@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.totalplay.ffm.plantainterna.repository.ConsultaOTPIRepository">
+
+	<select id="selectOTs" resultType="com.totalplay.ffm.plantainterna.model.consultaOTPI.ConsultaOTVO" parameterType="com.totalplay.ffm.plantainterna.model.consultaOTPI.ParamConsultaOTPI">
+		
+		SELECT  OT, 
+				OS, 
+				TICKET, 
+				CUENTA,
+			    CIUDAD, 
+			    DISTRITO, 
+			    CREACION,
+			    AGENDA, 
+			    TURNO,
+			    ID_TIPO, 
+			    TIPO, 
+			    ID_SUBTIPO,
+			    OPERARIO, 
+			    STATUS,
+			    ESTADO, 
+			    EQUIPO, 
+			    USUARIO_CREA, 
+			    RN FROM (
+			    SELECT  OT.EOT_ID OT, 
+			        OS.ESO_OS OS,
+			        NVL(OS.ESO_ID_TICKET,'NO APLICA') TICKET,
+			        OT.EOT_ACCOUNT_NO CUENTA,
+			        CIUDAD.ECT_DESCRIPTION CIUDAD,
+			        DISTRITO.ECT_DESCRIPTION DISTRITO,
+			        OT.EOT_CREATION_DATE CREACION,
+			        OT.EOT_DATE_SCHEDULE AGENDA,
+			        TURNO.ECTU_DESCRIPTION TURNO,
+			        OT.ECI_ID_TYPE_INTER ID_TIPO,
+			        INTERV.ECI_DESCRIPTION TIPO,
+			        OT.ECI_ID_SUB_TYPE_INTER ID_SUBTIPO,
+			        OPER.EFO_NAMES||' '||OPER.EFO_MIDDLE_NAME||' '||OPER.EFO_LAST_NAME OPERARIO,
+			        STATUS.ECS_dESCRIPTION STATUS,
+			        ESTADO.ECS_DESCRIPTION ESTADO, 
+			        LISTAGG (CEQ.EIC_ID,',') WITHIN GROUP (ORDER BY CEQ.EIC_ID) EQUIPO,
+			        CREA.EFO_NAMES||' '||CREA.EFO_MIDDLE_NAME||' '||CREA.EFO_LAST_NAME USUARIO_CREA,
+			        ROW_NUMBER() OVER(ORDER BY OT.EOT_ID ASC) RN
+				FROM ENL_ORDER_TRANSACTIONS OT
+				JOIN ENL_SERVICE_ORDERS OS ON OS.ESO_ID=OT.ESO_ID_SERVICE_ORDER
+				JOIN ENL_ACCOUNT_INFORMATION CUENTA ON CUENTA.EAI_ID=OS.EAI_ID_ACCOUNT
+				JOIN ENL_CAT_TREE DISTRITO ON DISTRITO.ECT_ID=OT.ECT_ID_TREE 
+				JOIN ENL_CAT_TREE CIUDAD ON CIUDAD.ECT_ID=DISTRITO.ECT_ID_PARENT
+				JOIN ENL_CAT_TURN TURNO ON TURNO.ECTU_ID=OT.ECTU_ID_TURN
+				JOIN ENL_CAT_INTERVENTION INTERV ON INTERV.ECI_ID=OT.ECI_ID_TYPE_INTER
+				LEFT JOIN ENL_FIELD_OPERATORS OPER ON OPER.EFO_ID=OT.EFO_ID_OPERATOR
+				LEFT JOIN ENL_FIELD_OPERATORS CREA ON CREA.EFO_ID=OT.EOT_ESTIMATE_TIME_BAND
+				JOIN ENL_CAT_STATUS_OT STATUS ON STATUS.ECS_ID=OT.ECS_ID_STATUS_OT
+				JOIN ENL_CAT_STATUS_OT ESTADO ON ESTADO.ECS_ID=OT.ECS_ID_ESTADO_OT
+				LEFT JOIN ENL_INFO_CEQUIPMENT CEQ ON CEQ.EOT_ID=OT.EOT_ID AND EIC_ACTIVE=1
+				WHERE 1 = 1
+					<if test="ot != ''">
+						AND OT.EOT_ID = #{ot}
+					</if>
+					<if test="os != ''">
+                		AND OS.ESO_OS = #{os}
+                	</if>
+                	<if test="cuenta != ''">
+                		AND OT.EOT_ACCOUNT_NO = #{cuenta}
+                	</if>
+	        	   <choose>
+						<when test=" fecha_inicio != ''  and fecha_fin != '' ">
+		                	AND TRUNC(OT.EOT_DATE_SCHEDULE)
+		                  	BETWEEN TO_DATE(#{fecha_inicio},'DD/MM/YYYY')  AND TO_DATE(#{fecha_fin},'DD/MM/YYYY')
+		                </when>	
+		    			<when test=" fecha_inicio != ''  and fecha_fin == '' ">
+		   					AND TO_DATE(OT.EOT_DATE_SCHEDULE) <![CDATA[>=]]> TO_DATE(#{fecha_inicio}, 'DD/MM/YYYY')
+		                </when>
+		               	<when test=" fecha_inicio == ''  and fecha_fin != '' ">
+		   					AND TO_DATE(OT.EOT_DATE_SCHEDULE) <![CDATA[<=]]> TO_DATE(#{fecha_fin}, 'DD/MM/YYYY')	
+		                </when>
+		                <otherwise>			                		            	
+		                </otherwise>
+	                </choose>
+	                  	AND OT.ECI_ID_TYPE_INTER IN (${intervencion})
+    					AND OT.ECT_ID_TREE IN (${distrito})
+    					GROUP BY OT.EOT_ID, 
+			        OS.ESO_OS,
+			        NVL(OS.ESO_ID_TICKET,'NO APLICA'),
+			        OT.EOT_ACCOUNT_NO,
+			        CIUDAD.ECT_DESCRIPTION,
+			        DISTRITO.ECT_DESCRIPTION,
+			        OT.EOT_CREATION_DATE,
+			        OT.EOT_DATE_SCHEDULE,
+			        TURNO.ECTU_DESCRIPTION,
+			        OT.ECI_ID_TYPE_INTER,
+			        INTERV.ECI_DESCRIPTION ,
+			        OT.ECI_ID_SUB_TYPE_INTER ,
+			        OPER.EFO_NAMES||' '||OPER.EFO_MIDDLE_NAME||' '||OPER.EFO_LAST_NAME ,
+			        STATUS.ECS_dESCRIPTION ,
+			        ESTADO.ECS_DESCRIPTION,
+			        CREA.EFO_NAMES||' '||CREA.EFO_MIDDLE_NAME||' '||CREA.EFO_LAST_NAME 
+		    )
+		    WHERE  RN BETWEEN #{start} AND #{end}
+	</select>
+	
+	<select id="countSelectOTs" resultType="java.lang.Integer" parameterType="com.totalplay.ffm.plantainterna.model.consultaOTPI.ParamConsultaOTPI">
+		
+		SELECT  COUNT(*) FROM (
+			    SELECT  OT.EOT_ID OT, 
+			        OS.ESO_OS OS,
+			        NVL(OS.ESO_ID_TICKET,'NO APLICA') TICKET,
+			        OT.EOT_ACCOUNT_NO CUENTA,
+			        CIUDAD.ECT_DESCRIPTION CIUDAD,
+			        DISTRITO.ECT_DESCRIPTION DISTRITO,
+			        OT.EOT_CREATION_DATE CREACION,
+			        OT.EOT_DATE_SCHEDULE AGENDA,
+			        TURNO.ECTU_DESCRIPTION TURNO,
+			        OT.ECI_ID_TYPE_INTER ID_TIPO,
+			        INTERV.ECI_DESCRIPTION TIPO,
+			        OT.ECI_ID_SUB_TYPE_INTER ID_SUBTIPO,
+			        OPER.EFO_NAMES||' '||OPER.EFO_MIDDLE_NAME||' '||OPER.EFO_LAST_NAME OPERARIO,
+			        STATUS.ECS_dESCRIPTION STATUS,
+			        ESTADO.ECS_DESCRIPTION ESTADO, 
+			        LISTAGG (CEQ.EIC_ID,',') WITHIN GROUP (ORDER BY CEQ.EIC_ID) EQUIPO,
+			        CREA.EFO_NAMES||' '||CREA.EFO_MIDDLE_NAME||' '||CREA.EFO_LAST_NAME USUARIO_CREA,
+			        ROW_NUMBER() OVER(ORDER BY OT.EOT_ID ASC) RN
+				FROM ENL_ORDER_TRANSACTIONS OT
+				JOIN ENL_SERVICE_ORDERS OS ON OS.ESO_ID=OT.ESO_ID_SERVICE_ORDER
+				JOIN ENL_ACCOUNT_INFORMATION CUENTA ON CUENTA.EAI_ID=OS.EAI_ID_ACCOUNT
+				JOIN ENL_CAT_TREE DISTRITO ON DISTRITO.ECT_ID=OT.ECT_ID_TREE 
+				JOIN ENL_CAT_TREE CIUDAD ON CIUDAD.ECT_ID=DISTRITO.ECT_ID_PARENT
+				JOIN ENL_CAT_TURN TURNO ON TURNO.ECTU_ID=OT.ECTU_ID_TURN
+				JOIN ENL_CAT_INTERVENTION INTERV ON INTERV.ECI_ID=OT.ECI_ID_TYPE_INTER
+				LEFT JOIN ENL_FIELD_OPERATORS OPER ON OPER.EFO_ID=OT.EFO_ID_OPERATOR
+				LEFT JOIN ENL_FIELD_OPERATORS CREA ON CREA.EFO_ID=OT.EOT_ESTIMATE_TIME_BAND
+				JOIN ENL_CAT_STATUS_OT STATUS ON STATUS.ECS_ID=OT.ECS_ID_STATUS_OT
+				JOIN ENL_CAT_STATUS_OT ESTADO ON ESTADO.ECS_ID=OT.ECS_ID_ESTADO_OT
+				LEFT JOIN ENL_INFO_CEQUIPMENT CEQ ON CEQ.EOT_ID=OT.EOT_ID AND EIC_ACTIVE=1
+				WHERE 1 = 1
+					<if test="ot != ''">
+						AND OT.EOT_ID = #{ot}
+					</if>
+					<if test="os != ''">
+                		AND OS.ESO_OS = #{os}
+                	</if>
+                	<if test="cuenta != ''">
+                		AND OT.EOT_ACCOUNT_NO = #{cuenta}
+                	</if>
+	        	   <choose>
+						<when test=" fecha_inicio != ''  and fecha_fin != '' ">
+		                	AND TRUNC(OT.EOT_DATE_SCHEDULE)
+		                  	BETWEEN TO_DATE(#{fecha_inicio},'DD/MM/YYYY')  AND TO_DATE(#{fecha_fin},'DD/MM/YYYY')
+		                </when>	
+		    			<when test=" fecha_inicio != ''  and fecha_fin == '' ">
+		   					AND TO_DATE(OT.EOT_DATE_SCHEDULE) <![CDATA[>=]]> TO_DATE(#{fecha_inicio}, 'DD/MM/YYYY')
+		                </when>
+		               	<when test=" fecha_inicio == ''  and fecha_fin != '' ">
+		   					AND TO_DATE(OT.EOT_DATE_SCHEDULE) <![CDATA[<=]]> TO_DATE(#{fecha_fin}, 'DD/MM/YYYY')	
+		                </when>
+		                <otherwise>			                		            	
+		                </otherwise>
+	                </choose>
+	                  	AND OT.ECI_ID_TYPE_INTER IN (${intervencion})
+    					AND OT.ECT_ID_TREE IN (${distrito})
+    					GROUP BY OT.EOT_ID, 
+			        OS.ESO_OS,
+			        NVL(OS.ESO_ID_TICKET,'NO APLICA'),
+			        OT.EOT_ACCOUNT_NO,
+			        CIUDAD.ECT_DESCRIPTION,
+			        DISTRITO.ECT_DESCRIPTION,
+			        OT.EOT_CREATION_DATE,
+			        OT.EOT_DATE_SCHEDULE,
+			        TURNO.ECTU_DESCRIPTION,
+			        OT.ECI_ID_TYPE_INTER,
+			        INTERV.ECI_DESCRIPTION ,
+			        OT.ECI_ID_SUB_TYPE_INTER ,
+			        OPER.EFO_NAMES||' '||OPER.EFO_MIDDLE_NAME||' '||OPER.EFO_LAST_NAME ,
+			        STATUS.ECS_dESCRIPTION ,
+			        ESTADO.ECS_DESCRIPTION,
+			        CREA.EFO_NAMES||' '||CREA.EFO_MIDDLE_NAME||' '||CREA.EFO_LAST_NAME 
+		    )
+	</select>
+	
+	<select id="consultaMaterialesOt" parameterType="com.totalplay.ffm.plantainterna.model.consultaOTPI.ParamConsultaOTPI" resultType="com.totalplay.ffm.plantainterna.model.consultaOTPI.ConsultaOTVO">
+		SELECT NVL(CAT.ECM_DESCRIPTION,'SIN INFORMACION') DESCRIPCION, TDM_SKU SKU, TDM_CANTIDAD CANTIDAD, TDM_LOTE LOTE, TDM_DOCUMENTO_SAP SAP, 
+			NVL(ECM_UM,'SIN INFORMACION') UNIDAD_MEDIDA
+			FROM TPE_DESCUENTOS_MATERIALES DES
+			LEFT JOIN ENL_CAT_MATERIALS CAT ON CAT.ECM_SKU = DES.TDM_SKU 
+			WHERE TOT_ID = #{Id_OT}
+			AND ECPR_ID = #{id_propietario}
+			AND TDM_ACTIVO = 1
+	</select>
+	
+	<select id="consultaInfoTrayectoria" resultType="com.totalplay.ffm.plantainterna.model.consultaOTPI.ConsultaTrayectoriaVO" parameterType="java.lang.String">
+	SELECT HIST.EHO_LATITUDE Latitud, 
+		   HIST.EHO_LONGITUDE Longitud, 
+	       HIST.ECS_ID_ESTATUS_OT idStatus, 
+		   STATUS.ECS_DESCRIPTION Status, 
+		   HIST.ECS_ID_ESTADO_OT idEstado, 
+		   ESTADO.ECS_DESCRIPTION Estado, 
+		   HIST.ECS_ID_REASON_OT idMotivo,  
+	       NVL(MOTIVO.ECS_DESCRIPTION,'NO APLICA') Motivo, 
+		   HIST.EHO_ID_ORIGEN idOrigen, 
+		   ORIG.EO_DESCRIPTION Origen,  
+		   TO_CHAR(HIST.EHO_MOVEMENT_DATE,'DD/MM/YYYY HH24:MI SS') Fecha, 
+		   OPER.EFO_EMPLOYEE_NUMBER NumEmpleado, 
+		   OPER.EFO_NAMES||' '||OPER.EFO_MIDDLE_NAME||' '||OPER.EFO_LAST_NAME Empleado
+	FROM ENL_HISTORICAL_OT HIST 
+	JOIN ENL_CAT_STATUS_OT STATUS ON STATUS.ECS_ID = HIST.ECS_ID_ESTATUS_OT 
+	JOIN ENL_CAT_STATUS_OT ESTADO ON ESTADO.ECS_ID = HIST.ECS_ID_ESTADO_OT 
+	LEFT JOIN ENL_CAT_STATUS_OT MOTIVO ON MOTIVO.ECS_ID = HIST.ECS_ID_REASON_OT 
+	JOIN ENL_ORIGEN ORIG ON ORIG.EO_ID = HIST.EHO_ID_ORIGEN 
+	JOIN ENL_FIELD_OPERATORS OPER ON OPER.EFO_ID = HIST.EFO_ID_OPERATOR 
+	WHERE HIST.EOT_ID_ORDER = #{idot} AND EHO_ACTIVE = 1 ORDER BY Fecha
+	</select>
+
+</mapper>

@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.totalplay.ffm.plantainterna.repository.ReportesPIRepository">
+<resultMap id="mapGetCoordinador" type="com.totalplay.ffm.plantainterna.model.CoordinadorReporteVO">
+	</resultMap>	
+	<resultMap id="mapConteoCoordinador" type="java.lang.Integer">
+	</resultMap>	
+	<select id="reporteCoordinadorProcedure" statementType="CALLABLE" 
+        	parameterType="com.totalplay.ffm.plantainterna.model.ParamsReporteCoorPi" >
+		    {
+		        CALL SP_REPORTE_COORDINADOR_ENL(
+				  #{nivel            		 ,javaType=String,			  jdbcType=VARCHAR,jdbcTypeName=VARCHAR2,  mode=IN  },
+				  #{distrito         		 ,javaType=String,			  jdbcType=VARCHAR,jdbcTypeName=VARCHAR2,  mode=IN  },
+				  #{intervencion     		 ,javaType=String,			  jdbcType=VARCHAR,jdbcTypeName=VARCHAR2,  mode=IN  },
+				  #{despacho_nombre    		 ,javaType=String,		      jdbcType=VARCHAR,jdbcTypeName=VARCHAR2,  mode=IN  }, 
+				  #{numero_empleado  		 ,javaType=String,			  jdbcType=VARCHAR,jdbcTypeName=VARCHAR2,  mode=IN  },
+				  #{operario    			 ,javaType=String,		      jdbcType=VARCHAR,jdbcTypeName=VARCHAR2,  mode=IN  }, 		
+				  #{ot               		 ,javaType=String,			  jdbcType=VARCHAR,jdbcTypeName=VARCHAR2,  mode=IN  },
+				  #{os               		 ,javaType=String,			  jdbcType=VARCHAR,jdbcTypeName=VARCHAR2,  mode=IN  },
+				  #{fecha_inicio     		 ,javaType=String,			  jdbcType=VARCHAR,jdbcTypeName=VARCHAR2,  mode=IN  },
+				  #{fecha_fin        		 ,javaType=String,			  jdbcType=VARCHAR,jdbcTypeName=VARCHAR2,  mode=IN	},
+  				  #{start                	 ,javaType=String,			  jdbcType=VARCHAR,jdbcTypeName=VARCHAR2,  mode=IN	},
+				  #{end              		 ,javaType=String,			  jdbcType=VARCHAR,jdbcTypeName=VARCHAR2,  mode=IN	},			  
+				  #{listado_info_coordinador ,javaType=java.sql.ResultSet, jdbcType=CURSOR ,resultMap=mapGetCoordinador,mode=OUT },
+				  #{total_results 	 		 ,javaType=Integer,           jdbcType=NUMERIC ,resultMap=mapConteoCoordinador,mode=OUT }	  		  			     	
+		        )
+		    }
+	</select>
+	<select id="reporteOt" resultType="com.totalplay.ffm.plantainterna.model.OrdenesPIVO"
+	parameterType="com.totalplay.ffm.plantainterna.model.ParamsReporteOrdenesPI">
+					SELECT *FROM(
+						SELECT ESO.ESO_OS OS,
+						               CASE
+						                  WHEN TO_CHAR(OT.EOT_DATE_END) IS NULL
+						                  THEN
+						                     TO_CHAR (OT.EOT_DATE_SCHEDULE, 'DD/MM/YY')
+						                  ELSE
+						                      TO_CHAR (OT.EOT_DATE_SCHEDULE, 'DD/MM/YY HH24:MI')
+						               END
+						                  FECHA_AGENDA_PI,
+						               CASE
+						                  WHEN OT.EOT_DATE_END IS NULL THEN 'PENDIENTE'
+						                  ELSE TO_CHAR (OT.EOT_DATE_END, 'DD/MM/YY HH24:MI')
+						               END
+						                  FECHA_FIN_PI,
+						               CASE
+						                  WHEN TO_CHAR(ITG.EOT_DATE_END) IS NULL
+						                  THEN
+						                     TO_CHAR (ITG.EOT_DATE_SCHEDULE, 'DD/MM/YY')
+						                  ELSE
+						                      TO_CHAR (ITG.EOT_DATE_SCHEDULE, 'DD/MM/YY HH24:MI')
+						               END
+						                  FECHA_AGENDA_ITG,
+						               CASE
+						                  WHEN ITG.EOT_DATE_END IS NULL THEN 'PENDIENTE'
+						                  ELSE TO_CHAR (OT.EOT_DATE_END, 'DD/MM/YY HH24:MI')
+						               END  FECHA_FIN_INT,
+						               CASE
+						                  WHEN (NVL (ITG.EOT_DATE_END, SYSDATE)
+						                        - NVL (OT.EOT_DATE_END, SYSDATE))
+						                       * (24) = 0
+						                  THEN
+						                     'OT DE PLANTA INTERNA PENDIENTE'
+						                  WHEN (NVL (ITG.EOT_DATE_END, SYSDATE)
+						                        - NVL (OT.EOT_DATE_END, SYSDATE))
+						                       * (24) >= 24
+						                  THEN
+						                     TO_CHAR (
+						                        TRUNC (
+						                           (NVL (ITG.EOT_DATE_END, SYSDATE)
+						                            - NVL (OT.EOT_DATE_END, SYSDATE))
+						                           * (24)
+						                           / 24,
+						                           0))
+						                     || ' DIAS'
+						                  WHEN TRUNC (
+						                          (NVL (ITG.EOT_DATE_END, SYSDATE)
+						                           - NVL (OT.EOT_DATE_END, SYSDATE))
+						                          * (24),
+						                          0) > 0
+						                  THEN
+						                     TO_CHAR (
+						                        TRUNC (
+						                           (NVL (ITG.EOT_DATE_END, SYSDATE)
+						                            - NVL (OT.EOT_DATE_END, SYSDATE))
+						                           * (24),
+						                           0))
+						                     || ' HORAS'
+						                  ELSE
+						                     TO_CHAR (
+						                        TRUNC (
+						                           ( (NVL (ITG.EOT_DATE_END, SYSDATE)
+						                              - NVL (OT.EOT_DATE_END, SYSDATE))
+						                            * (24))
+						                           * (60),
+						                           0))
+						                     || ' MINUTOS'
+						               END
+						                  TIEMPO_INTEGRADOR,
+						               OT.EOT_ID OT_PI,
+						               CASE
+						                  WHEN OT.EFO_ID_OPERATOR IS NOT NULL
+						                  THEN
+						                     UPPER (
+						                           OEFO.EFO_NAMES
+						                        || ' '
+						                        || OEFO.EFO_MIDDLE_NAME
+						                        || ' '
+						                        || OEFO.EFO_LAST_NAME)                                                                                                                                      
+						         ELSE
+						         'PENDIENTE ASIGNAR OPERADOR'
+						         END   TECNICO,
+						          CASE
+						                  WHEN ITG.EFO_ID_OPERATOR IS NOT NULL
+						                  THEN
+						                     UPPER (
+						                           IEFO.EFO_NAMES
+						                        || ' '
+						                        || IEFO.EFO_MIDDLE_NAME
+						                        || ' '
+						                        || IEFO.EFO_LAST_NAME)                                                                                                                                      
+						         ELSE
+						         'PENDIENTE ASIGNAR OPERADOR'
+						         END   TECNICO_ITG,
+						         ECT.ECT_DESCRIPTION DISTRITO_NOMBRE,
+						         STS.ECS_DESCRIPTION STATUS_PI,
+						         NVL(EST.ECS_DESCRIPTION,'NO APLICA') ESTADO_PI,
+						         NVL(RAZ.ECS_DESCRIPTION,'NO APLICA')  MOTIVO_PI,
+						         ITG.EOT_ID OT_ITG,
+						         ITG.EOT_ID_PADRE_OT ID_PADRE,
+						         SITG.ECS_DESCRIPTION STATUS_ITG,
+						         NVL(SEST.ECS_DESCRIPTION,'NO APLICA') ESTADO_ITG,
+						         NVL(SRAZ.ECS_DESCRIPTION,'NO APLICA')  MOTIVO_ITG,
+						         UPPER(OT.EP_PACKAGE) PAQUETE,
+				                   OT.EOT_ACCOUNT_NO CUENTA_NUMERO,
+				                   UPPER(DIST.ECT_DESCRIPTION) DISTRITO,
+				                   UPPER(CIUD.ECT_DESCRIPTION) CIUDAD,
+						         ROW_NUMBER () OVER (ORDER BY OT.EOT_DATE_SCHEDULE) AS RENGLON
+						    FROM ENL_ORDER_TRANSACTIONS ITG
+						         INNER JOIN ENL_ORDER_TRANSACTIONS OT
+						            ON OT.EOT_ID = ITG.EOT_ID_PADRE_OT
+						         INNER JOIN ENL_CAT_TREE ECT
+						            ON OT.ECT_ID_TREE = ECT.ECT_ID
+						         LEFT JOIN ENL_FIELD_OPERATORS  OEFO
+						            ON OEFO.EFO_ID =OT.EFO_ID_OPERATOR
+						          LEFT JOIN ENL_FIELD_OPERATORS  IEFO
+						            ON IEFO.EFO_ID =ITG.EFO_ID_OPERATOR
+						         INNER JOIN ENL_SERVICE_ORDERS ESO
+						            ON ESO.ESO_ID = OT.ESO_ID_SERVICE_ORDER
+						         INNER JOIN ENL_CAT_STATUS_OT STS
+						            ON STS.ECS_ID = OT.ECS_ID_STATUS_OT
+						         LEFT JOIN ENL_CAT_STATUS_OT EST
+						            ON EST.ECS_ID = OT.ECS_ID_ESTADO_OT
+						         LEFT JOIN ENL_CAT_STATUS_OT RAZ
+						            ON RAZ.ECS_ID = OT.ECS_ID_REASON_OT
+						         LEFT JOIN ENL_CAT_STATUS_OT SITG
+						            ON SITG.ECS_ID = ITG.ECS_ID_STATUS_OT
+						         LEFT JOIN ENL_CAT_STATUS_OT SEST
+						            ON SEST.ECS_ID = ITG.ECS_ID_ESTADO_OT
+						         LEFT JOIN ENL_CAT_STATUS_OT SRAZ
+						            ON SRAZ.ECS_ID = ITG.ECS_ID_REASON_OT
+						         INNER JOIN ENL_CAT_TREE DIST
+						         ON OT.ECT_ID_TREE= DIST.ECT_ID
+						         INNER JOIN ENL_CAT_TREE CIUD
+						         ON DIST.ECT_ID_PARENT = CIUD.ECT_ID
+						   WHERE ITG.EOT_TYPE_ORDER = 3
+						         <choose>
+										<when test="fecha_agenda_pi != ''  and fecha_termino != '' ">
+						                	AND TRUNC(OT.EOT_DATE_SCHEDULE)
+						                  	BETWEEN TO_DATE(#{fecha_agenda_pi},'DD/MM/YYYY')  AND TO_DATE(#{fecha_termino},'DD/MM/YYYY')
+						                </when>	
+						    			<when test="fecha_agenda_pi != ''  and fecha_termino == '' ">
+						   					AND TO_DATE(EOT_DATE_SCHEDULE) <![CDATA[>=]]> TO_DATE(#{fecha_agenda_pi}, 'DD/MM/YYYY')
+						                </when>
+						               	<when test="fecha_agenda_pi == ''  and fecha_termino != '' ">
+						   					AND TO_DATE(EOT_DATE_SCHEDULE) <![CDATA[<=]]> TO_DATE(#{fecha_termino}, 'DD/MM/YYYY')	
+						                </when>
+						                <otherwise>			                		            	
+						                </otherwise>
+					            </choose>    
+					            
+						         AND OT.ECT_ID_TREE IN (${distrito})
+						       
+						       <if test="os != ''">
+						         AND  UPPER(ESO.ESO_OS) LIKE UPPER('%'||#{os}||'%') 
+						       </if> 
+						
+						)WHERE RENGLON BETWEEN #{start}  AND #{end} 
+	</select>
+<select id="reporteOrdenesTerminadas" resultType="com.totalplay.ffm.plantainterna.model.OrdenesPIVO"
+	parameterType="com.totalplay.ffm.plantainterna.model.ParamsReporteOrdenesPI">
+	SELECT *FROM(         
+            SELECT OT.EOT_ID ID_OT,
+                           OS.ESO_OS OS,
+                           UPPER (CUENTA.EAI_COMPANY_NAME) CLIENTE,
+                           OT.EOT_ACCOUNT_NO CUENTA,
+                           UPPER (OT.EP_PACKAGE) PAQUETE,
+                           CIUDAD.ECT_DESCRIPTION CIUDAD,
+                           DISTRITO.ECT_DESCRIPTION DISTRITO,
+                           TO_CHAR (OT.EOT_DATE_SCHEDULE, 'DD/MM/YY HH24:MI ')
+                              FECHA_AGENDAMIENTO,
+                           TO_CHAR (OT.EOT_DATE_END, 'DD/MM/YY HH24:MI') FECHA_TERMINO,
+                           UPPER (
+                                 OPER.EFO_NAMES
+                              || ' '
+                              || OPER.EFO_MIDDLE_NAME
+                              || ' '
+                              || OPER.EFO_LAST_NAME)
+                              NOMBRE_TECNICO,
+                           CASE
+                              WHEN ETL_TIME_ARRIVE = 0 THEN 'A TIEMPO'
+                              WHEN ETL_TIME_ARRIVE = 1 THEN 'FUERA DE TIEMPO'
+                              ELSE 'SIN REGISTRO'
+                           END
+                              PUNTUALIDAD,
+                          NVL( TO_CHAR(QUES.CALIFICACION),'SIN CALIFICACION') CALIFICACION,
+                           CASE
+                                      WHEN WT.AUXILIARES IS NOT NULL
+                                      THEN
+                                         WT.AUXILIARES                                                                                                                               
+                             ELSE
+                             'SIN AUXILIAR'
+                             END   AUXILIARES,
+                             ROW_NUMBER () OVER (ORDER BY   OT.EOT_ID) AS RENGLON 
+                      FROM ENL_ORDER_TRANSACTIONS OT
+                           JOIN ENL_SERVICE_ORDERS OS
+                              ON OS.ESO_ID = OT.ESO_ID_SERVICE_ORDER
+                           JOIN ENL_ACCOUNT_INFORMATION CUENTA
+                              ON CUENTA.EAI_ID = OS.EAI_ID_ACCOUNT
+                           JOIN ENL_CAT_TREE DISTRITO
+                              ON DISTRITO.ECT_ID = OT.ECT_ID_TREE
+                           JOIN ENL_CAT_TREE CIUDAD
+                              ON CIUDAD.ECT_ID = DISTRITO.ECT_ID_PARENT
+                           JOIN ENL_FIELD_OPERATORS OPER
+                              ON OPER.EFO_ID = OT.EFO_ID_OPERATOR
+                           JOIN ENL_TIME_LINE TL
+                              ON TL.EOT_ID = OT.EOT_ID
+                           LEFT JOIN (SELECT   (ROUND (AVG (Q.ESQ_ANSWER), 1)) CALIFICACION, Q.EOT_ID 
+                     FROM ENL_SAVE_QUESTION Q GROUP BY Q.EOT_ID) QUES
+                              ON QUES.EOT_ID = OT.EOT_ID
+                           LEFT JOIN (SELECT OT, LISTAGG (AUXILIAR, ',')  
+                                WITHIN GROUP (ORDER BY AUXILIAR) AUXILIARES FROM (SELECT DISTINCT AUX.EOT_ID OT, EFO.EFO_NAMES|| ' ' || EFO.EFO_MIDDLE_NAME|| ' ' || EFO.EFO_LAST_NAME  AUXILIAR
+                                FROM ENL_OT_WORKTEAM AUX 
+                                INNER JOIN ENL_FIELD_OPERATORS EFO ON EFO.EFO_ID=AUX.EFO_ID 
+                                WHERE AUX.EFO_PRINCIPAL=0) GROUP BY OT) WT ON OT.EOT_ID=WT.OT
+                      WHERE OT.ECS_ID_STATUS_OT IN (4)  
+                      AND OT.ECI_ID_TYPE_INTER IN (${intervencion})
+					  <choose>
+						<when test=" fecha_agendamiento != ''  and fecha_termino != '' ">
+		                	AND TRUNC(OT.EOT_DATE_SCHEDULE)
+		                  	BETWEEN TO_DATE(#{fecha_agendamiento},'DD/MM/YYYY')  AND TO_DATE(#{fecha_termino},'DD/MM/YYYY')
+		                </when>	
+		    			<when test=" fecha_agendamiento != ''  and fecha_termino == '' ">
+		   					AND TO_DATE(EOT_DATE_SCHEDULE) <![CDATA[>=]]> TO_DATE(#{fecha_agendamiento}, 'DD/MM/YYYY')
+		                </when>
+		               	<when test=" fecha_agendamiento == ''  and fecha_termino != '' ">
+		   					AND TO_DATE(EOT_DATE_SCHEDULE) <![CDATA[<=]]> TO_DATE(#{fecha_termino}, 'DD/MM/YYYY')	
+		                </when>
+		                <otherwise>			                		            	
+		                </otherwise>
+	                </choose>    
+				)
+			WHERE RENGLON BETWEEN #{start}  AND #{end}
+	
+</select>	
+<select id="selectRepOTSPI" resultType="com.totalplay.ffm.plantainterna.model.ReportesPIVO" 
+	parameterType="com.totalplay.ffm.plantainterna.model.ParamsReporteOTPI">
+	SELECT ID_OT,OS,INTERVENCION,CUENTA,TIPO_ORDEN,CLIENTE,PAQUETE,CANAL_VENTA,CIUDAD,DISTRITO,RENGLON FROM(
+      			 SELECT 
+                        OT.EOT_ID ID_OT, 
+				        OS.ESO_OS OS, 
+				        INTERV.ECI_DESCRIPTION INTERVENCION, 
+				        CUENTA.EAI_ACCOUNT_NUMBER CUENTA, 
+				        TIPO.ECTO_DESCRIPCION TIPO_ORDEN,
+				        UPPER(CUENTA.EAI_COMPANY_NAME) CLIENTE, 
+				        UPPER(OT.EP_PACKAGE) PAQUETE, 
+				        UPPER(CANAL.ESC_DESCRIPTION) CANAL_VENTA, 
+				        CIUDAD.ECT_DESCRIPTION CIUDAD, 
+				        DISTRITO.ECT_DESCRIPTION DISTRITO,
+				        ROW_NUMBER () OVER (ORDER BY   OT.EOT_ID) AS RENGLON
+                  
+				    FROM ENL_ORDER_TRANSACTIONS OT
+				        JOIN ENL_SERVICE_ORDERS OS ON OS.ESO_ID=OT.ESO_ID_SERVICE_ORDER
+				        JOIN ENL_CAT_TREE DISTRITO ON DISTRITO.ECT_ID=OT.ECT_ID_TREE
+				        JOIN ENL_CAT_TREE CIUDAD ON DISTRITO.ECT_ID_PARENT=CIUDAD.ECT_ID
+				        JOIN ENL_ACCOUNT_INFORMATION CUENTA ON CUENTA.EAI_ID=OS.EAI_ID_ACCOUNT
+				        JOIN ENL_CAT_INTERVENTION INTERV ON INTERV.ECI_ID=OT.ECI_ID_TYPE_INTER
+				        JOIN ENL_SALES_CHANNEL CANAL ON CANAL.ESC_ID=OT.ESC_ID_SALES_CHANNEL 
+				        JOIN ENL_CAT_TYPES_ORDERS TIPO ON TIPO.ECTO_ID=OT.EOT_TYPE_ORDER
+				    WHERE 1=1    
+			       	<if test="id_ot != '' ">
+						AND OT.EOT_ID = #{id_ot}
+					</if>
+					<if test="os != ''">
+	               		AND UPPER(OS.ESO_OS) = UPPER(#{os})
+	               	</if> 
+	               	<if test="cuenta != ''">
+	                	AND CUENTA.EAI_ACCOUNT_NUMBER LIKE '%'||#{cuenta}||'%' 
+	                </if> 	                
+	                <if test="canal_venta != ''">
+	                	AND UPPER(CANAL.ESC_DESCRIPTION) LIKE UPPER('%'||#{canal_venta}||'%') 
+	                </if>         
+	                  <choose>
+						<when test=" fecha_inicio != ''  and fecha_fin != '' ">
+		                	AND TRUNC(EOT_DATE_SCHEDULE)
+		                  	BETWEEN TO_DATE(#{fecha_inicio},'DD/MM/YYYY')  AND TO_DATE(#{fecha_fin},'DD/MM/YYYY')
+		                </when>	
+		    			<when test=" fecha_inicio != ''  and fecha_fin == '' ">
+		   					AND TO_DATE(EOT_DATE_SCHEDULE) <![CDATA[>=]]> TO_DATE(#{fecha_inicio}, 'DD/MM/YYYY')
+		                </when>
+		               	<when test=" fecha_inicio == ''  and fecha_fin != '' ">
+		   					AND TO_DATE(EOT_DATE_SCHEDULE) <![CDATA[<=]]> TO_DATE(#{fecha_fin}, 'DD/MM/YYYY')	
+		                </when>
+		                <otherwise>			                		            	
+		                </otherwise>
+	                </choose>
+				        AND DISTRITO.ECT_ID_PARENT IN (${distrito})
+				        AND INTERV.ECI_ID IN (${intervencion})
+				 ) WHERE RENGLON  BETWEEN #{start}  AND #{end}	
+</select>
+<select id="reporteAuxiliarTecnico" resultType="com.totalplay.ffm.plantainterna.model.TecnicoAuxVO" 
+parameterType="com.totalplay.ffm.plantainterna.model.ParamsReportesPI">
+SELECT *FROM(
+ 			    SELECT  EOT_ID ID_OT, 
+					   	  	  OS.ESO_OS OS, 
+					   	  	  OPER.EFO_EMPLOYEE_NUMBER NO_EMPLEADO, 
+					   	  	  INTERV.ECI_DESCRIPTION INTERVENCION,
+	                          DISTRITO.ECT_DESCRIPTION DISTRITO,
+					   	  	  OPER.EFO_NAMES||' '||OPER.EFO_MIDDLE_NAME||' '||OPER.EFO_LAST_NAME NOMBRE_TECNICO,
+							  TO_CHAR (OT.EOT_DATE_SCHEDULE, 'DD/MM/YY HH24:MI') FECHA_AGENDAMIENTO, 
+						        NVL(TO_CHAR(OT.EOT_DATE_END,'DD/MM/YY HH24:MI '),'NO TERMINADA') FECHA_TERMINO,
+						        NVL(TO_CHAR(INVEH.EIV_ID),'SIN INFORMACION') ID_VEHICULO, 
+						        NVL(INVEH.EIV_SERIAL_NUMBER,'SIN INFORMACION') SERIE, 
+						        NVL(INVEH.EIV_LICENSE_PLATE,'SIN INFORMACION') PLACAS,
+						        NVL(MARCA.ECVB_DESCRIPTION,'SIN INFORMACION') MARCA,
+						        NVL(INVEH.EIV_MODEL,'SIN INFORMACION') MODELO,
+						        ROW_NUMBER () OVER (ORDER BY   EOT_ID) AS RENGLON
+							  FROM ENL_ORDER_TRANSACTIONS OT
+						        JOIN ENL_SERVICE_ORDERS OS ON OT.ESO_ID_SERVICE_ORDER=OS.ESO_ID
+						        JOIN ENL_FIELD_OPERATORS OPER ON OT.EFO_ID_OPERATOR=OPER.EFO_ID
+						        JOIN ENL_CAT_TREE DISTRITO ON DISTRITO.ECT_ID=OT.ECT_ID_TREE
+	                            JOIN ENL_CAT_INTERVENTION INTERV ON INTERV.ECI_ID=OT.ECI_ID_TYPE_INTER
+						        LEFT JOIN ENL_VEHICLE_OPERATOR VEH ON VEH.EFO_ID=OPER.EFO_ID AND TRUNC(VEH.EVO_DATE)=TRUNC(OT.EOT_DATE_SCHEDULE)
+						        LEFT JOIN ENL_INVENTORY_VEHICLE INVEH ON INVEH.EIV_ID=VEH.EIV_ID
+						        LEFT JOIN ENL_CAT_VEHICLE_BRAND MARCA ON MARCA.ECVB_ID=INVEH.ECVB_ID_BRAND
+						  
+						    WHERE 1=1
+						      
+			        	    <if test="id_ot != '' ">
+								   AND EOT_ID= #{id_ot}
+							</if>	     
+			                <if test="status != ''">
+			                	AND UPPER(OPER.EFO_EMPLOYEE_NUMBER) like UPPER('%'||#{no_empleado}||'%')          	        	
+			                </if>
+			  				<choose>
+								<when test=" fecha_agendamiento != '' and fecha_termino != '' ">
+						          	AND TRUNC(EOT_DATE_SCHEDULE)
+						           	BETWEEN TO_DATE(#{fecha_agendamiento},'DD/MM/YYYY')  AND TO_DATE(#{fecha_termino},'DD/MM/YYYY')
+						        </when>	
+						    	<when test=" fecha_agendamiento != ''  and fecha_termino == '' ">
+						   			AND TO_DATE(EOT_DATE_SCHEDULE) <![CDATA[>=]]> TO_DATE(#{fecha_agendamiento}, 'DD/MM/YYYY')
+						        </when>
+						        <when test=" fecha_agendamiento == ''  and fecha_termino != '' ">
+						   			AND TO_DATE(EOT_DATE_SCHEDULE) <![CDATA[<=]]> TO_DATE(#{fecha_termino}, 'DD/MM/YYYY')	
+						        </when>
+						        <otherwise>			                		            	
+						        </otherwise>
+					        </choose>   
+					        
+					        AND DISTRITO.ECT_ID_PARENT IN (${distrito})
+						    AND INTERV.ECI_ID IN (${intervencion})
+								
+					    )
+					  WHERE RENGLON BETWEEN #{start}  AND #{end} 
+	
+	</select>
+<select id="selectRepTecnico" resultType="com.totalplay.ffm.plantainterna.model.TecnicoReporteVO" 
+parameterType="com.totalplay.ffm.plantainterna.model.ParamsReportesPI">
+	SELECT RENGLON,ID_OPERARIO,EMPLEADO,NOMBRE,EMPRESA,JEFE_INMEDIATO,TERMINADAS,CANCELADAS,DETENIDAS,ASIGNADAS,PENDIENTES,RECHAZADAS,TOTALES
+		 FROM (
+		SELECT ROWNUM RENGLON, 
+		       OP.EFO_ID ID_OPERARIO,
+		       OP.EFO_EMPLOYEE_NUMBER EMPLEADO,
+		       OP.EFO_NAMES || ' ' || OP.EFO_MIDDLE_NAME || ' ' || OP.EFO_LAST_NAME NOMBRE,
+		       EMP.ECOPE_NOMBRE EMPRESA,
+		       JEFE.EFO_NAMES ||' '|| JEFE.EFO_MIDDLE_NAME ||' '|| JEFE.EFO_LAST_NAME JEFE_INMEDIATO,
+		       NVL (TERMINADAS, 0) TERMINADAS,
+		       NVL (CANCELADAS, 0) CANCELADAS,
+		       NVL (DETENDIDAS, 0) DETENIDAS,
+		       NVL (ASIGNADAS, 0) ASIGNADAS,
+		       NVL (PENDIENTES, 0) PENDIENTES,
+		       NVL (RECHAZADAS, 0) RECHAZADAS,
+		       NVL (TERMINADAS,0) + NVL(CANCELADAS,0) + NVL(DETENDIDAS,0) + NVL(ASIGNADAS,0) + NVL(PENDIENTES,0) + NVL(RECHAZADAS,0)  TOTALES
+		  FROM (SELECT EFO_ID_OPERATOR IDOPERARIO,
+		               "4" TERMINADAS,
+		               "5" CANCELADAS,
+		               "3" DETENDIDAS,
+		               "2" ASIGNADAS,
+		               "1" PENDIENTES,
+		               "169" RECHAZADAS
+		          FROM (SELECT ORIG.EFO_ID_OPERATOR,
+		                         ECS_ID_STATUS_OT,
+		                         COUNT (*) TOTALES
+		                    FROM ENL_ORDER_TRANSACTIONS ORIG
+		                    INNER JOIN FFMTPE.ENL_LOG_ASSIGMENTS ASIG ON ORIG.EOT_ID=ASIG.EOT_ID AND ASIG.EFO_ID_OPERATOR=ORIG.EFO_ID_OPERATOR
+		                   WHERE     ORIG.ECS_ID_STATUS_OT IN (5, 4, 3, 2, 1, 169)
+		                         AND ORIG.EFO_ID_OPERATOR IS NOT NULL
+		                         AND TRUNC(ASIG.ELA_DATE) BETWEEN TO_DATE (#{fecha_inicio}, 'DD/MM/YYYY') AND TO_DATE(#{fecha_fin}, 'DD/MM/YYYY')
+		                         AND ORIG.ECI_ID_TYPE_INTER IN (${intervencion})
+		                         AND ORIG.ECT_ID_TREE IN (${distrito})
+		                         <if test="numero_empleado != '' ">
+		                            AND OPER.EFO_EMPLOYEE_NUMBER IN (#{numero_empleado})
+		                         </if>
+		                GROUP BY ORIG.EFO_ID_OPERATOR, ECS_ID_STATUS_OT)PIVOT 
+		    ( 
+		        SUM(TOTALES) 
+		        FOR ECS_ID_STATUS_OT IN (5, 4, 3, 2, 1, 169) 
+		    )
+		    ORDER BY EFO_ID_OPERATOR ) 
+		    INNER JOIN ENL_FIELD_OPERATORS OP ON OP.EFO_ID=IDOPERARIO
+		    INNER JOIN ENL_CAT_COMPANY_OPERATOR EMP ON OP.ECOPE_ID=EMP.ECOPE_ID
+		    INNER JOIN FFMTPE.ENL_FIELD_OPERATORS JEFE ON OP.EFO_ID_PARENT=JEFE.EFO_ID 
+		    WHERE OP.EJB_ID_JOB_TITLE = 7 AND OP.EFO_ACTIVE = 1 
+		 
+		    <if test="numero_empleado != '' ">
+		      AND OP.EFO_EMPLOYEE_NUMBER = #{numero_empleado}
+		    </if>
+		    <if test="jefe_inmediato != '' ">
+		      AND JEFE.EFO_EMPLOYEE_NUMBER = #{jefe_inmediato}
+		    </if>
+		ORDER BY OP.EFO_EMPLOYEE_NUMBER ASC 
+		)WHERE RENGLON BETWEEN #{start} AND #{end}	
+</select>
+</mapper>

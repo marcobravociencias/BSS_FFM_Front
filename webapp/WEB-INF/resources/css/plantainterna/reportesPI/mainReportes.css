@@ -1,0 +1,1364 @@
+
+
+.btn-group.bootstrap-select.show-tick.select_consulta {
+    width: 100% !important;
+}
+input.form-control {
+    border-bottom: 1px solid #bdbdbd;
+    background-color: transparent;
+}
+button.btn.dropdown-toggle.bs-placeholder.btn-secondary, .bs-actionsbox .actions-btn, button.btn.dropdown-toggle.btn-secondary {
+    display: inline-block !important;
+    font-weight: 400 !important;
+    line-height: 1.25 !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    vertical-align: middle !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+    border: 1px solid transparent !important;
+    padding: .5rem 1rem !important;
+    font-size: .8rem !important;
+    border-radius: .25rem !important;
+    -webkit-transition: all .2s ease-in-out !important;
+    -o-transition: all .2s ease-in-out !important;
+    transition: all .2s ease-in-out !important;
+    color: #5a5a5a !important;
+    border: 1px solid #d5d5d5 !important;
+    /*font-family: 'Montserrat' !important;*/
+}
+button.btn.dropdown-toggle.bs-placeholder.btn-secondary, .bs-actionsbox .actions-btn, button.btn.dropdown-toggle.btn-secondary {
+    background: white !important;
+    box-shadow: none;
+    border: 1px solid #d9d9d9 !important;
+}
+#intro_compania_consulta ul.inner, #intro_puesto_consulta ul.inner, #intro_region_consulta ul.inner, #intro_ciudad_consulta ul.inner {
+    font-size: .8em;
+    font-family: 'Montserrat' !important;
+}
+.select_consulta>.dropdown-menu>.inner, .puesto_select>.dropdown-menu>.inner, .region_select>.dropdown-menu>.inner, .ciudad_select>.dropdown-menu>.inner {
+    padding-inline-start: 0px;
+}
+
+.icon-check-intervencion {
+    margin-top: .6em;
+}
+
+.intervencion-selected {
+    background-color: #40ac40;
+    color: white;
+}
+
+.opcion-propietario {
+    margin-top: .5em;
+    cursor: pointer;
+    height: 35px;
+    line-height: 35px;
+    border-left: .3em solid #40ac40;
+}
+
+.content_privilegios {
+    border: 2px dashed #d0d0d0 !important;
+    padding-top: 1em;
+    border-radius: .45rem !important;
+    font-size: .9em;
+}
+
+.bg-color1{ 
+    background-color:  #31a7ee !important;
+}
+
+.bg-color2{
+    background-color:  blueviolet !important;
+}
+
+.bg-color3{ 
+    background-color:  #f55756 !important;    
+}
+
+.bg-color4{
+    background-color:  #64c457 !important;
+}
+
+.bg-color5{
+    background-color:  #ffb100 !important;    
+}
+
+.bg-color6{ 
+    background-color:  #9A9A9A !important;    
+}
+
+.bg-color7{
+    background-color:  #f380b3 !important;
+}
+
+.bg-color8{
+    background-color:  #50e3c2 !important;    
+}
+
+.bg-color9{
+    background-color:  #53858f !important;    
+}
+
+.div_izquierdo_permiso {
+    border-top-left-radius: .3em;
+    border-bottom-left-radius: .3em;
+    color: #fff;
+    height: 35px;
+    padding-top: .5em;
+    text-align: center;
+}
+
+.div_derecho_permiso {
+    background-color: #546677;
+    height: 35px;
+    line-height: 35px;
+    border-top-right-radius: .3em;
+    border-bottom-right-radius: .3em;
+}
+
+.columna_padre {
+    margin-bottom: 10px;
+}
+
+.row_child {
+    margin-right: 5px;
+}
+
+.text-privilegio-principal {
+    color: white;
+    font-weight: bold;
+}
+
+.text-privilegio {
+    color: #46586b;
+    
+}
+
+.div_derecho_permiso_privilegios {
+    height: 35px;
+    line-height: 35px;
+    border-right: solid 1px #8b95a5;
+    border-bottom: solid 1px #8b95a5;
+    border-top: solid 1px #8b95a5;
+    border-top-right-radius: .3em;
+    border-bottom-right-radius: .3em;
+    text-align: center;
+}
+.list_group_privilegios{
+	min-height: 50px !important;
+	border-radius: .45rem !important;
+	padding: 0 20px !important;
+	height: 400px;
+	overflow-y: scroll;
+}
+.list_group_privilegios .list-group-item {
+    padding: .3rem 0em;
+    border:0;
+    display: block;
+}
+.content_check_priv {
+    width: 100%;
+}
+.content_privilegios {
+    border: 2px dashed #d0d0d0 !important;
+    padding-top: 1em;
+    border-radius: .45rem !important;
+    /*font-family: 'Montserrat' !important;*/
+    font-size: .9em;
+}
+
+.content_tecnicos {
+    padding-top: 1em;
+    border-radius: .45rem !important;
+    /*font-family: 'Montserrat' !important;*/
+    font-size: .9em;
+}
+.cursor-option {
+    cursor: pointer;
+}
+.check-privilegio {
+    color: rgb(0, 128, 0);
+    display: inline-block;
+    margin-top: .5em;
+}
+.cursorEfect {
+    cursor: pointer;
+}
+.padding-select-all {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 15px;
+
+}
+.img-tecnico {
+    height: 50%;
+    width: 50%;
+    margin-right: 10px;
+    margin-top: 10%;
+}
+.div-tecnicos {
+    height: 35px;
+    line-height: 35px;
+    background-color: #fff;
+    text-align: center;
+}
+.border-0 {
+    border: solid 1px #8b95a5!important;
+    border-left: 8px solid #40ac40!important;
+}
+.padding-tecnico {
+    padding-left: 0;
+    padding-right: 0;
+}
+.border-tecnico {
+    border-left: solid 1px #8b95a5;
+    border-right: solid 1px #8b95a5;
+    border-bottom: solid 1px #8b95a5;
+    border-left: 8px solid #40ac40;
+}
+.crop-text-col {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.content-confirmar-usuario {
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: .3rem;
+    outline: 0;
+}
+.header-confirmar-usuario {
+    border-bottom: 1px solid #cccccc;
+    background-color: #f7f7f7;
+    text-align: center !important;
+    border-top-left-radius: .3rem;
+    border-top-right-radius: .3em;
+}
+.body-confirmar-usuario {
+    position: relative;
+    -webkit-box-flex: 1;
+    flex: 1 1 auto;
+    padding: 15px;
+}
+.radio-ciudad-natal {
+    margin-top: .5em;
+}
+.row.padding_resumen_ciudades {
+    border-bottom: 1px dashed #e5e5e5;
+    padding-bottom: .5em;
+}
+.item_ciudad_resum {
+    display: -webkit-box;
+}
+#v-pills-tab .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: #773f85;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    cursor: default;
+}
+#v-pills-tab .nav-link:not(.active) {
+    color: grey !important;
+}
+#pills-tab .nav-link.active, .nav-pills .show>.nav-link, #pills-tab-mod .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: #773f85;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    cursor: default;
+}
+#pills-tab .nav-link:not(.active), #pills-tab-mod .nav-link:not(.active) {
+    color: grey !important;
+}
+.text-info-regitro {
+    color: #7c7c7d;
+}
+.titulo-opciones {
+    color: rgb(70, 88, 107);
+    font-weight: 450;
+}
+i.jstree-icon.jstree-themeicon {
+    color: #1ca4fc;
+}
+.text-head-table-arbol {
+    color: #784085;
+}
+.text-body-table-arbol {
+    color: #7c7c7d;
+    font-size: 12px;
+}
+.header-privilegios {
+    margin-bottom: 1em;
+}
+.titulos-confirmacion {
+    color: #784085;
+}
+.respuesta-confirmacion {
+    color: #7c7c7d;
+    font-size: 12px;
+}
+.encabezado-confirmacion {
+    color: rgb(70, 88, 107);
+    font-weight: 450;
+}
+.span-consulta {
+    color: #7c7c7d;
+    font-size: 12px;
+}
+.cursorEfect {
+    color: #7c7c7d;
+}
+.span-seleccion-all {
+    color: #7c7c7d;
+}
+#table-usuario-pi {
+    border-collapse: collapse !important;
+    width: 100%;
+}
+#table-usuario-pi{
+    border-collapse: collapse!important;
+ }
+
+#table-usuario-pi tbody tr td {
+    border-top: 0px solid #eceeef !important;
+    font-size: .8em;
+    font-family: 'Montserrat';
+    /* padding: .9em; */
+}
+#table-usuario-pi tbody tr:nth-child(even) {
+    background: #f9f7fe;
+}
+#table-usuario-pi_length { 
+    display: none;
+}
+
+#table-usuario-pi>tbody>tr>td {
+    text-align: center;
+    white-space: nowrap;
+    color: #39455b;
+    font-family: 'Montserrat', sans-serif;
+    font-size: .8em;
+}
+table.dataTable thead th {
+    position: relative;
+    background-color: #b1b1b1;
+    color: #fff;
+}
+#table-usuario-pi_wrapper>.row>#table-usuario-pi>thead>tr>th {
+    position: relative;
+    white-space: nowrap;
+    background-color: #b1b1b1;
+    color: #fff;
+}
+#table-usuario-pi {
+    width: 100%!important;
+}
+div.dataTables_wrapper div.dataTables_filter input {
+    margin-left: 0.5em;
+    display: inline-block;
+    width: auto;
+}
+#modalEdicionUsuario .modal-header{
+    margin:0;
+    box-shadow:none;
+    border-top: 20px solid #39455b;
+    border-bottom: 0px;
+}
+
+#modalEdicionUsuario .modal-header .close.close-modal{
+    /* background: #3b4559; */
+    padding:.1px .7em;
+    border-radius:1em;
+    margin:0;
+}
+#modalEdicionUsuario .modal-footer{
+    border:none !important;
+    padding-top:0;
+}
+#modalEdicionUsuario .modal-header  .modal-title{
+    color:#39455b;
+    font-size:1.2em;
+    font-weight:bolder;
+}
+
+#texto_header_reportes{	    
+	font-family: 'Montserrat', sans-serif;
+}
+.icon_color_table {
+	color:#b1b1b1 !important;
+}
+.button_filtro_despacho_drop {
+    background: #b1b1b1;
+    border: none;
+    color: white;
+    border: 1px solid white;
+    border-radius: 50%;
+    border-color: #b1b1b1;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
+    border-radius: 5px !important;
+    margin-left: 1em;
+    cursor:pointer;
+}
+
+.button_filtro_despacho_drop:after {
+    display: none;
+}
+
+a.primerNivelDespacho.consultarSegundoNivelDespacho {
+    color: #53a2d7 !important;
+    font-size: 1.2em !important;
+}
+a#dropdown_ordenes_integrador::after {
+    display: none;
+}
+.icono_filt{
+    position: relative !important;
+    margin-right: .3em !important;
+}
+#filtro_intervenciones .dropdown-toggle:after{
+	display:none !important;
+}
+.modal-dialog.cascading-modal .modal-header {
+    margin: 0 !important;
+}
+.blue-gradient {
+    /* background: #62a6e0; */
+}
+
+.form-control:focus {
+	-webkit-box-shadow: 0 1px 0 0 #4285f4 !important;
+	box-shadow: 0 1px 0 0 #4285f4 !important;
+	border-bottom: 1px solid #4285f4 !important;
+}
+
+.nav-pills .nav-item.show .nav-link, .nav-pills .nav-link.active {
+    color: #fff;
+    cursor: default;
+    background-color: #4cb8f9;
+}
+
+
+.md-form .prefix {
+    top: .25rem;
+    font-size: 1.20rem;
+    color: #4285f4;
+}
+
+hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid #ffffff;
+}
+input.form-control {
+    border-bottom: 1px solid #bdbdbd;
+    background-color: transparent;
+}
+i.fa.fa-calendar.prefix {
+    font-size: 0.9em;
+    color: #858d91;
+    padding-top: 0.3em;
+    margin-right: .4em;
+}
+i.fa.fa-globe.prefix {
+    font-size: 0.9em;
+    color: #848c90;
+    /* margin-right: .3em !important; */
+}
+/**    Estilos para arbol de clustes  **/
+
+/** ESTILOS DROPDOWN **/
+/** ESTILOS DROPDOWN **/
+.filtro_dropdown .items_parents > label span.texto_item:after {
+    font: normal normal normal 14px/1 FontAwesome;
+    float: right;
+    content: "\f0da";
+    font-size: inherit;
+    vertical-align: -50% !important;
+    margin-top:5px;
+}
+.filtro_dropdown label.dropdown-item.checkbox {
+    margin-right: 15px !important;
+    /* border-color: black; */
+}
+.filtro_dropdown .texto_item :after{
+    content:'>';
+}
+.filtro_dropdown .dropdown-submenu {
+    position: relative;
+    padding-top: 19px;
+}
+.filtro_dropdown .dropdown-submenu>.dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: 0px;
+    margin-left: 0px;
+    border: 1px;
+    background:  white;
+    border: 1px solid rgba(0, 0, 0, 0.15) !important;
+}
+i.icono_reporte_tecnico.fa.fa-plus {
+    font-size: 1.2em;
+    color: #53a2d7;
+}
+
+i.icono_reporte_tecnico.fa.fa-window-minimize {
+    font-size: 1.4em !important;
+    color: #7aa7b7;
+}
+i.iconColor.fa.fa-window-minimize {
+    font-size: 1.4em !important;
+    font-size: 1.4em !important;
+    color: #7aa7b7;
+}
+
+.filtro_dropdown .dropdown-submenu:hover>.dropdown-menu {
+    display: block;
+    border: 1em;
+    border-color:  black;
+    /* white-space: pre; */
+}
+a#dropdown_tecnico::after {
+    display: none;
+}
+label#link_reporte_excel_tecnico {
+    top: 0 !important;
+}
+label#link_reporte_excel_auxiliar_tecnico {
+    top: 0 !important;
+}
+label#link_reporte_excel_Despacho {
+    top: 0rem !important;
+    margin-left: 3em;
+}
+.filtro_dropdown button.btn.btn-indigo.btn-sm {
+  width: 43%;
+  text-align: center;
+  padding-left:.1em !important;
+  padding-right:.1em !important;
+}
+.filtro_dropdown a.dropdown-item input[type="checkbox"] {
+    float: right;
+}
+
+.filtro_dropdown .dropdown-menu > li:hover .dropdown-item,
+.filtro_dropdown .dropdown-menu > li:focus .dropdown-item{
+    color: #262625;
+    border-color:  black;
+    border: 1em;
+}
+.filtro_dropdown .dropdown-menu > li > .dropdown-item.checkbox.select {
+    margin: 0;
+    border-color:  black;
+    border: 1px;
+    border-color: 10px;
+}
+.filtro_dropdown .dropdown-menu > li > .dropdown-item.checkbox input {
+    display: none;
+    border-color:  black;
+}
+
+.filtro_dropdown .fa-check-square-o{
+    color:#7585f9;
+    font-weight:bold;
+    width: 17px;
+    margin: 0;
+}
+div.modal-footer {
+    /* border-top: 1px solid #eceeef !important; */
+}
+
+.filtro_dropdown .fa-square-o{
+    color:#b1b1b1;
+    font-weight:bold;
+}
+
+.filtro_dropdown{
+	top: -1em;
+	left: 1em;
+	padding: 0.2em;
+	/* border-bottom: 1px solid #bdbdbd !important; */
+} 
+/** FIN ESTILOS DROPDOWN **/
+
+
+.custom-control.custom-checkbox{
+    cursor:pointer;
+}
+.badge_filtro{
+    padding:6px !important;
+}
+
+.filtros_ots{
+    cursor:pointer;
+}
+i.fa.active {
+    font-size: 1.2em;
+}
+.md-form .prefix.active {
+    color: #4285f4;
+}
+#contenido_dropdown .btn.btn-sm {
+    padding: .5rem 0em;
+    font-size: .50rem;
+    width: 84px;
+}
+
+.cluster_filtro .active {
+    /* display: none !important; */
+    /* margin-right: 2em; */
+}
+
+.title_info_ot{
+  margin-bottom:1em !important;
+}
+.title_span {
+    color: #2f2f2fa8;
+}
+
+#dropdownint{
+	color: #000000;
+	text-decoration: none;
+	font-size: 0.8em;
+	flex-shrink: 10px;
+}
+
+.filtro_dropdown .dropdown-submenu {
+    margin: 0px;
+    position: relative;
+    padding-top: 34px;
+    margin: 0;
+}
+.fa-sort-amount-asc:before {
+    content: "\f160";
+    color: #858d91;
+    margin-left:  0px;
+}
+.md-form .form-control:disabled, .md-form .form-control[readonly] {
+       border-bottom: 1px solid #bdbdbd;
+       background-color: transparent;
+       /* margin-left: 2.3em; */
+}
+  
+span.texto_item {
+    FONT-SIZE: 0.7em;
+}
+
+
+nav .show>.dropdown-menu {
+    display: block;
+}
+
+
+.dropdown-divider {
+    height: 1px;
+    margin: 0rem 0;
+    overflow: hidden;
+    background-color: #eceeef;
+}
+.filtro_dropdown .dropdown-submenu>.dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: 0px;
+    margin-left: 0px;
+    padding-top: 0em;
+}
+ul.dropdown-menu, span.twitter-typeahead .tt-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 265px;
+    padding: 5px 0px;
+    margin: 2px 0 0;
+    font-size: 1rem;
+    color: #373a3c;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0.25rem;
+    /* display:  inline-block; */
+    padding-top: 0em;
+    margin-top: -0.4em;
+}
+.filtro_dropdown .dropdown-menu > li > .dropdown-item.checkbox {
+    margin: -7px;
+    margin-left: 0px;
+}
+.filtro_dropdown .dropdown-menu > li > .dropdown-item {
+    color: #777;
+    clear: both;
+    display: block;
+    padding: 3px 20px;
+    white-space: nowrap;
+    margin: 5px 0;
+    width: 100%;
+    text-align: left;
+    text-decoration: none;
+    outline: none;
+    cursor: pointer;
+    -moz-user-select: none;
+    user-select: none;
+    /* border: 1px solid rgba(0, 0, 0, 0.15) !important; */
+}
+.filtro_dropdown label.dropdown-item.checkbox {
+    margin-right: 15px !important;
+}
+.filtro_dropdown .dropdown-menu > li > .dropdown-item.checkbox input {
+    display: none;
+    border: 1px solid rgba(0, 0, 0, 0.15) !important;
+    /* padding-top: 100%; */
+    /* white-space:  pre-line; */
+    /* white-space: pre; */
+}
+.filtro_dropdown .fa-check-square-o {
+    color: #7585f9;
+    font-weight: bold;
+}
+
+
+.filtro_dropdown .dropdown-menu > li > .dropdown-item {
+    color: #777;
+    clear: both;
+    display: block;
+    padding: 1px 13px;
+    white-space: nowrap;
+    margin: 5px 0;
+    width: 100%;
+    text-align: left;
+    text-decoration: none;
+    outline: none;
+    cursor: pointer;
+    -moz-user-select: none;
+    user-select: none;
+}
+.filtro_dropdown .dropdown-menu > li > .dropdown-item.checkbox {
+    margin: 0px;
+    margin-left: 0px;
+} 
+
+.md-form label {
+    position: absolute;
+    top: -0.35rem;
+    left: 0;
+    -webkit-transition: .2s ease-out;
+    -o-transition: .2s ease-out;
+    transition: .2s ease-out;
+    cursor: text;
+    color: #757575;
+    margin-left: 1em;
+}
+
+<!--Inicio Reporte tecnico -->
+div#filtros_config {
+    margin-left: 23em;
+}
+
+
+<!--Fin Reporte tecnico -->
+
+<!--Inicio Reporte Coordinador-->
+
+input#fecha_inicio_despacho {
+    background: white;
+    margin-left: .9em;
+    margin-top: -1.7em;
+    background-color: #1f080800;
+}
+
+.form-control.datepicker{
+	background-color:white !important;
+} 
+
+<!--Fin Reporte Coordinador-->
+
+<!--Inicio Reporte Auxiliares-->
+
+input#fecha_inicio_auxiliar{
+    background: white;
+    margin-left: .9em;
+    margin-top: -1.6em;
+    background-color: transparent;
+    width: 6.9em;
+}
+input#fecha_fin_auxiliar {
+    background: white;
+}
+
+label#link_reporte_excel_auxiliar_tecnico {
+    float: right !important;
+}
+
+.list-group {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    padding-left: 0;
+    margin-bottom: 0;
+    text-decoration: none;
+}
+
+.list-group a, .list-group a:hover {
+    transition: .5s;
+}
+a, a:hover {
+    text-decoration: none;
+    transition: all .2s ease-in-out;
+}
+a {
+    cursor: pointer;
+    color: #0275d8;
+}
+.mr-3, .mx-3 {
+    margin-right: 1rem!important
+}
+.fon_size_menu {
+    margin-right: 2rem;	
+    font-size: 0.8em;
+}
+.pointer_element{
+	cursor:pointer !important;
+}
+.not_border_bottom{
+	border-bottom:none !important;
+}
+
+.sidebar-fixed .list-group .active[data-v-9ce54d62] {
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
+    border-radius: 5px;
+}
+.list-group-item.active {
+    z-index: 2;
+    color: #fff;
+    background-color: #773f85;
+    border-color: #773f85;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
+    border-radius: 5px !important;
+   padding:.5em 1em;
+}
+.list-group-item {
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-flow: row wrap;
+    -ms-flex-flow: row wrap;
+    flex-flow: row wrap;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: .75rem 1.25rem;
+    margin-bottom: -1px;
+    background-color: #fff;
+    border: 0px solid rgba(0,0,0,.125);
+}
+div#filtro_intervenciones {
+    background-color: transparent;
+}
+div.dataTables_scrollBody>table>tbody>tr>td {
+    font-size: .65em;
+    color: #0e0e0e;
+    padding: 1.2em;
+}
+thead.thead_tercer_nivel_ordenes_term tr th{
+	font-size: 1.1em;
+}
+thead.thead_segundo_nivel_ordenes_term tr th{
+	font-size: 1em;
+}
+.list-group a, .list-group a:hover, .list-group button, .list-group button:hover {
+    -webkit-transition: .5s;
+    -o-transition: .5s;
+    transition: .5s;
+    text-decoration: none;
+}
+i.iconColor.fa.fa-plus {
+    font-size: 1.4em;
+}
+div.dataTables_scrollBody>table>tbody>tr>td>div.details-container>table>tbody>tr>td {
+    font-size: 1em;
+    padding: 1em;
+    /* border: none !important; */
+}
+
+nav .dropdown-toggle::after {
+    /* display: inline !important; */
+}
+
+#contenido_dropdown_ordenes ul.dropdown-menu {
+    width: 13em !important;
+    border-bottom: 1px solid #bdbdbd !important;
+}
+li.elemento_menu.text {
+    position: relative;
+    margin: 0px;
+    display: block;
+    padding-left: 1em;
+    padding: 1em;
+}
+table.dataTable {
+    text-align: left;
+    height: 1em !important;
+}
+div.dataTables_wrapper div.dataTables_processing{
+	    text-align: -webkit-auto !important;
+}
+
+input#cluster {
+    cursor: pointer;
+}
+input.datepicker {
+    cursor: pointer;
+}
+ul.list-group-flush.list-group {
+    cursor: pointer;
+}
+div.dataTables_scrollBody>table>tbody>tr>td>div.details-container>table>tbody>tr>td>div.details-container>table>tbody>tr>td {
+    font-size: .9em;
+}
+div.dataTables_scrollBody>table>tbody>tr>td>div.details-container>table>tbody>tr>td>div.details-cantainer>table>tbody>tr>td {
+    font-size: 1em;
+}
+label#link_reporte_excel_despacho {
+    top: 0rem !important;
+}
+.pagination .page-item.active .page-link {
+   
+background-color: #4285f4 !important;
+}
+div#filtro_intervenciones_integrador {
+    border-bottom: 1px solid #bdbdbd !important;
+    padding-top: 0em;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #a5a5a5 !important;
+}
+ul.navbar-nav.mr-auto li.active{
+	border-bottom: none;
+}
+div.borderFilter {
+    padding-right: 0;
+    margin: 0 2px;
+    margin-left: 1em;
+}
+input#idot_reporte_ordenes, #fecha_inicio_ordenes, #numero_empleado_tecnico, #filtro_intervenciones_tecnico, #fecha_fin_tecnico, #numero_empleado, #fecha_fin_despacho, #idot_reporte_auxiliar, #fecha_fin_auxiliar, #fecha_inicio_ordenes_terminadas, #fecha_inicio_ot, #filtro_intervenciones_tecnico_Aux, #idot_reporte_ordenes_integrador, #fecha_inicio_ordenes_integrador, #fecha_inicio_ot_universal, #id_ot_reporte_ot_universal, #fecha_inicio_historico_ot, #idot_historico_ot, #fecha_inicio_reporte_detenciones, #os_reporte_detenciones,#numeroot_materialessap,
+#idot_reporte_ordenes_nocturnas,#fecha_inicio_ordenes_nocturnas,#fecha_inicio_justificaciones,#fecha_inicio_dias_traba, #fecha_inicio_geolocalizacion,
+input.cluster_tiempos_ot {
+    border-top: 3px solid #E8488E !important;
+    /* color: red !important; */
+}
+input#idos_reporte_ordenes, #fecha_fin_ordenes, #jefe_inmediato, #despacho_nombre, #filtro_intervenciones_despacho, 
+#empleado_reporte_auxiliar, #fecha_fin_ordenes_terminadas, #fecha_fin_ot, #idos_reporte_ordenes_integrador,
+ #fecha_fin_ordenes_integrador, #fecha_fin_ot_universal, #fecha_fin_historico_ot, #fecha_fin_reporte_detenciones,
+ #fecha_inicio_materiales, #idos_reporte_ordenes_nocturnas, #fecha_fin_ordenes_nocturnas,#filtro_interven_reporte_ots_nocturnas .input-group,
+ #filtro_intervenciones_ordenes_nocturnas, #fecha_fin_justificaciones, #fecha_fin_dias_traba, #fecha_fin_geolocalizacion,
+ input#fecha_tiempos_ot {
+    border-top: 3px solid #4FC3F7 !important;
+}
+input#cuenta_ordenes, .cluster_filtro,
+#cuenta_ordenes_nocturnas, #select_tecnicos_just, #idot_reporte_geolocalizacion {
+    border-top: 3px solid #E1E04A !important;
+}
+#canal_venta_ordenes, #filtro_intervenciones, #fecha_inicio_tecnico, #fecha_inicio_despacho, #fecha_inicio_auxiliar, #idos_reporte_ot_integrador, #canal_venta_ordenes_integrador, #filtro_intervenciones_integrador, div#filtro_intervenciones_ord_terminadas, #filtro_intervenciones_ot_universal, #filtro_intervenciones_historico_ot, #idot_reporte_detenciones, #filtro_intervenciones_detenciones,#fecha_fin_materiales,
+#empleado_reporte_materiales,
+#canal_venta_ordenes_nocturnas, input.cluster_reporte_geolocalizacion  {
+    border-top: 3px solid #773f85 !important;
+}
+button#btn_consultar_ordenes, #btn_consultar_tecnicos, #btn_consultar_despachos, #btn_consultar_tecnico_auxiliar, #btn_consultar_ordenes_terminadas, #btn_consultar_ot_int, #btn_consultar_ordenes_integrador, #btn_consultar_ot_universal, #btn_consultar_historico_ot, #btn_consultar_reporte_detenciones,#btn_consultarmateriales,
+#btn_consultar_ordenes_nocturnas, #btn_consultar_reporte_justificaciones,#btn_consultar_reporte_dias_traba, #btn_consultar_reporte_geolocalizacion,#btn_consultar_tiempos_ot{
+    background: #784085 !important;
+}
+#fecha_inicio_ordenes_terminadas, #fecha_inicio_ot, #fecha_fin_ordenes_terminadas, #fecha_fin_ot, #fecha_inicio_ot {
+    padding-left: 1em !important;
+    text-align: -webkit-left;
+}
+.top div.dataTables_info {
+    color: #9a9999 !important;
+    padding-top: 0em !important;
+}
+.dataTables_scrollHeadInner tr th {
+    font-family: 'Montserrat' !important;
+    font-size: .65em !important;
+    padding: 1em !important;
+    background: #aeaeae !important;
+    color: white;
+}
+.dataTables_length {
+    color: #9a9999 !important;
+}
+.dataTables_length .form-control.form-control-sm {
+    color: #9a9999 !important;
+    border-bottom: 2px solid #e4e2e2 !important;
+    font-family: 'Montserrat' !important;
+}
+
+
+select.form-control.form-control-sm {
+    border: 2px solid rgba(255, 255, 255, 0) !important;
+    background-color: rgba(255, 255, 255, 0);
+    /* padding: 0px; */
+}
+div.dataTables_wrapper div.dataTables_length label {
+    font-weight: inherit !important;
+    color: #828080 !important;
+}
+.form-filter {
+    border: .8px solid #DDDDDD !important;
+    border-radius: none !important;
+    border-radius: 0 !important;
+    font-size: .7em !important;
+    font-family: 'Montserrat' !important;
+    padding: .6em .5em !important;
+    color: #9c9e9f !important;
+}
+input.cluster_filtro.form-control, #cuenta_ordenes_integrador, .cluster_filtro_ot_universal, .cluster_filtro_historico_ot,.cluster_filtro_materialesap {
+    border-top: 3px solid #E1E04A !important;
+}
+.selectLabel {
+    font-size: .76em !important;
+    color: #757575 !important;
+    font-family: 'Montserrat' !important;
+    margin-bottom: 0;
+    margin-left: 0px !important;
+    padding: 0em 0em 0em;
+}
+.distrito label.active {
+    display: none;
+}
+div#filtros_config {
+    margin: 0px;
+    padding: 0px;
+}
+div.dataTables_paginate {
+    font-family: 'Montserrat' !important;
+}
+.pagination .paginate_button a.page-link {
+    color: #828080;
+}
+.dataTables_scrollBody tr td {
+    font-family: 'Montserrat' !important;
+    color: #9a9999 !important;
+    padding: .5em .5em;
+}
+thead.thead_segundo_nivel_auxiliar tr th {
+    font-size: 1em !important;
+}
+thead.thead_tercer_nivel_ordenes tr th {
+    font-size: .9em;
+}
+thead.thead_segundo_nivel_ot tr th {
+    font-size: 1.1em;
+}
+thead.thead_tercer_nivel_ot tr th {
+    font-size: 1em;
+}
+thead.thead_segundo_nivel_ordenes tr th {
+    font-size: .9em;
+}
+thead.thead_segundo_tecnico_nivel tr th {
+    font-size: .9em;
+}
+input.cluster_filtro.in_filt.pointer_element.f_size_8.not_border_bottom.form-filter.form-control {
+    text-align: -webkit-auto;
+}
+#navbar_reportes ul.list-group-flush.list-group {
+    font-family: 'Montserrat' !important;
+    font-size: .9em;
+}
+#filtro_intervenciones a#dropdown_tecnico, #filtro_intervenciones_tecnico a#dropdown_tecnico, #filtro_intervenciones_despacho a#dropdown_tecnico, #filtro_intervenciones_tecnico_Aux a#dropdown_tecnico {
+    color: #6f6f6f !important;
+}
+thead.thead_segundo_despacho_nivel tr th {
+    font-size: .9em;
+}
+.thead_segundo_despacho_nivel .dropdown-menu {
+    font-size: 1.3em;
+}
+thead.thead_primer_nivel_auxiliar_tecnico tr th {
+    font-size: .7em !important;
+}
+thead.thead_reporte_ordenes_terminadas tr th {
+    font-size: .8em !important;
+}
+thead.thead_segundo_nivel_ordenes_term tr th {
+    font-size: 1.1em;
+}
+thead.thead_reporte_ot_integrador tr th {
+    font-size: .8em !important;
+}
+thead.thead_segundo_nivel_ot tr th {
+    font-size: 1em;
+}
+div.style_modal_header {
+    background: #834594;
+    color: white;
+    border-bottom: none;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
+    font-family: 'Montserrat' !important;
+    padding: 0.9rem !important;
+}
+div.modal-footer {
+    border-top: 1px solid #dddddd;
+    margin: 0 !important;
+    padding: .3em .5em;
+}
+::-webkit-scrollbar-thumb {
+    background: #834594;
+    border: 71px none #ffffff;
+    border-radius: 31px;
+}
+div#modal_cluster {
+    font-family: "adobe-clean", sans-serif !important;
+    font-size: .9em !important;
+    height: 20em;
+    overflow: auto;
+}
+thead.thead_segundo_nivel_ordenes_universal tr th {
+    font-size: 1em;
+}
+thead.thead_segundo_nivel_ordenes_universal tr th, tbody_segundo_nivel_ordenes_universal tr td {
+    font-size: .8em;
+}
+.table_segundo_nivel_historico_ot thead tr th, .table_segundo_nivel_historico_ot tbody tr td {
+    font-size: .7em;
+}
+#filtro_intervenciones_ot_universal a#dropdown_tecnico {
+    color: #969191 !important;
+}
+div#filtro_intervenciones_reporte_detenciones .input-group ,#filtro_intervenciones_materiales  {
+    font-size: .7em !important;
+    padding-left: 1em;
+    border: 1px solid #f5e9e9;
+    position: unset;
+    border-radius: .1em !important;
+    border-top: 3px solid #E8488E !important;
+    height: 78%;
+}
+#filtro_intervenciones_reporte_detenciones button.btn.dropdown-toggle.bs-placeholder.btn-secondary, 
+#filtro_intervenciones_reporte_detenciones button.btn.dropdown-toggle.btn-secondary:focus, 
+#filtro_intervenciones_reporte_detenciones button.btn.dropdown-toggle.btn-secondary {
+    display: flex !important;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border: 0px !important;
+    height: 1em;
+}
+#filtro_intervenciones_reporte_detenciones button.btn.dropdown-toggle.btn-secondary:focus, #filtro_intervenciones_reporte_detenciones button.btn.dropdown-toggle.btn-secondary:focus {
+    outline: 0px !important;
+}
+#filtro_intervenciones_reporte_detenciones button.btn.dropdown-toggle.btn-secondary, 
+#filtro_intervenciones_reporte_detenciones button.btn.dropdown-toggle.btn-secondary,
+#filtro_interven_reporte_ots_nocturnas button.btn.dropdown-toggle.btn-secondary {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    color: #848c90 !important;
+    padding: 0px;
+    padding-top: .6em;
+}
+#filtro_intervenciones_reporte_detenciones .btn-group>.btn:first-child:not(:last-child):not(.dropdown-toggle), #filtro_intervenciones_reporte_detenciones .btn-group>.btn:first-child:not(:last-child):not(.dropdown-toggle),
+#filtro_interven_reporte_ots_nocturnas .btn-group>.btn:first-child:not(:last-child):not(.dropdown-toggle) {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    border: 1px solid #ccc;
+    background: #fff;
+    font-size: .5em !important;
+    font-family: 'Montserrat' !important;
+    background-color: #2bbbad!important;
+    color: #fff!important;
+}
+#filtro_intervenciones_reporte_detenciones .btn-group>.btn:last-child:not(:first-child), .btn-group>.dropdown-toggle:not(:first-child), #filtro_intervenciones_reporte_detenciones .btn-group>.btn:last-child:not(:first-child), .btn-group>.dropdown-toggle:not(:first-child),
+#filtro_interven_reporte_ots_nocturnas .btn-group>.btn:last-child:not(:first-child) {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    border: 1px solid #ccc;
+    background: #fff;
+    font-size: .5em !important;
+    font-family: 'Montserrat' !important;
+    background-color: #2bbbad!important;
+    color: #fff!important;
+}
+#filtro_intervenciones_reporte_detenciones ul.inner, #filtro_interven_reporte_ots_nocturnas ul.inner {
+    padding: 0PX;
+    font-family: 'Montserrat' !important;
+    font-size: .6em;
+}
+selectintervencion_reporte_detenciones {
+    padding: 0em !important;
+    min-height: 2.7em;
+}
+thead.thead_segundo_nivel_detenciones tr th {
+    font-size: .8em;
+}
+#filtro_intervenciones_materiales .dropdown-toggle::after {
+    display: none;
+}
+#filtro_interven_reporte_ots_nocturnas button.btn.dropdown-toggle.bs-placeholder.btn-secondary {
+    padding-left: 0em !important;
+    border: 0px !important;
+    width: 100%;
+    padding: 0px;
+}
+div#filtro_interven_reporte_ots_nocturnas {
+    min-width: 12%;
+    padding-left: 0em;
+    padding-right: 0px !important;
+    border: 1px solid #dbdbdb;
+    height: 1.9em;
+}
+#filtro_interven_reporte_ots_nocturnas button.btn.dropdown-toggle.bs-placeholder.btn-secondary:focus {
+    outline: 0px !important;
+}
+.cluster_ots_noc .cluster_filtro_ots_nocturnas {
+    border-top: 3px solid #E8488E !important;
+}
+#filtro_interven_reporte_ots_nocturnas .input-group{
+    border:1px solid #dfd9d9
+    height:1em
+}
+#filtro_interven_reporte_ots_nocturnas span.filter-option.pull-left {
+    font-size: .9em;
+}
+#label_tecnicos_just {
+    position: absolute;
+    top: -.6rem;
+    left: 13px;
+    -webkit-transition: .2s ease-out;
+    -o-transition: .2s ease-out;
+    transition: .2s ease-out;
+    cursor: text;
+    color: #757575;
+    margin-left: 1em;
+}
+#filtro_tecnicos_just, #filtro_tecnicos_dias_traba,
+#filtro_tecnicos_geolocalizacion, #filtro_intervencion_geolocalizacion {
+    margin-top: -.3em;
+    margin-left: 0.2em;
+}
+div#filtro_tecnicos_geolocalizacion {
+    margin-left: -.5em;
+}
+#filtro_tecnicos_just button.btn.dropdown-toggle.bs-placeholder.btn-secondary, .bs-actionsbox .actions-btn, button.btn.dropdown-toggle.btn-secondary,
+#filtro_tecnicos_just:focus button.btn.dropdown-toggle.bs-placeholder.btn-secondary, .bs-actionsbox .actions-btn, button.btn.dropdown-toggle.btn-secondary,
+#filtro_tecnicos_dias_traba button.btn.dropdown-toggle.bs-placeholder.btn-secondary, .bs-actionsbox .actions-btn, button.btn.dropdown-toggle.btn-secondary,
+#filtro_tecnicos_dias_traba:focus button.btn.dropdown-toggle.bs-placeholder.btn-secondary, .bs-actionsbox .actions-btn, button.btn.dropdown-toggle.btn-secondary {
+    height: 2.3em;
+    border-radius: 0px !important;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+#filtro_tecnicos_just button.btn.dropdown-toggle.bs-placeholder.btn-secondary, #filtro_tecnicos_just .bs-actionsbox .actions-btn, button.btn.dropdown-toggle.btn-secondary{
+    border-top: 3px solid #E1E04A !important;
+    height: 2.6em !important;
+    border-radius: 0px !important;
+    -webkit-box-shadow: none;
+}
+#filtro_tecnicos_just:focus button.btn.dropdown-toggle.bs-placeholder.btn-secondary, #filtro_tecnicos_just .bs-actionsbox .actions-btn, button.btn.dropdown-toggle.btn-secondary,
+#filtro_tecnicos_just:hover button.btn.dropdown-toggle.bs-placeholder.btn-secondary, #filtro_tecnicos_just:hover .bs-actionsbox .actions-btn, button.btn.dropdown-toggle.btn-secondary,
+{    
+    outline:none!important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    font-size: .7em !important;
+    font-family: 'Montserrat' !important;
+}
+#filtro_tecnicos_just .dropdown-menu.open,
+#filtro_tecnicos_dias_traba .dropdown-menu.open {
+    margin-top: -.5em;
+}
+#filtro_tecnicos_just ul.inner,
+#filtro_tecnicos_dias_traba ul.inner,
+#filtro_intervencion_geolocalizacion ul.inner ,
+#filtro_tecnicos_geolocalizacion ul.inner  {
+    padding: 0px;
+    font-size: .7em !important;
+    font-family: 'Montserrat' !important;
+}
+#filtro_tecnicos_dias_traba .bootstrap-select.btn-group .dropdown-menu li{
+    font-size: 1em !important;
+}
+#filtro_tecnicos_just .btn-group.bootstrap-select.show-tick.form-control,
+#filtro_tecnicos_dias_traba .btn-group.bootstrap-select.show-tick.form-control,
+#filtro_intervencion_geolocalizacion .btn-group.bootstrap-select.show-tick.form-control,
+#filtro_tecnicos_geolocalizacion .btn-group.bootstrap-select.show-tick.form-control{
+    background: white;
+    padding-top: 0em;
+    margin-top: .33em;
+}
+#filtro_tecnicos_dias_traba button.btn.dropdown-toggle.bs-placeholder.btn-secondary {
+    outline: none!important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    font-size: .7em !important;
+    font-family: 'Montserrat' !important;
+}
+#filtro_tecnicos_dias_traba button.actions-btn.bs-select-all.btn.btn-default, #filtro_tecnicos_dias_traba button.actions-btn.bs-deselect-all.btn.btn-default ,
+#filtro_tecnicos_just button.actions-btn.bs-select-all.btn.btn-default, #filtro_tecnicos_just button.actions-btn.bs-deselect-all.btn.btn-default {
+    font-size: .65em !important;
+}
+#filtro_tecnicos_dias_traba button.btn.dropdown-toggle.bs-placeholder.btn-secondary, #filtro_tecnicos_dias_traba .bs-actionsbox .actions-btn,#filtro_tecnicos_dias_traba button.btn.dropdown-toggle.btn-secondary,
+#filtro_tecnicos_just button.btn.dropdown-toggle.bs-placeholder.btn-secondary, #filtro_tecnicos_just .bs-actionsbox .actions-btn,#filtro_tecnicos_just button.btn.dropdown-toggle.btn-secondary,
+#filtro_intervencion_geolocalizacion button.btn.dropdown-toggle.bs-placeholder.btn-secondary, #filtro_intervencion_geolocalizacion .bs-actionsbox .actions-btn,#filtro_intervencion_geolocalizacion button.btn.dropdown-toggle.btn-secondary,
+#filtro_tecnicos_geolocalizacion button.btn.dropdown-toggle.bs-placeholder.btn-secondary, #filtro_tecnicos_geolocalizacion .bs-actionsbox .actions-btn,#filtro_tecnicos_geolocalizacion button.btn.dropdown-toggle.btn-secondary{
+    border-radius: 0px !important;
+    -webkit-box-shadow: none !important;
+    font-size:6em !important: ;
+    outline:none!important;
+    font-size: .7em !important;
+}
+#filtro_intervencion_geolocalizacion button.btn.dropdown-toggle.bs-placeholder.btn-secondary, #filtro_intervencion_geolocalizacion .bs-actionsbox .actions-btn, #filtro_intervencion_geolocalizacion button.btn.dropdown-toggle.btn-secondary{
+    border-top: 3px solid #E8488E !important
+}
+#filtro_tecnicos_geolocalizacion button.btn.dropdown-toggle.bs-placeholder.btn-secondary, #filtro_tecnicos_geolocalizacion .bs-actionsbox .actions-btn, #filtro_tecnicos_geolocalizacion button.btn.dropdown-toggle.btn-secondary{
+    border-top: 3px solid #4FC3F7 !important
+}
+div#container_reporte_geolocalizacion {
+    overflow-x: hidden;
+}
+#filtro_tecnicos_dias_traba button.btn.dropdown-toggle.bs-placeholder.btn-secondary, #filtro_tecnicos_dias_traba .bs-actionsbox .actions-btn, #filtro_tecnicos_dias_traba button.btn.dropdown-toggle.btn-secondary, #filtro_tecnicos_just button.btn.dropdown-toggle.bs-placeholder.btn-secondary, #filtro_tecnicos_just .bs-actionsbox .actions-btn, #filtro_tecnicos_just button.btn.dropdown-toggle.btn-secondary, #filtro_intervencion_geolocalizacion button.btn.dropdown-toggle.bs-placeholder.btn-secondary, #filtro_intervencion_geolocalizacion .bs-actionsbox .actions-btn, #filtro_intervencion_geolocalizacion button.btn.dropdown-toggle.btn-secondary, #filtro_tecnicos_geolocalizacion button.btn.dropdown-toggle.bs-placeholder.btn-secondary, #filtro_tecnicos_geolocalizacion .bs-actionsbox .actions-btn, #filtro_tecnicos_geolocalizacion button.btn.dropdown-toggle.btn-secondary {
+    height: 2.7em !important;
+}
+div#contenedor_mensual_cluster {
+    margin-left: 2em;
+}
+#fecha_tiempos_ot {
+    border: 1px solid #ccc3c3;
+    padding-left: 1em;
+    height: 1.1em;
+    font-size: .8em;
+    color: #6b6868;
+    font-weight: 100 !important;
+}
+div#contenedor_mensual_cluster .selectLabel {
+    padding-left: 1em;
+}
+
+thead.thead_segundo_nivel_ordenes_universal tr th {
+    font-size: 1em;
+}
+thead.thead_segundo_nivel_ordenes_universal tr th, tbody_segundo_nivel_ordenes_universal tr td {
+    font-size: .8em;
+}
+.table_segundo_nivel_historico_ot thead tr th, .table_segundo_nivel_historico_ot tbody tr td {
+    font-size: .7em;
+}
+thead.thead_segundo_nivel_detenciones tr th {
+    font-size: .8em;
+}
+table thead tr th{
+	font-size: .7em !important;
+	background: #AEAEAE;
+	color: #FFF;
+}
+table tbody tr td{
+	font-size: .6em !important;
+}
