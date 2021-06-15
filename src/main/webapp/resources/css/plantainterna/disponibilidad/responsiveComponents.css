@@ -1,0 +1,75 @@
+
+
+  @media screen and (min-width: 1366px) { 
+
+    #calendar_disponibilidad table tbody tr td table tbody tr td a.fc-day-grid-event.fc-h-event.fc-event.fc-start.fc-end.fc-draggable {
+        height: 4.5em !important;
+    }
+    h2.titulo_disponibilidad.text-center {
+        font-size: 1.7em !important;
+    }
+    div#filters-dispo {
+        font-size: .9em !important;
+    }
+    table#datatable_disponibilidad thead tr th {
+        font-size: .8em !important;
+    }
+    table#datatable_disponibilidad tbody tr td {
+        font-size: .8em !important;
+    }
+    #container_table_disponibilidad .pagination .page-item.active .page-link {
+        color: white !important;
+    }
+   
+  }
+  
+
+
+  @media screen and (max-width: 1365px) {   
+
+      #navbarSupportedContent ul li a {
+          font-size: .75em !important;
+      }
+      div#filters-dispo {
+          font-size: .85em !important;
+      }
+      #calendar_disponibilidad table tbody tr td table tbody tr td a.fc-day-grid-event.fc-h-event.fc-event.fc-start.fc-end.fc-draggable {
+          height: 4em !important;
+     }
+           table#datatable_disponibilidad thead tr th {
+          font-size: .7em !important;
+      }
+      table#datatable_disponibilidad tbody tr td {
+          font-size: .7em !important;
+      }
+      #container_table_disponibilidad .pagination .page-item.active .page-link {
+          color: white !important;
+      }
+
+  }
+
+  @media screen and (max-width: 1000px) {   
+      #navbarSupportedContent ul li a {
+          font-size: .75em !important;
+      }
+      h2.titulo_disponibilidad.text-center {
+          font-size: 1.5em !important;
+      }
+      div#filters-dispo {
+          font-size: .9em !important;
+      }
+      #calendar_disponibilidad table tbody tr td table tbody tr td a.fc-day-grid-event.fc-h-event.fc-event.fc-start.fc-end.fc-draggable {
+          height: 4em !important;
+      }
+      table#datatable_disponibilidad thead tr th {
+          font-size: .7em !important;
+      }
+      table#datatable_disponibilidad tbody tr td {
+          font-size: .7em !important;
+      }
+      #container_table_disponibilidad .pagination .page-item.active .page-link {
+          color: white !important;
+      }
+
+  }
+

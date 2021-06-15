@@ -1,0 +1,54 @@
+<!-- Modal -->
+<div class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" id="modalStatusOperario">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" > Estatus t&eacute;cnico</h5>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-mdb-dismiss="modal"
+                    aria-label="Close" >
+                </button>
+            </div>
+			<div class="modal-body">
+				<div class="container">
+                    <div class="row align-items-center">
+						<div class="col-12">
+							<div class="form-group-tecnico form-group">
+								<label class="label-group-tecnico" ng-bind="elementEstatusTecnico.tecnico.nombreCompleto"></label>							                                             
+						  	</div>
+						</div>
+					</div>	
+					<div class="row align-items-center">
+						<div class="col-12">
+							<div class="form-group">
+								<i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" id="icono_operario_status" class="fa fa-user-circle-o fa-2x"></i>
+								<label for="id-status-tecnico">Status:</label>
+								<select class="form-control" id="id-status-tecnico" ng-model="elementEstatusTecnico.status" ng-options="estatus.descripcion for estatus in listadoEstatusTecnico">
+                                    <option value="">Seleccione ...</option>
+							    </select>                                               
+						  	</div>
+						</div>
+					</div>		
+					<div class="row">
+						<div class="col-12">
+							<div class="form-group">
+						   		<label for="exampleTextarea">Comentario:</label>
+						   		<textarea class="form-control" style=" resize: none" ng-model="elementEstatusTecnico.comentario" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" id="comentario-status-tecnico" rows="3"></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+            <div class="modal-footer">
+                <button ng-click="cambiarEstatusOperario()" type="button" class="btn btn-primary">
+                    Cambiar estatus
+                </button>
+                <button type="button" class="btn cerrar-modal-btn btn-ligh" data-mdb-dismiss="modal">
+                    Cerrar
+                </button>
+           </div>
+        </div>
+    </div>
+</div>
