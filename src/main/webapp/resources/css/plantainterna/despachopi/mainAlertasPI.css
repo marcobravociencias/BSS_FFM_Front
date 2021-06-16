@@ -303,3 +303,6 @@ div#contenido_imagenes {
     font-size: 1em;
     color: #818181;
 }
+.dataTables_scrollHead {
+    display: none;
+}

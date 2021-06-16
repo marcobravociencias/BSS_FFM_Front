@@ -61,7 +61,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService){
             +       '<div class="card-body card-body-alertas">'
             +           '<div class="row">'
             +               '<div class="col-12">'
-            +                   '<span class="text-primary-alerta">OT: </span><span class="text-secundary-alerta">' + value.IdOT + '</span>'
+            +                   '<span class="text-primary-alerta">OT: </span><span class="text-secundary-alerta">' + value.IdOT + ' </span>'
             +                   '<span class="text-primary-alerta">OS: </span><span class="text-secundary-alerta">' + value.OrdenServicio + '</span>'
             +               '</div>'
             +           '</div>'
@@ -86,17 +86,6 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService){
             +   '</div>'
 
 
-            
-            arra[4] = value.plazaVendedor ? value.plazaVendedor : '';
-            arra[3] = value.tipoAcceso ? value.tipoAcceso : '';
-            arra[21] = value.precioRenta ? '$' + new Intl.NumberFormat("en-US").format(value.precioRenta) : '';
-            arra[22] = value.precioRentaConInpuestos ? '$' + new Intl.NumberFormat("en-US").format(value.precioRentaConInpuestos) : '';
-            arra[23] = '<div class="text-center"><button type="button" class="btn btn-informacion" onclick="detalleReporte(' + value.topCincomil + ', \''+ value.cliente + '\', \''+ value.folioCotizacion + '\', \''+ value.cuentaFactura + '\', \''+ value.tipoCuadrilla + 
-                '\', \''+ value.tipoAcceso + '\', \''+ value.folioCsp + '\', \''+ value.estatusCsp + '\', \''+ value.tipoVenta + '\', \''+ value.tipoplan + '\', \''+ value.folioOs + '\', \''+ value.estatatusOs + 
-                '\', \''+ value.idOt + '\', \''+ value.fechaVenta + '\', \'' + value.fechaCerradaGanada + '\', \'' + value.fechaObjetivo + '\', \'' + value.fechaComprometida + '\', \'' + value.fechaAgendamiento + 
-                '\', \'' + value.semaforoDesviacion + '\', \'' + value.nombrePm + '\', \'' + value.precioRenta + '\', \'' + value.precioRentaConInpuestos + '\', \'' + value.plazaVendedor +'\')"><i class="fa fa-bars"></i></button></div>';
-            
-            
             $scope.viewTableResumen.push(arra);
             
         });

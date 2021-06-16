@@ -158,21 +158,14 @@ label.dropdown-item.form-check-inputfiltro {
     /* border-left: 4px solid #773f85; */
 }
 .ot-pendiente-event .icono-ot-pendeinte {
-    /* box-shadow: 1px 2px 1px 1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 1px 3px 0 rgb(0 0 0 / 12%); */
+    box-shadow: 1px 2px 1px 1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 1px 3px 0 rgb(0 0 0 / 12%);
     font-size: .8em !important;
     margin-right: .5em;
     cursor: pointer;
     border-radius: 50%;
-    /* color: #1266f1; */
+    color: #1266f1;
     padding: 0.3em .3em;
     border: 0.5px solid #efefef;
-    color: #50b7d6;
-    /* padding: 0.3em 0.4em; */
-    background: #e0e7e9;
-}
-.ot-pendiente-event .icono-ot-pendeinte:hover {
-        box-shadow: 1px 2px 1px 1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 1px 3px 0 rgb(0 0 0 / 12%) !important;
-
 }
 .footer-otpendiente .content-footer {
     display: contents;
@@ -849,9 +842,8 @@ padding: .2em .5em;
     font-size: .8em !important;
     cursor: pointer;
     border-radius: 50%;
-    color: #50b7d6;
+    color: #1266f1;
     padding: 0.3em 0.4em;
-    background: #e0e7e9;
     border: 0.5px solid #eaeaea;
 }
 
