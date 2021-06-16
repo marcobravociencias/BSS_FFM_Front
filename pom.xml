@@ -14,7 +14,6 @@
 	<name>ffmcloudweb</name>
 	<description>Proyecto Migracion Spring boot</description>
 	<properties>
-		<java.version>11</java.version>
 		<googlegson.version>2.8.6</googlegson.version>        
         <lombok.version>1.18.10</lombok.version> 
 	</properties>
