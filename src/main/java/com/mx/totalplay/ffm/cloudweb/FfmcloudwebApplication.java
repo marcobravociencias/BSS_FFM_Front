@@ -8,8 +8,8 @@ import org.springframework.context.annotation.PropertySources;
 
 @SpringBootApplication(scanBasePackages = "com.mx.totalplay.ffm.cloudweb.*")
 @PropertySources({
-	@PropertySource("classpath:propertiesurls/plantainterna.properties"),
-	@PropertySource("classpath:propertiesurls/generic.properties")
+	@PropertySource("classpath:plantainterna.properties"),
+	@PropertySource("classpath:generic.properties")
 })
 public class FfmcloudwebApplication extends SpringBootServletInitializer {
 	@Override
