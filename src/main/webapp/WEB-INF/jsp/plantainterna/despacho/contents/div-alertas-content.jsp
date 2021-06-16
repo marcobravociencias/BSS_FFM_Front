@@ -60,7 +60,7 @@
 
 
                         <div class="tab-pane fade" id="pills-imagenes" role="tabpanel" aria-labelledby="pills-imagenes-tab">
-                            <div id="categorias_div" class="container row justify-content-center  text-center ">
+                            <div id="categorias_div" class="container row justify-content-center  text-center " style="margin-top: 1em;">
                                 <div class="content_category">
                                   <b class="badge accent-3" id="alerta-p-i">3</b>
                                   <button type="button" class="btn btn-sm  btn-blue-grey waves-effect waves-light"  >
