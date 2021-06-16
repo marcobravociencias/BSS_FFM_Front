@@ -113,7 +113,7 @@ metadata:
 spec:
   type: LoadBalancer
   #============================= DEV
-  loadBalancerIP: 94.74.70.52
+  loadBalancerIP: 34.94.124.52
   #============================= QA
   #loadBalancerIP: 34.102.125.80
   #============================= PRODUCCION
