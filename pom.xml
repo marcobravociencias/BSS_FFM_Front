@@ -12,7 +12,7 @@
 	<artifactId>ffmcloudweb</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ffmcloudweb</name>
-	<!--  packaging>war</packaging--> 
+	<packaging>war</packaging> 
 
 	<description>Proyecto Migracion Spring boot</description>
 	<properties>
