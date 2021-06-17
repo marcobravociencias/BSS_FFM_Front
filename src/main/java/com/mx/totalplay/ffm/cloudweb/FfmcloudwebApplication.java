@@ -17,7 +17,6 @@ public class FfmcloudwebApplication extends SpringBootServletInitializer {
 	    return application.sources(FfmcloudwebApplication.class);
 	}
 	public static void main(String[] args) {
-		System.out.println("### corriendo");
 		SpringApplication.run(FfmcloudwebApplication.class, args);
 	}
 

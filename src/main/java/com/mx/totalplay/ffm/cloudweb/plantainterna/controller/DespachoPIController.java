@@ -16,8 +16,10 @@ import com.mx.totalplay.ffm.cloudweb.utilerias.model.ServiceResponseResult;
 public class DespachoPIController {
 	private  final Logger logger = LogManager.getLogger(DespachoPIController.class.getName());
 
-	@Autowired
-	DespachoPIService despachoService;
+	
+	private DespachoPIService despachoService;
+	
+
 	
 	@PostMapping("consultarHistoricoDespachoOT")
 	public ServiceResponseResult consultarHistoricoDespachoOTCon(@RequestBody String params) {
