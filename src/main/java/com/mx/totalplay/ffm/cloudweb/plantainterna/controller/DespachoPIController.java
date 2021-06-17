@@ -19,7 +19,10 @@ public class DespachoPIController {
 	
 	private DespachoPIService despachoService;
 	
-
+	@Autowired
+	public DespachoPIController(DespachoPIService despachoService) {
+		this.despachoService=despachoService;
+	}
 	
 	@PostMapping("consultarHistoricoDespachoOT")
 	public ServiceResponseResult consultarHistoricoDespachoOTCon(@RequestBody String params) {
