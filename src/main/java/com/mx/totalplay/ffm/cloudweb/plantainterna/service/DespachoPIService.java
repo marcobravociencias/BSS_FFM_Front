@@ -3,7 +3,15 @@ package com.mx.totalplay.ffm.cloudweb.plantainterna.service;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.ServiceResponseResult;
 
 public interface DespachoPIService {
+	
+	public ServiceResponseResult consultarCatalogoTipoOrdenConfigDespacho();
+	public ServiceResponseResult consultarCatalogoTipoOrdenUsuarioDespacho();
 
+	
+	public ServiceResponseResult consultarCatalogoEstatusOrden();
+	public ServiceResponseResult consultarCatalogoGeografiaGeneral();
+	public ServiceResponseResult consultarCatalogoGeografiaUsuario();	
+	public ServiceResponseResult consultarCatalogoTurnosPI();
 	public ServiceResponseResult consultarCatalogoAccionesOTPI();
 	public ServiceResponseResult obtenerOrdenesTrabajoPendientesDespacho(String params);
 	public ServiceResponseResult consultarOrdenesAsignadasOperario(String params);

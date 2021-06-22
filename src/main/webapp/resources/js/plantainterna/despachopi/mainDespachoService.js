@@ -1,5 +1,68 @@
 app.service("mainDespachoService", function ($http) {
 
+	this.consultarCatalogoTipoOrdenConfigDespacho=function(params){
+		return $http({
+			method: "post",
+			url: "req/consultarCatalogoTipoOrdenConfigDespacho",
+			//data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
+	this.consultarCatalogoTipoOrdenUsuarioDespacho=function(params){
+		return $http({
+			method: "post",
+			url: "req/consultarCatalogoTipoOrdenUsuarioDespacho",
+			//data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
+	
+	this.consulCatalogoGeografiaUsuarioDespacho=function(params){
+		return $http({
+			method: "post",
+			url: "req/consulCatalogoGeografiaUsuarioDespacho",
+			//data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
+	this.consulCatalogoGeografiaGeneralDespacho=function(params){
+		return $http({
+			method: "post",
+			url: "req/consulCatalogoGeografiaGeneralDespacho",
+			//data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
+	this.consultarCatalogosTurnosDespachoPI=function(params){
+		return $http({
+			method: "post",
+			url: "req/consultarCatalogoTurnosDespachoPI",
+			//data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
+
+	this.consultarCatalogoEstatusDespachoPI=function(params){
+		return $http({
+			method: "post",
+			url: "req/consultarCatalogoEstatusDespachoPI",
+			//data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
+	
     this.consultarCatalogosPlantaInterna=function(params){
 		return $http({
 			method: "post",

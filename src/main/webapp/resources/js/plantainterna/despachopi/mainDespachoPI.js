@@ -768,16 +768,158 @@ app.controller('despachoController', ['$scope', 'mainDespachoService', 'mainAler
         $scope.consultarConteoAlertasPI()
     }, MILISEGUNDOS_ALERTAS);
 
+
+    $scope.getCatControlleripoOrdenConfigDespacho=function(){
+
+        mainDespachoService.consultarCatalogoTipoOrdenConfigDespacho().then(function success(response) {     
+            console.log(response);            
+            if (response.data !== undefined) {
+                if(response.data.respuesta ){
+                    if(response.data.result ){
+                        console.log("######")
+                        console.log(response.data.result)
+                    }else{                      
+                        toastr.warning( 'No se encontraron catalogos turnos' );                
+                    }
+                }else{
+                    toastr.warning( response.data.resultDescripcion );                
+                }               
+            }else{
+                toastr.error( 'Ha ocurrido un error en la consulta de turnos' );                
+            }
+        }, function error(response) {
+           // swal.close()
+        });
+    }
+    $scope.getCatControlleripoOrdenUsuarioDespacho=function(){
+
+        mainDespachoService.consultarCatalogoTipoOrdenUsuarioDespacho().then(function success(response) {     
+            console.log(response);            
+            if (response.data !== undefined) {
+                if(response.data.respuesta ){
+                    if(response.data.result ){
+                        console.log("######")
+                        console.log(response.data.result)
+                    }else{                      
+                        toastr.warning( 'No se encontraron catalogos turnos' );                
+                    }
+                }else{
+                    toastr.warning( response.data.resultDescripcion );                
+                }               
+            }else{
+                toastr.error( 'Ha ocurrido un error en la consulta de turnos' );                
+            }
+        }, function error(response) {
+           // swal.close()
+        });
+    }
+    $scope.getCatControllerrafiaUsuarioDespacho=function(){
+
+        mainDespachoService.consulCatalogoGeografiaUsuarioDespacho().then(function success(response) {     
+            console.log(response);            
+            if (response.data !== undefined) {
+                if(response.data.respuesta ){
+                    if(response.data.result ){
+                        console.log("######")
+                        console.log(response.data.result)
+                    }else{                      
+                        toastr.warning( 'No se encontraron catalogos turnos' );                
+                    }
+                }else{
+                    toastr.warning( response.data.resultDescripcion );                
+                }               
+            }else{
+                toastr.error( 'Ha ocurrido un error en la consulta de turnos' );                
+            }
+        }, function error(response) {
+           // swal.close()
+        });
+    }
+    $scope.getCatControllerrafiaGeneralDespacho=function(){
+
+        mainDespachoService.consulCatalogoGeografiaGeneralDespacho().then(function success(response) {     
+            console.log(response);            
+            if (response.data !== undefined) {
+                if(response.data.respuesta ){
+                    if(response.data.result ){
+                        console.log("######")
+                        console.log(response.data.result)
+                    }else{                      
+                        toastr.warning( 'No se encontraron catalogos turnos' );                
+                    }
+                }else{
+                    toastr.warning( response.data.resultDescripcion );                
+                }               
+            }else{
+                toastr.error( 'Ha ocurrido un error en la consulta de turnos' );                
+            }
+        }, function error(response) {
+           // swal.close()
+        });
+    }
+    $scope.getCatControllerTurnosDespachoPI=function(){
+
+        mainDespachoService.consultarCatalogosTurnosDespachoPI().then(function success(response) {     
+            console.log(response);            
+            if (response.data !== undefined) {
+                if(response.data.respuesta ){
+                    if(response.data.result ){
+                        console.log("######")
+                        console.log(response.data.result)
+                    }else{                      
+                        toastr.warning( 'No se encontraron catalogos turnos' );                
+                    }
+                }else{
+                    toastr.warning( response.data.resultDescripcion );                
+                }               
+            }else{
+                toastr.error( 'Ha ocurrido un error en la consulta de turnos' );                
+            }
+        }, function error(response) {
+           // swal.close()
+        });
+    }
+    $scope.getCatControllerstatusDespachoPI=function(){
+
+        mainDespachoService.consultarCatalogoEstatusDespachoPI().then(function success(response) {     
+            console.log(response);            
+            if (response.data !== undefined) {
+                if(response.data.respuesta ){
+                    if(response.data.result ){
+                        console.log("######")
+                        console.log(response.data.result)
+                    }else{                      
+                        toastr.warning( 'No se encontraron catalogos turnos' );                
+                    }
+                }else{
+                    toastr.warning( response.data.resultDescripcion );                
+                }               
+            }else{
+                toastr.error( 'Ha ocurrido un error en la consulta de turnos' );                
+            }
+        }, function error(response) {
+           // swal.close()
+        });
+    }
     $scope.fechaInicioFiltro=moment( FECHA_HOY_DATE ).format('DD/MM/YYYY'); 
     $scope.fechaFinFiltro=moment( FECHA_HOY_DATE ).format('DD/MM/YYYY'); 
     $scope.fechaFiltradoCalendar=moment( FECHA_HOY_DATE ).format('DD/MM/YYYY'); 
-    
-    $scope.consultarCatalogoEstatusTecnico()
-    $scope.consultarConteoAlertasPI()
-    $scope.consultarOrdenesTrabajoAsignadasDespacho()
-    $scope.consultarCatalogosDespacho()
-    $scope.consultarOtsPendientes()
-    $scope.consultarTecnicosDisponibiles()
-    $scope.consultarCatalogosAcciones();
+
+    $scope.getCatControllerTurnosDespachoPI()
+
+
+    $scope.getCatControlleripoOrdenConfigDespacho()
+    $scope.getCatControlleripoOrdenUsuarioDespacho()
+    $scope.getCatControllerrafiaUsuarioDespacho()
+    $scope.getCatControllerrafiaGeneralDespacho()
+    $scope.getCatControllerstatusDespachoPI()
+
+    //$scope.consultarCatalogoEstatusTecnico()
+    //$scope.consultarConteoAlertasPI()
+    //$scope.consultarOrdenesTrabajoAsignadasDespacho()
+    //$scope.consultarCatalogosDespacho()
+    //$scope.consultarOtsPendientes()
+    //$scope.consultarTecnicosDisponibiles()
+    //$scope.consultarCatalogosAcciones();
 
 }]);
