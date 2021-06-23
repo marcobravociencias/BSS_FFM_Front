@@ -11,11 +11,11 @@ app.controller('controlVehicularController', ['$scope', 'controlVehicularService
 	$scope.lineas = [];
 	$scope.data = {};
 
-	$scope.init = async function () {
+	$scope.init = function () {
 
-		await $scope.getMarcaControlVehicular();
-		await $scope.getColoresControlVehicular();
-		await $scope.getSegurosControlVehicular();
+		$scope.getMarcaControlVehicular();
+		$scope.getColoresControlVehicular();
+		$scope.getSegurosControlVehicular();
 		$('.year').datepicker({
 			format: 'yyyy',
 			viewMode: "years",
@@ -49,8 +49,8 @@ app.controller('controlVehicularController', ['$scope', 'controlVehicularService
 		});
 	}
 
-	$scope.getMarcaControlVehicular = async function () {
-		await controlVehicularService.consultarMarcasControlVehicular().then(function success(response) {
+	$scope.getMarcaControlVehicular = function () {
+		controlVehicularService.consultarMarcasControlVehicular().then(function success(response) {
 			if (response.data.respuesta) {
 				if (response.data.result.restulList.length > 0) {
 					$scope.data.tipoVehiculos = response.data.result.restulList;
@@ -65,8 +65,8 @@ app.controller('controlVehicularController', ['$scope', 'controlVehicularService
 		});
 	}
 
-	$scope.getColoresControlVehicular = async function () {
-		await controlVehicularService.consultarColoresControlVehicular().then(function success(response) {
+	$scope.getColoresControlVehicular = function () {
+		controlVehicularService.consultarColoresControlVehicular().then(function success(response) {
 			if (response.data.respuesta) {
 				if (response.data.result.restulList.length > 0) {
 					$scope.data.colores = response.data.result.restulList;
@@ -80,8 +80,8 @@ app.controller('controlVehicularController', ['$scope', 'controlVehicularService
 		});
 	}
 
-	$scope.getSegurosControlVehicular = async function () {
-		await controlVehicularService.consultarSegurosControlVehicular().then(function success(response) {
+	$scope.getSegurosControlVehicular = function () {
+		controlVehicularService.consultarSegurosControlVehicular().then(function success(response) {
 			if (response.data.respuesta) {
 				if (response.data.result.restulList.length > 0) {
 					$scope.data.seguros = response.data.result.restulList;
