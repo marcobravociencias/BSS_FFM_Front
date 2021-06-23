@@ -28,225 +28,261 @@ import com.mx.totalplay.ffm.cloudweb.utilerias.model.ServiceResponseResult;
 @Service
 public class ConsumeRest {
 
-	private final Logger logger = LogManager.getLogger(ConsumeRest.class.getName());
-	Gson gson = new Gson();
-	RestTemplate restTemplate = new RestTemplate();
-	
-	@Autowired
-	private Environment env;
-	
-	@Autowired
-	private ConstantesGeneric constantesGeneric;
-	
-	public ServiceResponseResult callPostParamString(String url, String params) {
-		logger.info("URL--------" + url);
-		ServiceResponseResult response = ServiceResponseResult.builder().isRespuesta(false)
-				.resultDescripcion("Sin datos").result(null).build();
+    private final Logger logger = LogManager.getLogger(ConsumeRest.class.getName());
+    Gson gson = new Gson();
+    RestTemplate restTemplate = new RestTemplate();
 
-		ResponseEntity<String> responseEntity = null;
-		try {
-			HttpHeaders headers = new HttpHeaders();
-			headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
-			headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+    @Autowired
+    private Environment env;
 
-			HttpEntity<String> request = new HttpEntity<>(params, headers);
-			responseEntity = restTemplate.postForEntity(url, request, String.class);
-			Object result = gson.fromJson(responseEntity.getBody(), Object.class);
+    @Autowired
+    private ConstantesGeneric constantesGeneric;
 
-			response = ServiceResponseResult.builder().isRespuesta(true).resultDescripcion("Accion completada")
-					.result(result).build();
+    public ServiceResponseResult callPostParamString(String url, String params) {
+        logger.info("URL--------" + url);
+        ServiceResponseResult response = ServiceResponseResult.builder().isRespuesta(false)
+                .resultDescripcion("Sin datos").result(null).build();
 
-		} catch (Exception e) {
-			logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO", e.getMessage());
-			response.setResultDescripcion(e.getMessage());
-		}
-		return response;
-	}
-	
-	public Object callPostReturnClassBasicAuthXwwwUrlFormed(String url, String us,String passCod, Class<?> classConversion) {
-		logger.info("URL--------" + url);
-		String response = "";
-		
-		ResponseEntity<String> responseEntity = null;
-		try {
-			String authStr = constantesGeneric.getAuthbasicUser().concat(":").concat(constantesGeneric.getAuthbasicCred());
-		   
-			String base64Creds = Base64.getEncoder().encodeToString(authStr.getBytes());
-			
+        ResponseEntity<String> responseEntity = null;
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+            headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
 
-			
-			HttpHeaders headers = new HttpHeaders();
-			headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
-			headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);	
-			headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-			headers.set("Authorization", "Basic " + base64Creds);
-			
-			
-			MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-			map.add(env.getProperty("param.text.emanresu"), us);
-			map.add(env.getProperty("param.textus.drowssap"), passCod);
-			map.add(env.getProperty("param.header.grant_type"), env.getProperty("param.textus.grant_type"));
-			
-			HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
-			
-			responseEntity = restTemplate.postForEntity(url, request, String.class);
-			
-			response = responseEntity.getBody().toString();
-			return gson.fromJson(response, classConversion);
-		} catch (Exception e) {
-			logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO", e.getMessage());
-				
-			return gson.fromJson( gson.toJson(
-					LoginResult.builder().
-					mensaje("Ocurrio un error en la autenticacion")
-					.description("Usuario o contrase�a incorrectos")
-					.build()	
-			), classConversion);
-		}		
-	}
-	public Object callPostReturnClassBasicAuth(String url, String params, Class<?> classConversion) {
-		logger.info("URL--------" + url);
-		String response = "";
-		
-		ResponseEntity<String> responseEntity = null;
-		try {
-			String authStr = constantesGeneric.getAuthbasicUser().concat(":").concat(constantesGeneric.getAuthbasicCred());
-		   
-			String base64Creds = Base64.getEncoder().encodeToString(authStr.getBytes());
-			
-			HttpHeaders headers = new HttpHeaders();
-			headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
-			headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);		    
-			headers.set("Authorization", "Basic " + base64Creds);
+            HttpEntity<String> request = new HttpEntity<>(params, headers);
+            responseEntity = restTemplate.postForEntity(url, request, String.class);
+            Object result = gson.fromJson(responseEntity.getBody(), Object.class);
 
-			HttpEntity<String> request = new HttpEntity<>(params, headers);
-			responseEntity = restTemplate.postForEntity(url, request, String.class);
-			
-			response = responseEntity.getBody().toString();
-			return gson.fromJson(response, classConversion);
-		} catch (Exception e) {
-			logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO", e.getMessage());
-				
-			return gson.fromJson( gson.toJson(
-					LoginResult.builder().
-					mensaje("Ocurrio un error en la autenticacion")
-					.description("Usuario o contrase�a incorrectos")
-					.build()	
-			), classConversion);
-		}		
-	}
-	/**
-	 * @param url 
-	 * @param params 
-	 * @param classConversion
-	 * @return
-	 */
-	public ServiceResponseResult callPatchBearerTokenRequest( String params,String urlRequest, Class<?> classConversion,String token) {
-		ServiceResponseResult response=ServiceResponseResult.builder().isRespuesta(false).resultDescripcion("Sin datos").build();
-		ResponseEntity<String> responseEntity = null;
-		try {
-			HttpHeaders headers = new HttpHeaders();
-			headers.set(HttpHeaders.ACCEPT, 		MediaType.APPLICATION_JSON_VALUE);
-			headers.set(HttpHeaders.CONTENT_TYPE,	MediaType.APPLICATION_JSON_VALUE);		    
-			headers.set(HttpHeaders.AUTHORIZATION ,"Bearer " + token);
-			HttpEntity<String> request = new HttpEntity<>(headers);	
-			responseEntity=restTemplate.exchange(urlRequest, HttpMethod.PATCH, request, String.class);
-			String bodyResponse = responseEntity.getBody();
-			logger.info("--- RESPONSE ---");
-			logger.info(bodyResponse);
-			Object result  =  gson.fromJson(bodyResponse, Object.class); 
-			response = ServiceResponseResult.builder()
-											.isRespuesta(true)
-											.resultDescripcion("Accion completada")
-											.result(result)
-											.build();
-		}catch(Exception e) {
-			logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO"+ e.getMessage());	
-			response.setResultDescripcion( e.getMessage() );
-			
-		}
-		return response;
-		
-	}
-	/**
-	 * 
-	 * @param url Contieene url con parametros ejemplo /despacho/{idDespachoParam}/fecha/{fechaParam}
-	 * @param params Formato Mapa con los parametros de la url Ej {idDespachoParam}=1229
-	 * @param classConversion Tipo de clase de conversion 
-	 * @return ServiceResponseResult.class
-	 */
-	public ServiceResponseResult callGetBearerTokenRequest( Map<String, String> params,String urlRequest, Class<?> classConversion,String token) {
+            response = ServiceResponseResult.builder().isRespuesta(true).resultDescripcion("Accion completada")
+                    .result(result).build();
 
-		ServiceResponseResult response = ServiceResponseResult.builder()
-				.isRespuesta(false).resultDescripcion("Sin datos").build();
-							 	 
-		UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(urlRequest);	
-		ResponseEntity<String> responseEntity = null;
+        } catch (Exception e) {
+            logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO", e.getMessage());
+            response.setResultDescripcion(e.getMessage());
+        }
+        return response;
+    }
 
-		try {								
-			HttpHeaders headers = new HttpHeaders();
-			headers.set(HttpHeaders.ACCEPT, 		MediaType.APPLICATION_JSON_VALUE);
-			headers.set(HttpHeaders.CONTENT_TYPE,	MediaType.APPLICATION_JSON_VALUE);		    
-			headers.set(HttpHeaders.AUTHORIZATION ,"Bearer " + token);			
-			HttpEntity<String> request = new HttpEntity<>(headers);					              
-			responseEntity = restTemplate.exchange(
-						uriBuilder.buildAndExpand(params).toUri(), 
-				        HttpMethod.GET, 
-				        request, 
-				        String.class);
-			String bodyResponse = responseEntity.getBody();
-			logger.info("--- RESPONSE ---");
-			logger.info(bodyResponse);
-			Object result  =  gson.fromJson(bodyResponse, Object.class); 
-			response = ServiceResponseResult.builder()
-											.isRespuesta(true)
-											.resultDescripcion("Accion completada")
-											.result(result)
-											.build();	
-		} catch (Exception e) {
-			logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO"+ e.getMessage());	
-			response.setResultDescripcion( e.getMessage() );
-		}		
-		return response;
-	}
-	
-	/**
-	 * 
-	 * @param url 
-	 * @param params 
-	 * @param classConversion
-	 * @return
-	 */
-	public ServiceResponseResult callPostBearerTokenRequest( String params,String urlRequest, Class<?> classConversion,String token) {
+    public Object callPostReturnClassBasicAuthXwwwUrlFormed(String url, String us, String passCod, Class<?> classConversion) {
+        logger.info("URL--------" + url);
+        String response = "";
 
-		ServiceResponseResult response = ServiceResponseResult.builder()
-				.isRespuesta(false).resultDescripcion("Sin datos").build();
+        ResponseEntity<String> responseEntity = null;
+        try {
+            String authStr = constantesGeneric.getAuthbasicUser().concat(":").concat(constantesGeneric.getAuthbasicCred());
 
-		ResponseEntity<String> responseEntity = null;
+            String base64Creds = Base64.getEncoder().encodeToString(authStr.getBytes());
 
-		try {								
-			HttpHeaders headers = new HttpHeaders();
-			headers.set(HttpHeaders.ACCEPT, 		MediaType.APPLICATION_JSON_VALUE);
-			headers.set(HttpHeaders.CONTENT_TYPE,	MediaType.APPLICATION_JSON_VALUE);		    
-			headers.set(HttpHeaders.AUTHORIZATION ,"Bearer " + token);		
-			
-			HttpEntity<String> request = new HttpEntity<>(params, headers);			
-			responseEntity = restTemplate.postForEntity(urlRequest, request, String.class);			
-			String bodyResponse = responseEntity.getBody();
-			logger.info("--- RESPONSE ---");
-			logger.info(bodyResponse);
-			Object result  =  gson.fromJson(bodyResponse, Object.class); 
-			response = ServiceResponseResult.builder()
-											.isRespuesta(true)
-											.resultDescripcion("Accion completada")
-											.result(result)
-											.build();	
-		} catch (Exception e) {
-			logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO"+e.getMessage());	
-			response.setResultDescripcion( e.getMessage() );
-		}		
-		return response;
 
-	}
+            HttpHeaders headers = new HttpHeaders();
+            headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+            headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+            headers.set("Authorization", "Basic " + base64Creds);
+
+
+            MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+            map.add(env.getProperty("param.text.emanresu"), us);
+            map.add(env.getProperty("param.textus.drowssap"), passCod);
+            map.add(env.getProperty("param.header.grant_type"), env.getProperty("param.textus.grant_type"));
+
+            HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
+
+            responseEntity = restTemplate.postForEntity(url, request, String.class);
+
+            response = responseEntity.getBody().toString();
+            return gson.fromJson(response, classConversion);
+        } catch (Exception e) {
+            logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO", e.getMessage());
+
+            return gson.fromJson(gson.toJson(
+                    LoginResult.builder().
+                            mensaje("Ocurrio un error en la autenticacion")
+                            .description("Usuario o contrase�a incorrectos")
+                            .build()
+            ), classConversion);
+        }
+    }
+
+    public Object callPostReturnClassBasicAuth(String url, String params, Class<?> classConversion) {
+        logger.info("URL--------" + url);
+        String response = "";
+
+        ResponseEntity<String> responseEntity = null;
+        try {
+            String authStr = constantesGeneric.getAuthbasicUser().concat(":").concat(constantesGeneric.getAuthbasicCred());
+
+            String base64Creds = Base64.getEncoder().encodeToString(authStr.getBytes());
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+            headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+            headers.set("Authorization", "Basic " + base64Creds);
+
+            HttpEntity<String> request = new HttpEntity<>(params, headers);
+            responseEntity = restTemplate.postForEntity(url, request, String.class);
+
+            response = responseEntity.getBody().toString();
+            return gson.fromJson(response, classConversion);
+        } catch (Exception e) {
+            logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO", e.getMessage());
+
+            return gson.fromJson(gson.toJson(
+                    LoginResult.builder().
+                            mensaje("Ocurrio un error en la autenticacion")
+                            .description("Usuario o contrase�a incorrectos")
+                            .build()
+            ), classConversion);
+        }
+    }
+
+    /**
+     * @param url
+     * @param params
+     * @param classConversion
+     * @return
+     */
+    public ServiceResponseResult callPatchBearerTokenRequest(String params, String urlRequest, Class<?> classConversion, String token) {
+        ServiceResponseResult response = ServiceResponseResult.builder().isRespuesta(false).resultDescripcion("Sin datos").build();
+        ResponseEntity<String> responseEntity = null;
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+            headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+            headers.set(HttpHeaders.AUTHORIZATION, "Bearer " + token);
+            HttpEntity<String> request = new HttpEntity<>(headers);
+            responseEntity = restTemplate.exchange(urlRequest, HttpMethod.PATCH, request, String.class);
+            String bodyResponse = responseEntity.getBody();
+            logger.info("--- RESPONSE ---");
+            logger.info(bodyResponse);
+            Object result = gson.fromJson(bodyResponse, Object.class);
+            response = ServiceResponseResult.builder()
+                    .isRespuesta(true)
+                    .resultDescripcion("Accion completada")
+                    .result(result)
+                    .build();
+        } catch (Exception e) {
+            logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO" + e.getMessage());
+            response.setResultDescripcion(e.getMessage());
+
+        }
+        return response;
+
+    }
+
+    /**
+     * @param url             Contieene url con parametros ejemplo /despacho/{idDespachoParam}/fecha/{fechaParam}
+     * @param params          Formato Mapa con los parametros de la url Ej {idDespachoParam}=1229
+     * @param classConversion Tipo de clase de conversion
+     * @return ServiceResponseResult.class
+     */
+    public ServiceResponseResult callGetBearerTokenRequest(Map<String, String> params, String urlRequest, Class<?> classConversion, String token) {
+
+        ServiceResponseResult response = ServiceResponseResult.builder()
+                .isRespuesta(false).resultDescripcion("Sin datos").build();
+
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(urlRequest);
+        ResponseEntity<String> responseEntity = null;
+
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+            headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+            headers.set(HttpHeaders.AUTHORIZATION, "Bearer " + token);
+            HttpEntity<String> request = new HttpEntity<>(headers);
+            responseEntity = restTemplate.exchange(
+                    uriBuilder.buildAndExpand(params).toUri(),
+                    HttpMethod.GET,
+                    request,
+                    String.class);
+            String bodyResponse = responseEntity.getBody();
+            logger.info("--- RESPONSE ---");
+            logger.info(bodyResponse);
+            Object result = gson.fromJson(bodyResponse, Object.class);
+            response = ServiceResponseResult.builder()
+                    .isRespuesta(true)
+                    .resultDescripcion("Accion completada")
+                    .result(result)
+                    .build();
+        } catch (Exception e) {
+            logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO" + e.getMessage());
+            response.setResultDescripcion(e.getMessage());
+        }
+        return response;
+    }
+
+    /**
+     * @param url
+     * @param params
+     * @param classConversion
+     * @return
+     */
+    public ServiceResponseResult callPostBearerTokenRequest(String params, String urlRequest, Class<?> classConversion, String token) {
+
+        ServiceResponseResult response = ServiceResponseResult.builder()
+                .isRespuesta(false).resultDescripcion("Sin datos").build();
+
+        ResponseEntity<String> responseEntity = null;
+
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+            headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+            headers.set(HttpHeaders.AUTHORIZATION, "Bearer " + token);
+
+            HttpEntity<String> request = new HttpEntity<>(params, headers);
+            responseEntity = restTemplate.postForEntity(urlRequest, request, String.class);
+            String bodyResponse = responseEntity.getBody();
+            logger.info("--- RESPONSE ---");
+            logger.info(bodyResponse);
+            Object result = gson.fromJson(bodyResponse, Object.class);
+            response = ServiceResponseResult.builder()
+                    .isRespuesta(true)
+                    .resultDescripcion("Accion completada")
+                    .result(result)
+                    .build();
+        } catch (Exception e) {
+            logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO" + e.getMessage());
+            response.setResultDescripcion(e.getMessage());
+        }
+        return response;
+
+    }
+
+    public ServiceResponseResult callPutBearerTokenRequest(String params, String urlRequest, Class<?> classConversion, String token) {
+
+        ServiceResponseResult response = ServiceResponseResult.builder()
+                .isRespuesta(false).resultDescripcion("Sin datos").build();
+
+        ResponseEntity<String> responseEntity = null;
+
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+            headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+            headers.set(HttpHeaders.AUTHORIZATION, "Bearer " + token);
+
+            HttpEntity<String> request = new HttpEntity<>(params, headers);
+            responseEntity = restTemplate.exchange(
+                    urlRequest,
+                    HttpMethod.PUT,
+                    request,
+                    String.class);
+            String bodyResponse = responseEntity.getBody();
+            logger.info("--- RESPONSE ---");
+            logger.info(bodyResponse);
+            Object result = gson.fromJson(bodyResponse, Object.class);
+            response = ServiceResponseResult.builder()
+                    .isRespuesta(true)
+                    .resultDescripcion("Accion completada")
+                    .result(result)
+                    .build();
+        } catch (Exception e) {
+            logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO" + e.getMessage());
+            response.setResultDescripcion(e.getMessage());
+        }
+        return response;
+
+    }
 
 }

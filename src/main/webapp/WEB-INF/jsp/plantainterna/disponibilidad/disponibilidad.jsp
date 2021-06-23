@@ -58,7 +58,8 @@ pageEncoding="ISO-8859-1"%>
 					data-intro="Opci&oacute;n tipo de intervenci&oacute;n">
 					<select id="tipo_select"
 						class="form-control-sm input-filtro-disponibilidad form-control"
-						ng-model="intervencionSelect" ng-change="intervencionSelecion()"
+						ng-model="intervencionSelect"
+						ng-change="intervencionSelecion()"
 						ng-options="elemento.Descripcion for elemento in arrayIntervencion" required>
 						<option value="">Seleccione Intervenci&oacute;n...</option>
 					</select>
@@ -73,6 +74,7 @@ pageEncoding="ISO-8859-1"%>
 				<div class="col-3" style="margin-top: 1.5px;">
 					<button id="btn-consultar-disponibilidad" type="button"
 					class="btn btn-sm btn-primary"
+					ng-click="consultaDisponibilidad()"
 					style="margin-top: 0; margin: 0 !important;">
 						<i class="fa fa-search"></i>
 					</button>
@@ -105,45 +107,47 @@ pageEncoding="ISO-8859-1"%>
 									<div class="col-9">
 										<div id="calendar_disponibilidad"></div>
 									</div>
-									<div class="col-3">
-										<br />
-										<div class="container-fluid">
-											<div class="row justify-content-between disponibilidad active">
-												<div class="col-12">
-													<h6 class="fontStyleAzul alineacion_inline ">Disponibilidad:</h5>
-														<h6 class="alineacion_inline info-disp-sec"
-															id="disponibilidad_span">Sin info.</h6>
-												</div>
-												<div class="col-12 ">
-													<h6 class="fontStyleAzul alineacion_inline ">Intervenci&oacute;n:</h5>
-														<h6 class="alineacion_inline info-disp-sec" id="intervencion_span">
-															Sin info.</h6>
-												</div>
-											</div>
-											<br />
-											<div class="row align-items-start">
-												<div class="col-12">
-													<strong class="fontStyleAzul alineacion_inline ">Matutino:
-													</strong><small class="alineacion_inline info-disp-sec"
-														id="matutino_dispo">Sin info.</small>
-												</div>
-												<div class="col-12 ">
-													<strong class="fontStyleAzul alineacion_inline ">Vespertino:
-													</strong><small class="alineacion_inline info-disp-sec"
-														id="vespertino_dispo">Sin info.</small>
-												</div>
-												<div class="col-12 ">
-													<strong class="fontStyleAzul alineacion_inline ">Nocturno:
-													</strong><small class="alineacion_inline info-disp-sec"
-														id="nocturno_dispo">Sin info.</small>
-												</div>
-												<div class="col-12 a">
-													<strong class="fontStyleAzul alineacion_inline ">Total Capacidad:
-													</strong><small class="alineacion_inline info-disp-sec"
-														id="total_dispo">Sin info.</small>
-												</div>
-											</div>
-										</div>
+									<div class="col-2">
+										<table class="table table-bordered" id="tableData">
+											<tbody>
+												<tr>
+													<td>
+														<span>Disponibilidad:</span>
+														<span id="disponibilidad_span" class="spanTable">Sin info.</span>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<span>Intervenci&oacute;n:</span>
+														<span id="intervencion_span" class="spanTable">Sin info.</span>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<span>Matutino:</span>
+														<span id="matutino_dispo" class="spanTable">Sin info.</span>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<span>Vespertino:</span>
+														<span id="vespertino_dispo" class="spanTable">Sin info.</span>
+													</td>
+												</tr>
+												<tr id="container-nocturno">
+													<td id="noctuurno_d">
+														<span>Nocturno:</span>
+														<span id="nocturno_dispo" class="spanTable">Sin info.</span>
+													</td>
+												</tr>
+												<tr style="background: #f4f5fc;">
+													<td>
+														<span>Total Capacidad:</span>
+														<span id="total_dispo" class="spanTable">Sin info.</span>
+													</td>
+												</tr>
+											</tbody>
+										</table>											
 									</div>
 								</div>
 							</div>
@@ -160,10 +164,10 @@ pageEncoding="ISO-8859-1"%>
 													<th id="theadnocturno">Nocturno</th>
 													<th>Capacidad d&iacute;a</th>
 													<th>Estatus</th>
-													<th>Agendado ( M )</th>
+<!-- 												<th>Agendado ( M )</th>
 													<th>Agendado ( V )</th>
 													<th id="theadnocturnoporcentaje">Nocturno ( N )</th>
-													<th>Total Agendado </th>
+													<th>Total Agendado </th> -->
 													<th>Editar</th>
 												</tr>
 											</thead>
@@ -188,21 +192,26 @@ pageEncoding="ISO-8859-1"%>
 
 	<!-- Scripts libraries -->
 	<script src="${pageContext.request.contextPath}/resources/libraries/angularjs/js/angular.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/libraries/bootstrap/js/bootstrap.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/main.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/jquery.dataTables.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/dataTables.bootstrap4.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/libraries/jstree/jstree.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/libraries/sweetalert/js/sweetalert2.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/libraries/alertify/alertify.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/moment.min.js"></script>
+	
 	<script type="text/javascript"
-		src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker_1.9.0.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/jquery-ui.min.js"></script>
+		src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.min.js"></script>
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/js/mdb.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-ui.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/libraries/popper\popper.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/moment.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/main.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/moment.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/jquery-ui.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/libraries/bootstrap/js/bootstrap.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/jquery.dataTables.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/dataTables.bootstrap4.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/libraries/jstree/jstree.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/libraries/sweetalert/js/sweetalert2.min.js"></script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker_1.9.0.min.js"></script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/libraries/magnific_popup/jquery.magnific-popup.min.js"></script>
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
 	<!-- Fin -->
@@ -213,6 +222,8 @@ pageEncoding="ISO-8859-1"%>
 		src="${pageContext.request.contextPath}/resources/js/plantainterna/disponibilidad/disponibilidadService.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/js/plantainterna/disponibilidad/disponibilidadCalendar.js"></script>
+		<script
+		src="${pageContext.request.contextPath}/resources/js/plantainterna/disponibilidad/arrayDisponibilidad.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js"></script>
 
