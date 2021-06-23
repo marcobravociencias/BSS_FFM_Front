@@ -143,13 +143,7 @@ public class DespachoPIController {
         return response;
     }
 	
-	@PostMapping("/consultarCatalogoDesphachoPI")
-    public ServiceResponseResult consultarCatalogoDesphachoPI(@RequestBody String params) {
-		logger.info("##### CONSULTANDO CATALGOS");
-		ServiceResponseResult response = despachoService.consultarCatalogosPI(params);
-        return response;
-    }
-	
+
 	@PostMapping("/consultarOtsAsignadas")
 	public ServiceResponseResult consultarOrdenesAsignadas(@RequestBody String params) {				
 		logger.info("##### CONSULTANDO CATALGOS");

@@ -23,7 +23,6 @@ public interface DespachoPIService {
 
 	public ServiceResponseResult consultarColoresIconografia();
 
-	public ServiceResponseResult consultarCatalogosPI(String params);
 	public ServiceResponseResult consultarConteoAlertasPI(String params);
 	public ServiceResponseResult consultarCatalogoEstatusTecnico(String params);
 	public ServiceResponseResult cambiarEstatusTecnicoDespachoPI(String params);

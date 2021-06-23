@@ -80,7 +80,7 @@
                             <li ng-repeat="turno in filtrosGeneral.turnosdisponibles " class="element-menu-filter"  class="element-menu-filter">
                                 <label  class="dropdown-item form-check-inputfiltro">
                                     <input id="filtrotext-turno-{{turno.id}}" class="form-check-input" type="checkbox" value=""   checked/>
-                                    <span  for="filtrotext-turno-{{turno.ID}}" class="dropdown-item item-text-filtro" href="#" ng-bind="turno.descripcion"></span>
+                                    <span  for="filtrotext-turno-{{turno.id}}" class="dropdown-item item-text-filtro" href="#" ng-bind="turno.nombre"></span>
                                 </label>
                             </li>
                         </ul>

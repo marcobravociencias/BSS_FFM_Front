@@ -1,5 +1,5 @@
 var fechaActual = new Date();
-
+var generalInfo=[]
 const FECHA_HOY_DATE=new Date()
 var permiso_reasigna=true;
 var permiso_asigna=true;
@@ -340,75 +340,6 @@ app.controller('despachoController', ['$scope', 'mainDespachoService', 'mainAler
             result = false;
         }
 	    return result;
-    }
-    $scope.consultarCatalogosDespacho = function() {
-        var params = {
-            "param1": "6",
-            "param2": "1",
-            "param3": "3"
-        }        
-        mainDespachoService.consultarCatalogosPlantaInterna(params).then(function success(response) {
-            console.log(response);
-            if (response.data !== undefined) {
-                if (response.data.respuesta) {
-                    if (response.data.result.result === '0') {
-                        $scope.filtrosGeneral=response.data.result.info[0];     
-                        $scope.filtrosGeneral.General_filtros.filtros.map(function(e){
-                            e.checkedOpcion=true
-                            e.subfiltros.map(function(j){
-                                j.checkedOpcion=true
-                            })                            
-                            return e
-                        })
-                        let generalInfo=[];
-
-                        let arbolniveles=$scope.filtrosGeneral.General_Arbol.arbol;
-                        let arrayPrimerNivel=arbolniveles.filter(function(el){return el.Nivel==='1' })
-                        angular.forEach(arrayPrimerNivel,function(elemento,index){        
-                            let elemGeneral={"text":elemento.ID_Description,"children":[]} 
-                            let arraySegundoNivel=arbolniveles.filter(function(el){return el.Nivel==='2' && el.ID_Padre === elemento.ID  })
-
-                            angular.forEach(arraySegundoNivel,function(elementoNiveldos,index){     
-                                let itemSegundonivel={"text":elementoNiveldos.ID_Description,"children":[]}  
-                                elemGeneral.children.push(itemSegundonivel)
-
-                                let arrayTercerNivel=arbolniveles.filter(function(el){return el.Nivel==='3' && el.ID_Padre === elementoNiveldos.ID  })
-                                angular.forEach(arrayTercerNivel,function(elementoNivelTres,index){     
-                                    itemSegundonivel.children.push({"text":elementoNivelTres.ID_Description })
-                                })
-                            })
-                            generalInfo.push(elemGeneral)
-                        })
-
-                        $scope.filtrosGeneral.turnosdisponibles=[{'id':1,'descripcion' :'Matutino'},{'id':2,'descripcion' :'Vespertino'} ]
-                        console.log($scope.filtrosGeneral)
-                       // $scope.datafiltersArbol.push({"text":"Total play","children":generalInfo})
-                       $('#jstree-proton-3').jstree({
-                            'plugins': ["wholerow", "checkbox"],
-                            'core': {
-                            'data': [{"text":"TOTAL PLAY","children":generalInfo}],
-                            'themes': {
-                                'name': 'proton',
-                                'responsive': true,
-                                "icons":false
-
-                            }
-                            }
-                        });
-                    
-                        //swal.close();
-                    } else {
-                        //swal.close();
-                    }
-                } else {
-                    //swal.close();
-                }
-            } else {
-                //swal.close();
-            }
-        }, function error(response) {
-            //swal.close()
-        });
     }
 
     $scope.randomIntFromInterval=function() { // min and max included 
@@ -778,6 +709,14 @@ app.controller('despachoController', ['$scope', 'mainDespachoService', 'mainAler
                     if(response.data.result ){
                         console.log("######")
                         console.log(response.data.result)
+
+                        $scope.filtrosGeneral.General_filtros.filtros.map(function(e){
+                            e.checkedOpcion=true
+                            e.subfiltros.map(function(j){
+                                j.checkedOpcion=true
+                            })                            
+                            return e
+                        })
                     }else{                      
                         toastr.warning( 'No se encontraron catalogos turnos' );                
                     }
@@ -835,17 +774,43 @@ app.controller('despachoController', ['$scope', 'mainDespachoService', 'mainAler
            // swal.close()
         });
     }
-    $scope.getCatControllerrafiaGeneralDespacho=function(){
-
+    $scope.getCatControllerrafiaGeneralDespacho=function(){  
         mainDespachoService.consulCatalogoGeografiaGeneralDespacho().then(function success(response) {     
             console.log(response);            
             if (response.data !== undefined) {
                 if(response.data.respuesta ){
                     if(response.data.result ){
-                        console.log("######")
-                        console.log(response.data.result)
+                        if(response.data.result.geografia){
+                            console.log("######")
+                            console.log(response.data.result)
+                            geografia=response.data.result.geografia
+                            geografia.map((e)=>{
+                                e.parent=e.padre ==undefined ? "#" : e.padre;
+                                e.text= e.nombre;
+                                e.icon= "fa fa-globe";
+                                e.state= {
+                                  opened: false,
+                                  selected: true,
+                                }
+                                return e
+                            })                            
+                            $('#jstree-proton-3').jstree({
+                                'plugins': ["wholerow", "checkbox"],
+                                'core': {
+                                    'data': geografia,
+                                    'themes': {
+                                        'name': 'proton',
+                                        'responsive': true,
+                                        "icons":false        
+                                    }
+                                }
+                            });
+                      
+                        }else{
+                            toastr.warning( 'No se encontraron datos para la geografia' );                
+                        }                        
                     }else{                      
-                        toastr.warning( 'No se encontraron catalogos turnos' );                
+                        toastr.warning( 'No se encontraron datos para la geografia' );                
                     }
                 }else{
                     toastr.warning( response.data.resultDescripcion );                
@@ -858,7 +823,6 @@ app.controller('despachoController', ['$scope', 'mainDespachoService', 'mainAler
         });
     }
     $scope.getCatControllerTurnosDespachoPI=function(){
-
         mainDespachoService.consultarCatalogosTurnosDespachoPI().then(function success(response) {     
             console.log(response);            
             if (response.data !== undefined) {
@@ -866,6 +830,8 @@ app.controller('despachoController', ['$scope', 'mainDespachoService', 'mainAler
                     if(response.data.result ){
                         console.log("######")
                         console.log(response.data.result)
+                        $scope.filtrosGeneral.turnosdisponibles=response.data.result
+
                     }else{                      
                         toastr.warning( 'No se encontraron catalogos turnos' );                
                     }
@@ -905,19 +871,16 @@ app.controller('despachoController', ['$scope', 'mainDespachoService', 'mainAler
     $scope.fechaFinFiltro=moment( FECHA_HOY_DATE ).format('DD/MM/YYYY'); 
     $scope.fechaFiltradoCalendar=moment( FECHA_HOY_DATE ).format('DD/MM/YYYY'); 
 
-    $scope.getCatControllerTurnosDespachoPI()
-
-
+    $scope.getCatControllerTurnosDespachoPI()//Consulta ok  
     $scope.getCatControlleripoOrdenConfigDespacho()
-    $scope.getCatControlleripoOrdenUsuarioDespacho()
-    $scope.getCatControllerrafiaUsuarioDespacho()
+    //$scope.getCatControlleripoOrdenUsuarioDespacho()
+    //$scope.getCatControllerrafiaUsuarioDespacho()
     $scope.getCatControllerrafiaGeneralDespacho()
-    $scope.getCatControllerstatusDespachoPI()
+    //$scope.getCatControllerstatusDespachoPI()
 
     //$scope.consultarCatalogoEstatusTecnico()
     //$scope.consultarConteoAlertasPI()
     //$scope.consultarOrdenesTrabajoAsignadasDespacho()
-    //$scope.consultarCatalogosDespacho()
     //$scope.consultarOtsPendientes()
     //$scope.consultarTecnicosDisponibiles()
     //$scope.consultarCatalogosAcciones();
