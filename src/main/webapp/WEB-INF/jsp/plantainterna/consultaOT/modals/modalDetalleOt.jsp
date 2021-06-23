@@ -1,239 +1,320 @@
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="modal-detalle-ot" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-acciones">
-          <div class="modal-content">
-              <div class="modal-header style_modal_header blue-gradient modal_header_bg" style="color: #fff;">
-                  <h5 class="modal-title">INFORMACI&Oacute;N OT <span id="ot-asignada"></span></h5>
-                  <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close" ng-click="closeModalDetalle()">
-                      <span aria-hidden="true">&times;</span>
-                  </button>
-              </div>
-              <div class="modal-body" >
-                  <div class="row">
-                      <div class="col-2">
-                          <ul class="list-group">
-                            <li class="list-group-item efecto itemGeneral active" id="informacion-ot">Detalle OT</li>
-                            <li class="list-group-item efecto itemGeneral" id="comentarios">Comentarios</li>
-                            <li class="list-group-item efecto itemGeneral" id="info_historico">Historico</li>
-                            <li class="list-group-item efecto itemGeneral" id="info_soluciones">Soluciones</li>
-                            <li class="list-group-item efecto itemGeneral" id="corte_individual">Corte Individual</li>  
-                            <li class="list-group-item efecto itemGeneral" id="info_cambio_equipo">Cambio de equipo</li>  
-                            <li class="list-group-item efecto itemGeneral" id="info_reubicacion">Reubicacion</li> 
-                            <li class="list-group-item efecto itemGeneral" id="info_red">Informaci&oacute;n red</li>
-                            <li class="list-group-item efecto itemGeneral" id="atividad_tecnico">Evidencia</li>      
-                            <li class="list-group-item efecto itemGeneral" id="trayectoria">geolocalizaci&oacute;n</li>      
-                      <!--	  <li class="list-group-item efecto itemGeneral" id="consulta_recolecciones">Recolecciones</li>      
-                          <li class="list-group-item efecto itemGeneral" id="info_cambio_plan">Cambio plan</li>  	-->
-                  </ul>
-                      </div>
-                      <div class="col-10">
-                          <div class="contenedor_detalle row" id="content-ot">
-                              <div class="col-12">
-                                  <h4 class="text-center">INFORMACI&Oacute;N OT</h4>
-                                  <hr>
-                              </div>
-                              <div class="container">
-  
-                                  <div class="info_ot_detail row justify-content-center">
-                                      <div class="col-md-6">
-                                          <b class="title_span title_info_ot"> OT:</b> &nbsp;
-                                          <span id="ota-ot" class="content_info_ot"> </span>	
-                                      </div>
-                                      <div class="col-md-6">
-                                          <b class="title_span title_info_ot"> CUENTA:</b> &nbsp;
-                                          <span id="ota-cuenta" class="content_info_ot"> </span>
-                                      </div>
-                                  </div>
-                                  <div class="info_ot_detail row justify-content-center">
-                                      <div class="col-md-6">
-                                          <b class="title_span title_info_ot">OS:</b> &nbsp;
-                                          <span id="ota-os" class="content_info_ot"> </span>	
-                                      </div>
-                                      <div class="col-md-6">
-                                          <b class="title_span title_info_ot"> CLIENTE:</b> &nbsp;
-                                          <span id="ota-cliente" class="content_info_ot"> </span>
-                                      </div>
-                                  </div>
-                                  <div class="info_ot_detail row justify-content-center">
-                                      <div class="col-md-6">
-                                          <b class="title_span title_info_ot"> ESTADO DE LA OT:</b> &nbsp;
-                                          <span id="ota-estado" class="content_info_ot"> </span>	
-                                      </div>
-                                      <div class="col-md-6">
-                                          <b class="title_span title_info_ot"> CONTACTO:</b> &nbsp;
-                                          <span id="ota-contacto" class="content_info_ot"> </span>
-                                      </div>
-                                  </div>
-                                  <div class="info_ot_detail row justify-content-center">
-                                      <div class="col-md-6">
-                                          <b class="title_span title_info_ot">HORA:</b> &nbsp;
-                                          <span id="ota-fecha" class="ota-paquete"> </span>	
-                                      </div>
-                                      <div class="col-md-6">
-                                          <b class="title_span title_info_ot">REFERENCIA:</b> &nbsp;
-                                          <span id="ota-referencia" class="content_info_ot"> </span>
-                                      </div>
-                                  </div>
-                                  <div class="info_ot_detail row justify-content-center">
-  
-                                  </div>
-                                  <div class="info_ot_detail row justify-content-center">
-                                      <div class="col-md-6">
-                                          <b class="title_span title_info_ot">SUB-INTERVENCI&Oacute;N:</b> &nbsp;
-                                          <span id="ota-subtipo" class="content_info_ot"> </span>	
-                                      </div>
-                                      <div class="col-md-6">
-                                          <b class="title_span title_info_ot"> ENTRE CALLES:</b> &nbsp; 
-                                          <span id="ota-calles" class="content_info_ot"> </span>
-                                      </div>
-                                  </div>
-                                  <div class="info_ot_detail row justify-content-center">
-                                      <div class="col-md-6">
-                                          <b class="title_span title_info_ot">PAQUETE:</b> &nbsp; 
-                                          <span id="ota-paquete" class="content_info_ot"> </span>	
-                                      </div>
-                                      <div class="col-md-6">
-                                          <b class="title_span title_info_ot"> TEL&Eacute;FONO:</b> &nbsp;
-                                          <span id="ota-telefono1" class="content_info_ot"> </span>
-                                      </div>
-                                  </div>
-                                  <div class="info_ot_detail row">
-                                      <div class="col-md-6">
-                                          <b class="title_span title_info_ot"> TEL&Eacute;FONO CONTACTO:</b> &nbsp;
-                                          <span id="ota-telefono2" class="content_info_ot"> </span>
-                                      </div>
-                                  </div>
-                                  <div class="info_ot_detail row ">
-                                      <div class="col-md-12">
-  
-                                          <b class="title_span title_info_ot"> DIRECCI&Oacute;N:</b> &nbsp;
-                                          <span id="ota-direccion" class="content_info_ot"> </span>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="contenedor_detalle row" id="content-comentarios">
-                              <div class="col-12">
-                                  <h4 class="text-center">COMENTARIOS</h4>
-                                  <hr>
-                              </div>
-                              <div class="container">
-                                 <jsp:include page="../contentTap/modalChat.jsp"></jsp:include>
-                              </div>
-                          </div>
-                          <div class="contenedor_detalle row" id="content-historico">
-                              <div class="col-12">
-                                  <h4 class="text-center">HISTORICO</h4>
-                                  <hr>
-                              </div>
-                              <div class="container">
-                                  <jsp:include page="../contentTap/modalHistorico.jsp"></jsp:include>
-                              </div>
-                          </div>
-                            <div class="contenedor_detalle row" id="content-soluciones">
-                                  <div class="col-12">
-                                      <h4 class="text-center">Soluciones</h4>
-                                      <hr>
-                                  </div>
-                                      <div class="container-fluid">
-                                          <input type="text" style="display:none;" id="Falla">
-                                          <input type="text" style="display:none;" id="Descripci&oacute;n Falla">
-                                          <input type="text" style="display:none;" id="Comentarios">
-                                        <div  class="row">
-                                          <div id="contenido_fallas_tabs" class="col-md-12">
-                                              <ul id="headers_tab" class="nav nav-tabs" id="myTab" role="tablist">
-                                                <li class="nav-item">
-                                                  <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">#1</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                  <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">#2</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                  <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">#3</a>
-                                                </li>
-                                              </ul>
-                                              <div id="content_tabs" class="tab-content" id="myTabContent">
-                                                  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>
-                                                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
-                                                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
-                                              </div>
-                                          </div>
-                                      </div>
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    id="modal-detalle-ot" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="color: grey;">Detalle de la Orden <span id="ot-asignada"></span></h5>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div style="padding-left: 0;" class="col-2">
+                            <div class="nav flex-column nav-tabs text-center" id="v-tabs-tab-detalle-ot" role="tablist" aria-orientation="vertical" >
+                                <li class="nav-link active" id="informacion-ot">Informaci&oacute;n</li>
+                                <li class="nav-link" id="info_historico">Hist&oacute;rico</li>
+                                <li class="nav-link" id="comentarios">Mensajer&iacute;a</li>
+                                <li class="nav-link" id="acciones">Acciones</li>
+                            </div>
+                        </div>
+                        <div class="col-10">
+                            <div class="contenedor_detalle row" id="content-ot">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="container-fluid ot-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-ot">OT</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-ot"></span> </div>
+                                        </div>
+                                        <div class="container-fluid ot-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-ot">OS</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-os"></span> </div>
+                                        </div>
+                                        <div class="container-fluid ot-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Estatus</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-estatus"></span> </div>
+                                        </div>
+                                        <div class="container-fluid ot-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Estado</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-estado"></span> </div>
+                                        </div>
+                                        <div class="container-fluid ot-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Motivo</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-motivo"></span> </div>
+                                        </div>
+                                        <div class="container-fluid ot-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Intervenci&oacute;n</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-intervencion"></span> </div>
+                                        </div>
+                                        <div class="container-fluid ot-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Subintervenci&oacuten</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-subtipo"></span> </div>
+                                        </div>
+                                        <div class="container-fluid ot-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Paquete</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-paquete"></span> </div>
+                                        </div>
                                     </div>
-                              </div>			
-                          <div class="contenedor_detalle row" id="content_corte_individual">
-                              <div class="col-12">
-                                  <h4 class="text-center">Corte individual</h4>
-                                  <hr>
-                              </div>
-                              <div class="container">
-                                  <%-- <jsp:include page="../contentTap/corteIndividual.jsp"></jsp:include> --%>
-                              </div>
-                          </div>		
-                          <div class="contenedor_detalle row" id="content_cambio_equipo">
-                              <div class="col-12">
-                                  <h4 class="text-center">Cambio Equipo</h4>
-                                  <hr>
-                              </div>
-                              <div class="container">
-                                  <jsp:include page="../contentTap/cambioEquipo.jsp"></jsp:include>
-                              </div>
-                          </div>	
-                          <div class="contenedor_detalle row" id="content_reubicacion">
-                              <div class="col-12">
-                                  <h4 class="text-center">Reubicacion</h4>
-                                  <hr>
-                              </div>
-                              <div class="container">
-                                  <%-- <jsp:include page="../contentTap/reubicacion.jsp"></jsp:include> --%>
-                              </div>
-                          </div>		
-                          <div class="contenedor_detalle row" id="content_cambio_plan">
-                              <div class="col-12">
-                                  <h4 class="text-center">Cambio Plan</h4>
-                                  <hr>
-                              </div>
-                              <div class="container">
-                                  <%-- <jsp:include page="../contentTap/cambio_plan.jsp"></jsp:include> --%>
-                              </div>
-                          </div>		
-                          <div class="contenedor_detalle row" id="content_informacion_red">
-                              <div class="col-12 content_style_info_red">
-                                  <h4 class="text-center">INFORMACI&Oacute;N RED</h4><hr>
-                                  <div class="container">
-                                      <jsp:include page="../contentTap/informacionRed.jsp"></jsp:include>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="contenedor_detalle row" id="content_actividad">
-                              <div class="col-12">
-                                  <h4 class="text-center">Evidencia</h4><hr>
-                                  <div class="container">
-                                      <jsp:include page="../contentTap/actividadTecnico.jsp"></jsp:include>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="contenedor_detalle row" id="content_trayectoria">
-                              <div class="col-12">
-                                  <h4 class="text-center">Geolocalizaci&oacute;n</h4><hr>
-                                  <div class="container">
-                                      <jsp:include page="../contentTap/geolocalizacion.jsp"></jsp:include>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="contenedor_detalle row" id="content_recoleccion_materiales">
-                              <div class="col-12">
-                                  <h4 class="text-center">Recoleccion</h4><hr>
-                                  <div class="container">
-                                      <%-- <jsp:include page="../contentTap/consultaRecolecciones.jsp"></jsp:include> --%>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <div class="modal-footer">
-                  <button type="button" id="btnCerrar" class="btn btn-blue-grey close-modal btn_cerrar_modal" data-dismiss="modal" ng-click="closeModalDetalle()">Cerrar</button>
-              </div>
-          </div>
-      </div>
-  </div>
+                                    <div class="col-6">
+                                        <div class="container-fluid ot-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Cuenta</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-cuenta"></span> </div>
+                                        </div>
+                                        <div class="container-fluid ot-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Cliente</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-cliente"></span> </div>
+                                        </div>
+                                        <div class="container-fluid ot-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Contacto</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-contacto"></span> </div>
+                                        </div>
+                                        <div class="container-fluid ot-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Fecha</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-fecha"></span> </div>
+                                        </div>
+                                        <div class="container-fluid ot-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Referencia</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-referencia"></span> </div>
+                                        </div>
+                                        <div class="container-fluid ot-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Entre calles</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-calles"></span> </div>
+                                        </div>
+                                        <div class="container-fluid ot-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Tel&eacute;fono</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-telefono1"></span> </div>
+                                        </div>
+                                        <div class="container-fluid ot-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Contacto</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-telefono2"></span> </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="container-fluid ot-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Direcci&oacute;n</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-direccion"></span> </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <br>
+                            </div>
+                            <div class="contenedor_detalle row" id="content-comentarios">
+                                <div class="container">
+                                    <jsp:include page="../contentTap/modalChat.jsp"></jsp:include>
+                                </div>
+                            </div>
+                            <div class="contenedor_detalle row" id="content-historico">
+                                <div class="container">
+                                    <jsp:include page="../contentTap/modalHistorico.jsp"></jsp:include>
+                                </div>
+                            </div>
+                            <div class="contenedor_detalle row" id="content_acciones">
+                                <div class="col-12">
+                                    <div class="container">
+                                        <ul class="nav nav-tabs mb-3 nav-fill " id="ex1" role="tablist">
+                                            <li class="nav-item" role="presentation" id="accion1">
+                                                <a class="nav-link active" data-mdb-toggle="tab"  href="#accion-rescate-ot" >Rescate</a>
+                                            </li>
+                                            <li class="nav-item" role="presentation" id="accion2">
+                                                <a class="nav-link" data-mdb-toggle="tab" href="#accion-reagendar-ot" >Reagendar</a>
+                                            </li>
+                                            <li class="nav-item" role="presentation" id="accion3">
+                                                <a class="nav-link" data-mdb-toggle="tab" href="#accion-calendarizar-ot" >Calendarizar</a>
+                                            </li>
+                                            <li class="nav-item" role="presentation" id="accion4">
+                                                <a class="nav-link" data-mdb-toggle="tab" href="#accion-terminar-ot" >Terminar</a>
+                                            </li>        
+                                            <li class="nav-item" role="presentation" id="accion5">
+                                                <a class="nav-link" data-mdb-toggle="tab" href="#accion-desasignar-ot" >Desasignar</a>
+                                            </li>
+                                        </ul>
+                                        <!-- Tabs navs -->
+                                        
+                                        <!-- Tabs content -->
+                                        <div class="tab-content" id="ex1-content">
+                                            <div class="tab-pane fade show active" id="accion-rescate-ot" >
+                                                <div class="container container-accion">
+                                       
+                                                    <div class="row align-items-center">
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" id="icono_operario_status" class="fa fa-user-circle-o fa-2x"></i>
+                                                                <label for="id-status-tecnico">Motivo:</label>
+                                                                <select class="form-control" ng-model="elementoRescate.motivo" ng-options="motivo.Descripcion for motivo in listadoMotivosRescate">
+                                                                    <option value="">Seleccione ...</option>
+                                                                </select>                                               
+                                                              </div>
+                                                        </div>
+                                                    </div>		
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <label for="exampleTextarea">Comentario:</label>
+                                                                <textarea class="form-control" style=" resize: none" ng-model="elementoRescate.comentario" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres"  rows="3"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" style="text-align: right;">
+                                                        <div class="col-12">
+                                                            <button ng-click="enviarRescateOt()" class="btn  btn-primary">Rescate</button>
+                                                        </div>
+                                                    </div>
+                                                </div>                                     
+                                            </div>
+                                            <div class="tab-pane fade" id="accion-reagendar-ot" >
+                                                <div class="container container-accion">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o fa-2x"></i>
+                                                                <label for="fecha-reagendamiento">Fecha reagendamiento:</label>
+                                                                <input type="text" ng-model="elementReagendaOT.fechaReagendamiento" id="fecha-reagendamiento" class="form-control ">                                 
+                                                              </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row align-items-center">
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o fa-2x"></i>
+                                                                <label for="id-turno-reagenda">Turno:</label>
+                                                                <select class="form-control" id="id-turno-reagenda" ng-model="elementReagendaOT.turno" ng-options="turno.descripcion for turno in listadoTurnosAcciones">
+                                                                    <option value="">Seleccione ...</option>
+                                                                </select>                                               
+                                                              </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row align-items-center">
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o fa-2x"></i>
+                                                                <label for="id-motivo-reagenda">Motivo:</label>
+                                                                <select class="form-control" id="id-motivo-reagenda" ng-model="elementReagendaOT.motivo" ng-options="motivo.Descripcion for motivo in listadoMotivosReagenda">
+                                                                    <option value="">Seleccione ...</option>
+                                                                </select>                                               
+                                                              </div>
+                                                        </div>
+                                                    </div>		
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <label for="exampleTextarea">Comentario:</label>
+                                                                <textarea class="form-control" style=" resize: none" ng-model="elementReagendaOT.comentario" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" rows="3"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" style="text-align: right;">
+                                                        <div class="col-12">
+                                                            <button ng-click="enviarReagendamiento()"  class="btn  btn-primary">Reagendar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="accion-calendarizar-ot" >
+                                                <div class="container container-accion">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o fa-2x"></i>
+                                                                <label for="fecha-calendarizado">Fecha calendarizado:</label>
+                                                                <input type="text" id="fecha-calendarizado" ng-model="elementCalendarizado.fechaCalendarizado" class="form-control ">                                 
+                                                              </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row align-items-center">
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o fa-2x"></i>
+                                                                <label for="id-turno-calendarizado">Turno:</label>
+                                                                <select class="form-control" id="id-turno-calendarizado" ng-model="elementCalendarizado.turno" ng-options="turno.descripcion for turno in listadoTurnosAcciones">
+                                                                    <option value="">Seleccione ...</option>
+                                                                </select>                                               
+                                                              </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row align-items-center">
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o fa-2x"></i>
+                                                                <label for="id-motivo-calendarizado">Motivo:</label>
+                                                                <select class="form-control" id="id-motivo-calendarizado" ng-model="elementCalendarizado.motivo" ng-options="motivo.Descripcion for motivo in listadoMotivosCalendarizado">
+                                                                    <option value="">Seleccione ...</option>
+                                                                </select>                                               
+                                                              </div>
+                                                        </div>
+                                                    </div>		
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <label for="exampleTextarea">Comentario:</label>
+                                                                <textarea class="form-control" style=" resize: none" ng-model="elementReagendaOT.comentario" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" rows="3"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" style="text-align: right;">
+                                                        <div class="col-12">
+                                                            <button ng-click="enviarCalendarizado()"  class="btn  btn-primary">Reagendar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="accion-terminar-ot" >
+                                                <div class="container container-accion">
+                                              
+        
+                                                    <div class="row align-items-center">
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o fa-2x"></i>
+                                                                <label for="id-estado-terminar">Estado:</label>
+                                                                <select class="form-control" id="id-estado-terminar" ng-model="elementTerminar.estado" ng-options="estado.Descripcion for estado in listadoEstadosTerminado">
+                                                                    <option value="">Seleccione ...</option>
+                                                                </select>                                               
+                                                              </div>
+                                                        </div>
+                                                    </div>		
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <label for="exampleTextarea">Comentario:</label>
+                                                                <textarea class="form-control" style=" resize: none" ng-model="elementTerminar.comentario" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" rows="3"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" style="text-align: right;">
+                                                        <div class="col-12">
+                                                            <button ng-click="enviarTerminadoOT()"  class="btn  btn-primary">Terminar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="accion-desasignar-ot" >
+                                                <div class="container container-accion">                                                                                	
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <label for="exampleTextarea">Comentario:</label>
+                                                                <textarea class="form-control" style=" resize: none" ng-model="elementoDesasigna.comentario" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" rows="3"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" style="text-align: right;">
+                                                        <div class="col-12">
+                                                            <button ng-click="enviarDesasignacion()"  class="btn  btn-primary">Desasigna</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                        <!-- Tabs content -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

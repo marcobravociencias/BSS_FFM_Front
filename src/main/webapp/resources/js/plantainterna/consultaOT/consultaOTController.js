@@ -1,7 +1,7 @@
 var app = angular.module('consultaOTApp', []);
 
 app.controller('consultaOTController', ['$scope', 'consultaOTService', 'genericService', function ($scope, consultaOTService, genericService) {
-  
+
 	$("#li-consultaot-navbar").addClass('active')
 
 	$scope.all_cluster = [];
@@ -24,6 +24,7 @@ app.controller('consultaOTController', ['$scope', 'consultaOTService', 'genericS
 	let datatable_Dispositivos;
 	let dataTable_IP;
 	$scope.filtrosGeneral = [];
+	$scope.movimientos = [];
 
 	$scope.iniciarTabla = function (data) {
 		if (otTabla) {
@@ -50,7 +51,7 @@ app.controller('consultaOTController', ['$scope', 'consultaOTService', 'genericS
 			array[13] = elemento.usuario_crea.trim() ? elemento.usuario_crea : 'SIN INFORMACION'
 			array[14] = '<div class="tooltip-btn"><span onclick="consultaMaterialesOT(\'' + elemento.ot + '\'' + ',\'' + elemento.operario.trim() + '\')" class="btn-floating btn-option btn-sm btn-default waves-effect waves-light"><th><i class="icono_cons_bg fa fa-wrench" aria-hidden="true"></i></th></span></div>';
 			array[15] = '<div class="tooltip-btn"><span onclick="consultaImagenesOT(\'' + elemento.ot + '\'' + ',\'' + elemento.id_tipo + '\')" class="btn-option btn-floating btn-evidencia btn-sm btn-secondary waves-effect waves-light"><i class="icono_cons_bg fa fa-picture-o" aria-hidden="true"></i></span></div>'
-			array[16] = '<div class="tooltip-btn"><span onclick="consultaDetalleOt(\'' + elemento.ot + '\'' + ',\'' + elemento.id_tipo  + '\'' + ',\'' + elemento.id_subtipo + '\'' + ',\'' + elemento.operario.trim() + '\'' + ',\'' + elemento.equipo + '\')" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones"><i class="icono_cons_bg fa fa-list-ul" aria-hidden="true"></i></span></div>'
+			array[16] = '<div class="tooltip-btn"><span onclick="consultaDetalleOt(\'' + elemento.ot + '\'' + ',\'' + elemento.id_tipo + '\'' + ',\'' + elemento.id_subtipo + '\'' + ',\'' + elemento.operario.trim() + '\'' + ',\'' + elemento.equipo + '\')" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones"><i class="icono_cons_bg fa fa-file-text" aria-hidden="true"></i></span></div>'
 
 			viewTable.push(array);
 		});
@@ -94,7 +95,7 @@ app.controller('consultaOTController', ['$scope', 'consultaOTService', 'genericS
 		let intervencion = [];
 		let selectedElms = $('#jstree').jstree("get_selected", true);
 
-		console.log($scope.filtrosGeneral.General_filtros.filtros)
+		
 
 		$(".dropdown-menu").filter(":checked").each(function () {
 			intervencion.push($(this).val());
@@ -213,11 +214,11 @@ app.controller('consultaOTController', ['$scope', 'consultaOTService', 'genericS
 			if (response.data.respuesta) {
 				if (response.data.result.result === "0") {
 					$scope.filtrosGeneral = response.data.result.info[0];
-					$scope.filtrosGeneral.General_filtros.filtros.map(function(e){
-						e.checkedOpcion=true
-						e.subfiltros.map(function(j){
-							j.checkedOpcion=true
-						})                            
+					$scope.filtrosGeneral.General_filtros.filtros.map(function (e) {
+						e.checkedOpcion = true
+						e.subfiltros.map(function (j) {
+							j.checkedOpcion = true
+						})
 						return e
 					})
 
@@ -326,6 +327,7 @@ app.controller('consultaOTController', ['$scope', 'consultaOTService', 'genericS
 			"autoWidth": true,
 			"language": idioma_espanol_not_font,
 			"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+
 		});
 
 		$scope.consultarCatalagosPI();
@@ -338,7 +340,7 @@ app.controller('consultaOTController', ['$scope', 'consultaOTService', 'genericS
 	});
 
 
-	consultaImagenesOT = function(ot, int){
+	consultaImagenesOT = function (ot, int) {
 		let params = {
 			Id_ot: ot,
 			Id_tipo_img: '',
@@ -347,7 +349,6 @@ app.controller('consultaOTController', ['$scope', 'consultaOTService', 'genericS
 		$('.idoti').text(ot);
 		swal({ text: 'Espera un momento...', allowOutsideClick: false });
 		swal.showLoading();
-		console.log(params);
 		consultaOTService.consultaImagenesOt(JSON.stringify(params)).then(function success(response) {
 			response = arrayConsultaImagen;
 			console.log(response);
@@ -451,52 +452,52 @@ app.controller('consultaOTController', ['$scope', 'consultaOTService', 'genericS
 		$("#not_info_evidencia").show();
 	}
 
-	$(document.body).on("click",".btn_categoria_img",function(){
+	$(document.body).on("click", ".btn_categoria_img", function () {
 
-		if( $(this).hasClass('btn-blue-grey') )return false;
-	
-		var id_categoria=$.trim(  $(this).attr('attr_id_cat') );
-		var texto_btn_categoria=$.trim(  $(this).text() );
-	
-		if(id_categoria===''){
+		if ($(this).hasClass('btn-blue-grey')) return false;
+
+		var id_categoria = $.trim($(this).attr('attr_id_cat'));
+		var texto_btn_categoria = $.trim($(this).text());
+
+		if (id_categoria === '') {
 			$(".btn_categoria_img").removeClass('btn-blue-grey').addClass('btn-outline-blue-grey');
 			$("#categoria_img_0").removeClass('btn-outline-blue-grey').addClass('btn-blue-grey');
 			$(".magnific.item").show();
 			$('.imagen_content:hidden').show(400);
-			setTimeout(function() {  mostarImagenesCategoria(); }, 500);
-	
-		}else{
-			$(".btn_categoria_img").removeClass('btn-blue-grey').addClass('btn-outline-blue-grey');
-			$("#categoria_img_"+id_categoria).removeClass('btn-outline-blue-grey').addClass('btn-blue-grey');
-	
-			
-			if($(".imagen_content:visible").length > 0){
-				$(".imagen_content:visible").hide(150,"linear",function(){
-	
-					$(".magnific.item:not(.imgtipo_"+id_categoria+")").hide();
-					$(".magnific.item.imgtipo_"+id_categoria+"").show();
-	
-					 $('.content_img_'+id_categoria).show(200);
-					 //Manda function magnific popup
-					 mostarImagenesCategoria();
-				});
-			}else{
-				$(".magnific.item:not(.imgtipo_"+id_categoria+")").hide();
-				$(".magnific.item.imgtipo_"+id_categoria+"").show();
-	
-				 $('.content_img_'+id_categoria).show(200);
-				 //Manda function magnific popup
-				 mostarImagenesCategoria();
-			}
-		
-		}		
-	
-	}); 
+			setTimeout(function () { mostarImagenesCategoria(); }, 500);
 
-	let groupBy = function(xs, key) {
-		return xs.reduce(function(rv, x) {
-		  (rv[x[key]] = rv[x[key]] || []).push(x);
-		  return rv;
+		} else {
+			$(".btn_categoria_img").removeClass('btn-blue-grey').addClass('btn-outline-blue-grey');
+			$("#categoria_img_" + id_categoria).removeClass('btn-outline-blue-grey').addClass('btn-blue-grey');
+
+
+			if ($(".imagen_content:visible").length > 0) {
+				$(".imagen_content:visible").hide(150, "linear", function () {
+
+					$(".magnific.item:not(.imgtipo_" + id_categoria + ")").hide();
+					$(".magnific.item.imgtipo_" + id_categoria + "").show();
+
+					$('.content_img_' + id_categoria).show(200);
+					//Manda function magnific popup
+					mostarImagenesCategoria();
+				});
+			} else {
+				$(".magnific.item:not(.imgtipo_" + id_categoria + ")").hide();
+				$(".magnific.item.imgtipo_" + id_categoria + "").show();
+
+				$('.content_img_' + id_categoria).show(200);
+				//Manda function magnific popup
+				mostarImagenesCategoria();
+			}
+
+		}
+
+	});
+
+	let groupBy = function (xs, key) {
+		return xs.reduce(function (rv, x) {
+			(rv[x[key]] = rv[x[key]] || []).push(x);
+			return rv;
 		}, {});
 	};
 
@@ -545,14 +546,14 @@ app.controller('consultaOTController', ['$scope', 'consultaOTService', 'genericS
 		});
 	}
 
-	$scope.closeModal = function(){
+	$scope.closeModal = function () {
 		$('#modal-imagen-ot').modal('hide');
 	}
 
 	$scope.datoOt;
 	$scope.datoInt;
 	$scope.datoSubInt;
-	consultaDetalleOt = function(ot, tipo, subtipo, operario, equipo){
+	consultaDetalleOt = function (ot, tipo, subtipo, operario, equipo) {
 		$("#modal-detalle-ot").removeClass('contenedor_detalle');
 		//getDetalleOTGeneric(idOT);
 		$scope.consultaDetalleOtGeneric(ot);
@@ -561,7 +562,7 @@ app.controller('consultaOTController', ['$scope', 'consultaOTService', 'genericS
 		$('#content-comentarios').hide();
 		$('#content-historico').hide();
 		$('#content-soluciones').hide();
-		$('#content_corte_individual').hide();
+		$('#content_acciones').hide();
 		$('#content_cambio_equipo').hide();
 		$('#content_reubicacion').hide();
 		$('#content_cambio_plan').hide();
@@ -623,7 +624,7 @@ app.controller('consultaOTController', ['$scope', 'consultaOTService', 'genericS
 		}
 	}
 
-	$scope.consultaDetalleOtGeneric = function(ot){
+	$scope.consultaDetalleOtGeneric = function (ot) {
 		if (!is_consulta_info_ot) {
 			let params = {
 				Id_ot: ot
@@ -631,7 +632,7 @@ app.controller('consultaOTController', ['$scope', 'consultaOTService', 'genericS
 			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 			swal.showLoading();
 			consultaOTService.consultaInfoDetalle(JSON.stringify(params)).then(function success(response) {
-				//response = arrayDetalleOt;
+				response = arrayDetalleOt;
 				console.log(response);
 				if (response.data !== undefined) {
 					if (response.data.respuesta) {
@@ -639,10 +640,13 @@ app.controller('consultaOTController', ['$scope', 'consultaOTService', 'genericS
 							if (response.data.result.DatosGeneralesOT.OT !== undefined) {
 								$('#ota-ot').html(response.data.result.DatosGeneralesOT.OT.Id_ot);
 								$('#ota-os').html(response.data.result.DatosGeneralesOT.OT.Folio_os);
+								$('#ota-estatus').html(response.data.result.DatosGeneralesOT.OT.Status);
 								$('#ota-estado').html(response.data.result.DatosGeneralesOT.OT.Estado);
-								$('#ota-subtipo').html(response.data.result.DatosGeneralesOT.OT.Subtipo_intervencion);
+								$('#ota-motivo').html(response.data.result.DatosGeneralesOT.OT.Motivo);
+								$('#ota-subtipo').html(response.data.result.DatosGeneralesOT.OT.Tipo_instervencion);
+								$('#ota-intervencion').html(response.data.result.DatosGeneralesOT.OT.Subtipo_intervencion);
 								$('#ota-paquete').html(response.data.result.DatosGeneralesOT.OT.Paquete_instalar);
-								$('#ota-fecha').html(response.data.result.DatosGeneralesOT.OT.Hora_agenda);
+								$('#ota-fecha').html(response.data.result.DatosGeneralesOT.OT.Fecha_agenda);
 								$('#ota-cuenta').html(response.data.result.DatosGeneralesOT.OT.Num_cuenta);
 								$('#ota-cliente').html(response.data.result.DatosGeneralesOT.OT.Nombre_cliente);
 								$('#ota-contacto').html(response.data.result.DatosGeneralesOT.OT.Nombre_contacto);
@@ -674,7 +678,7 @@ app.controller('consultaOTController', ['$scope', 'consultaOTService', 'genericS
 		}
 	}
 
-	consultaMaterialesOT = function(ot, operario){
+	consultaMaterialesOT = function (ot, operario) {
 		let params = {
 			Id_OT: ot,
 			id_propietario: '1'
@@ -687,33 +691,33 @@ app.controller('consultaOTController', ['$scope', 'consultaOTService', 'genericS
 				if (response.data.respuesta) {
 					if (response.data.result !== undefined) {
 						if (response.data.result !== null) {
-							if(response.data.result.Materiales !== undefined  && !response.data.result.Materiales.length){
+							if (response.data.result.Materiales !== undefined && !response.data.result.Materiales.length) {
 								var content = '';
-								$.each(response.data.result.Materiales.Material, function(index, mat){
+								$.each(response.data.result.Materiales.Material, function (index, mat) {
 									content += '<tr>';
-									content += '<td>'+mat.Description+'</td>';
-									content += '<td>'+mat.SKU+'</td>';
-									content += '<td>'+mat.Type+'</td>';
-									content += '<td>'+mat.Unit+'</td>';
+									content += '<td>' + mat.Description + '</td>';
+									content += '<td>' + mat.SKU + '</td>';
+									content += '<td>' + mat.Type + '</td>';
+									content += '<td>' + mat.Unit + '</td>';
 									content += '</tr>';
 								});
-							}else{
-								
-								if($.isEmptyObject(response.data.result)){
-									content += '<tr><td style="text-align: center;" colspan="10">'+'Sin informacion'+'</td></tr>';
+							} else {
+
+								if ($.isEmptyObject(response.data.result)) {
+									content += '<tr><td style="text-align: center;" colspan="10">' + 'Sin informacion' + '</td></tr>';
 								}
-								$.each(response.data.result, function(index, mat){
+								$.each(response.data.result, function (index, mat) {
 									content += '<tr>';
-									content += '<td>'+mat.descripcion+'</td>';
-									content += '<td>'+mat.sku+'</td>';
-									content += '<td>'+mat.cantidad+'</td>';
-									content += '<td>'+mat.unidad_medida+'</td>';
+									content += '<td>' + mat.descripcion + '</td>';
+									content += '<td>' + mat.sku + '</td>';
+									content += '<td>' + mat.cantidad + '</td>';
+									content += '<td>' + mat.unidad_medida + '</td>';
 									content += '</tr>';
 								});
 							}
 						} else {
-							content += '<tr><td style="text-align: center;" colspan="10">'+'Sin informacion'+'</td></tr>';
-						}				
+							content += '<tr><td style="text-align: center;" colspan="10">' + 'Sin informacion' + '</td></tr>';
+						}
 						$('.idotm').text(ot);
 						$('.operariom').text(operario);
 						$('#contentmateriales').html(content);
@@ -734,7 +738,7 @@ app.controller('consultaOTController', ['$scope', 'consultaOTService', 'genericS
 		});
 	}
 
-	$scope.cerrarModalMaterial = function(){
+	$scope.cerrarModalMaterial = function () {
 		$('#modal-material-ot').modal('hide');
 	}
 
@@ -746,40 +750,45 @@ app.controller('consultaOTController', ['$scope', 'consultaOTService', 'genericS
 			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 			swal.showLoading();
 			consultaOTService.consultaComentarios(JSON.stringify(params)).then(function success(response) {
-				//response = arrayDetalleOt;
-				console.log(response);
+				response = arrayChat;
 				if (response.data !== undefined) {
-					if (response.data.respuesta) {
+					// if (response.data.respuesta) {
+					if (response.data.success) {
 						if (response.data.result.result === '0') {
 							var content_chat = "";
 							$.each(response.data.result.Comentario, function (index, valor) {
 								if (valor.Origen == "FFM APP") {
 									content_chat += '' +
-										'<div class="row">' +
-										'	<div class="col-7 offset-md-4 comentario_movil">' +
-										'		<b class="autor_comentario" style="margin-top: 0.4em"> ' + valor.Origen + ' - ' + valor.NombreCompleto + ' </b>' +
-										'		<span > ' + valor.FechaComentario + '</span>' +
-										'		<hr style="margin-top: 0em; border-top: 1px solid #cdcdd6; !important" /> ' + valor.Comentario + ' ' +
+										'<div class="chat">' +
+										'	<div class="chat-avatar">' +
+										'		<a class="avatar">' +
+										'			<i class="img-comentarios-chat android-mensaje fab fa-android"></i>' +
+										'		</a>' +
 										'	</div>' +
-										'	<div class="col-1">' +
-										'		<img class="imagen_chat" alt="web" src="./img/generic/android.png" style="width: 40px; height: 40px;">' +
+										'	<div class="chat-body">' +
+										'		<div class="chat-body">' +
+										'			<div class="chat-text">' +
+										'				<p> ' + valor.Comentario + ' </p>' +
+										'			</div>' +
+										'		</div>' +
 										'	</div>' +
-										'</div>' +
-										'<div class="col-12"><br></div>';
+										'</div>';
 								} else {
 									content_chat += '' +
-										'<div class="row">' +
-										'	<div class="col-1 icono_chat">' +
-										'		<img class="imagen_chat" alt="web" src="./img/generic/web.png" style="width: 40px; height: 40px;">' +
+										'<div class="chat chat-right">' +
+										'	<div class="chat-body">' +
+										'		<div class="chat-body">' +
+										'			<div class="chat-text">' +
+										'				<p> ' + valor.Comentario + ' </p>' +
+										'			</div>' +
+										'		</div>' +
 										'	</div>' +
-										'	<div class="col-7 comentario_web">' +
-										'		<b  class="autor_comentario" style="margin-top: 0.4em"> ' + valor.Origen + ' - ' + valor.NombreCompleto + ' </b>' +
-										'		<span>' + valor.FechaComentario + '</span>' +
-										'		<hr style="margin-top: 0em; border-top: 1px solid #cdcdd6; !important" />  ' + valor.Comentario + ' ' +
+										'	<div class="chat-avatar">' +
+										'		<a class="avatar">' +
+										'			<i class="img-comentarios-chat web-mensaje fas fa-desktop"></i>' +
+										'		</a>' +
 										'	</div>' +
-										'	<div class="col-2 text-left"></div>' +
-										'</div>' +
-										'<div class="col-12"><br></div>';
+										'</div>';
 								}
 							});
 							$('.contenedor_detalle #content-chat-ot').empty().append(content_chat);
@@ -801,7 +810,12 @@ app.controller('consultaOTController', ['$scope', 'consultaOTService', 'genericS
 		}
 	}
 
-	$scope.consultaHistoricoOt = function(){
+	$scope.getFechaFormato = function (fecha) {
+		let fechaPrueba = fecha.split('/');
+		return fechaPrueba[2] + '-' + fechaPrueba[1] + '-' + fechaPrueba[0];
+	}
+
+	$scope.consultaHistoricoOt = function () {
 		if (!is_consulta_historico) {
 			let params = {
 				IdOT: $scope.datoOt
@@ -809,90 +823,19 @@ app.controller('consultaOTController', ['$scope', 'consultaOTService', 'genericS
 			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 			swal.showLoading();
 			consultaOTService.consultaHistorico(JSON.stringify(params)).then(function success(response) {
-				//response = arrayDetalleOt;
+				response = arrayHistorico;
 				console.log(response);
 				if (response.data !== undefined) {
-					if (response.data.respuesta) {
+					// if (response.data.respuesta) {
+					if (response.data.success) {
 						if (response.data.result.result === '0') {
-							var content = '';
-							var img_sta = '';
+							// var content = '';
+							// var img_sta = '';
 							jsonm = response.data;
+							$scope.movimientos = response.data.result.Movimientos.Trackin;
 							if (response.data.result.Movimientos !== undefined && response.data.result.Movimientos.Trackin.length > 0) {
-
-								$.each(response.data.result.Movimientos.Trackin, function (index, hist) {
-
-									switch (parseInt(hist.Id_Estatus)) {
-										case 1:
-											img_sta = "fa fa-pause-circle pend";
-											break;
-										case 2:
-											img_sta = "fa fa-arrow-circle-right asig";
-											break;
-										case 3:
-											img_sta = "fa fa-hand-paper-o deten";
-											break;
-										case 4:
-											img_sta = "fa fa-check-circle term";
-											break;
-										case 5:
-											img_sta = "fa fa-times-circle cancel";
-											break;
-									}
-
-									content += '' +
-										'<div class="timeline__group">' +
-										'  <div class="timeline__box">' +
-										'    <div style="background-color:white;"  class="timeline__date">' +
-										'      <span  style="font-size: 15px !important;color:grey;" class="timeline__day">OT</span>' +
-										'      <span  style="font-size: 12px !important;" class="timeline__month">' +
-										'			<i style="width:25px;heigth:25px;font-size: 2em; color: red;" alt="PENDIENTE" class="' + img_sta + '" />' +
-										'	   </span>' +
-										'    </div>' +
-										'    <div class="timeline__post">' +
-										'      <div class="timeline__content">' +
-										'		<div class="row">' +
-										'			<div class="col-md-12">' +
-										'				<div class="row">' +
-										'					<div class="col-md-6">' +
-										'						<div class="col-md-12">' +
-										'							<b  class="title_span"> OT:</b>' +
-										'							<span id="ot_detalle" class="content_text">' + hist.OT + '</span>' +
-										'						</div>' +
-										'						<div class="col-md-12">' +
-										'							<b class="title_span"> Estado:</b>' +
-										'							<span id="ot_detalle" class="content_text">' + hist.EstadoDescripcion + '</span>' +
-										'						</div>' +
-										'						<div class="col-md-12">' +
-										'							<b class="title_span"> Descripci&oacute;n:</b>' +
-										'							<span id="ot_detalle" class="content_text">' + hist.Descripcion + '</span>' +
-										'						</div>' +
-										'					</div>' +
-										'					<div class="col-md-6">' +
-										'						<div class="col-md-12">' +
-										'							<b class="title_span"> Motivo:</b>' +
-										'							<span id="ot_detalle" class="content_text">' + hist.MotivoDescripcion + '</span>' +
-										'						</div>' +
-										'						<div class="col-md-12">' +
-										'							<b class="title_span"> Fecha:</b>' +
-										'							<span id="ot_detalle" class="content_text">' + hist.FechaModificacion + '</span>' +
-										'						</div>' +
-										'						<div class="col-md-12">' +
-										'							<b class="title_span"> Hora:</b>' +
-										'							<span id="ot_detalle" class="content_text">' + hist.HoraModificacion + '</span>' +
-										'						</div>' +
-										'					</div>' +
-										'				</div>' +
-										'			</div>' +
-										'		</div>' +
-										'      </div>' +
-										'    </div>' +
-										'  </div>' +
-										'</div>';
-								});
 								is_consulta_historico = true;
-								$('.contenedor_detalle #timeline').append(content);
-
-							} else{
+							} else {
 								mostrarMensajeWarningValidacion("No se encontraron resultados");
 							}
 							swal.close();
@@ -912,7 +855,7 @@ app.controller('consultaOTController', ['$scope', 'consultaOTService', 'genericS
 		}
 	}
 
-	$scope.consultaActividadTecnico = function(){
+	$scope.consultaActividadTecnico = function () {
 		if (!is_consulta_actividad_tecnico) {
 			let params = {
 				ID_OT: $scope.datoOt
@@ -959,7 +902,7 @@ app.controller('consultaOTController', ['$scope', 'consultaOTService', 'genericS
 		}
 	}
 
-	$scope.consultaInfoTrayectoria = function(){
+	$scope.consultaInfoTrayectoria = function () {
 		if (!is_consulta_info_trayectoria) {
 			$('#table_info_trayectoria').dataTable().fnDestroy();
 			$('#table_info_trayectoria tbody').empty();
@@ -973,38 +916,38 @@ app.controller('consultaOTController', ['$scope', 'consultaOTService', 'genericS
 				if (response.data !== undefined) {
 					if (response.data.respuesta) {
 						var ltlng = [];
-							var ubicaciones = [];
-							ubicaciones = response.data.result;
-							$.each(ubicaciones, function (index, element) {
-								$("#table_info_trayectoria tbody").append("<tr>" +
-									"<td>" + element.numEmpleado + "</td>" +
-									"<td>" + element.empleado + "</td>" +
-									"<td>" + element.estado + "</td>" +
-									"<td>" + element.fecha + "</td>" +
-									"<td>" + element.motivo + "</td>" +
-									"<td>" + element.status + "</td>" +
-									'<td onclick="mostrarUbicacion(' + '\'' + element.latitud + '\', \'' + element.longitud + '\')" style="cursor:pointer;">' + '<div class="text-center"><button type="button" class="btn btn-informacion" onclick="mostrarUbicacion(' + '\'' + element.latitud + '\', \'' + element.longitud + '\')"><i class="fa fa-eye"></i></button></div>' + "</td>" +
-									"</tr>");
-								var elemento = {};
+						var ubicaciones = [];
+						ubicaciones = response.data.result;
+						$.each(ubicaciones, function (index, element) {
+							$("#table_info_trayectoria tbody").append("<tr>" +
+								"<td>" + element.numEmpleado + "</td>" +
+								"<td>" + element.empleado + "</td>" +
+								"<td>" + element.estado + "</td>" +
+								"<td>" + element.fecha + "</td>" +
+								"<td>" + element.motivo + "</td>" +
+								"<td>" + element.status + "</td>" +
+								'<td onclick="mostrarUbicacion(' + '\'' + element.latitud + '\', \'' + element.longitud + '\')" style="cursor:pointer;">' + '<div class="text-center"><button type="button" class="btn btn-informacion" onclick="mostrarUbicacion(' + '\'' + element.latitud + '\', \'' + element.longitud + '\')"><i class="fa fa-eye"></i></button></div>' + "</td>" +
+								"</tr>");
+							var elemento = {};
 
-								if (element.Latitud !== 'NA' && element.Longitud !== 'NA') {
-									elemento.lat = parseFloat(element.latitud);
-									elemento.lng = parseFloat(element.longitud);
-									ltlng.push(elemento);
-								}
-							})
-							is_consulta_info_trayectoria = true;
+							if (element.Latitud !== 'NA' && element.Longitud !== 'NA') {
+								elemento.lat = parseFloat(element.latitud);
+								elemento.lng = parseFloat(element.longitud);
+								ltlng.push(elemento);
+							}
+						})
+						is_consulta_info_trayectoria = true;
 
-							$('#table_info_trayectoria').DataTable({
-								"paging": true,
-								"ordering": false,
-								"searching": false,
-								"info": true,
-								"sDom": '<"top"fl>rt<"bottom"pi><"clear">',
-								"language": idioma_espanol_not_font
-							  });
+						$('#table_info_trayectoria').DataTable({
+							"paging": true,
+							"ordering": false,
+							"searching": false,
+							"info": true,
+							"sDom": '<"top"fl>rt<"bottom"pi><"clear">',
+							"language": idioma_espanol_not_font
+						});
 
-							swal.close();
+						swal.close();
 					} else {
 						swal.close();
 						mostrarMensajeErrorAlert(response.data.resultDescripcion);
@@ -1017,7 +960,7 @@ app.controller('consultaOTController', ['$scope', 'consultaOTService', 'genericS
 		}
 	}
 
-	$scope.consultaInformacionRed = function(){
+	$scope.consultaInformacionRed = function () {
 		if (!is_consulta_informacion_Red) {
 
 			$("#tableInfoRedEquipo tbody").empty()
@@ -1263,7 +1206,7 @@ app.controller('consultaOTController', ['$scope', 'consultaOTService', 'genericS
 		}
 	}
 
-	$scope.consultaCambioEquipo = function(){
+	$scope.consultaCambioEquipo = function () {
 		if (!is_consulta_info_trayectoria) {
 			$('#table_info_trayectoria').dataTable().fnDestroy();
 			$('#table_info_trayectoria tbody').empty();
@@ -1336,10 +1279,12 @@ app.controller('consultaOTController', ['$scope', 'consultaOTService', 'genericS
 		}
 	}
 
-	
 
-	document.getElementById('comentarios').addEventListener('click', function(){
-		$("#modal-detalle-ot .itemGeneral").removeClass('active')
+
+	document.getElementById('comentarios').addEventListener('click', function () {
+		$("#informacion-ot").removeClass('active')
+		$("#info_historico").removeClass('active')
+		$("#acciones").removeClass('active')
 		$('.contenedor_detalle').hide();
 
 		$('#comentarios').addClass('active');
@@ -1348,7 +1293,9 @@ app.controller('consultaOTController', ['$scope', 'consultaOTService', 'genericS
 	});
 
 	document.getElementById('informacion-ot').addEventListener('click', function () {
-		$("#modal-detalle-ot .itemGeneral").removeClass('active')
+		$("#comentarios").removeClass('active')
+		$("#info_historico").removeClass('active')
+		$("#acciones").removeClass('active')
 		$('.contenedor_detalle').hide();
 
 		$('#informacion-ot').addClass('active');
@@ -1357,7 +1304,9 @@ app.controller('consultaOTController', ['$scope', 'consultaOTService', 'genericS
 	});
 
 	document.getElementById('info_historico').addEventListener('click', function () {
-		$("#modal-detalle-ot .itemGeneral").removeClass('active')
+		$("#comentarios").removeClass('active')
+		$("#informacion-ot").removeClass('active')
+		$("#acciones").removeClass('active')
 		$('.contenedor_detalle').hide();
 
 		$('#info_historico').addClass('active');
@@ -1366,47 +1315,26 @@ app.controller('consultaOTController', ['$scope', 'consultaOTService', 'genericS
 	});
 
 
-	document.getElementById('info_red').addEventListener('click', function () {
-		$("#modal-detalle-ot .itemGeneral").removeClass('active')
+	document.getElementById('acciones').addEventListener('click', function () {
+		$("#comentarios").removeClass('active')
+		$("#informacion-ot").removeClass('active')
+		$("#info_historico").removeClass('active')
 		$('.contenedor_detalle').hide();
 
-		$('#info_red').addClass('active');
-		$("#content_informacion_red").show();
-		$scope.consultaInformacionRed()
-	});
-
-	document.getElementById('atividad_tecnico').addEventListener('click', function () {
-		$("#modal-detalle-ot .itemGeneral").removeClass('active')
-		$('.contenedor_detalle').hide();
-
-		$('#atividad_tecnico').addClass('active');
-		$("#content_actividad").show();
-		$scope.consultaActividadTecnico();
-	});
-
-	document.getElementById('trayectoria').addEventListener('click', function () {
-		$("#modal-detalle-ot .itemGeneral").removeClass('active')
-		$('.contenedor_detalle').hide();
-
-		$('#trayectoria').addClass('active');
-		$('#content_trayectoria').show();
-		$scope.consultaInfoTrayectoria();
-	});
-
-	document.getElementById('info_cambio_equipo').addEventListener('click', function () {
-		$("#modal-detalle-ot .itemGeneral").removeClass('active')
-		$('.contenedor_detalle').hide();
-
-		$('#info_cambio_equipo').addClass('active');
-		$('#content_cambio_equipo').show();
-		$scope.consultaCambioEquipo();
+		$('#acciones').addClass('active');
+		$("#content_acciones").show();
+		// $scope.consultaInformacionRed()
 	});
 
 	$('#modal-detalle-ot').on('hidden.bs.modal', function () {
-		limpiarVariablesModalDetalle();	
-	 })
+		limpiarVariablesModalDetalle();
+		$("#informacion-ot").addClass('active')
+		$("#info_historico").removeClass('active')
+		$("#comentarios").removeClass('active')
+		$("#acciones").removeClass('active')
+	})
 
-	 limpiarVariablesModalDetalle = function(){
+	limpiarVariablesModalDetalle = function () {
 		is_consulta_info_ot = false;
 		is_consulta_comentarios = false;
 		is_consulta_historico = false;
@@ -1415,20 +1343,25 @@ app.controller('consultaOTController', ['$scope', 'consultaOTService', 'genericS
 		is_consulta_cambio_equipo = false;
 		is_consulta_reubicacion = false;
 		is_consulta_cambio_plan = false;
-		is_consulta_potencia= false;
+		is_consulta_potencia = false;
 		is_consulta_equipos = false;
 		is_consulta_dispositivos = false;
 		is_consulta_ip = false;
-		is_consulta_informacion_Red=false;
-		is_consulta_actividad_tecnico=false;
+		is_consulta_informacion_Red = false;
+		is_consulta_actividad_tecnico = false;
+		$("#info_historico").removeClass('active')
+		$("#comentarios").removeClass('active')
+		$("#acciones").removeClass('active')
+		$("#informacion-ot").addClass('active')
 	}
 
-	$scope.closeModalDetalle = function(){
+	$scope.closeModalDetalle = function () {
 		$('#modal-detalle-ot').modal('hide')
+		$("#info_historico").removeClass('active')
+		$("#comentarios").removeClass('active')
+		$("#acciones").removeClass('active')
+		$("#informacion-ot").addClass('active')
 	}
 
-	$scope.getFechaFormato = function(fecha){
-		let fechaPrueba = fecha.split('/');
-		return fechaPrueba[2] + '-' + fechaPrueba[1] + '-' + fechaPrueba[0];
-	}
+
 }])

@@ -143,7 +143,7 @@
                         <!-- <th>USUARIO CREA</th> -->
                         <th><i class="fa fa-wrench" id="herramienta"></i></th>
                         <th><i class="fa fa-picture-o" id="muestra_IMG"></i></th>
-                        <th><i class="fa fa-list-ul" id="modalDetalleOT"></i></th>
+                        <th><i class="fa fa-file-text" id="modalDetalleOT"></i></th>
                     </tr>
                 </thead>
                 <tbody>
