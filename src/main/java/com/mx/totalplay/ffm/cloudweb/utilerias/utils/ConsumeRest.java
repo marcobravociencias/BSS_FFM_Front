@@ -136,6 +136,39 @@ public class ConsumeRest {
 		}		
 	}
 	/**
+	 * @param url 
+	 * @param params 
+	 * @param classConversion
+	 * @return
+	 */
+	public ServiceResponseResult callPatchBearerTokenRequest( String params,String urlRequest, Class<?> classConversion,String token) {
+		ServiceResponseResult response=ServiceResponseResult.builder().isRespuesta(false).resultDescripcion("Sin datos").build();
+		ResponseEntity<String> responseEntity = null;
+		try {
+			HttpHeaders headers = new HttpHeaders();
+			headers.set(HttpHeaders.ACCEPT, 		MediaType.APPLICATION_JSON_VALUE);
+			headers.set(HttpHeaders.CONTENT_TYPE,	MediaType.APPLICATION_JSON_VALUE);		    
+			headers.set(HttpHeaders.AUTHORIZATION ,"Bearer " + token);
+			HttpEntity<String> request = new HttpEntity<>(headers);	
+			responseEntity=restTemplate.exchange(urlRequest, HttpMethod.PATCH, request, String.class);
+			String bodyResponse = responseEntity.getBody();
+			logger.info("--- RESPONSE ---");
+			logger.info(bodyResponse);
+			Object result  =  gson.fromJson(bodyResponse, Object.class); 
+			response = ServiceResponseResult.builder()
+											.isRespuesta(true)
+											.resultDescripcion("Accion completada")
+											.result(result)
+											.build();
+		}catch(Exception e) {
+			logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO"+ e.getMessage());	
+			response.setResultDescripcion( e.getMessage() );
+			
+		}
+		return response;
+		
+	}
+	/**
 	 * 
 	 * @param url Contieene url con parametros ejemplo /despacho/{idDespachoParam}/fecha/{fechaParam}
 	 * @param params Formato Mapa con los parametros de la url Ej {idDespachoParam}=1229
