@@ -60,5 +60,10 @@ public class PlantaInternaViewsController {
 	public String busqueda() {
 		return "plantainterna/busqueda/busqueda";
 	}
+	
+	@GetMapping("/controlVehicular")
+	public String controlVehicular() {		
+		return "plantainterna/controlVehicular/mainControlVehicular";
+	}
 }
 

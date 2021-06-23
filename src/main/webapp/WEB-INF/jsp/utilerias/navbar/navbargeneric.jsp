@@ -51,24 +51,18 @@
                         <a class="nav-link a-navlink-navbar" href="consultaOT">Consulta ot</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <i class="fas fa-bars icon-navbar-izquierda"></i>                        
-                        <a
-                            class="nav-link dropdown-toggle  a-navlink-navbar"
-                            href="#"
-                            id="navbarDropdown"
-                            role="button"
-                            data-mdb-toggle="dropdown"
-                            aria-expanded="false"
-                        >
-                            Otros
-                        </a>
-                        <!-- Dropdown menu -->
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="reportesPI">Reportes</a></li>
-                            <li><a class="dropdown-item" href="skillsAdm">Skills</a></li>
-                            <li><a class="dropdown-item" href="busqueda">Busqueda</a></li>
-                        </ul>
-                    </li>
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+                                    class="fas fa-bars icon-navbar-izquierda"></i>
+                                Otros
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="reportesPI">Reportes</a>
+                                <a class="dropdown-item" href="skillsAdm">Skills</a>
+                                <a class="dropdown-item" href="busqueda">Busqueda</a>
+                                <a class="dropdown-item" href="controlVehicular" id="li-otros-vehicular">Control de Vehiculos</a>
+                            </div>
+                        </li>
                 </ul>
          
             </div>
