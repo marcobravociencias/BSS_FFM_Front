@@ -23,8 +23,8 @@ function logwarning(mensaje){
 function logprocess(mensaje){
     console.log('%c '+mensaje,'background: #7716fa; color: white' )
 }
-app.controller('despachoController', ['$scope', 'mainDespachoService', 'mainAlertasService',
-                                       function ($scope, mainDespachoService, mainAlertasService) {
+app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mainAlertasService',
+                                       function ($scope, $q,mainDespachoService, mainAlertasService) {
     
     app.filtrosDespachoPrincipal($scope,mainDespachoService)
     app.modalDespachoPrincipal($scope,mainDespachoService)
@@ -700,36 +700,7 @@ app.controller('despachoController', ['$scope', 'mainDespachoService', 'mainAler
     }, MILISEGUNDOS_ALERTAS);
 
 
-    $scope.getCatControlleripoOrdenConfigDespacho=function(){
-
-        mainDespachoService.consultarCatalogoTipoOrdenConfigDespacho().then(function success(response) {     
-            console.log(response);            
-            if (response.data !== undefined) {
-                if(response.data.respuesta ){
-                    if(response.data.result ){
-                        console.log("######")
-                        console.log(response.data.result)
-
-                        $scope.filtrosGeneral.General_filtros.filtros.map(function(e){
-                            e.checkedOpcion=true
-                            e.subfiltros.map(function(j){
-                                j.checkedOpcion=true
-                            })                            
-                            return e
-                        })
-                    }else{                      
-                        toastr.warning( 'No se encontraron catalogos turnos' );                
-                    }
-                }else{
-                    toastr.warning( response.data.resultDescripcion );                
-                }               
-            }else{
-                toastr.error( 'Ha ocurrido un error en la consulta de turnos' );                
-            }
-        }, function error(response) {
-           // swal.close()
-        });
-    }
+    
     $scope.getCatControlleripoOrdenUsuarioDespacho=function(){
 
         mainDespachoService.consultarCatalogoTipoOrdenUsuarioDespacho().then(function success(response) {     
@@ -774,77 +745,8 @@ app.controller('despachoController', ['$scope', 'mainDespachoService', 'mainAler
            // swal.close()
         });
     }
-    $scope.getCatControllerrafiaGeneralDespacho=function(){  
-        mainDespachoService.consulCatalogoGeografiaGeneralDespacho().then(function success(response) {     
-            console.log(response);            
-            if (response.data !== undefined) {
-                if(response.data.respuesta ){
-                    if(response.data.result ){
-                        if(response.data.result.geografia){
-                            console.log("######")
-                            console.log(response.data.result)
-                            geografia=response.data.result.geografia
-                            geografia.map((e)=>{
-                                e.parent=e.padre ==undefined ? "#" : e.padre;
-                                e.text= e.nombre;
-                                e.icon= "fa fa-globe";
-                                e.state= {
-                                  opened: false,
-                                  selected: true,
-                                }
-                                return e
-                            })                            
-                            $('#jstree-proton-3').jstree({
-                                'plugins': ["wholerow", "checkbox"],
-                                'core': {
-                                    'data': geografia,
-                                    'themes': {
-                                        'name': 'proton',
-                                        'responsive': true,
-                                        "icons":false        
-                                    }
-                                }
-                            });
-                      
-                        }else{
-                            toastr.warning( 'No se encontraron datos para la geografia' );                
-                        }                        
-                    }else{                      
-                        toastr.warning( 'No se encontraron datos para la geografia' );                
-                    }
-                }else{
-                    toastr.warning( response.data.resultDescripcion );                
-                }               
-            }else{
-                toastr.error( 'Ha ocurrido un error en la consulta de turnos' );                
-            }
-        }, function error(response) {
-           // swal.close()
-        });
-    }
-    $scope.getCatControllerTurnosDespachoPI=function(){
-        mainDespachoService.consultarCatalogosTurnosDespachoPI().then(function success(response) {     
-            console.log(response);            
-            if (response.data !== undefined) {
-                if(response.data.respuesta ){
-                    if(response.data.result ){
-                        console.log("######")
-                        console.log(response.data.result)
-                        $scope.filtrosGeneral.turnosdisponibles=response.data.result
 
-                    }else{                      
-                        toastr.warning( 'No se encontraron catalogos turnos' );                
-                    }
-                }else{
-                    toastr.warning( response.data.resultDescripcion );                
-                }               
-            }else{
-                toastr.error( 'Ha ocurrido un error en la consulta de turnos' );                
-            }
-        }, function error(response) {
-           // swal.close()
-        });
-    }
+ 
     $scope.getCatControllerstatusDespachoPI=function(){
 
         mainDespachoService.consultarCatalogoEstatusDespachoPI().then(function success(response) {     
@@ -870,19 +772,98 @@ app.controller('despachoController', ['$scope', 'mainDespachoService', 'mainAler
     $scope.fechaInicioFiltro=moment( FECHA_HOY_DATE ).format('DD/MM/YYYY'); 
     $scope.fechaFinFiltro=moment( FECHA_HOY_DATE ).format('DD/MM/YYYY'); 
     $scope.fechaFiltradoCalendar=moment( FECHA_HOY_DATE ).format('DD/MM/YYYY'); 
+   
+    $scope.cargarFiltrosGeneric=function(){
+        $q.all([
+            mainDespachoService.consultarCatalogosTurnosDespachoPI() ,
+            mainDespachoService.consultarCatalogoTipoOrdenConfigDespacho(),
+            mainDespachoService.consulCatalogoGeografiaGeneralDespacho()
+        ]).then(function(results) {
+            console.log("entra de cualquier manera")
+            if (results[0].data !== undefined) {
+                if(results[0].data.respuesta ){
+                    if(results[0].data.result ){
+                        console.log("######")
+                        console.log(results[0].data.result)
+                        $scope.filtrosGeneral.turnosdisponibles=results[0].data.result
+                    }else{                      
+                        toastr.warning( 'No se encontraron catalogos turnos' );                
+                    }
+                }else{
+                    toastr.warning( results[0].data.resultDescripcion );                
+                }               
+            }else{
+                toastr.error( 'Ha ocurrido un error en la consulta de turnos' );                
+            }
 
-    $scope.getCatControllerTurnosDespachoPI()//Consulta ok  
-    $scope.getCatControlleripoOrdenConfigDespacho()
-    //$scope.getCatControlleripoOrdenUsuarioDespacho()
-    //$scope.getCatControllerrafiaUsuarioDespacho()
-    $scope.getCatControllerrafiaGeneralDespacho()
-    //$scope.getCatControllerstatusDespachoPI()
+            if (results[1].data !== undefined) {
+                if(results[1].data.respuesta ){
+                    if(results[1].data.result ){
+                        $scope.filtrosGeneral.tipoOrdenes=results[1].data.result
+                        $scope.filtrosGeneral.tipoOrdenes.map((e)=>{e.checkedOpcion=true;return e;})
+                    }else{                      
+                        toastr.warning( 'No se encontraron catalogos turnos' );                
+                    }
+                }else{
+                    toastr.warning( results[1].data.resultDescripcion );                
+                }               
+            }else{
+                toastr.error( 'Ha ocurrido un error en la consulta de tipo ordenes' );                
+            }
 
-    //$scope.consultarCatalogoEstatusTecnico()
-    //$scope.consultarConteoAlertasPI()
-    //$scope.consultarOrdenesTrabajoAsignadasDespacho()
-    //$scope.consultarOtsPendientes()
-    //$scope.consultarTecnicosDisponibiles()
-    //$scope.consultarCatalogosAcciones();
+            if (results[2].data !== undefined) {
+                if(results[2].data.respuesta ){
+                    if(results[2].data.result ){
+                        if(results[2].data.result.geografia){
+                            console.log("######")
+                            console.log(results[2].data.result)
+                            geografia=results[2].data.result.geografia
+                            geografia.map((e)=>{
+                                e.parent=e.padre ==undefined ? "#" : e.padre;
+                                e.text= e.nombre;
+                                e.icon= "fa fa-globe";
+                                e.state= {
+                                opened: false,
+                                selected: true,
+                                }
+                                return e
+                            })       
+                            $('#jstree-proton-3').bind('loaded.jstree', function(e, data) {
+                                $scope.consultarCatalogoEstatusTecnico()
+                                $scope.consultarConteoAlertasPI()
+                                $scope.consultarOrdenesTrabajoAsignadasDespacho()
+                                $scope.consultarOtsPendientes()
+                                $scope.consultarTecnicosDisponibiles()
+                                $scope.consultarCatalogosAcciones();
+                            }).jstree({
+                                'plugins': ["wholerow", "checkbox"],
+                                'core': {
+                                    'data': geografia,
+                                    'themes': {
+                                        'name': 'proton',
+                                        'responsive': true,
+                                        "icons":false        
+                                    }
+                                }
+                            });
+                    
+                        }else{
+                            toastr.warning( 'No se encontraron datos para la geografia' );                
+                        }                        
+                    }else{                      
+                        toastr.warning( 'No se encontraron datos para la geografia' );                
+                    }
+                }else{
+                    toastr.warning( results[2].data.resultDescripcion );                
+                }               
+            }else{
+                toastr.error( 'Ha ocurrido un error en la consulta de turnos' );                
+            }           
+
+        });
+    }
+    $scope.cargarFiltrosGeneric()
+
+
 
 }]);
