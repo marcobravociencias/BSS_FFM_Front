@@ -40,6 +40,25 @@ public class ImplDespachoPIService implements DespachoPIService{
 	
 	Gson gson=new Gson();
 	
+	@Override
+	public ServiceResponseResult consultarCatalogosPI(String params) {
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		
+		JsonObject login = new JsonObject();		
+		login.addProperty( env.getProperty("param.textus.pI") , constantesAmbiente.getTextIpUsuario());
+		login.addProperty( env.getProperty("param.textus.drowssaP") , constantesAmbiente.getTextCredPad());
+		login.addProperty( env.getProperty("param.textus.resU") , constantesAmbiente.getTextCredUs());	
+		
+		jsonObject.add("Login", login);
+		
+		logger.info("json object params## "+jsonObject.toString());
+		
+	    String url="http://10.216.47.89"+constDespachoPI.getFiltrosDespachoPI();
+		ServiceResponseResult response= restCaller.callPostParamString(url, jsonObject.toString());
+	    logger.info("RESULT"+gson.toJson(response));
+		return response;
+	}
+	
 	public ServiceResponseResult consultarCatalogoTipoOrdenConfigDespacho() {
 		logger.info("ImplDespachoPIService.class [metodo = consultarCatalogoTipoOrdenConfigDespacho() ]\n");
 		

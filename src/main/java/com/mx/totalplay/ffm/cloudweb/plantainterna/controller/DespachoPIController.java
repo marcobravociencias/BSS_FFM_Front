@@ -23,7 +23,12 @@ public class DespachoPIController {
 		this.despachoService=despachoService;
 	}
 	
-	
+	@PostMapping("/consultarCatalogoDesphachoPI")
+    public ServiceResponseResult consultarCatalogoDesphachoPI(@RequestBody String params) {
+		logger.info("##### CONSULTANDO CATALGOS");
+		ServiceResponseResult response = despachoService.consultarCatalogosPI(params);
+        return response;
+    }
 	@PostMapping("consulCatalogoGeografiaGeneralDespacho")
 	public ServiceResponseResult consulCatalogoGeografiaGeneralDespacho() {
 		logger.info("##### CONSULTANDO CATALOGO GEOGRAFIA GENERAL DESPACHO PI");

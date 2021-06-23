@@ -6,6 +6,7 @@ public interface DespachoPIService {
 	
 	public ServiceResponseResult consultarCatalogoTipoOrdenConfigDespacho();
 	public ServiceResponseResult consultarCatalogoTipoOrdenUsuarioDespacho();
+	public ServiceResponseResult consultarCatalogosPI(String params);
 
 	
 	public ServiceResponseResult consultarCatalogoEstatusOrden();
