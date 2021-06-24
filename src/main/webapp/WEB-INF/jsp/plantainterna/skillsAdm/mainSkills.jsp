@@ -50,7 +50,7 @@
                 	
                 	<div class="col-2 column-style-consulta">
                 		<input type="text" class="form-control input-filtro-skills form-control-sm" placeholder="BUSQUEDA" 
-                		id="text-search-cluster" ng-model="txtbusq" ng-keyup="busquedaT()">
+                		id="text-search-cluster1" ng-model="txtbusq" ng-keyup="busquedaT()">
                         
                     	
                 	
@@ -114,5 +114,5 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/skillsAdms/skillsController.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/skillsAdms/skillsService.js"></script>
-    
+     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/skillsAdms/jsonSkills.js"></script>
     </html>

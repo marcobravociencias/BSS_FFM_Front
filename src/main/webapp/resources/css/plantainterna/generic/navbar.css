@@ -110,16 +110,28 @@ h5.header-perfil-usuario {
         -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
     box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
 }
-
 .icon-navbar-izquierda {
     display: inline-block;
     /* color: #7a7f87 !important; */
     color: #9d9ea2;
-}
-.a-navlink-navbar{
-  display:inline-block
-}
-
-.ul-elementos-nav .nav-item.active .icon-navbar-izquierda {
-    color: #7716FA !important;
-}
+  }
+  .a-navlink-navbar {
+    display: inline-block;
+  }
+  
+  .ul-elementos-nav .nav-item.active .icon-navbar-izquierda {
+    color: #7716fa !important;
+  }
+  
+  .dropdown-item {
+    font-size: 0.9em !important;
+    font-family: "Montserrat" !important;
+  }
+  
+  .dropdown-item.active,
+  .dropdown-item:active {
+    color: #7716fa !important;
+    background: #fff !important;
+    font-weight: bold !important;
+  }
+  

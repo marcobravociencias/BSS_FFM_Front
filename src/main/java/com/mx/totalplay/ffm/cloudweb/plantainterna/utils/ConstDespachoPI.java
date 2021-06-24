@@ -10,6 +10,25 @@ import lombok.Data;
 public class ConstDespachoPI implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
+		
+	
+	@Value("${consultarcatalogoTipoOrdenesConfig}")
+	private String consultaCatalogoTipoOrdenConfigDespacho;
+	
+	@Value("${consultarcatalogoTipoOrdenesPorUsuario}")
+	private String consultaCatalogoTipoOrdenUsuarioDespacho;
+	
+	@Value("${consultarcatalogoEstatusOrden}")
+	private String consultaCatalogoEstatusOrdenDespacho;
+	
+	@Value("${consultarcatalogogeografiageneral}")
+	private String consultarCatalogoGeografiaGeneralPI;
+	
+	@Value("${consultarcatalogogeografiausuario}")
+	private String consultarCatalogoGeografiaUsuarioPI;
+	
+	@Value("${consultarcatalogoturnospi}")
+	private String consultarCatalogoTurnosPi;	
 	
 	@Value("${consultaoperariosasignadosdespacho}")
 	private String consultarOperariosAsignadosDespachoPI;

@@ -11,6 +11,7 @@ import org.springframework.context.annotation.PropertySources;
 	@PropertySource("classpath:plantainterna.properties"),
 	@PropertySource("classpath:generic.properties")
 })
+
 public class FfmcloudwebApplication extends SpringBootServletInitializer {
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {	

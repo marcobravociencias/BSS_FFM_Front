@@ -16,13 +16,58 @@ import com.mx.totalplay.ffm.cloudweb.utilerias.model.ServiceResponseResult;
 public class DespachoPIController {
 	private  final Logger logger = LogManager.getLogger(DespachoPIController.class.getName());
 
-	
 	private DespachoPIService despachoService;
 	
 	@Autowired
 	public DespachoPIController(DespachoPIService despachoService) {
 		this.despachoService=despachoService;
 	}
+	
+	@PostMapping("/consultarCatalogoDesphachoPI")
+    public ServiceResponseResult consultarCatalogoDesphachoPI(@RequestBody String params) {
+		logger.info("##### CONSULTANDO CATALGOS");
+		ServiceResponseResult response = despachoService.consultarCatalogosPI(params);
+        return response;
+    }
+	@PostMapping("consulCatalogoGeografiaGeneralDespacho")
+	public ServiceResponseResult consulCatalogoGeografiaGeneralDespacho() {
+		logger.info("##### CONSULTANDO CATALOGO GEOGRAFIA GENERAL DESPACHO PI");
+		ServiceResponseResult response = despachoService.consultarCatalogoGeografiaGeneral(  );
+        return response;
+	}
+	@PostMapping("consulCatalogoGeografiaUsuarioDespacho")
+	public ServiceResponseResult consulCatalogoGeografiaUsuarioDespacho() {
+		logger.info("##### CONSULTANDO CATALOGO GEOGRAFIA USUARIO DESPACHO PI");
+		ServiceResponseResult response = despachoService.consultarCatalogoGeografiaUsuario(  );
+        return response;
+	}		
+	@PostMapping("consultarCatalogoTipoOrdenConfigDespacho")
+	public ServiceResponseResult consultarCatalogoTipoOrdenConfigDespacho() {
+		logger.info("##### CONSULTANDO CATALOGO ESTATUS DESPACHO PI");
+		ServiceResponseResult response = despachoService.consultarCatalogoTipoOrdenConfigDespacho(  );
+        return response;
+	}		
+	@PostMapping("consultarCatalogoTipoOrdenUsuarioDespacho")
+	public ServiceResponseResult consultarCatalogoTipoOrdenUsuarioDespacho() {
+		logger.info("##### CONSULTANDO CATALOGO ESTATUS DESPACHO PI");
+		ServiceResponseResult response = despachoService.consultarCatalogoTipoOrdenUsuarioDespacho(  );
+        return response;
+	}			
+	@PostMapping("consultarCatalogoEstatusDespachoPI")
+	public ServiceResponseResult consultarCatalogoEstatusOrdenDespacho() {
+		logger.info("##### CONSULTANDO CATALOGO ESTATUS DESPACHO PI");
+		ServiceResponseResult response = despachoService.consultarCatalogoEstatusOrden(  );
+        return response;
+	}
+	
+	
+	@PostMapping("consultarCatalogoTurnosDespachoPI")
+	public ServiceResponseResult consultarCatalogoTurnosPI() {
+		logger.info("##### CONSULTANDO CATALOGO TURNO DESPACHO PI");
+		ServiceResponseResult response = despachoService.consultarCatalogoTurnosPI(  );
+        return response;
+	}
+	
 	
 	@PostMapping("consultarHistoricoDespachoOT")
 	public ServiceResponseResult consultarHistoricoDespachoOTCon(@RequestBody String params) {
@@ -48,7 +93,7 @@ public class DespachoPIController {
 	
 	@PostMapping("cambiarEstatusOrdenPI")
 	public ServiceResponseResult cambiarEstatusOrdenTrabajo(@RequestBody String params) {
-		logger.info("##### CAMBIANDO ESTATUS ORDEN TRABAJO");
+		logger.info("##### CAMBIANDO ESTATUS ORDEN TRABAJO---");
 		ServiceResponseResult response = despachoService.cambiarEstatusOrdenTrabajo( params );
         return response;
 	}
@@ -70,6 +115,7 @@ public class DespachoPIController {
 	@PostMapping("consultarOtsTrabajadasDespacho")
 	public ServiceResponseResult consultarOtsTrabajadasDespacho(@RequestBody String params) {
 		logger.info("##### CONSULTANDO OTS TRABAJADAS");
+
 		ServiceResponseResult response = despachoService.cambiarEstatusTecnicoDespachoPI( params );
         return response;
 	}
@@ -102,13 +148,7 @@ public class DespachoPIController {
         return response;
     }
 	
-	@PostMapping("/consultarCatalogoDesphachoPI")
-    public ServiceResponseResult consultarCatalogoDesphachoPI(@RequestBody String params) {
-		logger.info("##### CONSULTANDO CATALGOS");
-		ServiceResponseResult response = despachoService.consultarCatalogosPI(params);
-        return response;
-    }
-	
+
 	@PostMapping("/consultarOtsAsignadas")
 	public ServiceResponseResult consultarOrdenesAsignadas(@RequestBody String params) {				
 		logger.info("##### CONSULTANDO CATALGOS");

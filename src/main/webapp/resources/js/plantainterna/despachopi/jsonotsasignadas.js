@@ -8876,3 +8876,1014 @@ var catalogoEstatusAlerta =
 		}]
 	}
 }
+
+
+var dataarbol=[{
+	"id": "115",
+	"parent": "114",
+	"text": "SAN LUIS POTOSI",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "156",
+	"parent": "124",
+	"text": "MORELIA",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "435",
+	"parent": "73",
+	"text": "IRAPUATO",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "444",
+	"parent": "73",
+	"text": "ZACATECAS",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "451",
+	"parent": "124",
+	"text": "COLIMA",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "575",
+	"parent": "459",
+	"text": "PUERTO VALLARTA",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "596",
+	"parent": "592",
+	"text": "SUR",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "125",
+	"parent": "124",
+	"text": "GUADALAJARA",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "782",
+	"parent": "454",
+	"text": "LAZARO CARDENAS",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "785",
+	"parent": "519",
+	"text": "COZUMEL",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "464",
+	"parent": "124",
+	"text": "URUAPAN",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "793",
+	"parent": "439",
+	"text": "SAN JUAN DEL RIO",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "440",
+	"parent": "73",
+	"text": "SAN MIGUEL ALLENDE",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "520",
+	"parent": "207",
+	"text": "ISLA MUJERES",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "441",
+	"parent": "73",
+	"text": "SILAO",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "827",
+	"parent": "826",
+	"text": "TULA",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "844",
+	"parent": "436",
+	"text": "MATEHUALA",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "848",
+	"parent": "847",
+	"text": "TENANGO",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "92",
+	"parent": "73",
+	"text": "LEON",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "104",
+	"parent": "73",
+	"text": "QUERETARO",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "157",
+	"parent": "156",
+	"text": "MORELIA",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "208",
+	"parent": "207",
+	"text": "CANCUN",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "217",
+	"parent": "216",
+	"text": "MERIDA",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "572",
+	"parent": "444",
+	"text": "ZACATECAS",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "592",
+	"parent": "591",
+	"text": "CIUDAD DE MEXICO",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "804",
+	"parent": "433",
+	"text": "FRESNILLO",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "433",
+	"parent": "73",
+	"text": "FRESNILLO",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "817",
+	"parent": "441",
+	"text": "SILAO",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "538",
+	"parent": "591",
+	"text": "TULANCINGO",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "826",
+	"parent": "591",
+	"text": "TULA",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "847",
+	"parent": "591",
+	"text": "TENANGO",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "851",
+	"parent": "528",
+	"text": "VALLE DE BRAVO",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "207",
+	"parent": "1",
+	"text": "SURESTE",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "216",
+	"parent": "207",
+	"text": "MERIDA",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "434",
+	"parent": "73",
+	"text": "GUANAJUATO",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "574",
+	"parent": "456",
+	"text": "MANZANILLO",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "597",
+	"parent": "593",
+	"text": "TOLUCA",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "598",
+	"parent": "594",
+	"text": "PACHUCA",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "594",
+	"parent": "591",
+	"text": "PACHUCA",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "787",
+	"parent": "432",
+	"text": "CIUDAD VALLES",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "450",
+	"parent": "124",
+	"text": "CIUDAD GUZMAN",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "791",
+	"parent": "445",
+	"text": "APATZINGAN",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "439",
+	"parent": "73",
+	"text": "SAN JUAN DEL RIO",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "794",
+	"parent": "440",
+	"text": "SAN MIGUEL ALLENDE",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "453",
+	"parent": "124",
+	"text": "LAGOS DE MORENO",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "825",
+	"parent": "824",
+	"text": "TEPEJI",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "829",
+	"parent": "591",
+	"text": "SAN JUAN TEOTIHUACAN",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "832",
+	"parent": "535",
+	"text": "TIZAYUCA",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "852",
+	"parent": "525",
+	"text": "JALMOLONGA",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "75",
+	"parent": "74",
+	"text": "AGUASCALIENTES",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "74",
+	"parent": "73",
+	"text": "AGUASCALIENTES",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "573",
+	"parent": "451",
+	"text": "COLIMA",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "456",
+	"parent": "124",
+	"text": "MANZANILLO",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "588",
+	"parent": "517",
+	"text": "CAMPECHE",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "590",
+	"parent": "521",
+	"text": "PLAYA DEL CARMEN",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "591",
+	"parent": "1",
+	"text": "MEGACENTRO",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "796",
+	"parent": "795",
+	"text": "SAN LUIS DE LA PAZ",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "819",
+	"parent": "453",
+	"text": "LAGOS DE MORENO",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "831",
+	"parent": "532",
+	"text": "APAN",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "436",
+	"parent": "73",
+	"text": "MATEHUALA",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "528",
+	"parent": "591",
+	"text": "VALLE DE BRAVO",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "73",
+	"parent": "1",
+	"text": "BAJIO",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "105",
+	"parent": "104",
+	"text": "QUERETARO",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "571",
+	"parent": "434",
+	"text": "GUANAJUATO",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "462",
+	"parent": "124",
+	"text": "TEPIC",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "519",
+	"parent": "207",
+	"text": "COZUMEL",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "445",
+	"parent": "124",
+	"text": "APATZINGAN",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "792",
+	"parent": "465",
+	"text": "ZAMORA",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "823",
+	"parent": "538",
+	"text": "TULANCINGO",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "828",
+	"parent": "533",
+	"text": "IXMIQUILPAN",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "1",
+	"parent": "#",
+	"text": "TOTALPLAY EMPRESARIAL",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "84",
+	"parent": "83",
+	"text": "CELAYA",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "209",
+	"parent": "208",
+	"text": "CANCUN",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "459",
+	"parent": "124",
+	"text": "PUERTO VALLARTA",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "576",
+	"parent": "462",
+	"text": "TEPIC",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "518",
+	"parent": "207",
+	"text": "CHETUMAL",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "432",
+	"parent": "73",
+	"text": "CIUDAD VALLES",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "789",
+	"parent": "452",
+	"text": "LA PIEDAD",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "465",
+	"parent": "124",
+	"text": "ZAMORA",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "795",
+	"parent": "73",
+	"text": "SAN LUIS DE LA PAZ",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "438",
+	"parent": "73",
+	"text": "SALAMANCA",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "820",
+	"parent": "73",
+	"text": "SAN FRANCISCO DEL RINCON",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "824",
+	"parent": "591",
+	"text": "TEPEJI",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "535",
+	"parent": "591",
+	"text": "TIZAYUCA",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "529",
+	"parent": "591",
+	"text": "ATLACOMULCO",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "1977",
+	"parent": "1976",
+	"text": "TULUM",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "114",
+	"parent": "73",
+	"text": "SAN LUIS POTOSI",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "124",
+	"parent": "1",
+	"text": "OCCIDENTE",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "517",
+	"parent": "207",
+	"text": "CAMPECHE",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "589",
+	"parent": "518",
+	"text": "CHETUMAL",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "454",
+	"parent": "124",
+	"text": "LAZARO CARDENAS",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "790",
+	"parent": "464",
+	"text": "URUAPAN",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "818",
+	"parent": "438",
+	"text": "SALAMANCA",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "830",
+	"parent": "829",
+	"text": "SAN JUAN TEOTIHUACAN",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "846",
+	"parent": "529",
+	"text": "ATLACOMULCO",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "525",
+	"parent": "591",
+	"text": "JALMOLONGA",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "1976",
+	"parent": "207",
+	"text": "TULUM",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "83",
+	"parent": "73",
+	"text": "CELAYA",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "93",
+	"parent": "92",
+	"text": "LEON",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "570",
+	"parent": "435",
+	"text": "IRAPUATO",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "521",
+	"parent": "207",
+	"text": "PLAYA DEL CARMEN",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "595",
+	"parent": "592",
+	"text": "NORTE",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "593",
+	"parent": "591",
+	"text": "TOLUCA",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "600",
+	"parent": "125",
+	"text": "GUADALAJARA",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "788",
+	"parent": "450",
+	"text": "CIUDAD GUZMAN",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "452",
+	"parent": "124",
+	"text": "LA PIEDAD",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "805",
+	"parent": "520",
+	"text": "ISLA MUJERES",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "821",
+	"parent": "820",
+	"text": "SAN FRANCISCO DEL RINCON",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "533",
+	"parent": "591",
+	"text": "IXMIQUILPAN",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "532",
+	"parent": "591",
+	"text": "APAN",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "850",
+	"parent": "849",
+	"text": "MANINALCO",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}, {
+	"id": "849",
+	"parent": "591",
+	"text": "MANINALCO",
+	"icon": "fa fa-globe",
+	"state": {
+		"opened": false,
+		"selected": true
+	}
+}]

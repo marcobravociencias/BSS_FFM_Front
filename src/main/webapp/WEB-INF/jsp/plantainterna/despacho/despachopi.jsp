@@ -56,16 +56,16 @@
                                 <button ng-click="deseleccionarTodos()" id="ninguno_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
                             </li>     
                             <li class="elemento_menu dropdown-divider"></li>
-                            <li ng-repeat="filtro in filtrosGeneral.General_filtros.filtros " class="element-menu-filter"  class="element-menu-filter">
+                            <li ng-repeat="filtro in filtrosGeneral.tipoOrdenes " class="element-menu-filter"  class="element-menu-filter">
                                 <label  class="dropdown-item form-check-inputfiltro">
-                                    <input ng-click=setCheckIntervencion(filtro) id="filtrotext-{{filtro.ID}}" class="form-check-input" type="checkbox" ng-checked="filtro.checkedOpcion"  />
-                                    <span  for="filtrotext-{{filtro.ID}}" class="dropdown-item item-text-filtro" href="#" ng-bind="filtro.ID_Description"></span>
+                                    <input ng-click=setCheckIntervencion(filtro) id="filtrotext-{{filtro.id}}" class="form-check-input" type="checkbox" ng-checked="filtro.checkedOpcion"  />
+                                    <span  for="filtrotext-{{filtro.id}}" class="dropdown-item item-text-filtro" href="#" ng-bind="filtro.nombre"></span>
                                 </label>
                                  <ul  class="dropdown-menu">                     
                                     <li  ng-repeat="subfiltro in filtro.subfiltros" class="element-menu-filter">
                                         <label  class="dropdown-item form-check-inputfiltro">
-                                            <input ng-click=setCheckSubIntervencion(subfiltro,filtro) id="subfiltrotext-{{subfiltro.ID}}" class="form-check-input" type="checkbox" ng-checked="subfiltro.checkedOpcion"    />
-                                            <span  for="subfiltrotext-{{subfiltro.ID}}" class="dropdown-item item-text-filtro" href="#" ng-bind="subfiltro.ID_Description"></span>
+                                            <input ng-click=setCheckSubIntervencion(subfiltro,filtro) id="subfiltrotext-{{subfiltro.id}}" class="form-check-input" type="checkbox" ng-checked="subfiltro.checkedOpcion"    />
+                                            <span  for="subfiltrotext-{{subfiltro.id}}" class="dropdown-item item-text-filtro" href="#" ng-bind="subfiltro.nombre"></span>
                                         </label>
                                     </li>
                                 </ul>
@@ -80,7 +80,7 @@
                             <li ng-repeat="turno in filtrosGeneral.turnosdisponibles " class="element-menu-filter"  class="element-menu-filter">
                                 <label  class="dropdown-item form-check-inputfiltro">
                                     <input id="filtrotext-turno-{{turno.id}}" class="form-check-input" type="checkbox" value=""   checked/>
-                                    <span  for="filtrotext-turno-{{turno.ID}}" class="dropdown-item item-text-filtro" href="#" ng-bind="turno.descripcion"></span>
+                                    <span  for="filtrotext-turno-{{turno.id}}" class="dropdown-item item-text-filtro" href="#" ng-bind="turno.nombre"></span>
                                 </label>
                             </li>
                         </ul>

@@ -11,6 +11,17 @@ app.service("skillsService", function ($http) {
 			});
 		};
 		
+		this.guardarInfoTecnico=function(params){
+			return $http({
+				method: "patch",
+				url:"req/guardarSkillsTecn",
+				data:JSON.stringify(params),
+				headers:{
+					'Content-Type':'application/json'
+				}
+				
+			});
+		};
 		this.consultarCatalogosPlantaInterna=function(params){
 			return $http({
 				method: "post",
