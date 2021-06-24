@@ -760,8 +760,6 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             if (results[1].data !== undefined) {
                 if(results[1].data.respuesta ){
                     if(results[1].data.result ){
-
-                        results[1].data.result=testing_intervenciones;
                         $scope.filtrosGeneral.tipoOrdenes=$scope.realizarConversionAnidado( results[1].data.result)            
                     }else{                      
                         toastr.warning( 'No se encontraron catalogos turnos' );                
