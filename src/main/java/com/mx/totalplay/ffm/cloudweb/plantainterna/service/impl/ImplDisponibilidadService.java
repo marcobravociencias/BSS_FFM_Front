@@ -41,9 +41,7 @@ public class ImplDisponibilidadService implements DisponibilidadService {
     @Override
     public ServiceResponseResult insertarDisponibilidad(String params) {
         logger.info("ImplDisponibilidadService.class [metodo = insertarDisponibilidad() ]\n" + params);
-
-        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-
+        
         LoginResult principalDetail = utileriaGeneral.obtenerObjetoPrincipal();
         String tokenAcces = principalDetail.getAccess_token();
         logger.info("insertarDisponibilidad ##+" + tokenAcces);
@@ -82,8 +80,6 @@ public class ImplDisponibilidadService implements DisponibilidadService {
     @Override
     public ServiceResponseResult actualizarDisponibilidad(String params) {
         logger.info("ImplDisponibilidadService.class [metodo = actualizarDisponibilidad() ]\n" + params);
-
-        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
 
         LoginResult principalDetail = utileriaGeneral.obtenerObjetoPrincipal();
         String tokenAcces = principalDetail.getAccess_token();

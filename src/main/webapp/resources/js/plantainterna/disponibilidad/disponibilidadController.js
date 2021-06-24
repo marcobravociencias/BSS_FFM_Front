@@ -14,7 +14,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
     $scope.idCompanyActualizar;
     $scope.idTipoActualizar;
     $scope.idCiudadActualizar;
-    /* $scope.arrayTitulo = [
+    $scope.arrayTitulo = [
         {
             title: 'Fecha Disponibilidad',
             vista: true
@@ -43,7 +43,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             title: 'Editar',
             vista: true
         }
-    ]; */
+    ];
 
 
     app.disponibilidadCalendar($scope);
@@ -57,10 +57,10 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
 			todayHighlight: true,
 			clearBtn: true
         });
-        $('.datepicker').datepicker('update', new Date());
+        //$('.datepicker').datepicker('update', new Date());
         if (!$scope.banderaNocturno) {
             document.getElementById('nocturno_dispo').parentElement.style.display = 'none'
-            document.getElementById('theadnocturno').style.display = 'none';
+            //document.getElementById('theadnocturno').style.display = 'none';
             //document.getElementById('theadnocturnoporcentaje').style.display = 'none';
             //document.getElementById('container-nocturno').style.display = 'none';
             //document.getElementById('contenedor-editar-nocturno').style.display = 'none';
@@ -70,15 +70,25 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
         document.getElementById('arbol_disponibilidad_consulta').placeholder = 'Seleccione un geografia';
 
 
-       /*  let contenTheadDetalle = '';
+       let contenTheadDetalle = '';
         $scope.arrayTitulo.forEach(function(elemento,index){
             if (elemento.vista) {
                 contenTheadDetalle += `<th> ${elemento.title} </th>`;
             }
         });
-        $('#theadDispo').append(`<tr> ${contenTheadDetalle} </tr>`); */
+        $('#theadDispo').append(`<tr> ${contenTheadDetalle} </tr>`); 
         $('#datatable_disponibilidad').DataTable({
-            "language": idioma_espanol_not_font
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "pageLength": 10,
+            "recordsTotal": 100,
+            "info": false,
+            "autoWidth": true,
+            "data": [],
+            "language": idioma_espanol_not_font,
+            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
         });
 
         $('#Disponibilidad').addClass('active');
@@ -158,18 +168,15 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                         swal.close();
                     } else {
                         swal.close();
-                        //total_loading.finish();
                         mostrarMensajeErrorAlert('No existen intervenciones actualmente');
                     }
                 } else {
                     swal.close();
-                    //total_loading.finish();
                     mostrarMensajeErrorAlert(response.data.result.resultdescription);
                 }
 
             } else {
                 swal.close();
-                //total_loading.finish();
                 mostrarMensajeErrorAlert(response.data.resultDescripcion);
             }
         });
@@ -183,77 +190,10 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             param2: '1',
             param3: '3'
         }
-        let response = arrayIntervencion;
-        console.log(response.data)
-            if (response.data.respuesta) {
-                if (response.data.result.result === "0") {
-                    //modalClusterAgrega,modalClusterConsulta,modalClusterModifica,jstreeagrega,jstreeconsulta,jstreemodifica
-
-                    let icon_check = '';
-                    let data_arbol = [];
-                    let texto_descripcion = '';
-                    $.each(response.data.result.info[0].General_Arbol.arbol, function (index, elementoArbol) {
-                        if (elementoArbol.ID_Padre === "-1")
-                            return;
-
-                        switch (elementoArbol.Nivel) {
-                            case '0':
-                                icon_check = 'fa fa-building';
-                                break;
-                            case '1':
-                                icon_check = 'fa fa-globe';
-                                break;
-                            case '2':
-                                icon_check = 'fa fa-crosshairs';
-                                break;
-                            case '3':
-                                icon_check = 'fa fa-cubes';
-                                break;
-                            case '4':
-                                icon_check = 'fa fa-cube';
-                                break;
-                        }
-
-                        //pinta todo el arbol
-                        data_arbol.push({
-                            id: elementoArbol.ID,
-                            parent: ((elementoArbol.ID_Padre == 'nulo' || elementoArbol.ID_Padre == 'NULO' || elementoArbol.ID_Padre == '' || elementoArbol.ID_Padre == 'null') ? '#' : elementoArbol.ID_Padre),
-                            text: elementoArbol.ID_Description,
-                            icon: icon_check,
-                            Nivel: elementoArbol.Nivel
-                        });
-                    });
-
-                    $('#jstreeconsulta').jstree({
-                        'plugins': ["wholerow", "checkbox"],
-                        'core': {
-                            'data': data_arbol,
-                            'themes': {
-                                'name': 'proton',
-                                'responsive': true,
-                                "icons": false
-
-                            }
-                        }
-                    });
-
-                    $scope.consultarIntervenciones();
-                } else {
-                    swal.close();
-                    //total_loading.finish()  
-                    //mostrarMensajeWarning('No se cuenta con registros para los \u00E1rboles');
-                }
-            } else {
-                swal.close();
-                //total_loading.finish()  
-                //mostrarMensajeErrorAlertAjax(res.mensaje);
-            }
-        /* genericService.consultarCatalogo(JSON.stringify(params)).then(function success(response) {
+        genericService.consultarCatalogo(JSON.stringify(params)).then(function success(response) {
             console.log(response.data)
             if (response.data.respuesta) {
                 if (response.data.result.result === "0") {
-                    //modalClusterAgrega,modalClusterConsulta,modalClusterModifica,jstreeagrega,jstreeconsulta,jstreemodifica
-
                     let icon_check = '';
                     let data_arbol = [];
                     let texto_descripcion = '';
@@ -305,15 +245,11 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                     $scope.consultarIntervenciones();
                 } else {
                     swal.close();
-                    //total_loading.finish()  
-                    //mostrarMensajeWarning('No se cuenta con registros para los \u00E1rboles');
                 }
             } else {
                 swal.close();
-                //total_loading.finish()  
-                //mostrarMensajeErrorAlertAjax(res.mensaje);
             }
-        }); */
+        });
     }
 
     $scope.consultarCatalogoArbol();
@@ -343,15 +279,6 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                 }
             }
         }
-        /*if (company === '-1' || tipo_intervencion === '-1' || distrito_cluster === '-1') {
-            return false;
-        }*/
-
-        // let params = {
-        //     IdCiudad: distrito_cluster,
-        //     IdIntervencion: tipo_intervencion,
-        //     IdCompany: company
-        //}
 
         let params = {
             subtipoIntervencion: 1,
@@ -387,8 +314,6 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
 
 
                     document.getElementById('disponibilidad_span').innerHTML = selected_arbol;
-                    document.getElementById
-                    //$("#disponibilidad_span").text(selected_arbol.substr(0, 1) + "" + (selected_arbol.substr(1, selected_arbol.length - 1)).toLowerCase());
                     $("#intervencion_span").text(textoIntervencion.substr(0, 1) + "" + (textoIntervencion.substr(1, textoIntervencion.length - 1)).toLowerCase());
 
                     let styleHide = ''
@@ -403,9 +328,9 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                     let arrayResult = (response.data.result.dias !== undefined && response.data.result.dias !== null) ? response.data.result.dias !== undefined ? response.data.result.dias : [] : [];
                     //let arrayResult = [];
                     $('#datatable_disponibilidad tbody').empty();
-                    //let arraRow = [];
+                    let arraRow = [];
                     $.each(arrayResult, function (i, elemento) {
-                        //let array = [];
+                        let array = [];
                         let totalMatutino = 0;
                         let totalVespertino = 0;
                         let totalNocturno = 0;
@@ -426,7 +351,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                             }
                         })
 
-/*                         array[0] = elemento.fecha;
+                        array[0] = elemento.fecha;
                         array[1] = totalMatutino;
                         array[2] = totalVespertino
                         if ($scope.banderaNocturno) {
@@ -439,8 +364,8 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                             array[4] = 'BLOQUEADO';
                             array[5] = '<i class="cursorEfect edit_disponibilidad_btn fa fa-edit"></i>'
                         }
-                        arraRow.push(array); */
-                        $("#datatable_disponibilidad").append("<tr>\n\
+                        arraRow.push(array); 
+                        /*$("#datatable_disponibilidad").append("<tr>\n\
                         <td class='fecha_elem'>"+ elemento.fecha + "</td>\n\
                             <td class='cantidad_matutino'>"+ totalMatutino + "</td>\n\
                             <td class='cantidad_vespertino'>"+ totalVespertino + "</td>\n\
@@ -449,7 +374,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                             <td tag_bloque='"+ elemento.bloqueado + "' class='tipo_bloqueo_disp'>" + (elemento.bloqueado ? 'DISPONIBLE' : "BLOQUEADO") + "</td>\n\
                             <td>\n\
                             <i class='cursorEfect edit_disponibilidad_btn fa fa-edit'></i> \n\
-                    </tr>");
+                    </tr>");*/
                     });/****/
                     $('#datatable_disponibilidad').DataTable({
                         "paging": true,
@@ -460,6 +385,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                         "recordsTotal": 100,
                         "info": false,
                         "autoWidth": true,
+                        "data": arraRow,
                         "language": idioma_espanol_not_font,
                         "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
                     });
@@ -481,6 +407,8 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
    
 
     $scope.insertarDisponibilidad = function () {
+
+        console.log("*********************************");
         let nocturnoCantidad = $.trim(document.getElementById('nocturno_adddisp').value);
         let arrayTurno = [];
         let companiaInserta = $.trim(document.getElementById('compania_select').value);
@@ -745,9 +673,13 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
         document.getElementById('container-nocturno').style.display = 'block'
         document.getElementById('noctuurno_d').style.display = 'block'
         document.getElementById('container-noc').style.display = 'block'
-        document.getElementById('theadnocturno').style.display = 'block';
-        /* $('#datatable_disponibilidad tbody').empty()
+        //document.getElementById('theadnocturno').style.display = 'block';
+        
+        $('#datatable_disponibilidad tbody').empty()
         $('#theadDispo').empty();
+        //$('#datatable_disponibilidad').empty(),
+        $('#datatable_disponibilidad').dataTable().fnDestroy(true);
+        $("#container_table_disponibilidad").append('<table id="datatable_disponibilidad" class="table table table-hover table-striped"><thead id="theadDispo"></thead><tbody></tbody></table>');
         $scope.arrayTitulo.map(elemento =>{
             if (elemento.title === 'Nocturno') {
                 elemento.vista = true
@@ -762,7 +694,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
         });
         
         $('#theadDispo').append(`<tr> ${contenTheadDetalle} </tr>`);
-        $('#datatable_disponibilidad').dataTable().fnDestroy();
+
         $('#datatable_disponibilidad').DataTable({
             "paging": true,
             "lengthChange": false,
@@ -775,7 +707,11 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             "data": [],
             "language": idioma_espanol_not_font,
             "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
-        }); */
+        });
+/*         setTimeout(function()  {
+           
+        }, 1000); */
+
     }
 
     $scope.ocultarDisponibilidadNocturno = function () {
@@ -783,9 +719,13 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
         document.getElementById('container-nocturno').style.display = 'none'
         document.getElementById('noctuurno_d').style.display = 'none'
         document.getElementById('container-noc').style.display = 'none'
-        document.getElementById('theadnocturno').style.display = 'none';
-        /* $('#datatable_disponibilidad tbody').empty()
+        //document.getElementById('theadnocturno').style.display = 'none';
+        
+        $('#datatable_disponibilidad tbody').empty()
         $('#theadDispo').empty();
+        //$('#datatable_disponibilidad').empty(),
+        $('#datatable_disponibilidad').dataTable().fnDestroy(true);
+        $("#container_table_disponibilidad").append('<table id="datatable_disponibilidad" class="table table table-hover table-striped"><thead id="theadDispo"></thead><tbody></tbody></table>');
         $scope.arrayTitulo.map(elemento =>{
             if (elemento.title === 'Nocturno') {
                 elemento.vista = false
@@ -800,7 +740,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
         });
         
         $('#theadDispo').append(`<tr> ${contenTheadDetalle} </tr>`);
-        $('#datatable_disponibilidad').dataTable().fnDestroy();
+
         $('#datatable_disponibilidad').DataTable({
             "paging": true,
             "lengthChange": false,
@@ -813,7 +753,11 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             "data": [],
             "language": idioma_espanol_not_font,
             "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
-        }); */
+        });
+/*         setTimeout(function() {
+           
+        }, 1000); */
+
     }
 
     $("#modal_cluster_arbol_diponibilidad").on("hidden.bs.modal", function () {
