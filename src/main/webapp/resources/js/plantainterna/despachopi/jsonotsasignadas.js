@@ -9887,3 +9887,48 @@ var dataarbol=[{
 		"selected": true
 	}
 }]
+
+var testing_intervenciones=
+    [
+        {
+            "id": 1,
+            "nombre": "DELIVERY",
+            "nivel": 1,
+            "idPadre": 0,
+            "asignacionAutomatica": 1,
+            "horasConfirmacion": 5
+        },
+        {
+            "id": 2,
+            "nombre": "DELIVERY II ",
+            "nivel": 1,
+            "idPadre": 0,
+            "asignacionAutomatica": 1,
+            "horasConfirmacion": 5
+        }
+        ,{
+            "id": 3,
+            "nombre": "DELIVERY CHILD I ",
+            "nivel": 2,
+            "idPadre": 1,
+            "asignacionAutomatica": 1,
+            "horasConfirmacion": 5
+        }
+        ,{
+            "id": 4,
+            "nombre": "1.-DELIVERY child II ",
+            "nivel": 2,
+            "idPadre": 2,
+            "asignacionAutomatica": 1,
+            "horasConfirmacion": 5
+        }
+        ,{
+            "id": 5,
+            "nombre": "2.-DELIVERY child II ",
+            "nivel": 2,
+            "idPadre": 2,
+            "asignacionAutomatica": 1,
+            "horasConfirmacion": 5
+        }
+        
+    ]

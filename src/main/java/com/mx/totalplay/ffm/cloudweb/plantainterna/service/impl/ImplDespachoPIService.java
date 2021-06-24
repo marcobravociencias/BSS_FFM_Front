@@ -59,13 +59,13 @@ public class ImplDespachoPIService implements DespachoPIService{
 		return response;
 	}
 	
-	public ServiceResponseResult consultarCatalogoTipoOrdenConfigDespacho() {
-		logger.info("ImplDespachoPIService.class [metodo = consultarCatalogoTipoOrdenConfigDespacho() ]\n");
+	public ServiceResponseResult consultarCatalogoTipoOrdenGeneralDespacho() {
+		logger.info("ImplDespachoPIService.class [metodo = consultarCatalogoTipoOrdenGeneralDespacho() ]\n");
 		
 		
 		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
 		String tokenAcces=principalDetail.getAccess_token() ;
-		logger.info("consultarCatalogoTipoOrdenConfigDespacho ##+"+tokenAcces);							
+		logger.info("consultarCatalogoTipoOrdenGeneralDespacho ##+"+tokenAcces);							
 	    String urlRequest=principalDetail.getDireccionAmbiente().concat( constDespachoPI.getConsultaCatalogoTipoOrdenConfigDespacho() );		
 	    Map<String, String> paramsRequestGet = new HashMap<String, String>();
 		ServiceResponseResult response= restCaller.callGetBearerTokenRequest( 

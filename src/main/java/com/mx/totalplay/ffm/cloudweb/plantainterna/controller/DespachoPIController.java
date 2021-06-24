@@ -41,10 +41,10 @@ public class DespachoPIController {
 		ServiceResponseResult response = despachoService.consultarCatalogoGeografiaUsuario(  );
         return response;
 	}		
-	@PostMapping("consultarCatalogoTipoOrdenConfigDespacho")
-	public ServiceResponseResult consultarCatalogoTipoOrdenConfigDespacho() {
+	@PostMapping("consultarCatalogoTipoOrdenGeneralDespacho")
+	public ServiceResponseResult consultarCatalogoTipoOrdenGeneralDespacho() {
 		logger.info("##### CONSULTANDO CATALOGO ESTATUS DESPACHO PI");
-		ServiceResponseResult response = despachoService.consultarCatalogoTipoOrdenConfigDespacho(  );
+		ServiceResponseResult response = despachoService.consultarCatalogoTipoOrdenGeneralDespacho(  );
         return response;
 	}		
 	@PostMapping("consultarCatalogoTipoOrdenUsuarioDespacho")
