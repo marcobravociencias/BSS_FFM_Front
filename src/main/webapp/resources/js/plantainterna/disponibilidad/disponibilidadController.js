@@ -158,26 +158,19 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
     $scope.inicioDisponibilidad();
 
     $scope.consultarIntervenciones = function () {
-        disponibilidadService.consultarIntervenciones().then(function success(response) {
-            console.log(response.data);
+        genericService.consultarCatalogoIntervenciones().then(function success(response) {
+            console.log(response);
             if (response.data.respuesta) {
-                if (response.data.result.result == '0') {
-                    if (response.data.result.Intervencion.length > 0) {
-
-                        $scope.arrayIntervencion = response.data.result.Intervencion.filter(intervencion => { return intervencion.Activo === '1' });
-                        swal.close();
-                    } else {
-                        swal.close();
-                        mostrarMensajeErrorAlert('No existen intervenciones actualmente');
-                    }
+                if (response.data.result) {
+                    $scope.arrayIntervencion = response.data.result.filter(elemento => { return elemento.nivel === 1 });
+                    swal.close();
                 } else {
                     swal.close();
-                    mostrarMensajeErrorAlert(response.data.result.resultdescription);
+                    mostrarMensajeErrorAlert('No existen intervenciones actualmente');
                 }
-
             } else {
                 swal.close();
-                mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                mostrarMensajeErrorAlert(response.data.resultDescripcion)
             }
         });
     }
@@ -185,68 +178,22 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
     $scope.consultarCatalogoArbol = function () {
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
-        let params = {
-            param1: '6',
-            param2: '1',
-            param3: '3'
-        }
-        genericService.consultarCatalogo(JSON.stringify(params)).then(function success(response) {
+        genericService.consulCatalogoGeografia().then(function success(response) {
             console.log(response.data)
             if (response.data.respuesta) {
-                if (response.data.result.result === "0") {
-                    let icon_check = '';
-                    let data_arbol = [];
-                    let texto_descripcion = '';
-                    $.each(response.data.result.info[0].General_Arbol.arbol, function (index, elementoArbol) {
-                        if (elementoArbol.ID_Padre === "-1")
-                            return;
-
-                        switch (elementoArbol.Nivel) {
-                            case '0':
-                                icon_check = 'fa fa-building';
-                                break;
-                            case '1':
-                                icon_check = 'fa fa-globe';
-                                break;
-                            case '2':
-                                icon_check = 'fa fa-crosshairs';
-                                break;
-                            case '3':
-                                icon_check = 'fa fa-cubes';
-                                break;
-                            case '4':
-                                icon_check = 'fa fa-cube';
-                                break;
-                        }
-
-                        //pinta todo el arbol
-                        data_arbol.push({
-                            id: elementoArbol.ID,
-                            parent: ((elementoArbol.ID_Padre == 'nulo' || elementoArbol.ID_Padre == 'NULO' || elementoArbol.ID_Padre == '' || elementoArbol.ID_Padre == 'null') ? '#' : elementoArbol.ID_Padre),
-                            text: elementoArbol.ID_Description,
-                            icon: icon_check,
-                            Nivel: elementoArbol.Nivel
-                        });
-                    });
-
-                    $('#jstreeconsulta').jstree({
-                        'plugins': ["wholerow", "checkbox"],
-                        'core': {
-                            'data': data_arbol,
-                            'themes': {
-                                'name': 'proton',
-                                'responsive': true,
-                                "icons": false
-
-                            }
-                        }
-                    });
-
+                if (response.data.result) {
+                    if (response.data.result.geografia || response.data.result.geografia.length > 0) {
+                        
+                    } else {
+                        mostrarMensajeWarningValidacion('No existen geografias actualmente')
+                    }
                     $scope.consultarIntervenciones();
                 } else {
+                    mostrarMensajeErrorAlert(response.data.result.mensaje)
                     swal.close();
                 }
             } else {
+                mostrarMensajeErrorAlert(response.data.resultDescripcion)
                 swal.close();
             }
         });
@@ -257,31 +204,20 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
     $scope.consultaDisponibilidad = function () {
 
         let company = document.getElementById('compania_select').value;
-        let tipo_intervencion = $scope.intervencionSelect !== undefined ? $scope.intervencionSelect.ID : '-1';
+        let tipo_intervencion = $scope.intervencionSelect !== undefined ? $scope.intervencionSelect.id : 0;
         let distrito_cluster = '-1';
 
 
         let selectedElms = $('#jstreeconsulta').jstree("get_selected", true);
         let selected_arbol;
 
-        selectedElms.forEach(element => {
-            selected_arbol = element.original;
-        });
-
-        if (selected_arbol !== undefined) {
-            if ($scope.session_propietario === '16') {
-                if (selected_arbol !== undefined && selected_arbol.Nivel === '5') {
-                    distrito_cluster = selected_arbol.id;
-                }
-            } else {
-                if (selected_arbol !== undefined && selected_arbol.Nivel === '3') {
-                    distrito_cluster = selected_arbol.id;
-                }
-            }
+        if (tipo_intervencion === 0) {
+            mostrarMensajeWarningValidacion('Selecciona una intervenci&oacute;n')
+            return false;
         }
 
         let params = {
-            subtipoIntervencion: 1,
+            subtipoIntervencion: tipo_intervencion,
             geografia2: 3
         }
 
@@ -407,8 +343,6 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
    
 
     $scope.insertarDisponibilidad = function () {
-
-        console.log("*********************************");
         let nocturnoCantidad = $.trim(document.getElementById('nocturno_adddisp').value);
         let arrayTurno = [];
         let companiaInserta = $.trim(document.getElementById('compania_select').value);

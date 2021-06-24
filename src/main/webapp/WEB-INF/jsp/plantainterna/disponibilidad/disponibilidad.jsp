@@ -48,7 +48,7 @@ pageEncoding="ISO-8859-1"%>
 						class="form-control-sm input-filtro-disponibilidad form-control"
 						ng-model="intervencionSelect"
 						ng-change="intervencionSelecion()"
-						ng-options="elemento.Descripcion for elemento in arrayIntervencion" required>
+						ng-options="elemento.nombre for elemento in arrayIntervencion" required>
 						<option value="">Seleccione Intervenci&oacute;n...</option>
 					</select>
 				</div>
