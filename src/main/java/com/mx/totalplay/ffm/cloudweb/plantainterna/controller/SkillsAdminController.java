@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
+import com.mx.totalplay.ffm.cloudweb.plantainterna.service.DespachoPIService;
 import com.mx.totalplay.ffm.cloudweb.plantainterna.service.SkillsAdminService;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.ServiceResponseResult;
 
@@ -18,6 +19,8 @@ import com.mx.totalplay.ffm.cloudweb.utilerias.model.ServiceResponseResult;
 public class SkillsAdminController {
 	private final Logger logger = LogManager.getLogger(SkillsAdminController.class.getName());
 	
+
+		
 	@Autowired
 	private SkillsAdminService skillsAdmin;
 	
@@ -44,10 +47,10 @@ public class SkillsAdminController {
 		ServiceResponseResult response = skillsAdmin.consultarArbolesCiudades();
 		return response;
 	}
-	@PostMapping("/consultarCatalogoSkills")
-    public ServiceResponseResult consultarCatalogoSkills(@RequestBody String params) {
+	@PostMapping("/consultaCatalogoGeografiaGeneralDespacho")
+    public ServiceResponseResult consultarCatalogoSkills() {
 		logger.info("##### CONSULTANDO CATALGOS");
-		ServiceResponseResult response ;
-        return null;
+		ServiceResponseResult response =skillsAdmin.consultarCatalogoGeografiaGeneral();
+        return response;
     }
 }

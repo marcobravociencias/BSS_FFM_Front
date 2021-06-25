@@ -6,4 +6,6 @@ public interface SkillsAdminService {
 	public ServiceResponseResult busqueda(String params);
 	public ServiceResponseResult consultarArbolesCiudades();
 	public ServiceResponseResult guardarSkills(String params);
+	public ServiceResponseResult consultarCatalogosPI(String params);
+	public ServiceResponseResult consultarCatalogoGeografiaGeneral();
 }

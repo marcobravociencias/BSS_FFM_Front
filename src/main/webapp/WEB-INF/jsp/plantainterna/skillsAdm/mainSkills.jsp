@@ -50,7 +50,7 @@
                 	
                 	<div class="col-2 column-style-consulta">
                 		<input type="text" class="form-control input-filtro-skills form-control-sm" placeholder="BUSQUEDA" 
-                		id="text-search-cluster1" ng-model="txtbusq" ng-keyup="busquedaT()">
+                		id="text-search-cluster1" ng-model="txtbusq" ng-keyup="buscTecnico()">
                         
                     	
                 	

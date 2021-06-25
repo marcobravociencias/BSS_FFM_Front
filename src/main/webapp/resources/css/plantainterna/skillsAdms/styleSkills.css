@@ -76,8 +76,8 @@ div.dataTables_paginate li.next a:after{
   width: 100%;
   clear: both;
   border-collapse: collapse;
-  table-layout: fixed; // ***********add this
-  word-wrap:break-word; // ***********and this
+  table-layout: fixed; 
+  word-wrap:break-word; 
 }
 #tableSkillCuadrillaV2 td {
   text-align: center;
