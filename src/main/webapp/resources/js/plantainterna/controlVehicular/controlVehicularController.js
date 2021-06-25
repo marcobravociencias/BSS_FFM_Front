@@ -1,8 +1,6 @@
 var app = angular.module('controlVehicularApp', []);
 
-app.controller('controlVehicularController', ['$scope', 'controlVehicularService', 'genericService', '$filter', function ($scope, controlVehicularService, genericService, $filter) {
-	$('#li-otros-vehicular').addClass('active');
-
+app.controller('controlVehicularController', ['$scope', '$q', 'controlVehicularService', 'genericService', '$filter', function ($scope, $q, controlVehicularService, genericService, $filter) {
 
 	let vehiculoTable;
 	let dataTable = [];
@@ -12,10 +10,7 @@ app.controller('controlVehicularController', ['$scope', 'controlVehicularService
 	$scope.data = {};
 
 	$scope.init = function () {
-
-		$scope.getMarcaControlVehicular();
-		$scope.getColoresControlVehicular();
-		$scope.getSegurosControlVehicular();
+		$scope.getData();
 		$('.year').datepicker({
 			format: 'yyyy',
 			viewMode: "years",
@@ -47,51 +42,43 @@ app.controller('controlVehicularController', ['$scope', 'controlVehicularService
 			"data": dataTable,
 			"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
 		});
+
 	}
 
-	$scope.getMarcaControlVehicular = function () {
-		controlVehicularService.consultarMarcasControlVehicular().then(function success(response) {
-			if (response.data.respuesta) {
-				if (response.data.result.restulList.length > 0) {
-					$scope.data.tipoVehiculos = response.data.result.restulList;
+	$scope.getData = function () {
+		swal({ text: 'Espera un momento...', allowOutsideClick: false });
+		swal.showLoading();
+		$q.all([
+			controlVehicularService.consultarMarcasControlVehicular(),
+			controlVehicularService.consultarColoresControlVehicular(),
+			controlVehicularService.consultarSegurosControlVehicular()
+		]).then(function (results) {
+			if (results[0].data.respuesta && results[0].data.result.restulList.length > 0) {
+				$scope.data.tipoVehiculos = results[0].data.result.restulList;
+			} else {
+				toastr.warning(results[0].data.resultDescripcion);
+				swal.close();
+				return
+			}
 
-				} else {
-					//MENSAJE WARNING
-				}
+			if (results[1].data.respuesta && results[1].data.result.restulList.length > 0) {
+				$scope.data.colores = results[1].data.result.restulList;
+			} else {
+				toastr.warning(results[1].data.resultDescripcion);
+				swal.close();
+				return
 			}
-			else {
-				//MENSAJE WARNING
-			}
-		});
-	}
 
-	$scope.getColoresControlVehicular = function () {
-		controlVehicularService.consultarColoresControlVehicular().then(function success(response) {
-			if (response.data.respuesta) {
-				if (response.data.result.restulList.length > 0) {
-					$scope.data.colores = response.data.result.restulList;
-				} else {
-					//MENSAJE WARNING
-				}
-			}
-			else {
-				//MENSAJE WARNING
-			}
-		});
-	}
+			if (results[2].data.respuesta && results[2].data.result.restulList.length > 0) {
+				$scope.data.seguros = results[2].data.result.restulList;
+			} else {
+				toastr.warning(results[2].data.resultDescripcion);
+				swal.close();
+				return
 
-	$scope.getSegurosControlVehicular = function () {
-		controlVehicularService.consultarSegurosControlVehicular().then(function success(response) {
-			if (response.data.respuesta) {
-				if (response.data.result.restulList.length > 0) {
-					$scope.data.seguros = response.data.result.restulList;
-				} else {
-					//MENSAJE WARNING
-				}
 			}
-			else {
-				//MENSAJE WARNING
-			}
+			swal.close();
+
 		});
 	}
 
@@ -125,7 +112,6 @@ app.controller('controlVehicularController', ['$scope', 'controlVehicularService
 			}
 		});
 	}
-
 
 	$scope.setCheck = function (elementoInt) {
 		elementoInt.checkedOpcion = !elementoInt.checkedOpcion
@@ -167,17 +153,34 @@ app.controller('controlVehicularController', ['$scope', 'controlVehicularService
 
 	}
 
-	$scope.validateFormInsert = function () {
-		let text = "";
-		var hasNumber = /\d/;
-		var hasLetter = /[A-Za-z]/;
-
-		if ($("#linea").val() === "" || $("#linea").val() === undefined) {
-			text += "<li>Tipo, Marca y Linea de vehiculo</li>";
+	$scope.insertarVehiculo = function(){
+		if($scope.validateForm()){
+			
+		}else{
+			
 		}
 
-		if ($("#anio").val() === "" || $("#anio").val() === undefined) {
-			text += "<li>A&ntilde;o del vehiculo</li>";
+	}
+
+	$scope.modificarVehiculo = function(){
+
+	}
+
+	$scope.validateForm = function () {
+		let text = "";
+		let hasNumber = /\d/;
+		let hasLetter = /[A-Za-z]/;
+		let date = /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/i;
+		let year = /^\d{4}$/i;
+
+		let vehiculo;
+
+		if ($("#linea").val() === "" || $("#linea").val() === undefined) {
+			text += "<li>Tipo, Marca y Linea de Veh&iacute;culo</li>";
+		}
+
+		if ($("#anio").val() === "" || $("#anio").val() === undefined || !year.test($("#anio").val())) {
+			text += "<li>A&ntilde;o del Veh&iacute;culo</li>";
 		}
 
 		if ($("#numMotor").val() === "" || $("#numMotor").val() === undefined) {
@@ -192,14 +195,86 @@ app.controller('controlVehicularController', ['$scope', 'controlVehicularService
 			text += "<li>Color</li>";
 		}
 
-		if ($("#placa").val() === "" || $("#placa").val() === undefined || hasNumber.test($("#placa").val())) {
+		if ($("#placa").val() === "" || $("#placa").val() === undefined) {
 			text += "<li>Placas</li>";
+		} else {
+			if (!hasNumber.test($("#placa").val()) || !hasLetter.test($("#placa").val())) {
+				text += "<li>Placas (alfan&uacute;merico)</li>";
+			} else {
+				if ($("#tipo").val() == "1" && $("#placa").val().length < 6) {
+					text += "<li>Placas (min 6 car&aacute;cteres)</li>";
+				} else if ($("#tipo").val() == "2" && $("#placa").val().length !== 5) {
+					text += "<li>Placas (5 car&aacute;cteres)</li>";
+				}
+			}
+		}
+
+		if ($("#aseguradora").val() === "" || $("#aseguradora").val() === undefined) {
+			text += "<li>Aseguradora</li>";
+		}
+
+		if ($("#numPoliza").val() === "" || $("#numPoliza").val() === undefined) {
+			text += "<li>N&uacute;m. de Poliza</li>";
+		}
+
+		if ($("#vencimientotoPoliza").val() === "" || $("#vencimientoPoliza").val() === undefined || !date.test($("#vencimientoPoliza").val())) {
+			text += "<li>Fecha Vencimeinto Poliza</li>";
+		}
+
+		if ($("#numTarjetaC").val() === "" || $("#numTarjetaC").val() === undefined) {
+			text += "<li>N&uacute;m. de Tarjeta de Circulaci&oacute;n</li>";
+		}
+
+		if ($("#vencimientoTarjeta").val() === "" || $("#vencimientoTarjeta").val() === undefined || !date.test($("#vencimientoTarjeta").val())) {
+			text += "<li>Vencimiento Tarjeta de Circulaci&oacute;n</li>";
+		}
+
+		if ($("#numVerificacion").val() === "" || $("#numVerificacion").val() === undefined) {
+			text += "<li>N&uacute;m. de Verificaci&oacute;n</li>";
+		}
+
+		if ($("#fechaVerificacion").val() === "" || $("#fechaVerificacion").val() === undefined || !date.test($("#fechaVerificacion").val())) {
+			text += "<li>Fecha de Verificaci&oacute;n</li>";
+		}
+
+		if ($("#clavePension").val() === "" || $("#clavePension").val() === undefined) {
+			text += "<li>Clave Pensi&oacute;n</li>";
+		}
+
+		if ($("#numTarjetaG").val() === "" || $("#numTarjetaG").val() === undefined) {
+			text += "<li>N&uacute;m. de Tarjeta Gasolina</li>";
+		}
+
+		if ($("#gps").val() === "" || $("#gps").val() === undefined) {
+			text += "<li>Clave GSP</li>";
+		}
+
+		if ($("#fileLicencia").val() === "" || $("#fileLicencia").val() === undefined) {
+			text += "<li>Licencia</li>";
+		}
+
+		if ($("#fileTarjeta").val() === "" || $("#fileTarjeta").val() === undefined) {
+			text += "<li>Tarjeta Circulaci&oacute;n</li>";
+		}
+
+		if ($("#fileFoto").val() === "" || $("#fileFoto").val() === undefined) {
+			text += "<li>Foto Veh&iacute;culo</li>";
+		}
+
+		if ($("#ubicacion").val() === "" || $("#ubicacion").val() === undefined) {
+			text += "<li>Ciudad, Distrito y Ubicaci&oacute;n</li>";
+		}
+
+		if ($("#comentarios").val() === "" || $("#comentarios").val() === undefined) {
+			text += "<li>Comentarios</li>";
 		}
 
 		if (text !== "") {
-			let info = "Verifica los datos en Datos Generales: " + text;
+			let info = "Verifica los siguientes campos: " + text;
 			mostrarMensajeWarningValidacion(info);
+			return false;
+		} else {
+			return true;
 		}
-
 	}
 }]);

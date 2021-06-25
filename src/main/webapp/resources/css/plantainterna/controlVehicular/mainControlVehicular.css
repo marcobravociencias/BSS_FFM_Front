@@ -189,9 +189,10 @@ span.btn-floating.btn-sm.btn-secondary.waves-effect.waves-light.acciones {
 }
 
 .icons-filter {
-  font-size: 20px;
+  font-size: 15px;
   cursor: pointer !important;
   margin-top: 20px;
+  font-weight: bold;
 }
 
 .disponible {
@@ -199,7 +200,7 @@ span.btn-floating.btn-sm.btn-secondary.waves-effect.waves-light.acciones {
 }
 
 .asignado {
-  color: #6CCAE8;
+  color: #61cae6;
 }
 
 .noDisponible {
@@ -212,6 +213,11 @@ thead#thead_vehiculo tr th {
   text-align: center;
   font-weight: bold;
 }
+
+thead#thead_vehiculo{
+  border: 1px #ccc;
+}
+
 
 #vehiculoTable tr td {
   font-size: 0.7em;
@@ -281,9 +287,22 @@ div.dataTables_wrapper div.dataTables_length label {
   border: #000000 !important;
 }
 
+table.dataTable.no-footer {
+  border-bottom: transparent !important;
+  margin-top: 0 !important;
+}
+
+
 #msjInterno {
   display: block;
-  color: #6CCAE8;
+  color: #61cae6;
   font-style: oblique;
   font-weight: bold;
+}
+
+.custom-file-label::after{
+  font-family: FontAwesome;
+  content: "\f093";
+  color: #61cae6;
+  font-size: 14px;
 }
