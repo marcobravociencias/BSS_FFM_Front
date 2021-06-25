@@ -43,14 +43,14 @@
 	<div style="padding-left: 0;padding-right: 0;" class="content-fluid">           
             <div class="row md-form" id="filtros_config">
             <div class="col-2 column-style-consulta">
-                		<input type="text" class="form-control input-filtro-skills form-control-sm" placeholder="BUSQUEDA" 
+                		<input type="text" class="form-control input-filtro-skills form-control-sm" placeholder="Busqueda" 
                 		id="text-search-cluster1" ng-model="txtbusq" ng-keyup="busquedaT()">
                         
                     	
                 	
                 	</div>
             	<div class="col-2 column-style-consulta columna-filtro-ind">
-                        <input readonly placeholder="CL&Uacute;STER" type="text" id="cluster"
+                        <input readonly placeholder="Cl&uacute;ster" type="text" id="cluster"
                         class="input-filtro-skills form-control form-control-sm" ng-click="abrirModalGeografia()">
                     </div>
                
@@ -58,7 +58,7 @@
                 	
                 	<div class="col-2 column-style-consulta">
                 	<button class="input-group-addon" id="search-arbol-cluster" ng-click="consultarTablaCuadrillasv2()">
-                        	<i class="fa fa-search"></i> BUSCAR REGISTROS
+                        	<i class="fa fa-search"></i> Buscar registros
                         </button>
                 	</div>
                 	<div class="col-2 column-style-consulta">
@@ -79,7 +79,7 @@
         
         	<div class="row-fluid">
         	<div id="tablaSkillCuadrilla"></div>
-						<table class="display table table-hover" cellspacing="0" width="100%"  id="tableSkillCuadrillaV2">
+						<table class="stripe hover" cellspacing="0" width="100%"  id="tableSkillCuadrillaV2">
 							<thead>
 							</thead>
 							<tbody>

@@ -217,10 +217,10 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
 			//console.log(params);
 				skillsService.consultarTecnico(params).then(function success(response) {
 				//console.log(response);
-				//$scope.llenarTableDinamic(jsonIntervenciones,jsonUsuarioTest); 
-				//dataTecnicoGlobal=jsonUsuarioTest;
+				$scope.llenarTableDinamic(jsonIntervenciones,jsonUsuarioTest); 
+				dataTecnicoGlobal=jsonUsuarioTest;
 				//Cuando el servicio retorne info quitar esta linea y descomentar la sección de abajo
-				if (response.data.respuesta) {
+				/*if (response.data.respuesta) {
 					//console.log("###respuesta###",response.data.result);
 				//	console.log("p",response.data.result.usuarios);
 				//	console.log("a",jsonIntervenciones);
@@ -230,7 +230,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
 				
 				} else {
 					
-				}
+				}*/
 			});
 
 		}
@@ -328,10 +328,10 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
 						
 					})
 					let textoper=`
-						<div class=""> 
-							<div class="col-xs-2 text-left" style="float:left;margin-right: 20px; margin-top:5px;"> 
+						<div class="" style="height:35px !important"> 
+							<div class="col-xs-2 text-left" style="float:left;margin-right: 20px; margin-top:4px; margin-left:15px;"> 
 								<div style="border:.2em solid #36A9FF" class="photo-user">
-								<img style="height: 25px; width: 25px;" src="./resources/img/operario/operario.svg"></div> 
+								<img style="height: 26px; width: 27.5px;" src="./resources/img/operario/operario.svg"></div> 
 							</div> 
 							<div class="col-xs-9" style="overflow: hidden;"> 
 								<div class="row text-left" style="word-wrap: break-word;"><h5 class="nombre_tecnico">${tecnico.nombreCompleto}</h5></div> 
