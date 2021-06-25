@@ -164,7 +164,7 @@ app.disponibilidadCalendar = function ($scope) {
             }
             events = {
                 height: 800,
-                title: 'Matutino: ' + totalMatutinoEvent  + '\nVespertino: ' + totalVespertinoEvent + '\n' + TitleNocturno + '  Total: ' +  totalTurno,
+                title: 'Matutino: ' + totalMatutinoEvent  + '\nVespertino: ' + totalVespertinoEvent + '\n' + TitleNocturno + 'Total: ' +  totalTurno,
                 start: datosDisponibilidad.fecha,
                 end: datosDisponibilidad.fecha,
                 id: index,

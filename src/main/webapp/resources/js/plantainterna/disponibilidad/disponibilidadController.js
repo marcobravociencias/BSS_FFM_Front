@@ -135,26 +135,31 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
         $(document.body).on("click", ".edit_capacidad_btn", function () {
             $("#modificar_capacidad_modal").modal('show');
         });
-
-        $(document.body).on("click", ".edit_disponibilidad_btn", function () {
-            trElementInstanciaClick = $(this).closest('tr');
-            var fechaSplit = $.trim($(trElementInstanciaClick).find('.fecha_elem').text()).split('-');
-            $("#matutino_actualizar").val($.trim($(trElementInstanciaClick).find('.cantidad_matutino').text()));
-            $("#vespertino_actualizar").val($.trim($(trElementInstanciaClick).find('.cantidad_vespertino').text()));
-            $("#fecha_actualizar").val(fechaSplit[2] + "/" + fechaSplit[1] + "/" + fechaSplit[0]);
-            if ($scope.banderaNocturno) {
-                $('#nocturno_actualizar').val($.trim($(trElementInstanciaClick).find('.cantidad_nocturno').text()));
-            }
-            $("#modificar_disponibilidad_modal").modal('show');
-
-            var tipo_bloque = $(this).closest('tr').find('.tipo_bloqueo_disp').attr('tag_bloque');
-            if (tipo_bloque === "0") {
-                $("#radio_activo_mod").trigger('click');
-            } else {
-                $("#radio_inactivo_mod").trigger('click');
-            }
-        });
     }
+
+    $( document ).ready(function() {
+        editarDisponibilidad = function(matutino, vespertino, nocturno, bloqueado, fecha){
+            document.getElementById('matutino_actualizar').value = matutino;
+            document.getElementById('vespertino_actualizar').value = vespertino;
+            if (nocturno !== '') {
+                document.getElementById('nocturno_actualizar').value = nocturno;
+                document.getElementById('contenedor-editar-nocturno').style.display = 'block'
+            } else{
+                document.getElementById('contenedor-editar-nocturno').style.display = 'none'
+            }
+            let fechaA = fecha.split('-');
+            document.getElementById('fecha_actualizar').value = fechaA[1]+'-'+fechaA[2]+'-'+fechaA[0]
+            if (bloqueado) {
+                document.getElementById('radio_activo_mod').checked = true
+                document.getElementById('radio_inactivo_mod').checked = false
+            } else {
+                document.getElementById('radio_inactivo_mod').checked = true
+                document.getElementById('radio_activo_mod').checked = false
+            }
+
+            $("#modificar_disponibilidad_modal").modal('show');
+        }
+    });
 
     $scope.inicioDisponibilidad();
 
@@ -250,11 +255,6 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             isValidado = false
         }
 
-        
-
-
-  
-
         if (isValidado) {
             swal({ text: 'Espera un momento...', allowOutsideClick: false });
             swal.showLoading();
@@ -330,12 +330,12 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                             if ($scope.banderaNocturno) {
                                 array[3] = totalNocturno;
                                 array[4] = totalTurnos;
-                                array[5] = 'BLOQUEADO';
-                                array[6] = '<i class="cursorEfect edit_disponibilidad_btn fa fa-edit"></i>'
+                                array[5] = elemento.bloqueado ? 'DISPONIBLE' : 'BLOQUEADO';
+                                array[6] = '<a onclick="editarDisponibilidad('+totalMatutino+','+totalVespertino+','+totalNocturno+','+elemento.bloqueado+'\,'+'\''+elemento.fecha+'\')"><i class="cursorEfect edit_disponibilidad_btn fa fa-edit"></i></a>'
                             } else {
                                 array[3] = totalTurnos;
-                                array[4] = 'BLOQUEADO';
-                                array[5] = '<i class="cursorEfect edit_disponibilidad_btn fa fa-edit"></i>'
+                                array[4] = elemento.bloqueado ? 'DISPONIBLE' : 'BLOQUEADO';
+                                array[5] = '<a onclick="editarDisponibilidad('+totalMatutino+','+totalVespertino+","+'\''+'\''+','+elemento.bloqueado+'\,'+'\''+elemento.fecha+'\')"><i class="cursorEfect edit_disponibilidad_btn fa fa-edit"></i></a>'
                             }
                             arraRow.push(array); 
                         });/****/
@@ -446,6 +446,9 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                 idCatTurno: 1,
                 cantidad: matutinoCant
             })
+        } else{
+            mensajeError += 'Introducir cantidad turno matutino \n'
+            isValido = false
         }
 
         if (vespertinoCant !== '') {
@@ -453,14 +456,23 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                 idCatTurno: 2,
                 cantidad: vespertinoCant
             })
+        } else{
+            mensajeError += 'Introducir cantidad turno vespertino <br/>'
+            isValido = false
         }
 
-        if (nocturnoCantidad !== '') {
-            arrayTurno.push({
-                idCatTurno: 3,
-                cantidad: nocturnoCantidad
-            })
+        if ($scope.banderaNocturno) {
+            if (nocturnoCantidad !== '') {
+                arrayTurno.push({
+                    idCatTurno: 3,
+                    cantidad: nocturnoCantidad
+                })
+            } else{
+                mensajeError += 'Introducir cantidad turno nocturno <br/>'
+                isValido = false
+            }
         }
+
 
 
         let fechaInicioSplit = fechaInicio.split('/');
@@ -469,7 +481,6 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
 
         let fechaInicioC = fechaInicioSplit[2] + '-' + fechaInicioSplit[1] + '-' + fechaInicioSplit[0]
         let fechaFinC = fechaFinSplit[2] + '-' + fechaFinSplit[1] + '-' + fechaFinSplit[0]
-        isValido = true
         if (isValido) {
 
             let params = {

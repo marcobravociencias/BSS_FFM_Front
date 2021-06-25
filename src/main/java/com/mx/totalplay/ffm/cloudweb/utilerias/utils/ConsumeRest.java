@@ -140,7 +140,7 @@ public class ConsumeRest {
     }
 
     /**
-     * @param url
+     * @param urlRequest
      * @param params
      * @param classConversion
      * @return
@@ -185,7 +185,7 @@ public class ConsumeRest {
     }
 
     /**
-     * @param url             Contieene url con parametros ejemplo /despacho/{idDespachoParam}/fecha/{fechaParam}
+     * @param urlRequest             Contieene url con parametros ejemplo /despacho/{idDespachoParam}/fecha/{fechaParam}
      * @param params          Formato Mapa con los parametros de la url Ej {idDespachoParam}=1229
      * @param classConversion Tipo de clase de conversion
      * @return ServiceResponseResult.class
@@ -226,7 +226,7 @@ public class ConsumeRest {
     }
 
     /**
-     * @param url
+     * @param urlRequest
      * @param params
      * @param classConversion
      * @return
