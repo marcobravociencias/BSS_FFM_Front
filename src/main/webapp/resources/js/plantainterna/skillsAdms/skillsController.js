@@ -2,7 +2,7 @@ var app = angular.module('skillsApp', []);
 var tablePermisosDinamica;
 
 app.controller('skillsController', ['$scope','$q','skillsService','$filter', function($scope, $q,skillsService, $filter) {
-	console.log("#http://localhost:7001/FFM/consultaOT")
+	//console.log("#http://localhost:7001/FFM/consultaOT")
 	var skillTabla;
 	var mapa_reasigna_cluster;
 	var dataTecnicoGlobal=[];
@@ -39,7 +39,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
         $q.all([
             skillsService.consulCatalogoGeografiaGeneralDespacho()
         ]).then(function(results) {
-            console.log("entra de cualquier manera")
+        //    console.log("entra de cualquier manera")
             
 
             if (results[0].data !== undefined) {
@@ -47,8 +47,8 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
                     if(results[0].data.result ){
                         if(results[0].data.result.geografia){
 							$scope.listadogeografiacopy=results[0].data.result.geografia
-                            console.log("######")
-                            console.log(results[0].data.result)
+                            //console.log("######")
+                            //console.log(results[0].data.result)
                             geografia=results[0].data.result.geografia
                             geografia.map((e)=>{
                                 e.parent=e.padre ==undefined ? "#" : e.padre;
@@ -60,8 +60,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
                             $('#jstree-proton-3').bind('loaded.jstree', function(e, data) {
                                 
                             }).jstree({
-                                
-                                'core': {
+								'core': {
                                     'data': geografia,
                                     'themes': {
                                         'name': 'proton',
@@ -74,7 +73,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
 										"case_sensitive": false,
 										"show_only_matches": true
 									}
-                            });
+							});
                     
                         }else{
                             toastr.warning( 'No se encontraron datos para la geografia' );                
@@ -103,13 +102,13 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
 	  $scope.busqueda=function(){
 		 var searchString = $.trim($("#text-search-cluster").val());
 			$('#jstree-proton-3').jstree('search', searchString);
-			//let ultimonivel=$scope.obtenerNivelUltimoJerarquia();
+			let ultimonivel=$scope.obtenerNivelUltimoJerarquia();
 			var clusters = [];
 			var selectedElms = $('#jstree-proton-3').jstree("get_selected", true);
 			$.each(selectedElms, function() {
 				clusters.push(this.id); 
 		    });
-			 console.log("Busqueda: ",clusters);
+			 console.log("Busqueda: ",ultimonivel);
 		 
 	 }
 	 
@@ -122,11 +121,11 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
 			let intervenciones=[]
 			$("#tableSkillCuadrillaV2  .registroTecnico"+elemento.idUsuario+" .checkboxpermiso").each(function(i,e){
 				if($(e).is(':checked')){
-					intervenciones.push( $(e).attr('intervencionid') )
+					intervenciones.push( $(e).attr('intervencionid'))
 				}
 			})
 			tecnicoguardado.id=elemento.idUsuario
-			tecnicoguardado.skill=intervenciones+
+			tecnicoguardado.skill=intervenciones+""
 			tecnicosSkills.push(tecnicoguardado)
 			console.log("tecnico guardado",tecnicoguardado)
 			let params = {
@@ -141,7 +140,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
 		  ]
 }
 			skillsService.guardarInfoTecnico(params).then(function success(response) {
-				console.log(response);
+				//console.log(response);
 			});
 		})
 		
@@ -202,6 +201,12 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
 	}
 	
 	$scope.consultarTablaCuadrillasv2 = function () {
+		/*var clusters = [];
+			var selectedElms = $('#jstree-proton-3').jstree("get_selected", true);
+			$.each(selectedElms, function() {
+				clusters.push(parseInt(this.id)); 
+		    });*/
+		   // console.log("Clus",clusters)
 		let params = {
 				idGeografia:[3302,3363,3461,3581,3582,3583,3584,3585],
 				idTiposUsuarios:[1,100]
@@ -211,14 +216,14 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
 			
 			//console.log(params);
 				skillsService.consultarTecnico(params).then(function success(response) {
-				console.log(response);
+				//console.log(response);
 				//$scope.llenarTableDinamic(jsonIntervenciones,jsonUsuarioTest); 
 				//dataTecnicoGlobal=jsonUsuarioTest;
 				//Cuando el servicio retorne info quitar esta linea y descomentar la sección de abajo
 				if (response.data.respuesta) {
-					console.log("###respuesta###",response.data.result);
-					console.log("p",response.data.result.usuarios);
-					console.log("a",jsonIntervenciones);
+					//console.log("###respuesta###",response.data.result);
+				//	console.log("p",response.data.result.usuarios);
+				//	console.log("a",jsonIntervenciones);
 					$scope.llenarTableDinamic(jsonIntervenciones,response.data.result.usuarios);
 					dataTecnicoGlobal=response.data.result;
 					
@@ -277,7 +282,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
 			
 		})
 			
-		console.log("###### ",tecnicosDisponibles)
+		//console.log("###### ",tecnicosDisponibles)
 		
 		
 		if( tablePermisosDinamica  )
@@ -296,8 +301,8 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
 			})
 			
 			$("#tableSkillCuadrillaV2 thead").append(
-		`<tr class="active" style="height: 38px !important; background: #e4e6f2; font-size: 1.2em;">
-			<th align="justify" ><small style="font-weight: 600;">CUADRILLA</small></th> 		
+		`<tr class="active" style="height: 32px !important; font-size: 1.2em;">
+			<th align="justify" ><small style="font-weight: 800; font-size:1em;">CUADRILLA</small></th> 		
 			${temphead}
 			<th>HORARIOS  </th>
 			<th>GUARDAR</th>
@@ -325,7 +330,8 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
 					let textoper=`
 						<div class=""> 
 							<div class="col-xs-2 text-left" style="float:left;margin-right: 20px; margin-top:5px;"> 
-								<div style="border:.2em solid #36A9FF" class="photo-user"><img style="height: 30px; width: 30px;" src="./resources/img/operario/operario.svg"></div> 
+								<div style="border:.2em solid #36A9FF" class="photo-user">
+								<img style="height: 25px; width: 25px;" src="./resources/img/operario/operario.svg"></div> 
 							</div> 
 							<div class="col-xs-9" style="overflow: hidden;"> 
 								<div class="row text-left" style="word-wrap: break-word;"><h5 class="nombre_tecnico">${tecnico.nombreCompleto}</h5></div> 
@@ -363,12 +369,13 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
 		let idsIntervencion=[]
 		$("#tableSkillCuadrillaV2  .registroTecnico"+elemento.idusuario+" .checkboxpermiso").each(function(i,e){
 			if($(e).is(':checked')){
-				intervenciones.push( $(e).attr('intervencionid') )
+				intervenciones.push(parseInt($(e).attr('intervencionid')))
 			}
 		})
 		tecnicoguardado.id=elemento.idusuario
 		tecnicoguardado.skill=intervenciones+""
 		tecnicosSkills.push(tecnicoguardado)
+		console.log("Intervenciones: ",tecnicoguardado.skill)
 	}
 	
 	
@@ -386,6 +393,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
     $scope.obtenerNivelUltimoJerarquia=function(){
         return $scope.listadogeografiacopy.sort(compareGeneric)[0].nivel
     }
+    
  //$scope.consultarArbolDesasignaCluster();
 	$scope.cargarFiltrosGeneric();
 }]);

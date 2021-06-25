@@ -77,32 +77,16 @@ app.disponibilidadCalendar = function ($scope) {
 
                     if (!exists) {
                         console.log("tiene eventos")
-                        var distrito_cluster = '-1';
+                        let tipoIntervencion = $scope.intervencionSelect ? $scope.intervencionSelect.id : 0;
 
-                        var selectedElms = $('#jstreeconsulta').jstree("get_selected", true);
-                        var selected_arbol;
-
-                        $.each(selectedElms, function (index, elem) {
-                            selected_arbol = elem.original;
-                            console.log(elem)
-                        });
-
-                        if (selected_arbol !== undefined) {
-                            if ($scope.session_propietario === '16') {
-                                if (selected_arbol !== undefined && selected_arbol.Nivel === '5') {
-                                    distrito_cluster = selected_arbol.id;
-                                }
-                            } else {
-                                if (selected_arbol !== undefined && selected_arbol.Nivel === '3') {
-                                    distrito_cluster = selected_arbol.id;
-                                }
-                            }
-                        }
+                        let ultimonivel=$scope.obtenerNivelUltimoJerarquia()
+                        let clustersparam=$("#jstreeconsulta").jstree("get_selected", true)
+                                                               .filter(e=>e.original.nivel== ultimonivel)
+                                                               .map(e=>parseInt(e.id))
                         
 
-                        if (distrito_cluster === '-1' || $("#compania_select").val() === '-1' || $("#tipo_select").val() === '-1') {
-                            $("#filters-dispo").shake({ count: 5, distance: 4, duration: 1000, vertical: false });
-                            mostrarMensajeWarning("Para agregar disponibilidad debes seleccionar todos los filtros")
+                        if (tipoIntervencion === 0 || clustersparam.length === 0) {
+                            mostrarMensajeWarningValidacion("Para agregar disponibilidad debes seleccionar todos los filtros")
                         } else {
                             swal({
                                 title: "\u00BFDeseas agregar disponibilidad en este dia ?",
