@@ -93,11 +93,17 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			otTabla.destroy();
 		}
 
-		let clusters = [];
-		let intervencion = [];
-		let selectedElms = $('#jstree').jstree("get_selected", true);
+		let intervencion = $scope.filtrosGeneral.tipoOrdenes.filter(e => e.checkedOpcion).map(e => e.id)
+		// let subIntTemp = []
+		// angular.forEach($scope.filtrosGeneral.tipoOrdenes, (e, i) => {
+		// 	e.children.filter(f => f.checkedOpcion).map((k) => { subIntTemp.push(k.id); return k; })
+		// })
 
-		
+		let ultimonivel = $scope.obtenerNivelUltimoJerarquia()
+		let clusters = $("#jstree-proton-3").jstree("get_selected", true)
+			.filter(e => e.original.nivel == ultimonivel)
+			.map(e => parseInt(e.id))
+		let selectedElms = $('#jstree').jstree("get_selected", true);
 
 		$(".dropdown-menu").filter(":checked").each(function () {
 			intervencion.push($(this).val());
@@ -109,7 +115,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			clusters = $scope.all_cluster;
 		}
 
-		intervencion = "48,35,49,50,51,116,1360,55,111,106,107,112,115,163,164,258,236,291,292,259,157,158,159,204,290,260,146,211,212,261,148,149,300,301,302,262,251,252,253,254,287,288,289,263,303,304,305,306,264,269,298,299,265,150,160,270,286,293,294,295,297,274,144,145,237,307,275,244,271,272,273,308,276,238,277,142,152,278,143,147,151,243";
+		// intervencion = "48,35,49,50,51,116,1360,55,111,106,107,112,115,163,164,258,236,291,292,259,157,158,159,204,290,260,146,211,212,261,148,149,300,301,302,262,251,252,253,254,287,288,289,263,303,304,305,306,264,269,298,299,265,150,160,270,286,293,294,295,297,274,144,145,237,307,275,244,271,272,273,308,276,238,277,142,152,278,143,147,151,243";
 		if ($.trim(document.getElementById('idot').value) !== '') {
 			if (!($.isNumeric($.trim(document.getElementById('idot').value)))) {
 				mostrarMensajeWarningValidacion('Introduce un n&uacute;mero correcto de OT');
