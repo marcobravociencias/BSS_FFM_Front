@@ -1,6 +1,6 @@
 var app = angular.module('consultaOTApp', []);
 
-app.controller('consultaOTController', ['$scope', 'consultaOTService', 'genericService', function ($scope, consultaOTService, genericService) {
+app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'genericService', function ($scope, $q, consultaOTService, genericService) {
 
 	$("#li-consultaot-navbar").addClass('active')
 
@@ -23,8 +23,10 @@ app.controller('consultaOTController', ['$scope', 'consultaOTService', 'genericS
 	let datatable_Equipos;
 	let datatable_Dispositivos;
 	let dataTable_IP;
-	$scope.filtrosGeneral = [];
+	$scope.filtrosGeneral = {};
 	$scope.movimientos = [];
+
+	
 
 	$scope.iniciarTabla = function (data) {
 		if (otTabla) {
@@ -201,64 +203,117 @@ app.controller('consultaOTController', ['$scope', 'consultaOTService', 'genericS
 
 	}
 
+	$scope.realizarConversionAnidado = function (array) {
+		let arrayCopy = [];
+		angular.forEach(array.filter(e => e.nivel == 1), function (elemento, index) {
+			elemento.checkedOpcion = true;
+			elemento.children = array.filter(e => e.nivel == 2 && e.idPadre == elemento.id)
+			elemento.children = (elemento.children !== undefined && elemento.children.length > 0) ? elemento.children : []
+			elemento.children.map(e => { e.checkedOpcion = true; return e; })
+			arrayCopy.push(elemento)
+		})
+		return arrayCopy;
+	}
+
 	$scope.consultarCatalagosPI = function () {
 		swal({ text: 'Espera un momento...', allowOutsideClick: false });
 		swal.showLoading();
-		let params = {
-			param1: '6',
-			param2: '1',
-			param3: '3'
-		}
-		genericService.consultarCatalogo(JSON.stringify(params)).then(function success(response) {
-			console.log(response);
-			if (response.data.respuesta) {
-				if (response.data.result.result === "0") {
-					$scope.filtrosGeneral = response.data.result.info[0];
-					$scope.filtrosGeneral.General_filtros.filtros.map(function (e) {
-						e.checkedOpcion = true
-						e.subfiltros.map(function (j) {
-							j.checkedOpcion = true
-						})
-						return e
-					})
+		$q.all([
+			genericService.consultarCatalogoIntervenciones(),
+			genericService.consulCatalogoGeografia()
+		]).then(function (results) {
+			if (results[0].data !== undefined) {
+				if (results[0].data.respuesta) {
+					if (results[0].data.result) {
+						$scope.filtrosGeneral.tipoOrdenes = $scope.realizarConversionAnidado(results[0].data.result)
+					} else {
+						toastr.warning('No se encontraron catalogos tipo ordenes');
+					}
+				} else {
+					toastr.warning(results[1].data.resultDescripcion);
+				}
+			} else {
+				toastr.error('Ha ocurrido un error en la consulta de tipo ordenes');
+			}
 
-					let tree_data = [];
-					$.each(response.data.result.info[0].General_Arbol.arbol, function (index, elem) {
-						$scope.all_cluster.push(elem.ID);
-						tree_data.push({
-							id: elem.ID,
-							parent: ((elem.ID_Padre == 'nulo' || elem.ID_Padre == 'NULO' || elem.ID_Padre == '' || elem.ID_Padre == 'null') ? '#' : elem.ID_Padre),
-							text: elem.ID_Description,
-							icon: 'fa fa-globe',
-							state: {
-								opened: false,
-								selected: true
-							}
-						});
-					});
-					$('#jstree').jstree({
-						'plugins': ["wholerow", "checkbox"],
-						'core': {
-							'data': tree_data,
-							'themes': {
-								'name': 'proton',
-								'responsive': true,
-								"icons": false
+			if (results[1].data !== undefined) {
+				if (results[1].data.respuesta) {
+					if (results[1].data.result) {
+						if (results[1].data.result.geografia) {
+							swal.close();
+							$scope.listadogeografiacopy = results[1].data.result.geografia
+							geografia = results[1].data.result.geografia
+							geografia.map((e) => {
+								e.parent = e.padre == undefined ? "#" : e.padre;
+								e.text = e.nombre;
+								e.icon = "fa fa-globe";
+								e.state = {
+									opened: false,
+									selected: true,
+								}
+								return e
+							})
+							$('#jstree-proton-3').bind('loaded.jstree', function (e, data) {
+								// $scope.consultarCatalogoEstatusTecnico()
+								// $scope.consultarConteoAlertasPI()
+								// $scope.consultarOrdenesTrabajoAsignadasDespacho()
+								// $scope.consultarOtsPendientes()
+								// $scope.consultarTecnicosDisponibiles()
+								// $scope.consultarCatalogosAcciones();
 
-							}
+							}).jstree({
+								'plugins': ["wholerow", "checkbox"],
+								'core': {
+									'data': geografia,
+									'themes': {
+										'name': 'proton',
+										'responsive': true,
+										"icons": false
+									}
+								}
+							});
+						} else {
+							swal.close();
+							toastr.warning('No se encontraron datos para la geografia');
 						}
-					});
-					//swal.close();
-					$scope.consultaOT();
+					} else {
+						swal.close();
+						toastr.warning('No se encontraron datos para la geografia');
+					}
 				} else {
 					swal.close();
-					mostrarMensajeWarningValidacion(response.data.result.resultdescription);
+					toastr.warning(results[2].data.resultDescripcion);
 				}
 			} else {
 				swal.close();
-				mostrarMensajeWarningValidacion(response.data.resultDescripcion);
+				toastr.error('Ha ocurrido un error en la consulta de turnos');
 			}
 		});
+	}
+
+	$scope.realizarConversionAnidado = function (array) {
+		let arrayCopy = [];
+		angular.forEach(array.filter(e => e.nivel == 1), function (elemento, index) {
+			elemento.checkedOpcion = true;
+			elemento.children = array.filter(e => e.nivel == 2 && e.idPadre == elemento.id)
+			elemento.children = (elemento.children !== undefined && elemento.children.length > 0) ? elemento.children : []
+			elemento.children.map(e => { e.checkedOpcion = true; return e; })
+			arrayCopy.push(elemento)
+		})
+		return arrayCopy;
+	}
+	function compareGeneric(a, b) {
+		let niveluno = a.nivel;
+		let niveldos = b.nivel;
+		if (niveluno > niveldos) {
+			return -1
+		} else if (niveluno < niveldos) {
+			return 1
+		}
+		return 0
+	}
+	$scope.obtenerNivelUltimoJerarquia = function () {
+		return $scope.listadogeografiacopy.sort(compareGeneric)[0].nivel
 	}
 
 	$scope.seleccionarTodos = function () {
@@ -638,19 +693,27 @@ app.controller('consultaOTController', ['$scope', 'consultaOTService', 'genericS
 					if (response.data.respuesta) {
 						if (response.data.result.result === '0') {
 							if (response.data.result.DatosGeneralesOT.OT !== undefined) {
+								console.log(response.data.result.DatosGeneralesOT);
+								console.log(response.data.result.DatosGeneralesOT.OT.Direccion.Ciudad);
 								$('#ota-ot').html(response.data.result.DatosGeneralesOT.OT.Id_ot);
 								$('#ota-os').html(response.data.result.DatosGeneralesOT.OT.Folio_os);
-								$('#ota-estatus').html(response.data.result.DatosGeneralesOT.OT.Status);
-								$('#ota-estado').html(response.data.result.DatosGeneralesOT.OT.Estado);
-								$('#ota-motivo').html(response.data.result.DatosGeneralesOT.OT.Motivo);
-								$('#ota-subtipo').html(response.data.result.DatosGeneralesOT.OT.Tipo_instervencion);
-								$('#ota-intervencion').html(response.data.result.DatosGeneralesOT.OT.Subtipo_intervencion);
-								$('#ota-paquete').html(response.data.result.DatosGeneralesOT.OT.Paquete_instalar);
-								$('#ota-fecha').html(response.data.result.DatosGeneralesOT.OT.Fecha_agenda);
 								$('#ota-cuenta').html(response.data.result.DatosGeneralesOT.OT.Num_cuenta);
 								$('#ota-cliente').html(response.data.result.DatosGeneralesOT.OT.Nombre_cliente);
 								$('#ota-contacto').html(response.data.result.DatosGeneralesOT.OT.Nombre_contacto);
-								$('#ota-direccion').html(response.data.result.DatosGeneralesOT.OT.Direccion_instalacion);
+								$('#ota-fecha').html(response.data.result.DatosGeneralesOT.OT.Fecha_agenda);
+								$('#ota-estatus').html(response.data.result.DatosGeneralesOT.OT.Status);
+								$('#ota-estado').html(response.data.result.DatosGeneralesOT.OT.Estado);
+								$('#ota-motivo').html(response.data.result.DatosGeneralesOT.OT.Motivo);
+								$('#ota-direccion-latitud').html(response.data.result.DatosGeneralesOT.OT.Direccion.Latitud);
+								$('#ota-direccion-longitud').html(response.data.result.DatosGeneralesOT.OT.Direccion.Longitud);;
+								$('#ota-direccion-ciudad').html(response.data.result.DatosGeneralesOT.OT.Direccion.Ciudad);
+								$('#ota-direccion-estado').html(response.data.result.DatosGeneralesOT.OT.Direccion.Estado);
+								$('#ota-direccion-municipio').html(response.data.result.DatosGeneralesOT.OT.Direccion.Municipio);
+								$('#ota-direccion-colonia').html(response.data.result.DatosGeneralesOT.OT.Direccion.Colonia);
+								$('#ota-direccion-calle').html(response.data.result.DatosGeneralesOT.OT.Direccion.Calle);
+								$('#ota-direccion-numero-interior').html(response.data.result.DatosGeneralesOT.OT.Direccion.Numero_interior);
+								$('#ota-direccion-numero-exterior').html(response.data.result.DatosGeneralesOT.OT.Direccion.Numero_exterior);
+								$('#ota-direccion-codigo-postal').html(response.data.result.DatosGeneralesOT.OT.Direccion.Codigo_postal);
 								$('#ota-referencia').html(response.data.result.DatosGeneralesOT.OT.Referencias_urbanas);
 								$('#ota-calles').html(response.data.result.DatosGeneralesOT.OT.Entre_calles);
 								$('#ota-telefono1').html(response.data.result.DatosGeneralesOT.OT.Telefono_empresa);

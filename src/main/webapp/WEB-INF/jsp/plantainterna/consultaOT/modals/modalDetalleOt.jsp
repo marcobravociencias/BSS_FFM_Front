@@ -31,32 +31,6 @@
                                             <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-os"></span> </div>
                                         </div>
                                         <div class="container-fluid ot-content">
-                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Estatus</span></div>
-                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-estatus"></span> </div>
-                                        </div>
-                                        <div class="container-fluid ot-content">
-                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Estado</span></div>
-                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-estado"></span> </div>
-                                        </div>
-                                        <div class="container-fluid ot-content">
-                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Motivo</span></div>
-                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-motivo"></span> </div>
-                                        </div>
-                                        <div class="container-fluid ot-content">
-                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Intervenci&oacute;n</span></div>
-                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-intervencion"></span> </div>
-                                        </div>
-                                        <div class="container-fluid ot-content">
-                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Subintervenci&oacuten</span></div>
-                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-subtipo"></span> </div>
-                                        </div>
-                                        <div class="container-fluid ot-content">
-                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Paquete</span></div>
-                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-paquete"></span> </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="container-fluid ot-content">
                                             <div class="container-text-title-detalle"><span class="text-tile-ot">Cuenta</span></div>
                                             <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-cuenta"></span> </div>
                                         </div>
@@ -73,6 +47,60 @@
                                             <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-fecha"></span> </div>
                                         </div>
                                         <div class="container-fluid ot-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Estatus</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-estatus"></span> </div>
+                                        </div>
+                                        <div class="container-fluid ot-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Estado</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-estado"></span> </div>
+                                        </div>
+                                        <div class="container-fluid ot-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Motivo</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-motivo"></span> </div>
+                                        </div>
+                                        <div class="container-fluid ot-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Latitud</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-direccion-latitud"></span> </div>
+                                        </div>
+                                        <div class="container-fluid ot-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Longitud</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-direccion-longitud"></span> </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="container-fluid ot-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Cuidad</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-direccion-ciudad"></span> </div>
+                                        </div>
+                                        <div class="container-fluid ot-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Estado</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-direccion-estado"></span> </div>
+                                        </div>
+                                        <div class="container-fluid ot-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Municipio</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-direccion-municipio"></span> </div>
+                                        </div>
+                                        <div class="container-fluid ot-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Colonia</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-direccion-colonia"></span> </div>
+                                        </div>
+                                        <div class="container-fluid ot-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Calle</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-direccion-calle"></span> </div>
+                                        </div>
+                                        <div class="container-fluid ot-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Num. interior</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-direccion-numero-interior"></span> </div>
+                                        </div>
+                                        <div class="container-fluid ot-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Num. exterior</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-direccion-numero-exterior"></span> </div>
+                                        </div>
+                                        <div class="container-fluid ot-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-ot">C&oacute;digo Postal</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-direccion-codigo-postal"></span> </div>
+                                        </div>
+                                        <div class="container-fluid ot-content">
                                             <div class="container-text-title-detalle"><span class="text-tile-ot">Referencia</span></div>
                                             <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-referencia"></span> </div>
                                         </div>
@@ -85,14 +113,8 @@
                                             <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-telefono1"></span> </div>
                                         </div>
                                         <div class="container-fluid ot-content">
-                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Contacto</span></div>
+                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Tel. contacto</span></div>
                                             <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-telefono2"></span> </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="container-fluid ot-content">
-                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Direcci&oacute;n</span></div>
-                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-direccion"></span> </div>
                                         </div>
                                     </div>
                                 </div>
