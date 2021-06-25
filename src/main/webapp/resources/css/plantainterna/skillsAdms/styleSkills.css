@@ -58,8 +58,8 @@ div.dataTables_paginate li.next a:after{
 	margin-left: 15px;
 }
 .photo-user {
-    width: 2.6em;
-    height: 2.6em;
+    width: 2.1em;
+    height: 2.1em;
     cursor: pointer;
     border-radius: 50%;
     margin-bottom: .2em !important;
@@ -114,13 +114,14 @@ div.dataTables_paginate li.next a:after{
     padding-bottom: 1.1em;
 }
 table thead{
-	background-color: #e4e6f2;
+	background-color: white;
 	color: grey;
+	/* font-size: xxx-large; */
 	font-family: "Montserrat" !important;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow:ellipsis;
-	font-size: 0.6em !important;
+	font-size: 0.5em !important;
 }
 
 table thead.active{
