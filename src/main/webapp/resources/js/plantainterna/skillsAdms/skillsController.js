@@ -60,8 +60,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
                             $('#jstree-proton-3').bind('loaded.jstree', function(e, data) {
                                 
                             }).jstree({
-                                
-                                'core': {
+								'core': {
                                     'data': geografia,
                                     'themes': {
                                         'name': 'proton',
@@ -74,7 +73,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
 										"case_sensitive": false,
 										"show_only_matches": true
 									}
-                            });
+							});
                     
                         }else{
                             toastr.warning( 'No se encontraron datos para la geografia' );                
