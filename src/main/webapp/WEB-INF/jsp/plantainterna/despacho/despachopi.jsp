@@ -58,13 +58,13 @@
                             <li class="elemento_menu dropdown-divider"></li>
                             <li ng-repeat="filtro in filtrosGeneral.tipoOrdenes " class="element-menu-filter"  class="element-menu-filter">
                                 <label  class="dropdown-item form-check-inputfiltro">
-                                    <input ng-click=setCheckIntervencion(filtro) id="filtrotext-{{filtro.id}}" class="form-check-input" type="checkbox" ng-checked="filtro.checkedOpcion"  />
+                                    <input ng-click=setCheckIntervencion(filtro) id="filtrotext-{{filtro.id}}" class="form-check-input" type="checkbox" ng-model="filtro.checkedOpcion" ng-checked="filtro.checkedOpcion"  />
                                     <span  for="filtrotext-{{filtro.id}}" class="dropdown-item item-text-filtro" href="#" ng-bind="filtro.nombre"></span>
                                 </label>
                                  <ul  class="dropdown-menu">                     
-                                    <li  ng-repeat="subfiltro in filtro.subfiltros" class="element-menu-filter">
+                                    <li  ng-repeat="subfiltro in filtro.children" class="element-menu-filter">
                                         <label  class="dropdown-item form-check-inputfiltro">
-                                            <input ng-click=setCheckSubIntervencion(subfiltro,filtro) id="subfiltrotext-{{subfiltro.id}}" class="form-check-input" type="checkbox" ng-checked="subfiltro.checkedOpcion"    />
+                                            <input ng-click=setCheckSubIntervencion(subfiltro,filtro) id="subfiltrotext-{{subfiltro.id}}" class="form-check-input" type="checkbox" ng-model="subfiltro.checkedOpcion" ng-checked="subfiltro.checkedOpcion"    />
                                             <span  for="subfiltrotext-{{subfiltro.id}}" class="dropdown-item item-text-filtro" href="#" ng-bind="subfiltro.nombre"></span>
                                         </label>
                                     </li>
@@ -79,7 +79,7 @@
                         <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-turno">                                 
                             <li ng-repeat="turno in filtrosGeneral.turnosdisponibles " class="element-menu-filter"  class="element-menu-filter">
                                 <label  class="dropdown-item form-check-inputfiltro">
-                                    <input id="filtrotext-turno-{{turno.id}}" class="form-check-input" type="checkbox" value=""   checked/>
+                                    <input id="filtrotext-turno-{{turno.id}}" class="form-check-input" type="checkbox" value="" ng-model="turno.checkedOpcion" ng-checked="turno.checkedOpcion"  />
                                     <span  for="filtrotext-turno-{{turno.id}}" class="dropdown-item item-text-filtro" href="#" ng-bind="turno.nombre"></span>
                                 </label>
                             </li>

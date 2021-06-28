@@ -66,11 +66,11 @@
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active" id="alta-tab" data-toggle="tab" href="#alta" role="tab"
-                                        aria-controls="alta" aria-selected="true">Alta Vehiculos</a>
+                                        aria-controls="alta" aria-selected="true">Alta Veh&iacute;culos</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" id="consulta-tab" data-toggle="tab" href="#consulta" role="tab"
-                                        aria-controls="consulta" aria-selected="false">Consulta Vehiculos</a>
+                                        aria-controls="consulta" aria-selected="false">Consulta Veh&iacute;culos</a>
                                 </li>
                             </ul>
                             <div class="tab-content">

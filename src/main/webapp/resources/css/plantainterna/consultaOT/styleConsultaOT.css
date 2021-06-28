@@ -976,14 +976,14 @@ table.dataTable.no-footer {
   z-index: 1;
 }
 
-#modalDetalleOT .modal-body {
+#modal-detalle-ot .modal-body {
   padding-left: 0;
 }
 
 .container-fluid.ot-content {
   padding: 0;
   display: flex;
-  border-bottom: 1px solid #e1e1e1;
+  /* border-bottom: 1px solid #e1e1e1; */
 }
 span.text-tile-ot {
   font-weight: bold;
@@ -991,9 +991,9 @@ span.text-tile-ot {
   color: #303030;
 }
 span.text-content-ot {
-  font-size: 0.9em;
-  color: #818181;
-  font-weight: bold;
+  /* font-weight: bold; */
+ font-size: .8em;
+ color: #303030;
 }
 .container-text-title {
   width: 40%;

@@ -4,7 +4,7 @@ import com.mx.totalplay.ffm.cloudweb.utilerias.model.ServiceResponseResult;
 
 public interface DespachoPIService {
 	
-	public ServiceResponseResult consultarCatalogoTipoOrdenConfigDespacho();
+	public ServiceResponseResult consultarCatalogoTipoOrdenGeneralDespacho();
 	public ServiceResponseResult consultarCatalogoTipoOrdenUsuarioDespacho();
 	public ServiceResponseResult consultarCatalogosPI(String params);
 

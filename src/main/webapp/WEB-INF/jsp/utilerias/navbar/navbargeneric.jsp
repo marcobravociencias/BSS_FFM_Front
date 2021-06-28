@@ -60,7 +60,7 @@
                                 <a class="dropdown-item" href="reportesPI">Reportes</a>
                                 <a class="dropdown-item" href="skillsAdm">Skills</a>
                                 <a class="dropdown-item" href="busqueda">Busqueda</a>
-                                <a class="dropdown-item" href="controlVehicular" id="li-otros-vehicular">Control de Vehiculos</a>
+                                <a class="dropdown-item" href="controlVehicular">Control de Veh&iacute;culos</a>
                             </div>
                         </li>
                 </ul>

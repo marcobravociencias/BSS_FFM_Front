@@ -22,11 +22,11 @@ app.service("skillsService", function ($http) {
 				
 			});
 		};
-		this.consultarCatalogosPlantaInterna=function(params){
+		this.consulCatalogoGeografiaGeneralDespacho=function(params){
 			return $http({
 				method: "post",
-				url: "req/consultarCatalogoSkills",
-				data:JSON.stringify(params),
+				url: "req/consultaCatalogoGeografiaGeneralDespacho",
+				//data:JSON.stringify(params),
 	            headers : {
 	                'Content-Type' : 'application/json'
 	            }

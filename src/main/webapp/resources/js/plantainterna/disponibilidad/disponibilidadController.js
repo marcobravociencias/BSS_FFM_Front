@@ -14,7 +14,8 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
     $scope.idCompanyActualizar;
     $scope.idTipoActualizar;
     $scope.idCiudadActualizar;
-    /* $scope.arrayTitulo = [
+    $scope.geografiaList = [];
+    $scope.arrayTitulo = [
         {
             title: 'Fecha Disponibilidad',
             vista: true
@@ -43,7 +44,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             title: 'Editar',
             vista: true
         }
-    ]; */
+    ];
 
 
     app.disponibilidadCalendar($scope);
@@ -57,10 +58,10 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
 			todayHighlight: true,
 			clearBtn: true
         });
-        $('.datepicker').datepicker('update', new Date());
+        //$('.datepicker').datepicker('update', new Date());
         if (!$scope.banderaNocturno) {
             document.getElementById('nocturno_dispo').parentElement.style.display = 'none'
-            document.getElementById('theadnocturno').style.display = 'none';
+            //document.getElementById('theadnocturno').style.display = 'none';
             //document.getElementById('theadnocturnoporcentaje').style.display = 'none';
             //document.getElementById('container-nocturno').style.display = 'none';
             //document.getElementById('contenedor-editar-nocturno').style.display = 'none';
@@ -70,15 +71,25 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
         document.getElementById('arbol_disponibilidad_consulta').placeholder = 'Seleccione un geografia';
 
 
-       /*  let contenTheadDetalle = '';
+       let contenTheadDetalle = '';
         $scope.arrayTitulo.forEach(function(elemento,index){
             if (elemento.vista) {
                 contenTheadDetalle += `<th> ${elemento.title} </th>`;
             }
         });
-        $('#theadDispo').append(`<tr> ${contenTheadDetalle} </tr>`); */
+        $('#theadDispo').append(`<tr> ${contenTheadDetalle} </tr>`); 
         $('#datatable_disponibilidad').DataTable({
-            "language": idioma_espanol_not_font
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "pageLength": 10,
+            "recordsTotal": 100,
+            "info": false,
+            "autoWidth": true,
+            "data": [],
+            "language": idioma_espanol_not_font,
+            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
         });
 
         $('#Disponibilidad').addClass('active');
@@ -124,53 +135,48 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
         $(document.body).on("click", ".edit_capacidad_btn", function () {
             $("#modificar_capacidad_modal").modal('show');
         });
-
-        $(document.body).on("click", ".edit_disponibilidad_btn", function () {
-            trElementInstanciaClick = $(this).closest('tr');
-            var fechaSplit = $.trim($(trElementInstanciaClick).find('.fecha_elem').text()).split('-');
-            $("#matutino_actualizar").val($.trim($(trElementInstanciaClick).find('.cantidad_matutino').text()));
-            $("#vespertino_actualizar").val($.trim($(trElementInstanciaClick).find('.cantidad_vespertino').text()));
-            $("#fecha_actualizar").val(fechaSplit[2] + "/" + fechaSplit[1] + "/" + fechaSplit[0]);
-            if ($scope.banderaNocturno) {
-                $('#nocturno_actualizar').val($.trim($(trElementInstanciaClick).find('.cantidad_nocturno').text()));
-            }
-            $("#modificar_disponibilidad_modal").modal('show');
-
-            var tipo_bloque = $(this).closest('tr').find('.tipo_bloqueo_disp').attr('tag_bloque');
-            if (tipo_bloque === "0") {
-                $("#radio_activo_mod").trigger('click');
-            } else {
-                $("#radio_inactivo_mod").trigger('click');
-            }
-        });
     }
+
+    $( document ).ready(function() {
+        editarDisponibilidad = function(matutino, vespertino, nocturno, bloqueado, fecha){
+            document.getElementById('matutino_actualizar').value = matutino;
+            document.getElementById('vespertino_actualizar').value = vespertino;
+            if (nocturno !== '') {
+                document.getElementById('nocturno_actualizar').value = nocturno;
+                document.getElementById('contenedor-editar-nocturno').style.display = 'block'
+            } else{
+                document.getElementById('contenedor-editar-nocturno').style.display = 'none'
+            }
+            let fechaA = fecha.split('-');
+            document.getElementById('fecha_actualizar').value = fechaA[1]+'-'+fechaA[2]+'-'+fechaA[0]
+            if (bloqueado) {
+                document.getElementById('radio_activo_mod').checked = true
+                document.getElementById('radio_inactivo_mod').checked = false
+            } else {
+                document.getElementById('radio_inactivo_mod').checked = true
+                document.getElementById('radio_activo_mod').checked = false
+            }
+
+            $("#modificar_disponibilidad_modal").modal('show');
+        }
+    });
 
     $scope.inicioDisponibilidad();
 
     $scope.consultarIntervenciones = function () {
-        disponibilidadService.consultarIntervenciones().then(function success(response) {
-            console.log(response.data);
+        genericService.consultarCatalogoIntervenciones().then(function success(response) {
+            console.log(response);
             if (response.data.respuesta) {
-                if (response.data.result.result == '0') {
-                    if (response.data.result.Intervencion.length > 0) {
-
-                        $scope.arrayIntervencion = response.data.result.Intervencion.filter(intervencion => { return intervencion.Activo === '1' });
-                        swal.close();
-                    } else {
-                        swal.close();
-                        //total_loading.finish();
-                        mostrarMensajeErrorAlert('No existen intervenciones actualmente');
-                    }
+                if (response.data.result) {
+                    $scope.arrayIntervencion = response.data.result.filter(elemento => { return elemento.nivel === 1 });
+                    swal.close();
                 } else {
                     swal.close();
-                    //total_loading.finish();
-                    mostrarMensajeErrorAlert(response.data.result.resultdescription);
+                    mostrarMensajeErrorAlert('No existen intervenciones actualmente');
                 }
-
             } else {
                 swal.close();
-                //total_loading.finish();
-                mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                mostrarMensajeErrorAlert(response.data.resultDescripcion)
             }
         });
     }
@@ -178,304 +184,191 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
     $scope.consultarCatalogoArbol = function () {
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
-        let params = {
-            param1: '6',
-            param2: '1',
-            param3: '3'
-        }
-        let response = arrayIntervencion;
-        console.log(response.data)
-            if (response.data.respuesta) {
-                if (response.data.result.result === "0") {
-                    //modalClusterAgrega,modalClusterConsulta,modalClusterModifica,jstreeagrega,jstreeconsulta,jstreemodifica
-
-                    let icon_check = '';
-                    let data_arbol = [];
-                    let texto_descripcion = '';
-                    $.each(response.data.result.info[0].General_Arbol.arbol, function (index, elementoArbol) {
-                        if (elementoArbol.ID_Padre === "-1")
-                            return;
-
-                        switch (elementoArbol.Nivel) {
-                            case '0':
-                                icon_check = 'fa fa-building';
-                                break;
-                            case '1':
-                                icon_check = 'fa fa-globe';
-                                break;
-                            case '2':
-                                icon_check = 'fa fa-crosshairs';
-                                break;
-                            case '3':
-                                icon_check = 'fa fa-cubes';
-                                break;
-                            case '4':
-                                icon_check = 'fa fa-cube';
-                                break;
-                        }
-
-                        //pinta todo el arbol
-                        data_arbol.push({
-                            id: elementoArbol.ID,
-                            parent: ((elementoArbol.ID_Padre == 'nulo' || elementoArbol.ID_Padre == 'NULO' || elementoArbol.ID_Padre == '' || elementoArbol.ID_Padre == 'null') ? '#' : elementoArbol.ID_Padre),
-                            text: elementoArbol.ID_Description,
-                            icon: icon_check,
-                            Nivel: elementoArbol.Nivel
-                        });
-                    });
-
-                    $('#jstreeconsulta').jstree({
-                        'plugins': ["wholerow", "checkbox"],
-                        'core': {
-                            'data': data_arbol,
-                            'themes': {
-                                'name': 'proton',
-                                'responsive': true,
-                                "icons": false
-
-                            }
-                        }
-                    });
-
-                    $scope.consultarIntervenciones();
-                } else {
-                    swal.close();
-                    //total_loading.finish()  
-                    //mostrarMensajeWarning('No se cuenta con registros para los \u00E1rboles');
-                }
-            } else {
-                swal.close();
-                //total_loading.finish()  
-                //mostrarMensajeErrorAlertAjax(res.mensaje);
-            }
-        /* genericService.consultarCatalogo(JSON.stringify(params)).then(function success(response) {
+        genericService.consulCatalogoGeografia().then(function success(response) {
             console.log(response.data)
             if (response.data.respuesta) {
-                if (response.data.result.result === "0") {
-                    //modalClusterAgrega,modalClusterConsulta,modalClusterModifica,jstreeagrega,jstreeconsulta,jstreemodifica
-
-                    let icon_check = '';
-                    let data_arbol = [];
-                    let texto_descripcion = '';
-                    $.each(response.data.result.info[0].General_Arbol.arbol, function (index, elementoArbol) {
-                        if (elementoArbol.ID_Padre === "-1")
-                            return;
-
-                        switch (elementoArbol.Nivel) {
-                            case '0':
-                                icon_check = 'fa fa-building';
-                                break;
-                            case '1':
-                                icon_check = 'fa fa-globe';
-                                break;
-                            case '2':
-                                icon_check = 'fa fa-crosshairs';
-                                break;
-                            case '3':
-                                icon_check = 'fa fa-cubes';
-                                break;
-                            case '4':
-                                icon_check = 'fa fa-cube';
-                                break;
-                        }
-
-                        //pinta todo el arbol
-                        data_arbol.push({
-                            id: elementoArbol.ID,
-                            parent: ((elementoArbol.ID_Padre == 'nulo' || elementoArbol.ID_Padre == 'NULO' || elementoArbol.ID_Padre == '' || elementoArbol.ID_Padre == 'null') ? '#' : elementoArbol.ID_Padre),
-                            text: elementoArbol.ID_Description,
-                            icon: icon_check,
-                            Nivel: elementoArbol.Nivel
+                if (response.data.result) {
+                    if (response.data.result.geografia || response.data.result.geografia.length > 0) {
+                        $scope.geografiaList = response.data.result.geografia;
+                        let geografia = response.data.result.geografia;
+                        geografia.map((e)=>{
+                            e.parent=e.padre ==undefined ? "#" : e.padre;
+                            e.text= e.nombre;
+                            e.icon= "fa fa-globe";
+                            
+                            return e
+                        })  
+                        
+                        $('#jstreeconsulta').bind('loaded.jstree', function(e, data){   
+                        }).jstree({
+                            'core': {
+                                'data': geografia,
+                                'themes': {
+                                    'name': 'proton',
+                                    'responsive': true,
+                                    "icons":false        
+                                }
+                            },
+                            plugins : ['search'],
+                             "search": {
+                                    "case_sensitive": false,
+                                    "show_only_matches": true
+                                }
                         });
-                    });
-
-                    $('#jstreeconsulta').jstree({
-                        'plugins': ["wholerow", "checkbox"],
-                        'core': {
-                            'data': data_arbol,
-                            'themes': {
-                                'name': 'proton',
-                                'responsive': true,
-                                "icons": false
-
-                            }
-                        }
-                    });
-
+                    } else {
+                        mostrarMensajeWarningValidacion('No existen geografias actualmente')
+                    }
                     $scope.consultarIntervenciones();
                 } else {
+                    mostrarMensajeErrorAlert(response.data.result.mensaje)
                     swal.close();
-                    //total_loading.finish()  
-                    //mostrarMensajeWarning('No se cuenta con registros para los \u00E1rboles');
                 }
             } else {
+                mostrarMensajeErrorAlert(response.data.resultDescripcion)
                 swal.close();
-                //total_loading.finish()  
-                //mostrarMensajeErrorAlertAjax(res.mensaje);
             }
-        }); */
+        });
     }
 
     $scope.consultarCatalogoArbol();
 
     $scope.consultaDisponibilidad = function () {
-
+        let mensaje = '';
+        let isValidado = true;
         let company = document.getElementById('compania_select').value;
-        let tipo_intervencion = $scope.intervencionSelect !== undefined ? $scope.intervencionSelect.ID : '-1';
+        let tipo_intervencion = $scope.intervencionSelect !== undefined ? $scope.intervencionSelect.id : 0;
         let distrito_cluster = '-1';
 
 
-        let selectedElms = $('#jstreeconsulta').jstree("get_selected", true);
-        let selected_arbol;
+        let ultimonivel=$scope.obtenerNivelUltimoJerarquia()
+        let clustersparam=$("#jstreeconsulta").jstree("get_selected", true)
+                                               .filter(e=>e.original.nivel== ultimonivel)
+                                               .map(e=>parseInt(e.id))
 
-        selectedElms.forEach(element => {
-            selected_arbol = element.original;
-        });
+        if (tipo_intervencion === 0) {
+            mensaje += 'Seleccione una intervenci&oacute;n \n'
+            isValidado = false
+        }
 
-        if (selected_arbol !== undefined) {
-            if ($scope.session_propietario === '16') {
-                if (selected_arbol !== undefined && selected_arbol.Nivel === '5') {
-                    distrito_cluster = selected_arbol.id;
-                }
-            } else {
-                if (selected_arbol !== undefined && selected_arbol.Nivel === '3') {
-                    distrito_cluster = selected_arbol.id;
-                }
+        if (clustersparam.length === 0) {
+            mensaje += 'Seleccione una geografia'
+            isValidado = false
+        }
+
+        if (isValidado) {
+            swal({ text: 'Espera un momento...', allowOutsideClick: false });
+            swal.showLoading();
+            let params = {
+                subtipoIntervencion: tipo_intervencion,
+                geografia2: clustersparam[0]
             }
-        }
-        /*if (company === '-1' || tipo_intervencion === '-1' || distrito_cluster === '-1') {
-            return false;
-        }*/
+            $('#datatable_disponibilidad').dataTable().fnDestroy();
 
-        // let params = {
-        //     IdCiudad: distrito_cluster,
-        //     IdIntervencion: tipo_intervencion,
-        //     IdCompany: company
-        //}
-
-        let params = {
-            subtipoIntervencion: 1,
-            geografia2: 3
-        }
-
-
-        $('#datatable_disponibilidad').dataTable().fnDestroy();
-
-        $('#consulta_disponibilidad').attr('disabled', true);
-        $('#consulta_disponibilidad').text("Cargando ...");
-
-        swal({ text: 'Espera un momento...', allowOutsideClick: false });
-        swal.showLoading();
-        disponibilidadService.consultaDisponibilidad(JSON.stringify(params)).then(function success(response) {
-            console.log(response.data);
-            if (response.data.respuesta) {
-                if (response.data.result.dias !== undefined) {
-                    arrDisponibilidad = [];
-                    $scope.muestraDisponibilidadCalendar(response.data.result);
-
-                    $scope.idCompanyActualizar = company;
-                    $scope.idTipoActualizar = tipo_intervencion;
-                    $scope.idCiudadActualizar = distrito_cluster;
-
-                    let textoIntervencion = $.trim($("#tipo_select option:selected").text());
-                    let selectedElms = $('#jstreeconsulta').jstree("get_selected", true);
-                    let selected_arbol;
-
-                    selectedElms.forEach(element => {
-                        selected_arbol = element.text;
-                    });
-
-
-                    document.getElementById('disponibilidad_span').innerHTML = selected_arbol;
-                    document.getElementById
-                    //$("#disponibilidad_span").text(selected_arbol.substr(0, 1) + "" + (selected_arbol.substr(1, selected_arbol.length - 1)).toLowerCase());
-                    $("#intervencion_span").text(textoIntervencion.substr(0, 1) + "" + (textoIntervencion.substr(1, textoIntervencion.length - 1)).toLowerCase());
-
-                    let styleHide = ''
-                    if (!$scope.banderaNocturno) {
-                        styleHide = 'display:none'
-                    } else {
-                        $('#nocturno_dispo').text(response.data.result.CapacidadNocturno === '' ? 0 : response.data.result.CapacidadNocturno);
-                    }
-
-                    $("#total_dispo").text(response.data.result.CapacidadTotal === "" ? 0 : response.data.result.CapacidadTotal);
-
-                    let arrayResult = (response.data.result.dias !== undefined && response.data.result.dias !== null) ? response.data.result.dias !== undefined ? response.data.result.dias : [] : [];
-                    //let arrayResult = [];
-                    $('#datatable_disponibilidad tbody').empty();
-                    //let arraRow = [];
-                    $.each(arrayResult, function (i, elemento) {
-                        //let array = [];
-                        let totalMatutino = 0;
-                        let totalVespertino = 0;
-                        let totalNocturno = 0;
-                        let totalTurnos = 0;
-
-                        elemento.turnos.forEach(turno =>{
-                            if (turno.idCatTurno === 1) {
-                                totalMatutino = turno.cantidad;
-                                totalTurnos += turno.cantidad;
-                            }
-                            if (turno.idCatTurno === 2) {
-                                totalVespertino = turno.cantidad;
-                                totalTurnos += turno.cantidad;
-                            }
-                            if (turno.idCatTurno === 3) {
-                                totalNocturno = turno.cantidad;
-                                totalTurnos += turno.cantidad;
-                            }
-                        })
-
-/*                         array[0] = elemento.fecha;
-                        array[1] = totalMatutino;
-                        array[2] = totalVespertino
-                        if ($scope.banderaNocturno) {
-                            array[3] = totalNocturno;
-                            array[4] = totalTurnos;
-                            array[5] = 'BLOQUEADO';
-                            array[6] = '<i class="cursorEfect edit_disponibilidad_btn fa fa-edit"></i>'
+            $('#consulta_disponibilidad').attr('disabled', true);
+            $('#consulta_disponibilidad').text("Cargando ...");
+            disponibilidadService.consultaDisponibilidad(JSON.stringify(params)).then(function success(response) {
+                console.log(response.data);
+                if (response.data.respuesta) {
+                    if (response.data.result.dias !== undefined) {
+                        arrDisponibilidad = [];
+                        $scope.muestraDisponibilidadCalendar(response.data.result);
+    
+                        $scope.idCompanyActualizar = company;
+                        $scope.idTipoActualizar = tipo_intervencion;
+                        $scope.idCiudadActualizar = distrito_cluster;
+    
+                        let textoIntervencion = $.trim($("#tipo_select option:selected").text());
+                        let selectedElms = $('#jstreeconsulta').jstree("get_selected", true);
+                        let selected_arbol;
+    
+                        selectedElms.forEach(element => {
+                            selected_arbol = element.text;
+                        });
+    
+    
+                        document.getElementById('disponibilidad_span').innerHTML = selected_arbol;
+                        $("#intervencion_span").text(textoIntervencion.substr(0, 1) + "" + (textoIntervencion.substr(1, textoIntervencion.length - 1)).toLowerCase());
+    
+                        let styleHide = ''
+                        if (!$scope.banderaNocturno) {
+                            styleHide = 'display:none'
                         } else {
-                            array[3] = totalTurnos;
-                            array[4] = 'BLOQUEADO';
-                            array[5] = '<i class="cursorEfect edit_disponibilidad_btn fa fa-edit"></i>'
+                            $('#nocturno_dispo').text(response.data.result.CapacidadNocturno === '' ? 0 : response.data.result.CapacidadNocturno);
                         }
-                        arraRow.push(array); */
-                        $("#datatable_disponibilidad").append("<tr>\n\
-                        <td class='fecha_elem'>"+ elemento.fecha + "</td>\n\
-                            <td class='cantidad_matutino'>"+ totalMatutino + "</td>\n\
-                            <td class='cantidad_vespertino'>"+ totalVespertino + "</td>\n\
-                            <td style='"+ styleHide + "' class='cantidad_nocturno'>" + totalNocturno + "</td>\n\
-                            <td>"+ totalTurnos + "</td>\n\
-                            <td tag_bloque='"+ elemento.bloqueado + "' class='tipo_bloqueo_disp'>" + (elemento.bloqueado ? 'DISPONIBLE' : "BLOQUEADO") + "</td>\n\
-                            <td>\n\
-                            <i class='cursorEfect edit_disponibilidad_btn fa fa-edit'></i> \n\
-                    </tr>");
-                    });/****/
-                    $('#datatable_disponibilidad').DataTable({
-                        "paging": true,
-                        "lengthChange": false,
-                        "searching": false,
-                        "ordering": false,
-                        "pageLength": 10,
-                        "recordsTotal": 100,
-                        "info": false,
-                        "autoWidth": true,
-                        "language": idioma_espanol_not_font,
-                        "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
-                    });
-
-                    $("#consulta_disponibilidad").attr('disabled', false);
-                    $("#consulta_disponibilidad").text("Consultar disponibilidad");
-                    swal.close();
+    
+                        $("#total_dispo").text(response.data.result.CapacidadTotal === "" ? 0 : response.data.result.CapacidadTotal);
+    
+                        let arrayResult = (response.data.result.dias !== undefined && response.data.result.dias !== null) ? response.data.result.dias !== undefined ? response.data.result.dias : [] : [];
+                        //let arrayResult = [];
+                        $('#datatable_disponibilidad tbody').empty();
+                        let arraRow = [];
+                        $.each(arrayResult, function (i, elemento) {
+                            let array = [];
+                            let totalMatutino = 0;
+                            let totalVespertino = 0;
+                            let totalNocturno = 0;
+                            let totalTurnos = 0;
+    
+                            elemento.turnos.forEach(turno =>{
+                                if (turno.idCatTurno === 1) {
+                                    totalMatutino = turno.cantidad;
+                                    totalTurnos += turno.cantidad;
+                                }
+                                if (turno.idCatTurno === 2) {
+                                    totalVespertino = turno.cantidad;
+                                    totalTurnos += turno.cantidad;
+                                }
+                                if (turno.idCatTurno === 3) {
+                                    totalNocturno = turno.cantidad;
+                                    totalTurnos += turno.cantidad;
+                                }
+                            })
+    
+                            array[0] = elemento.fecha;
+                            array[1] = totalMatutino;
+                            array[2] = totalVespertino
+                            if ($scope.banderaNocturno) {
+                                array[3] = totalNocturno;
+                                array[4] = totalTurnos;
+                                array[5] = elemento.bloqueado ? 'DISPONIBLE' : 'BLOQUEADO';
+                                array[6] = '<a onclick="editarDisponibilidad('+totalMatutino+','+totalVespertino+','+totalNocturno+','+elemento.bloqueado+'\,'+'\''+elemento.fecha+'\')"><i class="cursorEfect edit_disponibilidad_btn fa fa-edit"></i></a>'
+                            } else {
+                                array[3] = totalTurnos;
+                                array[4] = elemento.bloqueado ? 'DISPONIBLE' : 'BLOQUEADO';
+                                array[5] = '<a onclick="editarDisponibilidad('+totalMatutino+','+totalVespertino+","+'\''+'\''+','+elemento.bloqueado+'\,'+'\''+elemento.fecha+'\')"><i class="cursorEfect edit_disponibilidad_btn fa fa-edit"></i></a>'
+                            }
+                            arraRow.push(array); 
+                        });/****/
+                        $('#datatable_disponibilidad').DataTable({
+                            "paging": true,
+                            "lengthChange": false,
+                            "searching": false,
+                            "ordering": false,
+                            "pageLength": 10,
+                            "recordsTotal": 100,
+                            "info": false,
+                            "autoWidth": true,
+                            "data": arraRow,
+                            "language": idioma_espanol_not_font,
+                            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+                        });
+    
+                        $("#consulta_disponibilidad").attr('disabled', false);
+                        $("#consulta_disponibilidad").text("Consultar disponibilidad");
+                        swal.close();
+                    } else {
+                        swal.close();
+                        mostrarMensajeErrorAlert(response.data.result.ResultDescription);
+                    }
                 } else {
                     swal.close();
-                    mostrarMensajeErrorAlert(response.data.result.ResultDescription);
+                    mostrarMensajeErrorAlert(response.data.resultDescripcion);
                 }
-            } else {
-                swal.close();
-                mostrarMensajeErrorAlert(response.data.resultDescripcion);
-            }
-        });
+            });
+        } else {
+            mostrarMensajeWarningValidacion(mensaje)
+        }
+        
     }
 
    
@@ -484,7 +377,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
         let nocturnoCantidad = $.trim(document.getElementById('nocturno_adddisp').value);
         let arrayTurno = [];
         let companiaInserta = $.trim(document.getElementById('compania_select').value);
-        let tipoIntervencion = $scope.intervencionSelect.ID;
+        let tipoIntervencion = $scope.intervencionSelect.id;
         let vespertinoCant = $.trim(document.getElementById('vespertino_adddisp').value);
         let matutinoCant = $.trim(document.getElementById('matutino_adddisp').value);
         let fechaInicio = $.trim(document.getElementById('fecha_inicio_adddisp').value);
@@ -492,29 +385,13 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
 
         let isValido = true;
         let mensajeError = "";
-        let distrito_cluster = '-1';
         let bloqueo = $("input[name='checkBloque']:checked").val();
         bloqueo = bloqueo === 'true' ? 1 : 0;
-
-        let selectedElms = $('#jstreeconsulta').jstree("get_selected", true);
-        let selected_arbol;
+        let ultimonivel=$scope.obtenerNivelUltimoJerarquia()
+        let clustersparam=$("#jstreeconsulta").jstree("get_selected", true)
+                                               .filter(e=>e.original.nivel== ultimonivel)
+                                               .map(e=>parseInt(e.id))
         /*
-                $.each(selectedElms, function (index, elem) {
-                    selected_arbol = elem.original;
-                    console.log(elem)
-                });
-        
-                if (selected_arbol !== undefined) {
-                    if ($scope.session_propietario === '16') {
-                        if (selected_arbol !== undefined && selected_arbol.Nivel === '5') {
-                            distrito_cluster = selected_arbol.id;
-                        }
-                    } else {
-                        if (selected_arbol !== undefined && selected_arbol.Nivel === '3') {
-                            distrito_cluster = selected_arbol.id;
-                        }
-                    }
-                }
         
                 if ($scope.banderaNocturno) {
                     nocturnoCantidad = $.trim(document.getElementById('nocturno_adddisp').value);
@@ -569,6 +446,9 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                 idCatTurno: 1,
                 cantidad: matutinoCant
             })
+        } else{
+            mensajeError += 'Introducir cantidad turno matutino \n'
+            isValido = false
         }
 
         if (vespertinoCant !== '') {
@@ -576,14 +456,23 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                 idCatTurno: 2,
                 cantidad: vespertinoCant
             })
+        } else{
+            mensajeError += 'Introducir cantidad turno vespertino <br/>'
+            isValido = false
         }
 
-        if (nocturnoCantidad !== '') {
-            arrayTurno.push({
-                idCatTurno: 3,
-                cantidad: nocturnoCantidad
-            })
+        if ($scope.banderaNocturno) {
+            if (nocturnoCantidad !== '') {
+                arrayTurno.push({
+                    idCatTurno: 3,
+                    cantidad: nocturnoCantidad
+                })
+            } else{
+                mensajeError += 'Introducir cantidad turno nocturno <br/>'
+                isValido = false
+            }
         }
+
 
 
         let fechaInicioSplit = fechaInicio.split('/');
@@ -592,12 +481,11 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
 
         let fechaInicioC = fechaInicioSplit[2] + '-' + fechaInicioSplit[1] + '-' + fechaInicioSplit[0]
         let fechaFinC = fechaFinSplit[2] + '-' + fechaFinSplit[1] + '-' + fechaFinSplit[0]
-        isValido = true
         if (isValido) {
 
             let params = {
-                subtipoIntervencion: 1,
-                idGeografia2: 3,
+                subtipoIntervencion: tipoIntervencion,
+                idGeografia2: clustersparam[0],
                 fechaInicio: fechaInicioC.concat('T00:00:00.000+0000'),
                 fechaFin: fechaFinC.concat('T00:00:00.000+0000'),
                 bloqueado: bloqueo,
@@ -638,8 +526,13 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
         let vespertinoCant = $.trim(document.getElementById('vespertino_actualizar').value);
         let nocturnoCant = $.trim(document.getElementById('nocturno_actualizar').value);
         let fechaInicio = $.trim(document.getElementById('fecha_inicio_adddisp').value);
+        let tipoIntervencion = $scope.intervencionSelect.id;
         let bloqueo = $("input[name='radio-bloqueo-mod-individual']:checked").val();
         bloqueo = bloqueo === 'true' ? 1 : 0;
+        let ultimonivel=$scope.obtenerNivelUltimoJerarquia()
+        let clustersparam=$("#jstreeconsulta").jstree("get_selected", true)
+                                               .filter(e=>e.original.nivel== ultimonivel)
+                                               .map(e=>parseInt(e.id))
 
         /*
         if (matutinoCant === '') {
@@ -700,8 +593,8 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
         let fechaInicioSplit = document.getElementById('fecha_actualizar').value.split('-')
 
         let params = {
-            subtipoIntervencion: 1,
-            idGeografia2: 3,
+            subtipoIntervencion: tipoIntervencion,
+            idGeografia2: clustersparam[0],
             fechaInicio: fechaInicioSplit[2] + '-' + fechaInicioSplit[0] + '-' + fechaInicioSplit[1].concat('T00:00:00.000+0000'),
             fechaFin: fechaInicioSplit[2] + '-' + fechaInicioSplit[0] + '-' + fechaInicioSplit[1].concat('T00:00:00.000+0000'),
             bloqueado: bloqueo,
@@ -745,13 +638,18 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
         document.getElementById('container-nocturno').style.display = 'block'
         document.getElementById('noctuurno_d').style.display = 'block'
         document.getElementById('container-noc').style.display = 'block'
-        document.getElementById('theadnocturno').style.display = 'block';
-        /* $('#datatable_disponibilidad tbody').empty()
+        //document.getElementById('theadnocturno').style.display = 'block';
+        
+        $('#datatable_disponibilidad tbody').empty()
         $('#theadDispo').empty();
+        //$('#datatable_disponibilidad').empty(),
+        $('#datatable_disponibilidad').dataTable().fnDestroy(true);
+        $("#container_table_disponibilidad").append('<table id="datatable_disponibilidad" class="table table table-hover table-striped"><thead id="theadDispo"></thead><tbody></tbody></table>');
         $scope.arrayTitulo.map(elemento =>{
             if (elemento.title === 'Nocturno') {
                 elemento.vista = true
             }
+            return elemento;
         });
         console.log($scope.arrayTitulo);
         let contenTheadDetalle = '';
@@ -762,7 +660,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
         });
         
         $('#theadDispo').append(`<tr> ${contenTheadDetalle} </tr>`);
-        $('#datatable_disponibilidad').dataTable().fnDestroy();
+
         $('#datatable_disponibilidad').DataTable({
             "paging": true,
             "lengthChange": false,
@@ -775,7 +673,11 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             "data": [],
             "language": idioma_espanol_not_font,
             "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
-        }); */
+        });
+/*         setTimeout(function()  {
+           
+        }, 1000); */
+
     }
 
     $scope.ocultarDisponibilidadNocturno = function () {
@@ -783,13 +685,18 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
         document.getElementById('container-nocturno').style.display = 'none'
         document.getElementById('noctuurno_d').style.display = 'none'
         document.getElementById('container-noc').style.display = 'none'
-        document.getElementById('theadnocturno').style.display = 'none';
-        /* $('#datatable_disponibilidad tbody').empty()
+        //document.getElementById('theadnocturno').style.display = 'none';
+        
+        $('#datatable_disponibilidad tbody').empty()
         $('#theadDispo').empty();
+        //$('#datatable_disponibilidad').empty(),
+        $('#datatable_disponibilidad').dataTable().fnDestroy(true);
+        $("#container_table_disponibilidad").append('<table id="datatable_disponibilidad" class="table table table-hover table-striped"><thead id="theadDispo"></thead><tbody></tbody></table>');
         $scope.arrayTitulo.map(elemento =>{
             if (elemento.title === 'Nocturno') {
                 elemento.vista = false
             }
+            return elemento;
         });
         console.log($scope.arrayTitulo);
         let contenTheadDetalle = '';
@@ -800,7 +707,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
         });
         
         $('#theadDispo').append(`<tr> ${contenTheadDetalle} </tr>`);
-        $('#datatable_disponibilidad').dataTable().fnDestroy();
+
         $('#datatable_disponibilidad').DataTable({
             "paging": true,
             "lengthChange": false,
@@ -813,7 +720,11 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             "data": [],
             "language": idioma_espanol_not_font,
             "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
-        }); */
+        });
+/*         setTimeout(function() {
+           
+        }, 1000); */
+
     }
 
     $("#modal_cluster_arbol_diponibilidad").on("hidden.bs.modal", function () {
@@ -861,6 +772,21 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
 
     $scope.closeModalModificar = function () {
         $('#modificar_disponibilidad_modal').modal('hide')
+    }
+
+    function compareGeneric(a,b){
+        let niveluno=a.nivel;
+        let niveldos=b.nivel;
+        if(niveluno>niveldos){ 
+            return -1
+        }else if( niveluno < niveldos){
+            return 1
+        } 
+        return 0
+    }
+
+    $scope.obtenerNivelUltimoJerarquia=function(){
+        return $scope.geografiaList.sort(compareGeneric)[0].nivel
     }
 
 }]);

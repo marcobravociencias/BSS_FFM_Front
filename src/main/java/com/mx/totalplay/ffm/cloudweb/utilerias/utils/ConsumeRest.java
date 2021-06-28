@@ -4,6 +4,8 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -137,7 +140,7 @@ public class ConsumeRest {
     }
 
     /**
-     * @param url
+     * @param urlRequest
      * @param params
      * @param classConversion
      * @return
@@ -145,13 +148,24 @@ public class ConsumeRest {
     public ServiceResponseResult callPatchBearerTokenRequest(String params, String urlRequest, Class<?> classConversion, String token) {
         ServiceResponseResult response = ServiceResponseResult.builder().isRespuesta(false).resultDescripcion("Sin datos").build();
         ResponseEntity<String> responseEntity = null;
+        HttpClient client = HttpClients.createDefault();
+        HttpComponentsClientHttpRequestFactory httpRequestFactory = new HttpComponentsClientHttpRequestFactory(client);
+        httpRequestFactory.setConnectTimeout(6000);
+        httpRequestFactory.setReadTimeout(6000);
+
+        restTemplate.setRequestFactory(httpRequestFactory);
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
             headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
             headers.set(HttpHeaders.AUTHORIZATION, "Bearer " + token);
-            HttpEntity<String> request = new HttpEntity<>(headers);
-            responseEntity = restTemplate.exchange(urlRequest, HttpMethod.PATCH, request, String.class);
+            HttpEntity<String> request = new HttpEntity<>(params, headers);
+            logger.info("Ingresa a funcion patch: "+request);
+            responseEntity = restTemplate.exchange(urlRequest, 
+            		HttpMethod.PATCH, 
+            		request, 
+            		String.class);
+            logger.info("Sale de funcion patch");
             String bodyResponse = responseEntity.getBody();
             logger.info("--- RESPONSE ---");
             logger.info(bodyResponse);
@@ -171,7 +185,7 @@ public class ConsumeRest {
     }
 
     /**
-     * @param url             Contieene url con parametros ejemplo /despacho/{idDespachoParam}/fecha/{fechaParam}
+     * @param urlRequest             Contieene url con parametros ejemplo /despacho/{idDespachoParam}/fecha/{fechaParam}
      * @param params          Formato Mapa con los parametros de la url Ej {idDespachoParam}=1229
      * @param classConversion Tipo de clase de conversion
      * @return ServiceResponseResult.class
@@ -212,7 +226,7 @@ public class ConsumeRest {
     }
 
     /**
-     * @param url
+     * @param urlRequest
      * @param params
      * @param classConversion
      * @return

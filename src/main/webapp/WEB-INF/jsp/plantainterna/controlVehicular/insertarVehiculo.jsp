@@ -1,5 +1,5 @@
 <div class="row">
-    <form ng-submit="validateFormInsert()">
+    <form ng-submit="insertarVehiculo()" autocomplete="off">
         <div class="row segment">
             <div class="col-3">
                 <span class="title">Datos Generales</span>
@@ -7,7 +7,7 @@
             <div class="col-8">
                 <div class="form-row">
                     <div class="col-3 form-group">
-                        <label>Tipo Vehiculo <span style="color: red">*</span></label>
+                        <label>Tipo Veh&iacute;culo <span style="color: red">*</span></label>
                         <select class="form-control form-control-sm custom-select" name="tipo" id="tipo"
                             ng-change="loadMarca()" ng-model="tipo">
                             <option value="" selected>-- Seleccione tipo --</option>
@@ -18,7 +18,7 @@
                     </div>
                     <div class="col-3 form-group">
                         <label>Marca <span style="color: red">*</span></label>
-                        <span ng-if="marcas.length == 0" id="msjInterno">Seleccione Tipo Vehiculo</span>
+                        <span ng-if="marcas.length == 0" id="msjInterno">Seleccione Tipo Veh&iacute;culo</span>
                         <select ng-if="marcas.length" class="form-control form-control-sm custom-select" name="marca" id="marca" ng-change="loadLinea()"
                             ng-model="marca">
                             <option value="" selected>-- Seleccione marca --</option>
@@ -28,7 +28,7 @@
                         </select>
                     </div>
                     <div class="col-3 form-group">
-                        <label>Linea de Vehiculo <span style="color: red">*</span></label>
+                        <label>Linea de Veh&iacute;culo <span style="color: red">*</span></label>
                         <span ng-if="lineas.length == 0" id="msjInterno">Seleccione Marca</span>
                         <select ng-if="lineas.length" class="form-control form-control-sm custom-select" name="linea" id="linea">
                             <option value="" selected>-- Seleccione linea --</option>
@@ -38,7 +38,7 @@
                         </select>
                     </div>
                     <div class="col-3 form-group">
-                        <label>A&ntilde;o de Vehiculo <span style="color: red">*</span></label>
+                        <label>A&ntilde;o de Veh&iacute;culo <span style="color: red">*</span></label>
                         <input type="text" class="datepicker year form-control form-control-sm" id="anio"/>
                     </div>
                 </div>
@@ -129,25 +129,25 @@
                     <div class="col-3 form-group">
                         <label>Licencia <span style="color: red">*</span></label>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="fileLicencia" lang="es" />
-                            <label class="custom-file-label" for="fileLicencia">Seleccionar Archivo</label>
+                            <input type="file" class="custom-file-input" id="fileLicencia" name="fileLicencia" accept="image/*" />
+                            <label class="custom-file-label" for="fileLicencia">Carga Imagen</label>
                         </div>
                     </div>
                     <div class="col-3 form-group">
                         <label>Tarjeta Circulaci&oacute;n
                             <span style="color: red">*</span></label>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="fileTarjeta" lang="es" />
-                            <label class="custom-file-label" for="fileTarjeta">Seleccionar Archivo</label>
+                            <input type="file" class="custom-file-input" id="fileTarjeta" accept="image/*"/>
+                            <label class="custom-file-label" for="fileTarjeta">Carga Imagen</label>
                         </div>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="col-3 form-group">
-                        <label>Foto de Vehiculo <span style="color: red">*</span></label>
+                        <label>Foto de Veh&iacute;culo <span style="color: red">*</span></label>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="fileFoto" lang="es" />
-                            <label class="custom-file-label" for="fileFoto">Seleccionar Archivo</label>
+                            <input type="file" class="custom-file-input" id="fileFoto" accept="image/*"/>
+                            <label class="custom-file-label" for="fileFoto">Carga Imagen</label>
                         </div>
                     </div>
                 </div>

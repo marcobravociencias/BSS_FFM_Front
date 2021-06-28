@@ -12,19 +12,20 @@
           aria-label="Close"
         ></button>
       </div>
-      <div style="padding: 0" class="modal-body">
+      <div style="padding-right=15px;padding-left:15px; max-height: 300px; overflow: auto;" class="modal-body">
                     <div class="input-group input-group-sm">
                         <input type="text" class="form-control form-control-sm typeahead" placeholder="Buscar cl&uacute;ster" id="text-search-cluster">
-                        <button class="input-group-addon" id="search-arbol-cluster" ng-click="busqueda()"><i class="fa fa-search"></i></button>
+                        <button class="input-group-addon" id="search-arbol-cluster" ng-click="busqueda()" style="color: #bdbdbd; border:1px solid #bdbdbd !important"><i class="fa fa-search"></i></button>
                     												
 					</div>
-					<div id="tree_arbol_empresarial" class="jstree-proton-3 proton-demo">
-                    </div>
-      <div class="modal-footer">
+					<div id="jstree-proton-3" class="proton-demo"></div>
+      
+    </div>
+    <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
           Cerrar
         </button>
       </div>
-    </div>
   </div>
+  
 </div>

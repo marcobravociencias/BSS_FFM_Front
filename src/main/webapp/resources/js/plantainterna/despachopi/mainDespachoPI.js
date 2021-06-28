@@ -58,9 +58,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
     }
 
     triggerOperarioKeyup=function(event){
-        console.log('triggering')
         if (event.keyCode != 38 && event.keyCode != 40) {
-            console.log($scope.buscarTecnicoInput )
             $scope.buscarTecnicoInput= $(".buscar-input-operario").val()          
             $scope.buscarTecnicoCalendar();
         }
@@ -92,7 +90,6 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             //startDate : FECHA_HOY_DATE,
             //endDate : moment(FECHA_HOY_DATE).add('days', 2).toDate()
         }).on('changeDate',function(e){   
-            console.log("cambiando datos fecha")
             let textCalendar=$('#calendar-next-back').val()
             $scope.fechaFiltradoCalendar= textCalendar;                 
             $scope.$apply()
@@ -146,7 +143,6 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
     });
 
     $scope.initFullCalendar = function(tecnicosParams){
-       console.log( $scope.listadoOtsAsignadas)
         fechaActualFormat = parseInt(fechaActual.getHours())-2 + ':' + fechaActual.getMinutes() + ':00';
         fullcalendarAsignadas=$('#calendar').fullCalendar({
             height: screen.availHeight-250,
@@ -183,7 +179,6 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                 fecha_asignacion = date.format();                
             },
             eventReceive: function(event) {
-                console.log(event.objectevent)
                 let otinfo=event.objectevent
                 otinfo.fechahoraasignacion=fecha_asignacion
 
@@ -199,7 +194,6 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                 }
             },
             eventDrop: function(event) { 
-                console.log(event.objectevent)
                 let data_tecnico =$scope.listadoTecnicosGeneral.find((e)=> e.idTecnico== parseInt(event.resourceId))
                 if($scope.validate_time_asignacion(event.start.format())){
                     if($scope.validate_status_tecnico(data_tecnico.status)){
@@ -234,7 +228,6 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                         <option value=4>Descanso, comida o vacaciones</option>
                     </select>
                 `);
-                //console.log("#termina de pintar")
                 $(".buscar-input-operario").val( $scope.buscarTecnicoInput )
                 $(".buscar-input-operario").focus()
                 logsuccess('Cargo correctamente')
@@ -286,8 +279,6 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
         }
         mainDespachoService.consultarConteoAlertasPI(params).then(function success(response) {
             $scope.listadoConteoAlertasTipo=conteoOtsDespacho.Alertas                                            
-
-            console.log(response);
             if (response.data !== undefined) {
                 if (response.data.respuesta) {
                     if (response.data.result.result === '0') {
@@ -345,37 +336,33 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
     $scope.randomIntFromInterval=function() { // min and max included 
         return Math.floor(Math.random() * (8 - 0 + 1) + 0)
     }
-    $scope.consultarOtsPendientes = function() {
-
-        
+    $scope.consultarOtsPendientes = function() {        
         $scope.listadoOtsPendientes=[]        
-        $scope.isCargaOtsPendientes=false;
+        $scope.isCargaOtsPendientes=false;        
+        let turnosdisponiblescopy=$scope.filtrosGeneral.turnosdisponibles.filter(e=>e.checkedOpcion).map(e=>e.id)       
+        let intervencionestemp=$scope.filtrosGeneral.tipoOrdenes.filter(e=>e.checkedOpcion).map(e=>e.id)
+        let subIntTemp=[]
+        angular.forEach($scope.filtrosGeneral.tipoOrdenes,(e,i)=>{
+            e.children.filter( f => f.checkedOpcion ).map((k)=>{ subIntTemp.push(k.id); return k;} )   
+        })
+
+        let ultimonivel=$scope.obtenerNivelUltimoJerarquia()
+        let clustersparam=$("#jstree-proton-3").jstree("get_selected", true)
+                                               .filter(e=>e.original.nivel== ultimonivel)
+                                               .map(e=>parseInt(e.id))
+
         var params =  {
-            "fechaInicio": "2021-06-08",
-            "fechaFin": "2021-06-11",
-            "idSubIntervenciones": [              
-                1,
-                2,
-                365,100
-            ],
-            "idTurnos": [
-              1,
-              2
-            ],  
-            "idEstatus": [
-              1
-            ],
-            "idClusters": [
-              1,
-              2,
-              365
-            ]
+            "fechaInicio": moment( moment($scope.fechaInicioFiltro, 'DD/MM/YYYY').toDate()  ).format('YYYY-MM-DD'),
+            "fechaFin": moment( moment($scope.fechaFinFiltro , 'DD/MM/YYYY').toDate() ).format('YYYY-MM-DD') ,
+            "idSubIntervenciones": [].concat(intervencionestemp,subIntTemp),
+            "idTurnos": turnosdisponiblescopy,  
+            "idEstatus": [1],
+            "idClusters": clustersparam
         }
         if(dataTableOtsPendientes)
             dataTableOtsPendientes.destroy()
         
         mainDespachoService.consultarOrdenesPendientesDespacho(params).then(function success(response) {
-            console.log(response);
             $("#table-ot-pendientes tbody").empty()
             if (response.data !== undefined) {
                 if(response.data.respuesta ){
@@ -557,8 +544,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
        $scope.iniciarTypeAhead( arrayBusqueda )
     }
     $scope.buscarOtPendiente=function(event){
-        if (event.which === 13){
-            console.log("")   
+        if (event.which === 13){  
             $scope.buscarOtPendienteText() 
         }   
         if($("#buscar-ot-pendiente").val().trim() === '')
@@ -606,21 +592,13 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
     $scope.consultarOrdenesTrabajoAsignadasDespacho = function() {
         $scope.isCargaOtsAsignadas=false;
         $scope.listadoOtsAsignadas=[]
-    
-       // $('#filtro-fechainicio' ).val($scope.fechaInicioFiltro )
-       // $("#filtro-fechafin").val(  $scope.fechaFinFiltro )
-      
         let dateSeparado=$scope.fechaFiltradoCalendar.split('/')
-      
         let formatDateInicio=dateSeparado[2]+'-'+dateSeparado[1]+'-'+dateSeparado[0]
-
-
         var params =  {
             "fechaInicio":formatDateInicio,
             "fechaFin":formatDateInicio    
         }
         mainDespachoService.consultarOrdenesaAsignadasDespacho(params).then(function success(response) {     
-            console.log(response);            
             if (response.data !== undefined) {
                 if(response.data.respuesta ){
                     if(response.data.result ){
@@ -641,8 +619,6 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                                 e.end=e.fechaFin+' '+e.horaFin
                                 return e
                             })
-                            console.log("##########3----")
-                            console.log($scope.listadoOtsAsignadas)
                         }else{                            
                             toastr.info( 'No se encontraron OTS asignadas' );                
                         }
@@ -695,21 +671,16 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
         }       
     }
     setInterval(function(){
-        console.log("intervalo")
         $scope.consultarConteoAlertasPI()
     }, MILISEGUNDOS_ALERTAS);
 
 
-    
     $scope.getCatControlleripoOrdenUsuarioDespacho=function(){
 
-        mainDespachoService.consultarCatalogoTipoOrdenUsuarioDespacho().then(function success(response) {     
-            console.log(response);            
+        mainDespachoService.consultarCatalogoTipoOrdenUsuarioDespacho().then(function success(response) {             
             if (response.data !== undefined) {
                 if(response.data.respuesta ){
                     if(response.data.result ){
-                        console.log("######")
-                        console.log(response.data.result)
                     }else{                      
                         toastr.warning( 'No se encontraron catalogos turnos' );                
                     }
@@ -726,12 +697,9 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
     $scope.getCatControllerrafiaUsuarioDespacho=function(){
 
         mainDespachoService.consulCatalogoGeografiaUsuarioDespacho().then(function success(response) {     
-            console.log(response);            
             if (response.data !== undefined) {
                 if(response.data.respuesta ){
                     if(response.data.result ){
-                        console.log("######")
-                        console.log(response.data.result)
                     }else{                      
                         toastr.warning( 'No se encontraron catalogos turnos' );                
                     }
@@ -745,17 +713,12 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
            // swal.close()
         });
     }
-
- 
     $scope.getCatControllerstatusDespachoPI=function(){
 
         mainDespachoService.consultarCatalogoEstatusDespachoPI().then(function success(response) {     
-            console.log(response);            
             if (response.data !== undefined) {
                 if(response.data.respuesta ){
                     if(response.data.result ){
-                        console.log("######")
-                        console.log(response.data.result)
                     }else{                      
                         toastr.warning( 'No se encontraron catalogos turnos' );                
                     }
@@ -776,16 +739,14 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
     $scope.cargarFiltrosGeneric=function(){
         $q.all([
             mainDespachoService.consultarCatalogosTurnosDespachoPI() ,
-            mainDespachoService.consultarCatalogoTipoOrdenConfigDespacho(),
-            mainDespachoService.consulCatalogoGeografiaGeneralDespacho()
+            mainDespachoService.consultarCatalogoTipoOrdenUsuarioDespacho(),
+            mainDespachoService.consulCatalogoGeografiaUsuarioDespacho()
         ]).then(function(results) {
-            console.log("entra de cualquier manera")
             if (results[0].data !== undefined) {
                 if(results[0].data.respuesta ){
                     if(results[0].data.result ){
-                        console.log("######")
-                        console.log(results[0].data.result)
                         $scope.filtrosGeneral.turnosdisponibles=results[0].data.result
+                        $scope.filtrosGeneral.turnosdisponibles.map(e=>{e.checkedOpcion=true; return e;})
                     }else{                      
                         toastr.warning( 'No se encontraron catalogos turnos' );                
                     }
@@ -799,8 +760,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             if (results[1].data !== undefined) {
                 if(results[1].data.respuesta ){
                     if(results[1].data.result ){
-                        $scope.filtrosGeneral.tipoOrdenes=results[1].data.result
-                        $scope.filtrosGeneral.tipoOrdenes.map((e)=>{e.checkedOpcion=true;return e;})
+                        $scope.filtrosGeneral.tipoOrdenes=$scope.realizarConversionAnidado( results[1].data.result)            
                     }else{                      
                         toastr.warning( 'No se encontraron catalogos turnos' );                
                     }
@@ -815,8 +775,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                 if(results[2].data.respuesta ){
                     if(results[2].data.result ){
                         if(results[2].data.result.geografia){
-                            console.log("######")
-                            console.log(results[2].data.result)
+                            $scope.listadogeografiacopy=results[2].data.result.geografia
                             geografia=results[2].data.result.geografia
                             geografia.map((e)=>{
                                 e.parent=e.padre ==undefined ? "#" : e.padre;
@@ -835,6 +794,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                                 $scope.consultarOtsPendientes()
                                 $scope.consultarTecnicosDisponibiles()
                                 $scope.consultarCatalogosAcciones();
+
                             }).jstree({
                                 'plugins': ["wholerow", "checkbox"],
                                 'core': {
@@ -862,8 +822,29 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
 
         });
     }
+    $scope.realizarConversionAnidado=function(array){
+        let arrayCopy=[]
+        angular.forEach(array.filter( e=> e.nivel == 1),function(elemento,index){
+            elemento.checkedOpcion=true;
+            elemento.children=array.filter( e=> e.nivel == 2 && e.idPadre == elemento.id)
+            elemento.children=(elemento.children !==undefined && elemento.children.length>0) ? elemento.children:[]
+            elemento.children.map(e=> {e.checkedOpcion=true;return  e;})
+            arrayCopy.push(elemento)
+        }) 
+        return arrayCopy;
+    }   
+    function compareGeneric(a,b){
+        let niveluno=a.nivel;
+        let niveldos=b.nivel;
+        if(niveluno>niveldos){ 
+            return -1
+        }else if( niveluno < niveldos){
+            return 1
+        } 
+        return 0
+    }
+    $scope.obtenerNivelUltimoJerarquia=function(){
+        return $scope.listadogeografiacopy.sort(compareGeneric)[0].nivel
+    }
     $scope.cargarFiltrosGeneric()
-
-
-
 }]);

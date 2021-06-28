@@ -71,16 +71,16 @@
                                     class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
                                 </li>
                                 <li class="elemento_menu dropdown-divider"></li>
-                                <li ng-repeat="filtro in filtrosGeneral.General_filtros.filtros "
+                                <li ng-repeat="filtro in filtrosGeneral.tipoOrdenes"
                                 class="element-menu-filter" class="element-menu-filter">
                                 <label class="dropdown-item form-check-inputfiltro">
-                                    <input ng-click=setCheckIntervencion(filtro) id="filtrotext-{{filtro.ID}}"
+                                    <input ng-click=setCheckIntervencion(filtro) id="filtrotext-{{filtro.id}}"
                                     class="form-check-input" type="checkbox"
                                     ng-checked="filtro.checkedOpcion" />
-                                    <span for="filtrotext-{{filtro.ID}}" class="dropdown-item item-text-filtro"
-                                    href="#" ng-bind="filtro.ID_Description"></span>
+                                    <span for="filtrotext-{{filtro.id}}" class="dropdown-item item-text-filtro"
+                                    href="#" ng-bind="filtro.nombre"></span>
                                     </label>
-                                    <ul class="dropdown-menu">
+                                    <!-- <ul class="dropdown-menu">
                                         <li ng-repeat="subfiltro in filtro.subfiltros" class="element-menu-filter">
                                             <label class="dropdown-item form-check-inputfiltro">
                                                 <input ng-click=setCheckSubIntervencion(subfiltro,filtro)
@@ -91,13 +91,13 @@
                                                 ng-bind="subfiltro.ID_Description"></span>
                                             </label>
                                         </li>
-                                    </ul>
+                                    </ul> -->
                                 </li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-2 column-style-consulta columna-filtro-ind">
-                        <input readonly placeholder="CL&Uacute;STER" type="text" id="cluster"
+                        <input readonly placeholder="GEOGRAF&Iacute;A" type="text" id="cluster"
                         class="input-filtro-consultaOT form-control form-control-sm">
                     </div>
                     <div class="col-2 columna-filtro-ind" style="width: 120px;">

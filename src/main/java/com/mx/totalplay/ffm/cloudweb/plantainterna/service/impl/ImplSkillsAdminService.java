@@ -1,5 +1,8 @@
 package com.mx.totalplay.ffm.cloudweb.plantainterna.service.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +76,45 @@ public class ImplSkillsAdminService implements SkillsAdminService{
 		ServiceResponseResult response=restCaller.callPatchBearerTokenRequest(jsonObject.toString(), url, ServiceResponseResult.class, tokenAcces);
 		logger.info("RESULT guardarSkills"+gson.toJson(response));
 		return null;
+	}
+
+	@Override
+	public ServiceResponseResult consultarCatalogosPI(String params) {
+JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		
+		JsonObject login = new JsonObject();		
+		login.addProperty( env.getProperty("param.textus.pI") , constantesAmbiente.getTextIpUsuario());
+		login.addProperty( env.getProperty("param.textus.drowssaP") , constantesAmbiente.getTextCredPad());
+		login.addProperty( env.getProperty("param.textus.resU") , constantesAmbiente.getTextCredUs());	
+		
+		jsonObject.add("Login", login);
+		
+		logger.info("json object params## "+jsonObject.toString());
+		
+	    String url="http://10.216.47.89"+constSkills.getFiltrosSkillsPI();
+		ServiceResponseResult response= restCaller.callPostParamString(url, jsonObject.toString());
+	    logger.info("RESULT"+gson.toJson(response));
+		return response;
+	}
+	@Override
+	public ServiceResponseResult consultarCatalogoGeografiaGeneral() {
+		logger.info("ImplDespachoPIService.class [metodo = consultarCatalogoGeografiaGeneral() ]\n");
+		
+		
+		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
+		String tokenAcces=principalDetail.getAccess_token() ;
+		logger.info("consultarCatalogoGeografiaGeneral ##+"+tokenAcces);							
+	    String urlRequest=principalDetail.getDireccionAmbiente().concat( constSkills.getConsultarCatalogoGeografiaGeneralPI() );
+		
+	    Map<String, String> paramsRequestGet = new HashMap<String, String>();
+		//paramsRequestGet.put("idDespacho", principalDetail.getIdUsuario()+"");	    
+		ServiceResponseResult response= restCaller.callGetBearerTokenRequest( 
+																			paramsRequestGet,
+																			urlRequest,
+																			ServiceResponseResult.class , 
+																			tokenAcces );
+	    logger.info("RESULT"+gson.toJson(response));
+		return response;
 	}
 
 }

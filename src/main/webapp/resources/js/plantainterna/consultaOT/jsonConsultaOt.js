@@ -21,7 +21,18 @@ let arrayDetalleOt = {
                     "Nombre_contacto": "DAVID ZAVALETA JUAREZ",
                     "Tipo_instervencion": "INSTALACIÓN",
                     "Subtipo_intervencion": "INSTALACIONES NUEVAS",
-                    "Direccion_instalacion": "ZAPOPAN, VALLE REAL,, GUADALAJARA, PASEO VALLE REAL, CP: 45019",
+                    "Direccion": {
+                        "Latitud": "19.3339988",
+                        "Longitud": "-99.1984965",
+                        "Ciudad": "ZAPOPAN",
+                        "Estado": "GUADALAJARA",
+                        "Municipio": "ZAPOPAN",
+                        "Colonia": "PASEO VALLE REAL",
+                        "Calle": "VALLE REAL",
+                        "Numero_interior": "S/N",
+                        "Numero_exterior": "190",
+                        "Codigo_postal": "45019"
+                        },
                     "Telefono_empresa": "5515339293 EXT : NA",
                     "Telefono_contacto": "3333333330"
                 }

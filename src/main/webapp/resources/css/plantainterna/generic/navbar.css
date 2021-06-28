@@ -69,9 +69,6 @@ h5.header-perfil-usuario {
     vertical-align: initial;
 }
 
-
-
-
 .navbar-menu-generic {
     padding: 0;
     box-sizing: none !important;
@@ -126,6 +123,8 @@ h5.header-perfil-usuario {
   .dropdown-item {
     font-size: 0.9em !important;
     font-family: "Montserrat" !important;
+    color: black !important;
+    padding: .25rem 1.5rem !important;
   }
   
   .dropdown-item.active,
@@ -135,3 +134,9 @@ h5.header-perfil-usuario {
     font-weight: bold !important;
   }
   
+  .dropdown-menu {
+    font-size: 0.9em !important;
+    padding: 0 0 !important;
+    border: 0 !important;
+  
+  }

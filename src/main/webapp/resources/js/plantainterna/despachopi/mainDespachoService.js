@@ -1,9 +1,9 @@
 app.service("mainDespachoService", function ($http) {
 
-	this.consultarCatalogoTipoOrdenConfigDespacho=function(params){
+	this.consultarCatalogoTipoOrdenGeneralDespacho=function(params){
 		return $http({
 			method: "post",
-			url: "req/consultarCatalogoTipoOrdenConfigDespacho",
+			url: "req/consultarCatalogoTipoOrdenGeneralDespacho",
 			//data:JSON.stringify(params),
             headers : {
                 'Content-Type' : 'application/json'
@@ -63,17 +63,6 @@ app.service("mainDespachoService", function ($http) {
 		});
 	};
 	
-    this.consultarCatalogosPlantaInterna=function(params){
-		return $http({
-			method: "post",
-			url: "req/consultarCatalogoDesphachoPI",
-			data:JSON.stringify(params),
-            headers : {
-                'Content-Type' : 'application/json'
-            }
-		});
-	};
-
     this.consultarOrdenesPendientesDespacho=function(params){
 		return $http({
 			method: "post",
