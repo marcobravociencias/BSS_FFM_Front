@@ -20,5 +20,4 @@ public class FfmcloudwebApplication extends SpringBootServletInitializer {
 	public static void main(String[] args) {
 		SpringApplication.run(FfmcloudwebApplication.class, args);
 	}
-
 }
