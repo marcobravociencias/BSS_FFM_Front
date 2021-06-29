@@ -1,47 +1,46 @@
 app.filtrosDespachoPrincipal=function($scope,misProyectosManagService){
-    $scope.seleccionarTodos=function(){
-        $scope.filtrosGeneral.General_filtros.filtros.map(function(e){
+    
+    $scope.seleccionarTodos=function(paramFiltroParent){
+        paramFiltroParent.map(function(e){
             e.checkedOpcion=true
         })
 
-        $scope.filtrosGeneral.General_filtros.filtros.map(function(e){
-            e.subfiltros.map(function(j){
+        paramFiltroParent.map(function(e){
+            e.children.map(function(j){
                 j.checkedOpcion=true
                 return j
             })
         }) 
     }
-    $scope.deseleccionarTodos=function(){
-        $scope.filtrosGeneral.General_filtros.filtros.map(function(e){
+    $scope.deseleccionarTodos=function(paramFiltroParent){
+        paramFiltroParent.map(function(e){
             e.checkedOpcion=false
         })
-        $scope.filtrosGeneral.General_filtros.filtros.map(function(e){
-            e.subfiltros.map(function(j){
+        paramFiltroParent.map(function(e){
+            e.children.map(function(j){
                 j.checkedOpcion=false
                 return j
             })
         }) 
     }
-    $scope.setCheckIntervencion=function(elementoInt){
-        console.log(elementoInt.checkedOpcion)
+    $scope.setCheckFiltroGeneric=function( filtroParent){
+        console.log( filtroParent.checkedOpcion)
         console.log("#####---------")
-        console.log( elementoInt.subfiltros )
+        console.log(  filtroParent.children )
 
-        elementoInt.checkedOpcion=!elementoInt.checkedOpcion
-        elementoInt.subfiltros.map(function(e){
-            e.checkedOpcion=elementoInt.checkedOpcion
+         filtroParent.checkedOpcion=! filtroParent.checkedOpcion
+         filtroParent.children.map(function(e){
+            e.checkedOpcion= filtroParent.checkedOpcion
             return e
         })
         console.log("#####")
-        console.log( elementoInt.subfiltros )
-        console.log(elementoInt.checkedOpcion)
+        console.log(  filtroParent.children )
+        console.log( filtroParent.checkedOpcion)
     }
-    $scope.setCheckSubIntervencion=function(subInt,intervencion){
-        subInt.checkedOpcion=!subInt.checkedOpcion
-
-
-        let cantidadSubfiltros=intervencion.subfiltros.length
-        let cantidadChecked=intervencion.subfiltros.filter(function(e){return e.checkedOpcion}).length
-        intervencion.checkedOpcion=cantidadSubfiltros !== cantidadChecked ? false :true
+    $scope.setCheckSubFiltroGeneric=function(subFiltro,parentFiltro){
+        subFiltro.checkedOpcion=!subFiltro.checkedOpcion
+        let cantidadSubfiltros=parentFiltro.children.length        
+        let cantidadChecked=parentFiltro.children.filter(function(e){return e.checkedOpcion}).length
+        parentFiltro.checkedOpcion= cantidadSubfiltros !== cantidadChecked ? false :true
     }   
 }

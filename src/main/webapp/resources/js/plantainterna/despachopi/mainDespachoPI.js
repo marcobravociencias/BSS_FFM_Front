@@ -355,9 +355,9 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
         var params =  {
             "fechaInicio": moment( moment($scope.fechaInicioFiltro, 'DD/MM/YYYY').toDate()  ).format('YYYY-MM-DD'),
             "fechaFin": moment( moment($scope.fechaFinFiltro , 'DD/MM/YYYY').toDate() ).format('YYYY-MM-DD') ,
-            "idSubIntervenciones": [].concat(intervencionestemp,subIntTemp),
+            "idSubIntervenciones": [].concat(subIntTemp,[1]),
             "idTurnos": turnosdisponiblescopy,  
-            "idEstatus": [1],
+            "idEstatus": [2, 6, 5, 3, 7, 1, 8, 4, 229, 257, 243, 209, 212, 224, 245, 211, 240, 208, 210, 247, 213, 219, 220, 231, 218, 205, 204, 217, 230, 233, 255, 249, 202, 238, 239, 250, 244, 225, 246, 200, 221, 256, 252, 227, 228, 232, 251, 214, 206, 226, 207, 222, 203, 248, 215, 201, 223, 254, 234, 253, 241, 216, 236, 237, 235, 242],
             "idClusters": clustersparam
         }
         if(dataTableOtsPendientes)
@@ -741,8 +741,23 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
         $q.all([
             mainDespachoService.consultarCatalogosTurnosDespachoPI() ,
             mainDespachoService.consultarCatalogoTipoOrdenUsuarioDespacho(),
-            mainDespachoService.consulCatalogoGeografiaUsuarioDespacho()
+            mainDespachoService.consulCatalogoGeografiaUsuarioDespacho(),
+            mainDespachoService.consultarCatalogoEstatusDespachoPI()
         ]).then(function(results) {
+            if (results[3].data !== undefined) {
+                if(results[3].data.respuesta ){
+                    if(results[3].data.result ){
+                        $scope.filtrosGeneral.estatusdisponibles=$scope.realizarConversionAnidado( results[3].data.result)   
+                    }else{                      
+                        toastr.warning( 'No se encontraron  tipo ordenes' );                
+                    }
+                }else{
+                    toastr.warning( results[1].data.resultDescripcion );                
+                }               
+            }else{
+                toastr.error( 'Ha ocurrido un error en la consulta de tipo ordenes' );                
+            }
+            
             if (results[0].data !== undefined) {
                 if(results[0].data.respuesta ){
                     if(results[0].data.result ){

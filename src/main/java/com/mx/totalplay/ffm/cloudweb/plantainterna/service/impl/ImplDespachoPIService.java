@@ -103,18 +103,18 @@ public class ImplDespachoPIService implements DespachoPIService{
 	
 	public ServiceResponseResult consultarCatalogoEstatusOrden() {
 		logger.info("ImplDespachoPIService.class [metodo = consultarCatalogoEstatusOrden() ]\n");
-		
-		
+
+		String tokenTemp="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZE9yaWdlbiI6bnVsbCwidXNlcl9uYW1lIjoiRkZNQkFDSyIsImlkVXN1YXJpbyI6NjcsImlkUHVlc3RvIjoxLCJpZEdlb2dyYWZpYSI6MSwiaWRQcm9waWV0YXJpbyI6MSwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sImV4cCI6MTcyNDkyNjAwMiwiaWF0IjoxNjI0OTIwNjAyLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiLCJBRE1JTiJdLCJpZFVuaWRhZE5lZ29jaW8iOjR9.G5u4M4xPG77NSkOtQPjS2Xh8eh-n9irOhZNdGSciHY0rag1xpEYfTlnMtWOVfl7zc_e7z7F8-RUdW__MjxWUdw";
 		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
-		String tokenAcces=principalDetail.getAccess_token() ;
-		logger.info("consultarCatalogoEstatusOrden ##+"+tokenAcces);							
+		String tokenAccess=principalDetail.getAccess_token() ;
+		logger.info("consultarCatalogoEstatusOrden ##+"+tokenAccess);
 	    String urlRequest=principalDetail.getDireccionAmbiente().concat( constDespachoPI.getConsultaCatalogoEstatusOrdenDespacho() );		
 	    Map<String, String> paramsRequestGet = new HashMap<String, String>();
 		ServiceResponseResult response= restCaller.callGetBearerTokenRequest( 
 																			paramsRequestGet,
 																			urlRequest,
-																			ServiceResponseResult.class , 
-																			tokenAcces );
+																			ServiceResponseResult.class ,
+																			tokenTemp );
 	    logger.info("RESULT"+gson.toJson(response));
 		return response;
 	}
