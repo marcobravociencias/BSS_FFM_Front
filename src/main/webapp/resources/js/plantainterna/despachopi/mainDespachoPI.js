@@ -351,6 +351,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                                                .filter(e=>e.original.nivel== ultimonivel)
                                                .map(e=>parseInt(e.id))
 
+
         var params =  {
             "fechaInicio": moment( moment($scope.fechaInicioFiltro, 'DD/MM/YYYY').toDate()  ).format('YYYY-MM-DD'),
             "fechaFin": moment( moment($scope.fechaFinFiltro , 'DD/MM/YYYY').toDate() ).format('YYYY-MM-DD') ,
@@ -762,7 +763,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                     if(results[1].data.result ){
                         $scope.filtrosGeneral.tipoOrdenes=$scope.realizarConversionAnidado( results[1].data.result)            
                     }else{                      
-                        toastr.warning( 'No se encontraron catalogos turnos' );                
+                        toastr.warning( 'No se encontraron  tipo ordenes' );                
                     }
                 }else{
                     toastr.warning( results[1].data.resultDescripcion );                
@@ -777,13 +778,16 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                         if(results[2].data.result.geografia){
                             $scope.listadogeografiacopy=results[2].data.result.geografia
                             geografia=results[2].data.result.geografia
+                          
+                            //necesario para agregar el y arbol 
                             geografia.map((e)=>{
                                 e.parent=e.padre ==undefined ? "#" : e.padre;
                                 e.text= e.nombre;
                                 e.icon= "fa fa-globe";
-                                e.state= {
-                                opened: false,
-                                selected: true,
+                               
+                                e.state= { //Este objeto tu no lo necesitas karen! e.state
+                                    opened: false,
+                                    selected: true,
                                 }
                                 return e
                             })       
