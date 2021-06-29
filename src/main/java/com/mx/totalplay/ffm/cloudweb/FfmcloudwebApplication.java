@@ -13,6 +13,7 @@ import org.springframework.context.annotation.PropertySources;
 })
 
 public class FfmcloudwebApplication extends SpringBootServletInitializer {
+	
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {	
 	    return application.sources(FfmcloudwebApplication.class);
