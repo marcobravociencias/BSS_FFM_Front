@@ -39,11 +39,4 @@ public class DisponibilidadController {
         ServiceResponseResult response = disponibilidadService.actualizarDisponibilidad(params);
         return response;
     }
-
-    @GetMapping("/consultarIntervenciones")
-    public Object consultarIntervenciones() {
-        logger.info("#### CONSULTAR INTERVENCIONES ###");
-        ServiceResponseResult response = disponibilidadService.consultarIntervenciones();
-        return response;
-    }
 }

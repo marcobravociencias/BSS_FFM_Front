@@ -557,6 +557,7 @@ a.fc-day-grid-event.fc-h-event.fc-event.fc-start.fc-end.fc-draggable {
     font-size: 11px;
     white-space: pre-wrap !important;
     box-shadow: 0px 0px 10px #808c8c;
+    border: none;
 }
 
 #calendar_disponibilidad .fc-col-header {
@@ -855,4 +856,12 @@ div.dataTables_wrapper div.dataTables_length label {
 
 .body-modal-capacidad-mod{
     height: 190px;
+}
+
+.fc-header-toolbar.fc-toolbar{
+  padding-top: 5px !important;
+}
+
+.fc-event-title-container{
+  padding-left: 0.2em;
 }

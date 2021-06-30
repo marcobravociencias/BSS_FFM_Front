@@ -7,19 +7,6 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 public class ConstDisponbilidadPI {
-
-    @Value("${restagregadisponibilidad}")
-    private String restagregadisponibilidad;
-
-    @Value("${restconsultadisponibilidad}")
-    private String restconsultadisponibilidad;
-
-    @Value("${restactualizadisponibilidad}")
-    private String restactualizadisponibilidad;
-
-    @Value("${restconsultaintervencidisponibilidad}")
-    private String restconsultaintervencidisponibilidad;
-
     @Value("${ffmDisponibilidad}")
     private String ffmDisponibilidad;
 
