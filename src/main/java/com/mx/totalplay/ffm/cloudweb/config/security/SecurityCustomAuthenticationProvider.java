@@ -38,8 +38,6 @@ public class SecurityCustomAuthenticationProvider implements AuthenticationProvi
         put("/disponibilidad","ROLE_USER");
         put("/consultaOT","ROLE_USER");
         put("/req/**","ROLE_USER");
-        put("/enrutarUser","ROLE_USER");
-		put("/detailsHelp","ROLE_USER");
 		put("/","ROLE_ANONYMOUS");
     }};
     

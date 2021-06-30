@@ -26,7 +26,7 @@
                   <tr><th class="st">request.getLocalPort():</th><td  align="left"><%=request.getLocalPort()%>
                   <tr><th class="st">request.getServletPath():</th><td  align="left"><%=request.getServletPath()%>
                   <tr><th class="st">request.getHeader("x-forwarded-for"):</td><td  align="left"><%=(request.getHeader("x-forwarded-for")!=null)?request.getHeader("x-forwarded-for"):""%>
-                  <tr><td colspan="2" align="center"><a href="descargaLogFile/ffmlog.log">    FFM_web.log</a></td></tr>
+                  <tr><td colspan="2" align="center"><a href="req/descargaLogFile/ffmlog.log">    FFM_web.log</a></td></tr>
               </table>
         </div>
     </div>
