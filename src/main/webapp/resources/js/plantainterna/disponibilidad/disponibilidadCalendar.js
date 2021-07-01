@@ -30,12 +30,8 @@ app.disponibilidadCalendar = function ($scope) {
             },
             eventClick: function (info) {
                 console.log(info);
-                removerClasesElementosValidacion($scope.arrayIdsModif);
                 let eventObject = info.event;
-                let fecha_nueva = new Date(eventObject._instance.range.start)
-                let todayUTC = (fecha_nueva.getUTCFullYear() + '-' + (fecha_nueva.getUTCMonth() + 1) + '-' + fecha_nueva.getUTCDate());
-                let fecha_modificada = (todayUTC).split('-')
-                let lengFecha = fecha_modificada[1].length
+
                 $("#matutino_actualizar").val(eventObject._def.extendedProps.matutino);
                 $("#vespertino_actualizar").val(eventObject._def.extendedProps.vespertino);
                 if ($scope.banderaNocturno) {
@@ -44,7 +40,7 @@ app.disponibilidadCalendar = function ($scope) {
                 } else {
                     document.getElementById('contenedor-editar-nocturno').style.display = 'none'
                 }
-                $("#fecha_actualizar").val(lengFecha > 1 ? fecha_modificada[1] : '0'+fecha_modificada[1] + "-" + fecha_modificada[2] + '-'  + fecha_modificada[0]);
+                $("#fecha_actualizar").val(eventObject._def.extendedProps.fecha);
 
                 let tipo_bloque = (eventObject._def.extendedProps.bloqueo)
 
@@ -102,7 +98,6 @@ app.disponibilidadCalendar = function ($scope) {
                                 } else {
                                     document.getElementById('container-noc').style.display = 'none'
                                 }
-                                removerClasesElementosValidacion($scope.arrayIdsElementosValidacionAddDisp);
                                 var format_mex = stringdateselected[0].split("-")
                                 $('#fecha_inicio_adddisp').datepicker("setDate", new Date(format_mex[0], format_mex[1], format_mex[2]));
                                 $('#fecha_fin_adddisp').datepicker("setDate", new Date(format_mex[0], format_mex[1], format_mex[2]));
@@ -170,6 +165,7 @@ app.disponibilidadCalendar = function ($scope) {
                 id: index,
                 color: ((datosDisponibilidad.bloqueado)) ? bloq = '#1c74bfb3' : bloq = '#b9bfbc',
                 textColor: 'white',
+                fecha: datosDisponibilidad.fecha,
                 matutino: totalMatutinoEvent,
                 vespertino: totalVespertinoEvent,
                 nocturno: totalNocturnoEvent,

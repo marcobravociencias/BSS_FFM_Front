@@ -8,6 +8,4 @@ public interface DisponibilidadService {
     ServiceResponseResult consultarDisponibilidad(String params);
 
     ServiceResponseResult actualizarDisponibilidad(String params);
-
-    ServiceResponseResult consultarIntervenciones();
 }

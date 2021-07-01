@@ -38,5 +38,12 @@ public class ControlVehicularController {
 		ServiceResponseResult response = controlVehicularService.consultarSeguros();
 		return response;
 	}
-	
+
+	@GetMapping("/consultarEstatus")
+	public ServiceResponseResult consultarEstatus() {
+		logger.info("##### CONSULTANDO consultarEstatus");
+		ServiceResponseResult response = controlVehicularService.consultarEstatus();
+		return response;
+	}
+	 
 }

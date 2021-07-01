@@ -12,6 +12,7 @@ import com.mx.totalplay.ffm.cloudweb.utilerias.service.AutentificacionService;
 import com.mx.totalplay.ffm.cloudweb.utilerias.utils.ConstantesGeneric;
 import com.mx.totalplay.ffm.cloudweb.utilerias.utils.ConsumeRest;
 
+
 @Service
 public class ImplAutentificacionService  implements AutentificacionService{
 	

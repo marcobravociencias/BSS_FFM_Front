@@ -33,7 +33,7 @@ pageEncoding="ISO-8859-1"%>
 	<div class="container-fluid container-filtros-disponibilidad" id="container_consulta_disponbilidad">
 		<div class="container-fluid">
 			<div class="row md-form" id="filters-dispo">
-				<div class="col-sm-3 columna-filtro-ind" data-step="11"
+				<div class="col-sm-2 columna-filtro-ind" data-step="11"
 					data-intro="Opci&oacute;n compa&ntilde;ia" id="filtroCompania">
 					<select id="compania_select"
 						class="form-control-sm input-filtro-disponibilidad form-control"
@@ -42,7 +42,7 @@ pageEncoding="ISO-8859-1"%>
 						<option value="2">TotalPlay Empresarial </option>
 					</select>
 				</div>
-				<div id="tipo_intervencion" class="col-sm-3 columna-filtro-ind"
+				<div id="tipo_intervencion" class="col-sm-2 columna-filtro-ind"
 					data-intro="Opci&oacute;n tipo de intervenci&oacute;n">
 					<select id="tipo_select"
 						class="form-control-sm input-filtro-disponibilidad form-control"
@@ -52,7 +52,7 @@ pageEncoding="ISO-8859-1"%>
 						<option value="">Seleccione Intervenci&oacute;n...</option>
 					</select>
 				</div>
-				<div id="container_arbol_dispo_consulta" class="col-sm-3 columna-filtro-ind"
+				<div id="container_arbol_dispo_consulta" class="col-sm-2 columna-filtro-ind"
 					data-intro="Opci&oacute;n tipo de intervenci&oacute;n">
 					<input type="text" readonly id="arbol_disponibilidad_consulta"
 						style="background: white;cursor: pointer"
@@ -95,7 +95,7 @@ pageEncoding="ISO-8859-1"%>
 									<div class="col-9">
 										<div id="calendar_disponibilidad"></div>
 									</div>
-									<div class="col-2">
+									<div class="col-3">
 										<table class="table table-bordered" id="tableData">
 											<tbody>
 												<tr>
