@@ -26,5 +26,14 @@ app.service("controlVehicularService", function($http) {
             transformRequest: angular.identity
         });
     };
+
+    this.consultarEstatusControlVehicular = function () {
+        return $http({
+            method: "get",
+            url: "req/consultarEstatus",
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
+        });
+    };
     
 });

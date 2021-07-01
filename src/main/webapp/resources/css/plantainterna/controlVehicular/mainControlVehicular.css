@@ -32,18 +32,15 @@
 }
 
 #btnGuardar {
-  background-color: #ffffff;
-  color: #7716fa !important;
-  border: solid 1px #7716fa !important;
-  padding: 0.3em 2em;
-  border-radius: 5px;
-  font-size: 12px;
-  font-weight: bold;
   float: right;
   margin-bottom: 20px;
 }
 
 #btnBuscar { 
+  margin-top: 25px;
+}
+
+.btnTotal {
   background-color: #ffffff;
   color: #7716fa !important;
   border: solid 1px #7716fa !important;
@@ -51,7 +48,6 @@
   border-radius: 5px;
   font-size: 12px;
   font-weight: bold;
-  margin-top: 25px;
 }
 
 .btn:hover{
@@ -207,19 +203,19 @@ span.btn-floating.btn-sm.btn-secondary.waves-effect.waves-light.acciones {
   color: #FD7CD0;
 }
 
-thead#thead_vehiculo tr th {
+thead#thead_table tr th {
   font-size: 0.7em;
   padding: 1em 1em 1em;
   text-align: center;
   font-weight: bold;
 }
 
-thead#thead_vehiculo{
+thead#thead_table{
   border: 1px #ccc;
 }
 
 
-#vehiculoTable tr td {
+table tr td {
   font-size: 0.7em;
   font-family: "Montserrat" !important;
   text-align: center;
@@ -248,7 +244,9 @@ div.dataTables_wrapper div.dataTables_length label {
 }
 
 .pagination .paginate_button.active {
-  background-color: gray !important;
+  background-color: white !important;
+  border: 1px solid gray;
+  padding: 1px 1px 1px 1px;
 }
 
 .pagination .previous a.page-link {
@@ -305,4 +303,8 @@ table.dataTable.no-footer {
   content: "\f093";
   color: #61cae6;
   font-size: 14px;
+}
+
+.modal-title {
+  color: grey;
 }

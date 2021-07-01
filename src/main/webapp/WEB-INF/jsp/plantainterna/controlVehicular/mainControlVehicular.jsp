@@ -20,9 +20,7 @@
 
         <link href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap.css"
             rel="stylesheet" />
-        <link
-            href="${pageContext.request.contextPath}/resources/libraries/datePicker/css/bootstrap-datepicker3_1.9.0.min.css"
-            rel="stylesheet" />
+        
         <link href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css"
             rel="stylesheet" />
 
@@ -43,13 +41,15 @@
             rel="stylesheet" />
         <link href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/font-awesome.css"
             rel="stylesheet" />
-        <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css"
+            <link
+            href="${pageContext.request.contextPath}/resources/libraries/datePicker/css/bootstrap-datepicker3_1.9.0.min.css"
             rel="stylesheet" />
-
         <link href="${pageContext.request.contextPath}/resources/libraries/selectPicker/css/bootstrap-select.min.css"
             rel="stylesheet" />
         <link
             href="${pageContext.request.contextPath}/resources/css/plantainterna/controlVehicular/mainControlVehicular.css"
+            rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css"
             rel="stylesheet" />
     </head>
 
@@ -58,13 +58,13 @@
         <div class="container-fluid controlContent">
             <div class="row">
                 <div id="datos_tablas" class="col-sm-12">
-                    <a id="btn_mostrar_nav" class="menuOpt" style="display: none; position: absolute">
+                    <a id="btn_mostrar_nav" style="display: none; position: absolute">
                         <i class="fa fa-bars" aria-hidden="true"></i>
                     </a>
                     <div class="content-fluid">
-                        <div style="height: 730px" class="container-fluid" id="disponibilidad_datos_inferior">
+                        <div class="container-fluid">
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item">
+                                <li class="nav-item" ng-if="!isEdit">
                                     <a class="nav-link active" id="alta-tab" data-toggle="tab" href="#alta" role="tab"
                                         aria-controls="alta" aria-selected="true">Alta Veh&iacute;culos</a>
                                 </li>
@@ -72,14 +72,22 @@
                                     <a class="nav-link" id="consulta-tab" data-toggle="tab" href="#consulta" role="tab"
                                         aria-controls="consulta" aria-selected="false">Consulta Veh&iacute;culos</a>
                                 </li>
+                                <li class="nav-item" ng-if="isEdit">
+                                    <a class="nav-link" id="modifica-tab" data-toggle="tab" href="#modifica" role="tab"
+                                        aria-controls="modifica" aria-selected="false">Modificar Veh&iacute;culo</a>
+                                </li>
                             </ul>
                             <div class="tab-content">
-                                <div class="tab-pane fade show active" id="alta" role="tabpanel"
+                                <div class="tab-pane fade show active" id="alta" role="tabpanel" ng-if="!isEdit"
                                     aria-labelledby="alta-tab">
                                     <jsp:include page="./insertarVehiculo.jsp"></jsp:include>
                                 </div>
                                 <div class="tab-pane fade" id="consulta" role="tabpanel" aria-labelledby="consulta-tab">
                                     <jsp:include page="./consultarVehiculo.jsp"></jsp:include>
+                                </div>
+                                <div class="tab-pane fade" id="modifica" role="tabpanel" aria-labelledby="modifica-tab"
+                                    ng-if="isEdit">
+                                    <jsp:include page="./insertarVehiculo.jsp"></jsp:include>
                                 </div>
                             </div>
                         </div>
@@ -87,14 +95,15 @@
                 </div>
             </div>
         </div>
+        <jsp:include page="./modals/historico.jsp"></jsp:include>
     </body>
     <!-- LIBRERIAS -->
     <script src="${pageContext.request.contextPath}/resources/libraries/angularjs/js/angular.min.js"></script>
-
-    <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/js/mdb.min.js"></script>
     <script type="text/javascript"
         src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript"
+        src="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/js/mdb.min.js"></script>
+
     <script src="${pageContext.request.contextPath}/resources/libraries/popper/popper.min.js"></script>
     <script type="text/javascript"
         src="${pageContext.request.contextPath}/resources/libraries/bootstrap/js/bootstrap.min.js"></script>
@@ -111,7 +120,7 @@
     <script type="text/javascript"
         src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
     <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker.min.js"></script>
+        src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker_1.9.0.min.js"></script>
     <script type="text/javascript"
         src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker.es.min.js"></script>
     <!-- ARCHIVOS JS  -->

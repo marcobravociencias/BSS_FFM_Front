@@ -1,5 +1,6 @@
 package com.mx.totalplay.ffm.cloudweb.plantainterna.service.impl;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,10 +37,11 @@ public class ImplControlVehicularService implements ControlVehicularService {
 	ConstControlVehicular constControlVehicular;
  
 	Gson gson = new Gson();
+
+	
  
 	public ServiceResponseResult consultarMarcas() {
 		logger.info("ImplControlVehicularService.class [metodo = consultarMarcas() ]\n");
-
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
 		String tokenAcces = principalDetail.getAccess_token();
 		String urlRequest = principalDetail.getDireccionAmbiente()
@@ -86,4 +88,22 @@ public class ImplControlVehicularService implements ControlVehicularService {
 
 		return response;
 	}
+
+	public ServiceResponseResult consultarEstatus() {
+		logger.info("ImplControlVehicularService.class [metodo = consultarEstatus() ]\n");
+
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String tokenAcces = principalDetail.getAccess_token();
+		String urlRequest = principalDetail.getDireccionAmbiente()
+				.concat(constControlVehicular.getConsultarEstatusControlVehicular());
+					
+		logger.info("URL: " + urlRequest);
+
+		Map<String, String> paramsRequestGet = new HashMap<String, String>();
+		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
+				ServiceResponseResult.class, tokenAcces);
+
+		return response;
+	}
+	
 }

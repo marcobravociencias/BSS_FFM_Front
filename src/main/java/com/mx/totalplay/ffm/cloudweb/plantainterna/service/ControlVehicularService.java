@@ -10,5 +10,6 @@ public interface ControlVehicularService {
     public ServiceResponseResult consultarMarcas();
     public ServiceResponseResult consultarColores();
     public ServiceResponseResult consultarSeguros();
+    public ServiceResponseResult consultarEstatus();
    
 }
