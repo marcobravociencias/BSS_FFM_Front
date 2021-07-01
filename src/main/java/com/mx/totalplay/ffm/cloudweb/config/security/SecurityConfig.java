@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
@@ -51,8 +52,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 					.logoutSuccessUrl("/loginPage?logout")
 			.and().csrf().disable().cors(); 
 			*/
-		http
-        .authorizeRequests()
+		http.
+				sessionManagement().
+				sessionCreationPolicy(SessionCreationPolicy.ALWAYS).and()
+        	.authorizeRequests()
         	.antMatchers("/", "/resources/**", "/css", "/js/**")
         		.permitAll()		
         	.antMatchers("/loginPage")

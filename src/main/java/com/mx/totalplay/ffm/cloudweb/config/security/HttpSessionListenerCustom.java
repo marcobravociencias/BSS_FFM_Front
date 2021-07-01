@@ -29,10 +29,15 @@ public class HttpSessionListenerCustom implements HttpSessionListener  {
         HttpSession httpSession = arg0.getSession();
         if (httpSession != null) {
              logger.info("!!!!!-----Se destruye la sesion---");
-             LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
-             String numEmpleado = (String) principalDetail.getUsuario();
-             logger.info("##########3---destruyecti"+numEmpleado);
-            // arg0.getSession().getServletContext().removeAttribute(loginVO.getEmpNum());
+             try {
+                 LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
+                 String numEmpleado = (String) principalDetail.getUsuario();
+                 logger.info("##########3---destruyecti"+numEmpleado);
+                 arg0.getSession().getServletContext().removeAttribute(principalDetail.getUsuario());
+             }catch(NullPointerException exception){
+                 logger.info("#Destruyendo sesion exception");
+             }
+
         }
     }
 

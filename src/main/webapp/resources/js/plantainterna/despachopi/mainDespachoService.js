@@ -1,5 +1,14 @@
 app.service("mainDespachoService", function ($http) {
-
+    this.testingServiceEureka=function(params){
+		return $http({
+			method: "post",
+			url: "req/testingNameService",
+			data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
 	this.consultarCatalogoTipoOrdenGeneralDespacho=function(params){
 		return $http({
 			method: "post",

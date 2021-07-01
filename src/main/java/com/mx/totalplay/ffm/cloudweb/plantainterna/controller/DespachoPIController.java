@@ -1,6 +1,8 @@
 package com.mx.totalplay.ffm.cloudweb.plantainterna.controller;
 
+import com.mx.totalplay.ffm.cloudweb.plantainterna.model.TestingModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +12,10 @@ import com.mx.totalplay.ffm.cloudweb.plantainterna.service.DespachoPIService;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.ServiceResponseResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.Arrays;
+import java.util.List;
 
 @RestController
 @RequestMapping("/req")
@@ -17,12 +23,25 @@ public class DespachoPIController {
     private static final Logger LOGGER = LogManager.getLogger(DespachoPIController.class);
 
 	private DespachoPIService despachoService;
-	
+	/**
+	@Autowired
+	@Qualifier("clienteRestBalanced")
+	RestTemplate restTemplate;
+**/
 	@Autowired
 	public DespachoPIController(DespachoPIService despachoService) {
 		this.despachoService=despachoService;
 	}
-	
+	/**
+	@PostMapping("/testingNameService")
+	public ServiceResponseResult consultarTestingName(){
+		LOGGER.info("############-----------consumiendo");
+		List<TestingModel>listado= Arrays.asList( restTemplate.getForObject("http://servicio-usuarios/usuarios",TestingModel[].class));
+		ServiceResponseResult response=ServiceResponseResult.builder().result(listado).build();
+		return response;
+	}**/
+
+
 	@PostMapping("/consultarCatalogoDesphachoPI")
     public ServiceResponseResult consultarCatalogoDesphachoPI(@RequestBody String params) {
 		LOGGER.info("##### CONSULTANDO CATALGOS");

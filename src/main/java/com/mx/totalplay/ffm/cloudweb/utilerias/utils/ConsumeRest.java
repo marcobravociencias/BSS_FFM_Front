@@ -9,6 +9,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
@@ -33,7 +34,10 @@ public class ConsumeRest {
 
     private final Logger logger = LogManager.getLogger(ConsumeRest.class.getName());
     Gson gson = new Gson();
-    RestTemplate restTemplate = new RestTemplate();
+
+    @Autowired
+    @Qualifier("clienteRest")
+    RestTemplate restTemplate;
 
     @Autowired
     private Environment env;
