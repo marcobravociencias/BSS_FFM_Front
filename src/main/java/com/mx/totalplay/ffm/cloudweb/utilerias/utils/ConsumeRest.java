@@ -35,6 +35,11 @@ public class ConsumeRest {
     private final Logger logger = LogManager.getLogger(ConsumeRest.class.getName());
     Gson gson = new Gson();
 
+
+    @Autowired
+    @Qualifier("clienteRestBalanced")
+    RestTemplate restTemplateReferencia;
+
     @Autowired
     @Qualifier("clienteRest")
     RestTemplate restTemplate;
@@ -110,6 +115,52 @@ public class ConsumeRest {
             ), classConversion);
         }
     }
+
+    public Object callPostReturnClassBasicAuthXwwwUrlFormedRefencia(String url, String us, String passCod, Class<?> classConversion) {
+        logger.info("URL--------" + url);
+        String response = "";
+
+        ResponseEntity<String> responseEntity = null;
+        try {
+            String authStr = constantesGeneric.getAuthbasicUser().concat(":").concat(constantesGeneric.getAuthbasicCred());
+
+            String base64Creds = Base64.getEncoder().encodeToString(authStr.getBytes());
+
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+            headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+            headers.set("Authorization", "Basic " + base64Creds);
+
+
+            MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+            map.add(env.getProperty("param.text.emanresu"), us);
+            map.add(env.getProperty("param.textus.drowssap"), passCod);
+            map.add(env.getProperty("param.header.grant_type"), env.getProperty("param.textus.grant_type"));
+
+            HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
+
+            responseEntity = restTemplateReferencia.postForEntity(url, request, String.class);
+
+
+
+
+            response = responseEntity.getBody().toString();
+            return gson.fromJson(response, classConversion);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO", e.getMessage());
+
+            return gson.fromJson(gson.toJson(
+                    LoginResult.builder().
+                            mensaje("Ocurrio un error en la autenticacion")
+                            .description("Usuario o contrase�a incorrectos")
+                            .build()
+            ), classConversion);
+        }
+    }
+
 
     public Object callPostReturnClassBasicAuth(String url, String params, Class<?> classConversion) {
         logger.info("URL--------" + url);
