@@ -36,7 +36,7 @@ public class ImplAutentificacionService  implements AutentificacionService{
 		logger.info("jgetAutentificacion## "+us+" -- "+crdospas);
 					
 		//String urlService = constantesGeneric.getDirIpInicioService() + constantesGeneric.getWsUrlValidausrffm();
-		String urlService="http://login/ffm/login/auth/";
+		String urlService="http://logueo-service/ffm/login/auth/";
 		LoginResult response = (LoginResult) restCaller.callPostReturnClassBasicAuthXwwwUrlFormedRefencia(
 				urlService ,  us, crdospas, LoginResult.class
 		);
