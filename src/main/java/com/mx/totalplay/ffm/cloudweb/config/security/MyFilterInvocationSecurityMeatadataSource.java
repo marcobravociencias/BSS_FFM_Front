@@ -34,6 +34,8 @@ public class MyFilterInvocationSecurityMeatadataSource implements org.springfram
         put("/busqueda","ROLE_USER");
         put("/controlVehicular","ROLE_USER");
 		put("/detailsHelp","ROLE_USER");
+		put("/","ROLE_USER");
+
 	}};
     
     
