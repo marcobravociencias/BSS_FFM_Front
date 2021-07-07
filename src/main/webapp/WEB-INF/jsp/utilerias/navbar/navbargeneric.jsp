@@ -1,5 +1,7 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet"/>
 <link href="${pageContext.request.contextPath}/resources/css/plantainterna/generic/navbar.css"  rel="stylesheet"/>
 <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
@@ -23,9 +25,18 @@
             </div>
       
             <div class="content-header">
-                <h5 class="header-nombre-usuario">Hector Santamaria - Analista despacho</h5>
-                <h5 class="header-perfil-usuario">Planta Interna Bogota Colombia</h5>
+                <h5 class="header-nombre-usuario">
+                    <sec:authentication property="principal.usuarioNombre" />
+                    <sec:authentication property="principal.usuarioApellidoPaterno" />                    
+                     - 
+                    <sec:authentication property="principal.puesto" />
+                </h5>
+                <h5 class="header-perfil-usuario">  
+                    <sec:authentication property="principal.propietario" />
+                    <sec:authentication property="principal.unidadNegocio" />
+                </h5>
             </div>
+            
         </div>
     </div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-menu-generic">

@@ -351,15 +351,21 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                                                .filter(e=>e.original.nivel== ultimonivel)
                                                .map(e=>parseInt(e.id))
 
-
+        let estatusPendientes=[]
+        angular.forEach($scope.filtrosGeneral.estatusdisponibles,(e,i)=>{
+            e.children.filter( f => f.checkedOpcion ).map((k)=>{ estatusPendientes.push(k.id); return k;} )   
+        })
+                                               
         var params =  {
             "fechaInicio": moment( moment($scope.fechaInicioFiltro, 'DD/MM/YYYY').toDate()  ).format('YYYY-MM-DD'),
             "fechaFin": moment( moment($scope.fechaFinFiltro , 'DD/MM/YYYY').toDate() ).format('YYYY-MM-DD') ,
             "idSubIntervenciones": [].concat(subIntTemp,[1]),
             "idTurnos": turnosdisponiblescopy,  
-            "idEstatus": [2, 6, 5, 3, 7, 1, 8, 4, 229, 257, 243, 209, 212, 224, 245, 211, 240, 208, 210, 247, 213, 219, 220, 231, 218, 205, 204, 217, 230, 233, 255, 249, 202, 238, 239, 250, 244, 225, 246, 200, 221, 256, 252, 227, 228, 232, 251, 214, 206, 226, 207, 222, 203, 248, 215, 201, 223, 254, 234, 253, 241, 216, 236, 237, 235, 242],
+            "idEstatus":  estatusPendientes.concat([0]),
             "idClusters": clustersparam
         }
+    
+
         if(dataTableOtsPendientes)
             dataTableOtsPendientes.destroy()
         
@@ -715,11 +721,11 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
         });
     }
     console.log("#####%%%%%%%%%%%%%%%123")
-    mainDespachoService.testingServiceEureka().then(function success(response) {
+    /**mainDespachoService.testingServiceEureka().then(function success(response) {
         console.log("#####123")
     }, function error(response) {
          // swal.close()
-    });
+    });**/
     $scope.getCatControllerstatusDespachoPI=function(){
 
         mainDespachoService.consultarCatalogoEstatusDespachoPI().then(function success(response) {     
