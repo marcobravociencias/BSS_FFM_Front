@@ -25,7 +25,7 @@
 				    <div class="col-12 row style-col-row">
 						<div class="col-6 container-texto-login">
 							<div class="col-6 offset-3 content-info-login">
-								<form class="form" name='login' action="<c:url value='/loginPage'  />" method='POST'>	
+								<form id="form-in-te" class="form" name='login' action="<c:url value='/loginPage'  />" method='POST'>	
 									<div class="form-outline mb-4">				
 										<label class="label-form-login form-check-label " for="form2Example3">Usuario: </label>
 										<input placeholder="Ingresa tu usuario:" type='text' class="input-form-login " name='username' id="user_user" value=''>
@@ -77,10 +77,17 @@
 			</div>
 		</div>
 	</body>
+
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-2.2.4.js" ></script>    
 	<script>
 		document.getElementById("user_user").value = "FFMBACK";
 		document.getElementById("user_pswd").value = "accesoFFM";
+		$(document).ready(function(){
+			$("#ingresar-btn-login").click(function(){
+				//$(this).attr('disabled','disabled')
+				$(this).text('Ingresando ...')				
+			})
+		})
 	</script>
-
 	
 </html>

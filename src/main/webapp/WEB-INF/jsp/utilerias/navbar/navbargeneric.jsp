@@ -26,7 +26,6 @@
                 <h5 class="header-nombre-usuario">Hector Santamaria - Analista despacho</h5>
                 <h5 class="header-perfil-usuario">Planta Interna Bogota Colombia</h5>
             </div>
-             
         </div>
     </div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-menu-generic">

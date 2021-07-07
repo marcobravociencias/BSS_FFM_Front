@@ -9,7 +9,6 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class LoginController {
 	
-	/****/
 	@RequestMapping(value = { "/"}, method = RequestMethod.GET)
 	public ModelAndView Welome() {
 		ModelAndView model = new ModelAndView();
@@ -34,7 +33,7 @@ public class LoginController {
 		}
 
 		if (logout != null) {
-			model.addObject("message", "Has cerrado sesi�n.");
+			model.addObject("message", "Tu sesi&oacute;n ha expirado");
 		}
 
 		model.setViewName("loginPage");

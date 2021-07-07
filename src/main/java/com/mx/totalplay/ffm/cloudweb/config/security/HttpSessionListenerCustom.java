@@ -22,7 +22,7 @@ public class HttpSessionListenerCustom implements HttpSessionListener  {
     @Override
     public void sessionCreated(HttpSessionEvent event) {
         logger.info("####(( agregando intervalo ))))######## #");
-        event.getSession().setMaxInactiveInterval(30);
+        event.getSession().setMaxInactiveInterval(800000);
     }
 
   public void sessionDestroyed(HttpSessionEvent arg0) {

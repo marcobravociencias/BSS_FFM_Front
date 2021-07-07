@@ -755,7 +755,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                     if(results[3].data.result ){
                         $scope.filtrosGeneral.estatusdisponibles=$scope.realizarConversionAnidado( results[3].data.result)   
                     }else{                      
-                        toastr.warning( 'No se encontraron  tipo ordenes' );                
+                        toastr.info( 'No se encontraron catalogo de estatus' );                
                     }
                 }else{
                     toastr.warning( results[1].data.resultDescripcion );                
