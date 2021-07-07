@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
@@ -29,9 +30,9 @@ public class GenericController {
 	ConstantesGeneric genericVars;
 	
 	@GetMapping("/enrutarUser")
-	public String despachoPlantaExterna() {	
+	public String despachoPlantaExterna(ModelMap model) {	
 		logger.info("ENTRA DECISION");
-		return "plantainterna/despacho/despachopi";				
+		return "redirect:despachoplantainterna";				
 	}	
 	
 	 @ModelAttribute("googlkeyattrvar")
