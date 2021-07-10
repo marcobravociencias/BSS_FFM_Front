@@ -66,7 +66,7 @@ public class SecurityCustomAuthenticationProvider implements AuthenticationProvi
 	    		
 	    		logger.info("KEY GOOGLE $ "+constantesGeneric.getGoogAccLLaevATok());
 	    		response.setGooglAcceLla(constantesGeneric.getGoogAccLLaevATok());
-	    		response.setDireccionAmbiente("http://94.74.70.52");
+	    		response.setDireccionAmbiente("http://34.94.124.52");
 	    		return new UsernamePasswordAuthenticationToken(response, password, grantedAuths);
 	        	
 	        } else {
