@@ -54,6 +54,7 @@ public class MyFilterInvocationSecurityMeatadataSource implements org.springfram
 		// TODO Auto-generated method stub
 		FilterInvocation fi = (FilterInvocation) object;
 		String url = fi.getRequestUrl();
+		
 		for(Map.Entry<String,String> entry:urlRoleMap.entrySet()){
 			
 			boolean containsSigno=url.contains("?");
