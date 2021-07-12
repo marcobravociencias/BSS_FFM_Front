@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.mx.totalplay.ffm.cloudweb.utilerias.utils.*" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
@@ -42,16 +45,49 @@
 										${error}
 									</div>	
 								</c:if>
+								
+								numero de visitas: ${ConstSystem.ocurrencia}
+								
 								<c:if test="${not empty message}">
 									<div class="alert alert-success mensaje-alert" role="alert" data-mdb-color="success">
 										${message}
 									</div>
 								</c:if>	
 							</div>
+							<br>
+                        <c:set var="today" value="<%=new java.util.Date()%>" />
+							<table class="" border="0" style="font-size:small">
+				  <tr><th class="st">fecha:</th><td align="left"> <fmt:formatDate type="both" dateStyle="long" timeStyle="long" value="${today}" /> </td></tr>
+                  <tr><th class="st">Java Version:</th><td align="left"><%= System.getProperty("java.version")%></td></tr>
+                  <tr><th class="st">Java Home:</th><td align="left"><%= System.getProperty("java.home")%></td></tr>
+                  <tr><th class="st">java.vendor:</th><td align="left"><%= System.getProperty("java.vendor")%></td></tr>
+                  <tr><th class="st">java.vendor.url:</th><td align="left"><%= System.getProperty("java.vendor.url")%></td></tr>
+                  <tr><th class="st">os.arch:</th><td align="left"><%= System.getProperty("os.arch")%></td></tr>
+                  <tr><th class="st">os.name:</th><td align="left"><%= System.getProperty("os.name")%></td></tr>
+                  <tr><th class="st">os.version:</th><td align="left"><%= System.getProperty("os.version")%></td></tr>
+                  <tr><th class="st">user.dir:</th><td align="left"><%= System.getProperty("user.dir")%></td></tr>
+                  <tr><th class="st">user.home:</th><td align="left"><%= System.getProperty("user.home")%></td></tr>
+                  <tr><th class="st">user.name:</th><td align="left"><%= System.getProperty("user.name")%></td></tr>
+                  <tr><th class="st">request.getRemoteAddr():</th><td align="left"><%=request.getRemoteAddr()%></td></tr>
+                  <tr><th class="st">request.getRemoteHost():</th><td  align="left"><%=request.getRemoteHost()%>
+                  <tr><th class="st">request.getContextPath():</th><td  align="left">${pageContext.servletContext.contextPath}
+                  <tr><th class="st">request.getLocalAddr():</th><td  align="left"><%=request.getLocalAddr()%>
+                  <tr><th class="st">request.getLocalName():</th><td  align="left"><%=request.getLocalName()%>
+                  <tr><th class="st">request.getLocalPort():</th><td  align="left"><%=request.getLocalPort()%>
+                  <tr><th class="st">request.getServletPath():</th><td  align="left"><%=request.getServletPath()%>
+				  <tr><th class="st">Server Version:</th><td  align="left"><%=application.getServerInfo()%>
+				  <tr><th class="st">Servlet Version:</th><td  align="left"><%= application.getMajorVersion() %>
+				  <tr><th class="st"> JSP Version: </th><td  align="left"><%= JspFactory.getDefaultFactory().getEngineInfo().getSpecificationVersion() %>
+				  	  <tr><th class="st"> JSP Version: </th><td  align="left"><%= JspFactory.getDefaultFactory().getEngineInfo() %>
+                  <tr><th class="st">request.getHeader("x-forwarded-for"):</td><td  align="left"><%=(request.getHeader("x-forwarded-for")!=null)?request.getHeader("x-forwarded-for"):""%>
+              </table>
+			  ${SystemInfo.info}
 						</div>
 	
+	        
 					    
 					    <div class="col-6 container-imagen-login">
+						
 					    	<img src="${pageContext.request.contextPath}/resources/img/login/logoLogin.png" class="logo-login"><br>
 					    	<h6 class="texto_field_">Field Force Management</h6><br>
 					    	<span class="texto_powered">Powered by<span class="style_texto_tp">&nbspTotalplay</span></span>
