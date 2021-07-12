@@ -14,6 +14,8 @@ import org.springframework.util.AntPathMatcher;
 
 import com.google.gson.Gson;
 import com.mx.totalplay.ffm.cloudweb.plantainterna.controller.DespachoPIController;
+import com.mx.totalplay.ffm.cloudweb.utilerias.utils.ConstSystem;
+import com.mx.totalplay.ffm.cloudweb.utilerias.utils.SystemInfo;
 
 public class MyFilterInvocationSecurityMeatadataSource implements org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource {
 	
@@ -46,6 +48,8 @@ public class MyFilterInvocationSecurityMeatadataSource implements org.springfram
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		//auth.getPrincipal()
 		logger.info("###########.");
+		ConstSystem.sumar();
+		SystemInfo.Info();
 		logger.info(new Gson().toJson(auth.getPrincipal()));
 		// TODO Auto-generated method stub
 		FilterInvocation fi = (FilterInvocation) object;
