@@ -38,6 +38,7 @@ public class DespachoPIController {
 		LOGGER.info("############-----------consumiendo");
 		List<TestingModel>listado= Arrays.asList( restTemplate.getForObject("http://servicio-usuarios/usuarios",TestingModel[].class));
 		ServiceResponseResult response=ServiceResponseResult.builder().result(listado).build();
+		
 		return response;
 	}/****/
 

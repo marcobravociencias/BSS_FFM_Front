@@ -20,6 +20,7 @@ import org.apache.logging.log4j.Logger;
 @RequestMapping("/req")
 public class ConsultaOTController {
 
+	
 	private final Logger logger = LogManager.getLogger(ConsultaOTController.class.getName());
 
 	@Autowired
