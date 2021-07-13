@@ -1,6 +1,7 @@
 package com.mx.totalplay.ffm.cloudweb.utilerias.utils;
 
 import java.io.File;
+import java.net.InetAddress;
 import java.text.NumberFormat;
 
 public class SystemInfo {
@@ -73,6 +74,23 @@ public class SystemInfo {
 	        sb.append("Available processors (cores): ");
 	        sb.append(runtime.availableProcessors());
 	        sb.append("<br/>");
+	        
+	        try {
+
+	            InetAddress addr = InetAddress.getLocalHost();
+
+	            String hostname = addr.getHostName();
+
+	            sb.append("Host: " + hostname);
+	            sb.append("<br/>");
+	            sb.append("IP: " + addr.getHostAddress());
+	            sb.append("<br/>");
+	        } catch (Exception e) {
+	            // TODO: Add catch code
+	            e.printStackTrace();
+	        }
+	        
+	        
 	        return sb.toString();
 	    }
 
