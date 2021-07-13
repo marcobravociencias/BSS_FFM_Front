@@ -22,7 +22,6 @@
 	<body>
 	
 		<form  id="formulario-container"  class="login-form login style-form-login" autocomplete="off"  name='login' action="<c:url value='/loginPage' />" method='POST'>	
-
 			<fieldset>
 				<div class="content-fluid" id="content-login">
 				    <div class="col-12 row style-col-row">
@@ -46,7 +45,6 @@
 									</div>	
 								</c:if>
 								
-								numero de visitas: ${ConstSystem.ocurrencia}
 								
 								<c:if test="${not empty message}">
 									<div class="alert alert-success mensaje-alert" role="alert" data-mdb-color="success">
@@ -54,34 +52,7 @@
 									</div>
 								</c:if>	
 							</div>
-							<br>
-                        <c:set var="today" value="<%=new java.util.Date()%>" />
-							<table class="" border="0" style="font-size:small">
-				  <tr><th class="st">fecha:</th><td align="left"> <fmt:formatDate type="both" dateStyle="long" timeStyle="long" value="${today}" /> </td></tr>
-                  <tr><th class="st">Java Version:</th><td align="left"><%= System.getProperty("java.version")%></td></tr>
-                  <tr><th class="st">Java Home:</th><td align="left"><%= System.getProperty("java.home")%></td></tr>
-                  <tr><th class="st">java.vendor:</th><td align="left"><%= System.getProperty("java.vendor")%></td></tr>
-                  <tr><th class="st">java.vendor.url:</th><td align="left"><%= System.getProperty("java.vendor.url")%></td></tr>
-                  <tr><th class="st">os.arch:</th><td align="left"><%= System.getProperty("os.arch")%></td></tr>
-                  <tr><th class="st">os.name:</th><td align="left"><%= System.getProperty("os.name")%></td></tr>
-                  <tr><th class="st">os.version:</th><td align="left"><%= System.getProperty("os.version")%></td></tr>
-                  <tr><th class="st">user.dir:</th><td align="left"><%= System.getProperty("user.dir")%></td></tr>
-                  <tr><th class="st">user.home:</th><td align="left"><%= System.getProperty("user.home")%></td></tr>
-                  <tr><th class="st">user.name:</th><td align="left"><%= System.getProperty("user.name")%></td></tr>
-                  <tr><th class="st">request.getRemoteAddr():</th><td align="left"><%=request.getRemoteAddr()%></td></tr>
-                  <tr><th class="st">request.getRemoteHost():</th><td  align="left"><%=request.getRemoteHost()%>
-                  <tr><th class="st">request.getContextPath():</th><td  align="left">${pageContext.servletContext.contextPath}
-                  <tr><th class="st">request.getLocalAddr():</th><td  align="left"><%=request.getLocalAddr()%>
-                  <tr><th class="st">request.getLocalName():</th><td  align="left"><%=request.getLocalName()%>
-                  <tr><th class="st">request.getLocalPort():</th><td  align="left"><%=request.getLocalPort()%>
-                  <tr><th class="st">request.getServletPath():</th><td  align="left"><%=request.getServletPath()%>
-				  <tr><th class="st">Server Version:</th><td  align="left"><%=application.getServerInfo()%>
-				  <tr><th class="st">Servlet Version:</th><td  align="left"><%= application.getMajorVersion() %>
-				  <tr><th class="st"> JSP Version: </th><td  align="left"><%= JspFactory.getDefaultFactory().getEngineInfo().getSpecificationVersion() %>
-				  	  <tr><th class="st"> JSP Version: </th><td  align="left"><%= JspFactory.getDefaultFactory().getEngineInfo() %>
-                  <tr><th class="st">request.getHeader("x-forwarded-for"):</td><td  align="left"><%=(request.getHeader("x-forwarded-for")!=null)?request.getHeader("x-forwarded-for"):""%>
-              </table>
-			  ${SystemInfo.info}
+							
 						</div>
 	
 	        
