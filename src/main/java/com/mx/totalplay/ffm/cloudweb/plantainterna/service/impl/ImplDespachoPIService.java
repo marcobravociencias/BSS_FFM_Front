@@ -62,7 +62,6 @@ public class ImplDespachoPIService implements DespachoPIService{
 	public ServiceResponseResult consultarCatalogoTipoOrdenGeneralDespacho() {
 		logger.info("ImplDespachoPIService.class [metodo = consultarCatalogoTipoOrdenGeneralDespacho() ]\n");
 		
-		
 		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
 		String tokenAcces=principalDetail.getAccess_token() ;
 		logger.info("consultarCatalogoTipoOrdenGeneralDespacho ##+"+tokenAcces);							
@@ -81,7 +80,8 @@ public class ImplDespachoPIService implements DespachoPIService{
 	
 	public ServiceResponseResult consultarCatalogoTipoOrdenUsuarioDespacho() {
 		logger.info("ImplDespachoPIService.class [metodo = consultarCatalogoTipoOrdenUsuarioDespacho() ]\n");
-		
+		//logger.info("env --------------------"+env.getProperty("variable.entorno.ambiente"));
+
 		
 		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
 		String tokenAcces=principalDetail.getAccess_token() ;

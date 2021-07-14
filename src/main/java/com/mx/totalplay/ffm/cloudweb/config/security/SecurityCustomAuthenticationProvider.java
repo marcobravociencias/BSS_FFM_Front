@@ -8,6 +8,7 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -41,6 +42,8 @@ public class SecurityCustomAuthenticationProvider implements AuthenticationProvi
 		put("/","ROLE_ANONYMOUS");
     }};
     
+    @Autowired
+    Environment env;
     
     @Autowired 
     ConstantesGeneric constantesGeneric;
@@ -66,7 +69,7 @@ public class SecurityCustomAuthenticationProvider implements AuthenticationProvi
 	    		
 	    		logger.info("KEY GOOGLE $ "+constantesGeneric.getGoogAccLLaevATok());
 	    		response.setGooglAcceLla(constantesGeneric.getGoogAccLLaevATok());
-	    		response.setDireccionAmbiente("http://34.94.124.52");
+	    		response.setDireccionAmbiente("http://".concat(env.getProperty("dep.envirom.web")));
 	    		return new UsernamePasswordAuthenticationToken(response, password, grantedAuths);
 	        	
 	        } else {
