@@ -54,6 +54,9 @@ public class MyFilterInvocationSecurityMeatadataSource implements org.springfram
 		// TODO Auto-generated method stub
 		FilterInvocation fi = (FilterInvocation) object;
 		String url = fi.getRequestUrl();
+		if(auth.getPrincipal().toString().equals("anonymousUser") && url.equals("/") ) {
+			url = "homePage";
+		}
 		
 		for(Map.Entry<String,String> entry:urlRoleMap.entrySet()){
 			
