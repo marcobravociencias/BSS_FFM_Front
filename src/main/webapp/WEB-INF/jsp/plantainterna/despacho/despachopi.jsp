@@ -210,7 +210,8 @@
        
         <div ng-show="vistaDespacho" class="container-fluid">    
             <ul class="wall content-alert-parent">
-                <li style="background-color: {{tipoAlertaConteo.bgalerta}}" ng-click="getDetalleAlertas(tipoAlertaConteo)" title="{{tipoAlertaConteo.IdDescripcion}}" class="element-alert" ng-repeat="tipoAlertaConteo in listadoConteoAlertasTipo track by $index"> 
+                <!--li style="background-color: {{tipoAlertaConteo.bgalerta}}" ng-click="getDetalleAlertas(tipoAlertaConteo)" title="{{tipoAlertaConteo.IdDescripcion}}" class="element-alert" ng-repeat="tipoAlertaConteo in listadoConteoAlertasTipo track by $index"--> 
+                <li style="background-color: {{tipoAlertaConteo.bgalerta}}" title="{{tipoAlertaConteo.IdDescripcion}}" class="element-alert" ng-repeat="tipoAlertaConteo in listadoConteoAlertasTipo track by $index"> 
                      <b class="badge-alerta badge red accent-3" ng-bind="tipoAlertaConteo.Contador"></b>
                      <i style="color:{{tipoAlertaConteo.calerta}}" class="icon-alerta-ind {{tipoAlertaConteo.IdIcono}}"></i>
                      <div class="text-tipo-alerta-hide">

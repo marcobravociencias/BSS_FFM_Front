@@ -35,10 +35,10 @@ public class ConsumeRest {
     private final Logger logger = LogManager.getLogger(ConsumeRest.class.getName());
     Gson gson = new Gson();
 
-
+    /**
     @Autowired
     @Qualifier("clienteRestBalanced")
-    RestTemplate restTemplateReferencia;
+    RestTemplate restTemplateReferencia;**/
 
     @Autowired
     @Qualifier("clienteRest")
@@ -115,7 +115,7 @@ public class ConsumeRest {
             ), classConversion);
         }
     }
-
+/**
     public Object callPostReturnClassBasicAuthXwwwUrlFormedRefencia(String url, String us, String passCod, Class<?> classConversion) {
         logger.info("URL--------" + url);
         String response = "";
@@ -160,7 +160,7 @@ public class ConsumeRest {
             ), classConversion);
         }
     }
-
+**/
 
     public Object callPostReturnClassBasicAuth(String url, String params, Class<?> classConversion) {
         logger.info("URL--------" + url);

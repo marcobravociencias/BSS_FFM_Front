@@ -52,15 +52,16 @@
                         <a class="nav-link a-navlink-navbar" href="disponibilidad">Disponibilidad</a>
                     </li>
                     
-                    <!-- <li id="li-gestionusuarios-navbar" class="nav-item">
-                        <i class="far fa-file icon-navbar-izquierda"></i>
-                        <a class="nav-link a-navlink-navbar" href="usuariosplantainterna">Gesti&oacute;n de usuario</a>
-                    </li> -->
                     <li id="li-consultaot-navbar" class="nav-item">
                         <i class="far fa-folder-open icon-navbar-izquierda"></i>
                         <a class="nav-link a-navlink-navbar" href="consultaOT">Consulta ot</a>
                     </li>
-                    <li class="nav-item dropdown">
+                    <li id="li-skills-navbar" class="nav-item">
+                        <i class="fas fa-marker icon-navbar-izquierda"></i>
+                        <a class="nav-link a-navlink-navbar" href="skillsAdm">Skills</a>
+                    </li>
+
+                    <!--li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
                                     class="fas fa-bars icon-navbar-izquierda"></i>
@@ -72,7 +73,7 @@
                                 <a class="dropdown-item" href="busqueda">Busqueda</a>
                                 <a class="dropdown-item" href="controlVehicular">Control de Veh&iacute;culos</a>
                             </div>
-                        </li>
+                        </li-->
                 </ul>
          
             </div>

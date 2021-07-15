@@ -678,7 +678,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
         }       
     }
     setInterval(function(){
-        $scope.consultarConteoAlertasPI()
+        //$scope.consultarConteoAlertasPI()
     }, MILISEGUNDOS_ALERTAS);
 
 
@@ -755,7 +755,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             mainDespachoService.consultarCatalogoTipoOrdenUsuarioDespacho(),
             mainDespachoService.consulCatalogoGeografiaUsuarioDespacho(),
             mainDespachoService.consultarCatalogoEstatusDespachoPI()
-        ]).then(function(results) {
+        ]).then(function(results) {                  
             if (results[3].data !== undefined) {
                 if(results[3].data.respuesta ){
                     if(results[3].data.result ){
@@ -819,8 +819,8 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                                 return e
                             })       
                             $('#jstree-proton-3').bind('loaded.jstree', function(e, data) {
-                                $scope.consultarCatalogoEstatusTecnico()
-                                $scope.consultarConteoAlertasPI()
+                                //$scope.consultarCatalogoEstatusTecnico()
+                                //$scope.consultarConteoAlertasPI()
                                 $scope.consultarOrdenesTrabajoAsignadasDespacho()
                                 $scope.consultarOtsPendientes()
                                 $scope.consultarTecnicosDisponibiles()
@@ -878,4 +878,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
         return $scope.listadogeografiacopy.sort(compareGeneric)[0].nivel
     }
     $scope.cargarFiltrosGeneric()
+    $scope.listadoOtsPendientes=otspendientes
+    $scope.listadoEstatusTecnico=JSONEstatusTecnico     
+    $scope.listadoIconografia=paletaColors.result.Colores     
 }]);

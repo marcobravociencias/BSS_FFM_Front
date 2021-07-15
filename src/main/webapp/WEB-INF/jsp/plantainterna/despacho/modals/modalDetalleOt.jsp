@@ -19,9 +19,9 @@
                         <div style="padding-left: 0;" class="col-2">
                           <div class="nav flex-column nav-tabs text-center" id="v-tabs-tab-detalle-ot" role="tablist" aria-orientation="vertical" >
                             <a class="nav-link active" id="v-tabs-consulta-detalleot-tab" data-mdb-toggle="tab" href="#v-tabs-consulta-detalleot" role="tab" aria-controls="v-tabs-consulta-materiales" aria-selected="true" >Informaci&oacute;n</a>
-                            <a class="nav-link " id="v-tabs-consulta-historico-tab" data-mdb-toggle="tab" href="#v-tabs-consulta-historico" role="tab" aria-controls="v-tabs-consulta-materiales" aria-selected="true" >Hist&oacute;rico</a>
+                            <!--a class="nav-link " id="v-tabs-consulta-historico-tab" data-mdb-toggle="tab" href="#v-tabs-consulta-historico" role="tab" aria-controls="v-tabs-consulta-materiales" aria-selected="true" >Hist&oacute;rico</a>
                             <a class="nav-link" id="v-tabs-consulta-mensajeria-tab" data-mdb-toggle="tab" href="#v-tabs-consulta-mensajeria" role="tab" aria-controls="v-tabs-consulta-traspasos" aria-selected="false" >Comentarios</a>                    
-                            <a class="nav-link" id="v-tabs-consulta-acciones-tab" data-mdb-toggle="tab" href="#v-tabs-consulta-acciones" role="tab" aria-controls="v-tabs-consulta-traspasos" aria-selected="false" >Acciones</a>                    
+                            <a class="nav-link" id="v-tabs-consulta-acciones-tab" data-mdb-toggle="tab" href="#v-tabs-consulta-acciones" role="tab" aria-controls="v-tabs-consulta-traspasos" aria-selected="false" >Acciones</a-->                    
                         </div>
                         </div>                      
                         <div class="col-10">

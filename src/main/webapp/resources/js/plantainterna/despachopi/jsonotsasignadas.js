@@ -5290,7 +5290,7 @@ var conteoOtsDespacho={
 			"IdTipoAlerta": "75",
 			"IdIcono": "fas fa-broadcast-tower",
 			"IdColor": "#d45e82",
-			"IdDescripcion": "Validaci&oacute;n Corte Individual",
+			"IdDescripcion": "Valida Corte Individual",
 			"Contador": "5",
             "bgalerta":"#e6f7fb",
             "calerta":"#5bc8e5"

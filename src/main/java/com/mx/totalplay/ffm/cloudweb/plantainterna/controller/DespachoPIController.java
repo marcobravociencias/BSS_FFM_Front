@@ -23,16 +23,16 @@ public class DespachoPIController {
     private static final Logger LOGGER = LogManager.getLogger(DespachoPIController.class);
 
 	private DespachoPIService despachoService;
-	/****/
+	/**
 	@Autowired
 	@Qualifier("clienteRestBalanced")
 	RestTemplate restTemplate;
-
+	 **/
 	@Autowired
 	public DespachoPIController(DespachoPIService despachoService) {
 		this.despachoService=despachoService;
 	}
-
+	/**
 	@PostMapping("/testingNameService")
 	public ServiceResponseResult consultarTestingName(){
 		LOGGER.info("############-----------consumiendo");
@@ -40,7 +40,7 @@ public class DespachoPIController {
 		ServiceResponseResult response=ServiceResponseResult.builder().result(listado).build();
 		
 		return response;
-	}/****/
+	}**/
 
 
 	@PostMapping("/consultarCatalogoDesphachoPI")
