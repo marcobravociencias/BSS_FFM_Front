@@ -60,7 +60,10 @@
                         <i class="fas fa-marker icon-navbar-izquierda"></i>
                         <a class="nav-link a-navlink-navbar" href="skillsAdm">Skills</a>
                     </li>
-
+                    <!--li id="li-vehiculos-navbar" class="nav-item">
+                        <i class="fas fa-taxi icon-navbar-izquierda"></i>
+                        <a class="nav-link a-navlink-navbar" href="controlVehicular">Veh&iacute;culos</a>
+                    </li-->
                     <!--li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i

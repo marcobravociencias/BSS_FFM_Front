@@ -880,5 +880,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
     $scope.cargarFiltrosGeneric()
     $scope.listadoOtsPendientes=otspendientes
     $scope.listadoEstatusTecnico=JSONEstatusTecnico     
-    $scope.listadoIconografia=paletaColors.result.Colores     
+    $scope.listadoIconografia=paletaColors.result.Colores    
+    $scope.listadoConteoAlertasTipo=conteoOtsDespacho.Alertas                                            
+ 
 }]);
