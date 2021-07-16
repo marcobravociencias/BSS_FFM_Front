@@ -199,28 +199,66 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
 		});
 		
 	}
-	
-	$scope.consultarTablaCuadrillasv2 = function () {
-		var clusters = [];
-			var selectedElms = $('#jstree-proton-3').jstree("get_selected", true);
-			$.each(selectedElms, function() {
-				clusters.push(parseInt(this.id)); 
-		    });
-		   // console.log("Clus",clusters)
+	$scope.consultarTablaCuadrillasVacia=function(){
+		
 		let params = {
-				idGeografia:[3302,3363,3461,3581,3582,3583,3584,3585],
-				idTiposUsuarios:[1,100]
+				idGeografia:[0],
+				idTiposUsuarios:[0]
 				
 			}
 
 			
 			//console.log(params);
+			swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
+		swal.showLoading();
 				skillsService.consultarTecnico(params).then(function success(response) {
 				//console.log(response);
-				$scope.llenarTableDinamic(jsonIntervenciones,jsonUsuarioTest); 
-				dataTecnicoGlobal=jsonUsuarioTest;
+				//$scope.llenarTableDinamic(jsonIntervenciones,jsonUsuarioTest); 
+				//dataTecnicoGlobal=jsonUsuarioTest;
 				//Cuando el servicio retorne info quitar esta linea y descomentar la sección de abajo
-				/*if (response.data.respuesta) {
+				if (response.data.respuesta) {
+					//console.log("###respuesta###",response.data.result);
+				//	console.log("p",response.data.result.usuarios);
+				//	console.log("a",jsonIntervenciones);
+					$scope.llenarTableDinamic(jsonIntervenciones,response.data.result.usuarios);
+					dataTecnicoGlobal=response.data.result;
+					swal.close();
+				
+				} else {
+					
+				}
+			});
+		
+	}
+	$scope.consultarTablaCuadrillasv2 = function () {
+		swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
+		swal.showLoading();
+		let ultimonivel=$scope.obtenerNivelUltimoJerarquia();
+		console.log("Ultimo nivel",ultimonivel);
+		var clusters = [];
+		var nivelC=0;
+			var selectedElms = $('#jstree-proton-3').jstree("get_selected", true);
+			$.each(selectedElms, function() {
+				clusters.push(parseInt(this.id)); 
+				
+		    });
+		    nivelC=selectedElms[0].original.nivel;
+		    console.log("Nivel",nivelC);
+		    //if(ultimonivel==nivelC){
+				let params = {
+				idGeografia:clusters,
+				idTiposUsuarios:[1,100]
+				
+			}
+
+			
+			console.log(clusters);
+				skillsService.consultarTecnico(params).then(function success(response) {
+				//console.log(response);
+				//$scope.llenarTableDinamic(jsonIntervenciones,jsonUsuarioTest); 
+				//dataTecnicoGlobal=jsonUsuarioTest;
+				//Cuando el servicio retorne info quitar esta linea y descomentar la sección de abajo
+				if (response.data.respuesta) {
 					//console.log("###respuesta###",response.data.result);
 				//	console.log("p",response.data.result.usuarios);
 				//	console.log("a",jsonIntervenciones);
@@ -230,8 +268,40 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
 				
 				} else {
 					
-				}*/
+				}
+				swal.close();
 			});
+			
+			/*}else{
+				toastr.error( 'Debe seleccionar el ultimo nivel del cluster' ); 
+				let params = {
+				idGeografia:[0],
+				idTiposUsuarios:[0]
+				
+			}
+
+			
+			//console.log(params);
+				skillsService.consultarTecnico(params).then(function success(response) {
+				//console.log(response);
+				//$scope.llenarTableDinamic(jsonIntervenciones,jsonUsuarioTest); 
+				//dataTecnicoGlobal=jsonUsuarioTest;
+				//Cuando el servicio retorne info quitar esta linea y descomentar la sección de abajo
+				if (response.data.respuesta) {
+					//console.log("###respuesta###",response.data.result);
+				//	console.log("p",response.data.result.usuarios);
+				//	console.log("a",jsonIntervenciones);
+					$scope.llenarTableDinamic(jsonIntervenciones,response.data.result.usuarios);
+					dataTecnicoGlobal=response.data.result;
+					
+				
+				} else {
+					
+				}
+				swal.close();
+			}); 
+			}*/
+		
 
 		}
 	function removeDuplicates(array) {
@@ -379,7 +449,8 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
 	}
 	
 	
-	$scope.consultarTablaCuadrillasv2();
+	$scope.consultarTablaCuadrillasVacia();
+	
     function compareGeneric(a,b){
         let niveluno=a.nivel;
         let niveldos=b.nivel;
