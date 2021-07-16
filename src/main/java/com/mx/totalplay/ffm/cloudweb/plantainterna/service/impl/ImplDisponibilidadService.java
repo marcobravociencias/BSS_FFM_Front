@@ -6,13 +6,11 @@ import com.mx.totalplay.ffm.cloudweb.plantainterna.service.DisponibilidadService
 import com.mx.totalplay.ffm.cloudweb.plantainterna.utils.ConstDisponbilidadPI;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.LoginResult;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.ServiceResponseResult;
-import com.mx.totalplay.ffm.cloudweb.utilerias.utils.ConstantesGeneric;
 import com.mx.totalplay.ffm.cloudweb.utilerias.utils.ConsumeRest;
 import com.mx.totalplay.ffm.cloudweb.utilerias.utils.UtileriaGeneral;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -42,7 +40,7 @@ public class ImplDisponibilidadService implements DisponibilidadService {
         String tokenAcces = principalDetail.getAccess_token();
         logger.info("insertarDisponibilidad ##+" + tokenAcces);
         String urlRequest = principalDetail.getDireccionAmbiente().concat(constDisponbilidadPI.getCrearDisponibilidad());
-        logger.info("urlRequest "+urlRequest);
+        logger.info("***URL: "+ urlRequest);
         ServiceResponseResult response = consumeRest.callPostBearerTokenRequest(
                 params,
                 urlRequest,
@@ -62,7 +60,7 @@ public class ImplDisponibilidadService implements DisponibilidadService {
         String tokenAcces = principalDetail.getAccess_token();
         logger.info("consultarDisponibilidad ##+" + tokenAcces);
         String urlRequest = principalDetail.getDireccionAmbiente().concat(constDisponbilidadPI.getFfmDisponibilidad() + "?subtipoIntervencion=" + jsonObject.get("subtipoIntervencion").getAsString() + "&geografia2=" + jsonObject.get("geografia2").getAsString());
-
+        logger.info("***URL: "+ urlRequest);
         Map<String, String> paramsRequestGet = new HashMap<String, String>();
         paramsRequestGet.put("subtipoIntervencion", jsonObject.get("subtipoIntervencion").getAsString());
         paramsRequestGet.put("geografia2", jsonObject.get("geografia2").getAsString());
@@ -81,7 +79,7 @@ public class ImplDisponibilidadService implements DisponibilidadService {
         String tokenAcces = principalDetail.getAccess_token();
         logger.info("actualizarDisponibilidad ##+" + tokenAcces);
         String urlRequest = principalDetail.getDireccionAmbiente().concat(constDisponbilidadPI.getActualizarDisponibilidad());
-
+        logger.info("***URL: "+ urlRequest);
         ServiceResponseResult response = consumeRest.callPutBearerTokenRequest(params, urlRequest,
                 ServiceResponseResult.class, tokenAcces);
         logger.info("RESULT" + gson.toJson(response));

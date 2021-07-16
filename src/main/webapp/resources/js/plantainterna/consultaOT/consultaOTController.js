@@ -199,7 +199,11 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				},
 				"dataSrc": function (json) {
 					return json.data;
-				}, "complete": function () {
+				},
+				"error":function(xhr, error, thrown){
+					handleError(xhr)
+				}, 
+				"complete": function () {
 					swal.close()
 				}
 			},
@@ -294,7 +298,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				swal.close();
 				toastr.error('Ha ocurrido un error en la consulta de turnos');
 			}
-		});
+		}).catch(err => handleError(err));
 	}
 
 	$scope.realizarConversionAnidado = function (array) {
@@ -501,7 +505,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				swal.close();
 				mostrarMensajeErrorAlert("Error del servidor");
 			}
-		});
+		}).catch(err => handleError(err));
 
 	}
 
@@ -743,7 +747,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 					swal.close();
 					mostrarMensajeErrorAlert("Error del servidor");
 				}
-			});
+			}).catch(err => handleError(err));
 		}
 	}
 
@@ -804,7 +808,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				swal.close();
 				mostrarMensajeErrorAlert("Error del servidor");
 			}
-		});
+		}).catch(err => handleError(err));
 	}
 
 	$scope.cerrarModalMaterial = function () {
@@ -875,7 +879,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 					swal.close();
 					mostrarMensajeErrorAlert("Error del servidor");
 				}
-			});
+			}).catch(err => handleError(err));
 		}
 	}
 
@@ -920,7 +924,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 					swal.close();
 					mostrarMensajeErrorAlert("Error del servidor");
 				}
-			});
+			}).catch(err => handleError(err));
 		}
 	}
 
@@ -967,7 +971,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 					swal.close();
 					mostrarMensajeErrorAlert("Error del servidor");
 				}
-			});
+			}).catch(err => handleError(err));
 		}
 	}
 
@@ -1025,7 +1029,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 					swal.close();
 					mostrarMensajeErrorAlert("Error del servidor");
 				}
-			});
+			}).catch(err => handleError(err));
 		}
 	}
 
@@ -1271,7 +1275,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 					swal.close();
 					mostrarMensajeErrorAlert("Error del servidor");
 				}
-			});
+			}).catch(err => handleError(err));
 		}
 	}
 
@@ -1344,7 +1348,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 					swal.close();
 					mostrarMensajeErrorAlert("Error del servidor");
 				}
-			});
+			}).catch(err => handleError(err));
 		}
 	}
 

@@ -51,9 +51,7 @@ app.controller('usuarioController', ['$scope', 'usuarioPIService', '$filter', fu
             //$scope.llenarCompaniasSelect($scope.listaCompanias);
             $scope.consultarPuestos();
             
-        }, function error(response) {
-            swal.close()
-        });
+        }.catch(err => handleError(err)));
     }
     $scope.consultarCompanias();
 
@@ -79,9 +77,7 @@ app.controller('usuarioController', ['$scope', 'usuarioPIService', '$filter', fu
 
             $scope.consultarRegionesEstructura();
             
-        }, function error(response) {
-            swal.close()
-        });
+        }).catch(err => handleError(err));
     }
     //$scope.consultarPuestos();
 
@@ -99,9 +95,7 @@ app.controller('usuarioController', ['$scope', 'usuarioPIService', '$filter', fu
             });
             $('#region_select').selectpicker("refresh");
             
-        }, function error(response) {
-            swal.close()
-        });
+        }.catch(err => handleError(err)));
     }
     //$scope.consultarRegionesEstructura();
 
@@ -126,9 +120,7 @@ app.controller('usuarioController', ['$scope', 'usuarioPIService', '$filter', fu
             });
             
             
-        }, function error(response) {
-            swal.close()
-        }); 
+        }).catch(err => handleError(err)); 
     }
     $scope.consultarClasificacionUsuario();
 
@@ -147,9 +139,7 @@ app.controller('usuarioController', ['$scope', 'usuarioPIService', '$filter', fu
             angular.forEach($scope.listaIntervenciones,(element,index) => {
                 element.select = '0';
             });
-        }, function error(response) {
-            swal.close()
-        });
+        }).catch(err => handleError(err));
     }
     $scope.consultarIntervencionesPorPropietario();
 
@@ -172,9 +162,7 @@ app.controller('usuarioController', ['$scope', 'usuarioPIService', '$filter', fu
                   $scope.llenarTablaArabol();
                   $scope.$apply();
               });
-        }, function error(response) {
-            swal.close()
-        });
+        }).catch(err => handleError(err));
     }
     $scope.consultarArbolesCiudades();
 
@@ -195,9 +183,7 @@ app.controller('usuarioController', ['$scope', 'usuarioPIService', '$filter', fu
                   $scope.listaTecnicosDisponiblesMod.push({id: tecnico.id, nombre: tecnico.descripcion, check: 0});
             });
 
-        }, function error(response) {
-            swal.close()
-        });
+        }).catch(err => handleError(err));
     }
     $scope.consultarOperariosPorCiudad();
 
@@ -281,9 +267,7 @@ app.controller('usuarioController', ['$scope', 'usuarioPIService', '$filter', fu
             });
             $('#ciudad_select').selectpicker("refresh");
             
-        }, function error(response) {
-            swal.close()
-        });
+        }).catch(err => handleError(err));
     }
 
     $scope.consultarUsuarios = function() {
@@ -298,9 +282,7 @@ app.controller('usuarioController', ['$scope', 'usuarioPIService', '$filter', fu
 
             $scope.mostrarTablaUsuarios(response.data.result);
             
-        }, function error(response) {
-            swal.close()
-        });
+        }).catch(err => handleError(err));
     }
 
     $scope.privilegiosPrincipal = [];
@@ -342,9 +324,7 @@ app.controller('usuarioController', ['$scope', 'usuarioPIService', '$filter', fu
 
                 });
                 
-            }, function error(response) {
-                swal.close()
-            });
+            }).catch(err => handleError(err));
         }
         
     }
@@ -905,9 +885,7 @@ app.controller('usuarioController', ['$scope', 'usuarioPIService', '$filter', fu
 
                 });
                 
-            }, function error(response) {
-                swal.close()
-            });
+            }).catch(err => handleError(err));
         }
         
     }

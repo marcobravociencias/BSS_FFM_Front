@@ -9,7 +9,6 @@ public interface ConsultaOTService {
 	public ServiceResponseResult consultaFiltros(String params);
 
 	public DataTableResponse consultaOT(ParamConsultaOTPI paramsOT);
-	//public DataTableResponse consultaOT(String paramsOT);
 
 	public ServiceResponseResult consultaImagenesOt(String params);
 

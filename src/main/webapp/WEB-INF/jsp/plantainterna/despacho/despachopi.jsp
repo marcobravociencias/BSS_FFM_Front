@@ -257,6 +257,8 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/despachopi/mainDespachoService.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/despachopi/mainAlertasDespacho.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/despachopi/mainAlertasService.js"></script>
+    <script type="text/javascript">let contex_project = "${pageContext.request.contextPath}";</script>
+    <script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>
 </html>
 
 

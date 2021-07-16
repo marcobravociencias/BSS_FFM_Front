@@ -172,5 +172,6 @@
 <script src="${pageContext.request.contextPath}/resources/js/plantainterna/consultaOT/consultaOTService.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>
 
 </html>

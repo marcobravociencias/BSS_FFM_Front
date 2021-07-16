@@ -108,6 +108,8 @@ app.disponibilidadCalendar = function ($scope) {
                                 document.getElementById('matutino_adddisp').value = '';
                                 document.getElementById('vespertino_adddisp').value = '';
                                 document.getElementById('nocturno_adddisp').value = '';
+                                document.getElementById('radio_activo_adddisp').checked = false;
+                                document.getElementById('radio_inactivo_adddisp').checked = false;
                                 $("#moda-add-disponibilidad").modal('show')
                             }).catch(swal.noop);
                         }

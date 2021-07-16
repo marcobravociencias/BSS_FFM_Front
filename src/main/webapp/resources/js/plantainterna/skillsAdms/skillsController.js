@@ -88,7 +88,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
                 toastr.error( 'Ha ocurrido un error en la consulta de turnos' );                
             }           
 
-        });
+        }).catch(err => handleError(err));
     }
 	
 	$scope.buscTecnico=function(){
@@ -141,7 +141,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
 }
 			skillsService.guardarInfoTecnico(params).then(function success(response) {
 				//console.log(response);
-			});
+			}).catch(err => handleError(err));
 		})
 		
 	}
@@ -231,7 +231,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
 				} else {
 					
 				}*/
-			});
+			}).catch(err => handleError(err));
 
 		}
 	function removeDuplicates(array) {

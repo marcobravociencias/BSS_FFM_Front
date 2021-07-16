@@ -73,7 +73,7 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService){
             }else{
                 toastr.error( 'Ha ocurrido un error en la consulta de los datos' );                
             }
-        })
+        }).catch(err => handleError(err))
     }
 
     $scope.listadoArrayOtsLocalizacion=[]
@@ -107,7 +107,7 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService){
             }else{
                 toastr.error( 'Ha ocurrido un error en la consulta de los datos' );                
             }
-        })
+        }).catch(err => handleError(err))
     }
 
 
@@ -140,7 +140,7 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService){
             }else{
                 toastr.error( 'Ha ocurrido un error en la consulta de los comentarios' );                
             }
-        })
+        }).catch(err => handleError(err))
     }
     abrirModalHistorico=function(idOperario){
         let tecnicoConsulta=angular.copy($scope.listadoTecnicosGeneral.find((e)=>{return e.idTecnico==idOperario}) )
@@ -171,7 +171,7 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService){
             }else{
                 toastr.error( 'Ha ocurrido un error en la consulta de los datos' );                
             }
-        })
+        }).catch(err => handleError(err))
     }
     abrirCambioEstatusTecnico = function (idOperario){
         $scope.elementEstatusTecnico.status=null
@@ -221,7 +221,7 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService){
                     }
                 }
             }
-        })
+        }).catch(err => handleError(err))
 
     }
     abrirUbicacionOperario = function (idTecnico,nombreTecnico){
@@ -260,7 +260,7 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService){
                     }
                 }
             }
-        }) 
+        }).catch(err => handleError(err))
     }
     abrirInformacionMateriales = function (idTecnico){
         console.log("function 15"+idTecnico)
@@ -290,7 +290,7 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService){
                     }
                 }
             }
-        }) 
+        }).catch(err => handleError(err))
     }
     $scope.consultarCatalogoEstatusTecnico=function(){
         let params =  {
@@ -312,7 +312,7 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService){
                     }
                 }
             }
-        })
+        }).catch(err => handleError(err))
     }
     $scope.cambiarEstatusOperario=function(){
         if($scope.elementEstatusTecnico.status == null || !$scope.elementEstatusTecnico.comentario ){
@@ -345,7 +345,7 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService){
                     }
                 }
             }
-        }) 
+        }).catch(err => handleError(err))
     }
   
     $scope.confirmarDesconfirmarOt=function(){
@@ -367,7 +367,7 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService){
                     }
                 }
             }
-        }) 
+        }).catch(err => handleError(err))
     }
 
     $scope.abrirModalDetalleIconografia=function(){      
@@ -389,7 +389,7 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService){
                         }
                     }
                 }
-            }) 
+            }).catch(err => handleError(err))
         }
        
 
@@ -457,7 +457,7 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService){
                     }
                 }
             }
-        }) 
+        }).catch(err => handleError(err))
     }
 
     $scope.consultarCatalogosAcciones=function(){
@@ -481,7 +481,7 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService){
                     }
                 }
             }
-        }) 
+        }).catch(err => handleError(err))
     }
 
 }

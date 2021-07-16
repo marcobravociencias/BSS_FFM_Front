@@ -84,7 +84,7 @@ public class ImplDespachoPIService implements DespachoPIService{
 
 		
 		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
-		String tokenAcces=principalDetail.getAccess_token() ;
+		String tokenAcces=principalDetail.getAccess_token();
 		logger.info("consultarCatalogoTipoOrdenUsuarioDespacho ##+"+tokenAcces);							
 	    String urlRequest=principalDetail.getDireccionAmbiente().concat( constDespachoPI.getConsultaCatalogoTipoOrdenUsuarioDespacho() );		
 	    Map<String, String> paramsRequestGet = new HashMap<String, String>();

@@ -59,7 +59,7 @@ app.mapasControllerDespachoPI=function($scope,mainDespachoService){
                     }
                 }
             }
-        })
+        }).catch(err => handleError(err))
 
     }           
 }
