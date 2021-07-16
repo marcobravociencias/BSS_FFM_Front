@@ -116,4 +116,6 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/skillsAdms/skillsController.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/skillsAdms/skillsService.js"></script>
      <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/skillsAdms/jsonSkills.js"></script>
+     <script type="text/javascript">let contex_project = "${pageContext.request.contextPath}";</script>
+     <script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>
     </html>

@@ -3,17 +3,17 @@ package com.mx.totalplay.ffm.cloudweb.plantainterna.controller;
 import com.mx.totalplay.ffm.cloudweb.plantainterna.model.TestingModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.mx.totalplay.ffm.cloudweb.plantainterna.service.DespachoPIService;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.ServiceResponseResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.client.RestTemplate;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -44,219 +44,311 @@ public class DespachoPIController {
 
 
 	@PostMapping("/consultarCatalogoDesphachoPI")
-    public ServiceResponseResult consultarCatalogoDesphachoPI(@RequestBody String params) {
+    public ResponseEntity<?> consultarCatalogoDesphachoPI(@RequestBody String params) {
 		LOGGER.info("##### CONSULTANDO CATALGOS");
 		ServiceResponseResult response = despachoService.consultarCatalogosPI(params);
-        return response;
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
 	@PostMapping("consulCatalogoGeografiaGeneralDespacho")
-	public ServiceResponseResult consulCatalogoGeografiaGeneralDespacho() {
+	public ResponseEntity<?> consulCatalogoGeografiaGeneralDespacho() {
 		LOGGER.info("##### CONSULTANDO CATALOGO GEOGRAFIA GENERAL DESPACHO PI");
 		ServiceResponseResult response = despachoService.consultarCatalogoGeografiaGeneral(  );
-        return response;
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 	@PostMapping("consulCatalogoGeografiaUsuarioDespacho")
-	public ServiceResponseResult consulCatalogoGeografiaUsuarioDespacho() {
+	public ResponseEntity<?> consulCatalogoGeografiaUsuarioDespacho() {
 		LOGGER.info("##### CONSULTANDO CATALOGO GEOGRAFIA USUARIO DESPACHO PI");
 		ServiceResponseResult response = despachoService.consultarCatalogoGeografiaUsuario(  );
-        return response;
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}		
 	@PostMapping("consultarCatalogoTipoOrdenGeneralDespacho")
-	public ServiceResponseResult consultarCatalogoTipoOrdenGeneralDespacho() {
+	public ResponseEntity<?> consultarCatalogoTipoOrdenGeneralDespacho() {
 		LOGGER.info("##### CONSULTANDO CATALOGO ESTATUS DESPACHO PI");
 		ServiceResponseResult response = despachoService.consultarCatalogoTipoOrdenGeneralDespacho(  );
-        return response;
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}		
 	@PostMapping("consultarCatalogoTipoOrdenUsuarioDespacho")
-	public ServiceResponseResult consultarCatalogoTipoOrdenUsuarioDespacho() {
+	public ResponseEntity<?> consultarCatalogoTipoOrdenUsuarioDespacho() {
 		LOGGER.info("##### CONSULTANDO CATALOGO ESTATUS DESPACHO PI");
 		ServiceResponseResult response = despachoService.consultarCatalogoTipoOrdenUsuarioDespacho(  );
-        return response;
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}			
 	@PostMapping("consultarCatalogoEstatusDespachoPI")
-	public ServiceResponseResult consultarCatalogoEstatusOrdenDespacho() {
+	public ResponseEntity<?> consultarCatalogoEstatusOrdenDespacho() {
 		LOGGER.info("##### CONSULTANDO CATALOGO ESTATUS DESPACHO PI");
 		ServiceResponseResult response = despachoService.consultarCatalogoEstatusOrden(  );
-        return response;
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 	
 	
 	@PostMapping("consultarCatalogoTurnosDespachoPI")
-	public ServiceResponseResult consultarCatalogoTurnosPI() {
+	public ResponseEntity<?> consultarCatalogoTurnosPI() {
 		LOGGER.info("##### CONSULTANDO CATALOGO TURNO DESPACHO PI");
 		ServiceResponseResult response = despachoService.consultarCatalogoTurnosPI(  );
-        return response;
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 	
 	
 	@PostMapping("consultarHistoricoDespachoOT")
-	public ServiceResponseResult consultarHistoricoDespachoOTCon(@RequestBody String params) {
+	public ResponseEntity<?> consultarHistoricoDespachoOTCon(@RequestBody String params) {
 		LOGGER.info("##### CONSULTANDO HISTORICO DESPACHO OT");
 		ServiceResponseResult response = despachoService.consultarHistoricoOTPI( params );
-        return response;
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 	
 	@PostMapping("consultarDetalleDespachoOT")
-	public ServiceResponseResult consultarDetalleDespachoOTCon(@RequestBody String params) {
+	public ResponseEntity<?> consultarDetalleDespachoOTCon(@RequestBody String params) {
 		LOGGER.info("##### CONSULTANDO DETALLE OT DESPACHO");
 		ServiceResponseResult response = despachoService.consultarDetalleOTPI( params );
-        return response;
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 	
 	@PostMapping("consultarComentariosDespachoOT")
-	public ServiceResponseResult consultarComentariosDespachoOTCon(@RequestBody String params) {
+	public ResponseEntity<?> consultarComentariosDespachoOTCon(@RequestBody String params) {
 		LOGGER.info("##### CONSULTANDO COMENTARIOS ");
 		ServiceResponseResult response = despachoService.consultarComentariosOTPI( params );
-        return response;
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 	
 	
 	@PostMapping("cambiarEstatusOrdenPI")
-	public ServiceResponseResult cambiarEstatusOrdenTrabajo(@RequestBody String params) {
+	public ResponseEntity<?> cambiarEstatusOrdenTrabajo(@RequestBody String params) {
 		LOGGER.info("##### CAMBIANDO ESTATUS ORDEN TRABAJO---");
 		ServiceResponseResult response = despachoService.cambiarEstatusOrdenTrabajo( params );
-        return response;
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 	
 	@PostMapping("consultandoMaterialesPI")
-	public ServiceResponseResult consultarMaterialesDespachoOper(@RequestBody String params) {
+	public ResponseEntity<?> consultarMaterialesDespachoOper(@RequestBody String params) {
 		LOGGER.info("##### CONSULTANDO MATERIALES PI OPERARIO");
 		ServiceResponseResult response = despachoService.consultarMaterialesOperarioPI( params );
-        return response;
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 	
 	@PostMapping("consultarVehiculoOperarioPI")
-	public ServiceResponseResult consultarVehiculoOperarioPI(@RequestBody String params) {
+	public ResponseEntity<?> consultarVehiculoOperarioPI(@RequestBody String params) {
 		LOGGER.info("##### CONSULTANDO INFORMAICON VEHICULO");
 		ServiceResponseResult response = despachoService.cambiarEstatusTecnicoDespachoPI( params );
-        return response;
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 	
 	@PostMapping("consultarOtsTrabajadasDespacho")
-	public ServiceResponseResult consultarOtsTrabajadasDespacho(@RequestBody String params) {
+	public ResponseEntity<?> consultarOtsTrabajadasDespacho(@RequestBody String params) {
 		LOGGER.info("##### CONSULTANDO OTS TRABAJADAS");
-
 		ServiceResponseResult response = despachoService.cambiarEstatusTecnicoDespachoPI( params );
-        return response;
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 	
 	@PostMapping("cambiarEstatusOperarioPI")
-	public ServiceResponseResult cambiarEstatusOperarioPI(@RequestBody String params) {
+	public ResponseEntity<?> cambiarEstatusOperarioPI(@RequestBody String params) {
 		LOGGER.info("##### CAMBIANDO ESTATUS TECNICO PI");
 		ServiceResponseResult response = despachoService.cambiarEstatusTecnicoDespachoPI( params );
-        return response;
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 	
 	@PostMapping("/consultarCatalogoEstatusTecnico")
-	public ServiceResponseResult consultarCatalogoEstatusTecnico(@RequestBody String params) {
+	public ResponseEntity<?> consultarCatalogoEstatusTecnico(@RequestBody String params) {
 		LOGGER.info("##### CONSULTANDO CATALOGO ESTATUS TECNICO");
 		ServiceResponseResult response = despachoService.consultarCatalogoEstatusTecnico( params );
-        return response;
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
 	
 	@PostMapping("/consultarConteoAlertasPI")
-	public ServiceResponseResult consultarConteoAlertasPI(@RequestBody String params) {
+	public ResponseEntity<?> consultarConteoAlertasPI(@RequestBody String params) {
 		LOGGER.info("##### CONSULTANDO CONTEO ALERTAS");
 		ServiceResponseResult response = despachoService.consultarConteoAlertasPI( params );
-        return response;
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
 		
 	@PostMapping("/consultarOrdenesPendientes")
-    public ServiceResponseResult consultarOrdenesTrabajoPI(@RequestBody String params) {
+    public ResponseEntity<?> consultarOrdenesTrabajoPI(@RequestBody String params) {
 		LOGGER.info("##### CONSULTANDO ORDENES PENDIENTES");
 		ServiceResponseResult response = despachoService.obtenerOrdenesTrabajoPendientesDespacho( params );
-        return response;
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
 	
 
 	@PostMapping("/consultarOtsAsignadas")
-	public ServiceResponseResult consultarOrdenesAsignadas(@RequestBody String params) {				
+	public ResponseEntity<?> consultarOrdenesAsignadas(@RequestBody String params) {
 		LOGGER.info("##### CONSULTANDO CATALGOS");
 		ServiceResponseResult response = despachoService.consultarOrdenesAsignadasOperario(params);
-        return response;
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 	@PostMapping("/consultarTecnicosDisponiblesDespachoPI")
-	public ServiceResponseResult consultarTecnicosDisponiblesDespachoPI() {				
+	public ResponseEntity<?> consultarTecnicosDisponiblesDespachoPI() {
 		LOGGER.info("##### CONSULTANDO OPERARIOS DISPONIBLES");
 		ServiceResponseResult response = despachoService.consultarOperariosAsignadosDespacho();
-        return response;
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 	
 	@PostMapping("/consultarPaletaColores")
-	public ServiceResponseResult consultarPaletaColoresController() {				
+	public ResponseEntity<?> consultarPaletaColoresController() {
 		LOGGER.info("##### CONSULTANDO PALETA COLORES");
 		ServiceResponseResult response = despachoService.consultarColoresIconografia();
-        return response;
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 	@PostMapping("/consultarCatalogoAccionesDespachoPI")
-	public ServiceResponseResult consultarCatalogoAcciones() {				
+	public ResponseEntity<?> consultarCatalogoAcciones() {
 		LOGGER.info("##### CONSULTANDO consultarCatalogoAcciones");
 		ServiceResponseResult response = despachoService.consultarCatalogoAccionesOTPI();
-        return response;
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 	
 	
 	@PostMapping("/getDetalleAlertas")
-	public ServiceResponseResult getDetalleAlertas(@RequestBody String params) {
+	public ResponseEntity<?> getDetalleAlertas(@RequestBody String params) {
 		LOGGER.info("##### CONSULTANDO getDetalleAlertas");
 		ServiceResponseResult response = despachoService.getDetalleAlertas(params);
-		return response;
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 	
 	@PostMapping("/consultaAccionesAlerta")
-	public ServiceResponseResult consultaAccionesAlerta(@RequestBody String params) {
+	public ResponseEntity<?> consultaAccionesAlerta(@RequestBody String params) {
 		LOGGER.info("##### CONSULTANDO consultaAccionesAlerta");
 		ServiceResponseResult response = despachoService.consultaAcciones(params);
-		return response;
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 	
 	@PostMapping("/getCatalogoStatusEstadoMotivo")
-	public ServiceResponseResult getCatalogoStatusEstadoMotivo(@RequestBody String params) {
+	public ResponseEntity<?> getCatalogoStatusEstadoMotivo(@RequestBody String params) {
 		LOGGER.info("##### CONSULTANDO getDetalleAlertas");
 		ServiceResponseResult response = despachoService.getCatalogoStatusEstadoMotivo(params);
-		return response;
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 	
 	@PostMapping("/consultarEvidenciaAlertaPI")
-	public ServiceResponseResult consultarEvidenciaAlertaPI(@RequestBody String params) {
+	public ResponseEntity<?> consultarEvidenciaAlertaPI(@RequestBody String params) {
 		LOGGER.info("##### CONSULTANDO consultarEvidenciaAlertaPI");
 		ServiceResponseResult response = despachoService.consultarEvidenciaAlertaPI(params);
-		return response;
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 	
 	@PostMapping("/consultarHistoricoAlertaPI")
-	public ServiceResponseResult consultarHistoricoAlertaPI(@RequestBody String params) {
+	public ResponseEntity<?> consultarHistoricoAlertaPI(@RequestBody String params) {
 		LOGGER.info("##### CONSULTANDO consultarHistoricoAlertaPI");
 		ServiceResponseResult response = despachoService.consultarHistoricoAlertaPI(params);
-		return response;
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 	
 	@PostMapping("/consultarComentariosAlertaPI")
-	public ServiceResponseResult consultarComentariosAlertaPI(@RequestBody String params) {
+	public ResponseEntity<?> consultarComentariosAlertaPI(@RequestBody String params) {
 		LOGGER.info("##### CONSULTANDO consultarComentariosAlertaPI");
 		ServiceResponseResult response = despachoService.consultarComentariosAlertaPI(params);
-		return response;
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 	
 	@PostMapping("/consultarlocalizacionOtPIDespacho")
-	public ServiceResponseResult consultarlocalizacionOtPIDespachoController(@RequestBody String params) {
+	public ResponseEntity<?> consultarlocalizacionOtPIDespachoController(@RequestBody String params) {
 		LOGGER.info("##### CONSULTANDO consultarlocalizacionOtPIDespachoController");
 		ServiceResponseResult response = despachoService.consultarlocalizacionOtPIDespacho(params);
-		return response;
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 	
 	@PostMapping("/cambiarEstatusIntegrador") 
-	  public ServiceResponseResult cambiarEstatusIntegrador(@RequestBody String params) { 
+	  public ResponseEntity<?> cambiarEstatusIntegrador(@RequestBody String params) {
 	    LOGGER.info("##### CONSULTANDO cambiarEstatusIntegrador"); 
-	    ServiceResponseResult response = despachoService.cambiarEstatusIntegrador(params); 
-	    return response; 
+	    ServiceResponseResult response = despachoService.cambiarEstatusIntegrador(params);
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	  } 
 	   
 	  @PostMapping("/setComentariosIntegrador") 
-	  public ServiceResponseResult setComentariosIntegrador(@RequestBody String params) { 
+	  public ResponseEntity<?> setComentariosIntegrador(@RequestBody String params) {
 	    LOGGER.info("##### CONSULTANDO setComentariosIntegrador"); 
-	    ServiceResponseResult response = despachoService.setComentariosIntegrador(params); 
-	    return response; 
+	    ServiceResponseResult response = despachoService.setComentariosIntegrador(params);
+		  if (response.getResult() instanceof Integer){
+			  return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		  }
+		  return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	  } 
 	
 	

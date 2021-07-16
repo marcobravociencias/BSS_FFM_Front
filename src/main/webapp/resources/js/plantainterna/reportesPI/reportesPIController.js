@@ -387,7 +387,7 @@ app.controller('reportesController', ['$scope','reportesPIService','$filter', fu
 				//swal.close();
 				mostrarMensajeErrorAlert(response.data.resultDescripcion);
 			}
-		});
+		}).catch(err => handleError(err));
 		
 	}
 	$scope.consultaReporte = function () {
@@ -422,7 +422,7 @@ app.controller('reportesController', ['$scope','reportesPIService','$filter', fu
 				//swal.close();
 				mostrarMensajeErrorAlert(response.data.resultDescripcion);
 			}
-		});
+		}).catch(err => handleError(err));
 
 	}
 	$scope.consultarReporteCoord= function(){
@@ -449,7 +449,7 @@ app.controller('reportesController', ['$scope','reportesPIService','$filter', fu
 				//swal.close();
 				mostrarMensajeErrorAlert(response.data.resultDescripcion);
 			}
-		});
+		}).catch(err => handleError(err));
 		
 	}
 	
@@ -480,7 +480,7 @@ app.controller('reportesController', ['$scope','reportesPIService','$filter', fu
 					//swal.close();
 					//mostrarMensajeErrorAlert(response.data.resultDescripcion);
 				}
-			});
+			}).catch(err => handleError(err));
 
 		}
 	
@@ -508,7 +508,7 @@ app.controller('reportesController', ['$scope','reportesPIService','$filter', fu
 					//swal.close();
 					//mostrarMensajeErrorAlert(response.data.resultDescripcion);
 				}
-			});
+			}).catch(err => handleError(err));
 
 		}
 	
@@ -535,7 +535,7 @@ app.controller('reportesController', ['$scope','reportesPIService','$filter', fu
 					//swal.close();
 					//mostrarMensajeErrorAlert(response.data.resultDescripcion);
 				}
-			});
+			}).catch(err => handleError(err));
 
 		}
 	

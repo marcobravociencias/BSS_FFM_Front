@@ -1,22 +1,15 @@
 package com.mx.totalplay.ffm.cloudweb.plantainterna.service.impl;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
-
 import com.google.gson.Gson;
-import com.mx.totalplay.ffm.cloudweb.plantainterna.model.consultaOTPI.ConsultaOTVO;
-import com.mx.totalplay.ffm.cloudweb.plantainterna.model.consultaOTPI.ConsultaTrayectoriaVO;
 import com.mx.totalplay.ffm.cloudweb.plantainterna.model.consultaOTPI.ImagenesConfig;
 import com.mx.totalplay.ffm.cloudweb.plantainterna.model.consultaOTPI.ParamConsultaOTPI;
 import com.mx.totalplay.ffm.cloudweb.plantainterna.model.consultaOTPI.ResponseImagenEvidencia;
@@ -32,195 +25,213 @@ import com.mx.totalplay.ffm.cloudweb.utilerias.utils.UtileriaGeneral;
 @Service
 public class ImplConsultaOTService implements ConsultaOTService {
 
-	private final Logger logger = LogManager.getLogger(ImplConsultaOTService.class.getName());
-	
-	@Autowired
-	private ConsumeRest restCaller;
+    private final Logger logger = LogManager.getLogger(ImplConsultaOTService.class.getName());
+    private final ConsumeRest restCaller;
+    private final ConstantesGeneric constantesGeneric;
+    private final Environment env;
+    private final ConstConsultaOT constConsultaOT;
+    private final UtileriaGeneral utilerias;
+    Gson gson = new Gson();
 
-	@Autowired
-	private ConstantesGeneric constantesGeneric;
+    @Autowired
+    public ImplConsultaOTService(ConsumeRest restCaller, ConstantesGeneric constantesGeneric, Environment env, ConstConsultaOT constConsultaOT, UtileriaGeneral utilerias) {
+        this.restCaller = restCaller;
+        this.constantesGeneric = constantesGeneric;
+        this.env = env;
+        this.constConsultaOT = constConsultaOT;
+        this.utilerias = utilerias;
+    }
 
-	@Autowired
-	private Environment env;
 
-	@Autowired
-	ConstConsultaOT constConsultaOT;
-	Gson gson = new Gson();
+    @Override
+    public ServiceResponseResult consultaFiltros(String params) {
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        JsonObject login = new JsonObject();
+        login.addProperty(env.getProperty("param.textus.PI"), constantesGeneric.getTextIpUsuario());
+        login.addProperty(env.getProperty("param.textus.drowssap"), constantesGeneric.getTextCredPad());
+        login.addProperty(env.getProperty("param.textus.resU"), constantesGeneric.getTextCredUs());
+        jsonObject.add("Login", login);
 
-	//@Autowired
-	//private ConsultaOTPIRepository consultaOTPIRepository;
+        logger.info("json object params## " + jsonObject.toString());
 
-	@Autowired
-	private UtileriaGeneral utilerias;
-	
-	@Override
-	public ServiceResponseResult consultaFiltros(String params) {
-		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-		JsonObject login = new JsonObject();
-		login.addProperty(env.getProperty("param.textus.PI"), constantesGeneric.getTextIpUsuario());
-		login.addProperty(env.getProperty("param.textus.drowssap"), constantesGeneric.getTextCredPad());
-		login.addProperty(env.getProperty("param.textus.resU"), constantesGeneric.getTextCredUs());
-		jsonObject.add("Login", login);
+        String url = "http://10.216.47.89" + constConsultaOT.getFiltrosConsultaOT();
+        ServiceResponseResult response = restCaller.callPostParamString(url, jsonObject.toString());
+        logger.info("Result ImplConsultaOTService metodo consultaFiltros" + gson.toJson(response));
+        return response;
+    }
 
-		logger.info("json object params## " + jsonObject.toString());
+    @Override
+    public DataTableResponse consultaOT(ParamConsultaOTPI paramsOT) {
+        logger.info("ImplConsultaOTService.class [metodo consultaInformacionDetalleOt() ]\n" + gson.toJson(paramsOT));
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        String[][] dataArray = null;
+        DataTableResponse dataResponse = DataTableResponse.builder()
+                .isRespuesta(false)
+                .data(new String[0][10])
+                .paginaActual(0)
+                .registrosTotales(0)
+                .recordsFiltered("0")
+                .recordsTotal("0")
+                .draw(paramsOT.getDraw() + "")
+                .result(null).build();
+        paramsOT.setPagina((Integer.parseInt(paramsOT.getStart()) + 10) / 10);
+        paramsOT.setIdOrden(!paramsOT.getIdOrden().equals("") ? paramsOT.getIdOrden() : null);
+        paramsOT.setFolioSistema(!paramsOT.getFolioSistema().equals("") ? paramsOT.getFolioSistema() : null);
+        paramsOT.setClaveCliente(!paramsOT.getClaveCliente().equals("") ? paramsOT.getClaveCliente() : null);
 
-		String url = "http://10.216.47.89" + constConsultaOT.getFiltrosConsultaOT();
-		ServiceResponseResult response = restCaller.callPostParamString(url, jsonObject.toString());
-		logger.info("Result ImplConsultaOTService metodo consultaFiltros" + gson.toJson(response));
-		return response;
-	}
+        logger.info("### Object: " + gson.toJson(paramsOT));
 
-	@Override
-	public DataTableResponse consultaOT(ParamConsultaOTPI paramsOT) {
-		// logger.info("ImplConsultaOTService.class [metodo =
-		// consultaInformacionDetalleOt() ]\n"+params);
-		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
-		String[][] dataArray = null;
-		paramsOT.setPagina((Integer.parseInt(paramsOT.getStart()) + 10) / 10);
-		//jsonObject.addProperty("pagina", (Integer.parseInt(jsonObject.get("start").getAsString()) + 10) / 10);
-		paramsOT.setIdOrden(!paramsOT.getIdOrden().equals("") ? paramsOT.getIdOrden() : null);
-		//jsonObject.addProperty("idOrden", !jsonObject.get("idOrden").getAsString().equals("") ? jsonObject.get("idOrden").getAsString() : null);
-		paramsOT.setFolioSistema(!paramsOT.getFolioSistema().equals("") ? paramsOT.getFolioSistema() : null);
-		//jsonObject.addProperty("folioSistema", !jsonObject.get("folioSistema").getAsString().equals("") ? jsonObject.get("folioSistema").getAsString() : null);
-		paramsOT.setClaveCliente(!paramsOT.getClaveCliente().equals("") ? paramsOT.getClaveCliente() : null);
-		//jsonObject.addProperty("claveCliente", !jsonObject.get("claveCliente").getAsString().equals("") ? jsonObject.get("claveCliente").getAsString() : null);
+        String tokenAcces = principalDetail.getAccess_token();
+        logger.info("consultaInformacionDetalleOt ##+" + tokenAcces);
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constConsultaOT.getConsultaGeneralOt());
+        logger.info("URL ##+" + urlRequest);
 
-		logger.info("### Object: " + gson.toJson(paramsOT));
+        ServiceResponseResult response = restCaller.callPostBearerTokenRequest(gson.toJson(paramsOT), urlRequest,
+                ServiceResponseResult.class, tokenAcces);
+        if (response.getResult() instanceof Integer){
+            dataResponse = DataTableResponse.builder()
+                    .isRespuesta(false)
+                    .data(new String[0][10])
+                    .paginaActual(0)
+                    .registrosTotales(0)
+                    .recordsFiltered("0")
+                    .recordsTotal("0")
+                    .draw(paramsOT.getDraw() + "")
+                    .result(response.getResult()).build();
+        } else {
+            JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
+            JsonArray ordenesArray = jsonObjectResponse.getAsJsonArray("ordenes");
+            if (ordenesArray.size() > 0) {
+                if (jsonObjectResponse.get("registrosTotales").getAsInt() > 0) {
+                    int count = 0;
+                    dataArray = new String[ordenesArray.size()][11];
+                    for (int i = 0; i < ordenesArray.size(); i++) {
+                        JsonObject object = (JsonObject) ordenesArray.get(i);
+                        logger.info("objeto: " + object);
+                        dataArray[count][0] = object.get("idOrden").getAsInt() != 0 ? String.valueOf(object.get("idOrden").getAsInt()) : "";
+                        dataArray[count][1] = object.get("nombreCliente") != null ? object.get("nombreCliente").getAsString().trim() : "";
+                        dataArray[count][2] = object.get("claveCliente") != null ? object.get("claveCliente").getAsString().trim() : "";
+                        dataArray[count][3] = object.get("ciudad") != null ? object.get("ciudad").getAsString().trim() : "";
+                        dataArray[count][4] = object.get("fechaAgenda") != null ? object.get("fechaAgenda").getAsString().trim() : "";
+                        dataArray[count][5] = object.get("descripcionMotivo") != null ? object.get("descripcionMotivo").getAsString().trim() : "";
+                        dataArray[count][6] = object.get("descripcionEstatus") != null ? object.get("descripcionEstatus").getAsString().trim() : "";
+                        dataArray[count][7] = object.get("descripcionEstado") != null ? object.get("descripcionEstado").getAsString().trim() : "";
+                        dataArray[count][8] = "<div class='tooltip-btn'> <span onclick='consultaMaterialesOT(" + String.valueOf(object.get("idOrden").getAsInt()) + ")' class='btn-floating btn-option btn-sm btn-default waves-effect waves-light'><th><i class='icono_cons_bg fa fa-wrench' aria-hidden='true'></i></th></span></div>";
+                        ;
+                        dataArray[count][9] = "<div class='tooltip-btn'> <span onclick='consultaImagenesOT(" + String.valueOf(object.get("idOrden").getAsInt()) + ")' class='btn-option btn-floating btn-evidencia btn-sm btn-secondary waves-effect waves-light'><th><i class='icono_cons_bg fa fa-picture-o' aria-hidden='true'></i></th></span></div>";
+                        ;
+                        dataArray[count][10] = "<div class='tooltip-btn'> <span onclick='consultaDetalleOt(" + String.valueOf(object.get("idOrden").getAsInt()) + ")' class='btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones'><th><i class='icono_cons_bg fa fa-file-text' aria-hidden='true'></i></th></span></div>";
+                        ;
+                        count++;
+                    }
+                    dataResponse = DataTableResponse.builder()
+                            .isRespuesta(true)
+                            .data(dataArray)
+                            .paginaActual(jsonObjectResponse.get("paginaActual").getAsInt())
+                            .registrosTotales(jsonObjectResponse.get("registrosTotales").getAsInt())
+                            .recordsFiltered(jsonObjectResponse.get("registrosTotales").getAsInt() + "")
+                            .recordsTotal(jsonObjectResponse.get("registrosTotales").getAsInt() + "")
+                            .draw(paramsOT.getDraw() + "").build();
+                } else {
+                    dataResponse = DataTableResponse.builder()
+                            .isRespuesta(true)
+                            .data(new String[0][10])
+                            .paginaActual(jsonObjectResponse.get("paginaActual").getAsInt())
+                            .registrosTotales(jsonObjectResponse.get("registrosTotales").getAsInt())
+                            .recordsFiltered(jsonObjectResponse.get("registrosTotales").getAsInt() + "")
+                            .recordsTotal(jsonObjectResponse.get("registrosTotales").getAsInt() + "")
+                            .draw(paramsOT.getDraw() + "").build();
+                }
+            }
+        }
 
-		// String idot = jsonObject.get("Id_ot").getAsString();
 
-		String tokenAcces = principalDetail.getAccess_token();
-		logger.info("consultaInformacionDetalleOt ##+" + tokenAcces);
-		String urlRequest = principalDetail.getDireccionAmbiente().concat(constConsultaOT.getConsultaGeneralOt());
-		logger.info("URL ##+" + urlRequest);
 
-		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(gson.toJson(paramsOT), urlRequest,
-				ServiceResponseResult.class, tokenAcces);
-		
-		
-		DataTableResponse dataResponse = (DataTableResponse) gson.fromJson(gson.toJson(response.getResult()),
-				DataTableResponse.class);
-		if (dataResponse.getRegistrosTotales() > 0) {
-			int count = 0;
-			dataArray = new String[dataResponse.getOrdenes().size()][11];
+        logger.info("*** Objeto Response: " + gson.toJson(dataResponse));
 
-			for (ConsultaOTVO ot : dataResponse.getOrdenes()) {
-				dataArray[count][0] = ot.getIdOrden() != 0 ? String.valueOf(ot.getIdOrden()) : "";
-				dataArray[count][1] = ot.getNombreCliente() != null ? ot.getNombreCliente().trim() : "";
-				dataArray[count][2] = ot.getClaveCliente() != null ? ot.getClaveCliente() : "";
-				dataArray[count][3] = ot.getCiudad() != null ? ot.getCiudad() : "";
-				dataArray[count][4] = ot.getFechaAgenda() != null ? ot.getFechaAgenda() : "";
-				dataArray[count][5] = ot.getDescripcionMotivo() != null ? ot.getDescripcionMotivo() : "";
-				dataArray[count][6] = ot.getDescripcionEstatus() != null ? ot.getDescripcionEstatus() : "";
-				dataArray[count][7] = ot.getDescripcionEstado() != null ? ot.getDescripcionEstado() : "";
-				dataArray[count][8] = "<div class='tooltip-btn'> <span onclick='consultaMaterialesOT("+String.valueOf(ot.getIdOrden())+")' class='btn-floating btn-option btn-sm btn-default waves-effect waves-light'><th><i class='icono_cons_bg fa fa-wrench' aria-hidden='true'></i></th></span></div>";;
-				dataArray[count][9] = "<div class='tooltip-btn'> <span onclick='consultaImagenesOT("+String.valueOf(ot.getIdOrden())+")' class='btn-option btn-floating btn-evidencia btn-sm btn-secondary waves-effect waves-light'><th><i class='icono_cons_bg fa fa-picture-o' aria-hidden='true'></i></th></span></div>";;
-				dataArray[count][10] = "<div class='tooltip-btn'> <span onclick='consultaDetalleOt("+String.valueOf(ot.getIdOrden())+")' class='btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones'><th><i class='icono_cons_bg fa fa-file-text' aria-hidden='true'></i></th></span></div>";;
-				count++;
-			}
+        return dataResponse;
+    }
 
-			dataResponse.setRespuesta(true);
-			dataResponse.setData(dataArray);
-			dataResponse.setResult(dataResponse.getOrdenes());
-			dataResponse.setRecordsFiltered(dataResponse.getRegistrosTotales() + "");
-			dataResponse.setRecordsTotal(dataResponse.getRegistrosTotales() + "");
-			dataResponse.setDraw(paramsOT.getDraw() + "");
-		} else {
-			dataResponse.setRespuesta(true);
-			dataResponse.setData(new String[0][10]);
-			dataResponse.setResult(dataResponse.getOrdenes());
-			dataResponse.setRecordsFiltered(dataResponse.getRegistrosTotales() + "");
-			dataResponse.setRecordsTotal(dataResponse.getRegistrosTotales() + "");
-			dataResponse.setDraw(paramsOT.getDraw() + "");
-		}
-		logger.info("*** Objeto Response: " + gson.toJson(dataResponse));
+    @Override
+    public ServiceResponseResult consultaImagenesOt(String params) {
+        ServiceResponseResult responseS = ServiceResponseResult.builder().isRespuesta(false)
+                .resultDescripcion("sin datos").result(null).build();
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        JsonObject login = new JsonObject();
+        login.addProperty(env.getProperty("param.textus.pi"), constantesGeneric.getTextIpUsuario());
+        login.addProperty(env.getProperty("param.textus.drowssap"), constantesGeneric.getTextCredPad());
+        login.addProperty(env.getProperty("param.textus.diresu"), constantesGeneric.getTextCredUs());
+        jsonObject.add("Login", login);
+        jsonObject.addProperty(env.getProperty("param.header.grant_type"), env.getProperty("param.textus.grant_type"));
 
-		
-		// DataTableResponse dataResponse =
+        logger.info("json object params## " + jsonObject.toString());
+        try {
+            String url = "http://10.216.47.89" + constConsultaOT.getConsultaImagenesOt();
+            ResponseImagenEvidencia response = (ResponseImagenEvidencia) restCaller.callPostReturnClassBasicAuth(url,
+                    jsonObject.toString(), ResponseImagenEvidencia.class);
 
-		return dataResponse;
-	}
+            if (response.getImagen() != null) {
+                for (ImagenesConfig imagen : response.getImagen()) {
+                    if (imagen.getPath_imagen() != null) {
+                        try {
+                            String img64 = UtileriaGeneral
+                                    .encoderImg(UtileriaGeneral.desEncrypt(imagen.getPath_imagen()));
+                            if (img64.equals("")) {
+                                imagen.setPath_imagen("");
+                            } else {
+                                imagen.setPath_imagen(img64);
+                            }
+                        } catch (Exception e) {
+                            imagen.setPath_imagen("");
+                            logger.warn("Se encontro un problema en la imagen de la evidencia");
+                        }
+                    } else {
+                        imagen.setPath_imagen("");
+                    }
+                }
+            }
 
-	@Override
-	public ServiceResponseResult consultaImagenesOt(String params) {
-		ServiceResponseResult responseS = ServiceResponseResult.builder().isRespuesta(false)
-				.resultDescripcion("sin datos").result(null).build();
-		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-		JsonObject login = new JsonObject();
-		login.addProperty(env.getProperty("param.textus.pi"), constantesGeneric.getTextIpUsuario());
-		login.addProperty(env.getProperty("param.textus.drowssap"), constantesGeneric.getTextCredPad());
-		login.addProperty(env.getProperty("param.textus.diresu"), constantesGeneric.getTextCredUs());
-		jsonObject.add("Login", login);
-		jsonObject.addProperty(env.getProperty("param.header.grant_type"), env.getProperty("param.textus.grant_type"));
+            logger.info("Result ImplConsultaOTService metodo consultaImagenesOt: " + gson.toJson(response));
+            responseS = ServiceResponseResult.builder().isRespuesta(true).resultDescripcion("Accion completada")
+                    .result(response).build();
 
-		logger.info("json object params## " + jsonObject.toString());
-		try {
-			String url = "http://10.216.47.89" + constConsultaOT.getConsultaImagenesOt();
-			ResponseImagenEvidencia response = (ResponseImagenEvidencia) restCaller.callPostReturnClassBasicAuth(url,
-					jsonObject.toString(), ResponseImagenEvidencia.class);
+        } catch (Exception e) {
+            logger.info(e);
+            responseS = ServiceResponseResult.builder().isRespuesta(false).resultDescripcion("ERROR GENERAL")
+                    .result(null).build();
+        }
 
-			if (response.getImagen() != null) {
-				for (ImagenesConfig imagen : response.getImagen()) {
-					if (imagen.getPath_imagen() != null) {
-						try {
-							String img64 = UtileriaGeneral
-									.encoderImg(UtileriaGeneral.desEncrypt(imagen.getPath_imagen()));
-							if (img64.equals("")) {
-								imagen.setPath_imagen("");
-							} else {
-								imagen.setPath_imagen(img64);
-							}
-						} catch (Exception e) {
-							imagen.setPath_imagen("");
-							logger.warn("Se encontro un problema en la imagen de la evidencia");
-						}
-					} else {
-						imagen.setPath_imagen("");
-					}
-				}
-			}
+        return responseS;
+    }
 
-			logger.info("Result ImplConsultaOTService metodo consultaImagenesOt: " + gson.toJson(response));
-			responseS = ServiceResponseResult.builder().isRespuesta(true).resultDescripcion("Accion completada")
-					.result(response).build();
+    @Override
+    public ServiceResponseResult consultaInformacionDetalleOt(String params) {
+        logger.info("ImplConsultaOTService.class [metodo = consultaInformacionDetalleOt() ]\n" + params);
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
 
-		} catch (Exception e) {
-			logger.info(e);
-			responseS = ServiceResponseResult.builder().isRespuesta(false).resultDescripcion("ERROR GENERAL")
-					.result(null).build();
-		}
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        String idot = jsonObject.get("Id_ot").getAsString();
 
-		return responseS;
-	}
+        String tokenAcces = principalDetail.getAccess_token();//"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZE9yaWdlbiI6IjQiLCJ1c2VyX25hbWUiOiJGRk1CQUNLIiwiaWRVc3VhcmlvIjoyLCJpZFB1ZXN0byI6MSwiaWRHZW9ncmFmaWEiOjEsImlkUHJvcGlldGFyaW8iOjUsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdLCJleHAiOjE2MjYzNjg0MDAsImlhdCI6MTYyNjI5OTM3NywiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIiwiQURNSU4iXSwiaWRVbmlkYWROZWdvY2lvIjo0fQ.y_ap1bHChMFYsTGu68hWyqrbpRVsFYE919tKeClkAh9d2Co_f91eH65ptcMt6FVkp-ejZ3sRXvNDGwBbotHAHQ";//principalDetail.getAccess_token();
+        logger.info("consultaInformacionDetalleOt ##+" + tokenAcces);
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constConsultaOT.getConsultaOtInfoGeneral());
+        logger.info("URL ##+" + urlRequest);
 
-	@Override
-	public ServiceResponseResult consultaInformacionDetalleOt(String params) {
-		logger.info("ImplConsultaOTService.class [metodo = consultaInformacionDetalleOt() ]\n" + params);
-		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        Map<String, String> paramsRequestGet = new HashMap<String, String>();
+        paramsRequestGet.put("idot", idot);
 
-		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-		String idot = jsonObject.get("Id_ot").getAsString();
+        ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
+                ServiceResponseResult.class, tokenAcces);
+        return response;
+    }
 
-		String tokenAcces = principalDetail.getAccess_token();
-		logger.info("consultaInformacionDetalleOt ##+" + tokenAcces);
-		String urlRequest = principalDetail.getDireccionAmbiente().concat(constConsultaOT.getConsultaOtInfoGeneral());
-		logger.info("URL ##+" + urlRequest);
-
-		Map<String, String> paramsRequestGet = new HashMap<String, String>();
-		paramsRequestGet.put("idot", idot);
-
-		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
-				ServiceResponseResult.class, tokenAcces);
-		return response;
-	}
-
-	@Override
-	public ServiceResponseResult consultaMaterialesOts(ParamConsultaOTPI paramsOT) {
-		ServiceResponseResult response = ServiceResponseResult.builder().isRespuesta(false)
-				.resultDescripcion("sin datos").result(null).build();
-		List<ConsultaOTVO> responseMateriales = new ArrayList<ConsultaOTVO>();
-		ConsultaOTVO responseConsulta = new ConsultaOTVO();
-		try {
+    @Override
+    public ServiceResponseResult consultaMaterialesOts(ParamConsultaOTPI paramsOT) {
+        ServiceResponseResult response = ServiceResponseResult.builder().isRespuesta(false)
+                .resultDescripcion("sin datos").result(null).build();
+        //List<ConsultaOTVO> responseMateriales = new ArrayList<ConsultaOTVO>();
+        //ConsultaOTVO responseConsulta = new ConsultaOTVO();
+        try {
 //			responseMateriales = consultaOTPIRepository.consultaMaterialesOt(paramsOT);
 //			logger.info("### RESULT ### " + gson.toJson(responseMateriales));
 //
@@ -253,74 +264,74 @@ public class ImplConsultaOTService implements ConsultaOTService {
 //						.result(responseMateriales).build();
 //			}
 
-		} catch (Exception e) {
-			logger.info(e);
-			response = ServiceResponseResult.builder().isRespuesta(false).resultDescripcion("ERROR GENERAL")
-					.result(null).build();
-		}
-		logger.info("### RESULT ### " + gson.toJson(response));
-		return response;
-	}
+        } catch (Exception e) {
+            logger.info(e);
+            response = ServiceResponseResult.builder().isRespuesta(false).resultDescripcion("ERROR GENERAL")
+                    .result(null).build();
+        }
+        logger.info("### RESULT ### " + gson.toJson(response));
+        return response;
+    }
 
-	@Override
-	public ServiceResponseResult getComentariosIntegrador(String params) {
-		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-		JsonObject login = new JsonObject();
-		login.addProperty(env.getProperty("param.textus.pI"), constantesGeneric.getTextIpUsuario());
-		login.addProperty(env.getProperty("param.textus.drowssaP"), constantesGeneric.getTextCredPad());
-		login.addProperty(env.getProperty("param.textus.resU"), constantesGeneric.getTextCredUs());
-		jsonObject.add("Login", login);
-		jsonObject.addProperty("FechaInicial", "");
-		jsonObject.addProperty("FechaFinal", "");
+    @Override
+    public ServiceResponseResult getComentariosIntegrador(String params) {
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        JsonObject login = new JsonObject();
+        login.addProperty(env.getProperty("param.textus.pI"), constantesGeneric.getTextIpUsuario());
+        login.addProperty(env.getProperty("param.textus.drowssaP"), constantesGeneric.getTextCredPad());
+        login.addProperty(env.getProperty("param.textus.resU"), constantesGeneric.getTextCredUs());
+        jsonObject.add("Login", login);
+        jsonObject.addProperty("FechaInicial", "");
+        jsonObject.addProperty("FechaFinal", "");
 
-		logger.info("json object params## " + jsonObject.toString());
+        logger.info("json object params## " + jsonObject.toString());
 
-		String url = "http://10.216.47.89" + constConsultaOT.getConsultaComentariosOtOperario();
-		ServiceResponseResult response = restCaller.callPostParamString(url, jsonObject.toString());
-		logger.info("Result ImplConsultaOTService metodo getComentariosIntegrador" + gson.toJson(response));
-		return response;
-	}
+        String url = "http://10.216.47.89" + constConsultaOT.getConsultaComentariosOtOperario();
+        ServiceResponseResult response = restCaller.callPostParamString(url, jsonObject.toString());
+        logger.info("Result ImplConsultaOTService metodo getComentariosIntegrador" + gson.toJson(response));
+        return response;
+    }
 
-	@Override
-	public ServiceResponseResult historico(String params) {
-		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-		JsonObject login = new JsonObject();
-		login.addProperty(env.getProperty("param.textus.pI"), constantesGeneric.getTextIpUsuario());
-		login.addProperty(env.getProperty("param.textus.drowssaP"), constantesGeneric.getTextCredPad());
-		login.addProperty(env.getProperty("param.textus.resU"), constantesGeneric.getTextCredUs());
-		jsonObject.add("Login", login);
+    @Override
+    public ServiceResponseResult historico(String params) {
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        JsonObject login = new JsonObject();
+        login.addProperty(env.getProperty("param.textus.pI"), constantesGeneric.getTextIpUsuario());
+        login.addProperty(env.getProperty("param.textus.drowssaP"), constantesGeneric.getTextCredPad());
+        login.addProperty(env.getProperty("param.textus.resU"), constantesGeneric.getTextCredUs());
+        jsonObject.add("Login", login);
 
-		logger.info("json object params## " + jsonObject.toString());
+        logger.info("json object params## " + jsonObject.toString());
 
-		String url = "http://10.216.47.89" + constConsultaOT.getConsultaHistoricoOtOperario();
-		ServiceResponseResult response = restCaller.callPostParamString(url, jsonObject.toString());
-		logger.info("Result ImplConsultaOTService metodo historico" + gson.toJson(response));
-		return response;
-	}
+        String url = "http://10.216.47.89" + constConsultaOT.getConsultaHistoricoOtOperario();
+        ServiceResponseResult response = restCaller.callPostParamString(url, jsonObject.toString());
+        logger.info("Result ImplConsultaOTService metodo historico" + gson.toJson(response));
+        return response;
+    }
 
-	@Override
-	public ServiceResponseResult consultaActividadTecnico(String params) {
-		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-		JsonObject login = new JsonObject();
-		login.addProperty(env.getProperty("param.textus.pI"), constantesGeneric.getTextIpUsuario());
-		login.addProperty(env.getProperty("param.textus.drowssaP"), constantesGeneric.getTextCredPad());
-		login.addProperty(env.getProperty("param.textus.resU"), constantesGeneric.getTextCredUs());
-		jsonObject.add("Login", login);
+    @Override
+    public ServiceResponseResult consultaActividadTecnico(String params) {
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        JsonObject login = new JsonObject();
+        login.addProperty(env.getProperty("param.textus.pI"), constantesGeneric.getTextIpUsuario());
+        login.addProperty(env.getProperty("param.textus.drowssaP"), constantesGeneric.getTextCredPad());
+        login.addProperty(env.getProperty("param.textus.resU"), constantesGeneric.getTextCredUs());
+        jsonObject.add("Login", login);
 
-		logger.info("json object params## " + jsonObject.toString());
+        logger.info("json object params## " + jsonObject.toString());
 
-		String url = "http://10.216.47.89" + constConsultaOT.getConsultaActividad();
-		ServiceResponseResult response = restCaller.callPostParamString(url, jsonObject.toString());
-		logger.info("Result ImplConsultaOTService metodo consultaActividadTecnico" + gson.toJson(response));
-		return response;
-	}
+        String url = "http://10.216.47.89" + constConsultaOT.getConsultaActividad();
+        ServiceResponseResult response = restCaller.callPostParamString(url, jsonObject.toString());
+        logger.info("Result ImplConsultaOTService metodo consultaActividadTecnico" + gson.toJson(response));
+        return response;
+    }
 
-	@Override
-	public ServiceResponseResult consultaInfoTrayectoria(String params) {
-		ServiceResponseResult response = ServiceResponseResult.builder().isRespuesta(false)
-				.resultDescripcion("sin datos").result(null).build();
-		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-		try {
+    @Override
+    public ServiceResponseResult consultaInfoTrayectoria(String params) {
+        ServiceResponseResult response = ServiceResponseResult.builder().isRespuesta(false)
+                .resultDescripcion("sin datos").result(null).build();
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        try {
 //			String idot = jsonObject.get("idot").getAsString();
 //			List<ConsultaTrayectoriaVO> consulta = consultaOTPIRepository.consultaInfoTrayectoria(idot);
 //			logger.info("### RESULT ### " + gson.toJson(consulta));
@@ -328,47 +339,51 @@ public class ImplConsultaOTService implements ConsultaOTService {
 //			response = ServiceResponseResult.builder().isRespuesta(true).resultDescripcion("Accion completada")
 //					.result(consulta).build();
 
-		} catch (Exception e) {
-			logger.info(e);
-			response = ServiceResponseResult.builder().isRespuesta(false).resultDescripcion("ERROR GENERAL")
-					.result(null).build();
-		}
+        } catch (Exception e) {
+            logger.info(e);
+            response = ServiceResponseResult.builder().isRespuesta(false).resultDescripcion("ERROR GENERAL")
+                    .result(null).build();
+        }
 
-		return response;
-	}
+        return response;
+    }
 
-	@Override
-	public ServiceResponseResult consultaInformacionRed(String params) {
-		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-		JsonObject login = new JsonObject();
-		login.addProperty(env.getProperty("param.textus.pI"), constantesGeneric.getTextIpUsuario());
-		login.addProperty(env.getProperty("param.textus.drowssaP"), constantesGeneric.getTextCredPad());
-		login.addProperty(env.getProperty("param.textus.resU"), constantesGeneric.getTextCredUs());
-		jsonObject.add("Login", login);
+    @Override
+    public ServiceResponseResult consultaInformacionRed(String params) {
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        JsonObject login = new JsonObject();
+        login.addProperty(env.getProperty("param.textus.pI"), constantesGeneric.getTextIpUsuario());
+        login.addProperty(env.getProperty("param.textus.drowssaP"), constantesGeneric.getTextCredPad());
+        login.addProperty(env.getProperty("param.textus.resU"), constantesGeneric.getTextCredUs());
+        jsonObject.add("Login", login);
 
-		logger.info("json object params## " + jsonObject.toString());
+        logger.info("json object params## " + jsonObject.toString());
 
-		String url = "http://10.216.47.89" + constConsultaOT.getConsultaInformacionRed();
-		ServiceResponseResult response = restCaller.callPostParamString(url, jsonObject.toString());
-		logger.info("Result ImplConsultaOTService metodo consultaInformacionRed" + gson.toJson(response));
-		return response;
-	}
+        String url = "http://10.216.47.89" + constConsultaOT.getConsultaInformacionRed();
+        ServiceResponseResult response = restCaller.callPostParamString(url, jsonObject.toString());
+        logger.info("Result ImplConsultaOTService metodo consultaInformacionRed" + gson.toJson(response));
+        return response;
+    }
 
-	@Override
-	public ServiceResponseResult consultaCambioEquipo(String params) {
-		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-		JsonObject login = new JsonObject();
-		login.addProperty(env.getProperty("param.textus.pI"), constantesGeneric.getTextIpUsuario());
-		login.addProperty(env.getProperty("param.textus.drowssaP"), constantesGeneric.getTextCredPad());
-		login.addProperty(env.getProperty("param.textus.resU"), constantesGeneric.getTextCredUs());
-		jsonObject.add("Login", login);
+    @Override
+    public ServiceResponseResult consultaCambioEquipo(String params) {
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        JsonObject login = new JsonObject();
+        login.addProperty(env.getProperty("param.textus.pI"), constantesGeneric.getTextIpUsuario());
+        login.addProperty(env.getProperty("param.textus.drowssaP"), constantesGeneric.getTextCredPad());
+        login.addProperty(env.getProperty("param.textus.resU"), constantesGeneric.getTextCredUs());
+        jsonObject.add("Login", login);
 
-		logger.info("json object params## " + jsonObject.toString());
+        logger.info("json object params## " + jsonObject.toString());
 
-		String url = "http://10.216.47.89" + constConsultaOT.getConsultaCambioEquipo();
-		ServiceResponseResult response = restCaller.callPostParamString(url, jsonObject.toString());
-		logger.info("Result ImplConsultaOTService metodo consultaInformacionRed" + gson.toJson(response));
-		return response;
-	}
+        String url = "http://10.216.47.89" + constConsultaOT.getConsultaCambioEquipo();
+        ServiceResponseResult response = restCaller.callPostParamString(url, jsonObject.toString());
+        logger.info("Result ImplConsultaOTService metodo consultaInformacionRed" + gson.toJson(response));
+        return response;
+    }
+
+    private Boolean isNumero() {
+        return null;
+    }
 
 }

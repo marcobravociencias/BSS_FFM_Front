@@ -265,7 +265,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             }
             $scope.isCargaTecnicosDisponibles=true;
             $scope.validarLoadTecnicosOtsAsignadas()
-        })
+        }).catch(err => handleError(err))
     }
 
     $scope.consultarConteoAlertasPI=function(){
@@ -475,7 +475,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             $scope.inicializarsTableOtsPendientes()
             $scope.isCargaOtsPendientes=true;
 
-        })
+        }).catch(err => handleError(err))
     }
     $scope.setPixelesTableWrapper=function(){
         let pixelescon=$(window).height()-HEIGTH_PADDING_TABLE;
@@ -640,9 +640,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             }
             $scope.isCargaOtsAsignadas=true;
             $scope.validarLoadTecnicosOtsAsignadas()
-        }, function error(response) {
-           // swal.close()
-        });
+        }).catch(err => handleError(err));
     }
     $scope.refrescarBusqueda=function(){ 
         $('#calendar').fullCalendar('destroy');
@@ -697,9 +695,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             }else{
                 toastr.error( 'Ha ocurrido un error en la consulta de turnos' );                
             }
-        }, function error(response) {
-           // swal.close()
-        });
+        }).catch(err => handleError(err));
     }
     $scope.getCatControllerrafiaUsuarioDespacho=function(){
 
@@ -716,9 +712,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             }else{
                 toastr.error( 'Ha ocurrido un error en la consulta de turnos' );                
             }
-        }, function error(response) {
-           // swal.close()
-        });
+        }).catch(err => handleError(err));
     }
     console.log("#####%%%%%%%%%%%%%%%123")
     /**mainDespachoService.testingServiceEureka().then(function success(response) {
@@ -741,9 +735,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             }else{
                 toastr.error( 'Ha ocurrido un error en la consulta de turnos' );                
             }
-        }, function error(response) {
-           // swal.close()
-        });
+        }).catch(err => handleError(err));
     }
     $scope.fechaInicioFiltro=moment( FECHA_HOY_DATE ).format('DD/MM/YYYY'); 
     $scope.fechaFinFiltro=moment( FECHA_HOY_DATE ).format('DD/MM/YYYY'); 
@@ -851,7 +843,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                 toastr.error( 'Ha ocurrido un error en la consulta de turnos' );                
             }           
 
-        });
+        }).catch(err => handleError(err));
     }
     $scope.realizarConversionAnidado=function(array){
         let arrayCopy=[]

@@ -117,7 +117,7 @@ app.controller('controlVehicularController',
 
 					swal.close();
 
-				});
+				}).catch(err => handleError(err));
 			}
 
 			$scope.init();
