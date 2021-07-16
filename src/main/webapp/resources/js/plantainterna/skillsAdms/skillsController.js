@@ -227,7 +227,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
 				} else {
 					
 				}
-			});
+			}).catch(err => handleError(err));
 		
 	}
 	$scope.consultarTablaCuadrillasv2 = function () {
@@ -268,10 +268,9 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
 				
 				} else {
 					
-<<<<<<< HEAD
 				}
 				swal.close();
-			});
+			}).catch(err => handleError(err));
 			
 			/*}else{
 				toastr.error( 'Debe seleccionar el ultimo nivel del cluster' ); 
@@ -303,10 +302,6 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
 			}); 
 			}*/
 		
-=======
-				}*/
-			}).catch(err => handleError(err));
->>>>>>> development
 
 		}
 	function removeDuplicates(array) {

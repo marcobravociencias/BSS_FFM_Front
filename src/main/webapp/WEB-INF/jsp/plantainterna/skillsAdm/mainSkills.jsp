@@ -116,10 +116,6 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/skillsAdms/skillsController.js?"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/skillsAdms/skillsService.js"></script>
      <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/skillsAdms/jsonSkills.js"></script>
-<<<<<<< HEAD
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
-=======
-     <script type="text/javascript">let contex_project = "${pageContext.request.contextPath}";</script>
      <script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>
->>>>>>> development
     </html>
