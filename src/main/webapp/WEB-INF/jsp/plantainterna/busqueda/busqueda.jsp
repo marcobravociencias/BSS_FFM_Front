@@ -39,7 +39,7 @@
 
         <div class="row">
             <div ng-show="showSearch" class="col-first-parent col-2">
-                <div ng-click="setCurrentTabInfo(7)" ng-class="{'activetitleinfo':mostrarCurrentInfo==7}" class="element-busqueda-title">
+                <div ng-click="setCurrentTabInfo(1)" ng-class="{'activetitleinfo':mostrarCurrentInfo==1}" class="element-busqueda-title">
                     <div class="iconsf-container">
                         <img class="img-oportunidad" src="./resources/img/plantainterna/iconossf/oportunidad.png" alt="">
                     </div>
@@ -76,7 +76,7 @@
                         <span class="text-title-elementohcantidad">{{resultBusqueda.arrCotizacion !== undefined ? resultBusqueda.arrCotizacion.length : '0'}} registros</span>
                     </div>
                 </div>
-                <div ng-click="setCurrentTabInfo(1)" ng-class="{'activetitleinfo':mostrarCurrentInfo==1}" class="element-busqueda-title">
+                <div ng-click="setCurrentTabInfo(5)" ng-class="{'activetitleinfo':mostrarCurrentInfo==5}" class="element-busqueda-title">
     
                     <div class="iconsf-container">
                         <img class="img-cotsitio" src="./resources/img/plantainterna/iconossf/cotsitio.png" alt="">
@@ -95,7 +95,7 @@
                         <span class="text-title-elementohcantidad">{{resultBusqueda.arrCotSitioPlan !== undefined ? resultBusqueda.arrCotSitioPlan.length : '0'}} registros</span>
                     </div>
                 </div>
-                <div ng-click="setCurrentTabInfo(5)" ng-class="{'activetitleinfo':mostrarCurrentInfo==5}" class="element-busqueda-title">
+                <div ng-click="setCurrentTabInfo(7)" ng-class="{'activetitleinfo':mostrarCurrentInfo==7}" class="element-busqueda-title">
                     <div class="iconsf-container">
                         <img class="img-os" src="./resources/img/plantainterna/iconossf/os.png" alt="">
                     </div>
@@ -134,7 +134,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker_1.9.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
 <!-- Fin -->
-
+<script type="text/javascript">let contex_project = "${pageContext.request.contextPath}";</script>
 <script src="${pageContext.request.contextPath}/resources/js/plantainterna/busqueda/busquedaController.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/plantainterna/busqueda/busquedaService.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>

@@ -265,7 +265,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             }
             $scope.isCargaTecnicosDisponibles=true;
             $scope.validarLoadTecnicosOtsAsignadas()
-        })
+        }).catch(err => handleError(err))
     }
 
     $scope.consultarConteoAlertasPI=function(){
@@ -475,7 +475,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             $scope.inicializarsTableOtsPendientes()
             $scope.isCargaOtsPendientes=true;
 
-        })
+        }).catch(err => handleError(err))
     }
     $scope.setPixelesTableWrapper=function(){
         let pixelescon=$(window).height()-HEIGTH_PADDING_TABLE;
@@ -640,9 +640,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             }
             $scope.isCargaOtsAsignadas=true;
             $scope.validarLoadTecnicosOtsAsignadas()
-        }, function error(response) {
-           // swal.close()
-        });
+        }).catch(err => handleError(err));
     }
     $scope.refrescarBusqueda=function(){ 
         $('#calendar').fullCalendar('destroy');
@@ -678,7 +676,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
         }       
     }
     setInterval(function(){
-        $scope.consultarConteoAlertasPI()
+        //$scope.consultarConteoAlertasPI()
     }, MILISEGUNDOS_ALERTAS);
 
 
@@ -697,9 +695,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             }else{
                 toastr.error( 'Ha ocurrido un error en la consulta de turnos' );                
             }
-        }, function error(response) {
-           // swal.close()
-        });
+        }).catch(err => handleError(err));
     }
     $scope.getCatControllerrafiaUsuarioDespacho=function(){
 
@@ -716,9 +712,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             }else{
                 toastr.error( 'Ha ocurrido un error en la consulta de turnos' );                
             }
-        }, function error(response) {
-           // swal.close()
-        });
+        }).catch(err => handleError(err));
     }
     console.log("#####%%%%%%%%%%%%%%%123")
     /**mainDespachoService.testingServiceEureka().then(function success(response) {
@@ -741,9 +735,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             }else{
                 toastr.error( 'Ha ocurrido un error en la consulta de turnos' );                
             }
-        }, function error(response) {
-           // swal.close()
-        });
+        }).catch(err => handleError(err));
     }
     $scope.fechaInicioFiltro=moment( FECHA_HOY_DATE ).format('DD/MM/YYYY'); 
     $scope.fechaFinFiltro=moment( FECHA_HOY_DATE ).format('DD/MM/YYYY'); 
@@ -755,7 +747,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             mainDespachoService.consultarCatalogoTipoOrdenUsuarioDespacho(),
             mainDespachoService.consulCatalogoGeografiaUsuarioDespacho(),
             mainDespachoService.consultarCatalogoEstatusDespachoPI()
-        ]).then(function(results) {
+        ]).then(function(results) {                  
             if (results[3].data !== undefined) {
                 if(results[3].data.respuesta ){
                     if(results[3].data.result ){
@@ -819,12 +811,12 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                                 return e
                             })       
                             $('#jstree-proton-3').bind('loaded.jstree', function(e, data) {
-                                $scope.consultarCatalogoEstatusTecnico()
-                                $scope.consultarConteoAlertasPI()
+                                //$scope.consultarCatalogoEstatusTecnico()
+                                //$scope.consultarConteoAlertasPI()
                                 $scope.consultarOrdenesTrabajoAsignadasDespacho()
                                 $scope.consultarOtsPendientes()
                                 $scope.consultarTecnicosDisponibiles()
-                                $scope.consultarCatalogosAcciones();
+                                //$scope.consultarCatalogosAcciones();
 
                             }).jstree({
                                 'plugins': ["wholerow", "checkbox"],
@@ -851,7 +843,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                 toastr.error( 'Ha ocurrido un error en la consulta de turnos' );                
             }           
 
-        });
+        }).catch(err => handleError(err));
     }
     $scope.realizarConversionAnidado=function(array){
         let arrayCopy=[]
@@ -878,4 +870,9 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
         return $scope.listadogeografiacopy.sort(compareGeneric)[0].nivel
     }
     $scope.cargarFiltrosGeneric()
+    $scope.listadoOtsPendientes=otspendientes
+    $scope.listadoEstatusTecnico=JSONEstatusTecnico     
+    $scope.listadoIconografia=paletaColors.result.Colores    
+    $scope.listadoConteoAlertasTipo=conteoOtsDespacho.Alertas                                            
+ 
 }]);

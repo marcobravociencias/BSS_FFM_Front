@@ -44,9 +44,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService){
             } else {
                 swal.close();
             }
-        }, function error(response) {
-            //swal.close()
-        });
+        }).catch(err => handleError(err));
         
     }
 
@@ -147,9 +145,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService){
                 } else {
                     swal.close();
                 }
-            }, function error(response) {
-                //swal.close()
-            });
+            }).catch(err => handleError(err));
         }
         
     }
@@ -177,9 +173,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService){
             } else {
                 swal.close();
             }
-        }, function error(response) {
-            //swal.close()
-        });
+        }).catch(err => handleError(err));
     }
 
 
@@ -212,9 +206,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService){
             } else {
                 swal.close();
             }
-        }, function error(response) {
-            //swal.close()
-        });
+        }).catch(err => handleError(err));
     }
 
     $scope.evidenciaAlertaConsultada = false;
@@ -308,9 +300,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService){
                 } else {
                     swal.close();
                 }
-            }, function error(response) {
-                //swal.close()
-            });
+            }).catch(err => handleError(err));
         }
 
     }
@@ -428,9 +418,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService){
                 } else {
                     swal.close();
                 }
-            }, function error(response) {
-                //swal.close()
-            });
+            }).catch(err => handleError(err));
         }
         
     }
@@ -457,9 +445,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService){
                 } else {
                     swal.close();
                 }
-            }, function error(response) {
-                //swal.close()
-            });
+            }).catch(err => handleError(err));
         }
         
     }
@@ -483,9 +469,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService){
             } else {
                 swal.close();
             }
-        }, function error(response) {
-            //swal.close()
-        });
+        }).catch(err => handleError(err));
     }
 
     var mapaAlerta;

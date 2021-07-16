@@ -1,9 +1,7 @@
 package com.mx.totalplay.ffm.cloudweb.utilerias.utils;
 
 import java.util.Base64;
-import java.util.HashMap;
 import java.util.Map;
-
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.logging.log4j.LogManager;
@@ -21,9 +19,9 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-
 import com.google.gson.Gson;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.LoginResult;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.ServiceResponseResult;
@@ -35,10 +33,10 @@ public class ConsumeRest {
     private final Logger logger = LogManager.getLogger(ConsumeRest.class.getName());
     Gson gson = new Gson();
 
-
+    /**
     @Autowired
     @Qualifier("clienteRestBalanced")
-    RestTemplate restTemplateReferencia;
+    RestTemplate restTemplateReferencia;**/
 
     @Autowired
     @Qualifier("clienteRest")
@@ -115,7 +113,7 @@ public class ConsumeRest {
             ), classConversion);
         }
     }
-
+/**
     public Object callPostReturnClassBasicAuthXwwwUrlFormedRefencia(String url, String us, String passCod, Class<?> classConversion) {
         logger.info("URL--------" + url);
         String response = "";
@@ -160,7 +158,7 @@ public class ConsumeRest {
             ), classConversion);
         }
     }
-
+**/
 
     public Object callPostReturnClassBasicAuth(String url, String params, Class<?> classConversion) {
         logger.info("URL--------" + url);
@@ -230,6 +228,19 @@ public class ConsumeRest {
                     .resultDescripcion("Accion completada")
                     .result(result)
                     .build();
+        }catch (HttpClientErrorException httpErrorException){
+            switch (httpErrorException.getRawStatusCode()){
+                case 403:
+                    logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO" + httpErrorException.getMessage());
+                    response = ServiceResponseResult.builder()
+                            .result(httpErrorException.getRawStatusCode())
+                            .resultDescripcion(httpErrorException.getMessage()).build();
+                    break;
+                default:
+                    response = ServiceResponseResult.builder()
+                            .resultDescripcion(httpErrorException.getMessage()).build();
+                    break;
+            }
         } catch (Exception e) {
             logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO" + e.getMessage());
             response.setResultDescripcion(e.getMessage());
@@ -273,6 +284,19 @@ public class ConsumeRest {
                     .resultDescripcion("Accion completada")
                     .result(result)
                     .build();
+        }catch (HttpClientErrorException httpErrorException){
+            switch (httpErrorException.getRawStatusCode()){
+                case 403:
+                    logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO" + httpErrorException.getMessage());
+                    response = ServiceResponseResult.builder()
+                            .result(httpErrorException.getRawStatusCode())
+                            .resultDescripcion(httpErrorException.getMessage()).build();
+                    break;
+                default:
+                    response = ServiceResponseResult.builder()
+                            .resultDescripcion(httpErrorException.getMessage()).build();
+                    break;
+            }
         } catch (Exception e) {
             logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO" + e.getMessage());
             response.setResultDescripcion(e.getMessage());
@@ -310,6 +334,19 @@ public class ConsumeRest {
                     .resultDescripcion("Accion completada")
                     .result(result)
                     .build();
+        } catch (HttpClientErrorException httpErrorException){
+            switch (httpErrorException.getRawStatusCode()){
+                case 403:
+                    logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO" + httpErrorException.getMessage());
+                    response = ServiceResponseResult.builder()
+                                                    .result(httpErrorException.getRawStatusCode())
+                                                    .resultDescripcion(httpErrorException.getMessage()).build();
+                    break;
+                default:
+                    response = ServiceResponseResult.builder()
+                                                    .resultDescripcion(httpErrorException.getMessage()).build();
+                    break;
+            }
         } catch (Exception e) {
             logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO" + e.getMessage());
             response.setResultDescripcion(e.getMessage());
@@ -346,6 +383,19 @@ public class ConsumeRest {
                     .resultDescripcion("Accion completada")
                     .result(result)
                     .build();
+        }catch (HttpClientErrorException httpErrorException){
+            switch (httpErrorException.getRawStatusCode()){
+                case 403:
+                    logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO" + httpErrorException.getMessage());
+                    response = ServiceResponseResult.builder()
+                            .result(httpErrorException.getRawStatusCode())
+                            .resultDescripcion(httpErrorException.getMessage()).build();
+                    break;
+                default:
+                    response = ServiceResponseResult.builder()
+                            .resultDescripcion(httpErrorException.getMessage()).build();
+                    break;
+            }
         } catch (Exception e) {
             logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO" + e.getMessage());
             response.setResultDescripcion(e.getMessage());

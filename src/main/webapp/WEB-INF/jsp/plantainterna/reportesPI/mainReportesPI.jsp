@@ -132,4 +132,6 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/reportesPI/reportesPIController.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/reportesPI/reportesPIService.js"></script>
+	<script type="text/javascript">let contex_project = "${pageContext.request.contextPath}";</script>
+	<script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>
 </html>

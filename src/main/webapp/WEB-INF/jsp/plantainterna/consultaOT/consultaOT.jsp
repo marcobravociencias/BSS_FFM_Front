@@ -59,42 +59,29 @@
                 </div>
                 <div class="col-2 columna-filtro-ind">
                     <div class="dropdown">
-                        <input readonly data-mdb-toggle="dropdown" aria-expanded="false"
-                        placeholder="Intervenci&oacute;n" type="text" id="filtro-intervencion"
-                        class="input-filtro-consultaOT form-control form-control-sm" />
-                        
-                        <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-intervencion">
+                        <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Intervenci&oacute;n" type="text" id="filtro-intervencion" class="input-filtro-consultaOT form-control form-control-sm" />
+                        <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-intervencion">      
                             <li style="text-align: center;">
-                                    <button ng-click="seleccionarTodos()" id="todo_filtro" type="button"
-                                    class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
-                                    <button ng-click="deseleccionarTodos()" id="ninguno_filtro" type="button"
-                                    class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
-                                </li>
-                                <li class="elemento_menu dropdown-divider"></li>
-                                <li ng-repeat="filtro in filtrosGeneral.tipoOrdenes"
-                                class="element-menu-filter" class="element-menu-filter">
-                                <label class="dropdown-item form-check-inputfiltro">
-                                    <input ng-click=setCheckIntervencion(filtro) id="filtrotext-{{filtro.id}}"
-                                    class="form-check-input" type="checkbox"
-                                    ng-checked="filtro.checkedOpcion" />
-                                    <span for="filtrotext-{{filtro.id}}" class="dropdown-item item-text-filtro"
-                                    href="#" ng-bind="filtro.nombre"></span>
-                                    </label>
-                                    <!-- <ul class="dropdown-menu">
-                                        <li ng-repeat="subfiltro in filtro.subfiltros" class="element-menu-filter">
-                                            <label class="dropdown-item form-check-inputfiltro">
-                                                <input ng-click=setCheckSubIntervencion(subfiltro,filtro)
-                                                id="subfiltrotext-{{subfiltro.ID}}" class="form-check-input"
-                                                type="checkbox" ng-checked="subfiltro.checkedOpcion" />
-                                                <span for="subfiltrotext-{{subfiltro.ID}}"
-                                                class="dropdown-item item-text-filtro" href="#"
-                                                ng-bind="subfiltro.ID_Description"></span>
-                                            </label>
-                                        </li>
-                                    </ul> -->
-                                </li>
-                            </ul>
-                        </div>
+                                <button ng-click="seleccionarTodos(filtrosGeneral.tipoOrdenes)" id="todo_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
+                                <button ng-click="deseleccionarTodos(filtrosGeneral.tipoOrdenes)" id="ninguno_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
+                            </li>     
+                            <li class="elemento_menu dropdown-divider"></li>
+                            <li ng-repeat="filtro in filtrosGeneral.tipoOrdenes " class="element-menu-filter"  class="element-menu-filter">
+                                <label  class="dropdown-item form-check-inputfiltro">
+                                    <input ng-click=setCheckFiltroGeneric(filtro) id="filtrotext-{{filtro.id}}" class="form-check-input" type="checkbox" ng-model="filtro.checkedOpcion" ng-checked="filtro.checkedOpcion"  />
+                                    <span  for="filtrotext-{{filtro.id}}" class="dropdown-item item-text-filtro" href="#" ng-bind="filtro.nombre"></span>
+                                </label>
+                                 <ul  class="dropdown-menu">                     
+                                    <li  ng-repeat="subfiltro in filtro.children" class="element-menu-filter">
+                                        <label  class="dropdown-item form-check-inputfiltro">
+                                            <input ng-click=setCheckSubFiltroGeneric(subfiltro,filtro) id="subfiltrotext-{{subfiltro.id}}" class="form-check-input" type="checkbox" ng-model="subfiltro.checkedOpcion" ng-checked="subfiltro.checkedOpcion"    />
+                                            <span  for="subfiltrotext-{{subfiltro.id}}" class="dropdown-item item-text-filtro" href="#" ng-bind="subfiltro.nombre"></span>
+                                        </label>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                     </div>
                     </div>
                     <div class="col-2 column-style-consulta columna-filtro-ind">
                         <input readonly placeholder="GEOGRAF&Iacute;A" type="text" id="cluster"
@@ -185,5 +172,6 @@
 <script src="${pageContext.request.contextPath}/resources/js/plantainterna/consultaOT/consultaOTService.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>
 
 </html>

@@ -167,7 +167,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			idOrden: $.trim(document.getElementById('idot').value),
 			folioSistema: $.trim(document.getElementById('idos').value),
 			claveCliente: $.trim(document.getElementById('cuenta').value),
-			idSubTipoOrdenes: [].concat(subIntTemp,[1]),
+			idSubTipoOrdenes: [].concat(subIntTemp,[0]),
 			idEstatus: "1,2",
 			idClusters: clusters,
 			fechaInicio: $scope.getFechaFormato(document.getElementById('filtro_fecha_inicio_consultaOt').value),
@@ -199,7 +199,11 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				},
 				"dataSrc": function (json) {
 					return json.data;
-				}, "complete": function () {
+				},
+				"error":function(xhr, error, thrown){
+					handleError(xhr)
+				}, 
+				"complete": function () {
 					swal.close()
 				}
 			},
@@ -233,10 +237,10 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 					if (results[0].data.result) {
 						$scope.filtrosGeneral.tipoOrdenes = $scope.realizarConversionAnidado(results[0].data.result)
 					} else {
-						toastr.warning('No se encontraron catalogos tipo ordenes');
+						toastr.warning('No se encontraron  tipo ordenes');
 					}
 				} else {
-					toastr.warning(results[1].data.resultDescripcion);
+					toastr.warning(results[0].data.resultDescripcion);
 				}
 			} else {
 				toastr.error('Ha ocurrido un error en la consulta de tipo ordenes');
@@ -294,11 +298,11 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				swal.close();
 				toastr.error('Ha ocurrido un error en la consulta de turnos');
 			}
-		});
+		}).catch(err => handleError(err));
 	}
 
 	$scope.realizarConversionAnidado = function (array) {
-		let arrayCopy = [];
+		let arrayCopy = []
 		angular.forEach(array.filter(e => e.nivel == 1), function (elemento, index) {
 			elemento.checkedOpcion = true;
 			elemento.children = array.filter(e => e.nivel == 2 && e.idPadre == elemento.id)
@@ -501,7 +505,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				swal.close();
 				mostrarMensajeErrorAlert("Error del servidor");
 			}
-		});
+		}).catch(err => handleError(err));
 
 	}
 
@@ -743,7 +747,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 					swal.close();
 					mostrarMensajeErrorAlert("Error del servidor");
 				}
-			});
+			}).catch(err => handleError(err));
 		}
 	}
 
@@ -804,7 +808,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				swal.close();
 				mostrarMensajeErrorAlert("Error del servidor");
 			}
-		});
+		}).catch(err => handleError(err));
 	}
 
 	$scope.cerrarModalMaterial = function () {
@@ -875,7 +879,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 					swal.close();
 					mostrarMensajeErrorAlert("Error del servidor");
 				}
-			});
+			}).catch(err => handleError(err));
 		}
 	}
 
@@ -920,7 +924,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 					swal.close();
 					mostrarMensajeErrorAlert("Error del servidor");
 				}
-			});
+			}).catch(err => handleError(err));
 		}
 	}
 
@@ -967,7 +971,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 					swal.close();
 					mostrarMensajeErrorAlert("Error del servidor");
 				}
-			});
+			}).catch(err => handleError(err));
 		}
 	}
 
@@ -1025,7 +1029,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 					swal.close();
 					mostrarMensajeErrorAlert("Error del servidor");
 				}
-			});
+			}).catch(err => handleError(err));
 		}
 	}
 
@@ -1271,7 +1275,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 					swal.close();
 					mostrarMensajeErrorAlert("Error del servidor");
 				}
-			});
+			}).catch(err => handleError(err));
 		}
 	}
 
@@ -1344,7 +1348,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 					swal.close();
 					mostrarMensajeErrorAlert("Error del servidor");
 				}
-			});
+			}).catch(err => handleError(err));
 		}
 	}
 

@@ -122,7 +122,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                 swal.close();
                 mostrarMensajeErrorAlert(response.data.resultDescripcion)
             }
-        });
+        }).catch(err => handleError(err));
     }
 
     $scope.consultarCatalogoArbol = function () {
@@ -171,7 +171,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                 mostrarMensajeErrorAlert(response.data.resultDescripcion)
                 swal.close();
             }
-        });
+        }).catch(err => handleError(err));
     }
 
     $scope.consultarCatalogoArbol();
@@ -310,7 +310,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                     swal.close();
                     mostrarMensajeErrorAlert(response.data.resultDescripcion);
                 }
-            });
+            }).catch(err => handleError(err));
         } else {
             mensaje += '</ul>'
             mostrarMensajeWarningValidacion(mensaje)
@@ -356,8 +356,24 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             isValido = false
         }
 
+       
+
         let fechaInicioSplit = fechaInicio.split('/');
         let fechaFinSplit = fechaFin.split('/');
+
+        if (fechaInicioSplit[0] == "") {
+            mensajeError += '<li>Seleccione fecha inicio.</li>'
+            isValido = false
+        }
+        if (fechaFinSplit[0] == "") {
+            mensajeError += '<li>Seleccione fecha fin.</li>'
+            isValido = false
+        }
+        if (!bloqueo) {
+            mensajeError += '<li>Seleccione bloqueo.</li>'
+            isValido = false
+        }
+
         if (new Date(fechaInicioSplit[1] + "/" + fechaInicioSplit[0] + "/" + fechaInicioSplit[2]) >
             new Date(fechaFinSplit[1] + "/" + fechaFinSplit[0] + "/" + fechaFinSplit[2])) {
             isValido = false;
@@ -405,7 +421,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                     swal.close();
                     mostrarMensajeErrorAlert(response.data.resultDescripcion);
                 }
-            });
+            }).catch(err => handleError(err));
         } else {
             mensajeError += '</ul>'
             mostrarMensajeWarningValidacion(mensajeError);
@@ -461,6 +477,10 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                 isValido = false;
             }
         }
+        if (!bloqueo) {
+            mensajeError += '<li>Seleccione bloqueo.</li>'
+            isValido = false
+        }
 
         if (isValido) {
             let fechaInicioSplit = document.getElementById('fecha_actualizar').value
@@ -490,7 +510,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                     swal.close();
                     mostrarMensajeErrorAlert(response.data.resultDescripcion);
                 }
-            });
+            }).catch(err => handleError(err));
         } else {
             mensajeError += '</ul>'
             mostrarMensajeWarningValidacion(mensajeError)

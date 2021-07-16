@@ -88,7 +88,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
                 toastr.error( 'Ha ocurrido un error en la consulta de turnos' );                
             }           
 
-        });
+        }).catch(err => handleError(err));
     }
 	
 	$scope.buscTecnico=function(){
@@ -141,7 +141,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
 }
 			skillsService.guardarInfoTecnico(params).then(function success(response) {
 				//console.log(response);
-			});
+			}).catch(err => handleError(err));
 		})
 		
 	}
@@ -268,6 +268,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
 				
 				} else {
 					
+<<<<<<< HEAD
 				}
 				swal.close();
 			});
@@ -302,6 +303,10 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
 			}); 
 			}*/
 		
+=======
+				}*/
+			}).catch(err => handleError(err));
+>>>>>>> development
 
 		}
 	function removeDuplicates(array) {
@@ -467,4 +472,5 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
     
  //$scope.consultarArbolDesasignaCluster();
 	$scope.cargarFiltrosGeneric();
+	$("#li-skills-navbar").addClass('active')
 }]);

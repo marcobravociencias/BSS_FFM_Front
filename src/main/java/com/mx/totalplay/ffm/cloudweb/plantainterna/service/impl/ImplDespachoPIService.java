@@ -84,11 +84,15 @@ public class ImplDespachoPIService implements DespachoPIService{
 
 		
 		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
-		String tokenAcces=principalDetail.getAccess_token() ;
+		String tokenAcces=principalDetail.getAccess_token();
 		logger.info("consultarCatalogoTipoOrdenUsuarioDespacho ##+"+tokenAcces);							
 	    String urlRequest=principalDetail.getDireccionAmbiente().concat( constDespachoPI.getConsultaCatalogoTipoOrdenUsuarioDespacho() );		
 	    Map<String, String> paramsRequestGet = new HashMap<String, String>();
 	    paramsRequestGet.put("idUsuario", String.valueOf( principalDetail.getIdUsuario()) );
+	    
+		logger.info("idUsuario##+"+principalDetail.getIdUsuario());			
+		logger.info("urlRequest##+"+urlRequest);							
+
 	    ServiceResponseResult response= restCaller.callGetBearerTokenRequest( 
 																			paramsRequestGet,
 																			urlRequest,
@@ -109,6 +113,7 @@ public class ImplDespachoPIService implements DespachoPIService{
 		String tokenAccess=principalDetail.getAccess_token() ;
 		logger.info("consultarCatalogoEstatusOrden ##+"+tokenAccess);
 	    String urlRequest=principalDetail.getDireccionAmbiente().concat( constDespachoPI.getConsultaCatalogoEstatusOrdenDespacho() );		
+	    logger.info("consultarCatalogoEstatusOrden"+urlRequest);
 	    Map<String, String> paramsRequestGet = new HashMap<String, String>();
 		ServiceResponseResult response= restCaller.callGetBearerTokenRequest( 
 																			paramsRequestGet,
@@ -147,7 +152,7 @@ public class ImplDespachoPIService implements DespachoPIService{
 		String tokenAcces=principalDetail.getAccess_token() ;
 		logger.info("consultarCatalogoGeografiaUsuario ##+"+tokenAcces);							
 	    String urlRequest=principalDetail.getDireccionAmbiente().concat( constDespachoPI.getConsultarCatalogoGeografiaUsuarioPI() );
-		
+	    logger.info("urlRequest ##+"+urlRequest);
 	    Map<String, String> paramsRequestGet = new HashMap<String, String>();
 		//paramsRequestGet.put("idDespacho", principalDetail.getIdUsuario()+"");	    
 		ServiceResponseResult response= restCaller.callGetBearerTokenRequest( 
@@ -168,7 +173,8 @@ public class ImplDespachoPIService implements DespachoPIService{
 		String tokenAcces=principalDetail.getAccess_token() ;
 		logger.info("consultarCatalogoTurnosPI ##+"+tokenAcces);							
 	    String urlRequest=principalDetail.getDireccionAmbiente().concat( constDespachoPI.getConsultarCatalogoTurnosPi() );
-		
+		logger.info("urlRequest ##+"+urlRequest);							
+
 	    Map<String, String> paramsRequestGet = new HashMap<String, String>();
 		//paramsRequestGet.put("idDespacho", principalDetail.getIdUsuario()+"");	    
 		logger.info("idDespacho ##+"+principalDetail.getIdUsuario());							
