@@ -93,11 +93,11 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			otTabla.destroy();
 		}
 
-		let intervencion = $scope.filtrosGeneral.tipoOrdenes.filter(e => e.checkedOpcion).map(e => e.id)
-		// let subIntTemp = []
-		// angular.forEach($scope.filtrosGeneral.tipoOrdenes, (e, i) => {
-		// 	e.children.filter(f => f.checkedOpcion).map((k) => { subIntTemp.push(k.id); return k; })
-		// })
+		// let intervencion = $scope.filtrosGeneral.tipoOrdenes.filter(e => e.checkedOpcion).map(e => e.id)
+		let subIntTemp = []
+		angular.forEach($scope.filtrosGeneral.tipoOrdenes, (e, i) => {
+			e.children.filter(f => f.checkedOpcion).map((k) => { subIntTemp.push(k.id); return k; })
+		})
 
 		let ultimonivel = $scope.obtenerNivelUltimoJerarquia()
 		let clusters = $("#jstree-proton-3").jstree("get_selected", true)
@@ -105,9 +105,9 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			.map(e => parseInt(e.id))
 		let selectedElms = $('#jstree').jstree("get_selected", true);
 
-		$(".dropdown-menu").filter(":checked").each(function () {
-			intervencion.push($(this).val());
-		});
+		// $(".dropdown-menu").filter(":checked").each(function () {
+		// 	intervencion.push($(this).val());
+		// });
 		$.each(selectedElms, function () {
 			clusters.push(this.id);
 		});
@@ -130,10 +130,10 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			}
 		}
 
-		if (intervencion == '') {
-			mostrarMensajeWarningValidacion("Selecciona intervenciones");
-			return false;
-		}
+		// if (intervencion == '') {
+		// 	mostrarMensajeWarningValidacion("Selecciona intervenciones");
+		// 	return false;
+		// }
 		if (clusters == '') {
 			mostrarMensajeWarningValidacion("Selecciona Cluster");
 			return false;
@@ -167,9 +167,9 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			idOrden: $.trim(document.getElementById('idot').value),
 			folioSistema: $.trim(document.getElementById('idos').value),
 			claveCliente: $.trim(document.getElementById('cuenta').value),
-			idSubTipoOrdenes: "48,49,50,51,52,100",
+			idSubTipoOrdenes: [].concat(subIntTemp,[1]),
 			idEstatus: "1,2",
-			idClusters: "1,2,200",
+			idClusters: clusters,
 			fechaInicio: $scope.getFechaFormato(document.getElementById('filtro_fecha_inicio_consultaOt').value),
 			fechaFin: $scope.getFechaFormato(document.getElementById('filtro_fecha_fin_consultaOt').value),
 			elementosPorPagina: 10
