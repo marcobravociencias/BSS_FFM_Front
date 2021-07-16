@@ -217,10 +217,10 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
 			//console.log(params);
 				skillsService.consultarTecnico(params).then(function success(response) {
 				//console.log(response);
-			//	$scope.llenarTableDinamic(jsonIntervenciones,jsonUsuarioTest); 
-				//dataTecnicoGlobal=jsonUsuarioTest;
+				$scope.llenarTableDinamic(jsonIntervenciones,jsonUsuarioTest); 
+				dataTecnicoGlobal=jsonUsuarioTest;
 				//Cuando el servicio retorne info quitar esta linea y descomentar la sección de abajo
-				if (response.data.respuesta) {
+				/*if (response.data.respuesta) {
 					//console.log("###respuesta###",response.data.result);
 				//	console.log("p",response.data.result.usuarios);
 				//	console.log("a",jsonIntervenciones);
@@ -230,7 +230,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
 				
 				} else {
 					
-				}
+				}*/
 			});
 
 		}
@@ -379,7 +379,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
 	}
 	
 	
-	$scope.consultarTablaCuadrillasv2();
+	//$scope.consultarTablaCuadrillasv2();
     function compareGeneric(a,b){
         let niveluno=a.nivel;
         let niveldos=b.nivel;
