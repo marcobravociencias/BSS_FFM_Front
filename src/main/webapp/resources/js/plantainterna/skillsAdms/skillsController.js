@@ -379,7 +379,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
 	}
 	
 	
-	//$scope.consultarTablaCuadrillasv2();
+	$scope.consultarTablaCuadrillasv2();
     function compareGeneric(a,b){
         let niveluno=a.nivel;
         let niveldos=b.nivel;

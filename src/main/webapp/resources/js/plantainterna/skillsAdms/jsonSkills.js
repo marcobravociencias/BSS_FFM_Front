@@ -23,5 +23,47 @@ var jsonUsuarioTest=[
       "skills": [
         84,90
       ]
+    },
+     {
+      "idUsuario": 3,
+      "usuario": "FFM",
+      "no_empleado": "15005910",
+      "nombreCompleto": "FFM FFM FFM",
+      "nombre": "FFM",
+      "apellidoPaterno": "FFM",
+      "apellidoMaterno": "FFM",
+      "idGeografia": 1,
+      "geografia": "ENLACE",
+      "fechaActualizacion": "2021/05/24",
+      "geografias": [
+        {
+          "idGeografia": 365,
+          "geografia": "PELICANO 2"
+        }
+      ],
+      "skills": [
+        84,90
+      ]
+    },
+     {
+      "idUsuario": 4,
+      "usuario": "FFM",
+      "no_empleado": "15005911",
+      "nombreCompleto": "TECNICO TECNICO FFM",
+      "nombre": "TECNICO",
+      "apellidoPaterno": "TECNICO",
+      "apellidoMaterno": "FFM",
+      "idGeografia": 1,
+      "geografia": "ENLACE",
+      "fechaActualizacion": "2021/05/24",
+      "geografias": [
+        {
+          "idGeografia": 365,
+          "geografia": "PELICANO 2"
+        }
+      ],
+      "skills": [
+        84,90
+      ]
     }
   ]
