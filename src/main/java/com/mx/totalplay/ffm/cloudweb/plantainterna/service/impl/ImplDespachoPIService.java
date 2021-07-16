@@ -173,7 +173,8 @@ public class ImplDespachoPIService implements DespachoPIService{
 		String tokenAcces=principalDetail.getAccess_token() ;
 		logger.info("consultarCatalogoTurnosPI ##+"+tokenAcces);							
 	    String urlRequest=principalDetail.getDireccionAmbiente().concat( constDespachoPI.getConsultarCatalogoTurnosPi() );
-		
+		logger.info("urlRequest ##+"+urlRequest);							
+
 	    Map<String, String> paramsRequestGet = new HashMap<String, String>();
 		//paramsRequestGet.put("idDespacho", principalDetail.getIdUsuario()+"");	    
 		logger.info("idDespacho ##+"+principalDetail.getIdUsuario());							

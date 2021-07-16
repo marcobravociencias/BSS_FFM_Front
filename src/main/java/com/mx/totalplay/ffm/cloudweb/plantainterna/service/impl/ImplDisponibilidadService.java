@@ -42,7 +42,7 @@ public class ImplDisponibilidadService implements DisponibilidadService {
         String tokenAcces = principalDetail.getAccess_token();
         logger.info("insertarDisponibilidad ##+" + tokenAcces);
         String urlRequest = principalDetail.getDireccionAmbiente().concat(constDisponbilidadPI.getCrearDisponibilidad());
-        ;
+        logger.info("urlRequest "+urlRequest);
         ServiceResponseResult response = consumeRest.callPostBearerTokenRequest(
                 params,
                 urlRequest,

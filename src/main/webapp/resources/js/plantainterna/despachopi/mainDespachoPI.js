@@ -824,7 +824,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                                 $scope.consultarOrdenesTrabajoAsignadasDespacho()
                                 $scope.consultarOtsPendientes()
                                 $scope.consultarTecnicosDisponibiles()
-                                $scope.consultarCatalogosAcciones();
+                                //$scope.consultarCatalogosAcciones();
 
                             }).jstree({
                                 'plugins': ["wholerow", "checkbox"],
