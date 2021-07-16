@@ -104,7 +104,7 @@ JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
 		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
 		String tokenAcces=principalDetail.getAccess_token() ;
 		logger.info("consultarCatalogoGeografiaGeneral ##+"+tokenAcces);							
-	    String urlRequest=principalDetail.getDireccionAmbiente().concat( constSkills.getConsultarCatalogoGeografiaGeneralPI() );
+	    String urlRequest=principalDetail.getDireccionAmbiente().concat( constSkills.getConsultarCatalogoGeografiaUsuarioPI() );
 		
 	    Map<String, String> paramsRequestGet = new HashMap<String, String>();
 		//paramsRequestGet.put("idDespacho", principalDetail.getIdUsuario()+"");	    
@@ -113,7 +113,7 @@ JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
 																			urlRequest,
 																			ServiceResponseResult.class , 
 																			tokenAcces );
-	    logger.info("RESULT"+gson.toJson(response));
+	    logger.info("RESULT Catalogo geo"+gson.toJson(response));
 		return response;
 	}
 
