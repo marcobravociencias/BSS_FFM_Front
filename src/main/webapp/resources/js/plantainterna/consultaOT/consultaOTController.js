@@ -51,9 +51,9 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			array[11] = elemento.status ? elemento.status : '';
 			array[12] = elemento.estado ? elemento.estado : '';
 			array[13] = elemento.usuario_crea.trim() ? elemento.usuario_crea : 'SIN INFORMACION'
-			array[14] = '<div class="tooltip-btn"><span onclick="consultaMaterialesOT(\'' + elemento.ot + '\'' + ',\'' + elemento.operario.trim() + '\')" class="btn-floating btn-option btn-sm btn-default waves-effect waves-light"><th><i class="icono_cons_bg fa fa-wrench" aria-hidden="true"></i></th></span></div>';
-			array[15] = '<div class="tooltip-btn"><span onclick="consultaImagenesOT(\'' + elemento.ot + '\'' + ',\'' + elemento.id_tipo + '\')" class="btn-option btn-floating btn-evidencia btn-sm btn-secondary waves-effect waves-light"><i class="icono_cons_bg fa fa-picture-o" aria-hidden="true"></i></span></div>'
-			array[16] = '<div class="tooltip-btn"><span onclick="consultaDetalleOt(\'' + elemento.ot + '\'' + ',\'' + elemento.id_tipo + '\'' + ',\'' + elemento.id_subtipo + '\'' + ',\'' + elemento.operario.trim() + '\'' + ',\'' + elemento.equipo + '\')" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones"><i class="icono_cons_bg fa fa-file-text" aria-hidden="true"></i></span></div>'
+			// array[14] = '<div class="tooltip-btn"><span onclick="consultaMaterialesOT(\'' + elemento.ot + '\'' + ',\'' + elemento.operario.trim() + '\')" class="btn-floating btn-option btn-sm btn-default waves-effect waves-light"><th><i class="icono_cons_bg fa fa-wrench" aria-hidden="true"></i></th></span></div>';
+			// array[15] = '<div class="tooltip-btn"><span onclick="consultaImagenesOT(\'' + elemento.ot + '\'' + ',\'' + elemento.id_tipo + '\')" class="btn-option btn-floating btn-evidencia btn-sm btn-secondary waves-effect waves-light"><i class="icono_cons_bg fa fa-picture-o" aria-hidden="true"></i></span></div>'
+			array[14] = '<div class="tooltip-btn"><span onclick="consultaDetalleOt(\'' + elemento.ot + '\'' + ',\'' + elemento.id_tipo + '\'' + ',\'' + elemento.id_subtipo + '\'' + ',\'' + elemento.operario.trim() + '\'' + ',\'' + elemento.equipo + '\')" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones"><i class="icono_cons_bg fa fa-bars" aria-hidden="true"></i></span></div>'
 
 			viewTable.push(array);
 		});
@@ -167,7 +167,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			idOrden: $.trim(document.getElementById('idot').value),
 			folioSistema: $.trim(document.getElementById('idos').value),
 			claveCliente: $.trim(document.getElementById('cuenta').value),
-			idSubTipoOrdenes: [].concat(subIntTemp,[0]),
+			idSubTipoOrdenes: [].concat(subIntTemp, [0]),
 			idEstatus: "1,2",
 			idClusters: clusters,
 			fechaInicio: $scope.getFechaFormato(document.getElementById('filtro_fecha_inicio_consultaOt').value),
@@ -326,29 +326,50 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		return $scope.listadogeografiacopy.sort(compareGeneric)[0].nivel
 	}
 
-	$scope.seleccionarTodos = function () {
-		$scope.filtrosGeneral.General_filtros.filtros.map(function (e) {
+	$scope.seleccionarTodos = function (paramFiltroParent) {
+		paramFiltroParent.map(function (e) {
 			e.checkedOpcion = true
 		})
 
-		$scope.filtrosGeneral.General_filtros.filtros.map(function (e) {
-			e.subfiltros.map(function (j) {
+		paramFiltroParent.map(function (e) {
+			e.children.map(function (j) {
 				j.checkedOpcion = true
 				return j
 			})
 		})
 	}
-	$scope.deseleccionarTodos = function () {
-		$scope.filtrosGeneral.General_filtros.filtros.map(function (e) {
+	$scope.deseleccionarTodos = function (paramFiltroParent) {
+		paramFiltroParent.map(function (e) {
 			e.checkedOpcion = false
 		})
-		$scope.filtrosGeneral.General_filtros.filtros.map(function (e) {
-			e.subfiltros.map(function (j) {
+		paramFiltroParent.map(function (e) {
+			e.children.map(function (j) {
 				j.checkedOpcion = false
 				return j
 			})
 		})
 	}
+	$scope.setCheckFiltroGeneric = function (filtroParent) {
+		console.log(filtroParent.checkedOpcion)
+		console.log("#####---------")
+		console.log(filtroParent.children)
+
+		filtroParent.checkedOpcion = !filtroParent.checkedOpcion
+		filtroParent.children.map(function (e) {
+			e.checkedOpcion = filtroParent.checkedOpcion
+			return e
+		})
+		console.log("#####")
+		console.log(filtroParent.children)
+		console.log(filtroParent.checkedOpcion)
+	}
+	$scope.setCheckSubFiltroGeneric = function (subFiltro, parentFiltro) {
+		subFiltro.checkedOpcion = !subFiltro.checkedOpcion
+		let cantidadSubfiltros = parentFiltro.children.length
+		let cantidadChecked = parentFiltro.children.filter(function (e) { return e.checkedOpcion }).length
+		parentFiltro.checkedOpcion = cantidadSubfiltros !== cantidadChecked ? false : true
+	}
+	
 	$scope.setCheckIntervencion = function (elementoInt) {
 		console.log(elementoInt.checkedOpcion)
 		console.log("#####---------")
