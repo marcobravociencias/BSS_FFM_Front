@@ -207,7 +207,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 					swal.close()
 				}
 			},
-			"columns": [null, null, null, null, null, null, null, null, null, null, null],
+			"columns": [null, null, null, null, null, null, null, null, null],
 			"language": idioma_espanol_not_font
 		});
 
