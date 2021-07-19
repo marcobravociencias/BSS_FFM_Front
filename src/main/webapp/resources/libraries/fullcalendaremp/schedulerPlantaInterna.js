@@ -3673,6 +3673,7 @@ TimelineGrid = (function(superClass) {
     <div class="container-asignada">            
         <div class="content-text-otasignada" >  
             <div class="izquierda-icon"><i class="elemen-izquierda-asignada icon-otasginada fas fa-bars" onclick="abrirModalInformacion(${event.idOrden});"></i></div>
+            <i class="fas fa-dollar-sign detalle-cotizacion-icon-asignada" onclick="consultarDetalleCotizacion(${event.folioOrden});"></i>
             <h5 class="cliente-asignada">${event.nombreCliente}</h5>
         </div>
         <div class="content-text-otasignada" >      

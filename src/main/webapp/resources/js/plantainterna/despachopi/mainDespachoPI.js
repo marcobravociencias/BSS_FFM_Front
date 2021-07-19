@@ -9,6 +9,7 @@ var app = angular.module('despacho',[] );
 var triggerOperarioKeyup;
 
 var mapubicacionoperario;
+var mapaucotizaciondetalle;
 const HEIGTH_PADDING_TABLE=270;
 const MILISEGUNDOS_ALERTAS=(1000*60)*3;
 function logerror(mensaje){
@@ -450,6 +451,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
         
                                             </div>
                                             <div class="footer-otpendiente">
+                                                <i class="fas fa-dollar-sign detalle-cotizacion-icon" onclick="consultarDetalleCotizacion(${otpendiente.idOrden});" ></i>
                                                 <i class="fas fa-phone telefono-icon-pendiente"></i>
                                                 <span class="telefono-text-otpendiente" >${otpendiente.telefonoCliente}</span>
                                             </div>
@@ -698,29 +700,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
         }).catch(err => handleError(err));
     }
 
-    $scope.consultarCotizacionDespacho=function(idot){
-        let params={
-            "idOt":idot
-        }
-        mainDespachoService.consultarCotizacionDespacho(params).then(function success(response){
-            console.log()
-            console.log(response)
-            if (response.data !== undefined) {
-                if(response.data.respuesta ){
-                    if(response.data.result ){
-                    }else{                      
-                        toastr.warning( 'No se encontraron catalogos turnos' );                
-                    }
-                }else{
-                    toastr.warning( response.data.resultDescripcion );                
-                }               
-            }else{
-                toastr.error( 'Ha ocurrido un error en la consulta de turnos' );                
-            }
-        }).catch(err=>handleError(err))
-    }
 
-    $scope.consultarCotizacionDespacho(129);
     $scope.getCatControllerrafiaUsuarioDespacho=function(){
 
         mainDespachoService.consulCatalogoGeografiaUsuarioDespacho().then(function success(response) {     
@@ -767,7 +747,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
    
     $scope.cargarFiltrosGeneric=function(){
         $q.all([
-            mainDespachoService.consultarCatalogosTurnosDespachoPI() ,
+            mainDespachoService.consultarCatalogoEstatusDespachoPI() ,
             mainDespachoService.consultarCatalogoTipoOrdenUsuarioDespacho(),
             mainDespachoService.consulCatalogoGeografiaUsuarioDespacho(),
             mainDespachoService.consultarCatalogoEstatusDespachoPI()
@@ -785,11 +765,11 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             }else{
                 toastr.error( 'Ha ocurrido un error en la consulta de tipo ordenes' );                
             }
-            
+
             if (results[0].data !== undefined) {
                 if(results[0].data.respuesta ){
                     if(results[0].data.result ){
-                        $scope.filtrosGeneral.turnosdisponibles=results[0].data.result
+                        $scope.filtrosGeneral.turnosdisponibles=catalogoTurnoJSON
                         $scope.filtrosGeneral.turnosdisponibles.map(e=>{e.checkedOpcion=true; return e;})
                     }else{                      
                         toastr.warning( 'No se encontraron catalogos turnos' );                

@@ -7962,10 +7962,10 @@ let catalogoestatusJSON={
 }
 
 let catalogoTurnoJSON=[
-    {   id:1,descripcion:'Matutino'},
-    {   id:2,descripcion:'Vespertino'}
+    { id: 1,nombre: "MATUTINO"},
+    { id: 2, nombre: "VESPERTINO"}
 ]
-
+    
 var accionesAlerta = 
 {
 	"success": true,
