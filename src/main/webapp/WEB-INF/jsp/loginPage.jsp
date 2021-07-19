@@ -87,8 +87,8 @@
 
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-2.2.4.js" ></script>    
 	<script>
-		document.getElementById("user_user").value = "FFMBACK";
-		document.getElementById("user_pswd").value = "accesoFFM";
+		//document.getElementById("user_user").value = "FFMBACK";
+		//document.getElementById("user_pswd").value = "accesoFFM";
 		$(document).ready(function(){
 			$("#ingresar-btn-login").click(function(){
 				//$(this).attr('disabled','disabled')

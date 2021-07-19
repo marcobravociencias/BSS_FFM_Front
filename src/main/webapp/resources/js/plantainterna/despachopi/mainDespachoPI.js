@@ -451,7 +451,6 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
         
                                             </div>
                                             <div class="footer-otpendiente">
-                                                <i class="fas fa-dollar-sign detalle-cotizacion-icon" onclick="consultarDetalleCotizacion(${otpendiente.idOrden});" ></i>
                                                 <i class="fas fa-phone telefono-icon-pendiente"></i>
                                                 <span class="telefono-text-otpendiente" >${otpendiente.telefonoCliente}</span>
                                             </div>
@@ -459,6 +458,8 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                                     </td>
                                 </tr>	
                                 `
+                                //<i class="fas fa-dollar-sign detalle-cotizacion-icon" onclick="consultarDetalleCotizacion(${otpendiente.idOrden});" ></i>
+
                                 $("#table-ot-pendientes tbody").append(tableelemetn) 
                             })
                           
@@ -747,7 +748,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
    
     $scope.cargarFiltrosGeneric=function(){
         $q.all([
-            mainDespachoService.consultarCatalogoEstatusDespachoPI() ,
+            mainDespachoService.consultarCatalogosTurnosDespachoPI() ,
             mainDespachoService.consultarCatalogoTipoOrdenUsuarioDespacho(),
             mainDespachoService.consulCatalogoGeografiaUsuarioDespacho(),
             mainDespachoService.consultarCatalogoEstatusDespachoPI()
@@ -769,7 +770,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             if (results[0].data !== undefined) {
                 if(results[0].data.respuesta ){
                     if(results[0].data.result ){
-                        $scope.filtrosGeneral.turnosdisponibles=catalogoTurnoJSON
+                        $scope.filtrosGeneral.turnosdisponibles=results[0].data.result
                         $scope.filtrosGeneral.turnosdisponibles.map(e=>{e.checkedOpcion=true; return e;})
                     }else{                      
                         toastr.warning( 'No se encontraron catalogos turnos' );                
@@ -877,6 +878,6 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
     $scope.listadoOtsPendientes=otspendientes
     $scope.listadoEstatusTecnico=JSONEstatusTecnico     
     $scope.listadoIconografia=paletaColors.result.Colores    
-    $scope.listadoConteoAlertasTipo=conteoOtsDespacho.Alertas                                            
+    //$scope.listadoConteoAlertasTipo=conteoOtsDespacho.Alertas                                            
  
 }]);
