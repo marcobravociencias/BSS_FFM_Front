@@ -10,7 +10,9 @@ import lombok.Data;
 public class ConstDespachoPI implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
-		
+	
+	@Value("${consultarcotizaciondespacho}")
+	private String consultarCotizacionDespacho;
 	
 	@Value("${consultarcatalogoTipoOrdenesConfig}")
 	private String consultaCatalogoTipoOrdenConfigDespacho;

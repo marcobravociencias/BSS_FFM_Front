@@ -249,7 +249,16 @@ app.service("mainDespachoService", function ($http) {
             }
 		});
 	};
-
+	this.consultarCotizacionDespacho=function(params){
+		return $http({
+			method: "post",
+			url: "req/consultarCotizacionDespacho",
+			data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
 	
 	
 });

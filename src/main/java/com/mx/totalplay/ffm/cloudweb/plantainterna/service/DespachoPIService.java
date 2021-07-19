@@ -8,7 +8,7 @@ public interface DespachoPIService {
 	public ServiceResponseResult consultarCatalogoTipoOrdenUsuarioDespacho();
 	public ServiceResponseResult consultarCatalogosPI(String params);
 
-	
+	public ServiceResponseResult consultarCotizacionOTSe(String params);
 	public ServiceResponseResult consultarCatalogoEstatusOrden();
 	public ServiceResponseResult consultarCatalogoGeografiaGeneral();
 	public ServiceResponseResult consultarCatalogoGeografiaUsuario();	

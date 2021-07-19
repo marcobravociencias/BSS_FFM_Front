@@ -697,6 +697,30 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             }
         }).catch(err => handleError(err));
     }
+
+    $scope.consultarCotizacionDespacho=function(idot){
+        let params={
+            "idOt":idot
+        }
+        mainDespachoService.consultarCotizacionDespacho(params).then(function success(response){
+            console.log()
+            console.log(response)
+            if (response.data !== undefined) {
+                if(response.data.respuesta ){
+                    if(response.data.result ){
+                    }else{                      
+                        toastr.warning( 'No se encontraron catalogos turnos' );                
+                    }
+                }else{
+                    toastr.warning( response.data.resultDescripcion );                
+                }               
+            }else{
+                toastr.error( 'Ha ocurrido un error en la consulta de turnos' );                
+            }
+        }).catch(err=>handleError(err))
+    }
+
+    $scope.consultarCotizacionDespacho(129);
     $scope.getCatControllerrafiaUsuarioDespacho=function(){
 
         mainDespachoService.consulCatalogoGeografiaUsuarioDespacho().then(function success(response) {     

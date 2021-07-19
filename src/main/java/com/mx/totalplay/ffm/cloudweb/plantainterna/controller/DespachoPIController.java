@@ -1,8 +1,6 @@
 package com.mx.totalplay.ffm.cloudweb.plantainterna.controller;
 
-import com.mx.totalplay.ffm.cloudweb.plantainterna.model.TestingModel;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,9 +11,6 @@ import com.mx.totalplay.ffm.cloudweb.plantainterna.service.DespachoPIService;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.ServiceResponseResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.web.client.RestTemplate;
-import java.util.Arrays;
-import java.util.List;
 
 @RestController
 @RequestMapping("/req")
@@ -41,7 +36,16 @@ public class DespachoPIController {
 		
 		return response;
 	}**/
-
+	
+	@PostMapping("/consultarCotizacionDespacho")
+	public ResponseEntity<?> consultarCotizacionDespachoContr(@RequestBody String params){
+		ServiceResponseResult response = despachoService.consultarCotizacionOTSe(params);
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+		
+	}
 
 	@PostMapping("/consultarCatalogoDesphachoPI")
     public ResponseEntity<?> consultarCatalogoDesphachoPI(@RequestBody String params) {

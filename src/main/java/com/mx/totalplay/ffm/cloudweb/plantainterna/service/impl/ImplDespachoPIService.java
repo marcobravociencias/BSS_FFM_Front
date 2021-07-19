@@ -59,6 +59,27 @@ public class ImplDespachoPIService implements DespachoPIService{
 		return response;
 	}
 	
+	public ServiceResponseResult consultarCotizacionOTSe(String params) {
+		logger.info("ImplDespachoPIService.class [metodo = consultarCotizacionOTSe() ]\n"+params);
+		JsonObject jsonObject=gson.fromJson(params, JsonObject.class);
+		
+		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
+		String tokenAcces=principalDetail.getAccess_token() ;
+		logger.info("consultarCotizacionOTSe ##+"+tokenAcces);							
+	    String urlRequest=principalDetail.getDireccionAmbiente().concat( constDespachoPI.getConsultarCotizacionDespacho() );	
+	    logger.info("url--- "+urlRequest);
+	    Map<String, String> paramsRequestGet = new HashMap<String, String>();
+	    paramsRequestGet.put("idOt", jsonObject.get("idOt").getAsString());
+		ServiceResponseResult response= restCaller.callGetBearerTokenRequest( 
+																			paramsRequestGet,
+																			urlRequest,
+																			ServiceResponseResult.class , 
+																			tokenAcces );
+	    logger.info("RESULT"+gson.toJson(response));
+		return response;
+
+	}
+	
 	public ServiceResponseResult consultarCatalogoTipoOrdenGeneralDespacho() {
 		logger.info("ImplDespachoPIService.class [metodo = consultarCatalogoTipoOrdenGeneralDespacho() ]\n");
 		
@@ -663,5 +684,6 @@ JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
 		return response;
 	}
 
+	
 
 }
