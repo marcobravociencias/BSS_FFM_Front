@@ -389,7 +389,7 @@ public class ImplDespachoPIService implements DespachoPIService{
 	public ServiceResponseResult consultarComentariosOTPI(String params) {
 		logger.info("ImplDespachoPIService.class [metodo = consultarComentariosOTPI() ]\n"+params);
 		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-		String idOperario=jsonObject.get("idOperario").getAsString();
+		String idOt=jsonObject.get("idOt").getAsString();
 		
 		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
 		String tokenAcces=principalDetail.getAccess_token() ;
@@ -397,8 +397,8 @@ public class ImplDespachoPIService implements DespachoPIService{
 	    String urlRequest=principalDetail.getDireccionAmbiente().concat( constDespachoPI.getConsultaComentariosOrdenPI() );
 		
 	    Map<String, String> paramsRequestGet = new HashMap<String, String>();
-		paramsRequestGet.put("idDespacho", principalDetail.getIdUsuario()+"");	    
-		paramsRequestGet.put("idOperario", idOperario);	    
+		paramsRequestGet.put("idOt", idOt);	    
+		//paramsRequestGet.put("idOperario", idOperario);	    
 
 		ServiceResponseResult response= restCaller.callGetBearerTokenRequest( 
 																			paramsRequestGet,
@@ -414,16 +414,15 @@ public class ImplDespachoPIService implements DespachoPIService{
 		logger.info("ImplDespachoPIService.class [metodo = consultarHistoricoOTPI() ]\n"+params);
 	
 		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-		String idOperario=jsonObject.get("idOperario").getAsString();
+		String idOt=jsonObject.get("idOt").getAsString();
 		
 		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
 		String tokenAcces=principalDetail.getAccess_token() ;
 		logger.info("consultarOperariosAsignadosDespacho ##+"+tokenAcces);							
 	    String urlRequest=principalDetail.getDireccionAmbiente().concat( constDespachoPI.getConsultaHistoricoOrdenPI() );
 		
-	    Map<String, String> paramsRequestGet = new HashMap<String, String>();
-		paramsRequestGet.put("idDespacho", principalDetail.getIdUsuario()+"");	    
-		paramsRequestGet.put("idOperario", idOperario);	    
+	    Map<String, String> paramsRequestGet = new HashMap<String, String>(); 
+		paramsRequestGet.put("idOt", idOt);	    
 
 		ServiceResponseResult response= restCaller.callGetBearerTokenRequest( 
 																			paramsRequestGet,

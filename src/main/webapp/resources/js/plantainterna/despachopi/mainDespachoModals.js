@@ -43,7 +43,13 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService){
         $scope.requestModalInformacion(idotasignada)
     }
 
+    $scope.idOtSelect = "";
     $scope.requestModalInformacion=function(idparams){
+        $scope.idOtSelect = idparams;
+        $scope.flagComentarios = false;
+        $scope.flagHistorico = false;
+        $scope.comentariosOrdenTrabajo = [];
+        $scope.historialOrdenTrabajo = [];
         $scope.infoOtDetalle={}
         swal({ text: 'Consultando detalle de la OT ...', allowOutsideClick: false });
         swal.showLoading();      
@@ -111,67 +117,73 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService){
     }
 
 
-  
-    abrirModalComentarios=function(idOperario){
-        let tecnicoConsulta=angular.copy($scope.listadoTecnicosGeneral.find((e)=>{return e.idTecnico==idOperario}) )
-        console.log("tecnico",tecnicoConsulta)
-
-        swal({ text: 'Consultando comentarios ...', allowOutsideClick: false });
-        swal.showLoading();
-        let params =  {
-            "idOperario":tecnicoConsulta.idTecnico
-        }
-        mainDespachoService.consultarComentariosDespachoOT(params).then(function success(response) {            
-            swal.close()        
-            if (response.data !== undefined) {
-                if(response.data.respuesta ){
-                    if(response.data.result ){
-                        if( response.data.result.detalleTecnicos ){
-                            $("#modalComentariosPI").modal('show')
-                        }else{
-                            toastr.warning( response.data.result.mensaje );                
+    $scope.flagComentarios = false;
+    $scope.comentariosOrdenTrabajo = [];
+    $scope.consultarComentarios=function(){
+        if (!$scope.flagComentarios) {
+            swal({ text: 'Consultando comentarios ...', allowOutsideClick: false });
+            swal.showLoading();
+            let params =  {
+                "idOt" : $scope.idOtSelect
+            }
+            mainDespachoService.consultarComentariosDespachoOT(params).then(function success(response) {            
+                swal.close()        
+                if (response.data !== undefined) {
+                    if(response.data.respuesta ){
+                        if(response.data.result ){
+                            if( response.data.result.detalle ){
+                                $scope.flagComentarios = true;
+                                $scope.comentariosOrdenTrabajo = response.data.result.detalle;
+                            }else{
+                                toastr.warning( response.data.result.mensaje );                
+                            }
+                        }else{                        
+                            toastr.warning( 'No se encontraron comentarios' );                
                         }
-                    }else{                        
-                        toastr.warning( 'No se encontraron comentarios' );                
-                    }
+                    }else{
+                        toastr.warning( response.data.resultDescripcion );                
+                    }               
                 }else{
                     toastr.warning( response.data.resultDescripcion );                
                 }               
-            }else{
-                toastr.error( 'Ha ocurrido un error en la consulta de los comentarios' );                
-            }
-        }).catch(err => handleError(err))
+            }).catch(err => handleError(err))
+        }
     }
-    abrirModalHistorico=function(idOperario){
-        let tecnicoConsulta=angular.copy($scope.listadoTecnicosGeneral.find((e)=>{return e.idTecnico==idOperario}) )
-        console.log("tecnico",tecnicoConsulta)
 
-        swal({ text: 'Consultando historial ...', allowOutsideClick: false });
-        swal.showLoading();
-        let params =  {
-            "idOperario":tecnicoConsulta.idTecnico
-        }
-        mainDespachoService.consultarHistoricoDespachoOT(params).then(function success(response) {
-            console.log(response);
-            swal.close()
-            if (response.data !== undefined) {
-                if(response.data.respuesta ){
-                    if(response.data.result ){
-                        if( response.data.result.detalleTecnicos ){
-                            $("#modalHistoricoOT").modal('show')
-                        }else{
-                            toastr.warning( response.data.result.mensaje );                
+    $scope.flagHistorico = false;
+    $scope.historialOrdenTrabajo = [];
+    $scope.consultarHistorial = function(){
+        if (!$scope.flagHistorico) {
+            $scope.historialOrdenTrabajo = [];
+            swal({ text: 'Consultando historial ...', allowOutsideClick: false });
+            swal.showLoading();
+            let params =  {
+                "idOt" : $scope.idOtSelect
+            }
+            mainDespachoService.consultarHistoricoDespachoOT(params).then(function success(response) {
+                console.log(response);
+                swal.close()
+                if (response.data !== undefined) {
+                    if(response.data.respuesta ){
+                        if(response.data.result ){
+                            if( response.data.result.detalle ){
+                                $scope.flagHistorico = true;
+                                $scope.historialOrdenTrabajo = response.data.result.detalle;
+                                console.log($scope.historialOrdenTrabajo);
+                            }else{
+                                toastr.warning( response.data.result.mensaje );                
+                            }
+                        }else{                        
+                            toastr.warning( 'No se encontraron resultados' );                
                         }
-                    }else{                        
-                        toastr.warning( 'No se encontraron resultados' );                
-                    }
+                    }else{
+                        toastr.warning( response.data.resultDescripcion );                
+                    }               
                 }else{
                     toastr.warning( response.data.resultDescripcion );                
                 }               
-            }else{
-                toastr.error( 'Ha ocurrido un error en la consulta de los datos' );                
-            }
-        }).catch(err => handleError(err))
+            }).catch(err => handleError(err))
+        }
     }
     abrirCambioEstatusTecnico = function (idOperario){
         $scope.elementEstatusTecnico.status=null

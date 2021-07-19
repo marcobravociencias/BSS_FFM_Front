@@ -18,10 +18,10 @@
                     <div class="row">
                         <div style="padding-left: 0;" class="col-2">
                           <div class="nav flex-column nav-tabs text-center" id="v-tabs-tab-detalle-ot" role="tablist" aria-orientation="vertical" >
-                            <a class="nav-link active" id="v-tabs-consulta-detalleot-tab" data-mdb-toggle="tab" href="#v-tabs-consulta-detalleot" role="tab" aria-controls="v-tabs-consulta-materiales" aria-selected="true" >Informaci&oacute;n</a>
-                            <!--a class="nav-link " id="v-tabs-consulta-historico-tab" data-mdb-toggle="tab" href="#v-tabs-consulta-historico" role="tab" aria-controls="v-tabs-consulta-materiales" aria-selected="true" >Hist&oacute;rico</a>
-                            <a class="nav-link" id="v-tabs-consulta-mensajeria-tab" data-mdb-toggle="tab" href="#v-tabs-consulta-mensajeria" role="tab" aria-controls="v-tabs-consulta-traspasos" aria-selected="false" >Comentarios</a>                    
-                            <a class="nav-link" id="v-tabs-consulta-acciones-tab" data-mdb-toggle="tab" href="#v-tabs-consulta-acciones" role="tab" aria-controls="v-tabs-consulta-traspasos" aria-selected="false" >Acciones</a-->                    
+                            <a class="nav-link active" id="v-tabs-consulta-detalleot-tab" data-mdb-toggle="tab" href="#v-tabs-consulta-detalleot" role="tab" aria-controls="v-tabs-consulta-detalleot-tab" aria-selected="true" >Informaci&oacute;n</a>
+                            <a class="nav-link " id="v-tabs-consulta-historico-tab" data-mdb-toggle="tab" href="#v-tabs-consulta-historico" role="tab" ng-click="consultarHistorial()" aria-controls="v-tabs-consulta-historico-tab" aria-selected="true" >Hist&oacute;rico</a>
+                            <a class="nav-link" id="v-tabs-consulta-mensajeria-tab" data-mdb-toggle="tab" href="#v-tabs-consulta-mensajeria" role="tab" ng-click="consultarComentarios();" aria-controls="v-tabs-consulta-mensajeria-tab" aria-selected="false" >Comentarios</a>                    
+                            <a class="nav-link" id="v-tabs-consulta-acciones-tab" data-mdb-toggle="tab" href="#v-tabs-consulta-acciones" role="tab" aria-controls="v-tabs-consulta-acciones-tab" aria-selected="false" >Acciones</a>                    
                         </div>
                         </div>                      
                         <div class="col-10">
@@ -134,30 +134,30 @@
                             </div>
                             <div class="tab-pane fade " id="v-tabs-consulta-historico" role="tabpanel" aria-labelledby="v-tabs-consulta-historico-tab" >
                                 <div class="row">
-                                    <div ng-repeat="elementHistorico in listadoHistoricoOt" class="col-4">
+                                    <div ng-repeat="elementHistorico in historialOrdenTrabajo" class="col-4">
                                         <div  class="card-historico card text-center">
                                             <div class="card-body">
-                                                <i ng-if="elementHistorico.Id_Estatus==1" class="pendiente-historico  fas fa-pause circle-statushistorico"></i>
-                                                <i ng-if="elementHistorico.Id_Estatus==2" class="asignacion-historico fas fa-arrow-right circle-statushistorico"></i>
-                                                <i ng-if="elementHistorico.Id_Estatus==3" class="detencion-historico far fa-hand-paper circle-statushistorico"></i>
-                                                <i ng-if="elementHistorico.Id_Estatus==4" class="terminar-historico fas fa-check circle-statushistorico"></i>
-                                                <i ng-if="elementHistorico.Id_Estatus==5" class="cancelado-historico fas fa-times circle-statushistorico"></i> 
+                                                <i ng-if="elementHistorico.idEstatusOrden==1" class="pendiente-historico  fas fa-pause circle-statushistorico"></i>
+                                                <i ng-if="elementHistorico.idEstatusOrden==2" class="asignacion-historico fas fa-arrow-right circle-statushistorico"></i>
+                                                <i ng-if="elementHistorico.idEstatusOrden==3" class="detencion-historico far fa-hand-paper circle-statushistorico"></i>
+                                                <i ng-if="elementHistorico.idEstatusOrden==4" class="terminar-historico fas fa-check circle-statushistorico"></i>
+                                                <i ng-if="elementHistorico.idEstatusOrden==5" class="cancelado-historico fas fa-times circle-statushistorico"></i> 
 
                                                 <div class="container-deschistorico">
                                                     <span class="titlehistorico">Estado</span>
-                                                    <span class="content-titlehistorico" ng-bind="elementHistorico.EstatusDescripcion"></span>
+                                                    <span class="content-titlehistorico" ng-bind="elementHistorico.descripcionEstatusOrden"></span>
                                                 </div>
                                                 <div class="container-deschistorico">
                                                     <span class="titlehistorico">Motivo</span>
-                                                    <span class="content-titlehistorico" ng-bind="elementHistorico.MotivoDescripcion"></span>
+                                                    <span class="content-titlehistorico" ng-bind="elementHistorico.descripcionMotivoOrden"></span>
                                                 </div>
                                                 <div class="container-deschistorico">
                                                     <span class="titlehistorico">Descripci&oacute;n:</span>
-                                                    <span class="content-titlehistorico" ng-bind="elementHistorico.Descripcion"></span>
+                                                    <span class="content-titlehistorico" ng-bind="elementHistorico.descripcionEstadoOrden"></span>
                                                 </div>
                                             </div>
                                             <div class="card-footer text-muted">
-                                                <p class="footer-card-historico" ng-bind="elementHistorico.FechaModificacion+' '+elementHistorico.HoraModificacion" ></p>
+                                                <p class="footer-card-historico" ng-bind="elementHistorico.fecha+' '+elementHistorico.hora" ></p>
                                             </div>
                                         </div>
                                     </div>
@@ -173,7 +173,7 @@
 
                                         </div>
                                         <div class="chat-area">
-                                            <div class="chats">
+                                            <!--div class="chats">
                                                 <div class="chat chat-right">
                                                   
                                                     <div class="chat-body">
@@ -206,6 +206,31 @@
                                                       <div class="chat-text">
                                                         <p>Contactar&eacute; al clliente enseguida </p>
                                                       </div>
+                                                    </div>
+                                                    <div class="chat-avatar">
+                                                        <a class="avatar">
+                                                            <i class="img-comentarios-chat web-mensaje fas fa-desktop"></i>
+                                                        </a>
+                                                      </div>
+                                                </div>
+                                            </div-->
+
+                                            <div class="chats" ng-repeat="comentario in comentariosOrdenTrabajo">
+                                                <div class="chat" ng-if="comentario.origenSistema !== 1"><!-- APP-->
+                                                    <div class="chat-avatar">
+                                                        <a class="avatar"><i class="img-comentarios-chat android-mensaje fab fa-android"></i></a>
+                                                    </div>
+                                                    <div class="chat-body">
+                                                        <div class="chat-text">
+                                                            <p ng-bind="comentario.comentario"></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="chat chat-right" ng-if="comentario.origenSistema === 1">
+                                                    <div class="chat-body">
+                                                        <div class="chat-text">
+                                                            <p ng-bind="comentario.comentario"></p>
+                                                        </div>
                                                     </div>
                                                     <div class="chat-avatar">
                                                         <a class="avatar">
