@@ -3669,18 +3669,19 @@ TimelineGrid = (function(superClass) {
     var intervencion_letter=event.descipcionTipoOrden===undefined?"" :event.descipcionTipoOrden.slice(0,1).toUpperCase();
     
     let content=
-  //  <i class="fas fa-dollar-sign detalle-cotizacion-icon-asignada" onclick="consultarDetalleCotizacion(${event.folioOrden});"></i>
+  //  
 
     `
     <div class="container-asignada">            
         <div class="content-text-otasignada" >  
             <div class="izquierda-icon"><i class="elemen-izquierda-asignada icon-otasginada fas fa-bars" onclick="abrirModalInformacion(${event.idOrden});"></i></div>
+            <i class="fas fa-dollar-sign detalle-cotizacion-icon-asignada" onclick="consultarDetalleCotizacion(${event.folioOrden});"></i>
             <h5 class="cliente-asignada">${event.nombreCliente}</h5>
         </div>
         <div class="content-text-otasignada" >      
             <div class="izquierda-icon"><i class="far ${event.unidadNegocio === 1 ?'far fa-hand-paper':'fas fa-desktop'} 
               icon-tipoot-operacion"></i>
-            </div>
+            </div>  
             <b class="os-content-asignada">${event.folioOrden}</b>&nbsp&nbsp
         </div>
         <div class="content-text-otasignada" >       

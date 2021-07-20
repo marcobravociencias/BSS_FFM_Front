@@ -1,6 +1,7 @@
 app.mapasControllerDespachoPI=function($scope,mainDespachoService){
     let markerUbiacionOperario;
     $scope.isAbiertoDetalleDireccion=false;
+    listadoLinesCurves=[]
     $scope.consultarUbicacionOperario=function(objectParams){
         console.log(objectParams)
         swal({ text: 'Consultando datos ...', allowOutsideClick: false });
@@ -79,7 +80,7 @@ app.mapasControllerDespachoPI=function($scope,mainDespachoService){
         swal({ text: 'Consultando detalle de la OT ...', allowOutsideClick: false });
         swal.showLoading();   
         let params={
-            "idOt":129
+            "idOt":idot
         }
         if(!mapaucotizaciondetalle){
                 
@@ -99,53 +100,8 @@ app.mapasControllerDespachoPI=function($scope,mainDespachoService){
                 zoom: 15
                 }
             );
-
-            var marker = new google.maps.Marker({
-                position: new google.maps.LatLng(50.124462, -5.539994),
-                map: mapaucotizaciondetalle,
-                icon: {url:"https://maps.gstatic.com/intl/en_us/mapfiles/markers2/measle.png",
-                       size: new google.maps.Size(7,7),
-                       anchor: new google.maps.Point(4,4)
-                      }
-            });
-            var marker2 = new google.maps.Marker({
-                position: new google.maps.LatLng(50.124461,-5.553726),
-                map: mapaucotizaciondetalle,
-                draggable: true,
-                icon: {url:"https://maps.gstatic.com/intl/en_us/mapfiles/markers2/measle.png",
-                       size: new google.maps.Size(7,7),
-                       anchor: new google.maps.Point(4,4)
-                      }
-            });    
+                
         
-            /** 
-            
-            var p1 = mapaucotizaciondetalle.getProjection().fromLatLngToPoint(marker.getPosition());
-            var p2 = mapaucotizaciondetalle.getProjection().fromLatLngToPoint(marker2.getPosition());
-            var e = new google.maps.Point(p2.x - p1.x, p2.y - p1.y);
-            var m = new google.maps.Point(e.x/2, e.y/2);
-            var o = new google.maps.Point(0,7);
-            var c = new google.maps.Point(m.x + o.x, m.y + o.y);
-          
-          
-            var marcadorCurved = new google.maps.Marker({
-                position: new google.maps.LatLng(50.124462, -5.539994),
-                icon: {
-                    path: "M 0 0 q "+c.x+" "+c.y+" "+e.x+" "+e.y,
-                    scale: 8,
-                    strokeWeight: 2,
-                    fillColor: '#009933',
-                    fillOpacity: 0,
-                    rotation: 180,
-                    clickable: false,
-                    anchor: new google.maps.Point(0,0)
-                },
-            });
-            marcadorCurved.setMap(mapaucotizaciondetalle);
-            google.maps.event.addListener(map,'zoom_changed',function() {
-               
-            });
-            */
 
         }  
 
@@ -154,23 +110,45 @@ app.mapasControllerDespachoPI=function($scope,mainDespachoService){
             if (response.data !== undefined) {
                 if(response.data.respuesta ){
                     if(response.data.result ){
-                        if(response.data.result.consultaCotizacion){                           
+                        if(response.data.result.consultaCotizacion !=undefined){    
+
                             $("#modalDetalleCotizacion").modal('show')
                             $scope.detalleCotizacion=response.data.result.consultaCotizacion
+                            let arrarLatLong=[]
                             //mapaucotizaciondetalle.setCenter(new google.maps.LatLng(37.4419, -122.1419));
                             if(response.data.result.consultaCotizacion.direcciones != undefined && response.data.result.consultaCotizacion.direcciones.length>0){
                                 angular.forEach(response.data.result.consultaCotizacion.direcciones,function(elem,index){
                                 
                                     if(elem.direccionDetalle != undefined){
                                         if( index == 0 ){
-                                            //elem.direccionDetalle.latitud="19.327606110757337"
-                                            //elem.direccionDetalle.longitud="-99.19763482133813"
+                                            elem.direccionDetalle.latitud="19.327606110757337"
+                                            elem.direccionDetalle.longitud="-99.19763482133813"
                                             mapaucotizaciondetalle.setCenter(new google.maps.LatLng( parseFloat(elem.direccionDetalle.latitud), parseFloat(elem.direccionDetalle.longitud) ));
                                         }                                                                                    
                                         let latitud_ot={
                                                 lat : parseFloat(elem.direccionDetalle.latitud),
                                                 lng : parseFloat(elem.direccionDetalle.longitud)
                                         };
+                                        arrarLatLong.push({
+                                            lat:parseFloat(elem.direccionDetalle.latitud),
+                                            lng:parseFloat(elem.direccionDetalle.longitud)
+                                        })
+
+                                        let urlTemp=""
+                                        switch(elem.accion){
+                                            case 1:
+                                                urlTemp="./resources/img/plantainterna/despacho/negocio-marker.svg"
+                                                break;
+                                            case 2:
+                                                urlTemp="./resources/img/plantainterna/despacho/domicilio-marker.svg"
+                                                break;
+                                            case 3:
+                                                urlTemp="./resources/img/plantainterna/despacho/repartidor-icon.svg"
+                                                break;
+                                            default:
+                                                urlTemp="./resources/img/plantainterna/despacho/repartidor-marker.svg"
+                                        }
+
                                         let marker_ot = new google.maps.Marker({
                                             clickable : false,
                                             position : latitud_ot,
@@ -180,10 +158,10 @@ app.mapasControllerDespachoPI=function($scope,mainDespachoService){
                                             latitud_ot:parseFloat(elem.direccionDetalle.latitud),
                                             longitud_ot:parseFloat(elem.direccionDetalle.longitud),
                                             icon : {
-                                                url: "./resources/img/plantainterna/despacho/repartidor-icon.svg",
-                                                scaledSize: new google.maps.Size(37, 43)/**,
+                                                url: urlTemp,
+                                                scaledSize: new google.maps.Size(37, 43),
                                                 origin: new google.maps.Point(0,0),
-                                                anchor: new google.maps.Point(0, 0) **/
+                                                anchor: new google.maps.Point(10,20) 
                                             },
                                             direccionContent:elem
                                         });
@@ -197,11 +175,37 @@ app.mapasControllerDespachoPI=function($scope,mainDespachoService){
                                         $scope.listadomarkerscotizacion.push(marker_ot);
                                     }  
                                 })
+                                
+                                let paresLatLong=[]
+                                if(arrarLatLong.length > 1){
+                                    if( arrarLatLong.length % 2 !== 0 )
+                                        arrarLatLong.pop()
+
+                                    for(i=0 ; i< arrarLatLong.length;i+=2  ){
+                                        if( !( i == arrarLatLong.length )){
+                                            paresLatLong.push({
+                                                puntoA:arrarLatLong[i],
+                                                puntoB:arrarLatLong[i+1]                                            
+                                            })
+                                        }                                     
+                                    }                                
+                                }
+                                if(paresLatLong.length>0){
+                                    angular.forEach(paresLatLong,function(elem,index){
+                                        let pointA = new google.maps.LatLng(elem.puntoA.lat, elem.puntoA.lng) // basel airport
+                                        let pointB = new google.maps.LatLng(elem.puntoB.lat, elem.puntoB.lng)
+                                        drawCurve(pointA,pointB, mapaucotizaciondetalle);
+                                    })
+                                }
+                                
+
+                                
+
                             }else{
-                                toastr.warning( 'No se encontraron direcciones' );                
+                                toastr.warning( 'No se encontraron datos' );                
                             }
                         }else{
-                            toastr.warning( 'No se encontraron datos de la cotizacion' );                
+                            toastr.warning(  response.data.result.description );                
                         }                    
                     }else{                      
                         toastr.warning( 'No se encontraron datos de la cotizacion' );                
@@ -218,65 +222,108 @@ app.mapasControllerDespachoPI=function($scope,mainDespachoService){
     $scope.limpiarMarkersCotizacion=function(){
         $scope.listadomarkerscotizacion.map(function(e){ e.setMap(null);return e ;})
         $scope.listadomarkerscotizacion=[];
+
+        listadoLinesCurves.map(function(e){ e.setMap(null);return e ;})
+        listadoLinesCurves=[]
     }
 
-//    google.maps.event.addDomListener(window, 'load', init);
-   // $scope.consultarCotizacionDespacho(129);
-    function init(){
-        var curveMarker;
-        function updateCurveMarker() {
-            var pos1 = markerP1.getPosition(), // latlng
-                pos2 = markerP2.getPosition(),
-                projection = map.getProjection(),
-                p1 = projection.fromLatLngToPoint(pos1), // xy
-                p2 = projection.fromLatLngToPoint(pos2);
-    
-            // Calculate the arc.
-            // To simplify the math, these points 
-            // are all relative to p1:
-            var e = new Point(p2.x - p1.x, p2.y - p1.y), // endpoint (p2 relative to p1)
-                m = new Point(e.x / 2, e.y / 2), // midpoint
-                o = new Point(e.y, -e.x), // orthogonal
-                c = new Point( // curve control point
-                    m.x + curvature * o.x,
-                    m.y + curvature * o.y);
-    
-            var pathDef = 'M 0,0 ' +
-                'q ' + c.x + ',' + c.y + ' ' + e.x + ',' + e.y;
-    
-            var zoom = map.getZoom(),
-                scale = 1 / (Math.pow(2, -zoom));
-    
-            var symbol = {
-                path: pathDef,
-                scale: scale,
-                strokeWeight: 2,
-                fillColor: 'none'
-            };
-    
-            if (!curveMarker) {
-                curveMarker = new Marker({
-                    position: pos1,
-                    clickable: false,
-                    icon: symbol,
-                    zIndex: 0, // behind the other markers
-                    map: map
-                });
-            } else {
-                curveMarker.setOptions({
-                    position: pos1,
-                    icon: symbol,
-                });
-            }
+    function drawCurve(P1, P2, map) {
+        
+        var lineLength = google.maps.geometry.spherical.computeDistanceBetween(P1, P2);
+        var lineHeading = google.maps.geometry.spherical.computeHeading(P1, P2);
+        
+        if (lineHeading < 0) {
+          var lineHeading1 = lineHeading + 45;
+          var lineHeading2 = lineHeading + 135;
+        } else {
+          var lineHeading1 = lineHeading + -45;
+          var lineHeading2 = lineHeading + -135;
         }
-
-        google.maps.event.addListener(map, 'projection_changed', updateCurveMarker);
-        google.maps.event.addListener(map, 'zoom_changed', updateCurveMarker);
+        
+        var pA = google.maps.geometry.spherical.computeOffset(P1, lineLength / 2.2, lineHeading1);
+        var pB = google.maps.geometry.spherical.computeOffset(P2, lineLength / 2.2, lineHeading2);
+        
+        var curvedLine = new GmapsCubicBezier(P1, pA, pB, P2, 0.01, map);
     }
+      
 
+    var GmapsCubicBezier = function(latlong1, latlong2, latlong3, latlong4, resolution, map) {
+        var lat1 = latlong1.lat();
+        var long1 = latlong1.lng();
+        var lat2 = latlong2.lat();
+        var long2 = latlong2.lng();
+        var lat3 = latlong3.lat();
+        var long3 = latlong3.lng();
+        var lat4 = latlong4.lat();
+        var long4 = latlong4.lng();
+      
+        var points = [];
+      
+        for (var it = 0; it <= 1; it += resolution) {
+          points.push(this.getBezier({
+            x: lat1,
+            y: long1
+          }, {
+            x: lat2,
+            y: long2
+          }, {
+            x: lat3,
+            y: long3
+          }, {
+            x: lat4,
+            y: long4
+          }, it));
+        }
+        var path = [];
+        for (var i = 0; i < points.length - 1; i++) {
+          path.push(new google.maps.LatLng(points[i].x, points[i].y));
+          path.push(new google.maps.LatLng(points[i + 1].x, points[i + 1].y, false));
+        }
+        var FlightLine = new google.maps.Polyline({
+          path: path,
+          geodesic: true,
+          strokeColor:'#1266f1',
+          strokeOpacity:0,
+          strokeWeight:3, 
+      
+          icons:  [{
+            icon: {
+              path: 'M 0,-1 0,1',
+              strokeOpacity: .8,
+              scale: 3
+            },
+            offset: '0',
+            repeat: '16px'
+          }], 
+        });
+      
+        FlightLine.setMap(map);
+        listadoLinesCurves.push(FlightLine)
 
-    
-  //  google.maps.event.addDomListener(window, 'load', init);
+        return FlightLine;
+    };
+      
+      
+    GmapsCubicBezier.prototype = {
+      
+        B1: function(t) {
+          return t * t * t;
+        },
+        B2: function(t) {
+          return 3 * t * t * (1 - t);
+        },
+        B3: function(t) {
+          return 3 * t * (1 - t) * (1 - t);
+        },
+        B4: function(t) {
+          return (1 - t) * (1 - t) * (1 - t);
+        },
+        getBezier: function(C1, C2, C3, C4, percent) {
+          var pos = {};
+          pos.x = C1.x * this.B1(percent) + C2.x * this.B2(percent) + C3.x * this.B3(percent) + C4.x * this.B4(percent);
+          pos.y = C1.y * this.B1(percent) + C2.y * this.B2(percent) + C3.y * this.B3(percent) + C4.y * this.B4(percent);
+          return pos;
+        }
+    };
 
- 
 }
