@@ -134,6 +134,9 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService){
                             if( response.data.result.detalle ){
                                 $scope.flagComentarios = true;
                                 $scope.comentariosOrdenTrabajo = response.data.result.detalle;
+                                angular.forEach($scope.comentariosOrdenTrabajo,function(comentario,index){
+                                    comentario.fechaComentario = moment(comentario.fecha + ' ' + comentario.hora).format("dddd, D [de] MMMM [de] YYYY hh:mm A");
+                                });
                             }else{
                                 toastr.warning( response.data.result.mensaje );                
                             }

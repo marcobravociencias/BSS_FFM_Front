@@ -1375,9 +1375,14 @@ span.content-titlehistorico.ng-binding {
 }
 #modalRegistrosLocalizados .modal-dialog.modal-xl{
     min-height:50%;
-    max-heigh:50%;
+    max-height:50%;
     height:50%;
 
+}
+.text-fecha-comentario {
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: .7em;
 }
 
 .detalle-cotizacion-icon-asignada:hover{

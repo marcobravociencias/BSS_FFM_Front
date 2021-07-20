@@ -125,12 +125,8 @@
                                             <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Tel. contacto</span></div>
                                             <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.telefonoContacto}}" ng-bind="infoOtDetalle.telefonoContacto || 'Sin dato'"></span> </div>
                                         </div>
-
-
-
                                     </div>
                                 </div>
-                               
                             </div>
                             <div class="tab-pane fade " id="v-tabs-consulta-historico" role="tabpanel" aria-labelledby="v-tabs-consulta-historico-tab" >
                                 <div class="row">
@@ -169,65 +165,24 @@
                                 <div class="container-mensajes-parent">
                                     <div class="chat-content-area">
                                         <div class="chat-header">
-                                             
-
                                         </div>
                                         <div class="chat-area">
-                                            <!--div class="chats">
-                                                <div class="chat chat-right">
-                                                  
-                                                    <div class="chat-body">
-                                                      <div class="chat-text">
-                                                        <p>La orden ha sido asignada por el Despacho H&eacute;ctor Santamar&iacute;a en FFM </p>
-                                                      </div>
-                                                    </div>
-                                                    <div class="chat-avatar">
-                                                        <a class="avatar">
-                                                            <i class="img-comentarios-chat web-mensaje fas fa-desktop"></i>
-                                                        </a>
-                                                      </div>
-                                                </div>
-                                                <div class="chat">
-                                                    <div class="chat-avatar">
-                                                      <a class="avatar">
-                                                          
-                                                        <i class="img-comentarios-chat android-mensaje fab fa-android"></i>
-                                                      </a>
-                                                    </div>
-                                                    <div class="chat-body">
-                                                      <div class="chat-text">
-                                                        <p>He llegado al domicilio , sin embargo, el cliente se encuentra fuera del domicilio</p>
-                                                      </div>
-                                                    </div>
-                                                </div>
-                                                <div class="chat chat-right">
-                                                  
-                                                    <div class="chat-body">
-                                                      <div class="chat-text">
-                                                        <p>Contactar&eacute; al clliente enseguida </p>
-                                                      </div>
-                                                    </div>
-                                                    <div class="chat-avatar">
-                                                        <a class="avatar">
-                                                            <i class="img-comentarios-chat web-mensaje fas fa-desktop"></i>
-                                                        </a>
-                                                      </div>
-                                                </div>
-                                            </div-->
-
                                             <div class="chats" ng-repeat="comentario in comentariosOrdenTrabajo">
-                                                <div class="chat" ng-if="comentario.origenSistema !== 1"><!-- APP-->
+                                                <div class="chat" ng-if="comentario.origenSistema === 1"><!-- APP-->
                                                     <div class="chat-avatar">
                                                         <a class="avatar"><i class="img-comentarios-chat android-mensaje fab fa-android"></i></a>
                                                     </div>
+                                                    
                                                     <div class="chat-body">
+                                                        <span class="text-fecha-comentario" ng-bind="comentario.fechaComentario"></span>
                                                         <div class="chat-text">
                                                             <p ng-bind="comentario.comentario"></p>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="chat chat-right" ng-if="comentario.origenSistema === 1">
+                                                <div class="chat chat-right" ng-if="comentario.origenSistema !== 1">
                                                     <div class="chat-body">
+                                                        <span class="text-fecha-comentario" ng-bind="comentario.fechaComentario"></span>
                                                         <div class="chat-text">
                                                             <p ng-bind="comentario.comentario"></p>
                                                         </div>
@@ -236,10 +191,9 @@
                                                         <a class="avatar">
                                                             <i class="img-comentarios-chat web-mensaje fas fa-desktop"></i>
                                                         </a>
-                                                      </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                          
                                         </div>
                                         <div class="chat-fotter">
                                             <input placeholder="Escribe el mensaje aqu&iacute; ..." type="text" class="input-mensaje-chat form-control form-control-sm">
