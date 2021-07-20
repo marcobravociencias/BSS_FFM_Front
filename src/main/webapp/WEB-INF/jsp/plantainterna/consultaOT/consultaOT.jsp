@@ -82,7 +82,7 @@
                             </li>
                         </ul>
                      </div>
-                    </div>
+                </div>
                     <div class="col-2 column-style-consulta columna-filtro-ind">
                         <input readonly placeholder="GEOGRAF&Iacute;A" type="text" id="cluster"
                         class="input-filtro-consultaOT form-control form-control-sm">

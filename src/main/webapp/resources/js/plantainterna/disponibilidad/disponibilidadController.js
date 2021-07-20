@@ -369,7 +369,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             mensajeError += '<li>Seleccione fecha fin.</li>'
             isValido = false
         }
-        if (!bloqueo) {
+        if (bloqueo === undefined) {
             mensajeError += '<li>Seleccione bloqueo.</li>'
             isValido = false
         }

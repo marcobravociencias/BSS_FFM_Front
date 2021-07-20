@@ -117,12 +117,10 @@ public class ImplConsultaOTService implements ConsultaOTService {
                         dataArray[count][6] = object.get("descripcionEstatus") != null ? object.get("descripcionEstatus").getAsString().trim() : "";
                         dataArray[count][7] = object.get("descripcionEstado") != null ? object.get("descripcionEstado").getAsString().trim() : "";
                         // dataArray[count][8] = "<div class='tooltip-btn'> <span onclick='consultaMaterialesOT(" + String.valueOf(object.get("idOrden").getAsInt()) + ")' class='btn-floating btn-option btn-sm btn-default waves-effect waves-light'><th><i class='icono_cons_bg fa fa-wrench' aria-hidden='true'></i></th></span></div>";
-                        // ;
                         // dataArray[count][9] = "<div class='tooltip-btn'> <span onclick='consultaImagenesOT(" + String.valueOf(object.get("idOrden").getAsInt()) + ")' class='btn-option btn-floating btn-evidencia btn-sm btn-secondary waves-effect waves-light'><th><i class='icono_cons_bg fa fa-picture-o' aria-hidden='true'></i></th></span></div>";
-                        ;
                         dataArray[count][8] = "<div class='tooltip-btn'> <span onclick='consultaDetalleOt(" + String.valueOf(object.get("idOrden").getAsInt()) + ")' class='btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones'><th><i class='icono_cons_bg fa fa-bars' aria-hidden='true'></i></th></span></div>";
-                        ;
                         count++;
+
                     }
                     dataResponse = DataTableResponse.builder()
                             .isRespuesta(true)
@@ -212,7 +210,7 @@ public class ImplConsultaOTService implements ConsultaOTService {
         JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
         String idot = jsonObject.get("Id_ot").getAsString();
 
-        String tokenAcces = principalDetail.getAccess_token();//"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZE9yaWdlbiI6IjQiLCJ1c2VyX25hbWUiOiJGRk1CQUNLIiwiaWRVc3VhcmlvIjoyLCJpZFB1ZXN0byI6MSwiaWRHZW9ncmFmaWEiOjEsImlkUHJvcGlldGFyaW8iOjUsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdLCJleHAiOjE2MjYzNjg0MDAsImlhdCI6MTYyNjI5OTM3NywiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIiwiQURNSU4iXSwiaWRVbmlkYWROZWdvY2lvIjo0fQ.y_ap1bHChMFYsTGu68hWyqrbpRVsFYE919tKeClkAh9d2Co_f91eH65ptcMt6FVkp-ejZ3sRXvNDGwBbotHAHQ";//principalDetail.getAccess_token();
+        String tokenAcces = principalDetail.getAccess_token();
         logger.info("consultaInformacionDetalleOt ##+" + tokenAcces);
         String urlRequest = principalDetail.getDireccionAmbiente().concat(constConsultaOT.getConsultaOtInfoGeneral());
         logger.info("URL ##+" + urlRequest);

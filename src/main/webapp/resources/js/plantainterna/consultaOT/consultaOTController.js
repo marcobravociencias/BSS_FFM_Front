@@ -26,72 +26,11 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	$scope.filtrosGeneral = {};
 	$scope.movimientos = [];
 
-	
-
-	$scope.iniciarTabla = function (data) {
-		if (otTabla) {
-			otTabla.destroy();
-		}
-
-		let viewTable = [];
-		data.forEach(elemento => {
-			let array = [];
-
-			array[0] = elemento.ot ? elemento.ot : '';
-			array[1] = elemento.os ? elemento.os : '';
-			array[2] = elemento.cuenta ? elemento.cuenta : '';
-			array[3] = elemento.ticket ? elemento.ticket : '';
-			array[4] = elemento.ciudad ? elemento.ciudad : '';
-			array[5] = elemento.distrito ? elemento.distrito : '';
-			array[6] = elemento.creacion ? elemento.creacion : '';
-			array[7] = elemento.agenda ? elemento.agenda : '';
-			array[8] = elemento.turno ? elemento.turno : '';
-			array[9] = elemento.tipo ? elemento.tipo : '';
-			array[10] = elemento.operario.trim() ? elemento.operario : 'SIN OPERARIO';
-			array[11] = elemento.status ? elemento.status : '';
-			array[12] = elemento.estado ? elemento.estado : '';
-			array[13] = elemento.usuario_crea.trim() ? elemento.usuario_crea : 'SIN INFORMACION'
-			// array[14] = '<div class="tooltip-btn"><span onclick="consultaMaterialesOT(\'' + elemento.ot + '\'' + ',\'' + elemento.operario.trim() + '\')" class="btn-floating btn-option btn-sm btn-default waves-effect waves-light"><th><i class="icono_cons_bg fa fa-wrench" aria-hidden="true"></i></th></span></div>';
-			// array[15] = '<div class="tooltip-btn"><span onclick="consultaImagenesOT(\'' + elemento.ot + '\'' + ',\'' + elemento.id_tipo + '\')" class="btn-option btn-floating btn-evidencia btn-sm btn-secondary waves-effect waves-light"><i class="icono_cons_bg fa fa-picture-o" aria-hidden="true"></i></span></div>'
-			array[14] = '<div class="tooltip-btn"><span onclick="consultaDetalleOt(\'' + elemento.ot + '\'' + ',\'' + elemento.id_tipo + '\'' + ',\'' + elemento.id_subtipo + '\'' + ',\'' + elemento.operario.trim() + '\'' + ',\'' + elemento.equipo + '\')" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones"><i class="icono_cons_bg fa fa-bars" aria-hidden="true"></i></span></div>'
-
-			viewTable.push(array);
-		});
-
-		otTabla = $('#otTable').DataTable({
-			"paging": true,
-			"lengthChange": false,
-			"searching": false,
-			"ordering": false,
-			"pageLength": 10,
-			"recordsTotal": 100,
-			"info": false,
-			"autoWidth": true,
-			"language": idioma_espanol_not_font,
-			"data": viewTable,
-			"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
-		});
-		console.log(otTabla.page.info())
-	}
-
-	$scope.validarFecha = function () {
-		if (document.getElementById('filtro_fecha_inicio_consultaOt').value.trim() != "" && document.getElementById('filtro_fecha_fin_consultaOt').value.trim() != "") {
-			var inicio = document.getElementById('filtro_fecha_inicio_consultaOt').value.split('/');
-			var fin = document.getElementById('filtro_fecha_fin_consultaOt').value.split('/');
-			var date_inicio = new Date(inicio[2] + '-' + inicio[1] + '-' + inicio[0]);
-			var date_fin = new Date(fin[2] + '-' + fin[1] + '-' + fin[0]);
-			if (date_inicio <= date_fin) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-	}
 
 	$scope.consultaOT = function () {
-		if (otTabla) {
-			otTabla.destroy();
-		}
+		let isValido = true;
+		let errorMensaje = '';
+		let isValFecha = true;
 
 		// let intervencion = $scope.filtrosGeneral.tipoOrdenes.filter(e => e.checkedOpcion).map(e => e.id)
 		let subIntTemp = []
@@ -105,9 +44,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			.map(e => parseInt(e.id))
 		let selectedElms = $('#jstree').jstree("get_selected", true);
 
-		// $(".dropdown-menu").filter(":checked").each(function () {
-		// 	intervencion.push($(this).val());
-		// });
+
 		$.each(selectedElms, function () {
 			clusters.push(this.id);
 		});
@@ -115,101 +52,109 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			clusters = $scope.all_cluster;
 		}
 
-		// intervencion = "48,35,49,50,51,116,1360,55,111,106,107,112,115,163,164,258,236,291,292,259,157,158,159,204,290,260,146,211,212,261,148,149,300,301,302,262,251,252,253,254,287,288,289,263,303,304,305,306,264,269,298,299,265,150,160,270,286,293,294,295,297,274,144,145,237,307,275,244,271,272,273,308,276,238,277,142,152,278,143,147,151,243";
+
 		if ($.trim(document.getElementById('idot').value) !== '') {
 			if (!($.isNumeric($.trim(document.getElementById('idot').value)))) {
-				mostrarMensajeWarningValidacion('Introduce un n&uacute;mero correcto de OT');
-				return false;
+				errorMensaje += '<li>Introduce un n&uacute;mero correcto de OT.</li>';
+				isValido = false;
 			}
 		}
 
 		if ($.trim(document.getElementById('cuenta').value) !== '') {
 			if (!($.isNumeric($.trim(document.getElementById('cuenta').value)))) {
-				mostrarMensajeWarningValidacion("Introduce un n&uacute;mero correcto de cuenta");
-				return false;
+				errorMensaje += '<li>Introduce un n&uacute;mero correcto de cuenta.</li>';
+				isValido = false;
 			}
 		}
 
-		// if (intervencion == '') {
-		// 	mostrarMensajeWarningValidacion("Selecciona intervenciones");
-		// 	return false;
-		// }
-		if (clusters == '') {
-			mostrarMensajeWarningValidacion("Selecciona Cluster");
-			return false;
-		}
-		if (document.getElementById('fecha_inicio') == '') {
-			mostrarMensajeWarningValidacion("Introduce Fecha Inicial");
-			return false;
-		}
-		if (document.getElementById('fecha_fin') == '') {
-			mostrarMensajeWarningValidacion("Selecciona Fecha Final");
-			return false;
+		if (subIntTemp.length === 0) {
+			errorMensaje += '<li>Seleccione intervenci&oacute;n.</li>';
+			isValido = false
 		}
 
-		if (!$scope.validarFecha()) {
-			$('.datepicker').datepicker('update', new Date());
-			mostrarMensajeWarningValidacion("La fecha inicial no tiene que ser mayor a la final.");
-			return false;
+		if (clusters.length === 0) {
+			errorMensaje += '<li>Seleccione geograf&iacute;a.</li>';
+			isValido = false
+		}
+		
+		if (document.getElementById('filtro_fecha_inicio_consultaOt').value == '') {
+			errorMensaje += '<li>Introduce Fecha Inicial</li>';
+			isValFecha = false;
+			isValido = false
 		}
 
-		/* let params = {
-			ot: $.trim(document.getElementById('idot').value),
-			os: $.trim(document.getElementById('idos').value),
-			cuenta: $.trim(document.getElementById('cuenta').value),
-			fecha_inicio: $.trim(document.getElementById('filtro_fecha_inicio_consultaOt').value),
-			fecha_fin: $.trim(document.getElementById('filtro_fecha_fin_consultaOt').value),
-			intervencion: intervencion.toString(),
-			distrito: clusters.toString()
-		} */
-
-		let params = {
-			idOrden: $.trim(document.getElementById('idot').value),
-			folioSistema: $.trim(document.getElementById('idos').value),
-			claveCliente: $.trim(document.getElementById('cuenta').value),
-			idSubTipoOrdenes: [].concat(subIntTemp, [0]),
-			idEstatus: "1,2",
-			idClusters: clusters,
-			fechaInicio: $scope.getFechaFormato(document.getElementById('filtro_fecha_inicio_consultaOt').value),
-			fechaFin: $scope.getFechaFormato(document.getElementById('filtro_fecha_fin_consultaOt').value),
-			elementosPorPagina: 10
+		if (document.getElementById('filtro_fecha_fin_consultaOt').value == '') {
+			errorMensaje += '<li>Introduce Fecha Final</li>';
+			isValFecha = false;
+			isValido = false
 		}
 
-		console.log(otTabla.page.info())
+		if (isValFecha) {
+			if (!validarFecha()) {
+				$('.datepicker').datepicker('update', new Date());
+				errorMensaje += '<li>La fecha inicial no tiene que ser mayor a la final.</li>';
+				isValido = false
+			}
+		}
 
-		console.log(params);
 
-		otTabla = $('#otTable').DataTable({
-			"processing": false,
-			"ordering": false,
-			"serverSide": true,
-			"scrollX": false,
-			"paging": true,
-			"lengthChange": false,
-			"searching": false,
-			"ordering": false,
-			"pageLength": 10,
-			"ajax": {
-				"url": "req/consultaOT",
-				"type": "POST",
-				"data": params,
-				"beforeSend": function () {
-					swal({ text: 'Cargando registros...', allowOutsideClick: false });
-					swal.showLoading();
+		if (isValido) {
+			if (otTabla) {
+				otTabla.destroy();
+			}
+			let params = {
+				idOrden: $.trim(document.getElementById('idot').value),
+				folioSistema: $.trim(document.getElementById('idos').value),
+				claveCliente: $.trim(document.getElementById('cuenta').value),
+				idSubTipoOrdenes: [].concat(subIntTemp),
+				idEstatus: "1,2",
+				idClusters: clusters,
+				fechaInicio: $scope.getFechaFormato(document.getElementById('filtro_fecha_inicio_consultaOt').value),
+				fechaFin: $scope.getFechaFormato(document.getElementById('filtro_fecha_fin_consultaOt').value),
+				elementosPorPagina: 10
+			}
+	
+			console.log(otTabla.page.info())
+	
+			console.log(params);
+	
+			otTabla = $('#otTable').DataTable({
+				"processing": false,
+				"ordering": false,
+				"serverSide": true,
+				"scrollX": false,
+				"paging": true,
+				"lengthChange": false,
+				"searching": false,
+				"ordering": false,
+				"pageLength": 10,
+				"ajax": {
+					"url": "req/consultaOT",
+					"type": "POST",
+					"data": params,
+					"beforeSend": function () {
+						swal({ text: 'Cargando registros...', allowOutsideClick: false });
+						swal.showLoading();
+					},
+					"dataSrc": function (json) {
+						return json.data;
+					},
+					"error":function(xhr, error, thrown){
+						handleError(xhr)
+					}, 
+					"complete": function () {
+						swal.close()
+					}
 				},
-				"dataSrc": function (json) {
-					return json.data;
-				},
-				"error":function(xhr, error, thrown){
-					handleError(xhr)
-				}, 
-				"complete": function () {
-					swal.close()
-				}
-			},
-			"columns": [null, null, null, null, null, null, null, null, null],
-			"language": idioma_espanol_not_font
-		});
+				"columns": [null, null, null, null, null, null, null, null, null],
+				"language": idioma_espanol_not_font
+			});
+			
+		} else {
+			mostrarMensajeWarningValidacion(errorMensaje);
+		}
+
+		
 
 	}
 
@@ -384,10 +329,9 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		console.log(elementoInt.subfiltros)
 		console.log(elementoInt.checkedOpcion)
 	}
+
 	$scope.setCheckSubIntervencion = function (subInt, intervencion) {
 		subInt.checkedOpcion = !subInt.checkedOpcion
-
-
 		let cantidadSubfiltros = intervencion.subfiltros.length
 		let cantidadChecked = intervencion.subfiltros.filter(function (e) { return e.checkedOpcion }).length
 		intervencion.checkedOpcion = cantidadSubfiltros !== cantidadChecked ? false : true
@@ -418,6 +362,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 
 		$scope.consultarCatalagosPI();
 	}
+
 	$scope.iniciarConsultaOt();
 
 
@@ -1458,4 +1403,21 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	}
 
 
+	$('.drop-down-filters').on("click.bs.dropdown", function (e) {
+		e.stopPropagation();
+	});
+
+	validarFecha = function() {
+		if (document.getElementById('filtro_fecha_inicio_consultaOt').value.trim() != "" && document.getElementById('filtro_fecha_fin_consultaOt').value.trim() != "") {
+			var inicio = document.getElementById('filtro_fecha_inicio_consultaOt').value.split('/');
+			var fin = document.getElementById('filtro_fecha_fin_consultaOt').value.split('/');
+			var date_inicio = new Date(inicio[2] + '-' + inicio[1] + '-' + inicio[0]);
+			var date_fin = new Date(fin[2] + '-' + fin[1] + '-' + fin[0]);
+			if (date_inicio <= date_fin) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
 }])
