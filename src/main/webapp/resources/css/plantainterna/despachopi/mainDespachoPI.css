@@ -51,6 +51,8 @@ div#calendar {
 }
 .content-tecnico-asignacion{
     padding-top: .5em !important;
+    background: white;
+    position: relative;
 }
 @media screen and (min-width: 1366px)
 .numero_empleado_telefono {
@@ -664,7 +666,7 @@ span.text-content-asignacionmodal.ng-binding {
 .evento-ot-asignada:hover{
     width: fit-content;
     /* display:block; */
-    z-index: 2;
+    z-index: 12;
     /* width: -webkit-fill-available; */
     box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
     -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
@@ -775,9 +777,6 @@ p.top-title-comentario {
 
 .fc-scroller-canvas{
     background: #f1f2f2;
-}
-.content-tecnico-asignacion {
-    background: white;
 }
 
 .input-filtro-despacho{
@@ -1400,6 +1399,7 @@ span.content-titlehistorico.ng-binding {
     border-radius: 50%;
     color: #1266f1;
     padding: 0.3em 0.6em;
+    margin: 0 auto;
 }
 
 .detalle-cotizacion-icon {
@@ -1529,4 +1529,17 @@ span.cerrarnoticias {
     border-bottom:0.1px solid #e7e7e7;
     font-size:.9em;
     color:#303030
+}
+.barra-color-tecnico{
+    position: absolute;
+    width: 4px;
+    height: 80%;
+    display: inline;
+    right: 0;
+    margin-right: .3em;
+    border-bottom-left-radius: 1em;
+    border-bottom-right-radius: 1em;
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+    z-index: 1;
 }

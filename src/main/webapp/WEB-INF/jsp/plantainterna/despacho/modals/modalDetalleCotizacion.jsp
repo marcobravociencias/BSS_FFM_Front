@@ -391,11 +391,8 @@
                 </div>
 			</div>
             <div class="modal-footer">
-                <button   type="button" class="btn btn-primary">
-                    <b>Aceptar</b>
-                </button>
                 <button type="button" class="btn cerrar-modal-btn btn-ligh" data-mdb-dismiss="modal">
-                    Cancelar
+                    Cerrar
                 </button>
            </div>
         </div>

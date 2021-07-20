@@ -3675,14 +3675,15 @@ TimelineGrid = (function(superClass) {
     <div class="container-asignada">            
         <div class="content-text-otasignada" >  
             <div class="izquierda-icon"><i class="elemen-izquierda-asignada icon-otasginada fas fa-bars" onclick="abrirModalInformacion(${event.idOrden});"></i></div>
-            <i class="fas fa-dollar-sign detalle-cotizacion-icon-asignada" onclick="consultarDetalleCotizacion(${event.folioOrden});"></i>
             <h5 class="cliente-asignada">${event.nombreCliente}</h5>
         </div>
         <div class="content-text-otasignada" >      
-            <div class="izquierda-icon"><i class="far ${event.unidadNegocio === 1 ?'far fa-hand-paper':'fas fa-desktop'} 
-              icon-tipoot-operacion"></i>
+            <div class="izquierda-icon">
+              <i class="fas fa-dollar-sign detalle-cotizacion-icon-asignada" onclick="consultarDetalleCotizacion(${event.folioOrden});"></i>
             </div>  
             <b class="os-content-asignada">${event.folioOrden}</b>&nbsp&nbsp
+            <i class="far ${event.unidadNegocio === 1 ?'far fa-hand-paper':'fas fa-desktop'} 
+            icon-tipoot-operacion"></i>
         </div>
         <div class="content-text-otasignada" >       
             <div class="izquierda-icon">
@@ -6393,18 +6394,18 @@ ResourceRow = (function(superClass) {
       input = colSpec.field ? resource[colSpec.field] || null : resource;
       text = typeof colSpec.text === 'function' ? colSpec.text(resource, input) : input;
       // ***************************************Tecnicos*****************************************************************************
-      
+      //<span class="conteo-cantidad-ots">${resource.cantidadOts ? resource.cantidadOts : 0} </span>
+
       var templateOperador =`
       <div class="row">
           <div class="col-2 ">
-              <img style="border:.2em solid #${resource.color}"  class="efecto imagen_operario_foto"  src="./resources/img/plantainterna/despacho/tecnicootasignada.png"/>
+              <img style="border:.2em solid #${resource.color}"  class="efecto imagen_operario_foto"  src="${(resource.urlFotoPerfil != undefined && resource.urlFotoPerfil? resource.urlFotoPerfil:'./resources/img/plantainterna/despacho/tecnicootasignada.png' )}"/>
           </div>
           <div class="col-8 text-justify">
               <div class="conteo-content-ots" >
-                <span class="conteo-cantidad-ots">${resource.cantidadOts ? resource.cantidadOts : 0} </span>
               </div>
               <div class="row">
-                  <h5 class="big-text nombre_tecnico">${resource.nombre}  ${resource.apellidoPaterno}  ${resource.apellidoMaterno}</h5>
+                  <h5 title="${resource.nombre}  ${resource.apellidoPaterno}  ${resource.apellidoMaterno}" class="big-text nombre_tecnico">${resource.nombre}  ${resource.apellidoPaterno}  </h5>
               </div>
               <div class="row">
                   <small class="numero_empleado_telefono">
@@ -6443,7 +6444,7 @@ ResourceRow = (function(superClass) {
       
     
       
-      contentEl = $('<div class="fc-cell-content efecto content-tecnico-asignacion" id="resource-'+resource.idTecnico+'"  >' + (colSpec.isMain ? this.renderGutterHtml() : '') + '<div class="fc-cell-text">' +  templateOperador + '</div>' + '</div>');
+      contentEl = $('<div class="fc-cell-content efecto content-tecnico-asignacion" id="resource-'+resource.idTecnico+'"  >' + (colSpec.isMain ? this.renderGutterHtml() : '') + '<div style=" background: #'+resource.color+';" class="barra-color-tecnico"></div><div class="fc-cell-text">' +  templateOperador + '</div>' + '</div>');
       
       
       if (typeof colSpec.render === 'function') {

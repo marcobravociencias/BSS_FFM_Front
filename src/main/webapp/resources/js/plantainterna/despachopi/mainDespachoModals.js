@@ -189,7 +189,7 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService){
         }
     }
     abrirCambioEstatusTecnico = function (idOperario){
-        $scope.elementEstatusTecnico.status=null
+       /** $scope.elementEstatusTecnico.status=null
         $scope.elementEstatusTecnico.comentario=''
         
         $scope.elementEstatusTecnico.tecnico=angular.copy(
@@ -205,10 +205,10 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService){
         }
 
         $scope.$apply()
-        console.log($scope.elementEstatusTecnico.tecnico)
+        console.log($scope.elementEstatusTecnico.tecnico)**/
     }
     abrirOtsTrabajadas = function (idTecnico,nombreTecnico){
-        console.log("idTecnico"+idTecnico)
+       /** console.log("idTecnico"+idTecnico)
         console.log("nombreTecnico"+nombreTecnico)
 
         $scope.listadoOtsTrabajadasModal=[]       
@@ -236,19 +236,20 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService){
                     }
                 }
             }
-        }).catch(err => handleError(err))
+        }).catch(err => handleError(err))**/
 
     }
     abrirUbicacionOperario = function (idTecnico,nombreTecnico){
-        console.log("idTecnico"+idTecnico)
+        /**console.log("idTecnico"+idTecnico)
         console.log("nombreTecnico"+nombreTecnico)
         let objectParams={
             idTecnico:idTecnico,
             nombreTecnico:nombreTecnico
         }
-        $scope.consultarUbicacionOperario(objectParams)
+        $scope.consultarUbicacionOperario(objectParams)**/
     }
     abrirInformacionVehiculo = function (idTecnico){
+       /**
         console.log("function 14"+idTecnico)
         $scope.vehiculoOperario={}
         let params =  {
@@ -275,9 +276,10 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService){
                     }
                 }
             }
-        }).catch(err => handleError(err))
+        }).catch(err => handleError(err))**/
     }
     abrirInformacionMateriales = function (idTecnico){
+        /**
         console.log("function 15"+idTecnico)
 
         let params =  {
@@ -305,7 +307,7 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService){
                     }
                 }
             }
-        }).catch(err => handleError(err))
+        }).catch(err => handleError(err))**/
     }
     $scope.consultarCatalogoEstatusTecnico=function(){
         let params =  {
@@ -385,7 +387,8 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService){
         }).catch(err => handleError(err))
     }
 
-    $scope.abrirModalDetalleIconografia=function(){      
+    $scope.abrirModalDetalleIconografia=function(){ 
+        /**     
         if( $scope.listadoIconografia ){
             $("#modalIconografiaDespacho").modal('show')       
         }else{
@@ -399,14 +402,15 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService){
                 if (response.data !== undefined) {
                     if (response.data.respuesta) {
                         if (response.data.result.result === '0') {
-                           console.log("############## catalogo")
-                           //$scope.listadoOtsPendientes=otspendientes    
+                           console.log("############## catalogo")**/
+                           //$scope.listadoOtsPendientes=otspendientes 
+                           /**   
                         }
                     }
                 }
             }).catch(err => handleError(err))
         }
-       
+        **/
 
     }
 
