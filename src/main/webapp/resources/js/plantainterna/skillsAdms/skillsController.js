@@ -242,65 +242,40 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
 				clusters.push(parseInt(this.id)); 
 				
 		    });
+		    console.log("Nivel",selectedElms);
+		  if(selectedElms.length>0){
 		    nivelC=selectedElms[0].original.nivel;
-		    console.log("Nivel",nivelC);
-		    //if(ultimonivel==nivelC){
-				let params = {
-				idGeografia:clusters,
-				idTiposUsuarios:[1,100]
+		    
+		   		if(ultimonivel==nivelC){
+						let params = {
+						idGeografia:clusters,
+						idTiposUsuarios:[1,100]
 				
-			}
+					}
 
 			
-			console.log(clusters);
-				skillsService.consultarTecnico(params).then(function success(response) {
-				//console.log(response);
-				//$scope.llenarTableDinamic(jsonIntervenciones,jsonUsuarioTest); 
-				//dataTecnicoGlobal=jsonUsuarioTest;
-				//Cuando el servicio retorne info quitar esta linea y descomentar la sección de abajo
-				if (response.data.respuesta) {
-					//console.log("###respuesta###",response.data.result);
-				//	console.log("p",response.data.result.usuarios);
-				//	console.log("a",jsonIntervenciones);
-					$scope.llenarTableDinamic(jsonIntervenciones,response.data.result.usuarios);
-					dataTecnicoGlobal=response.data.result;
-					
-				
-				} else {
-					
-				}
-				swal.close();
-			}).catch(err => handleError(err));
+						console.log(clusters);
+						skillsService.consultarTecnico(params).then(function success(response) {
+						
+						//$scope.llenarTableDinamic(jsonIntervenciones,jsonUsuarioTest); 
+						//dataTecnicoGlobal=jsonUsuarioTest;
+						//Cuando el servicio retorne info quitar esta linea y descomentar la sección de abajo
+						if (response.data.respuesta) {	
+						$scope.llenarTableDinamic(jsonIntervenciones,response.data.result.usuarios);
+						dataTecnicoGlobal=response.data.result;
+						} 
+						swal.close();
+						}).catch(err => handleError(err));
 			
-			/*}else{
-				toastr.error( 'Debe seleccionar el ultimo nivel del cluster' ); 
-				let params = {
-				idGeografia:[0],
-				idTiposUsuarios:[0]
-				
+				}else{
+					toastr.error( 'Seleccionar el cluster' ); 
+					$scope.consultarTablaCuadrillasVacia();
+			
+				}
+			}else{
+				toastr.error( 'Seleccionar el cluster' ); 
+				$scope.consultarTablaCuadrillasVacia();
 			}
-
-			
-			//console.log(params);
-				skillsService.consultarTecnico(params).then(function success(response) {
-				//console.log(response);
-				//$scope.llenarTableDinamic(jsonIntervenciones,jsonUsuarioTest); 
-				//dataTecnicoGlobal=jsonUsuarioTest;
-				//Cuando el servicio retorne info quitar esta linea y descomentar la sección de abajo
-				if (response.data.respuesta) {
-					//console.log("###respuesta###",response.data.result);
-				//	console.log("p",response.data.result.usuarios);
-				//	console.log("a",jsonIntervenciones);
-					$scope.llenarTableDinamic(jsonIntervenciones,response.data.result.usuarios);
-					dataTecnicoGlobal=response.data.result;
-					
-				
-				} else {
-					
-				}
-				swal.close();
-			}); 
-			}*/
 		
 
 		}
