@@ -207,6 +207,7 @@
         <jsp:include page="./modals/modalConfirmaDesconfirma.jsp"></jsp:include>    
         <jsp:include page="./modals/modalLocalizacionRegistros.jsp"></jsp:include>   
         <jsp:include page="./modals/modalDetalleCotizacion.jsp"></jsp:include>    
+        <jsp:include page="./modals/modalFotoUsuario.jsp"></jsp:include>    
        
         <div ng-show="vistaDespacho" class="container-fluid">    
             <ul class="wall content-alert-parent">

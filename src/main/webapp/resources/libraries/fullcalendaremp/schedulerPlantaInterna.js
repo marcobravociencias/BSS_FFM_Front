@@ -6395,11 +6395,11 @@ ResourceRow = (function(superClass) {
       text = typeof colSpec.text === 'function' ? colSpec.text(resource, input) : input;
       // ***************************************Tecnicos*****************************************************************************
       //<span class="conteo-cantidad-ots">${resource.cantidadOts ? resource.cantidadOts : 0} </span>
-
+      var fullName = resource.nombre + " " + resource.apellidoPaterno + " " + resource.apellidoMaterno;
       var templateOperador =`
       <div class="row">
           <div class="col-2 ">
-              <img style="border:.2em solid #${resource.color}"  class="efecto imagen_operario_foto"  src="${(resource.urlFotoPerfil != undefined && resource.urlFotoPerfil? resource.urlFotoPerfil:'./resources/img/plantainterna/despacho/tecnicootasignada.png' )}"/>
+              <img style="border:.2em solid #${resource.color}" onclick="abrirModalFoto('${fullName}','${resource.urlFotoPerfil}', ' ${resource.usuarioFFM}', '${resource.numContacto}' )"  class="efecto imagen_operario_foto"  src="${(resource.urlFotoPerfil != undefined && resource.urlFotoPerfil? resource.urlFotoPerfil:'./resources/img/plantainterna/despacho/tecnicootasignada.png' )}"/>
           </div>
           <div class="col-8 text-justify">
               <div class="conteo-content-ots" >
