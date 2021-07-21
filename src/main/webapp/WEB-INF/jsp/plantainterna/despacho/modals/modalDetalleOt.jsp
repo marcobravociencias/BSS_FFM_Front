@@ -130,7 +130,7 @@
                             </div>
                             <div class="tab-pane fade " id="v-tabs-consulta-historico" role="tabpanel" aria-labelledby="v-tabs-consulta-historico-tab" >
                                 <div class="row">
-                                    <div ng-repeat="elementHistorico in historialOrdenTrabajo" class="col-4">
+                                    <div ng-repeat="elementHistorico in historialOrdenTrabajo" class="col-4" style="display: grid;">
                                         <div  class="card-historico card text-center">
                                             <div class="card-body">
                                                 <i ng-if="elementHistorico.idEstatusOrden==1" class="pendiente-historico  fas fa-pause circle-statushistorico"></i>
@@ -170,7 +170,7 @@
                                             <div class="chats" ng-repeat="comentario in comentariosOrdenTrabajo">
                                                 <div class="chat" ng-if="comentario.origenSistema === 1"><!-- APP-->
                                                     <div class="chat-avatar">
-                                                        <a class="avatar"><i class="img-comentarios-chat android-mensaje fab fa-android"></i></a>
+                                                        <a class="avatar"><i class="img-comentarios-chat android-mensaje fab fa-android" style="margin-top: 1em;"></i></a>
                                                     </div>
                                                     
                                                     <div class="chat-body">
@@ -189,16 +189,16 @@
                                                     </div>
                                                     <div class="chat-avatar">
                                                         <a class="avatar">
-                                                            <i class="img-comentarios-chat web-mensaje fas fa-desktop"></i>
+                                                            <i class="img-comentarios-chat web-mensaje fas fa-desktop" style="margin-top: 1em;"></i>
                                                         </a>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="chat-fotter">
+                                        <!--div class="chat-fotter">
                                             <input placeholder="Escribe el mensaje aqu&iacute; ..." type="text" class="input-mensaje-chat form-control form-control-sm">
                                             <button class="btn btn-sm btn-primary">Enviar</button>
-                                        </div>
+                                        </div-->
                                     </div>
                                 </div>
                             </div>

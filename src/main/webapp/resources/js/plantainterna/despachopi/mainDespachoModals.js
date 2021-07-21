@@ -45,6 +45,7 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService){
 
     $scope.idOtSelect = "";
     $scope.requestModalInformacion=function(idparams){
+        document.getElementById('v-tabs-consulta-detalleot-tab').click()
         $scope.idOtSelect = idparams;
         $scope.flagComentarios = false;
         $scope.flagHistorico = false;
