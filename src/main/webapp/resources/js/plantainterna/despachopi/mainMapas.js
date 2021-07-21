@@ -347,7 +347,7 @@ app.mapasControllerDespachoPI=function($scope,mainDespachoService){
             if (document.getElementById('v-tabs-consulta-pedido-tab').className.split(' ').length === 2) {
                 if ($scope.flagPedido) {
                     let params = {
-                        "idOt": 110//$scope.idOtSelect
+                        "idOt": $scope.idOtSelect
                     }
                     mainDespachoService.consultarDetalleTecnicoOt(params).then(function (result) {
                         if (result.data !== undefined) {
