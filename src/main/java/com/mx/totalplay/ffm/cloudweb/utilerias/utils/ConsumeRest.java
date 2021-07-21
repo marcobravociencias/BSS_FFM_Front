@@ -249,6 +249,60 @@ public class ConsumeRest {
         return response;
 
     }
+    
+    /**
+     * @param urlRequest             Contieene url con parametros ejemplo /despacho/{idDespachoParam}/fecha/{fechaParam}
+     * @param params          Formato Mapa con los parametros de la url Ej {idDespachoParam}=1229
+     * @param classConversion Tipo de clase de conversion
+     * @return ServiceResponseResult.class
+     */
+    public ServiceResponseResult callPostBearerTokenRequestURL(Map<String, String> params, String urlRequest, Class<?> classConversion, String token) {
+
+        ServiceResponseResult response = ServiceResponseResult.builder()
+                .isRespuesta(false).resultDescripcion("Sin datos").build();
+
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(urlRequest);
+        ResponseEntity<String> responseEntity = null;
+
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+            headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+            headers.set(HttpHeaders.AUTHORIZATION, "Bearer " + token);
+            HttpEntity<String> request = new HttpEntity<>(headers);
+            responseEntity = restTemplate.exchange(
+                    uriBuilder.buildAndExpand(params).toUri(),
+                    HttpMethod.POST,
+                    request,
+                    String.class);
+            String bodyResponse = responseEntity.getBody();
+            logger.info("--- RESPONSE ---***");
+            logger.info(bodyResponse);
+            Object result = gson.fromJson(bodyResponse, Object.class);
+            response = ServiceResponseResult.builder()
+                    .isRespuesta(true)
+                    .resultDescripcion("Accion completada")
+                    .result(result)
+                    .build();
+        }catch (HttpClientErrorException httpErrorException){
+            switch (httpErrorException.getRawStatusCode()){
+                case 403:
+                    logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO" + httpErrorException.getMessage());
+                    response = ServiceResponseResult.builder()
+                            .result(httpErrorException.getRawStatusCode())
+                            .resultDescripcion(httpErrorException.getMessage()).build();
+                    break;
+                default:
+                    response = ServiceResponseResult.builder()
+                            .resultDescripcion(httpErrorException.getMessage()).build();
+                    break;
+            }
+        } catch (Exception e) {
+            logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO" + e.getMessage());
+            response.setResultDescripcion(e.getMessage());
+        }
+        return response;
+    }
 
     /**
      * @param urlRequest             Contieene url con parametros ejemplo /despacho/{idDespachoParam}/fecha/{fechaParam}
