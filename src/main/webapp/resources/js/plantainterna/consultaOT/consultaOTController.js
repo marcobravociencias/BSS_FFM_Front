@@ -99,13 +99,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		
 		let estatusOrdenes = []
         angular.forEach($scope.filtrosGeneral.estatusdisponibles,(e,i)=>{
-			e.children.filter( f => f.checkedOpcion ).map((k)=>{ 
-				k.children.filter( l => l.checkedOpcion ).map((ll)=>{ 
-					estatusOrdenes.push(ll.id); 
-					return ll;
-				})   
-				return k;
-			})   
+			estatusOrdenes.push(e.id); 
         })
 		if (isValido) {
 			if (otTabla) {
@@ -142,8 +136,11 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 					"type": "POST",
 					"data": params,
 					"beforeSend": function () {
-						swal({ text: 'Cargando registros...', allowOutsideClick: false });
-						swal.showLoading();
+						if(!swal.isVisible() ){
+							swal({ text: 'Cargando registros...', allowOutsideClick: false });
+							swal.showLoading();
+						}
+						
 					},
 					"dataSrc": function (json) {
 						return json.data;
@@ -200,12 +197,23 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			} else {
 				toastr.error('Ha ocurrido un error en la consulta de tipo ordenes');
 			}
-
+			if (results[2].data !== undefined) {
+                if(results[2].data.respuesta ){
+                    if(results[2].data.result ){
+                        $scope.filtrosGeneral.estatusdisponibles=$scope.realizarConversionAnidado( results[2].data.result)   
+                    }else{                      
+                        toastr.info( 'No se encontraron catalogo de estatus' );                
+                    }
+                }else{
+                    toastr.warning( results[2].data.resultDescripcion );                
+                }               
+            }else{
+                toastr.error( 'Ha ocurrido un error en la consulta de catalogo de estatus' );                
+            }
 			if (results[1].data !== undefined) {
 				if (results[1].data.respuesta) {
 					if (results[1].data.result) {
 						if (results[1].data.result.geografia) {
-							swal.close();
 							$scope.listadogeografiacopy = results[1].data.result.geografia
 							geografia = results[1].data.result.geografia
 							geografia.map((e) => {
@@ -225,7 +233,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 								// $scope.consultarOtsPendientes()
 								// $scope.consultarTecnicosDisponibiles()
 								// $scope.consultarCatalogosAcciones();
-
+								$scope.consultaOT()
 							}).jstree({
 								'plugins': ["wholerow", "checkbox"],
 								'core': {
@@ -254,19 +262,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				toastr.error('Ha ocurrido un error en la consulta de geografia');
 			}
 
-			if (results[2].data !== undefined) {
-                if(results[2].data.respuesta ){
-                    if(results[2].data.result ){
-                        $scope.filtrosGeneral.estatusdisponibles=$scope.realizarConversionAnidado( results[2].data.result)   
-                    }else{                      
-                        toastr.info( 'No se encontraron catalogo de estatus' );                
-                    }
-                }else{
-                    toastr.warning( results[2].data.resultDescripcion );                
-                }               
-            }else{
-                toastr.error( 'Ha ocurrido un error en la consulta de catalogo de estatus' );                
-            }
+		
 		}).catch(err => handleError(err));
 	}
 
