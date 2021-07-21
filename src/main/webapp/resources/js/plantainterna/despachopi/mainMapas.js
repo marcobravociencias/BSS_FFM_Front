@@ -65,12 +65,13 @@ app.mapasControllerDespachoPI=function($scope,mainDespachoService){
     }      
     
     $scope.listadomarkerscotizacion=[];
-    consultarDetalleCotizacion=function(idot){
-        $scope.isAbiertoDetalleDireccion=false;
-        $scope.$apply()
+    $scope.consultarDetalleCotizacion = function (idot) {
+        $scope.isAbiertoDetalleDireccion = false;
+        //$scope.$apply()
         console.log(idot)
-        $scope.consultarCotizacionDespacho( idot );
+        $scope.consultarCotizacionDespacho(idot);
     }
+
     $scope.consultarCotizacionDespacho=function(idot){
         $scope.limpiarMarkersCotizacion()
 
@@ -103,7 +104,7 @@ app.mapasControllerDespachoPI=function($scope,mainDespachoService){
                 
         
 
-        }  
+        } 
 
         mainDespachoService.consultarCotizacionDespacho(params).then(function success(response){
             console.log(response)
@@ -111,8 +112,6 @@ app.mapasControllerDespachoPI=function($scope,mainDespachoService){
                 if(response.data.respuesta ){
                     if(response.data.result ){
                         if(response.data.result.consultaCotizacion !=undefined){    
-
-                            $("#modalDetalleCotizacion").modal('show')
                             $scope.detalleCotizacion=response.data.result.consultaCotizacion
                             let arrarLatLong=[]
                             //mapaucotizaciondetalle.setCenter(new google.maps.LatLng(37.4419, -122.1419));
@@ -200,7 +199,7 @@ app.mapasControllerDespachoPI=function($scope,mainDespachoService){
                                 
 
                                 
-
+                            $scope.flagPedido = true;
                             }else{
                                 toastr.warning( 'No se encontraron datos' );                
                             }
@@ -219,6 +218,7 @@ app.mapasControllerDespachoPI=function($scope,mainDespachoService){
             swal.close()
         }).catch(err=>handleError(err))
     }
+
     $scope.limpiarMarkersCotizacion=function(){
         $scope.listadomarkerscotizacion.map(function(e){ e.setMap(null);return e ;})
         $scope.listadomarkerscotizacion=[];

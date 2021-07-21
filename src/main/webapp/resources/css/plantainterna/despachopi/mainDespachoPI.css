@@ -1460,7 +1460,8 @@ span.content-titlehistorico.ng-binding {
 .container-direcciones-elemento {
     background: #ffffff;
     position: absolute;
-    width: 40%;
+    width: 45%;
+    top: 0px;
     left: 0%;
     height: 100%;
     z-index: 10;

@@ -259,6 +259,17 @@ app.service("mainDespachoService", function ($http) {
             }
 		});
 	};
+
+	this.consultarDetalleTecnicoOt=function(params){
+		return $http({
+			method: "post",
+			url: "req/consultarDetalleTecnicoOt",
+			data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
 	
 	
 });

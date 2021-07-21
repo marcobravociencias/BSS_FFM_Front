@@ -1,4 +1,4 @@
-app.modalDespachoPrincipal=function($scope,mainDespachoService){
+app.modalDespachoPrincipal=function($scope,mainDespachoService,$q){
     $scope.listadoIconografia=undefined
 
     $scope.listadoEstatusTecnico=[]   
@@ -49,38 +49,58 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService){
         $scope.idOtSelect = idparams;
         $scope.flagComentarios = false;
         $scope.flagHistorico = false;
+        $scope.flagPedido = false;
         $scope.comentariosOrdenTrabajo = [];
         $scope.historialOrdenTrabajo = [];
         $scope.infoOtDetalle={}
+        $scope.detalleCotizacion={}
+        $scope.detalleTecnicoOt = {};
         swal({ text: 'Consultando detalle de la OT ...', allowOutsideClick: false });
         swal.showLoading();      
 
         let params =  {
             "idOt": idparams
         }
-        mainDespachoService.consultarDetalleOtDespacho(params).then(function success(response) {
-            console.log(response);            
+
+        $q.all([
+            mainDespachoService.consultarDetalleOtDespacho(params),
+            mainDespachoService.consultarDetalleTecnicoOt(params)
+        ]).then(function(results){
             swal.close()
-            if (response.data !== undefined) {
-                if(response.data.respuesta ){
-                    if(response.data.result ){
-                        if( response.data.result.orden ){
-                            $scope.infoOtDetalle=response.data.result.orden 
+            if (results[0].data !== undefined) {
+                if(results[0].data.respuesta ){
+                    if(results[0].data.result ){
+                        if( results[0].data.result.orden ){
+                            $scope.infoOtDetalle=results[0].data.result.orden 
                             
                             $("#modalDetalleOT").modal('show')
                         }else{
-                            toastr.info( response.data.result.mensaje );                
+                            toastr.info( results[0].data.result.mensaje );                
                         }
                     }else{                        
                         toastr.warning( 'No se encontraron datos' );                
                     }
                 }else{
-                    toastr.warning( response.data.resultDescripcion );                
+                    toastr.warning( results[0].data.resultDescripcion );                
                 }               
             }else{
                 toastr.error( 'Ha ocurrido un error en la consulta de los datos' );                
             }
-        }).catch(err => handleError(err))
+            if (results[1].data !== undefined) {
+                if(results[1].data.respuesta ){
+                    if(results[1].data.result ){
+                        $scope.detalleTecnicoOt=results[1].data.result;
+                    }else{                        
+                        toastr.warning( 'No se encontraron datos' );                
+                    }
+                }else{
+                    toastr.warning( results[0].data.resultDescripcion );                
+                }               
+            }else{
+                toastr.error( 'Ha ocurrido un error en la consulta de los datos' );                
+            }
+        }).catch(err => handleError(err));
+
     }
 
     $scope.listadoArrayOtsLocalizacion=[]
@@ -502,6 +522,13 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService){
                 }
             }
         }).catch(err => handleError(err))
+    }
+
+    $scope.flagPedido = false;
+    $scope.consultarPedido = function(){
+        if (!$scope.flagPedido) {
+            $scope.consultarDetalleCotizacion($scope.idOtSelect);
+        }
     }
 
 }

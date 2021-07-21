@@ -639,7 +639,33 @@ JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
 	    ServiceResponseResult response= restCaller.callPostParamString(url, jsonObject.toString());         
 	      logger.info("RESULT"+gson.toJson(response)); 
 	    return response; 
-	  } 
+	  }
+
+	@Override
+	public ServiceResponseResult consultarDetalleTecnicoOt(String params) {
+		logger.info("ImplDespachoPIService.class [metodo = consultarDetalleTecnicoOt() ]\n"+params);
+
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		String idotdetalle=jsonObject.get("idOt").getAsString();
+
+		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
+		String tokenAcces=principalDetail.getAccess_token() ;
+		logger.info("consultarOperariosAsignadosDespacho ##+"+tokenAcces);
+		String urlRequest=principalDetail.getDireccionAmbiente().concat( constDespachoPI.getConsultarDetalleTecnicoOt() );
+		logger.info("#########3--"+urlRequest);
+
+		logger.info("#######idOt------"+idotdetalle);
+		Map<String, String> paramsRequestGet = new HashMap<String, String>();
+		paramsRequestGet.put("idOt", idotdetalle);
+
+		ServiceResponseResult response= restCaller.callGetBearerTokenRequest(
+				paramsRequestGet,
+				urlRequest,
+				ServiceResponseResult.class ,
+				tokenAcces );
+		logger.info("RESULT"+gson.toJson(response));
+		return response;
+	}
 
 
 	@Override
