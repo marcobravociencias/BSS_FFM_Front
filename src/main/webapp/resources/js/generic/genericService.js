@@ -26,4 +26,12 @@ app.service("genericService", function ($http) {
 		});
 	};
 
+    this.consultarCatalogoEstatusDespachoPI=function(params){
+		return $http({
+			method: "post",
+			url: "req/consultarCatalogoEstatusDespachoPI",
+            headers : { 'Content-Type' : 'application/json' }
+		});
+	};
+
 })

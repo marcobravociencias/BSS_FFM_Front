@@ -96,7 +96,11 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				isValido = false
 			}
 		}
-
+		
+		let estatusOrdenes = []
+        angular.forEach($scope.filtrosGeneral.estatusdisponibles,(e,i)=>{
+			e.children.filter( f => f.checkedOpcion ).map((k)=>{ estatusOrdenes.push(k.id); return k;} )   
+        })
 
 		if (isValido) {
 			if (otTabla) {
@@ -107,7 +111,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				folioSistema: $.trim(document.getElementById('idos').value),
 				claveCliente: $.trim(document.getElementById('cuenta').value),
 				idSubTipoOrdenes: [].concat(subIntTemp),
-				idEstatus: "1,2",
+				idEstatus: estatusOrdenes.concat([0]),
 				idClusters: clusters,
 				fechaInicio: $scope.getFechaFormato(document.getElementById('filtro_fecha_inicio_consultaOt').value),
 				fechaFin: $scope.getFechaFormato(document.getElementById('filtro_fecha_fin_consultaOt').value),
@@ -175,7 +179,8 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		swal.showLoading();
 		$q.all([
 			genericService.consultarCatalogoIntervenciones(),
-			genericService.consulCatalogoGeografia()
+			genericService.consulCatalogoGeografia(),
+			genericService.consultarCatalogoEstatusDespachoPI()
 		]).then(function (results) {
 			if (results[0].data !== undefined) {
 				if (results[0].data.respuesta) {
@@ -237,12 +242,26 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 					}
 				} else {
 					swal.close();
-					toastr.warning(results[2].data.resultDescripcion);
+					toastr.warning(results[1].data.resultDescripcion);
 				}
 			} else {
 				swal.close();
-				toastr.error('Ha ocurrido un error en la consulta de turnos');
+				toastr.error('Ha ocurrido un error en la consulta de geografia');
 			}
+
+			if (results[2].data !== undefined) {
+                if(results[2].data.respuesta ){
+                    if(results[2].data.result ){
+                        $scope.filtrosGeneral.estatusdisponibles=$scope.realizarConversionAnidado( results[2].data.result)   
+                    }else{                      
+                        toastr.info( 'No se encontraron catalogo de estatus' );                
+                    }
+                }else{
+                    toastr.warning( results[2].data.resultDescripcion );                
+                }               
+            }else{
+                toastr.error( 'Ha ocurrido un error en la consulta de catalogo de estatus' );                
+            }
 		}).catch(err => handleError(err));
 	}
 
