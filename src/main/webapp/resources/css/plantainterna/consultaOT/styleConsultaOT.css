@@ -866,10 +866,10 @@ div#table_tiempo_transito_paginate ul {
   border-bottom: 2px solid #a4b1ff !important;
 }
 
-.element-menu-filter:hover > .dropdown-menu {
+.element-menu-filter:hover  .dropdown-menu {
   display: block;
 }
-.element-menu-filter:hover > .dropdown-menu {
+.element-menu-filter:hover  .dropdown-menu {
   top: 0;
   left: 100%;
 }

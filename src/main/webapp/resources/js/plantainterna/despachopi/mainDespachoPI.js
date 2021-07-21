@@ -382,13 +382,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                             let indexot=0
                             $scope.listadoOtsPendientes.map((e)=>{
                                 indexot++
-                                e.claveCliente='02122102131091209'
-                                e.colorOrden=arrayColors[$scope.randomIntFromInterval()]
-                                e.nombreCliente='Guillermo Palacios Zavala'
-                                e.statusOtPendiente='PENDIENTE'
-                                e.folioOrden='OS-292812'
-                                e.folioOrden='OS-292812'
-                                e.telefonoCliente='7771201288'
+                                e.colorOrden=e.colorOrden != undefined && e.colorOrden ? e.colorOrden : arrayColors[$scope.randomIntFromInterval()]
                                 e.isConfirmado=indexot%2==0 ? true : false
                                 return e    
                             })
@@ -404,7 +398,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                                                 <div class="top-title-ot">
                                                     <div class="content-top-element bars-content">
                                                         <i onclick="abrirModalDetalleOtPendiente(${otpendiente.idOrden})" class="icono-ot-pendeinte fa fa-bars"></i>
-                                                        <h5  class="title-otpendeinte" >${otpendiente.claveCliente}</h5>
+                                                        <h5  class="title-otpendeinte" >#${otpendiente.claveCliente}</h5>
                                                     </div>
                                                     <div style="border:1px solid ${otpendiente.colorOrden}; color:${otpendiente.colorOrden}"  class="content-top-element intervencino-elemn intervencion-title"> 
                                                         ${otpendiente.descipcionTipoOrden}
@@ -415,16 +409,16 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                                                 </div>
                                                 <div class="posiciondos">
                                                     <div class="content-dos-element ">
-                                                        <h5  class="title-nombrecliente" ng-bind="otpendiente.nombreCliente"></h5>
+                                                        <h5  class="title-nombrecliente">${otpendiente.nombreCliente}</h5>
                                                     </div>
                                                 </div>
                                                 <div class="positiontres">
                                                     <div class="content-posiciontres">
-                                                        <p class="text-otpendiente-tres">FOLIO:</p>
+                                                        <p class="text-otpendiente-tres-title">FOLIO:</p>
                                                         <p class="text-otpendiente-tres" >${otpendiente.folioOrden}</p>
                                                     </div>
                                                     <div class="content-posiciontres">
-                                                        <p class="text-otpendiente-tres">OT:</p>
+                                                        <p class="text-otpendiente-tres-title">OT:</p>
                                                         <p class="text-otpendiente-tres" >${otpendiente.idOrden}</p>
                                                     </div>
                                                 </div>
@@ -451,9 +445,8 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
         
                                             </div>
                                             <div class="footer-otpendiente">
-                                                <i class="fas fa-dollar-sign detalle-cotizacion-icon" onclick="consultarDetalleCotizacion(${otpendiente.idOrden});" ></i>
                                                 <i class="fas fa-phone telefono-icon-pendiente"></i>
-                                                <span class="telefono-text-otpendiente" >${otpendiente.telefonoCliente}</span>
+                                                <span class="telefono-text-otpendiente" >${otpendiente.telefono}</span>
                                             </div>
                                         </div>
                                     </td>
@@ -625,7 +618,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                                // e.fechaFin=formatDateFin
                                 //e.horaInicio='15:00';
                                 //e.horaFin='18:20';
-                                e.colorOrden=arrayColors[$scope.randomIntFromInterval()]
+                                e.colorOrden=e.colorOrden != undefined && e.colorOrden? e.colorOrden: arrayColors[$scope.randomIntFromInterval()]
                                 e.start=e.fechaInicio+' '+e.horaInicio
                                 e.end=e.fechaFin+' '+e.horaFin
                                 return e
@@ -657,7 +650,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
         $scope.consultarTecnicosDisponibiles()
         $scope.consultarOrdenesTrabajoAsignadasDespacho()
         $scope.consultarOtsPendientes()
-        $scope.consultarConteoAlertasPI()
+      //  $scope.consultarConteoAlertasPI()
     }
     $scope.validarLoadTecnicosOtsAsignadas=function(){
         if( $scope.isCargaTecnicosDisponibles && $scope.isCargaOtsAsignadas){

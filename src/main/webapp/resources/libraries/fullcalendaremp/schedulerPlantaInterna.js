@@ -3679,11 +3679,9 @@ TimelineGrid = (function(superClass) {
         </div>
         <div class="content-text-otasignada" >      
             <div class="izquierda-icon">
-              <i class="fas fa-dollar-sign detalle-cotizacion-icon-asignada" onclick="consultarDetalleCotizacion(${event.folioOrden});"></i>
+              <i class="far ${event.unidadNegocio === 1 ?'far fa-hand-paper':'fas fa-desktop'}  icon-tipoot-operacion"></i>
             </div>  
-            <b class="os-content-asignada">${event.folioOrden}</b>&nbsp&nbsp
-            <i class="far ${event.unidadNegocio === 1 ?'far fa-hand-paper':'fas fa-desktop'} 
-            icon-tipoot-operacion"></i>
+            <b class="os-content-asignada">${event.folioOrden}</b>&nbsp&nbsp            
         </div>
         <div class="content-text-otasignada" >       
             <div class="izquierda-icon">

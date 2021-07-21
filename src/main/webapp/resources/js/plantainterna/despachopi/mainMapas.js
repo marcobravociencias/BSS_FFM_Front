@@ -1,5 +1,6 @@
 app.mapasControllerDespachoPI=function($scope,mainDespachoService){
     let markerUbiacionOperario;
+    let markerUbicacionRepartidor;
     $scope.isAbiertoDetalleDireccion=false;
     listadoLinesCurves=[]
     $scope.consultarUbicacionOperario=function(objectParams){
@@ -21,7 +22,6 @@ app.mapasControllerDespachoPI=function($scope,mainDespachoService){
             if(!mapubicacionoperario){
                 
                 mapubicacionoperario = new google.maps.Map(document.getElementById("vista_mapa_ubicacion"),{
-                    //center: { lat: latitudRes,  lng: longitudRes},
                     mapTypeControlOptions: {
                         style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
                         position: google.maps.ControlPosition.BOTTOM_LEFT,
@@ -74,9 +74,9 @@ app.mapasControllerDespachoPI=function($scope,mainDespachoService){
 
     $scope.consultarCotizacionDespacho = function (idot) {
         $scope.limpiarMarkersCotizacion()
-
-        $scope.detalleCotizacion = {}
-        $scope.detalleCotizacion.detalleOt = angular.copy($scope.listadoOtsPendientes.find((e) => e.idOrden == 117))
+        idot="167"
+        $scope.detalleCotizacion={}
+        $scope.detalleCotizacion.detalleOt=angular.copy($scope.listadoOtsPendientes.find((e)=> e.idOrden==idot) )
         console.log($scope.detalleCotizacion)
         swal({ text: 'Consultando detalle de la OT ...', allowOutsideClick: false });
         swal.showLoading();
@@ -99,12 +99,13 @@ app.mapasControllerDespachoPI=function($scope,mainDespachoService){
                 },
                 mapTypeControl: false,
                 zoom: 15
-            }
+                }
             );
+                
+        
 
+        } 
 
-
-        }
 
         mainDespachoService.consultarCotizacionDespacho(params).then(function success(response) {
             console.log(response)
@@ -164,11 +165,17 @@ app.mapasControllerDespachoPI=function($scope,mainDespachoService){
                                             },
                                             direccionContent: elem
                                         });
-                                        marker_ot.addListener("click", (e, i) => {
-                                            $scope.isAbiertoDetalleDireccion = true
-                                            $scope.elementoDireccion = marker_ot.direccionContent
+                                        marker_ot.addListener("click",(e,i)=>{
+                                            $scope.isAbiertoDetalleDireccion=true
+                                            $scope.elementoDireccion=marker_ot.direccionContent
                                             console.log(marker_ot.direccionContent)
+                                            if (marker_ot.getAnimation() !== null) {
+                                                marker_ot.setAnimation(null);
+                                            } else {
+                                                marker_ot.setAnimation(google.maps.Animation.BOUNCE);
+                                            }
                                             $scope.$apply()
+                                         
                                         })
 
                                         $scope.listadomarkerscotizacion.push(marker_ot);
@@ -197,7 +204,11 @@ app.mapasControllerDespachoPI=function($scope,mainDespachoService){
                                     })
                                 }
 
-                                let marker_repartidor = new google.maps.Marker({
+                                if(markerUbicacionRepartidor!=null)
+                                    markerUbicacionRepartidor.setMap(null)
+
+                                    
+                                markerUbicacionRepartidor = new google.maps.Marker({
                                     clickable: false,
                                     position: {
                                         lat: parseFloat($scope.detalleTecnicoOt.latitud),
@@ -216,6 +227,7 @@ app.mapasControllerDespachoPI=function($scope,mainDespachoService){
                                     },
                                 });
                                 $scope.flagPedido = true;
+                                $scope.llamarIntervalo()
                             } else {
                                 toastr.warning('No se encontraron datos');
                             }
@@ -234,7 +246,29 @@ app.mapasControllerDespachoPI=function($scope,mainDespachoService){
             swal.close()
         }).catch(err => handleError(err))
     }
+    $scope.colocarMarkerRepartidor=function(){
+        if( markerUbiacionOperario != undefined )
+            markerUbiacionOperario.setMap(null)
 
+        if($scope.ubicacionTecnicoObjeto.latitud!= undefined && $scope.ubicacionTecnicoObjeto.longitud != undefined){
+            markerUbiacionOperario = new google.maps.Marker({
+                clickable : false,
+                position:{ lat: parseFloat($scope.ubicacionTecnicoObjeto.latitud), lng: parseFloat($scope.ubicacionTecnicoObjeto.longitud)     },
+                title : "Repartidor",
+                animation : google.maps.Animation.DROP,
+                map : mapaucotizaciondetalle,
+                latitud_ot:parseFloat($scope.ubicacionTecnicoObjeto.latitud),
+                longitud_ot:parseFloat($scope.ubicacionTecnicoObjeto.longitud),
+                icon : {
+                    url:"./resources/img/plantainterna/despacho/repartidor-marker.svg",
+                    scaledSize: new google.maps.Size(37, 43),
+                    origin: new google.maps.Point(0,0),
+                    anchor: new google.maps.Point(10,20) 
+                }
+            });
+        }
+   
+    }
     $scope.limpiarMarkersCotizacion=function(){
         $scope.listadomarkerscotizacion.map(function(e){ e.setMap(null);return e ;})
         $scope.listadomarkerscotizacion=[];
@@ -342,151 +376,64 @@ app.mapasControllerDespachoPI=function($scope,mainDespachoService){
         }
     };
 
-    setInterval(() => {
-        if (document.getElementById('modalDetalleOT').style.display === 'block') {
-            if (document.getElementById('v-tabs-consulta-pedido-tab').className.split(' ').length === 2) {
-                if ($scope.flagPedido) {
-                    let params = {
-                        "idOt": $scope.idOtSelect
-                    }
-                    mainDespachoService.consultarDetalleTecnicoOt(params).then(function (result) {
-                        if (result.data !== undefined) {
-                            if (result.data.respuesta) {
-                                if (result.data.result) {
-                                    let arrarLatLong = []
-                                    $scope.detalleTecnicoOt = result.data.result;
-        
-                                    mapaucotizaciondetalle = new google.maps.Map(document.getElementById("mapa-cotizacion-despacho"), {
-                                        //center: { lat: latitudRes,  lng: longitudRes},
-                                        mapTypeControlOptions: {
-                                            style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-                                            position: google.maps.ControlPosition.BOTTOM_LEFT,
-                                        },
-                                        zoomControlOptions: {
-                                            position: google.maps.ControlPosition.BOTTOM_LEFT,
-                                        },
-                                        streetViewControlOptions: {
-                                            position: google.maps.ControlPosition.RIGHT_CENTER,
-                                        },
-                                        mapTypeControl: false,
-                                        zoom: 15
-                                    }
-                                    );
-        
-                                    angular.forEach($scope.detalleCotizacion.direcciones, function (elem, index) {
-        
-                                        if (elem.direccionDetalle != undefined) {
-                                            if (index == 0) {
-                                                elem.direccionDetalle.latitud = "19.327606110757337"
-                                                elem.direccionDetalle.longitud = "-99.19763482133813"
-                                                mapaucotizaciondetalle.setCenter(new google.maps.LatLng(parseFloat(elem.direccionDetalle.latitud), parseFloat(elem.direccionDetalle.longitud)));
-                                            }
-                                            let latitud_ot = {
-                                                lat: parseFloat(elem.direccionDetalle.latitud),
-                                                lng: parseFloat(elem.direccionDetalle.longitud)
-                                            };
-                                            arrarLatLong.push({
-                                                lat: parseFloat(elem.direccionDetalle.latitud),
-                                                lng: parseFloat(elem.direccionDetalle.longitud)
-                                            })
-        
-                                            let urlTemp = ""
-                                            switch (elem.accion) {
-                                                case 1:
-                                                    urlTemp = "./resources/img/plantainterna/despacho/negocio-marker.svg"
-                                                    break;
-                                                case 2:
-                                                    urlTemp = "./resources/img/plantainterna/despacho/domicilio-marker.svg"
-                                                    break;
-                                                case 3:
-                                                    urlTemp = "./resources/img/plantainterna/despacho/repartidor-icon.svg"
-                                                    break;
-                                                default:
-                                                    urlTemp = "./resources/img/plantainterna/despacho/repartidor-marker.svg"
-                                            }
-        
-                                            let marker_ot = new google.maps.Marker({
+    
+    $scope.isCOnsultaInterval=false;
+    $scope.llamarIntervalo=()=>{
+        if(!$scope.isCOnsultaInterval){
+            $scope.isCOnsultaInterval=true;
+            setInterval(() => {
+                if (document.getElementById('modalDetalleOT').style.display === 'block') {
+                    if (document.getElementById('v-tabs-consulta-pedido-tab').className.split(' ').length === 2) {
+                        if ($scope.flagPedido) {
+                            let params = {
+                                "idOt": $scope.idOtSelect
+                            }
+                            mainDespachoService.consultarDetalleTecnicoOt(params).then(function (result) {
+                                if (result.data !== undefined) {
+                                    if (result.data.respuesta) {
+                                        if (result.data.result) {
+                                            
+                                            if(markerUbicacionRepartidor!= null)
+                                                markerUbicacionRepartidor.setMap(null)
+                                           
+                                           
+                                            markerUbicacionRepartidor = new google.maps.Marker({
                                                 clickable: false,
-                                                position: latitud_ot,
-                                                title: "OT",
+                                                position: {
+                                                    lat: parseFloat($scope.detalleTecnicoOt.latitud),
+                                                    lng: parseFloat($scope.detalleTecnicoOt.longitud)
+                                                },
+                                                title: "Repartidor",
                                                 animation: google.maps.Animation.DROP,
                                                 map: mapaucotizaciondetalle,
-                                                latitud_ot: parseFloat(elem.direccionDetalle.latitud),
-                                                longitud_ot: parseFloat(elem.direccionDetalle.longitud),
+                                                latitud_ot: parseFloat($scope.detalleTecnicoOt.latitud),
+                                                longitud_ot: parseFloat($scope.detalleTecnicoOt.longitud),
                                                 icon: {
-                                                    url: urlTemp,
+                                                    url: "./resources/img/plantainterna/despacho/repartidor-marker.svg",
                                                     scaledSize: new google.maps.Size(37, 43),
                                                     origin: new google.maps.Point(0, 0),
                                                     anchor: new google.maps.Point(10, 20)
                                                 },
-                                                direccionContent: elem
                                             });
-                                            marker_ot.addListener("click", (e, i) => {
-                                                $scope.isAbiertoDetalleDireccion = true
-                                                $scope.elementoDireccion = marker_ot.direccionContent
-                                                console.log(marker_ot.direccionContent)
-                                                $scope.$apply()
-                                            })
-        
-                                            $scope.listadomarkerscotizacion.push(marker_ot);
+                
+                
+                                        } else {
+                                            toastr.warning('No se encontraron datos');
                                         }
-                                    })
-        
-                                    let paresLatLong = []
-                                    if (arrarLatLong.length > 1) {
-                                        if (arrarLatLong.length % 2 !== 0)
-                                            arrarLatLong.pop()
-        
-                                        for (i = 0; i < arrarLatLong.length; i += 2) {
-                                            if (!(i == arrarLatLong.length)) {
-                                                paresLatLong.push({
-                                                    puntoA: arrarLatLong[i],
-                                                    puntoB: arrarLatLong[i + 1]
-                                                })
-                                            }
-                                        }
+                                    } else {
+                                        toastr.warning(results[0].data.resultDescripcion);
                                     }
-                                    if (paresLatLong.length > 0) {
-                                        angular.forEach(paresLatLong, function (elem, index) {
-                                            let pointA = new google.maps.LatLng(elem.puntoA.lat, elem.puntoA.lng) // basel airport
-                                            let pointB = new google.maps.LatLng(elem.puntoB.lat, elem.puntoB.lng)
-                                            drawCurve(pointA, pointB, mapaucotizaciondetalle);
-                                        })
-                                    }
-        
-                                    let marker_repartidor = new google.maps.Marker({
-                                        clickable: false,
-                                        position: {
-                                            lat: parseFloat($scope.detalleTecnicoOt.latitud),
-                                            lng: parseFloat($scope.detalleTecnicoOt.longitud)
-                                        },
-                                        title: "Repartidor",
-                                        animation: google.maps.Animation.DROP,
-                                        map: mapaucotizaciondetalle,
-                                        latitud_ot: parseFloat($scope.detalleTecnicoOt.latitud),
-                                        longitud_ot: parseFloat($scope.detalleTecnicoOt.longitud),
-                                        icon: {
-                                            url: "./resources/img/plantainterna/despacho/repartidor-marker.svg",
-                                            scaledSize: new google.maps.Size(37, 43),
-                                            origin: new google.maps.Point(0, 0),
-                                            anchor: new google.maps.Point(10, 20)
-                                        },
-                                    });
-        
-        
                                 } else {
-                                    toastr.warning('No se encontraron datos');
+                                    toastr.error('Ha ocurrido un error en la consulta de los datos');
                                 }
-                            } else {
-                                toastr.warning(results[0].data.resultDescripcion);
-                            }
-                        } else {
-                            toastr.error('Ha ocurrido un error en la consulta de los datos');
+                            }).catch(err => handleError(err));
                         }
-                    }).catch(err => handleError(err));
+                    }
                 }
-            }
+            }, 5000);
         }
-    }, 15000);
+       
+    }
+
 
 }

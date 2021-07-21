@@ -172,10 +172,9 @@ label.dropdown-item.form-check-inputfiltro {
     cursor: pointer;
     border-radius: 50%;
     color: #1266f1;
-    padding: 0.3em .3em;
+    padding: 0.3em .4em;
     background: #efefef;
     color: #2c77d1;
-    
 }
 .footer-otpendiente .content-footer {
     display: contents;
@@ -223,7 +222,7 @@ h5.title-otpendeinte{
     font-size:1em;
     font-weight:bold;
     color:#003443;
-    color: #773f85;
+    color: #8e8e8e;
 }
 
 div#calendar {
@@ -466,7 +465,6 @@ span#buscar-operario {
     position: absolute;
     right: .6em;
     font-weight: bold;
-    background: rgb(44, 31, 31);
     font-size: .9em;
     width: 1.5em;
     height: 1.5em;
@@ -1454,9 +1452,10 @@ span.content-titlehistorico.ng-binding {
 
 .contentdetallecotbasico {
     font-size: .8em;
-    color: #303030;
+    color: #545454;
     padding-bottom: 0;
     margin-bottom: 0;
+    display: contents;
 }
 .header-title-cotiz {
     margin-bottom: 0;
@@ -1554,4 +1553,38 @@ span.cerrarnoticias {
     border-top-left-radius: 1em;
     border-top-right-radius: 1em;
     z-index: 1;
+}
+
+.text-otpendiente-tres-title {
+    display: inline;
+    font-size: .9em;
+    color: #939DB2;
+    font-weight: bold;
+    color: black;
+}
+
+.text-repartidor-noencontrado{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: .7em;
+    font-weight: 500;
+    color: #ff8935;
+    font-weight: bold;
+}
+
+.total-content-prod{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 1em;
+    font-weight: 500;
+    color: #0081e8;
+    font-weight: bold;
+}
+.total-title-prod {
+    font-size: 1em;
+    /* color: #2196f3; */
+    font-size: 1em !important;
+    color: #303030 !important;
 }

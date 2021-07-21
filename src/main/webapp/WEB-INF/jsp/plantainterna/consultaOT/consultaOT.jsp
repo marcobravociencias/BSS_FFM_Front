@@ -62,21 +62,29 @@
                         <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Estatus" type="text" id="filtro-estatus-substatus" class="input-filtro-consultaOT form-control form-control-sm" />
                         <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-estatus-substatus">      
                             <li style="text-align: center;">
-                                <button ng-click="seleccionarTodos(filtrosGeneral.estatusdisponibles)" id="todo_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
-                                <button ng-click="deseleccionarTodos(filtrosGeneral.estatusdisponibles)" id="ninguno_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
+                                <button ng-click="seleccionTodosEstatus(filtrosGeneral.estatusdisponibles,true)" id="todo_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
+                                <button ng-click="seleccionTodosEstatus(filtrosGeneral.estatusdisponibles,false)" id="ninguno_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
                             </li>     
                             <li class="elemento_menu dropdown-divider"></li>
                             <li ng-repeat="filtroE in filtrosGeneral.estatusdisponibles " class="element-menu-filter"  class="element-menu-filter">
                                 <label  class="dropdown-item form-check-inputfiltro">
-                                    <input ng-click=setCheckFiltroGeneric(filtro) id="filtrotext-{{filtroE.id}}" class="form-check-input" type="checkbox" ng-model="filtroE.checkedOpcion" ng-checked="filtroE.checkedOpcion"  />
+                                    <input ng-click=checkFiltroEstatus(filtroE) id="filtrotext-{{filtroE.id}}" class="form-check-input" type="checkbox" ng-model="filtroE.checkedOpcion" ng-checked="filtroE.checkedOpcion"  />
                                     <span  for="filtrotext-{{filtroE.id}}" class="dropdown-item item-text-filtro" href="#" ng-bind="filtroE.nombre"></span>
                                 </label>
                                  <ul  class="dropdown-menu">                     
                                     <li  ng-repeat="subfiltroE in filtroE.children" class="element-menu-filter">
                                         <label  class="dropdown-item form-check-inputfiltro">
-                                            <input ng-click=setCheckSubFiltroGeneric(subfiltroE,filtroE) id="subfiltrotext-{{subfiltroE.id}}" class="form-check-input" type="checkbox" ng-model="subfiltroE.checkedOpcion" ng-checked="subfiltroE.checkedOpcion"    />
+                                            <input ng-click=checkFiltroEstatus(subfiltroE) id="subfiltrotext-{{subfiltroE.id}}" class="form-check-input" type="checkbox" ng-model="subfiltroE.checkedOpcion" ng-checked="subfiltroE.checkedOpcion"    />
                                             <span  for="subfiltrotext-{{subfiltroE.id}}" class="dropdown-item item-text-filtro" href="#" ng-bind="subfiltroE.nombre"></span>
                                         </label>
+                                        <ul  class="dropdown-menu">                     
+                                            <li  ng-repeat="subfiltroJ in subfiltroE.children" class="element-menu-filter">
+                                                <label  class="dropdown-item form-check-inputfiltro">
+                                                    <input ng-click=checkFiltroEstatus(subfiltroJ) id="subfiltrotext-{{subfiltroJ.id}}" class="form-check-input" type="checkbox" ng-model="subfiltroJ.checkedOpcion" ng-checked="subfiltroJ.checkedOpcion"    />
+                                                    <span  for="subfiltrotext-{{subfiltroJ.id}}" class="dropdown-item item-text-filtro" href="#" ng-bind="subfiltroJ.nombre"></span>
+                                                </label>
+                                            </li>
+                                        </ul>
                                     </li>
                                 </ul>
                             </li>

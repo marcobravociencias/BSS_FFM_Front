@@ -99,9 +99,14 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		
 		let estatusOrdenes = []
         angular.forEach($scope.filtrosGeneral.estatusdisponibles,(e,i)=>{
-			e.children.filter( f => f.checkedOpcion ).map((k)=>{ estatusOrdenes.push(k.id); return k;} )   
+			e.children.filter( f => f.checkedOpcion ).map((k)=>{ 
+				k.children.filter( l => l.checkedOpcion ).map((ll)=>{ 
+					estatusOrdenes.push(ll.id); 
+					return ll;
+				})   
+				return k;
+			})   
         })
-
 		if (isValido) {
 			if (otTabla) {
 				otTabla.destroy();
@@ -110,8 +115,8 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				idOrden: $.trim(document.getElementById('idot').value),
 				folioSistema: $.trim(document.getElementById('idos').value),
 				claveCliente: $.trim(document.getElementById('cuenta').value),
-				idSubTipoOrdenes: [].concat(subIntTemp),
-				idEstatus: estatusOrdenes.concat([0]),
+				idSubTipoOrdenes: subIntTemp,
+				idEstatus: estatusOrdenes,
 				idClusters: clusters,
 				fechaInicio: $scope.getFechaFormato(document.getElementById('filtro_fecha_inicio_consultaOt').value),
 				fechaFin: $scope.getFechaFormato(document.getElementById('filtro_fecha_fin_consultaOt').value),
@@ -268,10 +273,19 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	$scope.realizarConversionAnidado = function (array) {
 		let arrayCopy = []
 		angular.forEach(array.filter(e => e.nivel == 1), function (elemento, index) {
+			
 			elemento.checkedOpcion = true;
 			elemento.children = array.filter(e => e.nivel == 2 && e.idPadre == elemento.id)
 			elemento.children = (elemento.children !== undefined && elemento.children.length > 0) ? elemento.children : []
 			elemento.children.map(e => { e.checkedOpcion = true; return e; })
+
+			angular.forEach(elemento.children, function (elementoJ, indexJ) {
+				elementoJ.checkedOpcion = true;
+				elementoJ.children = array.filter(e => e.nivel == 3 && e.idPadre == elementoJ.id)
+				elementoJ.children = (elementoJ.children !== undefined && elementoJ.children.length > 0) ? elementoJ.children : []
+				elementoJ.children.map(e => { e.checkedOpcion = true; return e; })
+			})
+			
 			arrayCopy.push(elemento)
 		})
 		return arrayCopy;
@@ -1438,5 +1452,38 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				return false;
 			}
 		}
+	}
+
+	$scope.seleccionTodosEstatus = function (paramFiltroParent,banderaChecked) {
+		paramFiltroParent.map(function (e) {
+			e.checkedOpcion = banderaChecked
+			e.children.map(function (j) {
+				j.checkedOpcion = banderaChecked	
+				j.children.map(function(k){
+					k.checkedOpcion=banderaChecked
+					return k
+				})
+				return j
+			})
+		})
+	}	
+	
+	$scope.checkFiltroEstatus=function(filtro){
+		filtro.checkedOpcion = !filtro.checkedOpcion
+		filtro.children.map(function (e) {
+			e.checkedOpcion = filtro.checkedOpcion	
+			if(e.children !=undefined && e.children.length > 0) {
+				e.children.map(function (j) {
+					j.checkedOpcion = filtro.checkedOpcion	
+					if(j.children !=undefined && j.children.length > 0) {
+						j.children.map(function(k){
+							k.checkedOpcion=filtro.checkedOpcion	
+							return k
+						})
+					}
+					return j
+				})
+			}			
+		})
 	}
 }])

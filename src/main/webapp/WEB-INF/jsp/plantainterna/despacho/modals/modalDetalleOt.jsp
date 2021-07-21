@@ -131,7 +131,7 @@
                             </div>
                             <div class="tab-pane fade " id="v-tabs-consulta-historico" role="tabpanel" aria-labelledby="v-tabs-consulta-historico-tab" >
                                 <div class="row">
-                                    <div ng-repeat="elementHistorico in historialOrdenTrabajo" class="col-4" style="display: grid;">
+                                    <div ng-repeat="elementHistorico in historialOrdenTrabajo"  class="col-4" style="display: grid;">
                                         <div  class="card-historico card text-center">
                                             <div class="card-body">
                                                 <i ng-if="elementHistorico.idEstatusOrden==1" class="pendiente-historico  fas fa-pause circle-statushistorico"></i>
@@ -408,6 +408,8 @@
                             <div class="tab-pane fade" id="v-tabs-consulta-pedido" role="tabpanel" aria-labelledby="v-tabs-consulta-acciones-tab">
                                 <div class="row parent-detallecotizacion">                        
                                     <div class="col-4">
+                                        <b class="text-repartidor-noencontrado" ng-if="ubicacionTecnicoObjeto.latitud == undefined || ubicacionTecnicoObjeto.latitud == null">No se encontr&oacute; ubicaci&oacute;n del repartidor</b>
+
                                         <div class="detalle-cot-basico">
                                             <div class="container-title-detallecot"> 
                                                 <b class="titulodetallecotbasico">Folio</b>                                   
@@ -448,12 +450,6 @@
                                                 <h5 class="contentdetallecotbasico" ng-bind="detalleCotizacion.fechaHoraProgramada" ></h5>                                   
                                             </div>
                                         </div>
-                                        <div class="divide-cotizacion">
-                
-                                        </div>
-                                        <h5 class="header-title-cotiz">
-                                            Costos
-                                        </h5>
                                         <div class="detalle-cot-basico">
                                             <div class="container-title-detallecot">
                                                 <b class="titulodetallecotbasico">Fecha estimada</b>
@@ -486,12 +482,19 @@
                                                 <h5 class="contentdetallecotbasico" ng-bind="detalleCotizacion.costos.fechaExpiracion" ></h5> 
                                             </div>
                                         </div>
+                                        <div class="divide-cotizacion">
+                
+                                        </div>
+                                        <h5 class="header-title-cotiz">
+                                            Costos
+                                        </h5>
+                                     
                                         <div class="detalle-cot-basico">
                                             <div class="container-title-detallecot">
                                                 <b class="titulodetallecotbasico">Subtotal</b>
                                             </div>
                                             <div class="container-text-detallecot"> 
-                                                <h5 class="contentdetallecotbasico" ng-bind="detalleCotizacion.costos.subTotal" ></h5>
+                                                <h5 class="contentdetallecotbasico" ng-bind="detalleCotizacion.costos.subTotal | currency:MX$:2" ></h5>
                                             </div>
                                         </div>
                                         <div class="detalle-cot-basico">
@@ -499,7 +502,7 @@
                                                 <b class="titulodetallecotbasico">IVA</b>
                                             </div>
                                             <div class="container-text-detallecot"> 
-                                                <h5 class="contentdetallecotbasico" ng-bind="detalleCotizacion.costos.iva" ></h5>
+                                                <h5 class="contentdetallecotbasico" ng-bind="detalleCotizacion.costos.iva | currency:MX$:2" ></h5>
                                             </div>
                                         </div>
                                         <div class="detalle-cot-basico">
@@ -507,19 +510,20 @@
                                                 <b class="titulodetallecotbasico">Descuento</b>
                                             </div>
                                             <div class="container-text-detallecot"> 
-                                                <h5 class="contentdetallecotbasico" ng-bind="detalleCotizacion.costos.descuento" ></h5>
+                                                <h5 class="contentdetallecotbasico" ng-bind="detalleCotizacion.costos.descuento | currency:MX$:2" ></h5>
                                             </div>
                                         </div>
                                         <div class="detalle-cot-basico">
                                             <div class="container-title-detallecot">
-                                                <b class="titulodetallecotbasico">Total</b>
+                                                <b class="titulodetallecotbasico total-title-prod">Total</b>
                                             </div>
                                             <div class="container-text-detallecot"> 
-                                                <h5 class="contentdetallecotbasico" ng-bind="detalleCotizacion.costos.total" ></h5>
+                                                <h5 class="contentdetallecotbasico total-content-prod" ng-bind="detalleCotizacion.costos.total | currency:MX$:2" ></h5>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-8">
+
                                         <div id="mapa-cotizacion-despacho" class="mapa-cotizacion-despacho" style="width:100%;height:100%; border-radius: 10px;">                            
                                         </div>
                                     </div>
@@ -610,13 +614,15 @@
                                                             <h5 class="contentgeneralcotbasico" ng-bind="elementoDireccion.tiempoEstimado" ></h5>
                                                         </div>
                                                     </div>
-                                                        
+                                                    <div class="divide-cotizacion">
+                
+                                                    </div>
                                                     <div class="detalle-text-parent-basico">
                                                         <div class="container-title-generalcot">
                                                             <b class="titulogeneralcotbasico">Subtotal</b>
                                                         </div>
                                                         <div class="container-text-generalcot"> 
-                                                            <h5 class="contentgeneralcotbasico" ng-bind="elementoDireccion.subTotal" ></h5>
+                                                            <h5 class="contentgeneralcotbasico" ng-bind="elementoDireccion.subTotal | currency:MX$:2" ></h5>
                                                         </div>
                                                     </div>
                                                     <div class="detalle-text-parent-basico">
@@ -624,7 +630,7 @@
                                                             <b class="titulogeneralcotbasico">Descuento</b>
                                                         </div>
                                                         <div class="container-text-generalcot"> 
-                                                            <h5 class="contentgeneralcotbasico" ng-bind="elementoDireccion.descuento" ></h5>
+                                                            <h5 class="contentgeneralcotbasico" ng-bind="elementoDireccion.descuento | currency:MX$:2" ></h5>
                                                         </div>
                                                     </div>
                                                     <div class="detalle-text-parent-basico">
@@ -632,17 +638,17 @@
                                                             <b class="titulogeneralcotbasico">IVA</b>
                                                         </div>
                                                         <div class="container-text-generalcot"> 
-                                                            <h5 class="contentgeneralcotbasico" ng-bind="elementoDireccion.iva" ></h5>
+                                                            <h5 class="contentgeneralcotbasico" ng-bind="elementoDireccion.iva | currency:MX$:2" ></h5>
                                                         </div>
                                                     </div>
                                                     <div class="detalle-text-parent-basico">
                                                         <div class="container-title-generalcot">
-                                                            <b class="titulogeneralcotbasico">Total</b>
+                                                            <b class="titulogeneralcotbasico  total-title-prod">Total</b>
                                                         </div>
                                                         <div class="container-text-generalcot"> 
-                                                            <h5 class="contentgeneralcotbasico" ng-bind="elementoDireccion.total" ></h5>
+                                                            <h5 class="contentgeneralcotbasico  total-content-prod" ng-bind="elementoDireccion.total | currency:MX$:2" ></h5>
                                                         </div>
-                                                    </div>                               
+                                                    </div>                                                                                                    
                 
                                                 </div>
                                                 <div class="tab-pane fade " id="v-tabs-consultadeta-coti" role="tabpanel" 

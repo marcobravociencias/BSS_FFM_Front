@@ -89,7 +89,7 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService,$q){
             if (results[1].data !== undefined) {
                 if(results[1].data.respuesta ){
                     if(results[1].data.result ){
-                        $scope.detalleTecnicoOt=results[1].data.result;
+                        $scope.ubicacionTecnicoObjeto=results[1].data.result;
                     }else{                        
                         toastr.warning( 'No se encontraron datos' );                
                     }
@@ -210,7 +210,7 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService,$q){
         }
     }
     abrirCambioEstatusTecnico = function (idOperario){
-       /** $scope.elementEstatusTecnico.status=null
+        $scope.elementEstatusTecnico.status=null
         $scope.elementEstatusTecnico.comentario=''
         
         $scope.elementEstatusTecnico.tecnico=angular.copy(
@@ -226,7 +226,7 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService,$q){
         }
 
         $scope.$apply()
-        console.log($scope.elementEstatusTecnico.tecnico)**/
+        console.log($scope.elementEstatusTecnico.tecnico)
     }
     abrirOtsTrabajadas = function (idTecnico,nombreTecnico){
        /** console.log("idTecnico"+idTecnico)
