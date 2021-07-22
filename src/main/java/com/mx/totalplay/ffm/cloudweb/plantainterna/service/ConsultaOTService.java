@@ -15,11 +15,6 @@ public interface ConsultaOTService {
 	public ServiceResponseResult consultaInformacionDetalleOt(String params);
 
 	public ServiceResponseResult consultaMaterialesOts(ParamConsultaOTPI paramsOT);
-	//public ServiceResponseResult consultaMaterialesOts(String paramsOT);
-
-	public ServiceResponseResult getComentariosIntegrador(String params);
-
-	public ServiceResponseResult historico(String params);
 
 	public ServiceResponseResult consultaActividadTecnico(String params);
 

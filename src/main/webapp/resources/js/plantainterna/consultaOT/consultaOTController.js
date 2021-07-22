@@ -44,6 +44,17 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			.map(e => parseInt(e.id))
 		let selectedElms = $('#jstree').jstree("get_selected", true);
 
+		let estatusOrdenes = []
+        angular.forEach($scope.filtrosGeneral.estatusdisponibles,(e,i)=>{
+			e.children.filter( f => f.checkedOpcion ).map((k)=>{ 
+				k.children.filter( l => l.checkedOpcion ).map((ll)=>{ 
+					estatusOrdenes.push(ll.id); 
+					return ll;
+				})   
+				return k;
+			})   
+        })
+
 
 		$.each(selectedElms, function () {
 			clusters.push(this.id);
@@ -65,6 +76,11 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				errorMensaje += '<li>Introduce un n&uacute;mero correcto de cuenta.</li>';
 				isValido = false;
 			}
+		}
+
+		if (estatusOrdenes.length === 0) {
+			errorMensaje += '<li>Seleccione estatus.</li>';
+			isValido = false
 		}
 
 		if (subIntTemp.length === 0) {
@@ -110,7 +126,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				folioSistema: $.trim(document.getElementById('idos').value),
 				claveCliente: $.trim(document.getElementById('cuenta').value),
 				idSubTipoOrdenes: subIntTemp,
-				idEstatus: estatusOrdenes,
+				idEstatus: "1,2",
 				idClusters: clusters,
 				fechaInicio: $scope.getFechaFormato(document.getElementById('filtro_fecha_inicio_consultaOt').value),
 				fechaFin: $scope.getFechaFormato(document.getElementById('filtro_fecha_fin_consultaOt').value),
@@ -813,10 +829,38 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	$scope.consultaChat = function () {
 		if (!is_consulta_comentarios) {
 			let params = {
-				IdOT: $scope.datoOt
+				idOt: $scope.datoOt
 			}
 			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 			swal.showLoading();
+
+			genericService.consultarComentariosDespachoOT(params).then(function success(response) {            
+                swal.close()        
+                if (response.data !== undefined) {
+                    if(response.data.respuesta ){
+                        if(response.data.result ){
+                            if( response.data.result.detalle ){
+                                $scope.comentariosOrdenTrabajo = response.data.result.detalle;
+                                angular.forEach($scope.comentariosOrdenTrabajo,function(comentario,index){
+                                    comentario.fechaComentario = moment(comentario.fecha + ' ' + comentario.hora).format("dddd, D [de] MMMM [de] YYYY hh:mm A");
+                                });
+								is_consulta_comentarios = true;
+							swal.close();
+                            }else{
+                                toastr.warning( response.data.result.mensaje );                
+                            }
+                        }else{                        
+                            toastr.warning( 'No se encontraron comentarios' );                
+                        }
+                    }else{
+                        toastr.warning( response.data.resultDescripcion );                
+                    }               
+                }else{
+                    toastr.warning( response.data.resultDescripcion );                
+                }               
+            }).catch(err => handleError(err));
+
+			/*
 			consultaOTService.consultaComentarios(JSON.stringify(params)).then(function success(response) {
 				response = arrayChat;
 				if (response.data !== undefined) {
@@ -860,8 +904,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 								}
 							});
 							$('.contenedor_detalle #content-chat-ot').empty().append(content_chat);
-							is_consulta_comentarios = true;
-							swal.close();
+							
 						} else {
 							swal.close();
 							mostrarMensajeErrorAlert(response.data.result.resultDescription)
@@ -874,7 +917,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 					swal.close();
 					mostrarMensajeErrorAlert("Error del servidor");
 				}
-			}).catch(err => handleError(err));
+			}).catch(err => handleError(err));*/
 		}
 	}
 
@@ -886,26 +929,20 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	$scope.consultaHistoricoOt = function () {
 		if (!is_consulta_historico) {
 			let params = {
-				IdOT: $scope.datoOt
+				idOt: $scope.datoOt
 			}
 			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 			swal.showLoading();
-			consultaOTService.consultaHistorico(JSON.stringify(params)).then(function success(response) {
-				response = arrayHistorico;
-				console.log(response);
-				if (response.data !== undefined) {
-					// if (response.data.respuesta) {
-					if (response.data.success) {
-						if (response.data.result.result === '0') {
-							// var content = '';
-							// var img_sta = '';
-							jsonm = response.data;
-							$scope.movimientos = response.data.result.Movimientos.Trackin;
-							if (response.data.result.Movimientos !== undefined && response.data.result.Movimientos.Trackin.length > 0) {
-								is_consulta_historico = true;
-							} else {
-								mostrarMensajeWarningValidacion("No se encontraron resultados");
-							}
+
+
+			genericService.consultarHistoricoDespachoOT(params).then(function(result){
+				console.log(result);
+				if (result.data !== undefined) {
+					if (result.data.respuesta) {
+						if (result.data.result !== undefined) {
+							jsonm = result.data;
+							$scope.movimientos = result.data.result.detalle;
+							is_consulta_historico = true;
 							swal.close();
 						} else {
 							swal.close();
@@ -1383,7 +1420,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	});
 
 
-	document.getElementById('acciones').addEventListener('click', function () {
+	/* document.getElementById('acciones').addEventListener('click', function () {
 		$("#comentarios").removeClass('active')
 		$("#informacion-ot").removeClass('active')
 		$("#info_historico").removeClass('active')
@@ -1392,7 +1429,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		$('#acciones').addClass('active');
 		$("#content_acciones").show();
 		// $scope.consultaInformacionRed()
-	});
+	}); */
 
 	$('#modal-detalle-ot').on('hidden.bs.modal', function () {
 		limpiarVariablesModalDetalle();

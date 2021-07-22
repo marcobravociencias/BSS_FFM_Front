@@ -74,26 +74,6 @@ public class ConsultaOTController {
 		}
 		return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
 	}
-	
-	@PostMapping("/getComentariosIntegrador")
-	public ResponseEntity<?> getComentariosIntegrador(@RequestBody String params) {
-		logger.info("*** ConsultaOTController.class *** Metodo getComentariosIntegrador *** Objecto: " + params);
-		result = consultaOTService.getComentariosIntegrador(params);
-		if (result.getResult() instanceof Integer){
-			return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
-		}
-		return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
-	}
-	
-	@PostMapping("/historico")
-	public ResponseEntity<?> historico(@RequestBody String params) {
-		logger.info("*** ConsultaOTController.class *** Metodo historico *** Objecto: " + params);
-		result = consultaOTService.historico(params);
-		if (result.getResult() instanceof Integer){
-			return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
-		}
-		return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
-	}
 
 	@PostMapping("/consultaActividadTecnico")
 	public ResponseEntity<?> consultaActividadTecnico(@RequestBody String params) {

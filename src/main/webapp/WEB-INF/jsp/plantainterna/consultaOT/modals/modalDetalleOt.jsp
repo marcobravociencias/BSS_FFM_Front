@@ -14,8 +14,8 @@
                             <div class="nav flex-column nav-tabs text-center" id="v-tabs-tab-detalle-ot" role="tablist" aria-orientation="vertical" >
                                 <li class="nav-link active" id="informacion-ot">Informaci&oacute;n</li>
                                 <li class="nav-link" id="info_historico">Hist&oacute;rico</li>
-                                <li class="nav-link" id="comentarios">Mensajer&iacute;a</li>
-                                <li class="nav-link" id="acciones">Acciones</li>
+                                <li class="nav-link" id="comentarios">Comentarios</li>
+                                <!-- <li class="nav-link" id="acciones">Acciones</li> -->
                             </div>
                         </div>
                         <div class="col-10">

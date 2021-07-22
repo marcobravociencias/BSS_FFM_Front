@@ -272,42 +272,6 @@ public class ImplConsultaOTService implements ConsultaOTService {
     }
 
     @Override
-    public ServiceResponseResult getComentariosIntegrador(String params) {
-        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-        JsonObject login = new JsonObject();
-        login.addProperty(env.getProperty("param.textus.pI"), constantesGeneric.getTextIpUsuario());
-        login.addProperty(env.getProperty("param.textus.drowssaP"), constantesGeneric.getTextCredPad());
-        login.addProperty(env.getProperty("param.textus.resU"), constantesGeneric.getTextCredUs());
-        jsonObject.add("Login", login);
-        jsonObject.addProperty("FechaInicial", "");
-        jsonObject.addProperty("FechaFinal", "");
-
-        logger.info("json object params## " + jsonObject.toString());
-
-        String url = "http://10.216.47.89" + constConsultaOT.getConsultaComentariosOtOperario();
-        ServiceResponseResult response = restCaller.callPostParamString(url, jsonObject.toString());
-        logger.info("Result ImplConsultaOTService metodo getComentariosIntegrador" + gson.toJson(response));
-        return response;
-    }
-
-    @Override
-    public ServiceResponseResult historico(String params) {
-        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-        JsonObject login = new JsonObject();
-        login.addProperty(env.getProperty("param.textus.pI"), constantesGeneric.getTextIpUsuario());
-        login.addProperty(env.getProperty("param.textus.drowssaP"), constantesGeneric.getTextCredPad());
-        login.addProperty(env.getProperty("param.textus.resU"), constantesGeneric.getTextCredUs());
-        jsonObject.add("Login", login);
-
-        logger.info("json object params## " + jsonObject.toString());
-
-        String url = "http://10.216.47.89" + constConsultaOT.getConsultaHistoricoOtOperario();
-        ServiceResponseResult response = restCaller.callPostParamString(url, jsonObject.toString());
-        logger.info("Result ImplConsultaOTService metodo historico" + gson.toJson(response));
-        return response;
-    }
-
-    @Override
     public ServiceResponseResult consultaActividadTecnico(String params) {
         JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
         JsonObject login = new JsonObject();

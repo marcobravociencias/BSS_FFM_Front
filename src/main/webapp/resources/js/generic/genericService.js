@@ -34,4 +34,26 @@ app.service("genericService", function ($http) {
 		});
 	};
 
+    this.consultarHistoricoDespachoOT=function(params){
+		return $http({
+			method: "post",
+			data:JSON.stringify(params),
+			url: "req/consultarHistoricoDespachoOT",
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	}
+
+    this.consultarComentariosDespachoOT=function(params){
+		return $http({
+			method: "post",
+			url: "req/consultarComentariosDespachoOT",
+			data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	}
+
 })

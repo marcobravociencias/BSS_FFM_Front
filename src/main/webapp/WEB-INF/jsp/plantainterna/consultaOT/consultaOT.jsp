@@ -192,12 +192,10 @@
 <script src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/dataTables.bootstrap4.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/libraries/jstree/jstree.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/libraries/sweetalert/js/sweetalert2.min.js"></script>
-<script type="text/javascript"
-    src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker_1.9.0.min.js"></script>
-<script type="text/javascript"
-    src="${pageContext.request.contextPath}/resources/libraries/magnific_popup/jquery.magnific-popup.min.js"></script>
-<script type="text/javascript"
-    src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker_1.9.0.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker.es.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/magnific_popup/jquery.magnific-popup.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
 <!-- Fin -->
 
 <script type="text/javascript">let contex_project = "${pageContext.request.contextPath}";</script>

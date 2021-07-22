@@ -1279,3 +1279,9 @@ span.content-titlehistorico.ng-binding {
 .container.container-accion {
   width: 60%;
 }
+
+.text-fecha-comentario {
+  padding-left: 15px;
+  padding-right: 15px;
+  font-size: .7em;
+}
