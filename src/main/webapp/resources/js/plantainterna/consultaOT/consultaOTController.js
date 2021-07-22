@@ -44,15 +44,10 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			.map(e => parseInt(e.id))
 		let selectedElms = $('#jstree').jstree("get_selected", true);
 
+
 		let estatusOrdenes = []
         angular.forEach($scope.filtrosGeneral.estatusdisponibles,(e,i)=>{
-			e.children.filter( f => f.checkedOpcion ).map((k)=>{ 
-				k.children.filter( l => l.checkedOpcion ).map((ll)=>{ 
-					estatusOrdenes.push(ll.id); 
-					return ll;
-				})   
-				return k;
-			})   
+			estatusOrdenes.push(e.id); 
         })
 
 
@@ -113,10 +108,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			}
 		}
 		
-		let estatusOrdenes = []
-        angular.forEach($scope.filtrosGeneral.estatusdisponibles,(e,i)=>{
-			estatusOrdenes.push(e.id); 
-        })
+
 		if (isValido) {
 			if (otTabla) {
 				otTabla.destroy();
@@ -126,7 +118,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				folioSistema: $.trim(document.getElementById('idos').value),
 				claveCliente: $.trim(document.getElementById('cuenta').value),
 				idSubTipoOrdenes: subIntTemp,
-				idEstatus: "1,2",
+				idEstatus: estatusOrdenes,
 				idClusters: clusters,
 				fechaInicio: $scope.getFechaFormato(document.getElementById('filtro_fecha_inicio_consultaOt').value),
 				fechaFin: $scope.getFechaFormato(document.getElementById('filtro_fecha_fin_consultaOt').value),
