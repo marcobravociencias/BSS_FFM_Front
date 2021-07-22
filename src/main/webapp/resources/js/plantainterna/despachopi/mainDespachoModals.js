@@ -89,7 +89,7 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService,$q){
             if (results[1].data !== undefined) {
                 if(results[1].data.respuesta ){
                     if(results[1].data.result ){
-                        $scope.ubicacionTecnicoObjeto=results[1].data.result;
+                        $scope.detalleTecnicoOt=results[1].data.result;
                     }else{                        
                         toastr.warning( 'No se encontraron datos' );                
                     }

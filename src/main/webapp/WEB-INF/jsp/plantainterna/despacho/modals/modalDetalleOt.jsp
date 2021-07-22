@@ -408,7 +408,7 @@
                             <div class="tab-pane fade" id="v-tabs-consulta-pedido" role="tabpanel" aria-labelledby="v-tabs-consulta-acciones-tab">
                                 <div class="row parent-detallecotizacion">                        
                                     <div class="col-4">
-                                        <b class="text-repartidor-noencontrado" ng-if="ubicacionTecnicoObjeto.latitud == undefined || ubicacionTecnicoObjeto.latitud == null">No se encontr&oacute; ubicaci&oacute;n del repartidor</b>
+                                        <b class="text-repartidor-noencontrado" ng-if="detalleTecnicoOt.latitud == undefined || detalleTecnicoOt.latitud == null">No se encontr&oacute; ubicaci&oacute;n del repartidor</b>
 
                                         <div class="detalle-cot-basico">
                                             <div class="container-title-detallecot"> 

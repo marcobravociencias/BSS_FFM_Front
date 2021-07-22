@@ -74,7 +74,7 @@ app.mapasControllerDespachoPI=function($scope,mainDespachoService){
 
     $scope.consultarCotizacionDespacho = function (idot) {
         $scope.limpiarMarkersCotizacion()
-        idot="167"
+       // idot="167"
         $scope.detalleCotizacion={}
         $scope.detalleCotizacion.detalleOt=angular.copy($scope.listadoOtsPendientes.find((e)=> e.idOrden==idot) )
         console.log($scope.detalleCotizacion)
@@ -166,16 +166,20 @@ app.mapasControllerDespachoPI=function($scope,mainDespachoService){
                                             direccionContent: elem
                                         });
                                         marker_ot.addListener("click",(e,i)=>{
+                                            
+                                            $scope.listadomarkerscotizacion.map(function(e){
+                                                if(marker_ot.direccionContent.idDireccion !== e.direccionContent.idDireccion)
+                                                    e.setAnimation(null);                                                
+                                                return e
+                                            })
                                             $scope.isAbiertoDetalleDireccion=true
                                             $scope.elementoDireccion=marker_ot.direccionContent
                                             console.log(marker_ot.direccionContent)
-                                            if (marker_ot.getAnimation() !== null) {
-                                                marker_ot.setAnimation(null);
-                                            } else {
-                                                marker_ot.setAnimation(google.maps.Animation.BOUNCE);
-                                            }
+                                            
                                             $scope.$apply()
-                                         
+                                            if (marker_ot.getAnimation() === null) 
+                                                marker_ot.setAnimation(google.maps.Animation.BOUNCE);
+                                                                                     
                                         })
 
                                         $scope.listadomarkerscotizacion.push(marker_ot);
@@ -392,7 +396,8 @@ app.mapasControllerDespachoPI=function($scope,mainDespachoService){
                                 if (result.data !== undefined) {
                                     if (result.data.respuesta) {
                                         if (result.data.result) {
-                                            
+                                            $scope.detalleTecnicoOt=result.data.result;
+
                                             if(markerUbicacionRepartidor!= null)
                                                 markerUbicacionRepartidor.setMap(null)
                                            
