@@ -1285,3 +1285,20 @@ span.content-titlehistorico.ng-binding {
   padding-right: 15px;
   font-size: .7em;
 }
+
+.container-fluid.vehiculo-content {
+  padding: 0;
+  display: flex;
+  /* border-bottom:1px solid #e1e1e1 */
+}
+
+span.text-tile-vehiculo {
+  font-weight: bold;
+  font-size: .8em;
+  color: #303030;
+}
+
+span.text-content-vehiculo {   
+  font-size: .8em;
+  color: #303030;
+}

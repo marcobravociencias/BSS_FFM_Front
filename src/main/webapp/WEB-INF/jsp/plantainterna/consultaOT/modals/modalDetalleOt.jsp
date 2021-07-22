@@ -22,104 +22,104 @@
                             <div class="contenedor_detalle row" id="content-ot">
                                 <div class="row">
                                     <div class="col-6">
-                                        <div class="container-fluid ot-content">
-                                            <div class="container-text-title-detalle"><span class="text-tile-ot">OT</span></div>
-                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-ot"></span> </div>
+                                        <div class="container-fluid vehiculo-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-vehiculo">OT</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.Id_ot}}" ng-bind="infoOtDetalle.idOrden || 'Sin dato'"></span> </div>
                                         </div>
-                                        <div class="container-fluid ot-content">
-                                            <div class="container-text-title-detalle"><span class="text-tile-ot">OS</span></div>
-                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-os"></span> </div>
+                                        <div class="container-fluid vehiculo-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-vehiculo">OS</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.Folio_os}}" ng-bind="infoOtDetalle.Folio_os || 'Sin dato'"></span> </div>
                                         </div>
-                                        <div class="container-fluid ot-content">
-                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Cuenta</span></div>
-                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-cuenta"></span> </div>
+                                        <div class="container-fluid vehiculo-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Cuenta</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.claveCliente}}" ng-bind="infoOtDetalle.claveCliente || 'Sin dato'"></span> </div>
                                         </div>
-                                        <div class="container-fluid ot-content">
-                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Cliente</span></div>
-                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-cliente"></span> </div>
+                                        <div class="container-fluid vehiculo-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Cliente</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.nombreCliente}}" ng-bind="infoOtDetalle.nombreCliente || 'Sin dato'"></span> </div>
                                         </div>
-                                        <div class="container-fluid ot-content">
-                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Contacto</span></div>
-                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-contacto"></span> </div>
+                                        <div class="container-fluid vehiculo-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Contacto</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.nombreContacto}}" ng-bind="infoOtDetalle.nombreContacto || 'Sin dato'"></span> </div>
                                         </div>
-                                        <div class="container-fluid ot-content">
-                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Fecha</span></div>
-                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-fecha"></span> </div>
+                                        <div class="container-fluid vehiculo-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Fecha</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.fechaAgenda}}" ng-bind="infoOtDetalle.fechaAgenda || 'Sin dato'"></span> </div>
                                         </div>
-                                        <div class="container-fluid ot-content">
-                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Estatus</span></div>
-                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-estatus"></span> </div>
+                                        <div class="container-fluid vehiculo-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Estatus</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.Status}}" ng-bind="infoOtDetalle.descripcionEstatus || 'Sin dato'"></span> </div>
                                         </div>
-                                        <div class="container-fluid ot-content">
-                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Estado</span></div>
-                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-estado"></span> </div>
+                                        <div class="container-fluid vehiculo-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Estado</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.Estado}}" ng-bind="infoOtDetalle.descripcionEstado || 'Sin dato'"></span> </div>
                                         </div>
-                                        <div class="container-fluid ot-content">
-                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Motivo</span></div>
-                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-motivo"></span> </div>
+                                        <div class="container-fluid vehiculo-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Motivo</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.Motivo}}" ng-bind="infoOtDetalle.descripcionMotivo || 'Sin dato'"></span> </div>
                                         </div>
-                                        <div class="container-fluid ot-content">
-                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Latitud</span></div>
-                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-direccion-latitud"></span> </div>
+                                        <div class="container-fluid vehiculo-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Latitud </span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.direccion.latitud}}" ng-bind="infoOtDetalle.direccion.latitud || 'Sin dato'"></span> </div>
                                         </div>
-                                        <div class="container-fluid ot-content">
-                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Longitud</span></div>
-                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-direccion-longitud"></span> </div>
+                                        <div class="container-fluid vehiculo-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Longitud</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.direccion.longitud}}" ng-bind="infoOtDetalle.direccion.longitud || 'Sin dato'"></span> </div>
                                         </div>
+                                   
                                     </div>
                                     <div class="col-6">
-                                        <div class="container-fluid ot-content">
-                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Cuidad</span></div>
-                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-direccion-ciudad"></span> </div>
+                                        <div class="container-fluid vehiculo-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Ciudad </span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.direccion.ciudad}}" ng-bind="infoOtDetalle.direccion.ciudad || 'Sin dato'"></span> </div>
                                         </div>
-                                        <div class="container-fluid ot-content">
-                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Estado</span></div>
-                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-direccion-estado"></span> </div>
+                                        <div class="container-fluid vehiculo-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Estado</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.direccion.estado}}" ng-bind="infoOtDetalle.direccion.estado || 'Sin dato'"></span> </div>
                                         </div>
-                                        <div class="container-fluid ot-content">
-                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Municipio</span></div>
-                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-direccion-municipio"></span> </div>
+                                        <div class="container-fluid vehiculo-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Municipio</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.direccion.municipio}}" ng-bind="infoOtDetalle.direccion.municipio || 'Sin dato'"></span> </div>
                                         </div>
-                                        <div class="container-fluid ot-content">
-                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Colonia</span></div>
-                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-direccion-colonia"></span> </div>
+                                        <div class="container-fluid vehiculo-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Colonia</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.direccion.colonia}}" ng-bind="infoOtDetalle.direccion.colonia || 'Sin dato'"></span> </div>
                                         </div>
-                                        <div class="container-fluid ot-content">
-                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Calle</span></div>
-                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-direccion-calle"></span> </div>
+                                        <div class="container-fluid vehiculo-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Calle</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.direccion.calle}}" ng-bind="infoOtDetalle.direccion.calle || 'Sin dato'"></span> </div>
                                         </div>
-                                        <div class="container-fluid ot-content">
-                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Num. interior</span></div>
-                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-direccion-numero-interior"></span> </div>
+                                        <div class="container-fluid vehiculo-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Num. interior</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.direccion.numeroInterior}}" ng-bind="infoOtDetalle.direccion.numeroInterior || 'Sin dato'"></span> </div>
                                         </div>
-                                        <div class="container-fluid ot-content">
-                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Num. exterior</span></div>
-                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-direccion-numero-exterior"></span> </div>
+                                        <div class="container-fluid vehiculo-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Num. exterior</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.direccion.numeroExterior}}" ng-bind="infoOtDetalle.direccion.entreCalles || 'Sin dato'"></span> </div>
                                         </div>
-                                        <div class="container-fluid ot-content">
-                                            <div class="container-text-title-detalle"><span class="text-tile-ot">C&oacute;digo Postal</span></div>
-                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-direccion-codigo-postal"></span> </div>
+                                     
+                                        <div class="container-fluid vehiculo-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-vehiculo">C&oacute;digo postal</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.direccion.codigoPostal}}" ng-bind="infoOtDetalle.direccion.codigoPostal || 'Sin dato'"></span> </div>
                                         </div>
-                                        <div class="container-fluid ot-content">
-                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Referencia</span></div>
-                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-referencia"></span> </div>
+                                        <div class="container-fluid vehiculo-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Referencia</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.direccion.referencias}}" ng-bind="infoOtDetalle.direccion.referencias || 'Sin dato'"></span> </div>
                                         </div>
-                                        <div class="container-fluid ot-content">
-                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Entre calles</span></div>
-                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-calles"></span> </div>
+                                        <div class="container-fluid vehiculo-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Entre calles</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.direccion.entreCalles}}" ng-bind="infoOtDetalle.direccion.entreCalles || 'Sin dato'"></span> </div>
                                         </div>
-                                        <div class="container-fluid ot-content">
-                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Tel&eacute;fono</span></div>
-                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-telefono1"></span> </div>
+                                        <div class="container-fluid vehiculo-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Tel&eacute;fono</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.telefonoCliente}}" ng-bind="infoOtDetalle.telefonoCliente || 'Sin dato'"></span> </div>
                                         </div>
-                                        <div class="container-fluid ot-content">
-                                            <div class="container-text-title-detalle"><span class="text-tile-ot">Tel. contacto</span></div>
-                                            <div class="container-text-content-detalle"><span class="text-content-ot" id="ota-telefono2"></span> </div>
+                                        <div class="container-fluid vehiculo-content">
+                                            <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Tel. contacto</span></div>
+                                            <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.telefonoContacto}}" ng-bind="infoOtDetalle.telefonoContacto || 'Sin dato'"></span> </div>
                                         </div>
                                     </div>
                                 </div>
-                                <br>
-                                <br>
                             </div>
                             <div class="contenedor_detalle row" id="content-comentarios">
                                 <div class="container">

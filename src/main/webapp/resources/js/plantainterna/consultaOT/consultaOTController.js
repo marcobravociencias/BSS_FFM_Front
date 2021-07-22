@@ -622,6 +622,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	$scope.datoInt;
 	$scope.datoSubInt;
 	consultaDetalleOt = function (ot, tipo, subtipo, operario, equipo) {
+		$scope.infoOtDetalle = {};
 		$("#modal-detalle-ot").removeClass('contenedor_detalle');
 		//getDetalleOTGeneric(idOT);
 		$scope.consultaDetalleOtGeneric(ot);
@@ -700,43 +701,13 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 			swal.showLoading();
 			consultaOTService.consultaInfoDetalle(JSON.stringify(params)).then(function success(response) {
-				response = arrayDetalleOt;
 				console.log(response);
 				if (response.data !== undefined) {
 					if (response.data.respuesta) {
-						if (response.data.result.result === '0') {
-							if (response.data.result.DatosGeneralesOT.OT !== undefined) {
-								console.log(response.data.result.DatosGeneralesOT);
-								console.log(response.data.result.DatosGeneralesOT.OT.Direccion.Ciudad);
-								$('#ota-ot').html(response.data.result.DatosGeneralesOT.OT.Id_ot);
-								$('#ota-os').html(response.data.result.DatosGeneralesOT.OT.Folio_os);
-								$('#ota-cuenta').html(response.data.result.DatosGeneralesOT.OT.Num_cuenta);
-								$('#ota-cliente').html(response.data.result.DatosGeneralesOT.OT.Nombre_cliente);
-								$('#ota-contacto').html(response.data.result.DatosGeneralesOT.OT.Nombre_contacto);
-								$('#ota-fecha').html(response.data.result.DatosGeneralesOT.OT.Fecha_agenda);
-								$('#ota-estatus').html(response.data.result.DatosGeneralesOT.OT.Status);
-								$('#ota-estado').html(response.data.result.DatosGeneralesOT.OT.Estado);
-								$('#ota-motivo').html(response.data.result.DatosGeneralesOT.OT.Motivo);
-								$('#ota-direccion-latitud').html(response.data.result.DatosGeneralesOT.OT.Direccion.Latitud);
-								$('#ota-direccion-longitud').html(response.data.result.DatosGeneralesOT.OT.Direccion.Longitud);;
-								$('#ota-direccion-ciudad').html(response.data.result.DatosGeneralesOT.OT.Direccion.Ciudad);
-								$('#ota-direccion-estado').html(response.data.result.DatosGeneralesOT.OT.Direccion.Estado);
-								$('#ota-direccion-municipio').html(response.data.result.DatosGeneralesOT.OT.Direccion.Municipio);
-								$('#ota-direccion-colonia').html(response.data.result.DatosGeneralesOT.OT.Direccion.Colonia);
-								$('#ota-direccion-calle').html(response.data.result.DatosGeneralesOT.OT.Direccion.Calle);
-								$('#ota-direccion-numero-interior').html(response.data.result.DatosGeneralesOT.OT.Direccion.Numero_interior);
-								$('#ota-direccion-numero-exterior').html(response.data.result.DatosGeneralesOT.OT.Direccion.Numero_exterior);
-								$('#ota-direccion-codigo-postal').html(response.data.result.DatosGeneralesOT.OT.Direccion.Codigo_postal);
-								$('#ota-referencia').html(response.data.result.DatosGeneralesOT.OT.Referencias_urbanas);
-								$('#ota-calles').html(response.data.result.DatosGeneralesOT.OT.Entre_calles);
-								$('#ota-telefono1').html(response.data.result.DatosGeneralesOT.OT.Telefono_empresa);
-								$('#ota-ext').html(response.data.result.DatosGeneralesOT.OT.Extension);
-								$('#ota-telefono2').html(response.data.result.DatosGeneralesOT.OT.Telefono_contacto);
-								$('#modal-detalle-ot').modal('show');
-								is_consulta_info_ot = true;
-							} else {
-								mostrarMensajeWarningValidacion("No se encontr\u00F3 informaci\u00F3n para la OT");
-							}
+						if (response.data.result.orden) {
+							$scope.infoOtDetalle = response.data.result.orden 
+							is_consulta_info_ot = true;
+							$('#modal-detalle-ot').modal('show');
 							swal.close();
 						} else {
 							swal.close();
