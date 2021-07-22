@@ -527,7 +527,7 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService,$q){
         }).catch(err => handleError(err))
     }
 
-    abrirModalFoto = function(nombre, url, usuario, telefono){
+    abrirModalFoto = function(nombre, url, usuario, telefono, centro, estatus){
         if(url == undefined || url == ""){
             url = "./resources/img/plantainterna/despacho/tecnicootasignada.png";
         }
@@ -535,9 +535,12 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService,$q){
         $("#num_emp").html("<span><strong>N&Uacute;M. EMPLEADO: </strong>"+usuario+"</span>");
         $("#tel_emp").html("<span><strong>TEL&Eacute;FONO: </strong>"+telefono+"</span>");
         $("#full_name").html("<span><strong>"+nombre+"</strong></span>");
+        $("#centro").html("<span><strong>"+centro+"</strong></span>");
+        $("#estatus").html("<span><strong>"+estatus+"</strong></span>");
         $("#img_emp").attr("src", url);
         $("#modalFotoUsuario").modal('show');
     }
+
     $scope.flagPedido = false;
     $scope.consultarPedido = function(){
         if (!$scope.flagPedido) {

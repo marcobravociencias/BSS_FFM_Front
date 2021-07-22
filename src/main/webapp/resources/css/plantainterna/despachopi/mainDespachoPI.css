@@ -109,7 +109,7 @@ div#calendar {
     margin-right: 0.5em !important;
     cursor: pointer;
 }
-}
+
 .tooltip-icon-des {
     display: inherit;
 }
@@ -391,7 +391,7 @@ span#buscar-operario {
     margin-right: 0;
     margin-right: 0;
     padding: 0;
-    margin-top: 1e;
+    margin-top: 1em;
 }
 
 #table-ot-pendientes_wrapper li.paginate_button {
@@ -448,18 +448,26 @@ span#buscar-operario {
 }
 
 .container-card{
-    margin-top: 5px;
+    margin-top: 10px;
+    margin-bottom: 15px;
 }
 
 #modalFotoUsuario{
     font-size: 12px;
 }
 
+#modalFotoUsuario .modal-body {
+    padding: 0px !important;
+}
+
 #full_name{
-    font-size: 14px;
+    font-size: 16px;
     color: #000;
 }
 
+#img_emp{
+    border-radius: 15px 15px 0px 0px;
+}
 
 .conteo-content-ots {
     position: absolute;
@@ -471,8 +479,6 @@ span#buscar-operario {
     bottom: 0;
     text-align: center;
 }
-
-
 
 
 ul.wall .red.accent-3 {
