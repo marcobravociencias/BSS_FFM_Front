@@ -528,11 +528,14 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService,$q){
     }
 
     abrirModalFoto = function(nombre, url, usuario, telefono){
-        var urlImg = url == undefined ? "./resources/img/plantainterna/despacho/tecnicootasignada.png" : url;
+        if(url == undefined || url == ""){
+            url = "./resources/img/plantainterna/despacho/tecnicootasignada.png";
+        }
+
         $("#num_emp").html("<span><strong>N&Uacute;M. EMPLEADO: </strong>"+usuario+"</span>");
         $("#tel_emp").html("<span><strong>TEL&Eacute;FONO: </strong>"+telefono+"</span>");
         $("#full_name").html("<span><strong>"+nombre+"</strong></span>");
-        $("#img_emp").attr("src", urlImg);
+        $("#img_emp").attr("src", url);
         $("#modalFotoUsuario").modal('show');
     }
     $scope.flagPedido = false;
