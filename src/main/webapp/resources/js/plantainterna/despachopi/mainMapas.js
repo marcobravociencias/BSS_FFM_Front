@@ -435,7 +435,7 @@ app.mapasControllerDespachoPI=function($scope,mainDespachoService){
                         }
                     }
                 }
-            }, 5000);
+            }, 10000);
         }
        
     }

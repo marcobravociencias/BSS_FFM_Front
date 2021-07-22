@@ -353,9 +353,9 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService,$q){
         }).catch(err => handleError(err))
     }
     $scope.cambiarEstatusOperario=function(){
-	console.log("Entra a cambiar estatus:")
-	var n=$('#id-status-tecnico').val();
-	console.log(n)
+        console.log("Entra a cambiar estatus:")
+        var n=$('#id-status-tecnico').val();
+        console.log(n)
         if($scope.elementEstatusTecnico.status == null || !$scope.elementEstatusTecnico.comentario ){
             toastr.warning('Selecciona estatus y completa campo de comentario.... ')
             return false
@@ -363,7 +363,7 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService,$q){
         let params =  {
          
             "idUsuario":$scope.elementEstatusTecnico.tecnico.idTecnico,
-            "idEstatusUsuario":$("#id-status-tecnico").val()
+            "idEstatusUsuario":$scope.elementEstatusTecnico.status.idEstatus
         }
 
        swal({ text: 'Cambiando estatus ...', allowOutsideClick: false });
@@ -372,18 +372,20 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService,$q){
           
             $("#modalStatusOperario").modal('hide')
             console.log("Estatus: ",response.status);
-            swal.close()
-            
-			toastr.success('Cambio de estatus correcto');
-            $scope.refrescarBusqueda()
             if (response.data !== undefined) {
                 if (response.data.respuesta) {
-                    if (response.data.result.result === '0') {
+                    if (response.data.result.mensaje === '0') {
                        console.log("############## catalogo")
-                       //$scope.listadoOtsPendientes=otspendientes                         
+                       //$scope.listadoOtsPendientes=otspendientes 
+			            toastr.success(response.data.result.description);                        
+                    }else{
+                        toastr.warning( response.data.result.description );                
                     }
+                }else{
+                    toastr.warning( response.data.resultDescripcionn );                
                 }
-            }                        
+            }   
+            swal.close()                             
         }).catch(err => handleError(err))
     }
   

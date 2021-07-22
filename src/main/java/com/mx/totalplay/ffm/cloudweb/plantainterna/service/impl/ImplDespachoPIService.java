@@ -608,7 +608,8 @@ JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
 	
 	@Override
 	public ServiceResponseResult cambiarEstatusTecnicoPI(String params) {
-		
+		logger.info("ImplDespachoPIService.class [metodo = cambiarEstatusTecnicoPI() ]\n"+params);
+	
 		JsonObject jsonObject=gson.fromJson(params, JsonObject.class);
 		
 		String idUsuario=jsonObject.get("idUsuario").getAsString();
@@ -619,12 +620,12 @@ JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
 	    logger.info("json object params## "+jsonObject.toString()); 
 	    
 	    String tokenAcces=principalDetail.getAccess_token();
-	    String url="http://94.74.70.52:8159"+constDespachoPI.getCambiarEstatusTecPi();
+	    String url=principalDetail.getDireccionAmbiente().concat(constDespachoPI.getCambiarEstatusTecPi());
 	    logger.info("URL ##+" + url);
 	    
 	    Map<String, String> paramsRequestGet = new HashMap<String, String>();
         paramsRequestGet.put("idUsuario", idUsuario);
-        paramsRequestGet.put("idEstatusUsuario", idEstatus.replace("object:", ""));
+        paramsRequestGet.put("idEstatusUsuario", idEstatus);
 	    
 	    ServiceResponseResult response= restCaller.callPostBearerTokenRequestURL(paramsRequestGet, url,
 	    		ServiceResponseResult.class, tokenAcces);
