@@ -271,5 +271,16 @@ app.service("mainDespachoService", function ($http) {
 		});
 	};
 	
+	this.cambiarEstatusTecnicoPI=function(params){
+		return $http({
+			method:"post",
+			url:"req/cambiarEstatusTecnicoPI",
+			data:JSON.stringify(params),
+			headers:{
+				'Content-Type':'application/json'
+			}
+		})
+	};
+	
 	
 });

@@ -40,6 +40,7 @@ public interface DespachoPIService {
 	public ServiceResponseResult consultarComentariosAlertaPI(String params);
 	public ServiceResponseResult cambiarEstatusIntegrador(String params);
 	public ServiceResponseResult setComentariosIntegrador(String params);
+	public ServiceResponseResult cambiarEstatusTecnicoPI(String params);
 
     ServiceResponseResult consultarDetalleTecnicoOt(String params);
 }

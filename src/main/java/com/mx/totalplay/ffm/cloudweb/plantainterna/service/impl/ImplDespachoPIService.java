@@ -606,6 +606,33 @@ JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
 		return null;
 	}
 	
+	@Override
+	public ServiceResponseResult cambiarEstatusTecnicoPI(String params) {
+		
+		JsonObject jsonObject=gson.fromJson(params, JsonObject.class);
+		
+		String idUsuario=jsonObject.get("idUsuario").getAsString();
+		String idEstatus=jsonObject.get("idEstatusUsuario").getAsString();
+		
+	    LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
+	    
+	    logger.info("json object params## "+jsonObject.toString()); 
+	    
+	    String tokenAcces=principalDetail.getAccess_token();
+	    String url="http://94.74.70.52:8159"+constDespachoPI.getCambiarEstatusTecPi();
+	    logger.info("URL ##+" + url);
+	    
+	    Map<String, String> paramsRequestGet = new HashMap<String, String>();
+        paramsRequestGet.put("idUsuario", idUsuario);
+        paramsRequestGet.put("idEstatusUsuario", idEstatus.replace("object:", ""));
+	    
+	    ServiceResponseResult response= restCaller.callPostBearerTokenRequestURL(paramsRequestGet, url,
+	    		ServiceResponseResult.class, tokenAcces);
+	    logger.info("##### RESULT"+gson.toJson(response)+" #######");
+		return response;
+	}
+
+	
 	@Override 
 	  public ServiceResponseResult cambiarEstatusIntegrador(String params) { 
 	    JsonObject jsonObject = gson.fromJson(params, JsonObject.class); 
@@ -708,6 +735,7 @@ JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
 	    logger.info("RESULT"+gson.toJson(response));
 		return response;
 	}
+
 
 	
 

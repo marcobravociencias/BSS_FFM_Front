@@ -200,7 +200,17 @@ public class DespachoPIController {
         }
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
-
+    
+    @PostMapping("cambiarEstatusTecnicoPI")
+    public ResponseEntity<?> cambiarEstatusTecnicoPI(@RequestBody String params){
+    	LOGGER.info("#### Cambiando estatus de tecnico PI 21072021");
+    	ServiceResponseResult response=despachoService.cambiarEstatusTecnicoPI(params);
+    	if(response.getResult() instanceof Integer) {
+    		return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+    	}
+    	return new ResponseEntity<>(response,HttpStatus.ACCEPTED);
+    }
+    
     @PostMapping("/consultarCatalogoEstatusTecnico")
     public ResponseEntity<?> consultarCatalogoEstatusTecnico(@RequestBody String params) {
         LOGGER.info("##### CONSULTANDO CATALOGO ESTATUS TECNICO");
