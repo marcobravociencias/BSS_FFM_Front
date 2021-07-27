@@ -67,3 +67,108 @@ var jsonUsuarioTest=[
       ]
     }
   ]
+
+
+let jsonTestingOperarios={
+	"result": {
+		"mensaje": "Operacion exitosa",
+		"description": "Ordenes encontradas",
+		"detalleTecnicos": [
+      {
+        
+      },{
+			"idTecnico": 11.0,
+			"idEstatusTecnico": 1.0,
+			"descipcionEstatusTecnico": "EN LINEA",
+			"numeroEmpleado": "GABMXOP144",
+			"usuarioFFM": "GABMXOP144",
+			"numContacto": "5514555274",
+			"nombre": "CARLOS ALBERTO",
+			"apellidoPaterno": "SOLIS",
+			"apellidoMaterno": "REYES",
+			"urlFotoPerfil": "https://firebasestorage.googleapis.com/v0/b/totalplay-ffm-core-dev.appspot.com/o/usuarios%2FCarlos%20Alberto%20Solis%20Reyes.jpeg?alt=media&token=453064cc-4c1e-4a79-9abf-c5fc750f1ed3",
+			"idTipoUsuario": 7.0,
+			"descripcionTipoUsuario": "TECNICO",
+			"centro": "SATE",
+			"almacen": "S100",
+			"color": "36A9FF",
+			"latitud": 19.3278328723,
+			"longitud": -22.89298238932
+		}, {
+			"idTecnico": 12.0,
+			"idEstatusTecnico": 1.0,
+			"descipcionEstatusTecnico": "EN LINEA",
+			"numeroEmpleado": "GABMXOP143",
+			"usuarioFFM": "GABMXOP143",
+			"numContacto": "5514555274",
+			"nombre": "ERIK GUSTAVO",
+			"apellidoPaterno": "GORDILLO",
+			"apellidoMaterno": "DELGADO",
+			"urlFotoPerfil": "",
+			"idTipoUsuario": 7.0,
+			"descripcionTipoUsuario": "TECNICO",
+			"centro": "SATE",
+			"almacen": "S100",
+			"color": "36A9FF",
+			"latitud": 19.3278328723,
+			"longitud": -22.89298238932
+		}, {
+			"idTecnico": 13.0,
+			"idEstatusTecnico": 1.0,
+			"descipcionEstatusTecnico": "EN LINEA",
+			"numeroEmpleado": "GABMXOP142",
+			"usuarioFFM": "GABMXOP142",
+			"numContacto": "5514555274",
+			"nombre": "EDER GUILLERMO",
+			"apellidoPaterno": "MONTEJANO",
+			"apellidoMaterno": "RAMIREZ",
+			"urlFotoPerfil": "https://firebasestorage.googleapis.com/v0/b/totalplay-ffm-core-dev.appspot.com/o/usuarios%2FEder%20Guillermo%20Montejano%20Ram%C3%ADrez.jpeg?alt=media&token=f80a3155-9612-4429-b1c2-9a1bd1a337ae",
+			"idTipoUsuario": 7.0,
+			"descripcionTipoUsuario": "TECNICO",
+			"centro": "SATE",
+			"almacen": "S100",
+			"color": "36A9FF",
+			"latitud": 19.3278328723,
+			"longitud": -22.89298238932
+		}, {
+			"idTecnico": 14.0,
+			"idEstatusTecnico": 1.0,
+			"descipcionEstatusTecnico": "EN LINEA",
+			"numeroEmpleado": "GABMXOP141",
+			"usuarioFFM": "GABMXOP141",
+			"numContacto": "5514555274",
+			"nombre": "URIEL",
+			"apellidoPaterno": "MARTÍNEZ",
+			"apellidoMaterno": "VAZQUEZ",
+			"urlFotoPerfil": "",
+			"idTipoUsuario": 7.0,
+			"descripcionTipoUsuario": "TECNICO",
+			"centro": "SATE",
+			"almacen": "S100",
+			"color": "36A9FF",
+			"latitud": 19.3278328723,
+			"longitud": -22.89298238932
+		}, {
+			"idTecnico": 15.0,
+			"idEstatusTecnico": 1.0,
+			"descipcionEstatusTecnico": "EN LINEA",
+			"numeroEmpleado": "65005843",
+			"usuarioFFM": "GABMXOP139",
+			"numContacto": "5514555274",
+			"nombre": "EDUARDO",
+			"apellidoPaterno": "MEJIA",
+			"apellidoMaterno": "TERCERO",
+			"urlFotoPerfil": "",
+			"idTipoUsuario": 7.0,
+			"descripcionTipoUsuario": "TECNICO",
+			"centro": "SATE",
+			"almacen": "S100",
+			"color": "36A9FF",
+			"latitud": 19.3278328723,
+			"longitud": -22.89298238932
+		}]
+	},
+	"resultDescripcion": "Accion completada",
+	"mensajeException": null,
+	"respuesta": true
+}

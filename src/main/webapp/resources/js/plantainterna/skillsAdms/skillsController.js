@@ -6,6 +6,9 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
 	var skillTabla;
 	var mapa_reasigna_cluster;
 	var dataTecnicoGlobal=[];
+	$scope.tecnicosMostradas=jsonTestingOperarios
+	$scope.listadoIntervenciones=jsonIntervenciones;
+	
 	$scope.txtbusq='';
 	$scope.busquedaT=function(){
 		var busq=$scope.txtbusq;
@@ -58,7 +61,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
                                 return e
                             })       
                             $('#jstree-proton-3').bind('loaded.jstree', function(e, data) {
-                                
+								$(this).jstree("open_all");
                             }).jstree({
 								'core': {
                                     'data': geografia,

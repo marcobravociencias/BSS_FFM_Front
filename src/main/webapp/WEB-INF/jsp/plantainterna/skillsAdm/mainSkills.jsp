@@ -13,83 +13,108 @@
         <link rel="manifest" href="${pageContext.request.contextPath}/resources/img/iconsistema/manifest.json">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet"/>
         <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css"/>
         <link href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap.css" rel="stylesheet"/>
         <link href="${pageContext.request.contextPath}/resources/libraries/datePicker/css/bootstrap-datepicker3_1.9.0.min.css" rel="stylesheet"/>
         <link href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/fullcalendar.min.css" rel="stylesheet" />
-    <link href="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/fullcalendar.print.min.css" rel="stylesheet" media="print" />
-    <link href="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/scheduler.min.css" rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/fullcalendar.print.min.css" rel="stylesheet" media="print" />
+        <link href="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/scheduler.min.css" rel="stylesheet" />
         <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css"  rel="stylesheet" />
         <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css"  rel="stylesheet" />     
  
         <link href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/dataTables.fontAwesome.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/dataTables.bootstrap.min.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/fixedColumns.bootstrap.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/fixedColumns.bootstrap.min.css" rel="stylesheet">
   
         <link href="${pageContext.request.contextPath}/resources/libraries/sweetalert/css/sweetalert2.min.css" rel="stylesheet">
  
         <link href="${pageContext.request.contextPath}/resources/libraries/jstree/css/style.min.css" rel="stylesheet" />
         <link href="${pageContext.request.contextPath}/resources/libraries/jstree/css/proton/style.css" rel="stylesheet" />
-     <link href="${pageContext.request.contextPath}/resources/libraries/sweetalert/css/sweetalert2.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/libraries/sweetalert/css/sweetalert2.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/css/plantainterna/despachopi/loaders.css"  rel="stylesheet"/>
-    <link href="${pageContext.request.contextPath}/resources/css/plantainterna/skillsAdms/styleSkills.css?"  rel="stylesheet"/>
-       
+        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/skillsAdms/styleSkills.css?"  rel="stylesheet"/>
+        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/skillsAdms/styleSkillsFeature.css?"  rel="stylesheet"/>
+
 </head>
 <body class="body" ng-controller="skillsController">
 <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
-<div class="container-fluid container-filtros-skills">
-	<div style="padding-left: 0;padding-right: 0;" class="content-fluid">           
-            <div class="row md-form" id="filtros_config">
-            <div class="col-2 column-style-consulta">
-                		<input type="text" class="form-control input-filtro-skills form-control-sm" placeholder="Busqueda" 
-                		id="text-search-cluster1" ng-model="txtbusq" ng-keyup="busquedaT()">
-                        
-                    	
-                	
-                	</div>
-            	<div class="col-2 column-style-consulta columna-filtro-ind">
-                        <input readonly placeholder="Cl&uacute;ster" type="text" id="cluster"
-                        class="input-filtro-skills form-control form-control-sm" ng-click="abrirModalGeografia()">
-                    </div>
-               
-                	
-                	
-                	<div class="col-2 column-style-consulta">
-                	<button class="input-group-addon" id="search-arbol-cluster" ng-click="consultarTablaCuadrillasv2()">
-                        	<i class="fa fa-search"></i> Buscar registros
-                        </button>
-                	</div>
-                	<div class="col-2 column-style-consulta">
-                	</div>
-                	<div class="col-2 column-style-consulta">
-                	</div>
-                    <div class="col-2 column-style-consulta">
-                    <button class="btn btn-gris" id="guardaAllSkills" ng-click="guardarSkills()">
-							<span class="fa fa-floppy-o">&nbsp;</span>Guardar Todo
-					</button>
-                	</div>
-					
+
+  
+    <div class="container container-parent-skills">
+        <div class="header-modulo">
+            <h5 class="title-modulo">Administraci&oacute;n de Skills</h5>
+            <h1 class="h6 subtitle-modulo">En este m&oacute;dulo podr&aacute;s realizar la gesti&oacute;n de tus t&eacute;cnicos asociados</h1>
+        </div>
+        <div class="row content-gestion-operarios">
+            <div class="col-3">
+              
+                <div class="input-group input-group-sm content-seach-group  ">
+                    <input type="text" class="form-control form-control-sm buscar-input-operario"  placeholder="Buscar geograf&iacute;a" ng-click="busqueda()">
+                    <span class="search-icon-operario-busq fa fa-search" ></span>
                 </div>
-                
+                <div class="container-treegeofria">
+                    <div id="jstree-proton-3" class="proton-demo"></div>
+                </div>
+                <div class="content-noseleccion">
+                    <i class="icono-noseleccion fas fa-exclamation-circle me-2"></i>
+                    <b class="text-no-seleccion-geografia">No has seleccionado un elemento correcto</b>
+                </div>        
+            </div>
+            <div class="col-4">
+                <div class="input-group input-group-sm content-seach-group  ">
+                    <input type="text" class="form-control form-control-sm buscar-input-operario" placeholder="Buscar OT" onkeyup="triggerOperarioKeyup(event);">
+                    <span class="search-icon-operario-busq fa fa-search" id="buscar-operario"></span>
+                </div>
+
+                <div class="tecnicos-container ">
+                    <div ng-repeat="tecnico in tecnicosMostradas.result.detalleTecnicos track by $index " class="user-section">                      
+                        <div ng-if="$index === 0" class=" valign-wrapper">
+                           
+                            <div class="col-12 pl-0">
+                                <p class="text-todos-nombre">Seleccionar todos</p>
+                            </div>
+                            <div class="content-checkbox-operario">
+                                <input class="form-check-input input-todos-checkbox" type="checkbox" id="inlineCheckbox1" value="option1" />
+                            </div>
+                        </div>
+                        <div ng-if="$index !== 0" class=" valign-wrapper">
+                            <div class="col-2 media-image online pr-0">
+                                <img src="{{tecnico.urlFotoPerfil !=undefined && tecnico.urlFotoPerfil ? tecnico.urlFotoPerfil :'./resources/img/plantainterna/despacho/tecnicootasignada.png'}}" class="circle z-depth-2 responsive-img">
+                            </div>
+                            <div class="col-10 pl-0">
+                                <p class="text-tecnico-nombre">Gorge Fernandis</p>
+                                <p class="text-adds-teccnico">Apple pie bonbon cheesecake tiramisu</p>
+                            </div>
+                            <div class="content-checkbox-operario">
+                                <input class="form-check-input input-operario-checkbox" type="checkbox" id="inlineCheckbox1" value="option1" />
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="col-5">
+                <div class="input-group input-group-sm content-seach-group  ">
+                    <input type="text" class="form-control form-control-sm buscar-input-operario"  placeholder="Buscar skill" >
+                    <span class="search-icon-operario-busq fa fa-search" ></span>
+                </div>
+                <div class="intervenciones-container">
+                    <div ng-repeat="intervencion in listadoIntervenciones track by $index" class="row ">
+                        <div class="col-9 intervencion-col">
+                                <h5 class="text-intervencion-title" ng-bind="intervencion.descripcion"></h5>
+                        </div>
+                        <div class="col-3 intervencion-col">
+                            <div class="form-check-sm form-check form-switch">
+                                <input class="form-check-input form-check-input-sm" type="checkbox" id="flexSwitchCheckDefault" />
+                            </div>
+                        </div>
+                    </div>
+                </div>              
             </div>
         </div>
-        
-        
-        	<div class="row-fluid">
-        	<div id="tablaSkillCuadrilla"></div>
-						<table class="stripe hover" cellspacing="0" width="100%"  id="tableSkillCuadrillaV2">
-							<thead>
-							</thead>
-							<tbody>
-							</tbody>
-						</table>
-			</div>
-        
-	
-	 <jsp:include page="./modals/geografia-mainfiltro.jsp"></jsp:include>
-</div>
+    </div>
+
 </body>
 <!-- LIBRERIAS -->
    <!--  <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.js"></script>

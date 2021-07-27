@@ -18,7 +18,6 @@
                         <button class="input-group-addon" id="search-arbol-cluster" ng-click="busqueda()" style="color: #bdbdbd; border:1px solid #bdbdbd !important"><i class="fa fa-search"></i></button>
                     												
 					</div>
-					<div id="jstree-proton-3" class="proton-demo"></div>
       
     </div>
     <div class="modal-footer">
