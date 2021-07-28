@@ -14,7 +14,7 @@
 		  <div id="jstreeconsulta" class="proton-demo"></div>
 		</div>
 		<div class="modal-footer">
-		  <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
+		  <button type="button" class="btn btn-cerrar-modal btn-secondary" data-mdb-dismiss="modal">
 			Cerrar
 		  </button>
 		</div>

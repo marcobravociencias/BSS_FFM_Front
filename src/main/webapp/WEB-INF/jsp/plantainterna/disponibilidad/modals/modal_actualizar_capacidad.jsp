@@ -6,9 +6,12 @@
         <h5 class="modal-title" id="exampleModalLabel">
             Agregar disponibilidad<span class=""></span>
         </h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="closeModalAdd()">
-           <span aria-hidden="true">&times;</span>
-        </button>
+        <button
+        type="button"
+        class="btn-close"
+        data-mdb-dismiss="modal"
+        aria-label="Close"
+        ></button>
       </div>
       <div class="modal-body body-modal-capacidad">
          <div class="container-fluid">
@@ -90,8 +93,8 @@
           </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal" ng-click="closeModalAdd()">Cerrar</button>
-        <button type="button" ng-click="insertarDisponibilidad()" class="btn_modificar_disp btn btn-sm "><i class="fa fa-edit" aria-hidden="true"></i> Agregar</button>
+        <button type="button" class="btn-cerrar-modal btn btn-sm btn-secondary" data-dismiss="modal" ng-click="closeModalAdd()">Cerrar</button>
+        <button type="button" ng-click="insertarDisponibilidad()" class="btn-aceptar-modal btn_modificar_disp btn btn-sm "><i class="fa fa-edit" aria-hidden="true"></i> Agregar</button>
       </div>
     </div>
   </div>

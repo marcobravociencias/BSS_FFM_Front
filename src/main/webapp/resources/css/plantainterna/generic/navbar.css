@@ -160,3 +160,40 @@ h1.h6.subtitle-modulo {
     font-size: .9em;
     color: #767676;
 }
+
+.modal-dialog{
+    background-color: rgb(255, 255, 255);
+    border-radius: 8px;
+    box-shadow: rgb(0 0 0 / 45%) 0px 2px 10px;
+}
+
+.modal-footer{
+  border:none !important;
+}
+.modal-footer .btn-cerrar-modal{
+    font-size: .7em;
+    background: white;
+    color: #0c56d0;
+    font-weight: bold;
+    box-shadow: none;
+    padding:.6em 2em .6em 2em;
+    border: .09rem solid #0c56d0;
+    box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
+    border-radius
+
+}
+.modal-footer .btn-aceptar-modal{
+    font-size: .7em;
+    background:  #0c56d0;
+    color: white;
+    font-weight: bold;
+    box-shadow: none;
+    padding:.6em 2em .6em 2em;
+    border: .09rem solid #0c56d0;
+    box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
+    margin-left:1em;
+} 
+.modal-header .modal-title{
+  font-weight:bold;
+}
+

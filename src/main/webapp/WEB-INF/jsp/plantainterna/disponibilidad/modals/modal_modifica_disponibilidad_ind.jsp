@@ -6,9 +6,12 @@
         <h5 class="modal-title" id="exampleModalLabel">
           Actualizar Disponibilidad<span class=""></span>
         </h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="closeModalModificar()">
-           <span aria-hidden="true">&times;</span>
-        </button>
+        <button
+        type="button"
+        class="btn-close"
+        data-mdb-dismiss="modal"
+        aria-label="Close"
+        ></button>
       </div>
       <div class="modal-body body-modal-capacidad-mod">  
           <br/>
@@ -67,8 +70,8 @@
           </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal" ng-click="closeModalModificar()">Cerrar</button>
-        <button type="button" id="boton_modificar_disponibilidad" ng-click="actualizarDisponibilidad()" class="btn_modificar_disp btn btn-sm "><i class="fa fa-edit" aria-hidden="true"></i> Actualizar d&iacute;a</button>
+        <button type="button" class="btn-cerrar-modal btn btn-sm btn-secondary" data-dismiss="modal" ng-click="closeModalModificar()">Cerrar</button>
+        <button type="button" id="boton_modificar_disponibilidad" ng-click="actualizarDisponibilidad()" class="btn-aceptar-modal btn_modificar_disp btn btn-sm "><i class="fa fa-edit" aria-hidden="true"></i> Actualizar d&iacute;a</button>
       </div>
     </div>
   </div>
