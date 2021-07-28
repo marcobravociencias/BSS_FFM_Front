@@ -80,7 +80,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             document.getElementById('nocturno_dispo').parentElement.style.display = 'none'
         }
 
-        document.getElementById('arbol_disponibilidad_consulta').placeholder = 'Seleccione un geografia';
+        document.getElementById('arbol_disponibilidad_consulta').placeholder = 'Seleccione ...';
         let contenTheadDetalle = '';
         $scope.arrayTitulo.forEach(function (elemento, index) {
             if (elemento.vista) {

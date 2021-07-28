@@ -33,7 +33,6 @@
                 </h5>
                 <h5 class="header-perfil-usuario">  
                     <sec:authentication property="principal.propietario" />
-                    <sec:authentication property="principal.unidadNegocio" />
                 </h5>
             </div>
             

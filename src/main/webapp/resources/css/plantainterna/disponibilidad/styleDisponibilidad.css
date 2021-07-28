@@ -1,7 +1,7 @@
 .alineacion_inline {
   display: inline;
   color: dimgrey;
-  margin-left: 1e;
+  margin-left: 1em;
 }
 .edit_disponibilidad_btn {
   color: #4caf50 !important;
@@ -261,7 +261,7 @@ ul.navbar-nav.mr-auto li.active {
 ::-webkit-scrollbar-thumb {
   background: #6da4ff;
   border: 71px none #ffffff;
-  border-radius: 31px;
+  /* border-radius: 31px; */
 }
 /*Efecto*/
 .icon {
@@ -504,10 +504,11 @@ a.nav-link.disponibilidad.active {
   font-weight: initial;
 }
 div#calendar_disponibilidad {
-  margin-top: 1em !important;
+  /* margin-top: 1em !important; */
   /* margin: 5px 12px 0px; */
-  box-shadow: 0 2px 2px 0 rgba(156, 39, 176, 0.14),
-    0 3px 1px -2px rgba(156, 39, 176, 0.2), 0 1px 5px 0 rgba(156, 39, 176, 0.12);
+  /* box-shadow: 0 2px 2px 0 rgba(156, 39, 176, 0.14),
+    0 3px 1px -2px rgba(156, 39, 176, 0.2), 0 1px 5px 0 rgba(156, 39, 176, 0.12); */
+  /* box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%); */
   /* border: 1px solid #e7e7e7; */
   /* margin-left: 1em; */
   /* border-bottom: none !important; */
@@ -553,11 +554,11 @@ a.fc-day-grid-event.fc-h-event.fc-event.fc-start.fc-end.fc-draggable {
 #calendar_disponibilidad .eventDisponibilidad {
    /*  background-color: #1c74bfb3 !important;
     border-color: #1c74bfb3 !important; */
-    font-weight: bold;
-    font-size: 11px;
-    white-space: pre-wrap !important;
-    box-shadow: 0px 0px 10px #808c8c;
-    border: none;
+   font-weight: bold;
+   font-size: 11px;
+   white-space: pre-wrap !important;
+   /* box-shadow: 0px 0px 10px #808c8c; */
+   border: none;
 }
 
 #calendar_disponibilidad .fc-col-header {
@@ -570,7 +571,8 @@ a.fc-day-grid-event.fc-h-event.fc-event.fc-start.fc-end.fc-draggable {
   text-align: -webkit-center;
 }
 #calendar_disponibilidad .fc-toolbar.fc-header-toolbar {
-  padding: 20px 20px 0em;
+  /* padding: 20px 20px 0em; */
+  margin-bottom: .5em;
 }
 #calendar_disponibilidad td.fc-head-container.fc-widget-header {
   border: 0px;
@@ -663,13 +665,17 @@ a.fc-day-grid-event.fc-h-event.fc-event.fc-start.fc-end.fc-draggable {
 }
 
 .input-filtro-disponibilidad {
-  border: none !important;
   font-weight: 400;
   font-size: 1em;
   color: #818181 !important;
   transition: all 0.5s ease;
-  border-bottom: 1px solid white;
   background: white !important;
+  border: 1px solid #dbdbdb !important;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,.07),0 1px 2px 0 rgba(0,0,0,.05)!important;
+}
+
+.columna-filtro-ind{
+  padding-left: 0 !important;
 }
 
 .input-filtro-disponibilidad::placeholder {
@@ -706,7 +712,7 @@ a.fc-day-grid-event.fc-h-event.fc-event.fc-start.fc-end.fc-draggable {
   content: "";
   position: absolute;
   right: 10%;
-  top: 40%;
+  top: 60%;
   width: 0;
   height: 0;
   border-left: 0.3em solid transparent;
@@ -720,38 +726,41 @@ a.fc-day-grid-event.fc-h-event.fc-event.fc-start.fc-end.fc-draggable {
   background-color: #ffffff;
   color: #7716fa;
   border: solid 1px #7716fa !important;
-  padding: 0.4em 2.3em;
+  padding: .6em 2.3em;
   border-radius: 5px;
   font-size: 0.7em;
   position: relative;
+  /* border-radius: 1.3em; */
+  display: block;
+  border-radius: .5em !important;
 }
 /* #calendar_disponibilidad table tbody tr td table tbody tr{
     height: 7.5em;
 } */
 
-.container-filtros-disponibilidad {
-  border: none !important;
-  box-shadow: 0px 0px 10px #878ee04d;
-  box-shadow: 0 0 5px 0 rgb(135 142 224 / 30%);
-  z-index: 2;
-  position: relative;
-  box-shadow: 0px 0px 10px #878ee04d;
-  padding-top: 3pt !important;
-  padding-bottom: 3pt !important;
+#myTab .nav-item:first-child .nav-link {
+   border-top-left-radius:1em;
+   border-bottom-left-radius:1em;
 }
-
+#myTab .nav-item:last-child .nav-link {
+   border-top-right-radius:1em;
+   border-bottom-right-radius:1em;
+}
 #myTab .nav-link {
-  padding-top: 3px;
-  padding-bottom: 3px;
-  margin-top: 20px;
+  padding-top: .4em;
+  padding-bottom: .4em;
+  /* margin-top: 20px; */
   border: solid 1px #ccc;
-  border-radius: 2px;
-  box-shadow: 0px 0px 10px #878ee04d;
+  /* border-radius: 2px; */
+  /* box-shadow: 0px 0px 10px #878ee04d; */
+  
+
 }
 
 #myTab .nav-link.active {
   color: #7716fa !important;
   font-weight: bolder;
+  background:#f9f9f9;
 }
 
 #tableData .spanTable {
@@ -761,7 +770,9 @@ a.fc-day-grid-event.fc-h-event.fc-event.fc-start.fc-end.fc-draggable {
 
 #tableData {
   margin-top: 16px;
-  box-shadow: 0px 0px 10px #878ee04d;
+  border: none;
+  /* box-shadow: 0px 0px 10px #878ee04d; */
+  /* box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%); */
 }
 
 div.dataTables_info {
@@ -816,7 +827,7 @@ div.dataTables_wrapper div.dataTables_length label {
 .pagination .paginate_button a.page-link {
   font-family: "Montserrat";
   background-color: white !important;
-  box-shadow: none !important;
+  /* box-shadow: none !important; */
 }
 
 .pagination .paginate_button.active {
@@ -825,8 +836,9 @@ div.dataTables_wrapper div.dataTables_length label {
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button a {
-  padding: 1px 1px 1px 1px;
-}
+ padding-bottom: 0 !important;
+ line-height: revert;
+ }
 
 .dataTables_length {
   display: none !important;
@@ -865,3 +877,69 @@ div.dataTables_wrapper div.dataTables_length label {
 .fc-event-title-container{
   padding-left: 0.2em;
 }
+ul#myTab ul li a{
+  border:none !important;
+}
+
+ul#myTab {
+    width: fit-content;
+    /* box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%); */
+    /* margin-top: 1em; */
+    margin-left: 1em;
+}
+
+.container.contenedor_disponibilidad {
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+    /* padding-top: 1em; */
+    padding-bottom: 1em;
+    background: white;
+    border-radius: .5em;
+    padding-top: 1em;
+    margin-top: 1em;
+}
+body {
+    /* background: #f9f9f9 !important; */
+}
+div#disponibilidad_datos_inferior {
+    padding-left: 0;
+    padding-right: 0;
+}
+div#datos_tablas {
+    padding: 0;
+}
+
+#tableData tbody  tr {
+    border: 0 solid !important;
+    border-color: inherit;
+}
+
+#tableData tbody  tr {
+    border-bottom: .01rem solid #e2e2e2 !important;
+    border-color: inherit;
+}
+#tableData .table-bordered th, .table-bordered td {
+    border: 0px solid #dee2e6 !IMPORTANT;
+}
+
+.input-filtro-disponibilidad{
+  border-radius: .5em !important;
+}
+
+ul#myTab ul li a{
+  border:1px solid red !important;
+}
+label.label-filter {
+    margin-bottom: 0;
+    font-size: .8em;
+    font-weight: bold;
+}
+
+.input-filtro-disponibilidad:focus {
+  font-weight: 400;
+  font-size: 1em;
+  color: #818181 !important;
+  transition: all 0.5s ease;
+  background: white !important;
+  border: 1px solid #dbdbdb !important;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,.07),0 1px 2px 0 rgba(0,0,0,.05)!important;
+} 

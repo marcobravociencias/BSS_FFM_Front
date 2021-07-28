@@ -29,37 +29,46 @@ pageEncoding="ISO-8859-1"%>
 
 <body ng-controller="disponibilidadController">
 	<jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
-
-	<div class="container-fluid container-filtros-disponibilidad" id="container_consulta_disponbilidad">
+	<div class="container container-title-header">
+		<div class="header-modulo">
+			<h5 class="title-modulo">Administraci&oacute;n de disponibilidad</h5>
+			<h1 class="h6 subtitle-modulo">En este m&oacute;dulo podr&aacute;s realizar la gesti&oacute;n de disponibilidad de tus cuadrillas</h1>
+		</div>
+	</div>
+	<div class="container container-filtros-disponibilidad" id="container_consulta_disponbilidad">
 		<div class="container-fluid">
 			<div class="row md-form" id="filters-dispo">
 				<div class="col-sm-2 columna-filtro-ind" data-step="11"
 					data-intro="Opci&oacute;n compa&ntilde;ia" id="filtroCompania">
+					<label for="compania_select" class="label-filter">Compa&ntilde;&iacute;a</label>
 					<select id="compania_select"
 						class="form-control-sm input-filtro-disponibilidad form-control"
 						placeholder="Compañia" required>
-						<option value="-1">Seleccione Compa&ntilde;&iacute;a...</option>
+						<option value="-1">Seleccione ...</option>
 						<option value="2">TotalPlay Empresarial </option>
 					</select>
 				</div>
 				<div id="tipo_intervencion" class="col-sm-2 columna-filtro-ind"
 					data-intro="Opci&oacute;n tipo de intervenci&oacute;n">
+					<label for="tipo_select" class="label-filter">Intervenci&oacute;n</label>
 					<select id="tipo_select"
 						class="form-control-sm input-filtro-disponibilidad form-control"
 						ng-model="intervencionSelect"
 						ng-change="intervencionSelecion()"
 						ng-options="elemento.nombre for elemento in arrayIntervencion" required>
-						<option value="">Seleccione Intervenci&oacute;n...</option>
+						<option value="">Seleccione ...</option>
 					</select>
 				</div>
 				<div id="container_arbol_dispo_consulta" class="col-sm-2 columna-filtro-ind"
 					data-intro="Opci&oacute;n tipo de intervenci&oacute;n">
+					<label for="arbol_disponibilidad_consulta" class="label-filter">Geograf&iacute;a</label>
 					<input type="text" readonly id="arbol_disponibilidad_consulta"
 						style="background: white;cursor: pointer"
 						class="input-filtro-disponibilidad form-control form-control-sm"
 						aria-describedby="emailHelp" placeholder="Seleccione">
 				</div>
 				<div class="col-3" style="margin-top: 1.5px;">
+					<label for="tipo_select" class="label-filter" style="visibility: hidden;">Intervención</label>
 					<button id="btn-consultar-disponibilidad" type="button"
 					class="btn btn-sm btn-primary"
 					ng-click="consultaDisponibilidad()"
@@ -70,85 +79,87 @@ pageEncoding="ISO-8859-1"%>
 			</div>
 		</div>
 	</div>
-	<div class="container contenedor_disponibilidad">
-		<div class="row">
-			<div id="datos_tablas" class="col-sm-12">
-				<a id="btn_mostrar_nav" class="menuOpt" style="display:none; position: absolute;">
-					<i class="fa fa-bars" aria-hidden="true"></i>
-				</a>
-				<div class="content-fluid">
-					<div style="height: 730px" class="container-fluid" id="disponibilidad_datos_inferior">
-						<ul class="nav nav-tabs" id="myTab" role="tablist">
-							<li class="nav-item">
-								<a class="nav-link active" id="calendario-tab" data-toggle="tab" href="#home" role="tab"
-									aria-controls="home" aria-selected="true">Calendario</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-									aria-controls="profile" aria-selected="false">Tabla</a>
-							</li>
-						</ul>
-						<div class="tab-content" id="myTabContent">
-							<div class="tab-pane fade show active" id="home" role="tabpanel"
-								aria-labelledby="calendario-tab">
-								<div class="row">
-									<div class="col-9">
-										<div id="calendar_disponibilidad"></div>
-									</div>
-									<div class="col-3">
-										<table class="table table-bordered" id="tableData">
-											<tbody>
-												<tr>
-													<td>
-														<span>Disponibilidad:</span>
-														<span id="disponibilidad_span" class="spanTable">Sin info.</span>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<span>Intervenci&oacute;n:</span>
-														<span id="intervencion_span" class="spanTable">Sin info.</span>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<span>Matutino:</span>
-														<span id="matutino_dispo" class="spanTable">Sin info.</span>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<span>Vespertino:</span>
-														<span id="vespertino_dispo" class="spanTable">Sin info.</span>
-													</td>
-												</tr>
-												<tr id="container-nocturno">
-													<td id="noctuurno_d">
-														<span>Nocturno:</span>
-														<span id="nocturno_dispo" class="spanTable">Sin info.</span>
-													</td>
-												</tr>
-												<tr style="background: #f4f5fc;">
-													<td>
-														<span>Total Capacidad:</span>
-														<span id="total_dispo" class="spanTable">Sin info.</span>
-													</td>
-												</tr>
-											</tbody>
-										</table>											
+	<div class="container">
+		<div class="container contenedor_disponibilidad">
+			<div class="row">
+				<div id="datos_tablas" class="col-sm-12">
+					<a id="btn_mostrar_nav" class="menuOpt" style="display:none; position: absolute;">
+						<i class="fa fa-bars" aria-hidden="true"></i>
+					</a>
+					<div class="content-fluid">
+						<div style="height: 730px" class="container-fluid" id="disponibilidad_datos_inferior">
+							<ul class="nav nav-tabs" id="myTab" role="tablist">
+								<li class="nav-item">
+									<a class="nav-link active" id="calendario-tab" data-toggle="tab" href="#home" role="tab"
+										aria-controls="home" aria-selected="true">Calendario</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+										aria-controls="profile" aria-selected="false">Tabla</a>
+								</li>
+							</ul>
+							<div class="tab-content" id="myTabContent">
+								<div class="tab-pane fade show active" id="home" role="tabpanel"
+									aria-labelledby="calendario-tab">
+									<div class="row">
+										<div class="col-9">
+											<div id="calendar_disponibilidad"></div>
+										</div>
+										<div class="col-3">
+											<table class="table table-bordered" id="tableData">
+												<tbody>
+													<tr>
+														<td>
+															<span>Disponibilidad:</span>
+															<span id="disponibilidad_span" class="spanTable">Sin info.</span>
+														</td>
+													</tr>
+													<tr>
+														<td>
+															<span>Intervenci&oacute;n:</span>
+															<span id="intervencion_span" class="spanTable">Sin info.</span>
+														</td>
+													</tr>
+													<tr>
+														<td>
+															<span>Matutino:</span>
+															<span id="matutino_dispo" class="spanTable">Sin info.</span>
+														</td>
+													</tr>
+													<tr>
+														<td>
+															<span>Vespertino:</span>
+															<span id="vespertino_dispo" class="spanTable">Sin info.</span>
+														</td>
+													</tr>
+													<tr id="container-nocturno">
+														<td id="noctuurno_d">
+															<span>Nocturno:</span>
+															<span id="nocturno_dispo" class="spanTable">Sin info.</span>
+														</td>
+													</tr>
+													<tr style="background: #f4f5fc;">
+														<td>
+															<span>Total Capacidad:</span>
+															<span id="total_dispo" class="spanTable">Sin info.</span>
+														</td>
+													</tr>
+												</tbody>
+											</table>											
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-								<br />
-								<div id="container_table_disponibilidad" class="table-responsive">
-									<table id="datatable_disponibilidad" class="table table table-hover table-striped">
-										<thead id="theadDispo">
-											
-										</thead>
-										<tbody>
-										</tbody>
-									</table>
+								<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+									<br />
+									<div id="container_table_disponibilidad" class="table-responsive">
+										<table id="datatable_disponibilidad" class="table table table-hover table-striped">
+											<thead id="theadDispo">
+												
+											</thead>
+											<tbody>
+											</tbody>
+										</table>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -157,6 +168,7 @@ pageEncoding="ISO-8859-1"%>
 			</div>
 		</div>
 	</div>
+
 	
 
 	<jsp:include page="./modals/modal_actualizar_capacidad.jsp"></jsp:include>

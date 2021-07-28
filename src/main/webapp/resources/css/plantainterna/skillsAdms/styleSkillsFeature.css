@@ -1,8 +1,4 @@
-.header-navbar-p{
-   box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
-   background:white;
 
-}
 .content-noseleccion {
     display: flex;
 }
@@ -35,15 +31,7 @@ i.icono-noseleccion {
     min-height: 9em;
     max-height: 15em;
 }
-h5.title-modulo {
-    font-weight: bold;
-    margin-bottom: 0;
-}
-h1.h6.subtitle-modulo {
-    /* font-weight: bold; */
-    font-size: .9em;
-    color: #767676;
-}
+
 .header-modulo {
     /* border-bottom: 1px solid #c6c6c6; */
     margin-bottom: 1em;
