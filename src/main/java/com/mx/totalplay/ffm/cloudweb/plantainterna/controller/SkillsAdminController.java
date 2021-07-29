@@ -20,12 +20,13 @@ import com.mx.totalplay.ffm.cloudweb.utilerias.model.ServiceResponseResult;
 @RequestMapping("/req")
 public class SkillsAdminController {
     private final Logger logger = LogManager.getLogger(SkillsAdminController.class.getName());
-
+    private final SkillsAdminService skillsAdmin;
+    private Gson gson = new Gson();
 
     @Autowired
-    private SkillsAdminService skillsAdmin;
-
-    Gson gson = new Gson();
+    public SkillsAdminController(SkillsAdminService skillsAdmin) {
+        this.skillsAdmin = skillsAdmin;
+    }
 
     @PostMapping("/consultarBusquedaSkills")
     public ResponseEntity<?> consultarBusquedaSkills(@RequestBody String params) {

@@ -196,10 +196,14 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!--div class="chat-fotter">
-                                            <input placeholder="Escribe el mensaje aqu&iacute; ..." type="text" class="input-mensaje-chat form-control form-control-sm">
-                                            <button class="btn btn-sm btn-primary">Enviar</button>
-                                        </div-->
+                                        <div class="row float-right col-chat-fotter">
+                                            <div class="col-6">
+                                                <input id="comentarioOt" placeholder="Escribe el mensaje aqu&iacute; ..." type="text" class="input-mensaje-chat form-control form-control-sm input-comentario-ot" ng-model="comentarios">
+                                            </div>
+                                            <div class="col-3" style="left: 200px;height: 50px;">
+                                                <button class="btn btn-primary btn-enviar-comentario-ot" ng-click="addComentariosOt()">Enviar</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

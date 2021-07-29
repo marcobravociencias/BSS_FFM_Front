@@ -343,9 +343,4 @@ public class ImplConsultaOTService implements ConsultaOTService {
         logger.info("Result ImplConsultaOTService metodo consultaInformacionRed" + gson.toJson(response));
         return response;
     }
-
-    private Boolean isNumero() {
-        return null;
-    }
-
 }

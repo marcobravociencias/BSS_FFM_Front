@@ -1,4 +1,4 @@
-<div class="modal-body" style="min-height: 300px; max-height: 300px; overflow: auto;">
+<div class="modal-body" style="min-height: 300px; max-height: 300px; overflow: auto;overflow-x: hidden;">
 	<div class="container-mensajes-parent">
 		<div class="chat-content-area">
 			<div class="chat-header">
@@ -32,10 +32,14 @@
 					</div>
 				</div>
 			</div>
-			<!--div class="chat-fotter">
-				<input placeholder="Escribe el mensaje aqu&iacute; ..." type="text" class="input-mensaje-chat form-control form-control-sm">
-				<button class="btn btn-sm btn-primary">Enviar</button>
-			</div-->
+			<div class="row float-right col-chat-fotter">
+				<div class="col-6">
+					<input id="comentarioConsultaOt" placeholder="Escribe el mensaje aqu&iacute; ..." type="text" class="input-mensaje-chat form-control form-control-sm ng-pristine ng-valid ng-empty ng-touched input-comentario-ot" ng-model="comentarioConsultaOT">
+				</div>
+				<div class="col-3" style="left: 200px;height: 50px;">
+					<button class="btn btn-primary btn-enviar-comentario-ot" ng-click="addComentariosConsultaOt()">Enviar</button>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

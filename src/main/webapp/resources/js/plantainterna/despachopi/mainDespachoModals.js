@@ -1,4 +1,4 @@
-app.modalDespachoPrincipal=function($scope,mainDespachoService,$q){
+app.modalDespachoPrincipal=function($scope,mainDespachoService,$q,genericService){
     $scope.listadoIconografia=undefined
 
     $scope.listadoEstatusTecnico=[]   
@@ -9,6 +9,7 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService,$q){
     $scope.procesandoAsignacion=false
     $scope.isConfirmadoDesconfirmado=false;
     $scope.idotConfirmacionDesconfirmacion=0;
+    $scope.comentarios = '';
 
     $scope.listadoCatalogoAcciones=[]
     $('#modalAsignacionOrdenTrabajo,#modalMaterialesOperario,#modalVehiculoOperario,#odalUbicacionOperario,#modalStatusOperario,#modalOtsTrabajadas')
@@ -142,8 +143,11 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService,$q){
     $scope.comentariosOrdenTrabajo = [];
     $scope.consultarComentarios=function(){
         if (!$scope.flagComentarios) {
-            swal({ text: 'Consultando comentarios ...', allowOutsideClick: false });
-            swal.showLoading();
+            if (!swal.isVisible()) {
+                swal({ text: 'Consultando comentarios ...', allowOutsideClick: false });
+                swal.showLoading();
+            }
+
             let params =  {
                 "idOt" : $scope.idOtSelect
             }
@@ -545,6 +549,43 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService,$q){
     $scope.consultarPedido = function(){
         if (!$scope.flagPedido) {
             $scope.consultarDetalleCotizacion($scope.idOtSelect);
+        }
+    }
+
+
+    $scope.addComentariosOt = function () {
+        if ($scope.comentarios.trim() !== '' && !/^\s/.test($scope.comentarios)) {
+
+            let params = {
+                idOrden: $scope.idOtSelect,
+                comentario: $scope.comentarios,
+                origenSistema: 1
+            }
+
+            swal({ text: 'Espere un momento ...', allowOutsideClick: false });
+            swal.showLoading();
+
+            genericService.agregarComentariosOt(params).then(function success(response) {
+                swal.close();
+                console.log(response);
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        console.log("############## Comentario agregado")
+                        $scope.comentarios = '';
+                        $scope.flagComentarios = false;
+                        $scope.consultarComentarios();
+                    } else {
+                        toastr.error(response.data.resultDescripcion);
+                    }
+                } else {
+                    toastr.error(response.data.resultDescripcion);
+                }
+            }).catch(err => handleError(err))
+
+        } else {
+            $scope.comentarios = '';
+            document.getElementById('comentarioOt').value = '';
+            toastr.warning('Intoducir un comentario.')
         }
     }
 

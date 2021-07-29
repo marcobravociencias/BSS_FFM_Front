@@ -331,7 +331,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
         let isValido = true;
         let mensajeError = "<ul>";
         let bloqueo = $("input[name='checkBloque']:checked").val();
-        bloqueo = bloqueo === 'true' ? 1 : 0;
+        bloqueo = bloqueo === 'true' ? 1 : bloqueo === 'false'? 0 : undefined;
         let ultimonivel=$scope.obtenerNivelUltimoJerarquia()
         let clustersparam=$("#jstreeconsulta").jstree("get_selected", true)
                                                .filter(e=>e.original.nivel== ultimonivel)

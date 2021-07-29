@@ -24,12 +24,12 @@ function logwarning(mensaje){
 function logprocess(mensaje){
     console.log('%c '+mensaje,'background: #7716fa; color: white' )
 }
-app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mainAlertasService',
-                                       function ($scope, $q,mainDespachoService, mainAlertasService) {
+app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mainAlertasService', 'genericService',
+                                       function ($scope, $q,mainDespachoService, mainAlertasService, genericService) {
     
     app.filtrosDespachoPrincipal($scope,mainDespachoService)
     app.mapasControllerDespachoPI($scope,mainDespachoService)
-    app.modalDespachoPrincipal($scope,mainDespachoService,$q)
+    app.modalDespachoPrincipal($scope,mainDespachoService,$q,genericService)
     app.alertasDespachoPrincipal($scope,mainAlertasService)
     
     $scope.isCargaTecnicosDisponibles=false;

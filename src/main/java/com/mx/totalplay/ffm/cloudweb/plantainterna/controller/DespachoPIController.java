@@ -382,4 +382,15 @@ public class DespachoPIController {
 		}
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
+
+	@PostMapping("/agregarComentariosOt")
+    public ResponseEntity<?> agregarComentariosOt(@RequestBody String params){
+        LOGGER.info("#### CONSULTANDO agregarComentariosOt");
+        ServiceResponseResult response = despachoService.agregarComentariosOt(params);
+        if (response.getResult() instanceof Integer) {
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+
+    }
 }

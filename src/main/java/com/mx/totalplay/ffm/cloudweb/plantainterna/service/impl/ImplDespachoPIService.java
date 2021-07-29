@@ -22,24 +22,22 @@ import org.apache.logging.log4j.Logger;
 @Service
 public class ImplDespachoPIService implements DespachoPIService{
 	private  final Logger logger = LogManager.getLogger(ImplDespachoPIService.class.getName());
+	private final ConstantesGeneric constantesAmbiente;
+	private final ConstDespachoPI constDespachoPI;
+	private final ConsumeRest restCaller;
+	private final UtileriaGeneral utilerias;
+	private final Environment env;
+	private Gson gson = new Gson();
 
-    @Autowired
-    ConstantesGeneric constantesAmbiente;
-	
 	@Autowired
-	ConstDespachoPI constDespachoPI;
-	
-	@Autowired
-	private ConsumeRest restCaller;
-	
-	@Autowired
-	private UtileriaGeneral utilerias;
-	
-	@Autowired
-	private Environment env;
-	
-	Gson gson=new Gson();
-	
+	public ImplDespachoPIService(ConstantesGeneric constantesAmbiente, ConstDespachoPI constDespachoPI, ConsumeRest restCaller, UtileriaGeneral utilerias, Environment env) {
+		this.constantesAmbiente = constantesAmbiente;
+		this.constDespachoPI = constDespachoPI;
+		this.restCaller = restCaller;
+		this.utilerias = utilerias;
+		this.env = env;
+	}
+
 	@Override
 	public ServiceResponseResult consultarCatalogosPI(String params) {
 		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
@@ -692,6 +690,26 @@ JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
 				ServiceResponseResult.class ,
 				tokenAcces );
 		logger.info("RESULT"+gson.toJson(response));
+		return response;
+	}
+
+	@Override
+	public ServiceResponseResult agregarComentariosOt(String params) {
+		logger.info("ImplDespachoPIService.class [metodo = agregarComentariosOt() ]\n"+params);
+
+		JsonObject jsonObject=gson.fromJson(params, JsonObject.class);
+
+		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
+
+		logger.info("json object params## "+jsonObject.toString());
+
+		String tokenAcces=principalDetail.getAccess_token();
+		String url=principalDetail.getDireccionAmbiente().concat(constDespachoPI.getAgregarComentariosOt());
+		logger.info("URL ##+" + url);
+
+		ServiceResponseResult response= restCaller.callPostBearerTokenRequest(params, url,
+				ServiceResponseResult.class, tokenAcces);
+		logger.info("##### RESULT"+gson.toJson(response)+" #######");
 		return response;
 	}
 
