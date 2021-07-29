@@ -130,7 +130,7 @@ div.modal-footer {
 
 /* titulos de los campos **/
 .title_campos {
-  color: #7c7c7d;
+  color: #1b1b1b;
   margin-bottom: 0;
 }
 
@@ -142,18 +142,13 @@ div.modal-footer {
 }
 /* Iconos font awesome de los campos **/
 .title_campos > .fa {
-  color: #b3b3b3;
-  padding-right: 10px;
+  padding-right: .2em;
+  font-size: .8em !important;
+  color: #919191;
+  margin-bottom: 0;
+  font-size: 1em;
 }
-/* titulo para disponibilidad */
-/* .titulo_disponibilidad { */
-/* background-color: #1fa67a; */
-/* color: #6b4a4c; */
-/* margin: 0; */
-/* height: 50px; */
-/* text-align: center; */
-/* padding-top: 10px; */
-/* } */
+
 
 #datatable_disponibilidad {
   border-collapse: collapse !important;
@@ -606,7 +601,7 @@ a.fc-day-grid-event.fc-h-event.fc-event.fc-start.fc-end.fc-draggable {
 }
 
 .contentMatu {
-  height: 56px;
+  height: fit-content;
 }
 
 .custom-control-input {
@@ -664,15 +659,9 @@ a.fc-day-grid-event.fc-h-event.fc-event.fc-start.fc-end.fc-draggable {
   height: 95px !important;
 }
 
-.input-filtro-disponibilidad {
-  font-weight: 400;
-  font-size: 1em;
-  color: #818181 !important;
-  transition: all 0.5s ease;
-  background: white !important;
-  border: 1px solid #dbdbdb !important;
-  box-shadow: 0 1px 3px 0 rgba(0,0,0,.07),0 1px 2px 0 rgba(0,0,0,.05)!important;
-}
+
+
+
 
 .columna-filtro-ind{
   padding-left: 0 !important;
@@ -789,7 +778,7 @@ div.dataTables_info {
   font-size: 0;
 }
 .row-content-bloqueo{
-    margin-top: 50px !important;
+    /* margin-top: 50px !important; */
 }
 
 .pagination .next a.page-link {
@@ -921,9 +910,7 @@ div#datos_tablas {
     border: 0px solid #dee2e6 !IMPORTANT;
 }
 
-.input-filtro-disponibilidad{
-  border-radius: .5em !important;
-}
+
 
 ul#myTab ul li a{
   border:1px solid red !important;
@@ -945,3 +932,31 @@ label.label-filter {
 } 
 
 
+#moda-add-disponibilidad .input-filtro-disponibilidad,#modificar_disponibilidad_modal .input-filtro-disponibilidad {
+  font-weight: 400;
+  font-size: 1em;
+  color: #818181 !important;
+  transition: all 0.5s ease;
+  background: white !important;
+  border: 1px solid #dbdbdb !important;
+  box-shadow: none !important;
+  border-radius: .5em !important;
+}
+
+.input-filtro-disponibilidad {
+  font-weight: 400;
+  font-size: 1em;
+  color: #818181 !important;
+  transition: all 0.5s ease;
+  background: white !important;
+  border: 1px solid #dbdbdb !important;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,.07),0 1px 2px 0 rgba(0,0,0,.05)!important;
+  border-radius: .5em !important;
+}
+
+#moda-add-disponibilidad .modal-dialog {
+  min-width:35% !important;  
+  width:35% !important;
+
+
+}
