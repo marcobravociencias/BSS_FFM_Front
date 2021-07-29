@@ -58,6 +58,7 @@ div.dataTables_wrapper div.dataTables_info {
   color: #403d3d !important;
   /* font-family: 'Montserrat'; */
 }
+
 div#otTable_filter {
   display: none;
 }
@@ -829,6 +830,10 @@ div#table_tiempo_transito_paginate ul {
 
 .contenedor-consultaOT {
   margin-top: 20px;
+  box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+  max-width: 1115px;
+  border-radius: .5em;
+  padding: 0px !important;
 }
 
 .label-filtro-consultaOT {
@@ -839,13 +844,15 @@ div#table_tiempo_transito_paginate ul {
 }
 
 .input-filtro-consultaOT {
-  border: none !important;
+  border: 1px solid #dbdbdb !important;;
   font-weight: 400;
   font-size: 1em;
   color: #818181 !important;
   transition: all 0.5s ease;
   border-bottom: 1px solid white;
   background: white !important;
+  border-radius: .5em !important;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,.07),0 1px 2px 0 rgba(0,0,0,.05)!important;
 }
 
 .input-filtro-consultaOT::placeholder {
@@ -855,9 +862,7 @@ div#table_tiempo_transito_paginate ul {
 }
 
 .input-filtro-consultaOT:focus {
-  border-color: white !important;
   -webkit-box-shadow: none;
-  box-shadow: none !important;
 }
 
 .input-filtro-consultaOT:hover {
@@ -903,7 +908,8 @@ label.form-check-inputfiltro {
 }
 
 .column-style-consulta {
-  width: 155px !important;
+  width: 136px !important;
+  padding-right: 0px !important;
 }
 
 .btn-option {
@@ -926,8 +932,8 @@ label.form-check-inputfiltro {
 .columna-filtro-ind::after {
   content: "";
   position: absolute;
-  right: 10%;
-  top: 40%;
+  right: 6%;
+  top: 67%;
   width: 0;
   height: 0;
   border-left: 0.3em solid transparent;
@@ -935,15 +941,17 @@ label.form-check-inputfiltro {
   border-top: 0.6em solid #939db2;
   clear: both;
   z-index: 2;
+  font-size: 14px;
 }
 
 #btn_consultar_ordenes {
   background-color: #ffffff;
   color: #7716fa;
   border: solid 1px #7716fa !important;
-  padding: 0.3em 2em;
+  padding: 0.5em 2em;
   border-radius: 5px;
   font-size: 0.7em;
+  margin-top: 22px;
 }
 
 table.dataTable.no-footer {
@@ -953,19 +961,16 @@ table.dataTable.no-footer {
 
 .container-filtros-consultaot {
   border: none !important;
-  box-shadow: 0px 0px 10px #878ee04d;
-  box-shadow: 0 0 5px 0 rgb(135 142 224 / 30%);
   z-index: 2;
   position: relative;
-  box-shadow: 0px 0px 10px #878ee04d;
   padding-top: 3pt !important;
   padding-bottom: 3pt !important;
+  max-width: 1140px;
 }
 
 .div-btn-busqueda {
   padding: 0% !important;
   text-align: right !important;
-  margin-top: 1px !important;
 }
 
 #v-tabs-tab-detalle-ot .nav-link {
@@ -1301,4 +1306,10 @@ span.text-tile-vehiculo {
 span.text-content-vehiculo {   
   font-size: .8em;
   color: #303030;
+}
+
+label.label-filter {
+  margin-bottom: 0;
+  font-size: .7em;
+  font-weight: bold;
 }

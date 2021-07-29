@@ -42,24 +42,34 @@
 
 <body ng-controller="consultaOTController" class="body">
     <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
+    <div class="container container-title-header">
+		<div class="header-modulo">
+			<h5 class="title-modulo">Consulta ordenes de trabajo</h5>
+			<h1 class="h6 subtitle-modulo">En este m&oacute;dulo podr&aacute;s realizar la busqueda de las ordenes de trabajo</h1>
+		</div>
+	</div>
     <div  class="container-fluid container-filtros-consultaot">
-        <div style="padding-left: 0;padding-right: 0;" class="content-fluid">
+        <div class="content-fluid">
             <div class="row md-form" id="filtros_config">
                 <div class="col-2 column-style-consulta">
-                    <input type="text" placeholder="OT" id="idot"
+                    <label for="idot" class="label-filter">OT</label>
+                    <input type="text" id="idot" placeholder="Ej: 65434"
                     class="form-control input-filtro-consultaOT form-control-sm">
                 </div>
                 <div class="col-2 column-style-consulta">
-                    <input type="text" placeholder="OS" id="idos"
+                    <label for="idos" class="label-filter">OS</label>
+                    <input type="text" id="idos" placeholder="Ej: 23214"
                     class="form-control input-filtro-consultaOT form-control-sm">
                 </div>
                 <div class="col-2 column-style-consulta">
-                    <input type="text" placeholder="CUENTA" id="cuenta"
+                    <label for="cuenta" class="label-filter">Cuenta</label>
+                    <input type="text" id="cuenta" placeholder="Ej: 0093484233"
                     class="form-control input-filtro-consultaOT form-control-sm">
                 </div>
                 <div class="col-2 column-style-consulta columna-filtro-ind">
+                    <label for="filtro-estatus-substatus" class="label-filter">Estatus</label>
                     <div class="dropdown">
-                        <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Estatus" type="text" id="filtro-estatus-substatus" class="input-filtro-consultaOT form-control form-control-sm" />
+                        <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..." type="text" id="filtro-estatus-substatus" class="input-filtro-consultaOT form-control form-control-sm" />
                         <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-estatus-substatus">      
                             <li style="text-align: center;">
                                 <button ng-click="seleccionTodosEstatus(filtrosGeneral.estatusdisponibles,true)" id="todo_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
@@ -92,8 +102,9 @@
                      </div>
                 </div>
                 <div class="col-2 column-style-consulta columna-filtro-ind">
+                    <label for="filtro-intervencion" class="label-filter">Intervenci&oacute;n</label>
                     <div class="dropdown">
-                        <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Intervenci&oacute;n" type="text" id="filtro-intervencion" class="input-filtro-consultaOT form-control form-control-sm" />
+                        <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..." type="text" id="filtro-intervencion" class="input-filtro-consultaOT form-control form-control-sm" />
                         <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-intervencion">      
                             <li style="text-align: center;">
                                 <button ng-click="seleccionarTodos(filtrosGeneral.tipoOrdenes)" id="todo_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
@@ -118,15 +129,18 @@
                      </div>
                 </div>
                     <div class="col-2 column-style-consulta columna-filtro-ind">
-                        <input readonly placeholder="GEOGRAF&Iacute;A" type="text" id="cluster"
+                        <label for="cluster" class="label-filter">Geograf&iacute;a</label>
+                        <input readonly placeholder="Seleccione..." type="text" id="cluster"
                         class="input-filtro-consultaOT form-control form-control-sm">
                     </div>
-                    <div class="col-2 columna-filtro-ind" style="width: 120px;">
-                        <input readonly placeholder="Fecha Inicial" type="text" id="filtro_fecha_inicio_consultaOt"
+                    <div class="col-2 columna-filtro-ind" style="width: 110px; padding-right: 0px !important;">
+                        <label for="filtro_fecha_inicio_consultaOt" class="label-filter">Fecha inicial</label>
+                        <input readonly type="text" id="filtro_fecha_inicio_consultaOt"
                         class="datepicker input-filtro-consultaOT form-control form-control-sm"
                         style="width: 100px;" />
                     </div>
-                    <div class="col-2 columna-filtro-ind" style="width: 120px;">
+                    <div class="col-2 columna-filtro-ind" style="width: 110px; padding-right: 0px !important;">
+                        <label for="filtro_fecha_fin_consultaOt" class="label-filter">Fecha final</label>
                         <input readonly placeholder="Fecha Final" type="text" id="filtro_fecha_fin_consultaOt"
                         class="datepicker input-filtro-consultaOT form-control form-control-sm"
                         style="width: 100px;" />
@@ -134,7 +148,7 @@
                     <div class="col-1 div-btn-busqueda" style="width: 85px;">
                         <button id="btn_consultar_ordenes" type="button"
                         class="btn btn-sm  btn-primary  waves-effect waves-light"
-                        style="margin-top: 0; margin: 0 !important;" ng-click="consultaOT()">
+                        ng-click="consultaOT()">
                         <i class="fa fa-search"></i>
                     </button>
                 </div>
