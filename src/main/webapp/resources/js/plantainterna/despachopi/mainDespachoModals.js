@@ -183,6 +183,7 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService,$q,genericService
     $scope.consultarHistorial = function(){
         if (!$scope.flagHistorico) {
             $scope.historialOrdenTrabajo = [];
+            $(".dot-dependencia").remove()
             swal({ text: 'Consultando historial ...', allowOutsideClick: false });
             swal.showLoading();
             let params =  {
@@ -196,8 +197,11 @@ app.modalDespachoPrincipal=function($scope,mainDespachoService,$q,genericService
                         if(response.data.result ){
                             if( response.data.result.detalle ){
                                 $scope.flagHistorico = true;
-                                $scope.historialOrdenTrabajo = response.data.result.detalle;
-                                console.log($scope.historialOrdenTrabajo);
+                                $scope.historialOrdenTrabajo = response.data.result.detalle.reverse();
+                                setTimeout(function(){
+                                    $(".dot-dependencia").remove()
+                                    $scope.pintarDependenciasHistorico();
+                                },500)
                             }else{
                                 toastr.warning( response.data.result.mensaje );                
                             }

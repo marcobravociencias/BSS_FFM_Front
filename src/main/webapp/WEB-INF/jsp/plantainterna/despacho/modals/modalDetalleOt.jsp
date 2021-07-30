@@ -130,8 +130,8 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade " id="v-tabs-consulta-historico" role="tabpanel" aria-labelledby="v-tabs-consulta-historico-tab" >
-                                <div class="row">
-                                    <div ng-repeat="elementHistorico in historialOrdenTrabajo"  class="col-4" style="display: grid;">
+                                <div id="content-principal-historial" class="row">
+                                    <div id="content-historial-{{$index}}" done-listado-dependencia-historico ng-repeat="elementHistorico in historialOrdenTrabajo" class="col-4" style="display: grid;">
                                         <div  class="card-historico card text-center">
                                             <div class="card-body">
                                                 <i ng-if="elementHistorico.idEstatusOrden==1" class="pendiente-historico  fas fa-pause circle-statushistorico"></i>

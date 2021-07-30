@@ -1580,3 +1580,14 @@ span.cerrarnoticias {
 .btn-enviar-comentario-ot {
   height: 41px;
 }
+
+.dot-dependencia  {
+    position: absolute;
+    color: #828282;
+}
+.direccionactividad  {
+    position: absolute !important;
+    color: #ababab;
+    width: 10px !important;
+    font-size: .7em;
+}

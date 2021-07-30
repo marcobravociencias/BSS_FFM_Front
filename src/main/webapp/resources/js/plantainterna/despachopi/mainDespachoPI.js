@@ -31,6 +31,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
     app.mapasControllerDespachoPI($scope,mainDespachoService)
     app.modalDespachoPrincipal($scope,mainDespachoService,$q,genericService)
     app.alertasDespachoPrincipal($scope,mainAlertasService)
+    app.misProyectosDependencias($scope,mainDespachoService)
     
     $scope.isCargaTecnicosDisponibles=false;
     $scope.isCargaOtsPendientes=false;
@@ -875,3 +876,16 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
     //$scope.listadoConteoAlertasTipo=conteoOtsDespacho.Alertas                                            
  
 }]);
+
+app.directive('doneListadoDependenciaHistorico', function () {
+    return function (scope, element, attrs) {
+        if (scope.$last) {
+            //console.log("directive done listado de  actividadesss####")
+            setTimeout(function(){
+                $(".dot-dependencia").remove()
+                scope.pintarDependenciasHistorico();
+            },700)
+
+        }
+    };
+});
