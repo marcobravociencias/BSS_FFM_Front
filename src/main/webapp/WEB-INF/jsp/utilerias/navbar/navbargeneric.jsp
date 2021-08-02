@@ -59,6 +59,10 @@
                         <i class="fas fa-marker icon-navbar-izquierda"></i>
                         <a class="nav-link a-navlink-navbar" href="skillsAdm">Skills</a>
                     </li>
+                    <li id="li-reporte-navbar" class="nav-item"> 
+                        <i class="fa fa-bar-chart icon-navbar-izquierda"></i> 
+                        <a class="nav-link a-navlink-navbar" href="reportesPI">Reportes</a> 
+                    </li>
                     <!--li id="li-vehiculos-navbar" class="nav-item">
                         <i class="fas fa-taxi icon-navbar-izquierda"></i>
                         <a class="nav-link a-navlink-navbar" href="controlVehicular">Veh&iacute;culos</a>
