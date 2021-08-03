@@ -10,6 +10,7 @@ var triggerOperarioKeyup;
 
 var mapubicacionoperario;
 var mapaucotizaciondetalle;
+var mapavistageneral;
 const HEIGTH_PADDING_TABLE=270;
 const MILISEGUNDOS_ALERTAS=(1000*60)*3;
 function logerror(mensaje){
@@ -43,6 +44,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
     $scope.filtrosGeneral={}
     $scope.listadoOtsPendientes=[]  
     $scope.listadoTecnicosGeneral=[];                                   
+    $scope.listadoTecnicosGeneralTemp=[];                                   
     $scope.listadoOtsAsignadas=[]
     $scope.listadoConteoAlertasTipo=[]
    
@@ -65,11 +67,11 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             $scope.buscarTecnicoCalendar();
         }
     }
-   
     $scope.buscarTecnicoInput=''
     $scope.buscarTecnicoCalendar=()=>{    
         $('#calendar').fullCalendar('destroy');    
         let copyoperarios=angular.copy( $scope.listadoTecnicosGeneral )  
+       
         if ( $scope.buscarTecnicoInput && $scope.buscarTecnicoInput.length >= 2 ) {                      
             let filterOperarios = [];
             angular.forEach(copyoperarios,function(tecnico,index){                
@@ -874,7 +876,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
     $scope.listadoEstatusTecnico=JSONEstatusTecnico     
     $scope.listadoIconografia=paletaColors.result.Colores    
     //$scope.listadoConteoAlertasTipo=conteoOtsDespacho.Alertas                                            
- 
+
 }]);
 
 app.directive('doneListadoDependenciaHistorico', function () {

@@ -132,6 +132,7 @@
                 <div class="col-4">
                     <input ng-model="fechaFiltradoCalendar" readonly id="calendar-next-back"  type="text" class="form-control form-control-sm"  />                  
                     <span ng-click="abrirModalDetalleIconografia()" class="paleta-color-despacho fas fa-palette"></span>
+                    <span onclick="abrirModalVistaMapa()" class="map-color-despacho fas fa-map"></span>
                 </div>
             </div>
         </div>
@@ -206,7 +207,8 @@
         <jsp:include page="./modals/modalIconografia.jsp"></jsp:include>    
         <jsp:include page="./modals/modalConfirmaDesconfirma.jsp"></jsp:include>    
         <jsp:include page="./modals/modalLocalizacionRegistros.jsp"></jsp:include>   
-        <jsp:include page="./modals/modalFotoUsuario.jsp"></jsp:include>    
+        <jsp:include page="./modals/modalFotoUsuario.jsp"></jsp:include>   
+        <jsp:include page="modals/modalVistaMapa.jsp"></jsp:include> 
        
         <div ng-show="vistaDespacho" class="container-fluid">    
             <ul class="wall content-alert-parent">
