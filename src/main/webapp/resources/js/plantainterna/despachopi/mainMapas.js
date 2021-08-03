@@ -459,22 +459,23 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
             );
         }
 
-        angular.forEach(listaOt, function (tec, index) {
-
+        angular.forEach(listaOt, function (tec, index1) {
+            let isRepartidor = true;
             for (i = 0; i < tec.idOt.length; i++) {
                 let params = {
                     "idOt": tec.idOt[i]
                 }
-
                 mainDespachoService.consultarCotizacionDespacho(params).then(function success(response) {
                     if (response.data !== undefined) {
                         if (response.data.respuesta) {
                             if (response.data.result) {
                                 if (response.data.result.consultaCotizacion != undefined) {
                                     let arrarLatLong = []
+                                    
                                     if (response.data.result.consultaCotizacion.direcciones != undefined && response.data.result.consultaCotizacion.direcciones.length > 0) {
                                         angular.forEach(response.data.result.consultaCotizacion.direcciones, function (elem, index) {
-                                            if (index == 0) {
+
+                                            if (elem.accion == 1) {
                                                 elem.direccionDetalle.latitud = tec.latitud
                                                 elem.direccionDetalle.longitud = tec.longitud
                                                 mapavistageneral.setCenter(new google.maps.LatLng(parseFloat(elem.direccionDetalle.latitud), parseFloat(elem.direccionDetalle.longitud)));
@@ -487,53 +488,43 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
                                                 lat: parseFloat(elem.direccionDetalle.latitud),
                                                 lng: parseFloat(elem.direccionDetalle.longitud)
                                             })
+                                            if (elem.accion != 1 || isRepartidor) {
+                                                let marker_ot = new google.maps.Marker({
+                                                    clickable: false,
+                                                    position: latitud_ot,
+                                                    title: elem.accion == 1 ? "Repartidor" : "OT",
+                                                    animation: google.maps.Animation.DROP,
+                                                    map: mapavistageneral,
+                                                    latitud_ot: parseFloat(elem.direccionDetalle.latitud),
+                                                    longitud_ot: parseFloat(elem.direccionDetalle.longitud),
+                                                    icon: {
+                                                        url: elem.accion == 1 ? "./resources/img/plantainterna/despacho/repartidor-marker.svg" : "./resources/img/plantainterna/despacho/domicilio-marker.svg",
+                                                        scaledSize: new google.maps.Size(37, 43),
+                                                        origin: new google.maps.Point(0, 0),
+                                                        anchor: new google.maps.Point(10, 20)
+                                                    },
+                                                    direccionContent: elem
+                                                });
 
-                                            let urlTemp = ""
-                                            switch (elem.accion) {
-                                                case 1:
-                                                    urlTemp = "./resources/img/plantainterna/despacho/repartidor-marker.svg"
-                                                    break;
-                                                case 2:
-                                                    urlTemp = "./resources/img/plantainterna/despacho/domicilio-marker.svg"
-                                                    break;
-                                                default:
-                                                    urlTemp = "./resources/img/plantainterna/despacho/repartidor-icon.svg"
-                                            }
+                                                marker_ot.addListener("click", (e, i) => {
 
-                                            let marker_ot = new google.maps.Marker({
-                                                clickable: false,
-                                                position: latitud_ot,
-                                                title: "OT",
-                                                animation: google.maps.Animation.DROP,
-                                                map: mapavistageneral,
-                                                latitud_ot: parseFloat(elem.direccionDetalle.latitud),
-                                                longitud_ot: parseFloat(elem.direccionDetalle.longitud),
-                                                icon: {
-                                                    url: urlTemp,
-                                                    scaledSize: new google.maps.Size(37, 43),
-                                                    origin: new google.maps.Point(0, 0),
-                                                    anchor: new google.maps.Point(10, 20)
-                                                },
-                                                direccionContent: elem
-                                            });
-                                            marker_ot.addListener("click", (e, i) => {
+                                                    $scope.listadomarkerscotizacion.map(function (e) {
+                                                        if (marker_ot.direccionContent.idDireccion !== e.direccionContent.idDireccion)
+                                                            e.setAnimation(null);
+                                                        return e
+                                                    })
 
-                                                $scope.listadomarkerscotizacion.map(function (e) {
-                                                    if (marker_ot.direccionContent.idDireccion !== e.direccionContent.idDireccion)
-                                                        e.setAnimation(null);
-                                                    return e
+                                                    $scope.$apply()
+                                                    if (marker_ot.getAnimation() === null)
+                                                        marker_ot.setAnimation(google.maps.Animation.BOUNCE);
+
                                                 })
-
-                                                $scope.$apply()
-                                                if (marker_ot.getAnimation() === null)
-                                                    marker_ot.setAnimation(google.maps.Animation.BOUNCE);
-
-                                            })
-
-                                            $scope.listadomarkerscotizacion.push(marker_ot);
-
+                                                if(elem.accion == 1){
+                                                    isRepartidor = false;
+                                                }
+                                                $scope.listadomarkerscotizacion.push(marker_ot);
+                                            }
                                         })
-
                                         let paresLatLong = []
                                         if (arrarLatLong.length > 1) {
                                             if (arrarLatLong.length % 2 !== 0)
@@ -563,13 +554,13 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
                                     toastr.warning(response.data.result.description);
                                 }
                             } else {
-                                toastr.warning('No se encontraron datos de la cotizacion');
+                                toastr.warning('No se encontraron datos');
                             }
                         } else {
                             toastr.warning(response.data.resultDescripcion);
                         }
                     } else {
-                        toastr.error('Ha ocurrido un error en la consulta de cotizacion');
+                        toastr.warning('No se encontraron datos');
                     }
                     swal.close()
                 }).catch(err => handleError(err))
