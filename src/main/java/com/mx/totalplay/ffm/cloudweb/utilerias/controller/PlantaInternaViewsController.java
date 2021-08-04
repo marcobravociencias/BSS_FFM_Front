@@ -55,6 +55,12 @@ public class PlantaInternaViewsController {
 		return "plantainterna/skillsAdm/mainSkills";
 		
 	}
+	@GetMapping("/coordInst")
+	public String coordInst() {
+		
+		return "plantainterna/coordInstalaciones/mainCoordInstalaciones";
+		
+	}
 	
 	@GetMapping("/busqueda")
 	public String busqueda() {
