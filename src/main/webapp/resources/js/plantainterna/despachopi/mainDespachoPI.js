@@ -274,25 +274,21 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
 
     $scope.consultarConteoAlertasPI=function(){
         var params =  {
-            "Fecha_fin":"25/03/2021",
-            "Fecha_inicio":"25/02/2021",
-            "Id_subIntervencion":"48,35,49,50,51,116,1360,55,111,106,107,112,115,163,164,258,236,291,292,259,157,158,159,204,290,260,146,211,212,261,148,149,300,301,302,262,251,252,253,254,287,288,289,263,303,304,305,306,264,269,298,299,265,150,160,270,286,293,294,295,297,274,144,145,237,307,275,244,271,272,273,308,276,238,277,142,152,278,143,147,151,243",
-            "Id_turno":"1,2,3",
-            "Id_cluster":"176,596,827,848,592,538,826,847,851,164,597,598,594,825,829,832,852,591,831,528,823,828,824,535,529,175,1,830,846,525,595,593,533,532,850,849",
-            "IDSDESPAHCO":"64"
+            "testing":"-",
         }
         mainDespachoService.consultarConteoAlertasPI(params).then(function success(response) {
-            $scope.listadoConteoAlertasTipo=conteoOtsDespacho.Alertas                                            
             if (response.data !== undefined) {
                 if (response.data.respuesta) {
-                    if (response.data.result.result === '0') {
-                        logprocess("############## consultando ")
-                       //$scope.listadoOtsPendientes=otspendientes     
+                    if (response.data.result.alertas) {
+                        $scope.listadoConteoAlertasTipo=response.data.result.alertas                                            
+                        //$scope.listadoConteoAlertasTipo=conteoOtsDespacho.Alertas                                            
+   
                     }
                 }
             }
         })
     }
+
     $scope.validate_time_asignacion = function(fecha){
         var fecha_asigna = new Date(fecha);
         if(fechaActual > fecha_asigna){
@@ -676,7 +672,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
         }       
     }
     setInterval(function(){
-        //$scope.consultarConteoAlertasPI()
+        $scope.consultarConteoAlertasPI()
     }, MILISEGUNDOS_ALERTAS);
 
 
@@ -814,7 +810,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                             })       
                             $('#jstree-proton-3').bind('loaded.jstree', function(e, data) {
                                 //$scope.consultarCatalogoEstatusTecnico()
-                                //$scope.consultarConteoAlertasPI()
+                                $scope.consultarConteoAlertasPI()
                                 $scope.consultarOrdenesTrabajoAsignadasDespacho()
                                 $scope.consultarOtsPendientes()
                                 $scope.consultarTecnicosDisponibiles()
@@ -875,8 +871,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
     $scope.listadoOtsPendientes=otspendientes
     $scope.listadoEstatusTecnico=JSONEstatusTecnico     
     $scope.listadoIconografia=paletaColors.result.Colores    
-    //$scope.listadoConteoAlertasTipo=conteoOtsDespacho.Alertas                                            
-
+ 
 }]);
 
 app.directive('doneListadoDependenciaHistorico', function () {

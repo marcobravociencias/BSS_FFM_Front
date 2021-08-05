@@ -55,7 +55,7 @@
 
     <body ng-controller="controlVehicularController">
         <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
-        <div class="container-fluid controlContent">
+        <div class="container-fluid controlContent "style="margin-top: 1em;">
             <div class="row">
                 <div id="datos_tablas" class="col-sm-12">
                     <a id="btn_mostrar_nav" style="display: none; position: absolute">

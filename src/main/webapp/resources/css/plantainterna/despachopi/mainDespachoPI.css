@@ -495,7 +495,7 @@ ul.wall li:last-child {
 }
 ul.wall {
   /* align-items: flex-start; */
-  right: 25%;
+  /* right: 25%; */
   position: fixed;
   bottom: 0;
   margin: 0;
@@ -509,8 +509,8 @@ ul.wall li {
   position: relative;
   display: inline-flex;
   align-items: center;
-  margin: 0 0 8px 0;
-  color: #9d9d9d;
+  margin: 0 .8em .8em 0;
+  color: #909090;
   cursor: pointer;
   height: 2em;
   width: 2.5em;
@@ -1666,4 +1666,10 @@ span.cerrarnoticias {
 
 #modalVistaMapa  .container{
     max-width: 100%;
+}
+
+table#table-alertas-pi {
+    padding-right: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
 }

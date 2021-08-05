@@ -210,10 +210,9 @@
         <jsp:include page="./modals/modalFotoUsuario.jsp"></jsp:include>   
         <jsp:include page="modals/modalVistaMapa.jsp"></jsp:include> 
        
-        <div ng-show="vistaDespacho" class="container-fluid">    
+        <!--div ng-show="vistaDespacho" class="container-fluid d-flex justify-content-center">    
             <ul class="wall content-alert-parent">
-                <!--li style="background-color: {{tipoAlertaConteo.bgalerta}}" ng-click="getDetalleAlertas(tipoAlertaConteo)" title="{{tipoAlertaConteo.IdDescripcion}}" class="element-alert" ng-repeat="tipoAlertaConteo in listadoConteoAlertasTipo track by $index"--> 
-                <li style="background-color: {{tipoAlertaConteo.bgalerta}}" title="{{tipoAlertaConteo.IdDescripcion}}" class="element-alert" ng-repeat="tipoAlertaConteo in listadoConteoAlertasTipo track by $index"> 
+                <li ng-click="getDetalleAlertas(tipoAlertaConteo)" style="background-color: {{tipoAlertaConteo.bgalerta}}" title="{{tipoAlertaConteo.IdDescripcion}}" class="element-alert" ng-repeat="tipoAlertaConteo in listadoConteoAlertasTipo track by $index"> 
                      <b class="badge-alerta badge red accent-3" ng-bind="tipoAlertaConteo.Contador"></b>
                      <i style="color:{{tipoAlertaConteo.calerta}}" class="icon-alerta-ind {{tipoAlertaConteo.IdIcono}}"></i>
                      <div class="text-tipo-alerta-hide">
@@ -221,8 +220,18 @@
                      </div>
                 </li>              
              </ul>
+        </div-->
+        <div ng-show="vistaDespacho" class="container-fluid d-flex justify-content-center">    
+            <ul class="wall content-alert-parent">
+                <li ng-click="getDetalleAlertas(tipoAlertaConteo)" style="background-color: {{tipoAlertaConteo.hexaColor}}" title="{{tipoAlertaConteo.id}}" class="element-alert" ng-repeat="tipoAlertaConteo in listadoConteoAlertasTipo track by $index"> 
+                     <b class="badge-alerta badge red accent-3" ng-bind="tipoAlertaConteo.contador"></b>
+                     <i style="color:white" class="icon-alerta-ind {{tipoAlertaConteo.icono}}"></i>
+                     <div class="text-tipo-alerta-hide">
+                         <b class="text-alertatipo" ng-bind="tipoAlertaConteo.descripcion"></b>
+                     </div>
+                </li>              
+             </ul>
         </div>
-
         <jsp:include page="./contents/div-alertas-content.jsp"></jsp:include>  
         
     </body>
