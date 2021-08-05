@@ -6,8 +6,41 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
 	var skillTabla;
 	var mapa_reasigna_cluster;
 	var dataTecnicoGlobal=[];
-	$scope.tecnicosMostradas=jsonTestingOperarios
+	$scope.tecnicosMostradas=jsonTestingOperarios;
 	$scope.listadoIntervenciones=jsonIntervenciones;
+	$scope.listadoIntervenciones2=jsonIntervenciones;
+	$scope.listadoIntervencionesTecnico=null;
+	$scope.contadorSkillsSeleccionadas = 0;
+	$scope.contadorTecnicosEncontrados = 0;
+	$scope.listadoIntervencionesSeleccionadas=[];
+	$scope.tecnicoSeleccionado = null;
+	
+//	$scope.jsonObjetosTree=[
+//	       { "id" : "id1", "parent" : "#", "text" : "Ciudad de México" },
+//	       { "id" : "id2", "parent" : "id1", "text" : "Iztapalapa" },
+//	       { "id" : "id3", "parent" : "id1", "text" : "Coyoacán" },
+//	       { "id" : "id4", "parent" : "id3", "text" : "Sección 1" },
+//	       { "id" : "id5", "parent" : "id3", "text" : "Sección 2" },
+//	       { "id" : "id6", "parent" : "id3", "text" : "Sección 3" },
+//	       { "id" : "id7", "parent" : "id2", "text" : "Sección A" },
+//	       { "id" : "id8", "parent" : "id2", "text" : "Sección B" },
+//	       { "id" : "id9", "parent" : "id2", "text" : "Sección C" },
+//	       
+//	       { "id" : "id10", "parent" : "id6", "text" : "Colonia Doctores" },
+//	       { "id" : "id11", "parent" : "id6", "text" : "Colonia Santo Domingo" },
+//	       { "id" : "id12", "parent" : "id6", "text" : "Colonia Cristo" },
+//	       { "id" : "id13", "parent" : "id6", "text" : "Ciudad Universitaria" },
+//	       
+//	       { "id" : "id14", "parent" : "id9", "text" : "Colonia Doctores" },
+//	       { "id" : "id15", "parent" : "id9", "text" : "Colonia Santo Domingo" },
+//	       { "id" : "id16", "parent" : "id9", "text" : "Colonia Cristo" },
+//	       { "id" : "id17", "parent" : "id9", "text" : "Ciudad Universitaria" },
+//	       
+//	       { "id" : "id18", "parent" : "id17", "text" : "Colonia Doctores" },
+//	       { "id" : "id19", "parent" : "id17", "text" : "Colonia Santo Domingo" },
+//	       { "id" : "id20", "parent" : "id17", "text" : "Colonia Cristo" },
+//	       { "id" : "id21", "parent" : "id17", "text" : "Ciudad Universitaria" }
+//	    ];
 	
 	$scope.txtbusq='';
 	$scope.busquedaT=function(){
@@ -36,7 +69,178 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
 	})
 	
 
-	    
+	$('#jstree-proton-3').on("click", function (e, data) {
+		//$scope.contadorTecnicosEncontrados = 9;
+		$('#contadorTecnicos').text("Técnicos encontrados: " + $scope.tecnicosMostradas.result.detalleTecnicos.length);
+		$('#divTecnicos').show();
+		$('#divContadorTecnicos').show();
+		$('#divMensajeSeleccionaGeografia').hide();
+		$('#divMensajeSeleccioneElemento').hide();
+
+    });
+	
+	$scope.consultarSkillsAsignadasTecnico = function(idTecnico, nombreTecnico, primerApellido, segundoApellido){
+		$('.checkTecnicoSeleccionado').hide();
+		//$(this).css("background-color", "red");
+		var tecnicoSeleccionado=document.getElementsByClassName("tecnicosDiv");
+		for (var i=0; i<tecnicoSeleccionado.length; i++){
+			tecnicoSeleccionado[i].style.backgroundColor="white";
+		}
+		document.getElementById(''+idTecnico).style.backgroundColor = "#DCDEDC";
+		
+		$scope.tecnicoSeleccionado = nombreTecnico + " " + primerApellido + " " + segundoApellido;
+		
+		$scope.listadoIntervencionesTecnico = null;
+		if(idTecnico === 11){
+			$scope.listadoIntervencionesTecnico = jsonIntervencionesId11;
+		}else if(idTecnico === 12){
+			$scope.listadoIntervencionesTecnico = jsonIntervencionesId12;
+		}else if(idTecnico === 13){
+			$scope.listadoIntervencionesTecnico = jsonIntervencionesId13;
+		}
+		
+		if($scope.listadoIntervencionesTecnico != null){
+			$scope.contadorSkillsSeleccionadas = $scope.listadoIntervencionesTecnico.length;
+		}else{
+			$scope.contadorSkillsSeleccionadas = 0;
+		}
+		
+		angular.forEach($scope.listadoIntervenciones,function(intervencion,index){
+			intervencion.check = 0;
+		});
+		
+		angular.forEach($scope.listadoIntervencionesTecnico,function(skillAsignada,index){
+			angular.forEach($scope.listadoIntervenciones,function(intervencion,index){
+				if(intervencion.id == skillAsignada.id){
+					intervencion.check = 1;
+				}
+			});
+		});
+		
+		$('#divContenedorSkills').show();
+		$('#divBotonGuardarSkills').show();
+		$('#divMensajeSeleccionaTecnico').hide();
+		$('#checkTecnicoSeleccionado'+idTecnico).show();
+	}
+	
+	$scope.sumarContador = function(estado){
+		if(estado == 0){
+			$scope.contadorSkillsSeleccionadas = $scope.contadorSkillsSeleccionadas + 1;
+		}else{
+			$scope.contadorSkillsSeleccionadas = $scope.contadorSkillsSeleccionadas - 1;
+		}
+	}
+	
+	$scope.abrirModalSkillsSeleccionadas = function(){
+		if($scope.contadorSkillsSeleccionadas != 0){
+			$scope.listadoIntervencionesSeleccionadas = [];
+			
+			angular.forEach($scope.listadoIntervenciones,function(skillSeleccionada,index){
+				if(skillSeleccionada.check === 1){
+					$scope.listadoIntervencionesSeleccionadas.push(skillSeleccionada);
+				}
+			});
+			$("#modalSkillsSeleccionadas").modal('show');
+		}else{
+			alertify.warning('¡No hay skills seleccionadas!');
+		}
+	}
+	
+	$scope.cerrarModalSkillsSeleccionadas = function() {
+		$("#modalSkillsSeleccionadas").modal('hide');
+	}
+	
+	$scope.mostrarContenedoresMultiseleccion = function(){
+		$(".checkedTecnicos").prop("checked",true);
+		$("#checkTotdosTecnicos").prop("checked",true);
+		$("#modalMultiseleccion").modal('show');
+		
+		angular.forEach($scope.listadoIntervenciones,function(intervencion,index){
+			intervencion.check = 0;
+		});
+		
+		$scope.contadorSkillsSeleccionadas = 0;
+		$('#contadorTecnicosMultiseleccion').text("Técnicos encontrados: " + $scope.tecnicosMostradas.result.detalleTecnicos.length);
+
+	}
+	
+	$scope.regresarContenedorIndividual = function() {
+		
+		angular.forEach($scope.listadoIntervenciones,function(intervencion,index){
+			intervencion.check = 0;
+		});
+		
+		var tecnicoSeleccionado=document.getElementsByClassName("tecnicosDiv");
+		for (var i=0; i<tecnicoSeleccionado.length; i++){
+			tecnicoSeleccionado[i].style.backgroundColor="white";
+		}
+		
+		$scope.contadorSkillsSeleccionadas = 0;
+		$(".checkedTecnicos").prop("checked",false);
+		$(".checkTecnicoSeleccionado").hide();
+		$("#modalMultiseleccion").modal('hide');
+	}
+	
+	$scope.seleccionarTodosTecnicos = function() {
+		if($('#checkTotdosTecnicos').prop('checked')){
+			$(".checkedTecnicos").prop("checked",true);
+		}else{
+			$(".checkedTecnicos").prop("checked",false);
+		}
+		
+	}
+	
+	$scope.verVistaIndividual = function() {
+		$("#divContenedorTabla").hide();
+		$("#divContenedorIndividual").show();
+	}
+	
+	$scope.verVistaTabla = function() {
+		
+		var listaSkills =  $scope.listadoIntervenciones;
+		
+		//Cada técnico
+		angular.forEach($scope.tecnicosMostradas.result.detalleTecnicos,function(tecnico,index){
+			if(tecnico.idTecnico == 11){
+				tecnico.todasSkills = listaSkills;
+				angular.forEach(tecnico.todasSkills,function(skill,indexSkills){
+					angular.forEach(tecnico.skills,function(skillAsignada,indexSkillAsignada){
+						if(skill.id == skillAsignada){
+							skill.checkTabla = true;
+						}else{
+							if(skill.checkTabla != true){
+								skill.checkTabla = false;
+							}
+						}
+					});
+				});
+			}else{
+				tecnico.todasSkills = listaSkills;
+			}
+			
+		});
+		
+		//alert($scope.tecnicosMostradas.result.detalleTecnicos[1].nombre + "\n" +
+			  //$scope.tecnicosMostradas.result.detalleTecnicos[1].todasSkills[0].checkTabla + "\n" +
+			  //$scope.tecnicosMostradas.result.detalleTecnicos[1].todasSkills[1].checkTabla + "\n" +
+			  //$scope.tecnicosMostradas.result.detalleTecnicos[1].todasSkills[2].checkTabla + "\n" +
+			  //$scope.tecnicosMostradas.result.detalleTecnicos[1].todasSkills[3].checkTabla + "\n" +
+			  //$scope.tecnicosMostradas.result.detalleTecnicos[1].todasSkills[4].checkTabla + "\n" +
+			  //$scope.tecnicosMostradas.result.detalleTecnicos[1].todasSkills[5].checkTabla);
+		
+		$("#divContenedorIndividual").hide();
+		$("#divContenedorTabla").show();
+	}
+	
+	$scope.seleccionarTecnicoMultiseleccion = function (id) {
+		if($("#checkTecnicoMultiseleccion"+id).prop('checked')){
+			$("#checkTecnicoMultiseleccion"+id).prop("checked",false);
+		}else{
+			$("#checkTecnicoMultiseleccion"+id).prop("checked",true);
+		}
+	}
+	
+	//-------------------------------------------------- FIN CAMBIOS REYNEL --------------------------------------------------
 	
 	$scope.cargarFiltrosGeneric=function(){
         $q.all([
@@ -57,6 +261,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
                                 e.parent=e.padre ==undefined ? "#" : e.padre;
                                 e.text= e.nombre;
                                 e.icon= "fa fa-globe";
+                                e.class = "xd";
                                 
                                 return e
                             })       
@@ -64,7 +269,8 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
 								$(this).jstree("open_all");
                             }).jstree({
 								'core': {
-                                    'data': geografia,
+                                    //'data': $scope.jsonObjetosTree,
+									'data': geografia,
                                     'themes': {
                                         'name': 'proton',
                                         'responsive': true,
@@ -103,16 +309,16 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
 		
 	}
 	  $scope.busqueda=function(){
-		 var searchString = $.trim($("#text-search-cluster").val());
-			$('#jstree-proton-3').jstree('search', searchString);
-			let ultimonivel=$scope.obtenerNivelUltimoJerarquia();
-			var clusters = [];
-			var selectedElms = $('#jstree-proton-3').jstree("get_selected", true);
-			$.each(selectedElms, function() {
-				clusters.push(this.id); 
-		    });
-			 console.log("Busqueda: ",ultimonivel);
-		 
+		  //var searchString = $.trim($("#text-search-cluster").val());
+		  //$('#jstree-proton-3').jstree('search', searchString);
+		  //let ultimonivel=$scope.obtenerNivelUltimoJerarquia();
+		  //var clusters = [];
+		  //var selectedElms = $('#jstree-proton-3').jstree("get_selected", true);
+		  //$.each(selectedElms, function() {
+			  //clusters.push(this.id); 
+		  //});
+			//console.log("Busqueda: ",ultimonivel);
+		  $("#jstree-proton-3").jstree("search", $('#idBuscadorGeografia').val());
 	 }
 	 
 	

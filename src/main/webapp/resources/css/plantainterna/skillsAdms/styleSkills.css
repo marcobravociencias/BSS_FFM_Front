@@ -304,3 +304,68 @@ table.dataTable thead th, table.dataTable thead td{
 ::-webkit-scrollbar-thumb{
 	outline:0px solid #9ca4b3 !important;
 }
+
+.scrollGeneral {
+    margin-bottom:.5em;
+	margin:4px, 4px;
+	padding:4px;
+	height: 330px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	text-align:justify;
+}
+
+.scrollGeneralHorizontal {
+    overflow-x: auto;
+}
+
+.pestaniaActivada{
+   border-bottom: .3em solid #7716FA;
+}
+.pestaniaActivada{
+    color: #000000 !important;
+}	
+
+.zui-wrapper {
+    position: relative;
+}
+.zui-scroller {
+    margin-left: 330px;
+    overflow-x: scroll;
+    padding-bottom: 5px;
+}
+.zui-table .zui-sticky-col {
+    left: 0;
+    position: absolute;
+    top: auto;
+    width: 350px;
+}
+
+.zui-table .zui-text-cabeceras {
+	color: black;
+	font-weight: bold;
+	font-weight:  bolder;
+	font-size:14px;
+}
+
+.zui-table .zui-sticky-body {
+    left: 0;
+    position: absolute;
+    top: auto;
+    width: 350px;
+}
+
+.scrollHorizontalTable {
+    margin-bottom:.5em;
+	margin:4px, 4px;
+	padding:4px;
+	height: 400px;
+	overflow-y: auto;
+	text-align:justify;
+}
+
+.zui-table .zui-sticky-body-final {
+    right: 0;
+    position: absolute;
+    top: auto;
+}
