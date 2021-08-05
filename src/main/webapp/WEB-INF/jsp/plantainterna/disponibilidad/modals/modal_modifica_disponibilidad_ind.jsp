@@ -6,30 +6,28 @@
         <h5 class="modal-title" id="exampleModalLabel">
           Actualizar Disponibilidad<span class=""></span>
         </h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="closeModalModificar()">
-           <span aria-hidden="true">&times;</span>
-        </button>
+        <button
+        type="button"
+        class="btn-close"
+        data-mdb-dismiss="modal"
+        aria-label="Close"
+        ></button>
       </div>
       <div class="modal-body body-modal-capacidad-mod">  
-          <br/>
           <div class="container-fluid">
              <div class="row">
                  <div class="col-md-6">
                     <div class="form-control-sm row contentMatu">   
-                      <label for="matutino" class="col-md-4 col-form-label">
-                          <p  class="title_campos"><i class="fa-lg fa fa-sort-numeric-asc"></i>Matutino</p>
-                      </label>
-                        <div class="col-sm-8">
+                        <div class="col-sm-12">
+                            <p  class="title_campos"><i class="fa-lg fa fa-sort-numeric-asc"></i>Matutino</p>
                             <input id="matutino_actualizar" type="text" class="form-control form-control-sm input-filtro-disponibilidad"  placeholder="" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="5" >
                         </div>
                       </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-control-sm row contentVesp">   
-                      <label for="vespertino" class="col-md-4 col-form-label">
-                          <p  class="title_campos"><i class="fa-lg fa fa-sort-numeric-asc"></i>Vespertino</p>
-                      </label>
-                        <div class="col-sm-8">
+                        <div class="col-sm-12">
+                            <p  class="title_campos"><i class="fa-lg fa fa-sort-numeric-asc"></i>Vespertino</p>
                             <input id="vespertino_actualizar" type="text" class="form-control form-control-sm input-filtro-disponibilidad"  placeholder="" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="5" >
                         </div>
                       </div>
@@ -39,18 +37,16 @@
               <div class="row">
                 <div id="contenedor-editar-nocturno" class="col-md-6">
                   <div class="form-control-sm row">   
-                    <label for="vespertino" class="col-md-4 col-form-label">
-                        <p  class="title_campos"><i class="fa-lg fa fa-sort-numeric-asc"></i>Nocturno</p>
-                    </label>
-                      <div class="col-sm-8">
+                      <div class="col-sm-12">
+                          <p  class="title_campos"><i class="fa-lg fa fa-sort-numeric-asc"></i>Nocturno</p>
                           <input id="nocturno_actualizar" type="text" class="form-control form-control-sm input-filtro-disponibilidad"  placeholder="" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="5" >
                       </div>
                     </div>
                 </div>   
                   <div class="col-md-6">  
                       <div class="form-control-sm row">
-                        <label class="col-form-label"><p  class="title_campos"><i class="fa-lg fa fa-lock "></i>Bloqueo</p></label>
-                        <div class="col-sm-8">                 
+                        <div class="col-sm-12">     
+                          <p  class="title_campos"><i class="fa-lg fa fa-lock "></i>Bloqueo</p>
                           <div class="custom-control custom-radio">
                             <input type="radio" class="custom-control-input" value="true" id="radio_activo_mod" name="radio-bloqueo-mod-individual">
                             <label class="custom-control-label" for="radio_activo_mod">Activo</label>
@@ -67,8 +63,8 @@
           </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal" ng-click="closeModalModificar()">Cerrar</button>
-        <button type="button" id="boton_modificar_disponibilidad" ng-click="actualizarDisponibilidad()" class="btn_modificar_disp btn btn-sm "><i class="fa fa-edit" aria-hidden="true"></i> Actualizar d&iacute;a</button>
+        <button type="button" class="btn-cerrar-modal btn btn-sm btn-secondary" data-dismiss="modal" ng-click="closeModalModificar()">Cerrar</button>
+        <button type="button" id="boton_modificar_disponibilidad" ng-click="actualizarDisponibilidad()" class="btn-aceptar-modal btn_modificar_disp btn btn-sm "><i class="fa fa-edit" aria-hidden="true"></i> Actualizar d&iacute;a</button>
       </div>
     </div>
   </div>

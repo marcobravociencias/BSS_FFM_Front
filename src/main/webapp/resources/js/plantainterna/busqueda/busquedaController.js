@@ -4,7 +4,7 @@ app.controller('busquedaController', ['$scope', 'busquedaService', function ($sc
     $scope.showSearch = true;
     $scope.mostrarCurrentInfo;
 
-    $scope.setCurrentTabInfo(){
+    $scope.setCurrentTabInfo=function(){
         
     }
 }])

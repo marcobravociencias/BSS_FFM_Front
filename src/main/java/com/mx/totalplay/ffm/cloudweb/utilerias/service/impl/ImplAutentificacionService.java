@@ -16,19 +16,16 @@ import com.mx.totalplay.ffm.cloudweb.utilerias.utils.ConsumeRest;
 @Service
 public class ImplAutentificacionService  implements AutentificacionService{
 	
-	private  final Logger logger = LogManager.getLogger(ImplAutentificacionService.class.getName());
-	
+	private final Logger logger = LogManager.getLogger(ImplAutentificacionService.class.getName());
+	private final Environment env;
+	private final ConsumeRest restCaller;
+	private Gson gson = new Gson();
+
 	@Autowired
-	private ConstantesGeneric constantesGeneric;
-	
-	@Autowired
-	private Environment env;
-	
-	@Autowired
-	private ConsumeRest restCaller;
-	
-	Gson gson = new Gson();
-	
+	public ImplAutentificacionService(Environment env, ConsumeRest restCaller) {
+		this.env = env;
+		this.restCaller = restCaller;
+	}
 
 	@Override
 	public LoginResult getAutentificacion(String us, String crdospas) {

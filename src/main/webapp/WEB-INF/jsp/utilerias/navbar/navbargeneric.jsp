@@ -2,12 +2,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
+<sec:authentication property="principal" var="userStore"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet"/>
 <link href="${pageContext.request.contextPath}/resources/css/plantainterna/generic/navbar.css"  rel="stylesheet"/>
 <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+<jsp:include page="./modalFotoDespacho.jsp"></jsp:include>   
 
 <header class="header-navbar-p">
-    <!-- Image and text -->
     <div class="row container-fluid container-top-header">
         <div class="col-6">
             <img  src="${pageContext.request.contextPath}/resources/img/logotipos/residencial.png" height="27" alt="" loading="lazy" />        
@@ -21,9 +22,16 @@
                 <a class="logout-text-nav" href="javascript:document.getElementById('logout').submit()">Salir</a>
             </div>    
             <div class="content-header">
-                <img  src="${pageContext.request.contextPath}/resources/img/iconsistema/usuario-header.png" height="37" alt="" loading="lazy" />        
+                <c:if test="${userStore.urlFoto != null &&  userStore.urlFoto != ''}">
+                    <img  data-mdb-toggle="modal"
+                          data-mdb-target="#modalFotoDespacho" class="img-despacho-navbar" src="${userStore.urlFoto}" height="37" alt="" loading="lazy" />        
+                </c:if>
+                <c:if test="${userStore.urlFoto == null ||  userStore.urlFoto == ''}">
+                    <img  src="${pageContext.request.contextPath}/resources/img/iconsistema/usuario-header.png"    height="37" alt="" loading="lazy" />        
+                </c:if>
+               
             </div>
-      
+            
             <div class="content-header">
                 <h5 class="header-nombre-usuario">
                     <sec:authentication property="principal.usuarioNombre" />
@@ -33,7 +41,6 @@
                 </h5>
                 <h5 class="header-perfil-usuario">  
                     <sec:authentication property="principal.propietario" />
-                    <sec:authentication property="principal.unidadNegocio" />
                 </h5>
             </div>
             
@@ -60,10 +67,18 @@
                         <i class="fas fa-marker icon-navbar-izquierda"></i>
                         <a class="nav-link a-navlink-navbar" href="skillsAdm">Skills</a>
                     </li>
-                    <!--li id="li-vehiculos-navbar" class="nav-item">
+                    <li id="li-reporte-navbar" class="nav-item"> 
+                        <i class="fa fa-bar-chart icon-navbar-izquierda"></i> 
+                        <a class="nav-link a-navlink-navbar" href="reportesPI">Reportes</a> 
+                    </li>
+                    <li id="li-coordinador-navbar" class="nav-item">
+                        <i class="fa fa-users icon-navbar-izquierda"></i>
+                        <a class="nav-link a-navlink-navbar" href="coordInst">Coordinador Instalaciones</a>
+                    </li>
+                    <li id="li-vehiculos-navbar" class="nav-item">
                         <i class="fas fa-taxi icon-navbar-izquierda"></i>
                         <a class="nav-link a-navlink-navbar" href="controlVehicular">Veh&iacute;culos</a>
-                    </li-->
+                    </li>
                     <!--li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i

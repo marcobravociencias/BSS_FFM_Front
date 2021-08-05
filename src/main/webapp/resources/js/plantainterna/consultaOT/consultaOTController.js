@@ -25,6 +25,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	let dataTable_IP;
 	$scope.filtrosGeneral = {};
 	$scope.movimientos = [];
+	$scope.comentarioConsultaOT = '';
 
 
 	$scope.consultaOT = function () {
@@ -794,8 +795,12 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			let params = {
 				idOt: $scope.datoOt
 			}
-			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
-			swal.showLoading();
+
+			if (!swal.isVisible()) {
+				swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
+				swal.showLoading();
+            }
+
 
 			genericService.consultarComentariosDespachoOT(params).then(function success(response) {            
                 swal.close()        
@@ -1482,4 +1487,41 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			}			
 		})
 	}
+
+	$scope.addComentariosConsultaOt = function () {
+        if ($scope.comentarioConsultaOT.trim() !== '' && !/^\s/.test($scope.comentarioConsultaOT)) {
+
+            let params = {
+                idOrden: $scope.datoOt,
+                comentario: $scope.comentarioConsultaOT,
+                origenSistema: 1
+            }
+
+            swal({ text: 'Espere un momento ...', allowOutsideClick: false });
+            swal.showLoading();
+
+            genericService.agregarComentariosOt(params).then(function success(response) {
+				swal.close();
+                console.log(response);
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        console.log("############## Comentario agregado")
+                        $scope.comentarioConsultaOT = '';
+						document.getElementById('comentarioConsultaOt').value = '';
+						is_consulta_comentarios = false;
+                        $scope.consultaChat();
+                    } else {
+                        toastr.error(response.data.resultDescripcion);
+                    }
+                } else {
+                    toastr.error(response.data.resultDescripcion);
+                }
+            }).catch(err => handleError(err))
+
+        } else {
+            $scope.comentarioConsultaOT = '';
+            document.getElementById('comentarioConsultaOt').value = '';
+            toastr.warning('Intoducir un comentario.')
+        }
+    }
 }])

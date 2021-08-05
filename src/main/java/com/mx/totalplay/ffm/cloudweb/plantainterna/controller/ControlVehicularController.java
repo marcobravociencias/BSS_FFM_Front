@@ -15,10 +15,13 @@ import com.mx.totalplay.ffm.cloudweb.utilerias.model.ServiceResponseResult;
 @RequestMapping("/req")
 public class ControlVehicularController {
 	private final Logger logger = LogManager.getLogger(ControlVehicularController.class.getName());
-	
+	private final ControlVehicularService controlVehicularService;
+
 	@Autowired
-	private ControlVehicularService controlVehicularService;
-	
+	public ControlVehicularController(ControlVehicularService controlVehicularService) {
+		this.controlVehicularService = controlVehicularService;
+	}
+
 	@GetMapping("/consultarMarcas")
 	public ResponseEntity<?> consultarMarcas() {
 		logger.info("##### CONSULTANDO consultarMarcas");

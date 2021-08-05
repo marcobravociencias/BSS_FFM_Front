@@ -32,11 +32,14 @@ public class MyFilterInvocationSecurityMeatadataSource implements org.springfram
         put("/enrutarUser","ROLE_USER");
         put("/","ROLE_ANONYMOUS");
         put("/reportesPI","ROLE_USER");
+        put("/coordInst","ROLE_USER");
         put("/skillsAdm","ROLE_USER");
         put("/busqueda","ROLE_USER");
         put("/controlVehicular","ROLE_USER");
 		put("/detailsHelp","ROLE_USER");
 		put("/","ROLE_USER");
+		put("/loginPage","ROLE_USER");
+		put("/loginPage","ROLE_ANONYMOUS");
 
 	}};
     
@@ -57,13 +60,16 @@ public class MyFilterInvocationSecurityMeatadataSource implements org.springfram
 		if(auth.getPrincipal().toString().equals("anonymousUser") && url.equals("/") ) {
 			url = "homePage";
 		}
+		if(!auth.getPrincipal().toString().equals("anonymousUser") && url.equals("/loginPage")) {
+			url = "/";
+		}
 		
 		for(Map.Entry<String,String> entry:urlRoleMap.entrySet()){
 			
 			boolean containsSigno=url.contains("?");
 			
 			if( containsSigno ) url=url.substring(0,url.indexOf("?"));
-			
+				
             if(antPathMatcher.match(entry.getKey(),url)  ){
                 return org.springframework.security.access.SecurityConfig.createList(entry.getValue());
             }

@@ -130,8 +130,8 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade " id="v-tabs-consulta-historico" role="tabpanel" aria-labelledby="v-tabs-consulta-historico-tab" >
-                                <div class="row">
-                                    <div ng-repeat="elementHistorico in historialOrdenTrabajo"  class="col-4" style="display: grid;">
+                                <div id="content-principal-historial" class="row">
+                                    <div id="content-historial-{{$index}}" done-listado-dependencia-historico ng-repeat="elementHistorico in historialOrdenTrabajo" class="col-4" style="display: grid;">
                                         <div  class="card-historico card text-center">
                                             <div class="card-body">
                                                 <i ng-if="elementHistorico.idEstatusOrden==1" class="pendiente-historico  fas fa-pause circle-statushistorico"></i>
@@ -196,10 +196,14 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!--div class="chat-fotter">
-                                            <input placeholder="Escribe el mensaje aqu&iacute; ..." type="text" class="input-mensaje-chat form-control form-control-sm">
-                                            <button class="btn btn-sm btn-primary">Enviar</button>
-                                        </div-->
+                                        <div class="row float-right col-chat-fotter">
+                                            <div class="col-6">
+                                                <input id="comentarioOt" placeholder="Escribe el mensaje aqu&iacute; ..." type="text" class="input-mensaje-chat form-control form-control-sm input-comentario-ot" ng-model="comentarios">
+                                            </div>
+                                            <div class="col-3" style="left: 200px;height: 50px;">
+                                                <button class="btn btn-primary btn-enviar-comentario-ot" ng-click="addComentariosOt()">Enviar</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

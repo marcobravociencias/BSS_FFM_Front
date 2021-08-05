@@ -80,7 +80,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             document.getElementById('nocturno_dispo').parentElement.style.display = 'none'
         }
 
-        document.getElementById('arbol_disponibilidad_consulta').placeholder = 'Seleccione un geografia';
+        document.getElementById('arbol_disponibilidad_consulta').placeholder = 'Seleccione ...';
         let contenTheadDetalle = '';
         $scope.arrayTitulo.forEach(function (elemento, index) {
             if (elemento.vista) {
@@ -331,7 +331,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
         let isValido = true;
         let mensajeError = "<ul>";
         let bloqueo = $("input[name='checkBloque']:checked").val();
-        bloqueo = bloqueo === 'true' ? 1 : 0;
+        bloqueo = bloqueo === 'true' ? 1 : bloqueo === 'false'? 0 : undefined;
         let ultimonivel=$scope.obtenerNivelUltimoJerarquia()
         let clustersparam=$("#jstreeconsulta").jstree("get_selected", true)
                                                .filter(e=>e.original.nivel== ultimonivel)

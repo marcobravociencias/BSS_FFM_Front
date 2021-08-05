@@ -28,8 +28,8 @@ public class LoginResult {
 	private String urlFoto;
 	private String jti;
 	private String customTocken;
-
-
+	private String numEmpleado;
+	private String geografia;
 	private int idUsuario;
 	private int idPuesto;
 	private int idUnidadNegocio;

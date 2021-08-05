@@ -29,14 +29,13 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService){
         swal.showLoading();
 
         var params = {
-            "ID_Tipo_Alerta": "87",
-            "ID_Despacho": "6",
-            "ID_Intervencion": "48,55,106,112,163,258,259,260,261,262,263,264,265,274,275,276,277,278"
+            "idTipoAlerta": alerta.id
         }        
+        console.log("params",params)
         mainAlertasService.getDetalleAlertas(params).then(function success(response) {
             console.log(response);
             if (response.data !== undefined) {
-                $scope.otsAlertas = alertas;
+                $scope.otsAlertas = response.data.result.detalleAlerta;
                 $scope.vistaDespacho = false;
                 $scope.tipoAlertaSeleccionada = angular.copy(alerta);
                 $scope.mostrarDetalleAlertas($scope.otsAlertas);
@@ -49,41 +48,43 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService){
     }
 
     $scope.mostrarDetalleAlertas = function(alertas) {
+        
         $scope.viewTableResumen = [];
-        angular.forEach(alertas,function(value,key){
+        angular.forEach(alertas,function(value,index){
+            let alertaob=value.alerta ;
+            let ordenobj=value.orden ;
             let  arra=[];
-            arra[0] = value.IdOT ? value.IdOT : '';
-            arra[1] = value.OrdenServicio ? value.OrdenServicio : '';
-            arra[2] = 
-                '<div class="card card-alertas-pendientes" onclick="consultarAccionesAlerta(\'' + value.IdOT + '\', \'' + value.OrdenServicio + '\', \''+ value.LatitudAlerta + '\', \'' + value.LongitudAlerta + '\', \'' + value.LatitudTec + '\', \'' + value.LongitudTec +'\')">'
-            +       '<div class="card-body card-body-alertas">'
-            +           '<div class="row">'
-            +               '<div class="col-12">'
-            +                   '<span class="text-primary-alerta">OT: </span><span class="text-secundary-alerta">' + value.IdOT + ' </span>'
-            +                   '<span class="text-primary-alerta">OS: </span><span class="text-secundary-alerta">' + value.OrdenServicio + '</span>'
-            +               '</div>'
-            +           '</div>'
-            +           '<div class="row">'
-            +               '<div class="col-12">'
-            +                   '<span class="text-primary-alerta">Direcci&oacute;n: </span><span class="text-secundary-alerta">' + value.Direccion + '</span>'
-            +               '</div>'
-            +           '</div>'
-            +           '<div class="row">'
-            +               '<div class="col-12">'
-            +                   '<span class="text-primary-alerta">Fecha y hora: </span><span class="text-secundary-alerta">' + value.Fecha_Registro + '</span>'
-            +               '</div>'
-            +           '</div>'
-            +       '</div>'
-            +       '<div class="card-footer text-muted card-alertas-pendientes-foot">'
-            +           '<div class="row">'
-            +               '<div class="col-12">'
-            +                   '<span class="text-primary-alerta">Alerta: </span><span class="text-secundary-alerta">' + value.SubtipoAlerta + '</span>'
-            +               '</div>'
-            +           '</div>'
-            +       '</div>'
-            +   '</div>'
-
-
+            arra[0] = alertaob.id ? alertaob.id : '';
+            arra[1] = alertaob.folioSistema ? alertaob.folioSistema : '';
+            arra[2] = `
+                <div class="card card-alertas-pendientes" onclick="consultarAccionesAlerta(${index})">
+                    <div class="card-body card-body-alertas">
+                        <div class="row">
+                            <div class="col-12">
+                                <span class="text-primary-alerta">OT: </span><span class="text-secundary-alerta">  ${ordenobj.id}   </span>
+                                <span class="text-primary-alerta">Folio: </span><span class="text-secundary-alerta">  ${ordenobj.folioSistema}  </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <span class="text-primary-alerta">Direcci&oacute;n: </span><span class="text-secundary-alerta"> ${ ordenobj.direccion } </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <span class="text-primary-alerta">Fecha y hora: </span><span class="text-secundary-alerta">  ${alertaob.fechaRegistro}  </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-muted card-alertas-pendientes-foot">
+                        <div class="row">
+                            <div class="col-12">
+                                <span class="text-primary-alerta">Alerta: </span><span class="text-secundary-alerta">  ${alertaob.descSubtipoAlerta}  </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `
             $scope.viewTableResumen.push(arra);
             
         });
