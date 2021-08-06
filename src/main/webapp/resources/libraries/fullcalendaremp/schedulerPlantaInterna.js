@@ -6397,7 +6397,7 @@ ResourceRow = (function(superClass) {
       var templateOperador =`
       <div class="row">
           <div class="col-2 ">
-              <img style="border:.2em solid #${resource.color}" onclick="abrirModalFoto('${fullName}','${resource.urlFotoPerfil}', ' ${resource.usuarioFFM}', '${resource.numContacto}', '${resource.centro}', '${resource.descipcionEstatusTecnico}')"  class="efecto imagen_operario_foto"  src="${(resource.urlFotoPerfil != undefined && resource.urlFotoPerfil? resource.urlFotoPerfil:'./resources/img/plantainterna/despacho/tecnicootasignada.png' )}"/>
+              <img style="border:.2em solid ${resource.color}" onclick="abrirModalFoto('${fullName}','${resource.urlFotoPerfil}', ' ${resource.usuarioFFM}', '${resource.numContacto}', '${resource.centro}', '${resource.descipcionEstatusTecnico}')"  class="efecto imagen_operario_foto"  src="${(resource.urlFotoPerfil != undefined && resource.urlFotoPerfil? resource.urlFotoPerfil:'./resources/img/plantainterna/despacho/tecnicootasignada.png' )}"/>
           </div>
           <div class="col-8 text-justify">
               <div class="conteo-content-ots" >
@@ -6442,7 +6442,7 @@ ResourceRow = (function(superClass) {
       
     
       
-      contentEl = $('<div class="fc-cell-content efecto content-tecnico-asignacion" id="resource-'+resource.idTecnico+'"  >' + (colSpec.isMain ? this.renderGutterHtml() : '') + '<div style=" background: #'+resource.color+';" class="barra-color-tecnico"></div><div class="fc-cell-text">' +  templateOperador + '</div>' + '</div>');
+      contentEl = $('<div class="fc-cell-content efecto content-tecnico-asignacion" id="resource-'+resource.idTecnico+'"  >' + (colSpec.isMain ? this.renderGutterHtml() : '') + '<div style=" background: '+resource.color+';" class="barra-color-tecnico"></div><div class="fc-cell-text">' +  templateOperador + '</div>' + '</div>');
       
       
       if (typeof colSpec.render === 'function') {

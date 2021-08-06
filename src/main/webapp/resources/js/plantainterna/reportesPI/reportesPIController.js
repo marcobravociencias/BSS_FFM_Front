@@ -22,44 +22,51 @@ app.controller('reportesController', ['$scope','$q','reportesPIService', 'generi
 			$(this).addClass('active');
 			switch($(this).attr('id')){
 				case 'link_reporte_ordenes':
-					console.log("entra")
+					console.log("entra ordenes")
 					$("#texto_header_reportes").text("Reporte Ordenes de Trabajo Planta Interna"); 
+					$("#container_reporte_ordenes").show('fade');
 					$('#container_reporte_despacho').hide();
 					$('#container_reporte_tecnico').hide();
 					$("#container_reporte_auxiliar").hide();
 					//$('.content_reporte').hide();
 					//$("#reporteOrdenesTable").show(); 
-					$("#container_reporte_ordenes").show('fade');
 					
-					console.log("sale")
+					
+					console.log("sale ordenes")
 				break;
 				case 'link_reporte_tecnico':
+					console.log("entra tecnico")
 					$("#texto_header_reportes").text("Reporte por t\u00E9cnico");
+					$("#container_reporte_tecnico").show('fade');
 					//reporteOrdenesTable.destroy();
 					$('#container_reporte_ordenes').hide();
 					$('#container_reporte_despacho').hide();
 					$("#container_reporte_auxiliar").hide();
 					//$('#reporteOrdenesTable').hide();
-					$("#container_reporte_tecnico").show('fade');
+					console.log("sale tecnico")
 					
 					
 				break;
 				case 'link_reporte_despacho':
+					console.log("entra despacho")
 					$("#texto_header_reportes").text("Reporte Coordinador");
+					$("#container_reporte_despacho").show('fade');
 					$('#container_reporte_tecnico').hide();
 					$('#container_reporte_ordenes').hide();
 					$("#container_reporte_auxiliar").hide();
 					//$('#reporteOrdenesTable').hide();
-					$("#container_reporte_despacho").show('fade');
+					console.log("sale despacho")
 					
 				break;
 				case 'link_reporte_auxiliar':
+					console.log("entra aux")
 					$("#texto_header_reportes").text("Reporte T\u00E9cnico Auxiliar");
+					$("#container_reporte_auxiliar").show('fade');
 					$('#container_reporte_tecnico').hide();
 					$('#container_reporte_ordenes').hide();
 					$("#container_reporte_despacho").hide();
 					//$('#reporteOrdenesTable').hide();
-					$("#container_reporte_auxiliar").show('fade');
+					console.log("sale aux")
 					
 				break;
 					
@@ -70,9 +77,17 @@ app.controller('reportesController', ['$scope','$q','reportesPIService', 'generi
 	//Muestra contenido completo
 $("#btn_mostrar_nav").click(function(){
 	$(this).hide();
+	
 	$("#datos_tablas").attr('class','');
 	$("#datos_tablas").addClass("col-sm-10");
 	$("#navbar_reportes").show('fade');		
+	$("#borderAlign").addClass("borderAlignR");
+	$("#borderAlignt").addClass("borderAlignR");
+	$("#borderAlignt").removeClass("borderAlignRD");
+	$("#borderAlignc").addClass("borderAlignR");
+	$("#borderAlignc").removeClass("borderAlignRD");
+	$("#borderAligna").addClass("borderAlignR");
+	$("#borderAligna").removeClass("borderAlignRD");
 });
 
 //Función para ocultar el nav de los selects
@@ -82,6 +97,15 @@ $("#ocultar_nav").click(function(){
 	$('#btn_mostrar_nav').show();
 	$("#datos_tablas").attr("class","");
 	$("#datos_tablas").addClass("col-sm-12 col-md-12");
+	$("#borderAlign").removeClass("borderAlignR");
+	$("#borderAlignt").removeClass("borderAlign");
+	$("#borderAlignt").addClass("borderAlignRD");
+	$("#borderAlignc").removeClass("borderAlign");
+	$("#borderAlignc").addClass("borderAlignRD");
+	$("#borderAligna").removeClass("borderAlign");
+	$("#borderAligna").addClass("borderAlignRD");
+	
+	
 });
 
 $scope.abrirModalGeografiaRep=function(){

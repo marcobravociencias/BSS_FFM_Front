@@ -42,9 +42,7 @@ app.misProyectosDependencias=function($scope){
                 }
                 // Draw pixel from line span at
                 // currently rasterized position
-                if(i% 6 === 0){
                    $scope.putpixel(x, y,clasedot);
-                }
             }
         } else { // The line is Y-axis dominant
         // Line is drawn bottom to top
@@ -70,9 +68,7 @@ app.misProyectosDependencias=function($scope){
                 }
                 // Draw pixel from line span at
                 // currently rasterized position
-                if(i% 6 === 0){
                    $scope.putpixel(x, y,clasedot);
-                }
             }
         }
     }

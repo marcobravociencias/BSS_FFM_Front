@@ -152,9 +152,12 @@ label.dropdown-item.form-check-inputfiltro {
 }
 #table-ot-pendientes .ot-pendiente-event {
   background: transparent !important;
-  border: 1px solid #dddddd;
-  box-shadow: 0 0 5px 0 rgb(135 142 224 / 30%);
+  border: 0px solid #dddddd;
+  /* box-shadow: 0 0 5px 0 rgb(135 142 224 / 30%); */
+  box-shadow: 0px 0px 5px #878EE04D;
+  /* box-shadow: 0px 0px 5px #878EE04D; */
   /* border-left: 4px solid #773f85; */
+  margin-bottom: .7em;
 }
 .ot-pendiente-event .icono-ot-pendeinte:hover {
   box-shadow: 1px 2px 1px 1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%),
@@ -171,7 +174,7 @@ label.dropdown-item.form-check-inputfiltro {
   color: #1266f1;
   padding: 0.3em 0.4em;
   background: #efefef;
-  color: #2c77d1;
+  color: #5cc8e5;
 }
 .footer-otpendiente .content-footer {
   display: contents;
@@ -186,8 +189,11 @@ label.dropdown-item.form-check-inputfiltro {
   color: #2c2c2c;
 }
 .footer-otpendiente {
-  border-top: 1px solid #dfdfdf;
-  padding: 0.2em 0.5em;
+  border-top: 1px solid #dbdbdb;
+  /* opacity: 0.3; */
+  padding: 0.3em 0 0.2em 0em;
+  margin-left: .7em;
+  margin-right: .7em;
   /* background:#f3f3f3; */
 }
 
@@ -343,6 +349,7 @@ span#buscar-btn-otpend {
 
 #table-ot-pendientes {
   margin-top: 0 !important;
+  padding: .5em;
 }
 #table-ot-pendientes thead {
   display: none;
@@ -845,18 +852,13 @@ p.top-title-comentario {
   font-size: 0.8em !important;
   cursor: pointer;
   border-radius: 50%;
-  color: #2c77d1;
+  color: #5cc8e5;
   padding: 0.3em 0.4em;
   border: 0.5px solid #eaeaea;
   background: #efefef;
 }
 
-.intervencion-title {
-  padding: 0 0.4em;
-  font-size: 0.8em;
-  border-radius: 1em;
-  font-weight: bold;
-}
+
 .content-top-element {
   display: inline-block;
 }
@@ -957,17 +959,16 @@ h5.title-nombrecliente {
 }
 
 .intervencino-elemn {
-  width: 25%;
+  /* width: 25%; */
   display: inline-block;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  border-radius: 1em;
   /* border: 1px solid red; */
-  text-align: center;
-  /* font-weight: bold !important; */
-  position: absolute;
-  left: 55%;
+  /* text-align: center; */
+  font-weight: bold;
+  display: contents;
+  font-size: .9em;
 }
 .content-top-element.bars-content {
   width: 55%;

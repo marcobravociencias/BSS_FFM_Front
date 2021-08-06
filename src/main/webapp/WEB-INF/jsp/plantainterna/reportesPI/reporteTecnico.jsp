@@ -1,7 +1,7 @@
 <div  class="container-fluid container-filtros-consultaot" style="padding-left: 0px;">
     <div style="padding-left: 0;padding-right: 0;" class="content-fluid">
         <div class="row md-form" id="filtros_config">
-            <div class="col-md-2 column-style-consulta borderFilterR" >
+            <div class="col-md-2 column-style-consulta borderFilterR borderAlignR" id="borderAlignt">
                 <input type="text" placeholder="# EMPLEADO" id="numEmp"
                 class="form-control input-filtro-consultaOT form-control-sm">
             </div>

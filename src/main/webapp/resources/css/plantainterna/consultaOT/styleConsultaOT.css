@@ -966,7 +966,6 @@ table.dataTable.no-footer {
   position: relative;
   padding-top: 3pt !important;
   padding-bottom: 3pt !important;
-  max-width: 1140px;
 }
 
 .div-btn-busqueda {
@@ -1327,3 +1326,12 @@ label.label-filter {
   font-size: .7em;
   font-weight: bold;
 }
+
+
+
+
+
+
+
+
+

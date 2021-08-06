@@ -241,7 +241,7 @@ i.fa.active {
 .title_span {
     color: #2f2f2fa8;
 }
-
+/*
 #dropdownint{
 	color: #000000;
 	text-decoration: none;
@@ -263,7 +263,7 @@ i.fa.active {
 .md-form .form-control:disabled, .md-form .form-control[readonly] {
        border-bottom: 1px solid #bdbdbd;
        background-color: transparent;
-       /* margin-left: 2.3em; */
+       /* margin-left: 2.3em; *//*
 }
   
 span.texto_item {
@@ -296,7 +296,7 @@ ul.dropdown-menu, span.twitter-typeahead .tt-menu {
     z-index: 1000;
     display: none;
     float: left;
-    min-width: 265px;
+    min-width: 269px;
     padding: 5px 0px;
     margin: 2px 0 0;
     font-size: 1rem;
@@ -307,9 +307,11 @@ ul.dropdown-menu, span.twitter-typeahead .tt-menu {
     background-clip: padding-box;
     border: 1px solid rgba(0, 0, 0, 0.15);
     border-radius: 0.25rem;
-    /* display:  inline-block; */
+    /* display:  inline-block; *//*
     padding-top: 0em;
     margin-top: -0.4em;
+    /* min-height: 54px; */
+    /* min-height: 50px; *//*
 }
 .filtro_dropdown .dropdown-menu > li > .dropdown-item.checkbox {
     margin: -7px;
@@ -329,7 +331,7 @@ ul.dropdown-menu, span.twitter-typeahead .tt-menu {
     cursor: pointer;
     -moz-user-select: none;
     user-select: none;
-    /* border: 1px solid rgba(0, 0, 0, 0.15) !important; */
+    /* border: 1px solid rgba(0, 0, 0, 0.15) !important; *//*
 }
 .filtro_dropdown label.dropdown-item.checkbox {
     margin-right: 15px !important;
@@ -339,7 +341,7 @@ ul.dropdown-menu, span.twitter-typeahead .tt-menu {
     border: 1px solid rgba(0, 0, 0, 0.15) !important;
     /* padding-top: 100%; */
     /* white-space:  pre-line; */
-    /* white-space: pre; */
+    /* white-space: pre; *//*
 }
 .filtro_dropdown .fa-check-square-o {
     color: #7585f9;
@@ -377,17 +379,15 @@ ul.dropdown-menu, span.twitter-typeahead .tt-menu {
     cursor: text;
     color: #757575;
     margin-left: 1em;
-}
+}*/
 
-<!--Inicio Reporte tecnico -->
+
 div#filtros_config {
     margin-left: 23em;
 }
 
 
-<!--Fin Reporte tecnico -->
 
-<!--Inicio Reporte Coordinador-->
 
 input#fecha_inicio_despacho {
     background: white;
@@ -400,9 +400,7 @@ input#fecha_inicio_despacho {
 	background-color:white !important;
 } 
 
-<!--Fin Reporte Coordinador-->
 
-<!--Inicio Reporte Auxiliares-->
 
 input#fecha_inicio_auxiliar{
     background: white;
@@ -554,8 +552,8 @@ ul.navbar-nav.mr-auto li.active{
 	border-bottom: none;
 }
 div.borderFilterR {
-    /* padding-right: 0; */
-    margin: 0 2px;
+    padding-right: 0;
+    margin: 0px 2px;
     /* margin-left: -1em; */
     /* padding-left: 0px; */
 }
@@ -1079,3 +1077,9 @@ div#contenedor_mensual_cluster .selectLabel {
     z-index: 2;
     font-size: 14px;
   }
+  div.borderAlignR{
+      padding: 0px !important;
+  }
+  div.borderAlignRD{
+    margin: 0px 11px;
+}
