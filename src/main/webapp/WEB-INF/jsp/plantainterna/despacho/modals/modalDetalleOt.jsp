@@ -22,7 +22,7 @@
                             <a class="nav-link " id="v-tabs-consulta-historico-tab" data-mdb-toggle="tab" href="#v-tabs-consulta-historico" role="tab" ng-click="consultarHistorial()" aria-controls="v-tabs-consulta-historico-tab" aria-selected="true" >Hist&oacute;rico</a>
                             <a class="nav-link" id="v-tabs-consulta-mensajeria-tab" data-mdb-toggle="tab" href="#v-tabs-consulta-mensajeria" role="tab" ng-click="consultarComentarios();" aria-controls="v-tabs-consulta-mensajeria-tab" aria-selected="false" >Comentarios</a>
                             <a class="nav-link" id="v-tabs-consulta-pedido-tab" data-mdb-toggle="tab" href="#v-tabs-consulta-pedido" role="tab" ng-click="consultarPedido();" aria-controls="v-tabs-consulta-pedido-tab" aria-selected="false" >Pedido</a>                
-                            <!--a class="nav-link" id="v-tabs-consulta-acciones-tab" data-mdb-toggle="tab" href="#v-tabs-consulta-acciones" role="tab" aria-controls="v-tabs-consulta-acciones-tab" aria-selected="false" >Acciones</a-->                    
+                            <a class="nav-link" id="v-tabs-consulta-acciones-tab" data-mdb-toggle="tab" href="#v-tabs-consulta-acciones" role="tab" aria-controls="v-tabs-consulta-acciones-tab" aria-selected="false" >Acciones</a>                    
                         </div>
                         </div>                      
                         <div class="col-10">

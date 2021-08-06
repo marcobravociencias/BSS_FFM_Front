@@ -399,9 +399,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                                                         <i onclick="abrirModalDetalleOtPendiente(${otpendiente.idOrden})" class="icono-ot-pendeinte fa fa-bars"></i>
                                                         <h5  class="title-otpendeinte" >#${otpendiente.claveCliente}</h5>
                                                     </div>
-                                                    <div style="border:1px solid ${otpendiente.colorOrden}; color:${otpendiente.colorOrden}"  class="content-top-element intervencino-elemn intervencion-title"> 
-                                                        ${otpendiente.descipcionTipoOrden}
-                                                    </div>
+                                                   
                                                     <div class="content-top-element confirmacion-elemn switchpendiente">
                                                         <input ${otpendiente.isConfirmado ? 'checked':''} onchange="abrirModalConfirmacionDesconfirmacion(this,${otpendiente.idOrden})" class="checkbox-confirmacion" type="checkbox" id="switch-${otpendiente.idOrden}" /><label class="checkbox-confirmacion-label" for="switch-${otpendiente.idOrden}">Toggle</label>
                                                     </div>
@@ -432,7 +430,6 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                                                         <b class="title-ciudad">Geograf&iacute;a.</b>
                                                         <span class="content-ciudadotpend" >${otpendiente.descripcionGeografia}</span>
                                                         
-                                                        <span class="content-telefonootpend" >${otpendiente.telefono}</span>
                                                     </div>                                               
                                                 </div>
                                                 <div class="info-content-otpendeinte">
@@ -441,11 +438,17 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                                                         <span class="content-ciudadotpend">${otpendiente.direccion}</span>
                                                     </div>                                             
                                                 </div>
-        
+                                                <div class="info-content-otpendeinte">
+                                                    <div class="line-content-infootpend">
+                                                        <i class="fas fa-phone telefono-icon-pendiente"></i>
+                                                        <span class="telefono-text-otpendiente" >${otpendiente.telefono}</span>
+                                                    </div>                                             
+                                                </div>
                                             </div>
                                             <div class="footer-otpendiente">
-                                                <i class="fas fa-phone telefono-icon-pendiente"></i>
-                                                <span class="telefono-text-otpendiente" >${otpendiente.telefono}</span>
+                                                <div style=" color:${otpendiente.colorOrden}"  class="content-top-element intervencino-elemn intervencion-title"> 
+                                                    ${otpendiente.descipcionTipoOrden}
+                                                </div>
                                             </div>
                                         </div>
                                     </td>
