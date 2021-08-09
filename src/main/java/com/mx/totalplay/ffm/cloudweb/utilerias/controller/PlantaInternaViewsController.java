@@ -26,12 +26,12 @@ public class PlantaInternaViewsController {
 		return "plantainterna/usuarios/usuariosPi";
 	}
 	
-	@GetMapping("/moduloDisponibilidad")
 	@GetMapping("/ordenesuniversales")
 	public String ordenesUniversales() {
 		return "plantainterna/ordenesUniversales/ordenesuniversales";
 	}
 	
+	@GetMapping("/moduloDisponibilidad")
 	public String disponibilidad() {
 		return "plantainterna/disponibilidad/disponibilidad";
 	}
