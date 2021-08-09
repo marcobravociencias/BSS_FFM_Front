@@ -40,6 +40,7 @@ public class MyFilterInvocationSecurityMeatadataSource implements org.springfram
 		put("/","ROLE_USER");
 		put("/loginPage","ROLE_USER");
 		put("/loginPage","ROLE_ANONYMOUS");
+		put("/ordenesuniversales","ROLE_USER");
 
 	}};
     
