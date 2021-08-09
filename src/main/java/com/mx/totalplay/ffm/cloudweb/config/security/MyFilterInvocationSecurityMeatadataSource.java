@@ -44,6 +44,11 @@ public class MyFilterInvocationSecurityMeatadataSource implements org.springfram
         put("/coordInst","ROLE_USER");
         put("/moduloSkills","ROLE_USER");
         put("/busqueda","ROLE_USER");
+		put("/detailsHelp","ROLE_USER");
+		put("/","ROLE_USER");
+		put("/loginPage","ROLE_USER");
+		put("/loginPage","ROLE_ANONYMOUS");
+		put("/ordenesuniversales","ROLE_USER");
         put("/moduloVehiculos","ROLE_USER");
 	
 	
