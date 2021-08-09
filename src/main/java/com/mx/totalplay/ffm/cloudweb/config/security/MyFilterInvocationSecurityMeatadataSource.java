@@ -34,6 +34,7 @@ public class MyFilterInvocationSecurityMeatadataSource implements org.springfram
 		put("/detailsHelp","ROLE_USER");
 		
 		
+		
         put("/moduloDespacho","ROLE_USER");
         put("/moduloConsultaOt","ROLE_USER");       
 
@@ -73,7 +74,7 @@ public class MyFilterInvocationSecurityMeatadataSource implements org.springfram
 		}
 		/**if(loginResult.getPermisos() !=null) {
 			for (Permiso permiso:loginResult.getPermisos()) {
-				urlRoleMap.put("", permiso.getClave());
+				urlRoleMap.put( permiso.getClave(),"ROLE_USER");
 			}
 		}
 		**/
