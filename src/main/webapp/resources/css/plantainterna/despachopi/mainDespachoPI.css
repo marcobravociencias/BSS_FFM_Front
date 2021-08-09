@@ -189,6 +189,7 @@ label.dropdown-item.form-check-inputfiltro {
   color: #2c2c2c;
 }
 .footer-otpendiente {
+  text-align: end;
   border-top: 1px solid #dbdbdb;
   /* opacity: 0.3; */
   padding: 0.3em 0 0.2em 0em;
@@ -959,16 +960,21 @@ h5.title-nombrecliente {
 }
 
 .intervencino-elemn {
-  /* width: 25%; */
   display: inline-block;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  /* border: 1px solid red; */
-  /* text-align: center; */
   font-weight: bold;
-  display: contents;
   font-size: .9em;
+  /* position: absolute; */
+  left: 0;
+  /* margin-left:1em; */
+  width: 23%;
+  text-align: initial;
+}
+.content-iconos {
+    display: inline-block;
+    width: 75%;
 }
 .content-top-element.bars-content {
   width: 55%;
@@ -1673,4 +1679,19 @@ table#table-alertas-pi {
     padding-right: 0 !important;
     margin-right: 0 !important;
     width: 100% !important;
+}
+
+.content-iconos-ot-pendiente {
+    display: inline-block;
+    background: #EFEFEF !important;
+    border-radius: 50%;
+    
+    height: 1.3em;   
+    width: 1.3em;
+    text-align: center;
+}
+.iconos-ot-pendiente{ 
+    vertical-align: middle;
+    max-height: 1em;
+    max-width: 1em;
 }

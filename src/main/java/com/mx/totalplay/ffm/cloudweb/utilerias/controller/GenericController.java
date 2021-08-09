@@ -32,7 +32,7 @@ public class GenericController {
 	@GetMapping("/enrutarUser")
 	public String despachoPlantaExterna(ModelMap model) {	
 		logger.info("ENTRA DECISION");
-		return "redirect:despachoplantainterna";				
+		return "redirect:moduloDespacho";				
 	}	
 	
 	 @ModelAttribute("googlkeyattrvar")

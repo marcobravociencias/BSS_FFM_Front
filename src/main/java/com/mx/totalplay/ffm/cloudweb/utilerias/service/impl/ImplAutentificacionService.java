@@ -35,12 +35,19 @@ public class ImplAutentificacionService  implements AutentificacionService{
 		//String urlService = constantesGeneric.getDirIpInicioService() + constantesGeneric.getWsUrlValidausrffm();
 		//String urlService="http://login/ffm/login/auth/";
 		String urlService=env.getProperty("dep.envirom.web").concat(":8151/ffm/login/auth/");
-		LoginResult response = (LoginResult) restCaller.callPostReturnClassBasicAuthXwwwUrlFormed(
+		
+
+		LoginResult responseLog = (LoginResult) restCaller.callPostReturnClassBasicAuthXwwwUrlFormed(
 				urlService ,  us, crdospas, LoginResult.class
 		);
-		logger.info("RESULT" + gson.toJson(response));
+								
+		logger.info("jsonstring\n" +gson.toJson(  responseLog ));
 
-		return response;
+//		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+//		String paramacc=jsonObject.get("yekparam").getAsString();
+		
+		logger.info("RESULT" + gson.toJson(responseLog));
+		return responseLog;
 	}
 
 }

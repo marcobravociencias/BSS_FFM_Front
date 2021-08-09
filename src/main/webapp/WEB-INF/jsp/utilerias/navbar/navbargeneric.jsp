@@ -49,8 +49,17 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-menu-generic">
         <div class="container-fluid container-fludi-navbar">
             <div class="collapse navbar-collapse container-menus-hader justify-content-center" id="navbarTogglerDemo02">
-                <ul class="ul-elementos-nav navbar-nav me-auto mb-2 mb-lg-0">                   
-                    <li id="li-despacho-navbar" class="nav-item ">
+                <ul class="ul-elementos-nav navbar-nav me-auto mb-2 mb-lg-0">                        
+                    <c:forEach var="permi" items="${userStore.permisos}">
+                        <c:if test="${permi.permisos.size() > 0}">
+
+                            <li id="" class="nav-item ">
+                                <i class="${permi.icono} icon-navbar-izquierda"></i>
+                                <a class="nav-link a-navlink-navbar"  href="${permi.clave}">${permi.descripcion}</a>
+                            </li>      
+                        </c:if>            
+                    </c:forEach>
+                    <!--li id="li-despacho-navbar" class="nav-item ">
                         <i class="fas fa-user-circle icon-navbar-izquierda"></i>
                         <a class="nav-link a-navlink-navbar"  href="despachoplantainterna">Despacho</a>
                     </li>
@@ -78,7 +87,7 @@
                     <li id="li-vehiculos-navbar" class="nav-item">
                         <i class="fas fa-taxi icon-navbar-izquierda"></i>
                         <a class="nav-link a-navlink-navbar" href="controlVehicular">Veh&iacute;culos</a>
-                    </li>
+                    </li-->
                     <!--li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i

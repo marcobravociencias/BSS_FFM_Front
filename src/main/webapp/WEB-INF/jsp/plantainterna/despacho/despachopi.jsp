@@ -1,5 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
+
 <!DOCTYPE HTML>
 <html ng-app="despacho">
 
@@ -40,8 +43,7 @@
 
 
     </head>
-    <body id="controllerdespacho" ng-controller="despachoController">
-
+    <body id="controllerdespacho" ng-controller="despachoController">        
 
     	<jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>  
         <input style="display: none;" ng-keyup="buscarTecnicoCalendar()" ng-model="buscarTecnicoInput" type="text">

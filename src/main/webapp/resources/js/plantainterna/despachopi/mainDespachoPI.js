@@ -56,7 +56,11 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
     $scope.listadoHistoricoOt[4].Id_Estatus=5
 
     $scope.infoOtDetalle={}
+    $scope.listadoIconosConfig=[]
 
+    $scope.nfiltrogeografia=''
+    $scope.nfiltrointervenciones=''
+    
     $scope.abrirModalGeografia=function(){
         $("#modal-jerarquia-filtro").modal('show')
     }
@@ -336,19 +340,39 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
     $scope.randomIntFromInterval=function() { // min and max included 
         return Math.floor(Math.random() * (8 - 0 + 1) + 0)
     }
-    $scope.consultarOtsPendientes = function() {        
+    $scope.consultarOtsPendientes = function() {  
+        
+       /**  $scope.nfiltrogeografia
+        $scope.nfiltrointervenciones*/
+
         $scope.listadoOtsPendientes=[]        
         $scope.isCargaOtsPendientes=false;        
         let turnosdisponiblescopy=$scope.filtrosGeneral.turnosdisponibles.filter(e=>e.checkedOpcion).map(e=>e.id)       
-        let intervencionestemp=$scope.filtrosGeneral.tipoOrdenes.filter(e=>e.checkedOpcion).map(e=>e.id)
+        
+        let intervencionestemp=$scope.filtrosGeneral.tipoOrdenes.filter(e=>e.checkedOpcion).map(e=>e.id)      
+        
         let subIntTemp=[]
         angular.forEach($scope.filtrosGeneral.tipoOrdenes,(e,i)=>{
-            e.children.filter( f => f.checkedOpcion ).map((k)=>{ subIntTemp.push(k.id); return k;} )   
+            e.children.filter( f => f.checkedOpcion ).map((k)=>{ 
+                subIntTemp.push(k.id); return k;
+            } )   
         })
 
-        let ultimonivel=$scope.obtenerNivelUltimoJerarquia()
+        let envioIntervenciones=[]
+        if($scope.nfiltrointervenciones){
+            if($scope.nfiltrointervenciones==='2'){
+                envioIntervenciones=[].concat(intervencionestemp);
+            }else{
+                envioIntervenciones=[].concat(subIntTemp);
+            }
+        }else{
+            envioIntervenciones=[].concat(subIntTemp);
+        }
+
+
+        let nivelBusquedaArbol= $scope.nfiltrogeografia ? $scope.nfiltrogeografia : $scope.obtenerNivelUltimoJerarquia()        
         let clustersparam=$("#jstree-proton-3").jstree("get_selected", true)
-                                               .filter(e=>e.original.nivel== ultimonivel)
+                                               .filter(e=>e.original.nivel== nivelBusquedaArbol)
                                                .map(e=>parseInt(e.id))
 
         let estatusPendientes=[]
@@ -359,7 +383,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
         var params =  {
             "fechaInicio": moment( moment($scope.fechaInicioFiltro, 'DD/MM/YYYY').toDate()  ).format('YYYY-MM-DD'),
             "fechaFin": moment( moment($scope.fechaFinFiltro , 'DD/MM/YYYY').toDate() ).format('YYYY-MM-DD') ,
-            "idSubIntervenciones": [].concat(subIntTemp,[1]),
+            "idSubIntervenciones": envioIntervenciones,
             "idTurnos": turnosdisponiblescopy,  
             "idEstatus":  estatusPendientes.concat([0]),
             "idClusters": clustersparam
@@ -384,10 +408,11 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                                 e.colorOrden=e.colorOrden != undefined && e.colorOrden ? e.colorOrden : arrayColors[$scope.randomIntFromInterval()]
                                 e.isConfirmado=indexot%2==0 ? true : false
                                 return e    
-                            })
-                        
+                            })                            
                             let tableelemetn=''
+                            let htmlImagenesIconos=''
                             angular.forEach($scope.listadoOtsPendientes,function(otpendiente,index){
+                                htmlImagenesIconos=$scope.categoriaIconos(otpendiente)
                                 
                                 tableelemetn=`
                                 <tr>
@@ -449,6 +474,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                                                 <div style=" color:${otpendiente.colorOrden}"  class="content-top-element intervencino-elemn intervencion-title"> 
                                                     ${otpendiente.descipcionTipoOrden}
                                                 </div>
+                                                ${htmlImagenesIconos}
                                             </div>
                                         </div>
                                     </td>
@@ -475,6 +501,44 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             $scope.isCargaOtsPendientes=true;
 
         }).catch(err => handleError(err))
+    }
+    $scope.categoriaIconos=function(ordenTrabajo){
+        let iconosText='';
+        iconosText='<div class="content-iconos">';
+
+        if(ordenTrabajo.informacionAdicional !=undefined && ordenTrabajo.informacionAdicional.length> 0){
+            $scope.listadoIconosConfig
+            let tipoDato='';
+           
+            angular.forEach( ordenTrabajo.informacionAdicional , function(elem,index){
+                if(elem.nombre && elem.nombre.toUpperCase() === 'ICONO'){
+                    tipoDato = elem.valor.substring( elem.valor.indexOf(".")+1 , elem.valor.length )
+                    let iconoEncontradoConfig=$scope.listadoIconosConfig.find( e =>{return e.icon=== elem.valor } ).value
+                    switch( tipoDato ){
+                        case 'svg':
+                            iconosText+=` <div class="content-iconos-ot-pendiente">
+                                            <img class="iconos-ot-pendiente svg"  src="data:image/svg+xml;base64,${iconoEncontradoConfig}"/></div>`                            
+                            break;
+                        case 'png':
+                            iconosText+=` <div class="content-iconos-ot-pendiente">
+                                            <img class="iconos-ot-pendiente png" src="data:image/png;base64,${iconoEncontradoConfig}"/></div>`                           
+                            break;
+                        case 'jpg':
+                            iconosText+=` <div class="content-iconos-ot-pendiente">
+                                            <img class="iconos-ot-pendiente jpg" src="data:image/jpeg;charset=utf-8;base64,${iconoEncontradoConfig}"/></div>`                            
+                            break;
+                        case 'jpeg':
+                            iconosText+=` <div class="content-iconos-ot-pendiente">
+                                            <img class="iconos-ot-pendiente jpeg" src="data:image/jpeg;charset=utf-8;base64,${iconoEncontradoConfig}"/></div>`                            
+                            break;
+                        default:
+                    }
+                }
+            })            
+        }
+        iconosText+=`</div>`
+
+        return iconosText;
     }
     $scope.setPixelesTableWrapper=function(){
         let pixelescon=$(window).height()-HEIGTH_PADDING_TABLE;
@@ -747,8 +811,24 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             mainDespachoService.consultarCatalogosTurnosDespachoPI() ,
             mainDespachoService.consultarCatalogoTipoOrdenUsuarioDespacho(),
             mainDespachoService.consulCatalogoGeografiaUsuarioDespacho(),
-            mainDespachoService.consultarCatalogoEstatusDespachoPI()
-        ]).then(function(results) {                  
+            mainDespachoService.consultarCatalogoEstatusDespachoPI(),
+            mainDespachoService.consultarConfiguracionDespachoDespacho()
+        ]).then(function(results) {              
+            let elementosMapa= angular.copy(results[4].data.result);
+            $scope.listadoIconosConfig=[]         
+            $scope.nfiltrogeografia=results[4].data.result.N_FILTRO_GEOGRAFIA
+            $scope.nfiltrointervenciones=results[4].data.result.N_FILTRO_INTERVENCIONES
+
+            
+            for (const elm in results[4].data.result) {
+                console.log(elm)
+                if(elm.toUpperCase().includes("ICONO_")){
+                    $scope.listadoIconosConfig.push({
+                        icon: elm.substring( elm.indexOf("_")+1 , elm.length ),
+                        value:elementosMapa[elm]
+                    }) 
+                }   
+            }
             if (results[3].data !== undefined) {
                 if(results[3].data.respuesta ){
                     if(results[3].data.result ){
@@ -842,7 +922,9 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                 }               
             }else{
                 toastr.error( 'Ha ocurrido un error en la consulta de turnos' );                
-            }           
+            }      
+           
+
 
         }).catch(err => handleError(err));
     }

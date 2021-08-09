@@ -448,9 +448,17 @@ public class ImplDespachoPIService implements DespachoPIService{
 																			params,
 																			urlRequest,
 																			ServiceResponseResult.class,
-																			tokenAcces);				
+																			tokenAcces);	
+
 	    logger.info("RESULT"+gson.toJson(response));
 		return response;
+	}
+	
+	public ServiceResponseResult consultarConfiguracionDespachoDespachoServ() {
+		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
+		Map<String, String> mapResponse = principalDetail.getConfiguraciones();
+		ServiceResponseResult response= ServiceResponseResult.builder().isRespuesta(true).result(mapResponse).build();
+		return response;				
 	}
 	
 	@Override

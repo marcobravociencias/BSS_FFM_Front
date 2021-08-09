@@ -33,7 +33,6 @@ public class SecurityCustomAuthenticationProvider implements AuthenticationProvi
 	
 	private final Map<String,String> urlRoleMap = new HashMap<String,String>(){{
         put("/homePage","ROLE_USER");
-        put("/welcome","ROLE_USER");
         put("/despachoplantainterna","ROLE_USER");
         put("/usuariosplantainterna","ROLE_USER");
         put("/disponibilidad","ROLE_USER");

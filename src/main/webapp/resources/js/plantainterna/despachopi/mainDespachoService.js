@@ -9,6 +9,18 @@ app.service("mainDespachoService", function ($http) {
             }
 		});
 	};
+
+	
+	this.consultarConfiguracionDespachoDespacho=function(params){
+		return $http({
+			method: "post",
+			url: "req/consultarConfiguracionDespachoDespacho",
+			//data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
 	this.consultarCatalogoTipoOrdenGeneralDespacho=function(params){
 		return $http({
 			method: "post",

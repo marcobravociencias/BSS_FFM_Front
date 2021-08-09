@@ -16,22 +16,22 @@ public class PlantaInternaViewsController {
 	@Autowired 
 	ConstantesGeneric genericVars;
 	
-	@GetMapping("/despachoplantainterna")
+	@GetMapping("/moduloDespacho")
 	public String despachoPlantaInterna() {		
 		return "plantainterna/despacho/despachopi";				
 	}
 	
-	@GetMapping("/usuariosplantainterna")
+	@GetMapping("/moduloUsuarios")
 	public String usuariosPlantaInterna() {
 		return "plantainterna/usuarios/usuariosPi";
 	}
 	
-	@GetMapping("/disponibilidad")
+	@GetMapping("/moduloDisponibilidad")
 	public String disponibilidad() {
 		return "plantainterna/disponibilidad/disponibilidad";
 	}
 	
-	@GetMapping("/consultaOT")
+	@GetMapping("/moduloConsultaOt")
 	public String consultaOT() {
 		return "plantainterna/consultaOT/consultaOT";
 	}
@@ -49,7 +49,7 @@ public class PlantaInternaViewsController {
 		return "plantainterna/reportesPI/mainReportesPI";
 		
 	}
-	@GetMapping("/skillsAdm")
+	@GetMapping("/moduloSkills")
 	public String skillsAdm() {
 		
 		return "plantainterna/skillsAdm/mainSkills";
@@ -67,7 +67,7 @@ public class PlantaInternaViewsController {
 		return "plantainterna/busqueda/busqueda";
 	}
 	
-	@GetMapping("/controlVehicular")
+	@GetMapping("/moduloVehiculos")
 	public String controlVehicular() {		
 		return "plantainterna/controlVehicular/mainControlVehicular";
 	}

@@ -14,32 +14,38 @@ import org.springframework.util.AntPathMatcher;
 
 import com.google.gson.Gson;
 import com.mx.totalplay.ffm.cloudweb.plantainterna.controller.DespachoPIController;
+import com.mx.totalplay.ffm.cloudweb.utilerias.model.LoginResult;
 import com.mx.totalplay.ffm.cloudweb.utilerias.utils.ConstSystem;
 import com.mx.totalplay.ffm.cloudweb.utilerias.utils.SystemInfo;
-
+import com.mx.totalplay.ffm.cloudweb.utilerias.model.Permiso;
 public class MyFilterInvocationSecurityMeatadataSource implements org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource {
 	
 	private final AntPathMatcher antPathMatcher = new AntPathMatcher();
 	private  final Logger logger = LogManager.getLogger(DespachoPIController.class.getName());
 	private final Map<String,String> urlRoleMap = new HashMap<String,String>(){{
         put("/homePage","ROLE_USER");
-        put("/welcome","ROLE_USER");
-        put("/despachoplantainterna","ROLE_USER");
-        put("/usuariosplantainterna","ROLE_USER");
-        put("/disponibilidad","ROLE_USER");
-        put("/consultaOT","ROLE_USER");
+
         put("/req/**","ROLE_USER");
         put("/enrutarUser","ROLE_USER");
         put("/","ROLE_ANONYMOUS");
-        put("/reportesPI","ROLE_USER");
-        put("/coordInst","ROLE_USER");
-        put("/skillsAdm","ROLE_USER");
-        put("/busqueda","ROLE_USER");
-        put("/controlVehicular","ROLE_USER");
-		put("/detailsHelp","ROLE_USER");
-		put("/","ROLE_USER");
+    	put("/","ROLE_USER");
 		put("/loginPage","ROLE_USER");
 		put("/loginPage","ROLE_ANONYMOUS");
+		put("/detailsHelp","ROLE_USER");
+		
+		
+        put("/moduloDespacho","ROLE_USER");
+        put("/moduloConsultaOt","ROLE_USER");       
+
+        put("/moduloUsuarios","ROLE_USER");
+        put("/moduloDisponibilidad","ROLE_USER");
+        put("/reportesPI","ROLE_USER");
+        put("/coordInst","ROLE_USER");
+        put("/moduloSkills","ROLE_USER");
+        put("/busqueda","ROLE_USER");
+        put("/moduloVehiculos","ROLE_USER");
+	
+	
 
 	}};
     
@@ -50,10 +56,12 @@ public class MyFilterInvocationSecurityMeatadataSource implements org.springfram
 	public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		//auth.getPrincipal()
-		logger.info("###########.");
+		logger.info("###########. counting");
 		ConstSystem.sumar();
 		SystemInfo.Info();
 		logger.info(new Gson().toJson(auth.getPrincipal()));
+		
+		
 		// TODO Auto-generated method stub
 		FilterInvocation fi = (FilterInvocation) object;
 		String url = fi.getRequestUrl();
@@ -63,7 +71,12 @@ public class MyFilterInvocationSecurityMeatadataSource implements org.springfram
 		if(!auth.getPrincipal().toString().equals("anonymousUser") && url.equals("/loginPage")) {
 			url = "/";
 		}
-		
+		/**if(loginResult.getPermisos() !=null) {
+			for (Permiso permiso:loginResult.getPermisos()) {
+				urlRoleMap.put("", permiso.getClave());
+			}
+		}
+		**/
 		for(Map.Entry<String,String> entry:urlRoleMap.entrySet()){
 			
 			boolean containsSigno=url.contains("?");

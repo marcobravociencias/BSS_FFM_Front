@@ -37,6 +37,16 @@ public class DespachoPIController {
      * return response;
      * }
      **/
+    
+    @PostMapping("/consultarConfiguracionDespachoDespacho")
+    public ResponseEntity<?> consultarIconosDisponibles() {
+        ServiceResponseResult response = despachoService.consultarConfiguracionDespachoDespachoServ();
+        if (response.getResult() instanceof Integer) {
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+
+    }
 
     @PostMapping("/consultarCotizacionDespacho")
     public ResponseEntity<?> consultarCotizacionDespachoContr(@RequestBody String params) {
