@@ -360,7 +360,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
 
         let envioIntervenciones=[]
         if($scope.nfiltrointervenciones){
-            if($scope.nfiltrointervenciones==='2'){
+            if($scope.nfiltrointervenciones==='1'){
                 envioIntervenciones=[].concat(intervencionestemp);
             }else{
                 envioIntervenciones=[].concat(subIntTemp);
