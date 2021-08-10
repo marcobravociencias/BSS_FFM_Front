@@ -210,7 +210,7 @@
         <jsp:include page="./modals/modalConfirmaDesconfirma.jsp"></jsp:include>    
         <jsp:include page="./modals/modalLocalizacionRegistros.jsp"></jsp:include>   
         <jsp:include page="./modals/modalFotoUsuario.jsp"></jsp:include>   
-        <jsp:include page="modals/modalVistaMapa.jsp"></jsp:include> 
+        <jsp:include page="./modals/modalVistaMapa.jsp"></jsp:include> 
        
         <!--div ng-show="vistaDespacho" class="container-fluid d-flex justify-content-center">    
             <ul class="wall content-alert-parent">
