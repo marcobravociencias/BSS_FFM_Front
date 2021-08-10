@@ -2,7 +2,8 @@ var app = angular.module('ordenesUniversalesApp', []);
 
 app.controller('ordenesUniversalesController', ['$scope', 'ordenesUniversalesService', 'genericService', function ($scope, ordenesUniversalesService, genericService) {
 
-    console.log("GG");
+    app.calendarController($scope, ordenesUniversalesService);
+    app.mapController($scope, ordenesUniversalesService);
 
     $scope.respaldoCatalogo = [];
     $scope.listaIntervencion = [];
@@ -11,7 +12,6 @@ app.controller('ordenesUniversalesController', ['$scope', 'ordenesUniversalesSer
     $scope.listaPaquete = [];
 
     $scope.infoBasica = {};
-    $scope.infoBasica.turno = "Turno";
     $scope.informacionCliente = {};
 
     $scope.consultarCatalogoOrdenesUniversales = function() {
@@ -43,6 +43,27 @@ app.controller('ordenesUniversalesController', ['$scope', 'ordenesUniversalesSer
     $scope.filtrarSubIntervencion = function(intervencion) {
         console.log(intervencion);
         $scope.listaSubIntervencion = $scope.respaldoCatalogo.filter(e => e.Id_padre === intervencion.Id_interv);
+    }
+
+    $scope.validarFolio = function() {
+        if($.trim(  $scope.infoBasica.folio)  !== ''){
+			let validacionCaracteres=$.trim( $scope.infoBasica.folio ).substr(0,2);
+			let validacionCaracteresNuevo=$.trim( $scope.infoBasica.folio ).substr(0,2);
+			if(validacionCaracteres ==='02'){			
+				//consultarInfoCuenta($.trim( $("#cuenta-form").val()));
+                $scope.consultarInformacionFolio();
+			} else if(validacionCaracteresNuevo ==='1.'){
+				//consultarInfoCuenta($.trim( $("#cuenta-form").val()));
+                $scope.consultarInformacionFolio();					
+			} else if(validacionCaracteresNuevo ==='6.'){			
+				//consultarInfoCuenta($.trim( $("#cuenta-form").val()));
+                $scope.consultarInformacionFolio();		
+			} else {
+				mostrarMensajeWarningValidacion('Formato de folio no valido')
+			}
+		} else {
+			mostrarMensajeWarningValidacion('Folio requerido')
+		}	
     }
 
     $scope.consultarInformacionFolio = function() {
@@ -115,8 +136,6 @@ app.controller('ordenesUniversalesController', ['$scope', 'ordenesUniversalesSer
                     if (response.data.result === "0") {
                         $scope.listaArbolCiudades = [];
                         $scope.resultArbol = response.data.info[0].General_Arbol.arbol;
-                        console.log($scope.resultArbol);
-                        //$scope.listaArbolCiudades.push({id: element.ID, text: ID_Description, parent: "#", icon: 'fa fa-globe', state:{opened:false}});
                         angular.forEach($scope.resultArbol, function (element, index) {
                             $scope.consultaArbol = true;
                             $scope.listaArbolCiudades.push(
@@ -125,14 +144,13 @@ app.controller('ordenesUniversalesController', ['$scope', 'ordenesUniversalesSer
                                     text: element.ID_Description,
                                     parent: ((element.ID_Padre=='nulo' || element.ID_Padre=='NULO' || element.ID_Padre=='' || element.ID_Padre=='null')?'#':element.ID_Padre),
                                     icon: 'fa fa-globe',
+                                    nivel: element.Nivel,
                                     state:{
                                         opened:false
                                     }
                                 }
                             );
                         });
-                        console.log("Finaliza");
-                        console.log($scope.listaArbolCiudades);
                         $('#jstree-distrito').bind('loaded.jstree', function(e, data) {	
                             swal.close()  
                             $("#modal-filtro-arbol").modal('show');
@@ -157,15 +175,18 @@ app.controller('ordenesUniversalesController', ['$scope', 'ordenesUniversalesSer
         } else {
             $("#modal-filtro-arbol").modal('show');
         }
-
     }
 
-    $scope.consultarDisponibilidad = function() {
+    $scope.borrarInformacionCliente = function() {
+        $scope.informacionCliente = {};
+    }
+
+    $scope.consultarDisponibilidad = function(distrito) {
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
         $scope.params = {};
-        $scope.params.IdCiudad = "";
-        $scope.params.IdIntervencion = "";
+        $scope.params.IdCiudad = distrito;
+        $scope.params.IdIntervencion = $scope.infoBasica.intervencion.Id_interv;
         $scope.params.IdCompany = "2";
         ordenesUniversalesService.getDisponibilidadServicioRest(JSON.stringify($scope.params)).then(function success(response) {
             response.data = responseDisponibilidad;
@@ -184,230 +205,16 @@ app.controller('ordenesUniversalesController', ['$scope', 'ordenesUniversalesSer
         }).catch(err => handleError(err));
     }
 
-
-
-    // ************************************************* CALENAR
-    
-
-    let arregloDisponibilidad = [];
-    let calHeight = 600;
-    let calendar_disponibilidad;
-    $scope.calendarDisp;
-
-    $scope.inicialCalendario = function () {
-        calendar_disponibilidad = document.getElementById('calendar_disponibilidad');
-        console.log(arregloDisponibilidad);
-        $scope.calendarDisp = new FullCalendar.Calendar(calendar_disponibilidad, {
-            height: 650,
-            width: 650,
-            locale: 'es',
-            displayEventTime: true,
-            selectable: true,
-            eventLimit: true,
-            editable: true,
-            eventDurationEditable: false,
-            events: arregloDisponibilidad,
-            headerToolbar: {
-                start: "",
-                center: "title",
-                end: "prev today next"
-            },
-            
-            eventAfterAllRender: function () {
-                calendarDisp.render();
-            },
-            eventClick: function (info) {
-                console.log(info);
-                let eventObject = info.event;
-
-                $scope.infoBasica.turno = eventObject._def.extendedProps.tipo + " / " + eventObject.startStr
-                $scope.$apply()
-                
-            },
-            selectable: true,
-            select: function (start, end, jsEvent, view) {
-
-                //if (agrega_sess) {
-                var stringdateselected = moment(start.start).format().split('T')
-                var stringhoydate = moment(new Date()).format('YYYY-MM-DD');
-
-                if (new Date(stringdateselected[0]) >= new Date(stringhoydate)) {
-
-                    /** Valida si no hay ningun evento lo agrega**/
-                    var allEvents = arregloDisponibilidad;//$('#calendar_disponibilidad').fullCalendar('clientEvents');
-                    var exists = false;
-                    $.each(allEvents, function (index, event) {
-                        if (stringdateselected[0] === event.start) {
-                            exists = true;
-                        }
-                    });
-
-                    if (!exists) {
-                        console.log("tiene eventos")
-                        let tipoIntervencion = $scope.intervencionSelect ? $scope.intervencionSelect.id : 0;
-
-                        let ultimonivel=$scope.obtenerNivelUltimoJerarquia()
-                        let clustersparam=$("#jstreeconsulta").jstree("get_selected", true)
-                                                               .filter(e=>e.original.nivel== ultimonivel)
-                                                               .map(e=>parseInt(e.id))
-                        
-
-                        if (tipoIntervencion === 0 || clustersparam.length === 0) {
-                            mostrarMensajeWarningValidacion("Para agregar disponibilidad debes seleccionar todos los filtros")
-                        } else {
-                            swal({
-                                title: "\u00BFDeseas agregar disponibilidad en este dia ?",
-                                type: 'question',
-                                showCancelButton: true,
-                                confirmButtonColor: '#3085d6',
-                                cancelButtonColor: '#d33',
-                                confirmButtonText: 'S\u00ED, agregar',
-                                cancelButtonText: "Cancelar",
-                            }).then(function () {
-                                if ($scope.banderaNocturno) {
-                                    document.getElementById('container-noc').style.display = 'block'
-                                } else {
-                                    document.getElementById('container-noc').style.display = 'none'
-                                }
-                                var format_mex = stringdateselected[0].split("-")
-                                $('#fecha_inicio_adddisp').datepicker("setDate", new Date(format_mex[0], format_mex[1], format_mex[2]));
-                                $('#fecha_fin_adddisp').datepicker("setDate", new Date(format_mex[0], format_mex[1], format_mex[2]));
-
-                                $("#fecha_inicio_adddisp").val(format_mex[2] + "/" + format_mex[1] + "/" + format_mex[0]);
-                                $("#fecha_fin_adddisp").val(format_mex[2] + "/" + format_mex[1] + "/" + format_mex[0]);
-
-                                document.getElementById('matutino_adddisp').value = '';
-                                document.getElementById('vespertino_adddisp').value = '';
-                                document.getElementById('nocturno_adddisp').value = '';
-                                document.getElementById('radio_activo_adddisp').checked = false;
-                                document.getElementById('radio_inactivo_adddisp').checked = false;
-                                $("#moda-add-disponibilidad").modal('show')
-                            }).catch(swal.noop);
-                        }
-
-                    }
-                }
-                //}
-            }
-        });
-
-        $scope.calendarDisp.render();
-    }
-    $scope.inicialCalendario();
-
-    $scope.muestraDisponibilidadCalendar = function (jsonResponse) {
-        console.log("inicia");
-        if ($scope.calendarDisp) {
-            $scope.calendarDisp.destroy();
-        }
-        arregloDisponibilidad = [];
-        var eventoIndiMatutino={};
-        var eventoIndiVespertino={};
-        var eventoIndiNocturno={};
-        var arrayDisponibilidad = ( jsonResponse.Disponibilidad !== undefined &&  jsonResponse.Disponibilidad.Dia!== undefined) ? jsonResponse.Disponibilidad.Dia: []
-        console.log(arrayDisponibilidad);
-        $.each(arrayDisponibilidad, function(index, disponibInd){
-           
-            if(disponibInd.Matutino !== '0'){
-                eventoIndiMatutino ={
-                    title      : 'Matutino: '+disponibInd.Matutino,
-                    tipo       : 'MATUTINO',
-                    start      : disponibInd.Fecha,
-                    end        : disponibInd.Fecha,
-                    id         : index,
-                    color      : ((disponibInd.bloqueado) === "0") ? bloq = '#08d85c' : bloq = '#b9bfbc' ,
-                    textColor  : 'white',
-                    matutino   : disponibInd.Matutino,
-                    className: 'matutino-event',
-                    defaultDate: moment(),
-                    objetodisponibilidad:disponibInd
-                }
-                arregloDisponibilidad.push(eventoIndiMatutino)
-            }
-
-            if(disponibInd.Vespertino !=='0'){
-                eventoIndiVespertino ={
-                    title      : 'Vespertino: ' +disponibInd.Vespertino,
-                    tipo       : 'VESPERTINO',
-                    start      : disponibInd.Fecha,
-                    end        : disponibInd.Fecha,
-                    id         : index,
-                    color      : ((disponibInd.bloqueado) === "0") ? bloq = '#08d85c' : bloq = '#b9bfbc' ,
-                    textColor  : 'white',
-                    vespertino : disponibInd.Vespertino,
-                    className: 'vespertino-event',
-                    defaultDate: moment(),
-                    objetodisponibilidad:disponibInd
-
-                }
-                arregloDisponibilidad.push(eventoIndiVespertino)
-            }
-            
-            if(disponibInd.Nocturno !=='0'){
-                eventoIndiNocturno ={
-                    title      : 'Nocturno: ' +disponibInd.Nocturno,
-                    tipo       : 'NOCTURNO',
-                    start      : disponibInd.Fecha,
-                    end        : disponibInd.Fecha,
-                    id         : index,
-                    color      : ((disponibInd.bloqueado) === "0") ? bloq = '#08d85c' : bloq = '#b9bfbc' ,
-                    textColor  : 'white',
-                    nocturno : disponibInd.Nocturno,
-                    className: 'nocturno-event',
-                    defaultDate: moment(),
-                    objetodisponibilidad:disponibInd
-
-                }
-                arregloDisponibilidad.push(eventoIndiNocturno)
-            }
-          
-        })
-
-
-        // ++++++++++++++++++++++++++++++++++++++
-
-     
-
-
-        $scope.inicialCalendario();
-    }
-
-
-
-    // ********************************** MAPA
-
-
-
-    let map;
-    let mapResumen;
-
-    $scope.initMap = function () {
-        map = new google.maps.Map(document.getElementById("mapa-ubicacion"), {
-            center: { lat: -34.397, lng: 150.644 },
-            zoom: 8,
-        });
-
-        mapResumen = new google.maps.Map(document.getElementById("mapa-resumen"), {
-            center: { lat: -34.397, lng: 150.644 },
-            zoom: 8,
-        });
-    }
-
-    $scope.initMap();
-
-
-    $(document).ready(function(){
-        $("#modalArbolFirst").on("hidden.bs.modal", function () {
-
-            var distrito_cluster = '-1';
-            var selectedElms = $('#jstreefirst').jstree("get_selected", true);
+    $scope.validarConsultaDisponibilidad = function() {
+        var distrito_cluster = '-1';
+            var selectedElms = $('#jstree-distrito').jstree("get_selected", true);
             var selected_arbol;
             
             $.each(selectedElms,function(index,elem){
                 selected_arbol=elem.original;
             });
             if(selected_arbol!== undefined){
-                if(session_propietario==='16'){
+                if(/*session_propietario==='16'*/false){
                     if(selected_arbol !== undefined && selected_arbol.nivel==='5'  ){
                         distrito_cluster=selected_arbol.id;
                     }
@@ -417,8 +224,10 @@ app.controller('ordenesUniversalesController', ['$scope', 'ordenesUniversalesSer
                     }
                 }
             }
-            if(  distrito_cluster  === '-1' || $("#Tipo_intervencion").val() === '' ) {
-                agregarDisponibilidadCalendario([]);
+            if(  distrito_cluster  === '-1' || $scope.infoBasica.intervencion === undefined ) {
+                console.log(distrito_cluster);
+                arregloDisponibilidad = [];
+                $scope.inicialCalendario();
                 $("#distrito-form").val('');
                 $("#distrito-form").attr('parentdistritotext','')
                 $("#distrito-form").attr('distritotext','')
@@ -428,23 +237,34 @@ app.controller('ordenesUniversalesController', ['$scope', 'ordenesUniversalesSer
                 $("#turno-form").attr('turno-info','')
                 $("#turno-form").attr('fecha-info', '')
             }else{
-                var textParent=$('#jstreefirst').jstree(true).get_node( selected_arbol.parent ).text 
+                var textParent=$('#jstree-distrito').jstree(true).get_node( selected_arbol.parent ).text 
                 $("#distrito-form").val(textParent+" / "+selected_arbol.text);
+                $scope.infoBasica.distrito = textParent+" / "+selected_arbol.text
                 
+                /*
                 $("#distrito-form").attr('parentdistritotext',textParent)
                 $("#distrito-form").attr('distritotext',selected_arbol.text)
                 $("#distrito-form").attr('iddistrito',distrito_cluster)
-    
-                consultaDisponibilidadRest(distrito_cluster)	
+                */
+                console.log(distrito_cluster);
+                $scope.consultarDisponibilidad(distrito_cluster)	
             }
             if(  distrito_cluster  !== '-1'){
-                var textParent=$('#jstreefirst').jstree(true).get_node( selected_arbol.parent ).text 
+                var textParent=$('#jstree-distrito').jstree(true).get_node( selected_arbol.parent ).text 
                 $("#distrito-form").val(textParent+" / "+selected_arbol.text);
                 
+                /*
                 $("#distrito-form").attr('parentdistritotext',textParent)
                 $("#distrito-form").attr('distritotext',selected_arbol.text)
                 $("#distrito-form").attr('iddistrito',distrito_cluster)
+                */
             }
+    }
+
+    $(document).ready(function(){
+        $("#modal-filtro-arbol").on("hidden.bs.modal", function () {
+            $scope.validarConsultaDisponibilidad();        
+            $scope.$apply();
         });
     });
     

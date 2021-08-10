@@ -7,8 +7,8 @@
         <div class="divider-cuenta " style="border: 0.5px  solid #e6e6e6;margin-bottom: 1em; margin-top: .2em;"></div>
     </div>   
     <div class="col-6">
-        <i id="borrar-info-os" class=" refresh-btn fa fa-eraser"></i>
-        <i id="refresh-cuenta-os" class="refresh-cuenta refresh-btn fa fa-refresh"></i>
+        <i id="borrar-info-os" ng-click="borrarInformacionCliente()" class="refresh-btn fa fa-eraser"></i>
+        <i id="refresh-cuenta-os" ng-click="consultarInformacionFolio()" class="refresh-cuenta refresh-btn fa fa-refresh"></i>
     </div>
 </div>
 <div class="row">

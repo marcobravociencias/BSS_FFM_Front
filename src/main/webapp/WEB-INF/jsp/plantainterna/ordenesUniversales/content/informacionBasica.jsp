@@ -2,7 +2,7 @@
     <div class="col-4">
         <div class="row input-group columna-filtro-ind">
             <label for="compania_select" class="label-filter">Tipo intervenci&oacute;n</label>
-            <select id="compania_select" ng-model="infoBasica.intervencion" ng-change="filtrarSubIntervencion(infoBasica.intervencion)" ng-options="intervencion.Descripcion for intervencion in listaIntervencion" class="form-control-sm input-filtro-disponibilidad form-control" placeholder="Compañia" required>
+            <select id="compania_select" ng-model="infoBasica.intervencion" ng-change="filtrarSubIntervencion(infoBasica.intervencion);validarConsultaDisponibilidad(infoBasica.intervencion)" ng-options="intervencion.Descripcion for intervencion in listaIntervencion" class="form-control-sm input-filtro-disponibilidad form-control" placeholder="Compañia" required>
                 <option value="">Seleccione ...</option>
             </select>
         </div>
@@ -15,8 +15,8 @@
         <div class="row input-group">
             <label for="compania_select" class="label-filter">Folio</label>
             <div class="input-group mb-3" style="padding: 0;">
-                <input type="text" ng-model="infoBasica.folio" class="form-control" placeholder="Sin folio">
-                <div class="input-group-append" ng-click="consultarInformacionFolio()">
+                <input type="text" id="folio" name="folio" ng-model="infoBasica.folio" class="form-control" placeholder="Sin folio">
+                <div class="input-group-append" ng-click="validarFolio()">
                     <span class="input-group-text"><i class="fa fa-search"></i></span>
                 </div>
             </div>
@@ -41,11 +41,11 @@
         </div>
         <div class="row input-group">
             <label for="compania_select" class="label-filter">Distrito</label>
-            <input type="text" ng-model="infoBasica.folio" ng-click="mostrarModalArbol()" readonly class="form-control" placeholder="Sin folio">
+            <input type="text" id="distrito-form" ng-model="infoBasica.distrito" ng-click="mostrarModalArbol()" readonly class="form-control-sm  form-control input-info-basica" placeholder="Selecciona distrito">
         </div>
         <div class="row input-group" >
             <label for="compania_select" class="label-filter">Turno</label>
-            <span ng-bind="infoBasica.turno"></span>
+            <input type="text" id="turno-form" ng-model="infoBasica.turno" readonly class="form-control-sm form-control input-info-basica" placeholder="Turno">
         </div>
     </div>
     <div class="col-8">
