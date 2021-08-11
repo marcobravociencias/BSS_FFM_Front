@@ -9,6 +9,7 @@
         <link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/dataTables.bootstrap.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/selectPicker/css/bootstrap-select.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/jstree/default/style.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/libraries/sweetalert/css/sweetalert2.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/jstree/themes/proton/style.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/datePicker/css/bootstrap-datepicker3.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/css/plantainterna/usuarios/usuariosPi.css" rel="stylesheet">
@@ -135,6 +136,7 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/angularjs/js/angular.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/dataTables.bootstrap4.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/libraries/sweetalert/js/sweetalert2.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/selectPicker/js/bootstrap-select.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/selectPicker/js/i18n/defaults-es_ES.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jstree/jstree.min.js"></script>
@@ -144,6 +146,7 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/usuarios/usuariosPIController.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/usuarios/usuarioPIService.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/usuarios/jsonResult.js"></script>
     <script type="text/javascript">let contex_project = "${pageContext.request.contextPath}";</script>
     <script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>
     
