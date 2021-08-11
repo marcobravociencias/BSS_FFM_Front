@@ -32,7 +32,7 @@
 			</div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface" data-mdb-dismiss="modal" ng-click="cerrarModalSkillsSeleccionadas()">
-                    Cerrar
+                    CERRAR
                 </button>
            </div>
         </div>
