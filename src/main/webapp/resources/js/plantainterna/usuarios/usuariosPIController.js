@@ -2,7 +2,7 @@ var app = angular.module('usuarioApp', []);
 var detalleTable;
 
 app.controller('usuarioController', ['$scope', 'usuarioPIService', '$filter', function ($scope, usuarioPIService, $filter) {
-    $("#li-gestionusuarios-navbar").addClass('active')
+    $("#moduloUsuarios").addClass('active')
     console.log("UsuarioController");
     $scope.listaCompanias = [];
     $scope.listaPuestos = [];

@@ -651,5 +651,5 @@ app.controller('skillsController', ['$scope','$q','skillsService','$filter', fun
     
  //$scope.consultarArbolDesasignaCluster();
 	$scope.cargarFiltrosGeneric();
-	$("#li-skills-navbar").addClass('active')
+	$("#moduloSkills").addClass('active')
 }]);

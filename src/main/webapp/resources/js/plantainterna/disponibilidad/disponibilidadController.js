@@ -102,7 +102,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
         });
 
-        $('#Disponibilidad').addClass('active');
+        $('#moduloDisponibilidad').addClass('active');
         $("#campos_dinamicos").hide();
         $("#btn_mostrar_nav").hide(500);
     }

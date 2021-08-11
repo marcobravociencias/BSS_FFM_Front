@@ -3667,10 +3667,8 @@ TimelineGrid = (function(superClass) {
     }
     // ***********************************OT Asignada*******************************************************************
     var intervencion_letter=event.descipcionTipoOrden===undefined?"" :event.descipcionTipoOrden.slice(0,1).toUpperCase();
-    
     let content=
   //  
-
     `
     <div class="container-asignada">            
         <div class="content-text-otasignada" >  
@@ -3679,7 +3677,7 @@ TimelineGrid = (function(superClass) {
         </div>
         <div class="content-text-otasignada" >      
             <div class="izquierda-icon">
-              <i class="far ${event.unidadNegocio === 1 ?'far fa-hand-paper':'fas fa-desktop'}  icon-tipoot-operacion"></i>
+              <i class="far ${event.tipoAsignacion === 2 ?'far fa-hand-paper':'fas fa-desktop'}  icon-tipoot-operacion"></i>
             </div>  
             <b class="os-content-asignada">${event.folioOrden}</b>&nbsp&nbsp            
         </div>
