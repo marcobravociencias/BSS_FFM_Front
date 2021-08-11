@@ -1,6 +1,6 @@
 var app = angular.module('disponibilidadApp', []);
 
-app.controller('disponibilidadController', ['$scope', 'disponibilidadService', 'genericService', function ($scope, disponibilidadService, genericService) {
+app.controller('disponibilidadController', ['$scope', 'disponibilidadService', 'genericService', '$q', function ($scope, disponibilidadService, genericService, $q) {
     $("#li-disponibilidad-navbar").addClass('active')
     $scope.banderaNocturno = false
     $scope.arrayIntervencion = [];
@@ -39,6 +39,8 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             vista: true
         }
     ];
+    $scope.nIntervencion = '';
+    $scope.nGeografia = '';
     app.disponibilidadCalendar($scope);
 
     $( document ).ready(function() {
@@ -105,36 +107,46 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
         $('#moduloDisponibilidad').addClass('active');
         $("#campos_dinamicos").hide();
         $("#btn_mostrar_nav").hide(500);
+        $scope.consultarCatalogos();
     }
 
-    $scope.consultarIntervenciones = function () {
-        genericService.consultarCatalogoIntervenciones().then(function success(response) {
-            console.log(response);
-            if (response.data.respuesta) {
-                if (response.data.result) {
-                    $scope.arrayIntervencion = response.data.result.filter(elemento => { return elemento.nivel === 1 });
-                    swal.close();
-                } else {
-                    swal.close();
-                    mostrarMensajeErrorAlert('No existen intervenciones actualmente');
-                }
-            } else {
-                swal.close();
-                mostrarMensajeErrorAlert(response.data.resultDescripcion)
-            }
-        }).catch(err => handleError(err));
-    }
-
-    $scope.consultarCatalogoArbol = function () {
+    $scope.consultarCatalogos = function(){
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
-        genericService.consulCatalogoGeografia().then(function success(response) {
-            console.log(response.data)
-            if (response.data.respuesta) {
-                if (response.data.result) {
-                    if (response.data.result.geografia || response.data.result.geografia.length > 0) {
-                        $scope.geografiaList = response.data.result.geografia;
-                        let geografia = response.data.result.geografia;
+        $q.all([
+            genericService.consultarConfiguracionDespachoDespacho(),
+            genericService.consultarCatalogoIntervenciones(),
+            genericService.consulCatalogoGeografia()
+        ]).then(result =>{
+            swal.close();
+            console.log(result);
+            if (result[0].data.respuesta) {
+                $scope.nIntervencion = Number(result[0].data.result.N_FILTRO_INTERVENCIONES) 
+                $scope.nGeografia = Number(result[0].data.result.N_FILTRO_GEOGRAFIA)
+            } else {
+                mostrarMensajeErrorAlert(result[0].data.resultDescripcion)
+            }
+            if (result[1].data.respuesta) {
+                if (result[1].data.result) {
+                    $scope.arrayIntervencion = result[1].data.result.filter(elemento => { return elemento.nivel === $scope.nIntervencion });
+                } else {
+                    mostrarMensajeErrorAlert('No existen intervenciones actualmente');
+                }              
+            } else{
+                mostrarMensajeErrorAlert(result[1].data.resultDescripcion)
+            }
+
+            if (result[2].data.respuesta) {
+                if (result[2].data.result) {
+                    if (result[2].data.result.geografia || result[2].data.result.geografia.length > 0) {
+                        let listGeo = [];
+                        result[2].data.result.geografia.forEach(elemento =>{
+                            if (elemento.nivel <= $scope.nGeografia) {
+                                listGeo.push(elemento)
+                            }
+                        })
+                        $scope.geografiaList = listGeo;
+                        let geografia = listGeo;
                         geografia.map((e)=>{
                             e.parent=e.padre ==undefined ? "#" : e.padre;
                             e.text= e.nombre;
@@ -159,22 +171,18 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                                     "show_only_matches": true
                                 }
                         });
+
                     } else {
                         mostrarMensajeWarningValidacion('No existen geografias actualmente')
                     }
-                    $scope.consultarIntervenciones();
                 } else {
-                    mostrarMensajeErrorAlert(response.data.result.mensaje)
-                    swal.close();
+                    mostrarMensajeErrorAlert(result[2].data.result.mensaje)
                 }
             } else {
-                mostrarMensajeErrorAlert(response.data.resultDescripcion)
-                swal.close();
+                mostrarMensajeErrorAlert(result[2].data.resultDescripcion)
             }
         }).catch(err => handleError(err));
     }
-
-    $scope.consultarCatalogoArbol();
 
     $scope.consultaDisponibilidad = function () {
         let mensaje = '<ul>';
@@ -216,96 +224,101 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             disponibilidadService.consultaDisponibilidad(JSON.stringify(params)).then(function success(response) {
                 console.log(response.data);
                 if (response.data.respuesta) {
-                    if (response.data.result.dias !== undefined) {
-                        arrDisponibilidad = [];
-                        $scope.muestraDisponibilidadCalendar(response.data.result);
-    
-                        $scope.idCompanyActualizar = company;
-                        $scope.idTipoActualizar = tipo_intervencion;
-                        $scope.idCiudadActualizar = distrito_cluster;
-    
-                        let textoIntervencion = $.trim($("#tipo_select option:selected").text());
-                        let selectedElms = $('#jstreeconsulta').jstree("get_selected", true);
-                        let selected_arbol;
-    
-                        selectedElms.forEach(element => {
-                            selected_arbol = element.text;
-                        });
-    
-    
-                        document.getElementById('disponibilidad_span').innerHTML = selected_arbol;
-                        $("#intervencion_span").text(textoIntervencion.substr(0, 1) + "" + (textoIntervencion.substr(1, textoIntervencion.length - 1)).toLowerCase());
-    
-                        let styleHide = ''
-                        if (!$scope.banderaNocturno) {
-                            styleHide = 'display:none'
-                        } else {
-                            $('#nocturno_dispo').text(response.data.result.CapacidadNocturno === '' ? 0 : response.data.result.CapacidadNocturno);
-                        }
-    
-                        $("#total_dispo").text(response.data.result.CapacidadTotal === "" ? 0 : response.data.result.CapacidadTotal);
-    
-                        let arrayResult = (response.data.result.dias !== undefined && response.data.result.dias !== null) ? response.data.result.dias !== undefined ? response.data.result.dias : [] : [];
-                        $('#datatable_disponibilidad tbody').empty();
-                        let arraRow = [];
-                        $.each(arrayResult, function (i, elemento) {
-                            let array = [];
-                            let totalMatutino = 0;
-                            let totalVespertino = 0;
-                            let totalNocturno = 0;
-                            let totalTurnos = 0;
-    
-                            elemento.turnos.forEach(turno =>{
-                                if (turno.idCatTurno === 1) {
-                                    totalMatutino = turno.cantidad;
-                                    totalTurnos += turno.cantidad;
-                                }
-                                if (turno.idCatTurno === 2) {
-                                    totalVespertino = turno.cantidad;
-                                    totalTurnos += turno.cantidad;
-                                }
-                                if (turno.idCatTurno === 3) {
-                                    totalNocturno = turno.cantidad;
-                                    totalTurnos += turno.cantidad;
-                                }
-                            })
-    
-                            array[0] = elemento.fecha;
-                            array[1] = totalMatutino;
-                            array[2] = totalVespertino
-                            if ($scope.banderaNocturno) {
-                                array[3] = totalNocturno;
-                                array[4] = totalTurnos;
-                                array[5] = elemento.bloqueado ? 'DISPONIBLE' : 'BLOQUEADO';
-                                array[6] = '<a onclick="editarDisponibilidad('+totalMatutino+','+totalVespertino+','+totalNocturno+','+elemento.bloqueado+'\,'+'\''+elemento.fecha+'\')"><i class="cursorEfect edit_disponibilidad_btn fa fa-edit"></i></a>'
+                    if (response.data.result) {
+                        if (response.data.result.dias !== undefined) {
+                            arrDisponibilidad = [];
+                            $scope.muestraDisponibilidadCalendar(response.data.result);
+        
+                            $scope.idCompanyActualizar = company;
+                            $scope.idTipoActualizar = tipo_intervencion;
+                            $scope.idCiudadActualizar = distrito_cluster;
+        
+                            let textoIntervencion = $.trim($("#tipo_select option:selected").text());
+                            let selectedElms = $('#jstreeconsulta').jstree("get_selected", true);
+                            let selected_arbol;
+        
+                            selectedElms.forEach(element => {
+                                selected_arbol = element.text;
+                            });
+        
+        
+                            document.getElementById('disponibilidad_span').innerHTML = selected_arbol;
+                            $("#intervencion_span").text(textoIntervencion.substr(0, 1) + "" + (textoIntervencion.substr(1, textoIntervencion.length - 1)).toLowerCase());
+        
+                            let styleHide = ''
+                            if (!$scope.banderaNocturno) {
+                                styleHide = 'display:none'
                             } else {
-                                array[3] = totalTurnos;
-                                array[4] = elemento.bloqueado ? 'DISPONIBLE' : 'BLOQUEADO';
-                                array[5] = '<a onclick="editarDisponibilidad('+totalMatutino+','+totalVespertino+","+'\''+'\''+','+elemento.bloqueado+'\,'+'\''+elemento.fecha+'\')"><i class="cursorEfect edit_disponibilidad_btn fa fa-edit"></i></a>'
+                                $('#nocturno_dispo').text(response.data.result.CapacidadNocturno === '' ? 0 : response.data.result.CapacidadNocturno);
                             }
-                            arraRow.push(array); 
-                        });
-                        $('#datatable_disponibilidad').DataTable({
-                            "paging": true,
-                            "lengthChange": false,
-                            "searching": false,
-                            "ordering": false,
-                            "pageLength": 10,
-                            "recordsTotal": 100,
-                            "info": false,
-                            "autoWidth": true,
-                            "data": arraRow,
-                            "language": idioma_espanol_not_font,
-                            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
-                        });
-    
-                        $("#consulta_disponibilidad").attr('disabled', false);
-                        $("#consulta_disponibilidad").text("Consultar disponibilidad");
-                        swal.close();
+        
+                            $("#total_dispo").text(response.data.result.CapacidadTotal === "" ? 0 : response.data.result.CapacidadTotal);
+        
+                            let arrayResult = (response.data.result.dias !== undefined && response.data.result.dias !== null) ? response.data.result.dias !== undefined ? response.data.result.dias : [] : [];
+                            $('#datatable_disponibilidad tbody').empty();
+                            let arraRow = [];
+                            $.each(arrayResult, function (i, elemento) {
+                                let array = [];
+                                let totalMatutino = 0;
+                                let totalVespertino = 0;
+                                let totalNocturno = 0;
+                                let totalTurnos = 0;
+        
+                                elemento.turnos.forEach(turno =>{
+                                    if (turno.idCatTurno === 1) {
+                                        totalMatutino = turno.cantidad;
+                                        totalTurnos += turno.cantidad;
+                                    }
+                                    if (turno.idCatTurno === 2) {
+                                        totalVespertino = turno.cantidad;
+                                        totalTurnos += turno.cantidad;
+                                    }
+                                    if (turno.idCatTurno === 3) {
+                                        totalNocturno = turno.cantidad;
+                                        totalTurnos += turno.cantidad;
+                                    }
+                                })
+        
+                                array[0] = elemento.fecha;
+                                array[1] = totalMatutino;
+                                array[2] = totalVespertino
+                                if ($scope.banderaNocturno) {
+                                    array[3] = totalNocturno;
+                                    array[4] = totalTurnos;
+                                    array[5] = elemento.bloqueado ? 'DISPONIBLE' : 'BLOQUEADO';
+                                    array[6] = '<a onclick="editarDisponibilidad('+totalMatutino+','+totalVespertino+','+totalNocturno+','+elemento.bloqueado+'\,'+'\''+elemento.fecha+'\')"><i class="cursorEfect edit_disponibilidad_btn fa fa-edit"></i></a>'
+                                } else {
+                                    array[3] = totalTurnos;
+                                    array[4] = elemento.bloqueado ? 'DISPONIBLE' : 'BLOQUEADO';
+                                    array[5] = '<a onclick="editarDisponibilidad('+totalMatutino+','+totalVespertino+","+'\''+'\''+','+elemento.bloqueado+'\,'+'\''+elemento.fecha+'\')"><i class="cursorEfect edit_disponibilidad_btn fa fa-edit"></i></a>'
+                                }
+                                arraRow.push(array); 
+                            });
+                            $('#datatable_disponibilidad').DataTable({
+                                "paging": true,
+                                "lengthChange": false,
+                                "searching": false,
+                                "ordering": false,
+                                "pageLength": 10,
+                                "recordsTotal": 100,
+                                "info": false,
+                                "autoWidth": true,
+                                "data": arraRow,
+                                "language": idioma_espanol_not_font,
+                                "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+                            });
+        
+                            $("#consulta_disponibilidad").attr('disabled', false);
+                            $("#consulta_disponibilidad").text("Consultar disponibilidad");
+                            swal.close();
+                        } else {
+                            swal.close();
+                            mostrarMensajeErrorAlert(response.data.result.ResultDescription);
+                        }
                     } else {
                         swal.close();
-                        mostrarMensajeErrorAlert(response.data.result.ResultDescription);
-                    }
+                        mostrarMensajeWarningValidacion("No hay disponibilidad.");
+                    }                 
                 } else {
                     swal.close();
                     mostrarMensajeErrorAlert(response.data.resultDescripcion);
