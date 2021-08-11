@@ -42,12 +42,15 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         $scope.detalleOtPendienteSelected=$scope.listadoOtsPendientes.find(e=>e.idOrden==idotpendiente)
         $scope.permisosModal=$scope.elementosConfigGeneral.get("MODAL_FLUJO_"+ $scope.detalleOtPendienteSelected.idFlujo ).split(",")
         console.log("##########permisos " + $scope.permisosModal )
+        console.log($scope.detalleOtPendienteSelected)
+
     }
     abrirModalInformacion = function (idotasignada) {
         $scope.requestModalInformacion(idotasignada)
         $scope.detalleOtAsignadaSelected= $scope.listadoOtsAsignadas.find(e=>e.idOrden==idotasignada)
-        $scope.permisosModal=$scope.elementosConfigGeneral.get("MODAL_FLUJO_" + $scope.detalleOtAsignadaSelected.idFlujo ).split(",")
+        $scope.permisosModal=$scope.elementosConfigGeneral.get("MODAL_ASIGNADA_" + $scope.detalleOtAsignadaSelected.idFlujo ).split(",")
         console.log($scope.permisosModal )
+        console.log($scope.detalleOtAsignadaSelected)
     }
 
     $scope.idOtSelect = "";

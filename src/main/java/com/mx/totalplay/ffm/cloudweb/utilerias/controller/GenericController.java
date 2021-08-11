@@ -30,8 +30,8 @@ public class GenericController {
 	ConstantesGeneric genericVars;
 	
 	@GetMapping("/enrutarUser")
-	public String despachoPlantaExterna(ModelMap model) {	
-		logger.info("ENTRA DECISION");
+	public String enrutamientoUser(ModelMap model) {	
+		logger.info("Enrutando ... " );
 		return "redirect:moduloDespacho";				
 	}	
 	

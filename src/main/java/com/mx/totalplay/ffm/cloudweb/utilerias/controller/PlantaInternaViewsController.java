@@ -61,7 +61,6 @@ public class PlantaInternaViewsController {
 	}
 	@GetMapping("/moduloCoordInst")
 	public String coordInst() {
-		
 		return "plantainterna/coordInstalaciones/mainCoordInstalaciones";
 		
 	}
