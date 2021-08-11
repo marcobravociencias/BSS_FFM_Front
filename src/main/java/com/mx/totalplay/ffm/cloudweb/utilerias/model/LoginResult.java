@@ -39,7 +39,7 @@ public class LoginResult {
 
 	private long expires_in;
 	private Map<String,String> permiAccUs;
-	
+	private boolean banderaPintarOtros;
 	private String googlAcceLla;
 	private String direccionAmbiente;
 	private List<Permiso>permisos;

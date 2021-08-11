@@ -20,7 +20,6 @@ public class PlantaInternaViewsController {
 	public String despachoPlantaInterna() {		
 		return "plantainterna/despacho/despachopi";				
 	}
-	
 	@GetMapping("/moduloUsuarios")
 	public String usuariosPlantaInterna() {
 		return "plantainterna/usuarios/usuariosPi";

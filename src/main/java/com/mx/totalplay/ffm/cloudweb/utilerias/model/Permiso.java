@@ -14,4 +14,7 @@ public class Permiso {
 	private String hexaColor; 
 	private String hexaHoverColor; 
 	private List<SubPermiso>permisos;
+	private int ordenConfig;
+	private boolean dentroNavbar;
+	
 }

@@ -195,13 +195,13 @@
                          <b class="text-alertatipo" ng-bind="tipoAlertaConteo.IdDescripcion"></b>
                      </div>
                 </li>              
-             </ul>
+             </ul>         
         </div-->
         <div ng-show="vistaDespacho" class="container-fluid d-flex justify-content-center">    
             <ul class="wall content-alert-parent">
-                <li ng-click="getDetalleAlertas(tipoAlertaConteo)" style="background-color: {{tipoAlertaConteo.hexaColor}}" title="{{tipoAlertaConteo.id}}" class="element-alert" ng-repeat="tipoAlertaConteo in listadoConteoAlertasTipo track by $index"> 
+                <li ng-click="getDetalleAlertas(tipoAlertaConteo)" style="background-color: {{tipoAlertaConteo.bgHexaColor}}" title="{{tipoAlertaConteo.id}}" class="element-alert" ng-repeat="tipoAlertaConteo in listadoConteoAlertasTipo track by $index"> 
                      <b class="badge-alerta badge red accent-3" ng-bind="tipoAlertaConteo.contador"></b>
-                     <i style="color:white" class="icon-alerta-ind {{tipoAlertaConteo.icono}}"></i>
+                     <i style="color:{{tipoAlertaConteo.hexaColor}}" class="icon-alerta-ind {{tipoAlertaConteo.icono}}"></i>
                      <div class="text-tipo-alerta-hide">
                          <b class="text-alertatipo" ng-bind="tipoAlertaConteo.descripcion"></b>
                      </div>

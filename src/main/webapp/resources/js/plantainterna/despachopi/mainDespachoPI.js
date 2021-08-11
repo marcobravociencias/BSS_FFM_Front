@@ -284,7 +284,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             if (response.data !== undefined) {
                 if (response.data.respuesta) {
                     if (response.data.result.alertas) {
-                        $scope.listadoConteoAlertasTipo=response.data.result.alertas                                            
+                       // $scope.listadoConteoAlertasTipo=response.data.result.alertas                                            
                         //$scope.listadoConteoAlertasTipo=conteoOtsDespacho.Alertas                                            
    
                     }
@@ -387,7 +387,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             "fechaFin": moment( moment($scope.fechaFinFiltro , 'DD/MM/YYYY').toDate() ).format('YYYY-MM-DD') ,
             "idSubIntervenciones": envioIntervenciones,
             "idTurnos": turnosdisponiblescopy,  
-            "idEstatus": [1,2],
+            "idEstatus": [$scope.nfiltroestatuspendiente],
             "idClusters": clustersparam
         }
     
@@ -819,7 +819,8 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             $scope.listadoIconosConfig=[]         
             $scope.nfiltrogeografia=results[3].data.result.N_FILTRO_GEOGRAFIA
             $scope.nfiltrointervenciones=results[3].data.result.N_FILTRO_INTERVENCIONES
-
+            $scope.nfiltroestatuspendiente=results[3].data.result.ESTATUS_PENDIENTES
+            $scope.elementosConfigGeneral=new Map(Object.entries(results[3].data.result))
             
             for (const elm in results[3].data.result) {
                 console.log(elm)
