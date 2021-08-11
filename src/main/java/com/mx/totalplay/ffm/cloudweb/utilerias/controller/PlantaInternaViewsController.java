@@ -25,7 +25,7 @@ public class PlantaInternaViewsController {
 		return "plantainterna/usuarios/usuariosPi";
 	}
 	
-	@GetMapping("/ordenesuniversales")
+	@GetMapping("/moduloOrdenesUniversales")
 	public String ordenesUniversales() {
 		return "plantainterna/ordenesUniversales/ordenesuniversales";
 	}
@@ -47,7 +47,7 @@ public class PlantaInternaViewsController {
 	  return mapaVars;
 	}
 	 
-	@GetMapping("/reportesPI")
+	@GetMapping("/moduloReportesPI")
 	public String reportesPI() {
 		
 		return "plantainterna/reportesPI/mainReportesPI";
@@ -59,14 +59,14 @@ public class PlantaInternaViewsController {
 		return "plantainterna/skillsAdm/mainSkills";
 		
 	}
-	@GetMapping("/coordInst")
+	@GetMapping("/moduloCoordInst")
 	public String coordInst() {
 		
 		return "plantainterna/coordInstalaciones/mainCoordInstalaciones";
 		
 	}
 	
-	@GetMapping("/busqueda")
+	@GetMapping("/moduloBusqueda")
 	public String busqueda() {
 		return "plantainterna/busqueda/busqueda";
 	}
