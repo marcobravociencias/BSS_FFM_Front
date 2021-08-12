@@ -428,7 +428,11 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                                                     </div>
                                                    
                                                     <div class="content-top-element confirmacion-elemn switchpendiente">
-                                                        <input ${otpendiente.isConfirmado ? 'checked':''} onchange="abrirModalConfirmacionDesconfirmacion(this,${otpendiente.idOrden})" class="checkbox-confirmacion" type="checkbox" id="switch-${otpendiente.idOrden}" /><label class="checkbox-confirmacion-label" for="switch-${otpendiente.idOrden}">Toggle</label>
+                                                        <label class="container-checkbox-cus">
+                                                            <input onchange="abrirModalConfirmacionDesconfirmacion(this,${otpendiente.idOrden})" id="switch-${otpendiente.idOrden}" ${otpendiente.isConfirmado ? 'checked':''} type="checkbox">
+                                                            <span class="checkmarkcust"></span>
+                                                        </label>
+
                                                     </div>
                                                 </div>
                                                 <div class="posiciondos">

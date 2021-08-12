@@ -45,6 +45,7 @@
     </head>
     <body id="controllerdespacho" ng-controller="despachoController">        
 
+          
     	<jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>  
         <input style="display: none;" ng-keyup="buscarTecnicoCalendar()" ng-model="buscarTecnicoInput" type="text">
         <div ng-show="vistaDespacho" class="container-fluid container-filtros-despacho">            

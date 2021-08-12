@@ -948,8 +948,9 @@ h5.title-nombrecliente {
 
 .switchpendiente {
   position: absolute;
-  right: 0;
-  margin-right: 0.3em;
+  right: 2em;
+  top: .4em;
+  /* margin-right: 0.3em; */
 }
 
 #table-ot-pendientes_wrapper {
@@ -1693,4 +1694,79 @@ table#table-alertas-pi {
     vertical-align: middle;
     max-height: 1em;
     max-width: 1em;
+}
+
+
+
+
+/* The container-checkbox-cus */
+.container-checkbox-cus {
+  /* display: block; */
+  /* position: relative; */
+  /* padding-left: 35px; */
+  /* margin-bottom: 12px; */
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container-checkbox-cus input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmarkcust {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1.1rem;
+  width: 1.1rem;
+  background-color: #ffffff;
+  border:2px solid #9d9ea2;
+  border-radius:.1em;
+}
+
+/* On mouse-over, add a grey background color */
+.container-checkbox-cus:hover input ~ .checkmarkcust {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container-checkbox-cus input:checked ~ .checkmarkcust {
+  background-color: #ffffff;
+  border:2px solid #68a3f2;
+
+}
+
+/* Create the checkmarkcust/indicator (hidden when not checked) */
+.checkmarkcust:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmarkcust when checked */
+.container-checkbox-cus input:checked ~ .checkmarkcust:after {
+  display: block;
+}
+
+/* Style the checkmarkcust/indicator */
+.container-checkbox-cus .checkmarkcust:after {
+  left: .3rem;
+  top: 0;
+  width: .3rem;
+  height: .8rem;
+  border: solid #68a3f2;
+  border-width: 0 .2rem .2rem 0;
+  -webkit-transform: rotate(40deg);
+  -ms-transform: rotate(40deg);
+  transform: rotate(40deg);
 }
