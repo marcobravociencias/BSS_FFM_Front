@@ -43,5 +43,5 @@ public class LoginResult {
 	private String googlAcceLla;
 	private String direccionAmbiente;
 	private List<Permiso>permisos;
-	private Map<String ,String>configuraciones;
+	private Map<String ,Object>configuraciones;
 }

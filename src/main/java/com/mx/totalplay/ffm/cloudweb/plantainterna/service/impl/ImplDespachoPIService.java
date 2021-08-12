@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.mx.totalplay.ffm.cloudweb.plantainterna.service.DespachoPIService;
 import com.mx.totalplay.ffm.cloudweb.plantainterna.utils.ConstDespachoPI;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.LoginResult;
+import com.mx.totalplay.ffm.cloudweb.utilerias.model.Permiso;
 import com.mx.totalplay.ffm.cloudweb.utilerias.utils.ConstantesGeneric;
 import com.mx.totalplay.ffm.cloudweb.utilerias.utils.ConsumeRest;
 import com.mx.totalplay.ffm.cloudweb.utilerias.utils.UtileriaGeneral;
@@ -15,6 +16,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -454,9 +456,25 @@ public class ImplDespachoPIService implements DespachoPIService{
 		return response;
 	}
 	
-	public ServiceResponseResult consultarConfiguracionDespachoDespachoServ() {
+	public ServiceResponseResult consultarConfiguracionDespachoDespachoServ(String params) {
 		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
-		Map<String, String> mapResponse = principalDetail.getConfiguraciones();
+		
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		
+		Map<String, Object> mapResponse = principalDetail.getConfiguraciones();
+		
+		if( jsonObject!=null ) {
+			String claveBusqueda=jsonObject.get("moduloAccionesUsuario").getAsString();
+			Permiso permiso=principalDetail.getPermisos()
+					.stream()
+					.filter(e-> claveBusqueda.equals(e.getClave()) )
+					.findAny()
+					.orElse(null);
+
+			mapResponse.put("MODULO_ACCIONES_USUARIO", permiso);
+		}
+		
+
 		ServiceResponseResult response= ServiceResponseResult.builder().isRespuesta(true).result(mapResponse).build();
 		return response;				
 	}

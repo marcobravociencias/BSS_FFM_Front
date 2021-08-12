@@ -7,13 +7,14 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     $scope.listadoTecnicosOtsModal = []
     $scope.vehiculoOperario = {}
     $scope.objectMateriales = {}
-    $scope.procesandoAsignacion = false
+    $scope.procesandoAsignacion = false    
+    $scope.procesandoReasignacion = false
     $scope.isConfirmadoDesconfirmado = false;
     $scope.idotConfirmacionDesconfirmacion = 0;
     $scope.comentarios = '';
 
     $scope.listadoCatalogoAcciones = []
-    $('#modalAsignacionOrdenTrabajo,#modalMaterialesOperario,#modalVehiculoOperario,#odalUbicacionOperario,#modalStatusOperario,#modalOtsTrabajadas')
+    $('#modalAsignacionOrdenTrabajo,#modalReAsignacionOrdenTrabajo,#modalMaterialesOperario,#modalVehiculoOperario,#odalUbicacionOperario,#modalStatusOperario,#modalOtsTrabajadas')
         .on("hidden.bs.modal", function () {
             $("#buscar-otsasignadas").trigger('click')
         });
@@ -454,7 +455,15 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 **/
 
     }
-
+    $scope.abrirModalReAsignacion = function (otinfo, data_tecnico) {
+        $scope.reAsignacionObject = {
+            'otInfo': otinfo,
+            'tecnicoInfo': data_tecnico,
+            'comentario': ''
+        }
+        $("#modalReAsignacionOrdenTrabajo").modal('show')
+        $scope.$digest()
+    }
     $scope.abrirModalAsignacion = function (otinfo, data_tecnico) {
         $scope.asignacionObject = {
             'otInfo': otinfo,
@@ -508,6 +517,65 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             toastr.success('Agendado correctamente');
 
             $scope.procesandoAsignacion = false
+
+            if (response.data !== undefined) {
+                if (response.data.respuesta) {
+                    if (response.data.result.result === '0') {
+                        console.log("############## catalogo")
+                        //$scope.listadoOtsPendientes=otspendientes                         
+                    }
+                }
+            }
+        }).catch(err => handleError(err))
+    }
+
+    $scope.reasignarOrdenTrabajo = function () {
+        if (!$scope.reAsignacionObject.comentario) {
+            toastr.warning('Completa campo de comentario ')
+            return false
+        }
+
+        let horaasignacionInicio = angular.copy($scope.reAsignacionObject.otInfo.fechahoraasignacion);
+        let horaasignacionFin = angular.copy($scope.reAsignacionObject.otInfo.fechahoraasignacion);
+        horaasignacionFin = moment(horaasignacionFin).add(3, 'hours').format();
+
+
+        let arrayHoraInicio = horaasignacionInicio.split("T")
+        arrayHoraInicio[1] = arrayHoraInicio[1].substr(0, 5)
+        let formatFechaHoraInicio = arrayHoraInicio[0] + " " + arrayHoraInicio[1]
+
+
+        let arrayHoraFin = horaasignacionFin.split("T")
+        arrayHoraFin[1] = arrayHoraFin[1].substr(0, 5)
+        let formatFechaHoraFin = arrayHoraFin[0] + " " + arrayHoraFin[1]
+
+        
+        let params = {
+            "idEstado": 203,
+            "idMotivo": 1,
+            "fechaHoraInicio": formatFechaHoraInicio,
+            "fechaHoraFin": formatFechaHoraFin,
+            "idOrigenSistema": 1,
+            "idTipoOrden": 1,
+            //"idUsuarioDespacho":1202,
+            //"latitud": 1651651.5,
+            //"longitud": 65465,
+            "idUsuarioTecnico": $scope.reAsignacionObject.tecnicoInfo.id,
+            "comentarios": $scope.reAsignacionObject.comentario,
+            "textAccionCambioEstatus": "asignaOrden",
+            "idOtEnvio": $scope.reAsignacionObject.otInfo.idOrden
+        }
+        $scope.procesandoReasignacion = true
+        swal({ text: 'Agendando orden ...', allowOutsideClick: false });
+        swal.showLoading();
+        mainDespachoService.cambiarEstatusOrdenTrabajoPI(params).then(function success(response) {
+
+            $("#modalAsignacionOrdenTrabajo").modal('hide')
+            console.log(response);
+            swal.close()
+            toastr.success('Reagendadado correctamente');
+
+            $scope.procesandoReasignacion = false
 
             if (response.data !== undefined) {
                 if (response.data.respuesta) {

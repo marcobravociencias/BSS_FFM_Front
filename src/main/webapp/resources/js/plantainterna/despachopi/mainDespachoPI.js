@@ -194,23 +194,26 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                 if($scope.validate_time_asignacion(fecha_asignacion)){
                     if($scope.validate_status_tecnico(data_tecnico.idEstatusTecnico)){
                         $scope.abrirModalAsignacion(otinfo, data_tecnico);
-                    }else{
-                        refresh();
+                    }else{ 
+                        $scope.refrescarBusqueda();
                     }
                 }else{
-                    refresh();
+                    $scope.refrescarBusqueda();
                 }
             },
             eventDrop: function(event) { 
+                fecha_asignacion = event.start.format()                          
+                event.fechahoraasignacion=fecha_asignacion
+
                 let data_tecnico =$scope.listadoTecnicosGeneral.find((e)=> e.idTecnico== parseInt(event.resourceId))
                 if($scope.validate_time_asignacion(event.start.format())){
                     if($scope.validate_status_tecnico(data_tecnico.status)){
-                        $scope.modal_reasigna_ot(event, data_tecnico);
+                        $scope.abrirModalReAsignacion(event, data_tecnico);
                     }else{
-                        refresh();
+                        $scope.refrescarBusqueda();
                     }
                 }else{
-                    refresh();
+                    $scope.refrescarBusqueda();
                 }
             },
             eventAfterAllRender:function(event){
@@ -296,8 +299,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
     $scope.validate_time_asignacion = function(fecha){
         var fecha_asigna = new Date(fecha);
         if(fechaActual > fecha_asigna){
-            alertify.set('notifier','position', 'top-right',{ delay: 4000 });
-            alertify.warning("Horario no permitido, por favor asigne en otra hora.");
+            toastr.info( 'Horario no permitido, por favor asigne en otra hora.');    
             return false;
         }else{
             return true;
@@ -306,33 +308,31 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
     $scope.validate_status_tecnico = function(status){
         var result = true;
         if(status == 3  || status == 5 || status == 6 || status == 7 || status == 8){
+            let stringmensaje=""
             switch(status){
                 case 3:
-                        alertify.set('notifier','position', 'top-right',{ delay: 4000 });
-                        alertify.warning("El t\u00E9cnico se encuentra en d\u00EDa libre.");
+                        stringmensaje="El t\u00E9cnico se encuentra en d\u00EDa libre."
                     break;
                 case 5:
-                        alertify.set('notifier','position', 'top-right',{ delay: 4000 });
-                        alertify.warning("El t\u00E9cnico se encuentra de Vacaciones.");
+                        stringmensaje="El t\u00E9cnico se encuentra de Vacaciones."
                     break;
                 case 6:
-                        alertify.set('notifier','position', 'top-right',{ delay: 4000 });
-                        alertify.warning("El t\u00E9cnico se encuentra en Almacen.");
+                        stringmensaje="El t\u00E9cnico se encuentra en Almacen."
                     break;
                 case 7:
-                        alertify.set('notifier','position', 'top-right',{ delay: 4000 });
-                        alertify.warning("El t\u00E9cnico se encuentra Fuera de servicio.");
+                        stringmensaje="El t\u00E9cnico se encuentra Fuera de servicio."
                     break;
                 case 8: 
-                        alertify.set('notifier','position', 'top-right',{ delay: 4000 });
-                        alertify.warning("El t\u00E9cnico se encuentra como apoyo t\u00E9cnico.");
+                        stringmensaje="El t\u00E9cnico se encuentra como apoyo t\u00E9cnico."
                     break;
                 default:
-                        alertify.set('notifier','position', 'top-right',{ delay: 4000 });
-                        alertify.error("Error no previsto, por favor intentelo de nuevo.");
+                        stringmensaje="Error no previsto, por favor intentelo de nuevo."
                     break;
             }
             result = false;
+
+            toastr.info( stringmensaje);    
+
         }
 	    return result;
     }
@@ -414,7 +414,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                             let tableelemetn=''
                             let htmlImagenesIconos=''
                             angular.forEach($scope.listadoOtsPendientes,function(otpendiente,index){
-                                htmlImagenesIconos=$scope.categoriaIconos(otpendiente)
+                               // htmlImagenesIconos=$scope.categoriaIconos(otpendiente)
                                 
                                 tableelemetn=`
                                 <tr>
@@ -813,15 +813,20 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             mainDespachoService.consultarCatalogosTurnosDespachoPI() ,
             mainDespachoService.consultarCatalogoTipoOrdenUsuarioDespacho(),
             mainDespachoService.consulCatalogoGeografiaUsuarioDespacho(),
-            mainDespachoService.consultarConfiguracionDespachoDespacho()
+            mainDespachoService.consultarConfiguracionDespachoDespacho({"moduloAccionesUsuario":"moduloDespacho"})
         ]).then(function(results) {              
             let elementosMapa= angular.copy(results[3].data.result);
             $scope.listadoIconosConfig=[]         
             $scope.nfiltrogeografia=results[3].data.result.N_FILTRO_GEOGRAFIA
             $scope.nfiltrointervenciones=results[3].data.result.N_FILTRO_INTERVENCIONES
-            $scope.nfiltroestatuspendiente=results[3].data.result.ESTATUS_PENDIENTES
-            $scope.elementosConfigGeneral=new Map(Object.entries(results[3].data.result))
+            $scope.nfiltroestatuspendiente=results[3].data.result.ESTATUS_PENDIENTES           
+            $scope.permisosConfigUser=results[3].data.result.MODULO_ACCIONES_USUARIO;
+           
+            if($scope.permisosConfigUser!=undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length >0)
+                 $scope.permisosConfigUser.permisos.map(e=>{e.banderaPermiso = true ; return e;});
             
+
+            $scope.elementosConfigGeneral=new Map(Object.entries(results[3].data.result))          
             for (const elm in results[3].data.result) {
                 console.log(elm)
                 if(elm.toUpperCase().includes("ICONO_")){

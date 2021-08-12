@@ -43,7 +43,7 @@ public class ImplAutentificacionService  implements AutentificacionService{
 		LoginResult responseLog = (LoginResult) restCaller.callPostReturnClassBasicAuthXwwwUrlFormed(
 				urlService ,  us, crdospas, LoginResult.class
 		);
-		Map<String, String> configuraciones = responseLog.getConfiguraciones();
+		Map<String, Object> configuraciones = responseLog.getConfiguraciones();
 		String ordenamiento=(String)configuraciones.get("NAVBAR_ORDER");		
 		
 		responseLog.setPermisos( retornarListOrdenamiento(responseLog.getPermisos(),ordenamiento));		
