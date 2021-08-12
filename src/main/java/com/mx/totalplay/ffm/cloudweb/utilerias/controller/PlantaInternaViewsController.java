@@ -9,12 +9,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import com.mx.totalplay.ffm.cloudweb.plantainterna.utils.ConstDisponbilidadPI;
 import com.mx.totalplay.ffm.cloudweb.utilerias.utils.ConstantesGeneric;
+import com.mx.totalplay.ffm.cloudweb.utilerias.utils.ConsumeRest;
+import com.mx.totalplay.ffm.cloudweb.utilerias.utils.UtileriaGeneral;
 @Controller
 public class PlantaInternaViewsController {
 	private  final Logger logger = LogManager.getLogger(PlantaInternaViewsController.class.getName());
-	@Autowired 
-	ConstantesGeneric genericVars;
+	
+	
+	private final ConstantesGeneric genericVars;   
+	private final UtileriaGeneral utileriaGeneral;
+
+    @Autowired
+    public PlantaInternaViewsController(UtileriaGeneral utileriaGeneral,ConstantesGeneric genericVars) {
+        this.utileriaGeneral = utileriaGeneral;
+        this.genericVars = genericVars;
+    }
+
 	
 	@GetMapping("/moduloDespacho")
 	public String despachoPlantaInterna() {		

@@ -284,7 +284,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             if (response.data !== undefined) {
                 if (response.data.respuesta) {
                     if (response.data.result.alertas) {
-                       // $scope.listadoConteoAlertasTipo=response.data.result.alertas                                            
+                        $scope.listadoConteoAlertasTipo=response.data.result.alertas                                            
                         //$scope.listadoConteoAlertasTipo=conteoOtsDespacho.Alertas                                            
    
                     }

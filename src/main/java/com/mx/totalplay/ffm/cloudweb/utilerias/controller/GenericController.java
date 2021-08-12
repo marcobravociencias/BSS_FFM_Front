@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.mx.totalplay.ffm.cloudweb.utilerias.utils.ConstantesGeneric;
+import com.mx.totalplay.ffm.cloudweb.utilerias.utils.UtileriaGeneral;
+
 import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,8 +28,15 @@ public class GenericController {
 	
 	private  final Logger logger = LogManager.getLogger(GenericController.class.getName());
 	
-	@Autowired
-	ConstantesGeneric genericVars;
+	
+	private final ConstantesGeneric genericVars;   
+	private final UtileriaGeneral utileriaGeneral;
+
+    @Autowired
+    public GenericController(UtileriaGeneral utileriaGeneral,ConstantesGeneric genericVars) {
+        this.utileriaGeneral = utileriaGeneral;
+        this.genericVars = genericVars;
+    }
 	
 	@GetMapping("/enrutarUser")
 	public String enrutamientoUser(ModelMap model) {	
