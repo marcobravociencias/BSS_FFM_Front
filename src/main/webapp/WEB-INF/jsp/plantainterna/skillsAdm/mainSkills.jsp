@@ -112,7 +112,7 @@
 										class="content-checkbox-operario checkTecnicoSeleccionado"
 										style="display: none">
 										<input class="form-check-input input-operario-checkbox"
-											type="checkbox" checked="checked" />
+											type="checkbox" checked="checked" disabled="disabled" />
 									</div>
 	
 								</div>
@@ -323,32 +323,22 @@
 						</ul>
 					</nav>
 				</header>
-				<div id="contenedorTablaSkilssVistaTabla" class=""
-					style="display: none;">
+				<div id="contenedorTablaSkilssVistaTabla" class="" style="display: none;">
 					<div class="row">
 						<div class="col-md-3">
 							<div class="input-group input-group-sm content-seach-group  ">
-								<input type="text"
-									class="form-control form-control-sm buscar-input-operario"
-									ng-model="buscarTecnicoTabla" placeholder="Buscar Técnico">
-								<span class="search-icon-operario-busq fa fa-search"
-									id="buscar-operario"></span>
+								<input type="text" id="idBuscadorTecnicoTabla" class="form-control form-control-sm buscar-input-operario" ng-keyup="busquedaTecnicoTabla()" placeholder="Buscar Técnico">
+								<span class="search-icon-operario-busq fa fa-search" id="buscar-operario"></span>
 							</div>
 						</div>
 						<div class="col-md-7" style="text-align: center;">
-							<i class="far fa-arrow-alt-circle-left fa-2x iconoFlechaScroll"
-								ng-click="moverScrollHorizontalIzquierda()"></i> <i
-								class="far fa-arrow-alt-circle-right fa-2x iconoFlechaScroll"
-								ng-click="moverScrollHorizontalDerecha()"></i>
+							<i class="far fa-arrow-alt-circle-left fa-2x iconoFlechaScroll" ng-click="moverScrollHorizontalIzquierda()"></i> 
+							<i class="far fa-arrow-alt-circle-right fa-2x iconoFlechaScroll" ng-click="moverScrollHorizontalDerecha()"></i>
 						</div>
 						<div class="col-md-2">
 							<div style="text-align: right;">
-								<i class="fas fa-eye iconoOjoVerColumnas"
-									ng-click="mostrarTodasColumnasIcono()" data-toggle="tooltip"
-									data-placement="top" title="Mostrar todas las columnas"></i> <i
-									class="fas fa-columns iconoColumnas"
-									ng-click="abrirModalSkillsFiltroTabla()" data-toggle="tooltip"
-									data-placement="top" title="Mostrar / ocultar columnas"></i>
+								<i class="fas fa-eye iconoOjoVerColumnas" ng-click="mostrarTodasColumnasIcono()" data-toggle="tooltip" data-placement="top" title="Mostrar todas las columnas"></i> 
+								<i class="fas fa-columns iconoColumnas"	ng-click="abrirModalSkillsFiltroTabla()" data-toggle="tooltip" data-placement="top" title="Mostrar / ocultar columnas"></i>
 							</div>
 						</div>
 					</div>
@@ -369,11 +359,8 @@
 											</tr>
 										</thead>
 										<tbody id="bodyTabla">
-											<tr
-												ng-repeat="tecnico in tecnicosMostradas.result.detalleTecnicos | filter: buscarTecnicoTabla"
-												class="zui-sticky-tr">
-												<td class="zui-sticky-body zui-text-cabeceras">{{tecnico.nombre}}
-													{{tecnico.apellidoPaterno}} {{tecnico.apellidoMaterno}}</td>
+											<tr ng-repeat="tecnico in tecnicosMostradas.result.detalleTecnicos | filter: buscarTecnicoTabla" class="zui-sticky-tr trTecnico">
+												<td class="zui-sticky-body zui-text-cabeceras nombreTecnico">{{tecnico.nombre}} {{tecnico.apellidoPaterno}} {{tecnico.apellidoMaterno}}</td>
 												<td ng-repeat="skill in tecnico.todasSkills"
 													style="text-align: center" scope="col"><input
 													class="form-check-input" type="checkbox"
@@ -418,15 +405,12 @@
 				</div>
 	
 				<!-- MODAL GEOGRAFÍA VISTA TABLA -->
-				<div id="modalGeografiaTabla" class="modal fade" tabindex="-1"
-					aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div id="modalGeografiaTabla" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header">
 								<h5 class="modal-title">Geografía</h5>
-								<button type="button" class="btn-close" data-mdb-dismiss="modal"
-									aria-label="Close" ng-click="cerrarModalGeografiaTabla()">
-								</button>
+								<button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close" ng-click="cerrarModalGeografiaTabla()"></button>
 							</div>
 							<div class="modal-body">
 								<div class="container">
@@ -455,9 +439,8 @@
 					</div>
 				</div>
 	
-				<!-- MODAL GEOGRAFÍA VISTA TABLA -->
-				<div id="modalSkillsFiltroTabla" class="modal fade" tabindex="-1"
-					aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<!-- MODAL SKILLS COLUMNAS VISTA TABLA -->
+				<div id="modalSkillsFiltroTabla" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header">
@@ -468,43 +451,27 @@
 							</div>
 							<div class="modal-body">
 								<div class="container">
-									<div class="input-group input-group-sm content-seach-group  ">
-										<input type="text"
-											class="form-control form-control-sm buscar-input-operario"
-											ng-model="buscarSkillFiltro" placeholder="Buscar skill">
+									<div class="input-group input-group-sm content-seach-group">
+										<input type="text" id="txtBusquedaSkillFiltro" class="form-control form-control-sm buscar-input-operario" ng-keyup="busquedaSkillFiltro()" placeholder="Buscar skill">
 										<span class="search-icon-operario-busq fa fa-search"></span>
 									</div>
-	
+									<div class="row contenedorCheckTodasSkillsFiltro">
+										<div class="col-md-1" style="text-align:right;">
+											<input id="checkOcultarMostrarColumnasTabla" type="checkbox" checked="checked" ng-click="ocultarMostrarTodasColumnas()" />
+										</div>
+										<div class="col-md-11">
+											<p class="textoMostrarTodas" ng-click="ocultarMostrarTodasColumnasTexto()"><strong>MOSTRAR TODAS</strong></p>
+										</div>
+									</div>
 									<div id="divContenedorSkills" class="scrollGeneral">
 										<div class="intervenciones-container">
-											<div class="row">
-												<div class="col-9 intervencion-col">
-													<h5 class="text-intervencion-title">
-														<strong>OCULTAR / MOSTRAR TODAS</strong>
-													</h5>
+											<div ng-repeat="intervencion in listadoIntervencionesFiltro track by $index" class="row rowSkillFiltro">
+												<div class="col-md-10 intervencion-col">
+													<h5 class="text-intervencion-title nombreSkillFiltro" ng-bind="intervencion.descripcion"></h5>
 												</div>
-												<div class="col-3 intervencion-col">
+												<div class="col-md-2 intervencion-col">
 													<div class="form-check-sm form-check form-switch">
-														<input id="checkOcultarMostrarColumnasTabla"
-															class="form-check-input form-check-input-sm"
-															type="checkbox" checked="checked"
-															ng-click="ocultarMostrarTodasColumnas()" />
-													</div>
-												</div>
-											</div>
-											<div
-												ng-repeat="intervencion in listadoIntervencionesFiltro | filter:buscarSkillFiltro track by $index"
-												class="row">
-												<div class="col-9 intervencion-col">
-													<h5 class="text-intervencion-title"
-														ng-bind="intervencion.descripcion"></h5>
-												</div>
-												<div class="col-3 intervencion-col">
-													<div class="form-check-sm form-check form-switch">
-														<input
-															class="form-check-input form-check-input-sm checkSkillsVistaTabla"
-															type="checkbox" id="flexSwitchCheckDefault"
-															ng-click="displayColumna($index+2)" checked="checked" />
+														<input id="checkSkillFiltro{{$index+2}}" class="form-check-input form-check-input-sm checkSkillsVistaTabla" type="checkbox" ng-click="displayColumna($index+2)" checked="checked" />
 													</div>
 												</div>
 											</div>
@@ -513,15 +480,11 @@
 								</div>
 							</div>
 							<div class="modal-footer">
-								<button type="button"
-									class="btn btn-cerrar-modal btn-secondary ripple-surface"
-									data-mdb-dismiss="modal"
-									ng-click="cerrarModalSkillsFiltroTabla()">CERRAR</button>
+								<button type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface"	data-mdb-dismiss="modal" ng-click="cerrarModalSkillsFiltroTabla()">CERRAR</button>
 							</div>
 						</div>
 					</div>
 				</div>
-	
 			</div>
 		</div>
 	</body>
