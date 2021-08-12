@@ -3,45 +3,45 @@
         <span class="resumen-title">INFORMACI&Oacute;N B&Aacute;SICA</span>
     </div>
 </div>
-<div class="row">
+<div class="row" style="text-align: left;">
     <div class="col-6 contenido-cuenta">
         <strong class="color_titulos_resumen">CUENTA:</strong>
-        <p class="resumen-detalle-agenda" id="cuenta-resumen"></p>
+        <label class="resumen-detalle-agenda" ng-bind="infoBasica.folio && infoBasica.folio !== '' ? infoBasica.folio : 'Sin informaci&oacute;n'"></label>
     </div>
     <div class="col-6  contenido-cuenta">
         <strong class="color_titulos_resumen">TIPO INTERVENCI&Oacute;N:</strong>
-        <p class="resumen-detalle-agenda" id="tipointervencion-resumen"></p>
+        <label class="resumen-detalle-agenda" ng-bind="infoBasica.intervencion.Descripcion ? infoBasica.intervencion.Descripcion : 'Sin informaci&oacute;n'"></label>
     </div>
 </div>
-<div class="row">
+<div class="row" style="text-align: left;">
     <div class="col-6 contenido-cuenta">
         <strong class="color_titulos_resumen">SUBINTERVENCI&Oacute;N:</strong>
-        <p class="resumen-detalle-agenda" id="subintervencion-resumen"></p>
+        <label class="resumen-detalle-agenda" ng-bind="infoBasica.subIntervencion.Descripcion ? infoBasica.subIntervencion.Descripcion : 'Sin informaci&oacute;n'"></label>
     </div>
     <div class="col-6 contenido-cuenta">
         <strong class="color_titulos_resumen">CANAL DE VENTAS:</strong>
-        <p class="resumen-detalle-agenda" id="canalventa-resumen"></p>
+        <label class="resumen-detalle-agenda" ng-bind="infoBasica.canalVenta.Canal_Venta ? infoBasica.canalVenta.Canal_Venta : 'Sin informaci&oacute;n'"></label>
     </div>
 </div>
-<div class="row">
+<div class="row" style="text-align: left;">
     <div class="col-6 contenido-cuenta">
         <strong class="color_titulos_resumen">PAQUETE:</strong>
-        <p class="resumen-detalle-agenda" id="paquete-resumen"></p>
+        <label class="resumen-detalle-agenda" ng-bind="infoBasica.paquete.Nombre_Paquete ? infoBasica.paquete.Nombre_Paquete : 'Sin informaci&oacute;n'"></label>
     </div>
     <div class="col-6 contenido-cuenta">
         
         <strong class="color_titulos_resumen">DISTRITO:</strong>
-        <p class="resumen-detalle-agenda" id="distrito-resumen"></p>
+        <label class="resumen-detalle-agenda" ng-bind="infoBasica.distrito ? infoBasica.distrito : 'Sin informaci&oacute;n'"></label>
     </div>
 </div>
-<div class="row">
+<div class="row" style="text-align: left;">
     <div class="col-6 contenido-cuenta">
         <strong class="color_titulos_resumen">TURNO:</strong>
-        <p class="resumen-detalle-agenda" id="turno-resumen"></p>
+        <label class="resumen-detalle-agenda" id="turno-resumen"></label>
     </div>
     <div class="col-6 contenido-cuenta">
         <strong class="color_titulos_resumen">FECHA:</strong>
-        <p class="resumen-detalle-agenda" id="fecha-resumen"></p>
+        <label class="resumen-detalle-agenda" id="fecha-resumen"></label>
     </div>
 </div>
 
@@ -53,97 +53,97 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row" style="text-align: left;">
     <div class="col-6 contenido-cuenta">
         <strong class="color_titulos_resumen">FOLIO:</strong>
-        <p class="resumen-detalle-agenda" id="folio-resumen"></p>
+        <label class="resumen-detalle-agenda" ng-bind="infoBasica.paquete.Nombre_Paquete ? infoBasica.paquete.Nombre_Paquete : 'Sin informaci&oacute;n'"></label>
     </div>
     <div class="col-6 contenido-cuenta">        
         <strong class="color_titulos_resumen">NOMBRE CLIENTE:</strong>
-        <p class="resumen-detalle-agenda" id="nombrecliente-resumen"></p>
+        <label class="resumen-detalle-agenda" ng-bind="informacionCliente.nombre ? informacionCliente.nombre : 'Sin informaci&oacute;n'"></label>
     </div> 
 </div>
-<div class="row">
-    <div class="col-12 contenido-cuenta">        
+<div class="row" style="text-align: left;">
+    <div class="col-12 contenido-cuenta" >        
         <strong class="color_titulos_resumen">NOMBRE CONTACTO:</strong>
-        <p class="resumen-detalle-agenda" id="nombrecontacto-resumen"></p>
+        <label class="resumen-detalle-agenda" ng-bind="informacionCliente.nombreContacto ? informacionCliente.nombreContacto : 'Sin informaci&oacute;n'"></label>
     </div>
 </div>
-<div class="row">
+<div class="row" style="text-align: left;">
     <div class="col-12 contenido-cuenta">        
         <strong class="color_titulos_resumen">CALLE:</strong>
-        <p class="resumen-detalle-agenda" id="calle-resumen"></p>
+        <label class="resumen-detalle-agenda" ng-bind="informacionCliente.calle ? informacionCliente.calle : 'Sin informaci&oacute;n'"></label>
     </div>
 </div>
 
-<div class="row">
+<div class="row" style="text-align: left;">
     <div class="col-6 contenido-cuenta">
         <strong class="color_titulos_resumen">CIUDAD:</strong>
-        <p class="resumen-detalle-agenda" id="ciudad-resumen"></p>
+        <label class="resumen-detalle-agenda" ng-bind="informacionCliente.ciudad ? informacionCliente.ciudad : 'Sin informaci&oacute;n'"></label>
     </div>
     <div class="col-6 contenido-cuenta">
         <strong class="color_titulos_resumen">COLONIA:</strong>
-        <p class="resumen-detalle-agenda" id="colonia-resumen"></p>
+        <label class="resumen-detalle-agenda" ng-bind="informacionCliente.colonia ? informacionCliente.colonia : 'Sin informaci&oacute;n'"></label>
     </div>
 </div>
-<div class="row">
+<div class="row" style="text-align: left;">
     <div class="col-6 contenido-cuenta">
         <strong class="color_titulos_resumen">ESTADO:</strong>
-        <p class="resumen-detalle-agenda" id="estado-resumen"></p>
+        <label class="resumen-detalle-agenda" ng-bind="informacionCliente.estado ? informacionCliente.estado : 'Sin informaci&oacute;n'"></label>
     </div>
     <div class="col-6 contenido-cuenta">
         <strong class="color_titulos_resumen">MUNICIPIO:</strong>
-        <p class="resumen-detalle-agenda" id="municipio-resumen"></p>
+        <label class="resumen-detalle-agenda" ng-bind="informacionCliente.municipio ? informacionCliente.municipio : 'Sin informaci&oacute;n'"></label>
     </div>
 </div>
-<div class="row">
+<div class="row" style="text-align: left;">
     <div class="col-12 contenido-cuenta">        
         <strong class="color_titulos_resumen">ENTRE CALLES:</strong>
-        <p class="resumen-detalle-agenda" id="entrecalles-resumen"></p>
+        <label class="resumen-detalle-agenda" ng-bind="informacionCliente.entreCalles ? informacionCliente.entreCalles : 'Sin informaci&oacute;n'"></label>
     </div>
 </div>
-<div class="row">
+<div class="row" style="text-align: left;">
     <div class="col-12 contenido-cuenta">        
         <strong class="color_titulos_resumen">REFERENCIAS:</strong>
-        <p class="resumen-detalle-agenda" id="referencias-resumen"></p>
+        <label class="resumen-detalle-agenda" ng-bind="informacionCliente.referencias ? informacionCliente.referencias : 'Sin informaci&oacute;n'"></label>
     </div>
 </div>
-<div class="row">
+<div class="row" style="text-align: left;">
     <div class="col-4 contenido-cuenta">        
         <strong class="color_titulos_resumen"> EXT.:</strong>
-        <p class="resumen-detalle-agenda" id="extension-resumen"></p>
+        <label class="resumen-detalle-agenda" ng-bind="informacionCliente.ext ? informacionCliente.ext : 'Sin informaci&oacute;n'"></label>
     </div>
     <div class="col-4 contenido-cuenta">        
         <strong class="color_titulos_resumen">T&Eacute;LEFONO:</strong>
-        <p class="resumen-detalle-agenda" id="telefono-resumen"></p>
+        <label class="resumen-detalle-agenda" ng-bind="informacionCliente.telefono ? informacionCliente.telefono : 'Sin informaci&oacute;n'"></label>
     </div>
     <div class="col-4 contenido-cuenta">        
         <strong class="color_titulos_resumen">CELULAR:</strong>
-        <p class="resumen-detalle-agenda" id="celular-resumen"></p>
+        <label class="resumen-detalle-agenda" ng-bind="informacionCliente.celular ? informacionCliente.celular : 'Sin informaci&oacute;n'"></label>
     </div>
 </div> 
-<div class="row">
+<div class="row" style="text-align: left;">
     <div class="col-4 contenido-cuenta">        
         <strong class="color_titulos_resumen">N&Uacute;M EXT.:</strong>
-        <p class="resumen-detalle-agenda" id="numexterior-resumen"></p>
+        <label class="resumen-detalle-agenda" ng-bind="informacionCliente.numeroExt ? informacionCliente.numeroExt : 'Sin informaci&oacute;n'"></label>
     </div>
     <div class="col-4 contenido-cuenta">        
         <strong class="color_titulos_resumen">N&Uacute;M INT.:</strong>
-        <p class="resumen-detalle-agenda" id="numinterior-resumen"></p>
+        <label class="resumen-detalle-agenda" ng-bind="informacionCliente.numeroInt ? informacionCliente.numeroInt : 'Sin informaci&oacute;n'"></label>
     </div>
     <div class="col-4 contenido-cuenta">        
         <strong class="color_titulos_resumen">C&Oacute;DIGO POSTAL.:</strong>
-        <p class="resumen-detalle-agenda" id="codigopostal-resumen"></p>
+        <label class="resumen-detalle-agenda" ng-bind="informacionCliente.codigoPostal ? informacionCliente.codigoPostal : 'Sin informaci&oacute;n'"></label>
     </div>
 </div> 
-<div class="row">
+<div class="row" style="text-align: left;">
     <div class="col-4 contenido-cuenta">
         <strong class="color_titulos_resumen">LATITUD:</strong>
-        <p class="resumen-detalle-agenda" id="latitud-resumen">Sin direcci&oacute;n capturada</p>
+        <label class="resumen-detalle-agenda" ng-bind="infoBasica.paquete.Nombre_Paquete ? infoBasica.paquete.Nombre_Paquete : 'Sin informaci&oacute;n'">Sin direcci&oacute;n capturada</label>
     </div>
     <div class="col-4 contenido-cuenta">
         <strong class="color_titulos_resumen">LONGITUD:</strong>
-        <p class="resumen-detalle-agenda" id="longitud-resumen">Sin direcci&oacute;n capturada</p>
+        <label class="resumen-detalle-agenda" ng-bind="infoBasica.paquete.Nombre_Paquete ? infoBasica.paquete.Nombre_Paquete : 'Sin informaci&oacute;n'">Sin direcci&oacute;n capturada</label>
     </div>
 </div>
 <br>

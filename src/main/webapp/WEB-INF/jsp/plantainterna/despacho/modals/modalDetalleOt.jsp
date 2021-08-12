@@ -18,13 +18,13 @@
                     <div class="row">
                         <div style="padding-left: 0;" class="col-2">
                           <div class="nav flex-column nav-tabs text-center" id="v-tabs-tab-detalle-ot" role="tablist" aria-orientation="vertical" >
-                            <a class="nav-link active" id="v-tabs-consulta-detalleot-tab" data-mdb-toggle="tab" href="#v-tabs-consulta-detalleot" role="tab" aria-controls="v-tabs-consulta-detalleot-tab" aria-selected="true" >Informaci&oacute;n</a>
-                            <a class="nav-link " id="v-tabs-consulta-historico-tab" data-mdb-toggle="tab" href="#v-tabs-consulta-historico" role="tab" ng-click="consultarHistorial()" aria-controls="v-tabs-consulta-historico-tab" aria-selected="true" >Hist&oacute;rico</a>
-                            <a class="nav-link" id="v-tabs-consulta-mensajeria-tab" data-mdb-toggle="tab" href="#v-tabs-consulta-mensajeria" role="tab" ng-click="consultarComentarios();" aria-controls="v-tabs-consulta-mensajeria-tab" aria-selected="false" >Comentarios</a>
-                            <a class="nav-link" id="v-tabs-consulta-pedido-tab" data-mdb-toggle="tab" href="#v-tabs-consulta-pedido" role="tab" ng-click="consultarPedido();" aria-controls="v-tabs-consulta-pedido-tab" aria-selected="false" >Pedido</a>                
-                            <a class="nav-link" id="v-tabs-consulta-acciones-tab" data-mdb-toggle="tab" href="#v-tabs-consulta-acciones" role="tab" aria-controls="v-tabs-consulta-acciones-tab" aria-selected="false" >Acciones</a>                    
-                        </div>
-                        </div>                      
+                                <a class="nav-link active" id="v-tabs-consulta-detalleot-tab" data-mdb-toggle="tab" href="#v-tabs-consulta-detalleot" role="tab" aria-controls="v-tabs-consulta-detalleot-tab" aria-selected="true" >Informaci&oacute;n</a>
+                                <a ng-show="permisosModal.indexOf('tabHistoricoDespacho') !== -1" class="nav-link " id="v-tabs-consulta-historico-tab" data-mdb-toggle="tab" href="#v-tabs-consulta-historico" role="tab" ng-click="consultarHistorial()" aria-controls="v-tabs-consulta-historico-tab" aria-selected="true" >Hist&oacute;rico</a>
+                                <a ng-show="permisosModal.indexOf('tabComentariosDespacho') !== -1" class="nav-link" id="v-tabs-consulta-mensajeria-tab" data-mdb-toggle="tab" href="#v-tabs-consulta-mensajeria" role="tab" ng-click="consultarComentarios();" aria-controls="v-tabs-consulta-mensajeria-tab" aria-selected="false" >Comentarios</a>
+                                <a ng-show="permisosModal.indexOf('tabPedidoDespacho') !== -1" class="nav-link" id="v-tabs-consulta-pedido-tab" data-mdb-toggle="tab" href="#v-tabs-consulta-pedido" role="tab" ng-click="consultarPedido();" aria-controls="v-tabs-consulta-pedido-tab" aria-selected="false" >Pedido</a>                
+                                <a ng-show="permisosModal.indexOf('tabAccionesOrdenDespacho') !== -1" class="nav-link" id="v-tabs-consulta-acciones-tab" data-mdb-toggle="tab" href="#v-tabs-consulta-acciones" role="tab" aria-controls="v-tabs-consulta-acciones-tab" aria-selected="false" >Acciones</a>                    
+                            </div>
+                        </div>                     
                         <div class="col-10">
                           <div class="tab-content" id="v-tabs-tabContent">
                             <div class="tab-pane fade show active"  id="v-tabs-consulta-detalleot" role="tabpanel" aria-labelledby="v-tabs-consulta-detalleot-tab" >
@@ -129,7 +129,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade " id="v-tabs-consulta-historico" role="tabpanel" aria-labelledby="v-tabs-consulta-historico-tab" >
+                            <div  ng-show="permisosModal.indexOf('tabHistoricoDespacho') !== -1" class="tab-pane fade " id="v-tabs-consulta-historico" role="tabpanel" aria-labelledby="v-tabs-consulta-historico-tab" >
                                 <div id="content-principal-historial" class="row">
                                     <div id="content-historial-{{$index}}" done-listado-dependencia-historico ng-repeat="elementHistorico in historialOrdenTrabajo" class="col-4" style="display: grid;">
                                         <div  class="card-historico card text-center">
@@ -162,7 +162,7 @@
                             
 
                             </div>
-                            <div class="tab-pane fade" id="v-tabs-consulta-mensajeria" role="tabpanel" aria-labelledby="v-tabs-consulta-mensajeria-tab">
+                            <div  ng-show="permisosModal.indexOf('tabComentariosDespacho') !== -1" class="tab-pane fade" id="v-tabs-consulta-mensajeria" role="tabpanel" aria-labelledby="v-tabs-consulta-mensajeria-tab">
                                 <div class="container-mensajes-parent">
                                     <div class="chat-content-area">
                                         <div class="chat-header">
@@ -207,33 +207,26 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="v-tabs-consulta-acciones" role="tabpanel" aria-labelledby="v-tabs-consulta-acciones-tab">
-
-
+                            <div ng-show="permisosModal.indexOf('tabPedidoDespacho') !== -1"  class="tab-pane fade" id="v-tabs-consulta-acciones" role="tabpanel" aria-labelledby="v-tabs-consulta-acciones-tab">
                                 <ul class="nav nav-tabs mb-3 nav-fill " id="ex1" role="tablist">
-                                    <li class="nav-item" role="presentation">
+                                    <li ng-show="permisosModal.indexOf('tabCambioEstatusRescateModal') !== -1" class="nav-item" role="presentation">
                                         <a class="nav-link active" data-mdb-toggle="tab"  href="#accion-rescate-ot" >Rescate</a>
                                     </li>
-                                    <li class="nav-item" role="presentation">
+                                    <li ng-show="permisosModal.indexOf('tabCambioEstatusReagendaModal') !== -1" class="nav-item" role="presentation">
                                         <a class="nav-link" data-mdb-toggle="tab" href="#accion-reagendar-ot" >Reagendar</a>
                                     </li>
-                                    <li class="nav-item" role="presentation">
+                                    <li ng-show="permisosModal.indexOf('tabCambioEstatusCalendarizarModal') !== -1"  class="nav-item" role="presentation">
                                         <a class="nav-link" data-mdb-toggle="tab" href="#accion-calendarizar-ot" >Calendarizar</a>
                                     </li>
-
-                                    <li class="nav-item" role="presentation">
+                                    <li  ng-show="permisosModal.indexOf('tabCambioEstatusTerminarModal') !== -1" class="nav-item" role="presentation">
                                         <a class="nav-link" data-mdb-toggle="tab" href="#accion-terminar-ot" >Terminar</a>
                                     </li>
-
-                                    <li class="nav-item" role="presentation">
+                                    <li  ng-show="permisosModal.indexOf('tabCambioEstatusDesasignarModal') !== -1" class="nav-item" role="presentation">
                                         <a class="nav-link" data-mdb-toggle="tab" href="#accion-desasignar-ot" >Desasignar</a>
                                     </li>
                                 </ul>
-                                <!-- Tabs navs -->
-                                
-                                <!-- Tabs content -->
                                 <div class="tab-content" id="ex1-content">
-                                    <div class="tab-pane fade show active" id="accion-rescate-ot" >
+                                    <div  ng-show="permisosModal.indexOf('tabCambioEstatusRescateModal') !== -1" class="tab-pane fade show active" id="accion-rescate-ot" >
                                         <div class="container container-accion">
                                
                                             <div class="row align-items-center">
@@ -262,7 +255,7 @@
                                             </div>
                                         </div>                                     
                                     </div>
-                                    <div class="tab-pane fade" id="accion-reagendar-ot" >
+                                    <div  ng-show="permisosModal.indexOf('tabCambioEstatusReagendaModal') !== -1" class="tab-pane fade" id="accion-reagendar-ot" >
                                         <div class="container container-accion">
                                             <div class="row align-items-center">
                                                 <div class="col-12">
@@ -310,7 +303,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="tab-pane fade" id="accion-calendarizar-ot" >
+                                    <div  ng-show="permisosModal.indexOf('tabCambioEstatusCalendarizarModal') !== -1" class="tab-pane fade" id="accion-calendarizar-ot" >
                                         <div class="container container-accion">
                                             <div class="row align-items-center">
                                                 <div class="col-12">
@@ -358,7 +351,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="tab-pane fade" id="accion-terminar-ot" >
+                                    <div  ng-show="permisosModal.indexOf('tabCambioEstatusTerminarModal') !== -1" class="tab-pane fade" id="accion-terminar-ot" >
                                         <div class="container container-accion">
                                       
 
@@ -388,7 +381,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="tab-pane fade" id="accion-desasignar-ot" >
+                                    <div  ng-show="permisosModal.indexOf('tabCambioEstatusDesasignarModal') !== -1" class="tab-pane fade" id="accion-desasignar-ot" >
                                         <div class="container container-accion">                                                                                	
                                             <div class="row">
                                                 <div class="col-12">
@@ -407,9 +400,8 @@
                                         
                                     </div>
                                 </div>
-                                <!-- Tabs content -->
                             </div>
-                            <div class="tab-pane fade" id="v-tabs-consulta-pedido" role="tabpanel" aria-labelledby="v-tabs-consulta-acciones-tab">
+                            <div ng-show="permisosModal.indexOf('tabAccionesOrdenDespacho') !== -1"  class="tab-pane fade" id="v-tabs-consulta-pedido" role="tabpanel" aria-labelledby="v-tabs-consulta-acciones-tab">
                                 <div class="row parent-detallecotizacion">                        
                                     <div class="col-4">
                                         <b class="text-repartidor-noencontrado" ng-if="detalleTecnicoOt.latitud == undefined || detalleTecnicoOt.latitud == null">No se encontr&oacute; ubicaci&oacute;n del repartidor</b>

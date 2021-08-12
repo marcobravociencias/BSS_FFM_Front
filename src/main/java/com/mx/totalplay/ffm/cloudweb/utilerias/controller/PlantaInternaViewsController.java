@@ -9,24 +9,35 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import com.mx.totalplay.ffm.cloudweb.plantainterna.utils.ConstDisponbilidadPI;
 import com.mx.totalplay.ffm.cloudweb.utilerias.utils.ConstantesGeneric;
+import com.mx.totalplay.ffm.cloudweb.utilerias.utils.ConsumeRest;
+import com.mx.totalplay.ffm.cloudweb.utilerias.utils.UtileriaGeneral;
 @Controller
 public class PlantaInternaViewsController {
 	private  final Logger logger = LogManager.getLogger(PlantaInternaViewsController.class.getName());
-	@Autowired 
-	ConstantesGeneric genericVars;
+	
+	
+	private final ConstantesGeneric genericVars;   
+	private final UtileriaGeneral utileriaGeneral;
+
+    @Autowired
+    public PlantaInternaViewsController(UtileriaGeneral utileriaGeneral,ConstantesGeneric genericVars) {
+        this.utileriaGeneral = utileriaGeneral;
+        this.genericVars = genericVars;
+    }
+
 	
 	@GetMapping("/moduloDespacho")
 	public String despachoPlantaInterna() {		
 		return "plantainterna/despacho/despachopi";				
 	}
-	
 	@GetMapping("/moduloUsuarios")
 	public String usuariosPlantaInterna() {
 		return "plantainterna/usuarios/usuariosPi";
 	}
 	
-	@GetMapping("/ordenesuniversales")
+	@GetMapping("/moduloOrdenesUniversales")
 	public String ordenesUniversales() {
 		return "plantainterna/ordenesUniversales/ordenesuniversales";
 	}
@@ -48,7 +59,7 @@ public class PlantaInternaViewsController {
 	  return mapaVars;
 	}
 	 
-	@GetMapping("/reportesPI")
+	@GetMapping("/moduloReportesPI")
 	public String reportesPI() {
 		
 		return "plantainterna/reportesPI/mainReportesPI";
@@ -60,14 +71,13 @@ public class PlantaInternaViewsController {
 		return "plantainterna/skillsAdm/mainSkills";
 		
 	}
-	@GetMapping("/coordInst")
+	@GetMapping("/moduloCoordInst")
 	public String coordInst() {
-		
 		return "plantainterna/coordInstalaciones/mainCoordInstalaciones";
 		
 	}
 	
-	@GetMapping("/busqueda")
+	@GetMapping("/moduloBusqueda")
 	public String busqueda() {
 		return "plantainterna/busqueda/busqueda";
 	}

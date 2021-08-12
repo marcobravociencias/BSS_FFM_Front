@@ -1,13 +1,13 @@
 <div class="col-12 row">
 	<div class="col-1"></div>
-	<div class="col-10">
+	<div class="col-10" style="text-align: left;">
 		<div class="col-12 contenido-cuenta">
 			<strong class="color_titulos_resumen">LATITUD SELECCIONADA:</strong>
-			<p class="resumen-detalle-agenda" id="latitud-label">Sin direcci&oacute;n capturada</p>
+			<label class="resumen-detalle-agenda" id="latitud-label">Sin direcci&oacute;n capturada</label>
 		</div>
 		<div class="col-12 contenido-cuenta">
 			<strong class="color_titulos_resumen">LONGITUD SELECCIONADA:</strong>
-			<p class="resumen-detalle-agenda" id="longitud-label">Sin direcci&oacute;n capturada</p>
+			<label class="resumen-detalle-agenda" id="longitud-label">Sin direcci&oacute;n capturada</label>
 		</div>
 	</div>
 	<div class="col-1"></div>

@@ -3,6 +3,7 @@ var app = angular.module('controlVehicularApp', []);
 app.controller('controlVehicularController',
 	['$scope', '$q', 'controlVehicularService', 'genericService', '$filter',
 		function ($scope, $q, controlVehicularService, genericService, $filter) {
+			$("#moduloVehiculos").addClass('active')
 
 			let dataTable = [];
 			$scope.marcas = [];

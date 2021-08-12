@@ -12,16 +12,17 @@
                             <div class="title-tecnicos">
                                 <span>T&Eacute;CNICOS</span>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" style="margin-bottom: 0 !important;">
                                 <input type="text" class="form-control form-control-sm search-tecnico" ng-model="search.nombreCompleto"
                                     placeholder="Buscar t&eacute;cnicos...">
                             </div>
                             <div class="content-list-tecnicos">
                                 <div ng-repeat="user in listadoTecnicosOtsModal | filter: search">
-                                    <div class="content-tecnico" id="{{user.idTecnico}}" onclick="detalleTecnicoRuta(this.value)" ng-value="{{user.id}}">
+                                    <div class="content-tecnico"  style="border-right: 4px solid {{user.color}}" 
+                                        id="{{user.idTecnico}}" onclick="detalleTecnicoRuta(this.value)" ng-value="{{user.id}}">
                                         <div class="row">
                                             <div class="col-3">
-                                                <img style="border:.2em solid #36A9FF"
+                                                <img style="border:.2em solid {{user.color}}"
                                                     class="efecto imagen_operario_foto" src="{{user.urlFotoPerfil ? user.urlFotoPerfil : './resources/img/plantainterna/despacho/tecnicootasignada.png'}}">
                                             </div>
                                             <div class="col-9 text-justify">

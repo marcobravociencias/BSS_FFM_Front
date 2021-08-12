@@ -22,7 +22,9 @@ public class MyFilterInvocationSecurityMeatadataSource implements org.springfram
 	
 	private final AntPathMatcher antPathMatcher = new AntPathMatcher();
 	private  final Logger logger = LogManager.getLogger(DespachoPIController.class.getName());
-	private final Map<String,String> urlRoleMap = new HashMap<String,String>(){{
+	
+	/*
+	Map<String,String> urlRoleMap = new HashMap<String,String>(){{
         put("/homePage","ROLE_USER");
 
         put("/req/**","ROLE_USER");
@@ -51,8 +53,12 @@ public class MyFilterInvocationSecurityMeatadataSource implements org.springfram
 		put("/ordenesuniversales","ROLE_USER");
         put("/moduloVehiculos","ROLE_USER");
 	
-	
-
+	}};
+	*/
+	private final Map<String,String> urlRoleMapRespaldo = new HashMap<String,String>(){{
+        put("/","ROLE_ANONYMOUS");
+		put("/loginPage","ROLE_ANONYMOUS");
+		put("/**","ROLE_USER");
 	}};
     
     
@@ -61,12 +67,19 @@ public class MyFilterInvocationSecurityMeatadataSource implements org.springfram
 	@Override
 	public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		//auth.getPrincipal()
+		logger.info(new Gson().toJson(auth.getPrincipal()));
 		logger.info("###########. counting");
 		ConstSystem.sumar();
 		SystemInfo.Info();
-		logger.info(new Gson().toJson(auth.getPrincipal()));
+		Map<String,String> urlRoleMap = new HashMap<String, String>();
+		if(!auth.getPrincipal().toString().equals("anonymousUser")) {
+			LoginResult result = new Gson().fromJson(new Gson().toJson(auth.getPrincipal()).toString(), LoginResult.class);
+			urlRoleMap = result.getPermiAccUs();
+		} else {
+			urlRoleMap = urlRoleMapRespaldo;
+		}
 		
+				
 		
 		// TODO Auto-generated method stub
 		FilterInvocation fi = (FilterInvocation) object;

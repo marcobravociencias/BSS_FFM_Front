@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.LoginResult;
+import com.mx.totalplay.ffm.cloudweb.utilerias.model.Permiso;
 import com.mx.totalplay.ffm.cloudweb.utilerias.service.AutentificacionService;
 import com.mx.totalplay.ffm.cloudweb.utilerias.utils.ConstantesGeneric;
 
@@ -32,13 +33,13 @@ public class SecurityCustomAuthenticationProvider implements AuthenticationProvi
 	
 	
 	private final Map<String,String> urlRoleMap = new HashMap<String,String>(){{
+		put("/req/**","ROLE_USER");
+		put("/","ROLE_USER");
+		put("/loginPage","ROLE_USER");
         put("/homePage","ROLE_USER");
-        put("/despachoplantainterna","ROLE_USER");
-        put("/usuariosplantainterna","ROLE_USER");
-        put("/disponibilidad","ROLE_USER");
-        put("/consultaOT","ROLE_USER");
-        put("/req/**","ROLE_USER");
-		put("/","ROLE_ANONYMOUS");
+        put("/enrutarUser","ROLE_USER");
+        
+        put("/moduloOrdenesUniversales","ROLE_USER");
     }};
     
     @Autowired
@@ -59,11 +60,14 @@ public class SecurityCustomAuthenticationProvider implements AuthenticationProvi
 	        LoginResult response = autentificacionService.getAutentificacion(username, password);
 	        
 	        if (response.getMensaje() == null ) {
-	        	
 	    		final List<GrantedAuthority> grantedAuths = new ArrayList<GrantedAuthority>();
 	    		grantedAuths.add(new SimpleGrantedAuthority("ROLE_USER"));
 	    		
 	    		//SE AGREGAN LOS PERMISOS AL USUARIO
+	    		
+	    		for(Permiso permiso: response.getPermisos()) {
+	    			urlRoleMap.put("/"+permiso.getClave(), "ROLE_USER");
+	    		}
 	    		response.setPermiAccUs(urlRoleMap);	    	
 	    		
 	    		logger.info("KEY GOOGLE $ "+constantesGeneric.getGoogAccLLaevATok());

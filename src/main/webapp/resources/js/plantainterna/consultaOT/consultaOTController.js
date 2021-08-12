@@ -2,7 +2,7 @@ var app = angular.module('consultaOTApp', []);
 
 app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'genericService', function ($scope, $q, consultaOTService, genericService) {
 
-	$("#li-consultaot-navbar").addClass('active')
+	$("#moduloConsultaOt").addClass('active')
 
 	$scope.all_cluster = [];
 	let otTabla;

@@ -39,13 +39,23 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 
     abrirModalDetalleOtPendiente = function (idotpendiente) {
         $scope.requestModalInformacion(idotpendiente)
+        $scope.detalleOtPendienteSelected=$scope.listadoOtsPendientes.find(e=>e.idOrden==idotpendiente)
+        $scope.permisosModal=$scope.elementosConfigGeneral.get("MODAL_FLUJO_"+ $scope.detalleOtPendienteSelected.idFlujo ).split(",")
+        console.log("##########permisos " + $scope.permisosModal )
+        console.log($scope.detalleOtPendienteSelected)
+
     }
     abrirModalInformacion = function (idotasignada) {
         $scope.requestModalInformacion(idotasignada)
+        $scope.detalleOtAsignadaSelected= $scope.listadoOtsAsignadas.find(e=>e.idOrden==idotasignada)
+        $scope.permisosModal=$scope.elementosConfigGeneral.get("MODAL_ASIGNADA_" + $scope.detalleOtAsignadaSelected.idFlujo ).split(",")
+        console.log($scope.permisosModal )
+        console.log($scope.detalleOtAsignadaSelected)
     }
 
     $scope.idOtSelect = "";
     $scope.requestModalInformacion = function (idparams) {
+        $scope.otconsultamodal=
         document.getElementById('v-tabs-consulta-detalleot-tab').click()
         $scope.idOtSelect = idparams;
         $scope.flagComentarios = false;

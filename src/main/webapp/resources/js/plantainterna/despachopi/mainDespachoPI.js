@@ -89,7 +89,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
         $scope.initFullCalendar(copyoperarios)
     }
     angular.element(document).ready(function () {
-        $("#li-despacho-navbar").addClass('active')
+        $("#moduloDespacho").addClass('active')
           
         $('#calendar-next-back').datepicker({
             format : 'dd/mm/yyyy',
@@ -357,7 +357,8 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                 subIntTemp.push(k.id); return k;
             } )   
         })
-
+        envioIntervenciones=subIntTemp;
+        /**
         let envioIntervenciones=[]
         if($scope.nfiltrointervenciones){
             if($scope.nfiltrointervenciones==='1'){
@@ -367,25 +368,26 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             }
         }else{
             envioIntervenciones=[].concat(subIntTemp);
-        }
+        }**/
 
 
-        let nivelBusquedaArbol= $scope.nfiltrogeografia ? $scope.nfiltrogeografia : $scope.obtenerNivelUltimoJerarquia()        
+        let nivelBusquedaArbol= $scope.obtenerNivelUltimoJerarquia()        
         let clustersparam=$("#jstree-proton-3").jstree("get_selected", true)
                                                .filter(e=>e.original.nivel== nivelBusquedaArbol)
                                                .map(e=>parseInt(e.id))
 
+        /**
         let estatusPendientes=[]
         angular.forEach($scope.filtrosGeneral.estatusdisponibles,(e,i)=>{
             e.children.filter( f => f.checkedOpcion ).map((k)=>{ estatusPendientes.push(k.id); return k;} )   
-        })
+        })**/
                                                
         var params =  {
             "fechaInicio": moment( moment($scope.fechaInicioFiltro, 'DD/MM/YYYY').toDate()  ).format('YYYY-MM-DD'),
             "fechaFin": moment( moment($scope.fechaFinFiltro , 'DD/MM/YYYY').toDate() ).format('YYYY-MM-DD') ,
             "idSubIntervenciones": envioIntervenciones,
             "idTurnos": turnosdisponiblescopy,  
-            "idEstatus":  estatusPendientes.concat([0]),
+            "idEstatus": [$scope.nfiltroestatuspendiente],
             "idClusters": clustersparam
         }
     
@@ -811,16 +813,16 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             mainDespachoService.consultarCatalogosTurnosDespachoPI() ,
             mainDespachoService.consultarCatalogoTipoOrdenUsuarioDespacho(),
             mainDespachoService.consulCatalogoGeografiaUsuarioDespacho(),
-            mainDespachoService.consultarCatalogoEstatusDespachoPI(),
             mainDespachoService.consultarConfiguracionDespachoDespacho()
         ]).then(function(results) {              
-            let elementosMapa= angular.copy(results[4].data.result);
+            let elementosMapa= angular.copy(results[3].data.result);
             $scope.listadoIconosConfig=[]         
-            $scope.nfiltrogeografia=results[4].data.result.N_FILTRO_GEOGRAFIA
-            $scope.nfiltrointervenciones=results[4].data.result.N_FILTRO_INTERVENCIONES
-
+            $scope.nfiltrogeografia=results[3].data.result.N_FILTRO_GEOGRAFIA
+            $scope.nfiltrointervenciones=results[3].data.result.N_FILTRO_INTERVENCIONES
+            $scope.nfiltroestatuspendiente=results[3].data.result.ESTATUS_PENDIENTES
+            $scope.elementosConfigGeneral=new Map(Object.entries(results[3].data.result))
             
-            for (const elm in results[4].data.result) {
+            for (const elm in results[3].data.result) {
                 console.log(elm)
                 if(elm.toUpperCase().includes("ICONO_")){
                     $scope.listadoIconosConfig.push({
@@ -829,6 +831,8 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                     }) 
                 }   
             }
+
+            /**
             if (results[3].data !== undefined) {
                 if(results[3].data.respuesta ){
                     if(results[3].data.result ){
@@ -841,7 +845,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                 }               
             }else{
                 toastr.error( 'Ha ocurrido un error en la consulta de tipo ordenes' );                
-            }
+            }**/
 
             if (results[0].data !== undefined) {
                 if(results[0].data.respuesta ){

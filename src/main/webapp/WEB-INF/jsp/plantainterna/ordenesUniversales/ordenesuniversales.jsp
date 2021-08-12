@@ -124,6 +124,8 @@ pageEncoding="ISO-8859-1"%>
 	<!-- Fin -->
 
 	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/ordenesUniversales/ordenesUniversalesController.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/ordenesUniversales/calendarController.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/ordenesUniversales/mapController.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/ordenesUniversales/ordenesUniversalesService.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/ordenesUniversales/jsonResult.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
