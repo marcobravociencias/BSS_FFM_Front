@@ -39,8 +39,8 @@ public class DespachoPIController {
      **/
     
     @PostMapping("/consultarConfiguracionDespachoDespacho")
-    public ResponseEntity<?> consultarIconosDisponibles() {
-        ServiceResponseResult response = despachoService.consultarConfiguracionDespachoDespachoServ();
+    public ResponseEntity<?> consultarIconosDisponibles(@RequestBody  (required=false) String params) {
+        ServiceResponseResult response = despachoService.consultarConfiguracionDespachoDespachoServ(params);
         if (response.getResult() instanceof Integer) {
             return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
         }

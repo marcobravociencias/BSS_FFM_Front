@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
@@ -15,6 +16,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import com.mx.totalplay.ffm.cloudweb.utilerias.model.LoginResult;
+import com.mx.totalplay.ffm.cloudweb.utilerias.model.Permiso;
 import com.mx.totalplay.ffm.cloudweb.utilerias.utils.ConstantesGeneric;
 import com.mx.totalplay.ffm.cloudweb.utilerias.utils.UtileriaGeneral;
 
@@ -41,7 +44,12 @@ public class GenericController {
 	@GetMapping("/enrutarUser")
 	public String enrutamientoUser(ModelMap model) {	
 		logger.info("Enrutando ... " );
-		return "redirect:moduloDespacho";				
+        LoginResult principalDetail = utileriaGeneral.obtenerObjetoPrincipal();
+        List<Permiso> permisos = principalDetail.getPermisos();
+        String redirectEnrutamiento="redirect:"+permisos.get(0).getClave();
+		logger.info("Enrutando ... "+redirectEnrutamiento );
+		
+		return redirectEnrutamiento;				
 	}	
 	
 	 @ModelAttribute("googlkeyattrvar")

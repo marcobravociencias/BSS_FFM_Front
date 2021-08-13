@@ -45,6 +45,7 @@
     </head>
     <body id="controllerdespacho" ng-controller="despachoController">        
 
+          
     	<jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>  
         <input style="display: none;" ng-keyup="buscarTecnicoCalendar()" ng-model="buscarTecnicoInput" type="text">
         <div ng-show="vistaDespacho" class="container-fluid container-filtros-despacho">            
@@ -178,6 +179,8 @@
         <jsp:include page="./modals/modalVehiculoOperario.jsp"></jsp:include>    
         <jsp:include page="./modals/modalMateriales.jsp"></jsp:include>    
         <jsp:include page="./modals/modalAsignaOt.jsp"></jsp:include>    
+        <jsp:include page="./modals/modalReasignaOt.jsp"></jsp:include>    
+
         <jsp:include page="./modals/modalComentarios.jsp"></jsp:include>    
         <jsp:include page="./modals/modalDetalleOt.jsp"></jsp:include>    
         <jsp:include page="./modals/modalIconografia.jsp"></jsp:include>    
@@ -199,7 +202,7 @@
         </div-->
         <div ng-show="vistaDespacho" class="container-fluid d-flex justify-content-center">    
             <ul class="wall content-alert-parent">
-                <li ng-click="getDetalleAlertas(tipoAlertaConteo)" style="background-color: {{tipoAlertaConteo.hexaColor}}" title="{{tipoAlertaConteo.id}}" class="element-alert" ng-repeat="tipoAlertaConteo in listadoConteoAlertasTipo track by $index"> 
+                <li ng-click="getDetalleAlertas(tipoAlertaConteo)" style="background-color: {{tipoAlertaConteo.hexaColor}}" title="{{tipoAlertaConteo.descripcion}}" class="element-alert" ng-repeat="tipoAlertaConteo in listadoConteoAlertasTipo track by $index"> 
                      <b class="badge-alerta badge red accent-3" ng-bind="tipoAlertaConteo.contador"></b>
                      <i style="color:{{tipoAlertaConteo.bgHexaColor}}" class="icon-alerta-ind {{tipoAlertaConteo.icono}}"></i>
                      <div class="text-tipo-alerta-hide">

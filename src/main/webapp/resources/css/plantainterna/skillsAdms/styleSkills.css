@@ -350,6 +350,10 @@ table.dataTable thead th, table.dataTable thead td{
 	margin: 1em 2em 0em;
 }
 
+.contenedorCheckTodasSkillsFiltro{
+	margin: 1.2em 0em 0em;
+	color: #7716fa !important;
+}
 
 .zui-wrapper {
     position: relative;
@@ -431,5 +435,9 @@ table.dataTable thead th, table.dataTable thead td{
   border-style: solid;
   border-color: #000000;
   cursor: pointer;
+}
+
+.textoMostrarTodas{
+	cursor: pointer;
 }
 
