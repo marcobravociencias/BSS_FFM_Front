@@ -480,7 +480,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                                                 <div style=" color:${otpendiente.colorOrden}"  class="content-top-element intervencino-elemn intervencion-title"> 
                                                     ${otpendiente.descipcionTipoOrden}
                                                 </div>
-                                                ${htmlImagenesIconos}
+                                                <div class="content-iconos"> ${htmlImagenesIconos}</div>
                                             </div>
                                         </div>
                                     </td>
@@ -510,7 +510,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
     }
     $scope.categoriaIconos=function(ordenTrabajo){
         let iconosText='';
-        iconosText='<div class="content-iconos">';
+        iconosText='';
 
         if(ordenTrabajo.informacionAdicional !=undefined && ordenTrabajo.informacionAdicional.length> 0){
             $scope.listadoIconosConfig
@@ -542,8 +542,6 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                 }
             })            
         }
-        iconosText+=`</div>`
-
         return iconosText;
     }
     $scope.setPixelesTableWrapper=function(){
