@@ -29,29 +29,32 @@ app.disponibilidadCalendar = function ($scope) {
                 calendarDisp.render();
             },
             eventClick: function (info) {
-                console.log(info);
-                let eventObject = info.event;
-
-                $("#matutino_actualizar").val(eventObject._def.extendedProps.matutino);
-                $("#vespertino_actualizar").val(eventObject._def.extendedProps.vespertino);
-                if ($scope.banderaNocturno) {
-                    document.getElementById('contenedor-editar-nocturno').style.display = 'block'
-                    $("#nocturno_actualizar").val(eventObject._def.extendedProps.nocturno);
-                } else {
-                    document.getElementById('contenedor-editar-nocturno').style.display = 'none'
+                if ($scope.permisosDisponibilidad.filter(elemt => { return elemt.clave === 'accionEditaDisponibilidad'}).length === 1) {
+                    console.log(info);
+                    let eventObject = info.event;
+    
+                    $("#matutino_actualizar").val(eventObject._def.extendedProps.matutino);
+                    $("#vespertino_actualizar").val(eventObject._def.extendedProps.vespertino);
+                    if ($scope.banderaNocturno) {
+                        document.getElementById('contenedor-editar-nocturno').style.display = 'block'
+                        $("#nocturno_actualizar").val(eventObject._def.extendedProps.nocturno);
+                    } else {
+                        document.getElementById('contenedor-editar-nocturno').style.display = 'none'
+                    }
+                    $("#fecha_actualizar").val(eventObject._def.extendedProps.fecha);
+    
+                    let tipo_bloque = (eventObject._def.extendedProps.bloqueo)
+    
+                    if (tipo_bloque) {
+                        //$("#radio_activo_mod").trigger('click');
+                        document.getElementById('radio_activo_mod').checked = true
+                    } else {
+                        //$("#radio_inactivo_mod").trigger('click');
+                        document.getElementById('radio_inactivo_mod').checked = true;
+                    }
+                    $("#modificar_disponibilidad_modal").modal('show');
                 }
-                $("#fecha_actualizar").val(eventObject._def.extendedProps.fecha);
 
-                let tipo_bloque = (eventObject._def.extendedProps.bloqueo)
-
-                if (tipo_bloque) {
-                    //$("#radio_activo_mod").trigger('click');
-                    document.getElementById('radio_activo_mod').checked = true
-                } else {
-                    //$("#radio_inactivo_mod").trigger('click');
-                    document.getElementById('radio_inactivo_mod').checked = true;
-                }
-                $("#modificar_disponibilidad_modal").modal('show');
             },
             selectable: true,
             select: function (start, end, jsEvent, view) {
@@ -84,34 +87,36 @@ app.disponibilidadCalendar = function ($scope) {
                         if (tipoIntervencion === 0 || clustersparam.length === 0) {
                             mostrarMensajeWarningValidacion("Para agregar disponibilidad debes seleccionar todos los filtros")
                         } else {
-                            swal({
-                                title: "\u00BFDeseas agregar disponibilidad en este dia ?",
-                                type: 'question',
-                                showCancelButton: true,
-                                confirmButtonColor: '#3085d6',
-                                cancelButtonColor: '#d33',
-                                confirmButtonText: 'S\u00ED, agregar',
-                                cancelButtonText: "Cancelar",
-                            }).then(function () {
-                                if ($scope.banderaNocturno) {
-                                    document.getElementById('container-noc').style.display = 'block'
-                                } else {
-                                    document.getElementById('container-noc').style.display = 'none'
-                                }
-                                var format_mex = stringdateselected[0].split("-")
-                                $('#fecha_inicio_adddisp').datepicker("setDate", new Date(format_mex[0], format_mex[1], format_mex[2]));
-                                $('#fecha_fin_adddisp').datepicker("setDate", new Date(format_mex[0], format_mex[1], format_mex[2]));
-
-                                $("#fecha_inicio_adddisp").val(format_mex[2] + "/" + format_mex[1] + "/" + format_mex[0]);
-                                $("#fecha_fin_adddisp").val(format_mex[2] + "/" + format_mex[1] + "/" + format_mex[0]);
-
-                                document.getElementById('matutino_adddisp').value = '';
-                                document.getElementById('vespertino_adddisp').value = '';
-                                document.getElementById('nocturno_adddisp').value = '';
-                                document.getElementById('radio_activo_adddisp').checked = false;
-                                document.getElementById('radio_inactivo_adddisp').checked = false;
-                                $("#moda-add-disponibilidad").modal('show')
-                            }).catch(swal.noop);
+                            if ($scope.permisosDisponibilidad.filter(elem => {return elem.clave === 'accionAgregaDisponibilidad'}).length === 1) {
+                                swal({
+                                    title: "\u00BFDeseas agregar disponibilidad en este dia ?",
+                                    type: 'question',
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#3085d6',
+                                    cancelButtonColor: '#d33',
+                                    confirmButtonText: 'S\u00ED, agregar',
+                                    cancelButtonText: "Cancelar",
+                                }).then(function () {
+                                    if ($scope.banderaNocturno) {
+                                        document.getElementById('container-noc').style.display = 'block'
+                                    } else {
+                                        document.getElementById('container-noc').style.display = 'none'
+                                    }
+                                    var format_mex = stringdateselected[0].split("-")
+                                    $('#fecha_inicio_adddisp').datepicker("setDate", new Date(format_mex[0], format_mex[1], format_mex[2]));
+                                    $('#fecha_fin_adddisp').datepicker("setDate", new Date(format_mex[0], format_mex[1], format_mex[2]));
+    
+                                    $("#fecha_inicio_adddisp").val(format_mex[2] + "/" + format_mex[1] + "/" + format_mex[0]);
+                                    $("#fecha_fin_adddisp").val(format_mex[2] + "/" + format_mex[1] + "/" + format_mex[0]);
+    
+                                    document.getElementById('matutino_adddisp').value = '';
+                                    document.getElementById('vespertino_adddisp').value = '';
+                                    document.getElementById('nocturno_adddisp').value = '';
+                                    document.getElementById('radio_activo_adddisp').checked = false;
+                                    document.getElementById('radio_inactivo_adddisp').checked = false;
+                                    $("#moda-add-disponibilidad").modal('show')
+                                }).catch(swal.noop);
+                            }
                         }
 
                     }

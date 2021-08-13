@@ -259,7 +259,7 @@
                                                             <div class="form-group">
                                                                 <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o fa-2x"></i>
                                                                 <label for="id-motivo-calendarizado">Motivo:</label>
-                                                                <select class="form-control" id="id-motivo-calendarizado" ng-model="elementCalendarizado.motivo" ng-options="motivo.Descripcion for motivo in listadoMotivosCalendarizado">
+                                                                <select class="form-control" id="id-motivo-calendarizado" ng-model="elementCalendarizado.motivo" ng-options="motivo.nombre for motivo in listadoMotivosCalendarizado">
                                                                     <option value="">Seleccione ...</option>
                                                                 </select>                                               
                                                               </div>

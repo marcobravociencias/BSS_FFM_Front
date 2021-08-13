@@ -216,7 +216,7 @@
                                         <a class="nav-link" data-mdb-toggle="tab" href="#accion-reagendar-ot" >Reagendar</a>
                                     </li>
                                     <li ng-show="permisosModal.indexOf('tabCambioEstatusCalendarizarModal') !== -1"  class="nav-item" role="presentation">
-                                        <a class="nav-link" data-mdb-toggle="tab" href="#accion-calendarizar-ot" >Calendarizar</a>
+                                        <a class="nav-link" data-mdb-toggle="tab" href="#accion-calendarizar-ot" ng-click="motivos('calendariza')">Calendarizar</a>
                                     </li>
                                     <li  ng-show="permisosModal.indexOf('tabCambioEstatusTerminarModal') !== -1" class="nav-item" role="presentation">
                                         <a class="nav-link" data-mdb-toggle="tab" href="#accion-terminar-ot" >Terminar</a>
@@ -250,7 +250,7 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <button ng-click="enviarRescateOt()" class="btn  btn-primary">Recate</button>
+                                                    <button ng-click="cambioStatus('cancela')" class="btn  btn-primary">Recate</button>
                                                 </div>
                                             </div>
                                         </div>                                     
@@ -298,7 +298,7 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <button ng-click="enviarReagendamiento()"  class="btn  btn-primary">Reagendar</button>
+                                                    <button ng-click="cambioStatus('reagendamiento')"  class="btn  btn-primary">Reagendar</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -330,7 +330,7 @@
                                                     <div class="form-group">
                                                         <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o fa-2x"></i>
                                                         <label for="id-motivo-calendarizado">Motivo:</label>
-                                                        <select class="form-control" id="id-motivo-calendarizado" ng-model="elementCalendarizado.motivo" ng-options="motivo.Descripcion for motivo in listadoMotivosCalendarizado">
+                                                        <select class="form-control" id="id-motivo-calendarizado" ng-model="elementCalendarizado.motivo" ng-options="motivo.nombre for motivo in listadoMotivosCalendarizado">
                                                             <option value="">Seleccione ...</option>
                                                         </select>                                               
                                                       </div>
@@ -346,7 +346,7 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <button ng-click="enviarCalendarizado()"  class="btn  btn-primary">Reagendar</button>
+                                                    <button ng-click="cambioStatus('calendariza')"  class="btn  btn-primary">Reagendar</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -376,7 +376,7 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <button ng-click="enviarTerminadoOT()"  class="btn  btn-primary">Terminar</button>
+                                                    <button ng-click="cambioStatus('termina')"  class="btn  btn-primary">Terminar</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -393,7 +393,7 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <button ng-click="enviarDesasignacion()"  class="btn  btn-primary">Desasigna</button>
+                                                    <button ng-click="cambioStatus('desasigna')"  class="btn  btn-primary">Desasigna</button>
                                                 </div>
                                             </div>
                                         </div>

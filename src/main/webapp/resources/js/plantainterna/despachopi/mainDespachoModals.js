@@ -595,7 +595,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             $scope.listadoTurnosAcciones = catalogoTurnoJSON
             $scope.listadoMotivosRescate = $scope.listadoCatalogoAcciones.filter((e) => e.Nivel === '3' && e.ID_Padre === '7')
             $scope.listadoMotivosReagenda = $scope.listadoCatalogoAcciones.filter((e) => e.Nivel === '3' && e.ID_Padre === '7')
-            $scope.listadoMotivosCalendarizado = $scope.listadoCatalogoAcciones.filter((e) => e.Nivel === '3' && e.ID_Padre === '320')
+            //$scope.listadoMotivosCalendarizado = $scope.listadoCatalogoAcciones.filter((e) => e.Nivel === '3' && e.ID_Padre === '320')
             $scope.listadoEstadosTerminado = $scope.listadoCatalogoAcciones.filter((e) => e.Nivel === '2' && e.ID_Padre === '4')
 
 
@@ -716,6 +716,140 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         $("#" + id).addClass("selected-tecnico");
 
         $scope.getListOt(id);
+    }
+
+
+    $scope.cambioStatus = function(tipo){
+        let params = {};
+        if (tipo === 'asigna') {
+            let horaasignacionInicio = angular.copy($scope.asignacionObject.otInfo.fechahoraasignacion);
+            let horaasignacionFin = angular.copy($scope.asignacionObject.otInfo.fechahoraasignacion);
+            horaasignacionFin = moment(horaasignacionFin).add(3, 'hours').format();
+
+            let arrayHoraInicio = horaasignacionInicio.split("T")
+            arrayHoraInicio[1] = arrayHoraInicio[1].substr(0, 5)
+            let formatFechaHoraInicio = arrayHoraInicio[0] + " " + arrayHoraInicio[1]
+
+            let arrayHoraFin = horaasignacionFin.split("T")
+            arrayHoraFin[1] = arrayHoraFin[1].substr(0, 5)
+            let formatFechaHoraFin = arrayHoraFin[0] + " " + arrayHoraFin[1]
+            params = {
+                tipo: tipo,
+                ot: $scope.asignacionObject.otInfo.idOrden,
+                folioSistema: $scope.asignacionObject.otInfo.folioOrden,
+                idFlujo: $scope.asignacionObject.otInfo.idFlujo,
+                idTipoOrden: $scope.asignacionObject.otInfo.idtipoOrden,
+                idSubTipoOrden: $scope.asignacionObject.otInfo.idSubtipoOrden,
+                idOrigenSistema: 1,
+                idUsuarioDespacho: 12,
+                idUsuarioTecnico: $scope.asignacionObject.tecnicoInfo.idTecnico,
+                latitud: $scope.asignacionObject.otInfo.latitud,
+                longitud: $scope.asignacionObject.otInfo.longitud,
+                comentarios: $scope.asignacionObject.comentario,
+                idMotivo: 500,
+                idTurno:  $scope.asignacionObject.otInfo.idTurno,
+                fechaHoraAgenda: formatFechaHoraInicio
+            }
+        } else if ( tipo === 'reasigna'){
+            let horaasignacionInicio = angular.copy($scope.reAsignacionObject.otInfo.fechahoraasignacion);
+            let horaasignacionFin = angular.copy($scope.reAsignacionObject.otInfo.fechahoraasignacion);
+            horaasignacionFin = moment(horaasignacionFin).add(3, 'hours').format();
+
+            let arrayHoraInicio = horaasignacionInicio.split("T")
+            arrayHoraInicio[1] = arrayHoraInicio[1].substr(0, 5)
+            let formatFechaHoraInicio = arrayHoraInicio[0] + " " + arrayHoraInicio[1]
+
+            let arrayHoraFin = horaasignacionFin.split("T")
+            arrayHoraFin[1] = arrayHoraFin[1].substr(0, 5)
+            let formatFechaHoraFin = arrayHoraFin[0] + " " + arrayHoraFin[1]
+            params = {
+                tipo: tipo,
+                ot: $scope.reAsignacionObject.otInfo.idOrden,
+                folioSistema: $scope.reAsignacionObject.otInfo.folioOrden,
+                idFlujo: $scope.reAsignacionObject.otInfo.idFlujo,
+                idTipoOrden: $scope.reAsignacionObject.otInfo.idtipoOrden,
+                idSubTipoOrden: $scope.reAsignacionObject.otInfo.idSubtipoOrden,
+                idOrigenSistema: 1,
+                idUsuarioDespacho: 12,
+                idUsuarioTecnico: $scope.reAsignacionObject.tecnicoInfo.idTecnico,
+                latitud: $scope.reAsignacionObject.otInfo.latitud,
+                longitud: $scope.reAsignacionObject.otInfo.longitud,
+                comentarios: $scope.reAsignacionObject.comentario,
+                fechaHoraInicio: formatFechaHoraInicio,
+                fechaHoraFin: formatFechaHoraFin,
+                idtipoAsignacion: $scope.reAsignacionObject.otInfo.tipoAsignacion
+            }
+        } else if (tipo === 'desasigna') {
+            params = {
+                tipo: tipo,
+                ot: $scope.detalleOtAsignadaSelected.idOrden,
+                folioSistema: $scope.detalleOtAsignadaSelected.folioOrden,
+                idFlujo: $scope.detalleOtAsignadaSelected.idFlujo,
+                idTipoOrden: $scope.detalleOtAsignadaSelected.idtipoOrden,
+                idSubTipoOrden: $scope.detalleOtAsignadaSelected.idSubtipoOrden,
+                idOrigenSistema: 1,
+                idUsuarioDespacho: 12,
+                idUsuarioTecnico: $scope.detalleOtAsignadaSelected.idTecnico,
+                latitud: $scope.detalleOtAsignadaSelected.latitud,
+                longitud: $scope.detalleOtAsignadaSelected.longitud,
+                comentarios: $scope.detalleOtAsignadaSelected.comentario,
+            }
+        } else if (tipo === 'calendariza'){
+            params = {
+                tipo: tipo,
+                ot: $scope.detalleOtAsignadaSelected.idOrden,
+                folioSistema: $scope.detalleOtAsignadaSelected.folioOrden,
+                idFlujo: $scope.detalleOtAsignadaSelected.idFlujo,
+                idTipoOrden: $scope.detalleOtAsignadaSelected.idtipoOrden,
+                idSubTipoOrden: $scope.detalleOtAsignadaSelected.idSubtipoOrden,
+                idOrigenSistema: 1,
+                idUsuarioDespacho: 12,
+                idUsuarioTecnico: $scope.detalleOtAsignadaSelected.idTecnico,
+                latitud: $scope.detalleOtAsignadaSelected.latitud,
+                longitud: $scope.detalleOtAsignadaSelected.longitud,
+                comentarios: $scope.detalleOtAsignadaSelected.comentario,
+                idMotivo: $scope.elementCalendarizado.motivo
+            }
+        }
+        $scope.detalleOtPendienteSelected;
+        $scope.infoOtDetalle
+        $scope.detalleTecnicoOt
+        $scope.detalleOtAsignadaSelected
+        
+        /* let params = {
+            tipo: tipo,
+            ot: $scope.idOtSelect,
+            folioSistema: "Buen servicio",
+            idFlujo: 30,
+            idTipoOrden: 12,
+            idSubTipoOrden: 12,
+            idOrigenSistema: 30,
+            idUsuarioDespacho: 12,
+            idUsuarioTecnico: 12,
+            latitud: 16.532,
+            longitud: -3.987,
+            comentarios: "Buen servicio",
+            idMotivo: 4,
+            idTurno: 4,
+            fechaHoraAgenda: "4"
+        } */
+       //envioCambioStatus(params);
+    }
+
+    envioCambioStatus = function(params){
+        swal({ text: 'Cambiando estatus de la OT ...', allowOutsideClick: false });
+        swal.showLoading();
+        genericService.cambioStatusOts(params).then(result =>{
+            console.log(result);
+            swal.close();
+        }).catch(err => handleError(err));
+    }
+
+    $scope.motivos = function(tipo){
+        if (tipo === 'calendariza') {
+            $scope.listadoMotivosCalendarizado = $scope.estatusCambio.filter(e => {return e.idPadre === 243})
+        }
+        
     }
 }
 /**

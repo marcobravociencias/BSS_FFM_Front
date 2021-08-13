@@ -41,7 +41,7 @@
 				</div>
 			</div>
             <div class="modal-footer">
-                <button ng-disabled="procesandoAsignacion" ng-click="asignarOrdenTrabajo()" type="button" class="btn btn-primary">
+                <button ng-disabled="procesandoAsignacion" ng-click="cambioStatus('asigna')" type="button" class="btn btn-primary">
                     <b ng-if="!procesandoAsignacion">Asignar orden</b>
                     <b ng-if="procesandoAsignacion">Asignando ...</b>
                 </button>

@@ -41,6 +41,8 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
     ];
     $scope.nIntervencion = '';
     $scope.nGeografia = '';
+    $scope.permisosDisponibilidad = [];
+
     app.disponibilidadCalendar($scope);
 
     $( document ).ready(function() {
@@ -113,8 +115,11 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
     $scope.consultarCatalogos = function(){
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
+        let params ={
+            moduloAccionesUsuario: 'moduloDisponibilidad'
+        }  
         $q.all([
-            genericService.consultarConfiguracionDespachoDespacho(),
+            genericService.consultarConfiguracionDespachoDespacho(params),
             genericService.consultarCatalogoIntervenciones(),
             genericService.consulCatalogoGeografia()
         ]).then(result =>{
@@ -123,6 +128,8 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             if (result[0].data.respuesta) {
                 $scope.nIntervencion = Number(result[0].data.result.N_FILTRO_INTERVENCIONES) 
                 $scope.nGeografia = Number(result[0].data.result.N_FILTRO_GEOGRAFIA)
+                $scope.permisosDisponibilidad = result[0].data.result.MODULO_ACCIONES_USUARIO.permisos;
+                console.log($scope.permisosDisponibilidad)
             } else {
                 mostrarMensajeErrorAlert(result[0].data.resultDescripcion)
             }

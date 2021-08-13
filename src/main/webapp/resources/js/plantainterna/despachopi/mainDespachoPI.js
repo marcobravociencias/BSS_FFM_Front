@@ -60,6 +60,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
 
     $scope.nfiltrogeografia=''
     $scope.nfiltrointervenciones=''
+    $scope.estatusCambio = [];
     
     $scope.abrirModalGeografia=function(){
         $("#modal-jerarquia-filtro").modal('show')
@@ -128,6 +129,15 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
         $('.drop-down-filters').on("click.bs.dropdown", function (e) {
             e.stopPropagation();
         });
+
+        $('#fecha-reagendamiento').datepicker({
+            format : 'dd/mm/yyyy',
+            autoclose : true,
+            language : 'es',
+            todayHighlight : true,
+            startDate :  moment(FECHA_HOY_DATE).toDate()
+        });
+        $('#fecha-reagendamiento').datepicker('update',FECHA_HOY_DATE);
 
         $('#fecha-calendarizado').datepicker({
             format : 'dd/mm/yyyy',
@@ -815,7 +825,8 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             mainDespachoService.consultarCatalogosTurnosDespachoPI() ,
             mainDespachoService.consultarCatalogoTipoOrdenUsuarioDespacho(),
             mainDespachoService.consulCatalogoGeografiaUsuarioDespacho(),
-            mainDespachoService.consultarConfiguracionDespachoDespacho({"moduloAccionesUsuario":"moduloDespacho"})
+            mainDespachoService.consultarConfiguracionDespachoDespacho({"moduloAccionesUsuario":"moduloDespacho"}),
+            mainDespachoService.consultarCatalogoEstatusDespachoPI()
         ]).then(function(results) {              
             let elementosMapa= angular.copy(results[3].data.result);
             $scope.listadoIconosConfig=[]         
@@ -823,6 +834,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             $scope.nfiltrointervenciones=results[3].data.result.N_FILTRO_INTERVENCIONES
             $scope.nfiltroestatuspendiente=results[3].data.result.ESTATUS_PENDIENTES           
             $scope.permisosConfigUser=results[3].data.result.MODULO_ACCIONES_USUARIO;
+            $scope.estatusCambio = results[4].data.result;
            
             if($scope.permisosConfigUser!=undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length >0)
                  $scope.permisosConfigUser.permisos.map(e=>{e.banderaPermiso = true ; return e;});
