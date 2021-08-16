@@ -45,17 +45,26 @@ public class ImplCambioStatusService implements CambioStatusService {
         Map<String, String> paramUri = new HashMap<String, String>(){{
             put("idOrden", jsonObject.get("ot").getAsString());
         }};
-        JsonObject paramsObject = new JsonObject();
+        
+		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
+		
+		jsonObject.addProperty("idUsuarioDespacho", principalDetail.getIdUsuario());
+		jsonObject.addProperty("geer", "asdsassda");
+
+
+ /**       JsonObject paramsObject = new JsonObject();
         paramsObject.addProperty("folioSistema", jsonObject.get("folioSistema").getAsString());
         paramsObject.addProperty("idFlujo", jsonObject.get("idFlujo").getAsInt());
         paramsObject.addProperty("idTipoOrden", jsonObject.get("idTipoOrden").getAsInt());
         paramsObject.addProperty("idSubTipoOrden", jsonObject.get("idSubTipoOrden").getAsInt());
         paramsObject.addProperty("idOrigenSistema", jsonObject.get("idOrigenSistema").getAsInt());
-        paramsObject.addProperty("idUsuarioDespacho", jsonObject.get("idUsuarioDespacho").getAsInt());
+        paramsObject.addProperty("idUsuarioDespacho", principalDetail.getIdUsuario());
         paramsObject.addProperty("idUsuarioTecnico", jsonObject.get("idUsuarioTecnico").getAsInt());
         paramsObject.addProperty("latitud", jsonObject.get("latitud").getAsInt());
         paramsObject.addProperty("longitud", jsonObject.get("longitud").getAsInt());
-        paramsObject.addProperty("comentarios", jsonObject.get("comentarios").getAsString());
+        paramsObject.addProperty("comentarios", jsonObject.get("comentarios").getAsString());**/
+        
+        
         switch (jsonObject.get("tipo").getAsString()) {
             case "reagendamiento":
                 requestTipo = "patch";
@@ -71,7 +80,7 @@ public class ImplCambioStatusService implements CambioStatusService {
                 break;
             case "desasigna":
                 requestTipo = "patch";
-                urlRequest = login.getDireccionAmbiente().concat(constCambioStatus.getCambioDeStatusOts()).concat(environment.getProperty("param.textus.desasigna"));
+                urlRequest = "http://94.74.70.52".concat(constCambioStatus.getCambioDeStatusOts()).concat(environment.getProperty("param.textus.desasigna"));
                 break;
             case "cancela":
                 requestTipo = "patch";
@@ -81,29 +90,56 @@ public class ImplCambioStatusService implements CambioStatusService {
             case "reasigna":
                 requestTipo = "patch";
                 urlRequest = login.getDireccionAmbiente().concat(constCambioStatus.getCambioDeStatusOts()).concat(environment.getProperty("param.textus.reasigna"));
-                paramsObject.addProperty("fechaHoraInicio", jsonObject.get("idMotivo").getAsString());
+            /**    paramsObject.addProperty("fechaHoraInicio", jsonObject.get("idMotivo").getAsString());
                 paramsObject.addProperty("fechaHoraFin", jsonObject.get("idTurno").getAsString());
                 paramsObject.addProperty("idtipoAsignacion", jsonObject.get("idtipoAsignacion").getAsInt());
+             	**/
                 break;
             case "asigna":
                 requestTipo = "post";
-                urlRequest = login.getDireccionAmbiente().concat(constCambioStatus.getCambioDeStatusOts()).concat(environment.getProperty("param.textus.asigna"));
-                paramsObject.addProperty("idMotivo", jsonObject.get("idMotivo").getAsInt());
-                paramsObject.addProperty("idTurno", jsonObject.get("idTurno").getAsInt());
-                paramsObject.addProperty("fechaHoraAgenda", jsonObject.get("fechaHoraAgenda").getAsString());
+                //urlRequest = login.getDireccionAmbiente().concat(constCambioStatus.getCambioDeStatusOts()).concat(environment.getProperty("param.textus.asigna"));
+                urlRequest = "http://94.74.70.52".concat(constCambioStatus.getCambioDeStatusOts()).concat(environment.getProperty("param.textus.asigna"));
+                http://94.74.70.52/
                 break;
         }
         logger.info("#### URL #### \n" + urlRequest);
         logger.info("### PARAM ### " + paramUri);
-        logger.info("### PARAM OBJECT ### " + gson.toJson(paramsObject));
+        logger.info("### PARAM OBJECT ### " + gson.toJson(jsonObject));
 
         if (requestTipo.equals("patch")) {
-            response = rest.callPatchBearerTokenRequestURL(paramUri, gson.toJson(paramsObject), urlRequest, ServiceResponseResult.class, token);
+            response = rest.callPatchBearerTokenRequestURL(paramUri, gson.toJson(jsonObject), urlRequest, ServiceResponseResult.class, token);
         } else {
-            response = rest.callPostBearerTokenRequestURL2(paramUri, gson.toJson(paramsObject), urlRequest, ServiceResponseResult.class, token);
+            response = rest.callPostBearerTokenRequestURL2(paramUri,gson.toJson(jsonObject), urlRequest, ServiceResponseResult.class, token);
         }
         logger.info("#### RESULT cambioStatusOts(): \n" + gson.toJson(response));
 
         return response;
     }
+    /**
+	@Override
+	public ServiceResponseResult cambiarEstatusTecnicoPI(String params) {
+		logger.info("ImplDespachoPIService.class [metodo = cambiarEstatusTecnicoPI() ]\n"+params);
+	
+		JsonObject jsonObject=gson.fromJson(params, JsonObject.class);
+		
+		String idUsuario=jsonObject.get("idUsuario").getAsString();
+		String idEstatus=jsonObject.get("idEstatusUsuario").getAsString();
+		
+	    LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
+	    
+	    logger.info("json object params## "+jsonObject.toString()); 
+	    
+	    String tokenAcces=principalDetail.getAccess_token();
+	    String url=principalDetail.getDireccionAmbiente().concat(constDespachoPI.getCambiarEstatusTecPi());
+	    logger.info("URL ##+" + url);
+	    
+	    Map<String, String> paramsRequestGet = new HashMap<String, String>();
+        paramsRequestGet.put("idUsuario", idUsuario);
+        paramsRequestGet.put("idEstatusUsuario", idEstatus);
+	    
+	    ServiceResponseResult response= restCaller.callPostBearerTokenRequestURL(paramsRequestGet, url,
+	    		ServiceResponseResult.class, tokenAcces);
+	    logger.info("##### RESULT"+gson.toJson(response)+" #######");
+		return response;
+	}**/
 }

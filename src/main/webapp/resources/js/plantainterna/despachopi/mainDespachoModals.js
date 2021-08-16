@@ -549,8 +549,8 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         arrayHoraFin[1] = arrayHoraFin[1].substr(0, 5)
         let formatFechaHoraFin = arrayHoraFin[0] + " " + arrayHoraFin[1]
 
-        
-        let params = {
+
+        /**let params = {
             "idEstado": 203,
             "idMotivo": 1,
             "fechaHoraInicio": formatFechaHoraInicio,
@@ -564,11 +564,11 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             "comentarios": $scope.reAsignacionObject.comentario,
             "textAccionCambioEstatus": "asignaOrden",
             "idOtEnvio": $scope.reAsignacionObject.otInfo.idOrden
-        }
+        }**/
         $scope.procesandoReasignacion = true
-        swal({ text: 'Agendando orden ...', allowOutsideClick: false });
+        swal({ text: 'Reagendando orden ...', allowOutsideClick: false });
         swal.showLoading();
-        mainDespachoService.cambiarEstatusOrdenTrabajoPI(params).then(function success(response) {
+        /** mainDespachoService.cambiarEstatusOrdenTrabajoPI(params).then(function success(response) {
 
             $("#modalAsignacionOrdenTrabajo").modal('hide')
             console.log(response);
@@ -585,7 +585,8 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                     }
                 }
             }
-        }).catch(err => handleError(err))
+        }).catch(err => handleError(err))**/
+        $scope.cambioStatus('reasigna');
     }
 
     $scope.consultarCatalogosAcciones = function () {
@@ -741,14 +742,15 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 idTipoOrden: $scope.asignacionObject.otInfo.idtipoOrden,
                 idSubTipoOrden: $scope.asignacionObject.otInfo.idSubtipoOrden,
                 idOrigenSistema: 1,
-                idUsuarioDespacho: 12,
                 idUsuarioTecnico: $scope.asignacionObject.tecnicoInfo.idTecnico,
                 latitud: $scope.asignacionObject.otInfo.latitud,
                 longitud: $scope.asignacionObject.otInfo.longitud,
                 comentarios: $scope.asignacionObject.comentario,
                 idMotivo: 500,
                 idTurno:  $scope.asignacionObject.otInfo.idTurno,
-                fechaHoraAgenda: formatFechaHoraInicio
+                fechaHoraAgenda: formatFechaHoraInicio,
+                fechaHoraInicio: formatFechaHoraInicio,
+                fechaHoraFin: formatFechaHoraFin
             }
         } else if ( tipo === 'reasigna'){
             let horaasignacionInicio = angular.copy($scope.reAsignacionObject.otInfo.fechahoraasignacion);
@@ -770,7 +772,6 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 idTipoOrden: $scope.reAsignacionObject.otInfo.idtipoOrden,
                 idSubTipoOrden: $scope.reAsignacionObject.otInfo.idSubtipoOrden,
                 idOrigenSistema: 1,
-                idUsuarioDespacho: 12,
                 idUsuarioTecnico: $scope.reAsignacionObject.tecnicoInfo.idTecnico,
                 latitud: $scope.reAsignacionObject.otInfo.latitud,
                 longitud: $scope.reAsignacionObject.otInfo.longitud,
@@ -788,11 +789,10 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 idTipoOrden: $scope.detalleOtAsignadaSelected.idtipoOrden,
                 idSubTipoOrden: $scope.detalleOtAsignadaSelected.idSubtipoOrden,
                 idOrigenSistema: 1,
-                idUsuarioDespacho: 12,
                 idUsuarioTecnico: $scope.detalleOtAsignadaSelected.idTecnico,
                 latitud: $scope.detalleOtAsignadaSelected.latitud,
                 longitud: $scope.detalleOtAsignadaSelected.longitud,
-                comentarios: $scope.detalleOtAsignadaSelected.comentario,
+                comentarios: $scope.elementoDesasigna.comentario,
             }
         } else if (tipo === 'calendariza'){
             params = {
@@ -833,7 +833,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             idTurno: 4,
             fechaHoraAgenda: "4"
         } */
-       //envioCambioStatus(params);
+       envioCambioStatus(params);
     }
 
     envioCambioStatus = function(params){
@@ -842,6 +842,13 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         genericService.cambioStatusOts(params).then(result =>{
             console.log(result);
             swal.close();
+            if(result.data.respuesta){
+
+            }else{
+                console.log(result.data.resultDescripcion)
+                toastr.warning( result.data.resultDescripcion );
+                
+            }
         }).catch(err => handleError(err));
     }
 

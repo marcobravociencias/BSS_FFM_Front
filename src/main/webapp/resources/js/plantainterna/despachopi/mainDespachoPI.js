@@ -423,13 +423,34 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                             })                            
                             let tableelemetn=''
                             let htmlImagenesIconos=''
+                            let banderaConfirmaDesconfirma= $scope.permisosConfigUser.permisos.find(e=>{return e.clave==='accionConfirmaOT'})
+                            let banderaAsignacion= $scope.permisosConfigUser.permisos.find(e=>{return e.clave==='accionAsignaOT'})
+
+                            
                             angular.forEach($scope.listadoOtsPendientes,function(otpendiente,index){
-                               // htmlImagenesIconos=$scope.categoriaIconos(otpendiente)
-                                
+                                htmlImagenesIconos=$scope.categoriaIconos(otpendiente)
+                                let stringCheckbox=''
+                                if(banderaConfirmaDesconfirma != undefined){
+                                    stringCheckbox=
+                                        `<div class="content-top-element confirmacion-elemn switchpendiente">
+                                            <label class="container-checkbox-cus">
+                                                <input onchange="abrirModalConfirmacionDesconfirmacion(this,${otpendiente.idOrden})" id="switch-${otpendiente.idOrden}" ${otpendiente.isConfirmado ? 'checked':''} type="checkbox">
+                                                <span class="checkmarkcust"></span>
+                                            </label>
+                                        </div>`
+                                }else{
+                                    stringCheckbox=
+                                    `<div  title="No tienes permiso para confirmar/desconfirmar" class="content-top-element confirmacion-elemn switchpendiente">
+                                        <label style="cursor: not-allowed" class="container-checkbox-cus">
+                                            <input style="cursor: not-allowed" disabled="disabled"  ${otpendiente.isConfirmado ? 'checked':''} type="checkbox">
+                                            <span style="cursor: not-allowed" class="checkmarkcust"></span>
+                                        </label>
+                                    </div>`
+                                }
                                 tableelemetn=`
                                 <tr>
                                     <td>  
-                                        <div id="idotpendiente${otpendiente.idOrden}" class="fc-event  ot-pendiente-event efecto ui-draggable ui-draggable-handle ">
+                                        <div id="idotpendiente${otpendiente.idOrden}" class="${banderaAsignacion!=undefined ? 'fc-event' : "fc-event-noasignacion"} ot-pendiente-event ${banderaAsignacion != undefined? "efecto ui-draggable ui-draggable-handle" :""} ">
                                             <div class="header-otpendeinte">
                                                 <div class="top-title-ot">
                                                     <div class="content-top-element bars-content">
@@ -437,13 +458,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                                                         <h5  class="title-otpendeinte" >#${otpendiente.claveCliente}</h5>
                                                     </div>
                                                    
-                                                    <div class="content-top-element confirmacion-elemn switchpendiente">
-                                                        <label class="container-checkbox-cus">
-                                                            <input onchange="abrirModalConfirmacionDesconfirmacion(this,${otpendiente.idOrden})" id="switch-${otpendiente.idOrden}" ${otpendiente.isConfirmado ? 'checked':''} type="checkbox">
-                                                            <span class="checkmarkcust"></span>
-                                                        </label>
-
-                                                    </div>
+                                                    ${stringCheckbox}
                                                 </div>
                                                 <div class="posiciondos">
                                                     <div class="content-dos-element ">
@@ -559,7 +574,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
         //$('#table-ot-pendientes_wrapper').attr('style','max-height: '+pixelescon+'px;min-height: '+pixelescon+'px;overflow-x:hidden;overflow-y: scroll;') ;/****/
     }
     $scope.inicializarsTableOtsPendientes=function(){               
-        $('.ot-pendiente-event').each(function(index) {	
+        $('.fc-event.ot-pendiente-event').each(function(index) {	
             let otpendiente=$scope.listadoOtsPendientes[index]   
             $(this).data('event', {
                 objectevent: otpendiente ,
@@ -836,8 +851,16 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             $scope.permisosConfigUser=results[3].data.result.MODULO_ACCIONES_USUARIO;
             $scope.estatusCambio = results[4].data.result;
            
-            if($scope.permisosConfigUser!=undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length >0)
-                 $scope.permisosConfigUser.permisos.map(e=>{e.banderaPermiso = true ; return e;});
+            if($scope.permisosConfigUser!=undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length >0){
+                $scope.permisosConfigUser.permisos.map(e=>{e.banderaPermiso = true ; return e;});
+                $scope.accionesUserConfigText=$scope.permisosConfigUser.permisos.map(e=>{return e.clave})
+
+            }else{
+                $scope.permisosConfigUser={}
+                $scope.accionesUserConfigText=[]
+                $scope.permisosConfigUser.permisos=[]
+            }
+
             
 
             $scope.elementosConfigGeneral=new Map(Object.entries(results[3].data.result))          

@@ -470,6 +470,9 @@ public class ConsumeRest {
             headers.set(HttpHeaders.AUTHORIZATION, "Bearer " + token);
             HttpEntity<String> request = new HttpEntity<>(paramsObject, headers);
             logger.info("Ingresa a funcion patch: "+request);
+            HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+            restTemplate.setRequestFactory(requestFactory);
+
             responseEntity = restTemplate.exchange(
                     uriBuilder.buildAndExpand(paramUri).toUri(),
                     HttpMethod.PATCH,
@@ -541,14 +544,23 @@ public class ConsumeRest {
                             .result(httpErrorException.getRawStatusCode())
                             .resultDescripcion(httpErrorException.getMessage()).build();
                     break;
+                case 500:
+                    logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO" + httpErrorException.getMessage());
+                    response = ServiceResponseResult.builder()
+                            .result(httpErrorException.getRawStatusCode())
+                            .resultDescripcion(httpErrorException.getMessage()).build();
+                    break;
                 default:
                     response = ServiceResponseResult.builder()
                             .resultDescripcion(httpErrorException.getMessage()).build();
                     break;
             }
         } catch (Exception e) {
+        	
             logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO" + e.getMessage());
             response.setResultDescripcion(e.getMessage());
+            response.setMensajeException(e.getMessage());
+
         }
         return response;
     }

@@ -207,7 +207,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div ng-show="permisosModal.indexOf('tabPedidoDespacho') !== -1"  class="tab-pane fade" id="v-tabs-consulta-acciones" role="tabpanel" aria-labelledby="v-tabs-consulta-acciones-tab">
+                            <div ng-show="permisosModal.indexOf('tabAccionesOrdenDespacho') !== -1"  class="tab-pane fade" id="v-tabs-consulta-acciones" role="tabpanel" aria-labelledby="v-tabs-consulta-acciones-tab">
                                 <ul class="nav nav-tabs mb-3 nav-fill " id="ex1" role="tablist">
                                     <li ng-show="permisosModal.indexOf('tabCambioEstatusRescateModal') !== -1" class="nav-item" role="presentation">
                                         <a class="nav-link active" data-mdb-toggle="tab"  href="#accion-rescate-ot" >Rescate</a>
@@ -220,7 +220,7 @@
                                     </li>
                                     <li  ng-show="permisosModal.indexOf('tabCambioEstatusTerminarModal') !== -1" class="nav-item" role="presentation">
                                         <a class="nav-link" data-mdb-toggle="tab" href="#accion-terminar-ot" >Terminar</a>
-                                    </li>
+                                    </li>   
                                     <li  ng-show="permisosModal.indexOf('tabCambioEstatusDesasignarModal') !== -1" class="nav-item" role="presentation">
                                         <a class="nav-link" data-mdb-toggle="tab" href="#accion-desasignar-ot" >Desasignar</a>
                                     </li>
@@ -393,7 +393,13 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <button ng-click="cambioStatus('desasigna')"  class="btn  btn-primary">Desasigna</button>
+                                                    <button ng-show="accionesUserConfigText.indexOf('accionDesasignaOT') !== -1" 
+                                                            ng-click="cambioStatus('desasigna')"  class="btn  btn-primary">Desasigna</button>
+                                                            
+                                                    <div ng-show="accionesUserConfigText.indexOf('accionDesasignaOT') === -1"  class="text-accion-nopermiso">
+                                                        <i class="icon-not-permiso fas fa-user-lock"></i>
+                                                        <b class="text-not-permiso">No tienes permiso para desasignar ordenes</b>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -401,7 +407,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div ng-show="permisosModal.indexOf('tabAccionesOrdenDespacho') !== -1"  class="tab-pane fade" id="v-tabs-consulta-pedido" role="tabpanel" aria-labelledby="v-tabs-consulta-acciones-tab">
+                            <div ng-show="permisosModal.indexOf('tabPedidoDespacho') !== -1"  class="tab-pane fade" id="v-tabs-consulta-pedido" role="tabpanel" aria-labelledby="v-tabs-consulta-acciones-tab">
                                 <div class="row parent-detallecotizacion">                        
                                     <div class="col-4">
                                         <b class="text-repartidor-noencontrado" ng-if="detalleTecnicoOt.latitud == undefined || detalleTecnicoOt.latitud == null">No se encontr&oacute; ubicaci&oacute;n del repartidor</b>
