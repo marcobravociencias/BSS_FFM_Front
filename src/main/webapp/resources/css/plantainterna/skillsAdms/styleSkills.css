@@ -382,6 +382,10 @@ table.dataTable thead th, table.dataTable thead td{
     position: absolute;
     top: auto;
     width: 350px;
+
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
 }
 
 .zui-table .zui-sticky-tr {

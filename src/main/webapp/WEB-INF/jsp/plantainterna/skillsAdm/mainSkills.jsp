@@ -91,28 +91,21 @@
 	
 					<div class="tecnicos-container">
 						<div class="scrollGeneral" id="divTecnicos" style="display: none">
-							<div
-								ng-repeat="tecnico in tecnicosMostradas.result.detalleTecnicos | filter:buscarTecnico track by $index "
-								class="user-section">
-								<div id="{{tecnico.idTecnico}}"
-									class="valign-wrapper tecnicosDiv">
+							<div ng-repeat="tecnico in tecnicosMostradas | filter:buscarTecnico track by $index" class="user-section">
+								<div id="{{tecnico.idUsuario}}" class="valign-wrapper tecnicosDiv">
 									<div class="col-2 media-image online pr-0">
 										<img
 											src="{{tecnico.urlFotoPerfil !=undefined && tecnico.urlFotoPerfil ? tecnico.urlFotoPerfil :'./resources/img/plantainterna/despacho/tecnicootasignada.png'}}"
 											class="circle z-depth-2 responsive-img">
 									</div>
-									<div id="{{tecnico.idTecnico}}" class="col-10 pl-0"
-										ng-click="consultarSkillsAsignadasTecnico(tecnico.idTecnico, tecnico.nombre, tecnico.apellidoPaterno, tecnico.apellidoMaterno)">
+									<div id="{{tecnico.idUsuario}}" class="col-10 pl-0"
+										ng-click="consultarSkillsAsignadasTecnico(tecnico.idUsuario, tecnico.nombre, tecnico.apellidoPaterno, tecnico.apellidoMaterno)">
 										<p class="text-tecnico-nombre">{{tecnico.nombre}}</p>
-										<p class="text-adds-teccnico">{{tecnico.apellidoPaterno}}
-											{{tecnico.apellidoMaterno}}</p>
+										<p class="text-adds-teccnico">{{tecnico.apellidoPaterno}} {{tecnico.apellidoMaterno}}</p>
 									</div>
 	
-									<div id="checkTecnicoSeleccionado{{tecnico.idTecnico}}"
-										class="content-checkbox-operario checkTecnicoSeleccionado"
-										style="display: none">
-										<input class="form-check-input input-operario-checkbox"
-											type="checkbox" checked="checked" disabled="disabled" />
+									<div id="checkTecnicoSeleccionado{{tecnico.idUsuario}}"	class="content-checkbox-operario checkTecnicoSeleccionado" style="display: none">
+										<input class="form-check-input input-operario-checkbox" type="checkbox" checked="checked" disabled="disabled" />
 									</div>
 	
 								</div>
@@ -130,14 +123,10 @@
 				</div>
 				<div id="divSkills" class="col-md-5">
 					<div class="input-group input-group-sm content-seach-group  ">
-						<input type="text"
-							class="form-control form-control-sm buscar-input-operario"
-							ng-model="buscarSkill" placeholder="Buscar skill"> <span
-							class="search-icon-operario-busq fa fa-search"></span>
+						<input type="text" class="form-control form-control-sm buscar-input-operario" ng-model="buscarSkill" placeholder="Buscar skill"> <span class="search-icon-operario-busq fa fa-search"></span>
 					</div>
 	
-					<div id="divContenedorSkills" class="scrollGeneral"
-						style="display: none">
+					<div id="divContenedorSkills" class="scrollGeneral" style="display: none">
 						<div style="margin: 10px; text-align: right;">
 							<a ng-click="mostrarContenedoresMultiseleccion()" href="">Multiselección</a>
 						</div>
@@ -151,11 +140,8 @@
 								</div>
 								<div class="col-3 intervencion-col">
 									<div class="form-check-sm form-check form-switch">
-										<input class="form-check-input form-check-input-sm"
-											type="checkbox" id="flexSwitchCheckDefault"
-											ng-model="intervencion.check" ng-true-value="1"
-											ng-false-value="0"
-											ng-click="sumarContador(intervencion.check)" />
+										<input class="form-check-input form-check-input-sm" type="checkbox" id="flexSwitchCheckDefault"	value="{{intervencion.id}}"
+										ng-model="intervencion.check" ng-true-value="1" ng-false-value="0" ng-click="sumarContador(intervencion.check)" />
 									</div>
 								</div>
 							</div>
@@ -171,7 +157,7 @@
 								seleccionadas: {{contadorSkillsSeleccionadas}}</a>
 						</div>
 						<div style="text-align: right;">
-							<input type="button" class="btn btn-primary" value="GUARDAR">
+							<input type="button" class="btn btn-primary" ng-click="guardarAsignacionSkillsIndividual()" value="GUARDAR">
 						</div>
 					</div>
 				</div>
@@ -194,11 +180,7 @@
 									<div class="row">
 										<div class="col-md-5">
 											<div class="input-group input-group-sm content-seach-group  ">
-												<input type="text"
-													class="form-control form-control-sm buscar-input-operario"
-													ng-model="buscarTecnico" placeholder="Buscar OT"> <span
-													class="search-icon-operario-busq fa fa-search"
-													id="buscar-operario"></span>
+												<input type="text" class="form-control form-control-sm buscar-input-operario" ng-model="buscarTecnico" placeholder="Buscar OT"> <span class="search-icon-operario-busq fa fa-search" id="buscar-operario"></span>
 											</div>
 											<div class="tecnicos-container">
 												<div class="scrollGeneral" id="divTecnicos">
@@ -207,39 +189,25 @@
 															<p class="text-todos-nombre">Seleccionar todos</p>
 														</div>
 														<div class="content-checkbox-operario">
-															<input class="form-check-input input-todos-checkbox"
-																type="checkbox" id="checkTotdosTecnicos" value="option1"
-																ng-click="seleccionarTodosTecnicos()" />
+															<input class="form-check-input input-todos-checkbox" type="checkbox" id="checkTotdosTecnicos" value="option1" ng-click="seleccionarTodosTecnicos()" />
 														</div>
 													</div>
-													<div
-														ng-repeat="tecnico in tecnicosMostradas.result.detalleTecnicos | filter:buscarTecnico track by $index "
-														class="user-section">
-														<div id="{{tecnico.idTecnico}}"
-															class="valign-wrapper tecnicosDiv">
+													<div ng-repeat="tecnico in tecnicosMostradas | filter:buscarTecnico track by $index" class="user-section">
+														<div id="{{tecnico.idUsuario}}" class="valign-wrapper tecnicosDiv">
 															<div class="col-2 media-image online pr-0">
-																<img
-																	src="{{tecnico.urlFotoPerfil !=undefined && tecnico.urlFotoPerfil ? tecnico.urlFotoPerfil :'./resources/img/plantainterna/despacho/tecnicootasignada.png'}}"
-																	class="circle z-depth-2 responsive-img">
+																<img src="{{tecnico.urlFotoPerfil !=undefined && tecnico.urlFotoPerfil ? tecnico.urlFotoPerfil :'./resources/img/plantainterna/despacho/tecnicootasignada.png'}}" class="circle z-depth-2 responsive-img">
 															</div>
-															<div id="{{tecnico.idTecnico}}" class="col-10 pl-0"
-																ng-click="seleccionarTecnicoMultiseleccion(tecnico.idTecnico)">
+															<div id="{{tecnico.idUsuario}}" class="col-10 pl-0" ng-click="seleccionarTecnicoMultiseleccion(tecnico.idUsuario)">
 																<p class="text-tecnico-nombre">{{tecnico.nombre}}</p>
-																<p class="text-adds-teccnico">{{tecnico.apellidoPaterno}}
-																	{{tecnico.apellidoMaterno}}</p>
+																<p class="text-adds-teccnico">{{tecnico.apellidoPaterno}} {{tecnico.apellidoMaterno}}</p>
 															</div>
 															<div class="content-checkbox-operario">
-																<input
-																	class="form-check-input input-operario-checkbox checkedTecnicos"
-																	type="checkbox"
-																	id="checkTecnicoMultiseleccion{{tecnico.idTecnico}}"
-																	value="option1" />
+																<input class="form-check-input input-operario-checkbox checkedTecnicos" type="checkbox"	id="checkTecnicoMultiseleccion{{tecnico.idTecnico}}" value="{{tecnico.idUsuario}}"/>
 															</div>
 														</div>
-													</div>
+													</div>	
 												</div>
-												<div id="divContadorTecnicos"
-													style="margin: 10px; text-align: right;">
+												<div id="divContadorTecnicos" style="margin: 10px; text-align: right;">
 													<span id="contadorTecnicosMultiseleccion"></span>
 												</div>
 											</div>
@@ -264,11 +232,7 @@
 														</div>
 														<div class="col-2 intervencion-col">
 															<div class="form-check-sm form-check form-switch">
-																<input class="form-check-input form-check-input-sm"
-																	type="checkbox" id="flexSwitchCheckDefault"
-																	ng-model="intervencion.check" ng-true-value="1"
-																	ng-false-value="0"
-																	ng-click="sumarContador(intervencion.check)" />
+																<input class="form-check-input form-check-input-sm" type="checkbox" id="flexSwitchCheckDefault" ng-model="intervencion.check" ng-true-value="1" ng-false-value="0" value="{{intervencion.id}}" ng-click="sumarContador(intervencion.check)" />
 															</div>
 														</div>
 													</div>
@@ -285,7 +249,7 @@
 														class="btn btn-cerrar-modal btn-secondary ripple-surface"
 														data-mdb-dismiss="modal"
 														ng-click="regresarContenedorIndividual()">CERRAR</button>
-													<button class="btn btn-primary">GUARDAR</button>
+													<button class="btn btn-primary" ng-click="guardarAsignacionSkillsMultiseleccion()">GUARDAR</button>
 												</div>
 											</div>
 										</div>
@@ -350,25 +314,18 @@
 										<thead class="thead-table table-nowrap" id="idTheadTabla">
 											<tr class="zui-sticky-tr">
 												<th class="zui-sticky-col zui-text-cabeceras" scope="col">CUADRILLA</th>
-												<th class="zui-text-cabeceras" scope="col"
-													style="text-align: center"
-													ng-repeat="intervencion in listadoIntervenciones track by $index">{{intervencion.descripcion}}
-													<i class="fas fa-eye-slash iconoOjoColumna"
-													ng-click="displayColumnaIndividual($index+2)"></i>
-												</th>
+												<th class="zui-text-cabeceras" scope="col" style="text-align: center" ng-repeat="intervencion in listadoIntervenciones track by $index">{{intervencion.descripcion}} <i class="fas fa-eye-slash iconoOjoColumna" ng-click="displayColumnaIndividual($index+2)"></i></th>
 											</tr>
 										</thead>
 										<tbody id="bodyTabla">
-											<tr ng-repeat="tecnico in tecnicosMostradas.result.detalleTecnicos | filter: buscarTecnicoTabla" class="zui-sticky-tr trTecnico">
-												<td class="zui-sticky-body zui-text-cabeceras nombreTecnico">{{tecnico.nombre}} {{tecnico.apellidoPaterno}} {{tecnico.apellidoMaterno}}</td>
-												<td ng-repeat="skill in tecnico.todasSkills"
-													style="text-align: center" scope="col"><input
-													class="form-check-input" type="checkbox"
-													ng-model="skill.checkTabla"
-													ng-init="check = skill.checkTabla"></td>
+											<tr ng-repeat="tecnico in tecnicosMostradas | filter: buscarTecnicoTabla" class="zui-sticky-tr trTecnico">
+												<td class="zui-sticky-body zui-text-cabeceras nombreTecnico" 
+												data-toggle="tooltip" data-placement="top" title="{{tecnico.nombre}} {{tecnico.apellidoPaterno}} {{tecnico.apellidoMaterno}}">{{tecnico.nombre}} {{tecnico.apellidoPaterno}} {{tecnico.apellidoMaterno}}</td>
+												<td ng-repeat="skill in tecnico.todasSkills" style="text-align: center" scope="col">
+													<input class="form-check-input" type="checkbox" ng-model="skill.checkTabla" ng-init="check = skill.checkTabla" ng-click="guardarAsignacionSkillTabla(tecnico.idUsuario,skill.id)" >
+												</td>
 												<td class="zui-sticky-body-final">
-													<button
-														style="background-color: white; border-color: #7716FA;">
+													<button style="background-color: white; border-color: #7716FA;">
 														<i class="fa fa-save"></i>
 													</button>
 												</td>
@@ -416,15 +373,11 @@
 								<div class="container">
 									<div class="scrollGeneral">
 										<div class="input-group input-group-sm content-seach-group">
-											<input id="idBuscadorGeografiaVistaTabla" type="text"
-												class="form-control form-control-sm buscar-input-operario"
-												placeholder="Buscar geograf&iacute;a"
-												ng-keyup="busquedaGeografiaVistaTabla()"> <span
-												class="search-icon-operario-busq fa fa-search"></span>
+											<input id="idBuscadorGeografiaVistaTabla" type="text" class="form-control form-control-sm buscar-input-operario" placeholder="Buscar geograf&iacute;a" ng-keyup="busquedaGeografiaVistaTabla()"> <span class="search-icon-operario-busq fa fa-search"></span>
 										</div>
 										<div class="container-treegeofria scrollGeneral">
-											<div id="arbolGeografiasVistaTabla" class="proton-demo"
-												ng-click="cargarTecnicosVistaTabla()"></div>
+											<div id="arbolGeografiasVistaTabla" class="proton-demo"	ng-click="cargarTecnicosVistaTabla()">
+											</div>
 										</div>
 									</div>
 								</div>
