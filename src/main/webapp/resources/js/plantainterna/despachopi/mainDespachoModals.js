@@ -39,6 +39,11 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     }
 
     abrirModalDetalleOtPendiente = function (idotpendiente) {
+        $scope.listadoMotivosRescate = $scope.estatusCambio.filter(e => {return e.idPadre === 212})
+        $scope.listadoMotivosCalendarizado = $scope.estatusCambio.filter(e => {return e.idPadre === 243})
+        $scope.listadoMotivosReagenda = $scope.estatusCambio.filter(e => {return e.idPadre === 201})
+        $scope.listadoEstadosTerminado = $scope.estatusCambio.filter(e => {return e.idPadre === 4})
+        $scope.listadoTurnosAcciones = $scope.filtrosGeneral.turnosdisponibles;
         $scope.requestModalInformacion(idotpendiente)
         $scope.detalleOtPendienteSelected=$scope.listadoOtsPendientes.find(e=>e.idOrden==idotpendiente)
         $scope.permisosModal=$scope.elementosConfigGeneral.get("MODAL_FLUJO_"+ $scope.detalleOtPendienteSelected.idFlujo ).split(",")
@@ -47,6 +52,11 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 
     }
     abrirModalInformacion = function (idotasignada) {
+        $scope.listadoMotivosRescate = $scope.estatusCambio.filter(e => {return e.idPadre === 212})
+        $scope.listadoMotivosCalendarizado = $scope.estatusCambio.filter(e => {return e.idPadre === 243})
+        $scope.listadoMotivosReagenda = $scope.estatusCambio.filter(e => {return e.idPadre === 201})
+        $scope.listadoEstadosTerminado = $scope.estatusCambio.filter(e => {return e.idPadre === 4})
+        $scope.listadoTurnosAcciones = $scope.filtrosGeneral.turnosdisponibles;
         $scope.requestModalInformacion(idotasignada)
         $scope.detalleOtAsignadaSelected= $scope.listadoOtsAsignadas.find(e=>e.idOrden==idotasignada)
         $scope.permisosModal=$scope.elementosConfigGeneral.get("MODAL_ASIGNADA_" + $scope.detalleOtAsignadaSelected.idFlujo ).split(",")
@@ -956,14 +966,6 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             }
         }).catch(err => handleError(err));
     }
-
-    document.getElementById('v-tabs-consulta-acciones-tab').addEventListener('click', function(){
-        $scope.listadoMotivosRescate = $scope.estatusCambio.filter(e => {return e.idPadre === 212})
-        $scope.listadoMotivosCalendarizado = $scope.estatusCambio.filter(e => {return e.idPadre === 243})
-        $scope.listadoMotivosReagenda = $scope.estatusCambio.filter(e => {return e.idPadre === 201})
-        $scope.listadoEstadosTerminado = $scope.estatusCambio.filter(e => {return e.idPadre === 4})
-        $scope.listadoTurnosAcciones = $scope.filtrosGeneral.turnosdisponibles;
-    })
 }
 /**
 
