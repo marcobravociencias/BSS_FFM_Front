@@ -12,6 +12,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     $scope.isConfirmadoDesconfirmado = false;
     $scope.idotConfirmacionDesconfirmacion = 0;
     $scope.comentarios = '';
+    $scope.estatusModals = '';
 
     $scope.listadoCatalogoAcciones = []
     $('#modalAsignacionOrdenTrabajo,#modalReAsignacionOrdenTrabajo,#modalMaterialesOperario,#modalVehiculoOperario,#odalUbicacionOperario,#modalStatusOperario,#modalOtsTrabajadas')
@@ -49,6 +50,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         $scope.permisosModal=$scope.elementosConfigGeneral.get("MODAL_FLUJO_"+ $scope.detalleOtPendienteSelected.idFlujo ).split(",")
         console.log("##########permisos " + $scope.permisosModal )
         console.log($scope.detalleOtPendienteSelected)
+        $scope.estatusModals = 'PENDIENTE'
 
     }
     abrirModalInformacion = function (idotasignada) {
@@ -62,6 +64,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         $scope.permisosModal=$scope.elementosConfigGeneral.get("MODAL_ASIGNADA_" + $scope.detalleOtAsignadaSelected.idFlujo ).split(",")
         console.log($scope.permisosModal )
         console.log($scope.detalleOtAsignadaSelected)
+        $scope.estatusModals = 'ASIGNADA'
     }
 
     $scope.idOtSelect = "";
@@ -808,7 +811,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 }
             
         } else if (tipo === 'calendariza') {
-            if ($scope.infoOtDetalle.descripcionEstatus === 'PENDIENTE') {
+            if ($scope.estatusModals === 'PENDIENTE') {
                 params = {
                     tipo: tipo,
                     ot: $scope.detalleOtPendienteSelected.idOrden,
@@ -845,7 +848,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 }
             }
         } else if (tipo === 'cancela') {
-            if ($scope.infoOtDetalle.descripcionEstatus === 'PENDIENTE') {
+            if ($scope.estatusModals === 'PENDIENTE') {
                 params = {
                     tipo: tipo,
                     ot: $scope.detalleOtPendienteSelected.idOrden,
@@ -878,7 +881,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 }
             }
         } else if (tipo === 'reagendamiento') {
-            if ($scope.infoOtDetalle.descripcionEstatus === 'PENDIENTE') {
+            if ($scope.estatusModals === 'PENDIENTE') {
                 params = {
                     tipo: tipo,
                     ot: $scope.detalleOtPendienteSelected.idOrden,
@@ -915,7 +918,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 }
             }
         } else if (tipo === 'termina'){
-            if ($scope.infoOtDetalle.descripcionEstatus === 'PENDIENTE') {
+            if ($scope.estatusModals === 'PENDIENTE') {
                 params = {
                     tipo: tipo,
                     ot: $scope.detalleOtPendienteSelected.idOrden,
@@ -957,6 +960,12 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         genericService.cambioStatusOts(params).then(result =>{
             console.log(result);
             swal.close();
+            $scope.elementTerminar = {};
+            $scope.elementReagendaOT = {};
+            $scope.elementoRescate = {};
+            $scope.elementoDesasigna = {};
+            $scope.reAsignacionObject = {};
+            $scope.asignacionObject = {};
             if(result.data.respuesta){
 
             }else{
