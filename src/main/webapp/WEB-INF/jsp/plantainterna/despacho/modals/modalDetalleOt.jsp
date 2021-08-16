@@ -340,7 +340,7 @@
                                                 <div class="col-12">
                                                     <div class="form-group">
                                                         <label for="exampleTextarea">Comentario:</label>
-                                                        <textarea class="form-control" style=" resize: none" ng-model="elementReagendaOT.comentario" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" rows="3"></textarea>
+                                                        <textarea class="form-control" style=" resize: none" ng-model="elementCalendarizado.comentario" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" rows="3"></textarea>
                                                     </div>
                                                 </div>
                                             </div>

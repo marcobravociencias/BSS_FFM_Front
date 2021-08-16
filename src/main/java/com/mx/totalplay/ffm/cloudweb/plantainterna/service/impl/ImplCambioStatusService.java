@@ -69,14 +69,17 @@ public class ImplCambioStatusService implements CambioStatusService {
             case "reagendamiento":
                 requestTipo = "patch";
                 urlRequest = login.getDireccionAmbiente().concat(constCambioStatus.getCambioDeStatusOts()).concat(environment.getProperty("param.textus.reagendamiento"));
+                //urlRequest = "http://94.74.70.52".concat(constCambioStatus.getCambioDeStatusOts()).concat(environment.getProperty("param.textus.reagendamiento"));
                 break;
             case "calendariza":
                 requestTipo = "patch";
-                urlRequest = login.getDireccionAmbiente().concat(constCambioStatus.getCambioDeStatusOts()).concat(environment.getProperty("param.textus.calendariza"));
+                //urlRequest = login.getDireccionAmbiente().concat(constCambioStatus.getCambioDeStatusOts()).concat(environment.getProperty("param.textus.calendariza"));
+                urlRequest = "http://94.74.70.52".concat(constCambioStatus.getCambioDeStatusOts()).concat(environment.getProperty("param.textus.calendariza"));
                 break;
             case "termina":
                 requestTipo = "patch";
-                urlRequest = login.getDireccionAmbiente().concat(constCambioStatus.getCambioDeStatusOts()).concat(environment.getProperty("param.textus.termina"));
+                //urlRequest = login.getDireccionAmbiente().concat(constCambioStatus.getCambioDeStatusOts()).concat(environment.getProperty("param.textus.termina"));
+                urlRequest = "http://94.74.70.52".concat(constCambioStatus.getCambioDeStatusOts()).concat(environment.getProperty("param.textus.termina"));
                 break;
             case "desasigna":
                 requestTipo = "patch";
@@ -84,7 +87,8 @@ public class ImplCambioStatusService implements CambioStatusService {
                 break;
             case "cancela":
                 requestTipo = "patch";
-                urlRequest = login.getDireccionAmbiente().concat(constCambioStatus.getCambioDeStatusOts()).concat(environment.getProperty("param.textus.cancela"));
+                //urlRequest = login.getDireccionAmbiente().concat(constCambioStatus.getCambioDeStatusOts()).concat(environment.getProperty("param.textus.cancela"));
+                urlRequest = "http://94.74.70.52".concat(constCambioStatus.getCambioDeStatusOts()).concat(environment.getProperty("param.textus.cancela"));
 
                 break;
             case "reasigna":

@@ -747,12 +747,12 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 longitud: $scope.asignacionObject.otInfo.longitud,
                 comentarios: $scope.asignacionObject.comentario,
                 idMotivo: 500,
-                idTurno:  $scope.asignacionObject.otInfo.idTurno,
+                idTurno: $scope.asignacionObject.otInfo.idTurno,
                 fechaHoraAgenda: formatFechaHoraInicio,
                 fechaHoraInicio: formatFechaHoraInicio,
                 fechaHoraFin: formatFechaHoraFin
             }
-        } else if ( tipo === 'reasigna'){
+        } else if (tipo === 'reasigna') {
             let horaasignacionInicio = angular.copy($scope.reAsignacionObject.otInfo.fechahoraasignacion);
             let horaasignacionFin = angular.copy($scope.reAsignacionObject.otInfo.fechahoraasignacion);
             horaasignacionFin = moment(horaasignacionFin).add(3, 'hours').format();
@@ -781,58 +781,163 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 idtipoAsignacion: $scope.reAsignacionObject.otInfo.tipoAsignacion
             }
         } else if (tipo === 'desasigna') {
-            params = {
-                tipo: tipo,
-                ot: $scope.detalleOtAsignadaSelected.idOrden,
-                folioSistema: $scope.detalleOtAsignadaSelected.folioOrden,
-                idFlujo: $scope.detalleOtAsignadaSelected.idFlujo,
-                idTipoOrden: $scope.detalleOtAsignadaSelected.idtipoOrden,
-                idSubTipoOrden: $scope.detalleOtAsignadaSelected.idSubtipoOrden,
-                idOrigenSistema: 1,
-                idUsuarioTecnico: $scope.detalleOtAsignadaSelected.idTecnico,
-                latitud: $scope.detalleOtAsignadaSelected.latitud,
-                longitud: $scope.detalleOtAsignadaSelected.longitud,
-                comentarios: $scope.elementoDesasigna.comentario,
+
+                params = {
+                    tipo: tipo,
+                    ot: $scope.detalleOtAsignadaSelected.idOrden,
+                    folioSistema: $scope.detalleOtAsignadaSelected.folioOrden,
+                    idFlujo: $scope.detalleOtAsignadaSelected.idFlujo,
+                    idTipoOrden: $scope.detalleOtAsignadaSelected.idtipoOrden,
+                    idSubTipoOrden: $scope.detalleOtAsignadaSelected.idSubtipoOrden,
+                    idOrigenSistema: 1,
+                    idUsuarioDespacho: 12,
+                    idUsuarioTecnico: $scope.detalleOtAsignadaSelected.idTecnico,
+                    latitud: $scope.detalleOtAsignadaSelected.latitud,
+                    longitud: $scope.detalleOtAsignadaSelected.longitud,
+                    comentarios: $scope.elementoDesasigna.comentario,
+                }
+            
+        } else if (tipo === 'calendariza') {
+            if ($scope.infoOtDetalle.descripcionEstatus === 'PENDIENTE') {
+                params = {
+                    tipo: tipo,
+                    ot: $scope.detalleOtPendienteSelected.idOrden,
+                    folioSistema: $scope.detalleOtPendienteSelected.folioOrden,
+                    idFlujo: $scope.detalleOtPendienteSelected.idFlujo,
+                    idTipoOrden: $scope.detalleOtPendienteSelected.idtipoOrden,
+                    idSubTipoOrden: $scope.detalleOtPendienteSelected.idSubtipoOrden,
+                    idOrigenSistema: 1,
+                    idUsuarioDespacho: 12,
+                    latitud: $scope.detalleOtPendienteSelected.latitud,
+                    longitud: $scope.detalleOtPendienteSelected.longitud,
+                    comentarios: $scope.elementCalendarizado.comentario,
+                    idTurno: $scope.elementCalendarizado.turno.id,
+                    idMotivo: $scope.elementCalendarizado.motivo.id,
+                    fechaHoraAgenda: $scope.elementCalendarizado.fechaCalendarizado
+                }
+            } else {
+                params = {
+                    tipo: tipo,
+                    ot: $scope.detalleOtAsignadaSelected.idOrden,
+                    folioSistema: $scope.detalleOtAsignadaSelected.folioOrden,
+                    idFlujo: $scope.detalleOtAsignadaSelected.idFlujo,
+                    idTipoOrden: $scope.detalleOtAsignadaSelected.idtipoOrden,
+                    idSubTipoOrden: $scope.detalleOtAsignadaSelected.idSubtipoOrden,
+                    idOrigenSistema: 1,
+                    idUsuarioDespacho: 12,
+                    idUsuarioTecnico: $scope.detalleOtAsignadaSelected.idTecnico,
+                    latitud: $scope.detalleOtAsignadaSelected.latitud,
+                    longitud: $scope.detalleOtAsignadaSelected.longitud,
+                    comentarios: $scope.elementCalendarizado.comentario,
+                    idTurno: $scope.elementCalendarizado.turno.id,
+                    idMotivo: $scope.elementCalendarizado.motivo.id,
+                    fechaHoraAgenda: $scope.elementCalendarizado.fechaCalendarizado
+                }
             }
-        } else if (tipo === 'calendariza'){
-            params = {
-                tipo: tipo,
-                ot: $scope.detalleOtAsignadaSelected.idOrden,
-                folioSistema: $scope.detalleOtAsignadaSelected.folioOrden,
-                idFlujo: $scope.detalleOtAsignadaSelected.idFlujo,
-                idTipoOrden: $scope.detalleOtAsignadaSelected.idtipoOrden,
-                idSubTipoOrden: $scope.detalleOtAsignadaSelected.idSubtipoOrden,
-                idOrigenSistema: 1,
-                idUsuarioDespacho: 12,
-                idUsuarioTecnico: $scope.detalleOtAsignadaSelected.idTecnico,
-                latitud: $scope.detalleOtAsignadaSelected.latitud,
-                longitud: $scope.detalleOtAsignadaSelected.longitud,
-                comentarios: $scope.detalleOtAsignadaSelected.comentario,
-                idMotivo: $scope.elementCalendarizado.motivo
+        } else if (tipo === 'cancela') {
+            if ($scope.infoOtDetalle.descripcionEstatus === 'PENDIENTE') {
+                params = {
+                    tipo: tipo,
+                    ot: $scope.detalleOtPendienteSelected.idOrden,
+                    folioSistema: $scope.detalleOtPendienteSelected.folioOrden,
+                    idFlujo: $scope.detalleOtPendienteSelected.idFlujo,
+                    idTipoOrden: $scope.detalleOtPendienteSelected.idtipoOrden,
+                    idSubTipoOrden: $scope.detalleOtPendienteSelected.idSubtipoOrden,
+                    idOrigenSistema: 1,
+                    idUsuarioDespacho: 12,
+                    latitud: $scope.detalleOtPendienteSelected.latitud,
+                    longitud: $scope.detalleOtPendienteSelected.longitud,
+                    comentarios: $scope.elementoRescate.comentario,
+                    idMotivo: $scope.elementoRescate.motivo.id
+                }
+            } else {
+                params = {
+                    tipo: tipo,
+                    ot: $scope.detalleOtAsignadaSelected.idOrden,
+                    folioSistema: $scope.detalleOtAsignadaSelected.folioOrden,
+                    idFlujo: $scope.detalleOtAsignadaSelected.idFlujo,
+                    idTipoOrden: $scope.detalleOtAsignadaSelected.idtipoOrden,
+                    idSubTipoOrden: $scope.detalleOtAsignadaSelected.idSubtipoOrden,
+                    idOrigenSistema: 1,
+                    idUsuarioDespacho: 12,
+                    idUsuarioTecnico: $scope.detalleOtAsignadaSelected.idTecnico,
+                    latitud: $scope.detalleOtAsignadaSelected.latitud,
+                    longitud: $scope.detalleOtAsignadaSelected.longitud,
+                    comentarios: $scope.elementoRescate.comentario,
+                    idMotivo: $scope.elementoRescate.motivo.id
+                }
+            }
+        } else if (tipo === 'reagendamiento') {
+            if ($scope.infoOtDetalle.descripcionEstatus === 'PENDIENTE') {
+                params = {
+                    tipo: tipo,
+                    ot: $scope.detalleOtPendienteSelected.idOrden,
+                    folioSistema: $scope.detalleOtPendienteSelected.folioOrden,
+                    idFlujo: $scope.detalleOtPendienteSelected.idFlujo,
+                    idTipoOrden: $scope.detalleOtPendienteSelected.idtipoOrden,
+                    idSubTipoOrden: $scope.detalleOtPendienteSelected.idSubtipoOrden,
+                    idOrigenSistema: 1,
+                    idUsuarioDespacho: 12,
+                    latitud: $scope.detalleOtPendienteSelected.latitud,
+                    longitud: $scope.detalleOtPendienteSelected.longitud,
+                    comentarios: $scope.elementReagendaOT.comentario,
+                    idTurno: $scope.elementReagendaOT.turno.id,
+                    idMotivo: $scope.elementReagendaOT.motivo.id,
+                    fechaHoraAgenda: $scope.elementReagendaOT.fechaReagendamiento
+                }
+            } else {
+                params = {
+                    tipo: tipo,
+                    ot: $scope.detalleOtAsignadaSelected.idOrden,
+                    folioSistema: $scope.detalleOtAsignadaSelected.folioOrden,
+                    idFlujo: $scope.detalleOtAsignadaSelected.idFlujo,
+                    idTipoOrden: $scope.detalleOtAsignadaSelected.idtipoOrden,
+                    idSubTipoOrden: $scope.detalleOtAsignadaSelected.idSubtipoOrden,
+                    idOrigenSistema: 1,
+                    idUsuarioDespacho: 12,
+                    idUsuarioTecnico: $scope.detalleOtAsignadaSelected.idTecnico,
+                    latitud: $scope.detalleOtAsignadaSelected.latitud,
+                    longitud: $scope.detalleOtAsignadaSelected.longitud,
+                    comentarios: $scope.elementReagendaOT.comentario,
+                    idTurno: $scope.elementReagendaOT.turno.id,
+                    idMotivo: $scope.elementReagendaOT.motivo.id,
+                    fechaHoraAgenda: $scope.elementReagendaOT.fechaReagendamiento
+                }
+            }
+        } else if (tipo === 'termina'){
+            if ($scope.infoOtDetalle.descripcionEstatus === 'PENDIENTE') {
+                params = {
+                    tipo: tipo,
+                    ot: $scope.detalleOtPendienteSelected.idOrden,
+                    folioSistema: $scope.detalleOtPendienteSelected.folioOrden,
+                    idFlujo: $scope.detalleOtPendienteSelected.idFlujo,
+                    idTipoOrden: $scope.detalleOtPendienteSelected.idtipoOrden,
+                    idSubTipoOrden: $scope.detalleOtPendienteSelected.idSubtipoOrden,
+                    idOrigenSistema: 1,
+                    idUsuarioDespacho: 12,
+                    latitud: $scope.detalleOtPendienteSelected.latitud,
+                    longitud: $scope.detalleOtPendienteSelected.longitud,
+                    comentarios: $scope.elementTerminar.comentario,
+                    idMotivo: $scope.elementTerminar.estado.id,
+                }
+            } else {
+                params = {
+                    tipo: tipo,
+                    ot: $scope.detalleOtAsignadaSelected.idOrden,
+                    folioSistema: $scope.detalleOtAsignadaSelected.folioOrden,
+                    idFlujo: $scope.detalleOtAsignadaSelected.idFlujo,
+                    idTipoOrden: $scope.detalleOtAsignadaSelected.idtipoOrden,
+                    idSubTipoOrden: $scope.detalleOtAsignadaSelected.idSubtipoOrden,
+                    idOrigenSistema: 1,
+                    idUsuarioDespacho: 12,
+                    idUsuarioTecnico: $scope.detalleOtAsignadaSelected.idTecnico,
+                    latitud: $scope.detalleOtAsignadaSelected.latitud,
+                    longitud: $scope.detalleOtAsignadaSelected.longitud,
+                    comentarios: $scope.elementTerminar.comentario,
+                    idMotivo: $scope.elementTerminar.estado.id,
+                }
             }
         }
-        $scope.detalleOtPendienteSelected;
-        $scope.infoOtDetalle
-        $scope.detalleTecnicoOt
-        $scope.detalleOtAsignadaSelected
-        
-        /* let params = {
-            tipo: tipo,
-            ot: $scope.idOtSelect,
-            folioSistema: "Buen servicio",
-            idFlujo: 30,
-            idTipoOrden: 12,
-            idSubTipoOrden: 12,
-            idOrigenSistema: 30,
-            idUsuarioDespacho: 12,
-            idUsuarioTecnico: 12,
-            latitud: 16.532,
-            longitud: -3.987,
-            comentarios: "Buen servicio",
-            idMotivo: 4,
-            idTurno: 4,
-            fechaHoraAgenda: "4"
-        } */
        envioCambioStatus(params);
     }
 
