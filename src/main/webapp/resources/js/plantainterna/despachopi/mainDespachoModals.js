@@ -12,6 +12,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     $scope.isConfirmadoDesconfirmado = false;
     $scope.idotConfirmacionDesconfirmacion = 0;
     $scope.comentarios = '';
+    $scope.estatusModals = '';
 
     $scope.listadoCatalogoAcciones = []
     $('#modalAsignacionOrdenTrabajo,#modalReAsignacionOrdenTrabajo,#modalMaterialesOperario,#modalVehiculoOperario,#odalUbicacionOperario,#modalStatusOperario,#modalOtsTrabajadas')
@@ -39,19 +40,31 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     }
 
     abrirModalDetalleOtPendiente = function (idotpendiente) {
+        $scope.listadoMotivosRescate = $scope.estatusCambio.filter(e => {return e.idPadre === 212})
+        $scope.listadoMotivosCalendarizado = $scope.estatusCambio.filter(e => {return e.idPadre === 243})
+        $scope.listadoMotivosReagenda = $scope.estatusCambio.filter(e => {return e.idPadre === 201})
+        $scope.listadoEstadosTerminado = $scope.estatusCambio.filter(e => {return e.idPadre === 4})
+        $scope.listadoTurnosAcciones = $scope.filtrosGeneral.turnosdisponibles;
         $scope.requestModalInformacion(idotpendiente)
         $scope.detalleOtPendienteSelected=$scope.listadoOtsPendientes.find(e=>e.idOrden==idotpendiente)
         $scope.permisosModal=$scope.elementosConfigGeneral.get("MODAL_FLUJO_"+ $scope.detalleOtPendienteSelected.idFlujo ).split(",")
         console.log("##########permisos " + $scope.permisosModal )
         console.log($scope.detalleOtPendienteSelected)
+        $scope.estatusModals = 'PENDIENTE'
 
     }
     abrirModalInformacion = function (idotasignada) {
+        $scope.listadoMotivosRescate = $scope.estatusCambio.filter(e => {return e.idPadre === 212})
+        $scope.listadoMotivosCalendarizado = $scope.estatusCambio.filter(e => {return e.idPadre === 243})
+        $scope.listadoMotivosReagenda = $scope.estatusCambio.filter(e => {return e.idPadre === 201})
+        $scope.listadoEstadosTerminado = $scope.estatusCambio.filter(e => {return e.idPadre === 4})
+        $scope.listadoTurnosAcciones = $scope.filtrosGeneral.turnosdisponibles;
         $scope.requestModalInformacion(idotasignada)
         $scope.detalleOtAsignadaSelected= $scope.listadoOtsAsignadas.find(e=>e.idOrden==idotasignada)
         $scope.permisosModal=$scope.elementosConfigGeneral.get("MODAL_ASIGNADA_" + $scope.detalleOtAsignadaSelected.idFlujo ).split(",")
         console.log($scope.permisosModal )
         console.log($scope.detalleOtAsignadaSelected)
+        $scope.estatusModals = 'ASIGNADA'
     }
 
     $scope.idOtSelect = "";
@@ -798,7 +811,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 }
             
         } else if (tipo === 'calendariza') {
-            if ($scope.infoOtDetalle.descripcionEstatus === 'PENDIENTE') {
+            if ($scope.estatusModals === 'PENDIENTE') {
                 params = {
                     tipo: tipo,
                     ot: $scope.detalleOtPendienteSelected.idOrden,
@@ -835,7 +848,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 }
             }
         } else if (tipo === 'cancela') {
-            if ($scope.infoOtDetalle.descripcionEstatus === 'PENDIENTE') {
+            if ($scope.estatusModals === 'PENDIENTE') {
                 params = {
                     tipo: tipo,
                     ot: $scope.detalleOtPendienteSelected.idOrden,
@@ -868,7 +881,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 }
             }
         } else if (tipo === 'reagendamiento') {
-            if ($scope.infoOtDetalle.descripcionEstatus === 'PENDIENTE') {
+            if ($scope.estatusModals === 'PENDIENTE') {
                 params = {
                     tipo: tipo,
                     ot: $scope.detalleOtPendienteSelected.idOrden,
@@ -905,7 +918,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 }
             }
         } else if (tipo === 'termina'){
-            if ($scope.infoOtDetalle.descripcionEstatus === 'PENDIENTE') {
+            if ($scope.estatusModals === 'PENDIENTE') {
                 params = {
                     tipo: tipo,
                     ot: $scope.detalleOtPendienteSelected.idOrden,
@@ -946,9 +959,21 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         swal.showLoading();
         genericService.cambioStatusOts(params).then(result =>{
             console.log(result);
+            $scope.procesandoAsignacion=false;
+            $scope.procesandoReasignacion=false
+            
             swal.close();
+            $scope.elementTerminar = {};
+            $scope.elementReagendaOT = {};
+            $scope.elementoRescate = {};
+            $scope.elementoDesasigna = {};
+            $scope.reAsignacionObject = {};
+            $scope.asignacionObject = {};
             if(result.data.respuesta){
-
+             
+                toastr.success( result.data.result.mensaje );
+                $("#modalDetalleOT").modal('hide')
+                $scope.refrescarBusqueda()
             }else{
                 console.log(result.data.resultDescripcion)
                 toastr.warning( result.data.resultDescripcion );
@@ -956,14 +981,6 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             }
         }).catch(err => handleError(err));
     }
-
-    document.getElementById('v-tabs-consulta-acciones-tab').addEventListener('click', function(){
-        $scope.listadoMotivosRescate = $scope.estatusCambio.filter(e => {return e.idPadre === 212})
-        $scope.listadoMotivosCalendarizado = $scope.estatusCambio.filter(e => {return e.idPadre === 243})
-        $scope.listadoMotivosReagenda = $scope.estatusCambio.filter(e => {return e.idPadre === 201})
-        $scope.listadoEstadosTerminado = $scope.estatusCambio.filter(e => {return e.idPadre === 4})
-        $scope.listadoTurnosAcciones = $scope.filtrosGeneral.turnosdisponibles;
-    })
 }
 /**
 
