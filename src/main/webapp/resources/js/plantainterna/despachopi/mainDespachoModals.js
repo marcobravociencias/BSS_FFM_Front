@@ -959,6 +959,9 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         swal.showLoading();
         genericService.cambioStatusOts(params).then(result =>{
             console.log(result);
+            $scope.procesandoAsignacion=false;
+            $scope.procesandoReasignacion=false
+            
             swal.close();
             $scope.elementTerminar = {};
             $scope.elementReagendaOT = {};
@@ -967,7 +970,10 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             $scope.reAsignacionObject = {};
             $scope.asignacionObject = {};
             if(result.data.respuesta){
-
+             
+                toastr.success( result.data.result.mensaje );
+                $("#modalDetalleOT").modal('hide')
+                $scope.refrescarBusqueda()
             }else{
                 console.log(result.data.resultDescripcion)
                 toastr.warning( result.data.resultDescripcion );

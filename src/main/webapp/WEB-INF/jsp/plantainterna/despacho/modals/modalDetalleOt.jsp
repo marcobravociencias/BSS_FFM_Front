@@ -249,8 +249,14 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-12">
-                                                    <button ng-click="cambioStatus('cancela')" class="btn  btn-primary">Recate</button>
+                                                <div class="col-12">                                                    
+                                                    <button ng-show="accionesUserConfigText.indexOf('accionCancelaOT') !== -1" 
+                                                        ng-click="cambioStatus('cancela')"  class="btn  btn-primary">Recate</button>
+                                                        
+                                                    <div ng-show="accionesUserConfigText.indexOf('accionCancelaOT') === -1"  class="text-accion-nopermiso">
+                                                        <i class="icon-not-permiso fas fa-user-lock"></i>
+                                                        <b class="text-not-permiso">No tienes permiso para enviar a rescate</b>
+                                                    </div>  
                                                 </div>
                                             </div>
                                         </div>                                     
@@ -298,7 +304,13 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <button ng-click="cambioStatus('reagendamiento')"  class="btn  btn-primary">Reagendar</button>
+                                                    <button ng-show="accionesUserConfigText.indexOf('accionReagendaOT') !== -1" 
+                                                        ng-click="cambioStatus('reagendamiento')"  class="btn  btn-primary">Reagendar</button>
+                                                        
+                                                    <div ng-show="accionesUserConfigText.indexOf('accionReagendaOT') === -1"  class="text-accion-nopermiso">
+                                                        <i class="icon-not-permiso fas fa-user-lock"></i>
+                                                        <b class="text-not-permiso">No tienes permiso para reagendar ordenes</b>
+                                                    </div>                                               
                                                 </div>
                                             </div>
                                         </div>
@@ -346,7 +358,14 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <button ng-click="cambioStatus('calendariza')"  class="btn  btn-primary">Reagendar</button>
+                                                    
+                                                    <button ng-show="accionesUserConfigText.indexOf('accionCalendarizaOT') !== -1" 
+                                                        ng-click="cambioStatus('calendariza')"  class="btn  btn-primary">Calendarizar</button>
+                                                        
+                                                    <div ng-show="accionesUserConfigText.indexOf('accionCalendarizaOT') === -1"  class="text-accion-nopermiso">
+                                                        <i class="icon-not-permiso fas fa-user-lock"></i>
+                                                        <b class="text-not-permiso">No tienes permiso para calendarizar ordenes</b>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -375,8 +394,14 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-12">
-                                                    <button ng-click="cambioStatus('termina')"  class="btn  btn-primary">Terminar</button>
+                                                <div class="col-12">                                                 
+                                                    <button ng-show="accionesUserConfigText.indexOf('accionTerminaOT') !== -1" 
+                                                        ng-click="cambioStatus('termina')"  class="btn  btn-primary">Terminar</button>
+                                                        
+                                                    <div ng-show="accionesUserConfigText.indexOf('accionTerminaOT') === -1"  class="text-accion-nopermiso">
+                                                        <i class="icon-not-permiso fas fa-user-lock"></i>
+                                                        <b class="text-not-permiso">No tienes permiso para terminar ordenes</b>
+                                                    </div>  
                                                 </div>
                                             </div>
                                         </div>
