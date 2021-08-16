@@ -852,12 +852,13 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         }).catch(err => handleError(err));
     }
 
-    $scope.motivos = function(tipo){
-        if (tipo === 'calendariza') {
-            $scope.listadoMotivosCalendarizado = $scope.estatusCambio.filter(e => {return e.idPadre === 243})
-        }
-        
-    }
+    document.getElementById('v-tabs-consulta-acciones-tab').addEventListener('click', function(){
+        $scope.listadoMotivosRescate = $scope.estatusCambio.filter(e => {return e.idPadre === 212})
+        $scope.listadoMotivosCalendarizado = $scope.estatusCambio.filter(e => {return e.idPadre === 243})
+        $scope.listadoMotivosReagenda = $scope.estatusCambio.filter(e => {return e.idPadre === 201})
+        $scope.listadoEstadosTerminado = $scope.estatusCambio.filter(e => {return e.idPadre === 4})
+        $scope.listadoTurnosAcciones = $scope.filtrosGeneral.turnosdisponibles;
+    })
 }
 /**
 
