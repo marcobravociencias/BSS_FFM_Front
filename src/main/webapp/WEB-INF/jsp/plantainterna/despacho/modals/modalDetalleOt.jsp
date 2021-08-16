@@ -234,7 +234,7 @@
                                                     <div class="form-group">
                                                         <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" id="icono_operario_status" class="fa fa-user-circle-o fa-2x"></i>
                                                         <label for="id-status-tecnico">Motivo:</label>
-                                                        <select class="form-control" ng-model="elementoRescate.motivo" ng-options="motivo.Descripcion for motivo in listadoMotivosRescate">
+                                                        <select class="form-control" ng-model="elementoRescate.motivo" ng-options="motivo.nombre for motivo in listadoMotivosRescate">
                                                             <option value="">Seleccione ...</option>
                                                         </select>                                               
                                                       </div>
@@ -271,7 +271,7 @@
                                                     <div class="form-group">
                                                         <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o fa-2x"></i>
                                                         <label for="id-turno-reagenda">Turno:</label>
-                                                        <select class="form-control" id="id-turno-reagenda" ng-model="elementReagendaOT.turno" ng-options="turno.descripcion for turno in listadoTurnosAcciones">
+                                                        <select class="form-control" id="id-turno-reagenda" ng-model="elementReagendaOT.turno" ng-options="turno.nombre for turno in listadoTurnosAcciones">
                                                             <option value="">Seleccione ...</option>
                                                         </select>                                               
                                                       </div>
@@ -282,7 +282,7 @@
                                                     <div class="form-group">
                                                         <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o fa-2x"></i>
                                                         <label for="id-motivo-reagenda">Motivo:</label>
-                                                        <select class="form-control" id="id-motivo-reagenda" ng-model="elementReagendaOT.motivo" ng-options="motivo.Descripcion for motivo in listadoMotivosReagenda">
+                                                        <select class="form-control" id="id-motivo-reagenda" ng-model="elementReagendaOT.motivo" ng-options="motivo.nombre for motivo in listadoMotivosReagenda">
                                                             <option value="">Seleccione ...</option>
                                                         </select>                                               
                                                       </div>
@@ -319,7 +319,7 @@
                                                     <div class="form-group">
                                                         <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o fa-2x"></i>
                                                         <label for="id-turno-calendarizado">Turno:</label>
-                                                        <select class="form-control" id="id-turno-calendarizado" ng-model="elementCalendarizado.turno" ng-options="turno.descripcion for turno in listadoTurnosAcciones">
+                                                        <select class="form-control" id="id-turno-calendarizado" ng-model="elementCalendarizado.turno" ng-options="turno.nombre for turno in listadoTurnosAcciones">
                                                             <option value="">Seleccione ...</option>
                                                         </select>                                               
                                                       </div>
@@ -360,7 +360,7 @@
                                                     <div class="form-group">
                                                         <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o fa-2x"></i>
                                                         <label for="id-estado-terminar">Estado:</label>
-                                                        <select class="form-control" id="id-estado-terminar" ng-model="elementTerminar.estado" ng-options="estado.Descripcion for estado in listadoEstadosTerminado">
+                                                        <select class="form-control" id="id-estado-terminar" ng-model="elementTerminar.estado" ng-options="estado.nombre for estado in listadoEstadosTerminado">
                                                             <option value="">Seleccione ...</option>
                                                         </select>                                               
                                                       </div>
