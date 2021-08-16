@@ -67,14 +67,26 @@ app.service("genericService", function ($http) {
         });
     }
 
-    this.consultarConfiguracionDespachoDespacho = function () {
+    this.consultarConfiguracionDespachoDespacho = function (params) {
         return $http({
             method: "post",
             url: "req/consultarConfiguracionDespachoDespacho",
+            data: JSON.stringify(params),
             headers: {
                 'Content-Type': 'application/json'
             }
         });
     };
+
+    this.cambioStatusOts = function (params) {
+        return $http({
+            method: "post",
+            url: "req/cambioStatusOts",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    }
 
 })

@@ -458,4 +458,110 @@ public class ConsumeRest {
 
     }
 
+    public ServiceResponseResult callPatchBearerTokenRequestURL(Map<String, String> paramUri, String paramsObject, String urlRequest, Class<ServiceResponseResult> serviceResponseResultClass, String token) {
+        ServiceResponseResult response = ServiceResponseResult.builder().isRespuesta(false).resultDescripcion("Sin datos").build();
+        ResponseEntity<String> responseEntity = null;
+
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(urlRequest);
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+            headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+            headers.set(HttpHeaders.AUTHORIZATION, "Bearer " + token);
+            HttpEntity<String> request = new HttpEntity<>(paramsObject, headers);
+            logger.info("Ingresa a funcion patch: "+request);
+            HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+            restTemplate.setRequestFactory(requestFactory);
+
+            responseEntity = restTemplate.exchange(
+                    uriBuilder.buildAndExpand(paramUri).toUri(),
+                    HttpMethod.PATCH,
+                    request,
+                    String.class);
+            logger.info("Sale de funcion patch");
+            String bodyResponse = responseEntity.getBody();
+            logger.info("--- RESPONSE ---");
+            logger.info(bodyResponse);
+            Object result = gson.fromJson(bodyResponse, Object.class);
+            response = ServiceResponseResult.builder()
+                    .isRespuesta(true)
+                    .resultDescripcion("Accion completada")
+                    .result(result)
+                    .build();
+        }catch (HttpClientErrorException httpErrorException){
+            switch (httpErrorException.getRawStatusCode()){
+                case 403:
+                    logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO" + httpErrorException.getMessage());
+                    response = ServiceResponseResult.builder()
+                            .result(httpErrorException.getRawStatusCode())
+                            .resultDescripcion(httpErrorException.getMessage()).build();
+                    break;
+                default:
+                    response = ServiceResponseResult.builder()
+                            .resultDescripcion(httpErrorException.getMessage()).build();
+                    break;
+            }
+        } catch (Exception e) {
+            logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO" + e.getMessage());
+            response.setResultDescripcion(e.getMessage());
+
+        }
+        return response;
+    }
+
+    public ServiceResponseResult callPostBearerTokenRequestURL2(Map<String, String> paramUri, String paramsObject, String urlRequest, Class<ServiceResponseResult> serviceResponseResultClass, String token) {
+        ServiceResponseResult response = ServiceResponseResult.builder()
+                .isRespuesta(false).resultDescripcion("Sin datos").build();
+
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(urlRequest);
+        ResponseEntity<String> responseEntity = null;
+
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+            headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+            headers.set(HttpHeaders.AUTHORIZATION, "Bearer " + token);
+            HttpEntity<String> request = new HttpEntity<>(paramsObject,headers);
+            responseEntity = restTemplate.exchange(
+                    uriBuilder.buildAndExpand(paramUri).toUri(),
+                    HttpMethod.POST,
+                    request,
+                    String.class);
+            String bodyResponse = responseEntity.getBody();
+            logger.info("--- RESPONSE ---***");
+            logger.info(bodyResponse);
+            Object result = gson.fromJson(bodyResponse, Object.class);
+            response = ServiceResponseResult.builder()
+                    .isRespuesta(true)
+                    .resultDescripcion("Accion completada")
+                    .result(result)
+                    .build();
+        }catch (HttpClientErrorException httpErrorException){
+            switch (httpErrorException.getRawStatusCode()){
+                case 403:
+                    logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO" + httpErrorException.getMessage());
+                    response = ServiceResponseResult.builder()
+                            .result(httpErrorException.getRawStatusCode())
+                            .resultDescripcion(httpErrorException.getMessage()).build();
+                    break;
+                case 500:
+                    logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO" + httpErrorException.getMessage());
+                    response = ServiceResponseResult.builder()
+                            .result(httpErrorException.getRawStatusCode())
+                            .resultDescripcion(httpErrorException.getMessage()).build();
+                    break;
+                default:
+                    response = ServiceResponseResult.builder()
+                            .resultDescripcion(httpErrorException.getMessage()).build();
+                    break;
+            }
+        } catch (Exception e) {
+        	
+            logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO" + e.getMessage());
+            response.setResultDescripcion(e.getMessage());
+            response.setMensajeException(e.getMessage());
+
+        }
+        return response;
+    }
 }

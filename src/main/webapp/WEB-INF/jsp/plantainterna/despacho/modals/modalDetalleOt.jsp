@@ -207,7 +207,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div ng-show="permisosModal.indexOf('tabPedidoDespacho') !== -1"  class="tab-pane fade" id="v-tabs-consulta-acciones" role="tabpanel" aria-labelledby="v-tabs-consulta-acciones-tab">
+                            <div ng-show="permisosModal.indexOf('tabAccionesOrdenDespacho') !== -1"  class="tab-pane fade" id="v-tabs-consulta-acciones" role="tabpanel" aria-labelledby="v-tabs-consulta-acciones-tab">
                                 <ul class="nav nav-tabs mb-3 nav-fill " id="ex1" role="tablist">
                                     <li ng-show="permisosModal.indexOf('tabCambioEstatusRescateModal') !== -1" class="nav-item" role="presentation">
                                         <a class="nav-link active" data-mdb-toggle="tab"  href="#accion-rescate-ot" >Rescate</a>
@@ -216,11 +216,11 @@
                                         <a class="nav-link" data-mdb-toggle="tab" href="#accion-reagendar-ot" >Reagendar</a>
                                     </li>
                                     <li ng-show="permisosModal.indexOf('tabCambioEstatusCalendarizarModal') !== -1"  class="nav-item" role="presentation">
-                                        <a class="nav-link" data-mdb-toggle="tab" href="#accion-calendarizar-ot" >Calendarizar</a>
+                                        <a class="nav-link" data-mdb-toggle="tab" href="#accion-calendarizar-ot" ng-click="motivos('calendariza')">Calendarizar</a>
                                     </li>
                                     <li  ng-show="permisosModal.indexOf('tabCambioEstatusTerminarModal') !== -1" class="nav-item" role="presentation">
                                         <a class="nav-link" data-mdb-toggle="tab" href="#accion-terminar-ot" >Terminar</a>
-                                    </li>
+                                    </li>   
                                     <li  ng-show="permisosModal.indexOf('tabCambioEstatusDesasignarModal') !== -1" class="nav-item" role="presentation">
                                         <a class="nav-link" data-mdb-toggle="tab" href="#accion-desasignar-ot" >Desasignar</a>
                                     </li>
@@ -234,7 +234,7 @@
                                                     <div class="form-group">
                                                         <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" id="icono_operario_status" class="fa fa-user-circle-o fa-2x"></i>
                                                         <label for="id-status-tecnico">Motivo:</label>
-                                                        <select class="form-control" ng-model="elementoRescate.motivo" ng-options="motivo.Descripcion for motivo in listadoMotivosRescate">
+                                                        <select class="form-control" ng-model="elementoRescate.motivo" ng-options="motivo.nombre for motivo in listadoMotivosRescate">
                                                             <option value="">Seleccione ...</option>
                                                         </select>                                               
                                                       </div>
@@ -250,7 +250,7 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <button ng-click="enviarRescateOt()" class="btn  btn-primary">Recate</button>
+                                                    <button ng-click="cambioStatus('cancela')" class="btn  btn-primary">Recate</button>
                                                 </div>
                                             </div>
                                         </div>                                     
@@ -271,7 +271,7 @@
                                                     <div class="form-group">
                                                         <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o fa-2x"></i>
                                                         <label for="id-turno-reagenda">Turno:</label>
-                                                        <select class="form-control" id="id-turno-reagenda" ng-model="elementReagendaOT.turno" ng-options="turno.descripcion for turno in listadoTurnosAcciones">
+                                                        <select class="form-control" id="id-turno-reagenda" ng-model="elementReagendaOT.turno" ng-options="turno.nombre for turno in listadoTurnosAcciones">
                                                             <option value="">Seleccione ...</option>
                                                         </select>                                               
                                                       </div>
@@ -282,7 +282,7 @@
                                                     <div class="form-group">
                                                         <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o fa-2x"></i>
                                                         <label for="id-motivo-reagenda">Motivo:</label>
-                                                        <select class="form-control" id="id-motivo-reagenda" ng-model="elementReagendaOT.motivo" ng-options="motivo.Descripcion for motivo in listadoMotivosReagenda">
+                                                        <select class="form-control" id="id-motivo-reagenda" ng-model="elementReagendaOT.motivo" ng-options="motivo.nombre for motivo in listadoMotivosReagenda">
                                                             <option value="">Seleccione ...</option>
                                                         </select>                                               
                                                       </div>
@@ -298,7 +298,7 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <button ng-click="enviarReagendamiento()"  class="btn  btn-primary">Reagendar</button>
+                                                    <button ng-click="cambioStatus('reagendamiento')"  class="btn  btn-primary">Reagendar</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -319,7 +319,7 @@
                                                     <div class="form-group">
                                                         <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o fa-2x"></i>
                                                         <label for="id-turno-calendarizado">Turno:</label>
-                                                        <select class="form-control" id="id-turno-calendarizado" ng-model="elementCalendarizado.turno" ng-options="turno.descripcion for turno in listadoTurnosAcciones">
+                                                        <select class="form-control" id="id-turno-calendarizado" ng-model="elementCalendarizado.turno" ng-options="turno.nombre for turno in listadoTurnosAcciones">
                                                             <option value="">Seleccione ...</option>
                                                         </select>                                               
                                                       </div>
@@ -330,7 +330,7 @@
                                                     <div class="form-group">
                                                         <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o fa-2x"></i>
                                                         <label for="id-motivo-calendarizado">Motivo:</label>
-                                                        <select class="form-control" id="id-motivo-calendarizado" ng-model="elementCalendarizado.motivo" ng-options="motivo.Descripcion for motivo in listadoMotivosCalendarizado">
+                                                        <select class="form-control" id="id-motivo-calendarizado" ng-model="elementCalendarizado.motivo" ng-options="motivo.nombre for motivo in listadoMotivosCalendarizado">
                                                             <option value="">Seleccione ...</option>
                                                         </select>                                               
                                                       </div>
@@ -340,13 +340,13 @@
                                                 <div class="col-12">
                                                     <div class="form-group">
                                                         <label for="exampleTextarea">Comentario:</label>
-                                                        <textarea class="form-control" style=" resize: none" ng-model="elementReagendaOT.comentario" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" rows="3"></textarea>
+                                                        <textarea class="form-control" style=" resize: none" ng-model="elementCalendarizado.comentario" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" rows="3"></textarea>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <button ng-click="enviarCalendarizado()"  class="btn  btn-primary">Reagendar</button>
+                                                    <button ng-click="cambioStatus('calendariza')"  class="btn  btn-primary">Reagendar</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -360,7 +360,7 @@
                                                     <div class="form-group">
                                                         <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o fa-2x"></i>
                                                         <label for="id-estado-terminar">Estado:</label>
-                                                        <select class="form-control" id="id-estado-terminar" ng-model="elementTerminar.estado" ng-options="estado.Descripcion for estado in listadoEstadosTerminado">
+                                                        <select class="form-control" id="id-estado-terminar" ng-model="elementTerminar.estado" ng-options="estado.nombre for estado in listadoEstadosTerminado">
                                                             <option value="">Seleccione ...</option>
                                                         </select>                                               
                                                       </div>
@@ -376,7 +376,7 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <button ng-click="enviarTerminadoOT()"  class="btn  btn-primary">Terminar</button>
+                                                    <button ng-click="cambioStatus('termina')"  class="btn  btn-primary">Terminar</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -393,7 +393,13 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <button ng-click="enviarDesasignacion()"  class="btn  btn-primary">Desasigna</button>
+                                                    <button ng-show="accionesUserConfigText.indexOf('accionDesasignaOT') !== -1" 
+                                                            ng-click="cambioStatus('desasigna')"  class="btn  btn-primary">Desasigna</button>
+                                                            
+                                                    <div ng-show="accionesUserConfigText.indexOf('accionDesasignaOT') === -1"  class="text-accion-nopermiso">
+                                                        <i class="icon-not-permiso fas fa-user-lock"></i>
+                                                        <b class="text-not-permiso">No tienes permiso para desasignar ordenes</b>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -401,7 +407,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div ng-show="permisosModal.indexOf('tabAccionesOrdenDespacho') !== -1"  class="tab-pane fade" id="v-tabs-consulta-pedido" role="tabpanel" aria-labelledby="v-tabs-consulta-acciones-tab">
+                            <div ng-show="permisosModal.indexOf('tabPedidoDespacho') !== -1"  class="tab-pane fade" id="v-tabs-consulta-pedido" role="tabpanel" aria-labelledby="v-tabs-consulta-acciones-tab">
                                 <div class="row parent-detallecotizacion">                        
                                     <div class="col-4">
                                         <b class="text-repartidor-noencontrado" ng-if="detalleTecnicoOt.latitud == undefined || detalleTecnicoOt.latitud == null">No se encontr&oacute; ubicaci&oacute;n del repartidor</b>
