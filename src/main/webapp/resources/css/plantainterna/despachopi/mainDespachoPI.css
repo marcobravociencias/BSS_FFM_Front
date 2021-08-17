@@ -1788,3 +1788,7 @@ b.text-not-permiso {
     font-weight: 100;
     font-size: .8em;
 }
+
+#fecha-calendarizado, #fecha-reagendamiento {
+  background-color: #ffffff;
+}

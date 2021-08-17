@@ -42,12 +42,23 @@
 				</div>
 			</div>
             <div class="modal-footer">
-                <button ng-click="cambiarEstatusOperario()" type="button" class="btn btn-primary">
-                    Cambiar estatus
+            
+				
+				<div ng-show="accionesUserConfigText.indexOf('accionActualizaUS') === -1"  class="text-accion-nopermiso">
+					<i class="icon-not-permiso fas fa-user-lock"></i>
+					<b class="text-not-permiso">No tienes permiso para est&aacute; acci&oacute;n</b>
+				</div>  
+				<button ng-show="accionesUserConfigText.indexOf('accionActualizaUS') !== -1"  
+						ng-disabled="procesandoEstatusTecnico" ng-click="cambiarEstatusOperario()" type="button" class="btn btn-primary">
+                    <b ng-if="!procesandoEstatusTecnico">Cambiar estatus</b>
+                    <b ng-if="procesandoEstatusTecnico">Cambiando ...</b>
                 </button>
+
                 <button type="button" class="btn cerrar-modal-btn btn-ligh" data-mdb-dismiss="modal">
                     Cerrar
                 </button>
+
+		
            </div>
         </div>
     </div>

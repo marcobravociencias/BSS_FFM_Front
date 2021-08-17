@@ -215,8 +215,11 @@
                                     <li ng-show="permisosModal.indexOf('tabCambioEstatusReagendaModal') !== -1" class="nav-item" role="presentation">
                                         <a class="nav-link" data-mdb-toggle="tab" href="#accion-reagendar-ot" >Reagendar</a>
                                     </li>
+                                    <li ng-show="permisosModal.indexOf('tabCambioEstatusGestoriaModal') !== -1" class="nav-item" role="presentation">
+                                        <a class="nav-link" data-mdb-toggle="tab" href="#accion-plaza-comercial-ot" >Plaza comercial</a>
+                                    </li>
                                     <li ng-show="permisosModal.indexOf('tabCambioEstatusCalendarizarModal') !== -1"  class="nav-item" role="presentation">
-                                        <a class="nav-link" data-mdb-toggle="tab" href="#accion-calendarizar-ot" ng-click="motivos('calendariza')">Calendarizar</a>
+                                        <a class="nav-link" data-mdb-toggle="tab" href="#accion-calendarizar-ot">Calendarizar</a>
                                     </li>
                                     <li  ng-show="permisosModal.indexOf('tabCambioEstatusTerminarModal') !== -1" class="nav-item" role="presentation">
                                         <a class="nav-link" data-mdb-toggle="tab" href="#accion-terminar-ot" >Terminar</a>
@@ -268,7 +271,7 @@
                                                     <div class="form-group">
                                                         <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o fa-2x"></i>
                                                         <label for="fecha-reagendamiento">Fecha reagendamiento:</label>
-                                                        <input type="text" ng-model="elementReagendaOT.fechaReagendamiento" id="fecha-reagendamiento" class="form-control ">                                 
+                                                        <input type="text" ng-model="elementReagendaOT.fechaReagendamiento" id="fecha-reagendamiento" class="form-control" readonly>                                 
                                                       </div>
                                                 </div>
                                             </div>
@@ -322,7 +325,7 @@
                                                     <div class="form-group">
                                                         <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o fa-2x"></i>
                                                         <label for="fecha-calendarizado">Fecha calendarizado:</label>
-                                                        <input type="text" id="fecha-calendarizado" ng-model="elementCalendarizado.fechaCalendarizado" class="form-control ">                                 
+                                                        <input type="text" id="fecha-calendarizado" ng-model="elementCalendarizado.fechaCalendarizado" class="form-control " readonly>                                 
                                                       </div>
                                                 </div>
                                             </div>
@@ -366,6 +369,52 @@
                                                         <i class="icon-not-permiso fas fa-user-lock"></i>
                                                         <b class="text-not-permiso">No tienes permiso para calendarizar ordenes</b>
                                                     </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div ng-show="permisosModal.indexOf('tabCambioEstatusGestoriaModal') !== -1"  class="tab-pane fade" id="accion-plaza-comercial-ot" >
+                                        <div class="container container-accion">
+                                            <div class="row align-items-center">
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o fa-2x"></i>
+                                                        <label for="id-turno-calendarizado">Estado:</label>
+                                                        <select class="form-control" id="id-estado-plaza-comercial" ng-model="elementoPlazaComercial.estado" ng-options="turno.nombre for turno in listadoEstadoGestoria">
+                                                            <option value="">Seleccione ...</option>
+                                                        </select>                                               
+                                                      </div>
+                                                </div>
+                                            </div>
+                                            <div class="row align-items-center">
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o fa-2x"></i>
+                                                        <label for="id-motivo-calendarizado">Motivo:</label>
+                                                        <select class="form-control" id="id-motivo-calendarizado" ng-model="elementoPlazaComercial.motivo" ng-options="motivo.nombre for motivo in listadoMotivosGestaria">
+                                                            <option value="">Seleccione ...</option>
+                                                        </select>                                               
+                                                      </div>
+                                                </div>
+                                            </div>		
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label for="exampleTextarea">Comentario:</label>
+                                                        <textarea class="form-control" style=" resize: none" ng-model="elementoPlazaComercial.comentario" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" rows="3"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <button ng-show="accionesUserConfigText.indexOf('accionGestoriaOT') !== -1" 
+                                                        ng-click="cambioStatus('gestoria')"  class="btn  btn-primary">Plaza</button>
+
+                                                    <div ng-show="accionesUserConfigText.indexOf('accionGestoriaOT') === -1"  class="text-accion-nopermiso">
+                                                        <i class="icon-not-permiso fas fa-user-lock"></i>
+                                                        <b class="text-not-permiso">No tienes permiso para enviar a plaza</b>
+                                                    </div>  
+
                                                 </div>
                                             </div>
                                         </div>

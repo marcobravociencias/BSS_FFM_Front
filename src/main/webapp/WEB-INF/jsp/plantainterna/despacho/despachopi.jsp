@@ -249,6 +249,7 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/despachopi/mainAlertasDespacho.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/despachopi/mainAlertasService.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/genericService.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/despachopi/mainDependencias.js"></script>
 
     <script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>
