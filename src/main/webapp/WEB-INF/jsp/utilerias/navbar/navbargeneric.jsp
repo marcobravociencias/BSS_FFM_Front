@@ -11,7 +11,8 @@
 <header class="header-navbar-p">
     <div class="row container-fluid container-top-header">
         <div class="col-6">
-            <img  src="${pageContext.request.contextPath}/resources/img/logotipos/residencial.png" height="27" alt="" loading="lazy" />        
+            <!--img  src="${pageContext.request.contextPath}/resources/img/logotipos/residencial.png" height="27" alt="" loading="lazy" /-->      
+            <img  src="${pageContext.request.contextPath}/resources/img/navbar/${userStore.configuraciones['KEY_BANER']}" height="27" alt="" loading="lazy" />                  
         </div>
         <div class="col-6 d-flex justify-content-end">
             <div class="content-header">

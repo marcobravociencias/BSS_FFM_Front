@@ -215,7 +215,7 @@
                                     <li ng-show="permisosModal.indexOf('tabCambioEstatusReagendaModal') !== -1" class="nav-item" role="presentation">
                                         <a class="nav-link" data-mdb-toggle="tab" href="#accion-reagendar-ot" >Reagendar</a>
                                     </li>
-                                    <li ng-show="permisosModal.indexOf('tabCambioEstatusReagendaModal') !== -1" class="nav-item" role="presentation">
+                                    <li ng-show="permisosModal.indexOf('tabCambioEstatusGestoriaModal') !== -1" class="nav-item" role="presentation">
                                         <a class="nav-link" data-mdb-toggle="tab" href="#accion-plaza-comercial-ot" >Plaza comercial</a>
                                     </li>
                                     <li ng-show="permisosModal.indexOf('tabCambioEstatusCalendarizarModal') !== -1"  class="nav-item" role="presentation">
@@ -373,7 +373,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div ng-show="permisosModal.indexOf('tabCambioEstatusCalendarizarModal') !== -1"  class="tab-pane fade" id="accion-plaza-comercial-ot" >
+                                    <div ng-show="permisosModal.indexOf('tabCambioEstatusGestoriaModal') !== -1"  class="tab-pane fade" id="accion-plaza-comercial-ot" >
                                         <div class="container container-accion">
                                             <div class="row align-items-center">
                                                 <div class="col-12">
@@ -407,7 +407,14 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <button ng-click="cambioStatus('gestoria')"  class="btn  btn-primary">Plaza</button>
+                                                    <button ng-show="accionesUserConfigText.indexOf('accionGestoriaOT') !== -1" 
+                                                        ng-click="cambioStatus('gestoria')"  class="btn  btn-primary">Plaza</button>
+
+                                                    <div ng-show="accionesUserConfigText.indexOf('accionGestoriaOT') === -1"  class="text-accion-nopermiso">
+                                                        <i class="icon-not-permiso fas fa-user-lock"></i>
+                                                        <b class="text-not-permiso">No tienes permiso para enviar a plaza</b>
+                                                    </div>  
+
                                                 </div>
                                             </div>
                                         </div>
