@@ -56,7 +56,7 @@
 						<ul class="ul-elementos-nav navbar-nav">
 							<li id="li-consultaot-navbar" class="nav-item"><a
 								class="nav-link a-navlink-navbar pestaniaActivada" href=""
-								ng-click="verVistaIndividual()">Individual</a></li>
+								ng-click="">Individual</a></li>
 							<li id="li-skills-navbar" class="nav-item"><a
 								class="nav-link a-navlink-navbar" href=""
 								ng-click="verVistaTabla()">Vista tabla</a></li>
@@ -136,7 +136,7 @@
 								class="row ">
 								<div class="col-9 intervencion-col">
 									<h5 class="text-intervencion-title"
-										ng-bind="intervencion.descripcion"></h5>
+										ng-bind="intervencion.nombre"></h5>
 								</div>
 								<div class="col-3 intervencion-col">
 									<div class="form-check-sm form-check form-switch">
@@ -228,7 +228,7 @@
 														class="row ">
 														<div class="col-10 intervencion-col">
 															<h5 class="text-intervencion-title"
-																ng-bind="intervencion.descripcion"></h5>
+																ng-bind="intervencion.nombre"></h5>
 														</div>
 														<div class="col-2 intervencion-col">
 															<div class="form-check-sm form-check form-switch">
@@ -261,8 +261,10 @@
 				</div>
 			</div>
 	
-			<div id="divContenedorTabla" class="row content-gestion-operarios"
-				style="display: none">
+			<!-- VISTA TABLA -->
+			<!-- VISTA TABLA -->
+	
+			<div id="divContenedorTabla" class="row content-gestion-operarios" style="display: none">
 				<header>
 					<nav
 						class="navbar navbar-expand-lg navbar-light bg-light navbar-menu-generic"
@@ -283,7 +285,7 @@
 								ng-click="verVistaIndividual()">Individual</a></li>
 							<li id="li-skills-navbar" class="nav-item"><a
 								class="nav-link a-navlink-navbar pestaniaActivada" href=""
-								ng-click="verVistaTabla()">Vista tabla</a></li>
+								ng-click="">Vista tabla</a></li>
 						</ul>
 					</nav>
 				</header>
@@ -314,7 +316,7 @@
 										<thead class="thead-table table-nowrap" id="idTheadTabla">
 											<tr class="zui-sticky-tr">
 												<th class="zui-sticky-col zui-text-cabeceras" scope="col">CUADRILLA</th>
-												<th class="zui-text-cabeceras" scope="col" style="text-align: center" ng-repeat="intervencion in listadoIntervenciones track by $index">{{intervencion.descripcion}} <i class="fas fa-eye-slash iconoOjoColumna" ng-click="displayColumnaIndividual($index+2)"></i></th>
+												<th class="zui-text-cabeceras" scope="col" style="text-align: center" ng-repeat="intervencion in listadoIntervenciones track by $index">{{intervencion.nombre}} <i class="fas fa-eye-slash iconoOjoColumna" ng-click="displayColumnaIndividual($index+2)"></i></th>
 											</tr>
 										</thead>
 										<tbody id="bodyTabla">
@@ -376,7 +378,7 @@
 											<input id="idBuscadorGeografiaVistaTabla" type="text" class="form-control form-control-sm buscar-input-operario" placeholder="Buscar geograf&iacute;a" ng-keyup="busquedaGeografiaVistaTabla()"> <span class="search-icon-operario-busq fa fa-search"></span>
 										</div>
 										<div class="container-treegeofria scrollGeneral">
-											<div id="arbolGeografiasVistaTabla" class="proton-demo"	ng-click="cargarTecnicosVistaTabla()">
+											<div id="arbolGeografiasVistaTabla" class="proton-demo">
 											</div>
 										</div>
 									</div>
@@ -420,7 +422,7 @@
 										<div class="intervenciones-container">
 											<div ng-repeat="intervencion in listadoIntervencionesFiltro track by $index" class="row rowSkillFiltro">
 												<div class="col-md-10 intervencion-col">
-													<h5 class="text-intervencion-title nombreSkillFiltro" ng-bind="intervencion.descripcion"></h5>
+													<h5 class="text-intervencion-title nombreSkillFiltro" ng-bind="intervencion.nombre"></h5>
 												</div>
 												<div class="col-md-2 intervencion-col">
 													<div class="form-check-sm form-check form-switch">
@@ -463,6 +465,8 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/skillsAdms/skillsController.js?" charset="UTF-8"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/skillsAdms/skillsService.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/skillsAdms/jsonSkills.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/genericService.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/despachopi/mainDespachoService.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
 	<script	src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>
 </html>

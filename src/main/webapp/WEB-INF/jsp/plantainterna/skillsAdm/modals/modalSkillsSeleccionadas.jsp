@@ -23,7 +23,7 @@
 							<tbody>
 								<tr ng-repeat="intervencionModal in listadoIntervencionesSeleccionadas track by $index">
 									<td>{{$index +1}} </td>
-									<td>{{intervencionModal.descripcion}}</td>
+									<td>{{intervencionModal.nombre}}</td>
 								</tr>
 							</tbody>
 						</table>
