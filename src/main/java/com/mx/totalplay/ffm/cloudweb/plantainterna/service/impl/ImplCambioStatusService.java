@@ -88,6 +88,11 @@ public class ImplCambioStatusService implements CambioStatusService {
                 urlRequest = baseUrlService.concat(environment.getProperty("param.textus.asigna"));
                 http://94.74.70.52/
                 break;
+            case "gestoria":
+                requestTipo = "patch";
+                //urlRequest = login.getDireccionAmbiente().concat(constCambioStatus.getCambioDeStatusOts()).concat(environment.getProperty("param.textus.asigna"));
+                urlRequest = baseUrlService.concat(environment.getProperty("param.textus.gestoria"));
+                break;
         }
         logger.info("#### URL #### \n" + urlRequest);
         logger.info("### PARAM ### " + paramUri);

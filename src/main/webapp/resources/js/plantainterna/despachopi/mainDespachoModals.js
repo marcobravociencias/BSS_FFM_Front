@@ -12,6 +12,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     $scope.isConfirmadoDesconfirmado = false;
     $scope.idotConfirmacionDesconfirmacion = 0;
     $scope.comentarios = '';
+    $scope.elementoPlazaComercial = {};
     $scope.estatusModals = '';
 
     $scope.listadoCatalogoAcciones = []
@@ -44,6 +45,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         $scope.listadoMotivosCalendarizado = $scope.estatusCambio.filter(e => {return e.idPadre === 243})
         $scope.listadoMotivosReagenda = $scope.estatusCambio.filter(e => {return e.idPadre === 201})
         $scope.listadoEstadosTerminado = $scope.estatusCambio.filter(e => {return e.idPadre === 4})
+        $scope.listadoEstadoGestoria = $scope.estatusCambio.filter(e => {return e.idPadre === 7})
         $scope.listadoTurnosAcciones = $scope.filtrosGeneral.turnosdisponibles;
         $scope.requestModalInformacion(idotpendiente)
         $scope.detalleOtPendienteSelected=$scope.listadoOtsPendientes.find(e=>e.idOrden==idotpendiente)
@@ -58,6 +60,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         $scope.listadoMotivosCalendarizado = $scope.estatusCambio.filter(e => {return e.idPadre === 243})
         $scope.listadoMotivosReagenda = $scope.estatusCambio.filter(e => {return e.idPadre === 201})
         $scope.listadoEstadosTerminado = $scope.estatusCambio.filter(e => {return e.idPadre === 4})
+        $scope.listadoEstadoGestoria = $scope.estatusCambio.filter(e => {return e.idPadre === 7})
         $scope.listadoTurnosAcciones = $scope.filtrosGeneral.turnosdisponibles;
         $scope.requestModalInformacion(idotasignada)
         $scope.detalleOtAsignadaSelected= $scope.listadoOtsAsignadas.find(e=>e.idOrden==idotasignada)
@@ -734,6 +737,8 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 
 
     $scope.cambioStatus = function(tipo){
+        let errorMensaje = '<ul>';
+        let isValido = true;
         let params = {};
         if (tipo === 'asigna') {
             let horaasignacionInicio = angular.copy($scope.asignacionObject.otInfo.fechahoraasignacion);
@@ -747,6 +752,12 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             let arrayHoraFin = horaasignacionFin.split("T")
             arrayHoraFin[1] = arrayHoraFin[1].substr(0, 5)
             let formatFechaHoraFin = arrayHoraFin[0] + " " + arrayHoraFin[1]
+
+            if ($scope.asignacionObject.comentario.trim() === '') {
+                errorMensaje += 'Completa campo comentario.'
+                isValido = false;
+            }
+
             params = {
                 tipo: tipo,
                 ot: $scope.asignacionObject.otInfo.idOrden,
@@ -777,6 +788,12 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             let arrayHoraFin = horaasignacionFin.split("T")
             arrayHoraFin[1] = arrayHoraFin[1].substr(0, 5)
             let formatFechaHoraFin = arrayHoraFin[0] + " " + arrayHoraFin[1]
+
+            if ($scope.reAsignacionObject.comentario.trim() === '') {
+                errorMensaje += 'Completa campo comentario.'
+                isValido = false;
+            }
+
             params = {
                 tipo: tipo,
                 ot: $scope.reAsignacionObject.otInfo.idOrden,
@@ -795,6 +812,10 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             }
         } else if (tipo === 'desasigna') {
 
+            if (!$scope.elementoDesasigna || $scope.elementoDesasigna.comentario.trim() === '') {
+                errorMensaje += 'Completa campo comentario.'
+                isValido = false;
+            } else {
                 params = {
                     tipo: tipo,
                     ot: $scope.detalleOtAsignadaSelected.idOrden,
@@ -809,149 +830,284 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                     longitud: $scope.detalleOtAsignadaSelected.longitud,
                     comentarios: $scope.elementoDesasigna.comentario,
                 }
+            }
+
+                
             
         } else if (tipo === 'calendariza') {
-            if ($scope.estatusModals === 'PENDIENTE') {
-                params = {
-                    tipo: tipo,
-                    ot: $scope.detalleOtPendienteSelected.idOrden,
-                    folioSistema: $scope.detalleOtPendienteSelected.folioOrden,
-                    idFlujo: $scope.detalleOtPendienteSelected.idFlujo,
-                    idTipoOrden: $scope.detalleOtPendienteSelected.idtipoOrden,
-                    idSubTipoOrden: $scope.detalleOtPendienteSelected.idSubtipoOrden,
-                    idOrigenSistema: 1,
-                    idUsuarioDespacho: 12,
-                    latitud: $scope.detalleOtPendienteSelected.latitud,
-                    longitud: $scope.detalleOtPendienteSelected.longitud,
-                    comentarios: $scope.elementCalendarizado.comentario,
-                    idTurno: $scope.elementCalendarizado.turno.id,
-                    idMotivo: $scope.elementCalendarizado.motivo.id,
-                    fechaHoraAgenda: $scope.elementCalendarizado.fechaCalendarizado
-                }
-            } else {
-                params = {
-                    tipo: tipo,
-                    ot: $scope.detalleOtAsignadaSelected.idOrden,
-                    folioSistema: $scope.detalleOtAsignadaSelected.folioOrden,
-                    idFlujo: $scope.detalleOtAsignadaSelected.idFlujo,
-                    idTipoOrden: $scope.detalleOtAsignadaSelected.idtipoOrden,
-                    idSubTipoOrden: $scope.detalleOtAsignadaSelected.idSubtipoOrden,
-                    idOrigenSistema: 1,
-                    idUsuarioDespacho: 12,
-                    idUsuarioTecnico: $scope.detalleOtAsignadaSelected.idTecnico,
-                    latitud: $scope.detalleOtAsignadaSelected.latitud,
-                    longitud: $scope.detalleOtAsignadaSelected.longitud,
-                    comentarios: $scope.elementCalendarizado.comentario,
-                    idTurno: $scope.elementCalendarizado.turno.id,
-                    idMotivo: $scope.elementCalendarizado.motivo.id,
-                    fechaHoraAgenda: $scope.elementCalendarizado.fechaCalendarizado
+
+            if ($scope.elementCalendarizado.fechaCalendarizado.trim() === '') {
+                errorMensaje += '<li>Completa campo fecha</li>'
+                isValido = false;
+            }
+
+            if (!$scope.elementCalendarizado.turno) {
+                errorMensaje += '<li>Seleccione campo turno.</li>'
+                isValido = false;
+            }
+
+            if (!$scope.elementCalendarizado.motivo) {
+                errorMensaje += '<li>Seleccione campo motivo.</li>'
+                isValido = false;
+            }
+
+            if (!$scope.elementCalendarizado.comentario || $scope.elementCalendarizado.comentario.trim() === '') {
+                errorMensaje += '<li>Completa campo comnentario.</li>'
+                isValido = false;
+            }
+
+            if (isValido) {
+                if ($scope.estatusModals === 'PENDIENTE') {
+                    params = {
+                        tipo: tipo,
+                        ot: $scope.detalleOtPendienteSelected.idOrden,
+                        folioSistema: $scope.detalleOtPendienteSelected.folioOrden,
+                        idFlujo: $scope.detalleOtPendienteSelected.idFlujo,
+                        idTipoOrden: $scope.detalleOtPendienteSelected.idtipoOrden,
+                        idSubTipoOrden: $scope.detalleOtPendienteSelected.idSubtipoOrden,
+                        idOrigenSistema: 1,
+                        idUsuarioDespacho: 12,
+                        latitud: $scope.detalleOtPendienteSelected.latitud,
+                        longitud: $scope.detalleOtPendienteSelected.longitud,
+                        comentarios: $scope.elementCalendarizado.comentario,
+                        idTurno: $scope.elementCalendarizado.turno.id,
+                        idMotivo: $scope.elementCalendarizado.motivo.id,
+                        fechaHoraAgenda: $scope.elementCalendarizado.fechaCalendarizado
+                    }
+                } else {
+                    params = {
+                        tipo: tipo,
+                        ot: $scope.detalleOtAsignadaSelected.idOrden,
+                        folioSistema: $scope.detalleOtAsignadaSelected.folioOrden,
+                        idFlujo: $scope.detalleOtAsignadaSelected.idFlujo,
+                        idTipoOrden: $scope.detalleOtAsignadaSelected.idtipoOrden,
+                        idSubTipoOrden: $scope.detalleOtAsignadaSelected.idSubtipoOrden,
+                        idOrigenSistema: 1,
+                        idUsuarioDespacho: 12,
+                        idUsuarioTecnico: $scope.detalleOtAsignadaSelected.idTecnico,
+                        latitud: $scope.detalleOtAsignadaSelected.latitud,
+                        longitud: $scope.detalleOtAsignadaSelected.longitud,
+                        comentarios: $scope.elementCalendarizado.comentario,
+                        idTurno: $scope.elementCalendarizado.turno.id,
+                        idMotivo: $scope.elementCalendarizado.motivo.id,
+                        fechaHoraAgenda: $scope.elementCalendarizado.fechaCalendarizado
+                    }
                 }
             }
         } else if (tipo === 'cancela') {
-            if ($scope.estatusModals === 'PENDIENTE') {
-                params = {
-                    tipo: tipo,
-                    ot: $scope.detalleOtPendienteSelected.idOrden,
-                    folioSistema: $scope.detalleOtPendienteSelected.folioOrden,
-                    idFlujo: $scope.detalleOtPendienteSelected.idFlujo,
-                    idTipoOrden: $scope.detalleOtPendienteSelected.idtipoOrden,
-                    idSubTipoOrden: $scope.detalleOtPendienteSelected.idSubtipoOrden,
-                    idOrigenSistema: 1,
-                    idUsuarioDespacho: 12,
-                    latitud: $scope.detalleOtPendienteSelected.latitud,
-                    longitud: $scope.detalleOtPendienteSelected.longitud,
-                    comentarios: $scope.elementoRescate.comentario,
-                    idMotivo: $scope.elementoRescate.motivo.id
-                }
-            } else {
-                params = {
-                    tipo: tipo,
-                    ot: $scope.detalleOtAsignadaSelected.idOrden,
-                    folioSistema: $scope.detalleOtAsignadaSelected.folioOrden,
-                    idFlujo: $scope.detalleOtAsignadaSelected.idFlujo,
-                    idTipoOrden: $scope.detalleOtAsignadaSelected.idtipoOrden,
-                    idSubTipoOrden: $scope.detalleOtAsignadaSelected.idSubtipoOrden,
-                    idOrigenSistema: 1,
-                    idUsuarioDespacho: 12,
-                    idUsuarioTecnico: $scope.detalleOtAsignadaSelected.idTecnico,
-                    latitud: $scope.detalleOtAsignadaSelected.latitud,
-                    longitud: $scope.detalleOtAsignadaSelected.longitud,
-                    comentarios: $scope.elementoRescate.comentario,
-                    idMotivo: $scope.elementoRescate.motivo.id
+
+            if (!$scope.elementoRescate ||!$scope.elementoRescate.motivo) {
+                errorMensaje += '<li>Seleccione campo motivo.</li>'
+                isValido = false;
+            }
+
+            if (!$scope.elementoRescate ||!$scope.elementoRescate.comentario || $scope.elementoRescate.comentario.trim() === '') {
+                errorMensaje += '<li>Completa campo comnentario.</li>'
+                isValido = false;
+            }
+
+            if (isValido) {
+                if ($scope.estatusModals === 'PENDIENTE') {
+                    params = {
+                        tipo: tipo,
+                        ot: $scope.detalleOtPendienteSelected.idOrden,
+                        folioSistema: $scope.detalleOtPendienteSelected.folioOrden,
+                        idFlujo: $scope.detalleOtPendienteSelected.idFlujo,
+                        idTipoOrden: $scope.detalleOtPendienteSelected.idtipoOrden,
+                        idSubTipoOrden: $scope.detalleOtPendienteSelected.idSubtipoOrden,
+                        idOrigenSistema: 1,
+                        idUsuarioDespacho: 12,
+                        latitud: $scope.detalleOtPendienteSelected.latitud,
+                        longitud: $scope.detalleOtPendienteSelected.longitud,
+                        comentarios: $scope.elementoRescate.comentario,
+                        idMotivo: $scope.elementoRescate.motivo.id
+                    }
+                } else {
+                    params = {
+                        tipo: tipo,
+                        ot: $scope.detalleOtAsignadaSelected.idOrden,
+                        folioSistema: $scope.detalleOtAsignadaSelected.folioOrden,
+                        idFlujo: $scope.detalleOtAsignadaSelected.idFlujo,
+                        idTipoOrden: $scope.detalleOtAsignadaSelected.idtipoOrden,
+                        idSubTipoOrden: $scope.detalleOtAsignadaSelected.idSubtipoOrden,
+                        idOrigenSistema: 1,
+                        idUsuarioDespacho: 12,
+                        idUsuarioTecnico: $scope.detalleOtAsignadaSelected.idTecnico,
+                        latitud: $scope.detalleOtAsignadaSelected.latitud,
+                        longitud: $scope.detalleOtAsignadaSelected.longitud,
+                        comentarios: $scope.elementoRescate.comentario,
+                        idMotivo: $scope.elementoRescate.motivo.id
+                    }
                 }
             }
+            
         } else if (tipo === 'reagendamiento') {
-            if ($scope.estatusModals === 'PENDIENTE') {
-                params = {
-                    tipo: tipo,
-                    ot: $scope.detalleOtPendienteSelected.idOrden,
-                    folioSistema: $scope.detalleOtPendienteSelected.folioOrden,
-                    idFlujo: $scope.detalleOtPendienteSelected.idFlujo,
-                    idTipoOrden: $scope.detalleOtPendienteSelected.idtipoOrden,
-                    idSubTipoOrden: $scope.detalleOtPendienteSelected.idSubtipoOrden,
-                    idOrigenSistema: 1,
-                    idUsuarioDespacho: 12,
-                    latitud: $scope.detalleOtPendienteSelected.latitud,
-                    longitud: $scope.detalleOtPendienteSelected.longitud,
-                    comentarios: $scope.elementReagendaOT.comentario,
-                    idTurno: $scope.elementReagendaOT.turno.id,
-                    idMotivo: $scope.elementReagendaOT.motivo.id,
-                    fechaHoraAgenda: $scope.elementReagendaOT.fechaReagendamiento
-                }
-            } else {
-                params = {
-                    tipo: tipo,
-                    ot: $scope.detalleOtAsignadaSelected.idOrden,
-                    folioSistema: $scope.detalleOtAsignadaSelected.folioOrden,
-                    idFlujo: $scope.detalleOtAsignadaSelected.idFlujo,
-                    idTipoOrden: $scope.detalleOtAsignadaSelected.idtipoOrden,
-                    idSubTipoOrden: $scope.detalleOtAsignadaSelected.idSubtipoOrden,
-                    idOrigenSistema: 1,
-                    idUsuarioDespacho: 12,
-                    idUsuarioTecnico: $scope.detalleOtAsignadaSelected.idTecnico,
-                    latitud: $scope.detalleOtAsignadaSelected.latitud,
-                    longitud: $scope.detalleOtAsignadaSelected.longitud,
-                    comentarios: $scope.elementReagendaOT.comentario,
-                    idTurno: $scope.elementReagendaOT.turno.id,
-                    idMotivo: $scope.elementReagendaOT.motivo.id,
-                    fechaHoraAgenda: $scope.elementReagendaOT.fechaReagendamiento
+
+            if (!$scope.elementReagendaOT || $scope.elementReagendaOT.fechaReagendamiento.trim() === '') {
+                errorMensaje += '<li>Completa campo fecha.</li>'
+                isValido = false;
+            }
+
+            if (!$scope.elementReagendaOT || !$scope.elementReagendaOT.turno) {
+                errorMensaje += '<li>Seleccione campo turno.</li>'
+                isValido = false;
+            }
+
+            if (!$scope.elementReagendaOT || !$scope.elementReagendaOT.motivo) {
+                errorMensaje += '<li>Seleccione campo motivo.</li>'
+                isValido = false;
+            }
+
+            if (!$scope.elementReagendaOT.comentario || $scope.elementReagendaOT.comentario.trim() === '') {
+                errorMensaje += '<li>Completa campo comentario.</li>'
+                isValido = false;
+            }
+
+
+            if (isValido) {
+                if ($scope.estatusModals === 'PENDIENTE') {
+                    params = {
+                        tipo: tipo,
+                        ot: $scope.detalleOtPendienteSelected.idOrden,
+                        folioSistema: $scope.detalleOtPendienteSelected.folioOrden,
+                        idFlujo: $scope.detalleOtPendienteSelected.idFlujo,
+                        idTipoOrden: $scope.detalleOtPendienteSelected.idtipoOrden,
+                        idSubTipoOrden: $scope.detalleOtPendienteSelected.idSubtipoOrden,
+                        idOrigenSistema: 1,
+                        idUsuarioDespacho: 12,
+                        latitud: $scope.detalleOtPendienteSelected.latitud,
+                        longitud: $scope.detalleOtPendienteSelected.longitud,
+                        comentarios: $scope.elementReagendaOT.comentario,
+                        idTurno: $scope.elementReagendaOT.turno.id,
+                        idMotivo: $scope.elementReagendaOT.motivo.id,
+                        fechaHoraAgenda: $scope.elementReagendaOT.fechaReagendamiento
+                    }
+                } else {
+                    params = {
+                        tipo: tipo,
+                        ot: $scope.detalleOtAsignadaSelected.idOrden,
+                        folioSistema: $scope.detalleOtAsignadaSelected.folioOrden,
+                        idFlujo: $scope.detalleOtAsignadaSelected.idFlujo,
+                        idTipoOrden: $scope.detalleOtAsignadaSelected.idtipoOrden,
+                        idSubTipoOrden: $scope.detalleOtAsignadaSelected.idSubtipoOrden,
+                        idOrigenSistema: 1,
+                        idUsuarioDespacho: 12,
+                        idUsuarioTecnico: $scope.detalleOtAsignadaSelected.idTecnico,
+                        latitud: $scope.detalleOtAsignadaSelected.latitud,
+                        longitud: $scope.detalleOtAsignadaSelected.longitud,
+                        comentarios: $scope.elementReagendaOT.comentario,
+                        idTurno: $scope.elementReagendaOT.turno.id,
+                        idMotivo: $scope.elementReagendaOT.motivo.id,
+                        fechaHoraAgenda: $scope.elementReagendaOT.fechaReagendamiento
+                    }
                 }
             }
         } else if (tipo === 'termina'){
-            if ($scope.estatusModals === 'PENDIENTE') {
-                params = {
-                    tipo: tipo,
-                    ot: $scope.detalleOtPendienteSelected.idOrden,
-                    folioSistema: $scope.detalleOtPendienteSelected.folioOrden,
-                    idFlujo: $scope.detalleOtPendienteSelected.idFlujo,
-                    idTipoOrden: $scope.detalleOtPendienteSelected.idtipoOrden,
-                    idSubTipoOrden: $scope.detalleOtPendienteSelected.idSubtipoOrden,
-                    idOrigenSistema: 1,
-                    idUsuarioDespacho: 12,
-                    latitud: $scope.detalleOtPendienteSelected.latitud,
-                    longitud: $scope.detalleOtPendienteSelected.longitud,
-                    comentarios: $scope.elementTerminar.comentario,
-                    idMotivo: $scope.elementTerminar.estado.id,
-                }
-            } else {
-                params = {
-                    tipo: tipo,
-                    ot: $scope.detalleOtAsignadaSelected.idOrden,
-                    folioSistema: $scope.detalleOtAsignadaSelected.folioOrden,
-                    idFlujo: $scope.detalleOtAsignadaSelected.idFlujo,
-                    idTipoOrden: $scope.detalleOtAsignadaSelected.idtipoOrden,
-                    idSubTipoOrden: $scope.detalleOtAsignadaSelected.idSubtipoOrden,
-                    idOrigenSistema: 1,
-                    idUsuarioDespacho: 12,
-                    idUsuarioTecnico: $scope.detalleOtAsignadaSelected.idTecnico,
-                    latitud: $scope.detalleOtAsignadaSelected.latitud,
-                    longitud: $scope.detalleOtAsignadaSelected.longitud,
-                    comentarios: $scope.elementTerminar.comentario,
-                    idMotivo: $scope.elementTerminar.estado.id,
+
+            if (!$scope.elementTerminar || !$scope.elementTerminar.estado) {
+                errorMensaje += '<li>Seleccione campo motivo.</li>'
+                isValido = false;
+            }
+
+            if (!$scope.elementTerminar ||!$scope.elementTerminar.comentario || $scope.elementTerminar.comentario.trim() === '') {
+                errorMensaje += '<li>Completa campo comentario.</li>'
+                isValido = false;
+            }
+
+            if (isValido) {
+                if ($scope.estatusModals === 'PENDIENTE') {
+                    params = {
+                        tipo: tipo,
+                        ot: $scope.detalleOtPendienteSelected.idOrden,
+                        folioSistema: $scope.detalleOtPendienteSelected.folioOrden,
+                        idFlujo: $scope.detalleOtPendienteSelected.idFlujo,
+                        idTipoOrden: $scope.detalleOtPendienteSelected.idtipoOrden,
+                        idSubTipoOrden: $scope.detalleOtPendienteSelected.idSubtipoOrden,
+                        idOrigenSistema: 1,
+                        idUsuarioDespacho: 12,
+                        latitud: $scope.detalleOtPendienteSelected.latitud,
+                        longitud: $scope.detalleOtPendienteSelected.longitud,
+                        comentarios: $scope.elementTerminar.comentario,
+                        idMotivo: $scope.elementTerminar.estado.id,
+                    }
+                } else {
+                    params = {
+                        tipo: tipo,
+                        ot: $scope.detalleOtAsignadaSelected.idOrden,
+                        folioSistema: $scope.detalleOtAsignadaSelected.folioOrden,
+                        idFlujo: $scope.detalleOtAsignadaSelected.idFlujo,
+                        idTipoOrden: $scope.detalleOtAsignadaSelected.idtipoOrden,
+                        idSubTipoOrden: $scope.detalleOtAsignadaSelected.idSubtipoOrden,
+                        idOrigenSistema: 1,
+                        idUsuarioDespacho: 12,
+                        idUsuarioTecnico: $scope.detalleOtAsignadaSelected.idTecnico,
+                        latitud: $scope.detalleOtAsignadaSelected.latitud,
+                        longitud: $scope.detalleOtAsignadaSelected.longitud,
+                        comentarios: $scope.elementTerminar.comentario,
+                        idMotivo: $scope.elementTerminar.estado.id,
+                    }
                 }
             }
+
+        } else if (tipo === 'gestoria'){
+            if (!$scope.elementoPlazaComercial || !$scope.elementoPlazaComercial.estado) {
+                errorMensaje += '<li>Seleccione campo estado.</li>'
+                isValido = false;
+            }
+
+            if (!$scope.elementoPlazaComercial || !$scope.elementoPlazaComercial.motivo) {
+                errorMensaje += '<li>Seleccione campo motivo.</li>'
+                isValido = false;
+            }
+
+            if (!$scope.elementoPlazaComercial.comentario || $scope.elementoPlazaComercial.comentario.trim() === '') {
+                errorMensaje += '<li>Completa campo comentario.</li>'
+                isValido = false;
+            }
+
+            if (isValido) {
+                if ($scope.estatusModals === 'PENDIENTE') {
+                    params = {
+                        tipo: tipo,
+                        ot: $scope.detalleOtPendienteSelected.idOrden,
+                        folioSistema: $scope.detalleOtPendienteSelected.folioOrden,
+                        idFlujo: $scope.detalleOtPendienteSelected.idFlujo,
+                        idTipoOrden: $scope.detalleOtPendienteSelected.idtipoOrden,
+                        idSubTipoOrden: $scope.detalleOtPendienteSelected.idSubtipoOrden,
+                        idOrigenSistema: 1,
+                        idUsuarioDespacho: 12,
+                        latitud: $scope.detalleOtPendienteSelected.latitud,
+                        longitud: $scope.detalleOtPendienteSelected.longitud,
+                        comentarios: $scope.elementoPlazaComercial.comentario,
+                        idMotivo: $scope.elementoPlazaComercial.motivo.id,
+                    }
+                } else {
+                    params = {
+                        tipo: tipo,
+                        ot: $scope.detalleOtAsignadaSelected.idOrden,
+                        folioSistema: $scope.detalleOtAsignadaSelected.folioOrden,
+                        idFlujo: $scope.detalleOtAsignadaSelected.idFlujo,
+                        idTipoOrden: $scope.detalleOtAsignadaSelected.idtipoOrden,
+                        idSubTipoOrden: $scope.detalleOtAsignadaSelected.idSubtipoOrden,
+                        idOrigenSistema: 1,
+                        idUsuarioDespacho: 12,
+                        idUsuarioTecnico: $scope.detalleOtAsignadaSelected.idTecnico,
+                        latitud: $scope.detalleOtAsignadaSelected.latitud,
+                        longitud: $scope.detalleOtAsignadaSelected.longitud,
+                        comentarios: $scope.elementoPlazaComercial.comentario,
+                        idMotivo: $scope.elementoPlazaComercial.motivo.id,
+                    }
+                }
+            }
+
         }
-       envioCambioStatus(params);
+        if (isValido) {
+            envioCambioStatus(params);
+        } else {
+            errorMensaje += '</ul>'
+            mostrarMensajeWarningValidacion(errorMensaje)
+        }
+
     }
 
     envioCambioStatus = function(params){
@@ -967,8 +1123,6 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             $scope.elementReagendaOT = {};
             $scope.elementoRescate = {};
             $scope.elementoDesasigna = {};
-            $scope.reAsignacionObject = {};
-            $scope.asignacionObject = {};
             if(result.data.respuesta){
              
                 toastr.success( result.data.result.mensaje );
@@ -981,6 +1135,15 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             }
         }).catch(err => handleError(err));
     }
+
+    document.getElementById('id-estado-plaza-comercial').addEventListener('change', function(){
+        $scope.listadoMotivosGestaria = [];
+        let x = document.getElementById('id-estado-plaza-comercial')
+        let select = x.options[x.selectedIndex].text
+        if (select !== 'Seleccione ...') {
+            $scope.listadoMotivosGestaria = $scope.estatusCambio.filter(e => {return e.idPadre === 249})
+        }
+    });
 }
 /**
 
