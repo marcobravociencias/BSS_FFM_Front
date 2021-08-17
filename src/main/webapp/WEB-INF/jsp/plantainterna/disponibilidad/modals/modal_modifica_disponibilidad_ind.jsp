@@ -46,7 +46,7 @@
                   <div class="col-md-6">  
                       <div class="form-control-sm row">
                         <div class="col-sm-12">     
-                          <p  class="title_campos"><i class="fa-lg fa fa-lock "></i>Bloqueo</p>
+                          <p  class="title_campos"><i class="fa-lg fa fa-lock "></i>Estatus</p>
                           <div class="custom-control custom-radio">
                             <input type="radio" class="custom-control-input" value="true" id="radio_activo_mod" name="radio-bloqueo-mod-individual">
                             <label class="custom-control-label" for="radio_activo_mod">Activo</label>

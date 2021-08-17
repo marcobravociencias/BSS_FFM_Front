@@ -38,15 +38,13 @@ pageEncoding="ISO-8859-1"%>
 	<div class="container container-filtros-disponibilidad" id="container_consulta_disponbilidad">
 		<div class="container-fluid">
 			<div class="row md-form" id="filters-dispo">
-				<div class="col-sm-2 columna-filtro-ind" data-step="11"
-					data-intro="Opci&oacute;n compa&ntilde;ia" id="filtroCompania">
-					<label for="compania_select" class="label-filter">Compa&ntilde;&iacute;a</label>
-					<select id="compania_select"
-						class="form-control-sm input-filtro-disponibilidad form-control"
-						placeholder="Compañia" required>
-						<option value="-1">Seleccione ...</option>
-						<option value="2">TotalPlay Empresarial </option>
-					</select>
+				<div id="container_arbol_dispo_consulta" class="col-sm-2 columna-filtro-ind"
+					data-intro="Opci&oacute;n tipo de intervenci&oacute;n">
+					<label for="arbol_disponibilidad_consulta" class="label-filter">Geograf&iacute;a</label>
+					<input type="text" readonly id="arbol_disponibilidad_consulta"
+						style="background: white;cursor: pointer"
+						class="input-filtro-disponibilidad form-control form-control-sm"
+						aria-describedby="emailHelp" placeholder="Seleccione">
 				</div>
 				<div id="tipo_intervencion" class="col-sm-2 columna-filtro-ind"
 					data-intro="Opci&oacute;n tipo de intervenci&oacute;n">
@@ -59,14 +57,7 @@ pageEncoding="ISO-8859-1"%>
 						<option value="">Seleccione ...</option>
 					</select>
 				</div>
-				<div id="container_arbol_dispo_consulta" class="col-sm-2 columna-filtro-ind"
-					data-intro="Opci&oacute;n tipo de intervenci&oacute;n">
-					<label for="arbol_disponibilidad_consulta" class="label-filter">Geograf&iacute;a</label>
-					<input type="text" readonly id="arbol_disponibilidad_consulta"
-						style="background: white;cursor: pointer"
-						class="input-filtro-disponibilidad form-control form-control-sm"
-						aria-describedby="emailHelp" placeholder="Seleccione">
-				</div>
+				
 				<div class="col-3" style="margin-top: 1.5px;">
 					<label for="tipo_select" class="label-filter" style="visibility: hidden;">Intervención</label>
 					<button id="btn-consultar-disponibilidad" type="button"
@@ -202,7 +193,6 @@ pageEncoding="ISO-8859-1"%>
 	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/disponibilidad/disponibilidadController.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/disponibilidad/disponibilidadService.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/disponibilidad/disponibilidadCalendar.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/disponibilidad/arrayDisponibilidad.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js"></script>
 	<script type="text/javascript">let contex_project = "${pageContext.request.contextPath}";</script>

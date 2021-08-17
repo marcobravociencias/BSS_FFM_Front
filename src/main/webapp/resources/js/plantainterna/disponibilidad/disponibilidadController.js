@@ -194,7 +194,6 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
     $scope.consultaDisponibilidad = function () {
         let mensaje = '<ul>';
         let isValidado = true;
-        let company = document.getElementById('compania_select').value;
         let tipo_intervencion = $scope.intervencionSelect !== undefined ? $scope.intervencionSelect.id : 0;
         let distrito_cluster = '-1';
 
@@ -204,13 +203,13 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                                                .filter(e=>e.original.nivel== ultimonivel)
                                                .map(e=>parseInt(e.id))
 
-        if (tipo_intervencion === 0) {
-            mensaje += '<li>Seleccione una intervenci&oacute;n</li>'
+        if (clustersparam.length === 0) {
+            mensaje += '<li>Seleccione una geografia</li>'
             isValidado = false
         }
 
-        if (clustersparam.length === 0) {
-            mensaje += '<li>Seleccione una geografia</li>'
+        if (tipo_intervencion === 0) {
+            mensaje += '<li>Seleccione una intervenci&oacute;n</li>'
             isValidado = false
         }
 
@@ -228,18 +227,17 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
 
             $('#consulta_disponibilidad').attr('disabled', true);
             $('#consulta_disponibilidad').text("Cargando ...");
+            //calendarDisp.render();
             disponibilidadService.consultaDisponibilidad(JSON.stringify(params)).then(function success(response) {
                 console.log(response.data);
+                arregloDisponibilidad = [];
                 if (response.data.respuesta) {
                     if (response.data.result) {
                         if (response.data.result.dias !== undefined) {
                             arrDisponibilidad = [];
                             $scope.muestraDisponibilidadCalendar(response.data.result);
-        
-                            $scope.idCompanyActualizar = company;
                             $scope.idTipoActualizar = tipo_intervencion;
                             $scope.idCiudadActualizar = distrito_cluster;
-        
                             let textoIntervencion = $.trim($("#tipo_select option:selected").text());
                             let selectedElms = $('#jstreeconsulta').jstree("get_selected", true);
                             let selected_arbol;
@@ -262,6 +260,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                             $("#total_dispo").text(response.data.result.CapacidadTotal === "" ? 0 : response.data.result.CapacidadTotal);
         
                             let arrayResult = (response.data.result.dias !== undefined && response.data.result.dias !== null) ? response.data.result.dias !== undefined ? response.data.result.dias : [] : [];
+                            console.log("Bandera3");
                             $('#datatable_disponibilidad tbody').empty();
                             let arraRow = [];
                             $.each(arrayResult, function (i, elemento) {
@@ -292,15 +291,16 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                                 if ($scope.banderaNocturno) {
                                     array[3] = totalNocturno;
                                     array[4] = totalTurnos;
-                                    array[5] = elemento.bloqueado ? 'DISPONIBLE' : 'BLOQUEADO';
+                                    array[5] = !elemento.bloqueado ? 'DISPONIBLE' : 'BLOQUEADO';
                                     array[6] = '<a onclick="editarDisponibilidad('+totalMatutino+','+totalVespertino+','+totalNocturno+','+elemento.bloqueado+'\,'+'\''+elemento.fecha+'\')"><i class="cursorEfect edit_disponibilidad_btn fa fa-edit"></i></a>'
                                 } else {
                                     array[3] = totalTurnos;
-                                    array[4] = elemento.bloqueado ? 'DISPONIBLE' : 'BLOQUEADO';
+                                    array[4] = !elemento.bloqueado ? 'DISPONIBLE' : 'BLOQUEADO';
                                     array[5] = '<a onclick="editarDisponibilidad('+totalMatutino+','+totalVespertino+","+'\''+'\''+','+elemento.bloqueado+'\,'+'\''+elemento.fecha+'\')"><i class="cursorEfect edit_disponibilidad_btn fa fa-edit"></i></a>'
                                 }
                                 arraRow.push(array); 
                             });
+                            console.log(arraRow);
                             $('#datatable_disponibilidad').DataTable({
                                 "paging": true,
                                 "lengthChange": false,
@@ -324,6 +324,22 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                         }
                     } else {
                         swal.close();
+                        $scope.muestraDisponibilidadCalendar([])
+                        document.getElementById('disponibilidad_span').innerHTML = "Sin info.";
+                        $("#intervencion_span").text("Sin info.");
+                        $('#datatable_disponibilidad').DataTable({
+                            "paging": true,
+                            "lengthChange": false,
+                            "searching": false,
+                            "ordering": false,
+                            "pageLength": 10,
+                            "recordsTotal": 100,
+                            "info": false,
+                            "autoWidth": true,
+                            "data": [],
+                            "language": idioma_espanol_not_font,
+                            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+                        });
                         mostrarMensajeWarningValidacion("No hay disponibilidad.");
                     }                 
                 } else {
@@ -351,7 +367,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
         let isValido = true;
         let mensajeError = "<ul>";
         let bloqueo = $("input[name='checkBloque']:checked").val();
-        bloqueo = bloqueo === 'true' ? 1 : bloqueo === 'false'? 0 : undefined;
+        bloqueo = bloqueo === 'true' ? 0 : bloqueo === 'false'? 1 : undefined;
         let ultimonivel=$scope.obtenerNivelUltimoJerarquia()
         let clustersparam=$("#jstreeconsulta").jstree("get_selected", true)
                                                .filter(e=>e.original.nivel== ultimonivel)
@@ -460,7 +476,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
         let nocturnoCant = $.trim(document.getElementById('nocturno_actualizar').value);
         let tipoIntervencion = $scope.intervencionSelect.id;
         let bloqueo = $("input[name='radio-bloqueo-mod-individual']:checked").val();
-        bloqueo = bloqueo === 'true' ? 1 : 0;
+        bloqueo = bloqueo === 'true' ? 0 : 1;
         let ultimonivel=$scope.obtenerNivelUltimoJerarquia()
         let clustersparam=$("#jstreeconsulta").jstree("get_selected", true)
                                                .filter(e=>e.original.nivel== ultimonivel)
@@ -496,10 +512,6 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                 mensajeError += '<li>Introducir cantidad turno nocturno</li>';
                 isValido = false;
             }
-        }
-        if (!bloqueo) {
-            mensajeError += '<li>Seleccione bloqueo.</li>'
-            isValido = false
         }
 
         if (isValido) {
