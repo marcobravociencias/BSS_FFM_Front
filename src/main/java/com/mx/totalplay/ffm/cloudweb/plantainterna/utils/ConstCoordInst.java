@@ -13,4 +13,5 @@ public class ConstCoordInst implements Serializable{
 	
 	@Value("{busquedaGralConstante}")
 	private String busquedaGralConstante;
+	
 }

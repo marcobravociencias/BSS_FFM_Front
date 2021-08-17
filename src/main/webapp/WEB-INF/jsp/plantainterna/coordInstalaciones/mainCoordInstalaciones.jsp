@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html ng-app="coordInstalacionesPIApp">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta charset="UTF-8" />
         <title>FFM Total play</title>
         <link rel="icon" type="image/png" sizes="192x192"
         href="${pageContext.request.contextPath}/resources/img/iconsistema/android-icon-192x192.png">
@@ -19,8 +19,10 @@
         rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/dataTables.bootstrap4.min.css"
         rel="stylesheet">
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDlkqLjBBERaYT3XXhZiRZIy6nBPN3G0iU&libraries=places" ></script>
         <link href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/font-awesome.min.css"
         rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/libraries/fullcalendar/main.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/jstree/default/style.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/jstree/themes/proton/style.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/sweetalert/css/sweetalert2.min.css"
@@ -33,18 +35,22 @@
         <link href="${pageContext.request.contextPath}/resources/libraries/magnific_popup/magnific-popup.css"
         rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" rel="stylesheet" />
-        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/coordInstalaciones/styleCoordInstalaciones.css?-"  rel="stylesheet"/>
-        
+        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/coordInstalaciones/styleCoordInstalaciones.css"  rel="stylesheet"/>
+        <link href="${pageContext.request.contextPath}/resources/libraries/fullcalendar/main.css" rel="stylesheet">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/jQueryTimelinr/css/timelinr.css"/>
+        <link href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.css' rel='stylesheet' />
+        <link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet'>
     </head>
-    <body id="idBody" ng-controller="coordInstPIController">
+    <body id="idBody" ng-controller="coordInstPIController" style="overflow-x: hidden;">
+        
         <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
         <div class="container container-title-header">
             <div class="header-modulo">
                 <h5 class="title-modulo">M&oacute;dulo de coordinador de instalaciones</h5>
-                <h1 class="h6 subtitle-modulo">En este m&oacute;dulo </h1>
+                <h1 class="h6 subtitle-modulo">En este m&oacute;dulo se podr&aacute;n visualizar los reportes correspondientes al coordinador</h1>
             </div>
         </div>
-        <div class="col-md-12 style_container_reportes">
+        <div class="col-md-12 style_container_reportes" id="bodyGral">
             <div class="row">
                 <div class="col-md-2" id="navbar_reportes">
                     <!--div class="align-rigth col-md-12">
@@ -129,10 +135,11 @@
                                     <div class="col-2 column-style-consulta">
                                         <label for="inputPlaceholderEx" class="label-filter">Distrito</label>
                                             <input readonly="" placeholder="Seleccione distrito" 
-                                            type="text" id="cluster" class="form-control input-filtro-coordInst form-control-sm">
+                                            type="text" id="cluster" class="form-control input-filtro-coordInst form-control-sm"
+                                            ng-click="abrirModalGeografiaRep()">
                                         </div>
                                     <div class="col-md-1 div-btn-busqueda" style="width: 85px;">
-                                        <button id="btn_coordi_instal" onclick="consultarCuentasSalesforce()" 
+                                        <button id="btn_coordi_instal" ng-click="obtenerPendientesAgenda()" 
                                         type="button" class="btn btn-sm waves-effect waves-light btn-primary"  
                                         >
                                         <i class="fa fa-search" ></i>
@@ -187,11 +194,12 @@
                                     <div class="col-2 column-style-consulta">
                                         <label for="inputPlaceholderEx" class="label-filter">Distrito</label>
                                         <input readonly="" placeholder="Selecciona distrito" 
-                                        type="text" id="cluster-rescataventas" class="form-control input-filtro-coordInst form-control-sm">
+                                        type="text" id="cluster-rescataventas" class="form-control input-filtro-coordInst form-control-sm"
+                                        ng-click="abrirModalGeografiaRep()">
                                     </div>
                                     <div class="col-md-1 div-btn-busqueda" style="width: 85px;">
                                         <button id="btn-cuentasrescataventas-salesforce"  
-                                        onclick="consultarCuentasRescataventasSalesforce()" 
+                                        ng-click="obtenerRescataventas()" 
                                         type="button" class="btn btn-sm waves-effect waves-light btn-primary">
                                         <i class="fa fa-search" ></i></button>
                                     </div>
@@ -243,11 +251,12 @@
                                     <div class="col-2 column-style-consulta">
                                         <label for="inputPlaceholderEx" class="label-filter">Distrito</label>
                                         <input readonly="" placeholder="Selecciona distrito" 
-                                        type="text" id="cluster-pendientesactivar" class="form-control input-filtro-coordInst form-control-sm">
+                                        type="text" id="cluster-pendientesactivar" class="form-control input-filtro-coordInst form-control-sm"
+                                        ng-click="abrirModalGeografiaRep()">
                                     </div>
                                     <div class="col-md-1 div-btn-busqueda" style="width: 85px;">
                                         <button id="btn-cuentasrescataventas-salesforce"  
-                                        onclick="consultarCuentasRescataventasSalesforce()" 
+                                        ng-click="obtenerPendientesActivar()" 
                                         type="button" class="btn btn-sm waves-effect waves-light btn-primary">
                                         <i class="fa fa-search" ></i></button>
                                     </div>
@@ -379,7 +388,7 @@
                                     </div>
                                     <div class="col-md-1 div-btn-busqueda" style="width: 85px;">
                                         <button id="btn-calendarizado-salesforce"  
-                                        onclick="consultarCuentasRescataventasSalesforce()" 
+                                        ng-click="obtenerCalendarizado()" 
                                         type="button" class="btn btn-sm waves-effect waves-light btn-primary">
                                         <i class="fa fa-search" ></i></button>
                                     </div>
@@ -511,7 +520,7 @@
                                     </div>
                                     <div class="col-md-1 div-btn-busqueda" style="width: 85px;">
                                         <button id="btn-plazascomer-salesforce"  
-                                        onclick="consultarCuentasRescataventasSalesforce()" 
+                                        ng-click="obtenerPlazasComerciales()" 
                                         type="button" class="btn btn-sm waves-effect waves-light btn-primary">
                                         <i class="fa fa-search" ></i></button>
                                     </div>
@@ -643,7 +652,7 @@
                                     </div>
                                     <div class="col-md-1 div-btn-busqueda" style="width: 85px;">
                                         <button id="btn-canceladas-salesforce"  
-                                        onclick="consultarCuentasRescataventasSalesforce()" 
+                                        ng-click="obtenerCanceladas()" 
                                         type="button" class="btn btn-sm waves-effect waves-light btn-primary">
                                         <i class="fa fa-search" ></i></button>
                                     </div>
@@ -775,7 +784,7 @@
                                     </div>
                                     <div class="col-md-1 div-btn-busqueda" style="width: 85px;">
                                         <button id="btn-reagenda-salesforce"  
-                                        onclick="consultarCuentasRescataventasSalesforce()" 
+                                        ng-click="obtenerReagendada()" 
                                         type="button" class="btn btn-sm waves-effect waves-light btn-primary">
                                         <i class="fa fa-search" ></i></button>
                                     </div>
@@ -989,7 +998,7 @@
                                     </div>
                                     <div class="col-md-1 div-btn-busqueda" style="width: 85px;">
                                         <button id="btn-terminadas-salesforce"  
-                                        onclick="consultarCuentasRescataventasSalesforce()" 
+                                        ng-click="obtenerTerminada()" 
                                         type="button" class="btn btn-sm waves-effect waves-light btn-primary">
                                         <i class="fa fa-search" ></i></button>
                                     </div>
@@ -1084,7 +1093,7 @@
                                     </div>
                                     <div class="col-md-1 div-btn-busqueda" style="width: 85px;">
                                         <button id="btn-detenidas-salesforce"  
-                                        onclick="consultarCuentasRescataventasSalesforce()" 
+                                        ng-click="obtenerDetenidas()" 
                                         type="button" class="btn btn-sm waves-effect waves-light btn-primary">
                                         <i class="fa fa-search" ></i></button>
                                     </div>
@@ -1120,27 +1129,214 @@
 
             </div>
         </div>
+        <div class="col-md-12" id="agendamiento" style="display: none; ">
+            <div class="row row-regresar">
+                <div style="padding:0" class="col-12">
+                    <div id="cerrar-agendamiento" class="container-icono-regresar-agenda   p-1 text-center">
+                        <span class="icono-regresar-agenda fa fa-x2 fa-arrow-left"></span>
+                    </div>
+                    <h5 style="font-weight: bold;font-size: 16px;display: inline;margin-left:2em;" class="modal-title header-title">Cliente: <span style="margin-right: 3em; font-size:0.8em;" ng-bind="infoDetalleCuenta.Cuenta"></span>  Cuenta:  <span style="margin-right: 2em;font-size:0.8em;" ng-bind="infoDetalleCuenta.Num_cuenta_factura"></span> </h5>
+                </div>
+
+            </div>
+            <div class="row">
+                
+                    <div class="col-md-5" style="padding: 0 !important;">
+                        <div  id="info-agendamiento">
+                            <div class="info_ot_detail  justify-content-center">
+                                <div class="col-md-12 ">
+                                    <b class="title_span_detalle title_info_ot"> Paquete:</b> &nbsp; &nbsp;
+                                    <span  class="paquete-agenda-cuenta content_cuenta_detalle" ng-bind="infoDetalleCuenta.Paquete"></span>	
+                                </div>
+                                <div class="col-md-12">
+                                    <b class="title_span_detalle title_info_ot"> CSP:</b> &nbsp; &nbsp;
+                                    <span  class="cotsitiop-inst-agenda-cuenta content_cuenta_detalle" ng-bind="infoDetalleCuenta.CotSitioPlan"></span>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="info_ot_detail title-contentedor-info  justify-content-center">
+                                <div class="col-md-12 ">
+                                    <span class="text-title-contentedor-info">Direcci&oacute;n de la instalaci&oacute;n</span>
+                                     <a href="descargarActaAceptacion" id="info-carta-aceptacion"> Descarga carta aceptaci&oacute;n</a>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="info_ot_detail  justify-content-center">
+                                <div class="col-md-12">
+                                    <b class="title_span_detalle title_info_ot"> Regi&oacute;n:</b> &nbsp; &nbsp;
+                                    <span  class="region-detalle-cuenta content_cuenta_detalle" ng-bind="infoDetalleCuenta.Region"></span>	
+                                </div>
+                                <div class="col-md-12">
+                                    <b class="title_span_detalle title_info_ot"> Ciudad:</b> &nbsp; &nbsp;
+                                    <span  class="ciudad-detalle-cuenta content_cuenta_detalle" ng-bind="infoDetalleCuenta.Ciudad"> Sin informaci&oacute;n</span>
+                                </div>
+                            </div>
+                            <div class="info_ot_detail justify-content-center">
+                                <div class="col-md-12">
+                                    <b class="title_span_detalle title_info_ot"> Distrito:</b> &nbsp; &nbsp;
+                                    <span  class="distrito-detalle-cuenta content_cuenta_detalle" ng-bind="infoDetalleCuenta.Distrito"> Sin informaci&oacute;n</span>	
+                                </div>
+                                <div class="col-md-12">
+                                    <b class="title_span_detalle title_info_ot"> Cl&uacute;ster:</b> &nbsp; &nbsp;
+                                    <span class="cluster-detalle-cuenta content_cuenta_detalle" ng-bind="infoDetalleCuenta.Cluster"> Sin informaci&oacute;n</span>
+                                </div>
+                            </div> 
+                            <div class="info_ot_detail  justify-content-center">
+                                <div class="col-md-12">
+                                    <b class="title_span_detalle title_info_ot"> Entre calles:</b> &nbsp; &nbsp;
+                                    <div style="margin-left: .9em">
+                                        <textarea class="form-control" id="entre-calle-detalle-cuenta" rows="2"></textarea>
+                                    </div>
+        
+                                </div>
+                                <div class="col-md-12">
+                                    <b class="title_span_detalle title_info_ot"> Referencias:</b> &nbsp; &nbsp;
+                                    <div style="margin-left: .9em">
+                                      <textarea class="form-control" id="referencias-calle-detalle-cuenta" rows="2"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="info_ot_detail  row mx-auto  justify-content-center">
+                                <div class="col-md-12">
+                                    <b class="title_span_detalle title_info_ot"> Latitud:</b> &nbsp; &nbsp;
+                                    <span  class="latitud-detalle-cuenta content_cuenta_detalle" ng-bind="infoDetalleCuenta.Latitud"> Sin informaci&oacute;n</span>
+                                    <b class="title_span_detalle title_info_ot"> Longitud:</b> &nbsp; &nbsp;
+                                    <span  class="longitud-detalle-cuenta content_cuenta_detalle" ng-bind="infoDetalleCuenta.Longitud"> Sin informaci&oacute;n</span>
+                                    <br>
+                                    <button id="btn-accion-factibilidad" type="button" class="btn btn-sm btn-outline-danger waves-effect">Factibilidad</button>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="info_ot_detail title-contentedor-info  justify-content-center">
+                                <div class="col-md-12 ">
+                                    <span class="text-title-contentedor-info">Informaci&oacute;n del contacto</span>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="info_ot_detail  row mx-auto mt-2 mb-2">
+                                <label class="col-2 title_span_contacto col-form-label">Contacto:</label>
+                                <div class="col-10">
+                                    <select id="select-contactos-agenda" class="browser-default custom-select  custom-select-sm">
+                                        <option value="-1" >Selecciona ...</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="info_ot_detail row mx-auto  " style="margin-left: 20px !important;">
+                                <div class="col-md-6">
+                                    <b class="title_span_detalle title_info_ot"> Email:</b> &nbsp; &nbsp;
+                                    <span  id="email-contacto-detalle" class="content_cuenta_detalle"> Sin informaci&oacute;n</span>	
+                                </div>                      
+                            </div> 
+                            <div class="info_ot_detail row mx-auto  justify-content-center" style="margin-left: 20px !important;">
+                                <div class="col-md-6">
+                                    <b class="title_span_detalle title_info_ot"> Celular:</b> &nbsp; &nbsp;
+                                    <span  id="celular-contacto-detalle" class="content_cuenta_detalle"> Sin informaci&oacute;n</span>	
+                                </div>
+                                <div class="col-md-6">
+                                    <b class="title_span_detalle title_info_ot"> Tel. fijo:</b> &nbsp; &nbsp;
+                                    <span id="telfijo-contacto-detalle" class="content_cuenta_detalle"> Sin informaci&oacute;n</span>
+                                </div>                          
+                            </div> 
+                            <div class="info_ot_detail row mx-auto  justify-content-center" style="margin-left: 20px !important;">     
+                                <div class="col-md-6">
+                                        <b class="title_span_detalle title_info_ot"> Sexo:</b> &nbsp; &nbsp;
+                                        <span id="sexo-contacto-detalle"  class="content_cuenta_detalle"> Sin informaci&oacute;n</span>	
+                                </div>   
+                                <div class="col-md-6">
+                                    <b class="title_span_detalle title_info_ot"> Ext. :</b> &nbsp; &nbsp;
+                                    <span id="extension-contacto-detalle" class="content_cuenta_detalle"> Sin informaci&oacute;n</span>
+                                </div>  
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div id="calendar-agenda-content">
+                            <h6 id="titulo_sin_disponibilidad" style="display:none">No se encontr&oacute; disponibilidad</h6>
+                            <div  id="calendar_disponibilidad">
+                            </div>
+                        </div>
+                        <div style="display: none"  id="mapa-agenda-content" >
+                            <div style="margin-top: 1rem;" class="row">
+                                <div class="col-12">
+                                    <input id="search-input-place" class="controls" type="text" placeholder="B&uacute;scar lugar en mapa">
+                                    <div id="mapa-asignacion" style="width:100%;height:400px; "></div>
+                                    <!--<button type="button" id="actualizar-factibilidad" class="btn btn-sm btn-primary">Actualizar factiblidad</button>-->
+                                </div>
+                            </div>                    
+                        </div>
+                        <div >
+                            <div class="info_ot_detail  row mx-auto  justify-content-center">
+                                <div style="margin:0;margin-top:1em;padding:0;" class="col-md-12">
+                                    <b class="title_span_detalle title_info_ot"> Fecha de agendamiento:</b> &nbsp;
+                                    <span  id="fecha-agendamiento-text"  class="content_cuenta_detalle" style="margin-right: 1em;margin-top: 1em;" > Sin informaci&oacute;n</span>
+                                    <b class="title_span_detalle title_info_ot"> Turno:</b> &nbsp;
+                                    <span  id="turno-agendamiento-text"  class="turno-agendamiento-detalle content_cuenta_detalle"> Sin informaci&oacute;n</span>
+                                    <span style="display: none;"  id="abrir-calendario" class="fa fa-calendar-o"></span>
+                                    <span style="float: right" id="info-factibilidad-actualiza"><span id="icon-factibilidad-actualiza"  class="fa fa-info-circle"></span> No has actualizado factibilidad</span>
+        
+                                </div>
+                            </div>  
+                            <div style="margin-top:1em;" class="  row mx-auto ">
+                                <b><label style="font-size:0.9em; font-weight: bolder;" for="exampleFormControlTextarea5">Comentarios:</label></b>
+                                <textarea class="form-control" id="comentarios-agendamiento" rows="1"></textarea>
+                            </div> 
+                            <div class="  row mx-auto ">
+                                <div style="padding-left:0;padding-right: 0" class="col-12">
+                                      <div id="message-success-agenda" style="display: none;    display: inline-block;" class="alert alert-success" role="alert">                              
+                                      </div>
+                                      <div id="message-error-agenda" style="display: none;" class="alert alert-danger" role="alert">                                
+                                      </div>
+                                    <button type="button" id="agendar-cuenta" class="btn btn-primary btn-sm">Agendar</button>
+                                   <!-- <button type="button" id="cancelacion-agendamiento" class="btn btn-primary btn-sm">Cancelar</button>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+            </div>
+        </div>
+        <jsp:include page="./modals/modalCluster.jsp"></jsp:include>
+        <jsp:include page="./modals/modalDetalleOt.jsp"></jsp:include>
+        <jsp:include page="./modals/modalChat.jsp"></jsp:include>
+        <jsp:include page="./modals/detalleCuenta.jsp"></jsp:include>
     </body>
     <script src="${pageContext.request.contextPath}/resources/libraries/angularjs/js/angular.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/moment.min.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/js/mdb.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-ui.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/libraries/popper\popper.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/libraries/bootstrap/js/bootstrap.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/jquery.dataTables.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/dataTables.bootstrap4.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/libraries/jstree/jstree.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/libraries/sweetalert/js/sweetalert2.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/moment.min.js"></script>
+<script type="text/javascript"
+    src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.min.js"></script>
+<script type="text/javascript"
+    src="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/js/mdb.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-ui.js"></script>
+<script src="${pageContext.request.contextPath}/resources/libraries/popper\popper.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/moment.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/main.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/locales-all.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/jquery-ui.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/libraries/bootstrap/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/jquery.dataTables.js"></script>
+<script src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/dataTables.bootstrap4.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/libraries/jstree/jstree.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/libraries/sweetalert/js/sweetalert2.min.js"></script>
+
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker_1.9.0.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker.es.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/magnific_popup/jquery.magnific-popup.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/lib/moment.es.js" ></script>
+    
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/coordInstalaciones/coordInstalacionesPIController.js?"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/coordInstalaciones/coordInstalacionesPIService.js"></script>
-	<script type="text/javascript">let contex_project = "${pageContext.request.contextPath}";</script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/coordInstalaciones/busqGral.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/coordInstalaciones/comentariosChat.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/coordInstalaciones/infoCuenta.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/coordInstalaciones/infoSitio.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/coordInstalaciones/historico.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/coordInstalaciones/infoOt.js"></script>
+    <script type="text/javascript">let contex_project = "${pageContext.request.contextPath}";</script>
 	<script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>	
+    <script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/main.min.js"></script>
+    
+	<script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/locales-all.min.js"></script>
 </html>
