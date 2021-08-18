@@ -323,11 +323,11 @@
 											<tr ng-repeat="tecnico in tecnicosMostradas | filter: buscarTecnicoTabla" class="zui-sticky-tr trTecnico">
 												<td class="zui-sticky-body zui-text-cabeceras nombreTecnico" 
 												data-toggle="tooltip" data-placement="top" title="{{tecnico.nombre}} {{tecnico.apellidoPaterno}} {{tecnico.apellidoMaterno}}">{{tecnico.nombre}} {{tecnico.apellidoPaterno}} {{tecnico.apellidoMaterno}}</td>
-												<td ng-repeat="skill in tecnico.todasSkills" style="text-align: center" scope="col">
-													<input class="form-check-input" type="checkbox" ng-model="skill.checkTabla" ng-init="check = skill.checkTabla" ng-click="guardarAsignacionSkillTabla(tecnico.idUsuario,skill.id)" >
+												<td ng-repeat="skill in tecnico.todasSkills track by $index" style="text-align: center" scope="col">
+													<input class="form-check-input" type="checkbox" ng-model="skill.checkTabla" ng-init="check = skill.checkTabla" ng-click="" >
 												</td>
 												<td class="zui-sticky-body-final">
-													<button style="background-color: white; border-color: #7716FA;">
+													<button style="background-color: white; border-color: #7716FA;" ng-click="guardarAsignacionSkillIndividualTabla(tecnico)">
 														<i class="fa fa-save"></i>
 													</button>
 												</td>
@@ -347,8 +347,7 @@
 							</div>
 						</div>
 						<div class="col-md-12" style="text-align: right;">
-							<button class="btn btn-primary" ng-click="verificar()">GUARDAR
-								TODO</button>
+							<button class="btn btn-primary" ng-click="guardarAsignacionTablaCompleta()">GUARDAR TODO</button>
 						</div>
 					</div>
 				</div>
