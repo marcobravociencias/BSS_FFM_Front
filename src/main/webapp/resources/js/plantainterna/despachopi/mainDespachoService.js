@@ -23,7 +23,7 @@ app.service("mainDespachoService", function ($http) {
             }
 		});
 	};
-	this.consultarCatalogoTipoOrdenGeneralDespacho=function(params){
+	this.consultarCatalogoTipoOrdenGeneralDespacho=function(){
 		return $http({
 			method: "post",
 			url: "req/consultarCatalogoTipoOrdenGeneralDespacho",
