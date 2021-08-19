@@ -385,8 +385,12 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
         $scope.isCargaOtsPendientes=false;        
         let turnosdisponiblescopy=$scope.filtrosGeneral.turnosdisponibles.filter(e=>e.checkedOpcion).map(e=>e.id)       
         
-        let intervencionestemp=$scope.filtrosGeneral.tipoOrdenes.filter(e=>e.checkedOpcion).map(e=>e.id)      
+        if($scope.filtrosGeneral.tipoOrdenes){
+            let intervencionestemp=$scope.filtrosGeneral.tipoOrdenes.filter(e=>e.checkedOpcion).map(e=>e.id)   
+        }
+       
         
+           
         let subIntTemp=[]
         angular.forEach($scope.filtrosGeneral.tipoOrdenes,(e,i)=>{
             e.children.filter( f => f.checkedOpcion ).map((k)=>{ 
@@ -899,7 +903,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                     }) 
                 }   
             }
-
+            
             if (results[4].data !== undefined) {
                 if(results[4].data.respuesta ){
                     if(results[4].data.result ){
@@ -1033,21 +1037,46 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
 		return fechaPrueba[2] + '-' + fechaPrueba[1] + '-' + fechaPrueba[0];
 	}
 
+    validarFecha = function(idFechaInicio, idFechaFin) {
+		var inicio = document.getElementById(idFechaInicio).value.split('/');
+		var fin = document.getElementById(idFechaFin).value.split('/');
+		var date_inicio = new Date(inicio[2] + '-' + inicio[1] + '-' + inicio[0]);
+		var date_fin = new Date(fin[2] + '-' + fin[1] + '-' + fin[0]);
+		if (date_inicio <= date_fin) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+
    consultarReporteDiario = function(){
         let mensaje = '<ul>';
         let isValid = true;
         let numerosOnly = /^[0-9]*$/i;
 
-        let statuscopy = $scope.filtrosGeneral.estatusdisponibles.filter(e=>e.checkedOpcion).map(e=>e.id);  
-        let intervencioncopy = $scope.filtrosGeneral.tipoOrdenes.filter(e=>e.checkedOpcion).map(e=>e.id);
+        let statuscopy = [];
+        if($scope.filtrosGeneral.estatusdisponibles){
+            angular.forEach($scope.filtrosGeneral.estatusdisponibles,(e,i)=>{
+                statuscopy.push(e.id); 
+            })
+        }
+       
+        let intervencioncopy= [];
+        if($scope.filtrosGeneral.tipoOrdenes){
+            angular.forEach($scope.filtrosGeneral.tipoOrdenes, (e, i) => {
+                e.children.filter(f => f.checkedOpcion).map((k) => { intervencioncopy.push(k.id); return k; })
+            })
+        }
+        
         let paramsTemp = angular.copy($scope.repDiario);
 
-        if(statuscopy.length == 0){
+        if(!statuscopy.length){
             mensaje += '<li>Introducir Estatus</li>';
             isValid = false;
         }
 
-        if(intervencioncopy.length == 0){
+        if(!intervencioncopy.length){
             mensaje += '<li>Introducir Intervenci\u00F3n</li>';
             isValid = false;
         }
@@ -1057,23 +1086,29 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             isValid = false;
         }
 
+        if(!validarFecha('filtro_fecha_inicio_reporte','filtro_fecha_fin_reporte')){
+            mensaje += '<li>La fecha final debe ser mayor que la fecha inicio</li>';
+            isValid = false;
+        }
+
         if(!isValid){
             mensaje += '</ul>';
             mostrarMensajeWarningValidacion(mensaje);
             return false;
         }else{
+
             let params = {
                 tipoIntervencion : intervencioncopy,
                 estatusOt : statuscopy,
                 fechaInicio : $scope.getFechaFormato(paramsTemp.fechaInicio),
                 fechaFin:  $scope.getFechaFormato(paramsTemp.fechaFin),
-                fechaSeleccionada : "",
-                idOrden : paramsTemp.idot || null,
-                idCuenta : paramsTemp.cuenta || null,
-                folio: "",
+                fechaSeleccionada : "fechaAgendamiento",
+                idOrden : paramsTemp.idot || "",
+                idCuenta : paramsTemp.cuenta || "",
+                folio: paramsTemp.idos || "",
                 elementosPorPagina : 10
             }
-
+            
             swal({ text: 'Espera un momento...', allowOutsideClick: false });
             swal.showLoading();
             swal.close()
@@ -1102,7 +1137,6 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
 					},
 					"error":function(xhr, error, thrown){
 						handleError(xhr)
-                        //mostrarMensajeErrorAlert(response.data.result.resultDescription)
 					}, 
 					"complete": function () {
 						swal.close()
