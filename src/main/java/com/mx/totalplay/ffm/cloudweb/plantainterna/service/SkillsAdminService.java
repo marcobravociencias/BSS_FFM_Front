@@ -8,4 +8,5 @@ public interface SkillsAdminService {
 	public ServiceResponseResult guardarSkills(String params);
 	public ServiceResponseResult consultarCatalogosPI(String params);
 	public ServiceResponseResult consultarCatalogoGeografiaGeneral();
+	public ServiceResponseResult guardarSkillsMultiple(String params);
 }

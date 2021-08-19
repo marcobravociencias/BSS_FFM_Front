@@ -1,10 +1,6 @@
 .bootstrap-select.btn-group .dropdown-menu.inner {
 	color: #1CA4FC !important;
-}
-
-.dropdown-menu>li>a {
-	color: #1CA4FC !important;
-}
+} 
 
 .dropdown-menu>li>a:focus,.dropdown-menu>li>a:hover {
 	color: #ffffff !important;

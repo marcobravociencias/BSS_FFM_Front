@@ -24,6 +24,20 @@ body {
   /*z-index: 2;*/
 }
 
+.columna-filtro-ind-rep::after {
+  content: "";
+  position: absolute;
+  right: 17px;
+  top: 65%;
+  width: 0;
+  height: 0;
+  border-left: 0.3em solid transparent;
+  border-right: 0.3em solid transparent;
+  border-top: 0.6em solid #939db2;
+  clear: both;
+  /*z-index: 2;*/
+}
+
 .label-filtro {
   font-size: 0.8em;
   margin-bottom: 0 !important;
@@ -264,6 +278,39 @@ div#calendar {
   border-color: white !important;
   -webkit-box-shadow: none;
   box-shadow: none;
+}
+
+.input-filtro-reporte {
+  border: 1px solid #dbdbdb !important;;
+  font-weight: 400;
+  font-size: 1em;
+  color: #818181 !important;
+  transition: all 0.5s ease;
+  border-bottom: 1px solid white;
+  background: white !important;
+  border-radius: .5em !important;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,.07),0 1px 2px 0 rgba(0,0,0,.05)!important;
+}
+
+.input-filtro-reporte::placeholder {
+  font-weight: 400;
+  font-size: 1em;
+  color: #818181 !important;
+}
+
+.label-filter{
+  font-size: 0.8em;
+  margin: 0 !important;
+}
+
+.input-filtro-reporte:focus {
+  -webkit-box-shadow: none;
+}
+
+.input-filtro-reporte:hover {
+  background: #e4e6f2 !important;
+  cursor: pointer;
+  border-bottom: 2px solid #a4b1ff !important;
 }
 
 #buscar-otsasignadas {
@@ -1604,7 +1651,7 @@ span.cerrarnoticias {
     font-size: .7em;
 }
 
-.map-color-despacho {
+.icon-color-despacho {
   color: #7c7c7c;
   display: inline;
   float: right;
@@ -1615,9 +1662,12 @@ span.cerrarnoticias {
   text-shadow: -4px 1px 10px rgba(14, 51, 33, 0.28);
 }
 .map-color-despacho:hover {
-  color: orange;
+  color: #ffab00;
 }
 
+.reporte-color-despacho:hover {
+  color: #ee4f97;
+}
 
 .content-tecnicos{
     border: 1px solid rgba(0,0,0,.125);
@@ -1667,7 +1717,7 @@ span.cerrarnoticias {
     background: #f7f7f9;
 }
 
-#modalVistaMapa .modal-xl {
+#modalVistaMapa .modal-xl, #modalReporte .modal-xl {
     max-width: 97%;
 }
 
@@ -1695,7 +1745,6 @@ table#table-alertas-pi {
     max-height: 1em;
     max-width: 1em;
 }
-
 
 
 
@@ -1791,4 +1840,102 @@ b.text-not-permiso {
 
 #fecha-calendarizado, #fecha-reagendamiento {
   background-color: #ffffff;
+}
+#buscarReporte {
+  background-color: #ffffff;
+  color: #7716fa;
+  border: solid 1px #7716fa;
+  padding: 0.3em 2em;
+  border-radius: 5px;
+  font-size: 0.7em;
+  margin-top: 2.4em;
+}
+
+.input-box{
+  padding-left: 0;
+
+}
+
+.contenedor-table {
+  margin-top: 20px;
+  box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+  border-radius: .5em;
+  padding: 0px !important;
+  font-family: "Montserrat" !important;
+}
+
+table.dataTable.no-footer{
+  border-bottom: transparent !important;
+  margin-top: 0 !important;
+}
+
+#head_table{
+  font-size: 0.6em !important;
+  white-space: nowrap;
+  text-align: center;
+}
+
+#head_table tr th{
+ padding: 1em;
+ font-weight: bold !important; 
+}
+
+#table-reporte tr td {
+  font-size: 0.7em;
+  padding: 1em 1em 1em;
+  text-align: center;
+}
+
+.pagination .paginate_button a.page-link {
+  color: #828080;
+  font-family: "Montserrat";
+  background-color: white !important;
+  box-shadow: none !important;
+}
+
+.pagination .paginate_button.active {
+  background-color: gray !important;
+}
+
+.pagination .previous a.page-link {
+  color: white !important;
+  font-size: 0;
+}
+
+.pagination .next a.page-link {
+  color: white !important;
+  font-size: 0;
+}
+
+.pagination .previous a:after {
+  font-family: FontAwesome;
+  display: inline-block;
+  content: "\f104";
+  visibility: visible;
+  color: #828080 !important;
+  font-size: initial !important;
+}
+
+.pagination .next a:before {
+  font-family: FontAwesome;
+  display: inline-block;
+  content: "\f105";
+  visibility: visible;
+  color: #828080 !important;
+  font-size: initial !important;
+}
+
+.download-file{
+  text-align: center; 
+  padding-top: 5px;
+  font-size: xx-large;
+  
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button a {
+  padding: 1px 1px 1px 1px;
+}
+
+#table-reporte .dataTables_empty{
+  background: #f9f9f9;
 }
