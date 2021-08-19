@@ -17,6 +17,7 @@
         <link rel="manifest" href="${pageContext.request.contextPath}/resources/img/iconsistema/manifest.json">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet"/>
         <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
+        <link href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
         <link href="${pageContext.request.contextPath}/resources/libraries/typeahead/css/typeaheadjs.css" rel="stylesheet" />
         <link href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap.css" rel="stylesheet"/>
@@ -30,7 +31,9 @@
 
         <link href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/dataTables.fontAwesome.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/dataTables.bootstrap.min.css" rel="stylesheet">
-
+        <link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/jquery.dataTables.css"
+        rel="stylesheet">
+        
         <link href="${pageContext.request.contextPath}/resources/libraries/sweetalert/css/sweetalert2.min.css" rel="stylesheet">
 
         <link href="${pageContext.request.contextPath}/resources/libraries/jstree/css/style.min.css" rel="stylesheet" />
@@ -106,10 +109,13 @@
                         </div>
                     </button>             
                 </div>
-                <div class="col-4">
+                <div class="col-3">    
+                    <span onclick="abrirModalReporte()" class="reporte-color-despacho icon-color-despacho fas fa-file-alt"></span>
+                    <span onclick="abrirModalVistaMapa()" class="map-color-despacho icon-color-despacho fas fa-map"></span>
+                </div>
+                <div class="col-2">
                     <input ng-model="fechaFiltradoCalendar" readonly id="calendar-next-back"  type="text" class="form-control form-control-sm"  />                  
                     <span ng-click="abrirModalDetalleIconografia()" class="paleta-color-despacho fas fa-palette"></span>
-                    <span onclick="abrirModalVistaMapa()" class="map-color-despacho fas fa-map"></span>
                 </div>
             </div>
         </div>
@@ -188,6 +194,7 @@
         <jsp:include page="./modals/modalLocalizacionRegistros.jsp"></jsp:include>   
         <jsp:include page="./modals/modalFotoUsuario.jsp"></jsp:include>   
         <jsp:include page="./modals/modalVistaMapa.jsp"></jsp:include> 
+        <jsp:include page="./modals/modalReporte.jsp"></jsp:include> 
        
         <!--div ng-show="vistaDespacho" class="container-fluid d-flex justify-content-center">    
             <ul class="wall content-alert-parent">

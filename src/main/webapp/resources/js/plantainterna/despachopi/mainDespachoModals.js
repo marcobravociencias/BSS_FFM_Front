@@ -1144,6 +1144,17 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             $scope.listadoMotivosGestaria = $scope.estatusCambio.filter(e => {return e.idPadre === 249})
         }
     });
+
+    abrirModalReporte = function(){
+        $scope.seleccionarTodos($scope.filtrosGeneral.tipoOrdenes);
+        $scope.$apply();
+        $("#idot-reporte").val('');
+        $("#idos-reporte").val('');
+        $("#cuenta-reporte").val('');
+        $('#filtro_fecha_inicio_reporte').datepicker('update',   moment(FECHA_HOY_DATE).toDate() );
+        $('#filtro_fecha_fin_reporte').datepicker('update',   moment(FECHA_HOY_DATE).toDate() );
+        $("#modalReporte").modal('show');
+    }
 }
 /**
 
