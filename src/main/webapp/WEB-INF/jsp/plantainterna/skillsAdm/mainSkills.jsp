@@ -459,6 +459,7 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/sweetalert/js/sweetalert2.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/magnific_popup/jquery.magnific-popup.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/alertify/alertify.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/js/mdb.min.js"></script>
 	<!-- ARCHIVOS JS -->
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/skillsAdms/skillsController.js?" charset="UTF-8"></script>

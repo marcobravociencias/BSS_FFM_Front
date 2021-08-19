@@ -73,6 +73,19 @@ public class ImplSkillsAdminService implements SkillsAdminService{
 		logger.info("RESULT guardarSkills"+gson.toJson(response));
 		return response;
 	}
+	
+	@Override
+	public ServiceResponseResult guardarSkillsMultiple(String params) {
+		logger.info("ImplSkillsAdminService.class [metodo = guardarSkillsMultiple() ]\n");
+		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		String tokenAcces=principalDetail.getAccess_token() ;
+		logger.info("json object params## "+jsonObject.toString());
+		String url = principalDetail.getDireccionAmbiente().concat(constSkills.getGuardarSkillsMultiple());
+		ServiceResponseResult response=restCaller.callPutBearerTokenRequest(jsonObject.toString(), url, ServiceResponseResult.class, tokenAcces);
+		logger.info("RESULT guardarSkillsMultiple"+gson.toJson(response));
+		return response;
+	}
 
 	@Override
 	public ServiceResponseResult consultarCatalogosPI(String params) {

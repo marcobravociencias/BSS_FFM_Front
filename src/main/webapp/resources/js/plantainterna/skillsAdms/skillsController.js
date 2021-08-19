@@ -20,7 +20,6 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 	
 	$scope.skillsSeleccionadasIndividual = [];
 	$scope.skillsSeleccionadasMultiseleccion = [];
-	$scope.tecnicosSeleccionadosMultiseleccion = [];
 	
 	$scope.txtbusq='';
 	
@@ -147,7 +146,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 		});
 		
 		$scope.contadorSkillsSeleccionadas = 0;
-		$('#contadorTecnicosMultiseleccion').text("Técnicos encontrados: " + $scope.tecnicosMostradas.result.detalleTecnicos.length);
+		$('#contadorTecnicosMultiseleccion').text("Técnicos encontrados: " + $scope.tecnicosMostradas.length);
 
 	}
 	
@@ -554,34 +553,13 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 				angular.forEach($scope.tecnicosMostradas,function(tecnico,index){
 					if(tecnico.idUsuario == $scope.idTecnicoSeleccionado){
 						tecnico.skills = $scope.skillsSeleccionadasIndividual;
+						swal.close();
 						swal("Correcto", "¡Registro actualizado con éxito!", "success");
 					}
 				});
 			}
 		}).catch(err => handleError(err));
-		swal.close();
 		//alert("ID Técnico: " + $scope.idTecnicoSeleccionado + "\n" +"Skills seleccionadas: " + $scope.skillsSeleccionadasIndividual);
-	}
-	
-	$scope.guardarAsignacionSkillsMultiseleccion = function() {
-		$scope.skillsSeleccionadasMultiseleccion = [];
-		swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
-		swal.showLoading();
-		angular.forEach($scope.listadoIntervenciones,function(skillSeleccionada,index){
-			if(skillSeleccionada.check === 1){
-				$scope.skillsSeleccionadasMultiseleccion.push(skillSeleccionada.id);
-			}
-		});
-		
-		$scope.tecnicosSeleccionadosMultiseleccion = [];
-		var checkedTecnicosMultiseleccion = $(".checkedTecnicos");
-		for(var check = 0; check < checkedTecnicosMultiseleccion.length; check++){
-			if(checkedTecnicosMultiseleccion[check].checked == true){
-				$scope.tecnicosSeleccionadosMultiseleccion.push(checkedTecnicosMultiseleccion[check].value);
-			}
-		}
-		swal.close();
-		//alert("ID Técnicos: " + $scope.tecnicosSeleccionadosMultiseleccion + "\n" +"Skills seleccionadas: " + $scope.skillsSeleccionadasMultiseleccion);
 	}
 	
 	$scope.guardarAsignacionSkillIndividualTabla = function(tecnico) {
@@ -615,12 +593,12 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 				angular.forEach($scope.tecnicosMostradas,function(tecnicoLista,index){
 					if(tecnicoLista.idUsuario == tecnico.idUsuario){
 						tecnico.skills = skillsAsignar;
+						swal.close();
 						swal("Correcto", "¡Registro actualizado con éxito!", "success");
 					}
 				});
 			}
 		}).catch(err => handleError(err));
-		swal.close();
 	}
 	
 	$scope.guardarAsignacionTablaCompleta = function() {
@@ -657,10 +635,59 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 			skillsService.guardarInfoTecnico(params)
 		]).then(function(results) {
 			if(results[0].data.respuesta){
+				swal.close();
 				swal("Correcto", "¡Registros actualizados con éxito!", "success");
 			}
 		}).catch(err => handleError(err));
-		swal.close();
+	}
+	
+	$scope.guardarAsignacionSkillsMultiseleccion = function() {
+		let params = {
+				skills:[]
+		};
+		
+		$scope.skillsSeleccionadasMultiseleccion = [];
+		swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
+		swal.showLoading();
+		angular.forEach($scope.listadoIntervenciones,function(skillSeleccionada,index){
+			if(skillSeleccionada.check === 1){
+				$scope.skillsSeleccionadasMultiseleccion.push(skillSeleccionada.id);
+			}
+		});
+		
+		if($scope.skillsSeleccionadasMultiseleccion != ""){
+			var checkedTecnicosMultiseleccion = $(".checkedTecnicos");
+			for(var check = 0; check < checkedTecnicosMultiseleccion.length; check++){
+				if(checkedTecnicosMultiseleccion[check].checked == true){
+					let objetoTecnico = {
+							idUsuario: checkedTecnicosMultiseleccion[check].value,
+							skills:$scope.skillsSeleccionadasMultiseleccion,
+							comentarios: "Comentarios"
+					}
+					params.skills.push(objetoTecnico);
+				}
+			}
+			
+			$q.all([
+				skillsService.guardarSkillsMultipleTecnicos(params)
+			]).then(function(results) {
+				if(results[0].data.respuesta){
+					swal.close();
+					swal("Correcto", "¡Registros guardados con éxito!", "success");
+				}
+			}).catch(err => handleError(err));
+			$("#modalMultiseleccion").modal('hide');
+			$("#divBotonGuardarSkills").hide();
+			$("#divContadorTecnicos").hide();
+			$("#divTecnicos").hide();
+			$("#divContenedorSkills").hide();
+			$("#divMensajeSeleccionaGeografia").show();
+			$("#divMensajeSeleccionaTecnico").show();
+			
+		}else{
+			swal.close();
+			swal("Aviso", "¡Selecciona al menos 1 Skill!", "warning");
+		}
 	}
 	
 	//-------------------------------------------------- FIN CAMBIOS REYNEL --------------------------------------------------
