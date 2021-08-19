@@ -13,7 +13,7 @@ app.service("skillsService", function ($http) {
 		
 		this.guardarInfoTecnico=function(params){
 			return $http({
-				method: "patch",
+				method: "PATCH",
 				url:"req/guardarSkillsTecn",
 				data:JSON.stringify(params),
 				headers:{

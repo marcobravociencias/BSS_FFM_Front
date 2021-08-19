@@ -174,7 +174,13 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 	}
 	
 	$scope.verVistaIndividual = function() {
+		$("#divBotonGuardarSkills").hide();
+		$("#divContadorTecnicos").hide();
+		$("#divTecnicos").hide();
+		$("#divContenedorSkills").hide();
 		$("#divContenedorTabla").hide();
+		$("#divMensajeSeleccionaGeografia").show();
+		$("#divMensajeSeleccionaTecnico").show();
 		$("#divContenedorIndividual").show();
 	}
 	
@@ -441,50 +447,12 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 	    }
 	}
 	
-	$scope.guardarAsignacionSkillsIndividual = function() {
-//		$q.all([
-//			mainDespachoService.consultarCatalogoTipoOrdenGeneralDespacho()
-//        ]).then(function(results) {
-//        	alert(results[0].data.result);
-//        }).catch(err => handleError(err));
-		$scope.skillsSeleccionadasIndividual = [];
-		angular.forEach($scope.listadoIntervenciones,function(skillSeleccionada,index){
-			if(skillSeleccionada.check === 1){
-				$scope.skillsSeleccionadasIndividual.push(skillSeleccionada.id);
-			}
-		});
-		
-		//alert("ID Técnico: " + $scope.idTecnicoSeleccionado + "\n" +"Skills seleccionadas: " + $scope.skillsSeleccionadasIndividual);
-	}
-	
-	$scope.guardarAsignacionSkillsMultiseleccion = function() {
-		$scope.skillsSeleccionadasMultiseleccion = [];
-		angular.forEach($scope.listadoIntervenciones,function(skillSeleccionada,index){
-			if(skillSeleccionada.check === 1){
-				$scope.skillsSeleccionadasMultiseleccion.push(skillSeleccionada.id);
-			}
-		});
-		
-		$scope.tecnicosSeleccionadosMultiseleccion = [];
-		var checkedTecnicosMultiseleccion = $(".checkedTecnicos");
-		for(var check = 0; check < checkedTecnicosMultiseleccion.length; check++){
-			if(checkedTecnicosMultiseleccion[check].checked == true){
-				$scope.tecnicosSeleccionadosMultiseleccion.push(checkedTecnicosMultiseleccion[check].value);
-			}
-		}
-		
-		//alert("ID Técnicos: " + $scope.tecnicosSeleccionadosMultiseleccion + "\n" +"Skills seleccionadas: " + $scope.skillsSeleccionadasMultiseleccion);
-	}
-	
-	$scope.guardarAsignacionSkillTabla = function(idTecnico, idSkill) {
-		//alert("Técnico -> " + idTecnico + "\n" + "Skill -> " + idSkill);
-	}
-	
 	$scope.cargarFiltrosGeneric=function(){
 		let params ={
 				moduloAccionesUsuario: 'moduloSkills'
 	    };
-		
+		swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
+		swal.showLoading();
         $q.all([
             skillsService.consulCatalogoGeografiaGeneralDespacho(),
             genericService.consultarConfiguracionDespachoDespacho(params),
@@ -548,11 +516,152 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
             }           
 
         }).catch(err => handleError(err));
+        swal.close();
     }
 	
 	$scope.busquedaGeografiaIndividual=function(){
 		  $("#jstree-proton-3").jstree("search", $('#idBuscadorGeografia').val());
 	 }
+	
+	$scope.guardarAsignacionSkillsIndividual = function() {
+		$scope.skillsSeleccionadasIndividual = [];
+		swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
+		swal.showLoading();
+		angular.forEach($scope.listadoIntervenciones,function(skillSeleccionada,index){
+			if(skillSeleccionada.check === 1){
+				$scope.skillsSeleccionadasIndividual.push(skillSeleccionada.id);
+			}
+		});
+		
+		if($scope.skillsSeleccionadasIndividual == ""){
+			$scope.skillsSeleccionadasIndividual.push(0);
+		}
+
+		let params = {
+				skills:[
+					{
+						idUsuario: $scope.idTecnicoSeleccionado,
+						skills:$scope.skillsSeleccionadasIndividual,
+						comentarios: "Comentarios"
+					}
+				]
+		};
+		
+		$q.all([
+			skillsService.guardarInfoTecnico(params)
+		]).then(function(results) {
+			if(results[0].data.respuesta){
+				angular.forEach($scope.tecnicosMostradas,function(tecnico,index){
+					if(tecnico.idUsuario == $scope.idTecnicoSeleccionado){
+						tecnico.skills = $scope.skillsSeleccionadasIndividual;
+						swal("Correcto", "¡Registro actualizado con éxito!", "success");
+					}
+				});
+			}
+		}).catch(err => handleError(err));
+		swal.close();
+		//alert("ID Técnico: " + $scope.idTecnicoSeleccionado + "\n" +"Skills seleccionadas: " + $scope.skillsSeleccionadasIndividual);
+	}
+	
+	$scope.guardarAsignacionSkillsMultiseleccion = function() {
+		$scope.skillsSeleccionadasMultiseleccion = [];
+		swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
+		swal.showLoading();
+		angular.forEach($scope.listadoIntervenciones,function(skillSeleccionada,index){
+			if(skillSeleccionada.check === 1){
+				$scope.skillsSeleccionadasMultiseleccion.push(skillSeleccionada.id);
+			}
+		});
+		
+		$scope.tecnicosSeleccionadosMultiseleccion = [];
+		var checkedTecnicosMultiseleccion = $(".checkedTecnicos");
+		for(var check = 0; check < checkedTecnicosMultiseleccion.length; check++){
+			if(checkedTecnicosMultiseleccion[check].checked == true){
+				$scope.tecnicosSeleccionadosMultiseleccion.push(checkedTecnicosMultiseleccion[check].value);
+			}
+		}
+		swal.close();
+		//alert("ID Técnicos: " + $scope.tecnicosSeleccionadosMultiseleccion + "\n" +"Skills seleccionadas: " + $scope.skillsSeleccionadasMultiseleccion);
+	}
+	
+	$scope.guardarAsignacionSkillIndividualTabla = function(tecnico) {
+		var skillsAsignar = [];
+		swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
+		swal.showLoading();
+		angular.forEach(tecnico.todasSkills,function(skill,index){
+			if(skill.checkTabla){
+				skillsAsignar.push(skill.id);
+			}
+		});
+		
+		if(skillsAsignar == ""){
+			skillsAsignar.push(0);
+		}
+
+		let params = {
+				skills:[
+					{
+						idUsuario: tecnico.idUsuario,
+						skills:skillsAsignar,
+						comentarios: "Comentarios"
+					}
+				]
+		};
+
+		$q.all([
+			skillsService.guardarInfoTecnico(params)
+		]).then(function(results) {
+			if(results[0].data.respuesta){
+				angular.forEach($scope.tecnicosMostradas,function(tecnicoLista,index){
+					if(tecnicoLista.idUsuario == tecnico.idUsuario){
+						tecnico.skills = skillsAsignar;
+						swal("Correcto", "¡Registro actualizado con éxito!", "success");
+					}
+				});
+			}
+		}).catch(err => handleError(err));
+		swal.close();
+	}
+	
+	$scope.guardarAsignacionTablaCompleta = function() {
+		let params = {
+				skills:[]
+		};
+		var skillsAsignar = [];
+		
+		swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
+		swal.showLoading();
+		angular.forEach($scope.tecnicosMostradas,function(tecnico,index){
+			angular.forEach(tecnico.todasSkills,function(skill,index){
+				if(skill.checkTabla){
+					skillsAsignar.push(skill.id);
+				}
+			});
+			
+			if(skillsAsignar == ""){
+				skillsAsignar.push(0);
+			}
+			
+			let objetoTecnico = {
+					idUsuario: tecnico.idUsuario,
+					skills:skillsAsignar,
+					comentarios: "Comentarios"
+			}
+			
+			params.skills.push(objetoTecnico);
+			
+			skillsAsignar = [];
+		});
+		
+		$q.all([
+			skillsService.guardarInfoTecnico(params)
+		]).then(function(results) {
+			if(results[0].data.respuesta){
+				swal("Correcto", "¡Registros actualizados con éxito!", "success");
+			}
+		}).catch(err => handleError(err));
+		swal.close();
+	}
 	
 	//-------------------------------------------------- FIN CAMBIOS REYNEL --------------------------------------------------
 	

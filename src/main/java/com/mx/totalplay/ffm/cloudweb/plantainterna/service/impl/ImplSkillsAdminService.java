@@ -67,10 +67,11 @@ public class ImplSkillsAdminService implements SkillsAdminService{
 		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
 		String tokenAcces=principalDetail.getAccess_token() ;
 		logger.info("json object params## "+jsonObject.toString());
-		String url="http://94.74.70.52:8149"+constSkills.getGuardarSkillSimple();
+//		String url="http://34.94.124.52:8149"+constSkills.getGuardarSkillSimple();
+		String url = principalDetail.getDireccionAmbiente().concat(constSkills.getGuardarSkillSimple());
 		ServiceResponseResult response=restCaller.callPatchBearerTokenRequest(jsonObject.toString(), url, ServiceResponseResult.class, tokenAcces);
 		logger.info("RESULT guardarSkills"+gson.toJson(response));
-		return null;
+		return response;
 	}
 
 	@Override
