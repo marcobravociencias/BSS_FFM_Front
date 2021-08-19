@@ -70,7 +70,7 @@ img.responsive-img, video.responsive-video {
         padding-bottom:1em;
         background: white;
         border-radius: .5em;
-        padding-top: 1em;
+        /* padding-top: 1em; */
 }
 body{
     background:#f9f9f9
@@ -177,4 +177,10 @@ p.text-tecnico-nombre {
     color:#a4a4a4;
     font-size:1em;
 
+}
+
+.navbar-skills-option li a{
+    padding-top:.2em !important;
+    padding-bottom: .1em !important;
+    margin-bottom:1em !important;
 }

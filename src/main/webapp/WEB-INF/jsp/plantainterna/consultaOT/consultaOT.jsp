@@ -152,7 +152,6 @@
                         <i class="fa fa-search"></i>
                     </button>
                 </div>
-                </div>
             </div>
         </div>
     </div>

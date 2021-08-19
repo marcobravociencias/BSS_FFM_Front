@@ -4,6 +4,7 @@ const FECHA_HOY_DATE=new Date()
 var permiso_reasigna=true;
 var permiso_asigna=true;
 var dataTableOtsPendientes;
+var tableReporte;
 var fullcalendarAsignadas;
 var app = angular.module('despacho',[] );
 var triggerOperarioKeyup;
@@ -47,6 +48,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
     $scope.listadoTecnicosGeneralTemp=[];                                   
     $scope.listadoOtsAsignadas=[]
     $scope.listadoConteoAlertasTipo=[]
+
    
     $scope.listadoHistoricoOt=arrayhistorico;
     $scope.listadoHistoricoOt[0].Id_Estatus=1
@@ -158,6 +160,30 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             endDate :  moment(FECHA_HOY_DATE).add('days', 7).toDate() ,
         });
         $('.datepicker_reagenda').datepicker('update',FECHA_HOY_DATE);
+
+        $("#filtro_fecha_inicio_reporte").datepicker({ 
+            format: 'dd/mm/yyyy',
+            language : 'es',
+            todayHighlight : true
+        });
+        $("#filtro_fecha_fin_reporte").datepicker({ 
+            format: 'dd/mm/yyyy',
+            language : 'es',
+            todayHighlight : true
+        });
+        
+        tableReporte = $('#table-reporte').DataTable({
+			"paging": true,
+			"lengthChange": false,
+			"searching": false,
+			"ordering": false,
+			"pageLength": 10,
+			"info": false,
+			"autoWidth": true,
+			"language": idioma_espanol_not_font,
+			"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+		});
+
     });
 
     $scope.initFullCalendar = function(tecnicosParams){
@@ -359,8 +385,12 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
         $scope.isCargaOtsPendientes=false;        
         let turnosdisponiblescopy=$scope.filtrosGeneral.turnosdisponibles.filter(e=>e.checkedOpcion).map(e=>e.id)       
         
-        let intervencionestemp=$scope.filtrosGeneral.tipoOrdenes.filter(e=>e.checkedOpcion).map(e=>e.id)      
+        if($scope.filtrosGeneral.tipoOrdenes){
+            let intervencionestemp=$scope.filtrosGeneral.tipoOrdenes.filter(e=>e.checkedOpcion).map(e=>e.id)   
+        }
+       
         
+           
         let subIntTemp=[]
         angular.forEach($scope.filtrosGeneral.tipoOrdenes,(e,i)=>{
             e.children.filter( f => f.checkedOpcion ).map((k)=>{ 
@@ -873,21 +903,20 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                     }) 
                 }   
             }
-
-            /**
-            if (results[3].data !== undefined) {
-                if(results[3].data.respuesta ){
-                    if(results[3].data.result ){
-                        $scope.filtrosGeneral.estatusdisponibles=$scope.realizarConversionAnidado( results[3].data.result)   
+            
+            if (results[4].data !== undefined) {
+                if(results[4].data.respuesta ){
+                    if(results[4].data.result ){
+                        $scope.filtrosGeneral.estatusdisponibles=$scope.realizarConversionAnidado( results[4].data.result)   
                     }else{                      
                         toastr.info( 'No se encontraron catalogo de estatus' );                
                     }
                 }else{
-                    toastr.warning( results[1].data.resultDescripcion );                
+                    toastr.warning( results[4].data.resultDescripcion );                
                 }               
             }else{
                 toastr.error( 'Ha ocurrido un error en la consulta de tipo ordenes' );                
-            }**/
+            }
 
             if (results[0].data !== undefined) {
                 if(results[0].data.respuesta ){
@@ -1002,7 +1031,124 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
     $scope.listadoOtsPendientes=otspendientes
     $scope.listadoEstatusTecnico=JSONEstatusTecnico     
     $scope.listadoIconografia=paletaColors.result.Colores    
- 
+    
+    $scope.getFechaFormato = function (fecha) {
+		let fechaPrueba = fecha.split('/');
+		return fechaPrueba[2] + '-' + fechaPrueba[1] + '-' + fechaPrueba[0];
+	}
+
+    validarFecha = function(idFechaInicio, idFechaFin) {
+		var inicio = document.getElementById(idFechaInicio).value.split('/');
+		var fin = document.getElementById(idFechaFin).value.split('/');
+		var date_inicio = new Date(inicio[2] + '-' + inicio[1] + '-' + inicio[0]);
+		var date_fin = new Date(fin[2] + '-' + fin[1] + '-' + fin[0]);
+		if (date_inicio <= date_fin) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+
+   consultarReporteDiario = function(){
+        let mensaje = '<ul>';
+        let isValid = true;
+        let numerosOnly = /^[0-9]*$/i;
+
+        let statuscopy = [];
+        if($scope.filtrosGeneral.estatusdisponibles){
+            angular.forEach($scope.filtrosGeneral.estatusdisponibles,(e,i)=>{
+                statuscopy.push(e.id); 
+            })
+        }
+       
+        let intervencioncopy= [];
+        if($scope.filtrosGeneral.tipoOrdenes){
+            angular.forEach($scope.filtrosGeneral.tipoOrdenes, (e, i) => {
+                e.children.filter(f => f.checkedOpcion).map((k) => { intervencioncopy.push(k.id); return k; })
+            })
+        }
+        
+        let paramsTemp = angular.copy($scope.repDiario);
+
+        if(!statuscopy.length){
+            mensaje += '<li>Introducir Estatus</li>';
+            isValid = false;
+        }
+
+        if(!intervencioncopy.length){
+            mensaje += '<li>Introducir Intervenci\u00F3n</li>';
+            isValid = false;
+        }
+
+        if(!numerosOnly.test($("#idot-reporte").val())){
+            mensaje += '<li>El campo OT debe ser n&uacute;merico</li>';
+            isValid = false;
+        }
+
+        if(!validarFecha('filtro_fecha_inicio_reporte','filtro_fecha_fin_reporte')){
+            mensaje += '<li>La fecha final debe ser mayor que la fecha inicio</li>';
+            isValid = false;
+        }
+
+        if(!isValid){
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        }else{
+
+            let params = {
+                tipoIntervencion : intervencioncopy,
+                estatusOt : statuscopy,
+                fechaInicio : $scope.getFechaFormato(paramsTemp.fechaInicio),
+                fechaFin:  $scope.getFechaFormato(paramsTemp.fechaFin),
+                fechaSeleccionada : "fechaAgendamiento",
+                idOrden : paramsTemp.idot || "",
+                idCuenta : paramsTemp.cuenta || "",
+                folio: paramsTemp.idos || "",
+                elementosPorPagina : 10
+            }
+            
+            swal({ text: 'Espera un momento...', allowOutsideClick: false });
+            swal.showLoading();
+            swal.close()
+            /*
+            if(tableReporte)
+                tableReporte.destroy()
+
+            tableReporte = $('#table-reporte').DataTable({
+                "paging": true,
+                "searching": false,
+                "ordering": false,
+                "info": false,
+                "autoWidth": true,
+				"processing": false,
+				"ordering": false,
+				"serverSide": true,
+				"scrollX": false,
+				"lengthChange": false,
+				"pageLength": 10,
+				"ajax": {
+					"url": "req/consultarReporteDiario",
+					"type": "POST",
+					"data": params,
+					"dataSrc": function (json) {
+						return json.data;
+					},
+					"error":function(xhr, error, thrown){
+						handleError(xhr)
+					}, 
+					"complete": function () {
+						swal.close()
+					}
+				},
+				"columns": [null, null, null, null, null, null, null, null, null],
+				"language": idioma_espanol_not_font
+			});
+            */
+        }
+    }
+    
 }]);
 
 app.directive('doneListadoDependenciaHistorico', function () {

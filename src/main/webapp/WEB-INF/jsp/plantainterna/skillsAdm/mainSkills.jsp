@@ -51,12 +51,12 @@
 				role="tabpanel" aria-labelledby="divContenedorIndividual-tab">
 				<header>
 					<nav
-						class="navbar navbar-expand-lg navbar-light bg-light navbar-menu-generic"
+						class="navbar-skills-option navbar navbar-expand-lg navbar-light bg-light "
 						style="float: right;">
-						<ul class="ul-elementos-nav navbar-nav">
+						<ul class=" navbar-nav">
 							<li id="li-consultaot-navbar" class="nav-item"><a
 								class="nav-link a-navlink-navbar pestaniaActivada" href=""
-								ng-click="verVistaIndividual()">Individual</a></li>
+								ng-click="">Individual</a></li>
 							<li id="li-skills-navbar" class="nav-item"><a
 								class="nav-link a-navlink-navbar" href=""
 								ng-click="verVistaTabla()">Vista tabla</a></li>
@@ -117,7 +117,7 @@
 						</div>
 						<div id="divMensajeSeleccionaGeografia" class="content-noseleccion">
 							<i class="icono-noseleccion fas fa-exclamation-circle me-2"></i> <b
-								class="text-no-seleccion-geografia">Selecciona una geografía</b>
+								class="text-no-seleccion-geografia">Selecciona una geografï¿½a</b>
 						</div>
 					</div>
 				</div>
@@ -128,7 +128,7 @@
 	
 					<div id="divContenedorSkills" class="scrollGeneral" style="display: none">
 						<div style="margin: 10px; text-align: right;">
-							<a ng-click="mostrarContenedoresMultiseleccion()" href="">Multiselección</a>
+							<a ng-click="mostrarContenedoresMultiseleccion()" href="">Multiselecciï¿½n</a>
 						</div>
 						<div class="intervenciones-container">
 							<div
@@ -136,7 +136,7 @@
 								class="row ">
 								<div class="col-9 intervencion-col">
 									<h5 class="text-intervencion-title"
-										ng-bind="intervencion.descripcion"></h5>
+										ng-bind="intervencion.nombre"></h5>
 								</div>
 								<div class="col-3 intervencion-col">
 									<div class="form-check-sm form-check form-switch">
@@ -149,7 +149,7 @@
 					</div>
 					<div id="divMensajeSeleccionaTecnico" class="content-noseleccion">
 						<i class="icono-noseleccion fas fa-exclamation-circle me-2"></i> <b
-							class="text-no-seleccion-geografia">Selecciona un técnico</b>
+							class="text-no-seleccion-geografia">Selecciona un tï¿½cnico</b>
 					</div>
 					<div id="divBotonGuardarSkills" style="display: none;">
 						<div style="margin: 10px; text-align: right;">
@@ -162,7 +162,7 @@
 					</div>
 				</div>
 	
-				<!-- MULTISELECCIÓN -->
+				<!-- MULTISELECCIï¿½N -->
 	
 				<div id="modalMultiseleccion" class="modal fade bd-example-modal-xl"
 					tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
@@ -170,7 +170,7 @@
 					<div class="modal-dialog modal-xl">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h5 class="modal-title">Multiselección</h5>
+								<h5 class="modal-title">Multiselecciï¿½n</h5>
 								<button type="button" class="btn-close" data-mdb-dismiss="modal"
 									aria-label="Close" ng-click="regresarContenedorIndividual()"></button>
 							</div>
@@ -228,7 +228,7 @@
 														class="row ">
 														<div class="col-10 intervencion-col">
 															<h5 class="text-intervencion-title"
-																ng-bind="intervencion.descripcion"></h5>
+																ng-bind="intervencion.nombre"></h5>
 														</div>
 														<div class="col-2 intervencion-col">
 															<div class="form-check-sm form-check form-switch">
@@ -261,8 +261,10 @@
 				</div>
 			</div>
 	
-			<div id="divContenedorTabla" class="row content-gestion-operarios"
-				style="display: none">
+			<!-- VISTA TABLA -->
+			<!-- VISTA TABLA -->
+	
+			<div id="divContenedorTabla" class="row content-gestion-operarios" style="display: none">
 				<header>
 					<nav
 						class="navbar navbar-expand-lg navbar-light bg-light navbar-menu-generic"
@@ -271,7 +273,7 @@
 							<li id="li-consultaot-navbar" class="nav-item"><i
 								class="fas fa-map-marked iconoGeografia"></i> <a
 								class="nav-link a-navlink-navbar linkGeografia" href=""
-								ng-click="abrirModalGeografiaTabla()">Geografía</a></li>
+								ng-click="abrirModalGeografiaTabla()">Geografï¿½a</a></li>
 						</ul>
 					</nav>
 					<nav
@@ -283,7 +285,7 @@
 								ng-click="verVistaIndividual()">Individual</a></li>
 							<li id="li-skills-navbar" class="nav-item"><a
 								class="nav-link a-navlink-navbar pestaniaActivada" href=""
-								ng-click="verVistaTabla()">Vista tabla</a></li>
+								ng-click="">Vista tabla</a></li>
 						</ul>
 					</nav>
 				</header>
@@ -291,7 +293,7 @@
 					<div class="row">
 						<div class="col-md-3">
 							<div class="input-group input-group-sm content-seach-group  ">
-								<input type="text" id="idBuscadorTecnicoTabla" class="form-control form-control-sm buscar-input-operario" ng-keyup="busquedaTecnicoTabla()" placeholder="Buscar Técnico">
+								<input type="text" id="idBuscadorTecnicoTabla" class="form-control form-control-sm buscar-input-operario" ng-keyup="busquedaTecnicoTabla()" placeholder="Buscar Tï¿½cnico">
 								<span class="search-icon-operario-busq fa fa-search" id="buscar-operario"></span>
 							</div>
 						</div>
@@ -314,18 +316,18 @@
 										<thead class="thead-table table-nowrap" id="idTheadTabla">
 											<tr class="zui-sticky-tr">
 												<th class="zui-sticky-col zui-text-cabeceras" scope="col">CUADRILLA</th>
-												<th class="zui-text-cabeceras" scope="col" style="text-align: center" ng-repeat="intervencion in listadoIntervenciones track by $index">{{intervencion.descripcion}} <i class="fas fa-eye-slash iconoOjoColumna" ng-click="displayColumnaIndividual($index+2)"></i></th>
+												<th class="zui-text-cabeceras" scope="col" style="text-align: center" ng-repeat="intervencion in listadoIntervenciones track by $index">{{intervencion.nombre}} <i class="fas fa-eye-slash iconoOjoColumna" ng-click="displayColumnaIndividual($index+2)"></i></th>
 											</tr>
 										</thead>
 										<tbody id="bodyTabla">
 											<tr ng-repeat="tecnico in tecnicosMostradas | filter: buscarTecnicoTabla" class="zui-sticky-tr trTecnico">
 												<td class="zui-sticky-body zui-text-cabeceras nombreTecnico" 
 												data-toggle="tooltip" data-placement="top" title="{{tecnico.nombre}} {{tecnico.apellidoPaterno}} {{tecnico.apellidoMaterno}}">{{tecnico.nombre}} {{tecnico.apellidoPaterno}} {{tecnico.apellidoMaterno}}</td>
-												<td ng-repeat="skill in tecnico.todasSkills" style="text-align: center" scope="col">
-													<input class="form-check-input" type="checkbox" ng-model="skill.checkTabla" ng-init="check = skill.checkTabla" ng-click="guardarAsignacionSkillTabla(tecnico.idUsuario,skill.id)" >
+												<td ng-repeat="skill in tecnico.todasSkills track by $index" style="text-align: center" scope="col">
+													<input class="form-check-input" type="checkbox" ng-model="skill.checkTabla" ng-init="check = skill.checkTabla" ng-click="" >
 												</td>
 												<td class="zui-sticky-body-final">
-													<button style="background-color: white; border-color: #7716FA;">
+													<button style="background-color: white; border-color: #7716FA;" ng-click="guardarAsignacionSkillIndividualTabla(tecnico)">
 														<i class="fa fa-save"></i>
 													</button>
 												</td>
@@ -345,8 +347,7 @@
 							</div>
 						</div>
 						<div class="col-md-12" style="text-align: right;">
-							<button class="btn btn-primary" ng-click="verificar()">GUARDAR
-								TODO</button>
+							<button class="btn btn-primary" ng-click="guardarAsignacionTablaCompleta()">GUARDAR TODO</button>
 						</div>
 					</div>
 				</div>
@@ -356,17 +357,17 @@
 							class="content-noseleccion">
 							<i class="icono-noseleccion fas fa-exclamation-circle me-2"></i> <b
 								class="text-no-seleccion-geografia">Selecciona una
-								geografía</b>
+								geografï¿½a</b>
 						</div>
 					</div>
 				</div>
 	
-				<!-- MODAL GEOGRAFÍA VISTA TABLA -->
+				<!-- MODAL GEOGRAFï¿½A VISTA TABLA -->
 				<div id="modalGeografiaTabla" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h5 class="modal-title">Geografía</h5>
+								<h5 class="modal-title">Geografï¿½a</h5>
 								<button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close" ng-click="cerrarModalGeografiaTabla()"></button>
 							</div>
 							<div class="modal-body">
@@ -376,7 +377,7 @@
 											<input id="idBuscadorGeografiaVistaTabla" type="text" class="form-control form-control-sm buscar-input-operario" placeholder="Buscar geograf&iacute;a" ng-keyup="busquedaGeografiaVistaTabla()"> <span class="search-icon-operario-busq fa fa-search"></span>
 										</div>
 										<div class="container-treegeofria scrollGeneral">
-											<div id="arbolGeografiasVistaTabla" class="proton-demo"	ng-click="cargarTecnicosVistaTabla()">
+											<div id="arbolGeografiasVistaTabla" class="proton-demo">
 											</div>
 										</div>
 									</div>
@@ -420,7 +421,7 @@
 										<div class="intervenciones-container">
 											<div ng-repeat="intervencion in listadoIntervencionesFiltro track by $index" class="row rowSkillFiltro">
 												<div class="col-md-10 intervencion-col">
-													<h5 class="text-intervencion-title nombreSkillFiltro" ng-bind="intervencion.descripcion"></h5>
+													<h5 class="text-intervencion-title nombreSkillFiltro" ng-bind="intervencion.nombre"></h5>
 												</div>
 												<div class="col-md-2 intervencion-col">
 													<div class="form-check-sm form-check form-switch">
@@ -458,11 +459,14 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/sweetalert/js/sweetalert2.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/magnific_popup/jquery.magnific-popup.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/alertify/alertify.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/js/mdb.min.js"></script>
 	<!-- ARCHIVOS JS -->
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/skillsAdms/skillsController.js?" charset="UTF-8"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/skillsAdms/skillsService.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/skillsAdms/jsonSkills.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/genericService.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/despachopi/mainDespachoService.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
 	<script	src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>
 </html>

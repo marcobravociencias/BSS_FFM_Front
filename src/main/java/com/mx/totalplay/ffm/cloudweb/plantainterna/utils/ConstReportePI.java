@@ -40,5 +40,8 @@ public class ConstReportePI implements Serializable{
   
   @Value("${consultaGeneralOt}")
   private String consultaGeneralOt;
+  
+  @Value("${busquedaDetalleGralConstante}")
+  private String busquedaDetalleGralConstante;
  
 }

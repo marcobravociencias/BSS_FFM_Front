@@ -13,7 +13,7 @@ app.service("skillsService", function ($http) {
 		
 		this.guardarInfoTecnico=function(params){
 			return $http({
-				method: "patch",
+				method: "PATCH",
 				url:"req/guardarSkillsTecn",
 				data:JSON.stringify(params),
 				headers:{
@@ -22,6 +22,19 @@ app.service("skillsService", function ($http) {
 				
 			});
 		};
+		
+		this.guardarSkillsMultipleTecnicos = function(params){
+			return $http({
+				method: "put",
+				url:"req/guardarSkillsMultipleTecnicos",
+				data:JSON.stringify(params),
+				headers:{
+					'Content-Type':'application/json'
+				}
+				
+			});
+		};
+		
 		this.consulCatalogoGeografiaGeneralDespacho=function(params){
 			return $http({
 				method: "post",

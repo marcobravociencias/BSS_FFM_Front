@@ -22,5 +22,7 @@ public class ConstSkills implements Serializable{
 	private String consultarCatalogoGeografiaGeneralPI;
 	@Value("${consultarcatalogogeografiausuario}")
 	private String consultarCatalogoGeografiaUsuarioPI;
+	@Value("${guardarSkillsMultiple}")
+	private String guardarSkillsMultiple;
 
 }

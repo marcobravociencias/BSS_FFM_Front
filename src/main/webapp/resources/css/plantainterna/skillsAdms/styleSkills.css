@@ -1,10 +1,6 @@
 .bootstrap-select.btn-group .dropdown-menu.inner {
 	color: #1CA4FC !important;
-}
-
-.dropdown-menu>li>a {
-	color: #1CA4FC !important;
-}
+} 
 
 .dropdown-menu>li>a:focus,.dropdown-menu>li>a:hover {
 	color: #ffffff !important;
@@ -382,10 +378,9 @@ table.dataTable thead th, table.dataTable thead td{
     position: absolute;
     top: auto;
     width: 350px;
-
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .zui-table .zui-sticky-tr {

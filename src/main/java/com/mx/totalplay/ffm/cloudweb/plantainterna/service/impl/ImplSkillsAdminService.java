@@ -43,7 +43,8 @@ public class ImplSkillsAdminService implements SkillsAdminService{
 		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
 		String tokenAcces=principalDetail.getAccess_token();
 		logger.info("json object params## "+jsonObject.toString());	 
-		String url="http://34.94.124.52:8149"+constSkills.getUsuariosTipoOrdenes();
+		//String url = "http://34.94.124.52:8149"+constSkills.getUsuariosTipoOrdenes();
+		String url = principalDetail.getDireccionAmbiente().concat(constSkills.getUsuariosTipoOrdenes());
 		ServiceResponseResult response= restCaller.callPostBearerTokenRequest(
 				jsonObject.toString(),
 				url,
@@ -66,10 +67,24 @@ public class ImplSkillsAdminService implements SkillsAdminService{
 		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
 		String tokenAcces=principalDetail.getAccess_token() ;
 		logger.info("json object params## "+jsonObject.toString());
-		String url="http://94.74.70.52:8149"+constSkills.getGuardarSkillSimple();
+//		String url="http://34.94.124.52:8149"+constSkills.getGuardarSkillSimple();
+		String url = principalDetail.getDireccionAmbiente().concat(constSkills.getGuardarSkillSimple());
 		ServiceResponseResult response=restCaller.callPatchBearerTokenRequest(jsonObject.toString(), url, ServiceResponseResult.class, tokenAcces);
 		logger.info("RESULT guardarSkills"+gson.toJson(response));
-		return null;
+		return response;
+	}
+	
+	@Override
+	public ServiceResponseResult guardarSkillsMultiple(String params) {
+		logger.info("ImplSkillsAdminService.class [metodo = guardarSkillsMultiple() ]\n");
+		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		String tokenAcces=principalDetail.getAccess_token() ;
+		logger.info("json object params## "+jsonObject.toString());
+		String url = principalDetail.getDireccionAmbiente().concat(constSkills.getGuardarSkillsMultiple());
+		ServiceResponseResult response=restCaller.callPutBearerTokenRequest(jsonObject.toString(), url, ServiceResponseResult.class, tokenAcces);
+		logger.info("RESULT guardarSkillsMultiple"+gson.toJson(response));
+		return response;
 	}
 
 	@Override

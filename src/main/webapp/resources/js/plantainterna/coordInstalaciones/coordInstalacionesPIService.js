@@ -11,5 +11,17 @@ app.service("coordInstalacionesPIService", function ($http) {
         }); 
 
     }
+    this.consultaOtBusqGral=function (params){
+        return $http({ 
+            method: "post", 
+            url: "req/consultaDetalleOTBsqGeneral", 
+            data: JSON.stringify(params), 
+            headers: {
+                'Content-Type' : 'application/json'
+            }
+        }); 
+
+    }
+    
     
 });
