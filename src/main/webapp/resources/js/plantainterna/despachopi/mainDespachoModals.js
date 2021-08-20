@@ -740,6 +740,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         let errorMensaje = '<ul>';
         let isValido = true;
         let params = {};
+        $scope.tipoaccioncambioestatus=tipo
         if (tipo === 'asigna') {
             let horaasignacionInicio = angular.copy($scope.asignacionObject.otInfo.fechahoraasignacion);
             let horaasignacionFin = angular.copy($scope.asignacionObject.otInfo.fechahoraasignacion);
@@ -774,6 +775,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 idTurno: $scope.asignacionObject.otInfo.idTurno,
                 fechaHoraAgenda: formatFechaHoraInicio,
                 fechaHoraInicio: formatFechaHoraInicio,
+                idtipoAsignacion: 2,
                 fechaHoraFin: formatFechaHoraFin
             }
         } else if (tipo === 'reasigna') {
@@ -1126,8 +1128,19 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             if(result.data.respuesta){
              
                 toastr.success( result.data.result.mensaje );
-                $("#modalDetalleOT").modal('hide')
-                $scope.refrescarBusqueda()
+                
+                switch( $scope.tipoaccioncambioestatus ){
+                    case 'asigna':
+                        $("#modalAsignacionOrdenTrabajo").modal('hide')
+                        break;
+                    case 'reasigna': 
+                        $("#modalReAsignacionOrdenTrabajo").modal('hide')
+                        break;                     
+                    default:
+                        $("#modalDetalleOT").modal('hide')
+                        $scope.refrescarBusqueda()
+
+                }
             }else{
                 console.log(result.data.resultDescripcion)
                 toastr.warning( result.data.resultDescripcion );
@@ -1146,8 +1159,11 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     });
 
     abrirModalReporte = function(){
-        $scope.seleccionarTodos($scope.filtrosGeneral.tipoOrdenes);
-        $scope.$apply();
+        if($scope.filtrosGeneral.tipoOrdenes){
+            $scope.seleccionarTodos($scope.filtrosGeneral.tipoOrdenes);
+            $scope.$apply();
+        }
+       
         $("#idot-reporte").val('');
         $("#idos-reporte").val('');
         $("#cuenta-reporte").val('');

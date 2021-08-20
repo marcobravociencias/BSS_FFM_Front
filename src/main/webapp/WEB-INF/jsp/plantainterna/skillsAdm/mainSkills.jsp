@@ -51,9 +51,9 @@
 				role="tabpanel" aria-labelledby="divContenedorIndividual-tab">
 				<header>
 					<nav
-						class="navbar navbar-expand-lg navbar-light bg-light navbar-menu-generic"
+						class="navbar-skills-option navbar navbar-expand-lg navbar-light bg-light "
 						style="float: right;">
-						<ul class="ul-elementos-nav navbar-nav">
+						<ul class=" navbar-nav">
 							<li id="li-consultaot-navbar" class="nav-item"><a
 								class="nav-link a-navlink-navbar pestaniaActivada" href=""
 								ng-click="">Individual</a></li>
@@ -117,7 +117,7 @@
 						</div>
 						<div id="divMensajeSeleccionaGeografia" class="content-noseleccion">
 							<i class="icono-noseleccion fas fa-exclamation-circle me-2"></i> <b
-								class="text-no-seleccion-geografia">Selecciona una geografía</b>
+								class="text-no-seleccion-geografia">Selecciona una geografï¿½a</b>
 						</div>
 					</div>
 				</div>
@@ -128,7 +128,7 @@
 	
 					<div id="divContenedorSkills" class="scrollGeneral" style="display: none">
 						<div style="margin: 10px; text-align: right;">
-							<a ng-click="mostrarContenedoresMultiseleccion()" href="">Multiselección</a>
+							<a ng-click="mostrarContenedoresMultiseleccion()" href="">Multiselecciï¿½n</a>
 						</div>
 						<div class="intervenciones-container">
 							<div
@@ -149,7 +149,7 @@
 					</div>
 					<div id="divMensajeSeleccionaTecnico" class="content-noseleccion">
 						<i class="icono-noseleccion fas fa-exclamation-circle me-2"></i> <b
-							class="text-no-seleccion-geografia">Selecciona un técnico</b>
+							class="text-no-seleccion-geografia">Selecciona un tï¿½cnico</b>
 					</div>
 					<div id="divBotonGuardarSkills" style="display: none;">
 						<div style="margin: 10px; text-align: right;">
@@ -162,7 +162,7 @@
 					</div>
 				</div>
 	
-				<!-- MULTISELECCIÓN -->
+				<!-- MULTISELECCIï¿½N -->
 	
 				<div id="modalMultiseleccion" class="modal fade bd-example-modal-xl"
 					tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
@@ -170,7 +170,7 @@
 					<div class="modal-dialog modal-xl">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h5 class="modal-title">Multiselección</h5>
+								<h5 class="modal-title">Multiselecciï¿½n</h5>
 								<button type="button" class="btn-close" data-mdb-dismiss="modal"
 									aria-label="Close" ng-click="regresarContenedorIndividual()"></button>
 							</div>
@@ -273,7 +273,7 @@
 							<li id="li-consultaot-navbar" class="nav-item"><i
 								class="fas fa-map-marked iconoGeografia"></i> <a
 								class="nav-link a-navlink-navbar linkGeografia" href=""
-								ng-click="abrirModalGeografiaTabla()">Geografía</a></li>
+								ng-click="abrirModalGeografiaTabla()">Geografï¿½a</a></li>
 						</ul>
 					</nav>
 					<nav
@@ -293,7 +293,7 @@
 					<div class="row">
 						<div class="col-md-3">
 							<div class="input-group input-group-sm content-seach-group  ">
-								<input type="text" id="idBuscadorTecnicoTabla" class="form-control form-control-sm buscar-input-operario" ng-keyup="busquedaTecnicoTabla()" placeholder="Buscar Técnico">
+								<input type="text" id="idBuscadorTecnicoTabla" class="form-control form-control-sm buscar-input-operario" ng-keyup="busquedaTecnicoTabla()" placeholder="Buscar Tï¿½cnico">
 								<span class="search-icon-operario-busq fa fa-search" id="buscar-operario"></span>
 							</div>
 						</div>
@@ -357,17 +357,17 @@
 							class="content-noseleccion">
 							<i class="icono-noseleccion fas fa-exclamation-circle me-2"></i> <b
 								class="text-no-seleccion-geografia">Selecciona una
-								geografía</b>
+								geografï¿½a</b>
 						</div>
 					</div>
 				</div>
 	
-				<!-- MODAL GEOGRAFÍA VISTA TABLA -->
+				<!-- MODAL GEOGRAFï¿½A VISTA TABLA -->
 				<div id="modalGeografiaTabla" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h5 class="modal-title">Geografía</h5>
+								<h5 class="modal-title">Geografï¿½a</h5>
 								<button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close" ng-click="cerrarModalGeografiaTabla()"></button>
 							</div>
 							<div class="modal-body">
