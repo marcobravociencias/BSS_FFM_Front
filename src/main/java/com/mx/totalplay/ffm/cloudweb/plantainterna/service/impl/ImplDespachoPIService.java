@@ -800,15 +800,15 @@ JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
 	public ServiceResponseResult consultarReporteDiario(String params) {
 		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
 		
-		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
-
-		logger.info("json object params## "+jsonObject.toString());
-
-		String tokenAcces=principalDetail.getAccess_token();
+		JsonObject login = new JsonObject();		
+		login.addProperty( env.getProperty("param.textus.pI") 		, constantesAmbiente.getTextIpUsuario());
+		login.addProperty( env.getProperty("param.textus.drowssaP") , constantesAmbiente.getTextCredPad());
+		login.addProperty( env.getProperty("param.textus.resU") 	, constantesAmbiente.getTextCredUs());
 		
-		String url="http://34.94.124.52"+constDespachoPI.getConsultarReporteDiario();
-		ServiceResponseResult response= restCaller.callPostBearerTokenRequest(params, url,
-				ServiceResponseResult.class, tokenAcces);			
+		jsonObject.add("Login", login);
+		logger.info("json object params## "+jsonObject.toString());
+		String url= "";
+		ServiceResponseResult response= restCaller.callPostParamString(url, jsonObject.toString());				
 	    logger.info("RESULT"+gson.toJson(response));
 		return response;
 	}
