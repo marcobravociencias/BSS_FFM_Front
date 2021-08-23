@@ -126,8 +126,8 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             swal.close();
             console.log(result);
             if (result[0].data.respuesta) {
-                $scope.nIntervencion = Number(result[0].data.result.N_FILTRO_INTERVENCIONES) 
-                $scope.nGeografia = Number(result[0].data.result.N_FILTRO_GEOGRAFIA)
+                $scope.nIntervencion = result[0].data.result.N_FILTRO_INTERVENCIONES ? Number(result[0].data.result.N_FILTRO_INTERVENCIONES) : null; 
+                $scope.nGeografia = result[0].data.result.N_FILTRO_GEOGRAFIA ? Number(result[0].data.result.N_FILTRO_GEOGRAFIA) : null;
                 $scope.permisosDisponibilidad = result[0].data.result.MODULO_ACCIONES_USUARIO.permisos;
                 console.log($scope.permisosDisponibilidad)
             } else {
@@ -135,7 +135,11 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             }
             if (result[1].data.respuesta) {
                 if (result[1].data.result) {
-                    $scope.arrayIntervencion = result[1].data.result.filter(elemento => { return elemento.nivel === $scope.nIntervencion });
+                    if ($scope.nIntervencion) {
+                        $scope.arrayIntervencion = result[1].data.result.filter(elemento => { return elemento.nivel === $scope.nIntervencion });
+                    } else {
+                        $scope.arrayIntervencion = result[1].data.result;
+                    }
                 } else {
                     mostrarMensajeErrorAlert('No existen intervenciones actualmente');
                 }              
@@ -147,11 +151,12 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                 if (result[2].data.result) {
                     if (result[2].data.result.geografia || result[2].data.result.geografia.length > 0) {
                         let listGeo = [];
-                        result[2].data.result.geografia.forEach(elemento =>{
-                            if (elemento.nivel <= $scope.nGeografia) {
-                                listGeo.push(elemento)
-                            }
-                        })
+                        if ($scope.nGeografia) {
+                             listGeo = result[2].data.result.geografia.filter(e => { return e.nivel <= $scope.nGeografia });
+                        } else {
+                            listGeo = result[2].data.result.geografia;
+                        }
+
                         $scope.geografiaList = listGeo;
                         let geografia = listGeo;
                         geografia.map((e)=>{

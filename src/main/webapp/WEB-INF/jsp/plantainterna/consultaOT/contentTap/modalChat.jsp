@@ -1,9 +1,9 @@
-<div class="modal-body" style="min-height: 300px; max-height: 300px; overflow: auto;overflow-x: hidden;">
+<div class="modal-body" style="min-height: 300px; max-height: 300px;">
 	<div class="container-mensajes-parent">
 		<div class="chat-content-area">
 			<div class="chat-header">
 			</div>
-			<div class="chat-area">
+			<div class="chat-area" style="height: 20em; overflow-y: auto;">
 				<div class="chats" ng-repeat="comentario in comentariosOrdenTrabajo">
 					<div class="chat" ng-if="comentario.origenSistema === 1"><!-- APP-->
 						<div class="chat-avatar">
@@ -32,7 +32,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="row float-right col-chat-fotter">
+			<div class="row float-right col-chat-fotter" style="margin-top: 2em; margin-right: 2em;">
 				<div class="col-6">
 					<input id="comentarioConsultaOt" placeholder="Escribe el mensaje aqu&iacute; ..." type="text" class="input-mensaje-chat form-control form-control-sm ng-pristine ng-valid ng-empty ng-touched input-comentario-ot" ng-model="comentarioConsultaOT">
 				</div>
