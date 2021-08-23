@@ -9,7 +9,7 @@
             <div class="modal-body">
                 <div class="col-12">
                     <div class="row">
-                        <div class="col-2  columna-filtro-ind-rep input-box">
+                        <div class="col-2  columna-filtro-ind-rep input-box" style="width: 150px !important;">
                             <label for="filtro-estatus-substatus" class="label-filter">Estatus</label>
                             <div class="dropdown">
                                 <input readonly data-mdb-toggle="dropdown" aria-expanded="false"
@@ -38,7 +38,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="col-2  columna-filtro-ind-rep input-box">
+                        <div class="col-2  columna-filtro-ind-rep input-box" style="width: 150px !important;">
                             <label for="filtro-intervencion" class="label-filter">Intervenci&oacute;n</label>
                             <div class="dropdown">
                                 <input readonly data-mdb-toggle="dropdown" aria-expanded="false"
@@ -69,46 +69,61 @@
                         </div>
                         <div class="col-1 input-box">
                             <label for="idot" class="label-filter">OT</label>
-                            <input type="text" id="idot-reporte" placeholder="Ej: 65434" ng-model="repDiario.idot" autocomplete="off"
-                                class="form-control input-filtro-reporte form-control-sm">
+                            <input type="text" id="idot-reporte" placeholder="Ej: 65434" ng-model="repDiario.idot"
+                                autocomplete="off" class="form-control input-filtro-reporte form-control-sm">
                         </div>
                         <div class="col-1 input-box">
                             <label for="idos" class="label-filter">OS</label>
-                            <input type="text" id="idos-reporte" placeholder="Ej: 23214" ng-model="repDiario.idos"  autocomplete="off"
-                                class="form-control input-filtro-reporte form-control-sm">
+                            <input type="text" id="idos-reporte" placeholder="Ej: 23214" ng-model="repDiario.idos"
+                                autocomplete="off" class="form-control input-filtro-reporte form-control-sm">
                         </div>
-                        <div class="col-2 input-box">
+                        <div class="col-1 input-box">
                             <label for="cuenta" class="label-filter">Cuenta</label>
-                            <input type="text" id="cuenta-reporte" placeholder="Ej: 0093484233" ng-model="repDiario.cuenta"  autocomplete="off"
-                                class="form-control input-filtro-reporte form-control-sm">
+                            <input type="text" id="cuenta-reporte" placeholder="Ej: 0093484" ng-model="repDiario.cuenta"
+                                autocomplete="off" class="form-control input-filtro-reporte form-control-sm">
+                        </div>
+                        <div class="col-2 columna-filtro-ind-rep input-box">
+                            <label for="tipo_reporte" class="label-filter">Tipo fecha</label>
+                            <select class="input-filtro-reporte form-control form-control-sm" id="tipo_reporte"
+                                ng-model="repDiario.tipo">
+                                <option value="" selected>Seleccione...</option>
+                                <option value="fechaCreacion">Fecha creaci&oacute;n</option>
+                                <option value="fechaConfirmacion">Fecha confirmaci&oacute;n</option>
+                                <option value="fechaAgenda">Fecha agenda</option>
+                                <option value="fechaAtencionInicio">Fecha atenci&oacute;n inicio</option>
+                                <option value="fechaAtencionFin">Fecha atenci&oacute;n fin</option>
+                            </select>
                         </div>
                         <div class="col-1 columna-filtro-ind-rep input-box">
-                            <label for="filtro_fecha_inicio_reporte" class="label-filter">Fecha 
+                            <label for="filtro_fecha_inicio_reporte" class="label-filter">Fecha
                                 inicial</label>
-                            <input readonly type="text" id="filtro_fecha_inicio_reporte" placeholder="Fecha inicial" ng-model="repDiario.fechaInicio"
+                            <input readonly type="text" id="filtro_fecha_inicio_reporte" placeholder="Fecha inicial"
+                                ng-model="repDiario.fechaInicio"
                                 class="datepicker input-filtro-reporte form-control form-control-sm" />
                         </div>
                         <div class="col-1 columna-filtro-ind-rep input-box">
                             <label for="filtro_fecha_fin_reporte" class="label-filter">Fecha final</label>
-                            <input readonly placeholder="Fecha Final" type="text" id="filtro_fecha_fin_reporte" ng-model="repDiario.fechaFin"
+                            <input readonly placeholder="Fecha Final" type="text" id="filtro_fecha_fin_reporte"
+                                ng-model="repDiario.fechaFin"
                                 class="datepicker input-filtro-reporte form-control form-control-sm" />
                         </div>
+
                         <div class="col-1">
-                            <button type="button" class="btn btn-sm  btn-primary  waves-effect waves-light" onclick="consultarReporteDiario()"
-                                id="buscarReporte">
+                            <button type="button" class="btn btn-sm  btn-primary  waves-effect waves-light"
+                                onclick="consultarReporteDiario()" id="buscarReporte">
                                 <i class="fa fa-search"></i>
                             </button>
                         </div>
                         <div class="col-1 download-file">
-                            <a href="#"> 
-                                <img alt="excel" src="${pageContext.request.contextPath}/resources/img/generic/group-10.png">
-                            </a>
+                            <img alt="excel" src="${pageContext.request.contextPath}/resources/img/generic/group-10.png" style="cursor:pointer"
+                                onclick="downloadExcelReportFile()">
                         </div>
 
                     </div>
                     <div class="row">
                         <div class="contenedor-table">
-                            <table class="table table-hover" cellspacing="0" id="table-reporte">
+                            <table class="table table-hover" cellspacing="0" id="table-reporte"
+                                style="width: 100% !important;">
                                 <thead id="head_table">
                                     <tr>
                                         <th>OT</th>
@@ -118,8 +133,7 @@
                                         <th>SUBINTERVENCI&Oacute;N</th>
                                         <th>STATUS</th>
                                         <th>ESTADO</th>
-                                        <th>CIUDAD</th>
-                                        <th>DISTRITO</th>
+                                        <th>GEOGRAF&Iacute;A</th>
                                         <th>OPERARIO</th>
                                         <th>#EMPLEADO</th>
                                         <th>FECHA ATENCI&Oacute;N</th>
@@ -128,7 +142,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                
+
                                 </tbody>
                             </table>
                         </div>
@@ -137,7 +151,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface" data-mdb-dismiss="modal">
+                <button type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface"
+                    data-mdb-dismiss="modal">
                     Cerrar
                 </button>
             </div>
