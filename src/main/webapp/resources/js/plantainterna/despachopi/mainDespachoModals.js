@@ -1161,8 +1161,9 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     abrirModalReporte = function(){
         if($scope.filtrosGeneral.tipoOrdenes){
             $scope.seleccionarTodos($scope.filtrosGeneral.tipoOrdenes);
+            $scope.$apply();
         }
-        $scope.$apply();
+       
         $("#idot-reporte").val('');
         $("#idos-reporte").val('');
         $("#cuenta-reporte").val('');

@@ -1049,10 +1049,11 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
 		}
 	}
 
-    $scope.listOrdenes = [];
-    consultarReporteDiario = function(){
+
+   consultarReporteDiario = function(){
         let mensaje = '<ul>';
         let isValid = true;
+        let numerosOnly = /^[0-9]*$/i;
 
         let statuscopy = [];
         if($scope.filtrosGeneral.estatusdisponibles){
@@ -1061,32 +1062,27 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             })
         }
        
-        let intervencioncopy= [];       
+        let intervencioncopy= [];
         if($scope.filtrosGeneral.tipoOrdenes){
             angular.forEach($scope.filtrosGeneral.tipoOrdenes, (e, i) => {
-                intervencioncopy.push(e.id)
+                e.children.filter(f => f.checkedOpcion).map((k) => { intervencioncopy.push(k.id); return k; })
             })
         }
         
         let paramsTemp = angular.copy($scope.repDiario);
 
-        if($("#idot-reporte").val() && !$.isNumeric($("#idot-reporte").val())){
-            mensaje += '<li>El campo OT debe ser n&uacute;merico</li>';
-            isValid = false;
-        }
-        
         if(!statuscopy.length){
             mensaje += '<li>Introducir Estatus</li>';
             isValid = false;
         }
-        
+
         if(!intervencioncopy.length){
             mensaje += '<li>Introducir Intervenci\u00F3n</li>';
             isValid = false;
         }
 
-        if(paramsTemp.tipo == '' || paramsTemp.tipo == undefined){
-            mensaje += '<li>Introducir Tipo fecha</li>';
+        if(!numerosOnly.test($("#idot-reporte").val())){
+            mensaje += '<li>El campo OT debe ser n&uacute;merico</li>';
             isValid = false;
         }
 
@@ -1101,86 +1097,58 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             return false;
         }else{
 
-            let parametros = {
+            let params = {
                 tipoIntervencion : intervencioncopy,
                 estatusOt : statuscopy,
                 fechaInicio : $scope.getFechaFormato(paramsTemp.fechaInicio),
                 fechaFin:  $scope.getFechaFormato(paramsTemp.fechaFin),
-                fechaSeleccionada : paramsTemp.tipo,
+                fechaSeleccionada : "fechaAgendamiento",
                 idOrden : paramsTemp.idot || "",
                 idCuenta : paramsTemp.cuenta || "",
-                folio: paramsTemp.idos || ""
+                folio: paramsTemp.idos || "",
+                elementosPorPagina : 10
             }
+            
             swal({ text: 'Espera un momento...', allowOutsideClick: false });
             swal.showLoading();
-            $scope.listOrdenes = [];
-            if(tableReporte){                             
+            swal.close()
+            /*
+            if(tableReporte)
                 tableReporte.destroy()
-            }
 
-            mainDespachoService.consultarReporteDiario(parametros).then(function success(response) {     
-                if (response.data !== undefined) {
-                    if(response.data.respuesta ){
-                        if(response.data.result ){
-                            angular.forEach(response.data.result.ordenes,function(orden,index){   
-                               let row = [];
-                               row[0] = orden.idOrden;
-                               row[1] = orden.folio;
-                               row[2] = orden.cuenta;
-                               row[3] = orden.intervencion;
-                               row[4] = orden.subIntervencion;
-                               row[5] = orden.estatus;
-                               row[6] = orden.estado;
-                               row[7] = orden.geografia;
-                               row[8] = orden.operario;
-                               row[9] = orden.nempleado;
-                               row[10] = orden.fechaCreacion;
-                               row[11] = orden.fechaPrimeraAgenda;
-                               row[12] = orden.turno;
-                               $scope.listOrdenes.push(row);
-                            })
-                            swal.close();
-                                
-                            tableReporte = $('#table-reporte').DataTable({
-                                "paging": true,
-                                "lengthChange": false,
-                                "searching": false,
-                                "ordering": false,
-                                "pageLength": 10,
-                                "info": false,
-                                "autoWidth": true,
-                                "data":$scope.listOrdenes,
-                                "language": idioma_espanol_not_font,
-                                "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
-                            });
-                        }else{
-                            swal.close();
-                            mostrarMensajeErrorAlert(response.data.resultDescripcion);
-                        }
-                    }else{
-                        swal.close();
-                        mostrarMensajeErrorAlert(response.data.resultDescripcion);
-                    }
-                }else{
-                    swal.close();
-                    mostrarMensajeErrorAlert(response.data.resultDescripcion);
-                }
-            });
+            tableReporte = $('#table-reporte').DataTable({
+                "paging": true,
+                "searching": false,
+                "ordering": false,
+                "info": false,
+                "autoWidth": true,
+				"processing": false,
+				"ordering": false,
+				"serverSide": true,
+				"scrollX": false,
+				"lengthChange": false,
+				"pageLength": 10,
+				"ajax": {
+					"url": "req/consultarReporteDiario",
+					"type": "POST",
+					"data": params,
+					"dataSrc": function (json) {
+						return json.data;
+					},
+					"error":function(xhr, error, thrown){
+						handleError(xhr)
+					}, 
+					"complete": function () {
+						swal.close()
+					}
+				},
+				"columns": [null, null, null, null, null, null, null, null, null],
+				"language": idioma_espanol_not_font
+			});
+            */
         }
     }
-
-    downloadExcelReportFile = function(){
-        if($scope.listOrdenes.length){
-        /*
-        let ordenes  = $scope.listOrdenes;
-        var blob = new Blob([ordenes], { type: 'application/vnd.ms-excel' });
-        let fileName = 'Seguimiento diario.xls';
-        saveAs(blob, fileName);
-        */
-        }else{
-            swal({ text: 'No hay datos disponibles para descargar', allowOutsideClick: true });
-        }
-    } 
+    
 }]);
 
 app.directive('doneListadoDependenciaHistorico', function () {
