@@ -111,7 +111,7 @@
                             <table class="table table-hover" cellspacing="0" id="table-reporte">
                                 <thead id="head_table">
                                     <tr>
-                                        <th>OT</th>
+                                        <th>OT</th> 
                                         <th>OS</th>
                                         <th>CUENTA</th>
                                         <th>INTERVENCI&Oacute;N</th>
