@@ -126,7 +126,7 @@
                                 style="width: 100% !important;">
                                 <thead id="head_table">
                                     <tr>
-                                        <th>OT</th>
+                                        <th>OT</th> 
                                         <th>OS</th>
                                         <th>CUENTA</th>
                                         <th>INTERVENCI&Oacute;N</th>
