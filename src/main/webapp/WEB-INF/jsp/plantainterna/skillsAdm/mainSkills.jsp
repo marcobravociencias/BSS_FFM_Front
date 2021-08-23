@@ -131,7 +131,8 @@
 							<a ng-click="mostrarContenedoresMultiseleccion()" href="">Multiselecci�n</a>
 						</div>
 						<div class="intervenciones-container">
-							<div ng-repeat="intervencion in listadoIntervenciones | orderBy:'nombre' | filter:buscarSkill track by $index"
+							<div
+								ng-repeat="intervencion in listadoIntervenciones | filter:buscarSkill track by $index"
 								class="row ">
 								<div class="col-9 intervencion-col">
 									<h5 class="text-intervencion-title"
@@ -223,7 +224,7 @@
 											<div id="divContenedorSkills2" class="scrollGeneral">
 												<div class="intervenciones-container">
 													<div
-														ng-repeat="intervencion in listadoIntervenciones | orderBy:'nombre' | filter:buscarSkill track by $index"
+														ng-repeat="intervencion in listadoIntervenciones | filter:buscarSkill track by $index"
 														class="row ">
 														<div class="col-10 intervencion-col">
 															<h5 class="text-intervencion-title"
@@ -315,15 +316,14 @@
 										<thead class="thead-table table-nowrap" id="idTheadTabla">
 											<tr class="zui-sticky-tr">
 												<th class="zui-sticky-col zui-text-cabeceras" scope="col">CUADRILLA</th>
-												<th class="zui-text-cabeceras" scope="col" style="text-align: center" ng-repeat="intervencion in listadoIntervenciones | orderBy:'nombre' track by $index">{{intervencion.nombre}} <i class="fas fa-eye-slash iconoOjoColumna" ng-click="displayColumnaIndividual($index+2)"></i></th>
-												<th></th>
+												<th class="zui-text-cabeceras" scope="col" style="text-align: center" ng-repeat="intervencion in listadoIntervenciones track by $index">{{intervencion.nombre}} <i class="fas fa-eye-slash iconoOjoColumna" ng-click="displayColumnaIndividual($index+2)"></i></th>
 											</tr>
 										</thead>
 										<tbody id="bodyTabla">
 											<tr ng-repeat="tecnico in tecnicosMostradas | filter: buscarTecnicoTabla" class="zui-sticky-tr trTecnico">
 												<td class="zui-sticky-body zui-text-cabeceras nombreTecnico" 
 												data-toggle="tooltip" data-placement="top" title="{{tecnico.nombre}} {{tecnico.apellidoPaterno}} {{tecnico.apellidoMaterno}}">{{tecnico.nombre}} {{tecnico.apellidoPaterno}} {{tecnico.apellidoMaterno}}</td>
-												<td class="zui-sticky-cuerpo" ng-repeat="skill in tecnico.todasSkills | orderBy:'nombre' track by $index" style="text-align: center" scope="col">
+												<td ng-repeat="skill in tecnico.todasSkills track by $index" style="text-align: center" scope="col">
 													<input class="form-check-input" type="checkbox" ng-model="skill.checkTabla" ng-init="check = skill.checkTabla" ng-click="" >
 												</td>
 												<td class="zui-sticky-body-final">
@@ -419,7 +419,7 @@
 									</div>
 									<div id="divContenedorSkills" class="scrollGeneral">
 										<div class="intervenciones-container">
-											<div ng-repeat="intervencion in listadoIntervencionesFiltro | orderBy:'nombre' track by $index" class="row rowSkillFiltro">
+											<div ng-repeat="intervencion in listadoIntervencionesFiltro track by $index" class="row rowSkillFiltro">
 												<div class="col-md-10 intervencion-col">
 													<h5 class="text-intervencion-title nombreSkillFiltro" ng-bind="intervencion.nombre"></h5>
 												</div>

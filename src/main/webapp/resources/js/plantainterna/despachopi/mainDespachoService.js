@@ -296,5 +296,15 @@ app.service("mainDespachoService", function ($http) {
 		})
 	};
 	
+	this.consultarReporteDiario=function(params){
+		return $http({
+			method:"post",
+			url:"req/consultarReporteDiario",
+			data:JSON.stringify(params),
+			headers:{
+				'Content-Type':'application/json'
+			}
+		})
+	};
 	
 });
