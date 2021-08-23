@@ -21,7 +21,7 @@
 					<div class="scrollGeneral">
 						<table class="table">
 							<tbody>
-								<tr ng-repeat="intervencionModal in listadoIntervencionesSeleccionadas track by $index">
+								<tr ng-repeat="intervencionModal in listadoIntervencionesSeleccionadas | orderBy:'nombre' track by $index">
 									<td>{{$index +1}} </td>
 									<td>{{intervencionModal.nombre}}</td>
 								</tr>
