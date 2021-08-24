@@ -182,7 +182,14 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
 			"info": false,
 			"autoWidth": true,
 			"language": idioma_espanol_not_font,
-			"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+            dom: 'Bfrtip',
+            buttons: 
+            [{
+                extend: 'excelHtml5',
+                title: 'Reporte Seguimiento Diario',
+                text: 'Exportar Excel'
+            }]
 		});
 
     });
@@ -1180,6 +1187,13 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                                 "data":$scope.listOrdenes,
                                 "language": idioma_espanol_not_font,
                                 "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+                                dom: 'Bfrtip',
+                                buttons: 
+                                [{
+                                    extend: 'excelHtml5',
+                                    title: 'Reporte Seguimiento Diario',
+                                    text: 'Exportar Excel'
+                                }]
                             });
                         }else{
                             swal.close();
@@ -1198,16 +1212,11 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
     }
 
     downloadExcelReportFile = function(){
-        if($scope.listOrdenes.length){
-        /*
-        let ordenes  = $scope.listOrdenes;
-        var blob = new Blob([ordenes], { type: 'application/vnd.ms-excel' });
-        let fileName = 'Seguimiento diario.xls';
-        saveAs(blob, fileName);
-        */
-        }else{
-            swal({ text: 'No hay datos disponibles para descargar', allowOutsideClick: true });
-        }
+        if($scope.listOrdenes.length){ 
+            $(".buttons-excel").click();
+        }else{ 
+            swal({ text: 'No hay datos disponibles para descargar', allowOutsideClick: true }); 
+        } 
     } 
 }]);
 
