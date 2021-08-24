@@ -32,7 +32,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
     app.filtrosDespachoPrincipal($scope,mainDespachoService)
     app.mapasControllerDespachoPI($scope,mainDespachoService)
     app.modalDespachoPrincipal($scope,mainDespachoService,$q,genericService)
-    app.alertasDespachoPrincipal($scope,mainAlertasService)
+    app.alertasDespachoPrincipal($scope,mainAlertasService,genericService)
     app.misProyectosDependencias($scope,mainDespachoService)
     
     $scope.isCargaTecnicosDisponibles=false;
@@ -43,6 +43,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
     $scope.isConsultarConteoAlertas=false
     
     $scope.filtrosGeneral={}
+    $scope.filtrosAlertas={};
     $scope.listadoOtsPendientes=[]  
     $scope.listadoTecnicosGeneral=[];                                   
     $scope.listadoTecnicosGeneralTemp=[];                                   
@@ -844,6 +845,10 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
     }, function error(response) {
          // swal.close()
     });**/
+    $scope.banderaErrorIntervencion = false;
+    $scope.banderaErrorTurno = false;
+    $scope.banderaErrorGeografia = false;
+    $scope.banderaErrorGeneral = false;
     $scope.getCatControllerstatusDespachoPI=function(){
 
         mainDespachoService.consultarCatalogoEstatusDespachoPI().then(function success(response) {     
@@ -880,6 +885,8 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             $scope.nfiltroestatuspendiente=results[3].data.result.ESTATUS_PENDIENTES           
             $scope.permisosConfigUser=results[3].data.result.MODULO_ACCIONES_USUARIO;
             $scope.estatusCambio = results[4].data.result;
+            $scope.filtrosAlertas.catalogoEstatus = angular.copy(results[4].data.result);
+
            
             if($scope.permisosConfigUser!=undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length >0){
                 $scope.permisosConfigUser.permisos.map(e=>{e.banderaPermiso = true ; return e;});
@@ -922,15 +929,22 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                 if(results[0].data.respuesta ){
                     if(results[0].data.result ){
                         $scope.filtrosGeneral.turnosdisponibles=results[0].data.result
+                        $scope.filtrosAlertas.turnos = angular.copy(results[0].data.result);
                         $scope.filtrosGeneral.turnosdisponibles.map(e=>{e.checkedOpcion=true; return e;})
                     }else{                      
-                        toastr.warning( 'No se encontraron catalogos turnos' );                
+                        toastr.warning( 'No se encontraron catalogos turnos' );
+                        $scope.banderaErrorTurno = true;
+                        $scope.banderaErrorGeneral = true;
                     }
                 }else{
-                    toastr.warning( results[0].data.resultDescripcion );                
+                    toastr.warning( results[0].data.resultDescripcion );
+                    $scope.banderaErrorTurno = true;
+                    $scope.banderaErrorGeneral = true;
                 }               
             }else{
-                toastr.error( 'Ha ocurrido un error en la consulta de turnos' );                
+                toastr.error( 'Ha ocurrido un error en la consulta de turnos' );
+                $scope.banderaErrorTurno = true;
+                $scope.banderaErrorGeneral = true;
             }
 
             if (results[1].data !== undefined) {
@@ -938,13 +952,19 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                     if(results[1].data.result ){
                         $scope.filtrosGeneral.tipoOrdenes=$scope.realizarConversionAnidado( results[1].data.result)            
                     }else{                      
-                        toastr.warning( 'No se encontraron  tipo ordenes' );                
+                        toastr.warning( 'No se encontraron  tipo ordenes' );
+                        $scope.banderaErrorIntervencion = true;
+                        $scope.banderaErrorGeneral = true;
                     }
                 }else{
-                    toastr.warning( results[1].data.resultDescripcion );                
+                    toastr.warning( results[1].data.resultDescripcion );
+                    $scope.banderaErrorIntervencion = true;
+                    $scope.banderaErrorGeneral = true;
                 }               
             }else{
-                toastr.error( 'Ha ocurrido un error en la consulta de tipo ordenes' );                
+                toastr.error( 'Ha ocurrido un error en la consulta de tipo ordenes' );
+                $scope.banderaErrorIntervencion = true;
+                $scope.banderaErrorGeneral = true;
             }
 
             if (results[2].data !== undefined) {
@@ -988,15 +1008,23 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                     
                         }else{
                             toastr.warning( 'No se encontraron datos para la geografia' );                
+                            $scope.banderaErrorGeografia = true;
+                            $scope.banderaErrorGeneral = true;
                         }                        
                     }else{                      
                         toastr.warning( 'No se encontraron datos para la geografia' );                
+                        $scope.banderaErrorGeografia = true;
+                        $scope.banderaErrorGeneral = true;
                     }
                 }else{
                     toastr.warning( results[2].data.resultDescripcion );                
+                    $scope.banderaErrorGeografia = true;
+                    $scope.banderaErrorGeneral = true;
                 }               
             }else{
-                toastr.error( 'Ha ocurrido un error en la consulta de turnos' );                
+                toastr.error( 'Ha ocurrido un error en la consulta de geografia' );                
+                $scope.banderaErrorGeografia = true;
+                $scope.banderaErrorGeneral = true;
             }      
            
 

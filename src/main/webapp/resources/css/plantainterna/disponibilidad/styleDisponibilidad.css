@@ -960,3 +960,10 @@ label.label-filter {
 
 
 }
+i.icono-noseleccion {
+  color: #ff9f3b;
+  display: inline-block;
+}
+b.text-no-seleccion-geografia {
+  color: #959595;
+}

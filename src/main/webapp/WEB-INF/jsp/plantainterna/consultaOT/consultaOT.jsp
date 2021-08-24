@@ -67,7 +67,7 @@
                     class="form-control input-filtro-consultaOT form-control-sm">
                 </div>
                 <div class="col-2 column-style-consulta columna-filtro-ind">
-                    <label for="filtro-estatus-substatus" class="label-filter">Estatus</label>
+                    <i class="icono-noseleccion fas fa-exclamation-circle me-2" title="No se encontraron catalogo de estatus" ng-show="banderaErrorEstatus"></i><label for="filtro-estatus-substatus" class="label-filter">Estatus</label>
                     <div class="dropdown">
                         <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..." type="text" id="filtro-estatus-substatus" class="input-filtro-consultaOT form-control form-control-sm" />
                         <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-estatus-substatus">      
@@ -102,7 +102,7 @@
                      </div>
                 </div>
                 <div class="col-2 column-style-consulta columna-filtro-ind">
-                    <label for="filtro-intervencion" class="label-filter">Intervenci&oacute;n</label>
+                    <i class="icono-noseleccion fas fa-exclamation-circle me-2" title="No se encontraron catalogo de intervenciones" ng-show="banderaErrorIntervencion"></i><label for="filtro-intervencion" class="label-filter">Intervenci&oacute;n</label>
                     <div class="dropdown">
                         <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..." type="text" id="filtro-intervencion" class="input-filtro-consultaOT form-control form-control-sm" />
                         <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-intervencion">      
@@ -129,7 +129,7 @@
                      </div>
                 </div>
                     <div class="col-2 column-style-consulta columna-filtro-ind">
-                        <label for="cluster" class="label-filter">Geograf&iacute;a</label>
+                        <i class="icono-noseleccion fas fa-exclamation-circle me-2" title="No se encontraron catalogo de Geografia" ng-show="banderaErrorGeografia"></i><label for="cluster" class="label-filter">Geograf&iacute;a</label>
                         <input readonly placeholder="Seleccione..." type="text" id="cluster"
                         class="input-filtro-consultaOT form-control form-control-sm">
                     </div>
