@@ -16,7 +16,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
 import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
@@ -61,24 +60,32 @@ public class SecurityCustomAuthenticationProvider implements AuthenticationProvi
 	        LoginResult response = autentificacionService.getAutentificacion(username, password);
 	        
 	        if (response.getMensaje() == null ) {
-	    		final List<GrantedAuthority> grantedAuths = new ArrayList<GrantedAuthority>();
-	    		grantedAuths.add(new SimpleGrantedAuthority("ROLE_USER"));
+	        	if (response.getPermisos().size() != 0) {
+	        		final List<GrantedAuthority> grantedAuths = new ArrayList<GrantedAuthority>();
+		    		grantedAuths.add(new SimpleGrantedAuthority("ROLE_USER"));
+		    		
+		    		//SE AGREGAN LOS PERMISOS AL USUARIO
+		    		
+		    		for(Permiso permiso: response.getPermisos()) {
+		    			urlRoleMap.put("/"+permiso.getClave(), "ROLE_USER");
+		    		}
+		    		response.setPermiAccUs(urlRoleMap);	    	
+		    		
+		    		logger.info("KEY GOOGLE $ "+constantesGeneric.getGoogAccLLaevATok());
+		    		response.setGooglAcceLla(constantesGeneric.getGoogAccLLaevATok());
+		    		response.setDireccionAmbiente( env.getProperty("dep.envirom.web")  );
+		    		return new UsernamePasswordAuthenticationToken(response, password, grantedAuths);
+	        	} else {
+	        		//new LoginController().loginPage("1", null);
+	        		throw new BadCredentialsException("External system authentication failed");
+	        	}
 	    		
-	    		//SE AGREGAN LOS PERMISOS AL USUARIO
-	    		
-	    		for(Permiso permiso: response.getPermisos()) {
-	    			urlRoleMap.put("/"+permiso.getClave(), "ROLE_USER");
-	    		}
-	    		response.setPermiAccUs(urlRoleMap);	    	
-	    		
-	    		logger.info("KEY GOOGLE $ "+constantesGeneric.getGoogAccLLaevATok());
-	    		response.setGooglAcceLla(constantesGeneric.getGoogAccLLaevATok());
-	    		response.setDireccionAmbiente( env.getProperty("dep.envirom.web")  );
-	    		return new UsernamePasswordAuthenticationToken(response, password, grantedAuths);
 	        	
 	        } else {
-	            throw new 
-	              BadCredentialsException("External system authentication failed");
+	        	//Authentication auth1 = SecurityContextHolder.getContext().getAuthentication();
+	    		//logger.info(auth1);
+	        	//new LoginController().loginPage("1", null);
+	            throw new BadCredentialsException("External system authentication failed");
 	        }
 	    }
 

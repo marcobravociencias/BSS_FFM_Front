@@ -87,9 +87,13 @@ public class MyFilterInvocationSecurityMeatadataSource implements org.springfram
 		if(auth.getPrincipal().toString().equals("anonymousUser") && url.equals("/") ) {
 			url = "homePage";
 		}
+		if(auth.getPrincipal().toString().equals("anonymousUser") && url.equals("/error")) {
+			url = "/";
+		}
 		if(!auth.getPrincipal().toString().equals("anonymousUser") && url.equals("/loginPage")) {
 			url = "/";
 		}
+		
 		/**if(loginResult.getPermisos() !=null) {
 			for (Permiso permiso:loginResult.getPermisos()) {
 				urlRoleMap.put( permiso.getClave(),"ROLE_USER");
