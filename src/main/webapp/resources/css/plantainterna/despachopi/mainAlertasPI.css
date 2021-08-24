@@ -117,7 +117,7 @@ div.comentario_web{
 }
 .timeline__date{
     top: 50%;
-    margin-top: -27px;
+    margin-top: -35px;
 }
 .timeline__box{
     position: relative;
@@ -307,4 +307,13 @@ div#contenido_imagenes {
 }
 .dataTables_scrollHead {
     display: none;
+}
+.line-time-new:before {
+    content: "";
+    width: 4px;
+    height: 100%;
+    background-color: #78A7F7;
+    position: absolute;
+    top: 0;
+    left: 2.5em;
 }

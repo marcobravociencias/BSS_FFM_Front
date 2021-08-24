@@ -40,14 +40,14 @@
                         <li class="nav-item" role="presentation">
                             <a class="nav-link options-alertas active" id="pills-mapa-tab" data-toggle="pill" href="#pills-mapa" role="tab" aria-controls="pills-mapa" aria-selected="true">Mapa</a>
                         </li>
-                        <li class="nav-item" role="presentation">
+                        <!--li class="nav-item" role="presentation">
                             <a class="nav-link options-alertas" id="pills-imagenes-tab" data-toggle="pill" href="#pills-imagenes" role="tab" ng-click="consultarEvidenciaAlerta()" aria-controls="pills-imagenes" aria-selected="false">Im&aacute;genes</a>
-                        </li>
+                        </li-->
                         <li class="nav-item" role="presentation">
                             <a class="nav-link options-alertas" id="pills-historico-tab" data-toggle="pill" href="#pills-historico" role="tab" ng-click="consultarHistoricoAlerta()" aria-controls="pills-historico" aria-selected="false">Hist&oacute;rico</a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link options-alertas" id="pills-chat-tab" data-toggle="pill" href="#pills-chat" role="tab" ng-click="consultarChatAlerta()" aria-controls="pills-chat" aria-selected="false">Chat</a>
+                            <a class="nav-link options-alertas" id="pills-chat-tab" data-toggle="pill" href="#pills-chat" role="tab" ng-click="consultarChatAlerta()" aria-controls="pills-chat" aria-selected="false">Comentarios</a>
                         </li>
                     </ul>
                 </div>
@@ -116,157 +116,111 @@
 
                         <div class="tab-pane fade" id="pills-historico" role="tabpanel" aria-labelledby="pills-historico-tab">
                             <div class="container">
-                                <div class="row">
-                                    <div ng-repeat="elementHistorico in listaHistoricoAlerta" class="col-6">
+                                <div class="row" ng-repeat="elementHistorico in listaHistoricoAlerta">
+                                    <div class="col-2 line-time-new">
+                                        <div style="background-color:white;" class="timeline__date">
+                                            <span style="font-size: 15px !important;color:grey;" class="timeline__day">OT</span>
+                                            <span style="font-size: 12px !important;" class="timeline__month">
+                                                <i ng-if="elementHistorico.idEstatusOrden==1" class="pendiente-historico  fas fa-pause circle-statushistorico-histo"></i>
+                                                <i ng-if="elementHistorico.idEstatusOrden==2" class="asignacion-historico fas fa-arrow-right circle-statushistorico-histo"></i>
+                                                <i ng-if="elementHistorico.idEstatusOrden==3" class="detencion-historico far fa-hand-paper circle-statushistorico-histo"></i>
+                                                <i ng-if="elementHistorico.idEstatusOrden==4" class="terminar-historico fas fa-check circle-statushistorico-histo"></i>
+                                                <i ng-if="elementHistorico.idEstatusOrden==5" class="cancelado-historico fas fa-times circle-statushistorico-histo"></i> 
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div id="content-historial-{{$index}}"  class="col-10" style="display: grid;">
                                         <div  class="card-historico card text-center">
                                             <div class="card-body">
-                                                <i ng-if="elementHistorico.Id_Estatus==1" class="pendiente-historico  fas fa-pause circle-statushistorico"></i>
-                                                <i ng-if="elementHistorico.Id_Estatus==2" class="asignacion-historico fas fa-arrow-right circle-statushistorico"></i>
-                                                <i ng-if="elementHistorico.Id_Estatus==3" class="detencion-historico far fa-hand-paper circle-statushistorico"></i>
-                                                <i ng-if="elementHistorico.Id_Estatus==4" class="terminar-historico fas fa-check circle-statushistorico"></i>
-                                                <i ng-if="elementHistorico.Id_Estatus==5" class="cancelado-historico fas fa-times circle-statushistorico"></i> 
+                                                <i ng-if="elementHistorico.idEstatusOrden==1" class="pendiente-historico  fas fa-pause circle-statushistorico"></i>
+                                                <i ng-if="elementHistorico.idEstatusOrden==2" class="asignacion-historico fas fa-arrow-right circle-statushistorico"></i>
+                                                <i ng-if="elementHistorico.idEstatusOrden==3" class="detencion-historico far fa-hand-paper circle-statushistorico"></i>
+                                                <i ng-if="elementHistorico.idEstatusOrden==4" class="terminar-historico fas fa-check circle-statushistorico"></i>
+                                                <i ng-if="elementHistorico.idEstatusOrden==5" class="cancelado-historico fas fa-times circle-statushistorico"></i> 
 
                                                 <div class="container-deschistorico">
-                                                    <span class="titlehistorico">Estado</span>
-                                                    <span class="content-titlehistorico-alerta" ng-bind="elementHistorico.EstatusDescripcion"></span>
+                                                    <span class="titlehistorico">Estado:</span>
+                                                    <span class="content-titlehistorico" ng-bind="elementHistorico.descripcionEstatusOrden"></span>
                                                 </div>
                                                 <div class="container-deschistorico">
-                                                    <span class="titlehistorico">Motivo</span>
-                                                    <span class="content-titlehistorico-alerta" ng-bind="elementHistorico.MotivoDescripcion"></span>
+                                                    <span class="titlehistorico">Motivo:</span>
+                                                    <span class="content-titlehistorico" ng-bind="elementHistorico.descripcionMotivoOrden"></span>
                                                 </div>
                                                 <div class="container-deschistorico">
                                                     <span class="titlehistorico">Descripci&oacute;n:</span>
-                                                    <span class="content-titlehistorico-alerta" ng-bind="elementHistorico.Descripcion"></span>
+                                                    <span class="content-titlehistorico" ng-bind="elementHistorico.descripcionEstadoOrden"></span>
                                                 </div>
                                             </div>
                                             <div class="card-footer text-muted">
-                                                <p class="footer-card-historico" ng-bind="elementHistorico.FechaModificacion+' '+elementHistorico.HoraModificacion" ></p>
+                                                <p class="footer-card-historico" ng-bind="elementHistorico.fecha+' '+elementHistorico.hora" ></p>
                                             </div>
                                         </div>
                                     </div>
-                                </div>																
-								<!--div ng-repeat="historicoInd in listaHistoricoAlerta" class="timeline__group">
-									<div class="timeline__box">
-										<div style="background-color:white;"  class="timeline__date">
-											<span  style="font-size: 15px !important;color:grey;" class="timeline__day">OT</span>
-											<span  style="font-size: 12px !important;" class="timeline__month">
-												<i ng-if="historicoInd.Id_Estatus === '1'" style="width:25px;height:25px;font-size: 2em; " alt="PENDIENTE" class="fa fa-pause-circle pend"></i>
-												<i ng-if="historicoInd.Id_Estatus === '2'" style="width:25px;height:25px;font-size: 2em;" alt="PENDIENTE" class="fa fa-arrow-circle-right asig"></i>
-												<i ng-if="historicoInd.Id_Estatus === '3'" style="width:25px;height:25px;font-size: 2em; " alt="PENDIENTE" class="'fa fa-hand-paper-o deten"></i>
-												<i ng-if="historicoInd.Id_Estatus === '4'" style="width:25px;height:25px;font-size: 2em; " alt="PENDIENTE" class="fa fa-check-circle term"></i>
-												<i ng-if="historicoInd.Id_Estatus === '5'" style="width:25px;height:25px;font-size: 2em; " alt="PENDIENTE" class="fa fa-times-circle cancel"></i>
-											</span>
-										</div>
-										<div class="timeline__post">
-											<div class="timeline__content">
-											<div class="row">
-												<div class="col-md-12">
-													<div class="row">
-														<div class="col-md-6">
-															<div class="col-md-12">
-																<b  class="title_span"> OT:</b>
-																<span id="ot_detalle" class="content_text">{{historicoInd.OT}}</span>
-															</div>
-															<div class="col-md-12">
-																<b class="title_span"> Estado:</b>
-																<span id="ot_detalle" class="content_text">{{historicoInd.EstadoDescripcion}}</span>
-															</div>
-															<div class="col-md-12">
-																<b class="title_span"> Descripci&oacute;n:</b>
-																<span id="ot_detalle" class="content_text">{{historicoInd.Descripcion}}</span>
-															</div>
-														</div>
-														<div class="col-md-6">
-															<div class="col-md-12">
-																<b class="title_span"> Motivo:</b>
-																<span id="ot_detalle" class="content_text">{{historicoInd.MotivoDescripcion}}</span>
-															</div>
-															<div class="col-md-12">
-																<b class="title_span"> Fecha:</b>
-																<span id="ot_detalle" class="content_text">{{historicoInd.FechaModificacion}}</span>
-															</div>
-															<div class="col-md-12">
-																<b class="title_span"> Hora:</b>
-																<span id="ot_detalle" class="content_text">{{historicoInd.HoraModificacion}}</span>
-															</div>
-														</div>
-													</div>
-												</div> 
-											</div>					     
-											</div>
-										</div>
-									</div>
-								</div-->										
+
+                                </div>																								
 							</div>
                         </div>
-                        <div class="tab-pane fade" id="pills-chat" role="tabpanel" aria-labelledby="pills-chat-tab">
-
-                            <div class="container-mensajes-parent">
-                                <div class="chat-content-area">
-                                    <div class="chat-header">
-                                         
-
-                                    </div>
-                                    <div class="chat-area">
-                                        <div class="chats" ng-repeat="comentario in listaComentariosAlerta">
-                                            <div class="chat" ng-if="comentario.Origen == 'FFM APP'">
-                                                <div class="chat-avatar">
-                                                    <a class="avatar"><i class="img-comentarios-chat android-mensaje fab fa-android"></i></a>
-                                                </div>
-                                                <div class="chat-body">
-                                                    <div class="chat-text">
-                                                        <p ng-bind="comentario.Comentario"></p>
+                        <div class="tab-pane fade" id="pills-chat" role="tabpanel" aria-labelledby="pills-chat-tab" style="overflow-y: hidden;">
+                            <div class="col-12">
+                                <div class="container-mensajes-parent">
+                                    <div class="chat-content-area">
+                                        <div class="chat-header">
+                                             
+    
+                                        </div>
+                                        <div class="chat-area" style="overflow-y: scroll; height: 50vh;">
+                                            
+    
+                                            <div class="chats" ng-repeat="comentario in listaComentariosAlerta">
+                                                <div class="chat" ng-if="comentario.origenSistema === 1"><!-- APP-->
+                                                    <div class="chat-avatar">
+                                                        <a class="avatar"><i class="img-comentarios-chat android-mensaje fab fa-android" style="margin-top: 1em;"></i></a>
+                                                    </div>
+                                                    <div class="chat-body">
+                                                        <span class="text-fecha-comentario" ng-bind="comentario.fechaComentario"></span>
+                                                        <div class="chat-text">
+                                                            <p ng-bind="comentario.comentario"></p>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="chat chat-right" ng-if="comentario.Origen !== 'FFM APP'">
-                                                <div class="chat-body">
-                                                    <div class="chat-text">
-                                                        <p ng-bind="comentario.Comentario"></p>
+                                                <div class="chat chat-right" ng-if="comentario.origenSistema !== 1">
+                                                    <div class="chat-body">
+                                                        <span class="text-fecha-comentario" ng-bind="comentario.fechaComentario"></span>
+                                                        <div class="chat-text">
+                                                            <p ng-bind="comentario.comentario"></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="chat-avatar">
+                                                        <a class="avatar">
+                                                            <i class="img-comentarios-chat web-mensaje fas fa-desktop" style="margin-top: 1em;"></i>
+                                                        </a>
                                                     </div>
                                                 </div>
-                                                <div class="chat-avatar">
-                                                    <a class="avatar">
-                                                        <i class="img-comentarios-chat web-mensaje fas fa-desktop"></i>
-                                                    </a>
-                                                  </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="chat-fotter">
-                                        <input placeholder="Escribe el mensaje aqu&iacute; ..." type="text" class="input-mensaje-chat form-control form-control-sm">
-                                        <button class="btn btn-sm btn-primary" ng-click="agregarComentario()">Enviar</button>
+                                        <div class="row col-chat-fotter">
+                                            
+                                            <!--div class="col-6">
+                                                <input id="comentarioOt" placeholder="Escribe el mensaje aqu&iacute; ..." type="text" class="input-mensaje-chat form-control form-control-sm input-comentario-ot" ng-model="comentarioAlerta">
+                                            </div>
+                                            <div class="col-3" style="left: 200px;height: 50px;">
+                                                <button class="btn btn-primary btn-enviar-comentario-ot" ng-click="agregarComentario()">Enviar</button>
+                                            </div-->
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <!--div class="row justify-content-center">
-                                <div ng-repeat="comentario in listaComentariosAlerta" class="col-12">	
-                                    <div ng-if="comentario.Origen =='FFM APP'"  class="row">
-                                        <div class="col-7 offset-md-4 comentario_movil">
-                                            <b class="autor_comentario" style="margin-top: 0.4em"> {{comentario.Origen}}  -  {{comentario.NombreCompleto}} </b>
-                                            <span > {{comentario.FechaComentario}}</span>
-                                            <hr style="margin-top: 0em; border-top: 1px solid #cdcdd6 !important" /> {{comentario.Comentario}} 
-                                        </div>
-                                        <div class="col-1">
-                                            <img class="imagen_chat" alt="web" src="${pageContext.request.contextPath}/resources/img/generic/android.png" style="width: 40px; height: 40px;">
-                                        </div>
+                            
+                            <div class="col-12" style="margin-top: .5em;">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Escribe el mensaje aqu&iacute; ..." ng-model="comentarioAlerta" style="height: 41px;">
+                                    <div class="input-group-append">
+                                      <button class="btn btn-primary btn-enviar-comentario-ot" ng-click="agregarComentario()" type="button" id="button-addon2" style="color: white!important;">Enviar</button>
                                     </div>
-
-                                    <div ng-if="comentario.Origen !== 'FFM APP'" class="row">
-                                        <div class="col-1 icono_chat">
-                                            <img class="imagen_chat" alt="web" src="${pageContext.request.contextPath}/resources/img/generic/web.png" style="width: 40px; height: 40px;">
-                                        </div>
-                                        <div class="col-7 comentario_web">
-                                            <b  class="autor_comentario" style="margin-top: 0.4em"> {{comentario.Origen}}  - {{comentario.NombreCompleto}} </b>
-                                            <span>{{comentario.FechaComentario}}</span>
-                                            <hr style="margin-top: 0em; border-top: 1px solid #cdcdd6 !important" />  {{comentario.Comentario}} 
-                                        </div>
-                                        <div class="col-2 text-left"></div>
-                                    </div>								
-                                    <div class="col-12"><br></div>
-                                </div>
-                            </div-->
-
+                                  </div>
+                            </div>
+                           
                         </div>
                     </div>
                 </div>
@@ -311,13 +265,33 @@
                             </div>
                         </div>
                         <div class="col-12" style="margin-top: 1em;" ng-repeat="opcion in listaOpcionesAlerta">
-                            <button type="button" class="btn btn-outline- btn-opciones-alerta" style="color: {{opcion.Color}}; border-color: {{opcion.Color}};" ng-click="mostrarAccionAlerta(opcion)" ng-bind="opcion.Descripcion"></button>
+                            <button type="button" class="btn btn-outline- btn-opciones-alerta" style="color: {{opcion.hexaColor}}; border-color: {{opcion.hexaColor}};" ng-click="mostrarAccionAlerta(opcion)" ng-bind="opcion.descripcion"></button>
                         </div>
                  
                     </div>
 
                     <div class="row" ng-show="showAaccion">
-                        <div class="col-12">
+                        <!--div class="col-12" ng-repeat="campo in listaCampos | orderBy:'ID_Campo'">
+							<div class="form-group" ng-if="campo.Descripcion === 'ESTADO'">
+								<i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" id="icono_operario_status" class="fa fa-user-circle-o fa-2x"></i>
+								<label class="span-opciones-status-alerta">Estado:</label>
+								<select class="form-control" id="id-status-tecnico" ng-model="estatusAlerta.estado" ng-options="estatus.Descripcion for estatus in listaEstadoAlerta" ng-change="consultarMotivoAlerta(estatusAlerta.estado)">
+                                    <option value="">Seleccione ...</option>
+							    </select>                                               
+						  	</div>
+                            <div class="form-group" ng-if="campo.Descripcion === 'MOTIVO'">
+								<i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" id="icono_operario_status" class="fa fa-user-circle-o fa-2x"></i>
+								<label class="span-opciones-status-alerta">Motivo:</label>
+								<select class="form-control" id="id-status-tecnico" ng-model="estatusAlerta.motivo" ng-options="estatus.Descripcion for estatus in listaMotivoEstatus">
+                                    <option value="">Seleccione ...</option>
+							    </select>                                               
+						  	</div>
+                            <div class="form-group" ng-if="campo.Descripcion === 'COMENTARIOS'">
+                                <label class="span-opciones-status-alerta">Comentario:</label>
+                                <textarea class="form-control" style=" resize: none" ng-model="estatusAlerta.comentario" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" id="comentario-status-tecnico" rows="3"></textarea>
+                            </div>
+						</div-->
+                        <!--div class="col-12">
 							<div class="form-group">
 								<i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" id="icono_operario_status" class="fa fa-user-circle-o fa-2x"></i>
 								<label class="span-opciones-status-alerta">Estado:</label>
@@ -343,6 +317,120 @@
 						</div>
                         <div class="col-12">
                             <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="cambiarEstatusIntegrador()">ACEPTAR</button>
+                        </div-->
+                        <div class="col-12" ng-show="showOpcion === 2">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" id="icono_operario_status" class="fa fa-user-circle-o fa-2x"></i>
+                                        <label class="span-opciones-status-alerta">Motivo:</label>
+                                        <select class="form-control" id="id-status-tecnico" ng-model="rescateAlerta.motivo" ng-options="motivo.nombre for motivo in listaMotivosAlerta">
+                                            <option value="">Seleccione ...</option>
+                                        </select>                                               
+                                      </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                           <label class="span-opciones-status-alerta">Comentario:</label>
+                                           <textarea class="form-control" style=" resize: none" ng-model="rescateAlerta.comentario" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" id="comentario-status-tecnico" rows="3"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn  btn-primary" ng-click="cambiarEstatusAlertaValidacion()">Rescate</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12" ng-show="showOpcion === 1">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group" style="margin-bottom: .5rem;">
+                                        <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o fa-2x"></i>
+                                        <label for="fecha-reagendamiento-alerta">Fecha reagendamiento:</label>
+                                        <input type="text" ng-model="reagendaAlerta.fechaReagendamiento" id="fecha-reagendamiento-alerta" class="form-control ">                                 
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group" style="margin-bottom: .5rem;">
+                                        <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" id="icono_operario_status" class="fa fa-user-circle-o fa-2x"></i>
+                                        <label class="span-opciones-status-alerta">Turno:</label>
+                                        <select class="form-control" id="id-status-tecnico" ng-model="reagendaAlerta.turno" ng-options="turno.nombre for turno in filtrosAlertas.turnos">
+                                            <option value="">Seleccione ...</option>
+                                        </select>                                               
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group" style="margin-bottom: .5rem;">
+                                        <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" id="icono_operario_status" class="fa fa-user-circle-o fa-2x"></i>
+                                        <label class="span-opciones-status-alerta">Motivo:</label>
+                                        <select class="form-control" id="id-status-tecnico" ng-model="reagendaAlerta.motivo" ng-options="motivo.nombre for motivo in listaMotivosAlerta">
+                                            <option value="">Seleccione ...</option>
+                                        </select>                                               
+                                      </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group" style="margin-bottom: 1rem;">
+                                        <label class="span-opciones-status-alerta">Comentario:</label>
+                                        <textarea class="form-control" style=" resize: none" ng-model="reagendaAlerta.comentario" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" id="comentario-status-tecnico" rows="3"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn  btn-primary" ng-click="cambiarEstatusAlertaValidacion()">Reagendar</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12" ng-show="showOpcion === 3">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o fa-2x"></i>
+                                        <label for="fecha-reagendamiento">Fecha calendarizado:</label>
+                                        <input type="text" ng-model="calendarizarAlerta.fechaReagendamiento" id="fecha-reagendamiento" class="form-control ">                                 
+                                      </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" id="icono_operario_status" class="fa fa-user-circle-o fa-2x"></i>
+                                        <label class="span-opciones-status-alerta">Turno:</label>
+                                        <select class="form-control" id="id-status-tecnico" ng-model="calendarizarAlerta.motivo" ng-options="turno.nombre for turno in filtrosAlertas.turnos">
+                                            <option value="">Seleccione ...</option>
+                                        </select>                                               
+                                      </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" id="icono_operario_status" class="fa fa-user-circle-o fa-2x"></i>
+                                        <label class="span-opciones-status-alerta">Motivo:</label>
+                                        <select class="form-control" id="id-status-tecnico" ng-model="calendarizarAlerta.motivo" ng-options="estatus.Descripcion for estatus in listaMotivoEstatus">
+                                            <option value="">Seleccione ...</option>
+                                        </select>                                               
+                                      </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="span-opciones-status-alerta">Comentario:</label>
+                                        <textarea class="form-control" style=" resize: none" ng-model="calendarizarAlerta.comentario" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" id="comentario-status-tecnico" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12" ng-show="showOpcion === 4">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" id="icono_operario_status" class="fa fa-user-circle-o fa-2x"></i>
+                                        <label class="span-opciones-status-alerta">Estado:</label>
+                                        <select class="form-control" id="id-status-tecnico" ng-model="terminarAlerta.motivo" ng-options="estatus.Descripcion for estatus in listaMotivoEstatus">
+                                            <option value="">Seleccione ...</option>
+                                        </select>                                               
+                                      </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                           <label class="span-opciones-status-alerta">Comentario:</label>
+                                           <textarea class="form-control" style=" resize: none" ng-model="terminarAlerta.comentario" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" id="comentario-status-tecnico" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
