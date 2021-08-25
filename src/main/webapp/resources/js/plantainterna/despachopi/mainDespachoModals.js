@@ -689,12 +689,9 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 
     $scope.getListOt = function (id) {
         let listOt = [];
-        $scope.listadoTecnicosOtsModal = [];
         
         angular.forEach($scope.listadoTecnicosGeneral, function (tecnico, index) {
-            if (tecnico.listadoOts.length) {
-                $scope.listadoTecnicosOtsModal.push(tecnico);
-            }
+            //$scope.listadoTecnicosOtsModal.push(tecnico);
             if ((!id || tecnico.id == id) && tecnico.listadoOts.length) {
                 let  tecnicoObj = {
                     "longitud": tecnico.longitud,
@@ -704,12 +701,13 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 
                 angular.forEach(tecnico.listadoOts, function (ot, index) {
                     tecnicoObj.idOt.push(ot.idOrden);
-                   
                 });
 
                 listOt.push(tecnicoObj);
             }
         });
+        $scope.consultarDetalleMapa(listOt);
+            return true;
         if (listOt.length) {
             $scope.consultarDetalleMapa(listOt);
             return true;
@@ -719,20 +717,23 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     }
 
     abrirModalVistaMapa = function () {
-        if ($scope.getListOt()) {
+         $scope.getListOt()
+        $(".content-tecnico").removeClass("selected-tecnico");
+        $("#modalVistaMapa").modal('show'); 
+       /* if ($scope.getListOt()) {
             $(".content-tecnico").removeClass("selected-tecnico");
             $("#modalVistaMapa").modal('show');
         } else {
             swal({ text: 'No hay OTs disponibles para mostrar en mapa', allowOutsideClick: true });
-        }
+        } */
     }
 
 
-    detalleTecnicoRuta = function (id) {
+    $scope.detalleTecnicoRuta = function (id) {
         $(".content-tecnico").removeClass("selected-tecnico");
         $("#" + id).addClass("selected-tecnico");
-
-        $scope.getListOt(id);
+        $scope.pintarOtMapTecnicoSeleccionado(id);
+        //$scope.getListOt(id);
     }
 
 
@@ -1161,9 +1162,8 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     abrirModalReporte = function(){
         if($scope.filtrosGeneral.tipoOrdenes){
             $scope.seleccionarTodos($scope.filtrosGeneral.tipoOrdenes);
-            $scope.$apply();
         }
-       
+        $scope.$apply();
         $("#idot-reporte").val('');
         $("#idos-reporte").val('');
         $("#cuenta-reporte").val('');

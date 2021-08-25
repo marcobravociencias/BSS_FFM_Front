@@ -46,13 +46,16 @@
 
 
     </head>
-    <body id="controllerdespacho" ng-controller="despachoController">        
+    <body id="idBody" ng-controller="despachoController">        
 
           
     	<jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>  
         <input style="display: none;" ng-keyup="buscarTecnicoCalendar()" ng-model="buscarTecnicoInput" type="text">
         <div ng-show="vistaDespacho" class="container-fluid container-filtros-despacho">            
             <div class="row">
+                <div style="width: 1em;" ng-show="banderaErrorIntervencion">
+                    <i class="icono-noseleccion fas fa-exclamation-circle me-2" style="margin-top: .8em;margin-left: -.5em;" title="No se encontro el catalogo de Intervencion"></i>
+                </div>   
                 <div class="col-1 columna-filtro-ind">
                     <div class="dropdown">
                         <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Intervenci&oacute;n" type="text" id="filtro-intervencion" class="input-filtro-despacho form-control form-control-sm" />
@@ -79,6 +82,9 @@
                         </ul>
                      </div>
                 </div>
+                <div style="width: 1em;" ng-show="banderaErrorTurno">
+                    <i class="icono-noseleccion fas fa-exclamation-circle me-2" style="margin-top: .8em;margin-left: -.5em;" title="No se encontro el catalogo de Turno"></i>
+                </div>
                 <div class="col-1 columna-filtro-ind">
                     <div class="dropdown">
                         <input readonly  data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Turno" type="text" id="filtro-turno" class="input-filtro-despacho form-control form-control-sm" />
@@ -98,10 +104,13 @@
                 <div class="col-1 columna-filtro-ind">
                     <input readonly ng-model="fechaFinFiltro" placeholder="Selecciona fecha" type="text" id="filtro-fechafin" class="datepicker input-filtro-despacho form-control form-control-sm" />
                 </div>
+                <div style="width: 1em;" ng-show="banderaErrorGeografia">
+                    <i class="icono-noseleccion fas fa-exclamation-circle me-2" style="margin-top: .8em;margin-left: -.5em;" title="No se encontro el catalogo de Geografia"></i>
+                </div>
                 <div class="col-1 columna-filtro-ind">
                     <input ng-click="abrirModalGeografia()" readonly  placeholder="Geograf&iacute;a" type="text" id="filtro-geografia" class="input-filtro-despacho form-control form-control-sm" />
                 </div>
-                <div class="col-2 ">
+                <div class="col-1 ">
                     <button ng-disabled="!isCargaOtsPendientes || !isCargaOtsAsignadas" ng-click="refrescarBusqueda()" id="buscar-otsasignadas" type="button" class="btn btn-sm  btn-primary  waves-effect waves-light" >
                         <span ng-if="isCargaOtsPendientes && isCargaOtsAsignadas" >Buscar</span>
                         <div ng-if="!isCargaOtsPendientes  || !isCargaOtsAsignadas" class="spinner-border spinner-cargando-info" role="status">
@@ -109,7 +118,10 @@
                         </div>
                     </button>             
                 </div>
-                <div class="col-3">    
+                <div class="col-3">
+                    <i class="icono-noseleccion fas fa-exclamation-circle me-2" ng-show="banderaErrorGeneral" style="margin-top: .8em;"></i> <b ng-show="banderaErrorGeneral" class="text-no-seleccion-geografia">Algunos cat&aacute;logos no han sido encontrados</b>
+                </div>
+                <div class="col-1">    
                     <span onclick="abrirModalReporte()" class="reporte-color-despacho icon-color-despacho fas fa-file-alt"></span>
                     <span onclick="abrirModalVistaMapa()" class="map-color-despacho icon-color-despacho fas fa-map"></span>
                 </div>
@@ -260,7 +272,13 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/despachopi/mainDependencias.js"></script>
 
     <script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/generic/FileSaver.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker.es.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
 </html>
 
 

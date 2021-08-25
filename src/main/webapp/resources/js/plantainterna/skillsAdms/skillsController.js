@@ -83,26 +83,32 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 		document.getElementById(''+idTecnico).style.backgroundColor = "#DCDEDC";
 		$scope.tecnicoSeleccionado = nombreTecnico + " " + primerApellido + " " + segundoApellido;
 		
-		angular.forEach($scope.listadoIntervenciones,function(intervencion,index){
-			intervencion.check = 0;
-		});
+		if($scope.listadoIntervenciones == ""){
+        	toastr.warning('¡No existen Skills actualmente!');
+        }else{
+        	angular.forEach($scope.listadoIntervenciones,function(intervencion,index){
+    			intervencion.check = 0;
+    		});
+    		
+    		angular.forEach($scope.tecnicosMostradas,function(tecnico,index){
+    			if(idTecnico == tecnico.idUsuario){
+    				angular.forEach($scope.listadoIntervenciones,function(intervencion,index){
+    					angular.forEach(tecnico.skills,function(skillAsignada,indexSkillAsignada){
+    						if(intervencion.id == skillAsignada && intervencion.check == 0){
+    							intervencion.check = 1;
+    							$scope.contadorSkillsSeleccionadas = $scope.contadorSkillsSeleccionadas + 1;
+    						}
+    					});
+    				});
+    			}
+    		});
+    		
+    		$('#divContenedorSkills').show();
+    		$('#divBotonGuardarSkills').show();
+    		$('#divMensajeSeleccionaTecnico').hide();
+    		$('#checkTecnicoSeleccionado'+idTecnico).show();
+        }
 		
-		angular.forEach($scope.tecnicosMostradas,function(tecnico,index){
-			if(idTecnico == tecnico.idUsuario){
-				angular.forEach($scope.listadoIntervenciones,function(intervencion,index){
-					angular.forEach(tecnico.skills,function(skillAsignada,indexSkillAsignada){
-						if(intervencion.id == skillAsignada && intervencion.check == 0){
-							intervencion.check = 1;
-							$scope.contadorSkillsSeleccionadas = $scope.contadorSkillsSeleccionadas + 1;
-						}
-					});
-				});
-			}
-		});
-		$('#divContenedorSkills').show();
-		$('#divBotonGuardarSkills').show();
-		$('#divMensajeSeleccionaTecnico').hide();
-		$('#checkTecnicoSeleccionado'+idTecnico).show();
 	}
 	
 	$scope.sumarContador = function(estado){
@@ -212,11 +218,15 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
                         if(results[0].data.result.geografia){
                         	var nivelUsuario = results[1].data.result.N_FILTRO_GEOGRAFIA;
 							let listGeografias = [];
-							results[0].data.result.geografia.forEach(elemento =>{
-	                            if (elemento.nivel <= nivelUsuario) {
-	                            	listGeografias.push(elemento);
-	                            }
-	                        });
+							if(nivelUsuario !== undefined){
+								results[0].data.result.geografia.forEach(elemento =>{
+		                            if (elemento.nivel <= nivelUsuario) {
+		                            	listGeografias.push(elemento);
+		                            }
+		                        });
+							}else{
+								listGeografias = results[0].data.result.geografia;
+							}
 	                        $scope.listadogeografiacopy = listGeografias;
 							geografia=listGeografias;
                             geografia.map((e)=>{
@@ -226,7 +236,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
                                 return e
                             })       
                             $('#arbolGeografiasVistaTabla').bind('loaded.jstree', function(e, data) {
-								$(this).jstree("open_all");
+								//$(this).jstree("open_all");
                             }).jstree({
 								'core': {
 									'data': geografia,
@@ -263,48 +273,52 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 		var idGeografia = $('#arbolGeografiasVistaTabla').jstree("get_selected", true);
 		var x = [];
 		let params = {idGeografia:[idGeografia[0].id]};
-		swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
-		swal.showLoading();
-		skillsService.consultarTecnico(params).then(function success(response) {
-			if (response.data.respuesta) {
-				if(response.data.result.usuarios != ""){
-					$scope.tecnicosMostradas = response.data.result.usuarios;
-					x = response.data.result.usuarios;
-					$("#divMensajeSeleccionaGeografiaVistaTabla").hide();
-					$('#contenedorTablaSkilssVistaTabla').show();
-					$('#tablaSkilssVistaTabla').find("th, td").show();
-					$("#checkOcultarMostrarColumnasTabla").prop("checked",true);
-					$(".checkSkillsVistaTabla").prop("checked",true);
-					var listaSkills =  $scope.listadoIntervenciones;
-					angular.forEach($scope.tecnicosMostradas,function(tecnico,index){
-							tecnico.todasSkills = angular.copy(listaSkills);
-							angular.forEach(tecnico.todasSkills,function(skill,indexSkills){
-								if(tecnico.skills != ""){
-									angular.forEach(tecnico.skills,function(skillAsignada,indexSkillAsignada){
-										if(skill.id == skillAsignada){
-											skill.checkTabla = true;
-										}else{
-											if(skill.checkTabla != true){
-												skill.checkTabla = false;
-											}
-										}
-									});
-								}else{
-									skill.checkTabla = false;
-								}
-							});
-					});
-					
-				}else{
-					$('#contenedorTablaSkilssVistaTabla').hide();
-					$("#divMensajeSeleccionaGeografiaVistaTabla").show();
-					toastr.warning('¡No se encontraron técnicos asignados a la geografía seleccionada!');
-				}
-			} else {
-					
-			}
-			swal.close();
-		}).catch(err => handleError(err));
+		if($scope.listadoIntervenciones == ""){
+        	swal("Aviso", "¡No existen Skills actualmente!", "warning");
+        }else{
+        	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
+    		swal.showLoading();
+    		skillsService.consultarTecnico(params).then(function success(response) {
+    			if (response.data.respuesta) {
+    				if(response.data.result.usuarios != ""){
+    					$scope.tecnicosMostradas = response.data.result.usuarios;
+    					x = response.data.result.usuarios;
+    					$("#divMensajeSeleccionaGeografiaVistaTabla").hide();
+    					$('#contenedorTablaSkilssVistaTabla').show();
+    					$('#tablaSkilssVistaTabla').find("th, td").show();
+    					$("#checkOcultarMostrarColumnasTabla").prop("checked",true);
+    					$(".checkSkillsVistaTabla").prop("checked",true);
+    					var listaSkills =  $scope.listadoIntervenciones;
+    					angular.forEach($scope.tecnicosMostradas,function(tecnico,index){
+    							tecnico.todasSkills = angular.copy(listaSkills);
+    							angular.forEach(tecnico.todasSkills,function(skill,indexSkills){
+    								if(tecnico.skills != ""){
+    									angular.forEach(tecnico.skills,function(skillAsignada,indexSkillAsignada){
+    										if(skill.id == skillAsignada){
+    											skill.checkTabla = true;
+    										}else{
+    											if(skill.checkTabla != true){
+    												skill.checkTabla = false;
+    											}
+    										}
+    									});
+    								}else{
+    									skill.checkTabla = false;
+    								}
+    							});
+    					});
+    					
+    				}else{
+    					$('#contenedorTablaSkilssVistaTabla').hide();
+    					$("#divMensajeSeleccionaGeografiaVistaTabla").show();
+    					toastr.warning('¡No se encontraron técnicos asignados a la geografía seleccionada!');
+    				}
+    			} else {
+    					
+    			}
+    			swal.close();
+    		}).catch(err => handleError(err));
+        }
 		
 		$("#modalGeografiaTabla").modal('hide');
 	});
@@ -464,11 +478,15 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
                         	var nivelUsuario = results[1].data.result.N_FILTRO_GEOGRAFIA;
                         	var nivelSkill = results[1].data.result.N_FILTRO_INTERVENCIONES
 							let listGeografias = [];
-							results[0].data.result.geografia.forEach(elemento =>{
-	                            if (elemento.nivel <= nivelUsuario) {
-	                            	listGeografias.push(elemento);
-	                            }
-	                        });
+                        	if(nivelUsuario !== undefined){
+                        		results[0].data.result.geografia.forEach(elemento =>{
+    	                            if (elemento.nivel <= nivelUsuario) {
+    	                            	listGeografias.push(elemento);
+    	                            }
+    	                        });
+                        	}else{
+                        		listGeografias = results[0].data.result.geografia;
+                        	}
 	                        $scope.listadogeografiacopy = listGeografias;
 							geografia=listGeografias;
                             geografia.map((e)=>{
@@ -478,7 +496,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
                                 return e
                             })       
                             $('#jstree-proton-3').bind('loaded.jstree', function(e, data) {
-								$(this).jstree("open_all");
+								//$(this).jstree("open_all");
                             }).jstree({
 								'core': {
 									'data': geografia,
@@ -494,13 +512,24 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 										"show_only_matches": true
 									}
 							});
-                            results[2].data.result.forEach(skill =>{
-	                            if (skill.nivel == nivelSkill) {
-	                            	$scope.listadoIntervenciones.push(skill);
-	                            	$scope.listadoIntervencionesFiltro.push(skill);
-	                            	$scope.idIntervenciones.push(skill.id);
-	                            }
-	                        });
+                            if(results[2].data.result == null){
+                            	toastr.warning('¡No existen Skills actualmente!');
+                            }
+                            if(nivelSkill !== undefined){
+                            	results[2].data.result.forEach(skill =>{
+    	                            if (skill.nivel == nivelSkill) {
+    	                            	$scope.listadoIntervenciones.push(skill);
+    	                            	$scope.listadoIntervencionesFiltro.push(skill);
+    	                            	$scope.idIntervenciones.push(skill.id);
+    	                            }
+    	                        });
+                            }else{
+                            	results[2].data.result.forEach(skill =>{
+    	                            	$scope.listadoIntervenciones.push(skill);
+    	                            	$scope.listadoIntervencionesFiltro.push(skill);
+    	                            	$scope.idIntervenciones.push(skill.id);
+    	                        });
+                            }
                         }else{
                             toastr.warning( 'No se encontraron datos para la geografia' );                
                         }                        

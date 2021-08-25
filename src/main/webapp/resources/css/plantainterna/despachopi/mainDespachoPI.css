@@ -308,7 +308,6 @@ div#calendar {
 }
 
 .input-filtro-reporte:hover {
-  background: #e4e6f2 !important;
   cursor: pointer;
   border-bottom: 2px solid #a4b1ff !important;
 }
@@ -1198,6 +1197,19 @@ h5.title-paleta-colores {
   box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%),
     0 1px 5px 0 rgb(0 0 0 / 20%);
 }
+.circle-statushistorico-histo {
+  font-size: 0.8em;
+  line-height: 2em !important;
+  text-align: center;
+  color: #fff;
+  background-color: #999;
+  width: 2em;
+  height: 2em;
+  vertical-align: middle;
+  border-radius: 50%;
+  box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%),
+    0 1px 5px 0 rgb(0 0 0 / 20%);
+}
 
 .card-historico .card-footer {
   padding: 0.2em;
@@ -1637,7 +1649,7 @@ span.cerrarnoticias {
     font-size: 1em;
     /* color: #2196f3; */
     font-size: 1em !important;
-    color: #303030 !important;
+    color: #ffffff !important;
 }
 
 .dot-dependencia  {
@@ -1893,10 +1905,6 @@ table.dataTable.no-footer{
   box-shadow: none !important;
 }
 
-.pagination .paginate_button.active {
-  background-color: gray !important;
-}
-
 .pagination .previous a.page-link {
   color: white !important;
   font-size: 0;
@@ -1925,6 +1933,14 @@ table.dataTable.no-footer{
   font-size: initial !important;
 }
 
+.dataTables_wrapper .dataTables_paginate .paginate_button a {
+  padding: 1px 1px 1px 1px;
+}
+
+.pagination .paginate_button > .active {
+  border: #000000 !important;
+}
+
 .download-file{
   text-align: center; 
   padding-top: 5px;
@@ -1932,10 +1948,32 @@ table.dataTable.no-footer{
   
 }
 
-.dataTables_wrapper .dataTables_paginate .paginate_button a {
+.paginate_button .page-item {
   padding: 1px 1px 1px 1px;
 }
 
 #table-reporte .dataTables_empty{
   background: #f9f9f9;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover{
+  background: #fff !important;
+  background-color: #fff !important;
+  box-shadow: none;
+}
+
+#table-reporte{
+  font-size: 0.9em;
+}
+i.icono-noseleccion {
+  color: #ff9f3b;
+  display: inline-block;
+}
+b.text-no-seleccion-geografia {
+  color: #959595;
+  font-size: .8em;
+}
+
+.dt-buttons {
+  display: none !important;
 }

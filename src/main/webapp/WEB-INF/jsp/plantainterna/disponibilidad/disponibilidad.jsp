@@ -27,7 +27,7 @@ pageEncoding="ISO-8859-1"%>
 	<link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" rel="stylesheet" />
 </head>
 
-<body ng-controller="disponibilidadController">
+<body ng-controller="disponibilidadController" id="idBody">
 	<jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
 	<div class="container container-title-header">
 		<div class="header-modulo">
@@ -38,27 +38,6 @@ pageEncoding="ISO-8859-1"%>
 	<div class="container container-filtros-disponibilidad" id="container_consulta_disponbilidad">
 		<div class="container-fluid">
 			<div class="row md-form" id="filters-dispo">
-				<div class="col-sm-2 columna-filtro-ind" data-step="11"
-					data-intro="Opci&oacute;n compa&ntilde;ia" id="filtroCompania">
-					<label for="compania_select" class="label-filter">Compa&ntilde;&iacute;a</label>
-					<select id="compania_select"
-						class="form-control-sm input-filtro-disponibilidad form-control"
-						placeholder="Compañia" required>
-						<option value="-1">Seleccione ...</option>
-						<option value="2">TotalPlay Empresarial </option>
-					</select>
-				</div>
-				<div id="tipo_intervencion" class="col-sm-2 columna-filtro-ind"
-					data-intro="Opci&oacute;n tipo de intervenci&oacute;n">
-					<label for="tipo_select" class="label-filter">Intervenci&oacute;n</label>
-					<select id="tipo_select"
-						class="form-control-sm input-filtro-disponibilidad form-control"
-						ng-model="intervencionSelect"
-						ng-change="intervencionSelecion()"
-						ng-options="elemento.nombre for elemento in arrayIntervencion" required>
-						<option value="">Seleccione ...</option>
-					</select>
-				</div>
 				<div id="container_arbol_dispo_consulta" class="col-sm-2 columna-filtro-ind"
 					data-intro="Opci&oacute;n tipo de intervenci&oacute;n">
 					<label for="arbol_disponibilidad_consulta" class="label-filter">Geograf&iacute;a</label>
@@ -66,6 +45,17 @@ pageEncoding="ISO-8859-1"%>
 						style="background: white;cursor: pointer"
 						class="input-filtro-disponibilidad form-control form-control-sm"
 						aria-describedby="emailHelp" placeholder="Seleccione">
+				</div>
+				<div id="tipo_intervencion" class="col-sm-2 columna-filtro-ind"
+					data-intro="Opci&oacute;n tipo de intervenci&oacute;n">
+					<i class="icono-noseleccion fas fa-exclamation-circle me-2" title="No se encontro el catalogo de Intervencion" ng-show="banderaErrorIntervencion"></i><label for="tipo_select" class="label-filter">Intervenci&oacute;n</label>
+					<select id="tipo_select"
+						class="form-control-sm input-filtro-disponibilidad form-control"
+						ng-model="intervencionSelect"
+						ng-change="intervencionSelecion()"
+						ng-options="elemento.nombre for elemento in arrayIntervencion" required>
+						<option value="">Seleccione ...</option>
+					</select>
 				</div>
 				<div class="col-3" style="margin-top: 1.5px;">
 					<label for="tipo_select" class="label-filter" style="visibility: hidden;">Intervención</label>
@@ -75,6 +65,9 @@ pageEncoding="ISO-8859-1"%>
 					style="margin-top: 0; margin: 0 !important;">
 						<i class="fa fa-search"></i>
 					</button>
+				</div>
+				<div class="col-4" ng-show="banderaErrorGeneral">
+					<i class="icono-noseleccion fas fa-exclamation-circle me-2" style="margin-top: 1.8em;"></i> <b class="text-no-seleccion-geografia">Algunos cat&aacute;logos no han sido encontrados</b>
 				</div>
 			</div>
 		</div>
@@ -202,7 +195,6 @@ pageEncoding="ISO-8859-1"%>
 	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/disponibilidad/disponibilidadController.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/disponibilidad/disponibilidadService.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/disponibilidad/disponibilidadCalendar.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/disponibilidad/arrayDisponibilidad.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js"></script>
 	<script type="text/javascript">let contex_project = "${pageContext.request.contextPath}";</script>

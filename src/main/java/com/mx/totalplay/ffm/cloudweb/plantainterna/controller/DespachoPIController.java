@@ -316,10 +316,14 @@ public class DespachoPIController {
     @PostMapping("/getCatalogoStatusEstadoMotivo")
     public ResponseEntity<?> getCatalogoStatusEstadoMotivo(@RequestBody String params) {
         LOGGER.info("##### CONSULTANDO getDetalleAlertas");
-        ServiceResponseResult response = despachoService.getCatalogoStatusEstadoMotivo(params);
-        if (response.getResult() instanceof Integer) {
-            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-        }
+        //ServiceResponseResult response = despachoService.getCatalogoStatusEstadoMotivo(params);
+        ServiceResponseResult response = null;
+		
+		/*
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		*/
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
 
@@ -327,16 +331,6 @@ public class DespachoPIController {
     public ResponseEntity<?> consultarEvidenciaAlertaPI(@RequestBody String params) {
         LOGGER.info("##### CONSULTANDO consultarEvidenciaAlertaPI");
         ServiceResponseResult response = despachoService.consultarEvidenciaAlertaPI(params);
-        if (response.getResult() instanceof Integer) {
-            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-        }
-        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-    }
-
-    @PostMapping("/consultarHistoricoAlertaPI")
-    public ResponseEntity<?> consultarHistoricoAlertaPI(@RequestBody String params) {
-        LOGGER.info("##### CONSULTANDO consultarHistoricoAlertaPI");
-        ServiceResponseResult response = despachoService.consultarHistoricoAlertaPI(params);
         if (response.getResult() instanceof Integer) {
             return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
         }

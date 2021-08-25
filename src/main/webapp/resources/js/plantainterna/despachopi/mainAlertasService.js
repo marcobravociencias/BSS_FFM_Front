@@ -47,7 +47,7 @@ app.service("mainAlertasService", function ($http) {
 	this.consultarHistoricoAlertaPI=function(params){
 		return $http({
 			method: "post",
-			url: "req/consultarHistoricoAlertaPI",
+			url: "req/consultarHistoricoDespachoOT",
 			data:JSON.stringify(params),
             headers : {
                 'Content-Type' : 'application/json'
@@ -58,7 +58,7 @@ app.service("mainAlertasService", function ($http) {
 	this.consultarComentariosAlertaPI=function(params){
 		return $http({
 			method: "post",
-			url: "req/consultarComentariosAlertaPI",
+			url: "req/consultarComentariosDespachoOT",
 			data:JSON.stringify(params),
             headers : {
                 'Content-Type' : 'application/json'

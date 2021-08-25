@@ -44,13 +44,22 @@
     <body id="idBody" ng-controller="coordInstPIController" style="overflow-x: hidden;">
         
         <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
-        <div class="container container-title-header">
-            <div class="header-modulo">
-                <h5 class="title-modulo">M&oacute;dulo de coordinador de instalaciones</h5>
-                <h1 class="h6 subtitle-modulo">En este m&oacute;dulo se podr&aacute;n visualizar los reportes correspondientes al coordinador</h1>
-            </div>
-        </div>
+        
+        
         <div class="col-md-12 style_container_reportes" id="bodyGral">
+            <div class="row">
+                <div class="col-md-2">
+        
+                </div>
+                <div class="col-md-10">
+                    <div class="container container-title-header" style="padding: 0px !important;">
+                        <div class="header-modulo">
+                            <h5 class="title-modulo">M&oacute;dulo de coordinador de instalaciones</h5>
+                            <h1 class="h6 subtitle-modulo">En este m&oacute;dulo se podr&aacute;n visualizar los reportes correspondientes al coordinador</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-2" id="navbar_reportes">
                     <!--div class="align-rigth col-md-12">

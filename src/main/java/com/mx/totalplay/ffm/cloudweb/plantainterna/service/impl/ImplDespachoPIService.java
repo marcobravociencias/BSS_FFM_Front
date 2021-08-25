@@ -623,18 +623,25 @@ public class ImplDespachoPIService implements DespachoPIService{
 
 	@Override
 	public ServiceResponseResult consultaAcciones(String params) {
-JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
 		
+/*
 		JsonObject login = new JsonObject();		
 		login.addProperty( env.getProperty("param.textus.pI") 		, constantesAmbiente.getTextIpUsuario());
 		login.addProperty( env.getProperty("param.textus.drowssaP") , constantesAmbiente.getTextCredPad());
 		login.addProperty( env.getProperty("param.textus.resU") 	, constantesAmbiente.getTextCredUs());
-		
 		jsonObject.add("Login", login);
+		*/
+		
 		logger.info("json object params## "+jsonObject.toString());
-		String url="http://10.216.47.89"+constDespachoPI.getConsultarDetalleAlerta();
-		ServiceResponseResult response= restCaller.callPostParamString(url, jsonObject.toString());				
-	    logger.info("RESULT"+gson.toJson(response));
+		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
+		//String url="http://10.216.47.89"+constDespachoPI.getConsultarDetalleAlerta();
+		String tokenAcces=principalDetail.getAccess_token();
+		String url = principalDetail.getDireccionAmbiente().concat(constDespachoPI.getConsultarAccionesAlerta());
+		Map<String, String> paramsRequestGet = new HashMap<String, String>();
+        paramsRequestGet.put("idTipoAlerta", jsonObject.get("idTipoAlerta").getAsString());
+		ServiceResponseResult response= restCaller.callGetBearerTokenRequest(paramsRequestGet, url, ServiceResponseResult.class, tokenAcces);
+	    logger.info("##### RESULT"+gson.toJson(response)+" #######");
 		return response;
 	}
 
@@ -761,24 +768,6 @@ JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
 		return null;
 	}
 
-
-	@Override
-	public ServiceResponseResult consultarHistoricoAlertaPI(String params) {
-		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-		
-		JsonObject login = new JsonObject();		
-		login.addProperty( env.getProperty("param.textus.pI") 		, constantesAmbiente.getTextIpUsuario());
-		login.addProperty( env.getProperty("param.textus.drowssaP") , constantesAmbiente.getTextCredPad());
-		login.addProperty( env.getProperty("param.textus.resU") 	, constantesAmbiente.getTextCredUs());
-		
-		jsonObject.add("Login", login);
-		logger.info("json object params## "+jsonObject.toString());
-		String url="http://10.216.47.89"+constDespachoPI.getConsultarHistoricoAlerta();
-		ServiceResponseResult response= restCaller.callPostParamString(url, jsonObject.toString());				
-	    logger.info("RESULT"+gson.toJson(response));
-		return response;
-	}
-
 	@Override
 	public ServiceResponseResult consultarComentariosAlertaPI(String params) {
 		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
@@ -800,15 +789,15 @@ JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
 	public ServiceResponseResult consultarReporteDiario(String params) {
 		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
 		
-		JsonObject login = new JsonObject();		
-		login.addProperty( env.getProperty("param.textus.pI") 		, constantesAmbiente.getTextIpUsuario());
-		login.addProperty( env.getProperty("param.textus.drowssaP") , constantesAmbiente.getTextCredPad());
-		login.addProperty( env.getProperty("param.textus.resU") 	, constantesAmbiente.getTextCredUs());
-		
-		jsonObject.add("Login", login);
+		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
+
 		logger.info("json object params## "+jsonObject.toString());
-		String url= "";
-		ServiceResponseResult response= restCaller.callPostParamString(url, jsonObject.toString());				
+
+		String tokenAcces=principalDetail.getAccess_token();
+		
+		String url="http://34.94.124.52"+constDespachoPI.getConsultarReporteDiario();
+		ServiceResponseResult response= restCaller.callPostBearerTokenRequest(params, url,
+				ServiceResponseResult.class, tokenAcces);			
 	    logger.info("RESULT"+gson.toJson(response));
 		return response;
 	}

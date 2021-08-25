@@ -17,9 +17,8 @@
                                     placeholder="Buscar t&eacute;cnicos...">
                             </div>
                             <div class="content-list-tecnicos">
-                                <div ng-repeat="user in listadoTecnicosOtsModal | filter: search">
-                                    <div class="content-tecnico"  style="border-right: 4px solid {{user.color}}" 
-                                        id="{{user.idTecnico}}" onclick="detalleTecnicoRuta(this.value)" ng-value="{{user.id}}">
+                                <div ng-repeat="user in listadoTecnicosGeneral | filter:search.nombreCompleto">
+                                    <div class="content-tecnico"  style="border-right: 4px solid {{user.color}}" id="{{user.idTecnico}}" ng-click="detalleTecnicoRuta(user.id)">
                                         <div class="row">
                                             <div class="col-3">
                                                 <img style="border:.2em solid {{user.color}}"

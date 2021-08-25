@@ -9932,3 +9932,41 @@ var testing_intervenciones=
         }
         
     ]
+
+
+var accionesOt = 
+{
+	"success": true,
+	"result": {
+		"result": "0",
+		"resultdescription": "Operaci&oacute;n exitosa.",
+		"Acciones": [{
+			"ID_Accion": "23",
+			"Descripcion": "ENVIO A INFRAESTRUCTURA",
+			"Color": "#F4404A",
+			"ID_Status": "3",
+			"Campo": [{
+				"ID_Campo": "1",
+				"Descripcion": "COMENTARIOS",
+				"TipoCampo": "textarea"
+			}, {
+				"ID_Campo": "2",
+				"Descripcion": "ESTADO",
+				"TipoCampo": "select"
+			}, {
+				"ID_Campo": "3",
+				"Descripcion": "MOTIVO",
+				"TipoCampo": "select"
+			}]
+		}, {
+			"ID_Accion": "5",
+			"Descripcion": "LIBERAR ORDEN, CONTINUAR CON EL TRABAJO",
+			"Color": "#93B8BE",
+			"Campo": [{
+				"ID_Campo": "1",
+				"Descripcion": "COMENTARIOS",
+				"TipoCampo": "textarea"
+			}]
+		}]
+	}
+}

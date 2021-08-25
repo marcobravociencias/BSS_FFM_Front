@@ -45,7 +45,7 @@ app.disponibilidadCalendar = function ($scope) {
     
                     let tipo_bloque = (eventObject._def.extendedProps.bloqueo)
     
-                    if (tipo_bloque) {
+                    if (!tipo_bloque) {
                         //$("#radio_activo_mod").trigger('click');
                         document.getElementById('radio_activo_mod').checked = true
                     } else {
@@ -133,7 +133,7 @@ app.disponibilidadCalendar = function ($scope) {
             $scope.calendarDisp.destroy();
         }
         arregloDisponibilidad = [];
-
+        
         let dato = (response.dias !== undefined && response.dias !== null) ? response.dias !== undefined ? response.dias : [] : [];
         let events;
         let totalMatutino = 0;
@@ -170,7 +170,7 @@ app.disponibilidadCalendar = function ($scope) {
                 start: datosDisponibilidad.fecha,
                 end: datosDisponibilidad.fecha,
                 id: index,
-                color: ((datosDisponibilidad.bloqueado)) ? bloq = '#1c74bfb3' : bloq = '#b9bfbc',
+                color: ((datosDisponibilidad.bloqueado)) ? bloq = '#b9bfbc' : bloq =  '#1c74bfb3',
                 textColor: 'white',
                 fecha: datosDisponibilidad.fecha,
                 matutino: totalMatutinoEvent,

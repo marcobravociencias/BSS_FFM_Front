@@ -52,7 +52,7 @@
                   </div>
                   <div class="col-md-6">   
                     <div class="form-control-sm  contentMatu">   
-                          <label  class="title_campos"><i class=" fa-lg fa fa-lock"></i>Bloqueo</label>  
+                          <label  class="title_campos"><i class=" fa-lg fa fa-lock"></i>Estatus</label>  
                           <div class="custom-control custom-radio">
                             <input type="radio" class="custom-control-input" value="true" id="radio_activo_adddisp" name="checkBloque">
                             <label class="custom-control-label" for="radio_activo_adddisp">Activo</label>
