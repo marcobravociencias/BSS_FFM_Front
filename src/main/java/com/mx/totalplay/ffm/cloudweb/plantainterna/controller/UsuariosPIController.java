@@ -2,47 +2,79 @@ package com.mx.totalplay.ffm.cloudweb.plantainterna.controller;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
+import com.mx.totalplay.ffm.cloudweb.plantainterna.service.SkillsAdminService;
+import com.mx.totalplay.ffm.cloudweb.plantainterna.service.UsuariosPIService;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.ServiceResponseResult;
 
 @RestController
 @RequestMapping("/req")
 public class UsuariosPIController {
 	private  final Logger logger = LogManager.getLogger(UsuariosPIController.class.getName());
+	private final UsuariosPIService usuarioService;
 	
-	@PostMapping("/consultarCompanias")
-	public ResponseEntity<?> consultarCompanias() {
-		logger.info("##### CONSULTANDO consultarCompanias  ");
-		//ServiceResponseResult response = ordenesUniversalesService.consultarCatalogoOrdenesUniversales(params);
-		ServiceResponseResult response = null;
-		
-		/*
-		if (response.getResult() instanceof Integer){
-			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-		}
-		*/
-		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	@Autowired
+    public UsuariosPIController(UsuariosPIService usuarioService) {
+        this.usuarioService = usuarioService;
+    }
+	
+	@GetMapping("/consultaCompanias")
+	public ResponseEntity<?> consultaCompanias() {
+		logger.info("##### CONSULTANDO consultaCompanias");
+        ServiceResponseResult result = usuarioService.consultaCompanias();
+        if (result.getResult() instanceof Integer){
+            return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
 	}
 	
-	@PostMapping("/consultarPuestos")
-	public ResponseEntity<?> consultarPuestos() {
-		logger.info("##### CONSULTANDO consultarPuestos  ");
-		//ServiceResponseResult response = ordenesUniversalesService.consultarCatalogoOrdenesUniversales(params);
-		ServiceResponseResult response = null;
-		
-		/*
-		if (response.getResult() instanceof Integer){
-			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-		}
-		*/
-		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	@GetMapping("/consultaPuestos")
+	public ResponseEntity<?> consultaPuestos() {
+		logger.info("##### CONSULTANDO consultaPuestos");
+		ServiceResponseResult result = usuarioService.consultaPuestos();
+        if (result.getResult() instanceof Integer){
+            return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(result, HttpStatus.ACCEPTED);		
+	}
+	
+	@GetMapping("/consultaPermisos")
+	public ResponseEntity<?> consultaPermisos() {
+		logger.info("##### CONSULTANDO consultaPermisos");
+		ServiceResponseResult result = usuarioService.consultaPermisos();
+        if (result.getResult() instanceof Integer){
+            return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
+	}
+	
+	@PostMapping("/consultaUsuarioPorId")
+	public ResponseEntity<?> consultaUsuarioPorId(@RequestBody String params) {
+		logger.info("##### CONSULTANDO consultaUsuarioPorId");
+		ServiceResponseResult result = usuarioService.consultaUsuarioPorId(params);
+        if (result.getResult() instanceof Integer){
+            return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
+	}
+	
+	@PostMapping("/consultaUsuariosPorGeoCompPuestos")
+	public ResponseEntity<?> consultaUsuariosPorGeoCompPuestos(@RequestBody String params) {
+		logger.info("##### CONSULTANDO consultaUsuariosPorGeoCompPuestos");
+		ServiceResponseResult result = usuarioService.consultaUsuariosPorGeoCompPuestos(params);
+        if (result.getResult() instanceof Integer){
+            return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
 	}
 	
 	@PostMapping("/consultarRegionesEstructura")
@@ -118,20 +150,6 @@ public class UsuariosPIController {
 	@PostMapping("/consultarIntervencionesPorPropietarios")
 	public ResponseEntity<?> consultarIntervencionesPorPropietarios() {
 		logger.info("##### CONSULTANDO consultarIntervencionesPorPropietarios  ");
-		//ServiceResponseResult response = ordenesUniversalesService.consultarCatalogoOrdenesUniversales(params);
-		ServiceResponseResult response = null;
-		
-		/*
-		if (response.getResult() instanceof Integer){
-			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-		}
-		*/
-		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-	}
-	
-	@PostMapping("/consultarPrivilegios")
-	public ResponseEntity<?> consultarPrivilegios() {
-		logger.info("##### CONSULTANDO consultarPrivilegios  ");
 		//ServiceResponseResult response = ordenesUniversalesService.consultarCatalogoOrdenesUniversales(params);
 		ServiceResponseResult response = null;
 		

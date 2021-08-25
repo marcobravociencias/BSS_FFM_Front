@@ -1,18 +1,47 @@
 app.service("usuarioPIService", function ($http) {
 
-    this.consultarCompanias =function(){
+    this.consultaCompanias = function(){
 		return $http({
-			method: "post",
-			url: "req/consultarCompanias",
+			method: "get",
+			url: "req/consultaCompanias",
 			headers: {'Content-Type': "application/json; charset=utf-8"},
 			transformRequest: angular.identity
 		});
 	};
 
-    this.consultarPuestos =function(){
+    this.consultaPuestos = function(){
+    	return $http({
+			method: "get",
+			url: "req/consultaPuestos",
+			headers: {'Content-Type': "application/json; charset=utf-8"},
+			transformRequest: angular.identity
+		});
+	};
+	
+	this.consultaPermisos = function(){
+		return $http({
+			method: "get",
+			url: "req/consultaPermisos",
+			headers: {'Content-Type': "application/json; charset=utf-8"},
+			transformRequest: angular.identity
+		});
+	};
+	
+	this.consultaUsuarioPorId = function(params){
 		return $http({
 			method: "post",
-			url: "req/consultarPuestos",
+			url: "req/consultaUsuarioPorId",
+			data:JSON.stringify(params),
+			headers: {'Content-Type': "application/json; charset=utf-8"},
+			transformRequest: angular.identity
+		});
+	};
+	
+	this.consultaUsuariosPorGeoCompPuestos = function(params){
+		return $http({
+			method: "post",
+			url: "req/consultaUsuariosPorGeoCompPuestos",
+			data:JSON.stringify(params),
 			headers: {'Content-Type': "application/json; charset=utf-8"},
 			transformRequest: angular.identity
 		});
@@ -79,16 +108,6 @@ app.service("usuarioPIService", function ($http) {
 		return $http({
 			method: "post",
 			url: "req/consultarUsuarios",
-			data: JSON.stringify(params),
-			headers: {'Content-Type': "application/json; charset=utf-8"},
-			transformRequest: angular.identity
-		});
-	};
-
-	this.consultarPrivilegios =function(params){
-		return $http({
-			method: "post",
-			url: "req/consultarPrivilegios",
 			data: JSON.stringify(params),
 			headers: {'Content-Type': "application/json; charset=utf-8"},
 			transformRequest: angular.identity
