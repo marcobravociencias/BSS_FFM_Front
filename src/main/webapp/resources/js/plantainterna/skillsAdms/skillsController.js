@@ -236,7 +236,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
                                 return e
                             })       
                             $('#arbolGeografiasVistaTabla').bind('loaded.jstree', function(e, data) {
-								$(this).jstree("open_all");
+								//$(this).jstree("open_all");
                             }).jstree({
 								'core': {
 									'data': geografia,
@@ -496,7 +496,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
                                 return e
                             })       
                             $('#jstree-proton-3').bind('loaded.jstree', function(e, data) {
-								$(this).jstree("open_all");
+								//$(this).jstree("open_all");
                             }).jstree({
 								'core': {
 									'data': geografia,

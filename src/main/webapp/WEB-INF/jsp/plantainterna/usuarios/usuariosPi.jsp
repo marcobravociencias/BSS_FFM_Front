@@ -1,7 +1,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html ng-app="usuarioApp">
     <head>
-        <!-- LIBRERIAS -->
+    	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>FFM Total play</title>
+    
+        <!-- LIBRERIAS CSS -->
+        <link rel="icon" type="image/png" sizes="192x192" href="${pageContext.request.contextPath}/resources/img/iconsistema/android-icon-192x192.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="96x96" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-96x96.png">
+		<link rel="icon" type="image/png" sizes="16x16"	href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-16x16.png">
         <link href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap-select.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -12,9 +19,9 @@
         <link href="${pageContext.request.contextPath}/resources/libraries/sweetalert/css/sweetalert2.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/jstree/themes/proton/style.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/datePicker/css/bootstrap-datepicker3.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css" rel="stylesheet">
+		<!-- CSS INTERNAS -->
         <link href="${pageContext.request.contextPath}/resources/css/plantainterna/usuarios/usuariosPi.css" rel="stylesheet">
-
-        <title>FFM</title>
     </head>
     <body id="idBody" ng-controller="usuarioController">
     	<jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>    
@@ -22,45 +29,37 @@
         <br>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-2">
+                <div class="col-md-2">
                     <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                         <a class="nav-link active" id="opcion-consulta-tab" data-toggle="pill" href="#opcion-consulta" role="tab" aria-controls="opcion-consulta" aria-selected="true">Consultar usuarios</a>
                         <a class="nav-link" id="opcion-alta-tab" data-toggle="pill" href="#opcion-alta" role="tab" aria-controls="opcion-alta" aria-selected="false">Alta Usuarios</a>
                     </div>
                 </div>
-                <div class="col-10">
+                <div class="col-md-10">
                     <div class="tab-content" id="v-pills-tabContent">
                         <div class="tab-pane fade show active" id="opcion-consulta" role="tabpanel" aria-labelledby="opcion-consulta-tab">
                             <h3 class="text-center">Consulta Usuarios</h3>
                             <hr/>
-                           
                             <div class="row">
-                                <div class="col-3">
+                                <div class="col-md-4">
                                     <label class="span-consulta"><i class="fa fa-building"></i> Compa&ntilde;ias</label>
-                                    <div class="input-group mb-3">
-                                        <select id="compania_select" class="selectpicker select_consulta"  multiple data-actions-box="true">	
+                                    <div class="input-group mb-4">
+                                        <select id="compania_select" class="selectpicker select_consulta" multiple data-actions-box="true">	
+                                        
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-3">
-                                    <label class="span-consulta"><i class="fa fa-user-circle-o"></i> Puesto</label>
-                                    <div class="input-group mb-3">
+                                <div class="col-md-4">
+                                    <label class="span-consulta"><i class="fas fa-address-card"></i> Puesto</label>
+                                    <div class="input-group mb-4">
                                         <select id="puesto_select" class="selectpicker select_consulta"  multiple data-actions-box="true">	
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-3">
-                                    <label class="span-consulta"><i class="fa fa-globe"></i> Regi&oacute;n</label>
-                                    <div class="input-group mb-3">
-                                        <select id="region_select" class="selectpicker select_consulta"  multiple data-actions-box="true">	
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-3">
-                                    <label class="span-consulta"><i class="fa fa-crosshairs"></i> Ciudad</label>
-                                    <div class="input-group mb-3">
-                                        <select id="ciudad_select" class="selectpicker select_consulta"  multiple data-actions-box="true">	
-                                        </select>
+                                <div class="col-md-4">
+                                    <label class="span-consulta"><i class="fas fa-map-marked"></i> Geograf&iacute;a</label>
+                                    <div class="input-group mb-4">
+                                    	<input type="text" class="form-control" ng-click="abrirModalGeografiaConsulta()" aria-describedby="basic-addon3" placeholder="NO HAY SELECCI&Oacute;N" >
                                     </div>
                                 </div>
                             </div>
@@ -126,9 +125,10 @@
         </div>
 
         <jsp:include page="./modal/modalEdicion.jsp"></jsp:include>
+        <jsp:include page="./modal/modalArbolGeografia.jsp"></jsp:include>
     </body>
 
-    <!-- LIBRERIAS -->
+    <!-- LIBRERIAS JS -->
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/selectPicker/js/popper.min.js"></script>
@@ -142,7 +142,9 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jstree/jstree.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker.es.min.js"></script>
-    <!-- ARCHIVOS JS -->
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/js/mdb.min.js"></script>
+    
+    <!-- ARCHIVOS JS INTERNOS -->
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/usuarios/usuariosPIController.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/usuarios/usuarioPIService.js"></script>
