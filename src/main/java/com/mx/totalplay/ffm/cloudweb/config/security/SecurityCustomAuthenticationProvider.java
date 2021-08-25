@@ -52,8 +52,7 @@ public class SecurityCustomAuthenticationProvider implements AuthenticationProvi
 	private AutentificacionService autentificacionService;
 
 	 @Override
-	    public Authentication authenticate(Authentication auth) 
-	      throws AuthenticationException {
+	    public Authentication authenticate(Authentication auth) throws AuthenticationException {
 	        String username = auth.getName();
 	        String password = auth.getCredentials().toString();
 	        
@@ -77,15 +76,13 @@ public class SecurityCustomAuthenticationProvider implements AuthenticationProvi
 		    		return new UsernamePasswordAuthenticationToken(response, password, grantedAuths);
 	        	} else {
 	        		//new LoginController().loginPage("1", null);
-	        		throw new BadCredentialsException("External system authentication failed");
+	        		throw new BadCredentialsException("2");
 	        	}
-	    		
-	        	
 	        } else {
 	        	//Authentication auth1 = SecurityContextHolder.getContext().getAuthentication();
 	    		//logger.info(auth1);
 	        	//new LoginController().loginPage("1", null);
-	            throw new BadCredentialsException("External system authentication failed");
+	            throw new BadCredentialsException("1");
 	        }
 	    }
 
