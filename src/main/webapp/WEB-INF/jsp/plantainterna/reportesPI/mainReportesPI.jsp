@@ -44,13 +44,21 @@
 </head>
 <body id="idBody" ng-controller="reportesController">
 <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
-<div class="container container-title-header">
-	<div class="header-modulo">
-		<h5 class="title-modulo">M&oacute;dulo de reportes</h5>
-		<h1 class="h6 subtitle-modulo">En este m&oacute;dulo podr&aacute;s visualizar reportes</h1>
-	</div>
-</div>
+<br/>
 <div class="col-md-12 style_container_reportes">
+	<div class="row">
+		<div class="col-md-2">
+
+		</div>
+		<div class="col-md-10">
+			<div class="container container-title-header" style="padding: 0px !important;">
+				<div class="header-modulo">
+					<h5 class="title-modulo">M&oacute;dulo de reportes</h5>
+					<h1 class="h6 subtitle-modulo">En este m&oacute;dulo podr&aacute;s visualizar reportes</h1>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div class="row">
 		<div class="col-md-2" id="navbar_reportes">
 			<div class="align-rigth col-md-12">
@@ -76,6 +84,7 @@
 
 		</div>
 		<div class="col-md-10 contentReport" id="datos_tablas">
+			
 			<a class="menuOpt" id="btn_mostrar_nav" style="display:none; position: absolute;">
 				<i class="fa fa-bars" aria-hidden="true"></i>
 			</a>
