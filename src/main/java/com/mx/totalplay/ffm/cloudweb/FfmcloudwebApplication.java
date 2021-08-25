@@ -12,6 +12,7 @@ import org.springframework.context.annotation.PropertySources;
 //@EnableDiscoveryClient
 @SpringBootApplication(scanBasePackages = "com.mx.totalplay.ffm.cloudweb.*")
 @PropertySources({
+	    @PropertySource("classpath:plantaexterna.properties"),
         @PropertySource("classpath:plantainterna.properties"),
         @PropertySource("classpath:generic.properties"),
         @PropertySource("classpath:cambiostatus.properties")

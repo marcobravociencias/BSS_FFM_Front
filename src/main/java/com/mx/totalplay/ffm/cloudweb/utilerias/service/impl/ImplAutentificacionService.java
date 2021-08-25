@@ -47,19 +47,19 @@ public class ImplAutentificacionService  implements AutentificacionService{
 		if (responseLog.getIdUsuario() != 0) {
 			Map<String, Object> configuraciones = responseLog.getConfiguraciones();
 			String ordenamiento=(String)configuraciones.get("NAVBAR_ORDER");
-			ordenamiento = null;
-			ordenamiento=String.join(",", responseLog.getPermisos().stream().map(e-> {return e.getClave();}).collect(Collectors.toList()));
-			logger.info(ordenamiento);
-			responseLog.setPermisos( retornarListOrdenamiento(responseLog.getPermisos(),ordenamiento));		
-			
-			Optional<Permiso> streamResult = responseLog.getPermisos()
-					 .stream().filter(e-> !e.isDentroNavbar()).findAny();
-			
-			responseLog.setBanderaPintarOtros( streamResult.isPresent() );
-		}
-		
-		
-				 		
+			if (responseLog.getPermisos().size() != 0) {
+				if (ordenamiento != null) {
+					responseLog.setPermisos( retornarListOrdenamiento(responseLog.getPermisos(),ordenamiento));		
+					
+					Optional<Permiso> streamResult = responseLog.getPermisos()
+							 .stream().filter(e-> !e.isDentroNavbar()).findAny();
+					
+					responseLog.setBanderaPintarOtros( streamResult.isPresent() );
+				} else {
+					ordenamiento=String.join(",", responseLog.getPermisos().stream().map(e-> {return e.getClave();}).collect(Collectors.toList()));
+				}
+			}
+		}	
 		logger.info("RESULT" + gson.toJson(responseLog));
 		return responseLog;
 	}
@@ -91,8 +91,7 @@ public class ImplAutentificacionService  implements AutentificacionService{
 		List<Permiso> permisosFound=permisos.stream()			
 				.sorted(Comparator.comparing(Permiso::getOrdenConfig))
 				.filter(e-> e.getOrdenConfig() != -1)			
-				.collect(Collectors.toList());				
-		
+				.collect(Collectors.toList());
 		int lastOrden=permisosFound.get( permisosFound.size()-1 ).getOrdenConfig();
 		logger.info("##lastOrden "+lastOrden+"permisosFound.size()"+permisosFound.size());		
 		
@@ -117,7 +116,6 @@ public class ImplAutentificacionService  implements AutentificacionService{
 				p.setDentroNavbar(true);
 			}
 		}
-		logger.info("___________________________________________________________________________________");
 		return nuevoOrdenamiento;
 	}
 

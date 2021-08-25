@@ -185,6 +185,9 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		return arrayCopy;
 	}
 
+	$scope.banderaErrorEstatus = false;
+	$scope.banderaErrorIntervencion = false;
+	$scope.banderaErrorGeografia = false;
 	$scope.consultarCatalagosPI = function () {
 		swal({ text: 'Espera un momento...', allowOutsideClick: false });
 		swal.showLoading();
@@ -199,25 +202,34 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 						$scope.filtrosGeneral.tipoOrdenes = $scope.realizarConversionAnidado(results[0].data.result)
 					} else {
 						toastr.warning('No se encontraron  tipo ordenes');
+						$scope.banderaErrorIntervencion = true;
 					}
 				} else {
 					toastr.warning(results[0].data.resultDescripcion);
+					$scope.banderaErrorIntervencion = true;
 				}
 			} else {
 				toastr.error('Ha ocurrido un error en la consulta de tipo ordenes');
+				$scope.banderaErrorIntervencion = true;
 			}
 			if (results[2].data !== undefined) {
                 if(results[2].data.respuesta ){
                     if(results[2].data.result ){
                         $scope.filtrosGeneral.estatusdisponibles=$scope.realizarConversionAnidado( results[2].data.result)   
-                    }else{                      
-                        toastr.info( 'No se encontraron catalogo de estatus' );                
+                    }else{ 
+                        toastr.info( 'No se encontraron catalogo de estatus' );
+						$scope.banderaErrorEstatus = true;             
+						swal.close();
                     }
                 }else{
-                    toastr.warning( results[2].data.resultDescripcion );                
+                    toastr.warning( results[2].data.resultDescripcion );
+					$scope.banderaErrorEstatus = true;
+					swal.close();                
                 }               
             }else{
-                toastr.error( 'Ha ocurrido un error en la consulta de catalogo de estatus' );                
+                toastr.error( 'Ha ocurrido un error en la consulta de catalogo de estatus' );
+				$scope.banderaErrorEstatus = true;
+				swal.close();                  
             }
 			if (results[1].data !== undefined) {
 				if (results[1].data.respuesta) {
@@ -257,18 +269,22 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 						} else {
 							swal.close();
 							toastr.warning('No se encontraron datos para la geografia');
+							$scope.banderaErrorGeografia = true;
 						}
 					} else {
 						swal.close();
 						toastr.warning('No se encontraron datos para la geografia');
+						$scope.banderaErrorGeografia = true;
 					}
 				} else {
 					swal.close();
 					toastr.warning(results[1].data.resultDescripcion);
+					$scope.banderaErrorGeografia = true;
 				}
 			} else {
 				swal.close();
-				toastr.error('Ha ocurrido un error en la consulta de geografia');
+				toastr.error('Ha ocurrido un error en la consulta de geografia')
+				$scope.banderaErrorGeografia = true;;
 			}
 
 		

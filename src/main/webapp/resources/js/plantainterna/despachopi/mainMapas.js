@@ -527,14 +527,14 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
             let marker_ot = new google.maps.Marker({
                 clickable: false,
                 position: {
-                    lat: parseFloat(19.336174),
-                    lng: parseFloat(-99.191088)
+                    lat: parseFloat(ot.latitud),
+                    lng: parseFloat(ot.longitud)
                 },
                 title: "OT",
                 animation: google.maps.Animation.DROP,
                 map: mapavistageneral,
-                latitud_ot: parseFloat(19.336174),
-                longitud_ot: parseFloat(-99.191088),
+                latitud_ot: parseFloat(ot.latitud),
+                longitud_ot: parseFloat(ot.longitud),
                 icon: {
                     url: './resources/img/plantainterna/despacho/domicilio-marker.svg',
                     scaledSize: new google.maps.Size(37, 43),
@@ -544,7 +544,7 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
             });
             $scope.markerOt.push(marker_ot)
             let pointA = new google.maps.LatLng(parseFloat(tecnicoSelect.latitud), parseFloat(tecnicoSelect.longitud)) // basel airport
-            let pointB = new google.maps.LatLng(parseFloat(19.336174), parseFloat(-99.191088))
+            let pointB = new google.maps.LatLng(parseFloat(ot.latitud), parseFloat(ot.longitud))
             drawCurve(pointA, pointB, mapavistageneral);
         });
     }

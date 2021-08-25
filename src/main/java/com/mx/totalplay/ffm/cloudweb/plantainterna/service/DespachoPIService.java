@@ -38,7 +38,6 @@ public interface DespachoPIService {
 	public ServiceResponseResult consultaAcciones(String params);
 	public ServiceResponseResult getCatalogoStatusEstadoMotivo(String params);
 	public ServiceResponseResult consultarEvidenciaAlertaPI(String params);
-	public ServiceResponseResult consultarHistoricoAlertaPI(String params);
 	public ServiceResponseResult consultarComentariosAlertaPI(String params);
 	public ServiceResponseResult cambiarEstatusIntegrador(String params);
 	public ServiceResponseResult setComentariosIntegrador(String params);

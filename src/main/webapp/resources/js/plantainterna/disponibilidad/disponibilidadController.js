@@ -112,6 +112,9 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
         $scope.consultarCatalogos();
     }
 
+    $scope.banderaErrorIntervencion = false;
+    $scope.banderaErrorGeografia = false;
+    $scope.banderaErrorGeneral = false;
     $scope.consultarCatalogos = function(){
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
@@ -140,11 +143,19 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                     } else {
                         $scope.arrayIntervencion = result[1].data.result;
                     }
+                    if ($scope.arrayIntervencion.length === 0) {
+                        $scope.banderaErrorIntervencion = true;
+                        $scope.banderaErrorGeneral = true;
+                    }
                 } else {
                     mostrarMensajeErrorAlert('No existen intervenciones actualmente');
+                    $scope.banderaErrorIntervencion = true;
+                    $scope.banderaErrorGeneral = true;
                 }              
             } else{
                 mostrarMensajeErrorAlert(result[1].data.resultDescripcion)
+                $scope.banderaErrorIntervencion = true;
+                $scope.banderaErrorGeneral = true;
             }
 
             if (result[2].data.respuesta) {
@@ -159,39 +170,51 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
 
                         $scope.geografiaList = listGeo;
                         let geografia = listGeo;
-                        geografia.map((e)=>{
-                            e.parent=e.padre ==undefined ? "#" : e.padre;
-                            e.text= e.nombre;
-                            e.icon= "fa fa-globe";
-                            
-                            return e
-                        })  
-                        
-                        $('#jstreeconsulta').bind('loaded.jstree', function(e, data){   
-                        }).jstree({
-                            'core': {
-                                'data': geografia,
-                                'themes': {
-                                    'name': 'proton',
-                                    'responsive': true,
-                                    "icons":false        
-                                }
-                            },
-                            plugins : ['search'],
-                             "search": {
-                                    "case_sensitive": false,
-                                    "show_only_matches": true
-                                }
-                        });
+                        if (geografia.length !== 0) {
 
+                        
+                            geografia.map((e)=>{
+                                e.parent=e.padre ==undefined ? "#" : e.padre;
+                                e.text= e.nombre;
+                                e.icon= "fa fa-globe";
+                                
+                                return e
+                            })  
+                            
+                            $('#jstreeconsulta').bind('loaded.jstree', function(e, data){   
+                            }).jstree({
+                                'core': {
+                                    'data': geografia,
+                                    'themes': {
+                                        'name': 'proton',
+                                        'responsive': true,
+                                        "icons":false        
+                                    }
+                                },
+                                plugins : ['search'],
+                                "search": {
+                                        "case_sensitive": false,
+                                        "show_only_matches": true
+                                    }
+                            });
+                        } else {
+                            $scope.banderaErrorGeografia = true;
+                            $scope.banderaErrorGeneral = true;
+                        }
                     } else {
                         mostrarMensajeWarningValidacion('No existen geografias actualmente')
+                        $scope.banderaErrorGeografia = true;
+                        $scope.banderaErrorGeneral = true;
                     }
                 } else {
                     mostrarMensajeErrorAlert(result[2].data.result.mensaje)
+                    $scope.banderaErrorGeografia = true;
+                    $scope.banderaErrorGeneral = true;
                 }
             } else {
                 mostrarMensajeErrorAlert(result[2].data.resultDescripcion)
+                $scope.banderaErrorGeografia = true;
+                $scope.banderaErrorGeneral = true;
             }
         }).catch(err => handleError(err));
     }

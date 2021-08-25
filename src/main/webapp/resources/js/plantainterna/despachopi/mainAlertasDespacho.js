@@ -1,5 +1,5 @@
 var tableAlerta;
-app.alertasDespachoPrincipal=function($scope,mainAlertasService){
+app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
 
     console.log("mainAlertasService");
     $scope.otsAlertas = [];
@@ -53,11 +53,13 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService){
         angular.forEach(alertas,function(value,index){
             let alertaob=value.alerta ;
             let ordenobj=value.orden ;
+            let tecnicoObj = value.tecnico;
             let  arra=[];
             arra[0] = alertaob.id ? alertaob.id : '';
             arra[1] = alertaob.folioSistema ? alertaob.folioSistema : '';
             arra[2] = `
-                <div class="card card-alertas-pendientes" onclick="consultarAccionesAlerta(${index})">
+                <div class="card card-alertas-pendientes" onclick="consultarAccionesAlerta(${ordenobj.id}, ${ordenobj.folioSistema}, ${alertaob.latitudAlerta}, ${alertaob.longitudAlerta}, ${tecnicoObj.latitud}, ${tecnicoObj.longitud}, ${alertaob.idSubAlerta}, ${ordenobj.idIntervencion}, 
+                    ${ordenobj.idSubIntervencion}, ${tecnicoObj.id}, ${alertaob.id})">
                     <div class="card-body card-body-alertas">
                         <div class="row">
                             <div class="col-12">
@@ -118,31 +120,48 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService){
     }
 
     $scope.idAlertaSelecionada = '';
-    consultarAccionesAlerta = function(ot, os, latAlerta, longAlerta, latTecnico, longTecnico) {
+    consultarAccionesAlerta = function(ot, os, latAlerta, longAlerta, latTecnico, longTecnico, idSubTipoAlerta, idIntervencion, idSubIntervencion, idTecnico, idAlerta) {
         if ($scope.idAlertaSelecionada !== ot) {
             $scope.idAlertaSelecionada = ot;
             $scope.evidenciaAlertaConsultada = false;
             $scope.historicoAlertaConsultada = false;
             $scope.chatAlertaConsultada = false;
             $scope.showAaccion = false;
-            $scope.alertaSeleccionadaObject = {IdOT: ot, os: os, latitudAlerta: latAlerta, longitudAlerta: longAlerta, latitudTecnico: latTecnico, longitudTecnico: longTecnico};
+            $scope.alertaSeleccionadaObject = {
+                IdOT: ot, 
+                os: os, 
+                latitudAlerta: latAlerta, 
+                longitudAlerta: longAlerta, 
+                latitudTecnico: latTecnico, 
+                longitudTecnico: longTecnico, 
+                idSubTipoAlerta: idSubTipoAlerta,
+                idIntervencion: idIntervencion,
+                idSubIntervencion: idSubIntervencion,
+                idTecnico: idTecnico,
+                idAlerta: idAlerta
+            };
             console.log($scope.alertaSeleccionadaObject);
             $scope.$apply();
             $("#pills-mapa-tab").click();
             swal({ text: 'Consultando datos ...', allowOutsideClick: false });
             swal.showLoading();
             var params = {
-                "Tipo_Alerta": "87"
+                "idTipoAlerta": idSubTipoAlerta
             }        
             mainAlertasService.consultaAccionesAlerta(params).then(function success(response) {
+                //response.data = accionesOt;
                 console.log(response);
-                response.data = accionesAlerta;
                 if (response.data !== undefined) {
-                    $scope.alertaSeleccionada = true;
+                    if (response.data.respuesta) {
+                        $scope.alertaSeleccionada = true;
                     $scope.setMarkets($scope.alertaSeleccionadaObject);
-                    $scope.listaOpcionesAlerta = response.data.result.Acciones;
+                    $scope.listaOpcionesAlerta = response.data.result.acciones;
                     
                     swal.close();
+                    } else {
+                        swal.close();
+                    }
+                    
                 } else {
                     swal.close();
                 }
@@ -155,26 +174,64 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService){
 
 
     $scope.showAaccion = false;
+    $scope.listaCampos = [];
+    $scope.listaMotivosAlerta = [];
     $scope.mostrarAccionAlerta = function(accion) {
+        /*
         console.log(accion);
         $scope.listaEstadoAlerta = [];
-
+        $scope.listaCampos = [];
         var params = {
-            "ID_Propietario": "87"
-        }        
+            "ID_Propietario": "1"
+        }
+        //$scope.listaCampos = accion.Campo;
+        //console.log($scope.listaCampos);
         mainAlertasService.getCatalogoStatusEstadoMotivo(params).then(function success(response) {
             console.log(response);
             response.data = catalogoEstatusAlerta;
             if (response.data !== undefined) {
                 $scope.listaCatalogoEstatusAlerta = response.data.result.Ststus;
                 $scope.showAaccion = true;
+                $scope.showOpcion = 0;
                 $scope.listaEstadoAlerta = $scope.listaCatalogoEstatusAlerta.filter(estatus => estatus.Nivel === "2")
-
+                $scope.mostrarOpcionAlerta(accion);
                 swal.close();
             } else {
                 swal.close();
             }
         }).catch(err => handleError(err));
+        */
+
+        $scope.showAaccion = true;
+        $scope.showOpcion = 0;
+        $scope.listaMotivosAlerta = [];
+        $scope.mostrarOpcionAlerta(accion);
+    }
+
+    $scope.showOpcion = 0;
+    $scope.mostrarOpcionAlerta = function(accion) {
+        console.log(accion);
+        switch (accion.id) {
+            case "12":
+                //RESCATE
+                $scope.showOpcion = 1;
+                break;
+            case 1: 
+                //REAGENDAR
+                $scope.showOpcion = accion.id;
+                $scope.listaMotivosAlerta = $scope.filtrosAlertas.catalogoEstatus.filter(e => {return e.idPadre === 201})
+                break;
+            case "13": 
+                //CALENDARIZAR
+                $scope.showOpcion = 3;
+                break;
+            case "14": 
+                //TERMINAR
+                $scope.showOpcion = 4;
+                break;
+            default:
+                break;
+        }
     }
 
 
@@ -403,72 +460,233 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService){
     $scope.listaHistoricoAlerta = [];
     $scope.historicoAlertaConsultada = false;
     $scope.consultarHistoricoAlerta = function() {
-        if (!$scope.historicoAlertaConsultada) {
-            $scope.historicoAlertaConsultada = true;
-            swal({ text: 'Consultando datos ...', allowOutsideClick: false });
-            swal.showLoading();
-            var params = {
-                "idot": "66169"//PENDIENTE
-                //"idot": $scope.alertaSeleccionadaObject.IdOT
-            }        
-            mainAlertasService.consultarHistoricoAlertaPI(params).then(function success(response) {
-                console.log(response);
-                if (response.data !== undefined) {
-                    $scope.listaHistoricoAlerta = historicoAlerta;
-                    swal.close();
-                } else {
-                    swal.close();
-                }
-            }).catch(err => handleError(err));
+        if ($scope.alertaSeleccionada) {
+            if (!$scope.historicoAlertaConsultada) {
+                $scope.historicoAlertaConsultada = true;
+                swal({ text: 'Consultando datos ...', allowOutsideClick: false });
+                swal.showLoading();
+                var params = {
+                    //"idOt": "3010"//PENDIENTE
+                    "idOt": $scope.alertaSeleccionadaObject.IdOT
+                }        
+                mainAlertasService.consultarHistoricoAlertaPI(params).then(function success(response) {
+                    console.log(response);
+                    if (response.data !== undefined) {
+                        if (response.data.respuesta) {
+                            if (response.data.result) {
+                                if (response.data.result.detalle) {
+                                    $scope.listaHistoricoAlerta = response.data.result.detalle.reverse();
+                                }else{
+                                    toastr.warning( response.data.result.mensaje );                
+                                }
+                            } else {
+                                toastr.warning('No se encontraron resultados');
+                            }
+                        } else {
+                            toastr.warning(response.data.resultDescripcion);
+                        }
+                        swal.close();
+                    } else {
+                        swal.close();
+                    }
+                }).catch(err => handleError(err));
+            }
+        } else {
+            setTimeout(function(){
+                $("#pills-mapa-tab").click();
+            }, 0500);
         }
-        
     }
 
     $scope.listaComentariosAlerta = [];
     $scope.chatAlertaConsultada = false;
     $scope.consultarChatAlerta = function() {
-        if(!$scope.chatAlertaConsultada) {
-            $scope.chatAlertaConsultada = true;
-            swal({ text: 'Consultando datos ...', allowOutsideClick: false });
-            swal.showLoading();
-            var params = {
-                "idot": "66169",//PENDIENTE
-                //"idot": $scope.alertaSeleccionadaObject.IdOT
-                "FechaInicial": "",
-                "FechaFinal": ""
+        if ($scope.alertaSeleccionada) {
+            if(!$scope.chatAlertaConsultada) {
+                $scope.chatAlertaConsultada = true;
+                swal({ text: 'Consultando datos ...', allowOutsideClick: false });
+                swal.showLoading();
+                var params = {
+                    //"idOt": "3"//PENDIENTE
+                    "idOt": $scope.alertaSeleccionadaObject.IdOT
+                }        
+                mainAlertasService.consultarComentariosAlertaPI(params).then(function success(response) {
+                    console.log(response);
+                    if (response.data !== undefined) {
+                        if(response.data.respuesta) {
+                        // $scope.listaComentariosAlerta = response.data.result.detalle;
+                            if (response.data.result.detalle) {
+                                //$scope.flagComentarios = true;
+                                $scope.listaComentariosAlerta = response.data.result.detalle;
+                                angular.forEach($scope.listaComentariosAlerta, function (comentario, index) {
+                                    comentario.fechaComentario = moment(comentario.fecha + ' ' + comentario.hora).format("dddd, D [de] MMMM [de] YYYY hh:mm A");
+                                });
+                            } else {
+                                toastr.warning(response.data.result.mensaje);
+                            }
+                        } else {
 
-            }        
-            mainAlertasService.consultarComentariosAlertaPI(params).then(function success(response) {
-                console.log(response);
-                if (response.data !== undefined) {
-                    $scope.listaComentariosAlerta = comentariosAlerta;
-                    swal.close();
-                } else {
-                    swal.close();
-                }
-            }).catch(err => handleError(err));
+                        }
+                        swal.close();
+                    } else {
+                        swal.close();
+                    }
+                }).catch(err => handleError(err));
+            }
+        } else {
+            setTimeout(function(){
+                $("#pills-mapa-tab").click();
+            }, 0500);
         }
         
     }
 
     $scope.comentarioAlerta = "";
     $scope.agregarComentario = function() {
-        var params = {
-            "idOT": "87",
-            "idUserComenta": "87",
-            "comentario": "87",
-            "afectaA": "87",
-            "origen": "87"
-        }        
-        mainAlertasService.setComentariosIntegrador(params).then(function success(response) {
-            console.log(response);
-            if (response.data !== undefined) {
-                toastr.success(response.data.result.resultDescription);
-                $scope.comentarioAlerta = "";
-                swal.close();
-                $scope.consultarChatAlerta();
-            } else {
-                swal.close();
+        if ($scope.comentarioAlerta !== "") {
+            var params = {
+                "comentario": $scope.comentarioAlerta,
+                //"idOrden": "3010",
+                "idOrden": $scope.alertaSeleccionadaObject.IdOT,
+                "origenSistema": "2"
+            }        
+            genericService.agregarComentariosOt(params).then(function success(response) {
+                console.log(response);
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        console.log("Agregando ");
+                        toastr.success(response.data.resultDescripcion);
+                        $scope.comentarioAlerta = "";
+                        $scope.chatAlertaConsultada = false;
+                        $scope.consultarChatAlerta();
+                        swal.close();
+                    } else {
+                        toastr.error(response.data.resultDescripcion);
+                    }
+                } else {
+                    toastr.error(response.data.resultDescripcion);
+                    swal.close();
+                }
+            }).catch(err => handleError(err));
+        } else {
+            toastr.warning( 'Ingrese un comentario.' );  
+        }
+    }
+
+    $scope.reagendaAlerta = {};
+    $scope.rescateAlerta = {};
+    $scope.calendarizarAlerta = {};
+    $scope.terminarAlerta = {};
+    $scope.cambiarEstatusAlertaValidacion = function() {
+        $scope.params = {};
+        let errorMensaje = '<ul>';
+        let isValido = true;
+        switch ($scope.showOpcion) {
+            case 1:
+                //REAGENDAMIENTO
+                if ($scope.reagendaAlerta.fechaReagendamiento.trim() === '') {
+                    errorMensaje += '<li>Completa campo fecha.</li>'
+                    isValido = false;
+                }
+                if (!$scope.reagendaAlerta || !$scope.reagendaAlerta.turno) {
+                    errorMensaje += '<li>Seleccione campo turno.</li>'
+                    isValido = false;
+                }
+                if (!$scope.reagendaAlerta || !$scope.reagendaAlerta.motivo) {
+                    errorMensaje += '<li>Seleccione campo motivo.</li>'
+                    isValido = false;
+                }
+                if (!$scope.reagendaAlerta.comentario || $scope.reagendaAlerta.comentario.trim() === '') {
+                    errorMensaje += '<li>Completa campo comentario.</li>'
+                    isValido = false;
+                }
+                if (isValido) {
+                    $scope.params = {
+                        tipo: 'reagendamiento',
+                        ot: $scope.alertaSeleccionadaObject.IdOT,
+                        folioSistema: $scope.alertaSeleccionadaObject.os,
+                        idFlujo: $scope.alertaSeleccionadaObject.idFlujo,//
+                        idTipoOrden: $scope.alertaSeleccionadaObject.idIntervencion,
+                        idSubTipoOrden: $scope.alertaSeleccionadaObject.idSubIntervencion,
+                        idOrigenSistema: 1,
+                        idUsuarioDespacho: 12,//
+                        latitud: $scope.alertaSeleccionadaObject.latitudAlerta,
+                        longitud: $scope.alertaSeleccionadaObject.longitudAlerta,
+                        comentarios: $scope.reagendaAlerta.comentario,
+                        idTurno: $scope.reagendaAlerta.turno.id,
+                        idMotivo: $scope.reagendaAlerta.motivo.id,
+                        fechaHoraAgenda: $scope.reagendaAlerta.fechaReagendamiento,
+                        idAccion: $scope.showOpcion,
+                        idAlerta: $scope.alertaSeleccionadaObject.idAlerta
+                    }
+                }
+                break;
+                
+                case 100:
+                    //REAGENDAMIENTO
+                    if ($scope.reagendaAlerta.fechaReagendamiento.trim() === '') {
+                        errorMensaje += '<li>Completa campo fecha.</li>'
+                        isValido = false;
+                    }
+                    if (!$scope.reagendaAlerta || !$scope.reagendaAlerta.turno) {
+                        errorMensaje += '<li>Seleccione campo turno.</li>'
+                        isValido = false;
+                    }
+                    if (!$scope.reagendaAlerta || !$scope.reagendaAlerta.motivo) {
+                        errorMensaje += '<li>Seleccione campo motivo.</li>'
+                        isValido = false;
+                    }
+                    if (!$scope.reagendaAlerta.comentario || $scope.reagendaAlerta.comentario.trim() === '') {
+                        errorMensaje += '<li>Completa campo comentario.</li>'
+                        isValido = false;
+                    }
+                    if (isValido) {
+                        $scope.params = {
+                            tipo: 'reagendamiento',
+                            ot: $scope.alertaSeleccionadaObject.IdOT,
+                            folioSistema: $scope.alertaSeleccionadaObject.os,
+                            idFlujo: $scope.alertaSeleccionadaObject.idFlujo,//
+                            idTipoOrden: $scope.alertaSeleccionadaObject.idIntervencion,
+                            idSubTipoOrden: $scope.alertaSeleccionadaObject.idSubIntervencion,
+                            idOrigenSistema: 1,
+                            idUsuarioDespacho: 12,//
+                            latitud: $scope.alertaSeleccionadaObject.latitudAlerta,
+                            longitud: $scope.alertaSeleccionadaObject.longitudAlerta,
+                            comentarios: $scope.reagendaAlerta.comentario,
+                            idTurno: $scope.reagendaAlerta.turno.id,
+                            idMotivo: $scope.reagendaAlerta.motivo.id,
+                            fechaHoraAgenda: $scope.reagendaAlerta.fechaReagendamiento,
+                            idAccion: $scope.showOpcion,
+                            idAlerta: $scope.alertaSeleccionadaObject.idAlerta
+                        }
+                    }
+                    break;
+            default:
+                break;
+        }
+
+        if (isValido) {
+            $scope.cambiarEstatusAlerta($scope.params);
+        } else {
+            errorMensaje += '</ul>'
+            mostrarMensajeWarningValidacion(errorMensaje)
+        }
+    }
+
+    $scope.cambiarEstatusAlerta = function(params) {
+
+        genericService.cambioStatusOts(params).then(result =>{
+            console.log(result);
+            swal.close();
+            if(result.data.respuesta){
+             
+                toastr.success( result.data.result.mensaje );
+                $("#modalDetalleOT").modal('hide')
+                $scope.refrescarBusqueda()
+            }else{
+                console.log(result.data.resultDescripcion)
+                toastr.warning( result.data.resultDescripcion );
+                
             }
         }).catch(err => handleError(err));
     }
@@ -585,6 +803,21 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService){
 
         
     }
+
+    $( document ).ready(function() {
+
+        $('#fecha-reagendamiento-alerta').datepicker({
+            format : 'dd/mm/yyyy',
+            autoclose : true,
+            language : 'es',
+            todayHighlight : true,
+            startDate :  moment(FECHA_HOY_DATE).toDate()
+        });
+        $('#fecha-reagendamiento-alerta').datepicker('update',FECHA_HOY_DATE);
+
+    });
+
+    
 
 
 };

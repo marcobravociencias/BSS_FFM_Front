@@ -1327,7 +1327,10 @@ label.label-filter {
   font-size: .7em;
   font-weight: bold;
 }
-
+i.icono-noseleccion {
+  color: #ff9f3b;
+  display: inline-block;
+}
 
 
 
