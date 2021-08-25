@@ -57,14 +57,6 @@ pageEncoding="ISO-8859-1"%>
 						<option value="">Seleccione ...</option>
 					</select>
 				</div>
-				<div id="container_arbol_dispo_consulta" class="col-sm-2 columna-filtro-ind"
-					data-intro="Opci&oacute;n tipo de intervenci&oacute;n">
-					<label for="arbol_disponibilidad_consulta" class="label-filter">Geograf&iacute;a</label>
-					<input type="text" readonly id="arbol_disponibilidad_consulta"
-						style="background: white;cursor: pointer"
-						class="input-filtro-disponibilidad form-control form-control-sm"
-						aria-describedby="emailHelp" placeholder="Seleccione">
-				</div>
 				<div class="col-3" style="margin-top: 1.5px;">
 					<label for="tipo_select" class="label-filter" style="visibility: hidden;">Intervención</label>
 					<button id="btn-consultar-disponibilidad" type="button"
