@@ -24,10 +24,10 @@ app.controller('reportesController', ['$scope','$q','reportesPIService', 'generi
 				case 'link_reporte_ordenes':
 					console.log("entra ordenes")
 					$("#texto_header_reportes").text("Reporte Ordenes de Trabajo Planta Interna"); 
-					$("#container_reporte_ordenes").show('fade');
+					$('#container_reporte_ordenes').show();
 					$('#container_reporte_despacho').hide();
 					$('#container_reporte_tecnico').hide();
-					$("#container_reporte_auxiliar").hide();
+					$('#container_reporte_auxiliar').hide();
 					//$('.content_reporte').hide();
 					//$("#reporteOrdenesTable").show(); 
 					
@@ -37,11 +37,11 @@ app.controller('reportesController', ['$scope','$q','reportesPIService', 'generi
 				case 'link_reporte_tecnico':
 					console.log("entra tecnico")
 					$("#texto_header_reportes").text("Reporte por t\u00E9cnico");
-					$("#container_reporte_tecnico").show('fade');
+					$('#container_reporte_tecnico').show();
 					//reporteOrdenesTable.destroy();
 					$('#container_reporte_ordenes').hide();
 					$('#container_reporte_despacho').hide();
-					$("#container_reporte_auxiliar").hide();
+					$('#container_reporte_auxiliar').hide();
 					//$('#reporteOrdenesTable').hide();
 					console.log("sale tecnico")
 					
@@ -50,10 +50,10 @@ app.controller('reportesController', ['$scope','$q','reportesPIService', 'generi
 				case 'link_reporte_despacho':
 					console.log("entra despacho")
 					$("#texto_header_reportes").text("Reporte Coordinador");
-					$("#container_reporte_despacho").show('fade');
+					$('#container_reporte_despacho').show();
 					$('#container_reporte_tecnico').hide();
 					$('#container_reporte_ordenes').hide();
-					$("#container_reporte_auxiliar").hide();
+					$('#container_reporte_auxiliar').hide();
 					//$('#reporteOrdenesTable').hide();
 					console.log("sale despacho")
 					
@@ -61,10 +61,10 @@ app.controller('reportesController', ['$scope','$q','reportesPIService', 'generi
 				case 'link_reporte_auxiliar':
 					console.log("entra aux")
 					$("#texto_header_reportes").text("Reporte T\u00E9cnico Auxiliar");
-					$("#container_reporte_auxiliar").show('fade');
+					$('#container_reporte_auxiliar').show();
 					$('#container_reporte_tecnico').hide();
 					$('#container_reporte_ordenes').hide();
-					$("#container_reporte_despacho").hide();
+					$('#container_reporte_despacho').hide();
 					//$('#reporteOrdenesTable').hide();
 					console.log("sale aux")
 					
