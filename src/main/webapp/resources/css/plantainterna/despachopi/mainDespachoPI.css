@@ -1898,24 +1898,37 @@ table.dataTable.no-footer{
   text-align: center;
 }
 
-.pagination .paginate_button a.page-link {
+.dataTables_paginate .pagination .paginate_button:hover{
+   border: 1px solid white !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button{
+  padding: 1px;
+}
+
+
+#table-reporte_paginate .pagination .paginate_button a.page-link {
   color: #828080;
   font-family: "Montserrat";
   background-color: white !important;
   box-shadow: none !important;
 }
 
-.pagination .previous a.page-link {
+#table-reporte-paginate .dataTables_paginate .pagination .paginate_button:hover{
+  border: 1px solid #000 !important;
+}
+
+#table-reporte_paginate .pagination .previous a.page-link {
   color: white !important;
   font-size: 0;
 }
 
-.pagination .next a.page-link {
+#table-reporte_paginate .pagination .next a.page-link {
   color: white !important;
   font-size: 0;
 }
 
-.pagination .previous a:after {
+#table-reporte_paginate .pagination .previous a:after {
   font-family: FontAwesome;
   display: inline-block;
   content: "\f104";
@@ -1924,7 +1937,7 @@ table.dataTable.no-footer{
   font-size: initial !important;
 }
 
-.pagination .next a:before {
+#table-reporte_paginate .pagination .next a:before {
   font-family: FontAwesome;
   display: inline-block;
   content: "\f105";
@@ -1933,12 +1946,12 @@ table.dataTable.no-footer{
   font-size: initial !important;
 }
 
-.dataTables_wrapper .dataTables_paginate .paginate_button a {
+#table-reporte_paginate .dataTables_wrapper .dataTables_paginate .paginate_button a {
   padding: 1px 1px 1px 1px;
 }
 
-.pagination .paginate_button > .active {
-  border: #000000 !important;
+#table-reporte_paginate .pagination .paginate_button > .active {
+  border: 1px solid #000000 !important;
 }
 
 .download-file{
@@ -1948,9 +1961,9 @@ table.dataTable.no-footer{
   
 }
 
-.paginate_button .page-item {
-  padding: 1px 1px 1px 1px;
-}
+.dataTables_wrapper .dataTables_paginate .paginate_button a { 
+    padding: 1px 1px 1px 1px; 
+  } 
 
 #table-reporte .dataTables_empty{
   background: #f9f9f9;
