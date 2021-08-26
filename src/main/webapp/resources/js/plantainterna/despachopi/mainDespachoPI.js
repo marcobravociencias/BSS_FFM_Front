@@ -171,25 +171,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             language : 'es',
             todayHighlight : true
         });
-        
-        tableReporte = $('#table-reporte').DataTable({
-			"paging": true,
-			"lengthChange": false,
-			"searching": false,
-			"ordering": false,
-			"pageLength": 10,
-			"info": false,
-			"autoWidth": true,
-			"language": idioma_espanol_not_font,
-			"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">', 
-            dom: 'Bfrtip', 
-            buttons:  
-            [{ 
-                extend: 'excelHtml5', 
-                title: 'Reporte Seguimiento Diario', 
-                text: 'Exportar Excel' 
-            }] 
-		});
+    
 
     });
 
@@ -1135,52 +1117,58 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             swal.close()
             
             $scope.listOrdenes = []; 
-            if(tableReporte){                              
-                tableReporte.destroy() 
-            } 
+           
  
             mainDespachoService.consultarReporteDiario(parametros).then(function success(response) {      
                 if (response.data !== undefined) { 
                     if(response.data.respuesta ){ 
                         if(response.data.result ){ 
-                            angular.forEach(response.data.result.ordenes,function(orden,index){    
-                               let row = []; 
-                               row[0] = orden.idOrden; 
-                               row[1] = orden.folio; 
-                               row[2] = orden.cuenta; 
-                               row[3] = orden.intervencion; 
-                               row[4] = orden.subIntervencion; 
-                               row[5] = orden.estatus; 
-                               row[6] = orden.estado; 
-                               row[7] = orden.geografia; 
-                               row[8] = orden.operario; 
-                               row[9] = orden.nempleado; 
-                               row[10] = orden.fechaCreacion; 
-                               row[11] = orden.fechaPrimeraAgenda; 
-                               row[12] = orden.turno; 
-                               $scope.listOrdenes.push(row); 
-                            }) 
-                            swal.close(); 
-                                 
-                            tableReporte = $('#table-reporte').DataTable({ 
-                                "paging": true, 
-                                "lengthChange": false, 
-                                "searching": false, 
-                                "ordering": false, 
-                                "pageLength": 10, 
-                                "info": false, 
-                                "autoWidth": true, 
-                                "data":$scope.listOrdenes, 
-                                "language": idioma_espanol_not_font, 
-                                "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">', 
-                                dom: 'Bfrtip', 
-                                buttons:  
-                                [{ 
-                                    extend: 'excelHtml5', 
-                                    title: 'Reporte Seguimiento Diario', 
-                                    text: 'Exportar Excel' 
-                                }] 
-                            }); 
+                            swal.close();  
+                            if(response.data.result.ordenes.length){
+                                angular.forEach(response.data.result.ordenes,function(orden,index){    
+                                let row = []; 
+                                row[0] = orden.idOrden; 
+                                row[1] = orden.folio; 
+                                row[2] = orden.cuenta; 
+                                row[3] = orden.intervencion; 
+                                row[4] = orden.subIntervencion; 
+                                row[5] = orden.estatus; 
+                                row[6] = orden.estado; 
+                                row[7] = orden.geografia; 
+                                row[8] = orden.operario; 
+                                row[9] = orden.nempleado; 
+                                row[10] = orden.fechaCreacion; 
+                                row[11] = orden.fechaPrimeraAgenda; 
+                                row[12] = orden.turno; 
+                                $scope.listOrdenes.push(row); 
+                                }) 
+                               
+                                if(tableReporte){                              
+                                    tableReporte.destroy() 
+                                }     
+                                tableReporte = $('#table-reporte').DataTable({ 
+                                    "paging": true, 
+                                    "lengthChange": false, 
+                                    "searching": false, 
+                                    "ordering": false, 
+                                    "pageLength": 10, 
+                                    "info": false, 
+                                    "autoWidth": true, 
+                                    "data":$scope.listOrdenes, 
+                                    "language": idioma_espanol_not_font, 
+                                    "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">', 
+                                    dom: 'Bfrtip', 
+                                    buttons:  
+                                    [{ 
+                                        extend: 'excelHtml5', 
+                                        title: 'Reporte Seguimiento Diario', 
+                                        text: 'Exportar Excel' 
+                                    }] 
+                                }); 
+                            }else{
+                                toastr.info(response.data.result.mensaje); 
+                            }
+                            
                         }else{ 
                             swal.close(); 
                             mostrarMensajeErrorAlert(response.data.resultDescripcion); 

@@ -1169,6 +1169,30 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         $("#cuenta-reporte").val('');
         $('#filtro_fecha_inicio_reporte').datepicker('update',   moment(FECHA_HOY_DATE).toDate() );
         $('#filtro_fecha_fin_reporte').datepicker('update',   moment(FECHA_HOY_DATE).toDate() );
+        
+        if(tableReporte){                              
+            tableReporte.destroy() 
+        } 
+
+        tableReporte = $('#table-reporte').DataTable({
+			"paging": true,
+			"lengthChange": false,
+			"searching": false,
+			"ordering": false,
+			"pageLength": 10,
+			"info": false,
+			"autoWidth": true,
+            "data":[], 
+			"language": idioma_espanol_not_font,
+			"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">', 
+            dom: 'Bfrtip', 
+            buttons:  
+            [{ 
+                extend: 'excelHtml5', 
+                title: 'Reporte Seguimiento Diario', 
+                text: 'Exportar Excel' 
+            }] 
+		});
         $("#modalReporte").modal('show');
     }
 }
