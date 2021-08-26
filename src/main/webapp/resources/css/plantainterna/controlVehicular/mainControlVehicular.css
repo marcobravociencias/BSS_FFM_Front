@@ -24,16 +24,16 @@
 .nav-item:first-child {
   margin-left: 2em;
 }
-.nav-link.active {
-  border-bottom: 0.3em solid #7716fa;
-}
-.nav-link.active a {
-  color: #7716fa !important;
-}
 
 #btnGuardar {
   float: right;
   margin-bottom: 20px;
+}
+
+#btnGuardar:active, #btnGuardar:focus {
+  background-color: white;
+  box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
+  
 }
 
 #btnBuscar { 
@@ -50,7 +50,7 @@
   font-weight: bold;
 }
 
-.btn:hover{
+#btnGuardar:hover{
   background-color: white;
 }
 
@@ -70,21 +70,11 @@ label {
 }
 
 /* CSS NAV */
-.nav-tabs {
-  border-bottom: none;
-}
-
-.nav-tabs .nav-item.show .nav-link,
-.nav-tabs .nav-link.active {
-  border-color: white;
-  border-bottom: groove #7716fa !important;
-  font-weight: bold;
-}
-
-.nav-tabs .nav-link:focus,
-.nav-tabs .nav-link:hover {
-  background: white;
-  border-color: white;
+#v-pills-tab .nav-link.active, .nav-pills .show>.nav-link {
+  color: #fff;
+  background-color: #773f85;
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+  cursor: default;
 }
 
 .input-filtro {
@@ -307,4 +297,13 @@ table.dataTable.no-footer {
 
 .modal-title {
   color: grey;
+}
+
+i.icono-noseleccion {
+  color: #ff9f3b;
+  display: inline-block;
+}
+b.text-no-seleccion-geografia {
+  color: #959595;
+  font-size: .8em;
 }

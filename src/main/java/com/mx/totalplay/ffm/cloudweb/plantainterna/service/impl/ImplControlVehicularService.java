@@ -11,6 +11,8 @@ import com.mx.totalplay.ffm.cloudweb.utilerias.utils.UtileriaGeneral;
 import com.mx.totalplay.ffm.cloudweb.plantainterna.service.ControlVehicularService;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.LoginResult;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.ServiceResponseResult;
 import com.mx.totalplay.ffm.cloudweb.utilerias.utils.ConsumeRest;
 import com.mx.totalplay.ffm.cloudweb.plantainterna.utils.ConstControlVehicular;
@@ -97,4 +99,24 @@ public class ImplControlVehicularService implements ControlVehicularService {
 		return response;
 	}
 	
+
+	    @Override
+    public ServiceResponseResult crearVehiculo(String params) {
+        logger.info("ImplControlVehicularService.class [metodo = crearVehiculo() ]\n" + params);
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constControlVehicular.getCrearVehiculo());
+        logger.info("URL ##" + urlRequest);
+
+        Map<String, String> paramsRequestGet = new HashMap<String, String>();
+
+        ServiceResponseResult response = restCaller.callPostBearerTokenRequest(jsonObject.toString(),
+				urlRequest,
+				ServiceResponseResult.class,
+				tokenAcces);
+        logger.info(response);
+        return response;
+    }
 }

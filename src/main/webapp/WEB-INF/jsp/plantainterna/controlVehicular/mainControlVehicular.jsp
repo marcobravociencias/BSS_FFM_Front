@@ -20,7 +20,7 @@
 
         <link href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap.css"
             rel="stylesheet" />
-        
+
         <link href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css"
             rel="stylesheet" />
 
@@ -41,7 +41,7 @@
             rel="stylesheet" />
         <link href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/font-awesome.css"
             rel="stylesheet" />
-            <link
+        <link
             href="${pageContext.request.contextPath}/resources/libraries/datePicker/css/bootstrap-datepicker3_1.9.0.min.css"
             rel="stylesheet" />
         <link href="${pageContext.request.contextPath}/resources/libraries/selectPicker/css/bootstrap-select.min.css"
@@ -55,7 +55,7 @@
 
     <body ng-controller="controlVehicularController">
         <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
-        <div class="container-fluid controlContent "style="margin-top: 1em;">
+        <div class="container-fluid controlContent " style="margin-top: 1em;">
             <div class="row">
                 <div id="datos_tablas" class="col-sm-12">
                     <a id="btn_mostrar_nav" style="display: none; position: absolute">
@@ -63,31 +63,36 @@
                     </a>
                     <div class="content-fluid">
                         <div class="container-fluid">
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item" ng-if="!isEdit">
-                                    <a class="nav-link active" id="alta-tab" data-toggle="tab" href="#alta" role="tab"
-                                        aria-controls="alta" aria-selected="true">Alta Veh&iacute;culos</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="consulta-tab" data-toggle="tab" href="#consulta" role="tab"
-                                        aria-controls="consulta" aria-selected="false">Consulta Veh&iacute;culos</a>
-                                </li>
-                                <li class="nav-item" ng-if="isEdit">
-                                    <a class="nav-link" id="modifica-tab" data-toggle="tab" href="#modifica" role="tab"
-                                        aria-controls="modifica" aria-selected="false">Modificar Veh&iacute;culo</a>
-                                </li>
-                            </ul>
-                            <div class="tab-content">
-                                <div class="tab-pane fade show active" id="alta" role="tabpanel" ng-if="!isEdit"
-                                    aria-labelledby="alta-tab">
-                                    <jsp:include page="./insertarVehiculo.jsp"></jsp:include>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
+                                        aria-orientation="vertical">
+                                        <a class="nav-link active" id="alta-tab" data-toggle="pill" ng-if="!isEdit"
+                                            href="#alta" role="tab" aria-controls="alta" aria-selected="true">Alta
+                                            Veh&iacute;culos</a>
+                                        <a class="nav-link" id="consulta-tab" data-toggle="pill" href="#consulta"
+                                            role="tab" aria-controls="consulta" aria-selected="false">Consulta
+                                            Veh&iacute;culos</a>
+                                        <a class="nav-link" id="modifica-tab" data-toggle="pill" href="#modifica"
+                                            ng-if="isEdit" role="tab" aria-controls="modifica"
+                                            aria-selected="false">Consulta Veh&iacute;culos</a>
+                                    </div>
                                 </div>
-                                <div class="tab-pane fade" id="consulta" role="tabpanel" aria-labelledby="consulta-tab">
-                                    <jsp:include page="./consultarVehiculo.jsp"></jsp:include>
-                                </div>
-                                <div class="tab-pane fade" id="modifica" role="tabpanel" aria-labelledby="modifica-tab"
-                                    ng-if="isEdit">
-                                    <jsp:include page="./insertarVehiculo.jsp"></jsp:include>
+                                <div class="col-md-10">
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade show active" id="alta" role="tabpanel" ng-if="!isEdit"
+                                            aria-labelledby="alta-tab">
+                                            <jsp:include page="./insertarVehiculo.jsp"></jsp:include>
+                                        </div>
+                                        <div class="tab-pane fade" id="consulta" role="tabpanel"
+                                            aria-labelledby="consulta-tab">
+                                            <jsp:include page="./consultarVehiculo.jsp"></jsp:include>
+                                        </div>
+                                        <div class="tab-pane fade" id="modifica" role="tabpanel"
+                                            aria-labelledby="modifica-tab" ng-if="isEdit">
+                                            <jsp:include page="./insertarVehiculo.jsp"></jsp:include>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -96,6 +101,7 @@
             </div>
         </div>
         <jsp:include page="./modals/historico.jsp"></jsp:include>
+        <jsp:include page="./modals/geografia-mainfiltro.jsp"></jsp:include>
     </body>
     <!-- LIBRERIAS -->
     <script src="${pageContext.request.contextPath}/resources/libraries/angularjs/js/angular.min.js"></script>

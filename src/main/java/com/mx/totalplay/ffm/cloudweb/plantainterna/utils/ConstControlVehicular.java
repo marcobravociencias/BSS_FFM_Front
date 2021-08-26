@@ -22,5 +22,8 @@ public class ConstControlVehicular implements Serializable{
 
 	@Value("${consultarEstatusControlVehicular}") 
 	private String consultarEstatusControlVehicular;
+
+	@Value("${crearVehiculo}") 
+	private String crearVehiculo;
 	
 }
