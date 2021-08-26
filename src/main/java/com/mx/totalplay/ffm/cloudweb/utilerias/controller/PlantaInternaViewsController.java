@@ -18,6 +18,7 @@ public class PlantaInternaViewsController {
 	private  final Logger logger = LogManager.getLogger(PlantaInternaViewsController.class.getName());
 	
 	
+	
 	private final ConstantesGeneric genericVars;   
 	private final UtileriaGeneral utileriaGeneral;
 
@@ -28,6 +29,7 @@ public class PlantaInternaViewsController {
     }
 
 	
+    
 	@GetMapping("/moduloDespacho")
 	public String despachoPlantaInterna() {		
 		return "plantainterna/despacho/despachopi";				
