@@ -1,4 +1,4 @@
-<div  class="container-fluid container-filtros-consultaot" style="padding-left: 0px;">
+<div  class="container-fluid container-filtros-consultaot" style="padding-left: 0px; margin-left: 0px;">
     <div style="padding-left: 0;padding-right: 0;" class="content-fluid">
         <div class="row md-form" id="filtros_config">
             <div class="col-md-1 column-style-consulta borderFilterR borderAlignR" style="width: 95px !important;" id="borderAlign">
@@ -66,7 +66,7 @@
         </div>
     </div>
 </div>
-<div class="container-fluid contenedor-consultaOT">
+<div class="container-fluid contenedor-consultaOT" style="margin-left: 0px;">
     <div class="content-fluid">
         <table id="reporteOrdenesTable" class="display table table-hover" cellspacing="0" width="100%">
             <thead id="thead_reporteOrdenes">

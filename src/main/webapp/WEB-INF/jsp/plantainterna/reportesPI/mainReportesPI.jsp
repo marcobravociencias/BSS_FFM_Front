@@ -37,8 +37,8 @@
 
 
 
-        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/reportesPI/mainReportes.css?"  rel="stylesheet"/>
-        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/consultaOT/styleConsultaOT.css?" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/reportesPI/mainReportes.css"  rel="stylesheet"/>
+        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/consultaOT/styleConsultaOT.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/css/plantainterna/consultaOT/timeLine.css"
         rel="stylesheet" />
 </head>
@@ -46,21 +46,9 @@
 <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
 <br/>
 <div class="col-md-12 style_container_reportes">
+	
 	<div class="row">
-		<div class="col-md-2">
-
-		</div>
-		<div class="col-md-10">
-			<div class="container container-title-header" style="padding: 0px !important;">
-				<div class="header-modulo">
-					<h5 class="title-modulo">M&oacute;dulo de reportes</h5>
-					<h1 class="h6 subtitle-modulo">En este m&oacute;dulo podr&aacute;s visualizar reportes</h1>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-2" id="navbar_reportes">
+		<div class="col-md-2" id="navbar_reportes" style="margin-top: 72px;">
 			<div class="align-rigth col-md-12">
 				<button id="ocultar_nav" type="button" class="close" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
@@ -83,11 +71,17 @@
 			</ul>
 
 		</div>
-		<div class="col-md-10 contentReport" id="datos_tablas">
+		<div class="col-md-10 col-lg-10 contentReport" id="datos_tablas">
 			
-			<a class="menuOpt" id="btn_mostrar_nav" style="display:none; position: absolute;">
+			<a class="menuOpt" id="btn_mostrar_nav" style="display:none;  margin:10px">
 				<i class="fa fa-bars" aria-hidden="true"></i>
 			</a>
+			<div class="container container-title-header" style="padding: 0px !important; margin-left: 0px;">
+				<div class="header-modulo">
+					<h5 class="title-modulo">M&oacute;dulo de reportes</h5>
+					<h1 class="h6 subtitle-modulo">En este m&oacute;dulo podr&aacute;s visualizar reportes</h1>
+				</div>
+			</div>
 			<h3 id="texto_header_reportes" class="text-center">Reporte Ordenes de Trabajo</h3>
 			
 			<div class="wraper_table content_reporte" id="container_reporte_ordenes">
