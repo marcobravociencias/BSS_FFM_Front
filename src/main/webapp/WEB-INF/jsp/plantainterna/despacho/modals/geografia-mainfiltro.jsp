@@ -16,7 +16,7 @@
         <div id="jstree-proton-3" class="proton-demo"></div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
+        <button type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface" data-mdb-dismiss="modal">
           Cerrar
         </button>
       </div>
