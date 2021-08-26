@@ -121,13 +121,12 @@
                 <div class="col-3">
                     <i class="icono-noseleccion fas fa-exclamation-circle me-2" ng-show="banderaErrorGeneral" style="margin-top: .8em;"></i> <b ng-show="banderaErrorGeneral" class="text-no-seleccion-geografia">Algunos cat&aacute;logos no han sido encontrados</b>
                 </div>
-                <div class="col-1">    
-                    <span onclick="abrirModalReporte()" class="reporte-color-despacho icon-color-despacho fas fa-file-alt"></span>
-                    <span onclick="abrirModalVistaMapa()" class="map-color-despacho icon-color-despacho fas fa-map"></span>
-                </div>
-                <div class="col-2">
+                <div class="col-3">
+                    
                     <input ng-model="fechaFiltradoCalendar" readonly id="calendar-next-back"  type="text" class="form-control form-control-sm"  />                  
                     <span ng-click="abrirModalDetalleIconografia()" class="paleta-color-despacho fas fa-palette"></span>
+                    <span onclick="abrirModalReporte()" class="reporte-color-despacho icon-color-despacho fas fa-file-alt"></span>
+                    <span onclick="abrirModalVistaMapa()" class="map-color-despacho icon-color-despacho fas fa-map"></span>
                 </div>
             </div>
         </div>
