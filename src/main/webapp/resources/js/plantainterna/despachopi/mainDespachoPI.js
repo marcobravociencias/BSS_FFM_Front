@@ -181,7 +181,14 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
 			"info": false,
 			"autoWidth": true,
 			"language": idioma_espanol_not_font,
-			"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+			"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">', 
+            dom: 'Bfrtip', 
+            buttons:  
+            [{ 
+                extend: 'excelHtml5', 
+                title: 'Reporte Seguimiento Diario', 
+                text: 'Exportar Excel' 
+            }] 
 		});
 
     });
@@ -1112,56 +1119,88 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             return false;
         }else{
 
-            let params = {
-                tipoIntervencion : intervencioncopy,
-                estatusOt : statuscopy,
-                fechaInicio : $scope.getFechaFormato(paramsTemp.fechaInicio),
-                fechaFin:  $scope.getFechaFormato(paramsTemp.fechaFin),
-                fechaSeleccionada : "fechaAgendamiento",
-                idOrden : paramsTemp.idot || "",
-                idCuenta : paramsTemp.cuenta || "",
-                folio: paramsTemp.idos || "",
-                elementosPorPagina : 10
-            }
+            let parametros = { 
+                tipoIntervencion : intervencioncopy, 
+                estatusOt : statuscopy, 
+                fechaInicio : $scope.getFechaFormato(paramsTemp.fechaInicio), 
+                fechaFin:  $scope.getFechaFormato(paramsTemp.fechaFin), 
+                fechaSeleccionada : paramsTemp.tipo, 
+                idOrden : paramsTemp.idot || "", 
+                idCuenta : paramsTemp.cuenta || "", 
+                folio: paramsTemp.idos || "" 
+            } 
             
             swal({ text: 'Espera un momento...', allowOutsideClick: false });
             swal.showLoading();
             swal.close()
-            /*
-            if(tableReporte)
-                tableReporte.destroy()
-
-            tableReporte = $('#table-reporte').DataTable({
-                "paging": true,
-                "searching": false,
-                "ordering": false,
-                "info": false,
-                "autoWidth": true,
-				"processing": false,
-				"ordering": false,
-				"serverSide": true,
-				"scrollX": false,
-				"lengthChange": false,
-				"pageLength": 10,
-				"ajax": {
-					"url": "req/consultarReporteDiario",
-					"type": "POST",
-					"data": params,
-					"dataSrc": function (json) {
-						return json.data;
-					},
-					"error":function(xhr, error, thrown){
-						handleError(xhr)
-					}, 
-					"complete": function () {
-						swal.close()
-					}
-				},
-				"columns": [null, null, null, null, null, null, null, null, null],
-				"language": idioma_espanol_not_font
-			});
-            */
+            
+            $scope.listOrdenes = []; 
+            if(tableReporte){                              
+                tableReporte.destroy() 
+            } 
+ 
+            mainDespachoService.consultarReporteDiario(parametros).then(function success(response) {      
+                if (response.data !== undefined) { 
+                    if(response.data.respuesta ){ 
+                        if(response.data.result ){ 
+                            angular.forEach(response.data.result.ordenes,function(orden,index){    
+                               let row = []; 
+                               row[0] = orden.idOrden; 
+                               row[1] = orden.folio; 
+                               row[2] = orden.cuenta; 
+                               row[3] = orden.intervencion; 
+                               row[4] = orden.subIntervencion; 
+                               row[5] = orden.estatus; 
+                               row[6] = orden.estado; 
+                               row[7] = orden.geografia; 
+                               row[8] = orden.operario; 
+                               row[9] = orden.nempleado; 
+                               row[10] = orden.fechaCreacion; 
+                               row[11] = orden.fechaPrimeraAgenda; 
+                               row[12] = orden.turno; 
+                               $scope.listOrdenes.push(row); 
+                            }) 
+                            swal.close(); 
+                                 
+                            tableReporte = $('#table-reporte').DataTable({ 
+                                "paging": true, 
+                                "lengthChange": false, 
+                                "searching": false, 
+                                "ordering": false, 
+                                "pageLength": 10, 
+                                "info": false, 
+                                "autoWidth": true, 
+                                "data":$scope.listOrdenes, 
+                                "language": idioma_espanol_not_font, 
+                                "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">', 
+                                dom: 'Bfrtip', 
+                                buttons:  
+                                [{ 
+                                    extend: 'excelHtml5', 
+                                    title: 'Reporte Seguimiento Diario', 
+                                    text: 'Exportar Excel' 
+                                }] 
+                            }); 
+                        }else{ 
+                            swal.close(); 
+                            mostrarMensajeErrorAlert(response.data.resultDescripcion); 
+                        } 
+                    }else{ 
+                        swal.close(); 
+                        mostrarMensajeErrorAlert(response.data.resultDescripcion); 
+                    } 
+                }else{ 
+                    swal.close(); 
+                    mostrarMensajeErrorAlert(response.data.resultDescripcion); 
+                } 
+            }); 
+            
         }
+    }
+    
+
+    downloadExcelReportFile = function(){ 
+        $(".buttons-excel").click(); 
     }
     
 }]);
