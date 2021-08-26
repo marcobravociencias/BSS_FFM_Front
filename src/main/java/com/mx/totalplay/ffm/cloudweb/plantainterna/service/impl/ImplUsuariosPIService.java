@@ -93,10 +93,23 @@ public class ImplUsuariosPIService implements UsuariosPIService {
 		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
 		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
 		String tokenAcces=principalDetail.getAccess_token() ;
-		logger.info("json object params## "+jsonObject.toString());
+		logger.info("json object params## "+ jsonObject.toString());
 		String url = principalDetail.getDireccionAmbiente().concat(constUsuario.getConsultaUsuariosPorGeoCompPuestos());
 		ServiceResponseResult response=restCaller.callPostBearerTokenRequest(jsonObject.toString(), url, ServiceResponseResult.class, tokenAcces);
 		logger.info("RESULT consultaUsuariosPorGeoCompPuestos "+gson.toJson(response));
+		return response;
+	}
+	
+	@Override
+	public ServiceResponseResult consultaGeografias() {
+		logger.info("ImplUsuariosPIService.class [metodo = consultaGeografias() ]\n");
+		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
+		String tokenAcces=principalDetail.getAccess_token() ;
+		logger.info("consultaGeografias ## " + tokenAcces);							
+	    String urlRequest=principalDetail.getDireccionAmbiente().concat(constUsuario.getConsultaGeografias());
+	    Map<String, String> paramsRequestGet = new HashMap<String, String>();	    
+		ServiceResponseResult response= restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest, ServiceResponseResult.class, tokenAcces);
+	    logger.info("RESULT consultaGeografias " + gson.toJson(response));
 		return response;
 	}
 

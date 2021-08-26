@@ -56,7 +56,7 @@
 				<div class="col-md-3">
 					<div class="input-group input-group-sm content-seach-group">
 						<input id="idBuscadorGeografia" type="text" class="form-control form-control-sm buscar-input-operario" placeholder="Buscar geograf&iacute;a" ng-keyup="busquedaGeografiaIndividual()"> 
-						<spanclass="search-icon-operario-busq fa fa-search"></span>
+						<span class="search-icon-operario-busq fa fa-search"></span>
 					</div>
 					<div class="container-treegeofria scrollGeneral">
 						<div id="jstree-proton-3" class="proton-demo"></div>

@@ -46,6 +46,27 @@ app.service("usuarioPIService", function ($http) {
 			transformRequest: angular.identity
 		});
 	};
+	
+	this.consultaGeografias=function(){
+		return $http({
+			method: "post",
+			url: "req/consultaGeografias",
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
+	
+	this.consultarConfiguracionDespachoDespacho = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarConfiguracionDespachoDespacho",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    };
 
     this.consultarRegionesEstructura =function(){
 		return $http({

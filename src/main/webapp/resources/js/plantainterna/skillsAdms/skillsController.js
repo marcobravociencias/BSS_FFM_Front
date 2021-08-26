@@ -2,7 +2,7 @@ var app = angular.module('skillsApp', []);
 var tablePermisosDinamica;
 
 app.controller('skillsController', ['$scope','$q','skillsService','genericService','mainDespachoService','$filter', function($scope, $q,skillsService, genericService, mainDespachoService, $filter) {
-
+	$("#moduloSkills").addClass('active');
 	var dataTecnicoGlobal=[];
 	$scope.tecnicosMostradas = [];
 	$scope.listadoIntervenciones = [];
@@ -476,7 +476,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
                     if(results[0].data.result ){
                         if(results[0].data.result.geografia){
                         	var nivelUsuario = results[1].data.result.N_FILTRO_GEOGRAFIA;
-                        	var nivelSkill = results[1].data.result.N_FILTRO_INTERVENCIONES
+                        	var nivelSkill = results[1].data.result.N_FILTRO_INTERVENCIONES;
 							let listGeografias = [];
                         	if(nivelUsuario !== undefined){
                         		results[0].data.result.geografia.forEach(elemento =>{

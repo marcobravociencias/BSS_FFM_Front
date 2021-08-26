@@ -7,20 +7,25 @@
 			</div>
 			<div class="modal-body">
 				<div class="container">
-<!-- 					<div class="scrollGeneral"> -->
-						<div class="input-group input-group-sm content-seach-group">
-							<input id="buscadorGeografiaConsulta" type="text" class="form-control form-control-sm" placeholder="Buscar geograf&iacute;a" ng-keyup="busquedaGeografiaConsulta()"> <span class="search-icon-operario-busq fa fa-search"></span>
-						</div>
-						<div class="container-treegeofria">
-							<div id="arbolGeografiaConsulta" class="proton-demo">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="input-group input-group-sm content-seach-group">
+								<input id="buscadorGeografiaConsulta" type="text" class="form-control buscadorGenerico" placeholder="Buscar geograf&iacute;a" ng-keyup="busquedaGeografiaConsulta()"> 
+								<span class="fa fa-search iconoBusqueda"></span>
 							</div>
 						</div>
-<!-- 					</div> -->
+						<div class="col-md-12 scrollModalArbolGeografias">
+							<div class="container-treegeofria">
+								<div id="arbolGeografiaConsulta" class="proton-demo">
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface" data-mdb-dismiss="modal" ng-click="cerrarModalGeografiaConsulta()">CERRAR</button>
-				<button class="btn btn-primary" ng-click="">ACEPTAR</button>
+				<button class="btn btn-primary" ng-click="consultaUsuariosPorGeoCompPuestos()">CONSULTAR</button>
 			</div>
 		</div>
 	</div>

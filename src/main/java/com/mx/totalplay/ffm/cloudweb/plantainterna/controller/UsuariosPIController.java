@@ -29,7 +29,7 @@ public class UsuariosPIController {
 	
 	@GetMapping("/consultaCompanias")
 	public ResponseEntity<?> consultaCompanias() {
-		logger.info("##### CONSULTANDO consultaCompanias");
+		logger.info("##### CONSULTANDO COMPANIAS");
         ServiceResponseResult result = usuarioService.consultaCompanias();
         if (result.getResult() instanceof Integer){
             return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
@@ -39,7 +39,7 @@ public class UsuariosPIController {
 	
 	@GetMapping("/consultaPuestos")
 	public ResponseEntity<?> consultaPuestos() {
-		logger.info("##### CONSULTANDO consultaPuestos");
+		logger.info("##### CONSULTANDO PUESTOS");
 		ServiceResponseResult result = usuarioService.consultaPuestos();
         if (result.getResult() instanceof Integer){
             return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
@@ -49,7 +49,7 @@ public class UsuariosPIController {
 	
 	@GetMapping("/consultaPermisos")
 	public ResponseEntity<?> consultaPermisos() {
-		logger.info("##### CONSULTANDO consultaPermisos");
+		logger.info("##### CONSULTANDO PERMISOS");
 		ServiceResponseResult result = usuarioService.consultaPermisos();
         if (result.getResult() instanceof Integer){
             return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
@@ -59,7 +59,7 @@ public class UsuariosPIController {
 	
 	@PostMapping("/consultaUsuarioPorId")
 	public ResponseEntity<?> consultaUsuarioPorId(@RequestBody String params) {
-		logger.info("##### CONSULTANDO consultaUsuarioPorId");
+		logger.info("##### CONSULTANDO USUARIO POR ID");
 		ServiceResponseResult result = usuarioService.consultaUsuarioPorId(params);
         if (result.getResult() instanceof Integer){
             return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
@@ -69,13 +69,23 @@ public class UsuariosPIController {
 	
 	@PostMapping("/consultaUsuariosPorGeoCompPuestos")
 	public ResponseEntity<?> consultaUsuariosPorGeoCompPuestos(@RequestBody String params) {
-		logger.info("##### CONSULTANDO consultaUsuariosPorGeoCompPuestos");
+		logger.info("##### CONSULTANDO USUARIOS POR GEOGRAFÍA - COMPANIAS - PUESTOS");
 		ServiceResponseResult result = usuarioService.consultaUsuariosPorGeoCompPuestos(params);
         if (result.getResult() instanceof Integer){
             return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
         }
         return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
 	}
+	
+	@PostMapping("/consultaGeografias")
+    public ResponseEntity<?> consultaGeografias() {
+		logger.info("##### CONSULTANDO GEOGRAFÍAS");
+        ServiceResponseResult response = usuarioService.consultaGeografias();
+        if (response.getResult() instanceof Integer){
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
 	
 	@PostMapping("/consultarRegionesEstructura")
 	public ResponseEntity<?> consultarRegionesEstructura() {

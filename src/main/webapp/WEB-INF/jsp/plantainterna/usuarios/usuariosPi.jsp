@@ -20,8 +20,10 @@
         <link href="${pageContext.request.contextPath}/resources/libraries/jstree/themes/proton/style.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/datePicker/css/bootstrap-datepicker3.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" rel="stylesheet" />
 		<!-- CSS INTERNAS -->
         <link href="${pageContext.request.contextPath}/resources/css/plantainterna/usuarios/usuariosPi.css" rel="stylesheet">
+		<link href="${pageContext.request.contextPath}/resources/css/plantainterna/skillsAdms/styleSkillsFeature.css?" rel="stylesheet" />
     </head>
     <body id="idBody" ng-controller="usuarioController">
     	<jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>    
@@ -43,30 +45,22 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <label class="span-consulta"><i class="fa fa-building"></i> Compa&ntilde;ias</label>
-                                    <div class="input-group mb-4">
-                                        <select id="compania_select" class="selectpicker select_consulta" multiple data-actions-box="true">	
-                                        
+                                    <div class="input-group">
+                                        <select id="compania_select" class="selectpicker select_consulta" multiple data-actions-box="true">
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="span-consulta"><i class="fas fa-address-card"></i> Puesto</label>
-                                    <div class="input-group mb-4">
-                                        <select id="puesto_select" class="selectpicker select_consulta"  multiple data-actions-box="true">	
+                                    <div class="input-group">
+                                        <select id="puesto_select" class="selectpicker select_consulta" multiple data-actions-box="true">
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="span-consulta"><i class="fas fa-map-marked"></i> Geograf&iacute;a</label>
-                                    <div class="input-group mb-4">
-                                    	<input type="text" class="form-control" ng-click="abrirModalGeografiaConsulta()" aria-describedby="basic-addon3" placeholder="NO HAY SELECCI&Oacute;N" >
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="table-responsive">
-                                        <table class="table" id="table-usuario-pi"></table>
+                                    <div class="">
+                                    	<input style="height: 34px;" id="txtGeografiasConsulta" type="text" class="form-control inputFormulario" ng-click="abrirModalGeografiaConsulta()" aria-describedby="basic-addon3" placeholder="NO HAY SELECCI&Oacute;N" autocomplete="off" >
                                     </div>
                                 </div>
                             </div>
@@ -122,8 +116,42 @@
                     </div>
                 </div>
             </div>
+            <br>
+            <div class="container">
+            	<div id="contenedorPrincipalTabla" class="row" style="display: none;">
+                	<div class="col-12">
+                    	<div class="table-responsive">
+                        	<table class="table" id="table-usuario-pi">
+                            	<thead>
+                                	<tr>
+                                    	<th class="txtTablaConsultaJustificado">Núm. empleado</th>
+                                        <th class="txtTablaConsultaJustificado">Usuario FFM</th>
+                                        <th class="txtTablaConsultaJustificado">Nombre</th>
+                                        <th class="txtTablaConsultaJustificado">Tipo usuario</th>
+                                        <th class="txtTablaConsultaJustificado">Ciudad</th>
+                                        <th class="txtTablaConsultaJustificado">Uni. negocio</th>
+                                        <th class="txtTablaConsultaCentrado">Editar</th>
+                                        <th class="txtTablaConsultaCentrado">Eliminar</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="usuario in listaUsuarios">
+										<td class="txtTablaConsultaJustificado">{{usuario.numeroEmpleado}}</td>
+										<td class="txtTablaConsultaJustificado">{{usuario.usuarioFfm}}</td>
+										<td class="txtTablaConsultaJustificado">{{usuario.nombre}}</td>
+										<td class="txtTablaConsultaJustificado">{{usuario.tipoOperario}}</td>
+										<td class="txtTablaConsultaJustificado">{{usuario.ciudad}}</td>
+										<td class="txtTablaConsultaJustificado">{{usuario.unidadNegocio}}</td>
+										<td class="txtTablaConsultaCentrado"><i class="fas fa-user-edit iconoEditarUsuario"></i></td>
+										<td class="txtTablaConsultaCentrado"><i class="fas fa-user-times iconoEliminarUsuario"></i></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>  
         </div>
-
         <jsp:include page="./modal/modalEdicion.jsp"></jsp:include>
         <jsp:include page="./modal/modalArbolGeografia.jsp"></jsp:include>
     </body>
@@ -143,10 +171,11 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker.es.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/js/mdb.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
     
     <!-- ARCHIVOS JS INTERNOS -->
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/usuarios/usuariosPIController.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/usuarios/usuariosPIController.js" charset="UTF-8"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/usuarios/usuarioPIService.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/usuarios/jsonResult.js"></script>
     <script type="text/javascript">let contex_project = "${pageContext.request.contextPath}";</script>

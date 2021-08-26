@@ -4,11 +4,14 @@ import com.mx.totalplay.ffm.cloudweb.utilerias.model.ServiceResponseResult;
 
 public interface UsuariosPIService {
 	
+	//MAPEADOS 
 	public ServiceResponseResult consultaCompanias();
 	public ServiceResponseResult consultaPuestos();
 	public ServiceResponseResult consultaPermisos();
 	public ServiceResponseResult consultaUsuarioPorId(String params);
 	public ServiceResponseResult consultaUsuariosPorGeoCompPuestos(String params);
+	public ServiceResponseResult consultaGeografias();
+	//FIN MAPEO
 	
 	public ServiceResponseResult consultarRegionesEstructura();
 	public ServiceResponseResult consultarClasificacionUsuario();
@@ -16,7 +19,6 @@ public interface UsuariosPIService {
 	public ServiceResponseResult consultarArbolesCiudades();
 	public ServiceResponseResult consultarOperariosPorCiudad(String params);
 	public ServiceResponseResult consultarCiudadesEstructura(String params);
-	
 	public ServiceResponseResult consultarUsuarios(String params);
 	
 	

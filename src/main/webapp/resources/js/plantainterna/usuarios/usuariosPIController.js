@@ -2,10 +2,16 @@ var app = angular.module('usuarioApp', []);
 var detalleTable;
 
 app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filter', function ($scope, $q, usuarioPIService, $filter) {
-   
-    $scope.listaCompanias = [];
-    
+	$("#moduloUsuarios").addClass('active');
+	$scope.listaCompanias = [];
     $scope.listaPuestos = [];
+    $scope.listaPermisos = [];
+    $scope.listaGeografias = [];
+    $scope.listaIdGeografias = [];
+    $scope.elementosPorPaginaTablaConsulta = 10;
+    $scope.paginaTablaConsulta = 1;
+    $scope.listaUsuarios = [];
+    
     $scope.listaRegiones = [];
     $scope.listaCiudades = [];
     $scope.listaClasificacionUsuario = [];
@@ -17,24 +23,25 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     $scope.ciudadNatal = {};
     
     $scope.revisarServicios = function() {
-    	let params = {idUsuario:10};
-    	let params2 = {
-    			"geografias": [1, 2008, 2045],
-    			"companias": [1, 15],
-    			"puestos": [1, 5],
-    			"elementosPorPagina": 10,
-    			"pagina": 1
-    	}
+    	let paramsConfiguracionDespacho ={
+				moduloAccionesUsuario: 'moduloUsuarios'
+	    };
+    	let params1 = {idUsuario:10};
     	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
 		swal.showLoading();
     	$q.all([
+    		usuarioPIService.consultarConfiguracionDespachoDespacho(paramsConfiguracionDespacho),
     		usuarioPIService.consultaCompanias(),
     		usuarioPIService.consultaPuestos(),
     		usuarioPIService.consultaPermisos(),
-    		usuarioPIService.consultaUsuarioPorId(params),
-    		usuarioPIService.consultaUsuariosPorGeoCompPuestos(params2)
+    		usuarioPIService.consultaGeografias(),
+    		usuarioPIService.consultaUsuarioPorId(params1)
         ]).then(function(results) {
-        	$scope.listaCompanias = results[0].data.result.companias;
+        	// *** CONFIGURACIÓN DESPACHO ***
+        	var nivelUsuario = results[0].data.result.N_FILTRO_GEOGRAFIA;
+        	
+        	// *** COMPAÑIAS ***
+        	$scope.listaCompanias = results[1].data.result.companias;
         	$("#compania_select").empty();
             $("#compania_select_registro").empty();
             $("#compania_select_modificacion").empty();
@@ -44,10 +51,76 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
                 $("#compania_select_registro").append("<option value='"+element.id+"'>"+element.descripcion+"</option>");
                 $("#compania_select_modificacion").append("<option value='"+element.id+"'>"+element.descripcion+"</option>");
             });
-
+            
             $('#compania_select').selectpicker("refresh");
             $('#compania_select_registro').selectpicker("refresh");
             $('#compania_select_modificacion').selectpicker("refresh");
+            
+            // *** PUESTOS ***
+            $scope.listaPuestos = results[2].data.result.puestos;
+
+            $("#puesto_select").empty();
+	        $("#puesto_select_registro").empty();
+	        $("#puesto_select_modificacion").empty();
+	        
+	        angular.forEach($scope.listaPuestos,(element,index) => {
+	        	$("#puesto_select").append("<option value='"+element.id+"'>"+element.descripcion+"</option>");
+	        	$("#puesto_select_registro").append("<option value='"+element.id+"'>"+element.descripcion+"</option>");
+	        	$("#puesto_select_modificacion").append("<option value='"+element.id+"'>"+element.descripcion+"</option>");
+	        });
+	        
+	        $('#puesto_select').selectpicker("refresh");
+	        $('#puesto_select_registro').selectpicker("refresh");
+	        $('#puesto_select_modificacion').selectpicker("refresh");
+            
+            // *** PERMISOS ***
+            
+            // *** GEOGRAFÍAS ***
+            if (results[4].data !== undefined) {
+            	if(results[4].data.respuesta){
+            		if(results[4].data.result.geografia.length > 0){
+            			let listGeografias = [];
+                    	if(nivelUsuario !== undefined){
+                    		results[4].data.result.geografia.forEach(elemento =>{
+	                            if (elemento.nivel <= nivelUsuario) {
+	                            	listGeografias.push(elemento);
+	                            	$scope.listaGeografias.push(elemento);
+	                            }
+	                        });
+                    	}else{
+                    		listGeografias = results[4].data.result.geografia;
+                    		$scope.listaGeografias = results[4].data.result.geografia;
+                    	}
+                    	geografia=listGeografias;
+                        geografia.map((e)=>{
+                            e.parent=e.padre == undefined ? "#" : e.padre;
+                            e.text= e.nombre;
+                            e.icon= "fa fa-globe";
+                            return e
+                        })       
+                        $('#arbolGeografiaConsulta').bind('loaded.jstree', function(e, data) {
+							//$(this).jstree("open_all");
+                        }).jstree({
+                        	'plugins': ['search', 'checkbox', 'wholerow'],
+							'core': {
+								'data': geografia,
+                                'themes': {
+                                    'name': 'proton',
+                                    'responsive': true,
+                                    "icons":false        
+                                }
+                            }
+						});
+                    }else{
+                    	toastr.warning('¡No existen Geografías actualmente!');
+                    }
+            	}else{
+            		toastr.error('Error interno en el servidor.');
+            	}
+            }else{
+            	toastr.error('Error interno en el servidor.');
+            }
+            
         	swal.close();
         });
 	}
@@ -59,6 +132,69 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     
     $scope.cerrarModalGeografiaConsulta = function() {
     	$("#modalGeografiaConsulta").modal('hide');
+	}
+    
+    $scope.busquedaGeografiaConsulta = function() {
+    	$("#arbolGeografiaConsulta").jstree("search", $('#buscadorGeografiaConsulta').val());
+	}
+    
+    $scope.consultaUsuariosPorGeoCompPuestos = function() {
+    	$scope.listaUsuarios = [];
+    	$scope.listaIdGeografias = [];
+    	var companiasSeleccionadas = $("#compania_select").val();
+    	var puestosSeleccionados = $("#puesto_select").val();
+    	var geografias = $('#arbolGeografiaConsulta').jstree("get_selected", true);
+    	
+    	if(companiasSeleccionadas != ""){
+    		if(puestosSeleccionados != ""){
+        		if(geografias.length > 0){
+        			let textoGeografias = [];
+        			angular.forEach(geografias,(geografia,index) => {
+        				$scope.listaIdGeografias.push(geografia.id);
+        				textoGeografias.push(geografia.text);				
+        			});
+        			$('#txtGeografiasConsulta').val(textoGeografias);
+        			let params = {
+        	    			"geografias": $scope.listaIdGeografias,
+        	    			"companias": companiasSeleccionadas,
+        	    			"puestos": puestosSeleccionados,
+        	    			"elementosPorPagina": $scope.elementosPorPaginaTablaConsulta,
+        	    			"pagina": $scope.paginaTablaConsulta
+        	    	}
+        			swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
+        			swal.showLoading();
+        	    	$q.all([
+        	    		usuarioPIService.consultaUsuariosPorGeoCompPuestos(params)
+        	        ]).then(function(results) {
+        	        	if (results[0].data !== undefined) {
+        	            	if(results[0].data.respuesta){
+        	            		console.log(params);
+        	            		if(results[0].data.result.usuarios.length > 0){
+        	            			$scope.listaUsuarios = results[0].data.result.usuarios;
+        	            			$("#modalGeografiaConsulta").modal('hide');
+        	            			$("#contenedorPrincipalTabla").show();
+        	            		}else{
+        	            			$("#modalGeografiaConsulta").modal('hide');
+        	            			$("#contenedorPrincipalTabla").hide();
+        	            			toastr.warning('¡No se encontraron usuarios!');
+        	            		}
+        	            	}else{
+        	            		toastr.error('Error interno en el servidor.');
+        	            	}
+        	        	}else{
+        	        		toastr.error('Error interno en el servidor.');
+        	        	}
+        	        	swal.close();
+        	        });
+        		}else{
+        			toastr.warning('¡Selecciona al menos una geografía!');
+        		}
+        	}else{
+        		toastr.warning('¡Selecciona al menos un puesto!');
+        	}
+    	}else{
+    		toastr.warning('¡Selecciona al menos una compañia!');
+    	}
 	}
     
     // *** FIN CAMBIOS REYNEL *** 
