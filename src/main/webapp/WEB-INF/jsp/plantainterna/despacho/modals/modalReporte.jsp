@@ -10,17 +10,17 @@
                 <div class="col-12">
                     <div class="row">
                         <div class="col-2  columna-filtro-ind-rep input-box" style="width: 150px !important;">
-                            <label for="filtro-estatus-substatus" class="label-filter">Estatus</label>
+                            <label for="filtro-estatus-substatus" class="label-filter"></label>
                             <div class="dropdown">
                                 <input readonly data-mdb-toggle="dropdown" aria-expanded="false"
-                                    placeholder="Seleccione..." type="text" id="filtro-estatus-reporte"
+                                    placeholder="Estatus" type="text" id="filtro-estatus-reporte"
                                     class="input-filtro-reporte form-control form-control-sm" />
                                 <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-estatus-rep">
                                     <li style="text-align: center;">
-                                        <button ng-click="seleccionTodos(filtrosGeneral.estatusdisponibles,true)"
+                                        <button ng-click="seleccionarTodos(filtrosGeneral.estatusdisponibles)"
                                             id="todo_filtro" type="button"
                                             class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
-                                        <button ng-click="deseleccionarTodos(filtrosGeneral.estatusdisponibles,false)"
+                                        <button ng-click="deseleccionarTodos(filtrosGeneral.estatusdisponibles)"
                                             id="ninguno_filtro" type="button"
                                             class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
                                     </li>
@@ -39,10 +39,10 @@
                             </div>
                         </div>
                         <div class="col-2  columna-filtro-ind-rep input-box" style="width: 150px !important;">
-                            <label for="filtro-intervencion" class="label-filter">Intervenci&oacute;n</label>
+                            <label for="filtro-intervencion" class="label-filter"></label>
                             <div class="dropdown">
                                 <input readonly data-mdb-toggle="dropdown" aria-expanded="false"
-                                    placeholder="Seleccione..." type="text" id="filtro-intervencion-reporte"
+                                    placeholder="Intervenci&oacute;n" type="text" id="filtro-intervencion-reporte"
                                     class="input-filtro-reporte form-control form-control-sm" />
                                 <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-intervencion">
                                     <li style="text-align: center;">
@@ -85,7 +85,7 @@
                         <div class="col-2 columna-filtro-ind-rep input-box">
                             <label for="tipo_reporte" class="label-filter">Tipo fecha</label>
                             <select class="input-filtro-reporte form-control form-control-sm" id="tipo_reporte"
-                                ng-model="repDiario.tipo">
+                                ng-model="repDiario.fechaSeleccionada">
                                 <option value="" selected>Seleccione...</option>
                                 <option value="fechaCreacion">Fecha creaci&oacute;n</option>
                                 <option value="fechaConfirmacion">Fecha confirmaci&oacute;n</option>

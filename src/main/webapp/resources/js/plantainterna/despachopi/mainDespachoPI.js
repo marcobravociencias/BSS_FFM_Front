@@ -1065,11 +1065,11 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                 statuscopy.push(e.id); 
             })
         }
-       
+        
         let intervencioncopy= [];
         if($scope.filtrosGeneral.tipoOrdenes){
-            angular.forEach($scope.filtrosGeneral.tipoOrdenes, (e, i) => {
-                e.children.filter(f => f.checkedOpcion).map((k) => { intervencioncopy.push(k.id); return k; })
+            angular.forEach($scope.filtrosGeneral.tipoOrdenes,(e,i)=>{
+                intervencioncopy.push(e.id); 
             })
         }
         
@@ -1090,6 +1090,11 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             isValid = false;
         }
 
+        if($("#tipo_reporte").val() == "" || $("#tipo_reporte").val() == undefined){
+            mensaje += '<li>Selecciona Tipo fecha</li>';
+            isValid = false;
+        }
+
         if(!validarFecha('filtro_fecha_inicio_reporte','filtro_fecha_fin_reporte')){
             mensaje += '<li>La fecha final debe ser mayor que la fecha inicio</li>';
             isValid = false;
@@ -1100,30 +1105,26 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             mostrarMensajeWarningValidacion(mensaje);
             return false;
         }else{
-
-            let parametros = { 
-                tipoIntervencion : intervencioncopy, 
-                estatusOt : statuscopy, 
-                fechaInicio : $scope.getFechaFormato(paramsTemp.fechaInicio), 
-                fechaFin:  $scope.getFechaFormato(paramsTemp.fechaFin), 
-                fechaSeleccionada : paramsTemp.tipo, 
-                idOrden : paramsTemp.idot || "", 
-                idCuenta : paramsTemp.cuenta || "", 
-                folio: paramsTemp.idos || "" 
-            } 
+            paramsTemp.fechaInicio = $scope.getFechaFormato(paramsTemp.fechaInicio);
+            paramsTemp.fechaFin =  $scope.getFechaFormato(paramsTemp.fechaFin);
+            paramsTemp.tipoIntervencion =  intervencioncopy;
+            paramsTemp.estatusOt = statuscopy;
+            
             
             swal({ text: 'Espera un momento...', allowOutsideClick: false });
             swal.showLoading();
-            swal.close()
             
             $scope.listOrdenes = []; 
            
  
-            mainDespachoService.consultarReporteDiario(parametros).then(function success(response) {      
+            mainDespachoService.consultarReporteDiario(paramsTemp).then(function success(response) {      
                 if (response.data !== undefined) { 
                     if(response.data.respuesta ){ 
                         if(response.data.result ){ 
-                            swal.close();  
+                             
+                            if(tableReporte){                              
+                                tableReporte.destroy() 
+                            }   
                             if(response.data.result.ordenes.length){
                                 angular.forEach(response.data.result.ordenes,function(orden,index){    
                                 let row = []; 
@@ -1142,10 +1143,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                                 row[12] = orden.turno; 
                                 $scope.listOrdenes.push(row); 
                                 }) 
-                               
-                                if(tableReporte){                              
-                                    tableReporte.destroy() 
-                                }     
+                                  
                                 tableReporte = $('#table-reporte').DataTable({ 
                                     "paging": true, 
                                     "lengthChange": false, 
@@ -1165,7 +1163,28 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                                         text: 'Exportar Excel' 
                                     }] 
                                 }); 
+                                swal.close();
                             }else{
+                                tableReporte = $('#table-reporte').DataTable({
+                                    "paging": true,
+                                    "lengthChange": false,
+                                    "searching": false,
+                                    "ordering": false,
+                                    "pageLength": 10,
+                                    "info": false,
+                                    "autoWidth": true,
+                                    "data":[], 
+                                    "language": idioma_espanol_not_font,
+                                    "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">', 
+                                    dom: 'Bfrtip', 
+                                    buttons:  
+                                    [{ 
+                                        extend: 'excelHtml5', 
+                                        title: 'Reporte Seguimiento Diario', 
+                                        text: 'Exportar Excel' 
+                                    }] 
+                                });
+                                swal.close();
                                 toastr.info(response.data.result.mensaje); 
                             }
                             

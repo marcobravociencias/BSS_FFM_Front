@@ -1167,6 +1167,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         $("#idot-reporte").val('');
         $("#idos-reporte").val('');
         $("#cuenta-reporte").val('');
+        $("#tipo_reporte").val('');
         $('#filtro_fecha_inicio_reporte').datepicker('update',   moment(FECHA_HOY_DATE).toDate() );
         $('#filtro_fecha_fin_reporte').datepicker('update',   moment(FECHA_HOY_DATE).toDate() );
         
@@ -1195,6 +1196,17 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 		});
         $("#modalReporte").modal('show');
     }
+
+    $('#modalReporte').on("hidden.bs.modal", function () {
+        if($scope.filtrosGeneral.tipoOrdenes){
+            $scope.seleccionarTodos($scope.filtrosGeneral.tipoOrdenes);
+        }
+
+        if($scope.filtrosGeneral.estatusdisponibles){
+            $scope.seleccionarTodos($scope.filtrosGeneral.estatusdisponibles);
+        }
+        $scope.$apply();
+    });
 }
 /**
 
