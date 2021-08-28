@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.mx.totalplay.ffm.cloudweb.plantainterna.service.DespachoPIService;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.ServiceResponseResult;
+
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -37,6 +40,26 @@ public class DespachoPIController {
      * return response;
      * }
      **/
+    
+    @PostMapping("/consultarComplementosDespacho")
+    public ResponseEntity<?> consultarComplementosDespacho() {
+        List<ServiceResponseResult> response = despachoService.consultarComplementosDespacho();
+        if (response.get(0).getResult() instanceof Integer) {
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+
+    }
+
+    @PostMapping("/consultarComplementosDespachoIdentificador")
+    public ResponseEntity<?> consultarComplementosDespachoIdentificador(@RequestBody String params) {
+        ServiceResponseResult response = despachoService.consultarComplementosDespachoIdentificador(params);
+        if (response.getResult() instanceof Integer) {
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+
+    }
     
     @PostMapping("/consultarConfiguracionDespachoDespacho")
     public ResponseEntity<?> consultarIconosDisponibles(@RequestBody  (required=false) String params) {
@@ -221,15 +244,7 @@ public class DespachoPIController {
     	return new ResponseEntity<>(response,HttpStatus.ACCEPTED);
     }
     
-    @PostMapping("/consultarCatalogoEstatusTecnico")
-    public ResponseEntity<?> consultarCatalogoEstatusTecnico(@RequestBody String params) {
-        LOGGER.info("##### CONSULTANDO CATALOGO ESTATUS TECNICO");
-        ServiceResponseResult response = despachoService.consultarCatalogoEstatusTecnico(params);
-        if (response.getResult() instanceof Integer) {
-            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-        }
-        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-    }
+ 
 
     @PostMapping("/consultarConteoAlertasPI")
     public ResponseEntity<?> consultarConteoAlertasPI(@RequestBody String params) {

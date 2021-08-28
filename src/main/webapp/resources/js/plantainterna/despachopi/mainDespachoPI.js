@@ -722,6 +722,54 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
         }
     }
    
+  
+    $scope.consultarEstatusTecnicos = function() {
+        $scope.isCargaOtsAsignadas=false;
+        $scope.listadoOtsAsignadas=[]
+        let dateSeparado=$scope.fechaFiltradoCalendar.split('/')
+        let formatDateInicio=dateSeparado[2]+'-'+dateSeparado[1]+'-'+dateSeparado[0]
+        var params =  {
+            "fechaInicio":formatDateInicio,
+            "fechaFin":formatDateInicio    
+        }
+        mainDespachoService.consultarOrdenesaAsignadasDespacho(params).then(function success(response) {     
+            if (response.data !== undefined) {
+                if(response.data.respuesta ){
+                    if(response.data.result ){
+                        if( response.data.result.detalleOrdenesAsignadas ){
+                            $scope.listadoOtsAsignadas=response.data.result.detalleOrdenesAsignadas
+                            let i=0
+                            $scope.listadoOtsAsignadas.map((e)=>{
+                                i++
+                                e.unidadNegocio =(i%2== 0) ?1 : 2
+                                //e.idTecnico=i
+                                e.id=e.idTecnico
+                               // e.fechaInicio=formatDateFin
+                               // e.fechaFin=formatDateFin
+                                //e.horaInicio='15:00';
+                                //e.horaFin='18:20';
+                                e.colorOrden=e.colorOrden != undefined && e.colorOrden? e.colorOrden: arrayColors[$scope.randomIntFromInterval()]
+                                e.start=e.fechaInicio+' '+e.horaInicio
+                                e.end=e.fechaFin+' '+e.horaFin
+                                return e
+                            })
+                        }else{                            
+                            toastr.info( 'No se encontraron OTS asignadas' );                
+                        }
+                    }else{                      
+                        toastr.warning( 'No se encontraron OTS asignadas' );                
+                    }
+                }else{
+                    toastr.warning( response.data.resultDescripcion );                
+                }               
+            }else{
+                toastr.error( 'Ha ocurrido un error en la consulta de OTS pendientes' );                
+            }
+            $scope.isCargaOtsAsignadas=true;
+            $scope.validarLoadTecnicosOtsAsignadas()
+        }).catch(err => handleError(err));
+    }
+
     $scope.consultarOrdenesTrabajoAsignadasDespacho = function() {
         $scope.isCargaOtsAsignadas=false;
         $scope.listadoOtsAsignadas=[]

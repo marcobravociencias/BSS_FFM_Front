@@ -74,7 +74,7 @@
                                     <c:if test="${!permi.dentroNavbar}">
                                         <li id="${permi.clave}">
                                             <a class="dropdown-item" href="${permi.clave}">
-                                                <i class="${permi.icono} icon-otros-dropdown"></i>
+                                                <i class="${permi.icono} icon-navbar-izquierda icon-otros-dropdown"></i>
                                                 ${permi.descripcion}</a>
                                         </li>
                                     </c:if>  
