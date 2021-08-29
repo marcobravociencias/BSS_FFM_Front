@@ -249,7 +249,40 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     abrirCambioEstatusTecnico = function (idOperario) {
         
         if( !$scope.isConsultaPrimeraVezEstatus ){
+            let params = {
+                "tipoRequest": "estatusTecnico"
+            }
+            mainDespachoService.consultarCatalogoEstatusTecnico(params).then(function success(response) {
+                console.log(response);
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        if (response.data.result.detalleTiposOrden !== undefined && response.data.result.detalleTiposOrden.length>0) {
+                            $scope.isConsultaPrimeraVezEstatus=true;
+                            console.log("############## catalogo")
+                            //$scope.listadoOtsPendientes=otspendientes           
+                            $scope.listadoEstatusTecnico=response.data.result.detalleTiposOrden 
+                            $scope.listadoEstatusTecnico=$scope.listadoEstatusTecnico.map(e=>{ e.descripcion = e.nombre;return e;});
+                            $scope.elementEstatusTecnico.status = null
+                            $scope.elementEstatusTecnico.comentario = ''
+                    
+                            $scope.elementEstatusTecnico.tecnico = angular.copy(
+                                $scope.listadoTecnicosGeneral.find((e) => e.idTecnico == idOperario)
+                            );
+                    
+                            if ($scope.listadoEstatusTecnico && $scope.listadoEstatusTecnico.length > 0) {
+                                $("#modalStatusOperario").modal('show')
+                                let optionTempSelected = $scope.listadoEstatusTecnico.find(function (e) {
+                                    return e.idEstatus == parseInt($scope.elementEstatusTecnico.tecnico.idEstatusTecnico);
+                                })
+                                $scope.elementEstatusTecnico.status = optionTempSelected
+                            }
+                            $scope.$apply()
+                            console.log($scope.elementEstatusTecnico.tecnico)
 
+                        }   
+                    }
+                }
+            }).catch(err => handleError(err))
         }else{
             $scope.elementEstatusTecnico.status = null
             $scope.elementEstatusTecnico.comentario = ''
@@ -374,23 +407,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             }
         }).catch(err => handleError(err))**/
     }
-    $scope.consultarCatalogoEstatusTecnico = function () {
-        let params = {
-            "tipoRequest": "estatusTecnico"
-        }
-        mainDespachoService.consultarCatalogoEstatusTecnico(params).then(function success(response) {
-            console.log(response);
-            $scope.listadoEstatusTecnico = JSONEstatusTecnico
-            if (response.data !== undefined) {
-                if (response.data.respuesta) {
-                    if (response.data.result.result === '0') {
-                        console.log("############## catalogo")
-                        //$scope.listadoOtsPendientes=otspendientes                         
-                    }
-                }
-            }
-        }).catch(err => handleError(err))
-    }
+ 
     $scope.cambiarEstatusOperario = function () {
         console.log("Entra a cambiar estatus:")
         var n = $('#id-status-tecnico').val();
@@ -451,7 +468,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     }
 
     $scope.abrirModalDetalleIconografia = function () {
-        /**     
+            
         if( $scope.listadoIconografia ){
             $("#modalIconografiaDespacho").modal('show')       
         }else{
@@ -460,21 +477,44 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             mainDespachoService.consultarPaletaColoresService().then(function success(response) {
                 swal.close()
                 $("#modalIconografiaDespacho").modal('show')  
-                $scope.listadoIconografia=paletaColors.result.Colores                         
+                $scope.listadoIconografia={}
+                
                 console.log(response);
                 if (response.data !== undefined) {
-                    if (response.data.respuesta) {
-                        if (response.data.result.result === '0') {
-                           console.log("############## catalogo")**/
-        //$scope.listadoOtsPendientes=otspendientes 
-        /**   
-     }
- }
-}
-}).catch(err => handleError(err))
-}
-**/
+                        if (response.data[0].respuesta) {
+                            if (response.data[0].result.detalleTiposOrden !== undefined && response.data[0].result.detalleTiposOrden.length>0) {
+                                console.log("############## catalogo")/** **/
+                                $scope.listadoIconografia.tipoIntervencion=response.data[0].result.detalleTiposOrden
+                             }  
+                        }
+                       
+                        if (response.data[1].respuesta) {
+                            if (response.data[1].result.detalleTiposOrden !== undefined && response.data[1].result.detalleTiposOrden.length>0) {
+                                console.log("############## catalogo")/** **/
+                                $scope.listadoIconografia.estatusIntervencion=response.data[1].result.detalleTiposOrden
+                            }
+                        }
+    
+                        if (response.data[2].respuesta) {
+                            if (response.data[2].result.result === '0') {
+                               console.log("############## catalogo")/** **/
+                            }
+                        }
 
+                        
+                        if (response.data[3].respuesta) {
+                            if (response.data[3].result.detalleTiposOrden !== undefined && response.data[3].result.detalleTiposOrden.length>0) {
+                                console.log("############## catalogo")/** **/
+                                $scope.listadoIconografia.estatusTecnico=response.data[3].result.detalleTiposOrden
+                            }
+                        }
+                }
+
+                
+
+                    
+            }).catch(err => handleError(err))
+       }
     }
     $scope.abrirModalReAsignacion = function (otinfo, data_tecnico) {
         $scope.reAsignacionObject = {

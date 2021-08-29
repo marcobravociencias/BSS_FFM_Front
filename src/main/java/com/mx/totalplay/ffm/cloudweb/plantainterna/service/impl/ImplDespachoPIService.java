@@ -131,28 +131,38 @@ public class ImplDespachoPIService implements DespachoPIService{
 				tokenAcces );
 	    
 	    
-	    String urlTipoOrden =urlRequestBase.concat("estatusOrdenes");
+	    String urlTipoOrden =urlRequestBase.concat("tiposOrdenes");
 	    ServiceResponseResult responseTipoOrden= restCaller.callGetBearerTokenRequest( 
 				paramsRequestGet,
 				urlTipoOrden,
 				ServiceResponseResult.class , 
 				tokenAcces );
 	    
+	    String urlEstatusTecnico =urlRequestBase.concat("estatusTecnicos");
+	    ServiceResponseResult responseEstatusTecnico= restCaller.callGetBearerTokenRequest( 
+				paramsRequestGet,
+				urlEstatusTecnico,
+				ServiceResponseResult.class , 
+				tokenAcces );
+	    
+
+	    
 	    resultsCatalogos.add(responseTipoOrden);
 	    resultsCatalogos.add(responseEstatusOrden);
 	    resultsCatalogos.add(responseIconos);
-	    
+	    resultsCatalogos.add(responseEstatusTecnico);
+
 	    logger.info("RESULT"+gson.toJson(resultsCatalogos));
 		return resultsCatalogos;
 
 	}
 	public ServiceResponseResult consultarComplementosDespachoIdentificador(String params) {
-		logger.info("ImplDespachoPIService.class [metodo = consultarComplementosDespachoIdentificador() ]\n");
+		logger.info("ImplDespachoPIService.class [metodo = consultarComplementosDespachoIdentificador() ]\n"+params);
 		//logger.info("env --------------------"+env.getProperty("variable.entorno.ambiente"));
 		
 		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
 		String tipoRequest=jsonObject.get("tipoRequest").getAsString();
-		
+		logger.info("ImplDespachoP  tipoRequest "+tipoRequest+" --- "+jsonObject.toString());
 		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
 		String tokenAcces=principalDetail.getAccess_token();
 		logger.info("consultarCatalogoTipoOrdenUsuarioDespacho ##+"+tokenAcces);							
@@ -160,20 +170,21 @@ public class ImplDespachoPIService implements DespachoPIService{
 	    
 	    switch( tipoRequest ) {
 	    	case "iconografia":
-	    		urlRequest.concat("iconografia");	
+	    		urlRequest=urlRequest.concat("iconografia");	
 	    		break;
 	    	case "estatusTecnico":
-	    		urlRequest.concat("estatusTecnicos");	
+	    		urlRequest=urlRequest.concat("estatusTecnicos");	
 	    		break;
 	    	case "estatusOrdenes":
-	    		urlRequest.concat("estatusOrdenes");	
+	    		urlRequest=urlRequest.concat("estatusOrdenes");	
 	    		break;
 	    	case "estatusTipoOrdenes":
-	    		urlRequest.concat("tiposOrdenes");	
+	    		urlRequest=urlRequest.concat("tiposOrdenes");	
     			break;    			
 	    	default:
     			
 	    }	    
+	    logger.info("tipoRequest"+urlRequest);
 	    Map<String, String> paramsRequestGet = new HashMap<String, String>();
 	    ServiceResponseResult response= restCaller.callGetBearerTokenRequest( 
 																			paramsRequestGet,
@@ -341,26 +352,7 @@ public class ImplDespachoPIService implements DespachoPIService{
 		return response;
 	}
 	
-	@Override
-	public ServiceResponseResult consultarColoresIconografia() {
-		logger.info("ImplDespachoPIService.class [metodo = consultarColoresIconografia() ]\n");
-		
-		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
-		String tokenAcces=principalDetail.getAccess_token() ;
-		logger.info("consultarColoresIconografia ##+"+tokenAcces);							
-	    String urlRequest=principalDetail.getDireccionAmbiente().concat( constDespachoPI.getConsultaPaletaColoresDespachoPI() );
-		
-	    Map<String, String> paramsRequestGet = new HashMap<String, String>();
-		paramsRequestGet.put("idDespacho", principalDetail.getIdUsuario()+"");	    
-		
-		ServiceResponseResult response= restCaller.callGetBearerTokenRequest( 
-																			paramsRequestGet,
-																			urlRequest,
-																			ServiceResponseResult.class , 
-																			tokenAcces );
-	    logger.info("RESULT"+gson.toJson(response));
-		return response;
-	}
+
 	
 	@Override
 	public ServiceResponseResult cambiarEstatusOrdenTrabajo(String params) {

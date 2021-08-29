@@ -75,9 +75,7 @@ public class ConstDespachoPI implements Serializable{
 	@Value("${cambiarestatusordentrabajopi}")
 	private String cambiarEstatusOrdenTrabajoPI;
 	
-	@Value("${consultarpaletacoloresdespachopi}")
-	private String consultaPaletaColoresDespachoPI;
-	
+
 	@Value("${consultarcatalogoaccionesotpi}")
 	private String consultaCatalogoAccionesOtPi;
 	

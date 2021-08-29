@@ -13,7 +13,7 @@ import com.google.gson.JsonObject;
 
 @Controller
 public class LoginController {
-	
+	Gson gson=new Gson();
 	@RequestMapping(value = { "/"}, method = RequestMethod.GET)
 	public ModelAndView Welome() {
 		ModelAndView model = new ModelAndView();
@@ -31,15 +31,17 @@ public class LoginController {
 	@RequestMapping(value = {"/loginPage"}, method = RequestMethod.GET)
 	public ModelAndView loginPage(@RequestParam(value = "error",required = false) String error,
 	@RequestParam(value = "logout",	required = false) String logout, HttpServletRequest request) {
-		Object lastException  = request.getSession().getAttribute("SPRING_SECURITY_LAST_EXCEPTION");
+		//Object lastException  = request.getSession().getAttribute("SPRING_SECURITY_LAST_EXCEPTION");
 		ModelAndView model = new ModelAndView();
 		if (error != null) {
-			JsonObject jsonObject = new Gson().fromJson(new Gson().toJson(lastException).toString(), JsonObject.class);
+			model.addObject("error", "Credenciales invalidas");
+
+			/**JsonObject jsonObject = gson.fromJson(gson.toJson(lastException).toString(), JsonObject.class);
 			if (jsonObject.get("detailMessage").getAsString().equals("1")) {
 				model.addObject("error", "Credenciales invalidas");
 			} else {
 				model.addObject("error", "No cuentas con permisos asignados");
-			}
+			}**/
 		}
 		if (logout != null) {
 			model.addObject("message", "Tu sesi&oacute;n ha expirado");

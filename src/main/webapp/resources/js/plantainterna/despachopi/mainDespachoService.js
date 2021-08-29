@@ -119,7 +119,7 @@ app.service("mainDespachoService", function ($http) {
 	this.consultarCatalogoEstatusTecnico=function(params){
 		return $http({
 			method: "post",
-			url: "req/consultarCatalogoEstatusTecnico",
+			url: "req/consultarComplementosDespachoIdentificador",
 			data:JSON.stringify(params),
             headers : {
                 'Content-Type' : 'application/json'
@@ -226,7 +226,7 @@ app.service("mainDespachoService", function ($http) {
 		return $http({
 			method: "post",
 			data:JSON.stringify(params),
-			url: "req/consultarPaletaColores",
+			url: "req/consultarComplementosDespacho",
             headers : {
                 'Content-Type' : 'application/json'
             }

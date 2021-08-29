@@ -287,15 +287,7 @@ public class DespachoPIController {
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
 
-    @PostMapping("/consultarPaletaColores")
-    public ResponseEntity<?> consultarPaletaColoresController() {
-        LOGGER.info("##### CONSULTANDO PALETA COLORES");
-        ServiceResponseResult response = despachoService.consultarColoresIconografia();
-        if (response.getResult() instanceof Integer) {
-            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-        }
-        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-    }
+
 
     @PostMapping("/consultarCatalogoAccionesDespachoPI")
     public ResponseEntity<?> consultarCatalogoAcciones() {

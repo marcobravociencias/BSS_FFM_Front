@@ -28,7 +28,6 @@ public interface DespachoPIService {
 	public ServiceResponseResult consultarComentariosOTPI(String params);
 	public ServiceResponseResult consultarHistoricoOTPI(String params);
 
-	public ServiceResponseResult consultarColoresIconografia();
 
 	public ServiceResponseResult consultarConteoAlertasPI(String params);
 	public ServiceResponseResult cambiarEstatusTecnicoDespachoPI(String params);
