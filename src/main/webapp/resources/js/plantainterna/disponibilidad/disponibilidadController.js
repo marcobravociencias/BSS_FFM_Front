@@ -58,7 +58,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                 document.getElementById('contenedor-editar-nocturno').style.display = 'none'
             }
             document.getElementById('fecha_actualizar').value = fecha
-            if (bloqueado) {
+            if (!bloqueado) {
                 document.getElementById('radio_activo_mod').checked = true
                 document.getElementById('radio_inactivo_mod').checked = false
             } else {

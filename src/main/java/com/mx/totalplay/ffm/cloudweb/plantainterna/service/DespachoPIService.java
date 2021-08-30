@@ -50,4 +50,6 @@ public interface DespachoPIService {
     ServiceResponseResult agregarComentariosOt(String params);
 
 	public ServiceResponseResult consultarReporteDiario(String params);
+
+    ServiceResponseResult obtenerResumenPaquete(String params);
 }

@@ -413,4 +413,14 @@ public class DespachoPIController {
         }
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
+
+    @PostMapping("/obtenerResumenPaquete")
+    public ResponseEntity<?> obtenerResumenPaquete(@RequestBody String params){
+        LOGGER.info("#### CONSULTANDO obtenerResumenPaquete: " + params);
+        ServiceResponseResult response = despachoService.obtenerResumenPaquete(params);
+        if (response.getResult() instanceof Integer) {
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
 }

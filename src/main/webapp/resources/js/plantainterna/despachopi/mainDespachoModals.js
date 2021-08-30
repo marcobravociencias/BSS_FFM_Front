@@ -14,6 +14,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     $scope.comentarios = '';
     $scope.elementoPlazaComercial = {};
     $scope.estatusModals = '';
+    $scope.flagPaquete = false;
 
     $scope.listadoCatalogoAcciones = []
     $('#modalAsignacionOrdenTrabajo,#modalReAsignacionOrdenTrabajo,#modalMaterialesOperario,#modalVehiculoOperario,#odalUbicacionOperario,#modalStatusOperario,#modalOtsTrabajadas')
@@ -41,6 +42,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     }
 
     abrirModalDetalleOtPendiente = function (idotpendiente) {
+        $scope.flagPaquete = false;
         $scope.listadoMotivosRescate = $scope.estatusCambio.filter(e => {return e.idPadre === 212})
         $scope.listadoMotivosCalendarizado = $scope.estatusCambio.filter(e => {return e.idPadre === 243})
         $scope.listadoMotivosReagenda = $scope.estatusCambio.filter(e => {return e.idPadre === 201})
@@ -1252,6 +1254,27 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         }
         $scope.$apply();
     });
+
+
+    $scope.obtenerPaquete = function(){
+        if (!$scope.flagPaquete) {
+            let params = {
+                folio: $scope.detalleOtPendienteSelected.folioOrden
+            }
+    
+            mainDespachoService.consultarResumenPaquete(params).then(response => {
+                console.log(response);
+                $scope.flagPaquete = true;
+                if (response.data.respuesta) {
+                    if (response.data.result) {
+                        
+                    }
+                } else {
+                    mostrarMensajeErrorAlert(response.data.resultDescripcion)
+                }
+            }).catch(err => handleError(err));
+        }
+    }
 }
 /**
 

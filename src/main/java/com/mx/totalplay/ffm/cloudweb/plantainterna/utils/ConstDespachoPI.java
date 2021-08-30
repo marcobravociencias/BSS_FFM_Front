@@ -121,6 +121,9 @@ public class ConstDespachoPI implements Serializable{
 	private String agregarComentariosOt;
 
 	@Value("${consultarReporteDiario}")
-	private String consultarReporteDiario; 
+	private String consultarReporteDiario;
+
+	@Value("${resumenPaquete}")
+	private String resumenPaquete;
 }
 

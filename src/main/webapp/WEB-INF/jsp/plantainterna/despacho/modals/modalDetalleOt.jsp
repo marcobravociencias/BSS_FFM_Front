@@ -227,6 +227,9 @@
                                     <li  ng-show="permisosModal.indexOf('tabCambioEstatusDesasignarModal') !== -1" class="nav-item" role="presentation">
                                         <a class="nav-link" data-mdb-toggle="tab" href="#accion-desasignar-ot" >Desasignar</a>
                                     </li>
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link" data-mdb-toggle="tab" href="#accion-paquete-ot" ng-click="obtenerPaquete()">Paquete</a>
+                                    </li>
                                 </ul>
                                 <div class="tab-content" id="ex1-content">
                                     <div  ng-show="permisosModal.indexOf('tabCambioEstatusRescateModal') !== -1" class="tab-pane fade show active" id="accion-rescate-ot" >
@@ -456,6 +459,30 @@
                                         </div>
                                     </div>
                                     <div  ng-show="permisosModal.indexOf('tabCambioEstatusDesasignarModal') !== -1" class="tab-pane fade" id="accion-desasignar-ot" >
+                                        <div class="container container-accion">                                                                                	
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label for="exampleTextarea">Comentario:</label>
+                                                        <textarea class="form-control" style=" resize: none" ng-model="elementoDesasigna.comentario" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" rows="3"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <button ng-show="accionesUserConfigText.indexOf('accionDesasignaOT') !== -1" 
+                                                            ng-click="cambioStatus('desasigna')"  class="btn  btn-primary">Desasigna</button>
+                                                            
+                                                    <div ng-show="accionesUserConfigText.indexOf('accionDesasignaOT') === -1"  class="text-accion-nopermiso">
+                                                        <i class="icon-not-permiso fas fa-user-lock"></i>
+                                                        <b class="text-not-permiso">No tienes permiso para desasignar ordenes</b>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="tab-pane fade" id="accion-paquete-ot" >
                                         <div class="container container-accion">                                                                                	
                                             <div class="row">
                                                 <div class="col-12">
