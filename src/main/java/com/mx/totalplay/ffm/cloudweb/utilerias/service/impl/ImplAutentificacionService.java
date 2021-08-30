@@ -43,10 +43,7 @@ public class ImplAutentificacionService  implements AutentificacionService{
 		LoginResult responseLog = (LoginResult) restCaller.callPostReturnClassBasicAuthXwwwUrlFormed(
 				urlService ,  us, crdospas, LoginResult.class
 		);
-		responseLog.setPermisos(new ArrayList<>());
-		responseLog.getPermisos().add(Permiso.builder().clave("moduloDespacho").dentroNavbar(true).descripcion("Despachoo").build());
-		
-		
+				
 		logger.info(gson.toJson(responseLog));
 		if (responseLog.getIdUsuario() != 0) {
 			Map<String, Object> configuraciones = responseLog.getConfiguraciones();
