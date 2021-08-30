@@ -1259,7 +1259,8 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     $scope.obtenerPaquete = function(){
         if (!$scope.flagPaquete) {
             let params = {
-                folio: $scope.detalleOtPendienteSelected.folioOrden
+               // folio: $scope.detalleOtPendienteSelected.folioOrden
+               folio: 'OS-7640234'
             }
     
             mainDespachoService.consultarResumenPaquete(params).then(response => {
