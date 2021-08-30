@@ -907,6 +907,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             }
 
             if (isValido) {
+                let fechaCalendariza = $scope.elementCalendarizado.fechaCalendarizado.split('/')
                 if ($scope.estatusModals === 'PENDIENTE') {
                     params = {
                         tipo: tipo,
@@ -922,7 +923,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                         comentarios: $scope.elementCalendarizado.comentario,
                         idTurno: $scope.elementCalendarizado.turno.id,
                         idMotivo: $scope.elementCalendarizado.motivo.id,
-                        fechaHoraAgenda: $scope.elementCalendarizado.fechaCalendarizado
+                        fechaHoraAgenda: fechaCalendariza[2] + '-' + fechaCalendariza[1] + '-' + fechaCalendariza[0]
                     }
                 } else {
                     params = {
@@ -940,7 +941,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                         comentarios: $scope.elementCalendarizado.comentario,
                         idTurno: $scope.elementCalendarizado.turno.id,
                         idMotivo: $scope.elementCalendarizado.motivo.id,
-                        fechaHoraAgenda: $scope.elementCalendarizado.fechaCalendarizado
+                        fechaHoraAgenda: fechaCalendariza[2] + '-' + fechaCalendariza[1] + '-' + fechaCalendariza[0]
                     }
                 }
             }
@@ -1015,6 +1016,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 
 
             if (isValido) {
+                let fechaReagendamiento = $scope.elementReagendaOT.fechaReagendamiento.split('/')
                 if ($scope.estatusModals === 'PENDIENTE') {
                     params = {
                         tipo: tipo,
@@ -1030,7 +1032,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                         comentarios: $scope.elementReagendaOT.comentario,
                         idTurno: $scope.elementReagendaOT.turno.id,
                         idMotivo: $scope.elementReagendaOT.motivo.id,
-                        fechaHoraAgenda: $scope.elementReagendaOT.fechaReagendamiento
+                        fechaHoraAgenda: fechaReagendamiento[2] + '-' + fechaReagendamiento[1] + '-' + fechaReagendamiento[0]
                     }
                 } else {
                     params = {
@@ -1048,7 +1050,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                         comentarios: $scope.elementReagendaOT.comentario,
                         idTurno: $scope.elementReagendaOT.turno.id,
                         idMotivo: $scope.elementReagendaOT.motivo.id,
-                        fechaHoraAgenda: $scope.elementReagendaOT.fechaReagendamiento
+                        fechaHoraAgenda: fechaReagendamiento[2] + '-' + fechaReagendamiento[1] + '-' + fechaReagendamiento[0]
                     }
                 }
             }
