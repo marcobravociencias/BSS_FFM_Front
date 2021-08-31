@@ -1113,7 +1113,7 @@ h5.title-nombrecliente {
 
 h5.title-paleta-colores {
   font-weight: bold;
-  text-align: center;
+  /* text-align: center; */
   margin-bottom: 0;
 }
 
@@ -1743,20 +1743,30 @@ table#table-alertas-pi {
     width: 100% !important;
 }
 
+.content-iconos-modal {
+    display: inline-block;
+    background: #EFEFEF !important;
+    border-radius: 50%;
+    height: 1.4em;
+    width: 1.4em;
+    text-align: center;
+}
+
 .content-iconos-ot-pendiente {
     display: inline-block;
     background: #EFEFEF !important;
     border-radius: 50%;
-    
-    height: 1.3em;   
+    height: 1.3em;
     width: 1.3em;
     text-align: center;
 }
-.iconos-ot-pendiente{ 
-    vertical-align: middle;
-    max-height: 1em;
-    max-width: 1em;
+.iconos-ot-modal{
+    vertical-align: middle !important;
+    max-height: 1.2em;
+    max-width: 1.2em;
 }
+
+
 
 
 
@@ -2002,4 +2012,30 @@ b.text-no-seleccion-geografia {
 }
 .jstree-proton .jstree-clicked {
     color: #808080;
+}
+
+
+.detalle-productos-table thead tr th{
+  padding:0;
+  padding:.3em;
+  font-weight:bold;
+  color:#303030;
+}
+.detalle-productos-table tbody tr td{
+  padding:0;
+  font-size:.8em;
+  padding:.3em;
+  color:#303030;
+}
+
+.detalle-productos-table tfoot{
+  padding:0;
+  font-weight:bold;
+  font-size:.9em;
+  padding:.3em;
+  color:#303030;
+}
+.btn_detalle_servicio {
+  padding:.1em 1em;
+  background:#2196f3;
 }
