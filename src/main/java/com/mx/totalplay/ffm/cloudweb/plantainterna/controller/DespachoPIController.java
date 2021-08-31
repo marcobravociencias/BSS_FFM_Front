@@ -4,16 +4,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.mx.totalplay.ffm.cloudweb.plantainterna.service.DespachoPIService;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.ServiceResponseResult;
+import com.mx.totalplay.ffm.cloudweb.plantainterna.model.consultaOTPI.ParamConsultaOTPI;
+import com.mx.totalplay.ffm.cloudweb.utilerias.model.DataTableResponse;
 
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import com.google.gson.Gson;
+
 
 @RestController
 @RequestMapping("/req")
@@ -21,6 +26,9 @@ public class DespachoPIController {
     private static final Logger LOGGER = LogManager.getLogger(DespachoPIController.class);
 
     private DespachoPIService despachoService;
+    private DataTableResponse dataTableResponse;
+    private Gson gson = new Gson();
+
 
     /**
      * @Autowired
@@ -405,14 +413,14 @@ public class DespachoPIController {
     }
 
     @PostMapping("/consultarReporteDiario")
-    public ResponseEntity<?> consultarReporteDiario(@RequestBody String params){
-        LOGGER.info("#### CONSULTANDO reporteDiario");
-        ServiceResponseResult response = despachoService.consultarReporteDiario(params);
-        if (response.getResult() instanceof Integer) {
-            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-        }
-        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-    }
+    public ResponseEntity<DataTableResponse> consultarReporteDiario(@ModelAttribute ParamConsultaOTPI params) {
+    	LOGGER.info("*** Objeto: " + gson.toJson(params));
+		dataTableResponse = despachoService.consultarReporteDiario(params);
+		if (dataTableResponse.getResult() instanceof Integer){
+			return new ResponseEntity<DataTableResponse>(dataTableResponse, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<DataTableResponse>(dataTableResponse, HttpStatus.ACCEPTED);
+	}
 
     @PostMapping("/obtenerResumenPaquete")
     public ResponseEntity<?> obtenerResumenPaquete(@RequestBody String params){
@@ -422,5 +430,7 @@ public class DespachoPIController {
             return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
         }
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-    }
+    } 
 }
+
+

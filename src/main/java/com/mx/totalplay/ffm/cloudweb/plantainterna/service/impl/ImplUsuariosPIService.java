@@ -8,9 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.mx.totalplay.ffm.cloudweb.plantainterna.model.usuario.ObjConsultaUsuario;
 import com.mx.totalplay.ffm.cloudweb.plantainterna.service.UsuariosPIService;
 import com.mx.totalplay.ffm.cloudweb.plantainterna.utils.ConstUsuarioPI;
+import com.mx.totalplay.ffm.cloudweb.utilerias.model.DataTableResponse;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.LoginResult;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.ServiceResponseResult;
 import com.mx.totalplay.ffm.cloudweb.utilerias.utils.ConstantesGeneric;
@@ -88,16 +91,82 @@ public class ImplUsuariosPIService implements UsuariosPIService {
 	}
 	
 	@Override
-	public ServiceResponseResult consultaUsuariosPorGeoCompPuestos(String params) {
+	public DataTableResponse consultaUsuariosPorGeoCompPuestos(ObjConsultaUsuario params) {
 		logger.info("ImplUsuariosPIService.class [metodo = consultaUsuariosPorGeoCompPuestos() ]\n");
 		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
-		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-		String tokenAcces=principalDetail.getAccess_token() ;
-		logger.info("json object params## "+ jsonObject.toString());
+		String[][] dataArray = null;
+        DataTableResponse dataResponse = DataTableResponse.builder()
+                .isRespuesta(false)
+                .data(new String[0][10])
+                .paginaActual(0)
+                .registrosTotales(0)
+                .recordsFiltered("0")
+                .recordsTotal("0")
+                .draw(params.getDraw() + "")
+                .result(null).build();
+        params.setPagina((Integer.parseInt(params.getStart()) + 10) / 10);
+        
+		String tokenAcces = principalDetail.getAccess_token() ;
+		logger.info("consultaUsuariosPorGeoCompPuestos ##+ " + tokenAcces);
 		String url = principalDetail.getDireccionAmbiente().concat(constUsuario.getConsultaUsuariosPorGeoCompPuestos());
-		ServiceResponseResult response=restCaller.callPostBearerTokenRequest(jsonObject.toString(), url, ServiceResponseResult.class, tokenAcces);
-		logger.info("RESULT consultaUsuariosPorGeoCompPuestos "+gson.toJson(response));
-		return response;
+		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(gson.toJson(params), url, ServiceResponseResult.class, tokenAcces);
+		logger.info("RESULT consultaUsuariosPorGeoCompPuestos " + gson.toJson(response));
+		
+		if (response.getResult() instanceof Integer){
+            dataResponse = DataTableResponse.builder()
+                    .isRespuesta(false)
+                    .data(new String[0][10])
+                    .paginaActual(0)
+                    .registrosTotales(0)
+                    .recordsFiltered("0")
+                    .recordsTotal("0")
+                    .draw(params.getDraw() + "")
+                    .result(response.getResult()).build();
+        } else {
+        	JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
+            JsonArray usuariosArray = jsonObjectResponse.getAsJsonArray("usuarios");
+            if (usuariosArray.size() > 0) {
+                if (jsonObjectResponse.get("registrosTotales").getAsInt() > 0) {
+                    int count = 0;
+                    dataArray = new String[usuariosArray.size()][11];
+                    for (int i = 0; i < usuariosArray.size(); i++) {
+                        JsonObject object = (JsonObject) usuariosArray.get(i);
+                        logger.info("objeto: " + object);
+                        //dataArray[count][0] = object.get("numeroEmpleado") != 0 ? String.valueOf(object.get("numeroEmpleado").getAsString()) : "";
+                        dataArray[count][0] = object.get("numeroEmpleado") != null ? object.get("numeroEmpleado").getAsString().trim() : "";
+                        dataArray[count][1] = object.get("usuarioFfm") != null ? object.get("usuarioFfm").getAsString().trim() : "";
+                        dataArray[count][2] = object.get("nombre") != null ? object.get("nombre").getAsString().trim() : "";
+                        dataArray[count][3] = object.get("tipoOperario") != null ? object.get("tipoOperario").getAsString().trim() : "";
+                        dataArray[count][4] = object.get("ciudad") != null ? object.get("ciudad").getAsString().trim() : "";
+                        dataArray[count][5] = object.get("unidadNegocio") != null ? object.get("unidadNegocio").getAsString().trim() : "";
+                        dataArray[count][6] = "<td class='txtTablaConsultaCentrado'><i class='fas fa-user-edit iconoEditarUsuario'></i></td>";
+                        dataArray[count][7] = "<td class='txtTablaConsultaCentrado'><i class='fas fa-user-times iconoEliminarUsuario'></i></td>";
+                        count++;
+                    }
+                    
+                    dataResponse = DataTableResponse.builder()
+                            .isRespuesta(true)
+                            .data(dataArray)
+                            .paginaActual(jsonObjectResponse.get("paginaActual").getAsInt())
+                            .registrosTotales(jsonObjectResponse.get("registrosTotales").getAsInt())
+                            .recordsFiltered(jsonObjectResponse.get("registrosTotales").getAsInt() + "")
+                            .recordsTotal(jsonObjectResponse.get("registrosTotales").getAsInt() + "")
+                            .draw(params.getDraw() + "").build();
+                } else {
+                    dataResponse = DataTableResponse.builder()
+                            .isRespuesta(true)
+                            .data(new String[0][10])
+                            .paginaActual(jsonObjectResponse.get("paginaActual").getAsInt())
+                            .registrosTotales(jsonObjectResponse.get("registrosTotales").getAsInt())
+                            .recordsFiltered(jsonObjectResponse.get("registrosTotales").getAsInt() + "")
+                            .recordsTotal(jsonObjectResponse.get("registrosTotales").getAsInt() + "")
+                            .draw(params.getDraw() + "").build();
+                }
+            }
+        }
+		
+		logger.info("*** Objeto Response: " + gson.toJson(dataResponse));
+		return dataResponse;
 	}
 	
 	@Override

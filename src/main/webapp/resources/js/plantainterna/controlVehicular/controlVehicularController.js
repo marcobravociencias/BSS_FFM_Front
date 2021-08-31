@@ -158,7 +158,6 @@ app.controller('controlVehicularController',
 
 										return e
 									})
-
 									$('#jstreeconsulta').bind('loaded.jstree', function (e, data) {
 									}).jstree({
 										'core': {
@@ -206,10 +205,15 @@ app.controller('controlVehicularController',
 
 			$scope.init();
 
-			$scope.loadMarca = function (event) {
+			$scope.loadMarca = function () {
 				let tipoV = Number($("#tipo").val());
 				$scope.marcas = [];
+				$scope.lineas = [];
 				$scope.marcasTemp = [];
+				if ($scope.vehiculo.idMarca) {
+					$scope.vehiculo.idMarca = null;
+				}
+
 				$scope.data.tipoVehiculos.map(function (e) {
 					if (tipoV === e.idTipoVehiculo) {
 						if (e.marcas.length) {
@@ -228,11 +232,59 @@ app.controller('controlVehicularController',
 			$scope.loadLinea = function () {
 				let marcaV = Number($("#marca").val());
 				$scope.lineas = [];
+				if ($scope.vehiculo.idModelo) {
+					$scope.vehiculo.idModelo = null;
+				}
 				$scope.marcasTemp.map(function (e) {
 					if (marcaV == e.padre) {
 						$scope.lineas.push(e);
 					}
 				});
+			}
+
+			$scope.loadMarcaLinea = function (tipo, marca) {
+				$scope.marcas = [];
+				$scope.marcasTemp = [];
+				$scope.lineas = [];
+				$scope.data.tipoVehiculos.map(function (e) {
+					if (tipo === e.idTipoVehiculo) {
+						if (e.marcas.length) {
+							e.marcas.map(function (m) {
+								if (m.nivel == "1") {
+									$scope.marcas.push(m);
+								} else if (m.nivel == "2" && marca == m.padre) {
+									$scope.lineas.push(m);
+								}
+							})
+						}
+					}
+				});
+			}
+
+			getNameText = function () {
+				$scope.data.tipoVehiculos.map(function (t) {
+					if (t.idTipoVehiculo == Number($scope.vehiculo.idTipo)) {
+						$scope.vehiculo.tipoText = t.tipoVehiculo;
+					}
+				})
+
+				$scope.marcas.map(function (m) {
+					if (m.idMarca == Number($scope.vehiculo.idMarca)) {
+						$scope.vehiculo.marcaText = m.nombre;
+					}
+				})
+
+				$scope.lineas.map(function (l) {
+					if (l.idMarca == Number($scope.vehiculo.idModelo)) {
+						$scope.vehiculo.lineaText = l.nombre;
+					}
+				})
+
+				$scope.data.colores.map(function (c) {
+					if (c.idColor == Number($scope.vehiculo.idColor)) {
+						$scope.vehiculo.colorText = c.descripcion;
+					}
+				})
 			}
 
 			$scope.loadMotivo = function () {
@@ -289,6 +341,7 @@ app.controller('controlVehicularController',
 				let fechaPrueba = fecha.split('/');
 				return fechaPrueba[2] + '-' + fechaPrueba[1] + '-' + fechaPrueba[0];
 			}
+
 
 			guardarVehiculo = function () {
 				if ($scope.validateForm()) {
@@ -347,33 +400,25 @@ app.controller('controlVehicularController',
 						paramsTemp.detalle.fechaVencimientoPoliza = $scope.getFechaFormato($("#vencimientoPoliza").val());
 					}
 
-					console.log(paramsTemp);
-
 					swal({ text: 'Espera un momento...', allowOutsideClick: false });
 					swal.showLoading();
 					controlVehicularService.crearVehiculo(paramsTemp).then(function success(response) {
-						console.log(response);
 
 						if (response.data !== undefined) {
 							if (response.data.respuesta) {
 								if (response.data.result) {
 									swal.close();
 									toastr.info(response.data.resultDescripcion);
-									$scope.vehiculo = {};
-									$scope.$apply();
-									$("#anio").val("");
-									$("#fechaVerificacion").val("");
-									$("#vencimientoTarjeta").val("");
-									$("#vencimientoPoliza").val("");
-									document.getElementById('arbol_vehiculo_consulta').placeholder = '-- Seleccione --';
-									//$scope.getData();
+									$scope.clearForm();
 								} else {
 									swal.close();
 									mostrarMensajeErrorAlert(response.data.resultDescripcion);
 								}
 							} else {
 								swal.close();
-								mostrarMensajeErrorAlert(response.data.resultDescripcion);
+								$scope.clearForm();
+								//mostrarMensajeErrorAlert(response.data.resultDescripcion);
+								mostrarMensajeErrorAlert("Error modificar");
 							}
 						} else {
 							swal.close();
@@ -383,6 +428,28 @@ app.controller('controlVehicularController',
 
 
 				}
+			}
+
+			$scope.clearForm = function () {
+				$scope.vehiculo = {};
+				$("#anio").val("");
+				$("#fechaVerificacion").val("");
+				$("#vencimientoTarjeta").val("");
+				$("#vencimientoPoliza").val("");
+				document.getElementById('arbol_vehiculo_consulta').placeholder = '-- Seleccione --';
+				$("#jstreeconsulta").jstree("destroy");
+				$scope.filePlaca = null;
+				$scope.fileVehiculo = null;
+				$scope.fileCirculacion = null;
+				$scope.fileGasolina = null;
+				$scope.getData();
+			}
+
+			validateFormulario = function () {
+				if ($scope.validateForm()) {
+					$("#stBtn").click();
+				}
+
 			}
 
 			$scope.validateForm = function () {
@@ -415,14 +482,21 @@ app.controller('controlVehicularController',
 					text += "<li>Color</li>";
 				}
 
+				if ($("#combustible").val() === "" || $("#combustible").val() === undefined) {
+					text += "<li>Combustible</li>";
+				}
+
 				if ($("#placa").val() === "" || $("#placa").val() === undefined) {
 					text += "<li>Placas</li>";
+					allRequired = false;
 				} else {
 					if (!hasLetterAndNumber.test($("#placa").val())) {
 						text += "<li>Placas (alfan&uacute;merico)</li>";
+						allRequired = false;
 					} else {
 						if ($("#tipo").val() == "1" && $("#placa").val().length < 6) {
 							text += "<li>Placas (min 6 car&aacute;cteres)</li>";
+							allRequired = false;
 						} else if ($("#tipo").val() == "2" && $("#placa").val().length !== 5) {
 							text += "<li>Placas (5 car&aacute;cteres)</li>";
 						}
@@ -443,6 +517,7 @@ app.controller('controlVehicularController',
 
 				if (($("#numSerie").val() === "" || $("#numSerie").val() === undefined) && !hasNumber.test($("#numSerie").val())) {
 					text += "<li>N&uacute;m. de Serie</li>";
+					allRequired = false;
 				}
 
 				if ($("#clavePension").val() && !hasNumber.test($("#clavePension").val())) {
@@ -457,8 +532,8 @@ app.controller('controlVehicularController',
 					text += "<li>Clave GSP</li>";
 				}
 
-				if (clustersparam.length == 0 || document.getElementById('arbol_vehiculo_consulta').placeholder == '-- Seleccione --' ) {
-					text += '<li>Seleccione una geografia</li>'
+				if (clustersparam.length == 0 || document.getElementById('arbol_vehiculo_consulta').placeholder == '-- Seleccione --') {
+					text += '<li>Seleccione una geografia</li>';
 				}
 
 				if ($scope.isEdit) {
@@ -483,7 +558,6 @@ app.controller('controlVehicularController',
 
 			$scope.subirArchivo = function (e, name) {
 				let labelFile = "#" + name;
-				console.log(e.target.files);
 				if (e.target.files[0]) {
 					$(labelFile).text(e.target.files[0].name);
 					let reader = new FileReader();
@@ -546,8 +620,78 @@ app.controller('controlVehicularController',
 				$("#modal_cluster_arbol_vehiculo").modal('show')
 			}
 
+			getPlaca = function () {
+				controlVehicularService.consultaVehiculoPlaca({ "placa": $scope.vehiculo.placa }).then(function success(response) {
+					if (response.data !== undefined) {
+						if (response.data.respuesta) {
+							if (response.data.result) {
+								let vehiculo = response.data.result.vehiculo;
+								$scope.loadMarcaLinea(vehiculo.idTipo, vehiculo.idMarca);
+								$scope.vehiculo = vehiculo;
+								$scope.vehiculo.idColor = vehiculo.idColor.toString();
+								$scope.vehiculo.idTipo = vehiculo.idTipo.toString();
+								$scope.vehiculo.idMarca = vehiculo.idMarca.toString();
+								$scope.vehiculo.idModelo = vehiculo.idModelo.toString();
+
+								if (vehiculo.detalle.idAseguradora) {
+									$scope.vehiculo.detalle.idAseguradora = vehiculo.detalle.idAseguradora.toString();
+								}
+
+								if (vehiculo.idGeografia) {
+									$("#jstreeconsulta").jstree("destroy")
+									let geografia = $scope.geografiaList;
+									let selected_arbol = "";
+									geografia.map((e) => {
+										e.parent = e.padre == undefined ? "#" : e.padre;
+										e.text = e.nombre;
+										e.icon = "fa fa-globe";
+										if (e.id == vehiculo.idGeografia) {
+											selected_arbol = e.text;
+											e.state = {
+												opened: true,
+												selected: true,
+											}
+										}
+										return e
+									})
+
+									$('#jstreeconsulta').bind('loaded.jstree', function (e, data) {
+									}).jstree({
+										'core': {
+											'data': geografia,
+											'themes': {
+												'name': 'proton',
+												'responsive': true,
+												"icons": false
+											}
+										},
+										plugins: ['search'],
+										"search": {
+											"case_sensitive": false,
+											"show_only_matches": true
+										}
+									});
+									document.getElementById('arbol_vehiculo_consulta').placeholder = selected_arbol
+								}
+
+								swal.close();
+							} else {
+								swal.close();
+								mostrarMensajeErrorAlert(response.data.resultDescripcion);
+							}
+						} else {
+							swal.close();
+						}
+					} else {
+						swal.close();
+						mostrarMensajeErrorAlert(response.data.resultDescripcion);
+					}
+				});
+			}
+
 		}
 	]
+
 );
 
 app.directive('capitalize', function () {

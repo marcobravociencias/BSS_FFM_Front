@@ -30,8 +30,8 @@
   margin-bottom: 20px;
 }
 
-#btnGuardar:active, #btnGuardar:focus {
-  background-color: white;
+.btnTotal:active, .btn:focus {
+  background-color: white !important;
   box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
   
 }
@@ -44,13 +44,23 @@
   background-color: #ffffff;
   color: #7716fa !important;
   border: solid 1px #7716fa !important;
-  padding: 0.3em 2em;
+  padding: 0.7em 2em;
   border-radius: 5px;
   font-size: 12px;
   font-weight: bold;
 }
 
-#btnGuardar:hover{
+.btnBack {
+  background-color: #ffffff;
+  color: #0c56d0 !important;
+  border: solid 1px #0c56d0 !important;
+  padding: 0.7em 2em;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.btn:hover{
   background-color: white;
 }
 
@@ -306,4 +316,172 @@ i.icono-noseleccion {
 b.text-no-seleccion-geografia {
   color: #959595;
   font-size: .8em;
+}
+* {
+  margin: 0;
+  padding: 0
+}
+
+html {
+  height: 100%
+}
+
+#grad1 {
+  background-color:  #9C27B0;
+  background-image: linear-gradient(120deg, #FF4081, #81D4FA)
+}
+
+#msform {
+  text-align: center;
+  position: relative;
+  margin-top: 20px
+}
+
+#msform fieldset .form-card {
+  background: white;
+  border: 0 none;
+  padding: 0px 40px 20px 40px;
+  box-sizing: border-box;
+  width: 94%;
+  margin: 0 3% 0 3%;
+  position: relative
+}
+
+#msform fieldset {
+  background: white;
+  border: 0 none;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding-bottom: 20px;
+  position: relative
+}
+
+#msform fieldset:not(:first-of-type) {
+  display: none
+}
+
+#msform fieldset .form-card {
+  text-align: left;
+  color: #9E9E9E
+}
+
+#msform .action-button-previous {
+  width: 100px;
+  background: #616161;
+  font-weight: bold;
+  color: white;
+  border: 0 none;
+  border-radius: 0px;
+  cursor: pointer;
+  padding: 10px 5px;
+  margin: 10px 5px
+}
+
+#msform .action-button-previous:hover,
+#msform .action-button-previous:focus {
+  box-shadow: 0 0 0 2px white, 0 0 0 3px #616161
+}
+
+select.list-dt {
+  border: none;
+  outline: 0;
+  border-bottom: 1px solid #ccc;
+  padding: 2px 5px 3px 5px;
+  margin: 2px
+}
+
+select.list-dt:focus {
+  border-bottom: 2px solid #7716fa
+}
+
+.card {
+  z-index: 0;
+  border: none;
+  border-radius: 0.5rem;
+  position: relative
+}
+
+.fs-title {
+  margin-bottom: 15px;
+  text-align: left;
+  font-size: 14px;
+}
+
+#progressbar {
+  margin-bottom: 30px;
+  overflow: hidden;
+  color: lightgrey
+}
+
+#progressbar .active {
+  color: #000000
+}
+
+#progressbar li {
+  list-style-type: none;
+  font-size: 14px;
+  width: 25%;
+  float: left;
+  position: relative
+}
+
+#progressbar #generales:before {
+  font-family: FontAwesome;
+  content: "\f07c"
+}
+
+#progressbar #docs:before {
+  font-family: FontAwesome;
+  content: "\f15b"
+}
+
+#progressbar #imgs:before {
+  font-family: FontAwesome;
+  content: "\f03e"
+}
+
+#progressbar #resumen:before {
+  font-family: FontAwesome;
+  content: "\f1b9"
+}
+
+#progressbar li:before {
+  width: 40px;
+  height: 40px;
+  line-height: 45px;
+  display: block;
+  font-size: 15px;
+  color: #ffffff;
+  background: lightgray;
+  border-radius: 50%;
+  margin: 0 auto 10px auto;
+  padding: 2px
+}
+
+#progressbar li:after {
+  content: '';
+  width: 100%;
+  height: 2px;
+  background: lightgray;
+  position: absolute;
+  left: 0;
+  top: 25px;
+  z-index: -1
+}
+
+#progressbar li.active:before,
+#progressbar li.active:after {
+  background: #7716fa
+}
+
+.fit-image {
+  width: 100%;
+  object-fit: cover
+}
+
+.resumeTable{
+  width: 100%;
+  font-size: 15px;
 }

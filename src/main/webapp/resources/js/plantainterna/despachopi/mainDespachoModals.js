@@ -274,11 +274,10 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                             if ($scope.listadoEstatusTecnico && $scope.listadoEstatusTecnico.length > 0) {
                                 $("#modalStatusOperario").modal('show')
                                 let optionTempSelected = $scope.listadoEstatusTecnico.find(function (e) {
-                                    return e.idEstatus == parseInt($scope.elementEstatusTecnico.tecnico.idEstatusTecnico);
+                                    return e.id == parseInt($scope.elementEstatusTecnico.tecnico.idEstatusTecnico);
                                 })
                                 $scope.elementEstatusTecnico.status = optionTempSelected
                             }
-                            $scope.$apply()
                             console.log($scope.elementEstatusTecnico.tecnico)
 
                         }   
@@ -296,7 +295,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             if ($scope.listadoEstatusTecnico && $scope.listadoEstatusTecnico.length > 0) {
                 $("#modalStatusOperario").modal('show')
                 let optionTempSelected = $scope.listadoEstatusTecnico.find(function (e) {
-                    return e.idEstatus == parseInt($scope.elementEstatusTecnico.tecnico.idEstatusTecnico);
+                    return e.id == parseInt($scope.elementEstatusTecnico.tecnico.idEstatusTecnico);
                 })
                 $scope.elementEstatusTecnico.status = optionTempSelected
             }
@@ -330,7 +329,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
  
              if (response.data !== undefined) {
                  if (response.data.respuesta) {
-                     if (response.data.result.result === '0') {
+                     if (response.data.result.result === '0') { 
                         console.log("############## ots trabajadas")
                         //$scope.listadoOtsPendientes=otspendientes                         
                      }
@@ -421,7 +420,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         let params = {
 
             "idUsuario": $scope.elementEstatusTecnico.tecnico.idTecnico,
-            "idEstatusUsuario": $scope.elementEstatusTecnico.status.idEstatus
+            "idEstatusUsuario": $scope.elementEstatusTecnico.status.id
         }
 
         swal({ text: 'Cambiando estatus ...', allowOutsideClick: false });
@@ -498,8 +497,9 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                         }
     
                         if (response.data[2].respuesta) {
-                            if (response.data[2].result.result === '0') {
+                            if (response.data[2].result.detalleIconos !== undefined && response.data[2].result.detalleIconos.length>0) {
                                console.log("############## catalogo")/** **/
+                               $scope.listadoIconografia.estatusIconografia=$scope.retornarBase64Icons(response.data[2].result.detalleIconos)
                             }
                         }
 
@@ -518,6 +518,41 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             }).catch(err => handleError(err))
        }
     }
+
+    $scope.retornarBase64Icons=function(listadoIcons){
+        angular.forEach( listadoIcons , function(elem,index){       
+            elem.url='';
+            elem.base64=false    
+            switch(  elem.archivo ){
+                case 'ZteLogo.svg':
+                    elem.url=`./resources/img/generic/ZteLogo.svg`                                                  
+                    break;
+                case 'Huawei.svg':
+                    elem.url=`./resources/img/generic/Huawei.svg`                                                                             
+                    break;   
+                default:
+                    let tipoDato = elem.archivo.substring( elem.archivo.indexOf(".")+1 , elem.archivo.length )
+                    let iconoEncontradoConfig=$scope.listadoIconosConfig.find( e =>{return e.icon=== elem.archivo } ).value
+                    switch( tipoDato ){
+                        case 'svg':
+                            elem.url+=`data:image/svg+xml;base64,${iconoEncontradoConfig}`                            
+                            break;
+                        case 'png':
+                            elem.url+=`data:image/png;base64,${iconoEncontradoConfig}`                           
+                            break;
+                        case 'jpg':
+                            elem.url+=`data:image/jpeg;charset=utf-8;base64,${iconoEncontradoConfig}`                            
+                            break;
+                        case 'jpeg':
+                            elem.url+=`data:image/jpeg;charset=utf-8;base64,${iconoEncontradoConfig}`                            
+                            break;
+                        default:
+                    }
+            }        
+        })      
+        return listadoIcons;
+    }
+
     $scope.abrirModalReAsignacion = function (otinfo, data_tecnico) {
         $scope.reAsignacionObject = {
             'otInfo': otinfo,
@@ -907,6 +942,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             }
 
             if (isValido) {
+                let fechaCalendariza = $scope.elementCalendarizado.fechaCalendarizado.split('/')
                 if ($scope.estatusModals === 'PENDIENTE') {
                     params = {
                         tipo: tipo,
@@ -922,7 +958,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                         comentarios: $scope.elementCalendarizado.comentario,
                         idTurno: $scope.elementCalendarizado.turno.id,
                         idMotivo: $scope.elementCalendarizado.motivo.id,
-                        fechaHoraAgenda: $scope.elementCalendarizado.fechaCalendarizado
+                        fechaHoraAgenda: fechaCalendariza[2] + '-' + fechaCalendariza[1] + '-' + fechaCalendariza[0]
                     }
                 } else {
                     params = {
@@ -940,7 +976,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                         comentarios: $scope.elementCalendarizado.comentario,
                         idTurno: $scope.elementCalendarizado.turno.id,
                         idMotivo: $scope.elementCalendarizado.motivo.id,
-                        fechaHoraAgenda: $scope.elementCalendarizado.fechaCalendarizado
+                        fechaHoraAgenda: fechaCalendariza[2] + '-' + fechaCalendariza[1] + '-' + fechaCalendariza[0]
                     }
                 }
             }
@@ -1015,6 +1051,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 
 
             if (isValido) {
+                let fechaReagendamiento = $scope.elementReagendaOT.fechaReagendamiento.split('/')
                 if ($scope.estatusModals === 'PENDIENTE') {
                     params = {
                         tipo: tipo,
@@ -1030,7 +1067,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                         comentarios: $scope.elementReagendaOT.comentario,
                         idTurno: $scope.elementReagendaOT.turno.id,
                         idMotivo: $scope.elementReagendaOT.motivo.id,
-                        fechaHoraAgenda: $scope.elementReagendaOT.fechaReagendamiento
+                        fechaHoraAgenda: fechaReagendamiento[2] + '-' + fechaReagendamiento[1] + '-' + fechaReagendamiento[0]
                     }
                 } else {
                     params = {
@@ -1048,7 +1085,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                         comentarios: $scope.elementReagendaOT.comentario,
                         idTurno: $scope.elementReagendaOT.turno.id,
                         idMotivo: $scope.elementReagendaOT.motivo.id,
-                        fechaHoraAgenda: $scope.elementReagendaOT.fechaReagendamiento
+                        fechaHoraAgenda: fechaReagendamiento[2] + '-' + fechaReagendamiento[1] + '-' + fechaReagendamiento[0]
                     }
                 }
             }
@@ -1255,20 +1292,27 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         $scope.$apply();
     });
 
-
+    $scope.responseServicios={}
     $scope.obtenerPaquete = function(){
         if (!$scope.flagPaquete) {
             let params = {
                // folio: $scope.detalleOtPendienteSelected.folioOrden
                folio: 'OS-7640234'
             }
-    
+            swal({ text: 'Espere un momento ...', allowOutsideClick: false });
+            swal.showLoading();
+            $scope.responseServicios={}
             mainDespachoService.consultarResumenPaquete(params).then(response => {
                 console.log(response);
+                swal.close()
                 $scope.flagPaquete = true;
                 if (response.data.respuesta) {
                     if (response.data.result) {
-                        
+                        if(response.data.result.resumenPaquete != undefined){
+                            $scope.responseServicios=response.data.result.resumenPaquete
+                        }else{
+
+                        }                        
                     }
                 } else {
                     mostrarMensajeErrorAlert(response.data.resultDescripcion)

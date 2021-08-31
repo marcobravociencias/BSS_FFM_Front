@@ -25,7 +25,7 @@
 							<div class="form-group">
 								<i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" id="icono_operario_status" class="fa fa-user-circle-o fa-2x"></i>
 								<label for="id-status-tecnico">Status:</label>
-								<select class="form-control" id="id-status-tecnico" ng-model="elementEstatusTecnico.status" ng-options="estatus.descripcion for estatus in listadoEstatusTecnico">
+								<select style="border-left:.4em solid {{elementEstatusTecnico.status.hexaColor}}" class="form-control" id="id-status-tecnico" ng-model="elementEstatusTecnico.status" ng-options="estatus.descripcion for estatus in listadoEstatusTecnico">
                                     <option value="">Seleccione ...</option>
 							    </select>                                               
 						  	</div>

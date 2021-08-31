@@ -1121,13 +1121,13 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             })
         }
         
-        let paramsTemp = angular.copy($scope.repDiario);
-
+        let paramsTemp = {};
+        
         if(!statuscopy.length){
             mensaje += '<li>Introducir Estatus</li>';
             isValid = false;
         }
-
+    
         if(!intervencioncopy.length){
             mensaje += '<li>Introducir Intervenci\u00F3n</li>';
             isValid = false;
@@ -1153,103 +1153,72 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             mostrarMensajeWarningValidacion(mensaje);
             return false;
         }else{
-            paramsTemp.fechaInicio = $scope.getFechaFormato(paramsTemp.fechaInicio);
-            paramsTemp.fechaFin =  $scope.getFechaFormato(paramsTemp.fechaFin);
+            paramsTemp.fechaInicio = $scope.getFechaFormato($scope.repDiario.fechaInicio);
+            paramsTemp.fechaFin =  $scope.getFechaFormato($scope.repDiario.fechaFin);
             paramsTemp.tipoIntervencion =  intervencioncopy;
             paramsTemp.estatusOt = statuscopy;
-            
-            
-            swal({ text: 'Espera un momento...', allowOutsideClick: false });
-            swal.showLoading();
-            
-            $scope.listOrdenes = []; 
-           
- 
-            mainDespachoService.consultarReporteDiario(paramsTemp).then(function success(response) {      
-                if (response.data !== undefined) { 
-                    if(response.data.respuesta ){ 
-                        if(response.data.result ){ 
-                             
-                            if(tableReporte){                              
-                                tableReporte.destroy() 
-                            }   
-                            if(response.data.result.ordenes.length){
-                                angular.forEach(response.data.result.ordenes,function(orden,index){    
-                                let row = []; 
-                                row[0] = orden.idOrden; 
-                                row[1] = orden.folio; 
-                                row[2] = orden.cuenta; 
-                                row[3] = orden.intervencion; 
-                                row[4] = orden.subIntervencion; 
-                                row[5] = orden.estatus; 
-                                row[6] = orden.estado; 
-                                row[7] = orden.geografia; 
-                                row[8] = orden.operario; 
-                                row[9] = orden.nempleado; 
-                                row[10] = orden.fechaCreacion; 
-                                row[11] = orden.fechaPrimeraAgenda; 
-                                row[12] = orden.turno; 
-                                $scope.listOrdenes.push(row); 
-                                }) 
-                                  
-                                tableReporte = $('#table-reporte').DataTable({ 
-                                    "paging": true, 
-                                    "lengthChange": false, 
-                                    "searching": false, 
-                                    "ordering": false, 
-                                    "pageLength": 10, 
-                                    "info": false, 
-                                    "autoWidth": true, 
-                                    "data":$scope.listOrdenes, 
-                                    "language": idioma_espanol_not_font, 
-                                    "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">', 
-                                    dom: 'Bfrtip', 
-                                    buttons:  
-                                    [{ 
-                                        extend: 'excelHtml5', 
-                                        title: 'Reporte Seguimiento Diario', 
-                                        text: 'Exportar Excel' 
-                                    }] 
-                                }); 
-                                swal.close();
-                            }else{
-                                tableReporte = $('#table-reporte').DataTable({
-                                    "paging": true,
-                                    "lengthChange": false,
-                                    "searching": false,
-                                    "ordering": false,
-                                    "pageLength": 10,
-                                    "info": false,
-                                    "autoWidth": true,
-                                    "data":[], 
-                                    "language": idioma_espanol_not_font,
-                                    "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">', 
-                                    dom: 'Bfrtip', 
-                                    buttons:  
-                                    [{ 
-                                        extend: 'excelHtml5', 
-                                        title: 'Reporte Seguimiento Diario', 
-                                        text: 'Exportar Excel' 
-                                    }] 
-                                });
-                                swal.close();
-                                toastr.info(response.data.result.mensaje); 
-                            }
-                            
-                        }else{ 
-                            swal.close(); 
-                            mostrarMensajeErrorAlert(response.data.resultDescripcion); 
-                        } 
-                    }else{ 
-                        swal.close(); 
-                        mostrarMensajeErrorAlert(response.data.resultDescripcion); 
-                    } 
-                }else{ 
-                    swal.close(); 
-                    mostrarMensajeErrorAlert(response.data.resultDescripcion); 
-                } 
-            }); 
-            
+            paramsTemp.fechaSeleccionada =  $scope.repDiario.fechaSeleccionada;
+            paramsTemp.elementosPorPagina = 10;
+            paramsTemp.pagina = 1;
+
+            if($scope.repDiario.idOrden && $scope.repDiario.idOrden != ""){
+                paramsTemp.idOrden =  $scope.repDiario.idOrden;
+            }
+
+            if($scope.repDiario.folio && $scope.repDiario.folio != ""){
+                paramsTemp.folio =  $scope.repDiario.folio;
+            }
+
+            if($scope.repDiario.idCuenta && $scope.repDiario.idCuenta != ""){
+                paramsTemp.idCuenta =  $scope.repDiario.idCuenta;
+            }
+
+            if(tableReporte){                              
+                tableReporte.destroy() 
+            }   
+            tableReporte = $('#table-reporte').DataTable({
+                "processing": false,
+                "ordering": false,
+                "serverSide": true,
+                "scrollX": false,
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": false,
+                "pageLength": 10,
+                "info": false,
+                "ajax": {
+                    "url": "req/consultarReporteDiario",
+                    "type": "POST",
+                    "data": paramsTemp,
+                    "beforeSend": function () {
+                        if(!swal.isVisible() ){
+                            swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                            swal.showLoading();
+                        }
+                        
+                    },
+                    "dataSrc": function (json) {
+                        return json.data;
+                    },
+                    "error":function(xhr, error, thrown){
+                        handleError(xhr)
+                    }, 
+                    "complete": function () {
+                        swal.close()
+                    }
+                },
+                "columns": [null, null, null, null, null, null, null, null, null, null, null, null, null],
+                "language": idioma_espanol_not_font,
+                "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">', 
+                dom: 'Bfrtip', 
+                buttons:  
+                [{ 
+                    extend: 'excelHtml5', 
+                    title: 'Reporte Seguimiento Diario', 
+                    text: 'Exportar Excel' 
+                }] 
+            });
         }
     }
     
