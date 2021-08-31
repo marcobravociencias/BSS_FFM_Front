@@ -3,6 +3,8 @@ package com.mx.totalplay.ffm.cloudweb.plantainterna.service;
 import java.util.List;
 
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.ServiceResponseResult;
+import com.mx.totalplay.ffm.cloudweb.plantainterna.model.consultaOTPI.ParamConsultaOTPI;
+import com.mx.totalplay.ffm.cloudweb.utilerias.model.DataTableResponse;
 
 public interface DespachoPIService {
 	public List<ServiceResponseResult> consultarComplementosDespacho();
@@ -49,7 +51,7 @@ public interface DespachoPIService {
 
     ServiceResponseResult agregarComentariosOt(String params);
 
-	public ServiceResponseResult consultarReporteDiario(String params);
+	public DataTableResponse consultarReporteDiario(ParamConsultaOTPI params);
 
     ServiceResponseResult obtenerResumenPaquete(String params);
 }

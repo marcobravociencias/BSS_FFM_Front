@@ -1955,7 +1955,7 @@ table.dataTable.no-footer{
 }
 
 .download-file{
-  text-align: center; 
+  text-align: right; 
   padding-top: 5px;
   font-size: xx-large;
   

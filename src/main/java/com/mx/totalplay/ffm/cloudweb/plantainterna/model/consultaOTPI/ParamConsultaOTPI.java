@@ -14,6 +14,8 @@ import lombok.NoArgsConstructor;
 public class ParamConsultaOTPI {
 	private String length;
 	private String ot;
+	private String idCuenta;
+	private String folio;
 	private String os;
 	private String cuenta;
 	private String fecha_inicio;
@@ -25,6 +27,7 @@ public class ParamConsultaOTPI {
 	private String Id_ot;
 	private String Id_tipo_img;
 	private String Propietario;
+	private String fechaSeleccionada;
 	private String Id_OT;
 	private String id_propietario;
 	private int draw;
@@ -34,6 +37,8 @@ public class ParamConsultaOTPI {
 	private List<Integer> idSubTipoOrdenes;
 	private List<Integer> idEstatus;
 	private List<Integer> idClusters;
+	private List<Integer> tipoIntervencion;
+	private List<Integer> estatusOt;
 	private String fechaInicio;
 	private String fechaFin;
 	private int elementosPorPagina;

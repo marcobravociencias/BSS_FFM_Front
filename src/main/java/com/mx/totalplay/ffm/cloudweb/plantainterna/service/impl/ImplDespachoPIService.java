@@ -1,5 +1,6 @@
 package com.mx.totalplay.ffm.cloudweb.plantainterna.service.impl;
 
+import com.google.gson.JsonArray;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.mx.totalplay.ffm.cloudweb.plantainterna.service.DespachoPIService;
@@ -10,6 +11,8 @@ import com.mx.totalplay.ffm.cloudweb.utilerias.utils.ConstantesGeneric;
 import com.mx.totalplay.ffm.cloudweb.utilerias.utils.ConsumeRest;
 import com.mx.totalplay.ffm.cloudweb.utilerias.utils.UtileriaGeneral;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.ServiceResponseResult;
+import com.mx.totalplay.ffm.cloudweb.plantainterna.model.consultaOTPI.ParamConsultaOTPI;
+import com.mx.totalplay.ffm.cloudweb.utilerias.model.DataTableResponse; 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -845,23 +848,95 @@ public class ImplDespachoPIService implements DespachoPIService{
 		logger.info("RESULT"+gson.toJson(response));
 		return response;
 	}
-
+	
+	
 	@Override
-	public ServiceResponseResult consultarReporteDiario(String params) {
-		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+	public DataTableResponse consultarReporteDiario(ParamConsultaOTPI params) {
+        logger.info("ImplDespachiPIService.class [metodo consultarReporteDiario() ]\n" + gson.toJson(params));
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        String[][] dataArray = null;
+        DataTableResponse dataResponse = DataTableResponse.builder()
+                .isRespuesta(false)
+                .data(new String[0][10])
+                .paginaActual(0)
+                .registrosTotales(0)
+                .recordsFiltered("0")
+                .recordsTotal("0")
+                .draw(params.getDraw() + "")
+                .result(null).build();
+        params.setPagina((Integer.parseInt(params.getStart()) + 10) / 10);
+ 
+        logger.info("### Object: " + gson.toJson(params));
+        String tokenAcces = principalDetail.getAccess_token();
+        logger.info("consultaInformacionDetalleOt ##+" + tokenAcces);
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constDespachoPI.getConsultarReporteDiario());
+        logger.info("URL ##+" + urlRequest);
+ 
+        ServiceResponseResult response = restCaller.callPostBearerTokenRequest(gson.toJson(params), urlRequest,
+                ServiceResponseResult.class, tokenAcces);
+        logger.info(response.getResult());
+        
+        if (response.getResult() == null || response.getResult() instanceof Integer){
+            dataResponse = DataTableResponse.builder()
+                    .isRespuesta(false)
+                    .data(new String[0][10])
+                    .paginaActual(0)
+                    .registrosTotales(0)
+                    .recordsFiltered("0")
+                    .recordsTotal("0")
+                    .draw(params.getDraw() + "")
+                    .result(response.getResult()).build();
+        } else {
+            JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
+            JsonArray ordenesArray = jsonObjectResponse.getAsJsonArray("ordenes");
+            if (ordenesArray.size() > 0) {
+            	if (jsonObjectResponse.get("registrosTotales").getAsInt() > 0) {
+                    int count = 0;
+                    dataArray = new String[ordenesArray.size()][13];
+                    for (int i = 0; i < ordenesArray.size(); i++) {
+                        JsonObject object = (JsonObject) ordenesArray.get(i);
+                        logger.info("objeto: " + object);
+                        dataArray[count][0] = object.get("idOrden").getAsInt() != 0 ? String.valueOf(object.get("idOrden").getAsInt()) : "";
+                        dataArray[count][1] = object.get("folio") != null ? object.get("folio").getAsString().trim() : "";
+                        dataArray[count][2] = object.get("cuenta") != null ? object.get("cuenta").getAsString().trim() : "";
+                        dataArray[count][3] = object.get("intervencion") != null ? object.get("intervencion").getAsString().trim() : "";
+                        dataArray[count][4] = object.get("subIntervencion") != null ? object.get("subIntervencion").getAsString().trim() : "";
+                        dataArray[count][5] = object.get("estatus") != null ? object.get("estatus").getAsString().trim() : "";
+                        dataArray[count][6] = object.get("estado") != null ? object.get("estado").getAsString().trim() : "";
+                        dataArray[count][7] = object.get("geografia") != null ? object.get("geografia").getAsString().trim() : "";
+                        dataArray[count][8] = object.get("operario") != null ? object.get("operario").getAsString().trim() : "";
+                        dataArray[count][9] = object.get("nempleado") != null ? object.get("nempleado").getAsString().trim() : "";
+                        dataArray[count][10] = object.get("fechaCreacion") != null ? object.get("fechaCreacion").getAsString().trim() : "";
+                        dataArray[count][11] = object.get("fechaPrimerAgenda") != null ? object.get("fechaPrimerAgenda").getAsString().trim() : "";
+                        dataArray[count][12] = object.get("turno") != null ? object.get("turno").getAsString().trim() : "";
+                        count++;
+ 
+                    }
+                    dataResponse = DataTableResponse.builder()
+                    		.isRespuesta(true)
+                            .data(dataArray)
+                            .paginaActual(jsonObjectResponse.get("paginaActual").getAsInt())
+                            .registrosTotales(jsonObjectResponse.get("registrosTotales").getAsInt())
+                            .recordsFiltered(jsonObjectResponse.get("registrosTotales").getAsInt() + "")
+                            .recordsTotal(jsonObjectResponse.get("registrosTotales").getAsInt() + "")
+                            .draw(params.getDraw() + "").build();
+                } else {
+                    dataResponse = DataTableResponse.builder()
+                            .isRespuesta(true)
+                            .data(new String[0][10])
+                            .paginaActual(jsonObjectResponse.get("paginaActual").getAsInt())
+                            .registrosTotales(jsonObjectResponse.get("registrosTotales").getAsInt())
+                            .recordsFiltered(jsonObjectResponse.get("registrosTotales").getAsInt() + "")
+                            .recordsTotal(jsonObjectResponse.get("registrosTotales").getAsInt() + "")
+                            .draw(params.getDraw() + "").build();
+                }
+            }
+        }
+        logger.info("*** Objeto Response: " + gson.toJson(dataResponse));
 
-		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
+        return dataResponse;
+    }
 
-		logger.info("json object params## "+jsonObject.toString());
-
-		String tokenAcces=principalDetail.getAccess_token();
-
-		String url="http://34.94.124.52"+constDespachoPI.getConsultarReporteDiario();
-		ServiceResponseResult response= restCaller.callPostBearerTokenRequest(params, url,
-				ServiceResponseResult.class, tokenAcces);
-		logger.info("RESULT"+gson.toJson(response));
-		return response;
-	}
 
 	@Override
 	public ServiceResponseResult obtenerResumenPaquete(String params) {
