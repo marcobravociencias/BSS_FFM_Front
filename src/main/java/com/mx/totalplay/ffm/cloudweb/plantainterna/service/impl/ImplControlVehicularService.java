@@ -33,6 +33,7 @@ public class ImplControlVehicularService implements ControlVehicularService {
 		this.constControlVehicular = constControlVehicular;
 	}
 
+	@Override
 	public ServiceResponseResult consultarMarcas() {
 		logger.info("ImplControlVehicularService.class [metodo = consultarMarcas() ]\n");
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
@@ -48,6 +49,7 @@ public class ImplControlVehicularService implements ControlVehicularService {
 		return response;
 	}
 
+	@Override
 	public ServiceResponseResult consultarColores() {
 		logger.info("ImplControlVehicularService.class [metodo = consultarColores() ]\n");
 
@@ -65,6 +67,7 @@ public class ImplControlVehicularService implements ControlVehicularService {
 		return response;
 	}
 
+	@Override
 	public ServiceResponseResult consultarSeguros() {
 		logger.info("ImplControlVehicularService.class [metodo = consultarSeguros() ]\n");
 
@@ -82,6 +85,7 @@ public class ImplControlVehicularService implements ControlVehicularService {
 		return response;
 	}
 
+	@Override
 	public ServiceResponseResult consultarEstatus() {
 		logger.info("ImplControlVehicularService.class [metodo = consultarEstatus() ]\n");
 
@@ -100,7 +104,7 @@ public class ImplControlVehicularService implements ControlVehicularService {
 	}
 	
 
-	    @Override
+	@Override
     public ServiceResponseResult crearVehiculo(String params) {
         logger.info("ImplControlVehicularService.class [metodo = crearVehiculo() ]\n" + params);
         LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
@@ -119,4 +123,26 @@ public class ImplControlVehicularService implements ControlVehicularService {
         logger.info(response);
         return response;
     }
+
+	
+	@Override
+    public ServiceResponseResult consultarVehiculoPlaca(String params) {
+        logger.info("ImplControlVehicularService.class [metodo = consultarVehiculoPlaca() ]\n" + params);
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        String placa = jsonObject.get("placa").getAsString();
+
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constControlVehicular.getConsultarVehiculoPlaca());
+        logger.info("URL ##+" + urlRequest);
+
+        Map<String, String> paramsRequestGet = new HashMap<String, String>();
+        paramsRequestGet.put("placa", placa);
+
+        ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
+                ServiceResponseResult.class, tokenAcces);
+        return response;
+    }
+
 }

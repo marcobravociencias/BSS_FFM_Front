@@ -74,4 +74,14 @@ public class ControlVehicularController {
         }
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
+
+	@PostMapping("/consultarVehiculoPlaca")
+	public ResponseEntity<?> consultarVehiculoPlaca(@RequestBody String params) {
+		logger.info("#### Metodo consultarVehiculoPlaca: " + params);
+		ServiceResponseResult response = controlVehicularService.consultarVehiculoPlaca(params);
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
 }

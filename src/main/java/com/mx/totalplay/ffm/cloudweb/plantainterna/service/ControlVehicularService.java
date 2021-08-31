@@ -9,5 +9,6 @@ public interface ControlVehicularService {
     public ServiceResponseResult consultarSeguros();
     public ServiceResponseResult consultarEstatus();
     public ServiceResponseResult crearVehiculo(String params);
+    public ServiceResponseResult consultarVehiculoPlaca(String params);
    
 }
