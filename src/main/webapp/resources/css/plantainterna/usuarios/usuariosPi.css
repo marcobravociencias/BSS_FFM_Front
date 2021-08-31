@@ -50,10 +50,18 @@
 
 .txtTablaConsultaCentrado{
 	text-align: center;
+	white-space: nowrap;
+    color: #39455b;
+    font-family: 'Montserrat', sans-serif;
+    font-size: .8em;
 }
 
 .txtTablaConsultaJustificado{
 	text-align: justify;
+	white-space: nowrap;
+    color: #39455b;
+    font-family: 'Montserrat', sans-serif;
+    font-size: .8em;
 }
 
 .iconoEditarUsuario{
@@ -64,7 +72,16 @@
     color: #ff0000!important;
 }
 
+.contenedorRowForm{
+	margin: 0em 0em 0.5em;
+}
+
+.selecRegistro{
+	width: 100% !important;
+}
+
 /* FIN CAMBIOS REYNEL */ 
+/* ----------------------------------------------------------------------------------------------------- */
 
 .btn-group.bootstrap-select.show-tick.select_consulta {
     width: 100% !important;

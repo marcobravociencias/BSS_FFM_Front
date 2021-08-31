@@ -64,6 +64,58 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="container">
+				            	<div id="contenedorPrincipalTabla" class="row" style="display: none;">
+<!-- 				                	<div class="col-md-12"> -->
+<!-- 				                    	<div class="table-responsive"> -->
+<!-- 				                        	<table class="table" id="table-usuario-pii"> -->
+<!-- 				                            	<thead> -->
+<!-- 				                                	<tr> -->
+<!-- 				                                    	<th class="txtTablaConsultaJustificado">Núm. empleado</th> -->
+<!-- 				                                        <th class="txtTablaConsultaJustificado">Usuario FFM</th> -->
+<!-- 				                                        <th class="txtTablaConsultaJustificado">Nombre</th> -->
+<!-- 				                                        <th class="txtTablaConsultaJustificado">Tipo usuario</th> -->
+<!-- 				                                        <th class="txtTablaConsultaJustificado">Ciudad</th> -->
+<!-- 				                                        <th class="txtTablaConsultaJustificado">Uni. negocio</th> -->
+<!-- 				                                        <th class="txtTablaConsultaCentrado">Editar</th> -->
+<!-- 				                                        <th class="txtTablaConsultaCentrado">Eliminar</th> -->
+<!-- 													</tr> -->
+<!-- 												</thead> -->
+<!-- 												<tbody> -->
+<!-- 													<tr ng-repeat="usuario in listaUsuarios"> -->
+<!-- 														<td class="txtTablaConsultaJustificado">{{usuario.numeroEmpleado}}</td> -->
+<!-- 														<td class="txtTablaConsultaJustificado">{{usuario.usuarioFfm}}</td> -->
+<!-- 														<td class="txtTablaConsultaJustificado">{{usuario.nombre}}</td> -->
+<!-- 														<td class="txtTablaConsultaJustificado">{{usuario.tipoOperario}}</td> -->
+<!-- 														<td class="txtTablaConsultaJustificado">{{usuario.ciudad}}</td> -->
+<!-- 														<td class="txtTablaConsultaJustificado">{{usuario.unidadNegocio}}</td> -->
+<!-- 														<td class="txtTablaConsultaCentrado"><i class="fas fa-user-edit iconoEditarUsuario"></i></td> -->
+<!-- 														<td class="txtTablaConsultaCentrado"><i class="fas fa-user-times iconoEliminarUsuario"></i></td> -->
+<!-- 													</tr> -->
+<!-- 												</tbody> -->
+<!-- 											</table> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+									<div class="col-md-12">
+										 <div class="table-responsive"> 
+				                         	<table class="table" id="table-usuario-pi">
+				                         		<thead>
+				                                	<tr>
+				                                    	<th class="txtTablaConsultaJustificado">Núm. empleado</th>
+				                                        <th class="txtTablaConsultaJustificado">Usuario FFM</th>
+				                                        <th class="txtTablaConsultaJustificado">Nombre</th>
+				                                        <th class="txtTablaConsultaJustificado">Tipo usuario</th>
+				                                        <th class="txtTablaConsultaJustificado">Ciudad</th>
+				                                        <th class="txtTablaConsultaJustificado">Uni. negocio</th>
+				                                        <th class="txtTablaConsultaCentrado">Editar</th>
+				                                        <th class="txtTablaConsultaCentrado">Eliminar</th>
+													</tr>
+												</thead>
+				                         	</table>
+				                         </div>
+									</div>
+								</div>
+							</div>
                         </div>
                         <div class="tab-pane fade" id="opcion-alta" role="tabpanel" aria-labelledby="opcion-alta-tab">
                             <h3 class="text-center">Alta Usuarios</h3>
@@ -115,42 +167,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <br>
-            <div class="container">
-            	<div id="contenedorPrincipalTabla" class="row" style="display: none;">
-                	<div class="col-12">
-                    	<div class="table-responsive">
-                        	<table class="table" id="table-usuario-pi">
-                            	<thead>
-                                	<tr>
-                                    	<th class="txtTablaConsultaJustificado">Núm. empleado</th>
-                                        <th class="txtTablaConsultaJustificado">Usuario FFM</th>
-                                        <th class="txtTablaConsultaJustificado">Nombre</th>
-                                        <th class="txtTablaConsultaJustificado">Tipo usuario</th>
-                                        <th class="txtTablaConsultaJustificado">Ciudad</th>
-                                        <th class="txtTablaConsultaJustificado">Uni. negocio</th>
-                                        <th class="txtTablaConsultaCentrado">Editar</th>
-                                        <th class="txtTablaConsultaCentrado">Eliminar</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr ng-repeat="usuario in listaUsuarios">
-										<td class="txtTablaConsultaJustificado">{{usuario.numeroEmpleado}}</td>
-										<td class="txtTablaConsultaJustificado">{{usuario.usuarioFfm}}</td>
-										<td class="txtTablaConsultaJustificado">{{usuario.nombre}}</td>
-										<td class="txtTablaConsultaJustificado">{{usuario.tipoOperario}}</td>
-										<td class="txtTablaConsultaJustificado">{{usuario.ciudad}}</td>
-										<td class="txtTablaConsultaJustificado">{{usuario.unidadNegocio}}</td>
-										<td class="txtTablaConsultaCentrado"><i class="fas fa-user-edit iconoEditarUsuario"></i></td>
-										<td class="txtTablaConsultaCentrado"><i class="fas fa-user-times iconoEliminarUsuario"></i></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div>  
+            </div>  
         </div>
         <jsp:include page="./modal/modalEdicion.jsp"></jsp:include>
         <jsp:include page="./modal/modalArbolGeografia.jsp"></jsp:include>
@@ -163,8 +180,9 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/angularjs/js/angular.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/jquery.dataTables.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/dataTables.bootstrap4.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/libraries/sweetalert/js/sweetalert2.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/sweetalert/js/sweetalert2.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/selectPicker/js/bootstrap-select.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/selectPicker/js/i18n/defaults-es_ES.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jstree/jstree.min.js"></script>
