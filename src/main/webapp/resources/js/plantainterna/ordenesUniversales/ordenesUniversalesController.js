@@ -1,6 +1,6 @@
 var app = angular.module('ordenesUniversalesApp', []);
 
-app.controller('ordenesUniversalesController', ['$scope', 'ordenesUniversalesService', 'genericService', function ($scope, ordenesUniversalesService, genericService) {
+app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversalesService', 'genericService', function ($scope, $q, ordenesUniversalesService, genericService) {
 
     app.calendarController($scope, ordenesUniversalesService);
     app.mapController($scope, ordenesUniversalesService);
@@ -13,21 +13,36 @@ app.controller('ordenesUniversalesController', ['$scope', 'ordenesUniversalesSer
 
     $scope.infoBasica = {};
     $scope.informacionCliente = {};
+    $scope.nGeografia = "";
 
     $scope.consultarCatalogoOrdenesUniversales = function() {
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
-        $scope.params = {};
-        ordenesUniversalesService.consultarCatalogoOrdenesUniversales(JSON.stringify($scope.params)).then(function success(response) {
-            response.data = catalogo;
-            console.log(response.data)
-            if (response.data.success) {
-                if (response.data.result) {
-                    $scope.respaldoCatalogo = angular.copy(response.data.result.InfoIntervenciones);
-                    $scope.listaIntervencion = response.data.result.InfoIntervenciones.filter(e => e.Nivel === "0");
-                    $scope.listaCanalVenta = angular.copy(response.data.result.Info_Canal_Venta);
-                    $scope.listaPaquete = angular.copy(response.data.result.Info_Paquete);
-                    console.log($scope.listaIntervencion);
+        let params ={
+            //moduloAccionesUsuario: 'moduloOrdenesUniversales'
+            moduloAccionesUsuario: 'moduloDisponibilidad'
+        }  
+        $q.all([
+            genericService.consultarConfiguracionDespachoDespacho(params),
+            genericService.consultarCatalogoIntervenciones(),
+            genericService.consulCatalogoGeografia()
+        ]).then(function(results) { 
+            console.log(results);
+
+            // ****************** CONFIGURACIÓN
+            if (results[0].data.respuesta) {
+                if (results[0].data.result) {
+                    $scope.nGeografia = results[0].data.result.N_FILTRO_GEOGRAFIA ? Number(results[0].data.result.N_FILTRO_GEOGRAFIA) : null;
+                }
+            }
+            
+            // ****************** INTERVENCIONES
+            if (results[1].data.respuesta) {
+                if (results[1].data.result) {
+                    $scope.respaldoCatalogo = angular.copy(results[1].data.result);
+                    $scope.listaIntervencion = results[1].data.result.filter(e => e.nivel === 1);
+                    //$scope.listaCanalVenta = angular.copy(response.data.result.Info_Canal_Venta);
+                    //$scope.listaPaquete = angular.copy(response.data.result.Info_Paquete);
                     swal.close();
                 } else {
                     mostrarMensajeErrorAlert(response.data.result.mensaje)
@@ -37,12 +52,62 @@ app.controller('ordenesUniversalesController', ['$scope', 'ordenesUniversalesSer
                 mostrarMensajeErrorAlert(response.data.resultDescripcion)
                 swal.close();
             }
+
+            // ****************** ARBOL
+            if (results[2].data.respuesta) {
+                if (results[2].data.result) {
+                    $scope.listaArbolCiudades = [];
+                    if ( $scope.nGeografia) {
+                        $scope.resultArbol = results[2].data.result.geografia.filter(e => { return e.nivel <= $scope.nGeografia });
+                    } else {
+                        $scope.resultArbol = results[2].data.result.geografia;
+                    }
+                    
+                    angular.forEach($scope.resultArbol, function (element, index) {
+                        $scope.consultaArbol = true;
+                        $scope.listaArbolCiudades.push(
+                            {
+                                id: element.id,
+                                text: element.nombre,
+                                parent: element.padre ==undefined ? "#" : element.padre,
+                                icon: 'fa fa-globe',
+                                nivel: element.nivel,
+                                state:{
+                                    opened:false
+                                }
+                            }
+                        );
+                    });
+                    $('#jstree-distrito').bind('loaded.jstree', function(e, data) {	
+                        swal.close()  
+                    }).jstree({ 
+                        core : {
+                            data :  $scope.listaArbolCiudades,
+                            themes: {
+                                name: 'proton',
+                                responsive: true,
+                                "icons":false  
+                            },
+                            animation: 100
+                        },
+                        plugins : [ ]
+                    });
+                    swal.close();
+                } else {
+                    mostrarMensajeErrorAlert(response.data.result.mensaje)
+                    swal.close();
+                }
+            } else {
+                mostrarMensajeErrorAlert(response.data.resultDescripcion)
+                swal.close();
+            }
+
         }).catch(err => handleError(err));
     }
 
     $scope.filtrarSubIntervencion = function(intervencion) {
         console.log(intervencion);
-        $scope.listaSubIntervencion = $scope.respaldoCatalogo.filter(e => e.Id_padre === intervencion.Id_interv);
+        $scope.listaSubIntervencion = $scope.respaldoCatalogo.filter(e => e.idPadre === intervencion.id);
     }
 
     $scope.validarFolio = function() {
@@ -125,56 +190,7 @@ app.controller('ordenesUniversalesController', ['$scope', 'ordenesUniversalesSer
     $scope.listaArbolCiudades = [];
     $scope.mostrarModalArbol = function() {
         
-        if (!$scope.consultaArbol) {
-            swal({ text: 'Espera un momento...', allowOutsideClick: false });
-            swal.showLoading();
-            $scope.params = {};
-            ordenesUniversalesService.getcatsdispacherintegrador(JSON.stringify($scope.params)).then(function success(response) {
-                response.data = infoArbol;
-                console.log(response.data)
-                // (response.data.success) {
-                    if (response.data.result === "0") {
-                        $scope.listaArbolCiudades = [];
-                        $scope.resultArbol = response.data.info[0].General_Arbol.arbol;
-                        angular.forEach($scope.resultArbol, function (element, index) {
-                            $scope.consultaArbol = true;
-                            $scope.listaArbolCiudades.push(
-                                {
-                                    id: element.ID,
-                                    text: element.ID_Description,
-                                    parent: ((element.ID_Padre=='nulo' || element.ID_Padre=='NULO' || element.ID_Padre=='' || element.ID_Padre=='null')?'#':element.ID_Padre),
-                                    icon: 'fa fa-globe',
-                                    nivel: element.Nivel,
-                                    state:{
-                                        opened:false
-                                    }
-                                }
-                            );
-                        });
-                        $('#jstree-distrito').bind('loaded.jstree', function(e, data) {	
-                            swal.close()  
-                            $("#modal-filtro-arbol").modal('show');
-                        }).jstree({ 
-                            core : {
-                                data :  $scope.listaArbolCiudades,
-                                themes: {
-                                      name: 'proton',
-                                      responsive: true
-                                },
-                                animation: 100
-                            },
-                            plugins : [ ]
-                        });
-                        swal.close();
-                    } else {
-                        mostrarMensajeErrorAlert(response.data.result.mensaje)
-                        swal.close();
-                    }
-                
-            }).catch(err => handleError(err));
-        } else {
-            $("#modal-filtro-arbol").modal('show');
-        }
+        $("#modal-filtro-arbol").modal('show');
     }
 
     $scope.borrarInformacionCliente = function() {
@@ -185,17 +201,20 @@ app.controller('ordenesUniversalesController', ['$scope', 'ordenesUniversalesSer
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
         $scope.params = {};
-        $scope.params.IdCiudad = distrito;
-        $scope.params.IdIntervencion = $scope.infoBasica.intervencion.Id_interv;
-        $scope.params.IdCompany = "2";
+        $scope.params.geografia2  = distrito;
+        $scope.params.subtipoIntervencion = $scope.infoBasica.subIntervencion.id;
+        //$scope.params.IdCompany = "2";
         ordenesUniversalesService.getDisponibilidadServicioRest(JSON.stringify($scope.params)).then(function success(response) {
-            response.data = responseDisponibilidad;
+            //response.data = responseDisponibilidad;
             console.log(response.data)
             // (response.data.success) {
-            if (response.data.success) {
-                console.log(response.data.result);
-                console.log();
-                $scope.muestraDisponibilidadCalendar(response.data.result);
+            if (response.data.respuesta) {
+                if (response.data.result) {
+                    $scope.muestraDisponibilidadCalendar(response.data.result);
+                } else {
+                    $scope.muestraDisponibilidadCalendar([]);
+                }
+                
                 swal.close();
             } else {
                 mostrarMensajeErrorAlert(response.data.result.mensaje)
@@ -213,8 +232,9 @@ app.controller('ordenesUniversalesController', ['$scope', 'ordenesUniversalesSer
             $.each(selectedElms,function(index,elem){
                 selected_arbol=elem.original;
             });
-            if(selected_arbol!== undefined){
-                if(/*session_propietario==='16'*/false){
+            /*
+            if(selected_arbol !== undefined){
+                if(false){
                     if(selected_arbol !== undefined && selected_arbol.nivel==='5'  ){
                         distrito_cluster=selected_arbol.id;
                     }
@@ -223,41 +243,49 @@ app.controller('ordenesUniversalesController', ['$scope', 'ordenesUniversalesSer
                         distrito_cluster=selected_arbol.id;
                     }
                 }
+            }*/
+            if(selected_arbol !== undefined){
+                console.log(selected_arbol);
+                distrito_cluster = selected_arbol.id;
             }
-            if(  distrito_cluster  === '-1' || $scope.infoBasica.intervencion === undefined ) {
-                console.log(distrito_cluster);
-                arregloDisponibilidad = [];
-                $scope.inicialCalendario();
-                $("#distrito-form").val('');
-                $("#distrito-form").attr('parentdistritotext','')
-                $("#distrito-form").attr('distritotext','')
-                $("#distrito-form").attr('iddistrito','')
-    
-                $("#turno-form").val('')
-                $("#turno-form").attr('turno-info','')
-                $("#turno-form").attr('fecha-info', '')
-            }else{
-                var textParent=$('#jstree-distrito').jstree(true).get_node( selected_arbol.parent ).text 
-                $("#distrito-form").val(textParent+" / "+selected_arbol.text);
-                $scope.infoBasica.distrito = textParent+" / "+selected_arbol.text
-                
-                /*
-                $("#distrito-form").attr('parentdistritotext',textParent)
-                $("#distrito-form").attr('distritotext',selected_arbol.text)
-                $("#distrito-form").attr('iddistrito',distrito_cluster)
-                */
-                console.log(distrito_cluster);
-                $scope.consultarDisponibilidad(distrito_cluster)	
-            }
-            if(  distrito_cluster  !== '-1'){
-                var textParent=$('#jstree-distrito').jstree(true).get_node( selected_arbol.parent ).text 
-                $("#distrito-form").val(textParent+" / "+selected_arbol.text);
-                
-                /*
-                $("#distrito-form").attr('parentdistritotext',textParent)
-                $("#distrito-form").attr('distritotext',selected_arbol.text)
-                $("#distrito-form").attr('iddistrito',distrito_cluster)
-                */
+
+            if ($scope.infoBasica.subIntervencion) {
+
+                if(  distrito_cluster  === '-1' || $scope.infoBasica.intervencion === undefined ) {
+                    console.log(distrito_cluster);
+                    arregloDisponibilidad = [];
+                    $scope.inicialCalendario();
+                    $("#distrito-form").val('');
+                    $("#distrito-form").attr('parentdistritotext','')
+                    $("#distrito-form").attr('distritotext','')
+                    $("#distrito-form").attr('iddistrito','')
+        
+                    $("#turno-form").val('')
+                    $("#turno-form").attr('turno-info','')
+                    $("#turno-form").attr('fecha-info', '')
+                }else{
+                    var textParent=$('#jstree-distrito').jstree(true).get_node( selected_arbol.parent ).text 
+                    $("#distrito-form").val(textParent+" / "+selected_arbol.text);
+                    $scope.infoBasica.distrito = textParent+" / "+selected_arbol.text
+                    
+                    /*
+                    $("#distrito-form").attr('parentdistritotext',textParent)
+                    $("#distrito-form").attr('distritotext',selected_arbol.text)
+                    $("#distrito-form").attr('iddistrito',distrito_cluster)
+                    */
+                    console.log(distrito_cluster);
+                    $scope.consultarDisponibilidad(distrito_cluster)	
+                }
+                if(  distrito_cluster  !== '-1'){
+                    var textParent=$('#jstree-distrito').jstree(true).get_node( selected_arbol.parent ).text 
+                    $("#distrito-form").val(textParent+" / "+selected_arbol.text);
+                    
+                    /*
+                    $("#distrito-form").attr('parentdistritotext',textParent)
+                    $("#distrito-form").attr('distritotext',selected_arbol.text)
+                    $("#distrito-form").attr('iddistrito',distrito_cluster)
+                    */
+                }
             }
     }
 

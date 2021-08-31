@@ -128,12 +128,12 @@ app.mapController = function ($scope, ordenesUniversalesService) {
         });
 
         markerRes = new google.maps.Marker({
-                map: mapResumen,
-                draggable: false,
-                animation: google.maps.Animation.DROP,
-                position: {
-                }
-            });
+            map: mapResumen,
+            draggable: false,
+            animation: google.maps.Animation.DROP,
+            position: {
+            }
+        });
 
         
 
