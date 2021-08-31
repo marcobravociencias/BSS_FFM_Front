@@ -41,32 +41,6 @@ public class ImplOrdenesUniversalesService implements OrdenesUniversalesService 
 	}
 
 	@Override
-	public ServiceResponseResult consultarCatalogoOrdenesUniversales(String params) {
-		logger.info("ImplOrdenesUniversalesService.class [metodo = consultarCatalogoOrdenesUniversales() ]\n" + params);
-
-		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-		
-		JsonObject login = new JsonObject();		
-		login.addProperty( env.getProperty("param.textus.pI") , constantesAmbiente.getTextIpUsuario());
-		login.addProperty( env.getProperty("param.textus.drowssaP") , constantesAmbiente.getTextCredPad());
-		login.addProperty( env.getProperty("param.textus.resU") , constantesAmbiente.getTextCredUs());	
-
-        LoginResult principalDetail = utileriaGeneral.obtenerObjetoPrincipal();
-        String tokenAcces = principalDetail.getAccess_token();
-        logger.info("consultarCatalogoOrdenesUniversales ##+" + tokenAcces);
-        String urlRequest = principalDetail.getDireccionAmbiente().concat(constOrdenesUniversales.getConsultarCatalogoOrdenesUniversales() + "?subtipoIntervencion=" + jsonObject.get("subtipoIntervencion").getAsString() + "&geografia2=" + jsonObject.get("geografia2").getAsString());
-        logger.info("***URL: "+ urlRequest);
-        Map<String, String> paramsRequestGet = new HashMap<String, String>();
-        paramsRequestGet.put("subtipoIntervencion", jsonObject.get("subtipoIntervencion").getAsString());
-        paramsRequestGet.put("geografia2", jsonObject.get("geografia2").getAsString());
-
-        ServiceResponseResult response = consumeRest.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
-                ServiceResponseResult.class, tokenAcces);
-        logger.info("RESULT" + gson.toJson(response));
-        return response;
-	}
-
-	@Override
 	public ServiceResponseResult consultarCuentaAsignadaGenerica(String params) {
 		// TODO Auto-generated method stub
 		return null;

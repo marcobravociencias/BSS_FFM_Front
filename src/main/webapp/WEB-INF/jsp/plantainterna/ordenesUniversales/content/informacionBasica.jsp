@@ -2,13 +2,13 @@
     <div class="col-4">
         <div class="row input-group columna-filtro-ind">
             <label for="compania_select" class="label-filter">Tipo intervenci&oacute;n</label>
-            <select id="compania_select" ng-model="infoBasica.intervencion" ng-change="filtrarSubIntervencion(infoBasica.intervencion);validarConsultaDisponibilidad(infoBasica.intervencion)" ng-options="intervencion.Descripcion for intervencion in listaIntervencion" class="form-control-sm input-filtro-disponibilidad form-control" placeholder="Compañia" required>
+            <select id="compania_select" ng-model="infoBasica.intervencion" ng-change="filtrarSubIntervencion(infoBasica.intervencion);" ng-options="intervencion.nombre for intervencion in listaIntervencion" class="form-control-sm input-filtro-disponibilidad form-control" placeholder="Compañia" required>
                 <option value="">Seleccione ...</option>
             </select>
         </div>
         <div class="row input-group columna-filtro-ind">
             <label for="compania_select" class="label-filter">Subintervenci&oacute;n</label>
-            <select id="compania_select" ng-model="infoBasica.subIntervencion" ng-options="subInter.Descripcion for subInter in listaSubIntervencion" class="form-control-sm input-filtro-disponibilidad form-control" placeholder="Compañia" required>
+            <select id="compania_select" ng-model="infoBasica.subIntervencion" ng-change="validarConsultaDisponibilidad()" ng-options="subInter.nombre for subInter in listaSubIntervencion" class="form-control-sm input-filtro-disponibilidad form-control" placeholder="Compañia" required>
                 <option value="">Seleccione ...</option>
             </select>
         </div>

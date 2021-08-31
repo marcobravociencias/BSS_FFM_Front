@@ -258,14 +258,12 @@ span.refresh-cuenta.refresh-btn.fa.fa-search {
      border-color: #1c74bfb3 !important; */
     font-weight: bold;
     font-size: 11px;
+    text-align: center;
     white-space: pre-wrap !important;
     /* box-shadow: 0px 0px 10px #808c8c; */
     border: none;
 }
 
-.eventDisponibilidad {
-    height: 65px !important;
-}
 .resumen-detalle-agenda {
     font-size: .8em;
     color: #7a7a7a;
