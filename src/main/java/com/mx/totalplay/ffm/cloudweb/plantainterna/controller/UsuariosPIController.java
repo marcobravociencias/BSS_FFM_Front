@@ -92,6 +92,16 @@ public class UsuariosPIController {
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
 	
+	@PostMapping("consultaIntervenciones")
+    public ResponseEntity<?> consultaIntervenciones() {
+		logger.info("##### CONSULTANDO INTERVENCIONES");
+        ServiceResponseResult response = usuarioService.consultaIntervenciones();
+        if (response.getResult() instanceof Integer) {
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
+	
 	@PostMapping("/consultarRegionesEstructura")
 	public ResponseEntity<?> consultarRegionesEstructura() {
 		logger.info("##### CONSULTANDO consultarRegionesEstructura  ");

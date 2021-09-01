@@ -64,55 +64,23 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="container">
-				            	<div id="contenedorPrincipalTabla" class="row" style="display: none;">
-<!-- 				                	<div class="col-md-12"> -->
-<!-- 				                    	<div class="table-responsive"> -->
-<!-- 				                        	<table class="table" id="table-usuario-pii"> -->
-<!-- 				                            	<thead> -->
-<!-- 				                                	<tr> -->
-<!-- 				                                    	<th class="txtTablaConsultaJustificado">Núm. empleado</th> -->
-<!-- 				                                        <th class="txtTablaConsultaJustificado">Usuario FFM</th> -->
-<!-- 				                                        <th class="txtTablaConsultaJustificado">Nombre</th> -->
-<!-- 				                                        <th class="txtTablaConsultaJustificado">Tipo usuario</th> -->
-<!-- 				                                        <th class="txtTablaConsultaJustificado">Ciudad</th> -->
-<!-- 				                                        <th class="txtTablaConsultaJustificado">Uni. negocio</th> -->
-<!-- 				                                        <th class="txtTablaConsultaCentrado">Editar</th> -->
-<!-- 				                                        <th class="txtTablaConsultaCentrado">Eliminar</th> -->
-<!-- 													</tr> -->
-<!-- 												</thead> -->
-<!-- 												<tbody> -->
-<!-- 													<tr ng-repeat="usuario in listaUsuarios"> -->
-<!-- 														<td class="txtTablaConsultaJustificado">{{usuario.numeroEmpleado}}</td> -->
-<!-- 														<td class="txtTablaConsultaJustificado">{{usuario.usuarioFfm}}</td> -->
-<!-- 														<td class="txtTablaConsultaJustificado">{{usuario.nombre}}</td> -->
-<!-- 														<td class="txtTablaConsultaJustificado">{{usuario.tipoOperario}}</td> -->
-<!-- 														<td class="txtTablaConsultaJustificado">{{usuario.ciudad}}</td> -->
-<!-- 														<td class="txtTablaConsultaJustificado">{{usuario.unidadNegocio}}</td> -->
-<!-- 														<td class="txtTablaConsultaCentrado"><i class="fas fa-user-edit iconoEditarUsuario"></i></td> -->
-<!-- 														<td class="txtTablaConsultaCentrado"><i class="fas fa-user-times iconoEliminarUsuario"></i></td> -->
-<!-- 													</tr> -->
-<!-- 												</tbody> -->
-<!-- 											</table> -->
-<!-- 										</div> -->
-<!-- 									</div> -->
-									<div class="col-md-12">
-										 <div class="table-responsive"> 
-				                         	<table class="table" id="table-usuario-pi">
-				                         		<thead>
-				                                	<tr>
-				                                    	<th class="txtTablaConsultaJustificado">Núm. empleado</th>
-				                                        <th class="txtTablaConsultaJustificado">Usuario FFM</th>
-				                                        <th class="txtTablaConsultaJustificado">Nombre</th>
-				                                        <th class="txtTablaConsultaJustificado">Tipo usuario</th>
-				                                        <th class="txtTablaConsultaJustificado">Ciudad</th>
-				                                        <th class="txtTablaConsultaJustificado">Uni. negocio</th>
-				                                        <th class="txtTablaConsultaCentrado">Editar</th>
-				                                        <th class="txtTablaConsultaCentrado">Eliminar</th>
-													</tr>
-												</thead>
-				                         	</table>
-				                         </div>
+				            <div id="contenedorPrincipalTabla" class="row" style="display: none;">
+								<div class="col-md-12">
+									<div class="table-responsive">
+				                    	<table class="table" id="table-usuario-pi">
+				                        	<thead>
+				                            	<tr>
+				                                	<th class="txtTablaConsultaJustificado">Núm. empleado</th>
+				                                    <th class="txtTablaConsultaJustificado">Usuario FFM</th>
+				                                    <th class="txtTablaConsultaJustificado">Nombre</th>
+				                                    <th class="txtTablaConsultaJustificado">Tipo usuario</th>
+				                                    <th class="txtTablaConsultaJustificado">Ciudad</th>
+				                                    <th class="txtTablaConsultaJustificado">Uni. negocio</th>
+				                                    <th class="txtTablaConsultaCentrado">Editar</th>
+				                                    <th class="txtTablaConsultaCentrado">Eliminar</th>
+												</tr>
+											</thead>
+				                         </table>
 									</div>
 								</div>
 							</div>
@@ -130,12 +98,12 @@
                                             <a class="nav-link" id="pills-intervencion-tab" data-toggle="pill" href="#pills-intervencion" role="tab" aria-controls="pills-intervencion" aria-selected="false">Intervenciones</a>
                                         </li>
                                         <li class="nav-item" role="presentation">
-                                            <a class="nav-link" id="pills-arbol-tab" data-toggle="pill" href="#pills-arbol" role="tab" aria-controls="pills-arbol" aria-selected="false">&Aacute;rbol</a>
+                                            <a class="nav-link" id="pills-arbol-tab" ng-click="mostrarArbolGeografiaRegistro()" data-toggle="pill" href="#pills-arbol" role="tab" aria-controls="pills-arbol" aria-selected="false">&Aacute;rbol</a>
                                         </li>
-                                        <li class="nav-item" role="presentation">
+                                        <li id="pestaniaPermisos" class="nav-item" role="presentation">
                                             <a class="nav-link" id="pills-accesos-tab" data-toggle="pill" href="#pills-accesos" ng-show="mostrarAccesos" role="tab" aria-controls="pills-accesos" aria-selected="false">Accesos</a>
                                         </li>
-                                        <li class="nav-item" role="presentation">
+                                        <li id="pestaniaTecnico" class="nav-item" role="presentation">
                                             <a class="nav-link" id="pills-tecnico-tab" data-toggle="pill" href="#pills-tecnico" ng-show="mostrarTecnicos" role="tab" aria-controls="pills-tecnico" aria-selected="false">T&eacute;cnico</a>
                                         </li>
                                         <li class="nav-item" role="presentation">

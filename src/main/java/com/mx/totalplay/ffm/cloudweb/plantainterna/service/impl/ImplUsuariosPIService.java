@@ -139,8 +139,8 @@ public class ImplUsuariosPIService implements UsuariosPIService {
                         dataArray[count][3] = object.get("tipoOperario") != null ? object.get("tipoOperario").getAsString().trim() : "";
                         dataArray[count][4] = object.get("ciudad") != null ? object.get("ciudad").getAsString().trim() : "";
                         dataArray[count][5] = object.get("unidadNegocio") != null ? object.get("unidadNegocio").getAsString().trim() : "";
-                        dataArray[count][6] = "<td class='txtTablaConsultaCentrado'><i class='fas fa-user-edit iconoEditarUsuario'></i></td>";
-                        dataArray[count][7] = "<td class='txtTablaConsultaCentrado'><i class='fas fa-user-times iconoEliminarUsuario'></i></td>";
+                        dataArray[count][6] = "<i class='fas fa-user-edit iconoEditarUsuario'></i>";
+                        dataArray[count][7] = "<i class='fas fa-user-times iconoEliminarUsuario'></i>";
                         count++;
                     }
                     
@@ -173,12 +173,28 @@ public class ImplUsuariosPIService implements UsuariosPIService {
 	public ServiceResponseResult consultaGeografias() {
 		logger.info("ImplUsuariosPIService.class [metodo = consultaGeografias() ]\n");
 		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
-		String tokenAcces=principalDetail.getAccess_token() ;
+		String tokenAcces=principalDetail.getAccess_token();
 		logger.info("consultaGeografias ## " + tokenAcces);							
 	    String urlRequest=principalDetail.getDireccionAmbiente().concat(constUsuario.getConsultaGeografias());
 	    Map<String, String> paramsRequestGet = new HashMap<String, String>();	    
 		ServiceResponseResult response= restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest, ServiceResponseResult.class, tokenAcces);
 	    logger.info("RESULT consultaGeografias " + gson.toJson(response));
+		return response;
+	}
+	
+	public ServiceResponseResult consultaIntervenciones() {
+		logger.info("ImplUsuariosPIService.class [metodo = consultaIntervenciones() ]\n");
+		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
+		String tokenAcces=principalDetail.getAccess_token();
+		logger.info("consultaIntervenciones ##+ " + tokenAcces);
+		String urlRequest=principalDetail.getDireccionAmbiente().concat(constUsuario.getConsultaIntervenciones());
+		Map<String, String> paramsRequestGet = new HashMap<String, String>();
+		paramsRequestGet.put("idUsuario", String.valueOf( principalDetail.getIdUsuario()));
+		logger.info("ID Usuario --->> " + String.valueOf( principalDetail.getIdUsuario()));
+		logger.info("idUsuario##+ " + principalDetail.getIdUsuario());
+		logger.info("urlRequest##+" + urlRequest);
+		ServiceResponseResult response= restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest, ServiceResponseResult.class, tokenAcces);
+		logger.info("RESULT"+gson.toJson(response));
 		return response;
 	}
 
