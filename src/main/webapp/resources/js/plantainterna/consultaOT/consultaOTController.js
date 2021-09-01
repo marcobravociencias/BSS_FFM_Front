@@ -1537,7 +1537,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
         } else {
             $scope.comentarioConsultaOT = '';
             document.getElementById('comentarioConsultaOt').value = '';
-            toastr.warning('Intoducir un comentario.')
+            toastr.warning('Intoducir un comentario.');
         }
     }
 }])

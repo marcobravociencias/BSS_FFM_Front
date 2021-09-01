@@ -79,4 +79,43 @@ app.service("controlVehicularService", function($http) {
         });
     };
 
+    this.consultarVehiculoUnico = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarVehiculoUnico",
+            data: JSON.stringify(params),
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
+        });
+    };
+
+    this.consultarVehiculos = function () {
+        return $http({
+            method: "get",
+            url: "req/consultarVehiculos",
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
+        });
+    };
+
+    this.editarVehiculo = function (params) {
+        return $http({
+            method: "post",
+            url: "req/editarVehiculo",
+            data: JSON.stringify(params),
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
+        });
+    };
+
+    this.consultarEncierros = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarEncierros",
+            data: JSON.stringify(params),
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
+        });
+    };
+
 });

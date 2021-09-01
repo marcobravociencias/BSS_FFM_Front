@@ -67,30 +67,26 @@
                                 <div class="col-md-2">
                                     <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
                                         aria-orientation="vertical">
-                                        <a class="nav-link active" id="alta-tab" data-toggle="pill" ng-if="!isEdit"
+                                        <a class="nav-link active" id="alta-tab" data-toggle="pill" onclick="resetAll()"
                                             href="#alta" role="tab" aria-controls="alta" aria-selected="true">Alta
-                                            Veh&iacute;culos</a>
-                                        <a class="nav-link" id="consulta-tab" data-toggle="pill" href="#consulta"
+                                            Veh&iacute;culo</a>
+                                        <a class="nav-link" id="consulta-tab" data-toggle="pill" href="#consulta" onclick="resetAll()"
                                             role="tab" aria-controls="consulta" aria-selected="false">Consulta
                                             Veh&iacute;culos</a>
-                                        <a class="nav-link" id="modifica-tab" data-toggle="pill" href="#modifica"
-                                            ng-if="isEdit" role="tab" aria-controls="modifica"
-                                            aria-selected="false">Consulta Veh&iacute;culos</a>
+                                        <a class="nav-link" id="modifica-tab" data-toggle="pill" href="#alta"
+                                            ng-if="isEdit" role="tab" aria-controls="alta"
+                                            aria-selected="false">Modifica Veh&iacute;culo</a>
                                     </div>
                                 </div>
                                 <div class="col-md-10">
                                     <div class="tab-content">
-                                        <div class="tab-pane fade show active" id="alta" role="tabpanel" ng-if="!isEdit"
+                                        <div class="tab-pane fade show active" id="alta" role="tabpanel"
                                             aria-labelledby="alta-tab">
                                             <jsp:include page="./insertarVehiculo.jsp"></jsp:include>
                                         </div>
                                         <div class="tab-pane fade" id="consulta" role="tabpanel"
                                             aria-labelledby="consulta-tab">
                                             <jsp:include page="./consultarVehiculo.jsp"></jsp:include>
-                                        </div>
-                                        <div class="tab-pane fade" id="modifica" role="tabpanel"
-                                            aria-labelledby="modifica-tab" ng-if="isEdit">
-                                            <jsp:include page="./insertarVehiculo.jsp"></jsp:include>
                                         </div>
                                     </div>
                                 </div>

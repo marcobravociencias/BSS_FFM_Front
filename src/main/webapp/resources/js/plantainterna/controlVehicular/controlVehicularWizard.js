@@ -65,4 +65,16 @@ $(document).ready(function () {
         });
     })
 
+    
+    function resetWizard() {
+        console.log('reset');
+        $("#progressbar li").removeClass("active");
+        $("#generales").addClass("active");
+        $("#docs-tab").css({ 'opacity': '0', 'display': 'none' });
+        $("#imgs-tab").css({ 'opacity': '0', 'display': 'none' });
+        $("#resumen-tab").css({ 'opacity': '0', 'display': 'none' });
+        $("#generales-tab").css({ 'opacity': '1', 'display': 'block' });
+        
+    };
+
 });

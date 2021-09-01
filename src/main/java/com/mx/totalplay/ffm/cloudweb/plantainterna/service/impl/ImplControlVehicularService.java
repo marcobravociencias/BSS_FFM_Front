@@ -144,5 +144,82 @@ public class ImplControlVehicularService implements ControlVehicularService {
                 ServiceResponseResult.class, tokenAcces);
         return response;
     }
+	
+	@Override
+    public ServiceResponseResult consultarVehiculoUnico(String params) {
+        logger.info("ImplControlVehicularService.class [metodo = consultarVehiculoUnico() ]\n" + params);
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        String id = jsonObject.get("id").getAsString();
+
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constControlVehicular.getConsultarVehiculoUnico());
+        logger.info("URL ##+" + urlRequest);
+
+        Map<String, String> paramsRequestGet = new HashMap<String, String>();
+        paramsRequestGet.put("id", id);
+
+        ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
+                ServiceResponseResult.class, tokenAcces);
+        return response;
+    }
+	
+	@Override
+    public ServiceResponseResult consultarVehiculos() {
+        logger.info("ImplControlVehicularService.class [metodo = consultarVehiculos() ]");
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+
+
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constControlVehicular.getConsultarVehiculos());
+        logger.info("URL ##+" + urlRequest);
+
+        Map<String, String> paramsRequestGet = new HashMap<String, String>();
+
+        ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
+                ServiceResponseResult.class, tokenAcces);
+        return response;
+    }
+	
+	@Override
+    public ServiceResponseResult editarVehiculo(String params) {
+        logger.info("ImplControlVehicularService.class [metodo = editarVehiculo() ]\n" + params);
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        String idVehiculo = jsonObject.get("idVehiculo").getAsString();
+
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constControlVehicular.getEditarVehiculo());
+        logger.info("URL ##+" + urlRequest);
+
+        Map<String, String> paramsRequestGet = new HashMap<String, String>();
+        paramsRequestGet.put("idVehiculo", idVehiculo);
+		
+        ServiceResponseResult response = restCaller.callPatchBearerTokenRequestURL(paramsRequestGet, 
+			gson.toJson(jsonObject), urlRequest, ServiceResponseResult.class, tokenAcces);
+        return response;
+    }
+	
+	@Override
+    public ServiceResponseResult consultarEncierros(String params) {
+        logger.info("ImplControlVehicularService.class [metodo = consultarEncierros() ]\n" + params);
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        String idGeografia = jsonObject.get("idGeografia").getAsString();
+
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constControlVehicular.getConsultarEncierrosControlVehicular());
+        logger.info("URL ##+" + urlRequest); 
+
+        Map<String, String> paramsRequestGet = new HashMap<String, String>();
+        paramsRequestGet.put("idGeografia", idGeografia);
+
+        ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
+                ServiceResponseResult.class, tokenAcces);
+        return response;
+    }
 
 }

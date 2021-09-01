@@ -58,70 +58,29 @@
     </div>
 </div>
 <br>
-<div class="row">
+<div class="row col-12">
     <div class="container-fluid contenedor">
         <div class="content-fluid">
             <table id="vehiculoTable" class="display table table-hover " cellspacing="0" width="100%">
                 <thead id="thead_table">
                     <tr>
-                        <th>N&uacute;m. Empleado</th>
-                        <th>Nombre del Empleado</th>
-                        <th>Tipo Veh&iacute;culo</th>
-                        <th>Marca</th>
-                        <th>Color</th>
                         <th>Placa</th>
-                        <th>Tarjeta de Circulaci&oacute;n</th>
-                        <th>Clave GPS</th>
-                        <th>Ubicaci&oacute;n CDO</th>
-                        <th>Distrito</th>
+                        <th>Tipo</th>
+                        <th>Marca</th>
+                        <th>Modelo</th>
+                        <th>A&ntilde;io</th>
+                        <th>Color</th>
+                        <th>Combustible</th>
+                        <th>N&uacute;m. Serie</th>
+                        <th>Geograf&iacute;a</th>
+                        <th>Foto placa</th>
+                        <th>Foto veh&iacute;culo</th>
                         <th>Estatus</th>
-                        <th>Motivo</th>
-                        <th>Fecha</th>
-                        <th>Comentario</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                      <!--
-                    <tr>
-                        <td>Tets</td>
-                        <td>Tets</td>
-                        <td>Tets</td>
-                        <td>Tets</td>
-                        <td>Tets</td>
-                        <td>Tets</td>
-                        <td>Tets</td>
-                        <td>Tets</td>
-                        <td>Tets</td>
-                        <td>Tets</td>
-                        <td>Tets</td>
-                        <td>Tets</td>
-                        <td>Tets</td>
-                        <td>Tets</td>
-                        <td>
-                      
-                            <nav class="navbar navbar-expand-sm navbar-light bg-light">
-                                <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                                    <ul class="navbar-nav">
-                                        <li class="nav-item dropdown">
-                                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fa fa-ellipsis-v"></i>
-                                            </a>
-                                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                                <a class="dropdown-item" href="#"><i
-                                                        class="fa fa-pencil-square-o"></i></a>
-                                                <a class="dropdown-item" href="#"><i class="fa fa-trash"></i></a>
-                                                <a class="dropdown-item" href="#"><i class="fa fa-history"></i></a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </nav>
-                        
-                        </td>
-                    </tr>
-                    -->
+                   
                 </tbody>
             </table>
         </div>
