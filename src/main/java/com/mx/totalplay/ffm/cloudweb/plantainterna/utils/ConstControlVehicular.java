@@ -29,4 +29,16 @@ public class ConstControlVehicular implements Serializable{
 	@Value("${consultarVehiculoPlaca}")
 	private String consultarVehiculoPlaca;
 	
+	@Value("${consultarVehiculoUnico}")
+	private String consultarVehiculoUnico;
+	
+	@Value("${consultarVehiculos}")
+	private String consultarVehiculos;
+	
+	@Value("${editarVehiculo}")
+	private String editarVehiculo;
+	
+	@Value("${consultarEncierrosControlVehicular}")
+	private String consultarEncierrosControlVehicular;
+	
 }

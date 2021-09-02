@@ -430,7 +430,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 
 	$scope.busquedaTecnicoTabla = function() {
 		var nombres = $('.nombreTecnico');
-	     var buscando = $('#idBuscadorTecnicoTabla').val().toLowerCase();;
+	     var buscando = $('#idBuscadorTecnicoTabla').val().toLowerCase();
 	     var item='';
 	     for( var i = 0; i < nombres.length; i++ ){
 	         item = $(nombres[i]).html().toLowerCase();
@@ -446,7 +446,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 	
 	$scope.busquedaSkillFiltro = function() {
 		var skills = $('.nombreSkillFiltro');
-	    var txtBuscar = $('#txtBusquedaSkillFiltro').val().toLowerCase();;
+	    var txtBuscar = $('#txtBusquedaSkillFiltro').val().toLowerCase();
 	    var item='';
 	    for( var i = 0; i < skills.length; i++ ){
 	    	item = $(skills[i]).html().toLowerCase();

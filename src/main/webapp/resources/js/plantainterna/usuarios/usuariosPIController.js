@@ -4,15 +4,24 @@ var detalleTable;
 app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filter', function ($scope, $q, usuarioPIService, $filter) {
 	$("#moduloUsuarios").addClass('active');
 	
+	//ELEMENTOS PARA CONSULTA
+	let tablaUsuarios;
 	$scope.listaCompanias = [];
     $scope.listaPuestos = [];
-    $scope.listaPermisos = [];
     $scope.listaGeografias = [];
     $scope.listaIdGeografias = [];
     $scope.elementosPorPaginaTablaConsulta = 10;
     $scope.paginaTablaConsulta = 1;
     $scope.listaUsuarios = [];
     $scope.paginasTotal = [];
+    //ELEMENTOS PARA REGISTRO
+    let acentos = {'á':'a','é':'e','í':'i','ó':'o','ú':'u','Á':'A','É':'E','Í':'I','Ó':'O','Ú':'U'};
+    let geografiasNivelCiudad = [];
+    var existePadre = false;
+    $scope.listaPermisos = [];
+    $scope.listaIntervenciones = [];
+    $scope.listaIntervencionesSeleccionadas = [];
+    $scope.listaGeografiasSeleccionadas = [];
     
     $scope.listaRegiones = [];
     $scope.listaCiudades = [];
@@ -37,6 +46,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     		usuarioPIService.consultaPuestos(),
     		usuarioPIService.consultaPermisos(),
     		usuarioPIService.consultaGeografias(),
+    		usuarioPIService.consultaIntervenciones(),
     		usuarioPIService.consultaUsuarioPorId(params1)
         ]).then(function(results) {
         	// *** CONFIGURACIÓN DESPACHO ***
@@ -160,6 +170,50 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
             	toastr.error('Error interno en el servidor.');
             }
             
+         // *** INTERVENCIONES ***
+            if (results[5].data !== undefined) {
+            	if(results[5].data.respuesta){
+            		if(results[5].data.result.length > 0){
+            			let intervencionesLista = [];
+            			results[5].data.result.forEach(intervencion =>{
+                            if (intervencion.nivel == 1) {
+                            	intervencionesLista.push(intervencion);
+                            	$scope.listaIntervenciones.push(intervencion);
+                            }
+                        });
+            			if(intervencionesLista.length > 0){
+            				intervencionesLista.map((e)=>{
+                                e.parent = e.idPadre == undefined ? "#" : e.idPadre;
+                                e.text= e.nombre;
+                                e.icon= "fa fa-globe";
+                                return e
+                            })       
+                            $('#arbolIntervencionRegistro').bind('loaded.jstree', function(e, data) {
+    							//$(this).jstree("open_all");
+                            }).jstree({
+                            	'plugins': ['search', 'checkbox', 'wholerow'],
+    							'core': {
+    								'data': intervencionesLista,
+                                    'themes': {
+                                        'name': 'proton',
+                                        'responsive': true,
+                                        "icons":false        
+                                    }
+                                }
+    						});
+            			}else{
+            				toastr.warning('¡No existen intervenciones actualmente!');
+            			}
+            		}else{
+                    	toastr.warning('¡No existen intervenciones actualmente!');
+                    }
+            	}else{
+            		toastr.warning('¡No existen intervenciones actualmente!');
+            	}
+            }else{
+            	toastr.error('Error interno en el servidor.');
+            }
+            			
         	swal.close();
         });
 	}
@@ -182,6 +236,14 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	$("#arbolGeografiaConsulta").jstree("search", $('#buscadorGeografiaConsulta').val());
 	}
     
+    $scope.busquedaIntervencionRegistro = function() {
+    	$("#arbolIntervencionRegistro").jstree("search", $('#buscadorIntervencionRegistro').val());
+	}
+    
+    $scope.busquedaGeografiaRegistro = function() {
+    	$("#arbolGeografiaRegistro").jstree("search", $('#buscadorGeografiaRegistro').val());
+	}
+    
     $scope.consultaUsuariosPorGeoCompPuestos = function() {
     	$scope.listaUsuarios = [];
     	$scope.listaIdGeografias = [];
@@ -198,6 +260,11 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
         				textoGeografias.push(geografia.text);				
         			});
         			$('#txtGeografiasConsulta').val(textoGeografias);
+
+        			if (tablaUsuarios) {
+        				tablaUsuarios.destroy();
+        			}
+        			
         			let params = {
         	    			geografias: $scope.listaIdGeografias,
         	    			companias: companiasSeleccionadas,
@@ -205,19 +272,6 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
         	    			elementosPorPagina: $scope.elementosPorPaginaTablaConsulta,
         	    			pagina: $scope.paginaTablaConsulta
         	    	}
-        			
-        			
-        			
-        			
-        			
-        			
-        			
-        			
-        			
-        			
-        			
-        			
-        			console.log(params);
         			
         			tablaUsuarios = $('#table-usuario-pi').DataTable({
         				"processing": false,
@@ -251,49 +305,14 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
         					}
         				},
         				"columns": [null, null, null, null, null, null, null, null],
-        				"language": idioma_espanol_not_font
+        				"language": idioma_espanol_not_font,
+        				"aoColumnDefs" : [ 
+                            {"aTargets" : [6], "sClass":  "txtTablaConsultaCentrado"},
+                            {"aTargets" : [7], "sClass":  "txtTablaConsultaCentrado"}
+                          ]
         			});
-        			
-        			
-        			
-        			
-        			
-        			
-        			
-        			
-        			
         			$("#modalGeografiaConsulta").modal('hide');
         			$("#contenedorPrincipalTabla").show();
-//        			swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
-//        			swal.showLoading();
-//        	    	$q.all([
-//        	    		usuarioPIService.consultaUsuariosPorGeoCompPuestos(params)
-//        	        ]).then(function(results) {
-//        	        	if (results[0].data !== undefined) {
-//        	            	if(results[0].data.respuesta){
-//        	            		if(results[0].data.result.usuarios.length > 0){
-//        	            			//alert( "Registros totales: " + results[0].data.result.registrosTotales + "\nPáginas: " + Math.ceil(results[0].data.result.registrosTotales / 10) );
-//        	            			for(var i = 1; i <= Math.ceil(results[0].data.result.registrosTotales / $scope.elementosPorPaginaTablaConsulta); i++){
-//        	            				$scope.paginasTotal.push(i);
-//        	            			}
-//        	            			alert("Págs: " + $scope.paginasTotal);
-//        	            			$scope.listaUsuarios = results[0].data.result.usuarios;
-//        	            			$scope.mostrarTablaUsuarios(params);
-//        	            			$("#modalGeografiaConsulta").modal('hide');
-//        	            			$("#contenedorPrincipalTabla").show();
-//        	            		}else{
-//        	            			$("#modalGeografiaConsulta").modal('hide');
-//        	            			$("#contenedorPrincipalTabla").hide();
-//        	            			toastr.warning('¡No se encontraron usuarios!');
-//        	            		}
-//        	            	}else{
-//        	            		toastr.warning('¡No se encontraron usuarios!');
-//        	            	}
-//        	        	}else{
-//        	        		toastr.error('Error interno en el servidor.');
-//        	        	}
-//        	        	swal.close();
-//        	        });
         		}else{
         			toastr.warning('¡Selecciona al menos una geografía!');
         		}
@@ -304,6 +323,100 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     		toastr.warning('¡Selecciona al menos una compañía!');
     	}
 	}
+    
+    $("#arbolIntervencionRegistro").click(function() {
+    	$scope.listaIntervencionesSeleccionadas = [];
+    	var intervencionesTree = $('#arbolIntervencionRegistro').jstree("get_selected", true);
+    	intervencionesTree.forEach(intervencion =>{
+    		$scope.listaIntervencionesSeleccionadas.push(intervencion.text);
+    	});
+    	$scope.$apply();
+    });
+    
+    $scope.mostrarArbolGeografiaRegistro = function() {
+    	
+    	var puestoSeleccionado = $("#puesto_select_registro option:selected").text().toLowerCase();
+    	puestoSeleccionado = puestoSeleccionado.split('').map( letra => acentos[letra] || letra).join('').toString();
+    	var plugins = [];
+    	if(puestoSeleccionado == "tecnico" || puestoSeleccionado == "auxiliar"){
+    		plugins = ['search'];
+    	}else{
+    		plugins = ['search', 'checkbox'];
+    	}
+    	
+    	$('#arbolGeografiaRegistro').jstree("destroy");
+    	
+    	geografiasNivelCiudad = [];
+    	angular.forEach($scope.listaGeografias,function(elementoGeografia,index){
+    		if(elementoGeografia.nivel < 4){
+    			geografiasNivelCiudad.push(elementoGeografia);
+    		}
+    	});
+    	
+    	let geografia = geografiasNivelCiudad;
+        geografia.map((e)=>{
+            e.parent=e.padre == undefined ? "#" : e.padre;
+            e.text= e.nombre;
+            e.icon= "fa fa-globe";
+            return e
+        })       
+        $('#arbolGeografiaRegistro').bind('loaded.jstree', function(e, data) {
+			//$(this).jstree("open_all");
+        }).jstree({
+        	'plugins': plugins,
+			'core': {
+				'data': geografia,
+                'themes': {
+                    'name': 'proton',
+                    'responsive': true,
+                    "icons":false        
+                }
+            }
+		});
+	}
+    
+    $('#puesto_select_registro').on('change', function() {
+    	var puestoSeleccionado = $("#puesto_select_registro option:selected").text().toLowerCase();
+    	puestoSeleccionado = puestoSeleccionado.split('').map( letra => acentos[letra] || letra).join('').toString();
+    	if(puestoSeleccionado == "tecnico"){
+    		$("#pestaniaPermisos").hide();
+    		$("#pestaniaTecnico").hide();
+    	}else{
+    		$("#pestaniaPermisos").show();
+    		$("#pestaniaTecnico").show();
+    	}
+    });
+    
+    $("#arbolGeografiaRegistro").click(function() {
+    	$scope.listaGeografiasSeleccionadas = [];
+    	var geografiasTree = $('#arbolGeografiaRegistro').jstree("get_selected", true);
+    	geografiasTree.forEach(geo =>{
+    		if(geo.original.nivel == 3){
+    			var idPadre = geo.original.padre;
+    			$scope.listaGeografiasSeleccionadas.forEach(geoPadre =>{
+    				if(geoPadre.id == idPadre){
+    					existePadre = true;
+    					geoPadre.hijos.push(geo);
+    				}
+    			});
+    			if(existePadre){
+				}else{
+					$scope.listaGeografias.forEach(geoListaGeneral =>{
+						if(geoListaGeneral.id == idPadre){
+							$scope.listaGeografiasSeleccionadas.push(geoListaGeneral);
+						}
+					});
+					$scope.listaGeografiasSeleccionadas.forEach(geoPadre =>{
+	    				if(geoPadre.id == idPadre){
+	    					geoPadre.hijos = [geo];
+	    				}
+	    			});
+				}
+    			existePadre = false;
+    		}
+    	});
+    	$scope.$apply();
+    });
     
     // *** FIN CAMBIOS REYNEL *** 
     

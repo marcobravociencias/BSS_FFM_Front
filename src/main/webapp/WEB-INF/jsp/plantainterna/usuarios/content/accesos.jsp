@@ -1,88 +1,46 @@
-<div class="col-12">
-    <div class="row header-privilegios">
-        <div class="col-4 columna_padre" ng-repeat="privilegio in privilegiosPrincipal">
-            <div class="row_child row">
-                <div class="col-2 div_izquierdo_permiso" ng-class="'bg-color' + privilegio.color">
-                    <img ng-src="${pageContext.request.contextPath}/resources/img/estructura/{{privilegio.img}}"/>
-                </div>
-                <div class="col-10 div_derecho_permiso">
-                    <span class="text-privilegio-principal" ng-bind="privilegio.nombre"></span>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="col-md-12">
     <div class="row">
-        <div class="col-5 content_privilegios">
-            <div class="row">
-                <div class="col-12 padding-select-all text-right">
-                    <span class="span-seleccion-all">Seleccionar todos</span>
-                    <input type="checkbox" ng-click="selectAllDisponible()" ng-model="allDisponible" ng-true-value="true" ng-false-value="false">
+        <div class="col-md-5">
+            <h6 class="text-center titulo-opciones">SELECCI&Oacute;N*</h6>
+            <hr/>
+            <div class="col-md-12">
+                <div class="row">
+                	<div class="col-md-12">
+						<div class="input-group input-group-sm content-seach-group">
+							<input id="buscadorPermisosRegistro" type="text" class="form-control buscadorGenerico" placeholder="Buscar permiso" ng-keyup="busquedaPermisosRegistro()"> 
+							<span class="fa fa-search iconoBusqueda"></span>
+						</div>
+					</div>
+                    <div class="scrollGeneralArbol">
+                    	<div id="arbolPermisoRegistro" class="jstree-proton-3 proton-demo">											
+						</div>
+                    </div>
                 </div>
             </div>
-            <ul class="list_group_privilegios">
-                <li class="columna_padre" ng-repeat="privilegio in privilegiosDisponibles">
-                    
-                    <div class="row_child row cursor-option" ng-click="checkDisponibilidad($index)">
-                        <div class="col-2 div_izquierdo_permiso" ng-class="'bg-color' + privilegio.color">
-                            <img ng-src="${pageContext.request.contextPath}/resources/img/estructura/{{privilegio.img}}"/>
-                        </div>
-                        <div class="col-10 div_derecho_permiso_privilegios">
-                            <div class="row">
-                                <div class="col-10">
-                                    <span class="text-privilegio" ng-bind="privilegio.nombre"></span>
-                                </div>
-                                <div class="col-2">
-                                    <i ng-show="privilegio.check === 1" class="fa fa-check check-privilegio"></i>
-                                </div>
-                            </div>
-                        </div>
+        </div>
+        <div class="offset-1 col-md-6">
+            <h6 class="text-center titulo-opciones">SELECCIONADOS</h6>
+            <hr/>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <span class="text-head-table-arbol"><li class="fa fa-cubes"></li>&nbsp;M&oacute;dulos:</span>
                     </div>
-                   
-                </li>
-            </ul>
-        </div>
-        <div class="col-2">
-            <br/>
-            <br/>
-            <br/>
-            <div class="row justify-content-center" >
-                <label tag_accion="asignar" class="cursorEfect" for="ciudad_select_inserta" ng-click="asignarPrivilegios()"><p class="title_campos"><i class="fa-2x fa fa-chevron-right"></i></p></label>
-            </div>
-            <br/>
-            <br/>
-            <br/>
-            <div class="row justify-content-center" >
-                <label tag_accion="desasignar" class="cursorEfect" for="ciudad_select_inserta" ng-click="removerPrivilegios()"><p class="title_campos"><i class="fa-2x fa fa-chevron-left"></i></p></label>
-            </div>
-        </div>
-        <div class="col-5 content_privilegios">
-            <div class="row">
-                <div class="col-12 padding-select-all text-right">
-                    <span class="span-seleccion-all">Seleccionar todos</span>
-                    <input type="checkbox" ng-click="selectAllAsignados()" ng-model="allAsignado" ng-true-value="true" ng-false-value="false">
+                    <div class="col-md-6">
+                        <span class="text-head-table-arbol"><li class="fas fa-lock"></li>&nbsp;Permisos:</span>
+                    </div>
+                </div>
+                <div class="scrollGeneralArbol">
+	                <div class="row padding_resumen_ciudades" ng-repeat="ciudad in listaGeografiasSeleccionadas track by $index">
+	                    <div class="col-md-6">
+	                        <span class="text-body-table-arbol" ng-bind="ciudad.nombre"></span>
+	                    </div>
+	                    <div class="col-md-6">
+	                        <li class="item_ciudad_resum text-body-table-arbol" ng-repeat="distrito in ciudad.hijos" ng-bind="distrito.text"></li>
+	                    </div>
+	                </div>
                 </div>
             </div>
-            <ul class="list_group_privilegios">
-                <li class="columna_padre" ng-repeat="privilegio in privilegiosAsignados">
-                    
-                    <div class="row_child row cursor-option" ng-click="checkAsignado($index)">
-                        <div class="col-2 div_izquierdo_permiso" ng-class="'bg-color' + privilegio.color">
-                            <img ng-src="${pageContext.request.contextPath}/resources/img/estructura/{{privilegio.img}}"/>
-                        </div>
-                        <div class="col-10 div_derecho_permiso_privilegios">
-                            <div class="row">
-                                <div class="col-10">
-                                    <span class="text-privilegio" ng-bind="privilegio.nombre"></span>
-                                </div>
-                                <div class="col-2">
-                                    <i ng-show="privilegio.check === 1" class="fa fa-check check-privilegio"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                   
-                </li>
-            </ul>
         </div>
     </div>
 </div>
