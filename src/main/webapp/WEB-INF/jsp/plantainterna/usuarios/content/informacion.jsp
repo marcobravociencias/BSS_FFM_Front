@@ -30,13 +30,13 @@
     <div class="col-md-4">
     	<label class="text-info-regitro"><i class="fa fa-unlock-alt"></i> Password*</label>
         <div class="">
-        	<input type="text" class="form-control inputFormulario" ng-model="informacionRegistro.contrasena" id="form-pasword" aria-describedby="basic-addon3" style="height: 34px;">
+        	<input type="password" class="form-control inputFormulario" ng-model="informacionRegistro.contrasena" id="form-pasword" aria-describedby="basic-addon3" style="height: 34px;">
         </div>
     </div>
     <div class="col-md-4">
 		<label class="text-info-regitro"><i class="fa fa-unlock-alt"></i> Confirmar Password*</label>
         <div class="">
-        	<input type="text" class="form-control inputFormulario" ng-model="informacionRegistro.confirContrasena" id="form-confir-password" aria-describedby="basic-addon3" style="height: 34px;">
+        	<input type="password" class="form-control inputFormulario" ng-model="informacionRegistro.confirContrasena" id="form-confir-password" aria-describedby="basic-addon3" style="height: 34px;">
         </div>
     </div>
 </div>

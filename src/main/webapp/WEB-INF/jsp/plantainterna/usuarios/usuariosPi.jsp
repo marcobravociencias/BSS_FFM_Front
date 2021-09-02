@@ -60,7 +60,7 @@
                                 <div class="col-md-4">
                                     <label class="span-consulta"><i class="fas fa-map-marked"></i> Geograf&iacute;a</label>
                                     <div class="">
-                                    	<input style="height: 34px;" id="txtGeografiasConsulta" type="text" class="form-control inputFormulario" ng-click="abrirModalGeografiaConsulta()" aria-describedby="basic-addon3" placeholder="NO HAY SELECCI&Oacute;N" autocomplete="off" >
+                                    	<input style="height: 34px;" id="txtGeografiasConsulta" type="text" class="form-control inputFormulario" ng-click="abrirModalGeografiaConsulta()" aria-describedby="basic-addon3" placeholder="NO HAY SELECCI&Oacute;N" autocomplete="off">
                                     </div>
                                 </div>
                             </div>
@@ -107,7 +107,7 @@
                                             <a class="nav-link" id="pills-tecnico-tab" data-toggle="pill" href="#pills-tecnico" ng-show="mostrarTecnicos" role="tab" aria-controls="pills-tecnico" aria-selected="false">T&eacute;cnico</a>
                                         </li>
                                         <li class="nav-item" role="presentation">
-                                            <a class="nav-link" id="pills-confirmar-tab" data-toggle="pill" ng-click="mostrarConfirmacionUsuario()" href="#pills-confirmar" role="tab" aria-controls="pills-confirmar" aria-selected="false">Confirmar Usuario</a>
+                                            <a class="nav-link" id="pills-confirmar-tab" ng-click="cargarInfoConfirmacionRegistro()" data-toggle="pill" ng-click="mostrarConfirmacionUsuario()" href="#pills-confirmar" role="tab" aria-controls="pills-confirmar" aria-selected="false">Confirmar Usuario</a>
                                         </li>
                                     </ul>
                                     <div class="tab-content" id="pills-tabContent">

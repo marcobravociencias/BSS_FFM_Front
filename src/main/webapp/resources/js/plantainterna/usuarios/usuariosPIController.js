@@ -18,10 +18,13 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     let acentos = {'á':'a','é':'e','í':'i','ó':'o','ú':'u','Á':'A','É':'E','Í':'I','Ó':'O','Ú':'U'};
     let geografiasNivelCiudad = [];
     var existePadre = false;
+    $scope.confirmacionRegistro = {};
+    $scope.informacionRegistro = {};
     $scope.listaPermisos = [];
     $scope.listaIntervenciones = [];
     $scope.listaIntervencionesSeleccionadas = [];
     $scope.listaGeografiasSeleccionadas = [];
+    $scope.listaPermisosSeleccionados = [];
     
     $scope.listaRegiones = [];
     $scope.listaCiudades = [];
@@ -113,7 +116,28 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
         	if (results[3].data !== undefined) {
             	if(results[3].data.respuesta){
             		if(results[3].data.result.permisos.length > 0){
-            			// -----------------------------------------------------------------------------------
+            			let permisosLista = results[3].data.result.permisos;
+            			$scope.listaPermisos = results[3].data.result.permisos;
+            			
+            			permisosLista.map((e)=>{
+                            e.parent = e.idPadre == undefined ? "#" : e.idPadre;
+                            e.text= e.nombre;
+                            e.icon= "fa fa-globe";
+                            return e
+                        })       
+                        $('#arbolPermisoRegistro').bind('loaded.jstree', function(e, data) {
+							//$(this).jstree("open_all");
+                        }).jstree({
+                        	'plugins': ['search', 'checkbox'],
+							'core': {
+								'data': permisosLista,
+                                'themes': {
+                                    'name': 'proton',
+                                    'responsive': true,
+                                    "icons":false        
+                                }
+                            }
+						});
             		}else{
             			toastr.warning('¡No existen permisos actualmente!');
             		}
@@ -244,6 +268,10 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	$("#arbolGeografiaRegistro").jstree("search", $('#buscadorGeografiaRegistro').val());
 	}
     
+    $scope.busquedaPermisosRegistro = function() {
+    	$("#arbolPermisoRegistro").jstree("search", $('#buscadorPermisosRegistro').val());
+	}
+    
     $scope.consultaUsuariosPorGeoCompPuestos = function() {
     	$scope.listaUsuarios = [];
     	$scope.listaIdGeografias = [];
@@ -334,7 +362,6 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     });
     
     $scope.mostrarArbolGeografiaRegistro = function() {
-    	
     	var puestoSeleccionado = $("#puesto_select_registro option:selected").text().toLowerCase();
     	puestoSeleccionado = puestoSeleccionado.split('').map( letra => acentos[letra] || letra).join('').toString();
     	var plugins = [];
@@ -343,8 +370,6 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	}else{
     		plugins = ['search', 'checkbox'];
     	}
-    	
-    	$('#arbolGeografiaRegistro').jstree("destroy");
     	
     	geografiasNivelCiudad = [];
     	angular.forEach($scope.listaGeografias,function(elementoGeografia,index){
@@ -375,7 +400,35 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		});
 	}
     
+    $scope.cargarInfoConfirmacionRegistro = function() {
+    	$scope.confirmacionRegistro.nombre = 
+          $scope.informacionRegistro.nombre !== undefined && $scope.informacionRegistro.nombre !== "" &&
+          $scope.informacionRegistro.apellidoPaterno !== undefined && $scope.informacionRegistro.apellidoPaterno !== "" &&
+          $scope.informacionRegistro.apellidoMaterno !== undefined && $scope.informacionRegistro.apellidoMaterno !== "" ?
+          $scope.informacionRegistro.nombre + ' ' + $scope.informacionRegistro.apellidoPaterno + ' ' + $scope.informacionRegistro.apellidoMaterno : "Sin asignar";
+    	$scope.confirmacionRegistro.usuario = $scope.informacionRegistro.numEmpleado !== undefined && $scope.informacionRegistro.numEmpleado !== "" ? $scope.informacionRegistro.numEmpleado : "Sin asignar";
+    	$scope.confirmacionRegistro.correo = $scope.informacionRegistro.correo !== undefined && $scope.informacionRegistro.correo !== "" ? $scope.informacionRegistro.correo : "Sin asignar";
+    	$scope.confirmacionRegistro.contrasena = $scope.informacionRegistro.contrasena !== undefined && $scope.informacionRegistro.contrasena !== "" ? $scope.informacionRegistro.contrasena : "Sin asignar";
+    	$scope.confirmacionRegistro.puesto = $("#puesto_select_registro option:selected").text();
+    	$scope.confirmacionRegistro.fechaIngreso = $scope.informacionRegistro.fechaIngreso !== undefined && $scope.informacionRegistro.fechaIngreso !== "" ? $scope.informacionRegistro.fechaIngreso : "Sin asignar";
+	}
+    
     $('#puesto_select_registro').on('change', function() {
+    	$('#arbolGeografiaRegistro').jstree("destroy");
+    	$('#arbolIntervencionRegistro').jstree("deselect_all");
+    	$('#arbolGeografiaRegistro').jstree("deselect_all");
+    	$('#arbolPermisoRegistro').jstree("deselect_all");
+    	$( "#arbolIntervencionRegistro").jstree('close_all', -1);
+    	$( "#arbolGeografiaRegistro").jstree('close_all');
+    	$( "#arbolPermisoRegistro").jstree('close_all');
+    	
+    	$("#buscadorIntervencionRegistro").val("");
+    	$("#buscadorGeografiaRegistro").val("");
+    	$("#buscadorPermisosRegistro").val("");
+    	$scope.listaIntervencionesSeleccionadas = [];
+    	$scope.listaGeografiasSeleccionadas = [];
+    	$scope.listaPermisosSeleccionados = [];
+    	
     	var puestoSeleccionado = $("#puesto_select_registro option:selected").text().toLowerCase();
     	puestoSeleccionado = puestoSeleccionado.split('').map( letra => acentos[letra] || letra).join('').toString();
     	if(puestoSeleccionado == "tecnico"){
@@ -385,6 +438,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     		$("#pestaniaPermisos").show();
     		$("#pestaniaTecnico").show();
     	}
+    	$scope.$apply();
     });
     
     $("#arbolGeografiaRegistro").click(function() {
@@ -409,6 +463,37 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 					$scope.listaGeografiasSeleccionadas.forEach(geoPadre =>{
 	    				if(geoPadre.id == idPadre){
 	    					geoPadre.hijos = [geo];
+	    				}
+	    			});
+				}
+    			existePadre = false;
+    		}
+    	});
+    	$scope.$apply();
+    });
+    
+    $("#arbolPermisoRegistro").click(function() {
+    	$scope.listaPermisosSeleccionados = [];
+    	var permisosTree = $('#arbolPermisoRegistro').jstree("get_selected", true);
+    	permisosTree.forEach(permiso =>{
+    		if(permiso.original.nivel == 2){
+    			var idPadre = permiso.original.idPadre;
+    			$scope.listaPermisosSeleccionados.forEach(permisosPadre =>{
+    				if(permisosPadre.id == idPadre){
+    					existePadre = true;
+    					permisosPadre.hijos.push(permiso);
+    				}
+    			});
+    			if(existePadre){
+				}else{
+					$scope.listaPermisos.forEach(permisosListaGeneral =>{
+						if(permisosListaGeneral.id == idPadre){
+							$scope.listaPermisosSeleccionados.push(permisosListaGeneral);
+						}
+					});
+					$scope.listaPermisosSeleccionados.forEach(permisosPadre =>{
+	    				if(permisosPadre.id == idPadre){
+	    					permisosPadre.hijos = [permiso];
 	    				}
 	    			});
 				}
