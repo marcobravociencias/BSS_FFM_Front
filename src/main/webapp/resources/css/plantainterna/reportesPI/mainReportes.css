@@ -457,7 +457,7 @@ label#link_reporte_excel_auxiliar_tecnico {
     border-color: #773f85;
     box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
     border-radius: 5px !important;
-   padding:.5em 1em;
+    padding:.5em 1em;
 }
 .list-group-item {
     position: relative;
@@ -938,7 +938,7 @@ div#filtro_tecnicos_geolocalizacion {
 #filtro_tecnicos_geolocalizacion button.btn.dropdown-toggle.bs-placeholder.btn-secondary, #filtro_tecnicos_geolocalizacion .bs-actionsbox .actions-btn,#filtro_tecnicos_geolocalizacion button.btn.dropdown-toggle.btn-secondary{
     border-radius: 0px !important;
     -webkit-box-shadow: none !important;
-    font-size:6em !important: ;
+    font-size:6em !important ;
     outline:none!important;
     font-size: .7em !important;
 }
@@ -1048,6 +1048,34 @@ div#contenedor_mensual_cluster .selectLabel {
     font-size: 0.8em;
     color: #a5a5a5 !important;
   }
+
+
+  div#reporteInspectorTable_filter {
+    display: none;
+  }
+  thead#thead_reporteInspector tr th {
+    font-size: 0.7em;
+    padding: 1em 1em 1em;
+    text-align: center;
+  }
+  #reporteInspectorTable tr td {
+    font-size: 0.7em;
+    font-family: "Montserrat" !important;
+    text-align: center;
+  }
+  #reporteInspectorTable_length select.form-control.form-control-sm {
+    border: none;
+  }
+  div#reporteInspectorTable_filter {
+    display: none;
+  }
+  div#reporteInspectorTable_info {
+    font-family: "Montserrat";
+    font-size: 0.8em;
+    color: #a5a5a5 !important;
+  }
+
+  
   .columna-filtro-indR::after {
     content: "";
     position: absolute;

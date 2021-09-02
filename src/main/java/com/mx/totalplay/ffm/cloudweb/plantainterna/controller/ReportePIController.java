@@ -75,6 +75,14 @@ public class ReportePIController {
     }
     return new ResponseEntity<DataTableResponse>(dataTableResponse, HttpStatus.ACCEPTED);
   }
-  
+  @PostMapping("/consultarReporteInspector")
+  public ResponseEntity<DataTableResponse> consultaReporteInspector(@ModelAttribute ParamConsultaOTPI params) {
+	    logger.info("*** Objeto: " + gson.toJson(params));
+	    dataTableResponse = reportePIService.consultaReporteInspector(params);
+	    if (dataTableResponse.getResult() instanceof Integer){
+	      return new ResponseEntity<DataTableResponse>(dataTableResponse, HttpStatus.FORBIDDEN);
+	    }
+	    return new ResponseEntity<DataTableResponse>(dataTableResponse, HttpStatus.ACCEPTED);
+ }
   
   }
