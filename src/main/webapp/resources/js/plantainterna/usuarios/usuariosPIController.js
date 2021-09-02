@@ -3,14 +3,28 @@ var detalleTable;
 
 app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filter', function ($scope, $q, usuarioPIService, $filter) {
 	$("#moduloUsuarios").addClass('active');
+	
+	//ELEMENTOS PARA CONSULTA
+	let tablaUsuarios;
 	$scope.listaCompanias = [];
     $scope.listaPuestos = [];
-    $scope.listaPermisos = [];
     $scope.listaGeografias = [];
     $scope.listaIdGeografias = [];
     $scope.elementosPorPaginaTablaConsulta = 10;
     $scope.paginaTablaConsulta = 1;
     $scope.listaUsuarios = [];
+    $scope.paginasTotal = [];
+    //ELEMENTOS PARA REGISTRO
+    let acentos = {'á':'a','é':'e','í':'i','ó':'o','ú':'u','Á':'A','É':'E','Í':'I','Ó':'O','Ú':'U'};
+    let geografiasNivelCiudad = [];
+    var existePadre = false;
+    $scope.confirmacionRegistro = {};
+    $scope.informacionRegistro = {};
+    $scope.listaPermisos = [];
+    $scope.listaIntervenciones = [];
+    $scope.listaIntervencionesSeleccionadas = [];
+    $scope.listaGeografiasSeleccionadas = [];
+    $scope.listaPermisosSeleccionados = [];
     
     $scope.listaRegiones = [];
     $scope.listaCiudades = [];
@@ -22,7 +36,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     $scope.listaCiudadNatal = [];
     $scope.ciudadNatal = {};
     
-    $scope.revisarServicios = function() {
+    $scope.iniciarModuloUsuarios = function() {
     	let paramsConfiguracionDespacho ={
 				moduloAccionesUsuario: 'moduloUsuarios'
 	    };
@@ -35,45 +49,104 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     		usuarioPIService.consultaPuestos(),
     		usuarioPIService.consultaPermisos(),
     		usuarioPIService.consultaGeografias(),
+    		usuarioPIService.consultaIntervenciones(),
     		usuarioPIService.consultaUsuarioPorId(params1)
         ]).then(function(results) {
         	// *** CONFIGURACIÓN DESPACHO ***
         	var nivelUsuario = results[0].data.result.N_FILTRO_GEOGRAFIA;
         	
         	// *** COMPAÑIAS ***
-        	$scope.listaCompanias = results[1].data.result.companias;
-        	$("#compania_select").empty();
-            $("#compania_select_registro").empty();
-            $("#compania_select_modificacion").empty();
+        	if (results[1].data !== undefined) {
+            	if(results[1].data.respuesta){
+            		if(results[1].data.result.companias.length > 0){
+            			$scope.listaCompanias = results[1].data.result.companias;
+                    	$("#compania_select").empty();
+                        $("#compania_select_registro").empty();
+                        $("#compania_select_modificacion").empty();
 
-            angular.forEach($scope.listaCompanias,(element,index) => {
-                $("#compania_select").append("<option value='"+element.id+"'>"+element.descripcion+"</option>");
-                $("#compania_select_registro").append("<option value='"+element.id+"'>"+element.descripcion+"</option>");
-                $("#compania_select_modificacion").append("<option value='"+element.id+"'>"+element.descripcion+"</option>");
-            });
-            
-            $('#compania_select').selectpicker("refresh");
-            $('#compania_select_registro').selectpicker("refresh");
-            $('#compania_select_modificacion').selectpicker("refresh");
+                        angular.forEach($scope.listaCompanias,(element,index) => {
+                            $("#compania_select").append("<option value='"+element.id+"'>"+element.descripcion+"</option>");
+                            $("#compania_select_registro").append("<option value='"+element.id+"'>"+element.descripcion+"</option>");
+                            $("#compania_select_modificacion").append("<option value='"+element.id+"'>"+element.descripcion+"</option>");
+                        });
+                        
+                        $('#compania_select').selectpicker("refresh");
+                        $('#compania_select_registro').selectpicker("refresh");
+                        $('#compania_select_modificacion').selectpicker("refresh");
+            		}else{
+                    	toastr.warning('¡No existen compañías actualmente!');
+                    }
+            	}else{
+            		toastr.warning('¡No existen compañías actualmente!');
+            	}
+            }else{
+            	toastr.error('Error interno en el servidor.');
+            }
             
             // *** PUESTOS ***
-            $scope.listaPuestos = results[2].data.result.puestos;
+        	if (results[2].data !== undefined) {
+            	if(results[2].data.respuesta){
+            		if(results[2].data.result.puestos.length > 0){
+            			$scope.listaPuestos = results[2].data.result.puestos;
 
-            $("#puesto_select").empty();
-	        $("#puesto_select_registro").empty();
-	        $("#puesto_select_modificacion").empty();
-	        
-	        angular.forEach($scope.listaPuestos,(element,index) => {
-	        	$("#puesto_select").append("<option value='"+element.id+"'>"+element.descripcion+"</option>");
-	        	$("#puesto_select_registro").append("<option value='"+element.id+"'>"+element.descripcion+"</option>");
-	        	$("#puesto_select_modificacion").append("<option value='"+element.id+"'>"+element.descripcion+"</option>");
-	        });
-	        
-	        $('#puesto_select').selectpicker("refresh");
-	        $('#puesto_select_registro').selectpicker("refresh");
-	        $('#puesto_select_modificacion').selectpicker("refresh");
+                        $("#puesto_select").empty();
+            	        $("#puesto_select_registro").empty();
+            	        $("#puesto_select_modificacion").empty();
+            	        
+            	        angular.forEach($scope.listaPuestos,(element,index) => {
+            	        	$("#puesto_select").append("<option value='"+element.id+"'>"+element.descripcion+"</option>");
+            	        	$("#puesto_select_registro").append("<option value='"+element.id+"'>"+element.descripcion+"</option>");
+            	        	$("#puesto_select_modificacion").append("<option value='"+element.id+"'>"+element.descripcion+"</option>");
+            	        });
+            	        
+            	        $('#puesto_select').selectpicker("refresh");
+            	        $('#puesto_select_registro').selectpicker("refresh");
+            	        $('#puesto_select_modificacion').selectpicker("refresh");
+            		}else{
+            			toastr.warning('¡No existen puestos actualmente!');
+            		}
+            	}else{
+            		toastr.warning('¡No existen puestos actualmente!');
+            	}
+        	}else{
+        		toastr.error('Error interno en el servidor.');
+        	}
             
             // *** PERMISOS ***
+        	if (results[3].data !== undefined) {
+            	if(results[3].data.respuesta){
+            		if(results[3].data.result.permisos.length > 0){
+            			let permisosLista = results[3].data.result.permisos;
+            			$scope.listaPermisos = results[3].data.result.permisos;
+            			
+            			permisosLista.map((e)=>{
+                            e.parent = e.idPadre == undefined ? "#" : e.idPadre;
+                            e.text= e.nombre;
+                            e.icon= "fa fa-globe";
+                            return e
+                        })       
+                        $('#arbolPermisoRegistro').bind('loaded.jstree', function(e, data) {
+							//$(this).jstree("open_all");
+                        }).jstree({
+                        	'plugins': ['search', 'checkbox'],
+							'core': {
+								'data': permisosLista,
+                                'themes': {
+                                    'name': 'proton',
+                                    'responsive': true,
+                                    "icons":false        
+                                }
+                            }
+						});
+            		}else{
+            			toastr.warning('¡No existen permisos actualmente!');
+            		}
+            	}else{
+            		toastr.warning('¡No existen permisos actualmente!');
+            	}
+        	}else{
+        		toastr.error('Error interno en el servidor.');
+        	}
             
             // *** GEOGRAFÍAS ***
             if (results[4].data !== undefined) {
@@ -112,22 +185,71 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
                             }
 						});
                     }else{
-                    	toastr.warning('¡No existen Geografías actualmente!');
+                    	toastr.warning('¡No existen geografías actualmente!');
                     }
             	}else{
-            		toastr.error('Error interno en el servidor.');
+            		toastr.warning('¡No existen geografías actualmente!');
             	}
             }else{
             	toastr.error('Error interno en el servidor.');
             }
             
+         // *** INTERVENCIONES ***
+            if (results[5].data !== undefined) {
+            	if(results[5].data.respuesta){
+            		if(results[5].data.result.length > 0){
+            			let intervencionesLista = [];
+            			results[5].data.result.forEach(intervencion =>{
+                            if (intervencion.nivel == 1) {
+                            	intervencionesLista.push(intervencion);
+                            	$scope.listaIntervenciones.push(intervencion);
+                            }
+                        });
+            			if(intervencionesLista.length > 0){
+            				intervencionesLista.map((e)=>{
+                                e.parent = e.idPadre == undefined ? "#" : e.idPadre;
+                                e.text= e.nombre;
+                                e.icon= "fa fa-globe";
+                                return e
+                            })       
+                            $('#arbolIntervencionRegistro').bind('loaded.jstree', function(e, data) {
+    							//$(this).jstree("open_all");
+                            }).jstree({
+                            	'plugins': ['search', 'checkbox', 'wholerow'],
+    							'core': {
+    								'data': intervencionesLista,
+                                    'themes': {
+                                        'name': 'proton',
+                                        'responsive': true,
+                                        "icons":false        
+                                    }
+                                }
+    						});
+            			}else{
+            				toastr.warning('¡No existen intervenciones actualmente!');
+            			}
+            		}else{
+                    	toastr.warning('¡No existen intervenciones actualmente!');
+                    }
+            	}else{
+            		toastr.warning('¡No existen intervenciones actualmente!');
+            	}
+            }else{
+            	toastr.error('Error interno en el servidor.');
+            }
+            			
         	swal.close();
         });
 	}
-    $scope.revisarServicios();
+    
+    $scope.iniciarModuloUsuarios();
     
     $scope.abrirModalGeografiaConsulta = function() {
-    	$("#modalGeografiaConsulta").modal('show');
+    	if($scope.listaGeografias != ""){
+    		$("#modalGeografiaConsulta").modal('show');
+    	}else{
+    		toastr.warning('¡No existen geografías actualmente!');
+    	}
 	}
     
     $scope.cerrarModalGeografiaConsulta = function() {
@@ -136,6 +258,18 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     
     $scope.busquedaGeografiaConsulta = function() {
     	$("#arbolGeografiaConsulta").jstree("search", $('#buscadorGeografiaConsulta').val());
+	}
+    
+    $scope.busquedaIntervencionRegistro = function() {
+    	$("#arbolIntervencionRegistro").jstree("search", $('#buscadorIntervencionRegistro').val());
+	}
+    
+    $scope.busquedaGeografiaRegistro = function() {
+    	$("#arbolGeografiaRegistro").jstree("search", $('#buscadorGeografiaRegistro').val());
+	}
+    
+    $scope.busquedaPermisosRegistro = function() {
+    	$("#arbolPermisoRegistro").jstree("search", $('#buscadorPermisosRegistro').val());
 	}
     
     $scope.consultaUsuariosPorGeoCompPuestos = function() {
@@ -154,38 +288,59 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
         				textoGeografias.push(geografia.text);				
         			});
         			$('#txtGeografiasConsulta').val(textoGeografias);
+
+        			if (tablaUsuarios) {
+        				tablaUsuarios.destroy();
+        			}
+        			
         			let params = {
-        	    			"geografias": $scope.listaIdGeografias,
-        	    			"companias": companiasSeleccionadas,
-        	    			"puestos": puestosSeleccionados,
-        	    			"elementosPorPagina": $scope.elementosPorPaginaTablaConsulta,
-        	    			"pagina": $scope.paginaTablaConsulta
+        	    			geografias: $scope.listaIdGeografias,
+        	    			companias: companiasSeleccionadas,
+        	    			puestos: puestosSeleccionados,
+        	    			elementosPorPagina: $scope.elementosPorPaginaTablaConsulta,
+        	    			pagina: $scope.paginaTablaConsulta
         	    	}
-        			swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
-        			swal.showLoading();
-        	    	$q.all([
-        	    		usuarioPIService.consultaUsuariosPorGeoCompPuestos(params)
-        	        ]).then(function(results) {
-        	        	if (results[0].data !== undefined) {
-        	            	if(results[0].data.respuesta){
-        	            		console.log(params);
-        	            		if(results[0].data.result.usuarios.length > 0){
-        	            			$scope.listaUsuarios = results[0].data.result.usuarios;
-        	            			$("#modalGeografiaConsulta").modal('hide');
-        	            			$("#contenedorPrincipalTabla").show();
-        	            		}else{
-        	            			$("#modalGeografiaConsulta").modal('hide');
-        	            			$("#contenedorPrincipalTabla").hide();
-        	            			toastr.warning('¡No se encontraron usuarios!');
-        	            		}
-        	            	}else{
-        	            		toastr.error('Error interno en el servidor.');
-        	            	}
-        	        	}else{
-        	        		toastr.error('Error interno en el servidor.');
-        	        	}
-        	        	swal.close();
-        	        });
+        			
+        			tablaUsuarios = $('#table-usuario-pi').DataTable({
+        				"processing": false,
+        				"ordering": false,
+        				"serverSide": true,
+        				"scrollX": false,
+        				"paging": true,
+        				"lengthChange": false,
+        				"searching": false,
+        				"ordering": false,
+        				"pageLength": 10,
+        				"ajax": {
+        					"url": "req/consultaUsuariosPorGeoCompPuestos",
+        					"type": "POST",
+        					"data": params,
+        					"beforeSend": function () {
+        						if(!swal.isVisible() ){
+        							swal({ text: 'Cargando registros...', allowOutsideClick: false });
+        							swal.showLoading();
+        						}
+        						
+        					},
+        					"dataSrc": function (json) {
+        						return json.data;
+        					},
+        					"error":function(xhr, error, thrown){
+        						handleError(xhr)
+        					}, 
+        					"complete": function () {
+        						swal.close()
+        					}
+        				},
+        				"columns": [null, null, null, null, null, null, null, null],
+        				"language": idioma_espanol_not_font,
+        				"aoColumnDefs" : [ 
+                            {"aTargets" : [6], "sClass":  "txtTablaConsultaCentrado"},
+                            {"aTargets" : [7], "sClass":  "txtTablaConsultaCentrado"}
+                          ]
+        			});
+        			$("#modalGeografiaConsulta").modal('hide');
+        			$("#contenedorPrincipalTabla").show();
         		}else{
         			toastr.warning('¡Selecciona al menos una geografía!');
         		}
@@ -193,9 +348,160 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
         		toastr.warning('¡Selecciona al menos un puesto!');
         	}
     	}else{
-    		toastr.warning('¡Selecciona al menos una compañia!');
+    		toastr.warning('¡Selecciona al menos una compañía!');
     	}
 	}
+    
+    $("#arbolIntervencionRegistro").click(function() {
+    	$scope.listaIntervencionesSeleccionadas = [];
+    	var intervencionesTree = $('#arbolIntervencionRegistro').jstree("get_selected", true);
+    	intervencionesTree.forEach(intervencion =>{
+    		$scope.listaIntervencionesSeleccionadas.push(intervencion.text);
+    	});
+    	$scope.$apply();
+    });
+    
+    $scope.mostrarArbolGeografiaRegistro = function() {
+    	var puestoSeleccionado = $("#puesto_select_registro option:selected").text().toLowerCase();
+    	puestoSeleccionado = puestoSeleccionado.split('').map( letra => acentos[letra] || letra).join('').toString();
+    	var plugins = [];
+    	if(puestoSeleccionado == "tecnico" || puestoSeleccionado == "auxiliar"){
+    		plugins = ['search'];
+    	}else{
+    		plugins = ['search', 'checkbox'];
+    	}
+    	
+    	geografiasNivelCiudad = [];
+    	angular.forEach($scope.listaGeografias,function(elementoGeografia,index){
+    		if(elementoGeografia.nivel < 4){
+    			geografiasNivelCiudad.push(elementoGeografia);
+    		}
+    	});
+    	
+    	let geografia = geografiasNivelCiudad;
+        geografia.map((e)=>{
+            e.parent=e.padre == undefined ? "#" : e.padre;
+            e.text= e.nombre;
+            e.icon= "fa fa-globe";
+            return e
+        })       
+        $('#arbolGeografiaRegistro').bind('loaded.jstree', function(e, data) {
+			//$(this).jstree("open_all");
+        }).jstree({
+        	'plugins': plugins,
+			'core': {
+				'data': geografia,
+                'themes': {
+                    'name': 'proton',
+                    'responsive': true,
+                    "icons":false        
+                }
+            }
+		});
+	}
+    
+    $scope.cargarInfoConfirmacionRegistro = function() {
+    	$scope.confirmacionRegistro.nombre = 
+          $scope.informacionRegistro.nombre !== undefined && $scope.informacionRegistro.nombre !== "" &&
+          $scope.informacionRegistro.apellidoPaterno !== undefined && $scope.informacionRegistro.apellidoPaterno !== "" &&
+          $scope.informacionRegistro.apellidoMaterno !== undefined && $scope.informacionRegistro.apellidoMaterno !== "" ?
+          $scope.informacionRegistro.nombre + ' ' + $scope.informacionRegistro.apellidoPaterno + ' ' + $scope.informacionRegistro.apellidoMaterno : "Sin asignar";
+    	$scope.confirmacionRegistro.usuario = $scope.informacionRegistro.numEmpleado !== undefined && $scope.informacionRegistro.numEmpleado !== "" ? $scope.informacionRegistro.numEmpleado : "Sin asignar";
+    	$scope.confirmacionRegistro.correo = $scope.informacionRegistro.correo !== undefined && $scope.informacionRegistro.correo !== "" ? $scope.informacionRegistro.correo : "Sin asignar";
+    	$scope.confirmacionRegistro.contrasena = $scope.informacionRegistro.contrasena !== undefined && $scope.informacionRegistro.contrasena !== "" ? $scope.informacionRegistro.contrasena : "Sin asignar";
+    	$scope.confirmacionRegistro.puesto = $("#puesto_select_registro option:selected").text();
+    	$scope.confirmacionRegistro.fechaIngreso = $scope.informacionRegistro.fechaIngreso !== undefined && $scope.informacionRegistro.fechaIngreso !== "" ? $scope.informacionRegistro.fechaIngreso : "Sin asignar";
+	}
+    
+    $('#puesto_select_registro').on('change', function() {
+    	$('#arbolGeografiaRegistro').jstree("destroy");
+    	$('#arbolIntervencionRegistro').jstree("deselect_all");
+    	$('#arbolGeografiaRegistro').jstree("deselect_all");
+    	$('#arbolPermisoRegistro').jstree("deselect_all");
+    	$( "#arbolIntervencionRegistro").jstree('close_all', -1);
+    	$( "#arbolGeografiaRegistro").jstree('close_all');
+    	$( "#arbolPermisoRegistro").jstree('close_all');
+    	
+    	$("#buscadorIntervencionRegistro").val("");
+    	$("#buscadorGeografiaRegistro").val("");
+    	$("#buscadorPermisosRegistro").val("");
+    	$scope.listaIntervencionesSeleccionadas = [];
+    	$scope.listaGeografiasSeleccionadas = [];
+    	$scope.listaPermisosSeleccionados = [];
+    	
+    	var puestoSeleccionado = $("#puesto_select_registro option:selected").text().toLowerCase();
+    	puestoSeleccionado = puestoSeleccionado.split('').map( letra => acentos[letra] || letra).join('').toString();
+    	if(puestoSeleccionado == "tecnico"){
+    		$("#pestaniaPermisos").hide();
+    		$("#pestaniaTecnico").hide();
+    	}else{
+    		$("#pestaniaPermisos").show();
+    		$("#pestaniaTecnico").show();
+    	}
+    	$scope.$apply();
+    });
+    
+    $("#arbolGeografiaRegistro").click(function() {
+    	$scope.listaGeografiasSeleccionadas = [];
+    	var geografiasTree = $('#arbolGeografiaRegistro').jstree("get_selected", true);
+    	geografiasTree.forEach(geo =>{
+    		if(geo.original.nivel == 3){
+    			var idPadre = geo.original.padre;
+    			$scope.listaGeografiasSeleccionadas.forEach(geoPadre =>{
+    				if(geoPadre.id == idPadre){
+    					existePadre = true;
+    					geoPadre.hijos.push(geo);
+    				}
+    			});
+    			if(existePadre){
+				}else{
+					$scope.listaGeografias.forEach(geoListaGeneral =>{
+						if(geoListaGeneral.id == idPadre){
+							$scope.listaGeografiasSeleccionadas.push(geoListaGeneral);
+						}
+					});
+					$scope.listaGeografiasSeleccionadas.forEach(geoPadre =>{
+	    				if(geoPadre.id == idPadre){
+	    					geoPadre.hijos = [geo];
+	    				}
+	    			});
+				}
+    			existePadre = false;
+    		}
+    	});
+    	$scope.$apply();
+    });
+    
+    $("#arbolPermisoRegistro").click(function() {
+    	$scope.listaPermisosSeleccionados = [];
+    	var permisosTree = $('#arbolPermisoRegistro').jstree("get_selected", true);
+    	permisosTree.forEach(permiso =>{
+    		if(permiso.original.nivel == 2){
+    			var idPadre = permiso.original.idPadre;
+    			$scope.listaPermisosSeleccionados.forEach(permisosPadre =>{
+    				if(permisosPadre.id == idPadre){
+    					existePadre = true;
+    					permisosPadre.hijos.push(permiso);
+    				}
+    			});
+    			if(existePadre){
+				}else{
+					$scope.listaPermisos.forEach(permisosListaGeneral =>{
+						if(permisosListaGeneral.id == idPadre){
+							$scope.listaPermisosSeleccionados.push(permisosListaGeneral);
+						}
+					});
+					$scope.listaPermisosSeleccionados.forEach(permisosPadre =>{
+	    				if(permisosPadre.id == idPadre){
+	    					permisosPadre.hijos = [permiso];
+	    				}
+	    			});
+				}
+    			existePadre = false;
+    		}
+    	});
+    	$scope.$apply();
+    });
     
     // *** FIN CAMBIOS REYNEL *** 
     
@@ -767,23 +1073,60 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 //
 //    
 //
-//    $scope.mostrarTablaUsuarios = function(lista) {
-//
+    $scope.mostrarTablaUsuarios = function(params) {
+	
+//			console.log(params);
+//	
+//			tablaUsuarios = $('#table-usuario-pi').DataTable({
+//				"processing": false,
+//				"ordering": false,
+//				"serverSide": true,
+//				"scrollX": false,
+//				"paging": true,
+//				"lengthChange": false,
+//				"searching": false,
+//				"ordering": false,
+//				"pageLength": 10,
+//				"ajax": {
+//					"url": "req/consultaUsuariosPorGeoCompPuestos",
+//					"type": "POST",
+//					"data": params,
+//					"beforeSend": function () {
+//						if(!swal.isVisible() ){
+//							swal({ text: 'Cargando registros...', allowOutsideClick: false });
+//							swal.showLoading();
+//						}
+//						
+//					},
+//					"dataSrc": function (json) {
+//						return json.data;
+//					},
+//					"error":function(xhr, error, thrown){
+//						handleError(xhr)
+//					}, 
+//					"complete": function () {
+//						swal.close()
+//					}
+//				},
+//				"columns": [null, null, null, null, null, null, null, null],
+//				"language": idioma_espanol_not_font
+//			});
+
 //        $scope.viewTableResumen = [];
 //        angular.forEach(lista,function(value,index){
 //            let  arra=[];
-//            arra[0] = value.workData.numero_empleado ? value.workData.numero_empleado : '';
-//            arra[1] = value.workData.usuario_ffm ? value.workData.usuario_ffm : '';
+//            arra[0] = value.numeroEmpleado ? value.numeroEmpleado : '';
+//            arra[1] = value.usuarioFfm ? value.usuarioFfm : '';
 //            arra[2] = value.nombre ? value.nombre : '';
-//            arra[3] = value.workData.texto_tipo_operario ? value.workData.texto_tipo_operario : '';
-//            arra[4] = value.workData.texto_ciudad ? value.workData.texto_ciudad : '';
-//            arra[5] = value.workData.unidad_negocio_text ? value.workData.unidad_negocio_text : '';
+//            arra[3] = value.tipoOperario ? value.tipoOperario : '';
+//            arra[4] = value.ciudad ? value.ciudad : '';
+//            arra[5] = value.unidadNegocio ? value.unidadNegocio : '';
 //            arra[6] = '<div class="text-center"><button type="button" class="btn btn-informacion" onclick="mostrarModalEdicion(' + index + ')"><i class="fa fa-edit"></i></button></div>';
 //            arra[7] = '<div class="text-center"><button type="button" class="btn btn-informacion" onclick="mostrarModalEliminar(' + index + ')"><i class="fa fa-remove"></i></button></div>';
 //
 //            $scope.viewTableResumen.push(arra);
 //        });
-//        detalleTable.destroy();
+//        //detalleTable.destroy();
 //        detalleTable = $('#table-usuario-pi').DataTable({
 //            "paging": true,
 //            "lengthChange": true,
@@ -793,7 +1136,10 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 //            "scrollCollapse": true,
 //            "autoWidth": true,
 //            "language": idioma_espanol_not_font,
-//            "data": $scope.viewTableResumen,
+//            "data": $scope.viewTableResumen, 
+//            "recordsTotal": 33,
+//            "recordsTotal": 33,
+//            "registrosTotales":33,
 //            "columns": [{
 //                "title": "No. Empleado"
 //        
@@ -820,8 +1166,8 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 //        
 //            }]
 //        });
-//
-//    }
+//        alert("Tabla -> " + detalleTable.page.info());
+    }
 //
 //    $scope.pintarArbol = function(idArbol, isInstalador, plugins, deshabilitar) {
 //

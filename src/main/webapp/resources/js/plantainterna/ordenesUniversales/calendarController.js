@@ -101,7 +101,7 @@ app.calendarController = function ($scope, ordenesUniversalesService) {
     }
     $scope.inicialCalendario();
 
-    $scope.muestraDisponibilidadCalendar = function (jsonResponse) {
+    $scope.muestraDisponibilidadCalendar = function (response) {
         console.log("inicia");
         if ($scope.calendarDisp) {
             $scope.calendarDisp.destroy();
@@ -110,27 +110,45 @@ app.calendarController = function ($scope, ordenesUniversalesService) {
         var eventoIndiMatutino={};
         var eventoIndiVespertino={};
         var eventoIndiNocturno={};
-        var arrayDisponibilidad = ( jsonResponse.Disponibilidad !== undefined &&  jsonResponse.Disponibilidad.Dia!== undefined) ? jsonResponse.Disponibilidad.Dia: []
+        var arrayDisponibilidad = (response.dias !== undefined && response.dias !== null) ? response.dias !== undefined ? response.dias : [] : [];
         console.log(arrayDisponibilidad);
         $.each(arrayDisponibilidad, function(index, disponibInd){
-           
-            if(disponibInd.Matutino !== '0'){
+            
+            if (disponibInd.turnos[0].cantidad !== 0) {
                 eventoIndiMatutino ={
-                    title      : 'Matutino: '+disponibInd.Matutino,
+                    title      : 'Matutino: '+disponibInd.turnos[0].cantidad,
                     tipo       : 'MATUTINO',
-                    start      : disponibInd.Fecha,
-                    end        : disponibInd.Fecha,
+                    start      : disponibInd.fecha,
+                    end        : disponibInd.fecha,
                     id         : index,
-                    color      : ((disponibInd.bloqueado) === "0") ? bloq = '#08d85c' : bloq = '#b9bfbc' ,
+                    color      : ((!disponibInd.bloqueado)) ? bloq = '#08d85c' : bloq = '#b9bfbc' ,
                     textColor  : 'white',
-                    matutino   : disponibInd.Matutino,
-                    className: 'matutino-event',
+                    matutino   : disponibInd.turnos[0].cantidad,
+                    className: 'eventDisponibilidad',
                     defaultDate: moment(),
                     objetodisponibilidad:disponibInd
                 }
                 arregloDisponibilidad.push(eventoIndiMatutino)
             }
 
+            if (disponibInd.turnos[1].cantidad !== 0) {
+                eventoIndiMatutino ={
+                    title      : 'Vespertino: '+disponibInd.turnos[1].cantidad,
+                    tipo       : 'VESPERTINO',
+                    start      : disponibInd.fecha,
+                    end        : disponibInd.fecha,
+                    id         : index,
+                    color      : ((!disponibInd.bloqueado)) ? bloq = '#08d85c' : bloq = '#b9bfbc' ,
+                    textColor  : 'white',
+                    matutino   : disponibInd.turnos[1].cantidad,
+                    className: 'eventDisponibilidad',
+                    defaultDate: moment(),
+                    objetodisponibilidad:disponibInd
+                }
+                arregloDisponibilidad.push(eventoIndiMatutino)
+            }
+            
+            /*
             if(disponibInd.Vespertino !=='0'){
                 eventoIndiVespertino ={
                     title      : 'Vespertino: ' +disponibInd.Vespertino,
@@ -166,6 +184,7 @@ app.calendarController = function ($scope, ordenesUniversalesService) {
                 }
                 arregloDisponibilidad.push(eventoIndiNocturno)
             }
+            */
         })
         $scope.inicialCalendario();
     }

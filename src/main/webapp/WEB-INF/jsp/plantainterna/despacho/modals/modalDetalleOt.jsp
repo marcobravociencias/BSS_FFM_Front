@@ -484,36 +484,72 @@
                                 </div>
                             </div>
                             <div ng-show="permisosModal.indexOf('tabInformacionPaqueteDespacho') !== -1"  class="tab-pane fade" id="v-tabs-consulta-paquete" role="tabpanel" aria-labelledby="v-tabs-consulta-paquete-tab">
-                                <div class="row parent-detallecotizacion">                        
+                                <div class="row parent-detallecotizacion">              
                                     <div class="col-12">
-                                        <div class="row justify-content-center">
-                                            <div class="col-md-6">
-                                                <b class="title-info-services"> Cuenta factura:</b> &nbsp; &nbsp;
-                                                <span id="cuenta_factura" class="content_info_ot" ng-bind="actividadSelected.Num_cuenta_factura"> </span>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <b class="title-info-services"> Nombre plan:</b>&nbsp; &nbsp;
-                                                <span id="nombre_plan" class="content_info_ot" ng-bind="responseServicios.Nombre_plan"> </span>
-                                            </div>
-                                        </div>
-                                        <div class="row justify-content-center">
-                                            <div class="col-md-6">
-                                                <b class="title-info-services"> Folio cotsitio plan:</b> &nbsp; &nbsp;
-                                                <span id="folio_cotsitio" class="content_info_ot" ng-bind="responseServicios.Folio_cotsitio_plan"> </span>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <b class="title-info-services">Num. dns:</b>&nbsp; &nbsp;
-                                                <span id="numero_dns" class="content_info_ot" ng-bind="responseServicios.Num_dns"> </span>
-                                            </div>
-                                        </div>
                                         <div class="row ">
-                                            <div class="col-md-6">
-                                                <b class="title-info-services"> Monto primer pago:</b> &nbsp; &nbsp;
-                                                <span id="monto_primer_pago" class="content_info_ot" ng-bind="responseServicios.Monto_primerpago"> </span>
+                                            <div class="col-md-6">                                               
+                                                <div class="container-fluid vehiculo-content">
+                                                    <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Paquete</span></div>
+                                                    <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{responseServicios.nombrePaquete}}" ng-bind="responseServicios.nombrePaquete || 'Sin dato'"></span> </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-center">
+                                            <div class="col-md-6">                                               
+                                                <div class="container-fluid vehiculo-content">
+                                                    <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Cuenta factura</span></div>
+                                                    <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{responseServicios.folioCuentaFactura}}" ng-bind="responseServicios.folioCuentaFactura || 'Sin dato'"></span> </div>
+                                                </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <b class="title-info-services"> Medio de acceso:</b> &nbsp; &nbsp;
-                                                <span id="medio-accceso-nota" class="content_info_ot" ng-bind="responseServicios.MedioAcceso"> </span>
+                                                <div class="container-fluid vehiculo-content">
+                                                    <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Folio OS</span></div>
+                                                    <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{responseServicios.folioOs}}" ng-bind="responseServicios.folioOs || 'Sin dato'"></span> </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row justify-content-center">
+                                            <div class="col-md-6">                                               
+                                                <div class="container-fluid vehiculo-content">
+                                                    <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Folio CSP</span></div>
+                                                    <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{responseServicios.folioCotSitioPlan}}" ng-bind="responseServicios.folioCotSitioPlan || 'Sin dato'"></span> </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="container-fluid vehiculo-content">
+                                                    <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Folio Sitio</span></div>
+                                                    <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{responseServicios.folioSitio}}" ng-bind="responseServicios.folioSitio || 'Sin dato'"></span> </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-center">
+                                            <div class="col-md-6">                                               
+                                                <div class="container-fluid vehiculo-content">
+                                                    <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Num. ips</span></div>
+                                                    <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{responseServicios.numIps}}" ng-bind="responseServicios.numIps || 'Sin dato'"></span> </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="container-fluid vehiculo-content">
+                                                    <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Num. dns</span></div>
+                                                    <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{responseServicios.numDns}}" ng-bind="responseServicios.numDns || 'Sin dato'"></span> </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row justify-content-center">
+                                            <div class="col-md-6">                                               
+                                                <div class="container-fluid vehiculo-content">
+                                                    <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Monto primer pago</span></div>
+                                                    <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{responseServicios.precioProntoPago}}" ng-bind="responseServicios.precioProntoPago || 'Sin dato' | currency:MX$:2"></span> </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="container-fluid vehiculo-content">
+                                                    <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Pago instalaci&oacute;n</span></div>
+                                                    <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{responseServicios.pagoEnInstalacion}}" ng-bind="responseServicios.pagoEnInstalacion || 'Sin dato' | currency:MX$:2"></span> </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <br />
@@ -521,9 +557,9 @@
                                             <div class="col-8">
                                                 <div class="row justify-content-center">
                                                     <div class="col-md-12">
-                                                        <h5 style="color:#767676" class="">Servicios a instalar</h5>		
+                                                        <h5 style="color:#767676" class="titlemodalproductos">Servicios a instalar</h5>		
                                                         <div class="parent_table_detalle">
-                                                            <table class="detalle_table table table-sm">
+                                                            <table class="detalle-productos-table table table-sm">
                                                                 <thead class="thead_table_servicios">
                                                                     <tr>
                                                                         <th scope="col">Nombre del Servicio</th>
@@ -532,18 +568,18 @@
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <tr ng-repeat="servicio in responseServicios.Servicios.Servicio">
-                                                                        <td ng-bind="servicio.Nombre_servicio"></td>
-                                                                        <td ng-bind="servicio.Tipo_servicio"></td>
+                                                                    <tr ng-repeat="servicio in responseServicios.resumenServicios">
+                                                                        <td ng-bind="servicio.descripcion"></td>
+                                                                        <td ng-bind="servicio.tipo"></td>
                                                                         <td>
-                                                                            <button ng-if="servicio.Id_dpplan_servicio !== undefined" type="button" ng-click="consultarDetalleServicio(servicio)" class="btn_detalle_servicio btn btn-info btn-rounded btn-sm my-0 waves-effect waves-light">
+                                                                            <button ng-if="servicio.id !== undefined" type="button" ng-click="consultarDetalleServicio(servicio)" class="btn_detalle_servicio btn btn-info btn-rounded btn-sm my-0 waves-effect waves-light">
                                                                             <i class="fa fa-eye"></i></button>
-                                                                            <span ng-if="servicio.Id_dpplan_servicio === undefined">Sin detalle</span>
+                                                                            <span ng-if="servicio.id === undefined">Sin detalle</span>
                                                                         </td>
                                                                     </tr>
                                                                 </tbody>
                                                                 <tfoot>
-                                                                    <tr ng-if="responseServicios.Servicios.Servicio === undefined">
+                                                                    <tr ng-if="responseServicios.resumenServicios === undefined || responseServicios.resumenServicios.length <= 0">
                                                                         <td class="text-center" colspan="2">No se cuenta con servicios</td>
                                                                     </tr>
                                                                 </tfoot>
@@ -553,25 +589,25 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <h5 style="color:#767676" class="">Productos </h5>		
+                                                        <h5 style="color:#767676" class="titlemodalproductos">Productos </h5>		
                                                         <div class="parent_table_detalle_productos">
                                                             <table class="table detalle-productos-table table-sm">
                                                                 <thead class="thead_table_productos">
                                                                     <tr>
-                                                                        <th scope="col">Folio</th>
+                                                                        <!--th scope="col">Folio</th-->
                                                                         <th scope="col">Nombre del producto</th>
                                                                         <th scope="col">Tipo producto</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <tr ng-repeat="producto in responseServicios.Productos.Producto">
-                                                                        <td ng-bind="producto.FolioProducto"></td>
-                                                                        <td ng-bind="producto.Nombre_producto"></td>
-                                                                        <td ng-bind="producto.Tipo_producto"></td>
+                                                                    <tr ng-repeat="producto in responseServicios.productos">
+                                                                        <!--td ng-bind="producto.id"></td-->
+                                                                        <td ng-bind="producto.descripcion"></td>
+                                                                        <td ng-bind="producto.tipo"></td>
                                                                     </tr>
                                                                 </tbody>
                                                                 <tfoot>
-                                                                    <tr ng-if="responseServicios.Productos.Producto === undefined">
+                                                                    <tr ng-if="responseServicios.productos === undefined || responseServicios.productos.length <= 0">
                                                                         <td class="text-center" colspan="2">No se cuenta con productos</td>
                                                                     </tr>
                                                                 </tfoot>
@@ -581,9 +617,9 @@
                                                 </div>
                                                 <div class="row ">
                                                     <div class="col-md-12">
-                                                        <h5 style="color:#767676" class="">Promociones </h5>		
+                                                        <h5 style="color:#767676" class="titlemodalproductos">Promociones </h5>		
                                                         <div class="parent_table_detalle_promociones">
-                                                            <table   class="detalle-promociones-table table table-sm">
+                                                            <table   class="detalle-productos-table table table-sm">
                                                                 <thead class="thead_table_promociones">
                                                                 <tr>
                                                                     <th scope="col">Folio promoci&oacute;n</th>
@@ -591,13 +627,14 @@
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <tr ng-repeat="promocion in responseServicios.Promociones.Promocion">
+                                                                    <tr ng-repeat="promocion in responseServicios.promociones">
                                                                     <td ng-bind="promocion.FolioPromocion"></td>
                                                                     <td ng-bind="promocion.Nombre_promocion"></td>
                                                                 </tr>
                                                                 </tbody>
-                                                                <tfoot>
-                                                                    <tr ng-if="responseServicios.Promociones.Promocion === undefined">
+                                                                <tfoot>                                                            
+                                                                    <tr ng-if="responseServicios.promociones === undefined || responseServicios.promociones.length <= 0">
+
                                                                         <td class="text-center" colspan="2">No se cuenta con promociones</td>
                                                                     </tr>
                                                                 </tfoot>

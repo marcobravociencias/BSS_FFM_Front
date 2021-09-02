@@ -24,20 +24,6 @@ public class OrdenesUniversalesController {
 		this.ordenesUniversalesService = ordenesUniversalesService;
 	}
 	
-	@PostMapping("/consultarCatalogoOrdenesUniversales")
-	public ResponseEntity<?> consultarCatalogoOrdenesUniversales(@RequestBody String params) {
-		logger.info("##### CONSULTANDO consultarCatalogoOrdenesUniversales  "+params);
-		//ServiceResponseResult response = ordenesUniversalesService.consultarCatalogoOrdenesUniversales(params);
-		ServiceResponseResult response = null;
-		
-		/*
-		if (response.getResult() instanceof Integer){
-			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-		}
-		*/
-		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-	}
-	
 	@PostMapping("/consultarCuentaAsignadaGenerica")
 	public ResponseEntity<?> consultarCuentaAsignadaGenerica(@RequestBody String params) {
 		logger.info("##### CONSULTANDO consultarCuentaAsignadaGenerica");

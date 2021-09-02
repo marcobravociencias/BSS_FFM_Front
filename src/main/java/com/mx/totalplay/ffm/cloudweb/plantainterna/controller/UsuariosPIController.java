@@ -6,14 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
+import com.mx.totalplay.ffm.cloudweb.plantainterna.model.usuario.ObjConsultaUsuario;
 import com.mx.totalplay.ffm.cloudweb.plantainterna.service.SkillsAdminService;
 import com.mx.totalplay.ffm.cloudweb.plantainterna.service.UsuariosPIService;
+import com.mx.totalplay.ffm.cloudweb.utilerias.model.DataTableResponse;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.ServiceResponseResult;
 
 @RestController
@@ -68,13 +71,15 @@ public class UsuariosPIController {
 	}
 	
 	@PostMapping("/consultaUsuariosPorGeoCompPuestos")
-	public ResponseEntity<?> consultaUsuariosPorGeoCompPuestos(@RequestBody String params) {
+	public ResponseEntity<DataTableResponse> consultaUsuariosPorGeoCompPuestos(@ModelAttribute ObjConsultaUsuario params) {
 		logger.info("##### CONSULTANDO USUARIOS POR GEOGRAFÍA - COMPANIAS - PUESTOS");
-		ServiceResponseResult result = usuarioService.consultaUsuariosPorGeoCompPuestos(params);
-        if (result.getResult() instanceof Integer){
-            return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
-        }
-        return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
+		Gson gson = new Gson();
+		logger.info("*** Objeto: " + gson.toJson(params));
+		DataTableResponse dataTableResponse = usuarioService.consultaUsuariosPorGeoCompPuestos(params);
+		if (dataTableResponse.getResult() instanceof Integer){
+			return new ResponseEntity<DataTableResponse>(dataTableResponse, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<DataTableResponse>(dataTableResponse, HttpStatus.ACCEPTED);
 	}
 	
 	@PostMapping("/consultaGeografias")
@@ -82,6 +87,16 @@ public class UsuariosPIController {
 		logger.info("##### CONSULTANDO GEOGRAFÍAS");
         ServiceResponseResult response = usuarioService.consultaGeografias();
         if (response.getResult() instanceof Integer){
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
+	
+	@PostMapping("consultaIntervenciones")
+    public ResponseEntity<?> consultaIntervenciones() {
+		logger.info("##### CONSULTANDO INTERVENCIONES");
+        ServiceResponseResult response = usuarioService.consultaIntervenciones();
+        if (response.getResult() instanceof Integer) {
             return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
         }
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);

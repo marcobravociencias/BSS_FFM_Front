@@ -67,6 +67,15 @@ app.service("usuarioPIService", function ($http) {
             }
         });
     };
+    
+    this.consultaIntervenciones = function(){
+		return $http({
+			method: "post",
+			url: "req/consultaIntervenciones",
+			headers: {'Content-Type': "application/json; charset=utf-8"},
+			transformRequest: angular.identity
+		});
+	};
 
     this.consultarRegionesEstructura =function(){
 		return $http({
