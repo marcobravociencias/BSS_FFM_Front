@@ -41,7 +41,7 @@ public class ImplInspectorIncidenciaService implements InspectorIncidenciaServic
     }
     
 	@Override
-	public ServiceResponseResult consultarFallas(String params) {
+	public ServiceResponseResult consultarFallasInspectorIncidenciaPE(String params) {
 		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
 		logger.info("ImplInspectorIncidencia.class [metodo = consultarFallas() ]\n" + jsonObject);
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
@@ -50,7 +50,7 @@ public class ImplInspectorIncidenciaService implements InspectorIncidenciaServic
 		
 		String tokenAcces = principalDetail.getAccess_token();
 	    logger.info("consultarFallas ##+" + tokenAcces);
-	    String urlRequest = principalDetail.getDireccionAmbiente().concat(constInspectorIncidencia.getConsultarFallas());
+	    String urlRequest = principalDetail.getDireccionAmbiente().concat(constInspectorIncidencia.getConsultarFallasInspectorIncidenciaPE());
 	    logger.info("URL ##+" + urlRequest);
 	     
 	    Map<String, String> paramsRequestGet = new HashMap<String, String>();
@@ -62,7 +62,7 @@ public class ImplInspectorIncidenciaService implements InspectorIncidenciaServic
 	}
 
 	@Override
-	public DataTableResponse consultarIncidenciasInspector(String params) {
+	public DataTableResponse consultarIncidenciasInspectorPE(String params) {
 		// TODO Auto-generated method stub
 		return null;
 	}

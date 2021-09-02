@@ -29,10 +29,10 @@ public class InspectorIncidenciaController {
 		this.inspectorIncidenciaService = inspectorIncidenciaService;
 	}
 	
-	@PostMapping("/consultarFallas")
-	public ResponseEntity<?> consultarFallas(String params) {
+	@PostMapping("/consultarFallasInspectorIncidenciaPE")
+	public ResponseEntity<?> consultarFallasInspectorIncidenciaPE(String params) {
 		logger.info("##### InspectorIncidenciaController - consultarFallas");
-		ServiceResponseResult response = inspectorIncidenciaService.consultarFallas(params);
+		ServiceResponseResult response = inspectorIncidenciaService.consultarFallasInspectorIncidenciaPE(params);
 		if (response.getResult() instanceof Integer){
 			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
 		}
