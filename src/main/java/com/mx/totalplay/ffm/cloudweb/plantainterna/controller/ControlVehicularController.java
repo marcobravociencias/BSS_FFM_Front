@@ -84,4 +84,44 @@ public class ControlVehicularController {
 		}
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
+
+	@PostMapping("/consultarVehiculoUnico")
+	public ResponseEntity<?> consultarVehiculoUnico(@RequestBody String params) {
+		logger.info("#### Metodo consultarVehiculoUnico: " + params);
+		ServiceResponseResult response = controlVehicularService.consultarVehiculoUnico(params);
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+
+	@GetMapping("/consultarVehiculos") 
+	public ResponseEntity<?> consultarVehiculos() {
+		logger.info("##### CONSULTANDO consultarVehiculos");
+		ServiceResponseResult response = controlVehicularService.consultarVehiculos();
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+
+	@PostMapping("/editarVehiculo")
+	public ResponseEntity<?> editarVehiculo(@RequestBody String params) {
+		logger.info("#### Metodo editarVehiculo: " + params);
+		ServiceResponseResult response = controlVehicularService.editarVehiculo(params);
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	
+	@PostMapping("/consultarEncierros")
+	public ResponseEntity<?> consultarEncierros(@RequestBody String params) {
+		logger.info("#### Metodo consultarEncierros: " + params);
+		ServiceResponseResult response = controlVehicularService.consultarEncierros(params);
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
 }

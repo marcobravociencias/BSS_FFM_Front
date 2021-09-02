@@ -3683,14 +3683,14 @@ TimelineGrid = (function(superClass) {
         </div>
         <div class="content-text-otasignada" >       
             <div class="izquierda-icon">
-              <span title="${event.descipcionTipoOrden}" style="background-color:${ event.colorOrden}" class="elemen-izquierda-asignada intervencion_asignada badge badge-pill ">${intervencion_letter}</span>
+              <span title="${event.descipcionTipoOrden}" style="background-color:${ event.colorEstatus}" class="elemen-izquierda-asignada intervencion_asignada badge badge-pill ">${intervencion_letter}</span>
             </div>
             <b class="orden-content">OT: ${event.idOrden}</b>&nbsp&nbsp
         </div>
     </div>
     `
     
-    return '<a class="'+clase_hover+' ' + classes.join(' ') + ' evento-ot-asignada" style="border-left: .5em solid '+ event.colorOrden + ';  "' + (event.url ? ' href="' + htmlEscape(event.url) + '"' : '') + '  >' + '<div class="fc-content">' + (timeText ? '<span class="fc-time">' + htmlEscape(timeText) + '</span>' : '') + '<div class="fc-title"> ' + content  + '</div>' + '</div>' + '<div class="fc-bg" />' + (isResizableFromStart ? '<div class="fc-resizer fc-start-resizer"></div>' : '') + (isResizableFromEnd ? '<div class="fc-resizer fc-end-resizer"></div>' : '') + '</a>';
+    return '<a class="'+clase_hover+' ' + classes.join(' ') + ' evento-ot-asignada" style="border-left: .5em solid '+ event.colorEstatus + ';  "' + (event.url ? ' href="' + htmlEscape(event.url) + '"' : '') + '  >' + '<div class="fc-content">' + (timeText ? '<span class="fc-time">' + htmlEscape(timeText) + '</span>' : '') + '<div class="fc-title"> ' + content  + '</div>' + '</div>' + '<div class="fc-bg" />' + (isResizableFromStart ? '<div class="fc-resizer fc-start-resizer"></div>' : '') + (isResizableFromEnd ? '<div class="fc-resizer fc-end-resizer"></div>' : '') + '</a>';
   };
 
   TimelineGrid.prototype.updateSegFollowers = function(segs) {

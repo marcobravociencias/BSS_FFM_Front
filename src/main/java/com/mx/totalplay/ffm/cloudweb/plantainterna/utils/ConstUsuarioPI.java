@@ -28,4 +28,7 @@ public class ConstUsuarioPI implements Serializable{
 	@Value("${consultarcatalogogeografiageneral}")
 	private String consultaGeografias;
 	
+	@Value("${consultarcatalogoTipoOrdenesPorUsuario}")
+	private String consultaIntervenciones;
+	
 }

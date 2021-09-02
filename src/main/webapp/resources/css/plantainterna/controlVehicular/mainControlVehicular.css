@@ -483,5 +483,22 @@ select.list-dt:focus {
 
 .resumeTable{
   width: 100%;
-  font-size: 15px;
+  font-size: 17px;
+}
+
+.tableTextTitle{
+  text-align: left;
+  font-weight: bold;
+}
+
+.tableText{
+  text-align: left;
+}
+
+#options.dropdown-menu{
+  min-width: 1em !important;
+}
+
+li{
+  list-style-type: none;
 }

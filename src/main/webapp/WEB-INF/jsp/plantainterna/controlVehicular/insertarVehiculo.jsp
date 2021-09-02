@@ -13,7 +13,7 @@
                         <div class="form-row">
                             <div class="col-3 form-group">
                                 <label>Placa </label>
-                                <input type="text" class="form-control form-control-sm" id="placa" onchange="getPlaca()"
+                                <input type="text" class="form-control form-control-sm" id="placa" onchange="buscarPlaca()"
                                     ng-model="vehiculo.placa" capitalize />
                             </div>
                             <div class="col-3 form-group">
@@ -92,16 +92,18 @@
                                     placeholder="-- Seleccione --" />
                             </div>
                         </div>
-                        <h5 class="fs-title"><i class="fas fa-info-circle" style="color: orange;"></i> Los datos de esta secci&oacute;n son obligatorios</h5>
+                        <h5 class="fs-title"><i class="fas fa-info-circle" style="color: orange;"></i> Los datos de esta
+                            secci&oacute;n son obligatorios</h5>
                     </div>
                 </div>
-                <input type="button" class="btn btn-primary btnTotal" value="Siguiente" onclick="validateFormulario()"/>
-                <input type="hidden" name="next" class="next btn btn-primary btnTotal" id="stBtn"/>
+                <input type="button" class="btn btn-primary btnTotal" value="Siguiente"
+                    onclick="validateFormulario()" />
+                <input type="hidden" name="next" class="next btn btn-primary btnTotal" id="stBtn" />
             </fieldset>
-            <fieldset>
+            <fieldset id="docs-tab">
                 <div class="form-card">
                     <div class="col-12">
-                        
+
                         <div class="form-row">
                             <div class="col-3 form-group">
                                 <label>Aseguradora </label>
@@ -122,8 +124,9 @@
                             <div class="col-3 form-group">
                                 <label>Fecha Vencimiento P&oacute;liza
                                 </label>
-                                <input type="text" class="datepicker datepickerNormal form-control form-control-sm" ng-model="vehiculo.detalle.fechaVencimientoPoliza"
-                                    readonly id="vencimientoPoliza" />
+                                <input type="text" class="datepicker datepickerNormal form-control form-control-sm"
+                                    ng-model="vehiculo.detalle.fechaVencimientoPoliza" readonly
+                                    id="vencimientoPoliza" />
                             </div>
                             <div class="col-3 form-group">
                                 <label>N&uacute;m. de Tarjeta de Circulaci&oacute;n
@@ -136,8 +139,9 @@
                             <div class="col-3 form-group">
                                 <label style="font-size: 11px !important">Vencimiento Tarjeta de Circulaci&oacute;n<span
                                         style="color: red">*</span></label>
-                                <input type="text" class="datepicker datepickerNormal form-control form-control-sm" ng-model="vehiculo.detalle.fechaVencimientoTarjeta"
-                                    id="vencimientoTarjeta" readonly />
+                                <input type="text" class="datepicker datepickerNormal form-control form-control-sm"
+                                    ng-model="vehiculo.detalle.fechaVencimientoTarjeta" id="vencimientoTarjeta"
+                                    readonly />
                             </div>
                             <div class="col-3 form-group">
                                 <label>N&uacute;m. de Verificaci&oacute;n
@@ -148,8 +152,8 @@
                             <div class="col-3 form-group">
                                 <label>Fecha de Verificaci&oacute;n
                                 </label>
-                                <input type="text" class="datepicker datepickerNormal form-control form-control-sm" ng-model="vehiculo.detalle.fechaVerificacion"
-                                    readonly id="fechaVerificacion" />
+                                <input type="text" class="datepicker datepickerNormal form-control form-control-sm"
+                                    ng-model="vehiculo.detalle.fechaVerificacion" readonly id="fechaVerificacion" />
                             </div>
                             <div class="col-3 form-group">
                                 <label>Clave Pensi&oacute;n </label>
@@ -232,7 +236,6 @@
                                 <label>Estatus </label>
                                 <select class="form-control form-control-sm custom-select" id="estatus"
                                     ng-model="vehiculo.idEstatus" ng-change="loadMotivo()">
-                                    <option value="" selected>-- Seleccione estatus --</option>
                                     <option value="{{status.idEstatus}}" ng-repeat="status in data.estatus">
                                         {{status.nombre}}
                                     </option>
@@ -255,17 +258,23 @@
                                     ng-model="vehiculo.comentarios"></textarea>
                             </div>
                         </div>
-                        <h5 class="fs-title"><i class="fas fa-info-circle" style="color: orange;"></i> Los datos de esta secci&oacute;n no son obligatorios</h5>
+                        <h5 class="fs-title"><i class="fas fa-info-circle" style="color: orange;"></i> Los datos de esta
+                            secci&oacute;n no son obligatorios</h5>
                     </div>
                 </div>
-                
+
                 <input type="button" name="previous" class="previous btn btn-primary btnBack" value="Regresar" />
-                <input type="button" name="next" class="next btn btn-primary btnTotal" value="Siguiente" onclick="getNameText()"  />
+                <input type="button" name="next" class="next btn btn-primary btnTotal" value="Siguiente" />
             </fieldset>
-            <fieldset>
+            <fieldset id="imgs-tab">
                 <div class="form-card">
                     <div class="col-12">
-                        
+                        <div class="row">
+                            <div class="col-3"><img alt="Placa" src="{{vehiculo.urlFotoPlaca}}"  ng-if="vehiculo.urlFotoPlaca" width="200"/></div>
+                            <div class="col-3"><img alt="Vehiculo" src="{{vehiculo.urlFotoVehiculo}}"  ng-if="vehiculo.urlFotoVehiculo" width="200"/></div>
+                            <div class="col-3"><img alt="Tarjeta Circulacion" src="{{vehiculo.detalle.urlFotoTarjetaCirculacion}}"  ng-if="vehiculo.detalle.urlFotoTarjetaCirculacion" width="200"/></div>
+                            <div class="col-3"><img alt="Tarjeta Gasolina" src="{{vehiculo.detalle.urlFotoTarjetaGasolina}}"  ng-if="vehiculo.detalle.urlFotoTarjetaGasolina" width="200"/></div>
+                        </div>
                         <div class="form-row">
                             <div class="col-3 form-group">
                                 <label>Foto Placa </label>
@@ -275,7 +284,6 @@
                                     <label class="custom-file-label" for="filePlaca" id="fotoPlaca">Cargar
                                         Imagen</label>
                                 </div>
-                                <span ng-if="vehiculo.fotoPlaca">{{vehiculo.fotoPlaca.nombre}}</span>
                             </div>
                             <div class="col-3 form-group">
                                 <label>Foto de Veh&iacute;culo </label>
@@ -307,47 +315,103 @@
                                     <label class="custom-file-label" for="fileTarjetaGas"
                                         id="fotoTarjetaGasolina">Cargar Imagen</label>
                                 </div>
-                                <span ng-if="vehiculo.detalle.fotoTarjetaGasolina">{{vehiculo.detalle.fotoTarjetaGasolina.nombre}}</span>
+                               
                             </div>
                         </div>
-                        <h5 class="fs-title"> <i class="fas fa-info-circle" style="color: orange;"></i> Los datos de esta secci&oacute;n no son obligatorios</h5>
+                        <h5 class="fs-title"> <i class="fas fa-info-circle" style="color: orange;"></i> Los datos de
+                            esta secci&oacute;n no son obligatorios</h5>
                     </div>
-                </div> 
+                </div>
                 <input type="button" name="previous" class="previous btn btn-primary btnBack" value="Regresar" />
-                <input type="button" name="next" class="next btn btn-primary btnTotal" value="Siguiente"/>
+                <input type="button" name="next" class="next btn btn-primary btnTotal" value="Siguiente" />
             </fieldset>
-            <fieldset>
+            <fieldset id="resumen-tab">
                 <div class="form-card">
-                    <h2 class="fs-title text-center">Resumen</h2> <br><br>
                     <table class="resumeTable">
                         <tr>
-                            <td>Placa: </td>
-                            <td>{{vehiculo.placa}}</td>
-                            <td>Tipo Veh&iacute;culo: </td>
-                            <td>{{vehiculo.tipoText}}</td>
-                            <td>Marca: </td>
-                            <td>{{vehiculo.marcaText}}</td>
-                            <td>Modelo: </td>
-                            <td>{{vehiculo.lineaText}}</td>
+                            <td class="tableTextTitle">Placa: </td>
+                            <td class="tableText">{{vehiculo.placa}}</td>
+                            <td class="tableTextTitle">Tipo Veh&iacute;culo: </td>
+                            <td class="tableText">{{vehiculoText.tipoText}}</td>
+                            <td class="tableTextTitle">Marca: </td>
+                            <td class="tableText">{{vehiculoText.marcaText}}</td>
+                            <td class="tableTextTitle">Modelo: </td>
+                            <td class="tableText">{{vehiculoText.lineaText}}</td>
                         </tr>
                         <tr>
-                            <td>A&ntilde;o: </td>
-                            <td>{{vehiculo.anio}}</td>
-                            <td>N&uacute;mero de serie: </td>
-                            <td>{{vehiculo.numeroSerie}}</td>
-                            <td>Combustible: </td>
-                            <td>{{vehiculo.combustible}}</td>
-                            <td>Color: </td>
-                            <td>{{vehiculo.colorText}}</td>
+                            <td class="tableTextTitle">A&ntilde;o: </td>
+                            <td class="tableText">{{vehiculo.anio}}</td>
+                            <td class="tableTextTitle">N&uacute;mero de serie: </td>
+                            <td class="tableText">{{vehiculo.numeroSerie}}</td>
+                            <td class="tableTextTitle">Combustible: </td>
+                            <td class="tableText">{{vehiculo.combustible}}</td>
+                            <td class="tableTextTitle">Color: </td>
+                            <td class="tableText">{{vehiculoText.colorText}}</td>
                         </tr>
                         <tr>
-                            <td>Geograf&iacute;a: </td>
-                            <td colspan="7">{{vehiculo.geografiaText}}</td>
+                            <td class="tableTextTitle">Geograf&iacute;a: </td>
+                            <td class="tableText" colspan="7">{{vehiculoText.geografiaText}}</td>
+                        </tr>
+                        <tr>
+                            <td class="tableTextTitle">Aseguradora: </td>
+                            <td class="tableText">{{vehiculoText.aseguradoraText ? vehiculoText.aseguradoraText : 'Sin
+                                informaci&oacute;n'}}</td>
+                            <td class="tableTextTitle">N&uacute;mero de poliza: </td>
+                            <td class="tableText">{{vehiculo.detalle.numeroPoliza ? vehiculo.detalle.numeroPoliza : 'Sin
+                                informaci&oacute;n'}}</td>
+                            <td class="tableTextTitle">Fecha vencimiento poliza: </td>
+                            <td v>{{vehiculo.detalle.fechaVencimientoPoliza ? vehiculo.detalle.fechaVencimientoPoliza :
+                                'Sin informaci&oacute;n'}}</td>
+                            <td class="tableTextTitle">N&uacute;m. Tarjeta de circulaci&oacute;n: </td>
+                            <td class="tableText">{{vehiculo.detalle.tarjetaCirculacion ? vehiculo.detalle.tarjetaCirculacion : 'Sin
+                                informaci&oacute;n'}}</td>
+                        </tr>
+                        <tr>
+                            <td class="tableTextTitle">Vencimiento tarjeta circulaci&oacute;n: </td>
+                            <td class="tableText">{{vehiculo.detalle.fechaVencimientoTarjeta ? vehiculo.detalle.fechaVencimientoTarjeta :
+                                'Sin informaci&oacute;n'}}</td>
+                            <td class="tableTextTitle">N&uacute;mero de verificaci&oacute;n: </td>
+                            <td class="tableText">{{vehiculo.detalle.numeroVerificacion ? vehiculo.detalle.numeroVerificacion : 'Sin
+                                informaci&oacute;n'}}</td>
+                            <td class="tableTextTitle">Fecha de verificaci&oacute;n: </td>
+                            <td class="tableText">{{vehiculo.detalle.fechaVerificacion ? vehiculo.detalle.fechaVerificacion : 'Sin
+                                informaci&oacute;n'}}</td>
+                            <td class="tableTextTitle">Clave pensi&oacute;n: </td>
+                            <td class="tableText">{{vehiculo.detalle.clavePension ? vehiculo.detalle.clavePension : 'Sin
+                                informaci&oacute;n'}}</td>
+                        </tr>
+                        <tr>
+                            <td class="tableTextTitle">N&uacute;m. tarjeta gasolina: </td>
+                            <td class="tableText">{{vehiculo.detalle.tarjetaGasolina ? vehiculo.detalle.tarjetaGasolina : 'Sin
+                                informaci&oacute;n'}}</td>
+                            <td class="tableTextTitle">Clave GPS: </td>
+                            <td class="tableText">{{vehiculo.detalle.claveGps ? vehiculo.detalle.claveGps : 'Sin informaci&oacute;n'}}
+                            </td>
+                            <td class="tableTextTitle">N&uacute;m motor: </td>
+                            <td class="tableText">{{vehiculo.detalle.numeroMotor ? vehiculo.detalle.numeroMotor : 'Sin
+                                informaci&oacute;n'}}</td>
+                            <td class="tableTextTitle">N&uacute;m chasis: </td>
+                            <td class="tableText">{{vehiculo.detalle.numeroChasis ? vehiculo.detalle.numeroChasis : 'Sin
+                                informaci&oacute;n'}}</td>
+                        </tr>
+                        <tr>
+                            <td class="tableTextTitle">Engomado: </td>
+                            <td class="tableText">{{vehiculo.detalle.engomado ? vehiculo.detalle.engomado : 'Sin informaci&oacute;n'}}
+                            </td>
+                            <td class="tableTextTitle">Holograma: </td>
+                            <td class="tableText">{{vehiculo.detalle.holograma ? vehiculo.detalle.holograma : 'Sin informaci&oacute;n'}}
+                            </td>
+                            <td class="tableTextTitle">Ubicaci&oacute;n CDO: </td>
+                            <td class="tableText">{{vehiculoText.encierroText ? vehiculoText.encierroText : 'Sin informaci&oacute;n'}}
+                            </td>
+                            <td class="tableTextTitle">Rotulado: </td>
+                            <td class="tableText">{{vehiculoText.rotulado ? vehiculoText.rotulado : 'Sin informaci&oacute;n'}}</td>
                         </tr>
                     </table>
                 </div>
                 <input type="button" name="previous" class="previous btn btn-primary btnBack" value="Regresar" />
-                <input type="button" class="submit btn btn-primary btnTotal" value="Guardar" onclick="guardarVehiculo()"/>
+                <input type="button" class="submit btn btn-primary btnTotal" value="Guardar"
+                    onclick="guardarVehiculo()" />
             </fieldset>
         </form>
     </div>
