@@ -502,3 +502,12 @@ select.list-dt:focus {
 li{
   list-style-type: none;
 }
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover{
+    padding: 1px;
+    background: white;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button{
+  padding: 1px;
+}

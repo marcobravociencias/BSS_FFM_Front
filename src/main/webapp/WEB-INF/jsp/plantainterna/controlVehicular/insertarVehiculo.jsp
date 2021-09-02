@@ -269,12 +269,15 @@
             <fieldset id="imgs-tab">
                 <div class="form-card">
                     <div class="col-12">
+                        <!--
                         <div class="row">
                             <div class="col-3"><img alt="Placa" src="{{vehiculo.urlFotoPlaca}}"  ng-if="vehiculo.urlFotoPlaca" width="200"/></div>
                             <div class="col-3"><img alt="Vehiculo" src="{{vehiculo.urlFotoVehiculo}}"  ng-if="vehiculo.urlFotoVehiculo" width="200"/></div>
                             <div class="col-3"><img alt="Tarjeta Circulacion" src="{{vehiculo.detalle.urlFotoTarjetaCirculacion}}"  ng-if="vehiculo.detalle.urlFotoTarjetaCirculacion" width="200"/></div>
                             <div class="col-3"><img alt="Tarjeta Gasolina" src="{{vehiculo.detalle.urlFotoTarjetaGasolina}}"  ng-if="vehiculo.detalle.urlFotoTarjetaGasolina" width="200"/></div>
                         </div>
+                        -->
+                        
                         <div class="form-row">
                             <div class="col-3 form-group">
                                 <label>Foto Placa </label>
