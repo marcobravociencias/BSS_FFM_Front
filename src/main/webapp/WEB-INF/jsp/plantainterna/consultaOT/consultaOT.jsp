@@ -42,13 +42,13 @@
 
 <body ng-controller="consultaOTController" class="body">
     <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
-    <div class="container container-title-header">
-		<div class="header-modulo">
-			<h5 class="title-modulo">Consulta ordenes de trabajo</h5>
-			<h1 class="h6 subtitle-modulo">En este m&oacute;dulo podr&aacute;s realizar la busqueda de las ordenes de trabajo</h1>
-		</div>
-	</div>
     <div  class="container-fluid container-filtros-consultaot">
+        <div class="container container-title-header" style="padding: 0 !important;">
+            <div class="header-modulo">
+                <h5 class="title-modulo">Consulta ordenes de trabajo</h5>
+                <h1 class="h6 subtitle-modulo">En este m&oacute;dulo podr&aacute;s realizar la busqueda de las ordenes de trabajo</h1>
+            </div>
+        </div>
         <div class="content-fluid">
             <div class="row md-form" id="filtros_config">
                 <div class="col-2 column-style-consulta">
