@@ -4,6 +4,7 @@ var detalleTable;
 app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filter', function ($scope, $q, usuarioPIService, $filter) {
 	$("#moduloUsuarios").addClass('active');
 	
+	app.editarUsuarioController($scope,usuarioPIService);
 	//ELEMENTOS PARA CONSULTA
 	let tablaUsuarios;
 	$scope.listaCompanias = [];
@@ -28,6 +29,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     
     $scope.listaRegiones = [];
     $scope.listaCiudades = [];
+	$scope.respaldoIntervenciones = [];
     $scope.listaClasificacionUsuario = [];
 
     $scope.mostrarAccesos = true;
@@ -199,6 +201,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
             	if(results[5].data.respuesta){
             		if(results[5].data.result.length > 0){
             			let intervencionesLista = [];
+						$scope.respaldoIntervenciones = results[5].data.result;
             			results[5].data.result.forEach(intervencion =>{
                             if (intervencion.nivel == 1) {
                             	intervencionesLista.push(intervencion);

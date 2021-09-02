@@ -70,7 +70,7 @@
 				                    	<table class="table" id="table-usuario-pi">
 				                        	<thead>
 				                            	<tr>
-				                                	<th class="txtTablaConsultaJustificado">Núm. empleado</th>
+				                                	<th class="txtTablaConsultaJustificado">Nï¿½m. empleado</th>
 				                                    <th class="txtTablaConsultaJustificado">Usuario FFM</th>
 				                                    <th class="txtTablaConsultaJustificado">Nombre</th>
 				                                    <th class="txtTablaConsultaJustificado">Tipo usuario</th>
@@ -162,6 +162,7 @@
     <!-- ARCHIVOS JS INTERNOS -->
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/usuarios/usuariosPIController.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/usuarios/usuariosEditarController.js" charset="UTF-8"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/usuarios/usuarioPIService.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/usuarios/jsonResult.js"></script>
     <script type="text/javascript">let contex_project = "${pageContext.request.contextPath}";</script>
