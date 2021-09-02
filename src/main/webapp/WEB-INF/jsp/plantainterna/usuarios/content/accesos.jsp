@@ -31,12 +31,12 @@
                     </div>
                 </div>
                 <div class="scrollGeneralArbol">
-	                <div class="row padding_resumen_ciudades" ng-repeat="ciudad in listaGeografiasSeleccionadas track by $index">
+	                <div class="row padding_resumen_ciudades" ng-repeat="modulo in listaPermisosSeleccionados track by $index">
 	                    <div class="col-md-6">
-	                        <span class="text-body-table-arbol" ng-bind="ciudad.nombre"></span>
+	                        <span class="text-body-table-arbol" ng-bind="modulo.nombre"></span>
 	                    </div>
 	                    <div class="col-md-6">
-	                        <li class="item_ciudad_resum text-body-table-arbol" ng-repeat="distrito in ciudad.hijos" ng-bind="distrito.text"></li>
+	                        <li class="item_ciudad_resum text-body-table-arbol" ng-repeat="permiso in modulo.hijos" ng-bind="permiso.text"></li>
 	                    </div>
 	                </div>
                 </div>

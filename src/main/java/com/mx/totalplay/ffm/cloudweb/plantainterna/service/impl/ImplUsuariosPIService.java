@@ -139,7 +139,7 @@ public class ImplUsuariosPIService implements UsuariosPIService {
                         dataArray[count][3] = object.get("tipoOperario") != null ? object.get("tipoOperario").getAsString().trim() : "";
                         dataArray[count][4] = object.get("ciudad") != null ? object.get("ciudad").getAsString().trim() : "";
                         dataArray[count][5] = object.get("unidadNegocio") != null ? object.get("unidadNegocio").getAsString().trim() : "";
-                        dataArray[count][6] = "<i class='fas fa-user-edit iconoEditarUsuario'></i>";
+                        dataArray[count][6] = "<i class='fas fa-user-edit iconoEditarUsuario' onclick='consultarDetalleUsuario(" + object.get("idOperario").getAsString().trim() + ")'></i>";
                         dataArray[count][7] = "<i class='fas fa-user-times iconoEliminarUsuario'></i>";
                         count++;
                     }

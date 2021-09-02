@@ -73,8 +73,8 @@
                                         <a class="nav-link" id="consulta-tab" data-toggle="pill" href="#consulta" onclick="resetAll()"
                                             role="tab" aria-controls="consulta" aria-selected="false">Consulta
                                             Veh&iacute;culos</a>
-                                        <a class="nav-link" id="modifica-tab" data-toggle="pill" href="#alta"
-                                            ng-if="isEdit" role="tab" aria-controls="alta"
+                                        <a class="nav-link" id="modifica-tab" data-toggle="pill"
+                                            ng-show="isEdit" role="tab"
                                             aria-selected="false">Modifica Veh&iacute;culo</a>
                                     </div>
                                 </div>
@@ -88,6 +88,7 @@
                                             aria-labelledby="consulta-tab">
                                             <jsp:include page="./consultarVehiculo.jsp"></jsp:include>
                                         </div>
+                                        
                                     </div>
                                 </div>
                             </div>

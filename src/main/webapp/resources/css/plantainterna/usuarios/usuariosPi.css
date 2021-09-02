@@ -74,6 +74,7 @@
 
 .iconoEditarUsuario{
     color: #7716fa !important;
+    cursor: pointer;
 }
 
 .iconoEliminarUsuario{

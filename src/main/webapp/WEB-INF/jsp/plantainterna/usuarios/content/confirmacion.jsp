@@ -12,19 +12,19 @@
                                 <div class="row">
                                     <label class="titulos-confirmacion">* Nombre:</label>
                                     <div class="input-group mb-3">
-                                        <span class="respuesta-confirmacion" ng-bind="confirmacion.nombre"></span>
+                                        <span class="respuesta-confirmacion" ng-bind="confirmacionRegistro.nombre"></span>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <label class="titulos-confirmacion">* Usuario:</label>
                                     <div class="input-group mb-3">
-                                        <span class="respuesta-confirmacion" ng-bind="confirmacion.usuario"></span>
+                                        <span class="respuesta-confirmacion" ng-bind="confirmacionRegistro.usuario"></span>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <label class="titulos-confirmacion">* Puesto del empleado:</label>
                                     <div class="input-group mb-3">
-                                        <span class="respuesta-confirmacion" ng-bind="confirmacion.puesto"></span>
+                                        <span class="respuesta-confirmacion" ng-bind="confirmacionRegistro.puesto"></span>
                                     </div>
                                 </div>
                             </div>
@@ -32,19 +32,19 @@
                                 <div class="row">
                                     <label class="titulos-confirmacion">* Correo electr&oacute;nico:</label>
                                     <div class="input-group mb-3">
-                                        <span class="respuesta-confirmacion" ng-bind="confirmacion.correo"></span>
+                                        <span class="respuesta-confirmacion" ng-bind="confirmacionRegistro.correo"></span>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <label class="titulos-confirmacion">* Contrasena:</label>
                                     <div class="input-group mb-3">
-                                        <span class="respuesta-confirmacion" ng-bind="confirmacion.contrasena"></span>
+                                        <span class="respuesta-confirmacion" ng-bind="confirmacionRegistro.contrasena"></span>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <label class="titulos-confirmacion">* Fecha Ingreso:</label>
                                     <div class="input-group mb-3">
-                                        <span class="respuesta-confirmacion" ng-bind="confirmacion.fechaIngreso"></span>
+                                        <span class="respuesta-confirmacion" ng-bind="confirmacionRegistro.fechaIngreso"></span>
                                     </div>
                                 </div>
                             </div>
@@ -56,7 +56,7 @@
                                     <label class="titulos-confirmacion">* Ciudad Natal:</label>
                                 </div>
                                 <form name="myForm">
-                                    <div class="row" ng-repeat="ciudad in listaCiudadNatal">
+                                    <div class="row" ng-repeat="ciudad in listaGeografiasSeleccionadas">
                                         <div class="col-12">
                                             <label class="respuesta-confirmacion">
                                                 <input type="radio" ng-model="ciudadNatal.id" ng-value="ciudad.id">

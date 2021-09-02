@@ -60,7 +60,7 @@
                                 <div class="col-md-4">
                                     <label class="span-consulta"><i class="fas fa-map-marked"></i> Geograf&iacute;a</label>
                                     <div class="">
-                                    	<input style="height: 34px;" id="txtGeografiasConsulta" type="text" class="form-control inputFormulario" ng-click="abrirModalGeografiaConsulta()" aria-describedby="basic-addon3" placeholder="NO HAY SELECCI&Oacute;N" autocomplete="off" >
+                                    	<input style="height: 34px;" id="txtGeografiasConsulta" type="text" class="form-control inputFormulario" ng-click="abrirModalGeografiaConsulta()" aria-describedby="basic-addon3" placeholder="NO HAY SELECCI&Oacute;N" autocomplete="off">
                                     </div>
                                 </div>
                             </div>
@@ -70,7 +70,7 @@
 				                    	<table class="table" id="table-usuario-pi">
 				                        	<thead>
 				                            	<tr>
-				                                	<th class="txtTablaConsultaJustificado">Núm. empleado</th>
+				                                	<th class="txtTablaConsultaJustificado">Nï¿½m. empleado</th>
 				                                    <th class="txtTablaConsultaJustificado">Usuario FFM</th>
 				                                    <th class="txtTablaConsultaJustificado">Nombre</th>
 				                                    <th class="txtTablaConsultaJustificado">Tipo usuario</th>
@@ -107,7 +107,7 @@
                                             <a class="nav-link" id="pills-tecnico-tab" data-toggle="pill" href="#pills-tecnico" ng-show="mostrarTecnicos" role="tab" aria-controls="pills-tecnico" aria-selected="false">T&eacute;cnico</a>
                                         </li>
                                         <li class="nav-item" role="presentation">
-                                            <a class="nav-link" id="pills-confirmar-tab" data-toggle="pill" ng-click="mostrarConfirmacionUsuario()" href="#pills-confirmar" role="tab" aria-controls="pills-confirmar" aria-selected="false">Confirmar Usuario</a>
+                                            <a class="nav-link" id="pills-confirmar-tab" ng-click="cargarInfoConfirmacionRegistro()" data-toggle="pill" ng-click="mostrarConfirmacionUsuario()" href="#pills-confirmar" role="tab" aria-controls="pills-confirmar" aria-selected="false">Confirmar Usuario</a>
                                         </li>
                                     </ul>
                                     <div class="tab-content" id="pills-tabContent">
@@ -162,6 +162,7 @@
     <!-- ARCHIVOS JS INTERNOS -->
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/usuarios/usuariosPIController.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/usuarios/usuariosEditarController.js" charset="UTF-8"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/usuarios/usuarioPIService.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/usuarios/jsonResult.js"></script>
     <script type="text/javascript">let contex_project = "${pageContext.request.contextPath}";</script>
