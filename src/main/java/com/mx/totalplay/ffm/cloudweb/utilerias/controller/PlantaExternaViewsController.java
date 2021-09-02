@@ -1,10 +1,14 @@
 package com.mx.totalplay.ffm.cloudweb.utilerias.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.mx.totalplay.ffm.cloudweb.utilerias.utils.ConstantesGeneric;
 import com.mx.totalplay.ffm.cloudweb.utilerias.utils.UtileriaGeneral;
@@ -49,5 +53,13 @@ public class PlantaExternaViewsController {
 	@GetMapping("/moduloInspectorCoberturasPE")
 	public String inspectorCoberturaPlantaExterna() {		
 		return "plantaexterna/inspectorcoberturas/inspectorcoberturaspe";				
+	}
+	
+	@ModelAttribute("googlkeyattrvar")
+	 public Map<String,Object> agregarVariablesGeneric () {
+		logger.info("agregando generic ------------------");
+		Map<String,Object>mapaVars=new HashMap<>();
+		mapaVars.put("gkeactok", genericVars.getGoogAccLLaevATok());
+	  return mapaVars;
 	}
 }

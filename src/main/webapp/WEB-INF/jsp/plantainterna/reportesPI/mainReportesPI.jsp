@@ -68,6 +68,9 @@
 				<li id="link_reporte_auxiliar" class="list-group-item list-group-item-action elemento_link nav-link">
 					<span class="fon_size_menu">T&eacute;cnico Auxiliar</span>
 				</li>
+				<li id="link_reporte_inspector" class="list-group-item list-group-item-action elemento_link nav-link">
+					<span class="fon_size_menu">Reporte Inspector</span>
+				</li>
 			</ul>
 
 		</div>
@@ -96,6 +99,9 @@
 
 			<div style="display: none;" class="wraper_table content_reporte" id="container_reporte_auxiliar">
 				<jsp:include page="./reporteAuxiliar.jsp"></jsp:include>	
+			</div>
+			<div style="display: none;" class="wraper_table content_reporte" id="container_reporte_inspector">
+				<jsp:include page="./reporteInspector.jsp"></jsp:include>	
 			</div>
 		</div>
 	</div>

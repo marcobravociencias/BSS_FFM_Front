@@ -1,0 +1,181 @@
+/* FILTROS INSPECTOR INCIDENCIA */
+.container-filtros-inspectorincidencia {
+    border: none !important;
+    z-index: 2;
+    position: relative;
+    padding-top: 3pt !important;
+    padding-bottom: 3pt !important;
+    max-width: 1140px;
+}
+
+.column-style-inspectorincidencia {
+  width: 136px !important;
+  padding-right: 0px !important;
+}
+
+.columna-filtro-ind::after {
+    content: "";
+    position: absolute;
+    right: 6%;
+    top: 67%;
+    width: 0;
+    height: 0;
+    border-left: 0.3em solid transparent;
+    border-right: 0.3em solid transparent;
+    border-top: 0.6em solid #939db2;
+    clear: both;
+    z-index: 2;
+    font-size: 14px;
+}
+
+label.label-filter {
+    margin-bottom: 0;
+    font-size: .7em;
+    font-weight: bold;
+}
+
+.input-filtro-inspectorincidencia {
+    border: 1px solid #dbdbdb !important;;
+    font-weight: 400;
+    font-size: 1em;
+    color: #818181 !important;
+    transition: all 0.5s ease;
+    border-bottom: 1px solid white;
+    background: white !important;
+    border-radius: .5em !important;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.07),0 1px 2px 0 rgba(0,0,0,.05)!important;
+}
+
+i.icono-noseleccion {
+    color: #ff9f3b;
+    display: inline-block;
+}
+
+.div-btn-busqueda {
+    /* padding: 0% !important; */
+    text-align: right !important;
+}
+
+#btn_consultar_incidencias {
+    background-color: #ffffff;
+    color: #7716fa;
+    border: solid 1px #7716fa !important;
+    padding: 0.5em 2em;
+    border-radius: 5px;
+    font-size: 0.7em;
+    margin-top: 25px;
+}
+
+.btn-sm {
+    padding: 0.7em 0.7em;
+    /* border-radius: 50% !important; */
+    font-size: 0.64rem;
+    border: 0px !important;
+  }
+
+.datepicker .datepicker-switch:hover,   
+.datepicker .next:hover,
+.datepicker .prev:hover,
+.datepicker tfoot tr th:hover {
+    background: #78a7f7;
+    color: white;
+}
+
+.dropdown-item.item-text-filtro.ng-binding {
+    display: contents;
+}
+
+.element-menu-filter:hover .dropdown-menu {
+    display: block;
+}
+.element-menu-filter:hover .dropdown-menu {
+    top: 0;
+    left: 100%;
+}
+
+#todo_filtro,
+#ninguno_filtro {
+  width: 45%;
+  background: #1266f1;
+  color: white;
+  margin-top: 0.5em;
+  padding: 0;
+}
+
+label.form-check-inputfiltro {
+  display: flex;
+}
+
+.element-menu-filter {
+  position: relative;
+}
+
+.dropdown-item.item-text-filtro.ng-binding {
+  display: contents;
+  /* margin-left: 1em; */
+}
+
+.form-check-input {
+  margin-right: 0.5em;
+}
+
+.dropdown-item {
+  padding: 0.25rem 1.5rem !important;
+}
+/* FILTROS INSPECTOR INCIDENCIA */
+
+/* CONTAINER INSPECTOR INCIDENCIA */
+.contenedor-inspectorIncidencia {
+    margin-top: 20px;
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+    max-width: 1115px;
+    border-radius: .5em;
+    padding: 0px !important;
+}
+
+.contenido_color{
+    display: inline;
+    margin-right: 1.5em;
+}
+.contenido_color i{
+    margin-right: .5em;
+}
+.contenido_color > small{
+    color:#4e5f71;
+    font-size: .9em;
+}
+#colores_estados {
+    margin-bottom: 10px !important;
+    margin-top: 10px !important;
+    font-family: 'Montserrat' !important;
+    font-size: .8em;
+}
+
+#mapaInspectorIncidencia {
+    height: 650px;
+    width: 100%;
+    background-color: gray;
+}
+
+/* TABLE INCIDENCIAS */
+#tableIncidencia tr td {
+    font-size: 0.7em;
+    font-family: "Montserrat" !important;
+    text-align: center;
+}
+thead#thead_incidencia tr th {
+    font-size: 0.7em;
+    padding: 1em 1em 1em;
+    text-align: center;
+}  
+#thead_incidencia .fa {
+    font-size: 13px;
+    color: gray;
+}
+thead#thead_incidencia {
+    font-weight: bold !important;
+    border: 1px #ccc;
+    font-family: "Montserrat" !important;
+}
+/* TABLE INCIDENCIAS */
+/* CONTAINER INSPECTOR INCIDENCIA */

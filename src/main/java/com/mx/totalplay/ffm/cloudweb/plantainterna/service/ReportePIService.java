@@ -15,5 +15,7 @@ public interface ReportePIService {
   public DataTableResponse consultaReporteDespacho(ParamConsultaOTPI paramsOT);
   
   public DataTableResponse consultaReporteAuxiliar(ParamConsultaOTPI paramsOT);
+  
+  public DataTableResponse consultaReporteInspector(ParamConsultaOTPI paramsOT);
  
 }

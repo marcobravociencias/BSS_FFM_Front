@@ -6,6 +6,7 @@ app.controller('reportesController', ['$scope','$q','reportesPIService', 'generi
 	let reporteTecnicoTabla;
 	let reporteDespachoTabla;
 	let reporteAuxiliarTabla;
+	let reporteInspectorTabla;
 	$scope.filtrosGeneral = {};
 	$scope.initComponents=function(){
 		console.log("Entra a inicializar elementos");
@@ -28,6 +29,7 @@ app.controller('reportesController', ['$scope','$q','reportesPIService', 'generi
 					$('#container_reporte_despacho').hide();
 					$('#container_reporte_tecnico').hide();
 					$('#container_reporte_auxiliar').hide();
+					$('#container_reporte_inspector').hide();
 					//$('.content_reporte').hide();
 					//$("#reporteOrdenesTable").show(); 
 					
@@ -42,6 +44,7 @@ app.controller('reportesController', ['$scope','$q','reportesPIService', 'generi
 					$('#container_reporte_ordenes').hide();
 					$('#container_reporte_despacho').hide();
 					$('#container_reporte_auxiliar').hide();
+					$('#container_reporte_inspector').hide();
 					//$('#reporteOrdenesTable').hide();
 					console.log("sale tecnico")
 					
@@ -54,6 +57,7 @@ app.controller('reportesController', ['$scope','$q','reportesPIService', 'generi
 					$('#container_reporte_tecnico').hide();
 					$('#container_reporte_ordenes').hide();
 					$('#container_reporte_auxiliar').hide();
+					$('#container_reporte_inspector').hide();
 					//$('#reporteOrdenesTable').hide();
 					console.log("sale despacho")
 					
@@ -65,10 +69,19 @@ app.controller('reportesController', ['$scope','$q','reportesPIService', 'generi
 					$('#container_reporte_tecnico').hide();
 					$('#container_reporte_ordenes').hide();
 					$('#container_reporte_despacho').hide();
+					$('#container_reporte_inspector').hide();
 					//$('#reporteOrdenesTable').hide();
 					console.log("sale aux")
 					
 				break;
+				case 'link_reporte_inspector':
+					$("#texto_header_reportes").text("Reporte Inspector");
+					$('#container_reporte_auxiliar').hide();
+					$('#container_reporte_tecnico').hide();
+					$('#container_reporte_ordenes').hide();
+					$('#container_reporte_despacho').hide();
+					$('#container_reporte_inspector').show();
+
 					
 			}
 			
@@ -351,6 +364,18 @@ $scope.abrirModalGeografiaRep=function(){
 
 		});
 		reporteAuxiliarTabla = $('#reporteAuxiliarTable').DataTable({
+			"paging": true,
+			"lengthChange": false,
+			"searching": false,
+			"ordering": false,
+			"pageLength": 10,
+			"info": false,
+			"autoWidth": true,
+			"language": idioma_espanol_not_font,
+			"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+
+		});
+		reporteInspectorTabla = $('#reporteInspectorTable').DataTable({
 			"paging": true,
 			"lengthChange": false,
 			"searching": false,
@@ -875,6 +900,126 @@ $scope.abrirModalGeografiaRep=function(){
 		}
 		
 	}
+
+	$scope.consultarReporteInspector=function(){
+		let isValido = true;
+		let errorMensaje = '';
+		let isValFecha = true;
+		
+		let subIntTemp = []
+		angular.forEach($scope.filtrosGeneral.tipoOrdenes, (e, i) => {
+			e.children.filter(f => f.checkedOpcion).map((k) => { subIntTemp.push(k.id); return k; })
+		})
+		
+		let ultimonivel = $scope.obtenerNivelUltimoJerarquia()
+		let clusters = $("#jstree-proton-3").jstree("get_selected", true)
+			.filter(e => e.original.nivel == ultimonivel)
+			.map(e => parseInt(e.id))
+		let selectedElms = $('#jstree').jstree("get_selected", true);
+		console.log(selectedElms)
+		let estatusOrdenes = []
+        angular.forEach($scope.filtrosGeneral.estatusdisponibles,(e,i)=>{
+			estatusOrdenes.push(e.id); 
+        })
+        
+        $.each(selectedElms, function () {
+			clusters.push(this.id);
+		});
+		if (clusters.length == 0) {
+			clusters = $scope.all_cluster;
+		}
+		
+
+		if (subIntTemp.length === 0) {
+			errorMensaje += '<li>Seleccione intervenci&oacute;n.</li>';
+			isValido = false
+		}
+
+		if (clusters.length === 0) {
+			errorMensaje += '<li>Seleccione geograf&iacute;a.</li>';
+			isValido = false
+		}
+		
+		if (document.getElementById('filtro_fecha_inicio_inspector').value == '') {
+			errorMensaje += '<li>Introduce Fecha Inicial</li>';
+			isValFecha = false;
+			isValido = false
+		}
+
+		if (document.getElementById('filtro_fecha_fin_inspector').value == '') {
+			errorMensaje += '<li>Introduce Fecha Final</li>';
+			isValFecha = false;
+			isValido = false
+		}
+
+		if (isValFecha) {
+			if (!validarFechaA()) {
+				$('.datepicker').datepicker('update', new Date());
+				errorMensaje += '<li>La fecha inicial no tiene que ser mayor a la final.</li>';
+				isValido = false
+			}
+		}
+		
+		if (isValido) {
+			if (reporteInspectorTabla) {
+				reporteInspectorTabla.destroy();
+			}
+			let params = {
+				idOrden: $.trim(document.getElementById('otI').value),
+				folioSistema: $.trim(document.getElementById('nEmpI').value),
+				claveCliente: '',
+				idSubTipoOrdenes: subIntTemp,
+				idEstatus: estatusOrdenes,
+				idClusters: clusters,
+				fechaInicio: $scope.getFechaFormato(document.getElementById('filtro_fecha_inicio_inspector').value),
+				fechaFin: $scope.getFechaFormato(document.getElementById('filtro_fecha_fin_inspector').value),
+				elementosPorPagina: 10
+			}
+			
+			console.log(reporteInspectorTabla.page.info())
+	
+			console.log(params);
+			
+			reporteInspectorTabla = $('#reporteInspectorTable').DataTable({
+				"processing": false,
+				"ordering": false,
+				"serverSide": true,
+				"scrollX": false,
+				"paging": true,
+				"lengthChange": false,
+				"searching": false,
+				"ordering": false,
+				"pageLength": 10,
+				"ajax": {
+					"url": "req/consultarReporteInspector",
+					"type": "POST",
+					"data": params,
+					"beforeSend": function () {
+						if(!swal.isVisible() ){
+							swal({ text: 'Cargando registros...', allowOutsideClick: false });
+							swal.showLoading();
+						}
+						
+					},
+					"dataSrc": function (json) {
+						return json.data;
+					},
+					"error":function(xhr, error, thrown){
+						handleError(xhr)
+					}, 
+					"complete": function () {
+						swal.close()
+					}
+				},
+				"columns": [null, null, null, null, null, null],
+				"language": idioma_espanol_not_font
+			});
+			
+		}else{
+			mostrarMensajeWarningValidacion(errorMensaje);
+		}
+		
+	}	
 	$scope.iniciarReporteOrdenes();  
 	$scope.initComponents();
 	$("#li-reporte-navbar").addClass('active')
