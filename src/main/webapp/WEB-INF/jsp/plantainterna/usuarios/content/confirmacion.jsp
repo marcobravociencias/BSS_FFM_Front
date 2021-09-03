@@ -69,13 +69,16 @@
 											Sin asignar
 										</span>
 									</div>
-									<div style="text-align: right; margin: 1em 0 0 0;">
-										<input type="button" class="btn btn-primary" ng-click="" value="GUARDAR">
-									</div> 
+								
                                 </form>
                                 
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
+                        <div style="text-align: right; margin: 1em 0 0 0;">
+                            <input type="button" class="btn btn-primary" ng-click="" value="GUARDAR">
+                        </div> 
                     </div>
                 </div>
             </div>

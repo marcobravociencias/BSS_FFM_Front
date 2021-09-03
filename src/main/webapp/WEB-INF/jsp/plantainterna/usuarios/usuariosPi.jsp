@@ -29,48 +29,59 @@
     	<jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>    
 
         <br>
-        <div class="container-fluid">
+        <div class="container" id="container_usuarios_alta_consulta">
             <div class="row">
-                <div class="col-md-2">
-                    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                        <a class="nav-link active" id="opcion-consulta-tab" data-toggle="pill" href="#opcion-consulta" role="tab" aria-controls="opcion-consulta" aria-selected="true">Consultar usuarios</a>
-                        <a class="nav-link" id="opcion-alta-tab" data-toggle="pill" href="#opcion-alta" role="tab" aria-controls="opcion-alta" aria-selected="false">Alta Usuarios</a>
-                    </div>
-                </div>
-                <div class="col-md-10">
+              
+                <div class="col-md-12">
+
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="opcion-consulta-tab" data-toggle="tab" href="#opcion-consulta" role="tab"
+                                aria-controls="opcion-consulta" aria-selected="true">Consultar usuario</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="opcion-alta-tab" data-toggle="tab" href="#opcion-alta" role="tab"
+                                aria-controls="opcion-alta" aria-selected="false">Alta usuarios</a>
+                        </li>
+                    </ul>
                     <div class="tab-content" id="v-pills-tabContent">
                         <div class="tab-pane fade show active" id="opcion-consulta" role="tabpanel" aria-labelledby="opcion-consulta-tab">
-                            <h3 class="text-center">Consulta Usuarios</h3>
-                            <hr/>
+                            <!--h3 class="text-center">Consulta Usuarios</h3-->
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <label class="span-consulta"><i class="fa fa-building"></i> Compa&ntilde;ias</label>
                                     <div class="input-group">
-                                        <select id="compania_select" class="selectpicker select_consulta" multiple data-actions-box="true">
+                                        <select id="compania_select" class="selectpicker form-control-sm select_consulta" multiple data-actions-box="true">
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <label class="span-consulta"><i class="fas fa-address-card"></i> Puesto</label>
                                     <div class="input-group">
-                                        <select id="puesto_select" class="selectpicker select_consulta" multiple data-actions-box="true">
+                                        <select id="puesto_select" class="selectpicker form-control-sm select_consulta" multiple data-actions-box="true">
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <label class="span-consulta"><i class="fas fa-map-marked"></i> Geograf&iacute;a</label>
                                     <div class="">
-                                    	<input style="height: 34px;" id="txtGeografiasConsulta" type="text" class="form-control inputFormulario" ng-click="abrirModalGeografiaConsulta()" aria-describedby="basic-addon3" placeholder="NO HAY SELECCI&Oacute;N" readonly autocomplete="off">
+                                    	<input id="txtGeografiasConsulta" type="text" class=" form-control  form-control-sm select_consulta inputFormulario" ng-click="abrirModalGeografiaConsulta()" aria-describedby="basic-addon3" placeholder="NO HAY SELECCI&Oacute;N" readonly autocomplete="off">
                                     </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label style="visibility: hidden;" class="span-consulta"><i class="fas fa-map-marked"></i> Geograf&iacute;a</label>
+                                    <button  ng-click="consultaUsuariosPorGeoCompPuestos()" id="btn-consultar-disponibilidad" type="button" class="btn btn-sm btn-primary" ng-click="consultaDisponibilidad()" style="margin-top: 0; margin: 0 !important;">
+                                        <i class="fa fa-search"></i>
+                                    </button>
                                 </div>
                             </div>
 				            <div id="contenedorPrincipalTabla" class="row" style="display: none;">
-								<div class="col-md-12">
+								<div class="columna-principal-users col-md-12">
 									<div class="table-responsive">
 				                    	<table class="table" id="table-usuario-pi">
 				                        	<thead>
 				                            	<tr>
-				                                	<th class="txtTablaConsultaJustificado">N�m. empleado</th>
+				                                	<th class="txtTablaConsultaJustificado">N&uacute;m. empleado</th>
 				                                    <th class="txtTablaConsultaJustificado">Usuario FFM</th>
 				                                    <th class="txtTablaConsultaJustificado">Nombre</th>
 				                                    <th class="txtTablaConsultaJustificado">Tipo usuario</th>
@@ -86,11 +97,11 @@
 							</div>
                         </div>
                         <div class="tab-pane fade" id="opcion-alta" role="tabpanel" aria-labelledby="opcion-alta-tab">
-                            <h3 class="text-center">Alta Usuarios</h3>
-                            <hr/>
-                            <div class="row">
+                            <!--h3 class="text-center">Alta Usuarios</h3>
+                            <hr/-->
+                            <div class="row row-datos-confirmacion">
                                 <div class="col-12">
-                                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                    <ul class="nav nav-pills mb-3" id="pills-tab-crearuser" role="tablist">
                                         <li class="nav-item" role="presentation">
                                             <a class="nav-link active" id="pills-informacion-tab" data-toggle="pill" href="#pills-informacion" role="tab" aria-controls="pills-informacion" aria-selected="true">Informaci&oacute;n</a>
                                         </li>

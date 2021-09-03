@@ -40,7 +40,6 @@
         </div>
     </div>
 </div>
-<hr/>
 <div class="row contenedorRowForm">
     <div class="col-md-4">
     	<label class="text-info-regitro"><i class="fa fa-user"></i> Nombre(s)*</label>
