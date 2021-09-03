@@ -151,14 +151,14 @@ public class ImplControlVehicularService implements ControlVehicularService {
         LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
 
         JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-        String id = jsonObject.get("id").getAsString();
+        String idVehiculo = jsonObject.get("idVehiculo").getAsString();
 
         String tokenAcces = principalDetail.getAccess_token();
         String urlRequest = principalDetail.getDireccionAmbiente().concat(constControlVehicular.getConsultarVehiculoUnico());
         logger.info("URL ##+" + urlRequest);
 
         Map<String, String> paramsRequestGet = new HashMap<String, String>();
-        paramsRequestGet.put("id", id);
+        paramsRequestGet.put("idVehiculo", idVehiculo);
 
         ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
                 ServiceResponseResult.class, tokenAcces);
