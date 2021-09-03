@@ -84,7 +84,7 @@ app.controller('controlVehicularController',
 			}
 
 			$scope.loadArbol = function () {
-				let geografia = $scope.geografiaList;
+				let geografia =$scope.geografiaList;
 				if (geografia.length !== 0) {
 
 					geografia.map((e) => {
@@ -291,10 +291,6 @@ app.controller('controlVehicularController',
 				return $scope.geografiaList.sort(compareGeneric)[0].nivel
 			}
 
-			$scope.selectValueExist = function (val, list) {
-
-			}
-
 			$scope.getData();
 			$scope.getVehiculos();
 			$scope.getArbol();
@@ -361,6 +357,7 @@ app.controller('controlVehicularController',
 			}
 
 			$scope.getNameText = function () {
+				
 				$scope.data.tipoVehiculos.map(function (t) {
 					if (t.idTipoVehiculo == Number($scope.vehiculo.idTipo)) {
 						$scope.vehiculoText.tipoText = t.tipoVehiculo;
@@ -585,14 +582,14 @@ app.controller('controlVehicularController',
 				$("#fechaVerificacion").val("");
 				$("#vencimientoTarjeta").val("");
 				$("#vencimientoPoliza").val("");
-				document.getElementById('arbol_vehiculo_consulta').placeholder = '-- Seleccione --';
 				$("#jstreeconsulta").jstree("destroy");
+				document.getElementById('arbol_vehiculo_consulta').placeholder = '-- Seleccione --';
 				$scope.filePlaca = null;
 				$scope.fileVehiculo = null;
 				$scope.fileCirculacion = null;
 				$scope.fileGasolina = null;
 				$("#rotuladoSi").attr("checked", true);
-				$scope.loadArbol();
+				$scope.getArbol();
 			}
 
 			validateFormulario = function (type) {

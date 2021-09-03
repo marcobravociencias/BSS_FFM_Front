@@ -58,25 +58,25 @@
     </div>
 </div>
 <br>
-<div class="row col-12">
+<div class="col-12">
     <div class="container-fluid contenedor">
         <div class="content-fluid">
             <table id="vehiculoTable" class="display table table-hover " cellspacing="0" width="100%">
                 <thead id="thead_table">
                     <tr>
-                        <th>Placa</th>
-                        <th>Tipo</th>
-                        <th>Marca</th>
-                        <th>Modelo</th>
-                        <th>A&ntilde;io</th>
-                        <th>Color</th>
-                        <th>Combustible</th>
-                        <th>N&uacute;m. Serie</th>
-                        <th>Geograf&iacute;a</th>
-                        <th>Foto placa</th>
-                        <th>Foto veh&iacute;culo</th>
-                        <th>Estatus</th>
-                        <th></th>
+                        <th>PLACA</th>
+                        <th>TIPO</th>
+                        <th>MARCA</th>
+                        <th>MODELO</th>
+                        <th>A&Ntilde;O</th>
+                        <th>COLOR</th>
+                        <th>COMBUSTIBLE</th>
+                        <th>N&Uacute;M. SERIE</th>
+                        <th>GEOGRAF&Iacute;A</th>
+                        <th>FOTO PLACA</th>
+                        <th>FOTO VEH&Iacute;CULO</th>
+                        <th>ESTATUS</th>
+                        <th><i class="fa fa-bars" style="color: gray; font-size: 13px;"></i></th>
                     </tr>
                 </thead>
                 <tbody>

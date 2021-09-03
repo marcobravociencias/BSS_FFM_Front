@@ -59,7 +59,7 @@
                             <div class="col-3 form-group">
                                 <label>N&uacute;mero de Serie </label>
                                 <input type="text" class="form-control form-control-sm" id="numSerie"
-                                    ng-model="vehiculo.numeroSerie" capitalize autocomplete="off"/>
+                                    ng-model="vehiculo.numeroSerie" capitalize autocomplete="off" />
                             </div>
                             <div class="col-3 form-group">
                                 <label>Combustible </label>
@@ -119,7 +119,7 @@
                                 <label>N&uacute;m. de P&oacute;liza
                                 </label>
                                 <input type="text" class="form-control form-control-sm" id="numPoliza"
-                                    ng-model="vehiculo.detalle.numeroPoliza" capitalize autocomplete="off"/>
+                                    ng-model="vehiculo.detalle.numeroPoliza" capitalize autocomplete="off" />
                             </div>
                             <div class="col-3 form-group">
                                 <label>Fecha Vencimiento P&oacute;liza
@@ -166,17 +166,17 @@
                                 <label>N&uacute;m. Tarjeta Gasolina
                                 </label>
                                 <input type="text" class="form-control form-control-sm" id="numTarjetaG"
-                                    ng-model="vehiculo.detalle.tarjetaGasolina" autocomplete="off"/>
+                                    ng-model="vehiculo.detalle.tarjetaGasolina" autocomplete="off" />
                             </div>
                             <div class="col-3 form-group">
                                 <label>Clave GPS </label>
                                 <input type="text" class="form-control form-control-sm" id="gps"
-                                    ng-model="vehiculo.detalle.claveGps" capitalize autocomplete="off"/>
+                                    ng-model="vehiculo.detalle.claveGps" capitalize autocomplete="off" />
                             </div>
                             <div class="col-3 form-group">
                                 <label>N&uacute;m. de Motor </label>
                                 <input type="text" class="form-control form-control-sm" id="numMotor"
-                                    ng-model="vehiculo.detalle.numeroMotor" capitalize autocomplete="off"/>
+                                    ng-model="vehiculo.detalle.numeroMotor" capitalize autocomplete="off" />
                             </div>
                             <div class="col-3 form-group">
                                 <label>N&uacute;m. de Chasis </label>
@@ -332,102 +332,111 @@
             </fieldset>
             <fieldset id="resumen-tab">
                 <div class="form-card">
-                    <table class="resumeTable">
-                        <tr>
-                            <td class="tableTextTitle">Placa: </td>
-                            <td class="tableText">{{vehiculo.placa}}</td>
-                            <td class="tableTextTitle">Tipo Veh&iacute;culo: </td>
-                            <td class="tableText">{{vehiculoText.tipoText}}</td>
-                            <td class="tableTextTitle">Marca: </td>
-                            <td class="tableText">{{vehiculoText.marcaText}}</td>
-                            <td class="tableTextTitle">Modelo: </td>
-                            <td class="tableText">{{vehiculoText.lineaText}}</td>
-                        </tr>
-                        <tr>
-                            <td class="tableTextTitle">A&ntilde;o: </td>
-                            <td class="tableText">{{vehiculo.anio}}</td>
-                            <td class="tableTextTitle">N&uacute;mero de serie: </td>
-                            <td class="tableText">{{vehiculo.numeroSerie}}</td>
-                            <td class="tableTextTitle">Combustible: </td>
-                            <td class="tableText">{{vehiculo.combustible}}</td>
-                            <td class="tableTextTitle">Color: </td>
-                            <td class="tableText">{{vehiculoText.colorText}}</td>
-                        </tr>
-                        <tr>
-                            <td class="tableTextTitle">Geograf&iacute;a: </td>
-                            <td class="tableText" colspan="7">{{vehiculoText.geografiaText}}</td>
-                        </tr>
-                    </table>
+                    <div class="col-12">
+                        <table class="resumeTable">
+                            <tr>
+                                <td class="tableTextTitle">Placa: </td>
+                                <td class="tableText">{{vehiculo.placa}}</td>
+                                <td class="tableTextTitle">Tipo Veh&iacute;culo: </td>
+                                <td class="tableText">{{vehiculoText.tipoText}}</td>
+                                <td class="tableTextTitle">Marca: </td>
+                                <td class="tableText">{{vehiculoText.marcaText}}</td>
+                                <td class="tableTextTitle">Modelo: </td>
+                                <td class="tableText">{{vehiculoText.lineaText}}</td>
+                            </tr>
+                            <tr>
+                                <td class="tableTextTitle">A&ntilde;o: </td>
+                                <td class="tableText">{{vehiculo.anio}}</td>
+                                <td class="tableTextTitle">N&uacute;mero de serie: </td>
+                                <td class="tableText">{{vehiculo.numeroSerie}}</td>
+                                <td class="tableTextTitle">Combustible: </td>
+                                <td class="tableText">{{vehiculo.combustible}}</td>
+                                <td class="tableTextTitle">Color: </td>
+                                <td class="tableText">{{vehiculoText.colorText}}</td>
+                            </tr>
+                            <tr>
+                                <td class="tableTextTitle">Geograf&iacute;a: </td>
+                                <td class="tableText" colspan="7">{{vehiculoText.geografiaText}}</td>
+                            </tr>
+                        </table>
+                        <table class="resumeTable">
+                            <tr>
+                                <td class="tableTextTitle">Aseguradora: </td>
+                                <td class="tableText">{{vehiculoText.aseguradoraText ? vehiculoText.aseguradoraText :
+                                    'Sin
+                                    informaci&oacute;n'}}</td>
+                                <td class="tableTextTitle">N&uacute;mero de poliza: </td>
+                                <td class="tableText">{{vehiculo.detalle.numeroPoliza ? vehiculo.detalle.numeroPoliza :
+                                    'Sin
+                                    informaci&oacute;n'}}</td>
+                                <td class="tableTextTitle">Fecha vencimiento poliza: </td>
+                                <td v>{{vehiculo.detalle.fechaVencimientoPoliza ?
+                                    vehiculo.detalle.fechaVencimientoPoliza :
+                                    'Sin informaci&oacute;n'}}</td>
+                                <td class="tableTextTitle">N&uacute;m. Tarjeta de circulaci&oacute;n: </td>
+                                <td class="tableText">{{vehiculo.detalle.tarjetaCirculacion ?
+                                    vehiculo.detalle.tarjetaCirculacion : 'Sin
+                                    informaci&oacute;n'}}</td>
+                            </tr>
+                            <tr>
+                                <td class="tableTextTitle">Vencimiento tarjeta circulaci&oacute;n: </td>
+                                <td class="tableText">{{vehiculo.detalle.fechaVencimientoTarjeta ?
+                                    vehiculo.detalle.fechaVencimientoTarjeta :
+                                    'Sin informaci&oacute;n'}}</td>
+                                <td class="tableTextTitle">N&uacute;mero de verificaci&oacute;n: </td>
+                                <td class="tableText">{{vehiculo.detalle.numeroVerificacion ?
+                                    vehiculo.detalle.numeroVerificacion : 'Sin
+                                    informaci&oacute;n'}}</td>
+                                <td class="tableTextTitle">Fecha de verificaci&oacute;n: </td>
+                                <td class="tableText">{{vehiculo.detalle.fechaVerificacion ?
+                                    vehiculo.detalle.fechaVerificacion : 'Sin
+                                    informaci&oacute;n'}}</td>
+                                <td class="tableTextTitle">Clave pensi&oacute;n: </td>
+                                <td class="tableText">{{vehiculo.detalle.clavePension ? vehiculo.detalle.clavePension :
+                                    'Sin
+                                    informaci&oacute;n'}}</td>
+                            </tr>
+                            <tr>
+                                <td class="tableTextTitle">N&uacute;m. tarjeta gasolina: </td>
+                                <td class="tableText">{{vehiculo.detalle.tarjetaGasolina ?
+                                    vehiculo.detalle.tarjetaGasolina
+                                    : 'Sin
+                                    informaci&oacute;n'}}</td>
+                                <td class="tableTextTitle">Clave GPS: </td>
+                                <td class="tableText">{{vehiculo.detalle.claveGps ? vehiculo.detalle.claveGps : 'Sin
+                                    informaci&oacute;n'}}
+                                </td>
+                                <td class="tableTextTitle">N&uacute;m motor: </td>
+                                <td class="tableText">{{vehiculo.detalle.numeroMotor ? vehiculo.detalle.numeroMotor :
+                                    'Sin
+                                    informaci&oacute;n'}}</td>
+                                <td class="tableTextTitle">N&uacute;m chasis: </td>
+                                <td class="tableText">{{vehiculo.detalle.numeroChasis ? vehiculo.detalle.numeroChasis :
+                                    'Sin
+                                    informaci&oacute;n'}}</td>
+                            </tr>
+                            <tr>
+                                <td class="tableTextTitle">Engomado: </td>
+                                <td class="tableText">{{vehiculo.detalle.engomado ? vehiculo.detalle.engomado : 'Sin
+                                    informaci&oacute;n'}}
+                                </td>
+                                <td class="tableTextTitle">Holograma: </td>
+                                <td class="tableText">{{vehiculo.detalle.holograma ? vehiculo.detalle.holograma : 'Sin
+                                    informaci&oacute;n'}}
+                                </td>
+                                <td class="tableTextTitle">Ubicaci&oacute;n CDO: </td>
+                                <td class="tableText">{{vehiculoText.encierroText ? vehiculoText.encierroText : 'Sin
+                                    informaci&oacute;n'}}
+                                </td>
+                                <td class="tableTextTitle">Rotulado: </td>
+                                <td class="tableText">{{vehiculoText.rotulado ? vehiculoText.rotulado : 'Sin
+                                    informaci&oacute;n'}}</td>
+                            </tr>
+                        </table>
+                        <h5 class="fs-title"> <i class="fas fa-info-circle" style="color: orange;"></i> Verifica la
+                            informaci&oacute;n antes de guardar</h5>
+                    </div>
                 </div>
-                <div class="form-card">
-                    <table class="resumeTable">
-                        <tr>
-                            <td class="tableTextTitle">Aseguradora: </td>
-                            <td class="tableText">{{vehiculoText.aseguradoraText ? vehiculoText.aseguradoraText : 'Sin
-                                informaci&oacute;n'}}</td>
-                            <td class="tableTextTitle">N&uacute;mero de poliza: </td>
-                            <td class="tableText">{{vehiculo.detalle.numeroPoliza ? vehiculo.detalle.numeroPoliza : 'Sin
-                                informaci&oacute;n'}}</td>
-                            <td class="tableTextTitle">Fecha vencimiento poliza: </td>
-                            <td v>{{vehiculo.detalle.fechaVencimientoPoliza ? vehiculo.detalle.fechaVencimientoPoliza :
-                                'Sin informaci&oacute;n'}}</td>
-                            <td class="tableTextTitle">N&uacute;m. Tarjeta de circulaci&oacute;n: </td>
-                            <td class="tableText">{{vehiculo.detalle.tarjetaCirculacion ?
-                                vehiculo.detalle.tarjetaCirculacion : 'Sin
-                                informaci&oacute;n'}}</td>
-                        </tr>
-                        <tr>
-                            <td class="tableTextTitle">Vencimiento tarjeta circulaci&oacute;n: </td>
-                            <td class="tableText">{{vehiculo.detalle.fechaVencimientoTarjeta ?
-                                vehiculo.detalle.fechaVencimientoTarjeta :
-                                'Sin informaci&oacute;n'}}</td>
-                            <td class="tableTextTitle">N&uacute;mero de verificaci&oacute;n: </td>
-                            <td class="tableText">{{vehiculo.detalle.numeroVerificacion ?
-                                vehiculo.detalle.numeroVerificacion : 'Sin
-                                informaci&oacute;n'}}</td>
-                            <td class="tableTextTitle">Fecha de verificaci&oacute;n: </td>
-                            <td class="tableText">{{vehiculo.detalle.fechaVerificacion ?
-                                vehiculo.detalle.fechaVerificacion : 'Sin
-                                informaci&oacute;n'}}</td>
-                            <td class="tableTextTitle">Clave pensi&oacute;n: </td>
-                            <td class="tableText">{{vehiculo.detalle.clavePension ? vehiculo.detalle.clavePension : 'Sin
-                                informaci&oacute;n'}}</td>
-                        </tr>
-                        <tr>
-                            <td class="tableTextTitle">N&uacute;m. tarjeta gasolina: </td>
-                            <td class="tableText">{{vehiculo.detalle.tarjetaGasolina ? vehiculo.detalle.tarjetaGasolina
-                                : 'Sin
-                                informaci&oacute;n'}}</td>
-                            <td class="tableTextTitle">Clave GPS: </td>
-                            <td class="tableText">{{vehiculo.detalle.claveGps ? vehiculo.detalle.claveGps : 'Sin
-                                informaci&oacute;n'}}
-                            </td>
-                            <td class="tableTextTitle">N&uacute;m motor: </td>
-                            <td class="tableText">{{vehiculo.detalle.numeroMotor ? vehiculo.detalle.numeroMotor : 'Sin
-                                informaci&oacute;n'}}</td>
-                            <td class="tableTextTitle">N&uacute;m chasis: </td>
-                            <td class="tableText">{{vehiculo.detalle.numeroChasis ? vehiculo.detalle.numeroChasis : 'Sin
-                                informaci&oacute;n'}}</td>
-                        </tr>
-                        <tr>
-                            <td class="tableTextTitle">Engomado: </td>
-                            <td class="tableText">{{vehiculo.detalle.engomado ? vehiculo.detalle.engomado : 'Sin
-                                informaci&oacute;n'}}
-                            </td>
-                            <td class="tableTextTitle">Holograma: </td>
-                            <td class="tableText">{{vehiculo.detalle.holograma ? vehiculo.detalle.holograma : 'Sin
-                                informaci&oacute;n'}}
-                            </td>
-                            <td class="tableTextTitle">Ubicaci&oacute;n CDO: </td>
-                            <td class="tableText">{{vehiculoText.encierroText ? vehiculoText.encierroText : 'Sin
-                                informaci&oacute;n'}}
-                            </td>
-                            <td class="tableTextTitle">Rotulado: </td>
-                            <td class="tableText">{{vehiculoText.rotulado ? vehiculoText.rotulado : 'Sin
-                                informaci&oacute;n'}}</td>
-                        </tr>
-                    </table>
-                </div>      
                 <input type="button" name="previous" class="previous btn btn-primary btnBack" value="Regresar" />
                 <input type="button" class="submit btn btn-primary btnTotal" value="Guardar"
                     onclick="guardarVehiculo()" />
