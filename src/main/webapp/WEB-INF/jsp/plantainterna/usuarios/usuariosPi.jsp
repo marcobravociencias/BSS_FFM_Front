@@ -60,7 +60,7 @@
                                 <div class="col-md-4">
                                     <label class="span-consulta"><i class="fas fa-map-marked"></i> Geograf&iacute;a</label>
                                     <div class="">
-                                    	<input style="height: 34px;" id="txtGeografiasConsulta" type="text" class="form-control inputFormulario" ng-click="abrirModalGeografiaConsulta()" aria-describedby="basic-addon3" placeholder="NO HAY SELECCI&Oacute;N" autocomplete="off">
+                                    	<input style="height: 34px;" id="txtGeografiasConsulta" type="text" class="form-control inputFormulario" ng-click="abrirModalGeografiaConsulta()" aria-describedby="basic-addon3" placeholder="NO HAY SELECCI&Oacute;N" readonly autocomplete="off">
                                     </div>
                                 </div>
                             </div>
