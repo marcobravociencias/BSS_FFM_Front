@@ -506,6 +506,79 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	$scope.$apply();
     });
     
+    $scope.registrarUsuario = function() {
+    	let paramsRegistro = {
+    			  idUsuario: 0,
+    			  nombre: "Juan",
+    			  apellidoPaterno: "Lopez",
+    			  apellidoMaterno: "Perez",
+    			  numeroEmpleado: "14102832",
+    			  usuario: "usuario324",
+    			  password: "12345",
+    			  identificacionTributaria: "TURPL901203",
+    			  identificacion: "872R987FDIUSFODSF",
+    			  genero: "MASCULINO",
+    			  fotoPerfil: "{archivo:\"\",\"bucketId\":\"\", \"nombre\":\"\"}",
+    			  urlFotoPerfil: "string",
+    			  urlFB: "string",
+    			  correoElectronico: "usuario@gmail.com",
+    			  telefonoCelular: 553289075,
+    			  idEstatusUsuario: 0,
+    			  idGeografia: 0,
+    			  idUsuarioJefe: 1,
+    			  llaveExterna: "4532",
+    			  tipoUsuario: 1,
+    			  idProveedor: 15,
+    			  intentosFallidos: 0,
+    			  fechaUltimoLogin: "2021-09-02T16:46:58.513Z",
+    			  primerIngreso: 0,
+    			  fechaBloqueo: "2021-09-02T16:46:58.513Z",
+    			  idDispositivo: "string",
+    			  fechaAlta: "2021-09-02T16:46:58.513Z",
+    			  fechaActualizacion: "2021-09-02T16:46:58.513Z",
+    			  activo: 0,
+    			  idCiudadNatal: 23,
+    			  idUsuarioDespacho: 10,
+    			  idUsuarioModifica: 13,
+    			  idHorario: 9,
+    			  idPerfil: 2,
+    			  operarios: [
+    			    1
+    			  ],
+    			  workData: {
+    			    idJefeInmediato: "string",
+    			    geografias: [
+    			      0
+    			    ],
+    			    idCompania: "string",
+    			    idTipoUsuario: 0,
+    			    numeroEmpleado: "string",
+    			    password: "string",
+    			    idClasificacionOperario: 0,
+    			    intervenciones: [
+    			      0
+    			    ],
+    			    idOperarios: [
+    			      0
+    			    ],
+    			    permisos: [
+    			      0
+    			    ],
+    			    idAsignacionAutomatica: "string"
+    			  },
+    			  permisos: [
+    			    {
+    			      idCatPermiso: 1
+    			    }
+    			  ],
+    			  skills: [
+    			    {
+    			      idTipoOt: 1
+    			    }
+    			  ]
+    			};
+	}
+    
     // *** FIN CAMBIOS REYNEL *** 
     
 //    $scope.consultarCompanias = function() {
