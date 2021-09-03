@@ -49,15 +49,20 @@
                                 </div>
                             </div>
                             <div class="col-4">
-                                <div class="row">
-                                    <input type="text" class="form-control" ng-model="filterTecnicoDisponible.nombre" placeholder="Buscar..." aria-label="Text input with checkbox">
+                            	<div class="row">
+                                	<div class="col-md-12">
+                                    	<div class="input-group input-group-sm content-seach-group">
+                                        	<input type="text" class="form-control buscadorGenerico" ng-model="buscarCiudad" placeholder="Buscar ciudad"> 
+                                        	<span class="fa fa-search iconoBusqueda"></span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <label class="titulos-confirmacion">* Ciudad Natal:</label>
                                 </div>
                                 <form name="myForm">
                                 	<div class="scrollListaCiudadNatal">
-	                                    <div class="row" ng-repeat="ciudad in listaGeografiasSeleccionadas">
+	                                    <div class="row" ng-repeat="ciudad in listaGeografiasSeleccionadas | filter:buscarCiudad track by $index">
 	                                        <div class="col-12">
 	                                            <label class="respuesta-confirmacion">
 	                                                <input type="radio" ng-model="ciudadNatal.id" ng-value="ciudad.id">
