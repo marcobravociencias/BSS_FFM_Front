@@ -1,6 +1,13 @@
 .controlContent {
   font-family: "Montserrat" !important;
   font-size: 12px !important;
+  box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+  padding-bottom: 1em;
+  background: white;
+  border-radius: .5em;
+  padding-top: 1em;
+  margin-top: 1em;
+  max-width: 1140px;
 }
 .title {
   color: #834594;
@@ -207,11 +214,15 @@ thead#thead_table tr th {
   font-size: 0.7em;
   padding: 1em 1em 1em;
   text-align: center;
-  font-weight: bold;
+  font-weight: lighter !important;
 }
 
 thead#thead_table{
   border: 1px #ccc;
+  padding: 1em;
+  position: relative;
+  background-color: #b1b1b1;
+  color: #fff;
 }
 
 
@@ -258,12 +269,6 @@ table.dataTable.no-footer{
   font-size: 1em;
 }
 
-.contenedor{
-  box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
-  border-radius: .5em;
-  padding: 0px !important;
-  margin-bottom: 20px;
-}
 
 .page-link{
   border: none;
@@ -522,13 +527,14 @@ select.list-dt:focus {
 
 .tableTextTitle{
   text-align: left;
-  font-weight: bold;
-  color: #000;
+  color: #784085;
 }
 
 .tableText{
   text-align: left;
+  color:#7c7c7d;
 }
+
 
 #options.dropdown-menu{
   min-width: 1em !important;
@@ -545,4 +551,69 @@ li{
 
 .dataTables_wrapper .dataTables_paginate .paginate_button{
   padding: 1px;
+}
+
+  
+#myTabVehiculo {
+  margin-bottom: 1em;
+}
+
+#myTabVehiculo .nav-item:first-child .nav-link {
+  border-top-left-radius: 1em;
+  border-bottom-left-radius: 1em;
+}
+
+#myTabVehiculo .nav-link.active {
+  color: #7716fa !important;
+  font-weight: bolder;
+  background: #f9f9f9;
+}
+
+#myTabVehiculo .nav-link {
+  padding-top: .6em;
+  padding-bottom: .6em;
+  border: solid 1px #ccc;
+}
+
+#myTabVehiculo .nav-item:last-child .nav-link {
+  border-top-right-radius: 1em;
+  border-bottom-right-radius: 1em;
+}
+
+.nav-tabs {
+  border-bottom: 0px solid !important;
+}
+
+#pills-tab-vehiculo li a.active {
+  background-color: #adadad;
+  box-shadow: none;
+  /* color: #888888; */
+  font-weight: bolder;
+  /* border-left: .3em solid #7a1cfa; */
+}
+
+#pills-tab-vehiculo li a {
+  padding: .8em 2em;
+  border-radius: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  border-radius: .5em;
+}
+
+.box-row{
+  /* margin-top: .5em; */
+  border-top: 1px solid #d7d7d7;
+  padding-top: .7em;
+}
+
+.container-fluid{
+  padding-left: 0;
+  padding-right:  0;;
+  
+}
+
+.fa-edit {
+  color: #7716fa !important;
+  cursor: pointer;
+  font-size: 12px;
 }
