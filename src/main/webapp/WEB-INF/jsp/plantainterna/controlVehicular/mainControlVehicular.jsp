@@ -17,11 +17,10 @@
         <link rel="manifest" href="${pageContext.request.contextPath}/resources/img/iconsistema/manifest.json" />
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
-
-        <link href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap.css"
+        <link href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap.min.css"
             rel="stylesheet" />
 
-        <link href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css"
+        <link href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap.css"
             rel="stylesheet" />
 
         <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css"
@@ -37,8 +36,9 @@
         <link href="${pageContext.request.contextPath}/resources/libraries/jstree/css/proton/style.css"
             rel="stylesheet" />
 
-        <link href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap.min.css"
+        <link href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css"
             rel="stylesheet" />
+
         <link href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/font-awesome.css"
             rel="stylesheet" />
         <link
@@ -55,6 +55,7 @@
 
     <body ng-controller="controlVehicularController">
         <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
+        <br>
         <div class="container-fluid controlContent " style="margin-top: 1em;">
             <div class="row">
                 <div id="datos_tablas" class="col-sm-12">
@@ -63,34 +64,34 @@
                     </a>
                     <div class="content-fluid">
                         <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
-                                        aria-orientation="vertical">
-                                        <a class="nav-link active" id="alta-tab" data-toggle="pill" onclick="resetAll()"
-                                            href="#alta" role="tab" aria-controls="alta" aria-selected="true">Alta
-                                            Veh&iacute;culo</a>
-                                        <a class="nav-link" id="consulta-tab" data-toggle="pill" href="#consulta" onclick="resetAll()"
-                                            role="tab" aria-controls="consulta" aria-selected="false">Consulta
-                                            Veh&iacute;culos</a>
-                                        <a class="nav-link" id="modifica-tab" data-toggle="pill"
-                                            ng-show="isEdit" role="tab"
-                                            aria-selected="false">Modifica Veh&iacute;culo</a>
-                                    </div>
+                            <ul class="nav nav-tabs" id="myTabVehiculo" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="consulta-tab" data-toggle="tab" href="#consulta"
+                                        role="tab" aria-controls="consulta" onclick="resetAll()"
+                                        aria-selected="true">Consultar
+                                        Veh&iacute;culos</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="modifica-tab" data-toggle="tab" href="#modifica"
+                                        onclick="resetAll()" role="tab" aria-controls="modifica" ng-show="isEdit"
+                                        aria-selected="false">Mofificar
+                                        Veh&iacute;culo</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="alta-tab" data-toggle="tab" href="#alta"
+                                        onclick="resetAll()" role="tab" aria-controls="alta" aria-selected="false">Alta
+                                        Veh&iacute;culo</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane fade" id="alta" role="tabpanel" aria-labelledby="alta-tab">
+                                    <jsp:include page="./insertarVehiculo.jsp"></jsp:include>
                                 </div>
-                                <div class="col-md-10">
-                                    <div class="tab-content">
-                                        <div class="tab-pane fade show active" id="alta" role="tabpanel"
-                                            aria-labelledby="alta-tab">
-                                            <jsp:include page="./insertarVehiculo.jsp"></jsp:include>
-                                        </div>
-                                        <div class="tab-pane fade" id="consulta" role="tabpanel"
-                                            aria-labelledby="consulta-tab">
-                                            <jsp:include page="./consultarVehiculo.jsp"></jsp:include>
-                                        </div>
-                                        
-                                    </div>
+                                <div class="tab-pane fade show active" id="consulta" role="tabpanel"
+                                    aria-labelledby="consulta-tab">
+                                    <jsp:include page="./consultarVehiculo.jsp"></jsp:include>
                                 </div>
+
                             </div>
                         </div>
                     </div>

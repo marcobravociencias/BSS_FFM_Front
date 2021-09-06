@@ -37,7 +37,15 @@
 
 .scrollGeneralArbol {
 	padding:4px;
-	height: 380px;
+	height: 330px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	text-align:justify;
+}
+
+.scrollListaCiudadNatal {
+	padding:3px;
+	height: 230px;
 	overflow-x: hidden;
 	overflow-y: auto;
 	text-align:justify;
