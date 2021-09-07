@@ -460,4 +460,18 @@ color: inherit;
   display: none;
 } 
 }
-
+div.comentario_web{
+  margin-left:15px !important;
+}
+.autor_comentario{
+  font-size:0.8em !important;
+}
+div.comentario_web span{
+  font-size:0.7em !important;
+}
+div.comentario_movil span{
+  font-size:0.7em !important;
+}
+.dataTables_wrapper.no-footer .dataTables_scrollBody{
+  border-bottom:none !important;
+}

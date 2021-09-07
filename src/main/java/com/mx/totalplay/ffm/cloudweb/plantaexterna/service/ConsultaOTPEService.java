@@ -15,4 +15,7 @@ public interface ConsultaOTPEService {
 	
 	public ServiceResponseResult consultarFallas(String params);
 
+	public ServiceResponseResult consultarComentarios(String params);
+	
+	public ServiceResponseResult consultarImagenes(String params);
 }

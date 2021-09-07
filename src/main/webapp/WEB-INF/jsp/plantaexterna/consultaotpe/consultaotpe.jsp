@@ -91,6 +91,8 @@
         <jsp:include page="./modals/modalHistorico.jsp"></jsp:include>
         <jsp:include page="./modals/modalHerramientas.jsp"></jsp:include>
         <jsp:include page="./modals/modalConsultaFallas.jsp"></jsp:include>
+        <jsp:include page="./modals/modalComentarios.jsp"></jsp:include>
+        <jsp:include page="./modals/modalImagenes.jsp"></jsp:include>
     </body>
 
     <!-- LIBRERIAS -->
