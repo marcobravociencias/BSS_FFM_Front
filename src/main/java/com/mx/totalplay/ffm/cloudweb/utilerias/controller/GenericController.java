@@ -50,7 +50,7 @@ public class GenericController {
 		logger.info("Enrutando ... "+redirectEnrutamiento );
 		
 		return redirectEnrutamiento;				
-	}	
+	}		
 	
 	 @ModelAttribute("googlkeyattrvar")
 	 public Map<String,Object> agregarVariablesGeneric () {

@@ -29,7 +29,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
         swal.showLoading();
 
         var params = {
-            "idTipoAlerta": alerta.id
+            "idTipoAlerta": 4
         }        
         console.log("params",params)
         mainAlertasService.getDetalleAlertas(params).then(function success(response) {
@@ -59,7 +59,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
             arra[1] = alertaob.folioSistema ? alertaob.folioSistema : '';
             arra[2] = `
                 <div class="card card-alertas-pendientes" onclick="consultarAccionesAlerta('${ordenobj.id}', '${ordenobj.folioSistema}', '${alertaob.latitudAlerta}', '${alertaob.longitudAlerta}', '${tecnicoObj.latitud}', '${tecnicoObj.longitud}', '${alertaob.idSubAlerta}', '${ordenobj.idIntervencion}', 
-                    '${ordenobj.idSubIntervencion}', '${tecnicoObj.id}', '${alertaob.id}')">
+                    '${ordenobj.idSubIntervencion}', '${tecnicoObj.id}', '${alertaob.idRegistroAlerta}')">
                     <div class="card-body card-body-alertas">
                         <div class="row">
                             <div class="col-12">
@@ -68,7 +68,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-12">    
                                 <span class="text-primary-alerta">Direcci&oacute;n: </span><span class="text-secundary-alerta"> ${ ordenobj.direccion } </span>
                             </div>
                         </div>
@@ -81,7 +81,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
                     <div class="card-footer text-muted card-alertas-pendientes-foot">
                         <div class="row">
                             <div class="col-12">
-                                <span class="text-primary-alerta">Alerta: </span><span class="text-secundary-alerta">  ${alertaob.descSubtipoAlerta}  </span>
+                                <span class="text-primary-alerta">Alerta: </span><span class="text-secundary-alerta">  ${alertaob.descripcionSubtipoAlerta}  </span>
                             </div>
                         </div>
                     </div>
