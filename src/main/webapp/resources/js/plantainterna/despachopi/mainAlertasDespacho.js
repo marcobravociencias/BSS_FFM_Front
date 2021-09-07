@@ -58,8 +58,8 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
             arra[0] = alertaob.id ? alertaob.id : '';
             arra[1] = alertaob.folioSistema ? alertaob.folioSistema : '';
             arra[2] = `
-                <div class="card card-alertas-pendientes" onclick="consultarAccionesAlerta(${ordenobj.id}, ${ordenobj.folioSistema}, ${alertaob.latitudAlerta}, ${alertaob.longitudAlerta}, ${tecnicoObj.latitud}, ${tecnicoObj.longitud}, ${alertaob.idSubAlerta}, ${ordenobj.idIntervencion}, 
-                    ${ordenobj.idSubIntervencion}, ${tecnicoObj.id}, ${alertaob.id})">
+                <div class="card card-alertas-pendientes" onclick="consultarAccionesAlerta('${ordenobj.id}', '${ordenobj.folioSistema}', '${alertaob.latitudAlerta}', '${alertaob.longitudAlerta}', '${tecnicoObj.latitud}', '${tecnicoObj.longitud}', '${alertaob.idSubAlerta}', '${ordenobj.idIntervencion}', 
+                    '${ordenobj.idSubIntervencion}', '${tecnicoObj.id}', '${alertaob.id}')">
                     <div class="card-body card-body-alertas">
                         <div class="row">
                             <div class="col-12">
