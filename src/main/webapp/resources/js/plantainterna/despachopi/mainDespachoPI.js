@@ -32,7 +32,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
     app.filtrosDespachoPrincipal($scope,mainDespachoService)
     app.mapasControllerDespachoPI($scope,mainDespachoService)
     app.modalDespachoPrincipal($scope,mainDespachoService,$q,genericService)
-    app.alertasDespachoPrincipal($scope,mainAlertasService)
+    app.alertasDespachoPrincipal($scope,mainAlertasService, genericService   )
     app.misProyectosDependencias($scope,mainDespachoService)
     
     $scope.isCargaTecnicosDisponibles=false;

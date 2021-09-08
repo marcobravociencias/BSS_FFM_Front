@@ -29,7 +29,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
         swal.showLoading();
 
         var params = {
-            "idTipoAlerta": 4
+            "idTipoAlerta": alerta.id
         }        
         console.log("params",params)
         mainAlertasService.getDetalleAlertas(params).then(function success(response) {
