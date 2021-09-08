@@ -10,6 +10,8 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	$scope.listaCompanias = [];
     $scope.listaPuestos = [];
     $scope.listaGeografias = [];
+	$scope.listaGeografiasRespaldo = [];
+	$scope.listaPermisosRespaldo = [];
     $scope.listaIdGeografias = [];
     $scope.elementosPorPaginaTablaConsulta = 10;
     $scope.paginaTablaConsulta = 1;
@@ -127,6 +129,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
                             e.icon= "fa fa-globe";
                             return e
                         })       
+						$scope.listaPermisosRespaldo = angular.copy(permisosLista);
                         $('#arbolPermisoRegistro').bind('loaded.jstree', function(e, data) {
 							//$(this).jstree("open_all");
                         }).jstree({
@@ -160,11 +163,13 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	                            if (elemento.nivel <= nivelUsuario) {
 	                            	listGeografias.push(elemento);
 	                            	$scope.listaGeografias.push(elemento);
+									$scope.listaGeografiasRespaldo.push(elemento);
 	                            }
 	                        });
                     	}else{
                     		listGeografias = results[4].data.result.geografia;
                     		$scope.listaGeografias = results[4].data.result.geografia;
+                    		$scope.listaGeografiasRespaldo = results[4].data.result.geografia;
                     	}
                     	geografia=listGeografias;
                         geografia.map((e)=>{

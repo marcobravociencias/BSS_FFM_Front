@@ -356,13 +356,13 @@ button.btn.dropdown-toggle.bs-placeholder.btn-secondary, .bs-actionsbox .actions
 #v-pills-tab .nav-link:not(.active) {
     color: grey !important;
 }
-#pills-tab .nav-link.active, .nav-pills .show>.nav-link, #pills-tab-mod .nav-link.active, .nav-pills .show>.nav-link {
+#pills-tab .nav-link.active, .nav-pills .show>.nav-link, .nav-pills .show>.nav-link {
     color: #fff;
     background-color: #773f85;
     box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
     cursor: default;
 }
-#pills-tab .nav-link:not(.active), #pills-tab-mod .nav-link:not(.active) {
+#pills-tab .nav-link:not(.active) {
     color: grey !important;
 }
 .text-info-regitro {
@@ -606,4 +606,24 @@ div.dataTables_wrapper div.dataTables_filter input {
     margin-top: .5em;
     border-top: 1px solid #d7d7d7;
     padding-top: .7em;
+}
+
+#pills-tab-mod{
+	margin:0;
+	margin-bottom:1em;
+}
+
+#pills-tab-mod li a{
+    padding:.8em 2em;
+    border-radius:0;
+    margin-top: 0;
+    margin-bottom: 0;
+    border-radius: .5em;
+}
+#pills-tab-mod li a.active{
+   background-color: #adadad;
+   box-shadow:none;
+   /* color:#888888; */
+   font-weight:bolder;
+   /* border-left:.3em solid #7a1cfa; */
 }
