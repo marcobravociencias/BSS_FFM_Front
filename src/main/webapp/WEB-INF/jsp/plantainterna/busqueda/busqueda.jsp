@@ -494,6 +494,7 @@
             </div>
 
 
+           
             <jsp:include page="./content/detalleCuenta.jsp"></jsp:include>
             <jsp:include page="./content/detalleActivar.jsp"></jsp:include>
             <jsp:include page="./content/detalleCotizacion.jsp"></jsp:include>
@@ -503,12 +504,17 @@
             <jsp:include page="./content/detalleOportunidad.jsp"></jsp:include>
             <jsp:include page="./content/detalleOs.jsp"></jsp:include>
             <jsp:include page="./content/detalleTicket.jsp"></jsp:include>
-            
         </div>
 
 
     </div>
 
+    <jsp:include page="./modal/modalDetalleContacto.jsp"></jsp:include>
+    <jsp:include page="./modal/modalDetalleServicio.jsp"></jsp:include>
+    <jsp:include page="./modal/modalEvidenciaBusqueda.jsp"></jsp:include>
+    <jsp:include page="./modal/modalImagenEvidenciaBusqueda.jsp"></jsp:include>
+    <jsp:include page="./modal/modalProductos.jsp"></jsp:include>
+    <jsp:include page="./modal/serviciosNoConfigurables.jsp"></jsp:include>
     
 </body>
 <!-- Scripts libraries -->
@@ -532,5 +538,6 @@
 <script	src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/generic/directives.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/plantainterna/busqueda/activarController.js"></script>
 
 </html>

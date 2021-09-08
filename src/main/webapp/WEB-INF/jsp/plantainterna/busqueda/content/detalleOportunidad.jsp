@@ -5,7 +5,7 @@
     <div  ng-click="regresarConsulta()" class="container-regresar-button text-center">
         <span class="regresar-elemento fa fa-undo"></span>
     </div>
-    <div  ng-click="abrirNoticiasos()" class="container-regresar-button text-center">
+    <div  ng-click="abrirVentanaNoticias()" class="container-regresar-button text-center">
         <span class="regresar-elemento fa fa-newspaper-o"></span>
     </div>
     <div  ng-click="regresarHome()" class="container-regresar-button text-center">
@@ -26,7 +26,7 @@
 
 <div  ng-show="showOportunidad" class="col-12 separador-according">
     <div ng-show="isAbiertoOSNoticias" class="container-noticia-elemento">
-        <img id="btnRefresNoticias" style="cursor: pointer;" alt="Refresh" ng-click="objectoConsulta()"  src="img/generic/actualizar_icon.svg">
+        <img id="btnRefresNoticias" style="cursor: pointer;" alt="Refresh" ng-click="objectoConsulta()"  src="${pageContext.request.contextPath}/resources/img/generic/actualizar_icon.svg">
         <span class="cerrarnoticias" ng-click="isAbiertoOSNoticias=false">Ocultar noticias</span>
         <div class="divider-noticias" style=" width: 100%;height: 1px; background: gainsboro;"></div>
         <div ng-if="listadoNoticias.length <= 0" class="container mt-5">
@@ -51,7 +51,7 @@
                                             <input id="texto-comentario-op-{{noticia.id}}" type="text" class="form-control form-control-sm form-send">
                                         </div>
                                         <div class="col-2 col-btn-send">
-                                            <button class="btn btn-sm btn-primary btn-send" ng-click="enviarComentario(noticia.id)"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                                            <button class="btn btn-sm btn-primary btn-send" ng-click="enviarComentario(noticia.id)"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
                                         </div>
                                         <div class="col-12 col-adjuntar-archivo" ng-show="showAdjuntar">
                                             <form id="uploadFormSubcomentario-{{noticia.id}}" name="17" class="form-horizontal box form_drag_drop" novalidate="novalidate" enctype="multipart/form-data">
@@ -74,14 +74,14 @@
                         <div class="col-11 offset-1">
                             <div class="row">
                             <div class="file-adjuntado"  ng-switch="noticia.media.type">
-                                <img ng-switch-when="JPG"  src="${pageContext.request.contextPath}/img/iconossf/imageico.jpg" class="imagen-adjuntado-noticia" alt="">
-                                <img ng-switch-when="JPEG" src="${pageContext.request.contextPath}/img/iconossf/imageico.jpg" class="imagen-adjuntado-noticia" alt="">
-                                <img ng-switch-when="PNG"  src="${pageContext.request.contextPath}/img/iconossf/imageico.jpg" class="imagen-adjuntado-noticia" alt="">
-                                <img ng-switch-when="GIF"  src="${pageContext.request.contextPath}/img/iconossf/imageico.jpg" class="imagen-adjuntado-noticia" alt="">
-                                <img ng-switch-when="PDF"  src="${pageContext.request.contextPath}/img/iconossf/pdf.png" class="" alt="">                                
-                                <img ng-switch-when="POWER_POINT_X" src="${pageContext.request.contextPath}/img/iconossf/powerpoint.png" class="" alt="">
-                                <img ng-switch-when="PPTX" src="${pageContext.request.contextPath}/img/iconossf/powerpoint.png" class="" alt="">
-                                <img ng-switch-default src="${pageContext.request.contextPath}/img/iconossf/not-found.jpg" class="imagen-adjuntado-noticianot" alt="">
+                                <img ng-switch-when="JPG"  src="${pageContext.request.contextPath}/resources/img/iconossf/imageico.jpg" class="imagen-adjuntado-noticia" alt="">
+                                <img ng-switch-when="JPEG" src="${pageContext.request.contextPath}/resources/img/iconossf/imageico.jpg" class="imagen-adjuntado-noticia" alt="">
+                                <img ng-switch-when="PNG"  src="${pageContext.request.contextPath}/resources/img/iconossf/imageico.jpg" class="imagen-adjuntado-noticia" alt="">
+                                <img ng-switch-when="GIF"  src="${pageContext.request.contextPath}/resources/img/iconossf/imageico.jpg" class="imagen-adjuntado-noticia" alt="">
+                                <img ng-switch-when="PDF"  src="${pageContext.request.contextPath}/resources/img/iconossf/pdf.png" class="" alt="">                                
+                                <img ng-switch-when="POWER_POINT_X" src="${pageContext.request.contextPath}/resources/img/iconossf/powerpoint.png" class="" alt="">
+                                <img ng-switch-when="PPTX" src="${pageContext.request.contextPath}/resources/img/iconossf/powerpoint.png" class="" alt="">
+                                <img ng-switch-default src="${pageContext.request.contextPath}/resources/img/iconossf/not-found.jpg" class="imagen-adjuntado-noticianot" alt="">
 
                                 <div class="title-file-adjuntado">
                                     <h1 class="text-title-adjuntado" ng-bind="noticia.media.name" ></h1>
@@ -109,7 +109,7 @@
                                             <input id="texto-comentario-op-{{comentario.id}}" type="text" class="form-control form-control-sm form-send">
                                         </div>
                                         <div class="col-2 col-btn-send">
-                                            <button class="btn btn-sm btn-primary btn-send" ng-click="enviarComentario(comentario.id)"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                                            <button class="btn btn-sm btn-primary btn-send" ng-click="enviarComentario(comentario.id)"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -119,15 +119,15 @@
                         <div class="col-10 offset-1" ng-if="comentario.media">
                         <div class="row content-archivo-comentario">
                             <div class="imagen-adjuntado-comment" ng-switch="comentario.media.type">
-                                <img ng-switch-when="JPG"  src="${pageContext.request.contextPath}/img/iconossf/imageico.jpg" class="imagen-comment-owner" alt="">
-                                <img ng-switch-when="JPEG" src="${pageContext.request.contextPath}/img/iconossf/imageico.jpg" class="imagen-comment-owner" alt="">
-                                <img ng-switch-when="PNG"  src="${pageContext.request.contextPath}/img/iconossf/imageico.jpg" class="imagen-comment-owner" alt="">
-                                <img ng-switch-when="GIF"  src="${pageContext.request.contextPath}/img/iconossf/imageico.jpg" class="imagen-comment-owner" alt="">
-                                <img ng-switch-when="PDF"  src="${pageContext.request.contextPath}/img/iconossf/pdf.png" class="" alt="">
-                                <img ng-switch-when="PPTX" src="${pageContext.request.contextPath}/img/iconossf/powerpoint.png" class="" alt="">
-                                <img ng-switch-when="POWER_POINT_X" src="${pageContext.request.contextPath}/img/iconossf/powerpoint.png" class="" alt="">
+                                <img ng-switch-when="JPG"  src="${pageContext.request.contextPath}/resources/img/iconossf/imageico.jpg" class="imagen-comment-owner" alt="">
+                                <img ng-switch-when="JPEG" src="${pageContext.request.contextPath}/resources/img/iconossf/imageico.jpg" class="imagen-comment-owner" alt="">
+                                <img ng-switch-when="PNG"  src="${pageContext.request.contextPath}/resources/img/iconossf/imageico.jpg" class="imagen-comment-owner" alt="">
+                                <img ng-switch-when="GIF"  src="${pageContext.request.contextPath}/resources/img/iconossf/imageico.jpg" class="imagen-comment-owner" alt="">
+                                <img ng-switch-when="PDF"  src="${pageContext.request.contextPath}/resources/img/iconossf/pdf.png" class="" alt="">
+                                <img ng-switch-when="PPTX" src="${pageContext.request.contextPath}/resources/img/iconossf/powerpoint.png" class="" alt="">
+                                <img ng-switch-when="POWER_POINT_X" src="${pageContext.request.contextPath}/resources/img/iconossf/powerpoint.png" class="" alt="">
 
-                                <img ng-switch-default src="${pageContext.request.contextPath}/img/iconossf/not-found.jpg" class="imagen-comment-owner" alt="">
+                                <img ng-switch-default src="${pageContext.request.contextPath}/resources/img/iconossf/not-found.jpg" class="imagen-comment-owner" alt="">
 
                                 <div class="comment-adjuntado-text">
                                     <h1 class="text-title-comment-top" ng-bind="comentario.media.name"></h1>
@@ -146,7 +146,7 @@
                 <input id="text-general-oportunidad" type="text" class="form-control form-control-sm form-send-general">
             </div>
             <div class="col-2 col-btn-send-general">
-                <button class="btn btn-sm btn-primary btn-send" ng-click="enviarMesajeGeneral()"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                <button class="btn btn-sm btn-primary btn-send" ng-click="enviarMesajeGeneral()"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
             </div>
         </div>
         <div class="row">

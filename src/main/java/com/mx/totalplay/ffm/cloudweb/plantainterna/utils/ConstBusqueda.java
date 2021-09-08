@@ -14,4 +14,25 @@ public class ConstBusqueda {
 
     @Value("${consultaDetalleObjetoSF}")
     private String consultaDetalleObjetoSF;
+
+    @Value("${consultarNoticias}")
+    private String consultarNoticias;
+
+    @Value("${diResuSaleForcesComentario}")
+    private String diResuSaleForcesComentario;
+
+    @Value("${crearNoticias}")
+    private String crearNoticias;
+
+    @Value("${consultarEquiposConfigurados}")
+    private String consultarEquiposConfigurados;
+
+    @Value("${consultaResumenFacturaSF}")
+    private String consultaResumenFacturaSF;
+
+    @Value("${consultarServiciosSF}")
+    private String consultarServiciosSF;
+
+    @Value("${consultarIpsSF}")
+    private String consultarIpsSF;
 }

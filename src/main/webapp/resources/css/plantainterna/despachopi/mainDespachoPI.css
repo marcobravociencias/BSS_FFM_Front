@@ -2047,3 +2047,8 @@ b.text-no-seleccion-geografia {
 #table-alertas-pi_paginate div.dataTables_paginate li.next a:after{
   display:none !important;
 }
+
+.content-historico-ot{
+  height: 25em;
+  overflow-y: auto;
+}
