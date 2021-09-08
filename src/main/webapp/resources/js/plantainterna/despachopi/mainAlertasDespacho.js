@@ -143,6 +143,8 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
             };
             console.log($scope.alertaSeleccionadaObject);
             $scope.$apply();
+            $scope.setMarkets($scope.alertaSeleccionadaObject);
+
             $("#pills-mapa-tab").click();
             swal({ text: 'Consultando datos ...', allowOutsideClick: false });
             swal.showLoading();
@@ -155,7 +157,6 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
                 if (response.data !== undefined) {
                     if (response.data.respuesta) {
                         
-                    $scope.setMarkets($scope.alertaSeleccionadaObject);
                     $scope.listaOpcionesAlerta = response.data.result.acciones;
                     
                     swal.close();
