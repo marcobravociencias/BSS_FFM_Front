@@ -102,6 +102,19 @@ public class UsuariosPIController {
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
 	
+	@PostMapping("/guardarUsuario")
+	public ResponseEntity<?> guardarUsuario(@RequestBody String params) {
+		logger.info("##### ALTA DE NUEVO USUARIO");
+		ServiceResponseResult result = usuarioService.guardarUsuario(params);
+        if (result.getResult() instanceof Integer){
+            return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
+	}
+	
+	//-------------------------------------------------------------------------------------------
+	//-------------------------------------------------------------------------------------------
+	
 	@PostMapping("/consultarRegionesEstructura")
 	public ResponseEntity<?> consultarRegionesEstructura() {
 		logger.info("##### CONSULTANDO consultarRegionesEstructura  ");

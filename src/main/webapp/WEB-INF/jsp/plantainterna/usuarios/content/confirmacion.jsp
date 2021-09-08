@@ -61,16 +61,16 @@
                                     <label class="titulos-confirmacion">* Ciudad Natal:</label>
                                 </div>
                                 <form name="myForm">
-                                	<div class="scrollListaCiudadNatal">
+                                	<div id="contenedorConfirmacionRegistro" class="scrollListaCiudadNatal">
 	                                    <div class="row" ng-repeat="ciudad in listaGeografiasSeleccionadas | filter:buscarCiudad track by $index">
 	                                        <div class="col-12">
-	                                            <label class="respuesta-confirmacion">
-	                                                <input type="radio" ng-model="ciudadNatal.id" ng-value="ciudad.id">
+	                                            <label class="respuesta-confirmacion ciudadNatal">
+	                                                <input type="radio" ng-model="informacionRegistro.ciudadNatal" ng-value="ciudad.id" ng-click="asignarCiudadNatalRegistro()">
 	                                                {{ciudad.nombre}}
 	                                            </label>
 	                                        </div>
 	                                    </div>
-	                                    <span ng-if="listaGeografiasSeleccionadas == ''" class="respuesta-confirmacion">
+	                                    <span ng-if="listaGeografiasSeleccionadas == ''" class="respuesta-confirmacion ciudadNatal">
 											Sin asignar
 										</span>
 									</div>
@@ -82,7 +82,7 @@
                     </div>
                     <div class="row">
                         <div style="text-align: right; margin: 1em 0 0 0;">
-                            <input type="button" class="btn btn-primary" ng-click="" value="GUARDAR">
+                            <input type="button" class="btn btn-primary" ng-click="guardarUsuario()" value="GUARDAR">
                         </div> 
                     </div>
                 </div>

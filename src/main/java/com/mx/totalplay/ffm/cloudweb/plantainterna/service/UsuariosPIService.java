@@ -14,6 +14,7 @@ public interface UsuariosPIService {
 	public DataTableResponse consultaUsuariosPorGeoCompPuestos(ObjConsultaUsuario params);
 	public ServiceResponseResult consultaGeografias();
 	public ServiceResponseResult consultaIntervenciones();
+	public ServiceResponseResult guardarUsuario(String params);
 	//FIN MAPEO
 	
 	public ServiceResponseResult consultarRegionesEstructura();

@@ -190,11 +190,20 @@ public class ImplUsuariosPIService implements UsuariosPIService {
 		String urlRequest=principalDetail.getDireccionAmbiente().concat(constUsuario.getConsultaIntervenciones());
 		Map<String, String> paramsRequestGet = new HashMap<String, String>();
 		paramsRequestGet.put("idUsuario", String.valueOf( principalDetail.getIdUsuario()));
-		logger.info("ID Usuario --->> " + String.valueOf( principalDetail.getIdUsuario()));
-		logger.info("idUsuario##+ " + principalDetail.getIdUsuario());
-		logger.info("urlRequest##+" + urlRequest);
 		ServiceResponseResult response= restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest, ServiceResponseResult.class, tokenAcces);
 		logger.info("RESULT"+gson.toJson(response));
+		return response;
+	}
+	
+	@Override
+	public ServiceResponseResult guardarUsuario(String params) {
+		logger.info("ImplUsuariosPIService.class [metodo = guardarUsuario() ]\n");
+		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		String tokenAcces=principalDetail.getAccess_token() ;
+		String url = principalDetail.getDireccionAmbiente().concat(constUsuario.getGuardarUsuario());
+		ServiceResponseResult response=restCaller.callPostBearerTokenRequest(jsonObject.toString(), url, ServiceResponseResult.class, tokenAcces);
+		logger.info("RESULT guardarUsuario " + gson.toJson(response));
 		return response;
 	}
 

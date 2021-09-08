@@ -75,7 +75,8 @@
                                     </button>
                                 </div>
                             </div>
-				            <div id="contenedorPrincipalTabla" class="row" style="display: none;">
+                            <br>
+				            <div id="contenedorPrincipalTabla" class="row">
 								<div class="columna-principal-users col-md-12">
 									<div class="table-responsive">
 				                    	<table class="table" id="table-usuario-pi">
