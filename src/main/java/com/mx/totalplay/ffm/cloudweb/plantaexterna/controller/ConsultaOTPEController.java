@@ -73,4 +73,21 @@ public class ConsultaOTPEController {
 		}
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
+	@PostMapping("/consultarComentarios")
+	public ResponseEntity<?> consultarComentarios(@RequestBody String params){
+		ServiceResponseResult response=consultaOTPEService.consultarComentarios(params);
+		if(response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	
+	@PostMapping("/consultarImagenes")
+	public ResponseEntity<?> consultarImagenes(@RequestBody String params){
+		ServiceResponseResult response=consultaOTPEService.consultarImagenes(params);
+		if(response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
 }

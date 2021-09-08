@@ -1,3 +1,39 @@
+let consultaComentariosData={
+	"success": true,
+	"mensaje": "Operación exitosa.",
+	"result": [{
+		"origen": "FFM WEB",
+		"emisor": "GAMALIEL AGUILAR",
+		"comentario": "FFM : OT CREADA POR INCIDENCIA :  PRUEBA GENERA ORDEN",
+		"fecha": "19/11/2020"
+	}, {
+		"origen": "FFM WEB",
+		"emisor": "GAMALIEL AGUILAR",
+		"comentario": "FFM - ASIGNACION : OK",
+		"fecha": "18/12/2020"
+	}, {
+		"origen": "FFM APP",
+		"emisor": "INSTALADOR PRUEBA",
+		"comentario": "FFM OT EN TRANSITO : ",
+		"fecha": "18/12/2020"
+	}, {
+		"origen": "FFM APP",
+		"emisor": "INSTALADOR PRUEBA",
+		"comentario": "FFM OT EN SITIO : ",
+		"fecha": "18/12/2020"
+	}, {
+		"origen": "FFM APP",
+		"emisor": "INSTALADOR PRUEBA",
+		"comentario": "FFM OT EN TRABAJO : ",
+		"fecha": "18/12/2020"
+	}, {
+		"origen": "FFM APP",
+		"emisor": "INSTALADOR PRUEBA",
+		"comentario": "FFM : OT TERMINADA :  ",
+		"fecha": "18/12/2020"
+	}]
+}
+
 let consultaFalla={
 	"success": true,
 	"mensaje": "Operación exitosa.",

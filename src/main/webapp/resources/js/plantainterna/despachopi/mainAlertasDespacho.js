@@ -127,6 +127,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
             $scope.historicoAlertaConsultada = false;
             $scope.chatAlertaConsultada = false;
             $scope.showAaccion = false;
+            $scope.alertaSeleccionada = true;
             $scope.alertaSeleccionadaObject = {
                 IdOT: ot, 
                 os: os, 
@@ -153,7 +154,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
                 console.log(response);
                 if (response.data !== undefined) {
                     if (response.data.respuesta) {
-                        $scope.alertaSeleccionada = true;
+                        
                     $scope.setMarkets($scope.alertaSeleccionadaObject);
                     $scope.listaOpcionesAlerta = response.data.result.acciones;
                     
