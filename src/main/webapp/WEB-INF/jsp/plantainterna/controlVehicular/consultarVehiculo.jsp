@@ -1,32 +1,30 @@
-<!--
-<div class="row col-12">
-    <div class="col-2 icons-filter disponible" onclick="filterByStatus(1)">
+
+<div class="row">
+    <div class="col-2 offset-1 icons-filter disponible" onclick="filterByStatus(1)">
         <i class="fas fa-car-side"></i>
-        <span class="disponible" style="cursor: pointer">{{countDisponibles > 0 ? countDisponibles + " Disponibles" :
-            "Disponibles"}}</span>
+        <span class="disponible" style="cursor: pointer">{{countDisponibles}} Disponibles</span>
     </div>
     <div class="col-2 icons-filter asignado" onclick="filterByStatus(2)">
         <i class="fas fa-car"></i>
-        <span class="asignadoStyle">{{countAsignados > 0 ? countAsignados + " Asignados" : "Asignados"}}</span>
+        <span class="asignadoStyle">{{countAsignados}} Asignados</span>
     </div>
     <div class="col-2 icons-filter noDisponible" onclick="filterByStatus(3)">
         <i class="fas fa-wrench"></i>
-        <span class="servicioStyle">{{countNoDisponibles > 0 ? countNoDisponibles + " No Disponibles" : "No
-            Disponible"}}</span>
+        <span class="servicioStyle">{{countNoDisponibles}} No Disponibles</span>
     </div>
-    <div class="col-3 offset-2">
-        <input readonly placeholder="Seleccione..." type="text" onclick="abrirModalGeografiaBuscar()"
-        class="input-filtro-consultaOT form-control form-control-sm">
+    <div class="col-2 search-form">
+        <input placeholder="Buscar" type="text" class="search-filtro form-control form-control-sm" id="searchText">
+    </div>
+    <div class="col-2 search-form">
+        <input readonly placeholder="Geograf&iacute;a" type="text" onclick="abrirModalGeografiaBuscar()"
+        class="search-filtro form-control form-control-sm">
     </div>
     <div class="col-1">
-        <button id="btnBuscar" type="button" class="btn btn-primary btnTotal">
-            Buscar
+        <button id="btnBuscar" type="button" class="btn btn-primary btnTotal"  onclick="filterByText()">
+            <i class="fa fa-search"></i>
         </button>
     </div>
 </div>
--->
-
-<br>
 <div class="container-fluid contenedor">
     <div class="content-fluid">
         <table id="vehiculoTable" class="display table table-hover " cellspacing="0" width="100%">

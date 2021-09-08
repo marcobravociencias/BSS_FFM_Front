@@ -1,24 +1,25 @@
 <div class="col-12  box-row">
     <ul class="nav nav-pills mb-3" id="pills-tab-vehiculo" role="tablist">
         <li class="nav-item" role="general">
-            <a class="nav-link active" id="pills-general-tab" data-toggle="pill" href="#pills-general" role="tab"
+            <a class="nav-link pills active" id="pills-general-tab" data-toggle="pill" href="#pills-general" role="tab"
                 aria-controls="pills-general" aria-selected="true">Datos generales</a>
         </li>
         <li class="nav-item" role="documentacion">
-            <a class="nav-link" id="pills-documentacion-tab" data-toggle="pill" href="#pills-documentacion" role="tab"
-                aria-controls="pills-documentacion" aria-selected="false">Documentaci&oacute;n</a>
+            <a class="nav-link pills" id="pills-documentacion-tab" data-toggle="pill" href="#pills-documentacion"
+                role="tab" aria-controls="pills-documentacion" aria-selected="false">Documentaci&oacute;n</a>
         </li>
         <li class="nav-item" role="imagenes">
-            <a class="nav-link" id="pills-imagenes-tab" data-toggle="pill" href="#pills-imagenes" role="tab"
+            <a class="nav-link pills" id="pills-imagenes-tab" data-toggle="pill" href="#pills-imagenes" role="tab"
                 aria-controls="pills-imageens" aria-selected="false">Imagenes</a>
         </li>
         <li class="nav-item" role="resumen" onclick="getNameText()">
-            <a class="nav-link" id="pills-resumen-tab" data-toggle="pill" href="#pills-resumen" role="tab"
+            <a class="nav-link pills" id="pills-resumen-tab" data-toggle="pill" href="#pills-resumen" role="tab"
                 aria-controls="pills-resumen" aria-selected="false">Resumen</a>
         </li>
     </ul>
     <div class="tab-content" id="pills-tabContent">
-        <div class="tab-pane fade show active" id="pills-general" role="tabpanel" aria-labelledby="pills-general-tab">
+        <div class="tab-pane pills-pane fade show active" id="pills-general" role="tabpanel"
+            aria-labelledby="pills-general-tab">
             <div class="col-12">
                 <div class="form-row">
                     <div class="col-3 form-group">
@@ -103,7 +104,8 @@
                     secci&oacute;n son obligatorios</h5>
             </div>
         </div>
-        <div class="tab-pane fade" id="pills-documentacion" role="tabpanel" aria-labelledby="pills-documentacion-tab">
+        <div class="tab-pane pills-pane fade" id="pills-documentacion" role="tabpanel"
+            aria-labelledby="pills-documentacion-tab">
             <div class="col-12">
 
                 <div class="form-row">
@@ -260,7 +262,7 @@
                     secci&oacute;n no son obligatorios</h5>
             </div>
         </div>
-        <div class="tab-pane fade" id="pills-imagenes" role="tabpanel" aria-labelledby="pills-imagenes-tab">
+        <div class="tab-pane pills-pane fade" id="pills-imagenes" role="tabpanel" aria-labelledby="pills-imagenes-tab">
             <div class="col-12">
                 <!--
                 <div class="row">
@@ -280,6 +282,10 @@
                             <label class="custom-file-label" for="filePlaca" id="fotoPlaca">Cargar
                                 Imagen</label>
                         </div>
+                        <div ng-if="filePlaca.nombre" class="file-delete">
+                            <span>{{filePlaca.nombre}} <i class="fa fa-trash"
+                                    onclick="deleteFile('fotoPlaca')"></i></span>
+                        </div>
                     </div>
                     <div class="col-3 form-group">
                         <label>Foto de Veh&iacute;culo </label>
@@ -288,6 +294,10 @@
                                 ng-model="fileFoto" ng-on-change="subirArchivo($event, 'fotoVehiculo')" />
                             <label class="custom-file-label" for="fileFoto" id="fotoVehiculo">Cargar
                                 Imagen</label>
+                        </div>
+                        <div ng-if="fileVehiculo.nombre" class="file-delete">
+                            <span>{{fileVehiculo.nombre}} <i class="fa fa-trash"
+                                    onclick="deleteFile('fotoVehiculo')"></i></span>
                         </div>
                     </div>
                     <div class="col-3 form-group">
@@ -299,6 +309,10 @@
                             <label class="custom-file-label" for="fileTarjeta" id="fotoTarjetaCirculaion">Cargar
                                 Imagen</label>
                         </div>
+                        <div ng-if="fileCirculacion.nombre" class="file-delete">
+                            <span>{{fileCirculacion.nombre}} <i class="fa fa-trash"
+                                    onclick="deleteFile('fotoTarjetaCirculaion')"></i></span>
+                        </div>
                     </div>
 
                     <div class="col-3 form-group">
@@ -309,46 +323,49 @@
                             <label class="custom-file-label" for="fileTarjetaGas" id="fotoTarjetaGasolina">Cargar
                                 Imagen</label>
                         </div>
-
+                        <div ng-if="fileGasolina.nombre" class="file-delete">
+                            <span>{{fileGasolina.nombre}} <i class="fa fa-trash"
+                                    onclick="deleteFile('fotoTarjetaGasolina')"></i></span>
+                        </div>
                     </div>
                 </div>
                 <h5 class="fs-title"> <i class="fas fa-info-circle" style="color: orange;"></i> Los datos de
                     esta secci&oacute;n no son obligatorios</h5>
             </div>
         </div>
-        <div class="tab-pane fade" id="pills-resumen" role="tabpanel" aria-labelledby="pills-resumen-tab">
+        <div class="tab-pane pills-pane fade" id="pills-resumen" role="tabpanel" aria-labelledby="pills-resumen-tab">
             <div class="col-12">
                 <table class="resumeTable">
                     <tr>
-                        <td class="tableTextTitle">Placa: </td>
+                        <td class="tableTextTitle">* Placa: </td>
                         <td class="tableText">{{vehiculo.placa ? vehiculo.placa : 'Sin
                             informaci&oacute;n'}}</td>
-                        <td class="tableTextTitle">Tipo Veh&iacute;culo: </td>
+                        <td class="tableTextTitle">* Tipo Veh&iacute;culo: </td>
                         <td class="tableText">{{vehiculoText.tipoText ? vehiculoText.tipoText : 'Sin
                             informaci&oacute;n'}}</td>
-                        <td class="tableTextTitle">Marca: </td>
+                        <td class="tableTextTitle">* Marca: </td>
                         <td class="tableText">{{vehiculoText.marcaText ? vehiculoText.marcaText : 'Sin
                             informaci&oacute;n'}}</td>
-                        <td class="tableTextTitle">Modelo: </td>
+                        <td class="tableTextTitle">* Modelo: </td>
                         <td class="tableText">{{vehiculoText.lineaText ? vehiculoText.lineaText : 'Sin
                             informaci&oacute;n'}}</td>
                     </tr>
                     <tr>
-                        <td class="tableTextTitle">A&ntilde;o: </td>
+                        <td class="tableTextTitle">* A&ntilde;o: </td>
                         <td class="tableText">{{vehiculoText.anio ? vehiculoText.anio : 'Sin
                             informaci&oacute;n'}}</td>
-                        <td class="tableTextTitle">N&uacute;mero de serie: </td>
+                        <td class="tableTextTitle">* N&uacute;mero de serie: </td>
                         <td class="tableText">{{vehiculo.numeroSerie ? vehiculo.numeroSerie : 'Sin
                             informaci&oacute;n'}}</td>
-                        <td class="tableTextTitle">Combustible: </td>
+                        <td class="tableTextTitle">* Combustible: </td>
                         <td class="tableText">{{vehiculo.combustible ? vehiculo.combustible : 'Sin
                             informaci&oacute;n'}}</td>
-                        <td class="tableTextTitle">Color: </td>
+                        <td class="tableTextTitle">* Color: </td>
                         <td class="tableText">{{vehiculoText.colorText ? vehiculoText.colorText : 'Sin
                             informaci&oacute;n'}}</td>
                     </tr>
                     <tr>
-                        <td class="tableTextTitle">Geograf&iacute;a: </td>
+                        <td class="tableTextTitle">* Geograf&iacute;a: </td>
                         <td class="tableText" colspan="7">{{vehiculoText.geografiaText ? vehiculoText.geografiaText :
                             'Sin
                             informaci&oacute;n'}}</td>
@@ -356,74 +373,74 @@
                 </table>
                 <table class="resumeTable">
                     <tr>
-                        <td class="tableTextTitle">Aseguradora: </td>
+                        <td class="tableTextTitle">* Aseguradora: </td>
                         <td class="tableText">{{vehiculoText.aseguradoraText ? vehiculoText.aseguradoraText :
                             'Sin
                             informaci&oacute;n'}}</td>
-                        <td class="tableTextTitle">N&uacute;mero de poliza: </td>
+                        <td class="tableTextTitle">* N&uacute;mero de poliza: </td>
                         <td class="tableText">{{vehiculo.detalle.numeroPoliza ? vehiculo.detalle.numeroPoliza :
                             'Sin
                             informaci&oacute;n'}}</td>
-                        <td class="tableTextTitle">Fecha vencimiento poliza: </td>
-                        <td v>{{vehiculoText.fechaVencimientoPoliza ?
+                        <td class="tableTextTitle">* Fecha vencimiento poliza: </td>
+                        <td class="tableText">{{vehiculoText.fechaVencimientoPoliza ?
                             vehiculoText.fechaVencimientoPoliza :
                             'Sin informaci&oacute;n'}}</td>
-                        <td class="tableTextTitle">N&uacute;m. Tarjeta de circulaci&oacute;n: </td>
+                        <td class="tableTextTitle">* N&uacute;m. Tarjeta de circulaci&oacute;n: </td>
                         <td class="tableText">{{vehiculo.detalle.tarjetaCirculacion ?
                             vehiculo.detalle.tarjetaCirculacion : 'Sin
                             informaci&oacute;n'}}</td>
                     </tr>
                     <tr>
-                        <td class="tableTextTitle">Vencimiento tarjeta circulaci&oacute;n: </td>
+                        <td class="tableTextTitle">* Vencimiento tarjeta circulaci&oacute;n: </td>
                         <td class="tableText">{{vehiculoText.fechaVencimientoTarjeta ?
                             vehiculoText.fechaVencimientoTarjeta :
                             'Sin informaci&oacute;n'}}</td>
-                        <td class="tableTextTitle">N&uacute;mero de verificaci&oacute;n: </td>
+                        <td class="tableTextTitle">* N&uacute;mero de verificaci&oacute;n: </td>
                         <td class="tableText">{{vehiculo.detalle.numeroVerificacion ?
                             vehiculo.detalle.numeroVerificacion : 'Sin
                             informaci&oacute;n'}}</td>
-                        <td class="tableTextTitle">Fecha de verificaci&oacute;n: </td>
+                        <td class="tableTextTitle">* Fecha de verificaci&oacute;n: </td>
                         <td class="tableText">{{vehiculoText.fechaVerificacion ?
                             vehiculoText.fechaVerificacion : 'Sin
                             informaci&oacute;n'}}</td>
-                        <td class="tableTextTitle">Clave pensi&oacute;n: </td>
+                        <td class="tableTextTitle">* Clave pensi&oacute;n: </td>
                         <td class="tableText">{{vehiculo.detalle.clavePension ? vehiculo.detalle.clavePension :
                             'Sin
                             informaci&oacute;n'}}</td>
                     </tr>
                     <tr>
-                        <td class="tableTextTitle">N&uacute;m. tarjeta gasolina: </td>
+                        <td class="tableTextTitle">* N&uacute;m. tarjeta gasolina: </td>
                         <td class="tableText">{{vehiculo.detalle.tarjetaGasolina ?
                             vehiculo.detalle.tarjetaGasolina
                             : 'Sin
                             informaci&oacute;n'}}</td>
-                        <td class="tableTextTitle">Clave GPS: </td>
+                        <td class="tableTextTitle">* Clave GPS: </td>
                         <td class="tableText">{{vehiculo.detalle.claveGps ? vehiculo.detalle.claveGps : 'Sin
                             informaci&oacute;n'}}
                         </td>
-                        <td class="tableTextTitle">N&uacute;m motor: </td>
+                        <td class="tableTextTitle">* N&uacute;m motor: </td>
                         <td class="tableText">{{vehiculo.detalle.numeroMotor ? vehiculo.detalle.numeroMotor :
                             'Sin
                             informaci&oacute;n'}}</td>
-                        <td class="tableTextTitle">N&uacute;m chasis: </td>
+                        <td class="tableTextTitle">* N&uacute;m chasis: </td>
                         <td class="tableText">{{vehiculo.detalle.numeroChasis ? vehiculo.detalle.numeroChasis :
                             'Sin
                             informaci&oacute;n'}}</td>
                     </tr>
                     <tr>
-                        <td class="tableTextTitle">Engomado: </td>
+                        <td class="tableTextTitle">* Engomado: </td>
                         <td class="tableText">{{vehiculo.detalle.engomado ? vehiculo.detalle.engomado : 'Sin
                             informaci&oacute;n'}}
                         </td>
-                        <td class="tableTextTitle">Holograma: </td>
+                        <td class="tableTextTitle">* Holograma: </td>
                         <td class="tableText">{{vehiculo.detalle.holograma ? vehiculo.detalle.holograma : 'Sin
                             informaci&oacute;n'}}
                         </td>
-                        <td class="tableTextTitle">Ubicaci&oacute;n CDO: </td>
+                        <td class="tableTextTitle">* Ubicaci&oacute;n CDO: </td>
                         <td class="tableText">{{vehiculoText.encierroText ? vehiculoText.encierroText : 'Sin
                             informaci&oacute;n'}}
                         </td>
-                        <td class="tableTextTitle">Rotulado: </td>
+                        <td class="tableTextTitle">* Rotulado: </td>
                         <td class="tableText">{{vehiculoText.rotulado ? 'Si' : 'No'}}</td>
                     </tr>
                 </table>
