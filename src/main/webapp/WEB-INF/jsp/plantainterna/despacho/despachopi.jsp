@@ -41,9 +41,8 @@
         <link href="${pageContext.request.contextPath}/resources/libraries/magnific_popup/magnific-popup.css" rel="stylesheet">
 
         <link href="${pageContext.request.contextPath}/resources/css/plantainterna/despachopi/loaders.css"  rel="stylesheet"/>
-        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/despachopi/mainDespachoPI.css"  rel="stylesheet"/>
         <link href="${pageContext.request.contextPath}/resources/css/plantainterna/despachopi/mainAlertasPI.css"  rel="stylesheet"/>
-
+        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/despachopi/mainDespachoPI.css"  rel="stylesheet"/>
 
     </head>
     <body id="idBody" ng-controller="despachoController">        

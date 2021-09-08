@@ -58,8 +58,8 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
             arra[0] = alertaob.id ? alertaob.id : '';
             arra[1] = alertaob.folioSistema ? alertaob.folioSistema : '';
             arra[2] = `
-                <div class="card card-alertas-pendientes" onclick="consultarAccionesAlerta(${ordenobj.id}, ${ordenobj.folioSistema}, ${alertaob.latitudAlerta}, ${alertaob.longitudAlerta}, ${tecnicoObj.latitud}, ${tecnicoObj.longitud}, ${alertaob.idSubAlerta}, ${ordenobj.idIntervencion}, 
-                    ${ordenobj.idSubIntervencion}, ${tecnicoObj.id}, ${alertaob.id})">
+                <div class="card card-alertas-pendientes" onclick="consultarAccionesAlerta('${ordenobj.id}', '${ordenobj.folioSistema}', '${alertaob.latitudAlerta}', '${alertaob.longitudAlerta}', '${tecnicoObj.latitud}', '${tecnicoObj.longitud}', '${alertaob.idSubAlerta}', '${ordenobj.idIntervencion}', 
+                    '${ordenobj.idSubIntervencion}', '${tecnicoObj.id}', '${alertaob.idRegistroAlerta}')">
                     <div class="card-body card-body-alertas">
                         <div class="row">
                             <div class="col-12">
@@ -68,7 +68,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-12">    
                                 <span class="text-primary-alerta">Direcci&oacute;n: </span><span class="text-secundary-alerta"> ${ ordenobj.direccion } </span>
                             </div>
                         </div>
@@ -81,7 +81,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
                     <div class="card-footer text-muted card-alertas-pendientes-foot">
                         <div class="row">
                             <div class="col-12">
-                                <span class="text-primary-alerta">Alerta: </span><span class="text-secundary-alerta">  ${alertaob.descSubtipoAlerta}  </span>
+                                <span class="text-primary-alerta">Alerta: </span><span class="text-secundary-alerta">  ${alertaob.descripcionSubtipoAlerta}  </span>
                             </div>
                         </div>
                     </div>
@@ -127,6 +127,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
             $scope.historicoAlertaConsultada = false;
             $scope.chatAlertaConsultada = false;
             $scope.showAaccion = false;
+            $scope.alertaSeleccionada = true;
             $scope.alertaSeleccionadaObject = {
                 IdOT: ot, 
                 os: os, 
@@ -142,6 +143,8 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
             };
             console.log($scope.alertaSeleccionadaObject);
             $scope.$apply();
+            $scope.setMarkets($scope.alertaSeleccionadaObject);
+
             $("#pills-mapa-tab").click();
             swal({ text: 'Consultando datos ...', allowOutsideClick: false });
             swal.showLoading();
@@ -153,8 +156,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
                 console.log(response);
                 if (response.data !== undefined) {
                     if (response.data.respuesta) {
-                        $scope.alertaSeleccionada = true;
-                    $scope.setMarkets($scope.alertaSeleccionadaObject);
+                        
                     $scope.listaOpcionesAlerta = response.data.result.acciones;
                     
                     swal.close();

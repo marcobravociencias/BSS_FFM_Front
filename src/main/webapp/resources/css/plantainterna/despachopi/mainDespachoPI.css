@@ -2039,3 +2039,11 @@ b.text-no-seleccion-geografia {
   padding:.1em 1em;
   background:#2196f3;
 }
+
+.dataTables_wrapper.no-footer .dataTables_scrollBody {
+    border-bottom: 0px solid #111 !important;
+}
+
+#table-alertas-pi_paginate div.dataTables_paginate li.next a:after{
+  display:none !important;
+}

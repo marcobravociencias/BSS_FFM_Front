@@ -32,7 +32,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
     app.filtrosDespachoPrincipal($scope,mainDespachoService)
     app.mapasControllerDespachoPI($scope,mainDespachoService)
     app.modalDespachoPrincipal($scope,mainDespachoService,$q,genericService)
-    app.alertasDespachoPrincipal($scope,mainAlertasService)
+    app.alertasDespachoPrincipal($scope,mainAlertasService, genericService   )
     app.misProyectosDependencias($scope,mainDespachoService)
     
     $scope.isCargaTecnicosDisponibles=false;
@@ -437,7 +437,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                             $scope.listadoOtsPendientes.map((e)=>{
                                 indexot++
                                 e.colorOrden=e.colorOrden != undefined && e.colorOrden ? e.colorOrden : arrayColors[$scope.randomIntFromInterval()]
-                                e.isConfirmado=indexot%2==0 ? true : false
+                              //  e.isConfirmado=indexot%2==0 ? true : false
                                 return e    
                             })                            
                             let tableelemetn=''
@@ -453,7 +453,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                                     stringCheckbox=
                                         `<div class="content-top-element confirmacion-elemn switchpendiente">
                                             <label class="container-checkbox-cus">
-                                                <input onchange="abrirModalConfirmacionDesconfirmacion(this,${otpendiente.idOrden})" id="switch-${otpendiente.idOrden}" ${otpendiente.isConfirmado ? 'checked':''} type="checkbox">
+                                                <input onchange="abrirModalConfirmacionDesconfirmacion(this,${otpendiente.idOrden})" id="switch-${otpendiente.idOrden}" ${otpendiente.ordenConfirmada ? 'checked':''} type="checkbox">
                                                 <span class="checkmarkcust"></span>
                                             </label>
                                         </div>`
@@ -461,7 +461,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                                     stringCheckbox=
                                     `<div  title="No tienes permiso para confirmar/desconfirmar" class="content-top-element confirmacion-elemn switchpendiente">
                                         <label style="cursor: not-allowed" class="container-checkbox-cus">
-                                            <input style="cursor: not-allowed" disabled="disabled"  ${otpendiente.isConfirmado ? 'checked':''} type="checkbox">
+                                            <input style="cursor: not-allowed" disabled="disabled"  ${otpendiente.ordenConfirmada ? 'checked':''} type="checkbox">
                                             <span style="cursor: not-allowed" class="checkmarkcust"></span>
                                         </label>
                                     </div>`

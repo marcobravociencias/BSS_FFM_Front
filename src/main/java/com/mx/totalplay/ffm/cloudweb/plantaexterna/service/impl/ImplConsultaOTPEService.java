@@ -155,4 +155,42 @@ public class ImplConsultaOTPEService implements ConsultaOTPEService{
 		return response;
 	}
 
+	@Override
+	public ServiceResponseResult consultarComentarios(String params) {
+		logger.info("ImplConsultaOTPEService.class [metodo = consultarComentarios() ]\n"+params);
+		JsonObject jsonObject=gson.fromJson(params, JsonObject.class);
+		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
+		String tokenAcces=principalDetail.getAccess_token() ;
+		logger.info("consultaOTDiario ##+"+tokenAcces);
+		String urlRequest=principalDetail.getDireccionAmbiente().concat( constConsultaOTPE.getConsultaOTTipoOrdenesPorUsuario() );	
+	    logger.info("url--- "+urlRequest);
+	    Map<String, String> paramsRequestGet = new HashMap<String, String>();
+		ServiceResponseResult response= restCaller.callGetBearerTokenRequest( 
+																			paramsRequestGet,
+																			urlRequest,
+																			ServiceResponseResult.class , 
+																			tokenAcces );
+	    logger.info("RESULT"+gson.toJson(response));
+		return response;
+	}
+
+	@Override
+	public ServiceResponseResult consultarImagenes(String params) {
+		logger.info("ImplConsultaOTPEService.class [metodo = consultarImagenes() ]\n"+params);
+		JsonObject jsonObject=gson.fromJson(params, JsonObject.class);
+		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
+		String tokenAcces=principalDetail.getAccess_token() ;
+		logger.info("consultaOTDiario ##+"+tokenAcces);
+		String urlRequest=principalDetail.getDireccionAmbiente().concat( constConsultaOTPE.getConsultaOTTipoOrdenesPorUsuario() );	
+	    logger.info("url--- "+urlRequest);
+	    Map<String, String> paramsRequestGet = new HashMap<String, String>();
+		ServiceResponseResult response= restCaller.callGetBearerTokenRequest( 
+																			paramsRequestGet,
+																			urlRequest,
+																			ServiceResponseResult.class , 
+																			tokenAcces );
+	    logger.info("RESULT"+gson.toJson(response));
+		return response;
+	}
+
 }
