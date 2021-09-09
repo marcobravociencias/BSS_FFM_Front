@@ -286,6 +286,9 @@
                             <span>{{filePlaca.nombre}} <i class="fa fa-trash"
                                     onclick="deleteFile('fotoPlaca')"></i></span>
                         </div>
+                        <div ng-if="!filePlaca.nombre && vehiculo.urlFotoPlaca" style="text-align: center;">
+                            <img alt="Placa" src="" width="150" id="urlFotoPlaca"/>
+                        </div>
                     </div>
                     <div class="col-3 form-group">
                         <label>Foto de Veh&iacute;culo </label>
