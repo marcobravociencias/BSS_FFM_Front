@@ -39,7 +39,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
                 $scope.vistaDespacho = false;
                 $scope.tipoAlertaSeleccionada = angular.copy(alerta);
                 $scope.mostrarDetalleAlertas($scope.otsAlertas);
-                swal.close();
+                //swal.close();
             } else {
                 swal.close();
             }
@@ -61,27 +61,50 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
                 <div class="card card-alertas-pendientes" onclick="consultarAccionesAlerta('${ordenobj.id}', '${ordenobj.folioSistema}', '${alertaob.latitudAlerta}', '${alertaob.longitudAlerta}', '${tecnicoObj.latitud}', '${tecnicoObj.longitud}', '${alertaob.idSubAlerta}', '${ordenobj.idIntervencion}', 
                     '${ordenobj.idSubIntervencion}', '${tecnicoObj.id}', '${alertaob.idRegistroAlerta}')">
                     <div class="card-body card-body-alertas">
-                        <div class="row">
-                            <div class="col-12">
-                                <span class="text-primary-alerta">OT: </span><span class="text-secundary-alerta">  ${ordenobj.id}   </span>
-                                <span class="text-primary-alerta">Folio: </span><span class="text-secundary-alerta">  ${ordenobj.folioSistema}  </span>
+
+                        <div class="top-title-ot">
+                            <div class="content-top-element bars-content">
+                                <h5 class="title-otpendeinte">${ordenobj.claveCliente}</h5>
+                            </div>                        
+                        </div>
+                        <div class="posiciondos">
+                            <div class="content-dos-element ">
+                                <h5 class="title-nombrecliente">${ordenobj.nombreCliente}</h5>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-12">    
-                                <span class="text-primary-alerta">Direcci&oacute;n: </span><span class="text-secundary-alerta"> ${ ordenobj.direccion } </span>
+                        <div class="positiontres">
+                            <div class="content-posiciontres">
+                                <p class="text-otpendiente-tres-title">FOLIO:</p>
+                                <p class="text-otpendiente-tres"> ${ordenobj.folioSistema}</p>
+                            </div>
+                            <div class="content-posiciontres">
+                                <p class="text-otpendiente-tres-title">OT:</p>
+                                <p class="text-otpendiente-tres"> ${ordenobj.id}  </p>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <span class="text-primary-alerta">Fecha y hora: </span><span class="text-secundary-alerta">  ${alertaob.fechaRegistro}  </span>
-                            </div>
-                        </div>
+
+                        <div class="info-content-otpendeinte">
+                            <div class="line-content-infootpend">
+                                <b class="title-ciudad">Intevenci&oacute;n:</b>
+                                <span class="content-ciudadotpend">${ordenobj.descSubIntervencion}</span>
+
+                                <b class="title-ciudad">Subintervenci&oacute;n.</b>
+                                <span class="content-ciudadotpend">${ordenobj.descIntervencion}</span>                                
+                            </div>                                               
+                        </div>        
+                        
+                        <div class="info-content-otpendeinte">
+                            <div class="line-content-infootpend">
+                                <b class="title-ciudad">Dir.</b>
+                                <span class="content-ciudadotpend">${ordenobj.direccion}</span>                                
+                            </div>                                               
+                        </div>                
                     </div>
                     <div class="card-footer text-muted card-alertas-pendientes-foot">
                         <div class="row">
                             <div class="col-12">
                                 <span class="text-primary-alerta">Alerta: </span><span class="text-secundary-alerta">  ${alertaob.descripcionSubtipoAlerta}  </span>
+                                <span></span>
                             </div>
                         </div>
                     </div>
@@ -115,7 +138,17 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
                     "visible": false,
                 }, {
                     "title": ""
-                }]
+                }
+            ],
+            "initComplete": function(settings, json) {
+                setTimeout(function(e){
+                    let objclic=document.getElementsByClassName('card-alertas-pendientes')[0]
+                    if(objclic!= undefined)
+                        document.getElementsByClassName('card-alertas-pendientes')[0].click();
+                    else
+                        swal.close()
+                },500)
+            }
         });
     }
 
@@ -146,8 +179,11 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
             $scope.setMarkets($scope.alertaSeleccionadaObject);
 
             $("#pills-mapa-tab").click();
-            swal({ text: 'Consultando datos ...', allowOutsideClick: false });
-            swal.showLoading();
+            if(!swal.isVisible() ){
+                swal({ text: 'Consultando datos ...', allowOutsideClick: false });
+                swal.showLoading();
+            }
+         
             var params = {
                 "idTipoAlerta": idSubTipoAlerta
             }        
