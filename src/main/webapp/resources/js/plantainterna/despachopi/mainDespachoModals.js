@@ -350,7 +350,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             });
             $('#modalOtTrabajadasTecnico').modal('show')
         } else {
-            mostrarMensajeInformativo('El tecnico no cuenta con ots asiganadas el dia de hoy.')
+            mostrarMensajeInformativo('El tecnico no cuenta con ots trabajadas el dia de hoy.')
         }
 
     }
