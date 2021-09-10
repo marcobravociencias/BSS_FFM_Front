@@ -29,6 +29,7 @@ function logprocess(mensaje){
 app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mainAlertasService', 'genericService',
                                        function ($scope, $q,mainDespachoService, mainAlertasService, genericService) {
     
+    
     app.filtrosDespachoPrincipal($scope,mainDespachoService)
     app.mapasControllerDespachoPI($scope,mainDespachoService)
     app.modalDespachoPrincipal($scope,mainDespachoService,$q,genericService)
@@ -64,6 +65,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
     $scope.nfiltrointervenciones=''
     $scope.estatusCambio = [];
     $scope.intervencionesConteo = [];
+    
     
     $scope.abrirModalGeografia=function(){
         $("#modal-jerarquia-filtro").modal('show')

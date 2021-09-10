@@ -548,4 +548,54 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
             drawCurve(pointA, pointB, mapavistageneral);
         });
     }
+
+    let mapaDetalleAlerta;
+    let mapaDetalleTecnico;
+    $scope.inicializarMapasAlertaDetalle = function(){
+        mapaDetalleAlerta = new google.maps.Map(document.getElementById("mapDetalleAlerta"), {
+            zoom: 8,
+        });
+
+        mapaDetalleTecnico = new google.maps.Map(document.getElementById("mapDetalleTecnico"), {
+            zoom: 15,
+        });
+    }
+    let marketsDetalleAlerta = []
+    let maDetalleAlerta;
+    let mDetalleTecnico;
+    $scope.pintarMarkesMapDetalleAlerta = function() {
+        $scope.limpiarMakerTecnicos();
+        maDetalleAlerta = new google.maps.Marker({
+            clickable: false,
+            position: {
+                lat: parseFloat($scope.objectDetalleAlerta.alerta.latitudAlerta),
+                lng: parseFloat($scope.objectDetalleAlerta.alerta.latitudAlerta)
+            },
+            animation: google.maps.Animation.DROP,
+            map: mapaDetalleAlerta,
+            latitud_ot: parseFloat($scope.objectDetalleAlerta.alerta.latitudAlerta),
+            longitud_ot: parseFloat($scope.objectDetalleAlerta.alerta.latitudAlerta),
+        });
+        mapaDetalleAlerta.setCenter(new google.maps.LatLng(parseFloat($scope.objectDetalleAlerta.alerta.latitudAlerta), parseFloat($scope.objectDetalleAlerta.alerta.latitudAlerta)));
+        marketsDetalleAlerta.push(maDetalleAlerta)
+
+        mDetalleTecnico = new google.maps.Marker({
+            clickable: false,
+            position: {
+                lat: parseFloat($scope.objectDetalleAlerta.tecnico.latitud),
+                lng: parseFloat($scope.objectDetalleAlerta.tecnico.longitud)
+            },
+            animation: google.maps.Animation.DROP,
+            map: mapaDetalleTecnico,
+            latitud_ot: parseFloat($scope.objectDetalleAlerta.tecnico.latitud),
+            longitud_ot: parseFloat($scope.objectDetalleAlerta.tecnico.longitud),
+        });
+        mapaDetalleTecnico.setCenter(new google.maps.LatLng(parseFloat($scope.objectDetalleAlerta.tecnico.latitud), parseFloat($scope.objectDetalleAlerta.tecnico.longitud)));
+        marketsDetalleAlerta.push(mDetalleTecnico)
+    }
+
+    $scope.limpiarMakerTecnicos = () => {
+        marketsDetalleAlerta.map(e => { e.setMap(null); return e; });
+        marketsDetalleAlerta = [];
+    }
 }

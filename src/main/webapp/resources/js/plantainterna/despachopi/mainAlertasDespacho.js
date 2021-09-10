@@ -11,6 +11,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
 
 
 
+
     $scope.getDetalleAlertas = function(alerta) {
         $("#pills-mapa-tab").click();
         $scope.idAlertaSelecionada = '';
@@ -20,6 +21,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
         $scope.showAaccion = false;
         $scope.alertaSeleccionadaObject = {};
         $scope.tipoAlertaSeleccionada = {};
+        $scope.isDetalleAlerta = false;
         console.log(alerta);
         deleteMarkers();
         clearMarkers();
@@ -161,6 +163,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
             $scope.chatAlertaConsultada = false;
             $scope.showAaccion = false;
             $scope.alertaSeleccionada = true;
+            $scope.isDetalleAlerta = false;
             $scope.alertaSeleccionadaObject = {
                 IdOT: ot, 
                 os: os, 
@@ -855,7 +858,15 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
 
     });
 
-    
-
+    $scope.isDetalleAlerta = false;
+    $scope.abirDetalle = function(){
+        if (!$scope.isDetalleAlerta) {
+            $scope.objectDetalleAlerta = $scope.otsAlertas[0]
+            $scope.objectDetalleAlerta.tecnico.urlFotoPerfil ? $scope.objectDetalleAlerta.tecnico.urlFotoPerfil: './resources/img/plantainterna/despacho/tecnicootasignada.png';
+            $scope.inicializarMapasAlertaDetalle()
+            $scope.isDetalleAlerta = true;
+        }
+        $scope.pintarMarkesMapDetalleAlerta();
+    }
 
 };
