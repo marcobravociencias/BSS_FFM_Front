@@ -20,7 +20,7 @@
         class="search-filtro form-control form-control-sm">
     </div>
     <div class="col-1">
-        <button id="btnBuscar" type="button" class="btn btn-primary btnTotal"  onclick="filterByText()">
+        <button id="btnBuscar" type="button" class="btn btn-primary btnTotal"  ng-click="getVehiculos()">
             <i class="fa fa-search"></i>
         </button>
     </div>

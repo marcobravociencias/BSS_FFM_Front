@@ -221,78 +221,49 @@ app.controller('controlVehicularController',
 			}
 
 			$scope.getVehiculos = function () {
+				swal({ text: 'Espera un momento...', allowOutsideClick: false });
+				swal.showLoading();
 				controlVehicularService.consultarVehiculos().then(function success(response) {
 					if (response.data.respuesta) {
 						if (response.data.result) {
 							if (response.data.result.vehiculo.length) {
 								$scope.vehiculos = angular.copy(response.data.result.vehiculo);
-								if (vehiculoTable) {
-									vehiculoTable.destroy();
+								if ($("#searchText").val() !== "") {
+									let list = [];
+									let text = $("#searchText").val().toLowerCase();
+									let listVehiculos = angular.copy($scope.vehiculos);
+									$.each(listVehiculos, function (i, elemento) {
+										if (elemento.placa.toLowerCase().includes(text) ||
+											elemento.numeroSerie.toLowerCase().includes(text) ||
+											elemento.color.toLowerCase().includes(text) ||
+											elemento.anio.toLowerCase().includes(text) ||
+											elemento.combustible.toLowerCase().includes(text) ||
+											elemento.tipo.toLowerCase().includes(text) ||
+											elemento.marca.toLowerCase().includes(text) ||
+											elemento.modelo.toLowerCase().includes(text)
+										) {
+											list.push(elemento);
+										}
+									})
+									$scope.buildTableVehiculos(list);
+								}else{
+									$scope.buildTableVehiculos($scope.vehiculos);
 								}
-								let arraRow = [];
-								$.each(response.data.result.vehiculo, function (i, elemento) {
-									if (elemento.idEstatus == 1) {
-										$scope.countDisponibles = $scope.countDisponibles + 1;
-									}
-
-									if (elemento.idEstatus == 2) {
-										$scope.countAsignados = $scope.countAsignados + 1;
-									}
-
-									if (elemento.idEstatus == 2) {
-										$scope.countNoDisponibles = $scope.countNoDisponibles + 1;
-									}
-
-									let row = [];
-									row[0] = elemento.placa;
-									row[1] = elemento.tipo;
-									row[2] = elemento.marca;
-									row[3] = elemento.modelo;
-									row[4] = elemento.anio;
-									row[5] = elemento.color;
-									row[6] = elemento.combustible;
-									row[7] = elemento.numeroSerie;
-									row[8] = elemento.geografia;
-									row[9] = elemento.urlFotoPlaca ? '<img src="' + elemento.urlFotoPlaca + '" alt="Placa" width="50"/>' : "";
-									row[10] = elemento.urlFotoVehiculo ? '<img src="' + elemento.urlFotoVehiculo + '" alt="Vehiculo" width="50"/>' : "";
-									row[11] = elemento.estatus;
-									row[12] = '<i class="fas fa-edit" onclick="editCar(' + "'" + elemento.idVehiculo + "'" + ')"></i>';
-									arraRow.push(row);
-								})
-								vehiculoTable = $('#vehiculoTable').DataTable({
-									"paging": true,
-									"lengthChange": false,
-									"searching": false,
-									"ordering": false,
-									"pageLength": 10,
-									"info": false,
-									"data": arraRow,
-									"language": idioma_espanol_not_font,
-									"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">'
-								});
+							
+							} else {
+								swal.close();
 							}
+
+						} else {
+							mostrarMensajeErrorAlert(response.data.resultDescripcion);
+							swal.close();
 						}
+
+					} else {
+						mostrarMensajeErrorAlert(response.data.resultDescripcion);
+						swal.close();
 					}
-
 				})
-			}
-
-			filterByText = function () {
-				console.log($("#searchText").val());
-				$scope.getVehiculos();
-				/*
-				if ($("#searchText").val() !== "") {
-					let list = [];
-					let listVehiculos = angular.copy($scope.vehiculos);
-					$.each(listVehiculos, function (i, elemento) {
-						if (elemento.idEstatus == status) {
-							list.push(elemento);
-						}
-					})
-					$scope.buidTableVehiculos(list);
-				}
-				*/
-
 			}
 
 			filterByStatus = function (status) {
@@ -303,11 +274,13 @@ app.controller('controlVehicularController',
 						list.push(elemento);
 					}
 				})
-				$scope.buidTableVehiculos(list);
+				$scope.buildTableVehiculos(list);
 			}
 
-			$scope.buidTableVehiculos = function (list) {
-
+			$scope.buildTableVehiculos = function (list) {
+				$scope.countDisponibles = 0;
+				$scope.countAsignados = 0;
+				$scope.countNoDisponibles = 0;
 				if (vehiculoTable) {
 					vehiculoTable.destroy();
 				}
@@ -352,6 +325,7 @@ app.controller('controlVehicularController',
 					"language": idioma_espanol_not_font,
 					"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">'
 				});
+				swal.close();
 			}
 
 			function compareGeneric(a, b) {
@@ -410,7 +384,7 @@ app.controller('controlVehicularController',
 				});
 			}
 
-			$scope.loadMarcaLinea = function (tipo, marca, status) {
+			$scope.loadMarcaLinea = function (tipo, marca, status, modelo) {
 				$scope.marcas = [];
 				$scope.marcasTemp = [];
 				$scope.lineas = [];
@@ -419,13 +393,18 @@ app.controller('controlVehicularController',
 						if (e.marcas.length) {
 							e.marcas.map(function (m) {
 								if (m.nivel == "1") {
+									if (m.idMarca == marca) {
+										$scope.vehiculo.idMarca = marca.toString();
+									}
 									$scope.marcas.push(m);
 								} else if (m.nivel == "2") {
 									$scope.marcasTemp.push(m);
 									if (marca == m.padre) {
+										if (m.idMarca == modelo) {
+											$scope.vehiculo.idModelo = modelo.toString();
+										}
 										$scope.lineas.push(m);
 									}
-
 								}
 							})
 						}
@@ -843,14 +822,7 @@ app.controller('controlVehicularController',
 
 
 			editCar = function (id) {
-				$("#consulta-tab").removeClass("active");
-				$("#consulta").removeClass("active show");
-				$scope.$apply();
-				$scope.clearForm();
-				$scope.isEdit = true;
-				$("#alta").addClass("active show");
-				$("#modifica-tab").addClass("active");
-				$scope.initWizard();
+
 				$scope.getCarById(id);
 			}
 
@@ -1023,6 +995,13 @@ app.controller('controlVehicularController',
 					if (response.data !== undefined) {
 						if (response.data.respuesta) {
 							if (response.data.result) {
+								$("#consulta-tab").removeClass("active");
+								$("#consulta").removeClass("active show");
+								$scope.clearForm();
+								$scope.isEdit = true;
+								$("#alta").addClass("active show");
+								$("#modifica-tab").addClass("active");
+								$scope.initWizard();
 								$scope.applyData(response.data.result.vehiculo);
 								swal.close();
 							} else {
@@ -1031,6 +1010,7 @@ app.controller('controlVehicularController',
 							}
 						} else {
 							swal.close();
+							mostrarMensajeErrorAlert(response.data.resultDescripcion);
 						}
 					} else {
 						swal.close();
@@ -1040,13 +1020,13 @@ app.controller('controlVehicularController',
 			}
 
 			$scope.applyData = function (vehiculo) {
-				$scope.loadMarcaLinea(vehiculo.idTipo, vehiculo.idMarca, vehiculo.idEstatus);
 				$scope.vehiculo = vehiculo;
-
+				$scope.vehiculo.idMarca = "";
+				$scope.vehiculo.idModelo = "";
+				$scope.loadMarcaLinea(vehiculo.idTipo, vehiculo.idMarca, vehiculo.idEstatus, vehiculo.idModelo);
 				$scope.vehiculo.idColor = vehiculo.idColor.toString();
 				$scope.vehiculo.idTipo = vehiculo.idTipo.toString();
-				$scope.vehiculo.idMarca = vehiculo.idMarca.toString();
-				$scope.vehiculo.idModelo = vehiculo.idModelo.toString();
+
 				$scope.vehiculo.idEstatus = vehiculo.idEstatus.toString();
 
 
@@ -1111,7 +1091,6 @@ app.controller('controlVehicularController',
 				$(".pills-pane").removeClass("active show");
 				$("#pills-general-tab").addClass("active");
 				$("#pills-general").addClass("active show");
-				$scope.$apply();
 			}
 
 		}
