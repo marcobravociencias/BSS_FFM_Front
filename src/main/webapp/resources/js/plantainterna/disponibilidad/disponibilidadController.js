@@ -42,6 +42,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
     $scope.nIntervencion = '';
     $scope.nGeografia = '';
     $scope.permisosDisponibilidad = [];
+    $scope.isConsultaDisponibilidad = false
 
     app.disponibilidadCalendar($scope);
 
@@ -307,8 +308,10 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                         if (response.data.result.dias !== undefined) {
                             arrDisponibilidad = [];
                             $scope.muestraDisponibilidadCalendar(response.data.result);
-                            $scope.idTipoActualizar = tipo_intervencion;
-                            $scope.idCiudadActualizar = distrito_cluster;
+                            $scope.idTipoActualizar = tipo_intervencion[0];
+                            $scope.idCiudadActualizar = clustersparam[0];
+                            $scope.isConsultaDisponibilidad = true;
+
                             let textoIntervencion = $.trim($("#tipo_select option:selected").text());
                             let selectedElms = $('#jstreeconsulta').jstree("get_selected", true);
                             let selected_arbol;
@@ -720,6 +723,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
 
     $("#modal_cluster_arbol_diponibilidad").on("hidden.bs.modal", function () {
         let selectedElms = $('#jstreeconsulta').jstree("get_selected", true);
+        let selectedElmsInterve = $('#jstreeIntervencion').jstree("get_selected", true);
         if (selectedElms.length > 0) {
             let selected_arbol;
 
@@ -730,6 +734,14 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
         } else {
             document.getElementById('arbol_disponibilidad_consulta').placeholder = 'Seleccione una geografia';
         }
+       /*  if ($scope.idCiudadActualizar && $scope.idTipoActualizar) {
+            if ($scope.idCiudadActualizar !== selectedElms[0].id) {
+                $scope.isConsultaDisponibilidad = false;
+            } else{
+                $scope.isConsultaDisponibilidad = true;
+            }
+        } */
+
     })
 
     $("#modalArbolIntervencion").on("hidden.bs.modal", function () {

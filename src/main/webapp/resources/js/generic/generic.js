@@ -144,3 +144,7 @@ function mostrarMensajeErrorAlert(mensaje) {
 mostrarMensajeWarningValidacion = function (mensaje) {
 	toastr.warning(mensaje);
 }
+
+mostrarMensajeInformativo = function(mensaje){
+	toastr.info(mensaje);
+}

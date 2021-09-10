@@ -144,7 +144,7 @@
                                 <!--span ng-click="buscarOtPendienteText();" class="input-group-text fa fa-search" id="buscar-btn-otpend"></span-->
                             </div>
                         </div>
-                        <i class="icon-menu-tecnicosdisp fas fa-align-center"></i>                                                
+                        <i class="icon-menu-tecnicosdisp fas fa-align-center" ng-click="abrirModalOtsIntervencionres()"></i>                                                
                     </div>
                     <div ng-show="!isCargaOtsPendientes" class="cargando-otspendientes ">
                         <div class="wrapper"> 
@@ -209,7 +209,9 @@
         <jsp:include page="./modals/modalLocalizacionRegistros.jsp"></jsp:include>   
         <jsp:include page="./modals/modalFotoUsuario.jsp"></jsp:include>   
         <jsp:include page="./modals/modalVistaMapa.jsp"></jsp:include> 
-        <jsp:include page="./modals/modalReporte.jsp"></jsp:include> 
+        <jsp:include page="./modals/modalReporte.jsp"></jsp:include>
+        <jsp:include page="./modals/modalDetalleOtsTecnico.jsp"></jsp:include>
+        <jsp:include page="./modals/modalOtIntervenciones.jsp"></jsp:include>
        
         <!--div ng-show="vistaDespacho" class="container-fluid d-flex justify-content-center">    
             <ul class="wall content-alert-parent">
