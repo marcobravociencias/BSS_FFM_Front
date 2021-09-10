@@ -90,7 +90,7 @@ app.disponibilidadCalendar = function ($scope) {
                         if (tipo_intervencion.length === 0 || clustersparam.length === 0) {
                             mostrarMensajeWarningValidacion("Para agregar disponibilidad debes seleccionar todos los filtros")
                         } else {
-                            if ($scope.permisosDisponibilidad.filter(elem => {return elem.clave === 'accionAgregaDisponibilidad'}).length === 1) {
+                            if ($scope.permisosDisponibilidad.filter(elem => {return elem.clave === 'accionAgregaDisponibilidad'}).length === 1 && $scope.isConsultaDisponibilidad) {
                                 swal({
                                     title: "\u00BFDeseas agregar disponibilidad en este dia ?",
                                     type: 'question',

@@ -303,6 +303,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             disponibilidadService.consultaDisponibilidad(JSON.stringify(params)).then(function success(response) {
                 console.log(response.data);
                 arregloDisponibilidad = [];
+                $scope.isConsultaDisponibilidad = true;
                 if (response.data.respuesta) {
                     if (response.data.result) {
                         if (response.data.result.dias !== undefined) {
@@ -310,9 +311,8 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                             $scope.muestraDisponibilidadCalendar(response.data.result);
                             $scope.idTipoActualizar = tipo_intervencion[0];
                             $scope.idCiudadActualizar = clustersparam[0];
-                            $scope.isConsultaDisponibilidad = true;
 
-                            let textoIntervencion = $.trim($("#tipo_select option:selected").text());
+                            let textoIntervencion =$('#jstreeIntervencion').jstree("get_selected", true);
                             let selectedElms = $('#jstreeconsulta').jstree("get_selected", true);
                             let selected_arbol;
 
@@ -322,7 +322,8 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
 
 
                             document.getElementById('disponibilidad_span').innerHTML = selected_arbol;
-                            $("#intervencion_span").text(textoIntervencion.substr(0, 1) + "" + (textoIntervencion.substr(1, textoIntervencion.length - 1)).toLowerCase());
+                            document.getElementById('intervencion_span').innerHTML = textoIntervencion[0].text;
+                            //$("#intervencion_span").text(textoIntervencion.substr(0, 1) + "" + (textoIntervencion.substr(1, textoIntervencion.length - 1)).toLowerCase());
 
                             let styleHide = ''
                             if (!$scope.banderaNocturno) {
@@ -723,8 +724,14 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
 
     $("#modal_cluster_arbol_diponibilidad").on("hidden.bs.modal", function () {
         let selectedElms = $('#jstreeconsulta').jstree("get_selected", true);
-        let selectedElmsInterve = $('#jstreeIntervencion').jstree("get_selected", true);
+       
         if (selectedElms.length > 0) {
+            if ($scope.idCiudadActualizar) {
+                if ($scope.idCiudadActualizar !== Number(selectedElms[0].id)) {
+                    $scope.muestraDisponibilidadCalendar([])
+                    $scope.isConsultaDisponibilidad = false;
+                }
+            }
             let selected_arbol;
 
             selectedElms.forEach(element => {
@@ -734,19 +741,19 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
         } else {
             document.getElementById('arbol_disponibilidad_consulta').placeholder = 'Seleccione una geografia';
         }
-       /*  if ($scope.idCiudadActualizar && $scope.idTipoActualizar) {
-            if ($scope.idCiudadActualizar !== selectedElms[0].id) {
-                $scope.isConsultaDisponibilidad = false;
-            } else{
-                $scope.isConsultaDisponibilidad = true;
-            }
-        } */
 
     })
 
     $("#modalArbolIntervencion").on("hidden.bs.modal", function () {
         let selectedElms = $('#jstreeIntervencion').jstree("get_selected", true);
+        
         if (selectedElms.length > 0) {
+            if ($scope.idTipoActualizar) {
+                if ($scope.idTipoActualizar !== Number(selectedElms[0].id)) {
+                    $scope.muestraDisponibilidadCalendar([])
+                    $scope.isConsultaDisponibilidad = false;
+                }
+            }
             let selected_arbol;
 
             selectedElms.forEach(element => {
