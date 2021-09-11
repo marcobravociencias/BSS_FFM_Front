@@ -56,6 +56,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         console.log($scope.detalleOtPendienteSelected)
         $scope.estatusModals = 'PENDIENTE'
 
+
     }
     abrirModalInformacion = function (idotasignada) {
         $scope.listadoMotivosRescate = $scope.estatusCambio.filter(e => {return e.idPadre === 212})
@@ -70,6 +71,8 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         console.log($scope.permisosModal )
         console.log($scope.detalleOtAsignadaSelected)
         $scope.estatusModals = 'ASIGNADA'
+        
+
     }
 
     $scope.idOtSelect = "";
@@ -104,6 +107,10 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                             $scope.infoOtDetalle = results[0].data.result.orden
 
                             $("#modalDetalleOT").modal('show')
+                            setTimeout(function(){ 
+                                document.getElementsByClassName('permiso-accion-modal')[0].click();
+                            },500)
+
                         } else {
                             toastr.info(results[0].data.result.mensaje);
                         }

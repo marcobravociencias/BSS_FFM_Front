@@ -235,29 +235,35 @@
                             </div>
                             <div ng-show="permisosModal.indexOf('tabAccionesOrdenDespacho') !== -1"  class="tab-pane fade" id="v-tabs-consulta-acciones" role="tabpanel" aria-labelledby="v-tabs-consulta-acciones-tab">
                                 <ul class="nav nav-tabs mb-3 nav-fill tabs-acciones-modal" id="ex1" role="tablist">
-                                    <li ng-class="{'permiso-accion-modal' : permisosModal.indexOf('tabCambioEstatusRescateModal') !== -1 }" 
+                                    <li  
                                         ng-show="permisosModal.indexOf('tabCambioEstatusRescateModal') !== -1" class="nav-item" role="presentation">
-                                        <a class="nav-link active" data-mdb-toggle="tab"  href="#accion-rescate-ot" >Rescate</a>
+                                        <a ng-class="{'permiso-accion-modal' : permisosModal.indexOf('tabCambioEstatusRescateModal') !== -1 }" 
+                                           class="nav-link active" data-mdb-toggle="tab"  href="#accion-rescate-ot" >Rescate</a>
                                     </li>
-                                    <li ng-class="{'permiso-accion-modal' : permisosModal.indexOf('tabCambioEstatusReagendaModal') !== -1 }"
+                                    <li 
                                         ng-show="permisosModal.indexOf('tabCambioEstatusReagendaModal') !== -1" class="nav-item" role="presentation">
-                                        <a class="nav-link" data-mdb-toggle="tab" href="#accion-reagendar-ot" >Reagendar</a>
+                                        <a ng-class="{'permiso-accion-modal' : permisosModal.indexOf('tabCambioEstatusReagendaModal') !== -1 }" 
+                                           class="nav-link" data-mdb-toggle="tab" href="#accion-reagendar-ot" >Reagendar</a>
                                     </li>
-                                    <li ng-class="{'permiso-accion-modal' : permisosModal.indexOf('tabCambioEstatusGestoriaModal') !== -1 }"
+                                    <li 
                                         ng-show="permisosModal.indexOf('tabCambioEstatusGestoriaModal') !== -1" class="nav-item" role="presentation">
-                                        <a class="nav-link" data-mdb-toggle="tab" href="#accion-plaza-comercial-ot" >Plaza comercial</a>
+                                        <a ng-class="{'permiso-accion-modal' : permisosModal.indexOf('tabCambioEstatusGestoriaModal') !== -1 }" 
+                                           class="nav-link" data-mdb-toggle="tab" href="#accion-plaza-comercial-ot" >Plaza comercial</a>
                                     </li>
-                                    <li ng-class="{'permiso-accion-modal' : permisosModal.indexOf('tabCambioEstatusCalendarizarModal') !== -1 }"
+                                    <li 
                                         ng-show="permisosModal.indexOf('tabCambioEstatusCalendarizarModal') !== -1"  class="nav-item" role="presentation">
-                                        <a class="nav-link" data-mdb-toggle="tab" href="#accion-calendarizar-ot">Calendarizar</a>
+                                        <a ng-class="{'permiso-accion-modal' : permisosModal.indexOf('tabCambioEstatusCalendarizarModal') !== -1 }" 
+                                           class="nav-link" data-mdb-toggle="tab" href="#accion-calendarizar-ot">Calendarizar</a>
                                     </li>
-                                    <li ng-class="{'permiso-accion-modal' : permisosModal.indexOf('tabCambioEstatusTerminarModal') !== -1 }" 
+                                    <li  
                                         ng-show="permisosModal.indexOf('tabCambioEstatusTerminarModal') !== -1" class="nav-item" role="presentation">
-                                        <a class="nav-link" data-mdb-toggle="tab" href="#accion-terminar-ot" >Terminar</a>
+                                        <a ng-class="{'permiso-accion-modal' : permisosModal.indexOf('tabCambioEstatusTerminarModal') !== -1 }" 
+                                           class="nav-link" data-mdb-toggle="tab" href="#accion-terminar-ot" >Terminar</a>
                                     </li>   
-                                    <li ng-class="{'permiso-accion-modal' : permisosModal.indexOf('tabCambioEstatusDesasignarModal') !== -1 }" 
+                                    <li  
                                         ng-show="permisosModal.indexOf('tabCambioEstatusDesasignarModal') !== -1" class="nav-item" role="presentation">
-                                        <a class="nav-link" data-mdb-toggle="tab" href="#accion-desasignar-ot" >Desasignar</a>
+                                        <a ng-class="{'permiso-accion-modal' : permisosModal.indexOf('tabCambioEstatusDesasignarModal') !== -1 }" 
+                                           class="nav-link" data-mdb-toggle="tab" href="#accion-desasignar-ot" >Desasignar</a>
                                     </li>
                                  
                                 </ul>
