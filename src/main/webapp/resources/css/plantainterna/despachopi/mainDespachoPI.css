@@ -2153,3 +2153,72 @@ b.text-no-seleccion-geografia {
   -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
   box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
 }
+
+#tableOtIntervencion thead {
+  border-bottom: 2px solid #e1e1e1;
+}
+#tableOtIntervencion thead tr th {
+    color: #2196f3!important;
+    border:none !important;
+}
+#tableOtIntervencion thead tr th {
+    text-align: left;
+    padding: .9em .9em .9em;
+    font-family: 'Montserrat' !important;
+    font-weight: bold;
+    color: #8e8e8e;
+    border:none !important;
+}
+
+ #tableOtIntervencion tbody tr td {
+    font-size: 1em;
+    padding: .9em .9em .9em;
+    font-family: 'Montserrat' !important;
+    font-weight: bold;
+    color: #8e8e8e;
+    text-align:left;
+    border: none;
+}
+ #tableOtIntervencion tbody tr{
+   border-bottom:1px solid #e7e7e7 !important;
+ }
+
+ #modalOtIntervenciones .modal-body{
+   padding: 0 1em;
+ }
+
+ #modalOtIntervenciones .modal-header{
+   border:none;
+   padding:0;
+ }
+ .style_modal_title {
+    font-family: 'Montserrat' !important;
+    text-align: center;
+    font-size: .7em;
+    -webkit-box-shadow: 0 5px 11px 0 rgb(0 0 0 / 18%), 0 4px 15px 0 rgb(0 0 0 / 15%);
+    box-shadow: 0 5px 11px 0 rgb(0 0 0 / 18%), 0 4px 15px 0 rgb(0 0 0 / 15%);
+    margin: -1rem 1rem 1rem;
+    border: none;
+    -webkit-border-radius: .125rem;
+    border-radius: .125rem;
+    padding: .5rem;
+    text-align: center;
+    margin-left: 50%;
+    background: #2196f3;
+    color: white;
+    font-weight: 900;
+    width: 45%;
+}
+
+#modalOtIntervenciones .modal-dialog{
+  min-width:23%;
+  width:23%;
+}
+#modalOtIntervenciones .modal-content{
+}
+
+.container_table_int {
+    padding-top: 0em;
+    overflow: auto;
+    max-height: 18em;
+}

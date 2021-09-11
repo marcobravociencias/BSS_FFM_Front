@@ -108,7 +108,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             $scope.fechaFiltradoCalendar= textCalendar;                 
             $scope.$apply()
 
-            $scope.refrescarBusqueda()
+            $scope.refrescarBusqueda(true)
         }) ;
         $('#calendar-next-back').datepicker('update',FECHA_HOY_DATE);
         
@@ -819,17 +819,21 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             $scope.validarLoadTecnicosOtsAsignadas()
         }).catch(err => handleError(err));
     }
-    $scope.refrescarBusqueda=function(){ 
+    $scope.refrescarBusqueda=function(banderaIsPendientes=false){ 
         $('#calendar').fullCalendar('destroy');
         //$('#calendar-next-back').datepicker('update',FECHA_HOY_DATE);
 
-        $scope.isCargaOtsPendientes=false;
+        $scope.isCargaOtsPendientes=banderaIsPendientes;
         $scope.isCargaOtsAsignadas=false;
         $scope.renderCalendario=false  
 
         $scope.consultarTecnicosDisponibiles()
         $scope.consultarOrdenesTrabajoAsignadasDespacho()
-        $scope.consultarOtsPendientes()
+        
+        if( banderaIsPendientes )
+            $scope.consultarOtsPendientes()
+
+
       //  $scope.consultarConteoAlertasPI()
     }
     $scope.validarLoadTecnicosOtsAsignadas=function(){

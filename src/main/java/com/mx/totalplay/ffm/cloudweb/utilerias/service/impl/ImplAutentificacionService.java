@@ -50,6 +50,9 @@ public class ImplAutentificacionService  implements AutentificacionService{
 			String ordenamiento=(String)configuraciones.get("NAVBAR_ORDER");
 			if (responseLog.getPermisos().size() != 0) {
 				if (ordenamiento != null) {
+					 	
+					ordenamiento=ordenamiento.replaceAll("moduloDespachoPE", "moduloDespacho");
+
 					responseLog.setPermisos( retornarListOrdenamiento(responseLog.getPermisos(),ordenamiento));		
 					
 					Optional<Permiso> streamResult = responseLog.getPermisos()
@@ -77,7 +80,11 @@ public class ImplAutentificacionService  implements AutentificacionService{
 
 		permisos=permisos.stream().map(e->{ e.setOrdenConfig(-1); return e ;}) .collect(Collectors.toList());	
 		int index=0;
-		for(Permiso e:permisos) {	
+		for(Permiso e:permisos) {
+			if(e.getClave()!= null && e.getClave().trim().equals("moduloDespachoPE")) 
+				e.setClave("moduloDespacho");
+			
+				
 			e.setOrdenConfig(-1);
 			for(String orden:listadoOrdenamiento) {
 				if(e.getClave().trim().equals(orden))
