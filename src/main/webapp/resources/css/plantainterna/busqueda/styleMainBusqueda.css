@@ -136,7 +136,7 @@ body {
 
 span.text-title-elementoh {
   display: block;
-  font-size: 1em;
+  font-size: 0.8em;
   font-weight: bold;
   white-space: nowrap;
   overflow: hidden;
@@ -285,6 +285,25 @@ span.text-title-elementoh {
 }
 
 
+#consultaInformacion{
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*aqui empieza lo viejo de busqueda ffm residencial*/
 
 body {
@@ -396,16 +415,6 @@ body {
 }
 .iconsf-container,.textcontainer-header{
   display: table-cell;
-}
-span.text-title-elementoh {
-  display: block;
-  font-size: 1em;
-  font-weight: bold;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: normal;
-  font-family: 'Montserrat', sans-serif;
 }
 .text-title-elementohcantidad{
   font-size:.8em;
@@ -552,28 +561,7 @@ span.noosactivar.ng-scope {
 .title-regresar-generic{
   font-family: 'Montserrat', sans-serif;
 }
-#modalProductos .modal-header, #modalDetalleServicio .modal-header{
-  margin:0;
-  box-shadow:none;
-  border-top: 20px solid #3b4559;
-  /* padding-top: .5rem; */
-}
 
-#modalProductos .modal-header .close.close-modal, #modalDetalleServicio .modal-header .close.close-modal {
-  background: #39455b;
-  padding:.1px .7em;
-  border-radius:1em;
-}
-#modalProductos .modal-footer, #modalDetalleServicio .modal-footer{
-  border:none !important;
-  padding-top:0;
-  margin-top: 1em;
-}
-#modalProductos .modal-header .modal-title, #modalDetalleServicio .modal-header .modal-title {
-  color: #39455b;
-  font-size: 1.2em;
-  font-weight: bolder;
-}
 .style_card_header_detallepro-sub {
   border-bottom: 0px;
   background: #f3f2f2;
@@ -605,27 +593,7 @@ span.noosactivar.ng-scope {
   border: 0px !important;
   background: #3B4559 !important;
 }
-#modalDetalleContacto .modal-header,
-#modalActivacionOrdenServicio .modal-header {
-  margin:0;
-  box-shadow:none;
-  border-top: 20px solid #39455b;
-  /* padding-top: .5rem; */
-}
-#modalDetalleContacto .modal-header .close.close-modal {
-  background:#39455b;
-  padding:.1px .7em;
-  border-radius:1em;
-}
-#modalDetalleContacto .modal-footer{
-  padding-top:0;
-  margin-top: 1em;
-}
-#modalDetalleContacto .modal-header .modal-title{
-  color:#39455b;
-  font-size:1.2em ;
-  font-weight:bolder;
-}
+
 .retorno-perfil {
   font-size: 16px; 
   color: #39455b;
@@ -1584,7 +1552,7 @@ img.img_evidencia{
 
 .col-content-text-general{
     margin-left: 15px;
-    max-width: 50%;;
+    max-width: 50% !important;
 }
 
 .col-btn-send-general{

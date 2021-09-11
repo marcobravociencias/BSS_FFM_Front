@@ -76,6 +76,20 @@ app.service("usuarioPIService", function ($http) {
 			transformRequest: angular.identity
 		});
 	};
+	
+	this.guardarUsuario = function (params) {
+        return $http({
+            method: "post",
+            url: "req/guardarUsuario",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    };
+    
+    //-----------------------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------------------
 
     this.consultarRegionesEstructura =function(){
 		return $http({

@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="offset-1 col-md-6">
-            <h6 class="text-center titulo-opciones">SELECCIONADAS</h6>
+            <h6 id="labelGeografiasSeleccionadas" class="text-center titulo-opciones">SELECCIONADAS</h6>
             <hr/>
             <div class="col-md-12">
                 <div class="row">
@@ -30,7 +30,7 @@
                         <span class="text-head-table-arbol"><li class="fa fa-cubes"></li>&nbsp;Distritos:</span>
                     </div>
                 </div>
-                <div class="scrollGeneralArbol">
+                <div id="contenedorGeografiasRegistro" class="scrollGeneralArbol">
 	                <div class="row padding_resumen_ciudades" ng-repeat="ciudad in listaGeografiasSeleccionadas track by $index">
 	                    <div class="col-md-6">
 	                        <span class="text-body-table-arbol" ng-bind="ciudad.nombre"></span>

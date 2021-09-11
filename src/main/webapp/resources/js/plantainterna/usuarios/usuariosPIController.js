@@ -248,6 +248,26 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
             			
         	swal.close();
         });
+    	
+    	if (tablaUsuarios) {
+			tablaUsuarios.destroy();
+		}
+		
+		tablaUsuarios = $('#table-usuario-pi').DataTable({
+			"processing": false,
+			"ordering": false,
+			"serverSide": false,
+			"scrollX": false,
+			"paging": true,
+			"lengthChange": false,
+			"searching": false,
+			"ordering": false,
+			"pageLength": 10,
+			"data": [],
+			"columns": [null, null, null, null, null, null, null, null],
+			"language": idioma_espanol_not_font
+		});
+    	
 	}
     
     $scope.iniciarModuloUsuarios();
@@ -360,15 +380,6 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	}
 	}
     
-    $("#arbolIntervencionRegistro").click(function() {
-    	$scope.listaIntervencionesSeleccionadas = [];
-    	var intervencionesTree = $('#arbolIntervencionRegistro').jstree("get_selected", true);
-    	intervencionesTree.forEach(intervencion =>{
-    		$scope.listaIntervencionesSeleccionadas.push(intervencion.text);
-    	});
-    	$scope.$apply();
-    });
-    
     $scope.mostrarArbolGeografiaRegistro = function() {
     	var puestoSeleccionado = $("#puesto_select_registro option:selected").text().toLowerCase();
     	puestoSeleccionado = puestoSeleccionado.split('').map( letra => acentos[letra] || letra).join('').toString();
@@ -449,8 +460,22 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	$scope.$apply();
     });
     
+    $("#arbolIntervencionRegistro").click(function() {
+    	$scope.listaIntervencionesSeleccionadas = [];
+    	$scope.informacionRegistro.intervenciones = [];
+    	var intervencionesTree = $('#arbolIntervencionRegistro').jstree("get_selected", true);
+    	intervencionesTree.forEach(intervencion =>{
+    		$scope.listaIntervencionesSeleccionadas.push(intervencion.text);
+    		$scope.informacionRegistro.intervenciones.push(intervencion.id);
+    	});
+    	$("#labelIntervencionesSeleccionadas").css("color", "rgb(70, 88, 107)");
+		$("#contenedorIntervencionesRegistro").css("border", "white solid 0px");
+    	$scope.$apply();
+    });
+    
     $("#arbolGeografiaRegistro").click(function() {
     	$scope.listaGeografiasSeleccionadas = [];
+    	$scope.informacionRegistro.geografias = [];
     	var geografiasTree = $('#arbolGeografiaRegistro').jstree("get_selected", true);
     	geografiasTree.forEach(geo =>{
     		if(geo.original.nivel == 3){
@@ -474,14 +499,21 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	    				}
 	    			});
 				}
+    			$scope.informacionRegistro.geografias.push(geo.id);
     			existePadre = false;
     		}
     	});
+    	if($scope.listaGeografiasSeleccionadas.length > 0){
+    		$("#labelGeografiasSeleccionadas").css("color", "rgb(70, 88, 107)");
+    		$("#contenedorGeografiasRegistro").css("border", "white solid 0px");
+    	}
+    	$scope.informacionRegistro.ciudadNatal = "";
     	$scope.$apply();
     });
     
     $("#arbolPermisoRegistro").click(function() {
     	$scope.listaPermisosSeleccionados = [];
+    	$scope.informacionRegistro.permisos = [];
     	var permisosTree = $('#arbolPermisoRegistro').jstree("get_selected", true);
     	permisosTree.forEach(permiso =>{
     		if(permiso.original.nivel == 2){
@@ -505,84 +537,387 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	    				}
 	    			});
 				}
+    			$scope.informacionRegistro.permisos.push(permiso.id);
     			existePadre = false;
     		}
     	});
+    	if($scope.listaPermisosSeleccionados.length > 0){
+        	$("#labelPermisosSeleccionadas").css("color", "rgb(70, 88, 107)");
+    		$("#contenedorPermisosRegistro").css("border", "white solid 0px");
+        }
     	$scope.$apply();
     });
     
-    $scope.registrarUsuario = function() {
+    $scope.guardarUsuario = function() {
+    	
+    	var puestoSeleccionado = $("#puesto_select_registro option:selected").val();
+    	var companiaSeleccionada = $("#compania_select_registro option:selected").val();
+    	
+//    	alert("Intervenciones: " + $scope.informacionRegistro.intervenciones + "\n" +
+//    		  "Geografrías: " + $scope.informacionRegistro.geografias + "\n" +
+//    		  "Permisos: " + $scope.informacionRegistro.permisos + "\n" +
+//    		  "Fecha ingreso: " + new Date($scope.informacionRegistro.fechaIngreso) + "\n" +
+//    		  ""
+//    			);
+    	
     	let paramsRegistro = {
-    			  idUsuario: 0,
-    			  nombre: "Juan",
-    			  apellidoPaterno: "Lopez",
-    			  apellidoMaterno: "Perez",
-    			  numeroEmpleado: "14102832",
-    			  usuario: "usuario324",
-    			  password: "12345",
-    			  identificacionTributaria: "TURPL901203",
-    			  identificacion: "872R987FDIUSFODSF",
-    			  genero: "MASCULINO",
-    			  fotoPerfil: "{archivo:\"\",\"bucketId\":\"\", \"nombre\":\"\"}",
-    			  urlFotoPerfil: "string",
-    			  urlFB: "string",
-    			  correoElectronico: "usuario@gmail.com",
-    			  telefonoCelular: 553289075,
-    			  idEstatusUsuario: 0,
-    			  idGeografia: 0,
-    			  idUsuarioJefe: 1,
-    			  llaveExterna: "4532",
-    			  tipoUsuario: 1,
-    			  idProveedor: 15,
-    			  intentosFallidos: 0,
-    			  fechaUltimoLogin: "2021-09-02T16:46:58.513Z",
-    			  primerIngreso: 0,
-    			  fechaBloqueo: "2021-09-02T16:46:58.513Z",
-    			  idDispositivo: "string",
-    			  fechaAlta: "2021-09-02T16:46:58.513Z",
-    			  fechaActualizacion: "2021-09-02T16:46:58.513Z",
-    			  activo: 0,
-    			  idCiudadNatal: 23,
-    			  idUsuarioDespacho: 10,
-    			  idUsuarioModifica: 13,
-    			  idHorario: 9,
+    			  //idUsuario: 0,
+    			  nombre: $scope.informacionRegistro.nombre,
+    			  apellidoPaterno: $scope.informacionRegistro.apellidoPaterno,
+    			  apellidoMaterno: $scope.informacionRegistro.apellidoMaterno,
+    			  numeroEmpleado: $scope.informacionRegistro.numEmpleado,
+    			  usuario: $scope.informacionRegistro.posicion,
+    			  password: $scope.informacionRegistro.contrasena,
+    			  identificacionTributaria: $scope.informacionRegistro.rfc,
+    			  //identificacion: "872R987FDIUSFODSF",
+    			  genero: $scope.informacionRegistro.sexo,
+    			  //fotoPerfil: null,
+    			  //urlFotoPerfil: null,
+    			  //urlFB: null,
+    			  correoElectronico: $scope.informacionRegistro.correo,
+    			  telefonoCelular: $scope.informacionRegistro.telefonoContacto,
+    			  //idEstatusUsuario: 0,
+    			  //idGeografia: 0,
+    			  //idUsuarioJefe: 1,
+    			  //llaveExterna: "4532",
+    			  tipoUsuario: puestoSeleccionado,
+    			  //idProveedor: 15,
+    			  //intentosFallidos: 0,
+    			  //fechaUltimoLogin: null,
+    			  //primerIngreso: null,
+    			  //fechaBloqueo: null,
+    			  //idDispositivo: "string",
+    			  fechaAlta: $scope.informacionRegistro.fechaIngreso,
+    			  //fechaActualizacion: null,
+    			  //activo: 0,
+    			  idCiudadNatal: $scope.informacionRegistro.ciudadNatal,
+    			  //idUsuarioDespacho: 10,
+    			  //idUsuarioModifica: 13,
+    			  //idHorario: 9,
     			  idPerfil: 2,
-    			  operarios: [
-    			    1
-    			  ],
+    			  //operarios: [
+    			    //1
+    			  //],
     			  workData: {
-    			    idJefeInmediato: "string",
-    			    geografias: [
-    			      0
-    			    ],
-    			    idCompania: "string",
-    			    idTipoUsuario: 0,
-    			    numeroEmpleado: "string",
-    			    password: "string",
-    			    idClasificacionOperario: 0,
-    			    intervenciones: [
-    			      0
-    			    ],
-    			    idOperarios: [
-    			      0
-    			    ],
-    			    permisos: [
-    			      0
-    			    ],
-    			    idAsignacionAutomatica: "string"
+    				  //idJefeInmediato: "string",
+    				  geografias: [
+    					  $scope.informacionRegistro.geografias
+    				  ],
+    				  idCompania: companiaSeleccionada,
+    				  //idTipoUsuario: puestoSeleccionado,
+    				  numeroEmpleado: $scope.informacionRegistro.numEmpleado,
+    				  password: $scope.informacionRegistro.contrasena,
+    				  //idClasificacionOperario: 0,
+    				  intervenciones: [
+    					  $scope.informacionRegistro.intervenciones
+    			      ],
+    			      //idOperarios: [
+    			    	  //0
+    			      //],
+    			      permisos: [
+    			    	  $scope.informacionRegistro.permisos
+    			      ],
+    			      //idAsignacionAutomatica: "string"
     			  },
     			  permisos: [
-    			    {
-    			      idCatPermiso: 1
-    			    }
+    				  {
+    					  idCatPermiso: $scope.informacionRegistro.permisos
+    			      }
     			  ],
     			  skills: [
-    			    {
-    			      idTipoOt: 1
-    			    }
+    				  {
+    					  idTipoOt: 1
+    			      }
     			  ]
-    			};
+    	};
+    	
+//    	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
+//		swal.showLoading();
+//    	$q.all([
+//    		usuarioPIService.guardarUsuario(paramsRegistro)
+//        ]).then(function(results) {
+//
+//        	swal.close();
+//        });
+//    	
+//    	console.log(paramsRegistro);
+    	var respuestaValidacionRegistro = $scope.validarInformacionRegistro();
+    	if(respuestaValidacionRegistro){
+    		swal("Correcto", "¡Registro guardado con éxito!", "success");
+    	}
+    	
 	}
+    
+    $scope.validarInformacionRegistro = function() {
+    	
+    	var validacion = true;
+    	var validacionInformacionGeneral = true;
+    	var validacionIntervenciones = true;
+    	var validacionArbol = true;
+    	var validacionAccesos = true;
+    	var mensaje = "VALIDA LOS SIGUIENTES CAMPOS: ";
+    	
+    	
+    	//PESTAÑA INFORMACIÓN GENERAL
+		if($("#puesto_select_registro option:selected").val() === "" || $("#puesto_select_registro option:selected").val() === undefined){
+			toastr.warning('¡Selecciona un puesto!');
+		}
+		
+		if($("#compania_select_registro option:selected").val() === "" || $("#compania_select_registro option:selected").val() === undefined){
+			mensaje = mensaje + '\n¡Selecciona una compañía!';
+		}
+		
+		if($scope.informacionRegistro.numEmpleado === "" || $scope.informacionRegistro.numEmpleado === undefined){
+			$("#form-num-empleado").css("border", "#f55756 solid 2px");
+			validacionInformacionGeneral = false;
+			mensaje = mensaje + "<br/> *Número empleado";
+		}else{
+			$("#form-num-empleado").css("border", "1px solid #d9d9d9");
+		}
+		
+		if($scope.informacionRegistro.posicion === "" || $scope.informacionRegistro.posicion === undefined){
+			$("#form-posicion").css("border", "#f55756 solid 2px");
+			validacionInformacionGeneral = false;
+			mensaje = mensaje + "<br/> *Posición";
+		}else{
+			$("#form-posicion").css("border", "1px solid #d9d9d9");
+		}
+		
+		if($scope.informacionRegistro.contrasena === "" || $scope.informacionRegistro.contrasena === undefined){
+			$("#form-pasword").css("border", "#f55756 solid 2px");
+			validacionInformacionGeneral = false;
+			mensaje = mensaje + "<br/> *Contraseña";
+		}else{
+			$("#form-pasword").css("border", "1px solid #d9d9d9");
+		}
+		
+		if($scope.informacionRegistro.confirContrasena === "" || $scope.informacionRegistro.confirContrasena === undefined){
+			$("#form-confir-password").css("border", "#f55756 solid 2px");
+			validacionInformacionGeneral = false;
+			mensaje = mensaje + "<br/> *Confirmación de contraseña";
+		}else{
+			var password = $("#form-pasword").val();
+	    	var confirPassword =  $("#form-confir-password").val();
+	    	if(password !== confirPassword){
+	    		$("#form-pasword").css("border", "#f55756 solid 2px");
+	    		$("#form-confir-password").css("border", "#f55756 solid 2px");
+	    		validacionInformacionGeneral = false;
+	    		mensaje = mensaje + "<br/> *Contraseña";
+				mensaje = mensaje + "<br/> *Confirmación de contraseña";
+	    		toastr.warning("¡Las contraseñas no coinciden!");
+	    	}else{
+	    		$("#form-pasword").css("border", "1px solid #d9d9d9");
+	    		$("#form-confir-password").css("border", "1px solid #d9d9d9");
+	    	}
+		}
+		
+		if($scope.informacionRegistro.nombre === "" || $scope.informacionRegistro.nombre === undefined){
+			$("#form-nombres").css("border", "#f55756 solid 2px");
+			validacionInformacionGeneral = false;
+			mensaje = mensaje + "<br/> *Nombre";
+		}else{
+			$("#form-nombres").css("border", "1px solid #d9d9d9");
+		}
+		
+		if($scope.informacionRegistro.apellidoPaterno === "" || $scope.informacionRegistro.apellidoPaterno === undefined){
+			$("#form-a-paterno").css("border", "#f55756 solid 2px");
+			validacionInformacionGeneral = false;
+			mensaje = mensaje + "<br/> *Apellido paterno";
+		}else{
+			$("#form-a-paterno").css("border", "1px solid #d9d9d9");
+		}
+		
+		if($scope.informacionRegistro.apellidoMaterno === "" || $scope.informacionRegistro.apellidoMaterno === undefined){
+			$("#form-a-materno").css("border", "#f55756 solid 2px");
+			validacionInformacionGeneral = false;
+			mensaje = mensaje + "<br/> *Apellido materno";
+		}else{
+			$("#form-a-materno").css("border", "1px solid #d9d9d9");
+		}
+		
+		if($scope.informacionRegistro.rfc === "" || $scope.informacionRegistro.rfc === undefined){
+			$("#form-rfc").css("border", "#f55756 solid 2px");
+			validacionInformacionGeneral = false;
+			mensaje = mensaje + "<br/> *RFC";
+		}else{
+			$("#form-rfc").css("border", "1px solid #d9d9d9");
+		}
+		
+		if($scope.informacionRegistro.telefono === "" || $scope.informacionRegistro.telefono === undefined){
+			$("#form-telefono").css("border", "#f55756 solid 2px");
+			validacionInformacionGeneral = false;
+			mensaje = mensaje + "<br/> *Teléfono";
+		}else{
+			$("#form-telefono").css("border", "1px solid #d9d9d9");
+		}
+		
+		if($scope.informacionRegistro.telefonoContacto === "" || $scope.informacionRegistro.telefonoContacto === undefined){
+			$("#form-telefono-contacto").css("border", "#f55756 solid 2px");
+			validacionInformacionGeneral = false;
+			mensaje = mensaje + "<br/> *Teléfono de contacto";
+		}else{
+			$("#form-telefono-contacto").css("border", "1px solid #d9d9d9");
+		}
+		
+		if($scope.informacionRegistro.correo === "" || $scope.informacionRegistro.correo === undefined){
+			$("#form-correo").css("border", "#f55756 solid 2px");
+			validacionInformacionGeneral = false;
+			mensaje = mensaje + "<br/> *Correo electrónico";
+		}else{
+			if($("#form-correo").val().indexOf('@', 0) == -1 || $("#form-correo").val().indexOf('.', 0) == -1) {
+				$("#form-correo").css("border", "#f55756 solid 2px");
+				validacionInformacionGeneral = false;
+				toastr.warning("¡Valida el formato del correo electrónico!");
+			}else{
+				$("#form-correo").css("border", "1px solid #d9d9d9");
+			}
+		}
+
+		if($scope.informacionRegistro.fechaIngreso === "" || $scope.informacionRegistro.fechaIngreso === undefined || $scope.informacionRegistro.fechaIngreso === null){
+			$("#form-fechaIngresoRegistro").css("border", "#f55756 solid 2px");
+			validacionInformacionGeneral = false;
+			mensaje = mensaje + "<br/> *Fecha de ingreso";
+		}else{
+			$("#form-fechaIngresoRegistro").css("border", "1px solid #d9d9d9");
+		}
+		
+		if($("#puesto_select_sexo").val() === "" || $("#puesto_select_sexo").val() === undefined || $("#puesto_select_sexo").val() === null){
+			$("#puesto_select_sexo").css("border", "#f55756 solid 2px");
+			validacionInformacionGeneral = false;
+			mensaje = mensaje + "<br/> *Sexo";
+		}else{
+			$("#puesto_select_sexo").css("border", "1px solid #d9d9d9");
+		}
+		
+		//PESTAÑA INTERVENCIONES
+		if($scope.listaIntervencionesSeleccionadas == "" || $scope.listaIntervencionesSeleccionadas == undefined || $scope.listaIntervencionesSeleccionadas == null){
+			validacionIntervenciones = false;
+			mensaje = mensaje + "<br/> *Intervención(es)";
+			$("#labelIntervencionesSeleccionadas").css("color", "#f55756");
+			$("#contenedorIntervencionesRegistro").css("border", "#f55756 solid 1px");
+		}else{
+			$("#labelIntervencionesSeleccionadas").css("color", "rgb(70, 88, 107)");
+			$("#contenedorIntervencionesRegistro").css("border", "white solid 0px");
+		}
+		
+		//PESTAÑA ÁRBOL
+		if($scope.listaGeografiasSeleccionadas == "" || $scope.listaGeografiasSeleccionadas == undefined || $scope.listaGeografiasSeleccionadas == null){
+			validacionArbol = false;
+			mensaje = mensaje + "<br/> *Geografía(s)";
+			$("#labelGeografiasSeleccionadas").css("color", "#f55756");
+			$("#contenedorGeografiasRegistro").css("border", "#f55756 solid 1px");
+		}else{
+			$("#labelGeografiasSeleccionadas").css("color", "rgb(70, 88, 107)");
+			$("#contenedorGeografiasRegistro").css("border", "white solid 0px");
+		}
+		
+		//PESTAÑA ACCESOS (PERMISOS)
+		var puestoSeleccionado = $("#puesto_select_registro option:selected").text().toLowerCase();
+    	puestoSeleccionado = puestoSeleccionado.split('').map( letra => acentos[letra] || letra).join('').toString();
+    	if(puestoSeleccionado == "tecnico" || puestoSeleccionado == "auxiliar"){
+    		//---
+    	}else{
+    		if($scope.listaPermisosSeleccionados == "" || $scope.listaPermisosSeleccionados == undefined || $scope.listaPermisosSeleccionados == null){
+    			validacionAccesos = false;
+    			mensaje = mensaje + "<br/> *Permiso(s)";
+    			$("#labelPermisosSeleccionadas").css("color", "#f55756");
+    			$("#contenedorPermisosRegistro").css("border", "#f55756 solid 1px");
+    		}else{
+    			$("#labelPermisosSeleccionadas").css("color", "rgb(70, 88, 107)");
+    			$("#contenedorPermisosRegistro").css("border", "white solid 0px");
+    		}
+    	}
+    	
+    	//PESTAÑA CONFIRMAR USUARIO
+    	if($scope.informacionRegistro.ciudadNatal == "" || $scope.informacionRegistro.ciudadNatal == undefined){
+    		$(".ciudadNatal").css("color", "#f55756");
+    		validacion = false;
+			mensaje = mensaje + "<br/> *Ciudad natal";
+    	}else{
+    		$(".ciudadNatal").css("color", "#7c7c7d");
+    	}
+		
+		//VALIDACIÓN Y ACTIVACIÓN DE PESTAÑAS
+		if(validacionInformacionGeneral == false){
+			validacion = false;
+			$("#pills-confirmar-tab").removeClass("active");
+			$("#pills-confirmar").removeClass("active show");
+			$("#pills-informacion-tab").addClass("active");
+			$("#pills-informacion").addClass("active show");
+		}else if(validacionIntervenciones == false){
+			validacion = false;
+			$("#pills-confirmar-tab").removeClass("active");
+			$("#pills-confirmar").removeClass("active show");
+			$("#pills-intervencion-tab").addClass("active");
+			$("#pills-intervencion").addClass("active show");
+		}else if(validacionArbol == false){
+			validacion = false;
+			$("#pills-confirmar-tab").removeClass("active");
+			$("#pills-confirmar").removeClass("active show");
+			$('#arbolGeografiaRegistro').jstree("destroy");
+	    	$('#arbolGeografiaRegistro').jstree("deselect_all");
+			$scope.mostrarArbolGeografiaRegistro();
+			$("#pills-arbol-tab").addClass("active");
+			$("#pills-arbol").addClass("active show");
+		}else if(validacionAccesos == false){
+			validacion = false;
+			$("#pills-confirmar-tab").removeClass("active");
+			$("#pills-confirmar").removeClass("active show");
+			$("#pills-accesos-tab").addClass("active");
+			$("#pills-accesos").addClass("active show");
+		}else{
+			//...
+		}
+		
+		//SI EXISTE ALGÚN CAMPO FALTANTE, MUESTRA EL MENSAJE
+		if(validacion == false){
+			toastr.warning(mensaje);
+		}
+		
+		//REGRESA LA RESPUESTA BOLEANA
+		return validacion;
+	}
+    
+    $scope.asignarCiudadNatalRegistro = function() {
+    	$(".ciudadNatal").css("color", "#7c7c7d");
+	}
+    
+    $(".inputFormulario").keyup(function() {
+		var input = $(this).attr("id");
+		if( $(this).val()  === "" || $(this).val() === undefined ){
+			$("#"+input).css("border", "#f55756 solid 2px");
+		}else{
+			$("#"+input).css("border", "1px solid #d9d9d9");
+		}
+		
+		if(input === "form-correo"){
+			if($("#"+input).val().indexOf('@', 0) == -1 || $("#"+input).val().indexOf('.', 0) == -1) {
+				$("#"+input).css("border", "#f55756 solid 2px");
+			}
+		}
+		
+	});
+    
+    $("#form-confir-password").change(function() {
+    	var password = $("#form-pasword").val();
+    	var confirPassword =  $("#form-confir-password").val();
+    	if(password !== confirPassword){
+    		$("#form-pasword").css("border", "#f55756 solid 2px");
+    		$("#form-confir-password").css("border", "#f55756 solid 2px");
+    		toastr.warning("¡Las contraseñas no coinciden!");
+    	}else{
+    		$("#form-pasword").css("border", "1px solid #d9d9d9");
+    		$("#form-confir-password").css("border", "1px solid #d9d9d9");
+    	}
+    });
+    
+    $("#puesto_select_sexo").change(function() {
+    	$("#puesto_select_sexo").css("border", "1px solid #d9d9d9");
+    });
+    
+    $("#form-fechaIngresoRegistro").change(function() {
+    	$("#form-fechaIngresoRegistro").css("border", "1px solid #d9d9d9");
+    });
     
     // *** FIN CAMBIOS REYNEL *** 
     
@@ -1154,7 +1489,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 //
 //    
 //
-    $scope.mostrarTablaUsuarios = function(params) {
+//    $scope.mostrarTablaUsuarios = function(params) {
 	
 //			console.log(params);
 //	
@@ -1248,7 +1583,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 //            }]
 //        });
 //        alert("Tabla -> " + detalleTable.page.info());
-    }
+//    }
 //
 //    $scope.pintarArbol = function(idArbol, isInstalador, plugins, deshabilitar) {
 //

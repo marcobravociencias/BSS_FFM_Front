@@ -69,14 +69,15 @@ app.editarUsuarioController=function($scope,usuarioPIService){
                     $scope.arbolCiudadesModificar = [];
                     $scope.listaCiudadesSelecionadasMod = [];
                     angular.forEach($scope.listaGeografiasRespaldo,(element,index) => {
-                        
+                        if(element.nivel < 4){
                             $scope.arbolCiudadesModificar.push({
                                 id: element.id,
                                 text: element.nombre,
                                 parent: element.padre == undefined ? "#" : element.padre,
-                                icon: "fa fa-tag"
+                                icon: "fa fa-tag",
+                                nivel: element.nivel
                             });
-                        
+                        }
                     });
 
                     angular.forEach($scope.arbolCiudadesModificar,(element,index) => {
@@ -92,7 +93,7 @@ app.editarUsuarioController=function($scope,usuarioPIService){
                     $('#arbolGeografiaModificacion').bind('loaded.jstree', function(e, data) {
                         //$(this).jstree("open_all");
                     }).jstree({
-                        'plugins': ['search', 'checkbox', 'wholerow'],
+                        'plugins': ['search', 'checkbox'],
                         'core': {
                             'data': $scope.arbolCiudadesModificar,
                             'themes': {
@@ -121,7 +122,7 @@ app.editarUsuarioController=function($scope,usuarioPIService){
                     $('#arbolPermisoModificar').bind('loaded.jstree', function(e, data) {
                         //$(this).jstree("open_all");
                     }).jstree({
-                        'plugins': ['search', 'checkbox', 'wholerow'],
+                        'plugins': ['search', 'checkbox'],
                         'core': {
                             'data': $scope.arbolAccesosModificar,
                             'themes': {
@@ -157,5 +158,55 @@ app.editarUsuarioController=function($scope,usuarioPIService){
     		$scope.listaIntervencionesSeleccionadasMod.push(intervencion.text);
     	});
     	$scope.$apply();
+    });
+
+    $("#arbolGeografiaModificacion").click(function() {
+        var geografia = $('#arbolGeografiaModificacion').jstree("get_selected", true);
+        $scope.listaCiudadesSelecionadasMod = [];
+        geografia.forEach(geo =>{
+            var existePadre = false;
+            if (geo.original.nivel === 3) {
+                var idPadre = Number(geo.original.parent);
+                $scope.listaCiudadesSelecionadasMod.forEach(ciudad =>{
+                    if (ciudad.id === idPadre) {
+                        existePadre = true;
+                        ciudad.distritos.push({id: geo.id, distrito: geo.text});
+                    }
+                });
+                if (!existePadre) {
+                    $scope.listaGeografiasRespaldo.forEach(ciudad =>{
+                        if (ciudad.id === idPadre) {
+                            $scope.listaCiudadesSelecionadasMod.push({id: ciudad.id, nombre: ciudad.nombre, distritos: [{id: geo.id, distrito: geo.text}]});
+                        }
+                    });
+                }
+            }
+        });
+        $scope.$apply();
+    });
+
+    $("#arbolPermisoModificar").click(function() {
+        var permisos = $('#arbolPermisoModificar').jstree("get_selected", true);
+        $scope.listaAccesosSelecionadosMod = [];
+        permisos.forEach(permiso =>{
+            var existePadre = false;
+            if (permiso.original.nivel === 2) {
+                var idPadre = permiso.original.idPadre;
+                $scope.listaAccesosSelecionadosMod.forEach(acceso =>{
+                    if (acceso.id === idPadre) {
+                        existePadre = true;
+                        acceso.permisos.push({id: permiso.id, nombre: permiso.text});
+                    }
+                });
+                if (!existePadre) {
+                    $scope.listaPermisosRespaldo.forEach(permisoRes => {
+                        if (permisoRes.id === idPadre) {
+                            $scope.listaAccesosSelecionadosMod.push({id: permisoRes.id, nombre: permisoRes.nombre, permisos: [{id: permiso.id, nombre: permiso.text}]});
+                        }
+                    });
+                }
+            }
+        });
+        $scope.$apply();
     });
 }

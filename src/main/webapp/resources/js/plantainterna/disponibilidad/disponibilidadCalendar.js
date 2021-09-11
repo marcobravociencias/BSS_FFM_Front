@@ -76,18 +76,21 @@ app.disponibilidadCalendar = function ($scope) {
 
                     if (!exists) {
                         console.log("tiene eventos")
-                        let tipoIntervencion = $scope.intervencionSelect ? $scope.intervencionSelect.id : 0;
+                       
+                        let ultimonivel = $scope.obtenerNivelUltimoJerarquia()
+                        let clustersparam = $("#jstreeconsulta").jstree("get_selected", true)
+                            .filter(e => e.original.nivel == ultimonivel)
+                            .map(e => parseInt(e.id))
+                        let ultimoNIntervencion = $scope.obtenerUltimoNivelIntervencion();
+                        let tipo_intervencion = $("#jstreeIntervencion").jstree("get_selected", true)
+                            .filter(e => e.original.nivel == ultimoNIntervencion)
+                            .map(e => parseInt(e.id))
 
-                        let ultimonivel=$scope.obtenerNivelUltimoJerarquia()
-                        let clustersparam=$("#jstreeconsulta").jstree("get_selected", true)
-                                                               .filter(e=>e.original.nivel== ultimonivel)
-                                                               .map(e=>parseInt(e.id))
-                        
 
-                        if (tipoIntervencion === 0 || clustersparam.length === 0) {
+                        if (tipo_intervencion.length === 0 || clustersparam.length === 0) {
                             mostrarMensajeWarningValidacion("Para agregar disponibilidad debes seleccionar todos los filtros")
                         } else {
-                            if ($scope.permisosDisponibilidad.filter(elem => {return elem.clave === 'accionAgregaDisponibilidad'}).length === 1) {
+                            if ($scope.permisosDisponibilidad.filter(elem => {return elem.clave === 'accionAgregaDisponibilidad'}).length === 1 && $scope.isConsultaDisponibilidad) {
                                 swal({
                                     title: "\u00BFDeseas agregar disponibilidad en este dia ?",
                                     type: 'question',
@@ -103,16 +106,19 @@ app.disponibilidadCalendar = function ($scope) {
                                         document.getElementById('container-noc').style.display = 'none'
                                     }
                                     var format_mex = stringdateselected[0].split("-")
-                                    $('#fecha_inicio_adddisp').datepicker("setDate", new Date(format_mex[0], format_mex[1], format_mex[2]));
-                                    $('#fecha_fin_adddisp').datepicker("setDate", new Date(format_mex[0], format_mex[1], format_mex[2]));
+                                    let fech = Number(format_mex[1]) - 1;
+                                    let fechaMes = fech.length === 1 ? '0'.concat(fech) : String(fech);
+                                    let fechaI = new Date(format_mex[0], fechaMes, format_mex[2])
+                                    $('#fecha_inicio_adddisp').datepicker("setDate", new Date(fechaI));
+                                    $('#fecha_fin_adddisp').datepicker("setDate", new Date(fechaI));
     
-                                    $("#fecha_inicio_adddisp").val(format_mex[2] + "/" + format_mex[1] + "/" + format_mex[0]);
-                                    $("#fecha_fin_adddisp").val(format_mex[2] + "/" + format_mex[1] + "/" + format_mex[0]);
+                                    //$("#fecha_inicio_adddisp").val(format_mex[2] + "/" + format_mex[1] + "/" + format_mex[0]);
+                                    //$("#fecha_fin_adddisp").val(format_mex[2] + "/" + format_mex[1] + "/" + format_mex[0]);
     
                                     document.getElementById('matutino_adddisp').value = '';
                                     document.getElementById('vespertino_adddisp').value = '';
                                     document.getElementById('nocturno_adddisp').value = '';
-                                    document.getElementById('radio_activo_adddisp').checked = false;
+                                    document.getElementById('radio_activo_adddisp').checked = true;
                                     document.getElementById('radio_inactivo_adddisp').checked = false;
                                     $("#moda-add-disponibilidad").modal('show')
                                 }).catch(swal.noop);

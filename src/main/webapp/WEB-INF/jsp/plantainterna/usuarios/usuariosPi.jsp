@@ -75,7 +75,8 @@
                                     </button>
                                 </div>
                             </div>
-				            <div id="contenedorPrincipalTabla" class="row" style="display: none;">
+                            <br>
+				            <div id="contenedorPrincipalTabla" class="row">
 								<div class="columna-principal-users col-md-12">
 									<div class="table-responsive">
 				                    	<table class="table" id="table-usuario-pi">
@@ -169,6 +170,8 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker.es.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/js/mdb.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/lib/moment.min.js" ></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/lib/moment.es.js" ></script>
     
     <!-- ARCHIVOS JS INTERNOS -->
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>

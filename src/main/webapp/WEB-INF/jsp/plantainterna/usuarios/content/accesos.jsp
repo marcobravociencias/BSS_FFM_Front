@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="offset-1 col-md-6">
-            <h6 class="text-center titulo-opciones">SELECCIONADOS</h6>
+            <h6 id="labelPermisosSeleccionadas" class="text-center titulo-opciones">SELECCIONADOS</h6>
             <hr/>
             <div class="col-md-12">
                 <div class="row">
@@ -30,7 +30,7 @@
                         <span class="text-head-table-arbol"><li class="fas fa-lock"></li>&nbsp;Permisos:</span>
                     </div>
                 </div>
-                <div class="scrollGeneralArbol">
+                <div id="contenedorPermisosRegistro" class="scrollGeneralArbol">
 	                <div class="row padding_resumen_ciudades" ng-repeat="modulo in listaPermisosSeleccionados track by $index">
 	                    <div class="col-md-6">
 	                        <span class="text-body-table-arbol" ng-bind="modulo.nombre"></span>

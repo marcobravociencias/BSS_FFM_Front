@@ -49,15 +49,16 @@
                         <li class="nav-item" role="presentation">
                             <a class="nav-link options-alertas" id="pills-chat-tab" data-toggle="pill" href="#pills-chat" role="tab" ng-click="consultarChatAlerta()" aria-controls="pills-chat" aria-selected="false">Comentarios</a>
                         </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link options-alertas" id="pills-chat-tab" data-toggle="pill" href="#pills-detalle" role="tab" ng-click="abirDetalle()" aria-controls="pills-detalle" aria-selected="false">Detalle</a>
+                        </li>
                     </ul>
                 </div>
                 <div class="card-body card-body-alerta-principal">
                     <div class="tab-content" id="pills-tabContent">
                         <div class="tab-pane fade show active" id="pills-mapa" role="tabpanel" aria-labelledby="pills-mapa-tab">
-                            <div id="mapAlerta" class="contenido-card" style="width:100%;height:100%; border-radius: 10px;"></div>
+                           <div id="mapAlerta" class="contenido-card" style="width:100%;height:100%; border-radius: 10px;"></div>
                         </div>
-
-
 
                         <div class="tab-pane fade" id="pills-imagenes" role="tabpanel" aria-labelledby="pills-imagenes-tab">
                             <div id="categorias_div" class="container row justify-content-center  text-center " style="margin-top: 1em;">
@@ -112,8 +113,6 @@
                             </div>
                         </div>
 
-
-
                         <div class="tab-pane fade" id="pills-historico" role="tabpanel" aria-labelledby="pills-historico-tab">
                             <div class="container">
                                 <div class="row" ng-repeat="elementHistorico in listaHistoricoAlerta">
@@ -131,29 +130,37 @@
                                     </div>
 
                                     <div id="content-historial-{{$index}}"  class="col-10" style="display: grid;">
-                                        <div  class="card-historico card text-center">
+                                        <div  class="card-historico card text-center historico-alertas-div">
                                             <div class="card-body">
                                                 <i ng-if="elementHistorico.idEstatusOrden==1" class="pendiente-historico  fas fa-pause circle-statushistorico"></i>
                                                 <i ng-if="elementHistorico.idEstatusOrden==2" class="asignacion-historico fas fa-arrow-right circle-statushistorico"></i>
                                                 <i ng-if="elementHistorico.idEstatusOrden==3" class="detencion-historico far fa-hand-paper circle-statushistorico"></i>
                                                 <i ng-if="elementHistorico.idEstatusOrden==4" class="terminar-historico fas fa-check circle-statushistorico"></i>
                                                 <i ng-if="elementHistorico.idEstatusOrden==5" class="cancelado-historico fas fa-times circle-statushistorico"></i> 
-
+                                               
+                                                <div class="container-deschistorico">
+                                                    <span class="titlehistorico">Estatus:</span>
+                                                    <span class="content-titlehistorico" ng-bind="elementHistorico.descripcionEstatusOrden || 'SIN DATO'"></span>
+                                                </div>
                                                 <div class="container-deschistorico">
                                                     <span class="titlehistorico">Estado:</span>
-                                                    <span class="content-titlehistorico" ng-bind="elementHistorico.descripcionEstatusOrden"></span>
+                                                    <span class="content-titlehistorico" ng-bind="elementHistorico.descripcionEstadoOrden || 'SIN DATO'"></span>
                                                 </div>
                                                 <div class="container-deschistorico">
                                                     <span class="titlehistorico">Motivo:</span>
-                                                    <span class="content-titlehistorico" ng-bind="elementHistorico.descripcionMotivoOrden"></span>
+                                                    <span class="content-titlehistorico" ng-bind="elementHistorico.descripcionMotivoOrden  || 'SIN DATO'"></span>
                                                 </div>
                                                 <div class="container-deschistorico">
-                                                    <span class="titlehistorico">Descripci&oacute;n:</span>
-                                                    <span class="content-titlehistorico" ng-bind="elementHistorico.descripcionEstadoOrden"></span>
+                                                    <span class="titlehistorico">Despacho:</span>
+                                                    <span class="content-titlehistorico" ng-bind="elementHistorico.nombreUsuarioDespacho || 'SIN DATO'"></span>
+                                                    <p class="footer-card-historico-alerta" ng-bind="elementHistorico.fecha+' '+elementHistorico.hora" ></p>
                                                 </div>
                                             </div>
                                             <div class="card-footer text-muted">
-                                                <p class="footer-card-historico" ng-bind="elementHistorico.fecha+' '+elementHistorico.hora" ></p>
+                                                <div class="container-deschistorico">
+                                                    <span class="titlehistorico">Usuario:</span>
+                                                    <span class="content-titlehistorico" ng-bind="elementHistorico.nombreUsuario  || 'SIN DATO'"></span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -161,6 +168,7 @@
                                 </div>																								
 							</div>
                         </div>
+
                         <div class="tab-pane fade" id="pills-chat" role="tabpanel" aria-labelledby="pills-chat-tab" style="overflow-y: hidden;">
                             <div class="col-12">
                                 <div class="container-mensajes-parent">
@@ -222,6 +230,127 @@
                             </div>
                            
                         </div>
+
+                        <div class="tab-pane fade" id="pills-detalle" role="tabpanel" aria-labelledby="pills-detalle">
+                           <div class="row">
+                            <div class="card-header card-header-principal">
+                                <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link options-alertas active" id="pills-detalle-alerta-tab" data-toggle="pill" href="#pills-detalle-alerta" role="tab" aria-controls="pills-detalle-alerta" aria-selected="true">Alerta</a>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link options-alertas" style="width: 155px;" id="pills-ot-tab" data-toggle="pill" href="#pills-OT" role="tab" aria-controls="pills-OT" aria-selected="false">Orden de Trabajo</a>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link options-alertas" id="pills-tecnico-tab" data-toggle="pill" href="#pills-tecnico" role="tab" aria-controls="pills-tecnico" aria-selected="false">T&eacute;cnico</a>
+                                    </li>
+                                </ul>
+                            </div>
+                           </div>
+                           <div class="row">
+                               <div class="tab-content" id="pills-detalle-tabContent">
+
+                                <div class="tab-pane fade show active" id="pills-detalle-alerta" role="tabpanel" aria-labelledby="pills-detalle-alerta-tab">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="container-fluid vehiculo-content">
+                                                <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Alerta</span></div>
+                                                <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.Id_ot}}" ng-bind="objectDetalleAlerta.alerta.descripcionAlerta || 'Sin dato'"></span> </div>
+                                            </div>
+                                            <div class="container-fluid vehiculo-content">
+                                                <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Tipo Alerta</span></div>
+                                                <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.Id_ot}}" ng-bind="objectDetalleAlerta.alerta.descripcionSubtipoAlerta || 'Sin dato'"></span> </div>
+                                            </div>
+                                            <div class="container-fluid vehiculo-content">
+                                                <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Fecha</span></div>
+                                                <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.Id_ot}}" ng-bind="objectDetalleAlerta.alerta.fechaRegistro || 'Sin dato'"></span> </div>
+                                            </div>
+                                            <div class="container-fluid vehiculo-content">
+                                                <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Hora</span></div>
+                                                <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.Id_ot}}" ng-bind="objectDetalleAlerta.alerta.horaRegistro || 'Sin dato'"></span> </div>
+                                            </div>
+                                            <div class="container-fluid vehiculo-content">
+                                                <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Tiempo trascurrido</span></div>
+                                                <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.Id_ot}}" ng-bind="objectDetalleAlerta.alerta.tiempoTranscurrido || 'Sin dato'"></span> </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-map-datlle">
+                                            <div id="mapDetalleAlerta" class="contenido-card" style="width:100%;height:100%; border-radius: 10px;"></div>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+
+                                <div class="tab-pane fade" id="pills-OT" role="tabpanel" aria-labelledby="pills-ot-tab">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="container-fluid vehiculo-content">
+                                                <div class="container-text-title-detalle"><span class="text-tile-vehiculo">OT</span></div>
+                                                <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.Id_ot}}" ng-bind="objectDetalleAlerta.orden.id || 'Sin dato'"></span> </div>
+                                            </div>
+                                            <div class="container-fluid vehiculo-content">
+                                                <div class="container-text-title-detalle"><span class="text-tile-vehiculo">OS</span></div>
+                                                <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.Id_ot}}" ng-bind="objectDetalleAlerta.orden.folioSistema || 'Sin dato'"></span> </div>
+                                            </div>
+                                            <div class="container-fluid vehiculo-content">
+                                                <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Cliente</span></div>
+                                                <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.Id_ot}}" ng-bind="objectDetalleAlerta.orden.nombreCliente || 'Sin dato'"></span> </div>
+                                            </div>
+                                            <div class="container-fluid vehiculo-content">
+                                                <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Cuenta</span></div>
+                                                <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.Id_ot}}" ng-bind="objectDetalleAlerta.orden.claveCliente || 'Sin dato'"></span> </div>
+                                            </div>
+                                            <div class="container-fluid vehiculo-content">
+                                                <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Tipo orden</span></div>
+                                                <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.Id_ot}}" ng-bind="objectDetalleAlerta.orden.tipoOrden || 'Sin dato'"></span> </div>
+                                            </div>
+                                            <div class="container-fluid vehiculo-content">
+                                                <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Intervenci&oacute;n</span></div>
+                                                <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.Id_ot}}" ng-bind="objectDetalleAlerta.orden.descIntervencion || 'Sin dato'"></span> </div>
+                                            </div>
+                                            <div class="container-fluid vehiculo-content">
+                                                <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Subintervenci&oacute;n</span></div>
+                                                <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.Id_ot}}" ng-bind="objectDetalleAlerta.orden.descSubIntervencion || 'Sin dato'"></span> </div>
+                                            </div>
+                                            <div class="container-fluid vehiculo-content">
+                                                <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Direcci&oacute;n</span></div>
+                                                <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.Id_ot}}" ng-bind="objectDetalleAlerta.orden.direccion || 'Sin dato'"></span> </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+
+                                <div class="tab-pane fade" id="pills-tecnico" role="tabpanel" aria-labelledby="pills-tecnico-tab">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="container-img-tecnico-detalle-alerta">
+                                                <img class="efecto imagen_tecnico_detalle_alerta"  ng-src="{{objectDetalleAlerta.tecnico.urlFotoPerfil}}"/>
+                                            </div>
+                                            <div class="container-fluid vehiculo-content">
+                                                <div class="container-text-title-detalle"><span class="text-tile-vehiculo">T&eacute;cnico</span></div>
+                                                <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.Id_ot}}" ng-bind="objectDetalleAlerta.tecnico.nombre || 'Sin dato'"></span> </div>
+                                            </div>
+                                            <div class="container-fluid vehiculo-content">
+                                                <div class="container-text-title-detalle"><span class="text-tile-vehiculo">N&uacute;mero empleado</span></div>
+                                                <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.Id_ot}}" ng-bind="objectDetalleAlerta.tecnico.numEmpleado || 'Sin dato'"></span> </div>
+                                            </div>
+                                            <div class="container-fluid vehiculo-content">
+                                                <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Tel&eacute;fono</span></div>
+                                                <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.Id_ot}}" ng-bind="objectDetalleAlerta.tecnico.telefonoContacto || 'Sin dato'"></span> </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-map-datlle">
+                                            <div id="mapDetalleTecnico" class="contenido-card" style="width:100%;height:100%; border-radius: 10px;"></div>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+
+                               </div>
+                           </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -265,7 +394,7 @@
                             </div>
                         </div>
                         <div class="col-12" style="margin-top: 1em;" ng-repeat="opcion in listaOpcionesAlerta">
-                            <button type="button" class="btn btn-outline- btn-opciones-alerta" style="color: {{opcion.hexaColor}}; border-color: {{opcion.hexaColor}};" ng-click="mostrarAccionAlerta(opcion)" ng-bind="opcion.descripcion"></button>
+                            <button type="button" class="btn btn-outline- btn-opciones-alerta" style="color: {{opcion.hexaColor}}; border: 3px solid {{opcion.hexaColor}};" ng-click="mostrarAccionAlerta(opcion)" ng-bind="opcion.descripcion"></button>
                         </div>
                  
                     </div>

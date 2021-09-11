@@ -36,7 +36,7 @@
 	                        <span class="text-body-table-arbol" ng-bind="ciudad.nombre"></span>
 	                    </div>
 	                    <div class="col-md-6">
-	                        <li class="item_ciudad_resum text-body-table-arbol" ng-repeat="distrito in ciudad.hijos" ng-bind="distrito.text"></li>
+	                        <li class="item_ciudad_resum text-body-table-arbol" ng-repeat="distrito in ciudad.distritos" ng-bind="distrito.distrito"></li>
 	                    </div>
 	                </div>
                 </div>

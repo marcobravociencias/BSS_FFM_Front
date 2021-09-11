@@ -54,9 +54,8 @@
 .inputFormulario{
 	align-items: stretch;
 	background: white !important;
-	border: 1px solid #d9d9d9 !important;
 	padding: .5rem 1rem !important;
-	font-size: .8rem !important
+	font-size: .8rem !important;
 	font-family: 'Montserrat' !important;
 }
 

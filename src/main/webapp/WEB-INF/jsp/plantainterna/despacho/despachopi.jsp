@@ -120,8 +120,13 @@
                 <div class="col-3">
                     <i class="icono-noseleccion fas fa-exclamation-circle me-2" ng-show="banderaErrorGeneral" style="margin-top: .8em;"></i> <b ng-show="banderaErrorGeneral" class="text-no-seleccion-geografia">Algunos cat&aacute;logos no han sido encontrados</b>
                 </div>
-                <div class="col-3">
-                    
+                <div class="col-3">                    
+                    <button ng-disabled="!isCargaOtsPendientes || !isCargaOtsAsignadas" ng-click="refrescarBusqueda()" id="refrescar-otsasignadas" type="button" class="btn btn-sm  btn-primary  waves-effect waves-light" >
+                        <i ng-if="isCargaOtsPendientes && isCargaOtsAsignadas" class="fas fa-redo"></i>
+                        <div ng-if="!isCargaOtsPendientes  || !isCargaOtsAsignadas" class="spinner-border spinner-cargando-info" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </button>  
                     <input ng-model="fechaFiltradoCalendar" readonly id="calendar-next-back"  type="text" class="form-control form-control-sm"  />                  
                     <span ng-click="abrirModalDetalleIconografia()" class="paleta-color-despacho fas fa-palette"></span>
                     <span onclick="abrirModalReporte()" class="reporte-color-despacho icon-color-despacho fas fa-file-alt"></span>
@@ -139,7 +144,7 @@
                                 <!--span ng-click="buscarOtPendienteText();" class="input-group-text fa fa-search" id="buscar-btn-otpend"></span-->
                             </div>
                         </div>
-                        <i class="icon-menu-tecnicosdisp fas fa-align-center"></i>                                                
+                        <i class="icon-menu-tecnicosdisp fas fa-align-center" ng-click="abrirModalOtsIntervencionres()"></i>                                                
                     </div>
                     <div ng-show="!isCargaOtsPendientes" class="cargando-otspendientes ">
                         <div class="wrapper"> 
@@ -204,7 +209,9 @@
         <jsp:include page="./modals/modalLocalizacionRegistros.jsp"></jsp:include>   
         <jsp:include page="./modals/modalFotoUsuario.jsp"></jsp:include>   
         <jsp:include page="./modals/modalVistaMapa.jsp"></jsp:include> 
-        <jsp:include page="./modals/modalReporte.jsp"></jsp:include> 
+        <jsp:include page="./modals/modalReporte.jsp"></jsp:include>
+        <jsp:include page="./modals/modalDetalleOtsTecnico.jsp"></jsp:include>
+        <jsp:include page="./modals/modalOtIntervenciones.jsp"></jsp:include>
        
         <!--div ng-show="vistaDespacho" class="container-fluid d-flex justify-content-center">    
             <ul class="wall content-alert-parent">

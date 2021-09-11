@@ -29,6 +29,7 @@ function logprocess(mensaje){
 app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mainAlertasService', 'genericService',
                                        function ($scope, $q,mainDespachoService, mainAlertasService, genericService) {
     
+    
     app.filtrosDespachoPrincipal($scope,mainDespachoService)
     app.mapasControllerDespachoPI($scope,mainDespachoService)
     app.modalDespachoPrincipal($scope,mainDespachoService,$q,genericService)
@@ -63,6 +64,8 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
     $scope.nfiltrogeografia=''
     $scope.nfiltrointervenciones=''
     $scope.estatusCambio = [];
+    $scope.intervencionesConteo = [];
+    
     
     $scope.abrirModalGeografia=function(){
         $("#modal-jerarquia-filtro").modal('show')
@@ -988,7 +991,8 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             if (results[1].data !== undefined) {
                 if(results[1].data.respuesta ){
                     if(results[1].data.result ){
-                        $scope.filtrosGeneral.tipoOrdenes=$scope.realizarConversionAnidado( results[1].data.result)            
+                        $scope.filtrosGeneral.tipoOrdenes=$scope.realizarConversionAnidado( results[1].data.result)
+                        $scope.intervencionesConteo = $scope.realizarConversionAnidado(results[1].data.result)
                     }else{                      
                         toastr.warning( 'No se encontraron  tipo ordenes' );                
                     }
