@@ -130,10 +130,10 @@ pipeline{
           sh 'docker tag $repository/$imagename:latest $hwregistry/$hworganization/$imagename:latest'
           sh 'docker tag $repository/$imagename:latest $ggregistry/$ggorganization/$imagename:latest'
 
-          echo "Pushing image To HCR"
+          /*echo "Pushing image To HCR"
           sh '''docker login -u ${hwregional}@${hwaccess} -p $(printf ANBDBGPHJ4QZKVYEEOM6 | openssl dgst -binary -sha256 -hmac wooxqU8wLT8Ud8BJCAybZuQv4UMuTKSGDinmjY4C | od -An -vtx1 | sed \'s/[ \\n]//g\' | sed \'N;s/\\n//\') ${hwregistry}'''
           sh 'docker push $hwregistry/$hworganization/$imagename:latest'
-          sh 'docker logout'
+          sh 'docker logout'*/
 
           echo "Pushing image To GCR"
           sh "gcloud auth activate-service-account --key-file=/opt/totalplay-ffm-core-dev-4b24bcf8b136.json"
@@ -149,7 +149,7 @@ pipeline{
       }
     }
 
-    stage('Despliegue HW') {
+    /*stage('Despliegue HW') {
 
       steps {
         script {
@@ -158,7 +158,7 @@ pipeline{
           kubernetesDeploy(configs: "DeploymentHW.yaml", kubeconfigId: "hwffmms")
         }
       }
-    }
+    }*/
 
     stage('Despliegue GC') {
 

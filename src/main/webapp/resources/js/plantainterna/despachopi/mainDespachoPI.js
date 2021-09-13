@@ -830,7 +830,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
         $scope.consultarTecnicosDisponibiles()
         $scope.consultarOrdenesTrabajoAsignadasDespacho()
         
-        if( banderaIsPendientes )
+        if( !banderaIsPendientes )
             $scope.consultarOtsPendientes()
 
 
