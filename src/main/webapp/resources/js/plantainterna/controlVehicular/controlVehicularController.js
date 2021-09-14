@@ -968,10 +968,15 @@ app.controller('controlVehicularController',
 									cancelButtonText: 'No'
 								}).then(function (isConfirm) {
 									if (isConfirm) {
-										$scope.applyData(response.data.result.vehiculo);
 										$("#alta-tab").removeClass("active");
+										$("#modifica-tab").addClass("active show");
+										$scope.$apply();
+										$scope.clearForm();
+										$scope.isEdit = true;
+										$("#alta").addClass("active show");
 										$("#modifica-tab").addClass("active");
-
+										$scope.applyData(response.data.result.vehiculo);
+										$scope.initWizard();
 									}
 								}).catch(err => {
 									$("#placa").val("");
