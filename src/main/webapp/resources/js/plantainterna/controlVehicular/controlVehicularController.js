@@ -3,6 +3,7 @@ var app = angular.module('controlVehicularApp', []);
 app.controller('controlVehicularController',
 	['$scope', '$q', 'controlVehicularService', 'genericService', '$filter',
 		function ($scope, $q, controlVehicularService, genericService, $filter) {
+			$scope.vehiculo = {};
 			let vehiculoTable;
 			let historicoTable;
 			$scope.marcas = [];
@@ -10,7 +11,6 @@ app.controller('controlVehicularController',
 			$scope.lineas = [];
 			$scope.motivos = [];
 			$scope.data = {};
-			$scope.vehiculo = {};
 			$scope.vehiculos = [];
 			$scope.vehiculoText = {};
 			$scope.isEdit = false;
@@ -338,8 +338,14 @@ app.controller('controlVehicularController',
 			}
 
 			showImg = function (img) {
+				console.log(img);
 				$("#modalFoto").modal('show');
 				$("#img_vehiculo").attr("src", img);
+			}
+
+			showImgResumen = function (element) {
+				$("#modalFoto").modal('show');
+				$("#img_vehiculo").attr("src", element.src);
 			}
 
 			$scope.obtenerNivelUltimoJerarquia = function () {
@@ -464,6 +470,25 @@ app.controller('controlVehicularController',
 
 				if ($("#vencimientoPoliza").val()) {
 					$scope.vehiculoText.fechaVencimientoPoliza = $("#vencimientoPoliza").val();
+				}
+				$("#placaImagen").attr("src", $scope.vehiculo.urlFotoPlaca);
+				$("#vehiculoImagen").attr("src", $scope.vehiculo.urlFotoVehiculo);
+				$("#circulacionImagen").attr("src", $scope.vehiculo.detalle.urlFotoTarjetaCirculacion);
+				$("#gasolinaImagen").attr("src", $scope.vehiculo.detalle.urlFotoTarjetaGasolina);
+
+				if ($scope.filePlaca) {
+					$("#placaImagen").attr("src", $scope.filePlaca.archivo);
+				}
+				if ($scope.fileVehiculo) {
+					$("#vehiculoImagen").attr("src", $scope.fileVehiculo.archivo);
+				}
+
+				if ($scope.fileCirculacion) {
+					$("#circulacionImagen").attr("src", $scope.fileCirculacion.archivo);
+				}
+
+				if ($scope.fileGasolina) {
+					$("#gasolinaImagen").attr("src", $scope.fileGasolina.archivo);
 				}
 
 				$scope.vehiculoText.anio = $("#anio").val();

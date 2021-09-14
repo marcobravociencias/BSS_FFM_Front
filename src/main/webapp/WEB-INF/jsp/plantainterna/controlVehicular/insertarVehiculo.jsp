@@ -24,8 +24,8 @@
                 <div class="form-row">
                     <div class="col-3 form-group">
                         <label>Placa </label>
-                        <input type="text" class="form-control form-control-sm" placeholder="Ej. A00AAA" id="placa" onchange="buscarPlaca()"
-                            ng-model="vehiculo.placa" capitalize autocomplete="off" />
+                        <input type="text" class="form-control form-control-sm" placeholder="Ej. A00AAA" id="placa"
+                            onchange="buscarPlaca()" ng-model="vehiculo.placa" capitalize autocomplete="off" />
                     </div>
                     <div class="col-3 form-group">
                         <label>Tipo Veh&iacute;culo </label>
@@ -62,13 +62,14 @@
                 <div class="form-row">
                     <div class="col-3 form-group">
                         <label>A&ntilde;o de Veh&iacute;culo </label>
-                        <input type="text" class="datepicker year form-control form-control-sm" placeholder="aaaa" id="anio" readonly
-                            ng-model="vehiculo.anio" />
+                        <input type="text" class="datepicker year form-control form-control-sm" placeholder="aaaa"
+                            id="anio" readonly ng-model="vehiculo.anio" />
                     </div>
                     <div class="col-3 form-group">
                         <label>N&uacute;mero de Serie </label>
                         <input type="text" class="form-control form-control-sm" id="numSerie"
-                            ng-model="vehiculo.numeroSerie" capitalize autocomplete="off" placeholder="Ej. 1HGBH41JXMN109186"/>
+                            ng-model="vehiculo.numeroSerie" capitalize autocomplete="off"
+                            placeholder="Ej. 1HGBH41JXMN109186" />
                     </div>
                     <div class="col-3 form-group">
                         <label>Combustible </label>
@@ -128,7 +129,8 @@
                     <div class="col-3 form-group">
                         <label>Fecha Vencimiento P&oacute;liza
                         </label>
-                        <input type="text" placeholder="dd/mm/aaaa" class="datepicker datepickerNormal form-control form-control-sm"
+                        <input type="text" placeholder="dd/mm/aaaa"
+                            class="datepicker datepickerNormal form-control form-control-sm"
                             ng-model="vehiculo.detalle.fechaVencimientoPoliza" readonly id="vencimientoPoliza" />
                     </div>
                     <div class="col-3 form-group">
@@ -142,8 +144,9 @@
                     <div class="col-3 form-group">
                         <label style="font-size: 11px !important">Vencimiento Tarjeta de Circulaci&oacute;n<span
                                 style="color: red">*</span></label>
-                        <input type="text" class="datepicker datepickerNormal form-control form-control-sm" placeholder="dd/mm/aaaa"
-                            ng-model="vehiculo.detalle.fechaVencimientoTarjeta" id="vencimientoTarjeta" readonly />
+                        <input type="text" class="datepicker datepickerNormal form-control form-control-sm"
+                            placeholder="dd/mm/aaaa" ng-model="vehiculo.detalle.fechaVencimientoTarjeta"
+                            id="vencimientoTarjeta" readonly />
                     </div>
                     <div class="col-3 form-group">
                         <label>N&uacute;m. de Verificaci&oacute;n
@@ -154,8 +157,9 @@
                     <div class="col-3 form-group">
                         <label>Fecha de Verificaci&oacute;n
                         </label>
-                        <input type="text" class="datepicker datepickerNormal form-control form-control-sm" placeholder="dd/mm/aaaa"
-                            ng-model="vehiculo.detalle.fechaVerificacion" readonly id="fechaVerificacion" />
+                        <input type="text" class="datepicker datepickerNormal form-control form-control-sm"
+                            placeholder="dd/mm/aaaa" ng-model="vehiculo.detalle.fechaVerificacion" readonly
+                            id="fechaVerificacion" />
                     </div>
                     <div class="col-3 form-group">
                         <label>Clave Pensi&oacute;n </label>
@@ -338,7 +342,6 @@
                         <td class="tableText">{{vehiculo.numeroSerie ? vehiculo.numeroSerie : 'Sin asignar'}}</td>
                     </tr>
                     <tr>
-
                         <td class="tableTextTitle">* Tipo Veh&iacute;culo: </td>
                         <td class="tableText">{{vehiculoText.tipoText ? vehiculoText.tipoText : 'Sin asignar'}}</td>
                         <td class="tableTextTitle">* Marca: </td>
@@ -424,26 +427,32 @@
                         <td class="tableText">{{vehiculoText.rotulado ? 'Si' : 'No'}}</td>
                     </tr>
                 </table>
-                <div class="row">
-                    <div class="col-2" ng-if="vehiculo.urlFotoPlaca">
+                <div class="row imagenes" >
+                    <div class="col-2" ng-if="vehiculo.urlFotoPlaca || filePlaca">
                         <p class="tableTextTitle">* Foto placa</p>
-                        <img alt="Placa" src="{{vehiculo.urlFotoPlaca}}" class="imgResumen" />
+                        <img alt="Placa" src="" class="imgResumen" id="placaImagen"
+                            onclick="showImgResumen(this)" />
                     </div>
-                    <div class="col-2" ng-if="vehiculo.urlFotoVehiculo">
+                    <div class="col-2" ng-if="vehiculo.urlFotoVehiculo || fileVehiculo">
                         <p class="tableTextTitle">* Foto veh&iacute;culo</p>
-                        <img alt="Vehiculo" src="{{vehiculo.urlFotoVehiculo}}" class="imgResumen" />
+                        <img alt="Vehiculo" src="" class="imgResumen" id="vehiculoImagen"
+                            onclick="showImgResumen(this)" />
                     </div>
-                    <div class="col-2" ng-if="vehiculo.detalle.urlFotoTarjetaCirculacion">
-                        <p class="tableTextTitle">* Foto tarjeta de circulaci&oacute;n</p>
-                        <img alt="Tarjeta Circulacion" src="{{vehiculo.detalle.urlFotoTarjetaCirculacion}}"
-                            class="imgResumen" />
+                    <div class="col-2"
+                        ng-if="vehiculo.detalle.urlFotoTarjetaCirculacion  || fileCirculacion">
+                        <p class="tableTextTitle">* Foto tarjeta circulaci&oacute;n</p>
+                        <img alt="Tarjeta Circulacion" src="" id="circulacionImagen"
+                            onclick="showImgResumen(this)" class="imgResumen" />
                     </div>
-                    <div class="col-2" ng-if="vehiculo.detalle.urlFotoTarjetaGasolina">
-                        <p class="tableTextTitle">* Foto gasolina</p>
-                        <img alt="Tarjeta Gasolina" src="{{vehiculo.detalle.urlFotoTarjetaGasolina}}"
-                            class="imgResumen" />
+                    <div class="col-2"
+                        ng-if="vehiculo.detalle.urlFotoTarjetaGasolina || fileGasolina">
+                        <p class="tableTextTitle">* Foto tarjeta gasolina</p>
+                        <img alt="Tarjeta Gasolina" src="" id="gasolinaImagen"
+                            onclick="showImgResumen(this)" class="imgResumen" />
                     </div>
                 </div>
+
+
                 <h5 class="fs-title" style="margin-top: 1em;"> <i class="fas fa-exclamation-circle me-2"
                         style="color: orange;"></i>
                     Verifica la
