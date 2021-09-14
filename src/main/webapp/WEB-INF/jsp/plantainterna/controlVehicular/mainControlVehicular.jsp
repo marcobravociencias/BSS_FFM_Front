@@ -100,6 +100,7 @@
         </div>
         <jsp:include page="./modals/historico.jsp"></jsp:include>
         <jsp:include page="./modals/geografia-mainfiltro.jsp"></jsp:include>
+        <jsp:include page="./modals/modalFoto.jsp"></jsp:include>
     </body>
     <!-- LIBRERIAS -->
     <script src="${pageContext.request.contextPath}/resources/libraries/angularjs/js/angular.min.js"></script>

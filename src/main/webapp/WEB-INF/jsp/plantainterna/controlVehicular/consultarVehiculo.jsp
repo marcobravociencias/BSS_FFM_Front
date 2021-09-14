@@ -13,7 +13,7 @@
         <span class="servicioStyle">{{countNoDisponibles}} No Disponibles</span>
     </div>
     <div class="col-2 search-form">
-        <input placeholder="Buscar" type="text" class="search-filtro form-control form-control-sm" id="searchText">
+        <input placeholder="Buscar" type="text" autocomplete="off" class="search-filtro form-control form-control-sm" id="searchText">
     </div>
     <div class="col-2 search-form">
         <input readonly placeholder="Geograf&iacute;a" type="text" onclick="abrirModalGeografiaBuscar()"

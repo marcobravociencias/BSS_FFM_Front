@@ -32,7 +32,7 @@ app.controller('controlVehicularController',
 					$scope.vehiculoText.geografiaText = selectedElms[0].text;
 					$scope.loadEncierros(selectedElms[0].id);
 				} else {
-					document.getElementById('arbol_vehiculo_consulta').placeholder = '-- Seleccione --';
+					document.getElementById('arbol_vehiculo_consulta').placeholder = 'NO HAY SELECCI\u00D3N';
 				}
 			})
 
@@ -147,7 +147,6 @@ app.controller('controlVehicularController',
 					} else {
 						mostrarMensajeErrorAlert(results[1].data.resultDescripcion)
 					}
-					swal.close();
 				}).catch(err => handleError(err));
 			}
 
@@ -194,7 +193,6 @@ app.controller('controlVehicularController',
 					} else {
 						toastr.warning(results[3].data.resultDescripcion);
 					}
-					swal.close();
 				}).catch(err => handleError(err));
 			}
 
@@ -246,10 +244,10 @@ app.controller('controlVehicularController',
 										}
 									})
 									$scope.buildTableVehiculos(list);
-								}else{
+								} else {
 									$scope.buildTableVehiculos($scope.vehiculos);
 								}
-							
+
 							} else {
 								swal.close();
 							}
@@ -308,8 +306,8 @@ app.controller('controlVehicularController',
 					row[6] = elemento.combustible;
 					row[7] = elemento.numeroSerie;
 					row[8] = elemento.geografia;
-					row[9] = elemento.urlFotoPlaca ? '<img src="' + elemento.urlFotoPlaca + '" alt="Placa" width="50"/>' : "";
-					row[10] = elemento.urlFotoVehiculo ? '<img src="' + elemento.urlFotoVehiculo + '" alt="Vehiculo" width="50"/>' : "";
+					row[9] = elemento.urlFotoPlaca && elemento.urlFotoPlaca.length > 15 ? '<img style="cursor:pointer" src="' + elemento.urlFotoPlaca + '" alt="Placa" width="50" height="30" onclick="showImg(' + "'" + elemento.urlFotoPlaca + "'" + ')"/>' : "";
+					row[10] = elemento.urlFotoVehiculo && elemento.urlFotoVehiculo.length > 15 ? '<img style="cursor:pointer" src="' + elemento.urlFotoVehiculo + '" alt="Vehiculo" width="50"  height="30" onclick="showImg(' + "'" + elemento.urlFotoVehiculo + "'" + ')"/>' : "";
 					row[11] = elemento.estatus;
 					row[12] = '<i class="fas fa-edit" onclick="editCar(' + "'" + elemento.idVehiculo + "'" + ')"></i>';
 					arraRow.push(row);
@@ -339,13 +337,19 @@ app.controller('controlVehicularController',
 				return 0
 			}
 
+			showImg = function (img) {
+				$("#modalFoto").modal('show');
+				$("#img_vehiculo").attr("src", img);
+			}
+
 			$scope.obtenerNivelUltimoJerarquia = function () {
 				return $scope.geografiaList.sort(compareGeneric)[0].nivel
 			}
 
 			$scope.getData();
-			$scope.getVehiculos();
 			$scope.getArbol();
+			$scope.getVehiculos();
+
 
 			$scope.loadMarca = function () {
 				let tipoV = Number($("#tipo").val());
@@ -668,7 +672,7 @@ app.controller('controlVehicularController',
 				$("#vencimientoTarjeta").val("");
 				$("#vencimientoPoliza").val("");
 				$("#jstreeconsulta").jstree("destroy");
-				document.getElementById('arbol_vehiculo_consulta').placeholder = '-- Seleccione --';
+				document.getElementById('arbol_vehiculo_consulta').placeholder = 'NO HAY SELECCI\u00D3N';
 				$scope.filePlaca = null;
 				$scope.fileVehiculo = null;
 				$scope.fileCirculacion = null;
@@ -803,7 +807,7 @@ app.controller('controlVehicularController',
 					allRequired = false;
 				}
 
-				if (clustersparam.length == 0 || document.getElementById('arbol_vehiculo_consulta').placeholder == '-- Seleccione --') {
+				if (clustersparam.length == 0 || document.getElementById('arbol_vehiculo_consulta').placeholder == 'NO HAY SELECCI\u00D3N') {
 					$("#arbol_vehiculo_consulta").addClass("input-valid-error");
 					text += '<li>Seleccione una geografia</li>';
 				}
@@ -833,7 +837,6 @@ app.controller('controlVehicularController',
 					let reader = new FileReader();
 					reader.readAsDataURL(e.target.files[0]);
 					reader.onload = function () {
-						//console.log(reader.result);
 						let img = {
 							"bucketId": "totalplay-ffm-core-dev.appspot.com",
 							"archivo": reader.result,
@@ -1030,11 +1033,11 @@ app.controller('controlVehicularController',
 				$scope.vehiculo.idEstatus = vehiculo.idEstatus.toString();
 
 
-				if (!vehiculo.detalle.rotulado) {
+				if (!vehiculo.detalle || !vehiculo.detalle.rotulado) {
 					$("#rotuladoNo").attr("checked", true);
 				}
 
-				if (vehiculo.detalle.idAseguradora) {
+				if (vehiculo.detalle && vehiculo.detalle.idAseguradora) {
 					$scope.vehiculo.detalle.idAseguradora = vehiculo.detalle.idAseguradora.toString();
 				}
 
