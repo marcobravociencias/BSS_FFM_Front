@@ -54,6 +54,11 @@ app.controller('controlVehicularController',
 				clearBtn: true
 			});
 
+			$(".datepicker").on("click",function(){
+				$(".datepicker-dropdown").removeClass("datepicker-orient-top");
+				$(".datepicker-dropdown").addClass("datepicker-orient-bottom");
+			})
+
 			vehiculoTable = $('#vehiculoTable').DataTable({
 				"paging": true,
 				"lengthChange": false,
@@ -338,7 +343,6 @@ app.controller('controlVehicularController',
 			}
 
 			showImg = function (img) {
-				console.log(img);
 				$("#modalFoto").modal('show');
 				$("#img_vehiculo").attr("src", img);
 			}
@@ -473,8 +477,11 @@ app.controller('controlVehicularController',
 				}
 				$("#placaImagen").attr("src", $scope.vehiculo.urlFotoPlaca);
 				$("#vehiculoImagen").attr("src", $scope.vehiculo.urlFotoVehiculo);
-				$("#circulacionImagen").attr("src", $scope.vehiculo.detalle.urlFotoTarjetaCirculacion);
-				$("#gasolinaImagen").attr("src", $scope.vehiculo.detalle.urlFotoTarjetaGasolina);
+				if ($scope.vehiculo.detalle) {
+					$("#circulacionImagen").attr("src", $scope.vehiculo.detalle.urlFotoTarjetaCirculacion);
+					$("#gasolinaImagen").attr("src", $scope.vehiculo.detalle.urlFotoTarjetaGasolina);
+				}
+
 
 				if ($scope.filePlaca) {
 					$("#placaImagen").attr("src", $scope.filePlaca.archivo);
@@ -701,8 +708,8 @@ app.controller('controlVehicularController',
 				$scope.filePlaca = null;
 				$scope.fileVehiculo = null;
 				$scope.fileCirculacion = null;
-				$scope.fileGasolina = null;
-				$("#rotuladoSi").attr("checked", true);
+				$scope.fileGasolina = null;			
+				$("#rotuladoSi").prop("checked", true);
 				$(".form-control-sm").removeClass("input-valid-error");
 				$scope.getArbol();
 			}
