@@ -1263,14 +1263,22 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
              elementosPorPagina: $scope.resultReporteDiario,
              pagina: 1
         }
+        swal({ text: 'Cargando registros...', allowOutsideClick: false });
+        swal.showLoading();
         mainDespachoService.consultaReporteDiario(paramsR).then((result) =>{
             console.log(result.data)
-            const data = JSON.parse(result.data.result).ordenes
-            console.log(JSON.parse(result.data.result))
-            const fileName = 'Resporte Seguimiento Diario'
-            const exportType = 'xls'
-
-    window.exportFromJSON({ data, fileName, exportType })
+            swal.close()
+            if (result.data.respuesta) {
+                const data = JSON.parse(result.data.result).ordenes
+                console.log(JSON.parse(result.data.result))
+                const fileName = 'Resporte Seguimiento Diario'
+                const exportType = 'xls'
+    
+                window.exportFromJSON({ data, fileName, exportType })
+            } else {
+                mostrarMensajeErrorAlert('Ocurrio un error al generar reporte.')
+            }
+           
         }).catch(err => handleError(err));
     }
     
