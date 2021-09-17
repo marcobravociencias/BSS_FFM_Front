@@ -43,4 +43,5 @@ public class ParamConsultaOTPI {
 	private String fechaFin;
 	private int elementosPorPagina;
 	private int pagina;
+	private int totalRegistros;
 }

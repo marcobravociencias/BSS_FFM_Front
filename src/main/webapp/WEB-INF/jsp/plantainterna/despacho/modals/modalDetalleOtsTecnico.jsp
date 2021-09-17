@@ -16,13 +16,15 @@
                                     <tr>
                                         <th>OT</th> 
                                         <th>OS</th>
+                                        <th>CLIENTE</th>
                                         <th>CUENTA</th>
-                                        <th>ESTATUS</th>
-                                        <th>ESTADO</th>
-                                        <th>MOTIVO</th>
-                                        <th>INTERVENCION</th>
-                                        <th>PAQUETE</th>
-                                        <th>FECHA</th>
+                                        <th>DIRECCI&Oacute;N</th>
+                                        <th>TEL&Eacute;FONO</th>
+                                        <th>GEOGRAFIA</th>
+                                        <th>TIPO ORDEN</th>
+                                        <th>SUBTIPO ORDEN</th>
+                                        <th>FECHA INICIO</th>
+                                        <th>FECHA FIN</th>
                                     </tr>
                                 </thead>
                                 <tbody>

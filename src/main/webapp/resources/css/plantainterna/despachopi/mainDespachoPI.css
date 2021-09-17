@@ -466,7 +466,7 @@ span#buscar-operario {
   color: #727272;
   font-size: 0.7em;
 }
-#table-ot-pendientes_wrapper li.paginate_button.active a {
+#table-ot-pendientes_wrapper li.paginate_button.active a, #table-reporte_wrapper li.paginate_button.active a {
   background: transparent !important;
   color: #7716fa;
   font-weight: bold;

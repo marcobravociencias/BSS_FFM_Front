@@ -327,13 +327,15 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 
                 array[0] = ot.idOrden ? ot.idOrden : 'Sin dato';
                 array[1] = ot.folioOrden ? ot.folioOrden : 'Sin dato';
-                array[2] = ot.claveCliente ? ot.claveCliente : 'Sin dato';
-                array[3] = ot.descripcionEstatus ? ot.descripcionEstatus : 'Sin dato';
-                array[4] = ot.descripcionEstado ? ot.descripcionEstado : 'Sin dato';
-                array[5] = ot.descripcionMotivo ? ot.descripcionMotivo : 'Sin dato';
-                array[6] = 'Sin dato';
-                array[7] = 'Sin dato';
-                array[8] = ot.fechaInicio ? ot.fechaInicio : 'Sin dato'
+                array[2] = ot.nombreCliente ? ot.nombreCliente : 'Sin dato';
+                array[3] = ot.claveCliente ? ot.claveCliente : 'Sin dato';
+                array[4] = ot.direccion ? ot.direccion : 'Sin dato';
+                array[5] = ot.telefono ? ot.telefono : 'Sin dato';
+                array[6] = ot.descripcionGeografia ? ot.descripcionGeografia : 'Sin dato';
+                array[7] = ot.descipcionTipoOrden ? ot.descipcionTipoOrden : 'Sin dato';
+                array[8] = ot.descripcionSubtipoOrden ? ot.descripcionSubtipoOrden : 'Sin dato';
+                array[9] = ot.fechaInicio ? ot.fechaInicio : 'Sin dato'
+                array[10] = ot.fechaFin ? ot.fechaFin : 'Sin dato'
 
                 arrayOts.push(array)
             })
@@ -353,7 +355,8 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 "autoWidth": true,
                 "data":arrayOts, 
                 "language": idioma_espanol_not_font,
-                "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">'
+                "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+                dom: 'Bfrtip', 
             });
             $('#modalOtTrabajadasTecnico').modal('show')
         } else {
@@ -1269,6 +1272,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     });
 
     abrirModalReporte = function(){
+        //$scope.repDiario.fechaSeleccionada = 'fechaCreacion'
         if($scope.filtrosGeneral.tipoOrdenes){
             $scope.seleccionarTodos($scope.filtrosGeneral.tipoOrdenes);
         }
@@ -1276,33 +1280,12 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         $("#idot-reporte").val('');
         $("#idos-reporte").val('');
         $("#cuenta-reporte").val('');
-        $("#tipo_reporte").val('');
+        $("#tipo_reporte").val('fechaCreacion');
         $('#filtro_fecha_inicio_reporte').datepicker('update',   moment(FECHA_HOY_DATE).toDate() );
         $('#filtro_fecha_fin_reporte').datepicker('update',   moment(FECHA_HOY_DATE).toDate() );
         
-        if(tableReporte){                              
-            tableReporte.destroy() 
-        } 
-
-        tableReporte = $('#table-reporte').DataTable({
-			"paging": true,
-			"lengthChange": false,
-			"searching": false,
-			"ordering": false,
-			"pageLength": 10,
-			"info": false,
-			"autoWidth": true,
-            "data":[], 
-			"language": idioma_espanol_not_font,
-			"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">', 
-            dom: 'Bfrtip', 
-            buttons:  
-            [{ 
-                extend: 'excelHtml5', 
-                title: 'Reporte Seguimiento Diario', 
-                text: 'Exportar Excel' 
-            }] 
-		});
+        consultarReporteDiario();
+        
         $("#modalReporte").modal('show');
     }
 

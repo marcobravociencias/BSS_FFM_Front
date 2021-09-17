@@ -188,6 +188,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	$scope.banderaErrorEstatus = false;
 	$scope.banderaErrorIntervencion = false;
 	$scope.banderaErrorGeografia = false;
+	
 	$scope.consultarCatalagosPI = function () {
 		swal({ text: 'Espera un momento...', allowOutsideClick: false });
 		swal.showLoading();
@@ -311,6 +312,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		})
 		return arrayCopy;
 	}
+
 	function compareGeneric(a, b) {
 		let niveluno = a.nivel;
 		let niveldos = b.nivel;
@@ -321,6 +323,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		}
 		return 0
 	}
+
 	$scope.obtenerNivelUltimoJerarquia = function () {
 		return $scope.listadogeografiacopy.sort(compareGeneric)[0].nivel
 	}
@@ -337,6 +340,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			})
 		})
 	}
+
 	$scope.deseleccionarTodos = function (paramFiltroParent) {
 		paramFiltroParent.map(function (e) {
 			e.checkedOpcion = false
@@ -348,6 +352,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			})
 		})
 	}
+
 	$scope.setCheckFiltroGeneric = function (filtroParent) {
 		console.log(filtroParent.checkedOpcion)
 		console.log("#####---------")
@@ -362,6 +367,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		console.log(filtroParent.children)
 		console.log(filtroParent.checkedOpcion)
 	}
+
 	$scope.setCheckSubFiltroGeneric = function (subFiltro, parentFiltro) {
 		subFiltro.checkedOpcion = !subFiltro.checkedOpcion
 		let cantidadSubfiltros = parentFiltro.children.length
