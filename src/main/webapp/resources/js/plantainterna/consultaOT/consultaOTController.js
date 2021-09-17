@@ -26,12 +26,14 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	$scope.filtrosGeneral = {};
 	$scope.movimientos = [];
 	$scope.comentarioConsultaOT = '';
+	$scope.elementosRegistro;
 
 
 	$scope.consultaOT = function () {
 		let isValido = true;
 		let errorMensaje = '';
 		let isValFecha = true;
+		$scope.elementosRegistro = 0;
 
 		// let intervencion = $scope.filtrosGeneral.tipoOrdenes.filter(e => e.checkedOpcion).map(e => e.id)
 		let subIntTemp = []
@@ -152,6 +154,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 						
 					},
 					"dataSrc": function (json) {
+						$scope.elementosRegistro = json.registrosTotales
 						return json.data;
 					},
 					"error":function(xhr, error, thrown){
@@ -1546,4 +1549,124 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
             toastr.warning('Intoducir un comentario.');
         }
     }
+
+	$scope.descargarReporteConsultaOt = function () {
+		let isValido = true;
+		let errorMensaje = '';
+		let isValFecha = true;
+
+		// let intervencion = $scope.filtrosGeneral.tipoOrdenes.filter(e => e.checkedOpcion).map(e => e.id)
+		let subIntTemp = []
+		angular.forEach($scope.filtrosGeneral.tipoOrdenes, (e, i) => {
+			e.children.filter(f => f.checkedOpcion).map((k) => { subIntTemp.push(k.id); return k; })
+		})
+
+		let ultimonivel = $scope.obtenerNivelUltimoJerarquia()
+		let clusters = $("#jstree-proton-3").jstree("get_selected", true)
+			.filter(e => e.original.nivel == ultimonivel)
+			.map(e => parseInt(e.id))
+		let selectedElms = $('#jstree').jstree("get_selected", true);
+
+
+		let estatusOrdenes = []
+        angular.forEach($scope.filtrosGeneral.estatusdisponibles,(e,i)=>{
+			estatusOrdenes.push(e.id); 
+        })
+
+
+		$.each(selectedElms, function () {
+			clusters.push(this.id);
+		});
+		if (clusters.length == 0) {
+			clusters = $scope.all_cluster;
+		}
+
+
+		if ($.trim(document.getElementById('idot').value) !== '') {
+			if (!($.isNumeric($.trim(document.getElementById('idot').value)))) {
+				errorMensaje += '<li>Introduce un n&uacute;mero correcto de OT.</li>';
+				isValido = false;
+			}
+		}
+
+		if ($.trim(document.getElementById('cuenta').value) !== '') {
+			if (!($.isNumeric($.trim(document.getElementById('cuenta').value)))) {
+				errorMensaje += '<li>Introduce un n&uacute;mero correcto de cuenta.</li>';
+				isValido = false;
+			}
+		}
+
+		if (estatusOrdenes.length === 0) {
+			errorMensaje += '<li>Seleccione estatus.</li>';
+			isValido = false
+		}
+
+		if (subIntTemp.length === 0) {
+			errorMensaje += '<li>Seleccione intervenci&oacute;n.</li>';
+			isValido = false
+		}
+
+		if (clusters.length === 0) {
+			errorMensaje += '<li>Seleccione geograf&iacute;a.</li>';
+			isValido = false
+		}
+		
+		if (document.getElementById('filtro_fecha_inicio_consultaOt').value == '') {
+			errorMensaje += '<li>Introduce Fecha Inicial</li>';
+			isValFecha = false;
+			isValido = false
+		}
+
+		if (document.getElementById('filtro_fecha_fin_consultaOt').value == '') {
+			errorMensaje += '<li>Introduce Fecha Final</li>';
+			isValFecha = false;
+			isValido = false
+		}
+
+		if (isValFecha) {
+			if (!validarFecha()) {
+				$('.datepicker').datepicker('update', new Date());
+				errorMensaje += '<li>La fecha inicial no tiene que ser mayor a la final.</li>';
+				isValido = false
+			}
+		}
+		
+
+		if (isValido) {
+			let params = {
+				idOrden: $.trim(document.getElementById('idot').value) !== '' ? $.trim(document.getElementById('idot').value): null,
+				folioSistema: $.trim(document.getElementById('idos').value) !== '' ? $.trim(document.getElementById('idos').value): null,
+				claveCliente: $.trim(document.getElementById('cuenta').value) !== '' ? $.trim(document.getElementById('cuenta').value): null,
+				idSubTipoOrdenes: subIntTemp,
+				idEstatus: estatusOrdenes,
+				idClusters: clusters,
+				fechaInicio: $scope.getFechaFormato(document.getElementById('filtro_fecha_inicio_consultaOt').value),
+				fechaFin: $scope.getFechaFormato(document.getElementById('filtro_fecha_fin_consultaOt').value),
+				elementosPorPagina: $scope.elementosRegistro,
+				pagina: 1
+			}
+			console.log(params);
+			
+			consultaOTService.consultaReporteConsultaOt(JSON.stringify(params)).then((result) => {
+				console.log(result.data)
+				if (result.data.respuesta) {
+					if (result.data.result) {
+						const data = JSON.parse(result.data.result).ordenes
+						console.log(JSON.parse(result.data.result))
+						const fileName = 'Resporte Consulta Ot'
+						const exportType = 'xls'
+
+						window.exportFromJSON({ data, fileName, exportType })
+					} else {
+						mostrarMensajeWarningValidacion('No hay datos en el reporte.')
+					}
+				} else {
+					mostrarMensajeErrorAlert('Ocurrio un erro.')
+				}
+			}).catch(err => handleError(err))
+			
+		} else {
+			mostrarMensajeWarningValidacion(errorMensaje);
+		}
+	}
 }])

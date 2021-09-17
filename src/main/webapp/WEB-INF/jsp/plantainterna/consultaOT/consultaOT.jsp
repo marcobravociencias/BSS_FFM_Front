@@ -152,6 +152,9 @@
                         <i class="fa fa-search"></i>
                     </button>
                 </div>
+                <div id="" class="col-1 column-style-consulta" style="margin-top: 20px; margin-left: 20px; width: 60px !important;">
+                    <img alt="excel" src="./resources/img/generic/group-10.png" style="cursor:pointer" ng-click="descargarReporteConsultaOt()">
+                </div>
             </div>
         </div>
     </div>
@@ -210,6 +213,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/magnific_popup/jquery.magnific-popup.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/lib/moment.es.js" ></script>
+<script src="${pageContext.request.contextPath}/resources/libraries/exportExcel/index.min.js"></script>
 <!-- Fin -->
 
 <script type="text/javascript">let contex_project = "${pageContext.request.contextPath}";</script>
