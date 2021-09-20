@@ -1,14 +1,14 @@
 <div class="row contenedorRowForm">
     <div class="col-md-4">
 		<label class="text-info-regitro"><i class="fas fa-address-card"></i> Puesto*</label>
-        <div class="input-group">
+        <div class="input-group" id="contenedor_puesto_select_registro">
         	<select id="puesto_select_registro" class="selectpicker select_consulta selecRegistro" >	
             </select>
         </div>
     </div>
     <div class="col-md-4">
     	<label class="text-info-regitro"><i class="fa fa-building"></i> Compa&ntilde;ia*</label>
-        <div class="input-group">
+        <div class="input-group" id="contenedor_compania_select_registro">
         	<select id="compania_select_registro" class="selectpicker select_consulta selecRegistro" >	
             </select>
         </div>

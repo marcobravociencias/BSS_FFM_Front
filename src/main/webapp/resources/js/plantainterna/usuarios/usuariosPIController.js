@@ -650,6 +650,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     
     $scope.validarInformacionRegistro = function() {
     	
+//    	.css("border", "#f55756 solid 2px");
     	var validacion = true;
     	var validacionInformacionGeneral = true;
     	var validacionIntervenciones = true;
@@ -660,15 +661,23 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	
     	//PESTAÑA INFORMACIÓN GENERAL
 		if($("#puesto_select_registro option:selected").val() === "" || $("#puesto_select_registro option:selected").val() === undefined){
-			toastr.warning('¡Selecciona un puesto!');
+			$("#contenedor_puesto_select_registro").css("border-bottom", "2px solid #f55756");
+			validacionInformacionGeneral = false;
+			mensaje = mensaje + "<br/> *Puesto";
+		}else{
+			$("#contenedor_puesto_select_registro").css("border", "1px solid #d9d9d9");
 		}
 		
 		if($("#compania_select_registro option:selected").val() === "" || $("#compania_select_registro option:selected").val() === undefined){
-			mensaje = mensaje + '\n¡Selecciona una compañía!';
+			$("#contenedor_compania_select_registro").css("border-bottom", "2px solid #f55756");
+			validacionInformacionGeneral = false;
+			mensaje = mensaje + "<br/> *Compañía";
+		}else{
+			$("#contenedor_compania_select_registro").css("border", "1px solid #d9d9d9");
 		}
 		
 		if($scope.informacionRegistro.numEmpleado === "" || $scope.informacionRegistro.numEmpleado === undefined){
-			$("#form-num-empleado").css("border", "#f55756 solid 2px");
+			$("#form-num-empleado").css("border-bottom", "2px solid #f55756");
 			validacionInformacionGeneral = false;
 			mensaje = mensaje + "<br/> *Número empleado";
 		}else{
@@ -676,7 +685,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		}
 		
 		if($scope.informacionRegistro.posicion === "" || $scope.informacionRegistro.posicion === undefined){
-			$("#form-posicion").css("border", "#f55756 solid 2px");
+			$("#form-posicion").css("border-bottom", "2px solid #f55756");
 			validacionInformacionGeneral = false;
 			mensaje = mensaje + "<br/> *Posición";
 		}else{
@@ -684,7 +693,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		}
 		
 		if($scope.informacionRegistro.contrasena === "" || $scope.informacionRegistro.contrasena === undefined){
-			$("#form-pasword").css("border", "#f55756 solid 2px");
+			$("#form-pasword").css("border-bottom", "2px solid #f55756");
 			validacionInformacionGeneral = false;
 			mensaje = mensaje + "<br/> *Contraseña";
 		}else{
@@ -692,15 +701,15 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		}
 		
 		if($scope.informacionRegistro.confirContrasena === "" || $scope.informacionRegistro.confirContrasena === undefined){
-			$("#form-confir-password").css("border", "#f55756 solid 2px");
+			$("#form-confir-password").css("border-bottom", "2px solid #f55756");
 			validacionInformacionGeneral = false;
 			mensaje = mensaje + "<br/> *Confirmación de contraseña";
 		}else{
 			var password = $("#form-pasword").val();
 	    	var confirPassword =  $("#form-confir-password").val();
 	    	if(password !== confirPassword){
-	    		$("#form-pasword").css("border", "#f55756 solid 2px");
-	    		$("#form-confir-password").css("border", "#f55756 solid 2px");
+	    		$("#form-pasword").css("border-bottom", "2px solid #f55756");
+	    		$("#form-confir-password").css("border-bottom", "2px solid #f55756");
 	    		validacionInformacionGeneral = false;
 	    		mensaje = mensaje + "<br/> *Contraseña";
 				mensaje = mensaje + "<br/> *Confirmación de contraseña";
@@ -712,7 +721,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		}
 		
 		if($scope.informacionRegistro.nombre === "" || $scope.informacionRegistro.nombre === undefined){
-			$("#form-nombres").css("border", "#f55756 solid 2px");
+			$("#form-nombres").css("border-bottom", "2px solid #f55756");
 			validacionInformacionGeneral = false;
 			mensaje = mensaje + "<br/> *Nombre";
 		}else{
@@ -720,7 +729,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		}
 		
 		if($scope.informacionRegistro.apellidoPaterno === "" || $scope.informacionRegistro.apellidoPaterno === undefined){
-			$("#form-a-paterno").css("border", "#f55756 solid 2px");
+			$("#form-a-paterno").css("border-bottom", "2px solid #f55756");
 			validacionInformacionGeneral = false;
 			mensaje = mensaje + "<br/> *Apellido paterno";
 		}else{
@@ -728,7 +737,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		}
 		
 		if($scope.informacionRegistro.apellidoMaterno === "" || $scope.informacionRegistro.apellidoMaterno === undefined){
-			$("#form-a-materno").css("border", "#f55756 solid 2px");
+			$("#form-a-materno").css("border-bottom", "2px solid #f55756");
 			validacionInformacionGeneral = false;
 			mensaje = mensaje + "<br/> *Apellido materno";
 		}else{
@@ -736,7 +745,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		}
 		
 		if($scope.informacionRegistro.rfc === "" || $scope.informacionRegistro.rfc === undefined){
-			$("#form-rfc").css("border", "#f55756 solid 2px");
+			$("#form-rfc").css("border-bottom", "2px solid #f55756");
 			validacionInformacionGeneral = false;
 			mensaje = mensaje + "<br/> *RFC";
 		}else{
@@ -744,7 +753,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		}
 		
 		if($scope.informacionRegistro.telefono === "" || $scope.informacionRegistro.telefono === undefined){
-			$("#form-telefono").css("border", "#f55756 solid 2px");
+			$("#form-telefono").css("border-bottom", "2px solid #f55756");
 			validacionInformacionGeneral = false;
 			mensaje = mensaje + "<br/> *Teléfono";
 		}else{
@@ -752,7 +761,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		}
 		
 		if($scope.informacionRegistro.telefonoContacto === "" || $scope.informacionRegistro.telefonoContacto === undefined){
-			$("#form-telefono-contacto").css("border", "#f55756 solid 2px");
+			$("#form-telefono-contacto").css("border-bottom", "2px solid #f55756");
 			validacionInformacionGeneral = false;
 			mensaje = mensaje + "<br/> *Teléfono de contacto";
 		}else{
@@ -760,12 +769,12 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		}
 		
 		if($scope.informacionRegistro.correo === "" || $scope.informacionRegistro.correo === undefined){
-			$("#form-correo").css("border", "#f55756 solid 2px");
+			$("#form-correo").css("border-bottom", "2px solid #f55756");
 			validacionInformacionGeneral = false;
 			mensaje = mensaje + "<br/> *Correo electrónico";
 		}else{
 			if($("#form-correo").val().indexOf('@', 0) == -1 || $("#form-correo").val().indexOf('.', 0) == -1) {
-				$("#form-correo").css("border", "#f55756 solid 2px");
+				$("#form-correo").css("border-bottom", "2px solid #f55756");
 				validacionInformacionGeneral = false;
 				toastr.warning("¡Valida el formato del correo electrónico!");
 			}else{
@@ -774,7 +783,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		}
 
 		if($scope.informacionRegistro.fechaIngreso === "" || $scope.informacionRegistro.fechaIngreso === undefined || $scope.informacionRegistro.fechaIngreso === null){
-			$("#form-fechaIngresoRegistro").css("border", "#f55756 solid 2px");
+			$("#form-fechaIngresoRegistro").css("border-bottom", "2px solid #f55756");
 			validacionInformacionGeneral = false;
 			mensaje = mensaje + "<br/> *Fecha de ingreso";
 		}else{
@@ -782,7 +791,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		}
 		
 		if($("#puesto_select_sexo").val() === "" || $("#puesto_select_sexo").val() === undefined || $("#puesto_select_sexo").val() === null){
-			$("#puesto_select_sexo").css("border", "#f55756 solid 2px");
+			$("#puesto_select_sexo").css("border-bottom", "2px solid #f55756");
 			validacionInformacionGeneral = false;
 			mensaje = mensaje + "<br/> *Sexo";
 		}else{
@@ -885,14 +894,14 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     $(".inputFormulario").keyup(function() {
 		var input = $(this).attr("id");
 		if( $(this).val()  === "" || $(this).val() === undefined ){
-			$("#"+input).css("border", "#f55756 solid 2px");
+			$("#"+input).css("border-bottom", "2px solid #f55756");
 		}else{
 			$("#"+input).css("border", "1px solid #d9d9d9");
 		}
 		
 		if(input === "form-correo"){
 			if($("#"+input).val().indexOf('@', 0) == -1 || $("#"+input).val().indexOf('.', 0) == -1) {
-				$("#"+input).css("border", "#f55756 solid 2px");
+				$("#"+input).css("border-bottom", "2px solid #f55756");
 			}
 		}
 		
@@ -902,8 +911,8 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	var password = $("#form-pasword").val();
     	var confirPassword =  $("#form-confir-password").val();
     	if(password !== confirPassword){
-    		$("#form-pasword").css("border", "#f55756 solid 2px");
-    		$("#form-confir-password").css("border", "#f55756 solid 2px");
+    		$("#form-pasword").css("border-bottom", "2px solid #f55756");
+    		$("#form-confir-password").css("border-bottom", "2px solid #f55756");
     		toastr.warning("¡Las contraseñas no coinciden!");
     	}else{
     		$("#form-pasword").css("border", "1px solid #d9d9d9");
