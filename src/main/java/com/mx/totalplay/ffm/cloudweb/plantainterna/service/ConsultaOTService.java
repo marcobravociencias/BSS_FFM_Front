@@ -23,4 +23,6 @@ public interface ConsultaOTService {
 	public ServiceResponseResult consultaInformacionRed(String params);
 
 	public ServiceResponseResult consultaCambioEquipo(String params);
+
+    ServiceResponseResult consultaReporteConsultaOt(String params);
 }

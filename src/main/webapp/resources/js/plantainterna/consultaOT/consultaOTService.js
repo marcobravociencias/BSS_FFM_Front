@@ -99,4 +99,14 @@ app.service("consultaOTService", function($http){
             transformRequest: angular.identity
         });
     };
+
+    this.consultaReporteConsultaOt = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultaReporteConsultaOt",
+            data: params,
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
+        });
+    };
 })

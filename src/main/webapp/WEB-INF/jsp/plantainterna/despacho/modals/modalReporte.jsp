@@ -9,7 +9,7 @@
             <div class="modal-body">
                 <div class="col-12">
                     <div class="row">
-                        <div class="col-2  columna-filtro-ind-rep input-box" style="width: 150px !important;">
+                        <div class="col-2  columna-filtro-ind-rep input-box" style="width: 120px !important;">
                             <label for="filtro-estatus-substatus" class="label-filter"></label>
                             <div class="dropdown">
                                 <input readonly data-mdb-toggle="dropdown" aria-expanded="false"
@@ -134,11 +134,11 @@
                                         <th>STATUS</th>
                                         <th>ESTADO</th>
                                         <th>GEOGRAF&Iacute;A</th>
+                                        <th>FECHA CREACI&Oacute;N</th>   
+                                        <th>FECHA ATENCI&Oacute;N</th>
+                                        <th>TURNO</th>
                                         <th>OPERARIO</th>
                                         <th>#EMPLEADO</th>
-                                        <th>FECHA ATENCI&Oacute;N</th>
-                                        <th>FECHA CREACI&Oacute;N</th>
-                                        <th>TURNO</th>
                                     </tr>
                                 </thead>
                                 <tbody>

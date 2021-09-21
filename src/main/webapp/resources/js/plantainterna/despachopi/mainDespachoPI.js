@@ -65,6 +65,8 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
     $scope.nfiltrointervenciones=''
     $scope.estatusCambio = [];
     $scope.intervencionesConteo = [];
+    $scope.repDiario;
+    $scope.resultReporteDiario = 0;
     
     
     $scope.abrirModalGeografia=function(){
@@ -1114,6 +1116,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
         let mensaje = '<ul>';
         let isValid = true;
         let numerosOnly = /^[0-9]*$/i;
+        $scope.resultReporteDiario = {};
 
         let statuscopy = [];
         if($scope.filtrosGeneral.estatusdisponibles){
@@ -1149,6 +1152,8 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
         if($("#tipo_reporte").val() == "" || $("#tipo_reporte").val() == undefined){
             mensaje += '<li>Selecciona Tipo fecha</li>';
             isValid = false;
+        } else {
+            $scope.repDiario.fechaSeleccionada = $("#tipo_reporte").val()
         }
 
         if(!validarFecha('filtro_fecha_inicio_reporte','filtro_fecha_fin_reporte')){
@@ -1207,6 +1212,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                         
                     },
                     "dataSrc": function (json) {
+                        $scope.resultReporteDiario = json.registrosTotales
                         return json.data;
                     },
                     "error":function(xhr, error, thrown){
@@ -1232,7 +1238,48 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
     
 
     downloadExcelReportFile = function(){ 
-        $(".buttons-excel").click(); 
+        //$(".buttons-excel").click();
+        let statuscopy = [];
+        if($scope.filtrosGeneral.estatusdisponibles){
+            angular.forEach($scope.filtrosGeneral.estatusdisponibles,(e,i)=>{
+                statuscopy.push(e.id); 
+            })
+        }
+        
+        let intervencioncopy= [];
+        if($scope.filtrosGeneral.tipoOrdenes){
+            angular.forEach($scope.filtrosGeneral.tipoOrdenes,(e,i)=>{
+                intervencioncopy.push(e.id); 
+            })
+        }
+        console.log($scope.resultReporteDiario)
+        console.log($scope.getFechaFormato($('#filtro_fecha_inicio_reporte').val()))
+        let paramsR = {
+             fechaInicio: $scope.getFechaFormato($('#filtro_fecha_inicio_reporte').val()),
+             fechaFin: $scope.getFechaFormato($('#filtro_fecha_fin_reporte').val()),
+             tipoIntervencion:  intervencioncopy,
+             estatusOt: statuscopy,
+             fechaSeleccionada:  $("#tipo_reporte").val(),
+             elementosPorPagina: $scope.resultReporteDiario,
+             pagina: 1
+        }
+        swal({ text: 'Cargando registros...', allowOutsideClick: false });
+        swal.showLoading();
+        mainDespachoService.consultaReporteDiario(paramsR).then((result) =>{
+            console.log(result.data)
+            swal.close()
+            if (result.data.respuesta) {
+                const data = JSON.parse(result.data.result).ordenes
+                console.log(JSON.parse(result.data.result))
+                const fileName = 'Resporte Seguimiento Diario'
+                const exportType = 'xls'
+    
+                window.exportFromJSON({ data, fileName, exportType })
+            } else {
+                mostrarMensajeErrorAlert('Ocurrio un error al generar reporte.')
+            }
+           
+        }).catch(err => handleError(err));
     }
     
 }]);

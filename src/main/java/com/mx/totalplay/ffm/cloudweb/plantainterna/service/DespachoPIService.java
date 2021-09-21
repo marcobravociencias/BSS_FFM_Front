@@ -54,4 +54,6 @@ public interface DespachoPIService {
 	public DataTableResponse consultarReporteDiario(ParamConsultaOTPI params);
 
     ServiceResponseResult obtenerResumenPaquete(String params);
+
+	ServiceResponseResult consultaRepoDiarioEx(String params);
 }

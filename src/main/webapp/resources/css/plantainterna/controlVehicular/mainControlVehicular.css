@@ -335,13 +335,17 @@ table.dataTable.no-footer {
 .tableTextTitle{
   text-align: left;
   color: #784085;
-  font-size: 15px;
+  font-size: 12px;
+  width: 165px;
+  vertical-align: baseline;
 }
 
 .tableText{
   text-align: left;
   color:#7c7c7d;
   font-size: 12px;
+  width: 165px;
+  vertical-align: baseline;
 }
 
 
@@ -417,7 +421,7 @@ li{
 
 .container-fluid{
   padding-left: 0;
-  padding-right:  0;;
+  padding-right:  0;
   margin-top: 5px;
 }
 
@@ -451,10 +455,17 @@ li{
 
 .fs-title{
   font-size: 13px;
+  color: #959595;
+  font-weight: bold;
 }
 
 .search-form {
    padding-right: 0;
 }
 
-
+.imgResumen{
+  width: 100px;
+  height: 100px;
+  box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
+  cursor: pointer;
+}

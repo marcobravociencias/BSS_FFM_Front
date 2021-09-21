@@ -343,4 +343,63 @@ public class ImplConsultaOTService implements ConsultaOTService {
         logger.info("Result ImplConsultaOTService metodo consultaInformacionRed" + gson.toJson(response));
         return response;
     }
+
+    @Override
+    public ServiceResponseResult consultaReporteConsultaOt(String params) {
+        logger.info("ImplConsultaOTService.class [metodo consultaReporteConsultaOt() ]\n" + params);
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        String tokenAcces = principalDetail.getAccess_token();
+        logger.info("consultaInformacionDetalleOt ##+" + tokenAcces);
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constConsultaOT.getConsultaGeneralOt());
+        logger.info("URL ##+" + urlRequest);
+
+        ServiceResponseResult response = restCaller.callPostBearerTokenRequest(params, urlRequest,
+                ServiceResponseResult.class, tokenAcces);
+        if (response.getResult() instanceof Integer){
+            response = ServiceResponseResult.builder()
+                    .isRespuesta(false)
+                    .result(response.getResult()).build();
+        } else {
+            JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
+            JsonArray ordenesArray = jsonObjectResponse.getAsJsonArray("ordenes");
+            JsonArray ordenesReporte = new JsonArray();
+            JsonObject ordenesR = new JsonObject();
+            if (ordenesArray.size() > 0) {
+                if (jsonObjectResponse.get("registrosTotales").getAsInt() > 0) {
+                    for (int i = 0; i < ordenesArray.size(); i++) {
+                        JsonObject object = (JsonObject) ordenesArray.get(i);
+                        JsonObject result = new JsonObject();
+                        logger.info("objeto: " + object);
+                        result.addProperty("OT", object.get("idOrden").getAsInt() != 0 ? String.valueOf(object.get("idOrden").getAsInt()) : "");
+                        result.addProperty("CLIENTE", object.get("nombreCliente") != null ? object.get("nombreCliente").getAsString().trim() : "");
+                        result.addProperty("CUENTA", object.get("claveCliente") != null ? object.get("claveCliente").getAsString().trim() : "");
+                        result.addProperty("CIUDAD", object.get("ciudad") != null ? object.get("ciudad").getAsString().trim() : "");
+                        result.addProperty("FECHA AGENDA", object.get("fechaAgenda") != null ? object.get("fechaAgenda").getAsString().trim() : "");
+                        result.addProperty("MOTIVO", object.get("descripcionMotivo") != null ? object.get("descripcionMotivo").getAsString().trim() : "");
+                        result.addProperty("ESTATUS", object.get("descripcionEstatus") != null ? object.get("descripcionEstatus").getAsString().trim() : "");
+                        result.addProperty("ESTADO", object.get("descripcionEstado") != null ? object.get("descripcionEstado").getAsString().trim() : "");
+                        ordenesReporte.add(result);
+                    }
+                    ordenesR.add("ordenes", ordenesReporte);
+                    response = ServiceResponseResult.builder()
+                            .isRespuesta(true)
+                            .result(gson.toJson(ordenesR)).build();
+                } else {
+                    response = ServiceResponseResult.builder()
+                            .isRespuesta(true)
+                            .result(null).build();
+                }
+            } else {
+                response = ServiceResponseResult.builder()
+                        .isRespuesta(true)
+                        .result(null).build();
+            }
+        }
+
+
+
+        logger.info("*** Objeto Response: " + gson.toJson(response));
+
+        return response;
+    }
 }

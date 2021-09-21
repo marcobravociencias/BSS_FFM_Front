@@ -31,7 +31,7 @@
                         <label>Tipo Veh&iacute;culo </label>
                         <select class="form-control form-control-sm custom-select" name="tipo" id="tipo"
                             ng-change="loadMarca()" ng-model="vehiculo.idTipo">
-                            <option value="" selected>-- Seleccione --</option>
+                            <option value="" selected>NO HAY SELECCI&Oacute;N</option>
                             <option value="{{ tipoVehiculo.idTipoVehiculo }}"
                                 ng-repeat="tipoVehiculo in data.tipoVehiculos">
                                 {{ tipoVehiculo.tipoVehiculo }}
@@ -42,7 +42,7 @@
                         <label>Marca </label>
                         <select class="form-control form-control-sm custom-select" name="marca" id="marca"
                             ng-model="vehiculo.idMarca" ng-change="loadLinea()">
-                            <option value="" selected>-- Seleccione --</option>
+                            <option value="" selected>NO HAY SELECCI&Oacute;N</option>
                             <option value="{{ marcaVehiculo.idMarca }}" ng-repeat="marcaVehiculo in marcas">
                                 {{ marcaVehiculo.nombre }}
                             </option>
@@ -52,7 +52,7 @@
                         <label>Linea de Veh&iacute;culo </label>
                         <select class="form-control form-control-sm custom-select" name="linea" id="linea"
                             ng-model="vehiculo.idModelo">
-                            <option value="" selected>-- Seleccione --</option>
+                            <option value="" selected>NO HAY SELECCI&Oacute;N</option>
                             <option value="{{ lineasVehiculo.idMarca }}" ng-repeat="lineasVehiculo in lineas">
                                 {{ lineasVehiculo.nombre }}
                             </option>
@@ -62,8 +62,8 @@
                 <div class="form-row">
                     <div class="col-3 form-group">
                         <label>A&ntilde;o de Veh&iacute;culo </label>
-                        <input type="text" class="datepicker year form-control form-control-sm" id="anio" readonly
-                            ng-model="vehiculo.anio" />
+                        <input type="text" class="datepicker year form-control form-control-sm" placeholder="aaaa"
+                            id="anio" readonly ng-model="vehiculo.anio" />
                     </div>
                     <div class="col-3 form-group">
                         <label>N&uacute;mero de Serie </label>
@@ -74,7 +74,7 @@
                         <label>Combustible </label>
                         <select class="form-control form-control-sm custom-select" id="combustible"
                             ng-model="vehiculo.combustible">
-                            <option value="" selected>-- Seleccione --</option>
+                            <option value="" selected>NO HAY SELECCI&Oacute;N</option>
                             <option value="GASOLINA" selected>Gasolina</option>
                             <option value="DIESEL" selected>Diesel</option>
                         </select>
@@ -83,7 +83,7 @@
                         <label>Color </label>
                         <select class="form-control form-control-sm custom-select" id="color"
                             ng-model="vehiculo.idColor">
-                            <option value="" selected>-- Seleccione --</option>
+                            <option value="" selected>NO HAY SELECCI&Oacute;N</option>
                             <option value="{{colorVehiculo.idColor}}" ng-repeat="colorVehiculo in data.colores">
                                 {{colorVehiculo.descripcion}}</option>
                         </select>
@@ -97,10 +97,11 @@
                         </div>
                         <label>Geograf&iacute;a </label>
                         <input ng-click="abrirModalGeografia()" readonly type="text" id="arbol_vehiculo_consulta"
-                            class="form-control form-control-sm" placeholder="-- Seleccione --" />
+                            class="form-control form-control-sm" placeholder="NO HAY SELECCI&Oacute;N" />
                     </div>
                 </div>
-                <h5 class="fs-title"><i class="fas fa-info-circle" style="color: orange;"></i> Los datos de esta
+                <h5 class="fs-title"><i class="fas fa-exclamation-circle me-2" style="color: orange;"></i> Los datos de
+                    esta
                     secci&oacute;n son obligatorios</h5>
             </div>
         </div>
@@ -113,7 +114,7 @@
                         <label>Aseguradora </label>
                         <select class="form-control form-control-sm custom-select" id="aseguradora"
                             ng-model="vehiculo.detalle.idAseguradora">
-                            <option value="" selected>-- Seleccione --</option>
+                            <option value="" selected>NO HAY SELECCI&Oacute;N</option>
                             <option value="{{seguroVehiculo.idSeguro}}" ng-repeat="seguroVehiculo in data.seguros">
                                 {{seguroVehiculo.descripcion}}</option>
                         </select>
@@ -127,7 +128,8 @@
                     <div class="col-3 form-group">
                         <label>Fecha Vencimiento P&oacute;liza
                         </label>
-                        <input type="text" class="datepicker datepickerNormal form-control form-control-sm"
+                        <input type="text" placeholder="dd/mm/aaaa"
+                            class="datepicker datepickerNormal form-control form-control-sm"
                             ng-model="vehiculo.detalle.fechaVencimientoPoliza" readonly id="vencimientoPoliza" />
                     </div>
                     <div class="col-3 form-group">
@@ -142,7 +144,8 @@
                         <label style="font-size: 11px !important">Vencimiento Tarjeta de Circulaci&oacute;n<span
                                 style="color: red">*</span></label>
                         <input type="text" class="datepicker datepickerNormal form-control form-control-sm"
-                            ng-model="vehiculo.detalle.fechaVencimientoTarjeta" id="vencimientoTarjeta" readonly />
+                            placeholder="dd/mm/aaaa" ng-model="vehiculo.detalle.fechaVencimientoTarjeta"
+                            id="vencimientoTarjeta" readonly />
                     </div>
                     <div class="col-3 form-group">
                         <label>N&uacute;m. de Verificaci&oacute;n
@@ -154,7 +157,8 @@
                         <label>Fecha de Verificaci&oacute;n
                         </label>
                         <input type="text" class="datepicker datepickerNormal form-control form-control-sm"
-                            ng-model="vehiculo.detalle.fechaVerificacion" readonly id="fechaVerificacion" />
+                            placeholder="dd/mm/aaaa" ng-model="vehiculo.detalle.fechaVerificacion" readonly
+                            id="fechaVerificacion" />
                     </div>
                     <div class="col-3 form-group">
                         <label>Clave Pensi&oacute;n </label>
@@ -190,7 +194,7 @@
                         <label>Engomado </label>
                         <select class="form-control form-control-sm custom-select" id="engomado"
                             ng-model="vehiculo.detalle.engomado">
-                            <option value="" selected>-- Seleccione --</option>
+                            <option value="" selected>NO HAY SELECCI&Oacute;N</option>
                             <option value="rosa" selected>Rosa</option>
                             <option value="amarillo" selected>Amarillo</option>
                             <option value="rojo" selected>Rojo</option>
@@ -202,7 +206,7 @@
                         <label>Holograma </label>
                         <select class="form-control form-control-sm custom-select" id="holograma"
                             ng-model="vehiculo.detalle.holograma">
-                            <option value="" selected>-- Seleccione --</option>
+                            <option value="" selected>NO HAY SELECCI&Oacute;N</option>
                             <option value="doble cero" selected>Doble cero</option>
                             <option value="cero" selected>Cero</option>
                             <option value="uno" selected>Uno</option>
@@ -214,7 +218,7 @@
                         <label>Ubicaci&oacute;n CDO</label>
                         <select class="form-control form-control-sm custom-select" id="encierro"
                             ng-model="vehiculo.detalle.idEncierro">
-                            <option value="" selected>-- Seleccione --</option>
+                            <option value="" selected>NO HAY SELECCI&Oacute;N</option>
                         </select>
                     </div>
                     <div class="col-3 form-group">
@@ -258,21 +262,13 @@
                             ng-model="vehiculo.comentarios"></textarea>
                     </div>
                 </div>
-                <h5 class="fs-title"><i class="fas fa-info-circle" style="color: orange;"></i> Los datos de esta
+                <h5 class="fs-title"><i class="fas fa-exclamation-circle me-2" style="color: orange;"></i> Los datos de
+                    esta
                     secci&oacute;n no son obligatorios</h5>
             </div>
         </div>
         <div class="tab-pane pills-pane fade" id="pills-imagenes" role="tabpanel" aria-labelledby="pills-imagenes-tab">
             <div class="col-12">
-                <!--
-                <div class="row">
-                    <div class="col-3"><img alt="Placa" src="{{vehiculo.urlFotoPlaca}}"  ng-if="vehiculo.urlFotoPlaca" width="200"/></div>
-                    <div class="col-3"><img alt="Vehiculo" src="{{vehiculo.urlFotoVehiculo}}"  ng-if="vehiculo.urlFotoVehiculo" width="200"/></div>
-                    <div class="col-3"><img alt="Tarjeta Circulacion" src="{{vehiculo.detalle.urlFotoTarjetaCirculacion}}"  ng-if="vehiculo.detalle.urlFotoTarjetaCirculacion" width="200"/></div>
-                    <div class="col-3"><img alt="Tarjeta Gasolina" src="{{vehiculo.detalle.urlFotoTarjetaGasolina}}"  ng-if="vehiculo.detalle.urlFotoTarjetaGasolina" width="200"/></div>
-                </div>
-                -->
-
                 <div class="form-row">
                     <div class="col-3 form-group">
                         <label>Foto Placa </label>
@@ -285,9 +281,6 @@
                         <div ng-if="filePlaca.nombre" class="file-delete">
                             <span>{{filePlaca.nombre}} <i class="fa fa-trash"
                                     onclick="deleteFile('fotoPlaca')"></i></span>
-                        </div>
-                        <div ng-if="!filePlaca.nombre && vehiculo.urlFotoPlaca" style="text-align: center;">
-                            <img alt="Placa" src="" width="150" id="urlFotoPlaca"/>
                         </div>
                     </div>
                     <div class="col-3 form-group">
@@ -332,7 +325,7 @@
                         </div>
                     </div>
                 </div>
-                <h5 class="fs-title"> <i class="fas fa-info-circle" style="color: orange;"></i> Los datos de
+                <h5 class="fs-title"> <i class="fas fa-exclamation-circle me-2" style="color: orange;"></i> Los datos de
                     esta secci&oacute;n no son obligatorios</h5>
             </div>
         </div>
@@ -341,113 +334,124 @@
                 <table class="resumeTable">
                     <tr>
                         <td class="tableTextTitle">* Placa: </td>
-                        <td class="tableText">{{vehiculo.placa ? vehiculo.placa : 'Sin
-                            informaci&oacute;n'}}</td>
-                        <td class="tableTextTitle">* Tipo Veh&iacute;culo: </td>
-                        <td class="tableText">{{vehiculoText.tipoText ? vehiculoText.tipoText : 'Sin
-                            informaci&oacute;n'}}</td>
-                        <td class="tableTextTitle">* Marca: </td>
-                        <td class="tableText">{{vehiculoText.marcaText ? vehiculoText.marcaText : 'Sin
-                            informaci&oacute;n'}}</td>
-                        <td class="tableTextTitle">* Modelo: </td>
-                        <td class="tableText">{{vehiculoText.lineaText ? vehiculoText.lineaText : 'Sin
-                            informaci&oacute;n'}}</td>
-                    </tr>
-                    <tr>
+                        <td class="tableText">{{vehiculo.placa ? vehiculo.placa : 'Sin asignar'}}</td>
                         <td class="tableTextTitle">* A&ntilde;o: </td>
-                        <td class="tableText">{{vehiculoText.anio ? vehiculoText.anio : 'Sin
-                            informaci&oacute;n'}}</td>
+                        <td class="tableText">{{vehiculoText.anio ? vehiculoText.anio : 'Sin asignar'}}</td>
                         <td class="tableTextTitle">* N&uacute;mero de serie: </td>
-                        <td class="tableText">{{vehiculo.numeroSerie ? vehiculo.numeroSerie : 'Sin
-                            informaci&oacute;n'}}</td>
-                        <td class="tableTextTitle">* Combustible: </td>
-                        <td class="tableText">{{vehiculo.combustible ? vehiculo.combustible : 'Sin
-                            informaci&oacute;n'}}</td>
-                        <td class="tableTextTitle">* Color: </td>
-                        <td class="tableText">{{vehiculoText.colorText ? vehiculoText.colorText : 'Sin
-                            informaci&oacute;n'}}</td>
+                        <td class="tableText">{{vehiculo.numeroSerie ? vehiculo.numeroSerie : 'Sin asignar'}}</td>
                     </tr>
                     <tr>
+                        <td class="tableTextTitle">* Tipo Veh&iacute;culo: </td>
+                        <td class="tableText">{{vehiculoText.tipoText ? vehiculoText.tipoText : 'Sin asignar'}}</td>
+                        <td class="tableTextTitle">* Marca: </td>
+                        <td class="tableText">{{vehiculoText.marcaText ? vehiculoText.marcaText : 'Sin asignar'}}</td>
+                        <td class="tableTextTitle">* Modelo: </td>
+                        <td class="tableText">{{vehiculoText.lineaText ? vehiculoText.lineaText : 'Sin asignar'}}</td>
+
+                    </tr>
+                    <tr>
+                        <td class="tableTextTitle">* Combustible: </td>
+                        <td class="tableText">{{vehiculo.combustible ? vehiculo.combustible : 'Sin asignar'}}</td>
+                        <td class="tableTextTitle">* Color: </td>
+                        <td class="tableText">{{vehiculoText.colorText ? vehiculoText.colorText : 'Sin asignar'}}</td>
                         <td class="tableTextTitle">* Geograf&iacute;a: </td>
                         <td class="tableText" colspan="7">{{vehiculoText.geografiaText ? vehiculoText.geografiaText :
-                            'Sin
-                            informaci&oacute;n'}}</td>
+                            'Sin asignar'}}</td>
                     </tr>
                 </table>
                 <table class="resumeTable">
                     <tr>
                         <td class="tableTextTitle">* Aseguradora: </td>
                         <td class="tableText">{{vehiculoText.aseguradoraText ? vehiculoText.aseguradoraText :
-                            'Sin
-                            informaci&oacute;n'}}</td>
+                            'Sin asignar'}}</td>
                         <td class="tableTextTitle">* N&uacute;mero de poliza: </td>
                         <td class="tableText">{{vehiculo.detalle.numeroPoliza ? vehiculo.detalle.numeroPoliza :
-                            'Sin
-                            informaci&oacute;n'}}</td>
+                            'Sin asignar'}}</td>
                         <td class="tableTextTitle">* Fecha vencimiento poliza: </td>
                         <td class="tableText">{{vehiculoText.fechaVencimientoPoliza ?
                             vehiculoText.fechaVencimientoPoliza :
-                            'Sin informaci&oacute;n'}}</td>
-                        <td class="tableTextTitle">* N&uacute;m. Tarjeta de circulaci&oacute;n: </td>
-                        <td class="tableText">{{vehiculo.detalle.tarjetaCirculacion ?
-                            vehiculo.detalle.tarjetaCirculacion : 'Sin
-                            informaci&oacute;n'}}</td>
+                            'Sin asignar'}}</td>
                     </tr>
                     <tr>
+                        <td class="tableTextTitle">* N&uacute;m. Tarjeta de circulaci&oacute;n: </td>
+                        <td class="tableText">{{vehiculo.detalle.tarjetaCirculacion ?
+                            vehiculo.detalle.tarjetaCirculacion : 'Sin asignar'}}</td>
                         <td class="tableTextTitle">* Vencimiento tarjeta circulaci&oacute;n: </td>
                         <td class="tableText">{{vehiculoText.fechaVencimientoTarjeta ?
                             vehiculoText.fechaVencimientoTarjeta :
-                            'Sin informaci&oacute;n'}}</td>
+                            'Sin asignar'}}</td>
                         <td class="tableTextTitle">* N&uacute;mero de verificaci&oacute;n: </td>
                         <td class="tableText">{{vehiculo.detalle.numeroVerificacion ?
-                            vehiculo.detalle.numeroVerificacion : 'Sin
-                            informaci&oacute;n'}}</td>
-                        <td class="tableTextTitle">* Fecha de verificaci&oacute;n: </td>
-                        <td class="tableText">{{vehiculoText.fechaVerificacion ?
-                            vehiculoText.fechaVerificacion : 'Sin
-                            informaci&oacute;n'}}</td>
-                        <td class="tableTextTitle">* Clave pensi&oacute;n: </td>
-                        <td class="tableText">{{vehiculo.detalle.clavePension ? vehiculo.detalle.clavePension :
-                            'Sin
-                            informaci&oacute;n'}}</td>
+                            vehiculo.detalle.numeroVerificacion : 'Sin asignar'}}</td>
                     </tr>
                     <tr>
+                        <td class="tableTextTitle">* Fecha de verificaci&oacute;n: </td>
+                        <td class="tableText">{{vehiculoText.fechaVerificacion ?
+                            vehiculoText.fechaVerificacion : 'Sin asignar'}}</td>
+                        <td class="tableTextTitle">* Clave pensi&oacute;n: </td>
+                        <td class="tableText">{{vehiculo.detalle.clavePension ? vehiculo.detalle.clavePension :
+                            'Sin asignar'}}</td>
                         <td class="tableTextTitle">* N&uacute;m. tarjeta gasolina: </td>
                         <td class="tableText">{{vehiculo.detalle.tarjetaGasolina ?
                             vehiculo.detalle.tarjetaGasolina
-                            : 'Sin
-                            informaci&oacute;n'}}</td>
+                            : 'Sin asignar'}}</td>
+                    </tr>
+                    <tr>
                         <td class="tableTextTitle">* Clave GPS: </td>
-                        <td class="tableText">{{vehiculo.detalle.claveGps ? vehiculo.detalle.claveGps : 'Sin
-                            informaci&oacute;n'}}
+                        <td class="tableText">{{vehiculo.detalle.claveGps ? vehiculo.detalle.claveGps : 'Sin asignar'}}
                         </td>
                         <td class="tableTextTitle">* N&uacute;m motor: </td>
                         <td class="tableText">{{vehiculo.detalle.numeroMotor ? vehiculo.detalle.numeroMotor :
-                            'Sin
-                            informaci&oacute;n'}}</td>
+                            'Sin asignar'}}</td>
                         <td class="tableTextTitle">* N&uacute;m chasis: </td>
                         <td class="tableText">{{vehiculo.detalle.numeroChasis ? vehiculo.detalle.numeroChasis :
-                            'Sin
-                            informaci&oacute;n'}}</td>
+                            'Sin asignar'}}</td>
+
                     </tr>
                     <tr>
                         <td class="tableTextTitle">* Engomado: </td>
-                        <td class="tableText">{{vehiculo.detalle.engomado ? vehiculo.detalle.engomado : 'Sin
-                            informaci&oacute;n'}}
+                        <td class="tableText">{{vehiculo.detalle.engomado ? vehiculo.detalle.engomado : 'Sin asignar'}}
                         </td>
                         <td class="tableTextTitle">* Holograma: </td>
                         <td class="tableText">{{vehiculo.detalle.holograma ? vehiculo.detalle.holograma : 'Sin
-                            informaci&oacute;n'}}
+                            asignar'}}
                         </td>
                         <td class="tableTextTitle">* Ubicaci&oacute;n CDO: </td>
-                        <td class="tableText">{{vehiculoText.encierroText ? vehiculoText.encierroText : 'Sin
-                            informaci&oacute;n'}}
+                        <td class="tableText">{{vehiculoText.encierroText ? vehiculoText.encierroText : 'Sin asignar'}}
                         </td>
+
+                    </tr>
+                    <tr>
                         <td class="tableTextTitle">* Rotulado: </td>
                         <td class="tableText">{{vehiculoText.rotulado ? 'Si' : 'No'}}</td>
                     </tr>
                 </table>
-                <h5 class="fs-title"> <i class="fas fa-info-circle" style="color: orange;"></i> Verifica la
+                <div class="row imagenes">
+                    <div class="col-2" ng-if="vehiculo.urlFotoPlaca || filePlaca">
+                        <p class="tableTextTitle">* Foto placa</p>
+                        <img alt="Placa" src="" class="imgResumen" id="placaImagen" onclick="showImgResumen(this)" />
+                    </div>
+                    <div class="col-2" ng-if="vehiculo.urlFotoVehiculo || fileVehiculo">
+                        <p class="tableTextTitle">* Foto veh&iacute;culo</p>
+                        <img alt="Vehiculo" src="" class="imgResumen" id="vehiculoImagen"
+                            onclick="showImgResumen(this)" />
+                    </div>
+                    <div class="col-2" ng-if="vehiculo.detalle.urlFotoTarjetaCirculacion  || fileCirculacion">
+                        <p class="tableTextTitle">* Foto tarjeta circulaci&oacute;n</p>
+                        <img alt="Tarjeta Circulacion" src="" id="circulacionImagen" onclick="showImgResumen(this)"
+                            class="imgResumen" />
+                    </div>
+                    <div class="col-2" ng-if="vehiculo.detalle.urlFotoTarjetaGasolina || fileGasolina">
+                        <p class="tableTextTitle">* Foto tarjeta gasolina</p>
+                        <img alt="Tarjeta Gasolina" src="" id="gasolinaImagen" onclick="showImgResumen(this)"
+                            class="imgResumen" />
+                    </div>
+                </div>
+
+
+                <h5 class="fs-title" style="margin-top: 1em;"> <i class="fas fa-exclamation-circle me-2"
+                        style="color: orange;"></i>
+                    Verifica la
                     informaci&oacute;n antes de guardar</h5>
             </div>
             <div style="text-align: right; margin: 1em 0 0 0;">

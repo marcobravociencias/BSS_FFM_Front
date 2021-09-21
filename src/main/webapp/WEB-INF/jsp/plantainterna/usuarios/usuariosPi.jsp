@@ -37,7 +37,7 @@
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="opcion-consulta-tab" data-toggle="tab" href="#opcion-consulta" role="tab"
-                                aria-controls="opcion-consulta" aria-selected="true">Consultar usuario</a>
+                                aria-controls="opcion-consulta" aria-selected="true">Consultar usuarios</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="opcion-alta-tab" data-toggle="tab" href="#opcion-alta" role="tab"
