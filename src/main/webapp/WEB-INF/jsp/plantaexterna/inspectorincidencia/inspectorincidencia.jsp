@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -21,8 +20,8 @@ pageEncoding="ISO-8859-1"%>
         <link href="${pageContext.request.contextPath}/resources/libraries/jstree/themes/proton/style.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/datePicker/css/bootstrap-datepicker3_1.9.0.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/jquery.dataTables.css" rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/libraries/magnific_popup/magnific-popup.css"
-        rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/libraries/magnific_popup/magnific-popup.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/libraries/sweetalert/css/sweetalert2.min.css" rel="stylesheet">
         
         <link href="${pageContext.request.contextPath}/resources/css/plantaexterna/inspectorIncidencia/styleInspectorIncidencia.css" rel="stylesheet">
 
@@ -57,14 +56,14 @@ pageEncoding="ISO-8859-1"%>
                             <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..." type="text" id="filtro-fallas" class="input-filtro-inspectorincidencia form-control form-control-sm" />
                             <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-fallas">      
                                 <li style="text-align: center;">
-                                    <button ng-click="seleccionTodos(filtrosInspector.fallas,true)" id="todo_filtro" type="button" class="btn btn-indigo btn-sm waves-effect waves-light">Todos</button>
-                                    <button ng-click="seleccionTodos(filtrosInspector.fallas,false)" id="ninguno_filtro" type="button" class="btn btn-indigo btn-sm waves-effect waves-light">Ninguno</button>
+                                    <button ng-click="seleccionTodos(filtrosInspector.fallas, true)" id="todo_filtro" type="button" class="btn btn-indigo btn-sm waves-effect waves-light">Todos</button>
+                                    <button ng-click="seleccionTodos(filtrosInspector.fallas, false)" id="ninguno_filtro" type="button" class="btn btn-indigo btn-sm waves-effect waves-light">Ninguno</button>
                                 </li>     
                                 <li class="elemento_menu dropdown-divider"></li>
-                                <li ng-repeat="filtroF in filtrosInspector.fallas " class="element-menu-filter"  class="element-menu-filter">
+                                <li ng-repeat="filtroFalla in filtrosInspector.fallas" class="element-menu-filter">
                                     <label class="dropdown-item form-check-inputfiltro">
-                                        <input ng-click=checkFiltroEstatus(filtroF) id="filtrotext-{{filtroF.id}}" class="form-check-input" type="checkbox" ng-model="filtroF.checkedOpcion" ng-checked="filtroF.checkedOpcion"  />
-                                        <span for="filtrotext-{{filtroF.id}}" class="dropdown-item item-text-filtro" href="#" ng-bind="filtroF.descripcion"></span>
+                                        <input id="filtrotext-{{filtroFalla.id}}" class="form-check-input" type="checkbox" ng-model="filtroFalla.checkedOpcion" ng-checked="filtroFalla.checkedOpcion"/>
+                                        <span for="filtrotext-{{filtroFalla.id}}" class="dropdown-item item-text-filtro" ng-bind="filtroFalla.descripcion"></span>
                                     </label>
                                 </li>
                             </ul>
@@ -76,14 +75,14 @@ pageEncoding="ISO-8859-1"%>
                             <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..." type="text" id="filtro-estatus-substatus" class="input-filtro-inspectorincidencia form-control form-control-sm" />
                             <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-estatus-substatus">      
                                 <li style="text-align: center;">
-                                    <button ng-click="seleccionTodosEstatus(filtrosInspector.statusFallas,true)" id="todo_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
-                                    <button ng-click="seleccionTodosEstatus(filtrosInspector.statusFallas,false)" id="ninguno_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
+                                    <button ng-click="seleccionTodos(filtrosInspector.statusFallas,true)" id="todo_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
+                                    <button ng-click="seleccionTodos(filtrosInspector.statusFallas,false)" id="ninguno_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
                                 </li>     
                                 <li class="elemento_menu dropdown-divider"></li>
-                                <li ng-repeat="filtroS in filtrosInspector.statusFallas" class="element-menu-filter" class="element-menu-filter">
+                                <li ng-repeat="filtroS in filtrosInspector.statusFallas" class="element-menu-filter">
                                     <label class="dropdown-item form-check-inputfiltro">
-                                        <input ng-click=checkFiltroEstatus(filtroS) id="filtrotext-{{filtroS.id}}" class="form-check-input" type="checkbox" ng-model="filtroS.checkedOpcion" ng-checked="filtroS.checkedOpcion"  />
-                                        <span  for="filtrotext-{{filtroS.id}}" class="dropdown-item item-text-filtro" href="#" ng-bind="filtroS.descripcion"></span>
+                                        <input id="filtrotext-{{filtroS.id}}" class="form-check-input" type="checkbox" ng-model="filtroS.checkedOpcion" ng-checked="filtroS.checkedOpcion"  />
+                                        <span for="filtrotext-{{filtroS.id}}" class="dropdown-item item-text-filtro" ng-bind="filtroS.descripcion"></span>
                                     </label>
                                 </li>
                             </ul>
@@ -97,7 +96,7 @@ pageEncoding="ISO-8859-1"%>
                     <div class="col-1 div-btn-busqueda" >
                         <button id="btn_consultar_incidencias" type="button"
                         class="btn btn-sm btn-primary waves-effect waves-light"
-                        ng-click="">
+                        ng-click="consultarIndicencias()">
                             <i class="fa fa-search"></i>
                         </button>
                     </div>
@@ -115,8 +114,8 @@ pageEncoding="ISO-8859-1"%>
                                     <th>FECHA</th>
                                     <th>CLUSTER</th>
                                     <th>FALLA</th>
-                                    <th><i class="fas fa-globe-americas" style="color:#808080"></i></th>
                                     <th><i class="far fa-window-restore" style="color:#808080"></i></th>
+                                    <th><i class="fas fa-globe-americas" style="color:#808080"></i></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -139,10 +138,13 @@ pageEncoding="ISO-8859-1"%>
             </div>
         </div>
 
+        <jsp:include page="modals/modalCluster.jsp"></jsp:include>
+        <jsp:include page="modals/modalDetalleIncidencia.jsp"></jsp:include>
+
     </body>
 
     <!-- LIBRERIAS -->
-     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=${googlkeyattrvar['gkeactok']}&libraries=geometry,places"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=${googlkeyattrvar['gkeactok']}&libraries=geometry,places"></script>
     <script src="${pageContext.request.contextPath}/resources/libraries/angularjs/js/angular.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/moment.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.min.js"></script>
@@ -169,4 +171,3 @@ pageEncoding="ISO-8859-1"%>
     
 
 </html>
-

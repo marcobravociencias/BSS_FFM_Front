@@ -13,8 +13,6 @@ public class ConstInspectorIncidencia  implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	@Value("${urlConsultarFallasInspectorIncidenciaPE}")
-	private String consultarFallasInspectorIncidenciaPE;
-	
-
+	@Value("${consultaOTTipoOrdenesPorUsuario}")
+	private String consultaOTTipoOrdenesPorUsuario;
 }

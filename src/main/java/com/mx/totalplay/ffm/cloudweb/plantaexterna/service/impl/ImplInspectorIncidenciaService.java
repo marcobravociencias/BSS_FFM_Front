@@ -41,32 +41,62 @@ public class ImplInspectorIncidenciaService implements InspectorIncidenciaServic
     }
     
 	@Override
-	public ServiceResponseResult consultarFallasInspectorIncidenciaPE(String params) {
+	public ServiceResponseResult consultarFallasInspectorPE(String params) {
 		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-		logger.info("ImplInspectorIncidencia.class [metodo = consultarFallas() ]\n" + jsonObject);
+		logger.info("ImplInspectorIncidencia.class [metodo = consultarFallasInspectorPE() ]\n" + jsonObject);
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
 		
 		String idPropietario = jsonObject.get("idPropietario").getAsString();
 		
-		String tokenAcces = principalDetail.getAccess_token();
-	    logger.info("consultarFallas ##+" + tokenAcces);
-	    String urlRequest = principalDetail.getDireccionAmbiente().concat(constInspectorIncidencia.getConsultarFallasInspectorIncidenciaPE());
+		String tokenAccess = principalDetail.getAccess_token();
+	    logger.info("consultarFallas ##+" + tokenAccess);
+	    String urlRequest = principalDetail.getDireccionAmbiente().concat(constInspectorIncidencia.getConsultaOTTipoOrdenesPorUsuario());
 	    logger.info("URL ##+" + urlRequest);
 	     
 	    Map<String, String> paramsRequestGet = new HashMap<String, String>();
-	       paramsRequestGet.put("idPropietario", idPropietario);
 	
-	    ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest, ServiceResponseResult.class, tokenAcces);
+	    ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest, ServiceResponseResult.class, tokenAccess);
+	     
+		return response;
+	}
+	
+	@Override
+	public ServiceResponseResult consultarStatusFallasInspectorPE(String params) {
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		logger.info("ImplInspectorIncidencia.class [metodo = consultarStatusFallasInspectorPE() ]\n" + jsonObject);
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		
+		String idPropietario = jsonObject.get("idPropietario").getAsString();
+		
+		String tokenAccess = principalDetail.getAccess_token();
+	    logger.info("consultarStatusFallas ##+" + tokenAccess);
+	    String urlRequest = principalDetail.getDireccionAmbiente().concat(constInspectorIncidencia.getConsultaOTTipoOrdenesPorUsuario());
+	    logger.info("URL ##+" + urlRequest);
+	     
+	    Map<String, String> paramsRequestGet = new HashMap<String, String>();
+	
+	    ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest, ServiceResponseResult.class, tokenAccess);
 	     
 		return response;
 	}
 
 	@Override
-	public DataTableResponse consultarIncidenciasInspectorPE(String params) {
-		// TODO Auto-generated method stub
-		return null;
+	public ServiceResponseResult consultarIncidenciasInspectorPE(String params) {
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		logger.info("ImplInspectorIncidencia.class [metodo = consultarIncidenciasInspectorPE() ] \n" + jsonObject);
+				
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String tokenAccess = principalDetail.getAccess_token();
+		logger.info("consultarIncidenciasInspectorPE ## "+tokenAccess);
+		
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constInspectorIncidencia.getConsultaOTTipoOrdenesPorUsuario());
+		logger.info("URL ##" + urlRequest);
+		
+		Map<String, String> paramsRequestGet = new HashMap<String, String>();
+		
+		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest, ServiceResponseResult.class, tokenAccess);
+		
+		return response;
 	}
-
-	
 
 }
