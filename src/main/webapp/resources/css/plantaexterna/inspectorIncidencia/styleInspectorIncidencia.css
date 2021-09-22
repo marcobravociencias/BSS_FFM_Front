@@ -9,8 +9,8 @@
 }
 
 .column-style-inspectorincidencia {
-  width: 136px !important;
-  padding-right: 0px !important;
+    width: 136px !important;
+    padding-right: 0px !important;
 }
 
 .columna-filtro-ind::after {
@@ -46,6 +46,22 @@ label.label-filter {
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.07),0 1px 2px 0 rgba(0,0,0,.05)!important;
 }
 
+.input-filtro-inspectorincidencia::placeholder {
+    font-weight: 400;
+    font-size: 1em;
+    color: #818181 !important;
+}
+
+.input-filtro-inspectorincidencia:focus {
+    -webkit-box-shadow: none;
+}
+
+.input-filtro-inspectorincidencia:hover {
+    background: #e4e6f2 !important;
+    cursor: pointer;
+    border-bottom: 2px solid #a4b1ff !important;
+}
+
 i.icono-noseleccion {
     color: #ff9f3b;
     display: inline-block;
@@ -71,7 +87,7 @@ i.icono-noseleccion {
     /* border-radius: 50% !important; */
     font-size: 0.64rem;
     border: 0px !important;
-  }
+}
 
 .datepicker .datepicker-switch:hover,   
 .datepicker .next:hover,
@@ -81,8 +97,9 @@ i.icono-noseleccion {
     color: white;
 }
 
-.dropdown-item.item-text-filtro.ng-binding {
-    display: contents;
+
+.element-menu-filter {
+    position: relative;
 }
 
 .element-menu-filter:hover .dropdown-menu {
@@ -95,33 +112,45 @@ i.icono-noseleccion {
 
 #todo_filtro,
 #ninguno_filtro {
-  width: 45%;
-  background: #1266f1;
-  color: white;
-  margin-top: 0.5em;
-  padding: 0;
+    width: 45%;
+    background: #1266f1;
+    color: white;
+    margin-top: 0.5em;
+    padding: 0;
 }
+/* 
+#todo_filtro,
+#ninguno_filtro {
+    width: 45%;
+    background: #1266f1;
+    color: white;
+} */
 
 label.form-check-inputfiltro {
-  display: flex;
+    display: flex;
 }
 
 .element-menu-filter {
-  position: relative;
+    position: relative;
 }
 
 .dropdown-item.item-text-filtro.ng-binding {
-  display: contents;
-  /* margin-left: 1em; */
-}
-
-.form-check-input {
-  margin-right: 0.5em;
+    display: contents;
+    /* margin-left: 1em; */
 }
 
 .dropdown-item {
-  padding: 0.25rem 1.5rem !important;
+    padding: 0.25rem 1.5rem !important;
 }
+
+.dropdown-item.item-text-filtro.ng-binding {
+    display: contents;
+
+}
+.form-check-input {
+    margin-right: 0.5em;
+}
+
 /* FILTROS INSPECTOR INCIDENCIA */
 
 /* CONTAINER INSPECTOR INCIDENCIA */
@@ -152,7 +181,7 @@ label.form-check-inputfiltro {
 }
 
 #mapaInspectorIncidencia {
-    height: 650px;
+    height: 550px;
     width: 100%;
     background-color: gray;
 }
@@ -174,8 +203,126 @@ thead#thead_incidencia tr th {
 }
 thead#thead_incidencia {
     font-weight: bold !important;
+    border-top: 4px solid transparent !important;
     border: 1px #ccc;
     font-family: "Montserrat" !important;
 }
+
+table.dataTable.no-footer {
+    border-bottom: transparent !important;
+    margin-top: 0 !important;
+}
+
+.table.dataTable {
+    border-collapse: collapse !important;
+}
+
+table.display.table.table-hover.table-striped.dataTable {
+    font-size: small;
+}
+
+/* PAGINATION */
+.pagination {
+    display: block !important;
+}
+  
+.pagination .paginate_button a.page-link {
+    color: #828080;
+    font-family: "Montserrat";
+    background-color: white !important;
+    box-shadow: none !important;
+}
+  
+.pagination .paginate_button.active {
+    background-color: gray !important;
+}
+  
+.pagination .previous a.page-link {
+    color: white !important;
+    font-size: 0;
+}
+  
+.pagination .next a.page-link {
+    color: white !important;
+    font-size: 0;
+}
+  
+.pagination .previous a:after {
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f104";
+    visibility: visible;
+    color: #828080 !important;
+    font-size: initial !important;
+}
+  
+.pagination .next a:before {
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f105";
+    visibility: visible;
+    color: #828080 !important;
+    font-size: initial !important;
+}
+  
+.dataTables_wrapper .dataTables_paginate .paginate_button a {
+    padding: 1px 1px 1px 1px;
+}
+  
+.pagination .paginate_button > .active {
+    border: #000000 !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: initial !important;
+}
+/* PAGINATION */
+
+/* MODAL DETALLE INCIDENCIA */
+#headers_tab .nav-link {
+    border-top-right-radius: 2rem !important;
+    border-bottom-right-radius: 2rem !important;
+}
+#headers_tab .nav-link.active {
+    border-top-right-radius: 2rem !important;
+    border-bottom-right-radius: 2rem !important;
+    background-color: #2196f3 !important;
+    /* box-shadow: 0 0 8px 0 #2196f3; */
+    border-bottom: 0 !important;
+    color: white !important;
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%),
+      0 1px 5px 0 rgb(0 0 0 / 20%) !important;
+    z-index: 1 !important;
+}
+  
+#modalDetalleIncidencia .modal-body {
+    padding-left: 0;
+}
+
+.container-fluid .incidencia-content {
+    padding: 0;
+    display: flex;
+    /* border-bottom:1px solid #e1e1e1 */
+}
+
+.container-text-title-detalle {
+    width: 30%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+span .text-title-incidencia {
+    font-weight: bold;
+    font-size: 0.8em;
+    color: #303030;
+}
+
+span .text-content-incidencia {
+    font-size: 0.8em;
+    color: #303030;
+}
+/* MODAL DETALLE INCIDENCIA */
+
 /* TABLE INCIDENCIAS */
 /* CONTAINER INSPECTOR INCIDENCIA */

@@ -5,8 +5,10 @@ import com.mx.totalplay.ffm.cloudweb.utilerias.model.ServiceResponseResult;
 
 public interface InspectorIncidenciaService {
 	
-	public ServiceResponseResult consultarFallasInspectorIncidenciaPE(String params);
+	public ServiceResponseResult consultarFallasInspectorPE(String params);
 	
-	public DataTableResponse consultarIncidenciasInspectorPE(String params);
+	public ServiceResponseResult consultarStatusFallasInspectorPE(String params);
+	
+	public ServiceResponseResult consultarIncidenciasInspectorPE(String params);
 
 }
