@@ -1,3 +1,8 @@
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+	color: #fff;
+	background-color: #834594;
+}
+
 .span-consulta {
     color: #9d9d9d;
     font-family: 'Montserrat' !important;
@@ -287,6 +292,27 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
 .select_consulta{
     width:100% !important;
 }
+
+.select_consulta>.dropdown-menu>.inner, .puesto_select>.dropdown-menu>.inner, .region_select>.dropdown-menu>.inner, .ciudad_select>.dropdown-menu>.inner {
+    padding-inline-start: 0px;
+}
+
+.select_consulta{
+	box-shadow:none;
+}
+
+.select_consulta {
+    padding: 0;
+}
+
+.select_consulta .btn-group.btn-group-sm.btn-block{
+	box-shadow:none !important;
+}
+.select_consulta  .dropdown-toggle:after {
+      color:#8f8f8f;
+      margin-left:-.2em !important;
+}
+
 p.title_consulta {
     margin-bottom: .2em;
     color: #7c7c7d;

@@ -25,8 +25,11 @@
         <title>FFM Total play</title>
     </head>
     <body id="idBody" ng-controller="despachoCentralController">
+    
 		<jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
-		<jsp:include page="./modals/modalArbolGeografiaConsulta.jsp"></jsp:include> 
+		<jsp:include page="./modals/modalArbolGeografiaConsulta.jsp"></jsp:include>
+		<jsp:include page="./modals/modalConsultaDetalleOT.jsp"></jsp:include> 
+		
         <div class="container-fluid">
             <div class="row">
 				<div class="col-md-12">
@@ -40,14 +43,14 @@
 							<div class="col-md-1" style="padding-right: 0em; padding-left: .1em;">
 								<label class="span-consulta">Status</label>
 								<div class="select_content form-group borderFilter bord_style" id="select_opt" style="height: 30px;">
-									<select id="status_select_consulta" class="selectpicker form-control-sm select_consulta filter_conf" multiple data-actions-box="true">
+									<select id="status_select_consulta" class="selectpicker form-control-sm select_consulta" multiple data-actions-box="true">
                                     </select>
 						  		</div>
 							</div>
 							<div class="col-md-1" style="padding-right: 0em; padding-left: .1em;">
 								<label class="span-consulta">Estado</label>
 								<div class="select_content form-group borderFilter bord_style" id="select_opt" style="height: 30px;">
-									<select id="estado_select_consulta" class="selectpicker form-control-sm select_consulta filter_conf" multiple data-actions-box="true">
+									<select id="estado_select_consulta" class="selectpicker form-control-sm select_consulta" multiple data-actions-box="true">
                                     </select>
 						  		</div>
 							</div>
@@ -90,7 +93,7 @@
 							<div class="col-md-1" >
 								<b id="cantidad_notificaciones" style="z-index:2;position: absolute;font-size: .6em;" class="badge red accent-3">1</b>
 								<div class="tooltip-btn">
-									<button style="padding: .7em 1.3em;background: #0cabf3 ;"  type="button" class="btn btn-sm btn-primary" id="btn_notificaciones_integrador"><i class="fa fa-bell" style="color: #FFFFFF;"></i></button>
+									<button style="padding: .7em 1.3em;background: #0cabf3;" type="button" class="btn btn-sm btn-primary" id="btn_notificaciones_integrador"><i class="fa fa-bell" style="color: #FFFFFF;"></i></button>
 								</div>
 							</div>
 						</div>
@@ -101,45 +104,13 @@
 			<div class="row" style="margin-top: 0.5em;">
 				<div class="col-md-8">
 					<table id="table_corte_masivo" class="table">
-						<thead id="thead_tabla_CorteMasivo">
-							<tr>
-								<th>OT</th>
-								<th>TS</th>
-								<th>TSD</th>
-								<th>N.C.</th>
-								<th>DISTRITO</th>
-								<th>TIEMPO ACTIVA</th>
-								<th>ESTADO</th>
-								<th>FECHA CORTE</th>
-								<th>DETALLE</th>
-								<th>ACCI&Oacute;N</th>
-							</tr>
-						</thead>
+
 					</table>
 				</div>
 				<div class="col-4">		
 					<div class="card map-card mb-4">
 						<div id="map-container-google-1" class="map-container" style="height: 500px">
 							<div id="map_corte_masivo" style="width:100%;height:100%;"></div>
-						</div>
-					    <div id="content_mapa_estatus"  class="card-body px-0 ">
-							<div class="white px-4 pb-4 pt-3-5">
-						    	<h5 id="conteo_cortes_masivos" class="card-title h5 living-coral-text">Ninguna ot encontrada</h5>			      
-						        <div class="divider"></div>					      			      
-							    <table id="table_status_corte" class="table table-borderless">
-							   		<thead id="thead_table_status_corte">
-										<tr>
-										    <th style="width: 80%;">Estado</th>
-										    <th style="width: 20%;">Total</th>
-										</tr>
-									</thead>
-									<tbody>
-							        	<tr>
-											<td class="sin_datos" colspan="2">Sin informaciónn</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
 						</div>
 					</div>
 				</div>
@@ -148,6 +119,7 @@
 	</body>
 
     <!-- LIBRERIAS -->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=${googlkeyattrvar['gkeactok']}&libraries=geometry,places"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/selectPicker/js/popper.min.js"></script>
@@ -167,7 +139,8 @@
     <!-- ARCHIVOS JS -->
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantaexterna/despachoCentralPe/despachoCentralPeController.js" charset="UTF-8"></script>
-    
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantaexterna/despachoCentralPe/funcionMapsOT.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/geoxml3/geoxml3.js" charset="UTF-8"></script>
 
     
 
