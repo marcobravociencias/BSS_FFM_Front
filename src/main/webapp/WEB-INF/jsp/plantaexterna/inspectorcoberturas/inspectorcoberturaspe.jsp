@@ -220,7 +220,7 @@
     <script type="text/javascript"
         src="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/js/mdb.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-ui.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/libraries/popper\popper.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/libraries/popper/popper.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/libraries/bootstrap/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/jquery.dataTables.js"></script>
     <script

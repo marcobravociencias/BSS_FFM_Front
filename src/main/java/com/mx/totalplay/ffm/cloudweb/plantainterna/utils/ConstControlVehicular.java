@@ -23,22 +23,28 @@ public class ConstControlVehicular implements Serializable{
 	@Value("${consultarEstatusControlVehicular}") 
 	private String consultarEstatusControlVehicular;
 
-	@Value("${crearVehiculo}") 
-	private String crearVehiculo;
-
-	@Value("${consultarVehiculoPlaca}")
-	private String consultarVehiculoPlaca;
-	
-	@Value("${consultarVehiculoUnico}")
-	private String consultarVehiculoUnico;
-	
-	@Value("${consultarVehiculos}")
-	private String consultarVehiculos;
-	
-	@Value("${editarVehiculo}")
-	private String editarVehiculo;
-	
 	@Value("${consultarEncierrosControlVehicular}")
 	private String consultarEncierrosControlVehicular;
+
+	@Value("${crearVehiculoCV}") 
+	private String crearVehiculoCV;
+
+	@Value("${consultarVehiculoPlacaCV}")
+	private String consultarVehiculoPlacaCV;
+	
+	@Value("${consultarVehiculoUnicoCV}")
+	private String consultarVehiculoUnicoCV;
+	
+	@Value("${consultarVehiculosCV}")
+	private String consultarVehiculosCV;
+	
+	@Value("${editarVehiculoCV}")
+	private String editarVehiculoCV;
+	
+	@Value("${consultarHistorialCV}")
+	private String consultarHistorialCV;
+
+	@Value("${eliminarVehiculoCV}")
+	private String eliminarVehiculoCV;
 	
 }

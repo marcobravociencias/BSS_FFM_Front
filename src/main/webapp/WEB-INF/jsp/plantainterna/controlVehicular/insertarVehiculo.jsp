@@ -10,7 +10,7 @@
         </li>
         <li class="nav-item" role="imagenes">
             <a class="nav-link pills" id="pills-imagenes-tab" data-toggle="pill" href="#pills-imagenes" role="tab"
-                aria-controls="pills-imageens" aria-selected="false">Imagenes</a>
+                aria-controls="pills-imagenes" aria-selected="false">Imagenes</a>
         </li>
         <li class="nav-item" role="resumen" onclick="getNameText()">
             <a class="nav-link pills" id="pills-resumen-tab" data-toggle="pill" href="#pills-resumen" role="tab"
@@ -75,8 +75,8 @@
                         <select class="form-control form-control-sm custom-select" id="combustible"
                             ng-model="vehiculo.combustible">
                             <option value="" selected>NO HAY SELECCI&Oacute;N</option>
-                            <option value="GASOLINA" selected>Gasolina</option>
-                            <option value="DIESEL" selected>Diesel</option>
+                            <option value="GASOLINA">GASOLINA</option>
+                            <option value="DIESEL">DIESEL</option>
                         </select>
                     </div>
                     <div class="col-3 form-group">
@@ -136,7 +136,7 @@
                         <label>N&uacute;m. de Tarjeta de Circulaci&oacute;n
                         </label>
                         <input type="text" class="form-control form-control-sm" id="numTarjetaC"
-                            ng-model="vehiculo.detalle.tarjetaCirculacion" autocomplete="off" />
+                            ng-model="vehiculo.detalle.tarjetaCirculacion" capitalize autocomplete="off" />
                     </div>
                 </div>
                 <div class="form-row">
@@ -171,7 +171,7 @@
                         <label>N&uacute;m. Tarjeta Gasolina
                         </label>
                         <input type="text" class="form-control form-control-sm" id="numTarjetaG"
-                            ng-model="vehiculo.detalle.tarjetaGasolina" autocomplete="off" />
+                            ng-model="vehiculo.detalle.tarjetaGasolina" capitalize autocomplete="off" />
                     </div>
                     <div class="col-3 form-group">
                         <label>Clave GPS </label>
@@ -195,11 +195,11 @@
                         <select class="form-control form-control-sm custom-select" id="engomado"
                             ng-model="vehiculo.detalle.engomado">
                             <option value="" selected>NO HAY SELECCI&Oacute;N</option>
-                            <option value="rosa" selected>Rosa</option>
-                            <option value="amarillo" selected>Amarillo</option>
-                            <option value="rojo" selected>Rojo</option>
-                            <option value="verde" selected>Verde</option>
-                            <option value="azul" selected>Azul</option>
+                            <option value="ROSA">ROSA</option>
+                            <option value="AMARILLO">AMARILLO</option>
+                            <option value="ROJO">ROJO</option>
+                            <option value="VERDE">VERDE</option>
+                            <option value="AZUL">AZUL</option>
                         </select>
                     </div>
                     <div class="col-3 form-group">
@@ -207,11 +207,11 @@
                         <select class="form-control form-control-sm custom-select" id="holograma"
                             ng-model="vehiculo.detalle.holograma">
                             <option value="" selected>NO HAY SELECCI&Oacute;N</option>
-                            <option value="doble cero" selected>Doble cero</option>
-                            <option value="cero" selected>Cero</option>
-                            <option value="uno" selected>Uno</option>
-                            <option value="dos" selected>Dos</option>
-                            <option value="foraneo" selected>Foraneo</option>
+                            <option value="DOBLE CERO">DOBLE CERO</option>
+                            <option value="CERO">CERO</option>
+                            <option value="UNO">UNO</option>
+                            <option value="DOS">DOS</option>
+                            <option value="FORANEO">FORANEO</option>
                         </select>
                     </div>
                     <div class="col-3 form-group">
@@ -259,7 +259,7 @@
                     <div class="col-12 form-group">
                         <label>Comentarios </label>
                         <textarea class="form-control form-control-sm" id="comentarios"
-                            ng-model="vehiculo.comentarios"></textarea>
+                            ng-model="vehiculo.detalle.comentarios"></textarea>
                     </div>
                 </div>
                 <h5 class="fs-title"><i class="fas fa-exclamation-circle me-2" style="color: orange;"></i> Los datos de
@@ -406,7 +406,6 @@
                         <td class="tableTextTitle">* N&uacute;m chasis: </td>
                         <td class="tableText">{{vehiculo.detalle.numeroChasis ? vehiculo.detalle.numeroChasis :
                             'Sin asignar'}}</td>
-
                     </tr>
                     <tr>
                         <td class="tableTextTitle">* Engomado: </td>
@@ -419,11 +418,16 @@
                         <td class="tableTextTitle">* Ubicaci&oacute;n CDO: </td>
                         <td class="tableText">{{vehiculoText.encierroText ? vehiculoText.encierroText : 'Sin asignar'}}
                         </td>
-
                     </tr>
                     <tr>
                         <td class="tableTextTitle">* Rotulado: </td>
                         <td class="tableText">{{vehiculoText.rotulado ? 'Si' : 'No'}}</td>
+                        <td class="tableTextTitle" ng-if="vehiculo.estatus">* Estatus: </td>
+                        <td class="tableText" ng-if="vehiculo.estatus">{{vehiculo.estatus ? vehiculo.estatus : 'BAJA'}}</td>
+                    </tr>
+                    <tr>
+                        <td class="tableTextTitle">* Comentarios: </td>
+                        <td class="tableText" colspan="5">{{vehiculo.detalle.comentarios ? vehiculo.detalle.comentarios : 'Sin asignar'}}</td>
                     </tr>
                 </table>
                 <div class="row imagenes">
@@ -447,8 +451,6 @@
                             class="imgResumen" />
                     </div>
                 </div>
-
-
                 <h5 class="fs-title" style="margin-top: 1em;"> <i class="fas fa-exclamation-circle me-2"
                         style="color: orange;"></i>
                     Verifica la

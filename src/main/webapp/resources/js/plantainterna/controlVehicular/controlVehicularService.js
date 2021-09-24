@@ -89,10 +89,11 @@ app.service("controlVehicularService", function($http) {
         });
     };
 
-    this.consultarVehiculos = function () {
+    this.consultarVehiculos = function (params) {
         return $http({
-            method: "get",
+            method: "post",
             url: "req/consultarVehiculos",
+            data: JSON.stringify(params),
             headers: {'Content-Type': "application/json; charset=utf-8"},
             transformRequest: angular.identity
         });
@@ -112,6 +113,26 @@ app.service("controlVehicularService", function($http) {
         return $http({
             method: "post",
             url: "req/consultarEncierros",
+            data: JSON.stringify(params),
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
+        });
+    };
+
+    this.consultarHistorialVehicular = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarHistorialVehiculo",
+            data: JSON.stringify(params),
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
+        });
+    };
+
+    this.eliminarVehiculo = function (params) {
+        return $http({
+            method: "post",
+            url: "req/eliminarVehiculo",
             data: JSON.stringify(params),
             headers: {'Content-Type': "application/json; charset=utf-8"},
             transformRequest: angular.identity

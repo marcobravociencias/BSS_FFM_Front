@@ -67,7 +67,7 @@
                             <ul class="nav nav-tabs" id="myTabVehiculo" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active" id="consulta-tab" data-toggle="tab" href="#consulta"
-                                        role="tab" aria-controls="consulta" onclick="resetAll()"
+                                        role="tab" aria-controls="consulta" onclick="resetAllSearch()"
                                         aria-selected="true">Consultar
                                         Veh&iacute;culos</a>
                                 </li>
@@ -91,7 +91,6 @@
                                     aria-labelledby="consulta-tab">
                                     <jsp:include page="./consultarVehiculo.jsp"></jsp:include>
                                 </div>
-
                             </div>
                         </div>
                     </div>
