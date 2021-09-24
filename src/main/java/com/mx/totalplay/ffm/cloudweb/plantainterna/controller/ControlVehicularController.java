@@ -95,10 +95,10 @@ public class ControlVehicularController {
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 
-	@GetMapping("/consultarVehiculos") 
-	public ResponseEntity<?> consultarVehiculos() {
-		logger.info("##### CONSULTANDO consultarVehiculos");
-		ServiceResponseResult response = controlVehicularService.consultarVehiculos();
+	@PostMapping("/consultarVehiculos") 
+	public ResponseEntity<?> consultarVehiculos(@RequestBody String params) {
+		logger.info("##### CONSULTANDO consultarVehiculos:" + params);
+		ServiceResponseResult response = controlVehicularService.consultarVehiculos(params);
 		if (response.getResult() instanceof Integer){
 			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
 		}
@@ -119,6 +119,26 @@ public class ControlVehicularController {
 	public ResponseEntity<?> consultarEncierros(@RequestBody String params) {
 		logger.info("#### Metodo consultarEncierros: " + params);
 		ServiceResponseResult response = controlVehicularService.consultarEncierros(params);
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+
+	@PostMapping("/consultarHistorialVehiculo")
+	public ResponseEntity<?> consultarHistorialVehiculo(@RequestBody String params) {
+		logger.info("#### Metodo consultarHistorialVehiculo: " + params);
+		ServiceResponseResult response = controlVehicularService.consultarHistorialVehiculo(params);
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+
+	@PostMapping("/eliminarVehiculo")
+	public ResponseEntity<?> eliminarVehiculo(@RequestBody String params) {
+		logger.info("#### Metodo eliminarVehiculo: " + params);
+		ServiceResponseResult response = controlVehicularService.eliminarVehiculo(params);
 		if (response.getResult() instanceof Integer){
 			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
 		}

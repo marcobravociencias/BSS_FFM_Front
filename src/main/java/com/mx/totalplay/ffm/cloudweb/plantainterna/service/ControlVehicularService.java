@@ -12,7 +12,9 @@ public interface ControlVehicularService {
     public ServiceResponseResult crearVehiculo(String params);
     public ServiceResponseResult consultarVehiculoPlaca(String params);
     public ServiceResponseResult consultarVehiculoUnico(String params);
-    public ServiceResponseResult consultarVehiculos();
+    public ServiceResponseResult consultarVehiculos(String params);
     public ServiceResponseResult editarVehiculo(String params);
+    public ServiceResponseResult consultarHistorialVehiculo(String params);
+    public ServiceResponseResult eliminarVehiculo(String params);
    
 }

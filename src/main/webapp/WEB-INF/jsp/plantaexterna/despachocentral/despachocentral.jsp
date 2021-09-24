@@ -15,7 +15,7 @@
         <link href="${pageContext.request.contextPath}/resources/libraries/jstree/default/style.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/sweetalert/css/sweetalert2.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/jstree/themes/proton/style.css" rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/libraries/datePicker/css/bootstrap-datepicker3.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/libraries/datePicker/css/bootstrap-datepicker3_1.9.0.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" rel="stylesheet" />
         
@@ -40,62 +40,77 @@
 				<div class="col-md-12">
 					<div id="" class="container-fluid">
 						<div class="row" id="">
-							<div class="col-md-1" style="padding-right: 0em; padding-left: .1em;">
-								<label class="span-consulta">Status</label>
-								<div class="select_content form-group borderFilter bord_style" id="select_opt" style="height: 30px;">
-									<select id="status_select_consulta" class="selectpicker form-control-sm select_consulta" multiple data-actions-box="true">
-                                    </select>
-						  		</div>
-							</div>
-							<div class="col-md-1" style="padding-right: 0em; padding-left: .1em;">
-								<label class="span-consulta">Estado</label>
-								<div class="select_content form-group borderFilter bord_style" id="select_opt" style="height: 30px;">
-									<select id="estado_select_consulta" class="selectpicker form-control-sm select_consulta" multiple data-actions-box="true">
-                                    </select>
-						  		</div>
-							</div>
-							<div class="col-md-1 borderFilter" id="fechaInicio" data-step="12">
-								<label class="span-consulta">Fecha inicial</label>
-								<div class="input-group" style="height: 30px;">
-									<input style="height: 30px;" type="date" class="form-control filter_conf" id="fecha_inicio_corte" aria-describedby="basic-addon1">
-								</div>
-							</div>
-							<div class="col-md-1 borderFilter" id="fechaFin">
-								<label class="span-consulta">Fecha fin</label>
-								<div class="input-group" style="height: 30px;">
-									<input style="height: 30px;" type="date" class="form-control filter_conf" id="fecha_fin_corte" aria-describedby="basic-addon1">
-								</div>
-							</div>
-							<div class="col-md-1 borderFilter bord_style" id="contcidades">
-								<label class="span-consulta">Cl&uacute;sters</label>
-								<div class="input-group">
-									<span class="input-group-addon" id="basic-addon1"></span>
-									<button type="button" style="width: 100%" ng-click="abrirModalArbolGeografiaConsulta()" class="filtro_conj btn btn-secondary btn-Clusters filter_conf input_consulta">Cl&uacute;sters</button>
-								</div>
-							</div>
-							<div class="col-md-1 borderFilter border_conf" id="">
-								<label class="span-consulta">TICKET SF</label>
-								<input type="text" placeholder="TICKET SF" id="ticket_salesforce" class="ind_filtro f_size_8  form-control filter_conf bord_style input_consulta" >
-							</div>
-							<div class="col-md-1 borderFilter border_conf" id="">
-								<label class="span-consulta">TICKET SD</label>
-								<input type="text" placeholder="TICKET SD" id="service_desk" class="ind_filtro f_size_8  form-control filter_conf bord_style input_consulta" >
-							</div>
-							<div class="col-md-1 borderFilter border_conf" >
-								<label class="span-consulta">OT</label>
-								<input type="text" placeholder="OT" id="id_ot_corte_masivo" class="ind_filtro f_size_8  form-control filter_conf bord_style input_consulta" >
-							</div>
-							<div class="col-md-1">
-								<span class="tooltip-btn">
-									<button style="height: 30px; width: 60px;" id="btn_busqueda_corte_masivo" ng-click="consultarOTs()" type="button" class="btn btn-sm  btn-primary btn_busqueda_bg"><i class="fa fa-search" style="color: #FFFFFF;"></i></button>
-								</span>
-							</div>
-							<div class="col-md-1" >
-								<b id="cantidad_notificaciones" style="z-index:2;position: absolute;font-size: .6em;" class="badge red accent-3">1</b>
-								<div class="tooltip-btn">
-									<button style="padding: .7em 1.3em;background: #0cabf3;" type="button" class="btn btn-sm btn-primary" id="btn_notificaciones_integrador"><i class="fa fa-bell" style="color: #FFFFFF;"></i></button>
-								</div>
-							</div>
+							
+							<div class="col-md-1 column-style-despacho-central columna-filtro-ind">
+<!-- 		                        <i class="icono-noseleccion fas fa-exclamation-circle me-2" title="No se encontraron status"></i> -->
+		                        <label class="label-filter">Status</label>
+		                        <div class="dropdown">
+		                            <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..." type="text" id="filtro-status" class="input-filtro-status form-control form-control-sm" />
+		                            <ul class="dropdown-menu drop-down-filters">      
+		                                <li style="text-align: center;">
+		                                    <button ng-click="seleccionTodos(listaStatus, true)" id="todo_filtro" type="button" class="btn btn-indigo btn-sm waves-effect waves-light">Todos</button>
+		                                    <button ng-click="seleccionTodos(listaStatus, false)" id="ninguno_filtro" type="button" class="btn btn-indigo btn-sm waves-effect waves-light">Ninguno</button>
+		                                </li>     
+		                                <li class="elemento_menu dropdown-divider"></li>
+		                                <li ng-repeat="listStat in listaStatus" class="element-menu-filter">
+		                                    <label class="dropdown-item form-check-inputfiltro">
+		                                        <input id="" class="form-check-input" type="checkbox" ng-model="listStat.checkedOpcion" ng-checked="listStat.checkedOpcion" />
+		                                        <span for="" class="dropdown-item item-text-filtro" ng-bind="listStat.nombre"></span>
+		                                    </label>
+		                                </li>
+		                            </ul>
+		                         </div>
+		                    </div>
+		                    <div class="col-md-1 column-style-despacho-central columna-filtro-ind">
+<!-- 		                        <i class="icono-noseleccion fas fa-exclamation-circle me-2" title="No se encontraron status"></i> -->
+		                        <label class="label-filter">Estado</label>
+		                        <div class="dropdown">
+		                            <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..." type="text" id="filtro-status" class="input-filtro-status form-control form-control-sm" />
+		                            <ul class="dropdown-menu drop-down-filters">      
+		                                <li style="text-align: center;">
+		                                    <button ng-click="seleccionTodos(listaEstados, true)" id="todo_filtro" type="button" class="btn btn-indigo btn-sm waves-effect waves-light">Todos</button>
+		                                    <button ng-click="seleccionTodos(listaEstados, false)" id="ninguno_filtro" type="button" class="btn btn-indigo btn-sm waves-effect waves-light">Ninguno</button>
+		                                </li>     
+		                                <li class="elemento_menu dropdown-divider"></li>
+		                                <li ng-repeat="listEstado in listaEstados" class="element-menu-filter">
+		                                    <label class="dropdown-item form-check-inputfiltro">
+		                                        <input id="" class="form-check-input" type="checkbox" ng-model="listEstado.checkedOpcion" ng-checked="listEstado.checkedOpcion"/>
+		                                        <span for="" class="dropdown-item item-text-filtro" ng-bind="listEstado.nombre"></span>
+		                                    </label>
+		                                </li>
+		                            </ul>
+		                         </div>
+		                    </div>
+		                    
+		                    <div class="col-md-1 columna-filtro-ind" style="width: 110px; padding-right: 0px !important;">
+		                        <label for="" class="label-filter">Fecha inicial</label>
+		                        <input type="text" id="fecha_inicio_corte" class="datepicker input-filtro-status form-control form-control-sm" style="width: 100px;" />
+		                    </div>
+		                    <div class="col-md-1 columna-filtro-ind" style="width: 110px; padding-right: 0px !important;">
+		                        <label for="" class="label-filter">Fecha fin</label>
+		                        <input type="text" id="fecha_fin_corte" class="datepicker input-filtro-status form-control form-control-sm" style="width: 100px;" />
+		                    </div>
+							<div class="col-md-1 columna-filtro-ind" style="width: 110px; padding-right: 0px !important;">
+<!-- 		                        <i class="icono-noseleccion fas fa-exclamation-circle me-2" title="No se encontraron catalogo de Geografia" ng-show="banderaErrorGeografia"></i> -->
+		                        <label for="cluster" class="label-filter">Cl&uacute;sters</label>
+		                        <input readonly placeholder="Seleccione..." type="text" id="cluster" 
+		                        class="input-filtro-status form-control form-control-sm" ng-click="abrirModalArbolGeografiaConsulta()">
+		                    </div>
+		                    <div class="col-md-1" style="width: 110px; padding-right: 0px !important;">
+		                        <label for="" class="label-filter">TICKET SF</label>
+		                        <input type="text" id="ticket_salesforce" class="input-filtro-status form-control form-control-sm" placeholder="TICKET SF" style="width: 100px;" />
+		                    </div>
+							<div class="col-md-1" style="width: 110px; padding-right: 0px !important;">
+		                        <label for="" class="label-filter">TICKET SD</label>
+		                        <input type="text" id="service_desk" class="input-filtro-status form-control form-control-sm" placeholder="TICKET SD" style="width: 100px;" />
+		                    </div>
+		                    <div class="col-md-1" style="width: 110px; padding-right: 0px !important;">
+		                        <label for="" class="label-filter">OT</label>
+		                        <input type="text" id="id_ot_corte_masivo" class="input-filtro-status form-control form-control-sm" placeholder="OT" style="width: 100px;" />
+		                    </div>
+		                    <div class="col-md-1 div-btn-busqueda" >
+		                        <button id="btn_busqueda_corte_masivo" type="button" class="btn btn-sm btn-primary waves-effect waves-light" ng-click="consultarOTs()"><i class="fa fa-search"></i></button>
+		                    </div>
 						</div>
 					</div>
 				</div>
@@ -103,14 +118,34 @@
 			
 			<div class="row" style="margin-top: 0.5em;">
 				<div class="col-md-8">
-					<table id="table_corte_masivo" class="table">
+					<table id="table-ot-pe" class="table">
 
 					</table>
 				</div>
-				<div class="col-4">		
+				<div class="col-md-4">		
 					<div class="card map-card mb-4">
 						<div id="map-container-google-1" class="map-container" style="height: 500px">
 							<div id="map_corte_masivo" style="width:100%;height:100%;"></div>
+						</div>
+						<div id="content_mapa_estatus"  class="card-body px-0 ">
+							<div class="white px-4 pb-4 pt-3-5">
+								<h5 id="conteo_cortes_masivos" class="card-title h5 living-coral-text">Ninguna ot encontrada</h5>			      
+								<div class="divider"></div>			      			      
+								<table id="table_status_corte" class="table" style="display: none;">
+							    	<thead id="thead_table_status_corte">
+										<tr>
+											<th style="width: 80%;">Estado</th>
+											<th style="width: 20%;">Total</th>
+										</tr>
+									</thead>
+							       	<tbody class="">
+							       		<tr ng-repeat="cont in resumenContadorEstadosOTs">
+							       			<td>{{cont.nombre}}</td>
+							       			<td>{{cont.contador}}</td>
+							       		</tr>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -132,7 +167,7 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/selectPicker/js/bootstrap-select.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/selectPicker/js/i18n/defaults-es_ES.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jstree/jstree.min.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker_1.9.0.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker.es.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/js/mdb.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>

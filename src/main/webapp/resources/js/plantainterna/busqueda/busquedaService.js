@@ -183,5 +183,15 @@ app.service("busquedaService", function($http){
         })
     }
 
+    this.consultarEstatusOs = function(params) {
+        return $http({
+            method: "post",
+            url: "req/consultarIps",
+            data: JSON.stringify(params),
+            headers: { 'Content-Type': undefined },
+            transformRequest: angular.identity
+        })
+    }
+
 
 })

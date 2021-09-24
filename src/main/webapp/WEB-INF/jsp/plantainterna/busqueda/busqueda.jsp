@@ -429,7 +429,7 @@
     
                             </div>
                             <div class="col-2">
-                                <a ng-if="os.idOt" href="" class="link-consultardetalle" ng-click="consultarEstatusOs(os.idOt)">
+                                <a ng-if="os.idOt" href="" class="link-consultardetalle" ng-click="consultaEvidencias(os.idOt, 'Validada')">
                                     <span class="text-table-click">Descargar</span>
                                 </a>
                             </div>
@@ -539,5 +539,6 @@
 <script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/generic/directives.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/plantainterna/busqueda/activarController.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/plantainterna/busqueda/arrayEvidencia.js"></script>
 
 </html>

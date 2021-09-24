@@ -34,6 +34,7 @@ app.controller('busquedaController', ['$scope', 'busquedaService', 'genericServi
                 swal.close();
                 if (result.data.respuesta) {
                     if (result.data.result) {
+                        $scope.historial = [];
                         $scope.resultBusqueda = result.data.result;
                         $scope.showSearch = true;
                     } else {
@@ -748,6 +749,152 @@ app.controller('busquedaController', ['$scope', 'busquedaService', 'genericServi
         } else {
             $scope.mostrarIps = false;
         }
+    }
+
+    $scope.imagenValidar;
+    $scope.imagenValidarLista = [];
+    $scope.idOt = "";
+    $scope.consultaEvidencias = function (ot, estatus) {
+        $scope.consultarEvidenciaValidada(ot);
+    }
+
+    $scope.consultarEvidenciaValidada = function (ot) {
+        for (let index = 0; index < $scope.imagenValidarLista.length; index++) {
+            document.getElementById('radioAceptar' + index).checked = false;
+            document.getElementById('radioRechazar' + index).checked = false;
+        }
+        document.getElementById('contentRadio').style.display = 'block';
+        document.getElementById('descargarEvidencia').style.display = 'block';
+        document.getElementById('guardarValidacionCheck').style.display = 'block';
+        document.getElementById('cerrarModalValidacion').style.display = 'none';
+        document.getElementById('radioAceptar').checked = false;
+        document.getElementById('radioRechazar').checked = false;
+        document.getElementById('evidenciaTotal').innerHTML = 0;
+        document.getElementById('evidenciaAcaptadas').innerHTML = 0;
+        document.getElementById('evidenciaRechazada').innerHTML = 0;
+        document.getElementById('contentEvidencia').innerHTML = '';
+        $("#descargarEvidencia").attr('href', 'descargarEvidenciaCheck?ot=' + ot)
+        //$('#modal-evidencia-busqueda').modal('show');
+        $scope.pintarEvidenciaModal(arrayEvidencia.result);
+        document.getElementById('evidenciaTotal').innerHTML = arrayEvidencia.result.length;
+        //$scope.pintarDocumentoValidado(response.data.result);
+        //document.getElementById('evidenciaTotal').innerHTML = response.data.result.length;
+       /*  var params = new FormData();
+        params.append("paramsRequestEvidencia.idOrden", ot); //
+        busquedaService.consultarDocumentosValidado(params).then(function success(response){
+            if (response.data.success) {
+                if (response.data.result !== undefined) {
+                    if (response.data.result.result === '1') {
+                        mostrarMensajeErrorAlertAjax(response.data.result.resultDescription)
+                        swal.close()
+                    } else {
+                        $("#descargarEvidencia").attr('href', 'descargarEvidenciaCheck?ot=' + ot)
+                        $scope.pintarDocumentoValidado(response.data.result);
+                        document.getElementById('evidenciaTotal').innerHTML = response.data.result.length;
+                    }
+                } else {
+                    mostrarMensajeErrorAlertAjax("Error al consultar imagenes")
+                    swal.close()
+                }
+            } else {
+                mostrarMensajeErrorAlertAjax("Error en el servidor")
+                swal.close()
+            }
+
+        },function error(response){
+                console.log(response);
+        }); */
+    }
+
+    $scope.pintarEvidenciaModal = function (data) {
+        let Base64 = { _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=", encode: function (e) { var t = ""; var n, r, i, s, o, u, a; var f = 0; e = Base64._utf8_encode(e); while (f < e.length) { n = e.charCodeAt(f++); r = e.charCodeAt(f++); i = e.charCodeAt(f++); s = n >> 2; o = (n & 3) << 4 | r >> 4; u = (r & 15) << 2 | i >> 6; a = i & 63; if (isNaN(r)) { u = a = 64 } else if (isNaN(i)) { a = 64 } t = t + this._keyStr.charAt(s) + this._keyStr.charAt(o) + this._keyStr.charAt(u) + this._keyStr.charAt(a) } return t }, decode: function (e) { var t = ""; var n, r, i; var s, o, u, a; var f = 0; e = e.replace(/[^A-Za-z0-9\+\/\=]/g, ""); while (f < e.length) { s = this._keyStr.indexOf(e.charAt(f++)); o = this._keyStr.indexOf(e.charAt(f++)); u = this._keyStr.indexOf(e.charAt(f++)); a = this._keyStr.indexOf(e.charAt(f++)); n = s << 2 | o >> 4; r = (o & 15) << 4 | u >> 2; i = (u & 3) << 6 | a; t = t + String.fromCharCode(n); if (u != 64) { t = t + String.fromCharCode(r) } if (a != 64) { t = t + String.fromCharCode(i) } } t = Base64._utf8_decode(t); return t }, _utf8_encode: function (e) { e = e.replace(/\r\n/g, "\n"); var t = ""; for (var n = 0; n < e.length; n++) { var r = e.charCodeAt(n); if (r < 128) { t += String.fromCharCode(r) } else if (r > 127 && r < 2048) { t += String.fromCharCode(r >> 6 | 192); t += String.fromCharCode(r & 63 | 128) } else { t += String.fromCharCode(r >> 12 | 224); t += String.fromCharCode(r >> 6 & 63 | 128); t += String.fromCharCode(r & 63 | 128) } } return t }, _utf8_decode: function (e) { var t = ""; var n = 0; var r = c1 = c2 = 0; while (n < e.length) { r = e.charCodeAt(n); if (r < 128) { t += String.fromCharCode(r); n++ } else if (r > 191 && r < 224) { c2 = e.charCodeAt(n + 1); t += String.fromCharCode((r & 31) << 6 | c2 & 63); n += 2 } else { c2 = e.charCodeAt(n + 1); c3 = e.charCodeAt(n + 2); t += String.fromCharCode((r & 15) << 12 | (c2 & 63) << 6 | c3 & 63); n += 3 } } return t } }
+        contenedorEvidencia = '';
+        $.each(data, function (index, evidencia) {
+            if (index === data.length - 1) {
+                contenedorEvidencia += '<div class="imagen_content content_img_21  col-md-3" style="display: block;height: 180px;">';
+            } else {
+                contenedorEvidencia += '<div class="imagen_content content_img_21  col-md-3" style="display: block;height: 240px;">';
+            }
+
+            contenedorEvidencia += '<div class="contenedor_img_evidencia">';
+            if (index === 0) {
+                var decodedString = Base64.decode(evidencia.urlImagen);
+                var lowerCase = decodedString.toLowerCase();
+                contenedorEvidencia += '<div id="pdfGrande">';
+                if (lowerCase.indexOf('pdf') !== -1) {
+                    contenedorEvidencia += '<embed class="z-depth-1 img_evidencia" src="data:application/pdf;base64,' + evidencia.urlImagen + '" type="application/pdf" width="180" height="125" style="margin-left: 20px;"/>';
+                } else {
+                    contenedorEvidencia += '<img class="z-depth-1 img_evidencia"  src="data:image/jpg;base64,' + evidencia.urlImagen + '" width="180" height="130" style="margin-left: 18px;"/>';
+                }
+
+
+                contenedorEvidencia += '</div>';
+            } else {
+                contenedorEvidencia += '<a id="showModal" class="magnific item imgtipo_' + index + '" data-title="' + evidencia.name + '" onclick="abrirModalImagen(\'' + evidencia.urlImagen + '\',\'' + evidencia.name + '\',' + index + ')" style="cursor: pointer;">';
+                contenedorEvidencia += '<img class="z-depth-1 img_evidencia"  src="data:image/jpg;base64,' + evidencia.urlImagen + '" width="180" height="130" style="margin-left: 18px;"/>';
+                contenedorEvidencia += '</a>';
+            }
+
+            contenedorEvidencia += '<div class="middle_img_evidencia">';
+            if (evidencia.archivoNombre !== undefined) {
+                contenedorEvidencia += '<div class="text_img_evidencia">' + evidencia.name + '</div>';
+            } else {
+                contenedorEvidencia += '<div class="text_img_evidencia">No se encontr&oacute;</div>';
+            }
+
+            contenedorEvidencia += '</div>'
+            contenedorEvidencia += '</div>';
+            contenedorEvidencia += '<div class="funkyradio">';
+            contenedorEvidencia += '<div class="col-3 funkyradio-success" style="width: 114px;top: -15px;padding-left: 0px;max-width: none;">';
+            contenedorEvidencia += '<input type="radio" name="radio' + index + '" id="radioAceptar' + index + '" onclick="validarEvidnecia(' + index + '\,' + 1 + ')"/>'
+            contenedorEvidencia += '<label for="radioAceptar' + index + '" style="width:90px;margin-left:10px;">Aceptar</label>'
+            contenedorEvidencia += '</div>';
+            contenedorEvidencia += '<div class="col-3 funkyradio-danger" style="width: 114px; top: -61px; margin-left: 100px;max-width: none;">';
+            contenedorEvidencia += '<input type="radio" name="radio' + index + '" id="radioRechazar' + index + '" onclick="validarEvidnecia(' + index + '\,' + 0 + ')"/>';
+            contenedorEvidencia += '<label for="radioRechazar' + index + '">Rechazar</label>';
+            contenedorEvidencia += '</div>';
+            contenedorEvidencia += '</div>';
+            contenedorEvidencia += '</div>';
+
+            $scope.imagenValidar = {
+                index: index,
+                path: evidencia.path,
+                imgNombre: evidencia.archivoNombre,
+                validacion: ''
+            };
+            $scope.imagenValidarLista.push($scope.imagenValidar);
+        });
+        console.log($scope.imagenValidarLista);
+        $('#contentEvidencia').append(contenedorEvidencia);
+        $('#modal-evidencia-busqueda').modal('show');
+        
+    }
+
+    validarEvidnecia = function(index, validacion){
+        if (index !== '') {
+            $scope.imagenValidarLista.forEach(evidencia => {
+                if (evidencia.index === index) {
+                    evidencia.validacion = String(validacion);
+                    document.getElementById('radioAceptar').checked = false;
+                    document.getElementById('radioRechazar').checked = false;
+                }
+            });
+        } else {
+            $scope.imagenValidarLista.forEach(evidencia => {
+                evidencia.validacion = String(validacion);
+                if (validacion === 1) {
+                    document.getElementById('radioAceptar' + evidencia.index).checked = true;
+                    document.getElementById('radioRechazar' + evidencia.index).checked = false;
+                } else {
+                    document.getElementById('radioAceptar' + evidencia.index).checked = false;
+                    document.getElementById('radioRechazar' + evidencia.index).checked = true;
+                }
+            });
+        }
+        let evidenciaAceptada = $scope.imagenValidarLista.filter(evidencia => { return evidencia.validacion === '1' }).length;
+        let evidenciaRechazada = $scope.imagenValidarLista.filter(evidencia => { return evidencia.validacion === '0' }).length;
+        document.getElementById('evidenciaAcaptadas').innerHTML = evidenciaAceptada;
+        document.getElementById('evidenciaRechazada').innerHTML = evidenciaRechazada;
     }
 
 }])

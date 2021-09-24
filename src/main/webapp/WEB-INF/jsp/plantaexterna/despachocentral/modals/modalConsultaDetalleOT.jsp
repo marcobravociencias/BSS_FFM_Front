@@ -1,8 +1,8 @@
 <div class="modal fade bd-example-modal-lg" id="modalConsultaDetalleOT" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" style="min-width: 75% !important; max-width: 75% !important;">
+    <div class="modal-dialog modal-lg" style="min-width: 65% !important; max-width: 65% !important;">
         <div class="modal-content">
             <div class="blue-gradient style_modal_header modal-header modal_header_bg">
-                <h5 style="font-weight: bold;" class="modal-title header-title">Detalle OT</h5>
+                <h5 id="lblTituloModalDetalleOT" style="font-weight: bold;" class="modal-title header-title">Detalle OT</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="cerrarmodalConsultaDetalleOT()">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -78,7 +78,7 @@
 	        	</div>
             </div>	
             <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-cerrar-modal" ng-click="cerrarmodalConsultaDetalleOT()" data-dismiss="modal">Cerrar</button>
+                <button id="btnCerrarmodalConsultaDetalleOT" type="button" class="btn btn-sm btn-primary waves-effect waves-light" ng-click="cerrarmodalConsultaDetalleOT()" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
