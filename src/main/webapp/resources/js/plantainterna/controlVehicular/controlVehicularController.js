@@ -240,7 +240,7 @@ app.controller('controlVehicularController',
 				}
 
 				let params = {
-					idGeografia: clustersparam
+					idGeografias: clustersparam
 				}
 				swal({ text: 'Espera un momento...', allowOutsideClick: false });
 				swal.showLoading();

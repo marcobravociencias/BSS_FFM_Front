@@ -83,14 +83,6 @@ i.icono-noseleccion {
     border: 0px !important;
 }
 
-.datepicker .datepicker-switch:hover,   
-.datepicker .next:hover,
-.datepicker .prev:hover,
-.datepicker tfoot tr th:hover {
-    background: #78a7f7;
-    color: white;
-}
-
 
 .element-menu-filter {
     position: relative;
