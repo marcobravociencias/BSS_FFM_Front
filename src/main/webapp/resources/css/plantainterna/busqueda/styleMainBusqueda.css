@@ -1269,7 +1269,7 @@ span.cerrarnoticias {
   border-radius: 3px;
   border: 1px solid #D1D3D4;
   font-weight: normal;
-  font-size: 10px;
+  font-size: 8px;
 }
 
 
@@ -1476,11 +1476,11 @@ img.img_evidencia{
 }
 
 .btnDescargarActa{
-  border-color: #46b8da;
-  background-color: #5bc0de;
+  border-color: #46b8da !important;
+  background-color: #5bc0de !important;
   color: #ffffff !important;
-  font-size: 10px;
-  width: 160px;
+  font-size: 10px !important;
+  width: 160px !important;
 }
 
 .colSelect {
