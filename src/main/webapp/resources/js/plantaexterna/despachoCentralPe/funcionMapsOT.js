@@ -1,9 +1,8 @@
 app.mapsOTController=function($scope){
 
-	var markers_cortes=[];
+	var markerIndividual=[];
 	var info_windows_cortes=[];
 	var markers_sin_cliente=[];
-	
 //	var zoom_session=$("#zoom_session").val();
 //	var latitud_sess=$("#latitud_sess").val();
 //	var longitud_ses=$("#longitud_ses").val();
@@ -57,17 +56,41 @@ app.mapsOTController=function($scope){
 		map_corte_masivo_modal.setZoom(parseInt(zoom_ot));
 	}
 	
-	colocarUbicacionOT = function (){
-		
-		map_corte_masivo_modal.setCenter(new google.maps.LatLng(latitud_ot, longitud_ot));
-		map_corte_masivo_modal = new google.maps.Marker({
+	colocarUbicacionOT = function (objUbicacion){
+		limpiarMarkerIndividual();
+		map_corte_masivo_modal.setCenter(new google.maps.LatLng(objUbicacion.lat, objUbicacion.long));
+		var marker = new google.maps.Marker({
 			position : {
-				lat:parseFloat(latitud_ot), lng:parseFloat( longitud_ot) 
+				lat:parseFloat(objUbicacion.lat), lng:parseFloat(objUbicacion.long) 
 			},
 			animation : google.maps.Animation.DROP,
 			map : map_corte_masivo_modal,
 			icon : "resources/img/maps/pin-pendiente.png"
 		});
+		markerIndividual.push(marker);
+	}
+	
+	colocarUbicacionesConsultaOTs = function (ubicaciones){	
+		mapa_corte.setCenter(new google.maps.LatLng(latitud_ot, longitud_ot));
+		
+		ubicaciones.forEach(ubicacion =>{
+			var marker = new google.maps.Marker({
+				position : {
+					lat:parseFloat(ubicacion.latitud), lng:parseFloat(ubicacion.longitud) 
+				},
+				animation : google.maps.Animation.DROP,
+				map : mapa_corte,
+				icon : "resources/img/maps/corte_masivo.png"
+			});
+        });
+	
+	}
+	
+	limpiarMarkerIndividual=function(){
+		$.each(markerIndividual, function(index,elemento){
+			elemento.setMap(null);
+		});
+		markerIndividual = [];
 	}
 	
 //	
@@ -106,13 +129,6 @@ app.mapsOTController=function($scope){
 //				
 //	}
 //	
-//	limpiarMarkersCortes=function(callbackEjecucion){
-//		$.each(markers_cortes, function(index,elemento){
-//			elemento.setMap(null);
-//		});
-//		markers_cortes = [];
-//		callbackEjecucion();
-//	}
 //	    
 //	
 //	
