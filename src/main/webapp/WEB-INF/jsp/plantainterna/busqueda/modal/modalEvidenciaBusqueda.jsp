@@ -44,7 +44,9 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button id="guardarValidacionCheck" class="btn btnGuardarValidacion" ng-click="gardarValidacion()">Guardar</button>
+                    <button id="guardarValidacionCheck"  type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface" data-mdb-dismiss="modal">
+                        Guardar
+                    </button>
                     <button id="cerrarModalValidacion" class="btn btnGuardarValidacion" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
