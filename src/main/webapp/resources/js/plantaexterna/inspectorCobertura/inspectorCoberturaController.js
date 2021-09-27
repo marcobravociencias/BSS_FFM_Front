@@ -14,6 +14,18 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
             e.stopPropagation();
         });
 
+        $("#content_mapa_estatus").toggleClass('closed');
+
+
+        $("#content_mapa_estatus").click(function () {
+            $(this).toggleClass('closed');
+            if ($(this).hasClass('closed')) {
+                $("#content-card-selected").hide();
+            } else {
+                $("#content-card-selected").show();
+            }
+        });
+
         $('.datepicker').datepicker({
             format: 'dd/mm/yyyy',
             autoclose: true,
@@ -22,10 +34,6 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
             clearBtn: true
         });
         $('.datepicker').datepicker('update', new Date());
-
-
-        $("#cardHeader").addClass("show-content");
-        $("#cardContent").addClass("hide-content");
 
         document.getElementById('cluster').addEventListener('click', function () {
             //Validar al menos una incidencia
@@ -52,9 +60,9 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
             } else {
                 $('#texto_cluster_seleccionado').text('Sin selecci\u00F3n');
             }
-        })
-
+        });
     }
+
 
     $scope.init();
 
@@ -76,7 +84,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
             zoom: 15,
             disableDoubleClickZoom: true
         });
-
+        markers = [];
     }
 
     $scope.initMapa();
@@ -111,11 +119,6 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                     'responsive': true,
                     "icons": false
                 }
-            },
-            plugins: ['search'],
-            "search": {
-                "case_sensitive": false,
-                "show_only_matches": true
             }
         });
         swal.close();
@@ -156,6 +159,8 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
 
     $scope.consultarCoberturas = function () {
         let errorMessage = "";
+        let listFallas = [];
+
         if (!$scope.validarFecha("filtro_fecha_inicio_inspectorCobertura", "filtro_fecha_fin_inspectorCobertura")) {
             errorMessage += "<li>La fecha inicical debe ser menor a la fecha final</li>";
         }
@@ -164,10 +169,11 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
             errorMessage += "<li>Falla es obligatorio</li>";
         } else {
             let isSelectedOne = false;
+
             $.each($scope.filtrosCobertura.fallas, function (i, elemento) {
                 if (elemento.checkedOpcion) {
+                    listFallas.push(elemento.id);
                     isSelectedOne = true;
-                    return;
                 }
             })
             if (!isSelectedOne) {
@@ -175,21 +181,20 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
             }
         }
 
-
         if (errorMessage == "") {
             swal({ text: 'Espera un momento...', allowOutsideClick: false });
             swal.showLoading();
 
             $scope.initMapa();
-            markers = [];
+            $scope.listaIncidenciasLigar = [];
 
             let params = {
-                idFalla: [12, 18, 1, 25, 43, 98],
+                idFalla: listFallas,
                 fechaInicio: $("#filtro_fecha_inicio_inspectorCobertura").val(),
                 fechaFin: $("#filtro_fecha_fin_inspectorCobertura").val()
             }
 
-            //inspectorCoberturaService.consultarCoberturasPE(params).then(function success(response) {
+            //inspectorCoberturaService.consultarIncidenciasCoberturaPE(params).then(function success(response) {
             let arrayRow = [];
             $scope.incidencias = arrayCobertura.data.result;
             if (coberturaTable) {
@@ -235,7 +240,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                 elemento.setMap(null);
                 return;
             }
-        })
+        });
 
         if (!isMarker) {
             $scope.printMarker(id, latitud, longitud, reporta, falla, fecha);
@@ -248,19 +253,36 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                     map.setZoom(15);
                 }
             });
+            $.each($scope.listaIncidenciasLigar, function (i, elemento) {
+                if (elemento.id == id) {
+                    $scope.listaIncidenciasLigar.splice(i, 1);
+                    $scope.$apply();
+                    return;
+                }
+            });
         }
     }
 
-    $scope.deleteAllMarkers = function () {
+    $scope.deleteMarker = function (id) {
         $.each(markers, function (i, elemento) {
-            $('#tableCobertura tbody tr:contains("' + elemento.id_marker + '")').css('background', '');
-            elemento.setMap(null);
-            return;
+            if (elemento.id_marker == id) {
+                $('#tableCobertura tbody tr:contains("' + elemento.id_marker + '")').css('background', '');
+                elemento.setMap(null);
+                markers.splice(i, 1);
+                $.each(markers, function (ix, elemento2) {
+                    if (ix == markers.length - 1) {
+                        elemento2.setAnimation(google.maps.Animation.BOUNCE);
+                        map.setCenter(elemento2.position);
+                        map.setZoom(15);
+                        return;
+                    }
+                });
+            }
         })
     }
 
     $scope.printMarker = function (id, latitud, longitud, reporta, falla, fecha) {
-        $('#tableCobertura  tbody tr:contains("' + id + '")').css('background', '#d3d3d3');
+        $('#tableCobertura  tbody tr:contains("' + id + '")').css('background', '#e9f5f4');
         var contentString = '<div id="content"><div id="siteNotice"></div>' +
             '<h4 id="firstHeading" class="firstHeading"><span class="titleHeading">ID: </span>' + id + '</h4><hr>' +
             '<div id="bodyContent">' +
@@ -269,7 +291,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
             '  <br><br><b><strong >Fecha:</strong></b>&nbsp;' + fecha +
             '  <br><br><b><strong >Latitud:</strong></b>&nbsp;' + latitud +
             '  <br><br><b><strong >Longitud:</strong></b>&nbsp;' + longitud +
-            '  <br><br><button tag_id="' + id + '" class="agregarBtn btn-block btn btn-sm btn-outline-primary">Agregar</button></div></div>';
+            '  <br><br><button id="inc_' + id + '" class="agregarBtn btn-block btn btn-sm btn-outline-primary" onclick="agregarIncidencia(' + id + ",'" + reporta + "','" + falla + "','" + fecha + "'" + ')">Agregar</button></div></div>';
 
         var infowindows = new google.maps.InfoWindow({
             content: contentString
@@ -307,17 +329,21 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
     $scope.ligarIncidencias = function () {
 
     }
-    $scope.isContent = false;
-    $scope.showHideContent = function () {
-        if ($scope.isContent) {
-            $scope.isContent = false;
-            $("#cardContent").removeClass("show-content");
-            $("#cardContent").addClass("hide-content");
-        } else {
-            $scope.isContent = true;
-            $("#cardContent").removeClass("hide-content");
-            $("#cardContent").addClass("show-content");
-        }
+
+    agregarIncidencia = function (id, reporta, falla, fecha) {
+        $scope.listaIncidenciasLigar.push({ id: id, reporta: reporta, falla: falla, fecha: fecha });
+        $("#inc_" + id).attr("disabled", true);
+        $scope.$apply();
+    }
+
+    $scope.eliminarIncidencia = function (id) {
+        $.each($scope.listaIncidenciasLigar, function (i, elemento) {
+            if (elemento.id == id) {
+                $scope.listaIncidenciasLigar.splice(i, 1);
+                $scope.deleteMarker(id);
+                return;
+            }
+        });
     }
 
 }]);
