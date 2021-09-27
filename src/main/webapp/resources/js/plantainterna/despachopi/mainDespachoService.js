@@ -328,5 +328,16 @@ app.service("mainDespachoService", function ($http) {
 			}
 		})
 	};
+
+	this.consultaInformacionVehiculoTecnico = function (params) {
+		return $http({
+			method: "post",
+			url: "req/consultaInformacionVehiculoTecnico",
+			data: JSON.stringify(params),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+	};
 	
 });
