@@ -472,6 +472,13 @@ h4#texto_not_arboles {
     margin-left:15%;
     list-style:none
 }
+.carousel .carousel-indicators li {
+    width: .625rem;
+    height: .625rem;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    cursor: pointer;
+}
 .carousel-indicators li{
     position:relative;
     -ms-flex:0 1 auto;
@@ -523,21 +530,35 @@ h4#texto_not_arboles {
     font-family: "Montserrat" !important;
     text-align: center;
 }
+
 thead#thead_detalleincidencia tr th {
     font-size: 0.7em;
     padding: 1em 1em 1em;
     text-align: center;
-}  
+}
+
 #thead_detalleincidencia .fa {
     font-size: 13px;
     color: gray;
 }
+
 thead#thead_incidencia {
     font-weight: bold !important;
     border-top: 4px solid transparent !important;
     border: 1px #ccc;
     font-family: "Montserrat" !important;
 }
+/* 
+::-webkit-scrollbar {
+    width: 5px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #3194c5;
+    border: 30px none #ffffff0d;
+    border-radius: 31px;
+  } */
 /* DETALLE STATUS */
 
 /* MODAL DETALLE INCIDENCIA */

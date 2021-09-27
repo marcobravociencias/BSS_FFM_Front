@@ -11,6 +11,10 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
     $scope.incidencia = {};
     let markers = [];
     $scope.isNavTab = false;
+    $scope.isFooter = false;
+    $scope.isRecuperar = false;
+    $scope.isGenerar = false;
+    $scope.isDeclinar = false;
 
     $('.drop-down-filters').on("click.bs.dropdown", function (e) {
         e.stopPropagation();
@@ -332,10 +336,12 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         $("#headers_tab").append(header_tabs);
         $("#content_tabs").append(content_tabs);
 
-        if ($scope.detalleIncidencia.DetalleStatus) {
+        console.log($scope.detalleIncidencia);
+        if ($scope.detalleIncidencia.DetalleStatus.length == 0) {
             $scope.isNavTab = true;
             $("#bodyFileDetallestatus").append('<tr><td class="sin_datos" colspan="10" style="text-align:center;">Sin datos para mostrar</td></tr>')
         } else {
+            $scope.isNavTab = true;
             var body = $("#bodyFileDetallestatus");
             body.html('');
             let contBody = '';
@@ -347,7 +353,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                     + '<td>' + element.Motivo + '</td>'
                     + '<td>' + element.Fecha + '</td>'
                     + '<td>' + element.Comentario + '</td>'
-                    + '<td><i class="fa fa-download style_icono_ajaxDownloadFile" onclick="downloadFile(\'' + element.NombreArchivo + '\', \'' + $('#idincidenciaI').val() + '\')"></i></td>'
+                    + '<td><i class="fa fa-download style_icono_ajaxDownloadFile" onclick=" (\'' + element.NombreArchivo + '\', \'' + $('#idincidenciaI').val() + '\')"></i></td>'
                     + '<td class="head_center"></td>  '
                     + '</tr>';
             });
@@ -372,43 +378,95 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         let params = {
 
         }
-        // inspectorIncidenciaService.consultarDetalleEvidencia(params).then(function success(response){
-        swal({ text: 'Espera un momento...', allowOutsideClick: false });
-        swal.showLoading();
-        $scope.inicializarDetalleIncidencia(latitud, longitud);
+        inspectorIncidenciaService.consultarDetalleIncidenciaInspectorPE(params).then(function success(response) {
+            swal({ text: 'Espera un momento...', allowOutsideClick: false });
+            swal.showLoading();
+            $scope.inicializarDetalleIncidencia(latitud, longitud);
 
-        // NUEVA
-        if ($scope.incidencia.idStatus == '1') { }
+            console.log($scope.incidencia.idStatus);
+            // NUEVA
+            if ($scope.incidencia.idStatus == '1') {
+                $scope.isNavTab = false;
+                $scope.isFooter = true;
+                $scope.isRecuperar = false;
+                $scope.isGenerar = true;
+                $scope.isDeclinar = true;
+                $("#containerModal").removeClass('col-10');
+                $("#containerModal").addClass('col-12');
+                $("#containerFallas").show();
+                $("#containerStatusFallas").hide();
+                // $scope.isNavTab = false;
+                // $scope.isFooter = true;
+                // $("#containerBig").removeClass('col-10');
+                // $("#containerBig").addClass('col-12');
+                // $("#containerFallas").hide();
+                // $("#containerStatusFallas").show();
+            }
 
-        // DECLINADA
-        if ($scope.incidencia.idStatus == '2') { }
+            // DECLINADA
+            if ($scope.incidencia.idStatus == '2') {
+                $scope.isNavTab = true;
+                $scope.isFooter = true;
+                $scope.isRecuperar = true;
+                $scope.isGenerar = false;
+                $scope.isDeclinar = false;
+                $("#containerModal").removeClass('col-12');
+                $("#containerModal").addClass('col-10');
+                $("#informacion-incidencia").addClass('active')
+                $("#detalle-status").removeClass('active')
+                $("#containerFallas").show()
+            }
 
-        // GENERADA
-        if ($scope.incidencia.idStatus == '3') { }
+            // GENERADA
+            if ($scope.incidencia.idStatus == '3') {
+                $scope.isNavTab = false;
+                $scope.isFooter = false;
+                $scope.isRecuperar = false;
+                $scope.isGenerar = false;
+                $scope.isDeclinar = false;
+                $("#containerModal").removeClass('col-10');
+                $("#containerModal").addClass('col-12');
+                $("#containerFallas").show();
+                $("#containerStatusFallas").hide();
+            }
 
-        // RECUPERADA
-        if ($scope.incidencia.idStatus == '4') { }
+            // RECUPERADA
+            if ($scope.incidencia.idStatus == '4') {
+                $scope.isNavTab = false;
+                $scope.isFooter = true;
+                $scope.isRecuperar = false;
+                $scope.isGenerar = true;
+                $scope.isDeclinar = true;
+                $("#containerModal").removeClass('col-10');
+                $("#containerModal").addClass('col-12');
+                $("#containerFallas").show();
+                $("#containerStatusFallas").hide();
+            }
 
-        // ATENDIDA
-        if ($scope.incidencia.idStatus == '5') { }
+            // ATENDIDA
+            if ($scope.incidencia.idStatus == '5') {
+                $scope.isNavTab = true;
+                $scope.isFooter = true;
+                $scope.isRecuperar = true;
+                $scope.isGenerar = false;
+                $scope.isDeclinar = false;
+                $("#containerModal").removeClass('col-12');
+                $("#containerModal").addClass('col-10');
+                $("#informacion-incidencia").addClass('active')
+                $("#detalle-status").removeClass('active')
+                $("#containerFallas").show()
+            }
 
-        $("#modalDetalleIncidencia").modal('show');
-        // tableDetalleStatus = $('#tableDetalleStatus').DataTable({
-        //     "paging": true,
-        //     "lengthChange": false,
-        //     "searching": false,
-        //     "ordering": false,
-        //     "pageLength": 10,
-        //     "info": false,
-        //     "autoWidth": true,
-        //     "language": idioma_espanol_not_font,
-        //     "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+            $("#modalDetalleIncidencia").modal('show');
+            swal.close();
+        })
+    }
 
-        // });
-        $scope.$apply();
-        console.log($scope.detalleIncidencia);
-        swal.close();
-        // })
+    cargarDetalle = function (idIncidencia) {
+        console.log("ENTRO A CARGA DETALLE");
+        console.log(idIncidencia);
+        console.log("detalleIncidencia" + idIncidencia);
+        $("#detalleIncidencia" + idIncidencia).trigger('click');
     }
 
     pintarUbicacionIncidencia = function (idIncidencia, latIncidencia, longIncidencia, descripcion, reporta, fecha, color) {
@@ -453,7 +511,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
             '  <br><br><b><strong style="color:#014c8c;">Fecha:</strong></b>&nbsp;' + fecha +
             '  <br><br><b><strong style="color:#014c8c;">Latitud:</strong></b>&nbsp;' + latIncidencia +
             '  <br><br><b><strong style="color:#014c8c;">Longitud:</strong></b>&nbsp;' + longIncidencia +
-            '  <br><br><button tag_id="' + idIncidencia + '" class="abrir_detalle_btn  btn-block btn btn-sm btn-outline-primary">Detalle</button>' +
+            '  <br><br><button onclick="cargarDetalle(' + idIncidencia + ')" class="btn-block btn btn-sm btn-outline-primary">Detalle</button>' +
             '   </div>' +
             '</div>';
         var infowindows = new google.maps.InfoWindow({
@@ -463,6 +521,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         mapInspector.setZoom(15);
         marker = new google.maps.Marker({
             id_incidencia: idIncidencia,
+            title: reporta,
             map: mapInspector,
             draggable: true,
             animation: google.maps.Animation.BOUNCE,
@@ -497,6 +556,16 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
             return false;
         }
     }
+
+    // $scope.descargarReporteDetalle = function (nombreArchivo, urlArchivo) {
+    //     swal({ text: 'Descargando Archivo ...', allowOutsideClick: false });
+    //     swal.showLoading();
+    //     var link = document.createElement("a");
+    //     link.download = "";
+    //     link.href = "/" + path + "/inspector/downloadFileInspector?paramsCambioStatus.NombreArchivo=" + nombreArchivo + "&paramsCambioStatus.UrlArchivo=" + urlArchivo;
+    //     link.click();
+    //     setTimeout(function () { swal.close() }, 2500);
+    // }
 
     $scope.consultarIndicencias = function () {
         let mensajeError = '';
@@ -546,7 +615,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                     row[1] = elemento.Fecha;
                     row[2] = elemento.Cluster;
                     row[3] = elemento.CatIncidenteDet;
-                    row[4] = '<a class="" id="navbarDropdownMenuLink" onclick="consultarDetalleIncidencia (\'' + elemento.IdIncidencia + '\',\'' + elemento.Reporta + '\',\'' + elemento.NumeroEmpleado + '\',\'' + elemento.CatIncidenteDet + '\',\'' + elemento.Cluster + '\',\'' + elemento.Latitud + '\',\'' + elemento.Longitud + '\',\'' + elemento.IdIncidencia + '\',\'' + elemento.CatIncidenteDet + '\',\'' + elemento.IdCluster + '\',\'' + elemento.ID_Status + '\',\'' + elemento.Status + '\',\'' + elemento.Ot + '\');">' +
+                    row[4] = '<a class="" id="detalleIncidencia' + elemento.IdIncidencia + '" onclick="consultarDetalleIncidencia (' + elemento.IdIncidencia + ",'" + elemento.Reporta + "','" + elemento.NumeroEmpleado + "','" + elemento.CatIncidenteDet + "','" + elemento.Cluster + "'," + elemento.Latitud + "," + elemento.Longitud + "," + elemento.IdIncidencia + ",'" + elemento.CatIncidenteDet + "','" + elemento.IdCluster + "','" + elemento.ID_Status + "','" + elemento.Status + "','" + elemento.Ot + "'" + ');">' +
                         '<i class="far fa-window-restore"></i>' +
                         '</a>';
                     row[5] = '<i class="fas fa-globe-americas" style="color:' + elemento.Color + '" onclick="pintarUbicacionIncidencia(' + elemento.IdIncidencia + ',' + elemento.Latitud + ',' + elemento.Longitud + ",'" + elemento.CatIncidenteDet + "','" + elemento.Reporta + "','" + elemento.Fecha + "','" + elemento.Color + "'" + ')"></i>'
@@ -571,14 +640,14 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         }
     }
 
-    $("#informacion-incidencia").click(function(){
+    $("#informacion-incidencia").click(function () {
         $("#informacion-incidencia").addClass('active')
         $("#detalle-status").removeClass('active')
         $("#containerFallas").show()
         $("#containerStatusFallas").hide()
     })
 
-    $("#detalle-status").click(function(){
+    $("#detalle-status").click(function () {
         $("#informacion-incidencia").removeClass('active')
         $("#detalle-status").addClass('active')
         $("#containerFallas").hide()

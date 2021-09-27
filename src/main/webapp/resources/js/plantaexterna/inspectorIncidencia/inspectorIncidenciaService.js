@@ -1,9 +1,9 @@
-app.service("inspectorIncidenciaService", function($http) {
+app.service("inspectorIncidenciaService", function ($http) {
     this.consultarFallasInspectorPE = function () {
         return $http({
             method: "get",
             url: "req/consultarFallasInspectorPE",
-            headers: {'Content-Type': "application/json; charset=utf-8"},
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
             transformRequest: angular.identity
         });
     };
@@ -11,7 +11,7 @@ app.service("inspectorIncidenciaService", function($http) {
         return $http({
             method: "get",
             url: "req/consultarStatusFallasInspectorPE",
-            headers: {'Content-Type': "application/json; charset=utf-8"},
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
             transformRequest: angular.identity
         });
     };
@@ -19,7 +19,7 @@ app.service("inspectorIncidenciaService", function($http) {
         return $http({
             method: "get",
             url: "req/systemColor",
-            headers: {'Content-Type': "application/json; charset=utf-8"},
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
             transformRequest: angular.identity
         });
     };
@@ -28,7 +28,16 @@ app.service("inspectorIncidenciaService", function($http) {
             method: "post",
             url: "req/consultarIncidenciasInspectorPE",
             data: JSON.stringify(params),
-            headers: {'Content-Type': "application/json; charset=utf-8"},
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
+            transformRequest: angular.identity
+        })
+    }
+    this.consultarDetalleIncidenciaInspectorPE = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarDetalleIncidenciaInspectorPE",
+            data: JSON.stringify(params),
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
             transformRequest: angular.identity
         })
     }

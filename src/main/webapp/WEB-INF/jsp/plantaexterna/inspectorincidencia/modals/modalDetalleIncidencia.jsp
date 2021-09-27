@@ -18,7 +18,7 @@
                                 <li class="nav-link" id="detalle-status">Detalle Status</li>
                             </div>
                         </div>
-                        <div class="col-10">
+                        <div class="col-10" id="containerModal">
                             <div class="container" id="containerFallas">
                                 <!-- <li class="nav-link" id="acciones">Acciones</li> -->
                                 <ul class="nav nav-tabs mb-3 nav-fill " id="headers_tab" role="tablist">
@@ -28,7 +28,7 @@
                             <div class="container" id="containerStatusFallas" style="display:none">
                                 <div class="row">
                                     <div class="col-12">
-                                        <div id="conten_table_detalle_status" class="">
+                                        <div id="content_table_detalle_status" class="">
                                             <div class="table-wrapper">
                                                 <table id="tableDetalleStatus" class="table table-hover" cellspacing="0" width="100%">
                                                     <thead id="thead_detalleincidencia">
@@ -55,6 +55,11 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <div class="pull-right" ng-show="isFooter">
+                    <button type="button" class="btn btn-primary" ng-show="isRecuperar">Recuperar</button>
+                    <button type="button" class="btn btn-primary" ng-show="isDeclinar" style="background-color: #ff8800;">Declinar</button>
+                    <button type="button" class="btn btn-primary" ng-show="isGenerar" style="background-color: #00c851;"><i class="fa fa-paper-plane"></i>&nbsp;Generar</button>
+                </div>
             </div>
         </div>
     </div>
