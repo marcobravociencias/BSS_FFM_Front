@@ -2,7 +2,7 @@ var app = angular.module('busquedaApp', []);
 
 app.controller('busquedaController', ['$scope', 'busquedaService', 'genericService', function ($scope, busquedaService, genericService) {
     $scope.showSearch = true;
-    $scope.mostrarCurrentInfo;
+    $scope.mostrarCurrentInfo = 1;
     $scope.searchSF = '';
 
     app.activacionController($scope, busquedaService)

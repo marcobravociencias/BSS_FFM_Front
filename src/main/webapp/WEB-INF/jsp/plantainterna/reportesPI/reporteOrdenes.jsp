@@ -1,23 +1,23 @@
 <div  class="container-fluid container-filtros-consultaot" style="padding-left: 0px; margin-left: 0px;">
     <div style="padding-left: 0;padding-right: 0;" class="content-fluid">
         <div class="row md-form" id="filtros_config">
-            <div class="col-md-1 column-style-consulta borderFilterR borderAlignR" style="width: 95px !important;" id="borderAlign">
+            <div class="col-md-1 column-style-consulta borderFilterR borderAlignR" style="width: 90px !important;" id="borderAlign">
                 <input type="text" placeholder="OT" id="idotO"
                 class="form-control input-filtro-consultaOT form-control-sm">
             </div>
-            <div class="col-md-1 column-style-consulta borderFilterR" style="width: 95px !important;">
+            <div class="col-md-1 column-style-consulta borderFilterR" style="width: 90px !important;">
                 <input type="text" placeholder="OS" id="idosO"
                 class="form-control input-filtro-consultaOT form-control-sm" >
             </div>
-            <div class="col-md-1 column-style-consulta borderFilterR" style="width: 95px !important;">
+            <div class="col-md-1 column-style-consulta borderFilterR" style="width: 90px !important;">
                 <input type="text" placeholder="CUENTA" id="cuentaO"
                 class="form-control input-filtro-consultaOT form-control-sm">
             </div>
-            <div class="col-md-1 column-style-consulta borderFilterR" style="width: 95px !important;">
+            <div class="col-md-1 column-style-consulta borderFilterR" style="width: 90px !important;">
                 <input type="text" placeholder="VENTA" id="ventaO"
                 class="form-control input-filtro-consultaOT form-control-sm">
             </div>
-            <div class="col-lg-2 column-style-consulta columna-filtro-indRR borderFilterR" style="width: 150px !important;">
+            <div class="col-lg-2 column-style-consulta columna-filtro-indRR borderFilterR" style="width: 145px !important;">
                 <div class="dropdown">
                     <input readonly data-toggle="dropdown" aria-expanded="false" placeholder="Intervenci&oacute;n" type="text" id="filtro-intervencionO" class="input-filtro-consultaOT form-control form-control-sm" />
                     <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-intervencion">      
@@ -43,15 +43,15 @@
                     </ul>
                  </div>
             </div>
-                <div class="col-lg-2 column-style-consulta columna-filtro-indRR borderFilterR" style="width: 150px !important;">
+                <div class="col-lg-2 column-style-consulta columna-filtro-indRR borderFilterR" style="width: 145px !important;">
                     <input readonly placeholder="GEOGRAF&Iacute;A" type="text" id="clusterO"
                     class="input-filtro-consultaOT form-control form-control-sm" ng-click="abrirModalGeografiaRep()"/>
                 </div>
-                <div class="col-md-2 columna-filtro-indR borderFilterR" style="width: 150px !important;">
+                <div class="col-md-2 columna-filtro-indR borderFilterR" style="width: 145px !important;">
                     <input readonly placeholder="Fecha Inicial" type="text" id="filtro_fecha_inicio_consultaOtO"
                     class="datepicker input-filtro-consultaOT form-control form-control-sm" />
                 </div>
-                <div class="col-md-2 columna-filtro-indR borderFilterR" style="width: 150px !important;">
+                <div class="col-md-2 columna-filtro-indR borderFilterR" style="width: 145px !important;">
                     <input readonly placeholder="Fecha Final" type="text" id="filtro_fecha_fin_consultaOtO"
                     class="datepicker input-filtro-consultaOT form-control form-control-sm"/>
                 </div>

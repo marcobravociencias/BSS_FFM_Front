@@ -39,7 +39,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row div-parent-home">
             <div ng-show="showSearch" class="col-first-parent col-2">
                 <div ng-click="setCurrentTabInfo(1)" ng-class="{'activetitleinfo':mostrarCurrentInfo==1}" class="element-busqueda-title">
                     <div class="iconsf-container">

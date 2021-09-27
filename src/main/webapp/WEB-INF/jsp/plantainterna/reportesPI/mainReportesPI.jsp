@@ -44,17 +44,15 @@
 </head>
 <body id="idBody" ng-controller="reportesController">
 <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
-<br/>
 <div class="col-md-12 style_container_reportes">
 	
 	<div class="row">
-		<div class="col-md-2" id="navbar_reportes" style="margin-top: 72px;">
+		<div class="col-md-2" id="navbar_reportes" style="margin-top: 5px;">
 			<div class="align-rigth col-md-12">
 				<button id="ocultar_nav" type="button" class="close" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<br/>
 			<ul class="list-group-flush list-group">
 				<li id="link_reporte_ordenes" class="list-group-item list-group-item-action elemento_link nav-link active">
 					<span class="fon_size_menu">OTS Planta Interna</span>
@@ -79,12 +77,6 @@
 			<a class="menuOpt" id="btn_mostrar_nav" style="display:none;  margin:10px">
 				<i class="fa fa-bars" aria-hidden="true"></i>
 			</a>
-			<div class="container container-title-header" style="padding: 0px !important; margin-left: 0px;">
-				<div class="header-modulo">
-					<h5 class="title-modulo">M&oacute;dulo de reportes</h5>
-					<h1 class="h6 subtitle-modulo">En este m&oacute;dulo podr&aacute;s visualizar reportes</h1>
-				</div>
-			</div>
 			<h3 id="texto_header_reportes" class="text-center">Reporte Ordenes de Trabajo</h3>
 			
 			<div class="wraper_table content_reporte" id="container_reporte_ordenes">
