@@ -99,7 +99,18 @@
                         <input ng-click="abrirModalGeografia()" readonly type="text" id="arbol_vehiculo_consulta"
                             class="form-control form-control-sm" placeholder="NO HAY SELECCI&Oacute;N" />
                     </div>
+                    <div class="col-3 form-group">
+                        <label>Ubicaci&oacute;n CDO</label>
+                        <select class="form-control form-control-sm custom-select" id="encierro"
+                            ng-model="vehiculo.detalle.idEncierro">
+                            <option value="" selected>NO HAY SELECCI&Oacute;N</option>
+                            <option value="{{enc.id}}" ng-repeat="enc in data.encierros">
+                               {{enc.descripcion}}
+                            </option>
+                        </select>
+                    </div>
                 </div>
+
                 <h5 class="fs-title"><i class="fas fa-exclamation-circle me-2" style="color: orange;"></i> Los datos de
                     esta
                     secci&oacute;n son obligatorios</h5>
@@ -215,13 +226,6 @@
                         </select>
                     </div>
                     <div class="col-3 form-group">
-                        <label>Ubicaci&oacute;n CDO</label>
-                        <select class="form-control form-control-sm custom-select" id="encierro"
-                            ng-model="vehiculo.detalle.idEncierro">
-                            <option value="" selected>NO HAY SELECCI&Oacute;N</option>
-                        </select>
-                    </div>
-                    <div class="col-3 form-group">
                         <label class="form-label">Rotulado </label>
                         <br />
                         <div class="form-check form-check-inline">
@@ -234,9 +238,7 @@
                             <label class="form-check-label" for="rotuladoNo"> No </label>
                         </div>
                     </div>
-                </div>
-                <div class="form-row" ng-if="isEdit">
-                    <div class="col-3 form-group">
+                    <div class="col-3 form-group" ng-if="isEdit">
                         <label>Estatus </label>
                         <select class="form-control form-control-sm custom-select" id="estatus"
                             ng-model="vehiculo.idEstatus" ng-change="loadMotivo()">
@@ -245,6 +247,8 @@
                             </option>
                         </select>
                     </div>
+                </div>
+                <div class="form-row" ng-if="isEdit">
                     <div class="col-3 form-group">
                         <label>Motivo </label>
                         <span ng-if="motivos.length == 0" id="msjInterno">Seleccione Estatus</span>
@@ -423,11 +427,13 @@
                         <td class="tableTextTitle">* Rotulado: </td>
                         <td class="tableText">{{vehiculoText.rotulado ? 'Si' : 'No'}}</td>
                         <td class="tableTextTitle" ng-if="vehiculo.estatus">* Estatus: </td>
-                        <td class="tableText" ng-if="vehiculo.estatus">{{vehiculo.estatus ? vehiculo.estatus : 'BAJA'}}</td>
+                        <td class="tableText" ng-if="vehiculo.estatus">{{vehiculo.estatus ? vehiculo.estatus : 'BAJA'}}
+                        </td>
                     </tr>
                     <tr>
                         <td class="tableTextTitle">* Comentarios: </td>
-                        <td class="tableText" colspan="5">{{vehiculo.detalle.comentarios ? vehiculo.detalle.comentarios : 'Sin asignar'}}</td>
+                        <td class="tableText" colspan="5">{{vehiculo.detalle.comentarios ? vehiculo.detalle.comentarios
+                            : 'Sin asignar'}}</td>
                     </tr>
                 </table>
                 <div class="row imagenes">
