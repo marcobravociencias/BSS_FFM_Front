@@ -1,5 +1,5 @@
 <center>
-	<h3 style="margin-top: 0;color:#3c465a;display: inline;">Script</h3>
+	<h3 class="subtitulosModalDetalle">Script</h3>
 	<button id="copy_script" class="btn btn-sm btn-primary fa fa-clipboard" type="button" data-clipboard-demo="" data-clipboard-target="#foo" ng-click="copiarTextoScript()">
 	</button>
 	<hr style="    border: .5px solid #ccc;" />

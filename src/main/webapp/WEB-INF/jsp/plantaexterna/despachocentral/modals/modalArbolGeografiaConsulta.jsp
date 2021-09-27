@@ -3,18 +3,18 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title">Geograf&iacute;a</h5>
-				<button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close" ng-click="cerrarModalGeografiaConsulta()"></button>
+				<button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close" ng-click="cerrarModalGeografiaConsultaa()"></button>
 			</div>
 			<div class="modal-body">
 				<div class="container">
 					<div class="row">
 						<div class="col-md-12">
 							<div class="input-group input-group-sm content-seach-group">
-								<input id="buscadorGeografiaConsulta" type="text" class="form-control buscadorGenerico" placeholder="Buscar geograf&iacute;a" ng-keyup="busquedaGeografiaConsulta()"> 
+								<input id="buscadorGeografiaConsulta" type="text" class="form-control buscadorGenericoArbol" placeholder="Buscar geograf&iacute;a" ng-keyup="busquedaGeografiaConsulta()"> 
 								<span class="fa fa-search iconoBusqueda"></span>
 							</div>
 						</div>
-						<div class="col-md-12 scrollModalArbolGeografias">
+						<div class="col-md-12 scrollArbolGeografias">
 							<div class="container-treegeofria">
 								<div id="arbolGeografiaConsulta" class="proton-demo">
 								</div>
