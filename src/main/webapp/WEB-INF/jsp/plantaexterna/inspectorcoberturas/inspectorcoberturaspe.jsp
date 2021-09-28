@@ -104,7 +104,7 @@
                     </div>
                     <div class="col-1 download-file">
                         <img alt="excel" src="${pageContext.request.contextPath}/resources/img/generic/group-10.png"
-                            style="cursor:pointer">
+                            style="cursor:pointer" ng-click="downloadExcelReportFile()">
                     </div>
                 </div>
             </div>
@@ -113,7 +113,7 @@
             <div class="content-fluid">
                 <div class="row">
                     <div class="col-5">
-                        <table id="tableCobertura" class="display table table-hover table-striped" cellspacing="0"
+                        <table id="tableCobertura" class="display table table-hover" cellspacing="0"
                             width="100%">
                             <thead id="thead_cobertura">
                                 <tr>
@@ -132,7 +132,7 @@
                         <div class="card map-card">
                             <div id="mapaInspectorCobertura">
                             </div>
-                            <div id="content_mapa_estatus" class="card-body">
+                            <div id="content_mapa" class="card-body">
                                 <div class="white">
                                     <div class="card-header">
                                         <h5 class="card-title">INCIDENCIAS</h5>
@@ -148,14 +148,14 @@
                                                             <h5 class="card-title">
                                                                 &nbsp;&nbsp;ID: {{item.id}} </h5>
                                                         </div>
-                                                        <div class="col-md-2" style="text-align: right;">
-                                                            <i class="fas fa-trash" style="cursor: pointer;"
+                                                        <div class="col-md-2" style="text-align: right; color: red;">
+                                                            <i class="fas fa-trash" style="cursor: pointer;" title="Eliminar"
                                                                 ng-click="eliminarIncidencia(item.id)"></i>
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-md-9">
-                                                            <span class="title_span">{{item.reporta}}</span><br>
+                                                            <span class="title_span"><strong>{{item.reporta}}</strong></span><br>
                                                             <span class="title_span">{{item.falla}}</span>
                                                         </div>
                                                         <div class="col-md-3" style="text-align: right;">
@@ -225,6 +225,7 @@
         src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
     <script type="text/javascript"
         src="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/lib/moment.es.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/libraries/exportExcel/index.min.js"></script>
 
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
     <script type="text/javascript"
@@ -233,6 +234,4 @@
         src="${pageContext.request.contextPath}/resources/js/plantaexterna/inspectorCobertura/inspectorCoberturaService.js"></script>
     <script type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/plantaexterna/inspectorCobertura/jsonInspectorCobertura.js"></script>
-
-
     </html>

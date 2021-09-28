@@ -246,7 +246,7 @@ app.controller('controlVehicularController',
 
 				if (clustersparam.length == 0) {
 					mostrarMensajeWarningValidacion('Selecciona geograf\u00EDa');
-					return;
+					return false;
 				}
 
 				let params = {
@@ -1060,7 +1060,7 @@ app.controller('controlVehicularController',
 									text: "\u00BFDesea modificar la placa?",
 									type: "warning",
 									showCancelButton: true,
-									confirmButtonColor: '#288e07',
+									confirmButtonColor: '#007bff',
 									confirmButtonText: 'Si',
 									cancelButtonText: 'No'
 								}).then(function (isConfirm) {

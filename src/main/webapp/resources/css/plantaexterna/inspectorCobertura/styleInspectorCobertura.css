@@ -1,3 +1,7 @@
+.datepicker table tr td, .datepicker table tr th{
+    font-size: 0.8em;
+}
+
 .container-filtros-inspectorCobertura {
     border: none !important;
     z-index: 2;
@@ -61,19 +65,14 @@ i.icono-noseleccion {
     display: inline-block;
 }
 
-.div-btn-busqueda {
-    /* padding: 0% !important; */
-    text-align: right !important;
-}
-
 #btn_consultar_cobertura {
     background-color: #ffffff;
     color: #7716fa;
     border: solid 1px #7716fa !important;
-    padding: 0.6em 2em;
+    padding: 0.7em 2em;
     border-radius: 5px;
     font-size: 0.7em;
-    margin-top: 20px;
+    margin-top: 15px;
 }
 
 .btn-sm {
@@ -152,12 +151,13 @@ label.form-check-inputfiltro {
 }
 
 #tableCobertura tr td {
-    font-size: 0.7em;
+    font-size: 0.8em;
     font-family: "Montserrat" !important;
     text-align: center;
 }
+
 thead#thead_cobertura tr th {
-    font-size: 0.7em;
+    font-size: 0.8em;
     padding: 1em 1em 1em;
     text-align: center;
 }  
@@ -181,7 +181,7 @@ table.dataTable.no-footer {
     border-collapse: collapse !important;
 }
 
-table.display.table.table-hover.table-striped.dataTable {
+table.display.table.table-hover.dataTable {
     font-size: small;
 }
 
@@ -288,20 +288,18 @@ tfoot{
     color: #a4b1ff !important;
 }
 
-#bodyContent{
-    color: #014c8c !important;
-}
-
 .agregarBtn{
     background-color: #ffffff;
     color: #7716fa !important;
     border: solid 1px #7716fa !important;
+    margin: 10px 0;
+    width: 300px;
     box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
 }
 
 .agregarBtn:hover, .agregarBtn:active{
     background-color: white !important;
-    box-shadow: 0 10px 20px 0 rgb(0 0 0 / 28%), 0 6px 25px 0 rgb(0 0 0 / 15%) !important;
+    box-shadow: 0 5px 11px 0 rgb(0 0 0 / 18%), 0 4px 15px 0 rgb(0 0 0 / 15%) !important;
 }
 
 
@@ -373,6 +371,20 @@ map-card .map-container iframe {
     box-shadow: 0 5px 11px 0 rgb(0 0 0 / 18%), 0 4px 15px 0 rgb(0 0 0 / 15%);
 }
 
+.card-selected{
+    overflow-y: auto;
+    height: 71%;
+}
+
 .download-file{
-    margin-top: 20px;
+    margin-top: 15px;
+}
+
+.gm-style-iw.gm-style-iw-c{
+    padding-right: 12px !important;
+    padding-bottom: 12px !important;
+}
+
+.gm-style-iw-d{
+    overflow: hidden !important;
 }
