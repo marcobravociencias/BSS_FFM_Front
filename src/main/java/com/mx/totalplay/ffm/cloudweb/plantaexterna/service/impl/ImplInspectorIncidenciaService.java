@@ -46,7 +46,7 @@ public class ImplInspectorIncidenciaService implements InspectorIncidenciaServic
 		logger.info("ImplInspectorIncidencia.class [metodo = consultarFallasInspectorPE() ]\n" + jsonObject);
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
 		
-		String idPropietario = jsonObject.get("idPropietario").getAsString();
+		String idPropietario = principalDetail.getPropietario();
 		
 		String tokenAccess = principalDetail.getAccess_token();
 	    logger.info("consultarFallas ##+" + tokenAccess);
@@ -66,7 +66,7 @@ public class ImplInspectorIncidenciaService implements InspectorIncidenciaServic
 		logger.info("ImplInspectorIncidencia.class [metodo = consultarStatusFallasInspectorPE() ]\n" + jsonObject);
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
 		
-		String idPropietario = jsonObject.get("idPropietario").getAsString();
+		String idPropietario = principalDetail.getPropietario();
 		
 		String tokenAccess = principalDetail.getAccess_token();
 	    logger.info("consultarStatusFallas ##+" + tokenAccess);
@@ -102,7 +102,7 @@ public class ImplInspectorIncidenciaService implements InspectorIncidenciaServic
 	@Override
 	public ServiceResponseResult consultarDetalleIncidenciaInspectorPE(String params) {
 		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-		logger.info("ImplInspectorIncidenciA.class [metodo = consultarDetalleIncidenciaInspectorPE() ] \n"+ jsonObject);
+		logger.info("ImplInspectorIncidencia.class [metodo = consultarDetalleIncidenciaInspectorPE() ] \n"+ jsonObject);
 		
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
 		String tokenAccess = principalDetail.getAccess_token();
@@ -121,11 +121,30 @@ public class ImplInspectorIncidenciaService implements InspectorIncidenciaServic
 	@Override
 	public ServiceResponseResult consultarCatalogoRechazoIncidenciaInspectorPE(String params) {
 		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-		logger.info("ImplInspectorIncidenciA.class [metodo = consultarCatalogoRechazoIncidenciaInspectorPE() ] \n"+ jsonObject);
+		logger.info("ImplInspectorIncidencia.class [metodo = consultarCatalogoRechazoIncidenciaInspectorPE() ] \n"+ jsonObject);
 		
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String idPropietario = principalDetail.getPropietario();
 		String tokenAccess = principalDetail.getAccess_token();
 		logger.info("consultarCatalogoRechazoIncidenciaInspectorPE ## "+ tokenAccess);
+		
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constInspectorIncidencia.getConsultaOTTipoOrdenesPorUsuario());
+		logger.info("URL ##"+ urlRequest);
+		
+		Map<String, String> paramsRequestGet = new HashMap<String, String>();
+		
+		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest, ServiceResponseResult.class, tokenAccess);
+		
+		return response;
+	}
+
+	@Override
+	public ServiceResponseResult cambiarStatusIncidenciaInspectorPE(String params) {
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		logger.info("ImplInspectorIncidencia.class [metodo = cambiarStatusIncidenciaInspectorPE() ] \n"+ jsonObject);
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String tokenAccess = principalDetail.getAccess_token();
+		logger.info("cambiarStatusIncidenciaInspectorPE ## "+ tokenAccess);
 		
 		String urlRequest = principalDetail.getDireccionAmbiente().concat(constInspectorIncidencia.getConsultaOTTipoOrdenesPorUsuario());
 		logger.info("URL ##"+ urlRequest);
