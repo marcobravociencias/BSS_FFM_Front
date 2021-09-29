@@ -35,9 +35,8 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
         });
         $('.datepicker').datepicker('update', new Date());
 
-        document.getElementById('cluster').addEventListener('click', function () {
+        document.getElementById('jstree-proton-3').addEventListener('click', function () {
             $("#content_mapa").click();
-            $('#modalCluster').modal('show');
         });
 
         coberturaTable = $('#tableCobertura').DataTable({
@@ -53,6 +52,10 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
 
         });
 
+        $('#search').on('keyup', function () {
+            coberturaTable.search(this.value).draw();
+        });
+
         $("#modalCluster").on("hidden.bs.modal", function () {
             let selectedElm = $('#jstree-proton-3').jstree("get_selected", true);
             if (selectedElm.length == 1) {
@@ -61,6 +64,8 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                 $('#texto_cluster_seleccionado').text('Sin selecci\u00F3n');
             }
         });
+
+
     }
 
 
@@ -126,7 +131,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
             } else {
                 toastr.error('Ha ocurrido un error en la consulta de Fallas');
             }
-
+    
             if (results[1].data !== undefined) {
                 if (results[1].data.respuesta) {
                     if (results[1].data.result) {
@@ -264,7 +269,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
             coberturaTable = $('#tableCobertura').DataTable({
                 "paging": true,
                 "lengthChange": false,
-                "searching": false,
+                "searching": true,
                 "ordering": false,
                 "pageLength": 10,
                 "info": false,
@@ -272,12 +277,23 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                 "language": idioma_espanol_not_font,
                 "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">'
             });
+            document.getElementById('tableCobertura_paginate').addEventListener('click', function () {
+                $('#tableCobertura tbody tr').css('background', '');
+                $.each(markers, function (i, elemento) {
+                    $('#tableCobertura tbody tr:contains("' + elemento.id_marker + '")').css('background', '#d3d3d3');
+                });
+                $scope.$apply();
+            })
             swal.close();
         }
 
     }
 
     pintarUbicacion = function (id, latitud, longitud, reporta, falla, fecha) {
+        if (!$("#content_mapa").hasClass('closed')) {
+            $("#content_mapa").click();
+        }
+
         let isMarker = false;
         let index = 0;
         $.each(markers, function (i, elemento) {
@@ -296,9 +312,9 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
             markers.splice(index, 1);
             $.each(markers, function (i, elemento) {
                 if (i == markers.length - 1) {
-                    elemento.setAnimation(google.maps.Animation.BOUNCE);
                     map.setCenter(elemento.position);
                     map.setZoom(15);
+                    return false;
                 }
             });
             $.each($scope.listaIncidenciasLigar, function (i, elemento) {
@@ -319,12 +335,12 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                 markers.splice(i, 1);
                 $.each(markers, function (ix, elemento2) {
                     if (ix == markers.length - 1) {
-                        elemento2.setAnimation(google.maps.Animation.BOUNCE);
                         map.setCenter(elemento2.position);
                         map.setZoom(15);
                         return false;
                     }
                 });
+                return false;
             }
         })
     }
@@ -348,7 +364,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
             id_marker: id,
             position: { lat: parseFloat(latitud), lng: parseFloat(longitud) },
             map: map,
-            animation: google.maps.Animation.BOUNCE,
+            animation: google.maps.Animation.DROP,
             title: reporta,
             icon: {
                 path: google.maps.SymbolPath.CIRCLE,
@@ -363,10 +379,6 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
         marker.addListener('click', function () {
             infowindows.open(map, marker);
         });
-
-        for (i = 0; i < markers.length; i++) {
-            markers[i].setAnimation(google.maps.Animation.DROP);
-        }
 
         markers.push(marker);
         map.setCenter(new google.maps.LatLng(latitud, longitud));
@@ -473,7 +485,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                 const data = JSON.parse(result.data.result)
                 const fileName = 'Reporte incidencias cobertura'
                 const exportType = 'xls'
-    
+     
                 window.exportFromJSON({ data, fileName, exportType })
             } else {
                 mostrarMensajeErrorAlert('Ocurrio un error al generar reporte.')
