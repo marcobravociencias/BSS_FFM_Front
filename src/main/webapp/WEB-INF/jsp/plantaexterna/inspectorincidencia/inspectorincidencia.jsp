@@ -22,6 +22,7 @@ pageEncoding="ISO-8859-1"%>
         <link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/jquery.dataTables.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/magnific_popup/magnific-popup.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/sweetalert/css/sweetalert2.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" rel="stylesheet" />
         
         <link href="${pageContext.request.contextPath}/resources/css/plantaexterna/inspectorIncidencia/styleInspectorIncidencia.css" rel="stylesheet">
 
@@ -142,7 +143,7 @@ pageEncoding="ISO-8859-1"%>
         <jsp:include page="modals/modalDetalleIncidencia.jsp"></jsp:include>
 
     </body>
-
+    
     <!-- LIBRERIAS -->
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=${googlkeyattrvar['gkeactok']}&libraries=geometry,places"></script>
     <script src="${pageContext.request.contextPath}/resources/libraries/angularjs/js/angular.min.js"></script>
@@ -161,12 +162,15 @@ pageEncoding="ISO-8859-1"%>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/magnific_popup/jquery.magnific-popup.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/lib/moment.es.js" ></script>
-
+    
     <!-- ARCHIVOS JS -->
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantaexterna/inspectorIncidencia/inspectorIncidenciaController.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantaexterna/inspectorIncidencia/inspectorIncidenciaService.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantaexterna/inspectorIncidencia/jsonInspectorIncidencia.js"></script>
+    <script>
+        var context_project="${pageContext.request.contextPath}/resources"
+    </script> 
 
     
 

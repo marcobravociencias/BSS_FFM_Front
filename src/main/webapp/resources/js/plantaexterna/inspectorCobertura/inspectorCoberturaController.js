@@ -14,6 +14,18 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
             e.stopPropagation();
         });
 
+        $("#content_mapa").toggleClass('closed');
+
+
+        $("#content_mapa").click(function () {
+            $(this).toggleClass('closed');
+            if ($(this).hasClass('closed')) {
+                $("#content-card-selected").hide();
+            } else {
+                $("#content-card-selected").show();
+            }
+        });
+
         $('.datepicker').datepicker({
             format: 'dd/mm/yyyy',
             autoclose: true,
@@ -23,12 +35,8 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
         });
         $('.datepicker').datepicker('update', new Date());
 
-
-        $("#cardHeader").addClass("show-content");
-        $("#cardContent").addClass("hide-content");
-
         document.getElementById('cluster').addEventListener('click', function () {
-            //Validar al menos una incidencia
+            $("#content_mapa").click();
             $('#modalCluster').modal('show');
         });
 
@@ -52,9 +60,9 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
             } else {
                 $('#texto_cluster_seleccionado').text('Sin selecci\u00F3n');
             }
-        })
-
+        });
     }
+
 
     $scope.init();
 
@@ -76,14 +84,13 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
             zoom: 15,
             disableDoubleClickZoom: true
         });
-
     }
 
     $scope.initMapa();
 
     $scope.seleccionTodos = function (paramFiltroParent, banderaChecked) {
         paramFiltroParent.map(function (e) {
-            e.checkedOpcion = banderaChecked
+            e.checkedOpcion = banderaChecked;
             return e;
         })
     }
@@ -91,15 +98,62 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
     $scope.consultarCatalogos = function () {
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
+
         $scope.filtrosCobertura.fallas = arrayFallas.data.result;
         $scope.filtrosCobertura.listArbol = arrayFiltersPE.data.result.listArbolFilter;
 
         $scope.seleccionTodos($scope.filtrosCobertura.fallas, true);
-        let geografia = $scope.filtrosCobertura.listArbol;
+        $scope.loadTree();
+        swal.close();
+
+        /*
+        $q.all([
+            inspectorCoberturaService.consultarFallasCoberturaPE(),
+            inspectorCoberturaService.consultarFintrosCoberturaPE(),
+        ]).then(function (results) {
+            swal.close();
+            if (results[0].data !== undefined) {
+                if (results[0].data.respuesta) {
+                    if (results[0].data.result) {
+                        $scope.filtrosCobertura.fallas =  results[0].data.result;
+                        $scope.seleccionTodos($scope.filtrosCobertura.fallas, true);
+                    } else {
+                        toastr.warning('No se encontraron datos de Fallas');
+                    }
+                } else {
+                    toastr.warning(results[0].data.resultDescripcion);
+                }
+            } else {
+                toastr.error('Ha ocurrido un error en la consulta de Fallas');
+            }
+
+            if (results[1].data !== undefined) {
+                if (results[1].data.respuesta) {
+                    if (results[1].data.result) {
+                        $scope.filtrosCobertura.listArbol =  results[1].data.result;
+                        $scope.loadTree();
+                    } else {
+                        toastr.warning('No se encontraron datos');
+                    }
+                } else {
+                    toastr.warning(results[1].data.resultDescripcion);
+                }
+            } else {
+                toastr.error('Ha ocurrido un error en la consulta general');
+            }
+        });*/
+    }
+
+    $scope.loadTree = function () {
+        let geografia = angular.copy($scope.filtrosCobertura.listArbol);
         geografia.map((e) => {
             e.parent = e.padre == undefined ? "#" : e.padre;
             e.text = e.descripcion;
             e.icon = "fa fa-globe";
+            e.state = {
+                opened: false,
+                selected: false,
+            }
             return e
         })
         $('#jstree-proton-3').bind('loaded.jstree', function (e, data) {
@@ -111,33 +165,9 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                     'responsive': true,
                     "icons": false
                 }
-            },
-            plugins: ['search'],
-            "search": {
-                "case_sensitive": false,
-                "show_only_matches": true
             }
         });
-        swal.close();
-
-        /*
-        $q.all([
-            inspectorCoberturaService.consultarFallasCoberturaPE(),
-        ]).then(function (results) {
-            if (results[0].data !== undefined) {
-                if (results[0].data.respuesta) {
-                    if (results[0].data.result) {
-                        $scope.filtrosCobertura.fallas =  $scope.realizarConversionAnidado(results[0].data.result);
-                    } else {
-                        toastr.warning('No se encontraron datos de Fallas');
-                    }
-                } else {
-                    toastr.warning(results[0].data.resultDescripcion);
-                }
-            } else {
-                toastr.error('Ha ocurrido un error en la consulta de Fallas');
-            }
-        });*/
+        $('#texto_cluster_seleccionado').text('Sin selecci\u00F3n');
     }
 
     $scope.consultarCatalogos();
@@ -154,8 +184,9 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
         }
     }
 
-    $scope.consultarCoberturas = function () {
+    $scope.validarBusqueda = function () {
         let errorMessage = "";
+
         if (!$scope.validarFecha("filtro_fecha_inicio_inspectorCobertura", "filtro_fecha_fin_inspectorCobertura")) {
             errorMessage += "<li>La fecha inicical debe ser menor a la fecha final</li>";
         }
@@ -164,32 +195,57 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
             errorMessage += "<li>Falla es obligatorio</li>";
         } else {
             let isSelectedOne = false;
+
             $.each($scope.filtrosCobertura.fallas, function (i, elemento) {
                 if (elemento.checkedOpcion) {
                     isSelectedOne = true;
-                    return;
+                    return false;
                 }
             })
             if (!isSelectedOne) {
                 errorMessage += "<li>Selecciona falla</li>";
             }
         }
+        if (errorMessage !== "") {
+            toastr.warning(errorMessage);
+            return false;
+        } else {
+            return true;
+        }
 
+    }
 
-        if (errorMessage == "") {
+    $scope.consultarCoberturas = function () {
+        let listFallas = [];
+
+        if ($scope.validarBusqueda()) {
+            $.each($scope.filtrosCobertura.fallas, function (i, elemento) {
+                if (elemento.checkedOpcion) {
+                    listFallas.push(elemento.id);
+                }
+            })
+
             swal({ text: 'Espera un momento...', allowOutsideClick: false });
             swal.showLoading();
 
-            $scope.initMapa();
+
+            $.each(markers, function (i, elemento) {
+                $('#tableCobertura tbody tr:contains("' + elemento.id_marker + '")').css('background', '');
+                elemento.setMap(null);
+            });
             markers = [];
+            map.setCenter({ lat: parseFloat(19.4326), lng: parseFloat(-99.1332) });
+            map.setZoom(15);
+
+            $scope.listaIncidenciasLigar = [];
 
             let params = {
-                idFalla: [12, 18, 1, 25, 43, 98],
+                idFalla: listFallas,
                 fechaInicio: $("#filtro_fecha_inicio_inspectorCobertura").val(),
                 fechaFin: $("#filtro_fecha_fin_inspectorCobertura").val()
             }
 
-            //inspectorCoberturaService.consultarCoberturasPE(params).then(function success(response) {
+            //inspectorCoberturaService.consultarIncidenciasCoberturaPE(params).then(function success(response) {
             let arrayRow = [];
             $scope.incidencias = arrayCobertura.data.result;
             if (coberturaTable) {
@@ -217,9 +273,6 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                 "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">'
             });
             swal.close();
-            //})
-        } else {
-            toastr.warning(errorMessage);
         }
 
     }
@@ -233,9 +286,9 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                 isMarker = true;
                 $('#tableCobertura tbody tr:contains("' + id + '")').css('background', '');
                 elemento.setMap(null);
-                return;
+                return false;
             }
-        })
+        });
 
         if (!isMarker) {
             $scope.printMarker(id, latitud, longitud, reporta, falla, fecha);
@@ -248,14 +301,31 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                     map.setZoom(15);
                 }
             });
+            $.each($scope.listaIncidenciasLigar, function (i, elemento) {
+                if (elemento.id == id) {
+                    $scope.listaIncidenciasLigar.splice(i, 1);
+                    $scope.$apply();
+                    return false;
+                }
+            });
         }
     }
 
-    $scope.deleteAllMarkers = function () {
+    $scope.deleteMarker = function (id) {
         $.each(markers, function (i, elemento) {
-            $('#tableCobertura tbody tr:contains("' + elemento.id_marker + '")').css('background', '');
-            elemento.setMap(null);
-            return;
+            if (elemento.id_marker == id) {
+                $('#tableCobertura tbody tr:contains("' + elemento.id_marker + '")').css('background', '');
+                elemento.setMap(null);
+                markers.splice(i, 1);
+                $.each(markers, function (ix, elemento2) {
+                    if (ix == markers.length - 1) {
+                        elemento2.setAnimation(google.maps.Animation.BOUNCE);
+                        map.setCenter(elemento2.position);
+                        map.setZoom(15);
+                        return false;
+                    }
+                });
+            }
         })
     }
 
@@ -269,7 +339,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
             '  <br><br><b><strong >Fecha:</strong></b>&nbsp;' + fecha +
             '  <br><br><b><strong >Latitud:</strong></b>&nbsp;' + latitud +
             '  <br><br><b><strong >Longitud:</strong></b>&nbsp;' + longitud +
-            '  <br><br><button tag_id="' + id + '" class="agregarBtn btn-block btn btn-sm btn-outline-primary">Agregar</button></div></div>';
+            '  <br><br><button id="inc_' + id + '" class="agregarBtn btn-block btn btn-sm btn-outline-primary" onclick="agregarIncidencia(' + id + ",'" + reporta + "','" + falla + "','" + fecha + "'" + ')">Agregar</button></div></div>';
 
         var infowindows = new google.maps.InfoWindow({
             content: contentString
@@ -302,22 +372,115 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
         map.setCenter(new google.maps.LatLng(latitud, longitud));
     }
 
-    $scope.consultarCoberturas();
+    //$scope.consultarCoberturas();
 
     $scope.ligarIncidencias = function () {
+        $("#content_mapa").click();
+        if (!$scope.listaIncidenciasLigar.length) {
+            toastr.warning('Selecciona al menos una incidencia');
+            return false;
+        }
+
+        let ultimonivel = $scope.obtenerNivelUltimoJerarquia()
+        let clustersparam = $("#jstree-proton-3").jstree("get_selected", true)
+            .filter(e => e.original.nivel == ultimonivel)
+            .map(e => parseInt(e.id))
+
+        if (clustersparam.length == 0) {
+            toastr.warning('Selecciona cluster valido');
+            return false;
+        }
+
+        let selectedElm = $('#jstree-proton-3').jstree("get_selected", true);
+        swal({
+            title: "Ligar incidencia(s) al cluster " + selectedElm[0].text,
+            text: "Comentarios:",
+            type: "warning",
+            input: "textarea",
+            inputPlaceholder: "Comentarios",
+            showCancelButton: true,
+            confirmButtonColor: '#007bff',
+            confirmButtonText: 'Si, ligar incidencia(s)',
+            cancelButtonText: 'Cancelar'
+        }).then(function (response) {
+            if (response.length) {
+                $("#content_mapa").click();
+                $scope.consultarCoberturas();
+                $('#jstree-proton-3').jstree("destroy");
+                $scope.$apply();
+                $scope.loadTree();
+                toastr.success('Operaci&oacute;n exitosa');
+            } else {
+                toastr.warning('El comentario es obligatorio para ligar incidencias');
+            }
+
+        }).catch(err => {
+            toastr.warning('Operaci&oacute;n cancelada');
+        });
+
 
     }
-    $scope.isContent = false;
-    $scope.showHideContent = function () {
-        if ($scope.isContent) {
-            $scope.isContent = false;
-            $("#cardContent").removeClass("show-content");
-            $("#cardContent").addClass("hide-content");
-        } else {
-            $scope.isContent = true;
-            $("#cardContent").removeClass("hide-content");
-            $("#cardContent").addClass("show-content");
+
+    agregarIncidencia = function (id, reporta, falla, fecha) {
+        $scope.listaIncidenciasLigar.push({ id: id, reporta: reporta, falla: falla, fecha: fecha });
+        $("#inc_" + id).attr("disabled", true);
+        $scope.$apply();
+    }
+
+    $scope.eliminarIncidencia = function (id) {
+        $("#content_mapa").click();
+        $.each($scope.listaIncidenciasLigar, function (i, elemento) {
+            if (elemento.id == id) {
+                $scope.listaIncidenciasLigar.splice(i, 1);
+                $scope.deleteMarker(id);
+                return false;
+            }
+        });
+    }
+
+    function compareGeneric(a, b) {
+        let niveluno = a.nivel;
+        let niveldos = b.nivel;
+        if (niveluno > niveldos) {
+            return -1
+        } else if (niveluno < niveldos) {
+            return 1
         }
+        return 0
+    }
+
+    $scope.obtenerNivelUltimoJerarquia = function () {
+        return $scope.filtrosCobertura.listArbol.sort(compareGeneric)[0].nivel
+    }
+
+    $scope.downloadExcelReportFile = function () {
+        const data = JSON.parse(JSON.stringify($scope.incidencias));
+        const fileName = 'Reporte incidencias cobertura';
+        const exportType = 'xls';
+        window.exportFromJSON({ data, fileName, exportType });
+
+        /*
+        let params = {
+                idFalla: listFallas,
+                fechaInicio: $("#filtro_fecha_inicio_inspectorCobertura").val(),
+                fechaFin: $("#filtro_fecha_fin_inspectorCobertura").val()          
+        }
+        swal({ text: 'Cargando registros...', allowOutsideClick: false });
+        swal.showLoading();
+        //inspectorCoberturaService.consultarIncidenciasCoberturaPE(params).then(function success(response) {
+            swal.close()
+            if (result.data.respuesta) {
+                const data = JSON.parse(result.data.result)
+                const fileName = 'Reporte incidencias cobertura'
+                const exportType = 'xls'
+    
+                window.exportFromJSON({ data, fileName, exportType })
+            } else {
+                mostrarMensajeErrorAlert('Ocurrio un error al generar reporte.')
+            }
+           
+        }).catch(err => handleError(err));
+        */
     }
 
 }]);

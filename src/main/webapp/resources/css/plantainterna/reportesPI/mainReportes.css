@@ -1111,3 +1111,9 @@ div#contenedor_mensual_cluster .selectLabel {
   div.borderAlignRD{
     margin: 0px 11px;
 }
+
+#ocultar_nav{
+    position: absolute;
+    left: 190px;
+    top: -6px;
+}

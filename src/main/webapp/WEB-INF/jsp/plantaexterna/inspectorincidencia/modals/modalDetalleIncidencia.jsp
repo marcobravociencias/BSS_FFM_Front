@@ -10,20 +10,56 @@
             <div class="modal-body" style=" max-height: 300px; overflow: auto;">
                 <div class="container">
                     <div class="" id="acciones"></div>
-                    <div class="row">
-                        <div style="padding-left: 0;" class="col-2">
-                            <div id="headers_tab" class="nav flex-column nav-tabs text-center" role="tablist"
+                    <div class="col-12 row">
+                        <div style="padding-left: 0;" class="col-2" ng-show="isNavTab">
+                            <div class="nav flex-column nav-tabs text-center" id="v-tabs-tab-incidencia" role="tablist"
                                 aria-orientation="vertical">
+                                <li class="nav-link active" id="informacion-incidencia">Informaci&oacute;n</li>
+                                <li class="nav-link" id="detalle-status">Detalle Status</li>
                             </div>
                         </div>
-                        <div class="col-10"id="content_tabs">
-                            <div class="contenedor_detalle row" id="content_tabs">
+                        <div class="col-10" id="containerModal">
+                            <div class="container" id="containerFallas">
+                                <!-- <li class="nav-link" id="acciones">Acciones</li> -->
+                                <ul class="nav nav-tabs mb-3 nav-fill " id="headers_tab" role="tablist">
+                                </ul>
+                                <div id="content_tabs" class="tab-content"></div>
+                            </div>
+                            <div class="container" id="containerStatusFallas" style="display:none">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div id="content_table_detalle_status" class="">
+                                            <div class="table-wrapper">
+                                                <table id="tableDetalleStatus" class="table table-hover" cellspacing="0" width="100%">
+                                                    <thead id="thead_detalleincidencia">
+                                                        <tr>
+                                                            <th>#EMPLEADO</th>
+                                                            <th>NOMBRE EMPLEADO</th>
+                                                            <th>MOTIVO</th>
+                                                            <th>FECHA</th>
+                                                            <th>COMENTARIO</th>
+                                                            <th><i class="fa fa-download"></i></th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="bodyFileDetallestatus">
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
+                <div class="pull-right" ng-show="isFooter">
+                    <button type="button" class="btn btn-primary" ng-show="isRecuperar">Recuperar</button>
+                    <button type="button" class="btn btn-primary" ng-show="isDeclinar" style="background-color: #ff8800;">Declinar</button>
+                    <button type="button" class="btn btn-primary" ng-show="isGenerar" style="background-color: #00c851;"><i class="fa fa-paper-plane"></i>&nbsp;Generar</button>
+                </div>
             </div>
         </div>
     </div>

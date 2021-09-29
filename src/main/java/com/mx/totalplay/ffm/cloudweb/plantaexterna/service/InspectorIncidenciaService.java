@@ -10,5 +10,9 @@ public interface InspectorIncidenciaService {
 	public ServiceResponseResult consultarStatusFallasInspectorPE(String params);
 	
 	public ServiceResponseResult consultarIncidenciasInspectorPE(String params);
+	
+	public ServiceResponseResult consultarDetalleIncidenciaInspectorPE(String params);
+	
+	public ServiceResponseResult consultarCatalogoRechazoIncidenciaInspectorPE(String params);
 
 }

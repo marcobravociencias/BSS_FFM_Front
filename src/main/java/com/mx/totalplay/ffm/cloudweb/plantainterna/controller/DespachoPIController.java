@@ -441,6 +441,16 @@ public class DespachoPIController {
         }
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
+
+    @PostMapping("/consultaInformacionVehiculoTecnico")
+    public ResponseEntity<?> consultaInformacionVehiculoTecnico(@RequestBody String params){
+        LOGGER.info("#### CONSULTANDO consultaInformacionVehiculoTecnico: " + params);
+        ServiceResponseResult response = despachoService.consultaInformacionVehiculoTecnico(params);
+        if (response.getResult() instanceof Integer) {
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
 }
 
 

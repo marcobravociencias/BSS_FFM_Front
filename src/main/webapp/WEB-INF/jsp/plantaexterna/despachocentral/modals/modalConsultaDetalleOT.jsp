@@ -10,38 +10,40 @@
             <div class="modal-body">
             	<div class="row">
 	                <div class="col-md-12">
-	                    <ul class="nav nav-pills mb-3" id="pills-tab-mod" role="tablist">
-	                        <li class="nav-item" role="presentation">
-	                            <a class="nav-link active" id="pills-maps-tab" data-toggle="pill" href="#pills-maps" role="tab" aria-controls="#pills-maps" aria-selected="true"><i class="fas fa-map"></i></a>
-	                        </li>
-	                        <li class="nav-item" role="presentation">
-	                            <a class="nav-link" id="pills-informacion-tab" data-toggle="pill" href="#pills-informacion" role="tab" aria-controls="#pills-informacion" aria-selected="true"><i class="fas fa-bars"></i></a>
-	                        </li>
-	                        <li class="nav-item" role="presentation">
-	                            <a class="nav-link" id="pills-historico-tab" data-toggle="pill" href="#pills-historico" role="tab" aria-controls="#pills-historico" aria-selected="true"><i class="fas fa-heading"></i></a>
-	                        </li>
-	                        <li class="nav-item" role="presentation">
-	                            <a class="nav-link" id="pills-chat-tab" data-toggle="pill" href="#pills-chat" role="tab" aria-controls="#pills-chat" aria-selected="true"><i class="fas fa-comments"></i></a>
-	                        </li>
-	                        <li class="nav-item" role="presentation">
-	                            <a class="nav-link" id="pills-script-tab" data-toggle="pill" href="#pills-script" role="tab" aria-controls="#pills-script" aria-selected="true"><i class="fas fa-copy"></i></a>
-	                        </li>
-	                        <li class="nav-item" role="presentation">
-	                            <a class="nav-link" id="pills-afectacion-tab" data-toggle="pill" href="#pills-afectacion" role="tab" aria-controls="#pills-afectacion" aria-selected="true"><i class="fa fa-crosshairs"></i></a>
-	                        </li>
-	                        <li class="nav-item" role="presentation">
-	                            <a class="nav-link" id="pills-actualizarStatus-tab" data-toggle="pill" href="#pills-actualizarStatus" role="tab" aria-controls="#pills-actualizarStatus" aria-selected="true"><i class="fas fa-cogs"></i></a>
-	                        </li>
-	                        <li class="nav-item" role="presentation">
-	                            <a class="nav-link" id="pills-conceptos-tab" data-toggle="pill" href="#pills-conceptos" role="tab" aria-controls="#pills-conceptos" aria-selected="true"><i class="fa fa-tasks"></i></a>
-	                        </li>
-	                        <li class="nav-item" role="presentation">
-	                            <a class="nav-link" id="pills-fallas-tab" data-toggle="pill" href="#pills-fallas" role="tab" aria-controls="#pills-fallas" aria-selected="true"><i class="fab fa-deviantart"></i></a>
-	                        </li>
-	                        <li class="nav-item" role="presentation">
-	                            <a class="nav-link" id="pills-reasignarGeografia-tab" data-toggle="pill" href="#pills-reasignarGeografia" role="tab" aria-controls="#pills-reasignarGeografia" aria-selected="true"><i class="fas fa-map"></i></a>
-	                        </li>
-	                    </ul>
+		                <div>
+		                    <ul class="nav nav-tabs" id="pills-tab-mod" role="tablist">
+		                        <li class="nav-item" role="presentation">
+		                            <a class="nav-link active" id="pills-maps-tab" data-toggle="pill" href="#pills-maps" role="tab" aria-controls="#pills-maps" aria-selected="true"><i class="fas fa-map"></i></a>
+		                        </li>
+		                        <li class="nav-item" role="presentation">
+		                            <a class="nav-link" id="pills-informacion-tab" data-toggle="pill" href="#pills-informacion" role="tab" aria-controls="#pills-informacion" aria-selected="true"><i class="fas fa-bars"></i></a>
+		                        </li>
+		                        <li class="nav-item" role="presentation">
+		                            <a class="nav-link" id="pills-historico-tab" data-toggle="pill" href="#pills-historico" role="tab" aria-controls="#pills-historico" aria-selected="true"><i class="fas fa-heading"></i></a>
+		                        </li>
+		                        <li class="nav-item" role="presentation">
+		                            <a class="nav-link" id="pills-chat-tab" data-toggle="pill" href="#pills-chat" role="tab" aria-controls="#pills-chat" aria-selected="true"><i class="fas fa-comments"></i></a>
+		                        </li>
+		                        <li class="nav-item" role="presentation">
+		                            <a class="nav-link" id="pills-script-tab" data-toggle="pill" href="#pills-script" role="tab" aria-controls="#pills-script" aria-selected="true"><i class="fas fa-copy"></i></a>
+		                        </li>
+		                        <li class="nav-item" role="presentation">
+		                            <a class="nav-link" id="pills-afectacion-tab" data-toggle="pill" href="#pills-afectacion" role="tab" aria-controls="#pills-afectacion" aria-selected="true"><i class="fa fa-crosshairs"></i></a>
+		                        </li>
+		                        <li class="nav-item" role="presentation">
+		                            <a class="nav-link" id="pills-actualizarStatus-tab" data-toggle="pill" href="#pills-actualizarStatus" role="tab" aria-controls="#pills-actualizarStatus" aria-selected="true"><i class="fas fa-cogs"></i></a>
+		                        </li>
+		                        <li class="nav-item" role="presentation">
+		                            <a class="nav-link" id="pills-conceptos-tab" data-toggle="pill" href="#pills-conceptos" role="tab" aria-controls="#pills-conceptos" aria-selected="true"><i class="fa fa-tasks"></i></a>
+		                        </li>
+		                        <li class="nav-item" role="presentation">
+		                            <a class="nav-link" id="pills-fallas-tab" data-toggle="pill" href="#pills-fallas" role="tab" aria-controls="#pills-fallas" aria-selected="true"><i class="fab fa-deviantart"></i></a>
+		                        </li>
+		                        <li class="nav-item" role="presentation">
+		                            <a class="nav-link" id="pills-reasignarGeografia-tab" data-toggle="pill" href="#pills-reasignarGeografia" role="tab" aria-controls="#pills-reasignarGeografia" aria-selected="true"><i class="fas fa-map"></i></a>
+		                        </li>
+		                    </ul>
+	                    </div>
 	                    <div class="tab-content" id="pills-tabContent-mod">
 	                        <div class="tab-pane fade show active" id="pills-maps" role="tabpanel" aria-labelledby="pills-maps-tab">
 	                            <jsp:include page="./../content/mapsConsultaDetalleOT.jsp"></jsp:include> 

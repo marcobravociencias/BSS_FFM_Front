@@ -1,1 +1,1 @@
-<h2>FALLAS OT</h2>
+<h2 class="subtitulosModalDetalle">FALLAS OT</h2>

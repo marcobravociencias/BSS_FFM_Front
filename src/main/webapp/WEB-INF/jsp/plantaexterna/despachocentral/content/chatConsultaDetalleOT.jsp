@@ -1,1 +1,1 @@
-<h2>CHAT OT</h2>
+<h2 class="subtitulosModalDetalle">CHAT OT</h2>

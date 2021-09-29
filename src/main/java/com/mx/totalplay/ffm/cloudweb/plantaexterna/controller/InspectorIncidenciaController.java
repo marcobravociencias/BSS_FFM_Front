@@ -59,5 +59,25 @@ public class InspectorIncidenciaController {
 		}
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
+	
+	@PostMapping("/consultarDetalleIncidenciaInspectorPE")
+	public ResponseEntity<?> consultarDetalleIncidenciaInspectorPE(String params){
+		logger.info("###### InspectorIncidenciaController - consultarDetalleIncidenciaInspectorPE");
+		ServiceResponseResult response = inspectorIncidenciaService.consultarDetalleIncidenciaInspectorPE(params);
+		if(response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	
+	@PostMapping("/consultarCatalogoRechazoIncidenciaInspectorPE")
+	public ResponseEntity<?> consultarCatalogoRechazoIncidenciaInspectorPE(String params){
+		logger.info("###### InspectorIncidenciaController - consultarCatalogoRechazoIncindenciaInspectorPE");
+		ServiceResponseResult response = inspectorIncidenciaService.consultarCatalogoRechazoIncidenciaInspectorPE(params);
+		if(response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
 
 }

@@ -102,6 +102,10 @@
                             <i class="fa fa-search"></i>
                         </button>
                     </div>
+                    <div class="col-1 download-file">
+                        <img alt="excel" src="${pageContext.request.contextPath}/resources/img/generic/group-10.png"
+                            style="cursor:pointer" ng-click="downloadExcelReportFile()">
+                    </div>
                 </div>
             </div>
         </div>
@@ -109,7 +113,8 @@
             <div class="content-fluid">
                 <div class="row">
                     <div class="col-5">
-                        <table id="tableCobertura" class="display table table-hover table-striped" cellspacing="0" width="100%">
+                        <table id="tableCobertura" class="display table table-hover" cellspacing="0"
+                            width="100%">
                             <thead id="thead_cobertura">
                                 <tr>
                                     <th>ID</th>
@@ -124,83 +129,66 @@
                         </table>
                     </div>
                     <div class="col-7">
-                        <div id="mapaInspectorCobertura">
-                        </div>
-                        <div class="cardLigarIncidencia">
-                            <div class="card text-center">
-                                <div class="card-header" ng-click="showHideContent()">
-                                    INCIDENCIAS
-                                </div>
-                                <div id="cardContent">
-                                    <div class="card-body">
-                                        <!--
-                                         <div class="card-incidencias">
-                                        <div class="col-md-12 multiorden contentIncpendiente" id="crear_inc84956">
-                                            <input style="display:none;" id="datoinc" value="84956"
-                                                class="id_incidencias contenidoInc">
-                                            <div class="card contenido_orden_pendiente border_inspector">
-                                                <div class="card-block"
-                                                    style="padding: 0.25rem; color: #039be5; padding-top: 7px;">
+                        <div class="card map-card">
+                            <div id="mapaInspectorCobertura">
+                            </div>
+                            <div id="content_mapa" class="card-body">
+                                <div class="white">
+                                    <div class="card-header">
+                                        <h5 class="card-title">INCIDENCIAS</h5>
+                                    </div>
+                                    <div class="divider"></div>
+                                    <div style="display: none;" class="content-card" id="content-card-selected">
+                                        <div class="card-selected">
+                                            <div class="col-md-10 offset-md-1"
+                                                ng-repeat="item in listaIncidenciasLigar">
+                                                <div class="card card-incidencia">
                                                     <div class="row">
                                                         <div class="col-md-10">
-                                                            <h5 class="card-title" style="margin-bottom: -1.25rem;">
-                                                                &nbsp;&nbsp;ID: 84956 </h5>
+                                                            <h5 class="card-title">
+                                                                &nbsp;&nbsp;ID: {{item.id}} </h5>
                                                         </div>
-                                                        <div class="col-md-2">
-                                                            <div class="tooltip-table"><span
-                                                                    style="z-index: 1000000000000000000000000000000;"
-                                                                    class="tooltiptext-text-table">Elimina
-                                                                    incidencia</span><i onclick="eliminaInc(84956)"
-                                                                    style="  color:#ff7058 !important; font-weight: normal;font-size: .8em;float: right; padding-right: 9px;"
-                                                                    class="cursorEffect icono_detalle_asignada fa fa-trash colorMorado"
-                                                                    aria-hidden="true"></i> </div>
-                                                        </div>
-                                                        <div class="card-text"> <b
-                                                                style="font-size:.8em; padding-left: 10px; color: black;"
-                                                                class="title_span">MIGUEL ANGEL LOPEZ HINOJOSA </b> <br>
-                                                            <div class="row">
-                                                                <div class="col-md-12"> <span class="content_text"
-                                                                        style="font-size:.8em; padding-left: 10px; !important; color: #3a3434;">
-                                                                        FALTA NOMENCLATURA</span>
-                                                                    <div style="float: right; display:inline-table;background-color:MIGUEL ANGEL LOPEZ HINOJOSA !important;"
-                                                                        class="list-card-label"></div> <span
-                                                                        class="badge badge-primary badge-inspector"
-                                                                        style="float: right;">INP</span>
-                                                                </div>
-                                                            </div>
+                                                        <div class="col-md-2" style="text-align: right; color: red;">
+                                                            <i class="fas fa-trash" style="cursor: pointer;" title="Eliminar"
+                                                                ng-click="eliminarIncidencia(item.id)"></i>
                                                         </div>
                                                     </div>
-                                                    <div class="card-footer" style="padding: 0.20rem !important;">
-                                                        <div class="row">
-                                                            <div class="col-md-12">
-                                                                <div class="content_text" style="float: right;"><small
-                                                                        class="title_span"><b>Fecha:
-                                                                        </b>2019/01/02</small></div>
-                                                            </div>
+                                                    <div class="row">
+                                                        <div class="col-md-9">
+                                                            <span class="title_span"><strong>{{item.reporta}}</strong></span><br>
+                                                            <span class="title_span">{{item.falla}}</span>
+                                                        </div>
+                                                        <div class="col-md-3" style="text-align: right;">
+                                                            <div class="list-card-label"></div> <span
+                                                                class="badge badge-primary badge-inspector">INP</span><br>
+                                                            <small class="title_span" style="color: #039be5;"><b>Fecha:
+                                                                </b>{{item.fecha}}</small>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    -->
-
-                                        <div class="row card-bottom">
-                                            <div class="col-6">
-                                                <h6 class="" id="titulo_Cluster">
-                                                    <center>Cl&uacute;ster</center>
-                                                </h6>
+                                        <div class="card-bottom">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <h6 class="" id="titulo_Cluster">
+                                                        <center>Cl&uacute;ster</center>
+                                                    </h6>
+                                                </div>
+                                                <div class="col-6">
+                                                    <h6 class="select_cluster" id="cluster"><span
+                                                            id="texto_cluster_seleccionado">Sin
+                                                            selecci&oacute;n</span></h6>
+                                                </div>
                                             </div>
-                                            <div class="col-6">
-                                                <h6 class="select_cluster" id="cluster"><span
-                                                        id="texto_cluster_seleccionado">Sin
-                                                        selecci&oacute;n</span></h6>
+                                            <div class="row">
+                                                <div class="card-footer btn-ligar" ng-click="ligarIncidencias()">
+                                                    <span>LIGAR INCIDENCIAS</span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card-footer btn-ligar" ng-click="ligarIncidencias()">
-                                        <span>LIGAR INCIDENCIAS</span>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -237,6 +225,7 @@
         src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
     <script type="text/javascript"
         src="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/lib/moment.es.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/libraries/exportExcel/index.min.js"></script>
 
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
     <script type="text/javascript"
@@ -245,6 +234,4 @@
         src="${pageContext.request.contextPath}/resources/js/plantaexterna/inspectorCobertura/inspectorCoberturaService.js"></script>
     <script type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/plantaexterna/inspectorCobertura/jsonInspectorCobertura.js"></script>
-
-
     </html>

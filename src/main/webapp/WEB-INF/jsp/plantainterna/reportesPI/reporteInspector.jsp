@@ -15,12 +15,12 @@
                 class="form-control input-filtro-consultaOT form-control-sm">
             </div>
             
-            <div class="col-md-2 column-style-consulta borderFilterR" style="width: 105px !important;" id="borderAlign">
+            <div class="col-md-1 column-style-consulta borderFilterR" style="width: 95px !important;" id="borderAlign">
                 <input type="text" placeholder="OT" id="otI"
                 class="form-control input-filtro-consultaOT form-control-sm">
             </div>
 
-            <div class="col-md-2 column-style-consulta borderFilterR">
+            <div class="col-md-1 column-style-consulta borderFilterR">
                 <input type="text" placeholder="# EMPLEADO" id="nEmpI"
                 class="form-control input-filtro-consultaOT form-control-sm">
             </div>

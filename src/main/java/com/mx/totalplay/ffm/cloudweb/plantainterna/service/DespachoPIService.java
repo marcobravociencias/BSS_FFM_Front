@@ -56,4 +56,6 @@ public interface DespachoPIService {
     ServiceResponseResult obtenerResumenPaquete(String params);
 
 	ServiceResponseResult consultaRepoDiarioEx(String params);
+
+    ServiceResponseResult consultaInformacionVehiculoTecnico(String params);
 }

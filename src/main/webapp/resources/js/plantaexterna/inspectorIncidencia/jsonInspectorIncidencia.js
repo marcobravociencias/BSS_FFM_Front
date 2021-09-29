@@ -5696,6 +5696,83 @@ let arrayIncidenciasInspector = {
                     "ID_Status": "2",
                     "Status": "DECLINADA",
                     "Color": "#4cb4f4"
+                }, {
+                    "IdIncidencia": "100982",
+                    "IdCluster": "248",
+                    "Cluster": "LOMAS DE CHAPULTEPEC",
+                    "IdUnidadNegocio": "3",
+                    "UnidadNegocio": "PLANTA EXTERNA",
+                    "IdReporta": "3382",
+                    "NumeroEmpleado": "65027431",
+                    "Reporta": "SERGIO YAIR SANTANA LAZCANO",
+                    "IdCatIncidente": "43",
+                    "CatIncidente": "ETIQUETADO - ETQ",
+                    "IdCatIncidenteDet": "45",
+                    "CatIncidenteDet": "FALTA NOMENCLATURA",
+                    "Fecha": "2019/03/14",
+                    "Latitud": "19.4056533",
+                    "Longitud": "-99.2288876",
+                    "ID_Status": "4",
+                    "Status": "INCIDENCIA RECUPERADA",
+                    "Color": "#66ca8e"
+                }, {
+                    "IdIncidencia": "22457",
+                    "IdCluster": "660",
+                    "Cluster": "OZUMBILLA",
+                    "IdUnidadNegocio": "3",
+                    "UnidadNegocio": "PLANTA EXTERNA",
+                    "IdReporta": "3361",
+                    "NumeroEmpleado": "65027681",
+                    "Reporta": "JOSE ARTURO GONZALEZ ACEVEDO",
+                    "IdCatIncidente": "43",
+                    "CatIncidente": "ETIQUETADO - ETQ",
+                    "IdCatIncidenteDet": "45",
+                    "CatIncidenteDet": "FALTA NOMENCLATURA",
+                    "Fecha": "2018/10/18",
+                    "Latitud": "19.6750122",
+                    "Longitud": "-99.0019199",
+                    "ID_Status": "4",
+                    "Status": "INCIDENCIA RECUPERADA",
+                    "Color": "#66ca8e"
+                },
+                {
+                    "IdIncidencia": "146770",
+                    "IdCluster": "273",
+                    "Cluster": "SAN FERNANDO 1",
+                    "IdUnidadNegocio": "3",
+                    "UnidadNegocio": "PLANTA EXTERNA",
+                    "IdReporta": "3320",
+                    "NumeroEmpleado": "65027429",
+                    "Reporta": "VICTOR HUGO SORIANO HERNANDEZ",
+                    "IdCatIncidente": "12",
+                    "CatIncidente": "GASA - GSA",
+                    "IdCatIncidenteDet": "16",
+                    "CatIncidenteDet": "GASA FUERA DE NORMA",
+                    "Fecha": "2019/08/06",
+                    "Latitud": "19.2954582",
+                    "Longitud": "-99.162459",
+                    "ID_Status": "5",
+                    "Status": "INCIDENCIA ATENDIDA",
+                    "Color": "#7b8d8d"
+                }, {
+                    "IdIncidencia": "152682",
+                    "IdCluster": "49",
+                    "Cluster": "CERRO DE LA SILLA",
+                    "IdUnidadNegocio": "3",
+                    "UnidadNegocio": "PLANTA EXTERNA",
+                    "IdReporta": "7541",
+                    "NumeroEmpleado": "ITMON00022",
+                    "Reporta": "DANIEL GARCIA GARCIA",
+                    "IdCatIncidente": "12",
+                    "CatIncidente": "GASA - GSA",
+                    "IdCatIncidenteDet": "14",
+                    "CatIncidenteDet": "GASA CAIDA",
+                    "Fecha": "2019/08/20",
+                    "Latitud": "25.6453652",
+                    "Longitud": "-100.2141706",
+                    "ID_Status": "5",
+                    "Status": "INCIDENCIA ATENDIDA",
+                    "Color": "#7b8d8d"
                 }]
             }
         }
@@ -5741,43 +5818,39 @@ let detalleIncidencia = {
                         "Detalleimagenes": [{
                             "URLImg": "",
                             "TipoImg": "65"
+                        }, {
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }, {
+                            "URLImg": "",
+                            "TipoImg": "65"
                         }]
                     }
                 }],
                 "DetalleStatus": [{
-                    "NombreArchivo": "Parametros.txt",
-                    "Url": "IA0YCc5Xwl1bB+NhO7sTFtm4FZcTXbmi/1v2d79t9hgDNmrVMpVWAfagb+D+NK0DfjUzVQP9Vdsn/HiN2ETV08yjxPAw37GNXbqtPAH0c5o\u003d",
-                    "Comentario": "FFM - SE ACTUALIZA STATUS DE INCIDENCIA :: PROBANDO GG",
+                    "NombreArchivo": "BITACORA.docx",
+                    "Url": "IA0YCc5Xwl1bB+NhO7sTFtm4FZcTXbmi/1v2d79t9hgDNmrVMpVWAfagb+D+NK0D8QWUH7yIe6vaGo7nRUs7aFgHS8IgOhQd5THBwni0coM\u003d",
+                    "Comentario": "FFM - SE ACTUALIZA STATUS DE INCIDENCIA :: OK",
                     "NumEmpleado": "MACDM00006",
                     "Empleado": "GAMALIEL AGUILAR CERON",
                     "Motivo": "POSTE DANADO",
-                    "Fecha": "27/05/2020 18:12 54"
-                }, {
-                    "NombreArchivo": "Prueba archivos.txt",
-                    "Url": "Rz9pcA/xasBRB1LZRkZ3gMTIIbPMyGbdvMcOPgpWHH+yZGx7UkvuxzCjP4wTN2W1kWp5hra5KN/QLFZL1igAqre1v9BVlHZTkQ/FSwhwAza8/yFw6egWxuUxwcJ4tHKD",
-                    "Comentario": "FFM - SE ACTUALIZA STATUS DE INCIDENCIA :: PRUEASDFASD",
-                    "NumEmpleado": "MACDM00006",
-                    "Empleado": "GAMALIEL AGUILAR CERON",
-                    "Motivo": "RED TX",
-                    "Fecha": "28/05/2020 11:57 57"
-                }, {
-                    "NombreArchivo": "Prueba inspector.txt",
-                    "Url": "IA0YCc5Xwl1bB+NhO7sTFtm4FZcTXbmi/1v2d79t9hgDNmrVMpVWAfagb+D+NK0DfjUzVQP9VdvYMrKfTDZuuX8Xjngli2r7H1sfeQBuQfI\u003d",
-                    "Comentario": "FFM - SE ACTUALIZA STATUS DE INCIDENCIA :: PROBANDO...",
-                    "NumEmpleado": "MACDM00006",
-                    "Empleado": "GAMALIEL AGUILAR CERON",
-                    "Motivo": "POSTE DANADO",
-                    "Fecha": "28/05/2020 12:34 22"
-                }, {
-                    "NombreArchivo": "BANDEJA.txt",
-                    "Url": "IA0YCc5Xwl1bB+NhO7sTFtm4FZcTXbmi/1v2d79t9hgDNmrVMpVWAfagb+D+NK0DfjUzVQP9VdtmLOCUBYPwhdoSx3UhJcbo",
-                    "Comentario": "FFM - SE ACTUALIZA STATUS DE INCIDENCIA :: ASDFASD",
-                    "NumEmpleado": "MACDM00006",
-                    "Empleado": "GAMALIEL AGUILAR CERON",
-                    "Motivo": "RED TX",
-                    "Fecha": "27/05/2020 18:03 11"
+                    "Fecha": "27/05/2020 12:55 16"
                 }]
             }
         }
+    }
+}
+
+let arrayCatalogoRechazo = {
+    data: {
+        "success": true,
+        "mensaje": "Consulta exitosa",
+        "result": [{
+            "idMotivo": "1",
+            "motivo": "RED TX"
+        }, {
+            "idMotivo": "2",
+            "motivo": "POSTE DANADO"
+        }]
     }
 }

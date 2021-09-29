@@ -1,17 +1,39 @@
 app.service("inspectorCoberturaService", function($http) {
-    this.consultarFallasCoberturaPE = function () {
+    this.consultarFallasCoberturaPE = function (params) {
         return $http({
-            method: "get",
+            method: "post",
             url: "req/consultarFallasCoberturaPE",
+            data: JSON.stringify(params),
             headers: {'Content-Type': "application/json; charset=utf-8"},
             transformRequest: angular.identity
         });
     };
 
-    this.consultarCoberturasPE = function () {
+    this.consultarIncidenciasCoberturaPE = function (params) {
         return $http({
-            method: "get",
-            url: "req/consultarCoberturasPE",
+            method: "post",
+            url: "req/consultarIncidenciasCoberturaPE",
+            data: JSON.stringify(params),
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
+        });
+    };
+
+    this.consultarFiltrosPE = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarFiltrosCoberturaPE",
+            data: JSON.stringify(params),
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
+        });
+    };
+
+    this.ligarIncidenciasCoberturaPE = function (params) {
+        return $http({
+            method: "post",
+            url: "req/ligarIncidenciasCoberturasPE",
+            data: JSON.stringify(params),
             headers: {'Content-Type': "application/json; charset=utf-8"},
             transformRequest: angular.identity
         });
