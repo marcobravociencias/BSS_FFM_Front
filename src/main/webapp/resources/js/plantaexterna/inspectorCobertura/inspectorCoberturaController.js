@@ -393,9 +393,9 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
 
         let selectedElm = $('#jstree-proton-3').jstree("get_selected", true);
         swal({
-            title: "Ligar incidencia(s) al cluster",
-            text: selectedElm[0].text  || '',
-            type: "info",
+            title: "Ligar incidencia(s) al cluster " + selectedElm[0].text,
+            text: "Comentarios:",
+            type: "warning",
             input: "textarea",
             inputPlaceholder: "Comentarios",
             showCancelButton: true,

@@ -161,7 +161,7 @@
                                                         <div class="col-md-3" style="text-align: right;">
                                                             <div class="list-card-label"></div> <span
                                                                 class="badge badge-primary badge-inspector">INP</span><br>
-                                                            <small class="title_span"><b>Fecha:
+                                                            <small class="title_span" style="color: #039be5;"><b>Fecha:
                                                                 </b>{{item.fecha}}</small>
                                                         </div>
                                                     </div>
