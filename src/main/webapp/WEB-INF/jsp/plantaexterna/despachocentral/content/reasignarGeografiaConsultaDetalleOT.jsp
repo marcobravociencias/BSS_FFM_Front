@@ -1,9 +1,9 @@
 <center>
-	<h3 class="subtitulosModalDetalle">Reasigna  a cl&uacute;ster</h3>
+	<h3 class="subtitulosModalDetalle">Reasignar geograf&iacute;a</h3>
 	<hr style=" border: .5px solid #ccc;">
 </center>
 <div class="row justify-content-center">
-	<div class="col-md-7 ">
+	<div class="col-md-9">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
@@ -19,7 +19,6 @@
 						</div>
 					</div>
 				</div>
-				
 				<div class="row">
 					<div class="col-md-12">
 						<div class="form-group">
@@ -30,10 +29,10 @@
             	</div>
             	<div class="row">
 		            <div class="col-md-6">
-		                <h6 id="seleccion-reasignacluster"><span style="color: #737373;">Sin selecci&oacute;n de cl&uacute;ster*</span></h6>
+		                <h6 id="seleccion-reasignacluster"><span style="color: #737373;">Sin selecci&oacute;n de geograf&iacute;a*</span></h6>
 		            </div>
 					<div class="col-md-6">
-						<button id="reasignaotcluster" style="float: right;" type="button" onclick="reasignaOTCluster();" class="btn btn-sm btn-primary" >Reasignar a cl&uacute;ster</button>
+						<button id="reasignaotcluster" style="float: right;" type="button" onclick="reasignaOTCluster();" class="btn btn-sm btn-primary" >Reasignar a geograf&iacute;a</button>
 					</div>
 				</div>
 			</div>
