@@ -1,8 +1,9 @@
 app.service("inspectorCoberturaService", function($http) {
-    this.consultarFallasCoberturaPE = function () {
+    this.consultarFallasCoberturaPE = function (params) {
         return $http({
-            method: "get",
+            method: "post",
             url: "req/consultarFallasCoberturaPE",
+            data: JSON.stringify(params),
             headers: {'Content-Type': "application/json; charset=utf-8"},
             transformRequest: angular.identity
         });
@@ -11,17 +12,18 @@ app.service("inspectorCoberturaService", function($http) {
     this.consultarIncidenciasCoberturaPE = function (params) {
         return $http({
             method: "post",
-            url: "req/consultarIncidenciasCoberturasPE",
+            url: "req/consultarIncidenciasCoberturaPE",
             data: JSON.stringify(params),
             headers: {'Content-Type': "application/json; charset=utf-8"},
             transformRequest: angular.identity
         });
     };
 
-    this.consultarFiltrosPE = function () {
+    this.consultarFiltrosPE = function (params) {
         return $http({
-            method: "get",
-            url: "req/consultarFiltrosPE",
+            method: "post",
+            url: "req/consultarFiltrosCoberturaPE",
+            data: JSON.stringify(params),
             headers: {'Content-Type': "application/json; charset=utf-8"},
             transformRequest: angular.identity
         });

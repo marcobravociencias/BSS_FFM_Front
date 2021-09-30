@@ -14,5 +14,7 @@ public interface InspectorIncidenciaService {
 	public ServiceResponseResult consultarDetalleIncidenciaInspectorPE(String params);
 	
 	public ServiceResponseResult consultarCatalogoRechazoIncidenciaInspectorPE(String params);
+	
+	public ServiceResponseResult cambiarStatusIncidenciaInspectorPE(String params);
 
 }

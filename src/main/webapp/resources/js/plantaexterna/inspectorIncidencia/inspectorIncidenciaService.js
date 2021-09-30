@@ -41,4 +41,22 @@ app.service("inspectorIncidenciaService", function ($http) {
             transformRequest: angular.identity
         })
     }
+    this.consultarCatalogoRechazoIncidenciaInspectorPE = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarCatalogoRechazoIncidenciaInspectorPE",
+            data: JSON.stringify(params),
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
+            transformRequest: angular.identity
+        })
+    }
+    this.cambiarStatusIncidenciaInspectorPE = function (params) {
+        return $http({
+            method: "post",
+            url: "req/cambiarStatusIncidenciaInspectorPE",
+            data: JSON.stringify(params),
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
+            transformRequest: angular.identity
+        })
+    }
 });

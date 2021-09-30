@@ -14,10 +14,10 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
             e.stopPropagation();
         });
 
-        $("#content_mapa_estatus").toggleClass('closed');
+        $("#content_mapa").toggleClass('closed');
 
 
-        $("#content_mapa_estatus").click(function () {
+        $("#content_mapa").click(function () {
             $(this).toggleClass('closed');
             if ($(this).hasClass('closed')) {
                 $("#content-card-selected").hide();
@@ -35,9 +35,8 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
         });
         $('.datepicker').datepicker('update', new Date());
 
-        document.getElementById('cluster').addEventListener('click', function () {
-            //Validar al menos una incidencia
-            $('#modalCluster').modal('show');
+        document.getElementById('jstree-proton-3').addEventListener('click', function () {
+            $("#content_mapa").click();
         });
 
         coberturaTable = $('#tableCobertura').DataTable({
@@ -53,6 +52,10 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
 
         });
 
+        $('#search').on('keyup', function () {
+            coberturaTable.search(this.value).draw();
+        });
+
         $("#modalCluster").on("hidden.bs.modal", function () {
             let selectedElm = $('#jstree-proton-3').jstree("get_selected", true);
             if (selectedElm.length == 1) {
@@ -61,6 +64,8 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                 $('#texto_cluster_seleccionado').text('Sin selecci\u00F3n');
             }
         });
+
+
     }
 
 
@@ -84,14 +89,13 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
             zoom: 15,
             disableDoubleClickZoom: true
         });
-        markers = [];
     }
 
     $scope.initMapa();
 
     $scope.seleccionTodos = function (paramFiltroParent, banderaChecked) {
         paramFiltroParent.map(function (e) {
-            e.checkedOpcion = banderaChecked
+            e.checkedOpcion = banderaChecked;
             return e;
         })
     }
@@ -99,15 +103,62 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
     $scope.consultarCatalogos = function () {
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
+
         $scope.filtrosCobertura.fallas = arrayFallas.data.result;
         $scope.filtrosCobertura.listArbol = arrayFiltersPE.data.result.listArbolFilter;
 
         $scope.seleccionTodos($scope.filtrosCobertura.fallas, true);
-        let geografia = $scope.filtrosCobertura.listArbol;
+        $scope.loadTree();
+        swal.close();
+
+        /*
+        $q.all([
+            inspectorCoberturaService.consultarFallasCoberturaPE(),
+            inspectorCoberturaService.consultarFintrosCoberturaPE(),
+        ]).then(function (results) {
+            swal.close();
+            if (results[0].data !== undefined) {
+                if (results[0].data.respuesta) {
+                    if (results[0].data.result) {
+                        $scope.filtrosCobertura.fallas =  results[0].data.result;
+                        $scope.seleccionTodos($scope.filtrosCobertura.fallas, true);
+                    } else {
+                        toastr.warning('No se encontraron datos de Fallas');
+                    }
+                } else {
+                    toastr.warning(results[0].data.resultDescripcion);
+                }
+            } else {
+                toastr.error('Ha ocurrido un error en la consulta de Fallas');
+            }
+    
+            if (results[1].data !== undefined) {
+                if (results[1].data.respuesta) {
+                    if (results[1].data.result) {
+                        $scope.filtrosCobertura.listArbol =  results[1].data.result;
+                        $scope.loadTree();
+                    } else {
+                        toastr.warning('No se encontraron datos');
+                    }
+                } else {
+                    toastr.warning(results[1].data.resultDescripcion);
+                }
+            } else {
+                toastr.error('Ha ocurrido un error en la consulta general');
+            }
+        });*/
+    }
+
+    $scope.loadTree = function () {
+        let geografia = angular.copy($scope.filtrosCobertura.listArbol);
         geografia.map((e) => {
             e.parent = e.padre == undefined ? "#" : e.padre;
             e.text = e.descripcion;
             e.icon = "fa fa-globe";
+            e.state = {
+                opened: false,
+                selected: false,
+            }
             return e
         })
         $('#jstree-proton-3').bind('loaded.jstree', function (e, data) {
@@ -121,26 +172,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                 }
             }
         });
-        swal.close();
-
-        /*
-        $q.all([
-            inspectorCoberturaService.consultarFallasCoberturaPE(),
-        ]).then(function (results) {
-            if (results[0].data !== undefined) {
-                if (results[0].data.respuesta) {
-                    if (results[0].data.result) {
-                        $scope.filtrosCobertura.fallas =  $scope.realizarConversionAnidado(results[0].data.result);
-                    } else {
-                        toastr.warning('No se encontraron datos de Fallas');
-                    }
-                } else {
-                    toastr.warning(results[0].data.resultDescripcion);
-                }
-            } else {
-                toastr.error('Ha ocurrido un error en la consulta de Fallas');
-            }
-        });*/
+        $('#texto_cluster_seleccionado').text('Sin selecci\u00F3n');
     }
 
     $scope.consultarCatalogos();
@@ -157,9 +189,8 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
         }
     }
 
-    $scope.consultarCoberturas = function () {
+    $scope.validarBusqueda = function () {
         let errorMessage = "";
-        let listFallas = [];
 
         if (!$scope.validarFecha("filtro_fecha_inicio_inspectorCobertura", "filtro_fecha_fin_inspectorCobertura")) {
             errorMessage += "<li>La fecha inicical debe ser menor a la fecha final</li>";
@@ -172,20 +203,45 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
 
             $.each($scope.filtrosCobertura.fallas, function (i, elemento) {
                 if (elemento.checkedOpcion) {
-                    listFallas.push(elemento.id);
                     isSelectedOne = true;
+                    return false;
                 }
             })
             if (!isSelectedOne) {
                 errorMessage += "<li>Selecciona falla</li>";
             }
         }
+        if (errorMessage !== "") {
+            toastr.warning(errorMessage);
+            return false;
+        } else {
+            return true;
+        }
 
-        if (errorMessage == "") {
+    }
+
+    $scope.consultarCoberturas = function () {
+        let listFallas = [];
+
+        if ($scope.validarBusqueda()) {
+            $.each($scope.filtrosCobertura.fallas, function (i, elemento) {
+                if (elemento.checkedOpcion) {
+                    listFallas.push(elemento.id);
+                }
+            })
+
             swal({ text: 'Espera un momento...', allowOutsideClick: false });
             swal.showLoading();
 
-            $scope.initMapa();
+
+            $.each(markers, function (i, elemento) {
+                $('#tableCobertura tbody tr:contains("' + elemento.id_marker + '")').css('background', '');
+                elemento.setMap(null);
+            });
+            markers = [];
+            map.setCenter({ lat: parseFloat(19.4326), lng: parseFloat(-99.1332) });
+            map.setZoom(15);
+
             $scope.listaIncidenciasLigar = [];
 
             let params = {
@@ -213,7 +269,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
             coberturaTable = $('#tableCobertura').DataTable({
                 "paging": true,
                 "lengthChange": false,
-                "searching": false,
+                "searching": true,
                 "ordering": false,
                 "pageLength": 10,
                 "info": false,
@@ -221,15 +277,23 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                 "language": idioma_espanol_not_font,
                 "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">'
             });
+            document.getElementById('tableCobertura_paginate').addEventListener('click', function () {
+                $('#tableCobertura tbody tr').css('background', '');
+                $.each(markers, function (i, elemento) {
+                    $('#tableCobertura tbody tr:contains("' + elemento.id_marker + '")').css('background', '#d3d3d3');
+                });
+                $scope.$apply();
+            })
             swal.close();
-            //})
-        } else {
-            toastr.warning(errorMessage);
         }
 
     }
 
     pintarUbicacion = function (id, latitud, longitud, reporta, falla, fecha) {
+        if (!$("#content_mapa").hasClass('closed')) {
+            $("#content_mapa").click();
+        }
+
         let isMarker = false;
         let index = 0;
         $.each(markers, function (i, elemento) {
@@ -238,7 +302,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                 isMarker = true;
                 $('#tableCobertura tbody tr:contains("' + id + '")').css('background', '');
                 elemento.setMap(null);
-                return;
+                return false;
             }
         });
 
@@ -248,16 +312,16 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
             markers.splice(index, 1);
             $.each(markers, function (i, elemento) {
                 if (i == markers.length - 1) {
-                    elemento.setAnimation(google.maps.Animation.BOUNCE);
                     map.setCenter(elemento.position);
                     map.setZoom(15);
+                    return false;
                 }
             });
             $.each($scope.listaIncidenciasLigar, function (i, elemento) {
                 if (elemento.id == id) {
                     $scope.listaIncidenciasLigar.splice(i, 1);
                     $scope.$apply();
-                    return;
+                    return false;
                 }
             });
         }
@@ -271,18 +335,18 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                 markers.splice(i, 1);
                 $.each(markers, function (ix, elemento2) {
                     if (ix == markers.length - 1) {
-                        elemento2.setAnimation(google.maps.Animation.BOUNCE);
                         map.setCenter(elemento2.position);
                         map.setZoom(15);
-                        return;
+                        return false;
                     }
                 });
+                return false;
             }
         })
     }
 
     $scope.printMarker = function (id, latitud, longitud, reporta, falla, fecha) {
-        $('#tableCobertura  tbody tr:contains("' + id + '")').css('background', '#e9f5f4');
+        $('#tableCobertura  tbody tr:contains("' + id + '")').css('background', '#d3d3d3');
         var contentString = '<div id="content"><div id="siteNotice"></div>' +
             '<h4 id="firstHeading" class="firstHeading"><span class="titleHeading">ID: </span>' + id + '</h4><hr>' +
             '<div id="bodyContent">' +
@@ -300,7 +364,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
             id_marker: id,
             position: { lat: parseFloat(latitud), lng: parseFloat(longitud) },
             map: map,
-            animation: google.maps.Animation.BOUNCE,
+            animation: google.maps.Animation.DROP,
             title: reporta,
             icon: {
                 path: google.maps.SymbolPath.CIRCLE,
@@ -316,17 +380,56 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
             infowindows.open(map, marker);
         });
 
-        for (i = 0; i < markers.length; i++) {
-            markers[i].setAnimation(google.maps.Animation.DROP);
-        }
-
         markers.push(marker);
         map.setCenter(new google.maps.LatLng(latitud, longitud));
     }
 
-    $scope.consultarCoberturas();
+    //$scope.consultarCoberturas();
 
     $scope.ligarIncidencias = function () {
+        $("#content_mapa").click();
+        if (!$scope.listaIncidenciasLigar.length) {
+            toastr.warning('Selecciona al menos una incidencia');
+            return false;
+        }
+
+        let ultimonivel = $scope.obtenerNivelUltimoJerarquia()
+        let clustersparam = $("#jstree-proton-3").jstree("get_selected", true)
+            .filter(e => e.original.nivel == ultimonivel)
+            .map(e => parseInt(e.id))
+
+        if (clustersparam.length == 0) {
+            toastr.warning('Selecciona cluster valido');
+            return false;
+        }
+
+        let selectedElm = $('#jstree-proton-3').jstree("get_selected", true);
+        swal({
+            title: "Ligar incidencia(s) al cluster " + selectedElm[0].text,
+            text: "Comentarios:",
+            type: "warning",
+            input: "textarea",
+            inputPlaceholder: "Comentarios",
+            showCancelButton: true,
+            confirmButtonColor: '#007bff',
+            confirmButtonText: 'Si, ligar incidencia(s)',
+            cancelButtonText: 'Cancelar'
+        }).then(function (response) {
+            if (response.length) {
+                $("#content_mapa").click();
+                $scope.consultarCoberturas();
+                $('#jstree-proton-3').jstree("destroy");
+                $scope.$apply();
+                $scope.loadTree();
+                toastr.success('Operaci&oacute;n exitosa');
+            } else {
+                toastr.warning('El comentario es obligatorio para ligar incidencias');
+            }
+
+        }).catch(err => {
+            toastr.warning('Operaci&oacute;n cancelada');
+        });
+
 
     }
 
@@ -337,13 +440,59 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
     }
 
     $scope.eliminarIncidencia = function (id) {
+        $("#content_mapa").click();
         $.each($scope.listaIncidenciasLigar, function (i, elemento) {
             if (elemento.id == id) {
                 $scope.listaIncidenciasLigar.splice(i, 1);
                 $scope.deleteMarker(id);
-                return;
+                return false;
             }
         });
+    }
+
+    function compareGeneric(a, b) {
+        let niveluno = a.nivel;
+        let niveldos = b.nivel;
+        if (niveluno > niveldos) {
+            return -1
+        } else if (niveluno < niveldos) {
+            return 1
+        }
+        return 0
+    }
+
+    $scope.obtenerNivelUltimoJerarquia = function () {
+        return $scope.filtrosCobertura.listArbol.sort(compareGeneric)[0].nivel
+    }
+
+    $scope.downloadExcelReportFile = function () {
+        const data = JSON.parse(JSON.stringify($scope.incidencias));
+        const fileName = 'Reporte incidencias cobertura';
+        const exportType = 'xls';
+        window.exportFromJSON({ data, fileName, exportType });
+
+        /*
+        let params = {
+                idFalla: listFallas,
+                fechaInicio: $("#filtro_fecha_inicio_inspectorCobertura").val(),
+                fechaFin: $("#filtro_fecha_fin_inspectorCobertura").val()          
+        }
+        swal({ text: 'Cargando registros...', allowOutsideClick: false });
+        swal.showLoading();
+        //inspectorCoberturaService.consultarIncidenciasCoberturaPE(params).then(function success(response) {
+            swal.close()
+            if (result.data.respuesta) {
+                const data = JSON.parse(result.data.result)
+                const fileName = 'Reporte incidencias cobertura'
+                const exportType = 'xls'
+     
+                window.exportFromJSON({ data, fileName, exportType })
+            } else {
+                mostrarMensajeErrorAlert('Ocurrio un error al generar reporte.')
+            }
+           
+        }).catch(err => handleError(err));
+        */
     }
 
 }]);

@@ -104,7 +104,7 @@
                     </div>
                     <div class="col-1 download-file">
                         <img alt="excel" src="${pageContext.request.contextPath}/resources/img/generic/group-10.png"
-                            style="cursor:pointer">
+                            style="cursor:pointer" ng-click="downloadExcelReportFile()">
                     </div>
                 </div>
             </div>
@@ -112,9 +112,13 @@
         <div class="container-fluid contenedor-inspectorCobertura">
             <div class="content-fluid">
                 <div class="row">
-                    <div class="col-5">
-                        <table id="tableCobertura" class="display table table-hover table-striped" cellspacing="0"
-                            width="100%">
+                    <div class="col-5" style="padding-right: 0;">
+                        <div class="row" style="float: right; margin: 5px; margin-top: 10px;">
+                            <input type="text" class="col-2 form-control form-control-sm" id="search" placeholder="Buscar">
+                            <span class="fa fa-search" id="buscar-falla"></span>
+                        </div>
+
+                        <table id="tableCobertura" class="display table table-hover" cellspacing="0" width="100%">
                             <thead id="thead_cobertura">
                                 <tr>
                                     <th>ID</th>
@@ -128,46 +132,60 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="col-7">
+                    <div class="col-7" style="padding: 0;">
                         <div class="card map-card">
                             <div id="mapaInspectorCobertura">
                             </div>
-                            <div id="content_mapa_estatus" class="card-body">
+                            <div id="content_mapa" class="card-body">
                                 <div class="white">
                                     <div class="card-header">
-                                        <h5 class="card-title">INCIDENCIAS</h5>
+                                        <h5 class="card-title">INCIDENCIAS <span ng-if="listaIncidenciasLigar.length"
+                                                style="color: red;" ng-bind="listaIncidenciasLigar.length"></span></h5>
                                     </div>
                                     <div class="divider"></div>
                                     <div style="display: none;" class="content-card" id="content-card-selected">
-                                        <div class="card-selected">
-                                            <div class="col-md-10 offset-md-1"
-                                                ng-repeat="item in listaIncidenciasLigar">
-                                                <div class="card card-incidencia">
+                                        <div class="row">
+                                            <div class="col-md-6 card-selected">
+                                                <div class="card card-incidencia"
+                                                    ng-repeat="item in listaIncidenciasLigar">
                                                     <div class="row">
                                                         <div class="col-md-10">
                                                             <h5 class="card-title">
                                                                 &nbsp;&nbsp;ID: {{item.id}} </h5>
                                                         </div>
-                                                        <div class="col-md-2" style="text-align: right;">
+                                                        <div class="col-md-2" style="text-align: right; color: red;">
                                                             <i class="fas fa-trash" style="cursor: pointer;"
+                                                                title="Eliminar"
                                                                 ng-click="eliminarIncidencia(item.id)"></i>
                                                         </div>
                                                     </div>
                                                     <div class="row">
-                                                        <div class="col-md-9">
-                                                            <span class="title_span">{{item.reporta}}</span><br>
+                                                        <div class="col-md-8">
+                                                            <span
+                                                                class="title_span"><strong>{{item.reporta}}</strong></span><br>
                                                             <span class="title_span">{{item.falla}}</span>
                                                         </div>
-                                                        <div class="col-md-3" style="text-align: right;">
+                                                        <div class="col-md-4" style="text-align: right;">
                                                             <div class="list-card-label"></div> <span
                                                                 class="badge badge-primary badge-inspector">INP</span><br>
-                                                            <small class="title_span"><b>Fecha:
+                                                            <small class="title_span" style="color: #039be5;"><b>Fecha:
                                                                 </b>{{item.fecha}}</small>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="col-md-6">
+                                                <div style=" max-height: 200px; overflow: auto;">
+                                                    <div id="jstree-proton-3" class="proton-demo"></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="card-footer btn-ligar" ng-click="ligarIncidencias()">
+                                                        <span>LIGAR INCIDENCIAS</span>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
+                                        <!--
                                         <div class="card-bottom">
                                             <div class="row">
                                                 <div class="col-6">
@@ -187,6 +205,8 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        -->
+
                                     </div>
 
                                 </div>
@@ -225,6 +245,7 @@
         src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
     <script type="text/javascript"
         src="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/lib/moment.es.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/libraries/exportExcel/index.min.js"></script>
 
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
     <script type="text/javascript"
@@ -233,6 +254,5 @@
         src="${pageContext.request.contextPath}/resources/js/plantaexterna/inspectorCobertura/inspectorCoberturaService.js"></script>
     <script type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/plantaexterna/inspectorCobertura/jsonInspectorCobertura.js"></script>
-
 
     </html>
