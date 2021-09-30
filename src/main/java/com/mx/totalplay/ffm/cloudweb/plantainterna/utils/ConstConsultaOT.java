@@ -40,4 +40,10 @@ private static final long serialVersionUID = 1L;
 	
 	@Value("${consultaGeneralOt}")
 	private String consultaGeneralOt;
+
+	@Value("${consultaPosventaDetalleSoporte}")
+	private String consultaPosventaDetalleSoporte;
+
+	@Value("${consultaPagos}")
+	private String consultaPagos;
 }

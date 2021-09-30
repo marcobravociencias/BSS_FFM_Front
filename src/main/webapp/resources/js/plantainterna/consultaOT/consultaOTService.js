@@ -109,4 +109,24 @@ app.service("consultaOTService", function($http){
             transformRequest: angular.identity
         });
     };
+
+    this.consultaPostVentaOt = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultaDetallePostVenta",
+            data: params,
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
+        });
+    };
+
+    this.consultaPagosOt = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultaPagos",
+            data: params,
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
+        });
+    };
 })

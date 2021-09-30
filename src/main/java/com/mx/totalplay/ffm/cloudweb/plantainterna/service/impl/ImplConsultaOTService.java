@@ -402,4 +402,45 @@ public class ImplConsultaOTService implements ConsultaOTService {
 
         return response;
     }
+
+    @Override
+    public ServiceResponseResult consultaDetallePostVenta(String params) {
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constConsultaOT.getConsultaPosventaDetalleSoporte());
+        logger.info("### URL consultaDetallePostVenta(): \n" + urlRequest);
+        Map<String, String> paramsRequestGet = new HashMap<>();
+        paramsRequestGet.put("idOrden", jsonObject.get("orden").getAsString());
+
+        ServiceResponseResult response = restCaller.callGetBearerTokenRequest(
+                paramsRequestGet,
+                urlRequest,
+                ServiceResponseResult.class,
+                tokenAcces);
+
+        logger.info("### RESULT consultaDetallePostVenta(): " + gson.toJson(response));
+        return response;
+    }
+
+    @Override
+    public ServiceResponseResult consultaPagos(String params) {
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constConsultaOT.getConsultaPagos());
+        logger.info("### URL consultaPagos(): \n" + urlRequest);
+        Map<String, String> paramsRequestGet = new HashMap<>();
+        paramsRequestGet.put("idOrden", jsonObject.get("orden").getAsString());
+        //paramsRequestGet.put("idUsuario", jsonObject.get("usuario").getAsString());
+
+        ServiceResponseResult response = restCaller.callGetBearerTokenRequest(
+                paramsRequestGet,
+                urlRequest,
+                ServiceResponseResult.class,
+                tokenAcces);
+
+        logger.info("### RESULT consultaPagos(): " + gson.toJson(response));
+        return response;
+    }
 }

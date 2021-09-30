@@ -27,7 +27,12 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	$scope.movimientos = [];
 	$scope.comentarioConsultaOT = '';
 	$scope.elementosRegistro;
-
+	$scope.detalleSoporteObj = {};
+	$scope.detallePagoObj = {};
+	let isConsultaDetalleSoporte = false;
+	let isConsultaDetallePago = false;
+	$scope.evidenciaDetalleEquipoV = '';
+	$scope.evidenciaDetalleEquipoN = '';
 
 	$scope.consultaOT = function () {
 		let isValido = true;
@@ -665,6 +670,8 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		$("#content_actividad").hide();
 		$("#content_recoleccion_materiales").hide()
 		$('#content_trayectoria').hide();
+		$('#content-postVenta').hide();
+		$('#content-pagos').hide();
 		$('#modal-detalle-ot .itemGeneral').removeClass('active');
 		$('#modal-detalle-ot .itemGeneral:first').addClass('active');
 		$scope.datoOt = ot;
@@ -1383,6 +1390,8 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		$("#informacion-ot").removeClass('active')
 		$("#info_historico").removeClass('active')
 		$("#acciones").removeClass('active')
+		$("#postVenta").removeClass('active')
+		$('#pagos-Ot').removeClass('active');
 		$('.contenedor_detalle').hide();
 
 		$('#comentarios').addClass('active');
@@ -1394,6 +1403,8 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		$("#comentarios").removeClass('active')
 		$("#info_historico").removeClass('active')
 		$("#acciones").removeClass('active')
+		$("#postVenta").removeClass('active')
+		$('#pagos-Ot').removeClass('active');
 		$('.contenedor_detalle').hide();
 
 		$('#informacion-ot').addClass('active');
@@ -1405,11 +1416,38 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		$("#comentarios").removeClass('active')
 		$("#informacion-ot").removeClass('active')
 		$("#acciones").removeClass('active')
+		$("#postVenta").removeClass('active')
+		$('#pagos-Ot').removeClass('active');
 		$('.contenedor_detalle').hide();
 
 		$('#info_historico').addClass('active');
 		$('#content-historico').show();
 		$scope.consultaHistoricoOt();
+	});
+
+	document.getElementById('postVenta').addEventListener('click', function () {
+		$("#comentarios").removeClass('active')
+		$("#info_historico").removeClass('active')
+		$("#informacion-ot").removeClass('active')
+		$('#pagos-Ot').removeClass('active');
+		$('.contenedor_detalle').hide();
+
+		$('#postVenta').addClass('active');
+		$('#content-postVenta').show();
+		$scope.consultarPostVentaOt();
+	});
+
+	document.getElementById('pagos-Ot').addEventListener('click', function () {
+		$("#comentarios").removeClass('active')
+		$("#informacion-ot").removeClass('active')
+		$("#acciones").removeClass('active')
+		$("#postVenta").removeClass('active')
+		$('#info_historico').removeClass('active');
+		$('.contenedor_detalle').hide();
+
+		$('#pagos-Ot').addClass('active');
+		$('#content-pagos').show();
+		$scope.consultaPagosOt();
 	});
 
 
@@ -1430,6 +1468,8 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		$("#info_historico").removeClass('active')
 		$("#comentarios").removeClass('active')
 		$("#acciones").removeClass('active')
+		$("#postVenta").removeClass('active')
+		$("#pagos-Ot").removeClass('active')
 	})
 
 	limpiarVariablesModalDetalle = function () {
@@ -1447,9 +1487,13 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		is_consulta_ip = false;
 		is_consulta_informacion_Red = false;
 		is_consulta_actividad_tecnico = false;
+		isConsultaDetalleSoporte = false
+		isConsultaDetallePago = false
 		$("#info_historico").removeClass('active')
 		$("#comentarios").removeClass('active')
 		$("#acciones").removeClass('active')
+		$("#postVenta").removeClass('active')
+		$("#pagos-Ot").removeClass('active')
 		$("#informacion-ot").addClass('active')
 	}
 
@@ -1458,6 +1502,8 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		$("#info_historico").removeClass('active')
 		$("#comentarios").removeClass('active')
 		$("#acciones").removeClass('active')
+		$("#postVenta").removeClass('active')
+		$("#pagos-Ot").removeClass('active')
 		$("#informacion-ot").addClass('active')
 	}
 
@@ -1667,6 +1713,58 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			
 		} else {
 			mostrarMensajeWarningValidacion(errorMensaje);
+		}
+	}
+
+	$scope.consultarPostVentaOt = function(){
+		if (!isConsultaDetalleSoporte) {
+			let params = {
+				orden: $scope.datoOt
+			}
+			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
+			swal.showLoading();
+			consultaOTService.consultaPostVentaOt(JSON.stringify(params)).then((result) =>{
+				swal.close()
+				console.log(result)
+				isConsultaDetalleSoporte = true
+				if (result.data.respuesta) {
+					if (result.data.result) {
+						$scope.detalleSoporteObj = result.data.result
+						$scope.detalleSoporteObj.equipoNuevo.evidencias ? $scope.evidenciaDetalleEquipoN = $scope.detalleSoporteObj.equipoNuevo.evidencias : $scope.evidenciaDetalleEquipoN = './resources/img/generic/not_found.png'
+						$scope.detalleSoporteObj.equipoViejo.evidencias ? $scope.evidenciaDetalleEquipoV = $scope.detalleSoporteObj.equipoViejo.evidencias : $scope.evidenciaDetalleEquipoV = './resources/img/generic/not_found.png'
+					} else {
+						mostrarMensajeWarningValidacion('No se encontro informaci&oacute;n')
+						$scope.evidenciaDetalleEquipoN = './resources/img/generic/not_found.png'
+						$scope.evidenciaDetalleEquipoV = './resources/img/generic/not_found.png'
+					}
+				} else {
+					mostrarMensajeErrorAlert(result.data.resultDescripcion)
+				}
+			}).catch(err => handleError(err));
+		}
+	}
+
+	$scope.consultaPagosOt = function(){
+		if (!isConsultaDetallePago) {
+			let params = {
+				orden: $scope.datoOt
+			}
+			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
+			swal.showLoading();
+			consultaOTService.consultaPagosOt(JSON.stringify(params)).then((result) =>{
+				swal.close()
+				console.log(result)
+				isConsultaDetallePago = true
+				if (result.data.respuesta) {
+					if (result.data.result) {
+						$scope.detallePagoObj = result.data.result.detallePago
+					} else {
+						mostrarMensajeWarningValidacion('No se encontro informaci&oacute;n')
+					}
+				} else {
+					mostrarMensajeErrorAlert(result.data.resultDescripcion)
+				}
+			}).catch(err => handleError(err));
 		}
 	}
 }])
