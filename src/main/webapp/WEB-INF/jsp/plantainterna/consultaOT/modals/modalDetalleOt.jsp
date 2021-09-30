@@ -15,6 +15,8 @@
                                 <li class="nav-link active" id="informacion-ot">Informaci&oacute;n</li>
                                 <li class="nav-link" id="info_historico">Hist&oacute;rico</li>
                                 <li class="nav-link" id="comentarios">Comentarios</li>
+                                <li class="nav-link" id="postVenta">Detalle Soporte</li>
+                                <li class="nav-link" id="pagos-Ot">Pagos</li>
                                 <!-- <li class="nav-link" id="acciones">Acciones</li> -->
                             </div>
                         </div>
@@ -129,6 +131,16 @@
                             <div class="contenedor_detalle row" id="content-historico">
                                 <div class="container">
                                     <jsp:include page="../contentTap/modalHistorico.jsp"></jsp:include>
+                                </div>
+                            </div>
+                            <div class="contenedor_detalle row" id="content-postVenta">
+                                <div class="container">
+                                    <jsp:include page="../contentTap/detalleSoporte.jsp"></jsp:include>
+                                </div>
+                            </div>
+                            <div class="contenedor_detalle row" id="content-pagos">
+                                <div class="container">
+                                    <jsp:include page="../contentTap/detallePago.jsp"></jsp:include>
                                 </div>
                             </div>
                             <div class="contenedor_detalle row" id="content_acciones">

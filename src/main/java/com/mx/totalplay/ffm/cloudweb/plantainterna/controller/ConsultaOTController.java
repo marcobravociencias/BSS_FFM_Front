@@ -124,4 +124,24 @@ public class ConsultaOTController {
 		}
 		return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
 	}
+
+	@PostMapping("/consultaDetallePostVenta")
+	public ResponseEntity<?> consultaDetallePostVenta(@RequestBody String params){
+		logger.info("#### CONSULTANDO consultaDetallePostVenta: " + params);
+		ServiceResponseResult response = consultaOTService.consultaDetallePostVenta(params);
+		if (response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+
+	@PostMapping("/consultaPagos")
+	public ResponseEntity<?> consultaPagos(@RequestBody String params){
+		logger.info("#### CONSULTANDO consultaPagos: " + params);
+		ServiceResponseResult response = consultaOTService.consultaPagos(params);
+		if (response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
 }
