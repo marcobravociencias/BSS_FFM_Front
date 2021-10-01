@@ -1,3 +1,29 @@
+.jstree-proton .jstree-wholerow-clicked {
+  background: white;
+}
+
+.jstree-proton .jstree-clicked {
+  color: white;
+}
+
+.jstree-checkbox-selection .jstree-clicked {
+  color: #808080;
+}
+
+.jstree-proton .jstree-search {
+  font-style: italic;
+  color: #8b0000;
+  font-weight: bold;
+}
+
+.jstree-proton{
+  color: #808080;
+}
+
+.jstree-proton .jstree-clicked{
+  border-radius: 0;
+}
+
 .controlContent {
   font-family: "Montserrat" !important;
   font-size: 12px !important;
@@ -337,7 +363,11 @@ table.dataTable.no-footer {
   color: #784085;
   font-size: 12px;
   width: 165px;
+  display: inline-block;
   vertical-align: baseline;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .tableText{
@@ -346,6 +376,10 @@ table.dataTable.no-footer {
   font-size: 12px;
   width: 165px;
   vertical-align: baseline;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 
@@ -436,13 +470,15 @@ li{
 }
 
 .file-delete{
-    margin: 1em;
+  margin-top: 20px;
+  margin-left: 55px;
+  display: inline-flex;
 }
 
 .file-delete i{
   color: red;
   cursor: pointer;
-  margin-left: 1em;
+  margin: 0.3em;
 }
 
 .search-filtro {
@@ -464,12 +500,62 @@ li{
 }
 
 .imgResumen{
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 80px;
   box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
   cursor: pointer;
 }
 
 tfoot{
   display: none;
+}
+
+.iconoBusqueda {
+  color: #888888;
+  position: absolute;
+  right: 0.8em;
+  top: 0.4em;
+  font-size: 0.8em;
+  z-index: 3;
+}
+
+.content-seach-group {
+    height: 1em;
+    display: inline-flex;
+    margin: 0em auto 1em;
+}
+
+.buscadorGenerico {
+  height: 2em !important;
+  min-height: 2em !important;
+  padding: 0 !important;
+  padding-left: 1em !important;
+  border-radius: 1em !important;
+  border: 1px solid #e2e2e2;
+  background:#fcfcfc;
+}
+
+.buscadorGenerico::placeholder{
+  color:#a4a4a4;
+  font-size:1em;
+}
+
+.custom-file-label {
+  width: 250px;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.text-img{
+  width: 120px;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.custom-select{
+  text-transform: uppercase;
 }
