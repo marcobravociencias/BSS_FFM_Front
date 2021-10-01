@@ -1324,10 +1324,11 @@ app.controller('controlVehicularController',
 						if (isConfirm) {
 							$scope.isEdit = false;
 							$("#jstreeconsulta").jstree("destroy");
-							$scope.clearForm();
-							$scope.$apply();
-							$scope.loadArbol();
+							$scope.clearForm();		
+							$scope.loadArbolBuscar();
+							$scope.buildTableVehiculos($scope.vehiculos);
 							$scope.initWizard();
+							$scope.$apply();
 						}
 					}).catch(err => {
 						$("#consulta-tab").removeClass("active");
@@ -1340,8 +1341,9 @@ app.controller('controlVehicularController',
 					$scope.initWizard();
 					$("#searchText").val("");
 					$("#jstreeconsulta").jstree("destroy");
-					$scope.$apply();
 					$scope.loadArbolBuscar();
+					$scope.buildTableVehiculos($scope.vehiculos);
+					$scope.$apply();
 				}
 			}
 
