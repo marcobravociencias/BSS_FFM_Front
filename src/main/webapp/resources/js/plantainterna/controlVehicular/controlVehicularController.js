@@ -1318,12 +1318,11 @@ app.controller('controlVehicularController',
 					});
 				} else {
 					$("#jstreeconsulta").jstree("destroy");
+					$("#consulta-tab").removeClass("active");
 					$scope.$apply();
 					$scope.loadArbol();
 					$scope.initWizard();
 				}
-
-
 			}
 
 			resetAllSearch = function () {
@@ -1357,6 +1356,7 @@ app.controller('controlVehicularController',
 					$scope.initWizard();
 					$("#searchText").val("");
 					$("#jstreeconsulta").jstree("destroy");
+					$("#alta-tab").removeClass("active");
 					$scope.loadArbolBuscar();
 					$scope.buildTableVehiculos($scope.vehiculos);
 					$scope.$apply();
