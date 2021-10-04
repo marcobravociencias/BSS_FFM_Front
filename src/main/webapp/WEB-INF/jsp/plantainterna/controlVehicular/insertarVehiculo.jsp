@@ -451,7 +451,7 @@
                     </tr>
                     <tr>
                         <td class="tableTextTitle">* Comentarios: </td>
-                        <td class="tableText" colspan="5">{{vehiculo.detalle.comentarios ? vehiculo.detalle.comentarios
+                        <td class="tableText" colspan="5" style="width: 835px;">{{vehiculo.detalle.comentarios ? vehiculo.detalle.comentarios
                             : 'Sin asignar'}}</td>
                     </tr>
                 </table>

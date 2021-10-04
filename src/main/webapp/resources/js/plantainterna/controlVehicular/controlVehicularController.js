@@ -214,6 +214,7 @@ app.controller('controlVehicularController',
 			}
 
 			$scope.loadEncierros = function (geografia, encierro) {
+				$scope.vehiculo.detalle.idEncierro = "";
 				swal({ text: 'Espera un momento...', allowOutsideClick: false });
 				swal.showLoading();
 				$scope.data.encierros = [];
@@ -223,6 +224,7 @@ app.controller('controlVehicularController',
 							swal.close();
 							if (response.data.result.encierros.length) {
 								$scope.data.encierros = response.data.result.encierros;
+								
 								if ($scope.isEdit && encierro != 0) {
 									$scope.data.encierros.map(function (e) {
 										if (e.id == encierro) {
@@ -701,7 +703,6 @@ app.controller('controlVehicularController',
 					if (paramsTemp.idVehiculo) {
 						$scope.editarVehiculo(paramsTemp);
 					} else {
-
 						$scope.crearVehiculo(paramsTemp);
 					}
 
@@ -1095,7 +1096,7 @@ app.controller('controlVehicularController',
 			}
 
 			buscarPlaca = function () {
-				if ($("#placa").val().length > 4 && $("#placa").val().length < 8) {
+				if ($("#placa").val().length > 4 && $("#placa").val().length < 8 && $scope.isEdit == false) {
 					$scope.getPlaca();
 				}
 			}
