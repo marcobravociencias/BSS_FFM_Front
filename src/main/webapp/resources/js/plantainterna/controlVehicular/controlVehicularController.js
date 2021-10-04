@@ -719,10 +719,19 @@ app.controller('controlVehicularController',
 						if (response.data.respuesta) {
 							if (response.data.result) {
 								swal.close();
-								toastr.success(response.data.resultDescripcion);
+								$("#searchText").val("");
 								$("#jstreeconsulta").jstree("destroy");
-								$scope.loadArbol();
+								$scope.isEdit = false;
+								toastr.success(response.data.resultDescripcion);
+								$("#alta").removeClass("active show");
+								$("#alta-tab").removeClass("active");
+								$("#consulta-tab").addClass("active");
+								$("#consulta").addClass("active show");
+							
+								$scope.loadArbolBuscar();
+							
 								$scope.clearForm();
+								
 								$scope.initWizard();
 								setTimeout(function () {
 									$scope.getVehiculos();
@@ -751,14 +760,17 @@ app.controller('controlVehicularController',
 								swal.close();
 								$("#searchText").val("");
 								$("#jstreeconsulta").jstree("destroy");
-								$scope.loadArbolBuscar();
-								toastr.success(response.data.resultDescripcion);
-								$scope.clearForm();
 								$scope.isEdit = false;
-								$scope.initWizard();
+								toastr.success(response.data.resultDescripcion);
 								$("#alta").removeClass("active show");
 								$("#consulta-tab").addClass("active");
 								$("#consulta").addClass("active show");
+							
+								$scope.loadArbolBuscar();
+							
+								$scope.clearForm();
+								
+								$scope.initWizard();
 								setTimeout(function () {
 									$scope.getVehiculos();
 								}, 200)
@@ -944,12 +956,12 @@ app.controller('controlVehicularController',
 					$("#arbol_vehiculo_consulta").addClass("input-valid-error");
 					text += '<li>Seleccione una geograf\u00EDa</li>';
 				}
-
+				
 				if ($("#encierro").val() === "" || $("#encierro").val() === undefined) {
 					$("#encierro").addClass("input-valid-error");
 					text += "<li>Ubicaci&oacute;n CDO</li>";
 				}
-
+				
 				if (text !== "") {
 					let info = "Verifica los siguientes campos: " + text;
 					mostrarMensajeWarningValidacion(info);
