@@ -214,7 +214,10 @@ app.controller('controlVehicularController',
 			}
 
 			$scope.loadEncierros = function (geografia, encierro) {
-				$scope.vehiculo.detalle.idEncierro = "";
+				if ($scope.vehiculo.detalle && $scope.vehiculo.detalle.idEncierro) {
+					$scope.vehiculo.detalle.idEncierro = "";
+				}
+
 				swal({ text: 'Espera un momento...', allowOutsideClick: false });
 				swal.showLoading();
 				$scope.data.encierros = [];
@@ -224,7 +227,7 @@ app.controller('controlVehicularController',
 							swal.close();
 							if (response.data.result.encierros.length) {
 								$scope.data.encierros = response.data.result.encierros;
-								
+
 								if ($scope.isEdit && encierro != 0) {
 									$scope.data.encierros.map(function (e) {
 										if (e.id == encierro) {
@@ -1279,7 +1282,7 @@ app.controller('controlVehicularController',
 				if ($scope.isEdit) {
 					swal({
 						title: "\u00BFSeguro que desea salir del apartado?",
-						text: "Se perderan los datos actualizados",
+						text: "Se perder\u00E1n los datos actualizados",
 						type: "warning",
 						showCancelButton: true,
 						confirmButtonColor: '#007bff',
@@ -1315,7 +1318,7 @@ app.controller('controlVehicularController',
 				if ($scope.isEdit) {
 					swal({
 						title: "\u00BFSeguro que desea salir del apartado?",
-						text: "Se perderan los datos actualizados",
+						text: "Se perder\u00E1n los datos actualizados",
 						type: "warning",
 						showCancelButton: true,
 						confirmButtonColor: '#007bff',
@@ -1325,7 +1328,7 @@ app.controller('controlVehicularController',
 						if (isConfirm) {
 							$scope.isEdit = false;
 							$("#jstreeconsulta").jstree("destroy");
-							$scope.clearForm();		
+							$scope.clearForm();
 							$scope.loadArbolBuscar();
 							$scope.buildTableVehiculos($scope.vehiculos);
 							$scope.initWizard();
