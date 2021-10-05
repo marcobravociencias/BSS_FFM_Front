@@ -161,8 +161,6 @@ app.mapController = function ($scope, ordenesUniversalesService) {
             $("#search-input-place").val(marker.getPosition().lat()+', '+marker.getPosition().lng());
             $("#latitud-label").text(marker.getPosition().lat());
             $("#longitud-label").text(marker.getPosition().lng());
-            // if you don't do this, the map will zoom in
-    //        e.stopPropagation();
             console.log("ERROR")
         });
 

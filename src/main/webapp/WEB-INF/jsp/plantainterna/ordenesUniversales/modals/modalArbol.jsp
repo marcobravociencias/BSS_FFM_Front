@@ -3,14 +3,14 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"> &Aacute;rbol Cl&uacute;ster</h5>
+                <h5 class="modal-title" id="exampleModalLabel"> &Aacute;rbol geograf&iacute;a</h5>
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" style=" max-height: 300px; overflow: auto;">
                 <div id="jstree-distrito" class="proton-demo"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
+                <button type="button" class="btn btn-secondary btn-cerrar-modal" data-mdb-dismiss="modal">
                     Cerrar
                 </button>
             </div>
