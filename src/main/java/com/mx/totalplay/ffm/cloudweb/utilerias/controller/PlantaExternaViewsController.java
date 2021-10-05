@@ -55,6 +55,11 @@ public class PlantaExternaViewsController {
 		return "plantaexterna/inspectorcoberturas/inspectorcoberturaspe";				
 	}
 	
+	@GetMapping("/moduloIncidenciasCuadrantesPE")
+	public String incidenciasCuadrantesPlantaExterna() {		
+		return "plantaexterna/incidenciasCuadrantes/incidenciasCuadrantes";				
+	}
+	
 	@ModelAttribute("googlkeyattrvar")
 	 public Map<String,Object> agregarVariablesGeneric () {
 		logger.info("agregando generic ------------------");

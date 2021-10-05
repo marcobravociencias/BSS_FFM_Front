@@ -59,7 +59,6 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
     }
     $scope.initMapa();
 
-
     $scope.realizarConversionAnidado = function (array) {
         let arrayCopy = [];
         angular.forEach(array.filter(e => e.nivel == 1), function (elemento, index) {
@@ -71,8 +70,6 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         })
         return arrayCopy;
     }
-
-
 
     $scope.initCatalogos = function () {
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
@@ -190,6 +187,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                                 return e
                             })
                             $('#jstree-proton-3').bind('loaded.jstree', function (e, data) {
+
                             }).jstree({
                                 'plugins': ["wholerow", "checkbox"],
                                 'core': {
@@ -197,7 +195,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                                     'themes': {
                                         'name': 'proton',
                                         'responsive': true,
-                                        "icons": false
+                                        "icons":false        
                                     }
                                 }
                             });

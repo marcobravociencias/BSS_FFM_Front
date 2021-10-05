@@ -90,14 +90,12 @@ i.icono-noseleccion {
     border: 0px !important;
 }
 
-/* .datepicker .datepicker-switch:hover,   
-.datepicker .next:hover,
-.datepicker .prev:hover,
-.datepicker tfoot tr th:hover {
-    background: #78a7f7;
-    color: white;
-} */
-
+.jstree-proton .jstree-wholerow-clicked {
+  background: white;
+}
+.jstree-proton .jstree-clicked {
+  color: #808080;
+}
 
 .element-menu-filter {
     position: relative;
