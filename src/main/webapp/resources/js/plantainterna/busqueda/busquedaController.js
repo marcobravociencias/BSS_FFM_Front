@@ -367,7 +367,7 @@ app.controller('busquedaController', ['$scope', 'busquedaService', 'genericServi
                         console.log(result.data.result)
                         swal.close();
                     } else {
-                        mostrarMensajeErrorAlert("No se encontr\u00F3 informaci\u00F3n")
+                        mostrarMensajeWarningValidacion("No se encontr\u00F3 informaci\u00F3n")
                         swal.close()
                     }
                 } else {
