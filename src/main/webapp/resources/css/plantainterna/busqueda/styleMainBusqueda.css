@@ -470,22 +470,7 @@ span.noosactivar.ng-scope {
   font-family: 'Montserrat', sans-serif;
   color: #39455b;
 }
-.text-table-click:hover{
-  text-decoration:underline; 
-  cursor:pointer;   
-}
 
-.text-table-click {
-  font-size: 12px;
-  font-family: 'Montserrat', sans-serif;
-  color: #005aff !important;
-  font-weight: bold;
-}
-.text-table {
-  font-size: 12px;
-  font-family: 'Montserrat', sans-serif;
-  color: #39455b;
-}
 .style-link {
   font-size: 12px;
   font-family: 'Montserrat', sans-serif;

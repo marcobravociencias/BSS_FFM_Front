@@ -368,7 +368,7 @@
                                         <span class="text-head-table">Confirmada</span>
                                     </div>
                                 </div>
-                                <div class="row" ng-repeat="os in detalle.arrOs | limitTo: limitOsCf" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
+                                <div class="row" ng-repeat="os in detalle.os | limitTo: limitOsCf" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
                                     <div class="col-3">
                                         <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(os.id, os.keyObject)">
                                             <span class="text-table" ng-bind="os.nombre"></span>
@@ -387,7 +387,7 @@
                                         <input type="checkbox" disabled readonly ng-model="os.osConfirmada" ng-true-value="'true'" ng-false-value="'false'">
                                     </div>
                                 </div>
-                                <div class="row" ng-show="detalle.arrOs.length > 10">
+                                <div class="row" ng-show="detalle.os.length > 10">
                                     <div class="col-12">
                                         <a class="style-link" href="" ng-click="mostrarMasMenosOsCf()">
                                             <span ng-show="limitOsCf === 10">Mostrar mas...</span>
@@ -395,7 +395,7 @@
                                         </a>
                                     </div>
                                 </div>
-                                <div class="row" ng-show="detalle.arrOs.length === 0">
+                                <div class="row" ng-show="detalle.os.length === 0">
                                     <div class="col-12 text-center">
                                         <span class="text-table">No se encontro informaci&oacute;n</span>
                                     </div>
@@ -439,7 +439,7 @@
                                         <span class="text-head-table">Estatus</span>
                                     </div>
                                 </div>
-                                <div class="row" ng-repeat="ticket in detalle.arrTicket | limitTo: limitTicketCf" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
+                                <div class="row" ng-repeat="ticket in detalle.tickets | limitTo: limitTicketCf" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
                                     <div class="col-3">
                                         <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(ticket.id, ticket.keyObject)">
                                             <span class="text-table" ng-bind="ticket.caseNumber"></span>
@@ -456,7 +456,7 @@
                                         <span class="text-table" ng-bind="ticket.status"></span>
                                     </div>
                                 </div>
-                                <div class="row" ng-show="detalle.arrTicket.length > 10">
+                                <div class="row" ng-show="detalle.tickets.length > 10">
                                     <div class="col-12">
                                         <a class="style-link" href="" ng-click="mostrarMasMenosTicketCf()">
                                             <span ng-show="limitTicketCf === 10">Mostrar mas...</span>
@@ -464,7 +464,7 @@
                                         </a>
                                     </div>
                                 </div>
-                                <div class="row" ng-show="detalle.arrTicket.length === 0">
+                                <div class="row" ng-show="detalle.tickets.length === 0">
                                     <div class="col-12 text-center">
                                         <span class="text-table">No se encontro informaci&oacute;n</span>
                                     </div>

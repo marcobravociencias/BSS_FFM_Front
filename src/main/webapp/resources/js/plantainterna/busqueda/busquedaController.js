@@ -5,6 +5,32 @@ app.controller('busquedaController', ['$scope', 'busquedaService', 'genericServi
     $scope.mostrarCurrentInfo = 1;
     $scope.searchSF = '';
 
+    // limites
+    $scope.limitCotSitio = 10;
+    $scope.limitCuentas = 10;
+    $scope.limitCuentaFactura = 10;
+    $scope.limitCotizacion = 10;
+    $scope.limitOs = 10;
+    $scope.limitCotSitioPlan = 10;
+    $scope.limitOportunidad = 10;
+    $scope.limitTickets = 10;
+
+    $scope.limitCotSitioPlanCs = 10;
+    $scope.limitCotSitioCot = 10;
+    $scope.limitCotSitioPlanCot = 10;
+    $scope.limitOsCf = 10;
+    $scope.limitTicketCf = 10;
+    $scope.limitCuentaFacturaCu = 10;
+    $scope.limitOportunidadCu = 10;
+
+    $scope.limitServiciosCsp = 10;
+    $scope.limitProductosCsp = 10;
+    $scope.limitPromocionesCsp = 10;
+    $scope.limitInternetCf = 10;
+    $scope.limitTelefoniaCf = 10;
+    $scope.limitTvCf = 10;
+    $scope.limitIps = 10;
+
     app.activacionController($scope, busquedaService)
 
     $scope.consultaPermisos = function () {
@@ -22,10 +48,10 @@ app.controller('busquedaController', ['$scope', 'busquedaService', 'genericServi
     }
 
     $scope.buscarGeneral = function () {
-        if ($scope.searchSF !== '') {
+        if ($scope.searchSF.trim() !== '') {
             $scope.cerrarDetalles();
             let params = {
-                parametroBusqueda: $scope.searchSF
+                busqueda: $scope.searchSF
             }
             swal({ text: 'Buscando...', allowOutsideClick: false });
             swal.showLoading();
@@ -38,7 +64,7 @@ app.controller('busquedaController', ['$scope', 'busquedaService', 'genericServi
                         $scope.resultBusqueda = result.data.result;
                         $scope.showSearch = true;
                     } else {
-                        mostrarMensajeErrorAlert("No se encontro resultado")
+                        mostrarMensajeWarningValidacion("No se encontro resultado")
                     }
                 } else {
                     mostrarMensajeErrorAlert(result.data.resultDescripcion)
@@ -895,6 +921,185 @@ app.controller('busquedaController', ['$scope', 'busquedaService', 'genericServi
         let evidenciaRechazada = $scope.imagenValidarLista.filter(evidencia => { return evidencia.validacion === '0' }).length;
         document.getElementById('evidenciaAcaptadas').innerHTML = evidenciaAceptada;
         document.getElementById('evidenciaRechazada').innerHTML = evidenciaRechazada;
+    }
+
+
+    $scope.mostrarMasMenosCotSitio = function() {
+        if ($scope.limitCotSitio === 10) {
+            $scope.limitCotSitio = $scope.resultBusqueda.cotSitios.length;
+        } else {
+            $scope.limitCotSitio = 10;
+        }
+    }
+
+    $scope.mostrarMasMenosCuentas = function() {
+        if ($scope.limitCuentas === 10) {
+            $scope.limitCuentas = $scope.resultBusqueda.cuentas.length;
+        } else {
+            $scope.limitCuentas = 10;
+        }
+    }
+
+    $scope.mostrarMasMenosCuentaFactura = function() {
+        if ($scope.limitCuentaFactura === 10) {
+            $scope.limitCuentaFactura = $scope.resultBusqueda.cuentasFactura.length;
+        } else {
+            $scope.limitCuentaFactura = 10;
+        }
+    }
+
+    $scope.mostrarMasMenosCotizacion = function() {
+        if ($scope.limitCotizacion === 10) {
+            $scope.limitCotizacion = $scope.resultBusqueda.cotizaciones.length;
+        } else {
+            $scope.limitCotizacion = 10;
+        }
+    }
+
+    $scope.mostrarMasMenosOs = function() {
+        if ($scope.limitOs === 10) {
+            $scope.limitOs = $scope.resultBusqueda.ordenesServicio.length;
+        } else {
+            $scope.limitOs = 10;
+        }
+    }
+
+    $scope.mostrarMasMenosCotSitioPlan = function() {
+        if ($scope.limitCotSitioPlan === 10) {
+            $scope.limitCotSitioPlan = $scope.resultBusqueda.cotSitiosPlan.length;
+        } else {
+            $scope.limitCotSitioPlan = 10;
+        }
+    }
+
+    $scope.mostrarMasMenosOportunidad = function() {
+        if ($scope.limitOportunidad === 10) {
+            $scope.limitOportunidad = $scope.resultBusqueda.oportunidades.length;
+        } else {
+            $scope.limitOportunidad = 10;
+        }
+    }
+
+    $scope.mostrarMasMenosTickets = function() {
+        if ($scope.limitTickets === 10) {
+            $scope.limitTickets = $scope.resultBusqueda.tickets.length;
+        } else {
+            $scope.limitTickets = 10;
+        }
+    }
+
+    //
+
+    $scope.mostrarMasMenosCotSitioPlanCs = function() {
+        if ($scope.limitCotSitioPlanCs === 10) {
+            $scope.limitCotSitioPlanCs = $scope.detalle.cotSitioPlanes.length;
+        } else {
+            $scope.limitCotSitioPlanCs = 10;
+        }
+    }
+
+    $scope.mostrarMasMenosCotSitioCot = function() {
+        if ($scope.limitCotSitioCot === 10) {
+            $scope.limitCotSitioCot = $scope.detalle.listCotSitio.length;
+        } else {
+            $scope.limitCotSitioCot = 10;
+        }
+    }
+
+    $scope.mostrarMasMenosCotSitioPlanCot = function() {
+        if ($scope.limitCotSitioPlanCot === 10) {
+            $scope.limitCotSitioPlanCot = $scope.detalle.listCotSitioPlan.length;
+        } else {
+            $scope.limitCotSitioPlanCot = 10;
+        }
+    }
+
+    $scope.mostrarMasMenosOsCf = function() {
+        if ($scope.limitOsCf === 10) {
+            $scope.limitOsCf = $scope.detalle.os.length;
+        } else {
+            $scope.limitOsCf = 10;
+        }
+    }
+
+    $scope.mostrarMasMenosTicketCf = function() {
+        if ($scope.limitTicketCf === 10) {
+            $scope.limitTicketCf = $scope.detalle.tickets.length;
+        } else {
+            $scope.limitTicketCf = 10;
+        }
+    }
+
+    $scope.mostrarMasMenosCuentaFacturaCu = function() {
+        if ($scope.limitCuentaFacturaCu === 10) {
+            $scope.limitCuentaFacturaCu = $scope.detalle.cuentasFacturas.length;
+        } else {
+            $scope.limitCuentaFacturaCu = 10;
+        }
+    }
+
+    $scope.mostrarMasMenosOportunidadCu = function() {
+        if ($scope.limitOportunidadCu === 10) {
+            $scope.limitOportunidadCu = $scope.detalle.oportinidades.length;
+        } else {
+            $scope.limitOportunidadCu = 10;
+        }
+    }
+
+    $scope.mostrarMasMenosServicioCsp = function() {
+        if ($scope.limitServiciosCsp === 10) {
+            $scope.limitServiciosCsp = $scope.responseServicios.Servicios.Servicio.length;
+        } else {
+            $scope.limitServiciosCsp = 10;
+        }
+    }
+
+    $scope.mostrarMasMenosProductoCsp = function() {
+        if ($scope.limitProductosCsp === 10) {
+            $scope.limitProductosCsp = $scope.responseServicios.Productos.Producto.length;
+        } else {
+            $scope.limitProductosCsp = 10;
+        }
+    }
+
+    $scope.mostrarMasMenosPromocionesCsp = function() {
+        if ($scope.limitPromocionesCsp === 10) {
+            $scope.limitPromocionesCsp = $scope.responseServicios.Promociones.Promocion.length;
+        } else {
+            $scope.limitPromocionesCsp = 10;
+        }
+    }
+
+    $scope.mostrarMasMenosInternetCf = function() {
+        if ($scope.limitInternetCf === 10) {
+            $scope.limitInternetCf = $scope.serviciosFacturado.InfoInternet.Internet.length;
+        } else {
+            $scope.limitInternetCf = 10;
+        }
+    }
+
+    $scope.mostrarMasMenosTelefoniaCf = function() {
+        if ($scope.limitTelefoniaCf === 10) {
+            $scope.limitTelefoniaCf = $scope.serviciosFacturado.InfoTelefonia.DNs.length;
+        } else {
+            $scope.limitTelefoniaCf = 10;
+        }
+    }
+
+    $scope.mostrarMasMenosTvCf = function() {
+        if ($scope.limitTvCf === 10) {
+            $scope.limitTvCf = $scope.serviciosFacturado.InfoTelevision.Television.length;
+        } else {
+            $scope.limitTvCf = 10;
+        }
+    }
+
+    $scope.mostrarMasMenosIps = function() {
+        if ($scope.limitIps === 10) {
+            $scope.limitIps = $scope.arregloIps.length;
+        } else {
+            $scope.limitIps = 10;
+        }
     }
 
 }])

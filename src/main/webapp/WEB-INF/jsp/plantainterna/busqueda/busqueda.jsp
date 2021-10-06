@@ -47,7 +47,7 @@
                     </div>
                     <div class="textcontainer-header">
                         <span class="text-title-elementoh">OPORTUNIDAD</span>
-                        <span class="text-title-elementohcantidad">{{resultBusqueda.arrOportunidad !== undefined ? resultBusqueda.arrOportunidad.length : '0'}} registros</span>
+                        <span class="text-title-elementohcantidad">{{resultBusqueda.oportunidades !== undefined ? resultBusqueda.oportunidades.length : '0'}} registros</span>
                     </div>
                 </div>
                 <div ng-click="setCurrentTabInfo(2)" ng-class="{'activetitleinfo':mostrarCurrentInfo==2}" class="element-busqueda-title">
@@ -57,7 +57,7 @@
                     </div>
                     <div class="textcontainer-header">
                         <span class="text-title-elementoh">CUENTAS</span>
-                        <span class="text-title-elementohcantidad">{{resultBusqueda.arrCuentas !== undefined ? resultBusqueda.arrCuentas.length : '0'}} registros</span>
+                        <span class="text-title-elementohcantidad">{{resultBusqueda.cuentas !== undefined ? resultBusqueda.cuentas.length : '0'}} registros</span>
                     </div>
                 </div>
                 <div ng-click="setCurrentTabInfo(3)" ng-class="{'activetitleinfo':mostrarCurrentInfo==3}" class="element-busqueda-title">
@@ -66,7 +66,7 @@
                     </div>
                     <div class="textcontainer-header">
                         <span class="text-title-elementoh">CUENTAS FACTURA</span>
-                        <span class="text-title-elementohcantidad">{{resultBusqueda.arrCuentaFactura !== undefined ? resultBusqueda.arrCuentaFactura.length : '0'}} registros</span>
+                        <span class="text-title-elementohcantidad">{{resultBusqueda.cuentasFactura !== undefined ? resultBusqueda.cuentasFactura.length : '0'}} registros</span>
                     </div>
                 </div>
                 <div ng-click="setCurrentTabInfo(4)" ng-class="{'activetitleinfo':mostrarCurrentInfo==4}" class="element-busqueda-title">
@@ -75,7 +75,7 @@
                     </div>
                     <div class="textcontainer-header">
                         <span class="text-title-elementoh">COTIZACION</span>
-                        <span class="text-title-elementohcantidad">{{resultBusqueda.arrCotizacion !== undefined ? resultBusqueda.arrCotizacion.length : '0'}} registros</span>
+                        <span class="text-title-elementohcantidad">{{resultBusqueda.cotizaciones !== undefined ? resultBusqueda.cotizaciones.length : '0'}} registros</span>
                     </div>
                 </div>
                 <div ng-click="setCurrentTabInfo(5)" ng-class="{'activetitleinfo':mostrarCurrentInfo==5}" class="element-busqueda-title">
@@ -85,7 +85,7 @@
                     </div>
                     <div class="textcontainer-header">
                         <span class="text-title-elementoh">COT SITIOS</span>
-                        <span class="text-title-elementohcantidad">{{resultBusqueda.arrCotSitio !== undefined ? resultBusqueda.arrCotSitio.length : '0'}} registros</span>
+                        <span class="text-title-elementohcantidad">{{resultBusqueda.cotSitios !== undefined ? resultBusqueda.cotSitios.length : '0'}} registros</span>
                     </div>
                 </div>
                 <div ng-click="setCurrentTabInfo(6)" ng-class="{'activetitleinfo':mostrarCurrentInfo==6}" class="element-busqueda-title">
@@ -94,7 +94,7 @@
                     </div>
                     <div class="textcontainer-header">
                         <span class="text-title-elementoh">COT SITIOS PLAN</span>
-                        <span class="text-title-elementohcantidad">{{resultBusqueda.arrCotSitioPlan !== undefined ? resultBusqueda.arrCotSitioPlan.length : '0'}} registros</span>
+                        <span class="text-title-elementohcantidad">{{resultBusqueda.cotSitiosPlan !== undefined ? resultBusqueda.cotSitiosPlan.length : '0'}} registros</span>
                     </div>
                 </div>
                 <div ng-click="setCurrentTabInfo(7)" ng-class="{'activetitleinfo':mostrarCurrentInfo==7}" class="element-busqueda-title">
@@ -103,7 +103,7 @@
                     </div>
                     <div class="textcontainer-header">
                         <span class="text-title-elementoh">OS</span>
-                        <span class="text-title-elementohcantidad">{{resultBusqueda.arrOs !== undefined ? resultBusqueda.arrOs.length : '0'}} registros</span>
+                        <span class="text-title-elementohcantidad">{{resultBusqueda.ordenesServicio !== undefined ? resultBusqueda.ordenesServicio.length : '0'}} registros</span>
                     </div>
                 </div>
     
@@ -113,14 +113,14 @@
                     </div>
                     <div class="textcontainer-header">
                         <span class="text-title-elementoh">TICKETS</span>
-                        <span class="text-title-elementohcantidad">{{resultBusqueda.arrTk !== undefined ? resultBusqueda.arrTk.length : '0'}} registros</span>
+                        <span class="text-title-elementohcantidad">{{resultBusqueda.tickets !== undefined ? resultBusqueda.tickets.length : '0'}} registros</span>
                     </div>
                 </div>
             </div>
 
             <div ng-show="showSearch" class="col-second-parent col-10">
                 <div ng-if="mostrarCurrentInfo==1" class="contenedor-info-resumen">
-                    <div class="col-12" ng-if="resultBusqueda.arrOportunidad.length > 0">
+                    <div class="col-12" ng-if="resultBusqueda.oportunidades.length > 0">
                         <div class="header-col-table row">
                             <div class="col-3">
                                 <span class="text-head-table">N&uacute;mero de oportunidad</span>
@@ -132,7 +132,7 @@
                                 <span class="text-head-table">Etapa</span>
                             </div>
                         </div>
-                        <div class="row" ng-repeat="oportunidad in resultBusqueda.arrOportunidad | limitTo: limitOportunidad  track by $index" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
+                        <div class="row" ng-repeat="oportunidad in resultBusqueda.oportunidades | limitTo: limitOportunidad  track by $index" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
                             <div class="col-3">
                                 <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(oportunidad.id, oportunidad.keyObject)">
                                     <span class="text-table" ng-bind="oportunidad.numeroOportunidad"></span>
@@ -145,7 +145,7 @@
                                 <span class="text-table" ng-bind="oportunidad.etapa"></span>
                             </div>
                         </div>
-                        <div class="row" ng-show="resultBusqueda.arrOportunidad.length > 10">
+                        <div class="row" ng-show="resultBusqueda.oportunidades.length > 10">
                             <div class="col-12">
                                 <a class="style-link" href="" ng-click="mostrarMasMenosOportunidad()">
                                     <span ng-show="limitOportunidad === 10">Mostrar mas...</span>
@@ -154,14 +154,14 @@
                             </div>
                         </div>
                     </div>
-                    <div ng-if="resultBusqueda.arrOportunidad.length==0 || !resultBusqueda.arrOportunidad" class="imagen-no-results text-center">
+                    <div ng-if="resultBusqueda.oportunidadesoportunidades.length==0 || !resultBusqueda.oportunidades" class="imagen-no-results text-center">
                         <img src="${pageContext.request.contextPath}/resources/img/generic/no-results.png">
                         <br>
                         <span class="span-no-result">No se encontraron resultados</span>
                     </div>
                 </div>      
                 <div ng-if="mostrarCurrentInfo==2" class="contenedor-info-resumen">
-                    <div class="col-12" ng-if="resultBusqueda.arrCuentas.length > 0">
+                    <div class="col-12" ng-if="resultBusqueda.cuentas.length > 0">
                         <div class="header-col-table row">
                             <div class="col-6">
                                 <span class="text-head-table">Nombre</span>
@@ -173,7 +173,7 @@
                                 <span class="text-head-table">Raz&oacute;n social</span>
                             </div>
                         </div>
-                        <div class="row" ng-repeat="cuenta in resultBusqueda.arrCuentas | limitTo: limitCuentas  track by $index" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
+                        <div class="row" ng-repeat="cuenta in resultBusqueda.cuentas | limitTo: limitCuentas  track by $index" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
                             <div class="col-6">
                                 <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(cuenta.id, cuenta.keyObject)">
                                     <span class="text-table" ng-bind="cuenta.nombre"></span>
@@ -186,7 +186,7 @@
                                 <span class="text-table" ng-bind="cuenta.razonSocial"></span>
                             </div>
                         </div>
-                        <div class="row" ng-show="resultBusqueda.arrCuentas.length > 10">
+                        <div class="row" ng-show="resultBusqueda.cuentas.length > 10">
                             <div class="col-12">
                                 <a class="style-link" href="" ng-click="mostrarMasMenosCuentas()">
                                     <span ng-show="limitCuentas === 10">Mostrar mas...</span>
@@ -195,14 +195,14 @@
                             </div>
                         </div>
                     </div>
-                    <div ng-if="resultBusqueda.arrCuentas.length==0 || !resultBusqueda.arrCuentas" class="imagen-no-results text-center">
+                    <div ng-if="resultBusqueda.cuentas.length==0 || !resultBusqueda.cuentas" class="imagen-no-results text-center">
                         <img src="${pageContext.request.contextPath}/resources/img/generic/no-results.png">
                         <br>
                         <span class="span-no-result">No se encontraron resultados</span>
                     </div>
                 </div>
                 <div ng-if="mostrarCurrentInfo==3" class="contenedor-info-resumen">
-                    <div class="col-12" ng-if="resultBusqueda.arrCuentaFactura.length > 0">
+                    <div class="col-12" ng-if="resultBusqueda.cuentasFactura.length > 0">
                         <div class="header-col-table row">
                             <div class="col-3">
                                 <span class="text-head-table">N&uacute;mero de cuenta factura</span>
@@ -215,7 +215,7 @@
                                 <span class="text-head-table">Responsable</span>
                             </div>
                         </div>
-                        <div class="row" ng-repeat="cuenta in resultBusqueda.arrCuentaFactura | limitTo: limitCuentaFactura  track by $index" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
+                        <div class="row" ng-repeat="cuenta in resultBusqueda.cuentasFactura | limitTo: limitCuentaFactura  track by $index" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
                             <div class="col-3">
                                 <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(cuenta.id, cuenta.keyObject)">
                                     <span class="text-table" ng-bind="cuenta.numCuentaFactura"></span>
@@ -228,7 +228,7 @@
                                 <span class="text-table" ng-bind="cuenta.nombreResponsableComercial"></span>
                             </div>
                         </div>
-                        <div class="row" ng-show="resultBusqueda.arrCuentaFactura.length > 10">
+                        <div class="row" ng-show="resultBusqueda.cuentasFactura.length > 10">
                             <div class="col-12">
                                 <a class="style-link" href="" ng-click="mostrarMasMenosCuentaFactura()">
                                     <span ng-show="limitCuentaFactura === 10">Mostrar mas...</span>
@@ -237,14 +237,14 @@
                             </div>
                         </div>
                     </div>
-                    <div ng-if="resultBusqueda.arrCuentaFactura.length==0 || !resultBusqueda.arrCuentaFactura" class="imagen-no-results text-center">
+                    <div ng-if="resultBusqueda.cuentasFactura.length==0 || !resultBusqueda.cuentasFactura" class="imagen-no-results text-center">
                         <img src="${pageContext.request.contextPath}/resources/img/generic/no-results.png">
                         <br>
                         <span class="span-no-result">No se encontraron resultados</span>
                     </div>
                 </div>
                 <div ng-if="mostrarCurrentInfo==4" class="contenedor-info-resumen">
-                    <div class="col-12" ng-if="resultBusqueda.arrCotizacion.length > 0">
+                    <div class="col-12" ng-if="resultBusqueda.cotizaciones.length > 0">
                         <div class="header-col-table row">
                             <div class="col-4">
                                 <span class="text-head-table">Nombre</span>
@@ -256,7 +256,7 @@
                                 <span class="text-head-table">Estatus</span>
                             </div>
                         </div>
-                        <div class="row" ng-repeat="cotizacion in resultBusqueda.arrCotizacion | limitTo: limitCotizacion  track by $index" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
+                        <div class="row" ng-repeat="cotizacion in resultBusqueda.cotizaciones | limitTo: limitCotizacion  track by $index" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
                             <div class="col-4">
                                 <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(cotizacion.id, cotizacion.keyObject)">
                                     <span class="text-table" ng-bind="cotizacion.nombre"></span>
@@ -269,7 +269,7 @@
                                 <span class="text-table" ng-bind="cotizacion.estatus"></span>
                             </div>
                         </div>
-                        <div class="row" ng-show="resultBusqueda.arrCotizacion.length > 10">
+                        <div class="row" ng-show="resultBusqueda.cotizaciones.length > 10">
                             <div class="col-12">
                                 <a class="style-link" href="" ng-click="mostrarMasMenosCotizacion()">
                                     <span ng-show="limitCotizacion === 10">Mostrar mas...</span>
@@ -278,14 +278,14 @@
                             </div>
                         </div>
                     </div>
-                    <div ng-if="resultBusqueda.arrCotizacion.length==0 || !resultBusqueda.arrCotizacion" class="imagen-no-results text-center">
+                    <div ng-if="resultBusqueda.cotizaciones.length==0 || !resultBusqueda.cotizaciones" class="imagen-no-results text-center">
                         <img src="${pageContext.request.contextPath}/resources/img/generic/no-results.png">
                         <br>
                         <span class="span-no-result">No se encontraron resultados</span>
                     </div>
                 </div>
                 <div ng-if="mostrarCurrentInfo==5" class="contenedor-info-resumen">
-                    <div class="col-12" ng-if="resultBusqueda.arrCotSitio.length > 0">
+                    <div class="col-12" ng-if="resultBusqueda.cotSitios.length > 0">
                         <div class="header-col-table row">
                             <div class="col-2">
                                 <span class="text-head-table">Nombre</span>
@@ -297,7 +297,7 @@
                                 <span class="text-head-table">Plaza</span>
                             </div>
                         </div>
-                        <div class="row" ng-repeat="cotSitio in resultBusqueda.arrCotSitio | limitTo: limitCotSitio  track by $index" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
+                        <div class="row" ng-repeat="cotSitio in resultBusqueda.cotSitios | limitTo: limitCotSitio  track by $index" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
                             <div class="col-2">
                                 <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(cotSitio.id, cotSitio.keyObject)">
                                     <span class="text-table" ng-bind="cotSitio.nombre"></span>
@@ -310,7 +310,7 @@
                                 <span class="text-table" ng-bind="cotSitio.plaza"></span>
                             </div>
                         </div>
-                        <div class="row" ng-show="resultBusqueda.arrCotSitio.length > 10">
+                        <div class="row" ng-show="resultBusqueda.cotSitios.length > 10">
                             <div class="col-12">
                                 <a class="style-link" href="" ng-click="mostrarMasMenosCotSitio()">
                                     <span ng-show="limitCotSitio === 10">Mostrar mas...</span>
@@ -320,14 +320,14 @@
                         </div>
 
                     </div>
-                    <div ng-if="resultBusqueda.arrCotSitio.length==0 || !resultBusqueda.arrCotSitio" class="imagen-no-results text-center">
+                    <div ng-if="resultBusqueda.cotSitios.length==0 || !resultBusqueda.cotSitios" class="imagen-no-results text-center">
                         <img src="${pageContext.request.contextPath}/resources/img/generic/no-results.png">
                         <br>
                         <span class="span-no-result">No se encontraron resultados</span>
                     </div>
                 </div>
                 <div ng-if="mostrarCurrentInfo==6" class="contenedor-info-resumen">
-                    <div class="col-12" ng-if="resultBusqueda.arrCotSitioPlan.length > 0">
+                    <div class="col-12" ng-if="resultBusqueda.cotSitiosPlan.length > 0">
                         <div class="header-col-table row">
                             <div class="col-3">
                                 <span class="text-head-table">Nombre</span>
@@ -345,7 +345,7 @@
                                 <span class="text-head-table">Acci&oacute;n</span>
                             </div>
                         </div>
-                        <div class="row" ng-repeat="cotSitioPlan in resultBusqueda.arrCotSitioPlan | limitTo: limitCotSitioPlan track by $index" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
+                        <div class="row" ng-repeat="cotSitioPlan in resultBusqueda.cotSitiosPlan | limitTo: limitCotSitioPlan track by $index" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
                             <div class="col-3">
                                 <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(cotSitioPlan.id, cotSitioPlan.keyObject)">
                                     <span class="text-table" ng-bind="cotSitioPlan.nombre"></span>
@@ -371,7 +371,7 @@
                                 
                             </div>
                         </div>
-                        <div class="row" ng-show="resultBusqueda.arrCotSitioPlan.length > 10">
+                        <div class="row" ng-show="resultBusqueda.cotSitiosPlan.length > 10">
                             <div class="col-12">
                                 <a class="style-link" href="" ng-click="mostrarMasMenosCotSitioPlan()">
                                     <span ng-show="limitCotSitioPlan === 10">Mostrar mas...</span>
@@ -380,14 +380,14 @@
                             </div>
                         </div>
                     </div>
-                    <div ng-if="resultBusqueda.arrCotSitioPlan.length==0 || !resultBusqueda.arrCotSitioPlan" class="imagen-no-results text-center">
+                    <div ng-if="resultBusqueda.cotSitiosPlan.length==0 || !resultBusqueda.cotSitiosPlan" class="imagen-no-results text-center">
                         <img src="${pageContext.request.contextPath}/resources/img/generic/no-results.png">
                         <br>
                         <span class="span-no-result">No se encontraron resultados</span>
                     </div>
                 </div>
                 <div ng-if="mostrarCurrentInfo==7" class="contenedor-info-resumen">
-                    <div class="col-12" ng-if="resultBusqueda.arrOs.length > 0">
+                    <div class="col-12" ng-if="resultBusqueda.ordenesServicio.length > 0">
                         <div class="header-col-table row">
                             <div class="col-3">
                                 <span class="text-head-table">Nombre</span>
@@ -405,7 +405,7 @@
                                 <span class="text-head-table">Carta</span>
                             </div>
                         </div>
-                        <div class="row" ng-repeat="os in resultBusqueda.arrOs | limitTo: limitOs track by $index" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
+                        <div class="row" ng-repeat="os in resultBusqueda.ordenesServicio | limitTo: limitOs track by $index" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
                             <div class="col-3">
                                 <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(os.id, os.keyObject); respaldarObjectoOs(os)">
                                     <span class="text-table" ng-bind="os.nombre"></span>
@@ -434,7 +434,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="row" ng-show="resultBusqueda.arrOs.length > 10">
+                        <div class="row" ng-show="resultBusqueda.ordenesServicio.length > 10">
                             <div class="col-12">
                                 <a class="style-link" href="" ng-click="mostrarMasMenosOs()">
                                     <span ng-show="limitOs === 10">Mostrar mas...</span>
@@ -443,14 +443,14 @@
                             </div>
                         </div>
                     </div>
-                    <div ng-if="resultBusqueda.arrOs.length==0 || !resultBusqueda.arrOs" class="imagen-no-results text-center">
+                    <div ng-if="resultBusqueda.ordenesServicio.length==0 || !resultBusqueda.ordenesServicio" class="imagen-no-results text-center">
                         <img src="${pageContext.request.contextPath}/resources/img/generic/no-results.png">
                         <br>
                         <span class="span-no-result">No se encontraron resultados</span>
                     </div>
                 </div>
                 <div ng-if="mostrarCurrentInfo==8" class="contenedor-info-resumen">
-                    <div class="col-12" ng-if="resultBusqueda.arrTk.length > 0">
+                    <div class="col-12" ng-if="resultBusqueda.tickets.length > 0">
                         <div class="header-col-table row">
                             <div class="col-3">
                                 <span class="text-head-table">N&uacute;mero</span>
@@ -462,7 +462,7 @@
                                 <span class="text-head-table">Estatus</span>
                             </div>
                         </div>
-                        <div class="row" ng-repeat="ticket in resultBusqueda.arrTk | limitTo: limitTickets  track by $index"  ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
+                        <div class="row" ng-repeat="ticket in resultBusqueda.tickets | limitTo: limitTickets  track by $index"  ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
                             <div class="col-3">
                                 <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(ticket.id, ticket.keyObject)">
                                     <span class="text-table" ng-bind="ticket.caseNumber"></span>
@@ -476,7 +476,7 @@
                                 <span class="text-table" ng-bind="ticket.status"></span>
                             </div>
                         </div>
-                        <div class="row" ng-show="resultBusqueda.arrTk.length > 10">
+                        <div class="row" ng-show="resultBusqueda.tickets.length > 10">
                             <div class="col-12">
                                 <a class="style-link" href="" ng-click="mostrarMasMenosTickets()">
                                     <span ng-show="limitTickets === 10">Mostrar mas...</span>
@@ -485,7 +485,7 @@
                             </div>
                         </div>
                     </div>
-                    <div ng-if="resultBusqueda.arrTk.length==0 || !resultBusqueda.arrTk" class="imagen-no-results text-center">
+                    <div ng-if="resultBusqueda.tickets.length==0 || !resultBusqueda.tickets" class="imagen-no-results text-center">
                         <img src="${pageContext.request.contextPath}/resources/img/generic/no-results.png">
                         <br>
                         <span class="span-no-result">No se encontraron resultados</span>

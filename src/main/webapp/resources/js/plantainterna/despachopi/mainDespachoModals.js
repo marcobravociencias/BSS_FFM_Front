@@ -375,6 +375,9 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         }
         $scope.consultarUbicacionOperario(objectParams)**/
     }
+
+    $scope.evidenciaPlaca = '';
+    $scope.evidenciaVehiculo = '';
     abrirInformacionVehiculo = function (idTecnico) {
         console.log(idTecnico)
         let params = {
@@ -385,15 +388,13 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         mainDespachoService.consultaInformacionVehiculoTecnico(params).then(function success(response) {
             console.log(response)
             swal.close();
-            if (response.data.respuesta) {
-                if (response.data.result) {
-                    $scope.vehiculoOperario = response.data.result.vehiculo
-                    $('#modalVehiculoOperario').modal('show')
-                } else{
-                    mostrarMensajeErrorAlert(response.data.resultDescripcion)
-                }
-            } else {
-                mostrarMensajeErrorAlert(response.data.resultDescripcion)
+            if (response.data.result) {
+                $scope.vehiculoOperario = response.data.result.vehiculo
+                $scope.vehiculoOperario.urlFotoPlaca ? $scope.evidenciaPlaca = $scope.vehiculoOperario.urlFotoPlaca : $scope.evidenciaPlaca = './resources/img/generic/not_found.png';
+                $scope.vehiculoOperario.urlFotoVehiculo ? $scope.evidenciaVehiculo = $scope.vehiculoOperario.urlFotoVehiculo : $scope.evidenciaVehiculo = './resources/img/generic/not_found.png';
+                $('#modalVehiculoOperario').modal('show')
+            } else{
+                mostrarMensajeWarningValidacion('El t&eacute;cnico no cuenta con vehiculo asignado.')
             }
         }).catch(err => handleError(err))
     }

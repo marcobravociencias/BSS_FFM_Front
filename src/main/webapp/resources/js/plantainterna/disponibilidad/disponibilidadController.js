@@ -170,6 +170,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
 
                         $('#jstreeIntervencion').bind('loaded.jstree', function (e, data) {
                         }).jstree({
+                            'plugins': ["wholerow", 'search'],
                             'core': {
                                 'data': intervencionesArray,
                                 'themes': {
@@ -178,11 +179,6 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                                     "icons": false
                                 }
                             },
-                            plugins: ['search'],
-                            "search": {
-                                "case_sensitive": false,
-                                "show_only_matches": true
-                            }
                         });
                     } else {
                         $scope.banderaErrorIntervencion = true;
@@ -213,17 +209,22 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                         let geografia = listGeo;
                         if (geografia.length !== 0) {
 
-
+                            //let ultimoN = $scope.obtenerNivelUltimoJerarquia();
                             geografia.map((e) => {
                                 e.parent = e.padre == undefined ? "#" : e.padre;
                                 e.text = e.nombre;
                                 e.icon = "fa fa-globe";
-
+                               /*  if (e.nivel === ultimoN) {
+                                    e.state = {
+                                        disabled: true
+                                    }
+                                } */
                                 return e
                             })
 
                             $('#jstreeconsulta').bind('loaded.jstree', function (e, data) {
                             }).jstree({
+                                'plugins': ["wholerow", 'search'],
                                 'core': {
                                     'data': geografia,
                                     'themes': {
@@ -231,11 +232,6 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                                         'responsive': true,
                                         "icons": false
                                     }
-                                },
-                                plugins: ['search'],
-                                "search": {
-                                    "case_sensitive": false,
-                                    "show_only_matches": true
                                 }
                             });
                         } else {
@@ -441,7 +437,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
         let mensajeError = "<ul>";
         let bloqueo = $("input[name='checkBloque']:checked").val();
         bloqueo = bloqueo === 'true' ? 0 : bloqueo === 'false' ? 1 : undefined;
-        let ultimonivel = $scope.obtenerNivelUltimoJerarquia()
+        let ultimonivel = $scope.obtenerNivelUltimoJerarquia();
         let clustersparam = $("#jstreeconsulta").jstree("get_selected", true)
             .filter(e => e.original.nivel == ultimonivel)
             .map(e => parseInt(e.id))
@@ -799,11 +795,19 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
     }
 
     $scope.obtenerNivelUltimoJerarquia = function () {
-        return $scope.geografiaList.sort(compareGeneric)[0].nivel
+        return $scope.geografiaList.sort(compareGeneric)[1].nivel
     }
 
     $scope.obtenerUltimoNivelIntervencion = function () {
         return $scope.arrayIntervencion.sort(compareGeneric)[0].nivel
     }
+
+    $scope.busquedaGeografiaFiltro = function() {
+    	$("#jstreeconsulta").jstree("search", $('#searchGeografia').val());
+	}
+
+    $scope.busquedaIntervencionFiltro = function() {
+    	$("#jstreeIntervencion").jstree("search", $('#searchIntervencion').val());
+	}
 
 }]);

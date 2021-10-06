@@ -209,7 +209,7 @@
                                         <span class="text-head-table">Total</span>
                                     </div>
                                 </div>
-                                <div class="row" ng-repeat="cotSitio in detalle.arrCotSitio | limitTo: limitCotSitioCot" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
+                                <div class="row" ng-repeat="cotSitio in detalle.listCotSitio | limitTo: limitCotSitioCot" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
                                     <div class="col-4">
                                         <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(cotSitio.id, cotSitio.keyObject)">
                                             <span class="text-table" ng-bind="cotSitio.nombre"></span>
@@ -222,7 +222,7 @@
                                         <span class="text-table" ng-bind="cotSitio.totalRentaConImpuesto"></span>
                                     </div>
                                 </div>
-                                <div class="row" ng-show="detalle.arrCotSitio.length > 10">
+                                <div class="row" ng-show="detalle.listCotSitio.length > 10">
                                     <div class="col-12">
                                         <a class="style-link" href="" ng-click="mostrarMasMenosCotSitioCot()">
                                             <span ng-show="limitCotSitioCot === 10">Mostrar mas...</span>
@@ -230,7 +230,7 @@
                                         </a>
                                     </div>
                                 </div>
-                                <div class="row" ng-show="detalle.arrCotSitio.length === 0">
+                                <div class="row" ng-show="detalle.listCotSitio.length === 0">
                                     <div class="col-12 text-center">
                                         <span class="text-table">No se encontro informaci&oacute;n</span>
                                     </div>
@@ -268,7 +268,7 @@
                                         <span class="text-head-table">Nombre plan</span>
                                     </div>
                                 </div>
-                                <div class="row" ng-repeat="cotSitioPlan in detalle.arrCotSitioPlan | limitTo: limitCotSitioPlanCot" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
+                                <div class="row" ng-repeat="cotSitioPlan in detalle.listCotSitioPlan | limitTo: limitCotSitioPlanCot" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
                                     <div class="col-6">
                                         <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(cotSitioPlan.id, cotSitioPlan.keyObject)">
                                             <span class="text-table" ng-bind="cotSitioPlan.nombre"></span>
@@ -278,7 +278,7 @@
                                         <span class="text-table" ng-bind="cotSitioPlan.nombrePlan"></span>
                                     </div>
                                 </div>
-                                <div class="row" ng-show="detalle.arrCotSitioPlan.length > 10">
+                                <div class="row" ng-show="detalle.listCotSitioPlan.length > 10">
                                     <div class="col-12">
                                         <a class="style-link" href="" ng-click="mostrarMasMenosCotSitioPlanCot()">
                                             <span ng-show="limitCotSitioPlanCot === 10">Mostrar mas...</span>
@@ -286,7 +286,7 @@
                                         </a>
                                     </div>
                                 </div>
-                                <div class="row" ng-show="detalle.arrCotSitioPlan.length === 0">
+                                <div class="row" ng-show="detalle.listCotSitioPlan.length === 0">
                                     <div class="col-12 text-center">
                                         <span class="text-table">No se encontro informaci&oacute;n</span>
                                     </div>
