@@ -621,4 +621,89 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
         marketsDetalleAlerta.map(e => { e.setMap(null); return e; });
         marketsDetalleAlerta = [];
     }
+    
+    $("#guardar-datos-cuenta").click(function(){
+		if($.trim(  $("#cuenta-form").val())  !== ''){
+		
+			let validacionCaracteres=$.trim( $("#cuenta-form").val() ).substr(0,2);
+			let validacionCaracteresNuevo=$.trim( $("#cuenta-form").val() ).substr(0,2);
+			if(validacionCaracteres ==='02'){					
+			} else if(validacionCaracteresNuevo ==='1.'){					
+			} else if(validacionCaracteresNuevo ==='6.'){					
+			} else {
+				mostrarMensajeWarning('Formato de folio no valido')
+				return false;
+			}
+		}
+		if(validarPrimerPasoBool()){
+			$(".tab-step-wizar:first").trigger('click')
+		}else if(validarSegundoPasoBool()){ 
+			$(".tab-step-wizar:eq(1)").trigger('click')
+		}else if(validarTercerPaso()){
+			$(".tab-step-wizar:eq(2)").trigger('click')
+		}
+		else{
+			creacionAsignacionGenerica()
+		
+		}
+	})
+
+    let X={
+        "nombreOrden": "string",
+        "tipoOrden": 0,
+        "subTipoOrden": 0,
+        "idunidadNegocio": 0,
+        "idPropietario": 0,
+        "flujo": 1,
+        "geografia1": "string",
+        "geografia2": "string",
+        "folios": [{
+            "folio": "string",
+            "idFolio": "string",
+            "idSistema": 0
+        }],
+        "cliente": {
+            "idClaveCliente": "string",
+            "nombre": "string",
+            "apellidoPaterno": "string",
+            "apellidoMaterno": "string",
+            "razonSocial": "string",
+            "telefonoCelular": "string",
+            "telefonoFijo": "string",
+            "telefonoOficina": "string",
+            "correoElectronico": "string",
+            "contactos": [{
+                "nombre": "string",
+                "telefono": 0,
+                "parentesco": "string"
+            }]
+        },
+        "agendamiento": {
+            "fechaAgenda": "string",
+            "idTurno": 0,
+            "hora": "string",
+            "comentarios": "string",
+            "origen": "string",
+            "confirmada": 0
+        },
+        "direccion": {
+            "calle": "string",
+            "numeroInterior": 0,
+            "numeroExterior": 0,
+            "colonia": "string",
+            "municipio": "string",
+            "ciudad": "string",
+            "latitud": 0,
+            "longitud": 0,
+            "estado": "string",
+            "codigoPostal": 0,
+            "calleReferencia": "string",
+            "entreCalles": "string",
+            "pais": "string"
+        },
+        "informacionAdicional": [{
+            "nombre": "string",
+            "valor": "string"
+        }]
+    }
 }

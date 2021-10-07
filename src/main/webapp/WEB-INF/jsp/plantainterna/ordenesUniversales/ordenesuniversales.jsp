@@ -56,7 +56,8 @@ pageEncoding="ISO-8859-1"%>
 										</a>
 									</li>
 
-									<li role="tab" id="wizzard-3" class="tab-step-wizar" aria-disabled="false" aria-selected="false" style="padding-right: 0% !important;" ng-click="mostrarTab(3)">
+									<li role="tab"  id="wizzard-3" class="tab-step-wizar" aria-disabled="false" aria-selected="false" style="padding-right: 0% !important;" 
+										ng-click="mostrarTab(3);abrirOpcionUbicacion();">
 										<a id="form-total-t-2" href="" aria-controls="form-total-p-2">
 											<div class="title">
 												<span class="step-icon"><i class="fa fa-map-marker"></i></span>
@@ -98,6 +99,7 @@ pageEncoding="ISO-8859-1"%>
     </div>
 
 	<jsp:include page="./modals/modalArbol.jsp"></jsp:include>
+	<jsp:include page="./modals/modalTipoOrdenes.jsp"></jsp:include>
 
 
 </body>

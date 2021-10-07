@@ -100,5 +100,8 @@
                 <input id="colonia-contacto" ng-model="informacionCliente.colonia" type="text" class="form-control form-control-sm mb-1 formulario-campo " placeholder="Ej. Del valle " maxlength="35">
             </div>
         </div>		
+
+        <span ng-click="guardarOrdenUniversal()" class="step-icon guardar-datos-cuenta"><i class="fa fa-check"></i></span>
+
     </div>    
 </div>

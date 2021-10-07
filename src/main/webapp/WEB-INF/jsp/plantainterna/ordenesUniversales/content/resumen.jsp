@@ -139,11 +139,11 @@
 <div class="row" style="text-align: left;">
     <div class="col-4 contenido-cuenta">
         <strong class="color_titulos_resumen">LATITUD:</strong>
-        <label class="resumen-detalle-agenda" ng-bind="infoBasica.paquete.Nombre_Paquete ? infoBasica.paquete.Nombre_Paquete : 'Sin informaci&oacute;n'">Sin direcci&oacute;n capturada</label>
+        <label class="resumen-detalle-agenda" ng-bind="latitudSelectedMap ? latitudSelectedMap : 'Sin informaci&oacute;n'">Sin direcci&oacute;n capturada</label>
     </div>
     <div class="col-4 contenido-cuenta">
         <strong class="color_titulos_resumen">LONGITUD:</strong>
-        <label class="resumen-detalle-agenda" ng-bind="infoBasica.paquete.Nombre_Paquete ? infoBasica.paquete.Nombre_Paquete : 'Sin informaci&oacute;n'">Sin direcci&oacute;n capturada</label>
+        <label class="resumen-detalle-agenda" ng-bind="longitudSelectedMap ? longitudSelectedMap : 'Sin informaci&oacute;n'">Sin direcci&oacute;n capturada</label>
     </div>
 </div>
 <br>
@@ -161,7 +161,7 @@
 			class="alert alert-danger" role="alert"></div>
 	</div>
 	<div class="col-2">
-            <span class="step-icon" id="guardar-datos-cuenta"><i class="fa fa-check"></i></span>
+            <span ng-click="guardarOrdenUniversal()" class="step-icon" class="guardar-datos-cuenta"><i class="fa fa-check"></i></span>
     </div>
 </div>
 

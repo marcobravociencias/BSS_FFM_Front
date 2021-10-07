@@ -3,11 +3,11 @@
 	<div class="col-10" style="text-align: left;">
 		<div class="col-12 contenido-cuenta">
 			<strong class="color_titulos_resumen">LATITUD SELECCIONADA:</strong>
-			<label class="resumen-detalle-agenda" id="latitud-label">Sin direcci&oacute;n capturada</label>
+			<label class="resumen-detalle-agenda" id="latitud-label"  ng-bind="latitudSelectedMap ? latitudSelectedMap : 'Sin informaci&oacute;n'">Sin direcci&oacute;n capturada</label>
 		</div>
 		<div class="col-12 contenido-cuenta">
 			<strong class="color_titulos_resumen">LONGITUD SELECCIONADA:</strong>
-			<label class="resumen-detalle-agenda" id="longitud-label">Sin direcci&oacute;n capturada</label>
+			<label class="resumen-detalle-agenda" id="longitud-label" ng-bind="longitudSelectedMap ? longitudSelectedMap : 'Sin informaci&oacute;n'">Sin direcci&oacute;n capturada</label>
 		</div>
 	</div>
 	<div class="col-1"></div>
