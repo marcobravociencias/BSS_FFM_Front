@@ -1024,3 +1024,11 @@ font-size: 0.8em;
 .jstree-disabled{
   cursor: not-allowed;
 }
+
+.jstree-themeicon{
+  display: none;
+}
+
+.fa-instagram {
+  display: none !important;
+}

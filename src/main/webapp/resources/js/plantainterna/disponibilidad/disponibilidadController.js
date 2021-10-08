@@ -215,11 +215,13 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                             geografia.map((e) => {
                                 e.parent = e.padre == undefined ? "#" : e.padre;
                                 e.text = e.nombre;
-                                e.icon = "fa fa-globe";
                                 if (e.nivel > $scope.nGeografia) {
+                                    e.icon = 'fa fa-ban',
                                     e.state = {
                                         disabled: true
                                     }
+                                } else{
+                                    e.icon = 'fa fa-instagram'
                                 }
                                 return e
                             })
@@ -232,7 +234,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                                     'themes': {
                                         'name': 'proton',
                                         'responsive': true,
-                                        "icons": false
+                                        "icons": true
                                     }
                                 }
                             });
