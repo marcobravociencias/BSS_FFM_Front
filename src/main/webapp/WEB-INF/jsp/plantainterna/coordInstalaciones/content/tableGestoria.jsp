@@ -19,11 +19,11 @@
             type="text" id="intervencion_gestoria" class="input-filtro-coordInst form-control form-control-sm" />
             <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-intervencion">      
                 <li style="text-align: center;">
-                    <button ng-click="seleccionarTodos(listaEstatusGestoria)" id="todo_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
-                    <button ng-click="deseleccionarTodos(listaEstatusGestoria)" id="ninguno_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
+                    <button ng-click="seleccionarTodos(listaEstatusCalendarizada)" id="todo_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
+                    <button ng-click="deseleccionarTodos(listaEstatusCalendarizada)" id="ninguno_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
                 </li>     
                 <li class="elemento_menu dropdown-divider"></li>
-                <li ng-repeat="filtro in listaEstatusGestoria" class="element-menu-filter"  class="element-menu-filter">
+                <li ng-repeat="filtro in listaEstatusCalendarizada" class="element-menu-filter"  class="element-menu-filter">
                     <label  class="dropdown-item form-check-inputfiltro">
                         <input id="filtrotext-{{filtro.id}}" class="form-check-input" type="checkbox" ng-model="filtro.check" ng-true-value="true" ng-false-value="false"/>
                         <span  for="filtrotext-{{filtro.id}}" class="dropdown-item item-text-filtro" href="#" ng-bind="filtro.nombre"></span>
@@ -39,11 +39,11 @@
             placeholder="Seleccione..." type="text" id="selectMotivoGestoria" class="input-filtro-coordInst form-control form-control-sm" />
             <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-estatus-substatus">      
                 <li style="text-align: center;">
-                    <button ng-click="seleccionarTodos(listaEstadoGestoria)" id="todo_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
-                    <button ng-click="deseleccionarTodos(listaEstadoGestoria)" id="ninguno_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
+                    <button ng-click="seleccionarTodos(listaEstadoCalendarizada)" id="todo_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
+                    <button ng-click="deseleccionarTodos(listaEstadoCalendarizada)" id="ninguno_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
                 </li>     
                 <li class="elemento_menu dropdown-divider"></li>
-                <li ng-repeat="filtroE in listaEstadoGestoria" class="element-menu-filter"  class="element-menu-filter">
+                <li ng-repeat="filtroE in listaEstadoCalendarizada" class="element-menu-filter"  class="element-menu-filter">
                     <label  class="dropdown-item form-check-inputfiltro">
                         <input id="filtrotext-{{filtroE.id}}" class="form-check-input" type="checkbox" ng-model="filtroE.check" ng-true-value="true" ng-false-value="false"/>
                         <span  for="filtrotext-{{filtroE.id}}" class="dropdown-item item-text-filtro" href="#" ng-bind="filtroE.nombre"></span>
@@ -54,7 +54,7 @@
     </div>
     <div class="column-style-consulta" id="fechaFin" style="width: 10%;">
         <label for="inputPlaceholderEx" class="label-filter">Geografia</label>
-        <input style="text-align: left;" readonly placeholder="Geografia" ng-click="mostrarArbol(7)" type="text" class="input-filtro-coordInst form-control form-control-sm">
+        <input style="text-align: left;" readonly placeholder="Geografia" ng-click="mostrarArbol(6)" type="text" class="input-filtro-coordInst form-control form-control-sm">
     </div>
     <div class="column-style-consulta" style="width: 10%;">
         <label for="ot_gestoria" class="label-filter">OT</label>
@@ -68,7 +68,7 @@
     </div>
     <div class="col-md-1 div-btn-busqueda" style="width: 85px;">
         <button id="btn-gestoria-salesforce"  
-        ng-click="consultarGestoria()" 
+        ng-click="consultarCalendarizada()" 
         type="button" class="btn btn-sm waves-effect waves-light btn-primary">
         <i class="fa fa-search" ></i></button>
     </div>
