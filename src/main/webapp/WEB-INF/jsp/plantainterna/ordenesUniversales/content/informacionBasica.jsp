@@ -45,13 +45,16 @@
         </div>
         <div class="row input-group columna-filtro-ind">
             <label  class="label-filter">Subtipo ordenes</label>
-            <input type="text" id="subtipoordenes-form" ng-model="infoBasica.subtipoorden" ng-click="mostrarModalSubtipoOrdenes()" readonly class=" form-control-sm   input-filtro-disponibilidad " placeholder="Selecciona sutipo de orden">
+            <input type="text" id="subtipoordenes-form" ng-model="infoBasica.tiposubtipoordentext" ng-click="mostrarModalSubtipoOrdenes()" readonly class=" form-control-sm   input-filtro-disponibilidad " placeholder="Selecciona sutipo de orden">
         </div>
         <div class="row input-group columna-filtro-ind" >
             <label for="compania_select" class="label-filter">Turno</label>
             <input type="text" id="turno-form" ng-model="infoBasica.turno" readonly class="form-control-sm  input-filtro-disponibilidad" placeholder="Turno">
         </div>
-        <span ng-click="guardarOrdenUniversal()" class="step-icon guardar-datos-cuenta"><i class="fa fa-check"></i></span>
+        <div class="row input-group columna-filtro-ind" >
+            <label for="compania_select" class="label-filter">Hora estimada</label>
+            <input type="text" id="horaestimada-form"  readonly class="form-control-sm  input-filtro-disponibilidad" placeholder="Hora estimada">
+        </div>
     </div>
     <div class="col-8">
         <div id="calendar_disponibilidad">

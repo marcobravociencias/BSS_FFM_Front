@@ -12,6 +12,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
     $scope.listaPaquete = [];
 
     $scope.infoBasica = {};
+    
     $scope.informacionCliente = {};
     $scope.nGeografia = "";
     $scope.nTipoOrdenes = "";
@@ -26,6 +27,8 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
 			$(".tab-step-wizar:eq(1)").trigger('click')
 		}else  if( $scope.validarTercerPaso() ) { 
 			$(".tab-step-wizar:eq(2)").trigger('click')
+        }else{
+            $scope.guardarOrdenUniversalRegistro()
         }
     }
     
@@ -53,8 +56,8 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
             if (results[0].data.respuesta) {
                 if (results[0].data.result) {
                     $scope.nGeografia = results[0].data.result.N_FILTRO_GEOGRAFIA ? Number(results[0].data.result.N_FILTRO_GEOGRAFIA) : null;
-                    $scope.nTipoOrdenes = results[0].data.result.N_FILTRO_INTERVENCIONES ? Number(results[0].data.result.N_FILTRO_INTERVENCIONES) : null;
-
+                    //$scope.nTipoOrdenes = results[0].data.result.N_FILTRO_INTERVENCIONES ? Number(results[0].data.result.N_FILTRO_INTERVENCIONES) : null;
+                    $scope.nTipoOrdenes=2   
                 }
             }
             
@@ -258,7 +261,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
         swal.showLoading();
         $scope.params = {};
         $scope.params.geografia2  = distrito;
-        $scope.params.subtipoIntervencion = $scope.infoBasica.subIntervencion.id;
+        $scope.params.subtipoIntervencion =  $scope.infoBasica.subTipoOrden
         //$scope.params.IdCompany = "2";
         ordenesUniversalesService.getDisponibilidadServicioRest(JSON.stringify($scope.params)).then(function success(response) {
             //response.data = responseDisponibilidad;
@@ -280,10 +283,10 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
         }).catch(err => handleError(err));
     }
 
-    $scope.validarModalGeografia = function() { 
+    $scope.validarModalesTipoIntervencionesGeografia = function() { 
 
+        //Valida geografia
         let isErrorGeograf=true;
-
         let elementonivel = '-1';
         let selectedElms = $('#jstree-distrito').jstree("get_selected", true);
         let selected_arbol;
@@ -301,8 +304,40 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
             isErrorGeograf=false;
         }else{
             $scope.infoBasica.distrito=''
-        }         
-        if( !isErrorGeograf && $scope.infoBasica.subIntervencion  !== undefined){
+        }      
+        
+        //Valida subtipoordenes
+        let isErrorTipoOrden=true;
+        let elementonivelTipoOrden = '-1';
+        let selectedElmsTipoOrden = $('#jstree-tipoordenes').jstree("get_selected", true);
+        let selected_tipo_orden;
+        angular.forEach(selectedElmsTipoOrden,function(elem,index){
+            selected_tipo_orden=elem.original;
+        });
+        if(selected_tipo_orden!== undefined){
+            if(selected_tipo_orden !== undefined && selected_tipo_orden.nivel===$scope.nTipoOrdenes  ){
+                elementonivelTipoOrden=selected_tipo_orden.id;
+            }          
+        }
+
+        if(  elementonivelTipoOrden  !== '-1'){
+            let textParent=$('#jstree-tipoordenes').jstree(true).get_node( selected_tipo_orden.parent ).text 
+            $scope.infoBasica.tiposubtipoordentext=textParent+" / "+selected_tipo_orden.text
+            $scope.infoBasica.subTipoOrden=selected_tipo_orden.id
+           
+            $scope.infoBasica.tipoordentext=textParent
+            $scope.infoBasica.subtipoordentext=selected_tipo_orden.text
+            isErrorTipoOrden=false;
+        }else{
+            $scope.infoBasica.tiposubtipoordentext=''
+            $scope.infoBasica.subTipoOrden=''
+            
+            $scope.infoBasica.tipoordentext=''
+            $scope.infoBasica.subtipoordentext=''
+        }      
+        
+
+        if( !isErrorTipoOrden && !isErrorGeograf){
             $scope.consultarDisponibilidad(elementonivel)	
         }
 
@@ -312,17 +347,12 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
     $scope.validarPrimerPaso=function(){
         let isErrorValidate=false;
         let textError='';
-    
-        if(  $scope.infoBasica.intervencion   == undefined){
-            isErrorValidate=true
-            textError+='Captura intervenci&oacute;n</br>';
-        }
-    
-        if(  $scope.infoBasica.subIntervencion   == undefined){
+  
+        if(  !$scope.infoBasica.subTipoOrden ){
             isErrorValidate=true;
-            textError+='Selecciona subintervenci&oacute;n</br>';
+            textError+='Selecciona subtipo de orden</br>';
         }
-    
+        /**
         if(  $scope.infoBasica.canalVenta  == undefined){
             isErrorValidate=true
             textError+='Selecciona canal de venta</br>';
@@ -331,7 +361,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
         if(   $scope.infoBasica.paquete   == undefined){
             isErrorValidate=true
             textError+='Selecciona un paquete</br>';
-        }    
+        }    **/
         let elementonivel = '-1';
         let selectedElms = $('#jstree-distrito').jstree("get_selected", true);
         let selected_arbol;
@@ -343,14 +373,21 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                 elementonivel=selected_arbol.id;
             }          
         }
+
+        
+
+
         if(  elementonivel  === '-1' ) {
             isErrorValidate=true
             textError+='Selecciona un elemento valido de la geografia</br>';         
         }
-    
+         if(  $scope.infoBasica.horaEstimada  == undefined){
+            isErrorValidate=true
+            textError+='Selecciona una hora estimada</br>';
+        }
         if(  $scope.infoBasica.turno  == undefined){
             isErrorValidate=true
-            textError+='Selecciona un turno del calendario';
+            textError+='Selecciona un turno del calendario</br>';
         }
     
         if(isErrorValidate){
@@ -365,14 +402,33 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
         let textError='';
         let regExpresionEspecialCharacters = /[!@#$%^&*()_+\-=\[\]{};':"´\\|<>\/?]/;
 
-        if( !$scope.informacionCliente.nombreContacto ){
+        if( !$scope.informacionCliente.nombre ){
             isErrorValidate=true
-            textError+='Captura el nombre del contacto</br>';
-        }else if(regExpresionEspecialCharacters.test($scope.informacionCliente.nombreContacto   )){
+            textError+='Captura el nombre del cliente</br>';
+        }else if(regExpresionEspecialCharacters.test($scope.informacionCliente.nombre   )){
             isErrorValidate=true
             textError+='Nombre contacto no valido</br>';
         }
             
+        
+        if( !$scope.informacionCliente.apaterno ){
+            isErrorValidate=true
+            textError+='Captura el apellido paterno</br>';
+        }else if(regExpresionEspecialCharacters.test($scope.informacionCliente.apaterno   )){
+            isErrorValidate=true
+            textError+='Nombre contacto no valido</br>';
+        }
+            
+        
+        if( !$scope.informacionCliente.amaterno ){
+            isErrorValidate=true
+            textError+='Captura apellido materno</br>';
+        }else if(regExpresionEspecialCharacters.test($scope.informacionCliente.amaterno   )){
+            isErrorValidate=apaterno
+            textError+='Nombre contacto no valido</br>';
+        }
+            
+
         if( !$scope.informacionCliente.calle ){
             isErrorValidate=true
             textError+='Captura la calle</br>';
@@ -463,6 +519,36 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
         }
         
 
+        if( !$scope.informacionCliente.razonsocial ){
+            isErrorValidate=true
+            textError+='Captura raz\u00F3n social</br>';
+        }else if(regExpresionEspecialCharacters.test($scope.informacionCliente.razonsocial   )){
+            isErrorValidate=true
+            textError+='Nombre raz\u00F3n social</br>';
+        }
+
+        if( !$scope.informacionCliente.correo ){
+            isErrorValidate=true
+            textError+='Captura correo</br>';
+        }
+
+        if( !$scope.informacionCliente.nombreContacto ){
+            isErrorValidate=true
+            textError+='Captura el nombre del contacto</br>';
+        }else if(regExpresionEspecialCharacters.test($scope.informacionCliente.nombreContacto   )){
+            isErrorValidate=true
+            textError+='Nombre contacto no valido</br>';
+        }
+        
+        if(	!$scope.informacionCliente.telefonoContacto ){
+            isErrorValidate=true
+            textError+='Captura n\u00famero de tel\u00E9fono</br>';
+        }else if(regExpresionEspecialCharacters.test( $scope.informacionCliente.telefonoContacto )){
+            isErrorValidate=true
+            textError+='Celular no valido</br>';
+        }
+        
+
         if(isErrorValidate){
             mostrarMensajeWarningValidacion( textError )
         }
@@ -490,12 +576,226 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
         }   
         return isErrorValidate
     }
-
-    $(document).ready(function(){
+  
+  
+    angular.element(document).ready(function () {   
+        
         $("#modal-filtro-arbol").on("hidden.bs.modal", function () {
-            $scope.validarModalGeografia();        
+            $scope.validarModalesTipoIntervencionesGeografia();        
             $scope.$apply();
         });
+
+        $("#modal-filtro-tipoordenes").on("hidden.bs.modal", function () {
+            $scope.validarModalesTipoIntervencionesGeografia();        
+            $scope.$apply();
+        });
+
+        $('#horaestimada-form').timepicker({
+            format: 'hh:mm:ss a',
+            change:  function(dateInput){
+                let minutos=dateInput.getMinutes()+""
+                let horas=dateInput.getHours()+""
+                $scope.infoBasica.horaEstimada=(horas.padStart(2,'0')  )+':'+( minutos.padStart(2,'0'));
+                $scope.$apply()
+                console.log($scope.infoBasica.horaEstimada)
+            }
+        })
     });
+
+    $scope.guardarOrdenUniversalRegistro=function(){        
+        
+        let selectedElmsTipoOrden = $('#jstree-tipoordenes').jstree("get_selected", true);
+        let selected_tipo_orden;
+        let subTipoOrden=''
+    
+        angular.forEach(selectedElmsTipoOrden,function(elem,index){
+            selected_tipo_orden=elem.original;
+        });
+        if(selected_tipo_orden!== undefined){
+            if(selected_tipo_orden !== undefined && selected_tipo_orden.nivel===$scope.nTipoOrdenes  ){
+                subTipoOrden=selected_tipo_orden.id;
+            }          
+        }
+        let tipoOrdenId= $('#jstree-tipoordenes').jstree(true).get_node( selected_tipo_orden.parent ).id
+        let nombreOrden=$('#jstree-tipoordenes').jstree(true).get_node( selected_tipo_orden.parent ).text 
+
+        let jsonEnvio={
+            "nombreOrden": nombreOrden,   //Ejemplo: Instalación
+            "tipoOrden": tipoOrdenId ,            //id tipo orden
+            "subTipoOrden": subTipoOrden,         //id siubtipo orden
+            "idunidadNegocio": 0,      // sesion    ???
+            "idPropietario": 0,        // sesion    ???        
+            "flujo": 1,                 
+            "geografia1": "string",
+            "geografia2": "string",
+            "folios": [{
+                "folio": "string",
+                "idFolio": "string",
+                "idSistema": 0
+            }],
+            "cliente": {
+                "idClaveCliente":    $scope.infoBasica.folio, //numero de cuenta factura
+                "nombre":            $scope.informacionCliente.nombre,
+                "apellidoPaterno":   $scope.informacionCliente.apaterno,
+                "apellidoMaterno":   $scope.informacionCliente.amaterno,
+                "razonSocial":       $scope.informacionCliente.razonsocial,
+                "telefonoCelular":   $scope.informacionCliente.celular,
+                "telefonoFijo":      $scope.informacionCliente.telefono,
+                "telefonoOficina":   $scope.informacionCliente.telefono,
+                "correoElectronico": $scope.informacionCliente.correo,
+                "contactos": [{
+                    "nombre": $scope.informacionCliente.nombreContacto,
+                    "telefono": $scope.informacionCliente.telefonoContacto,
+                    "parentesco": "string"
+                }]
+            },
+            "agendamiento": {
+                "fechaAgenda": "string",        //esta                           "string", Formato "2021-07-09"
+                "idTurno": 0,                   //esta                           1 = Matutino, 2 = Vespertino , 3 = Nocturno
+                "hora": "string",               //ESTE VALOR NO LO TENEMOS       Formato "19:46" 24 horas
+                "comentarios": "string",        //esta 
+                "origen": "string",             //ESTE VALOR NO LO TENEMOS       "string", mesa= 9
+                "confirmada": 0                 //ESTE VALOR NO LO TENEMOS       0 = false 1 = true
+            },
+            "direccion": {
+                "calle":                     $scope.informacionCliente.calle,   //esta     
+                "numeroInterior":            $scope.informacionCliente.numeroInt,   //esta         
+                "numeroExterior":            $scope.numeroExt,  //esta         
+                "colonia":                   $scope.informacionCliente.colonia,   //esta          
+                "municipio":                 $scope.informacionCliente.municipio,        
+                "ciudad":                    $scope.informacionCliente.ciudad ,
+                "latitud":                   $scope.latitudSelectedMap , 
+                "longitud":                  $scope.longitudSelectedMap ,    //esta 
+                "estado":                    $scope.informacionCliente.estado,    
+                "codigoPostal":              $scope.informacionCliente.codigoPostal,        
+                "calleReferencia":           $scope.informacionCliente.referencias,                    
+                "entreCalles":               $scope.informacionCliente.calle,             
+                "pais":                      "MX",    //ESTE VALOR NO LO TENEMOS
+            },
+            "informacionAdicional": [] //iconos no enviar
+        }
+
+
+        /**
+            folio
+            os
+            canalVenta
+            paquete
+            geografia
+            subtipoordenes    objeto  general
+            turno             objecto agendamiento      
+            fecha             objecto agendamiento
+
+            "calle":"AVENIDA FLORES",               objeto direccion
+            "numeroExt":"NA",                       objeto direccion
+            "numeroInt":"12",                       objeto direccion
+            "codigoPostal":"926152",                objeto direccion
+            "estado":"MORELOS",                     objeto direccion
+            "municipio":"EMILIANO ZAPATA",          objeto direccion
+            "entreCalles":"GUERRERO Y DEL CRUCERO", objeto direccion
+            "referencias":"ENTRE ASP. 1 Y RED..",   objeto direccion[calle referencia
+            "ciudad":"CUENRNAA",                    objeto direccion
+            "colonia":"CAPULIN",                    objeto direccion
+            "latitud"                               objeto direccion
+            "longitud"                              objeto direccion
+
+            "ext":"",
+            "telefono":"7772804607",
+            "celular":"7772771921",
+            "comentario":"comentario testing",      objecto agendamiento
+            "nombre":"HECTOR SANTAMAIA",            
+            "nombreContacto":"FATMA SA DE CV",
+        **/
+
+        /**
+            Agendamientos de ordenes que atiende residencial
+            idunidadNegocio = 1
+            idPropietario = 1
+            Agendamientos de ordenes que atiende empresarial
+            idunidadNegocio = 2
+            idPropietario = 1
+            Agendamientos de ordenes que atiende residencial Colombia
+            idunidadNegocio = 1
+        **/
+        let jsonEnvio2={
+            "nombreOrden": "string",   //Ejemplo: Instalación
+            "tipoOrden": 0,            //id tipo orden
+            "subTipoOrden": 0,         //id siubtipo orden
+            "idunidadNegocio": 0,      // sesion    ???
+            "idPropietario": 0,        // sesion    ???        
+            "flujo": 1,
+            "geografia1": "string",
+            "geografia2": "string",
+            "folios": [{
+                "folio": "string",
+                "idFolio": "string",
+                "idSistema": 0
+            }],
+            "cliente": {
+                "idClaveCliente": "string", //numero de cuenta factura
+                "nombre": "string",
+                "apellidoPaterno": "string",
+                "apellidoMaterno": "string",
+                "razonSocial": "string",
+                "telefonoCelular": "string",
+                "telefonoFijo": "string",
+                "telefonoOficina": "string",
+                "correoElectronico": "string",
+                "contactos": [{
+                    "nombre": "string",
+                    "telefono": 0,
+                    "parentesco": "string"
+                }]
+            },
+            "agendamiento": {
+                "fechaAgenda": "string",        //esta                           "string", Formato "2021-07-09"
+                "idTurno": 0,                   //esta                           1 = Matutino, 2 = Vespertino , 3 = Nocturno
+                "hora": "string",               //ESTE VALOR NO LO TENEMOS       Formato "19:46" 24 horas
+                "comentarios": "string",        //esta 
+                "origen": "string",             //ESTE VALOR NO LO TENEMOS       "string", mesa= 9
+                "confirmada": 0                 //ESTE VALOR NO LO TENEMOS       0 = false 1 = true
+            },
+            "direccion": {
+                "calle": "string",              //esta     
+                "numeroInterior": 0,            //esta         
+                "numeroExterior": 0,            //esta         
+                "colonia": "string",            //esta          
+                "municipio": "string",          //esta         
+                "ciudad": "string",             //esta     
+                "latitud": 0,                   //esta 
+                "longitud": 0,                  //esta 
+                "estado": "string",             //esta     
+                "codigoPostal": 0,              //esta      
+                "calleReferencia": "string",    //esta                 
+                "entreCalles": "string",        //esta               
+                "pais": "string"                //ESTE VALOR NO LO TENEMOS
+            },
+            "informacionAdicional": [] //iconos no enviar
+        }
+    }
+
+   //$scope.armarTestCliente=function(){
+    $scope.informacionCliente={
+            "nombre":"HECTOR ",
+            "apaterno":"santamaria",
+            "amaterno":"orduna",
+            "nombreContacto":"FATMA SA DE CV",
+            "calle":"AVENIDA FLORES",
+            "numeroExt":"NA",
+            "numeroInt":"12",
+            "codigoPostal":"926152",
+            "comentario":"comentario testing",
+
+            "estado":"MORELOS",
+            "municipio":"EMILIANO ZAPATA",
+            "entreCalles":"GUERRERO Y DEL CRUCERO",
+            "referencias":"ENTRE ASP. 1 Y RED..",
+            "ext":"",
+            "telefono":"7772804607",
+            "celular":"7772771921",
+            "ciudad":"CUENRNAA",
+            "colonia":"CAPULIN",
+    }
+    //}
     
 }]);
