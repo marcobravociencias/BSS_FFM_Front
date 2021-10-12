@@ -245,8 +245,9 @@ div.borderFilter {
   margin-top: 22px;
 }
 
-#btn-calendarizado-salesforce{
-  background-color: #ffffff;
+#btn-calendarizado-salesforce, #btn-pendiente-salesforce, #btn-asignada-salesforce, #btn-detenida-salesforce, #btn-terminada-salesforce, #btn-cancelada-salesforce,
+#btn-gestoria-salesforce{
+  background-color: #ffffff; 
   color: #7716fa;
   border: solid 1px #7716fa !important;
   padding: 0.5em 2em;
@@ -1460,3 +1461,289 @@ i.fa.fa-times-circle.cancel {
   } 
 }
 
+/* CAMBIO DE DISEÑO */
+#container_coordinar_instalaciones {
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+    /* padding-top: 1em; */
+    padding-bottom: 1em;
+    background: white;
+    border-radius: .5em;
+    padding-top: 1em;
+    margin-top: 1em;
+}
+
+#myTab .nav-link.active {
+    color: #7716fa !important;
+    font-weight: bolder;
+    background:#f9f9f9;
+}
+  
+#myTab{
+    margin-bottom:1em;
+}
+#myTab .nav-link {
+    padding-top: .6em;
+    padding-bottom: .6em;
+    border: solid 1px #ccc;
+}
+#myTab .nav-item:first-child .nav-link {
+    border-top-left-radius:1em;
+    border-bottom-left-radius:1em;
+}
+#myTab .nav-item:last-child .nav-link {
+    border-top-right-radius:1em;
+    border-bottom-right-radius:1em;
+}
+.nav-tabs {
+    border-bottom: 0!important;
+}
+#opciones-menu div > span {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.1s, opacity 0.7s linear;
+}
+#opciones-menu:hover div > span{
+    visibility: visible;
+    opacity: 1;
+}
+.left-menu {
+    background-color: #FFFFFF;
+    padding:0;
+    box-shadow: 8px 0px 8px -6px #0000004b;
+    z-index: 4;
+    /* height: 105vh; */
+    position: inherit;
+}
+.small-menu {
+    width: 4%;
+    transition: width .5s;
+}
+.small-menu:hover{
+    width: 15%;
+}
+.titulo-opcion-menu {
+    height: 5em;
+    line-height: 5em;
+}
+.opcion-menu {
+    cursor: pointer;
+    height: 3.5em;
+    line-height: 3.5em;
+}
+.small-menu .opcion-menu:hover .icon-menu-left{
+    color: #7700ff;
+    font-weight: bold;
+}
+.small-menu .opcion-menu:hover .titulo-menu{
+    color: #7700ff;
+    font-weight: bold;
+}
+
+.small-menu .opcion-menu{
+    white-space: nowrap;
+    width: 100%;
+    text-align: center;
+    padding-left:1em;
+    transition: width 1s ease;
+}  
+.small-menu:hover > .opcion-menu{
+    width: 35%;
+}
+.small-menu .parent-monitor-menu{
+    white-space: nowrap;
+    width: 100%;
+    text-align: center;
+    padding-left:1em;
+    transition: width 1s ease;
+    margin-top:2em;
+    margin-bottom:2em;
+}  
+.small-menu:hover >  .parent-monitor-menu{
+    width: 65%;
+}
+.small-menu .parent-monitor-menu{
+    white-space: nowrap;
+    width: 100%;
+    text-align: center;
+    padding-left:1em;
+    transition: width 1s ease;
+    margin-top:2em;
+    margin-bottom:2em;
+}  
+.small-menu:hover >  .parent-monitor-menu{
+    width: 65%;
+}
+span.titulo-menu.active-text-menu {
+    color: #7700ff;
+    font-weight: bold;
+}
+.icon-menu-left{
+   color: #7700ff;
+   color: #7e7e7e;
+}
+.active-iconmenu {
+    color: #7700ff;
+    /* font-size: 1.2em; */
+    font-weight: bold;
+}
+.parent-monitor-menu .icon-menu-left {
+    color: #7700ff;
+    font-size: 1.3em;
+}
+.parent-monitor-menu  .titulo-menu{
+    font-weight:bold;
+    font-size:1.1em;
+}
+.right-content {
+    height: 100vh;
+    width: 96%;
+    position: absolute;
+    right: 0;
+}
+.titulo-menu {
+    position: absolute;
+    color: #5b5b5b;
+    font-size: 1em;
+    font-family: 'Montserrat' !important;
+    /* font-weight: bold; */
+}
+
+div.borderFilter {
+  margin-left: 0em;
+}
+thead#thead_calendarizada tr th, thead#thead_pendiente tr th, thead#thead_asignada tr th, thead#thead_detenida tr th, thead#thead_terminada tr th, thead#thead_cancelada tr th,
+thead#thead_gestoria tr th {
+  font-size: 0.7em;
+  padding: 1em 1em 1em;
+  text-align: center;
+}
+
+div.dataTables_wrapper div.dataTables_length label {
+  font-weight: inherit !important;
+  color: #828080 !important;
+}
+.dataTables_length .form-control.form-control-sm {
+  color: #9a9999 !important;
+  border-bottom: 2px solid #e4e2e2 !important;
+  font-family: "Montserrat" !important;
+}
+#tableCalendarizada tr td, #table_pendiente tr td, #tableAsignada tr td, #tableDetenida tr td, #tableTerminada tr td, #tableCancelada tr td, #tableGestoria tr td {
+  font-size: 0.7em;
+  font-family: "Montserrat" !important;
+  text-align: center;
+}
+div#tableCalendarizada_filter, div#table_pendiente_filter, div#tableAsignada_filter, div#tableDetenida_filter, div#tableCancelada_filter, div#tableGestoria_filter,
+div#tableTerminada_filter {
+  display: none;
+}
+div#tableCalendarizada_info, div#table_pendiente_info, div#tableAsignada_info, div#tableDetenida_info, div#tableTerminada_info, div#tableCancelada_info, div#tableGestoria_info {
+  font-family: "Montserrat";
+  font-size: 0.8em;
+  color: #a5a5a5 !important;
+}
+#tableCalendarizada_length select.form-control.form-control-sm, #table_pendiente_length select.form-control.form-control-sm, #tableAsignada_length select.form-control.form-control-sm,
+#tableDetenida_length select.form-control.form-control-sm, #tableTerminada_length select.form-control.form-control-sm, #tableCancelada_length select.form-control.form-control-sm,
+#tableGestoria_length select.form-control.form-control-sm {
+  border: none;
+}
+
+.pagination {
+  display: block !important;
+}
+
+.pagination .paginate_button a.page-link {
+  color: #828080;
+  font-family: "Montserrat";
+  background-color: white !important;
+  box-shadow: none !important;
+}
+
+.pagination .paginate_button.active {
+  background-color: gray !important;
+}
+
+.pagination .previous a.page-link {
+  color: white !important;
+  font-size: 0;
+}
+
+.pagination .next a.page-link {
+  color: white !important;
+  font-size: 0;
+}
+
+.pagination .previous a:after {
+  font-family: FontAwesome;
+  display: inline-block;
+  content: "\f104";
+  visibility: visible;
+  color: #828080 !important;
+  font-size: initial !important;
+}
+
+.pagination .next a:before {
+  font-family: FontAwesome;
+  display: inline-block;
+  content: "\f105";
+  visibility: visible;
+  color: #828080 !important;
+  font-size: initial !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button a {
+  padding: 1px 1px 1px 1px;
+}
+
+.pagination .paginate_button > .active {
+  border: #000000 !important;
+}
+.jstree-proton .jstree-wholerow-clicked {
+  background: white;
+}
+.jstree-proton .jstree-clicked {
+  color: #808080;
+}
+
+ul.dropdown-menu {
+  box-shadow: 0 1px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+  -webkit-box-shadow: 0 1px 5px 0 rgb(0 0 0 / 16%);
+  /* z-index: 200 !important; */
+}
+.element-menu-filter:hover .dropdown-menu {
+  display: block;
+}
+.element-menu-filter:hover .dropdown-menu {
+  top: 0;
+  left: 100%;
+}
+a.btn-floating.btn-sm.btn-primary.waves-effect.waves-light {
+  /* background-color: #33b5e5!important; */
+  color: #fff !important;
+  -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
+    0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+span.btn-floating.btn-sm.btn-default.waves-effect.waves-light {
+  background-color: #4284cc !important;
+  color: #fff !important;
+  -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
+    0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  font-size: 0.9em;
+}
+
+span.btn-floating.btn-sm.btn-secondary.waves-effect.waves-light.acciones {
+  background-color: #58b3bf !important;
+  color: #fff !important;
+  -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
+    0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  font-size: 0.9em;
+}
+span.btn-floating.btn-evidencia.btn-sm.btn-secondary.waves-effect.waves-light {
+  -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
+    0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  font-size: 0.9em;
+}

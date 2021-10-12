@@ -1,5 +1,6 @@
 package com.mx.totalplay.ffm.cloudweb.plantainterna.service;
 
+import com.mx.totalplay.ffm.cloudweb.plantainterna.model.CoordInstalacionesPI.ParamFFMCoordInstalacionesVO;
 import com.mx.totalplay.ffm.cloudweb.plantainterna.model.consultaOTPI.ParamConsultaOTPI;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.DataTableResponse;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.ServiceResponseResult;
@@ -29,6 +30,8 @@ public interface CoordInstalacionesService {
 	public DataTableResponse consultaDetenidas(ParamConsultaOTPI paramsOt);
 	
 	public ServiceResponseResult consultaDetalleOTBsqGeneral(String params);
+	
+	public DataTableResponse consultarBandejaFFM(ParamFFMCoordInstalacionesVO params);
 	
 
 }

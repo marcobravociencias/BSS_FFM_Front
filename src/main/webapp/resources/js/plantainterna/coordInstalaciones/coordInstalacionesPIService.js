@@ -22,6 +22,26 @@ app.service("coordInstalacionesPIService", function ($http) {
         }); 
 
     }
+
+    this.consultarCatalogoEstatusDespachoPI = function() {
+        return $http({ 
+            method: "post", 
+            url: "req/consultarCatalogoEstatusDespachoPI",
+            headers: {
+                'Content-Type' : 'application/json'
+            }
+        });
+    }
+
+    this.consulCatalogoGeografiaUsuarioDespacho = function() {
+        return $http({ 
+            method: "post", 
+            url: "req/consulCatalogoGeografiaUsuarioDespacho",
+            headers: {
+                'Content-Type' : 'application/json'
+            }
+        });
+    }
     
     
 });

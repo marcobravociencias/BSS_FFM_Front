@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
+import com.mx.totalplay.ffm.cloudweb.plantainterna.model.CoordInstalacionesPI.ParamFFMCoordInstalacionesVO;
 import com.mx.totalplay.ffm.cloudweb.plantainterna.model.consultaOTPI.ParamConsultaOTPI;
 import com.mx.totalplay.ffm.cloudweb.plantainterna.service.CoordInstalacionesService;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.DataTableResponse;
@@ -31,6 +32,16 @@ public class CoordInstalacionesController {
 	  public CoordInstalacionesController(CoordInstalacionesService coordInstalacionesService) {
 	    this.coordInstalacionesService = coordInstalacionesService;
 	  }
+	
+	@PostMapping("/consultarBandejaFFM")
+	public ResponseEntity<DataTableResponse> consultarBandejaFFM(@ModelAttribute ParamFFMCoordInstalacionesVO params) {
+		logger.info("*** Objeto: " + gson.toJson(params));
+		dataTableResponse = coordInstalacionesService.consultarBandejaFFM(params);
+		if (dataTableResponse.getResult() instanceof Integer){
+			return new ResponseEntity<DataTableResponse>(dataTableResponse, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<DataTableResponse>(dataTableResponse, HttpStatus.ACCEPTED);
+	}
 	
 	@PostMapping("consultaBusquedaGeneral")
 	public ResponseEntity<?> consultaBusquedaGeneral(@RequestBody String params){
