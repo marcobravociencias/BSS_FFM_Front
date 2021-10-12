@@ -1,3 +1,190 @@
+#arbolGeografiaRegistro.jstree-checkbox-selection .jstree-wholerow-clicked,
+#arbolIntervencionRegistro .jstree-wholerow-clicked,
+#arbolPermisoRegistro .jstree-wholerow-clicked,
+#arbolGeografiaConsulta .jstree-wholerow-clicked {
+  background: white;
+}
+
+#arbolGeografiaRegistro.jstree-checkbox-selection .jstree-clicked,
+#arbolIntervencionRegistro .jstree-clicked,
+#arbolPermisoRegistro .jstree-clicked,
+#arbolGeografiaConsulta .jstree-clicked {
+	background: white;
+  	color: #808080;
+}
+
+img.responsive-img-tecnico{
+    box-shadow: 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%), 0 2px 4px -1px rgb(0 0 0 / 30%);
+    border-radius: 50%;
+    height: 1.5em;
+    width: 1.5em;
+}
+
+.tecnico-section {
+    display: -ms-flexbox;
+    margin-bottom: 0px;
+    padding: .3em;
+    cursor: pointer;
+    display: flex;
+    position: relative;
+    border-bottom: 1px solid #eee;
+}
+
+/* -------------------------------------------------------------------------------------------------- */
+
+.form-switch .form-check-input:after {
+    width: 1em;
+    height: 1em;
+}
+.form-switch .form-check-input {
+    height: .6rem;
+}
+.form-switch .form-check-input:checked[type=checkbox]:after{
+	width: 1em;
+    height: 1em;
+    margin-left:60%;
+}
+
+.column-style-usuarios {
+    padding-right: 0px 
+}
+
+.columna-filtro-usuarios::after {
+    content: "";
+    position: absolute;
+    right: 3%;
+    top: 67%;
+    width: 0;
+    height: 0;
+    border-left: 0.3em solid transparent;
+    border-right: 0.3em solid transparent;
+    border-top: 0.6em solid #939db2;
+    clear: both;
+    z-index: 2;
+    font-size: 14px;
+}
+
+.input-filtro-status {
+    border: 1px solid #dbdbdb !important;
+    font-size: 0.7em;
+    color: #818181 !important;
+    transition: all 0.5s ease;
+    border-bottom: 1px solid white;
+    background: white !important;
+    border-radius: .5em !important;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.07),0 1px 2px 0 rgba(0,0,0,.05)!important;
+    padding-right: 1.5em;
+}
+
+.input-filtro-status::placeholder {
+    font-weight: 400;
+    font-size: 1em;
+    color: #818181 !important;
+}
+
+.input-filtro-status:focus {
+    -webkit-box-shadow: none;
+}
+
+.input-filtro-status:hover {
+    background: #e4e6f2 !important;
+    cursor: pointer;
+    border-bottom: 2px solid #a4b1ff !important;
+}
+
+.element-menu-filter {
+    position: relative;
+}
+
+.element-menu-filter:hover .dropdown-menu {
+    display: block;
+}
+
+.element-menu-filter:hover .dropdown-menu {
+    top: 0;
+    left: 100%;
+}
+
+.element-menu-filter {
+    position: relative;
+}
+
+label.form-check-inputfiltro {
+    display: flex;
+}
+
+.form-check-input {
+    margin-right: 0.5em;
+}
+
+.dropdown-item.item-text-filtro.ng-binding {
+    display: contents;
+    /* margin-left: 1em; */
+}
+
+.dropdown-item {
+    padding: 0.25rem 1.5rem !important;
+}
+
+.dropdown-item.item-text-filtro.ng-binding {
+    display: contents;
+}
+
+#todo_filtro,
+#ninguno_filtro {
+    width: 45%;
+    background: #1266f1;
+    color: white;
+    margin-top: 0.5em;
+    padding: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.page-link{
+	font-size: 0.7em !important;
+    font-family: "Montserrat" !important;
+}
+
+.dataTables_info{
+	font-size: 0.7em;
+    font-family: "Montserrat" !important;
+    text-align: center;
+}
+
 .buscadorGenerico {
     height: 2em !important;
     min-height: 2em !important;
@@ -29,7 +216,6 @@
 
 .scrollModalArbolGeografias {
 	padding:4px;
-	height: 350px;
 	overflow-x: auto;
 	overflow-y: auto;
 	text-align:justify;
@@ -44,6 +230,14 @@
 }
 
 .scrollListaCiudadNatal {
+	padding:3px;
+	height: 230px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	text-align:justify;
+}
+
+.scrollListaTecnicos {
 	padding:3px;
 	height: 230px;
 	overflow-x: hidden;
@@ -97,41 +291,6 @@
 
 .btn-group.bootstrap-select.show-tick.select_consulta {
     width: 100% !important;
-}
-
-button.btn.dropdown-toggle.bs-placeholder.btn-secondary, .bs-actionsbox .actions-btn, button.btn.dropdown-toggle.btn-secondary {
-    display: inline-block !important;
-    font-weight: 400 !important;
-    line-height: 1.25 !important;
-    text-align: center !important;
-    white-space: nowrap !important;
-    vertical-align: middle !important;
-    -webkit-user-select: none !important;
-    -moz-user-select: none !important;
-    -ms-user-select: none !important;
-    user-select: none !important;
-    border: 1px solid transparent !important;
-    padding: .5rem 1rem !important;
-    font-size: .8rem !important;
-    border-radius: .25rem !important;
-    -webkit-transition: all .2s ease-in-out !important;
-    -o-transition: all .2s ease-in-out !important;
-    transition: all .2s ease-in-out !important;
-    color: #5a5a5a !important;
-    border: 1px solid #d5d5d5 !important;
-    /*font-family: 'Montserrat' !important;*/
-}
-button.btn.dropdown-toggle.bs-placeholder.btn-secondary, .bs-actionsbox .actions-btn, button.btn.dropdown-toggle.btn-secondary {
-    background: white !important;
-    box-shadow: none;
-    border: 1px solid #d9d9d9 !important;
-}
-#intro_compania_consulta ul.inner, #intro_puesto_consulta ul.inner, #intro_region_consulta ul.inner, #intro_ciudad_consulta ul.inner {
-    font-size: .8em;
-    font-family: 'Montserrat' !important;
-}
-.select_consulta>.dropdown-menu>.inner, .puesto_select>.dropdown-menu>.inner, .region_select>.dropdown-menu>.inner, .ciudad_select>.dropdown-menu>.inner {
-    padding-inline-start: 0px;
 }
 
 .icon-check-intervencion {
@@ -522,6 +681,12 @@ div.dataTables_wrapper div.dataTables_filter input {
     margin-bottom:0;
 }
 
+.span-consultaTecnico {
+    color: #9d9d9d;
+    font-size: .7em;
+    margin-bottom:0;
+}
+
 #btn-consultar-disponibilidad {
     background-color: #ffffff;
     color: #7716fa;
@@ -557,10 +722,7 @@ div.dataTables_wrapper div.dataTables_filter input {
 .select_consulta .btn-group.btn-group-sm.btn-block{
 	box-shadow:none !important;
 }
-.select_consulta  .dropdown-toggle:after {
-      color:#8f8f8f;
-      margin-left:-.2em !important;
-}
+
 .columna-principal-users{
 	padding:0;
 }

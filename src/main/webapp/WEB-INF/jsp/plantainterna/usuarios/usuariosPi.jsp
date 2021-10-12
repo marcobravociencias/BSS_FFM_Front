@@ -27,7 +27,6 @@
     </head>
     <body id="idBody" ng-controller="usuarioController">
     	<jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>    
-
         <br>
         <div class="container" id="container_usuarios_alta_consulta">
             <div class="row">
@@ -48,25 +47,49 @@
                         <div class="tab-pane fade show active" id="opcion-consulta" role="tabpanel" aria-labelledby="opcion-consulta-tab">
                             <!--h3 class="text-center">Consulta Usuarios</h3-->
                             <div class="row">
-                                <div class="col-md-3">
-                                    <label class="span-consulta"><i class="fa fa-building"></i> Compa&ntilde;ias</label>
-                                    <div class="input-group">
-                                        <select id="compania_select" class="selectpicker form-control-sm select_consulta" multiple data-actions-box="true">
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <label class="span-consulta"><i class="fas fa-address-card"></i> Puesto</label>
-                                    <div class="input-group">
-                                        <select id="puesto_select" class="selectpicker form-control-sm select_consulta" multiple data-actions-box="true">
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3 column-style-usuarios columna-filtro-usuarios">
+									<label class="span-consulta"><i class="fa fa-building"></i> Compa&ntilde;ias</label>
+				                    <div class="dropdown">
+				                    	<input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="SELECCIONE..." type="text" id="txtCompania" class="input-filtro-status form-control" />
+				                        <ul class="dropdown-menu drop-down-filters scrollGeneralArbol">      
+				                        	<li style="text-align: center;">
+				                            	<button ng-click="seleccionTodos(listaCompanias, true, 'companias')" id="todo_filtro" type="button" class="btn btn-indigo btn-sm waves-effect waves-light">Todos</button>
+				                                <button ng-click="seleccionTodos(listaCompanias, false, 'companias')" id="ninguno_filtro" type="button" class="btn btn-indigo btn-sm waves-effect waves-light">Ninguno</button>
+											</li>     
+				                            <li class="elemento_menu dropdown-divider"></li>
+				                            <li ng-repeat="compania in listaCompanias" class="element-menu-filter">
+				                            	<label class="dropdown-item form-check-inputfiltro">
+				                                	<input id="" ng-change="companiaSeleccion()" class="form-check-input" type="checkbox" ng-model="compania.checkedOpcion" ng-checked="compania.checkedOpcion" />
+				                                    <span for="" class="dropdown-item item-text-filtro" ng-bind="compania.descripcion"></span>
+												</label>
+											</li>
+										</ul>
+									</div>
+								</div>
+                                <div class="col-md-3 column-style-usuarios columna-filtro-usuarios">
+									<label class="span-consulta"><i class="fas fa-address-card"></i> Puesto</label>
+				                    <div class="dropdown">
+				                    	<input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="SELECCIONE..." type="text" id="txtPuesto" class="input-filtro-status form-control" />
+				                        <ul class="dropdown-menu drop-down-filters scrollGeneralArbol">      
+				                        	<li style="text-align: center;">
+				                            	<button ng-click="seleccionTodos(listaPuestos, true, 'puestos')" id="todo_filtro" type="button" class="btn btn-indigo btn-sm waves-effect waves-light">Todos</button>
+				                                <button ng-click="seleccionTodos(listaPuestos, false, 'puestos')" id="ninguno_filtro" type="button" class="btn btn-indigo btn-sm waves-effect waves-light">Ninguno</button>
+											</li>     
+				                            <li class="elemento_menu dropdown-divider"></li>
+				                            <li ng-repeat="puesto in listaPuestos" class="element-menu-filter">
+				                            	<label class="dropdown-item form-check-inputfiltro">
+				                                	<input id="" ng-change="puestoSeleccion()" class="form-check-input" type="checkbox" ng-model="puesto.checkedOpcion" ng-checked="puesto.checkedOpcion" />
+				                                    <span for="" class="dropdown-item item-text-filtro" ng-bind="puesto.descripcion"></span>
+												</label>
+											</li>
+										</ul>
+									</div>
+								</div>
+                                <div class="col-md-3 column-style-usuarios columna-filtro-usuarios">
                                     <label class="span-consulta"><i class="fas fa-map-marked"></i> Geograf&iacute;a</label>
-                                    <div class="">
-                                    	<input id="txtGeografiasConsulta" type="text" class=" form-control  form-control-sm select_consulta inputFormulario" ng-click="abrirModalGeografiaConsulta()" aria-describedby="basic-addon3" placeholder="NO HAY SELECCI&Oacute;N" readonly autocomplete="off">
-                                    </div>
+                                    <div class="dropdown">
+                                    	<input id="txtGeografiasConsulta" type="text" class="input-filtro-status form-control" ng-click="abrirModalGeografiaConsulta()" placeholder="NO HAY SELECCI&Oacute;N" readonly autocomplete="off">
+                                	</div>
                                 </div>
                                 <div class="col-md-3">
                                     <label style="visibility: hidden;" class="span-consulta"><i class="fas fa-map-marked"></i> Geograf&iacute;a</label>
@@ -151,6 +174,7 @@
         </div>
         <jsp:include page="./modal/modalEdicion.jsp"></jsp:include>
         <jsp:include page="./modal/modalArbolGeografia.jsp"></jsp:include>
+        <jsp:include page="./modal/modalFotografiaRegistro.jsp"></jsp:include>
     </body>
 
     <!-- LIBRERIAS JS -->

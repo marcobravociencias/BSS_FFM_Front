@@ -1,13 +1,20 @@
 var tableAlerta;
 app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
 
-    console.log("mainAlertasService");
+//    console.log("mainAlertasService");
     $scope.otsAlertas = [];
     $scope.vistaDespacho = true;
     $scope.alertaSeleccionada = false;
     $scope.alertaSeleccionadaObject = {};
     $scope.tipoAlertaSeleccionada = {};
     $scope.estatusAlerta = {};
+    
+    $scope.listaOpcionesAlerta = [];
+    
+    $scope.listaStatusAlertaAccion = [];
+    $scope.listaEstadosAlertaAccion = [];
+    $scope.listaMotivosAlertaAccion = [];
+    $scope.contadorCaracteresTextArea = 0;
 
 
 
@@ -66,12 +73,12 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
 
                         <div class="top-title-ot">
                             <div class="content-top-element bars-content">
-                                <h5 class="title-otpendeinte">${ordenobj.claveCliente}</h5>
+                                <p class="text-otpendiente-tres-title">${ordenobj.claveCliente}</p>
                             </div>                        
                         </div>
                         <div class="posiciondos">
                             <div class="content-dos-element ">
-                                <h5 class="title-nombrecliente">${ordenobj.nombreCliente}</h5>
+                                <p class="text-otpendiente-tres-title">${ordenobj.nombreCliente}</p>
                             </div>
                         </div>
                         <div class="positiontres">
@@ -87,31 +94,27 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
 
                         <div class="info-content-otpendeinte">
                             <div class="line-content-infootpend">
-                                <b class="title-ciudad">Intevenci&oacute;n:</b>
-                                <span class="content-ciudadotpend">${ordenobj.descSubIntervencion}</span>
+                                <b class="text-otpendiente-tres-title">Intevenci&oacute;n:</b>
+                                <span class="text-otpendiente-tres">${ordenobj.descSubIntervencion}</span>
 
-                                <b class="title-ciudad">Subintervenci&oacute;n.</b>
-                                <span class="content-ciudadotpend">${ordenobj.descIntervencion}</span>                                
+                                <b class="text-otpendiente-tres-title">Subintervenci&oacute;n.</b>
+                                <span class="text-otpendiente-tres">${ordenobj.descIntervencion}</span>                                
                             </div>                                               
                         </div>        
-                        
-                        <div class="info-content-otpendeinte">
-                            <div class="line-content-infootpend">
-                                <b class="title-ciudad">Dir.</b>
-                                <span class="content-ciudadotpend">${ordenobj.direccion}</span>                                
-                            </div>                                               
-                        </div>                
+                                       
                     </div>
                     <div class="card-footer text-muted card-alertas-pendientes-foot">
                         <div class="row">
                             <div class="col-12">
-                                <span class="text-primary-alerta">Alerta: </span><span class="text-secundary-alerta">  ${alertaob.descripcionSubtipoAlerta}  </span>
+                                <span class="text-otpendiente-tres-title">Alerta: </span><span class="text-otpendiente-tres">  ${alertaob.descripcionSubtipoAlerta}  </span>
                                 <span></span>
                             </div>
                         </div>
                     </div>
                 </div>
             `
+            $scope.filtrosGeneral.turnosdisponibles;
+            $scope.viewTableResumen.push(arra);
             $scope.viewTableResumen.push(arra);
             
         });
@@ -198,6 +201,26 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
                         
                     $scope.listaOpcionesAlerta = response.data.result.acciones;
                     
+                    angular.forEach($scope.listaOpcionesAlerta,function(opcion,index){
+                    	opcion.checkedOpcion = false;
+            		});
+                   
+//                  --------------------------------------------------------------------------------------------------------------------
+//                  --------------------EL SIGUIENTE CÓDIGO DEBE QUITARSE UNA VEZ QUE SE CORRIJAN LOS SERVICIOS-------------------------
+                    
+//                    $scope.listaOpcionesAlerta[0].campos[3].valorDefecto = 201;
+//                    $scope.listaOpcionesAlerta[0].campos[3].valorDefecto = null;
+                    
+                    //$scope.listaOpcionesAlerta[0].campos[2].esVisible = 1;
+                    //$scope.listaOpcionesAlerta[0].campos[2].valorDefecto = null;
+//                    $scope.listaOpcionesAlerta[0].campos[2].valorDefecto = 4;
+                    
+//                    $scope.listaOpcionesAlerta[0].campos[1].valorDefecto = null;
+//                    $scope.listaOpcionesAlerta[0].campos[4].valorDefecto = null;
+                    
+//                  ------------------------------HASTA AQUÍ-------------------------------
+//                  --------------------------------------------------------------------------------------------------------------------
+                    
                     swal.close();
                     } else {
                         swal.close();
@@ -210,9 +233,6 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
         }
         
     }
-
-  
-
 
     $scope.showAaccion = false;
     $scope.listaCampos = [];
@@ -242,11 +262,49 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
             }
         }).catch(err => handleError(err));
         */
-
-        $scope.showAaccion = true;
-        $scope.showOpcion = 0;
-        $scope.listaMotivosAlerta = [];
-        $scope.mostrarOpcionAlerta(accion);
+    	$scope.alertaSeleccionada = false;
+    	accion.checkedOpcion = true;
+    	
+    	$('.campoFecha').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            language: 'es',
+            todayHighlight: true,
+            clearBtn: true
+        });
+        $('.campoFecha').datepicker('update', new Date());
+        
+        $scope.idValorDefectoStatusAlertaAccion = null;
+        $scope.idValorDefectoEstadoAlertaAccion = null;
+        $scope.listaStatusAlertaAccion = [];
+        $scope.listaEstadosAlertaAccion = [];
+        $scope.listaMotivosAlertaAccion = [];
+        
+        angular.forEach(accion.campos,function(campo,index){
+        	if(campo.nombreParamentro == "idEstatus"){
+        		if(campo.valorDefecto != null && campo.valorDefecto != "" && campo.valorDefecto != "NA"){
+        			$scope.listaStatusAlertaAccion = campo.valorDefecto;
+        			$scope.listaEstadosAlertaAccion = $scope.estatusCambio.filter(e => {return e.idPadre == $scope.listaStatusAlertaAccion});
+        		}else{
+        			$scope.listaStatusAlertaAccion = $scope.estatusCambio.filter(e => {return e.idPadre == null});
+        		}
+        	}else if(campo.nombreParamentro == "idEstado"){
+        		if(campo.valorDefecto != null && campo.valorDefecto != "" && campo.valorDefecto != "NA"){
+        			$scope.idValorDefectoEstadoAlertaAccion = campo.valorDefecto;
+        			$scope.listaMotivosAlertaAccion = $scope.estatusCambio.filter(e => {return e.idPadre == $scope.idValorDefectoEstadoAlertaAccion});
+        		}else{
+        			
+        		}
+        	}
+		});
+        
+        $scope.terminarAlerta.comentario = "";
+        $scope.contadorCaracteresTextArea = 0;
+        
+        //$scope.showAaccion = true;
+//        $scope.showOpcion = 0;
+//        $scope.listaMotivosAlerta = [];
+//        $scope.mostrarOpcionAlerta(accion);
     }
 
     $scope.showOpcion = 0;
@@ -868,5 +926,41 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
         }
         $scope.pintarMarkesMapDetalleAlerta();
     }
-
+    
+    
+    
+    
+    
+//    ---------------------------------------------------
+//    CAMBIOS REYNEL
+//    ---------------------------------------------------
+    
+    $scope.cerrarCamposAccionAlerta = function() {
+    	angular.forEach($scope.listaOpcionesAlerta,function(opcion,index){
+        	opcion.checkedOpcion = false;
+		});
+    	$scope.alertaSeleccionada = true;
+	}
+    
+    $scope.cambiarSelectsAccionAlerta = function(campo) {
+    	var idCampo = $("#"+campo.nombreParamentro).val();
+    	if(idCampo != null){
+    		if(campo.nombreParamentro == "idEstatus"){
+        		$scope.listaEstadosAlertaAccion = $scope.estatusCambio.filter(e => {return e.idPadre == idCampo});
+        	}else if(campo.nombreParamentro == "idEstado"){
+        		$scope.listaMotivosAlertaAccion = $scope.estatusCambio.filter(e => {return e.idPadre == idCampo});
+        	}
+    	}
+	}
+    
+    $scope.contadorTextArea = function(etiqueta) {
+    	var con =  $("#"+etiqueta).val().length;
+    	if(con > 50){
+    		$(".etiquetaContador").css("color", "#f55756");
+    	}else{
+    		$(".etiquetaContador").css("color", "#a2a2a2");
+    	}
+    	$scope.contadorCaracteresTextArea = con;
+	}
+    
 };

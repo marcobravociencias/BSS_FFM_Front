@@ -956,9 +956,10 @@ h5.title-nombrecliente {
 }
 
 .text-otpendiente-tres {
-  display: inline;
-  font-size: 0.8em;
-  color: #a2a2a2;
+	font-family: 'Montserrat' !important;
+  	display: inline;	
+  	font-size: 0.7em;
+  	color: #a2a2a2;
 }
 
 .checkbox-confirmacion {
@@ -1617,8 +1618,8 @@ span.cerrarnoticias {
 
 .text-otpendiente-tres-title {
   display: inline;
-  font-size: 0.9em;
-  color: #939db2;
+  font-family: 'Montserrat' !important;
+  font-size: .7em !important;
   font-weight: bold;
   color: black;
 }

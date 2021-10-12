@@ -533,7 +533,7 @@ app.controller('despachoCentralController', ['$scope', '$q', '$filter', function
         paramFiltroParent.map(function (e) {
             e.checkedOpcion = banderaChecked
             return e;
-        })
+        });
     };
     
     $scope.busquedaGeografiaConsulta = function() {
