@@ -9,14 +9,14 @@
         <label class="resumen-detalle-agenda" ng-bind="infoBasica.folio && infoBasica.folio !== '' ? infoBasica.folio : 'Sin informaci&oacute;n'"></label>
     </div>
     <div class="col-6  contenido-cuenta">
-        <strong class="color_titulos_resumen">TIPO INTERVENCI&Oacute;N:</strong>
-        <label class="resumen-detalle-agenda" ng-bind="infoBasica.intervencion.Descripcion ? infoBasica.intervencion.Descripcion : 'Sin informaci&oacute;n'"></label>
+        <strong class="color_titulos_resumen">TIPO ORDEN:</strong>
+        <label class="resumen-detalle-agenda" ng-bind="infoBasica.tipoordentext ? infoBasica.tipoordentext : 'Sin informaci&oacute;n'"></label>
     </div>
 </div>
 <div class="row" style="text-align: left;">
     <div class="col-6 contenido-cuenta">
-        <strong class="color_titulos_resumen">SUBINTERVENCI&Oacute;N:</strong>
-        <label class="resumen-detalle-agenda" ng-bind="infoBasica.subIntervencion.Descripcion ? infoBasica.subIntervencion.Descripcion : 'Sin informaci&oacute;n'"></label>
+        <strong class="color_titulos_resumen">SUTIPO ORDEN:</strong>
+        <label class="resumen-detalle-agenda" ng-bind="infoBasica.subtipoordentext ? infoBasica.subtipoordentext : 'Sin informaci&oacute;n'"></label>
     </div>
     <div class="col-6 contenido-cuenta">
         <strong class="color_titulos_resumen">CANAL DE VENTAS:</strong>
@@ -30,20 +30,22 @@
     </div>
     <div class="col-6 contenido-cuenta">
         
-        <strong class="color_titulos_resumen">DISTRITO:</strong>
+        <strong class="color_titulos_resumen">GEOGRAF&Iacute;A:</strong>
         <label class="resumen-detalle-agenda" ng-bind="infoBasica.distrito ? infoBasica.distrito : 'Sin informaci&oacute;n'"></label>
     </div>
 </div>
 <div class="row" style="text-align: left;">
     <div class="col-6 contenido-cuenta">
         <strong class="color_titulos_resumen">TURNO:</strong>
-        <label class="resumen-detalle-agenda" id="turno-resumen"></label>
+        <label class="resumen-detalle-agenda"  ng-bind="infoBasica.turnotext ? infoBasica.turnotext : 'Sin informaci&oacute;n'" id="turno-resumen"></label>
     </div>
     <div class="col-6 contenido-cuenta">
         <strong class="color_titulos_resumen">FECHA:</strong>
-        <label class="resumen-detalle-agenda" id="fecha-resumen"></label>
+        <label class="resumen-detalle-agenda"  ng-bind="infoBasica.fechaTurnoText ? infoBasica.fechaTurnoText : 'Sin informaci&oacute;n'" id="fecha-resumen"></label>
     </div>
 </div>
+
+
 
 <div class="divider-cuenta " style="border: 0.5px solid #e6e6e6;margin-bottom: 1em; margin-top: .2em;"></div>
 
@@ -161,7 +163,7 @@
 			class="alert alert-danger" role="alert"></div>
 	</div>
 	<div class="col-2">
-            <span ng-click="guardarOrdenUniversal()" class="step-icon" class="guardar-datos-cuenta"><i class="fa fa-check"></i></span>
+        <span ng-click="guardarOrdenUniversal()" class="step-icon guardar-datos-cuenta"><i class="fa fa-check"></i></span>
     </div>
 </div>
 

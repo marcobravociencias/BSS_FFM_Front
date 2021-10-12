@@ -5,6 +5,7 @@ app.calendarController = function ($scope, ordenesUniversalesService) {
     let calendar_disponibilidad;
     $scope.calendarDisp;
 
+
     $scope.inicialCalendario = function () {
         calendar_disponibilidad = document.getElementById('calendar_disponibilidad');
         console.log(arregloDisponibilidad);
@@ -27,6 +28,8 @@ app.calendarController = function ($scope, ordenesUniversalesService) {
                 let eventObject = info.event;
 
                 $scope.infoBasica.turno = eventObject._def.extendedProps.tipo + " / " + eventObject.startStr
+                $scope.infoBasica.turnotext=eventObject._def.extendedProps.tipo
+                $scope.infoBasica.fechaTurnoText=eventObject.startStr
                 $scope.$apply()
                 
             },
@@ -148,43 +151,7 @@ app.calendarController = function ($scope, ordenesUniversalesService) {
                 arregloDisponibilidad.push(eventoIndiMatutino)
             }
             
-            /*
-            if(disponibInd.Vespertino !=='0'){
-                eventoIndiVespertino ={
-                    title      : 'Vespertino: ' +disponibInd.Vespertino,
-                    tipo       : 'VESPERTINO',
-                    start      : disponibInd.Fecha,
-                    end        : disponibInd.Fecha,
-                    id         : index,
-                    color      : ((disponibInd.bloqueado) === "0") ? bloq = '#08d85c' : bloq = '#b9bfbc' ,
-                    textColor  : 'white',
-                    vespertino : disponibInd.Vespertino,
-                    className: 'vespertino-event',
-                    defaultDate: moment(),
-                    objetodisponibilidad:disponibInd
-
-                }
-                arregloDisponibilidad.push(eventoIndiVespertino)
-            }
-            
-            if(disponibInd.Nocturno !=='0'){
-                eventoIndiNocturno ={
-                    title      : 'Nocturno: ' +disponibInd.Nocturno,
-                    tipo       : 'NOCTURNO',
-                    start      : disponibInd.Fecha,
-                    end        : disponibInd.Fecha,
-                    id         : index,
-                    color      : ((disponibInd.bloqueado) === "0") ? bloq = '#08d85c' : bloq = '#b9bfbc' ,
-                    textColor  : 'white',
-                    nocturno : disponibInd.Nocturno,
-                    className: 'nocturno-event',
-                    defaultDate: moment(),
-                    objetodisponibilidad:disponibInd
-
-                }
-                arregloDisponibilidad.push(eventoIndiNocturno)
-            }
-            */
+       
         })
         $scope.inicialCalendario();
     }
