@@ -19,11 +19,11 @@
             type="text" id="intervencion_pendiente" class="input-filtro-coordInst form-control form-control-sm" />
             <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-intervencion">      
                 <li style="text-align: center;">
-                    <button ng-click="seleccionarTodos(listaEstatusCalendarizada)" id="todo_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
-                    <button ng-click="deseleccionarTodos(listaEstatusCalendarizada)" id="ninguno_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
+                    <button ng-click="seleccionarTodos(listaEstatusPendiente)" id="todo_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
+                    <button ng-click="deseleccionarTodos(listaEstatusPendiente)" id="ninguno_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
                 </li>     
                 <li class="elemento_menu dropdown-divider"></li>
-                <li ng-repeat="filtro in listaEstatusCalendarizada" class="element-menu-filter"  class="element-menu-filter">
+                <li ng-repeat="filtro in listaEstatusPendiente" class="element-menu-filter"  class="element-menu-filter">
                     <label  class="dropdown-item form-check-inputfiltro">
                         <input id="filtrotext-{{filtro.id}}" class="form-check-input" type="checkbox" ng-model="filtro.check" ng-true-value="true" ng-false-value="false"/>
                         <span  for="filtrotext-{{filtro.id}}" class="dropdown-item item-text-filtro" href="#" ng-bind="filtro.nombre"></span>
@@ -39,11 +39,11 @@
             placeholder="Seleccione..." type="text" id="selectMotivoPendiente" class="input-filtro-coordInst form-control form-control-sm" />
             <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-estatus-substatus">      
                 <li style="text-align: center;">
-                    <button ng-click="seleccionarTodos(listaEstadoCalendarizada)" id="todo_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
-                    <button ng-click="deseleccionarTodos(listaEstadoCalendarizada)" id="ninguno_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
+                    <button ng-click="seleccionarTodos(listaEstadoPendiente)" id="todo_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
+                    <button ng-click="deseleccionarTodos(listaEstadoPendiente)" id="ninguno_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
                 </li>     
                 <li class="elemento_menu dropdown-divider"></li>
-                <li ng-repeat="filtroE in listaEstadoCalendarizada" class="element-menu-filter"  class="element-menu-filter">
+                <li ng-repeat="filtroE in listaEstadoPendiente" class="element-menu-filter"  class="element-menu-filter">
                     <label  class="dropdown-item form-check-inputfiltro">
                         <input id="filtrotext-{{filtroE.id}}" class="form-check-input" type="checkbox" ng-model="filtroE.check" ng-true-value="true" ng-false-value="false"/>
                         <span  for="filtrotext-{{filtroE.id}}" class="dropdown-item item-text-filtro" href="#" ng-bind="filtroE.nombre"></span>
@@ -68,7 +68,7 @@
     </div>
     <div class="col-md-1 div-btn-busqueda" style="width: 85px;">
         <button id="btn-pendiente-salesforce"  
-        ng-click="consultarCalendarizada()" 
+        ng-click="consultarPendientes()" 
         type="button" class="btn btn-sm waves-effect waves-light btn-primary">
         <i class="fa fa-search" ></i></button>
     </div>
