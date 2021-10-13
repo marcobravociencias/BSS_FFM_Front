@@ -85,7 +85,7 @@
     <div class="col-md-4">
 		<label class="text-info-regitro"><i class="fa fa-mars"></i> Sexo*</label>
         <div class="input-group">
-        	<select class="form-control inputFormulario" id="puesto_select_sexo_mod" aria-describedby="basic-addon3" style="height: 34px;">
+        	<select class="form-control inputFormulario" id="sexo_select_registro_mod" aria-describedby="basic-addon3" style="height: 34px;">
         		<option disabled selected>NO HAY SELECCI&Oacute;N</option>
         		<option>Hombre</option>
         		<option>Mujer</option>

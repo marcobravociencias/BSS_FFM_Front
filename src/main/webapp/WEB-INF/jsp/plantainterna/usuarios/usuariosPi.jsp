@@ -174,7 +174,6 @@
         </div>
         <jsp:include page="./modal/modalEdicion.jsp"></jsp:include>
         <jsp:include page="./modal/modalArbolGeografia.jsp"></jsp:include>
-        <jsp:include page="./modal/modalFotografiaRegistro.jsp"></jsp:include>
     </body>
 
     <!-- LIBRERIAS JS -->

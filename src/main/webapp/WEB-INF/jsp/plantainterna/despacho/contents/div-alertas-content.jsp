@@ -488,19 +488,19 @@
                                     <div class="form-group contenedorCamposOpcion" ng-switch-when="selectpicker">
 										<!-- <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o"></i> -->
                                         <label class="etiquetaFormOpcion" for="fecha-reagendamiento-alerta">{{campo.nombreEtiqueta}}</label>
-                                       	<input type="text" readonly placeholder="Selecciona fecha" class="datepicker campoFecha form-control form-control-sm" />                               
+                                       	<input id="{{campo.nombreParamentro}}" type="text" readonly placeholder="Selecciona fecha" class="datepicker campoFecha form-control form-control-sm" ng-model="terminarAlerta.fecha" />                               
                                     </div>
                                     <div class="form-group contenedorCamposOpcion" ng-switch-when="textarea">
 										<!-- <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o"></i> -->
                                         <label class="etiquetaFormOpcion" for="fecha-reagendamiento-alerta">{{campo.nombreEtiqueta}}</label>
-                                        <textarea class="form-control form-control-sm txtFormOpcion" style=" resize: none" ng-model="terminarAlerta.comentario" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" id="{{campo.nombreParamentro}}" rows="3" ng-keyup="contadorTextArea(campo.nombreParamentro)"></textarea>                             
+                                        <textarea class="form-control form-control-sm txtFormOpcion {{campo.nombreParamentro}}" style=" resize: none" ng-model="terminarAlerta.comentario" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" id="{{campo.nombreParamentro}}" rows="3" ng-keyup="contadorTextArea(campo.nombreParamentro)"></textarea>                             
                                     	<label style="float: right;" class="etiquetaFormOpcion etiquetaContador">{{contadorCaracteresTextArea}} - 50</label>
                                     </div>
                                     
                                 </div>
                                 
                                 <div class="col-12">
-                                    <button class="btn btn-primary btnAccionCamposOpcion" style="width: 100%" ng-click="cambiarEstatusAlertaValidacion()">{{opcion.descripcion}}</button>
+                                    <button class="btn btn-primary btnAccionCamposOpcion" style="width: 100%" ng-click="guardar(opcion)">{{opcion.descripcion}}</button>
 <!--                                 	{{opcion.descripcion == 'REAGENDA' ? 'btn btn-primary btnAccionCamposOpcion' : 'btn btn-success'}} -->
                                 </div>
                             </div>

@@ -4,7 +4,7 @@
         <div class="input-group">
         	<select class="form-control inputFormulario" id="puesto_select_registro" aria-describedby="basic-addon3" style="height: 34px;">
         		<option disabled selected>NO HAY SELECCI&Oacute;N</option>
-        		<option ng-repeat="puesto in listaPuestos" value="puesto.id">{{puesto.descripcion}}</option>
+        		<option ng-repeat="puesto in listaPuestos" value="{{puesto.id}}">{{puesto.descripcion}}</option>
         	</select>
         </div>
     </div>
@@ -13,7 +13,7 @@
         <div class="input-group">
         	<select class="form-control inputFormulario" id="compania_select_registro" aria-describedby="basic-addon3" style="height: 34px;">
         		<option disabled selected>NO HAY SELECCI&Oacute;N</option>
-        		<option ng-repeat="compania in listaCompanias" value="compania.id">{{compania.descripcion}}</option>
+        		<option ng-repeat="compania in listaCompanias" value="{{compania.id}}">{{compania.descripcion}}</option>
         	</select>
         </div>
     </div>
@@ -108,10 +108,10 @@
     <div class="col-md-4">
 		<label class="span-consulta"><i class="fa fa-mars"></i> Sexo*</label>
         <div class="input-group">
-        	<select class="form-control inputFormulario" id="puesto_select_sexo" aria-describedby="basic-addon3" style="height: 34px;">
+        	<select class="form-control inputFormulario" id="sexo_select_registro" aria-describedby="basic-addon3" style="height: 34px;">
         		<option disabled selected>NO HAY SELECCI&Oacute;N</option>
-        		<option>Hombre</option>
-        		<option>Mujer</option>
+        		<option value="MASCULINO">Hombre</option>
+        		<option value="FEMENINO">Mujer</option>
         	</select>
         </div>
     </div>
@@ -119,7 +119,7 @@
 		<label class="span-consulta"><i class="fas fa-sync"></i> Asignaci&oacute;n autom&aacute;tica*</label>
         <div class="input-group">
         	<div class="form-check-sm form-check form-switch" style="padding-top: .5rem;">
-				<input class="form-check-input form-check-input-sm" type="checkbox" id="form-asignacionAutomatica" ng-model="informacionRegistro.asignacionAutomatica" ng-change="cambiarCheckAsignacionAutomatica()" />
+				<input class="form-check-input form-check-input-sm" type="checkbox" id="form-asignacionAutomatica" ng-model="informacionRegistro.asignacionAutomatica" ng-true-value="1" ng-false-value="0" ng-change="cambiarCheckAsignacionAutomatica()" />
 				<span class="text-info-regitro" id="checkAsignacionAutomatica">NO</span>
 			</div>
         </div>

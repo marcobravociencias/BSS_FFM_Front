@@ -30,6 +30,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     $scope.listaGeografiasSeleccionadas = [];
     $scope.listaPermisosSeleccionados = [];
     $scope.listaTecnicos = [];
+    $scope.informacionRegistro.asignacionAutomatica = 0;
     $scope.mostrarAccesos = true;
     $scope.mostrarTecnicos = true;
     //PENDIENTES
@@ -553,60 +554,52 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     $scope.guardarUsuario = function() {
     	var puestoSeleccionado = $("#puesto_select_registro option:selected").val();
     	var companiaSeleccionada = $("#compania_select_registro option:selected").val();
+    	var sexo = $("#sexo_select_registro option:selected").val();
     	let paramsRegistro = {
-    			  nombre: $scope.informacionRegistro.nombre,
-    			  apellidoPaterno: $scope.informacionRegistro.apellidoPaterno,
-    			  apellidoMaterno: $scope.informacionRegistro.apellidoMaterno,
-    			  numeroEmpleado: $scope.informacionRegistro.numEmpleado,
-    			  usuario: $scope.informacionRegistro.posicion,
-    			  password: $scope.informacionRegistro.contrasena,
-    			  identificacionTributaria: $scope.informacionRegistro.rfc,
-    			  identificacion: $scope.informacionRegistro.curp,
-    			  genero: $scope.informacionRegistro.sexo,
-    			  urlFotoPerfil: "string",
-    			  correoElectronico: $scope.informacionRegistro.correo,
-    			  telefonoCelular: $scope.informacionRegistro.telefonoContacto,
-    			  idEstatusUsuario: 1,
-    			  idGeografia: 1,
-    			  idUsuarioJefe: 1,
-    			  llaveExterna: "4532",
-    			  idProveedor: 15,
-    			  idDispositivo: "string",
-    			  fechaAlta: $scope.informacionRegistro.fechaIngreso,
-    			  workData: {
-    				  idJefeInmediato: "string",
-    				  geografias: [
-    					  $scope.informacionRegistro.geografias
-    				  ],
-    				  idCompania: companiaSeleccionada,
-    				  idTipoUsuario: puestoSeleccionado,
-    				  numeroEmpleado: $scope.informacionRegistro.numEmpleado,
-    				  password: $scope.informacionRegistro.contrasena,
-    				  idClasificacionOperario: 0,
-    				  intervenciones: [
-    					  $scope.informacionRegistro.intervenciones
-    			      ],
-    			      idOperarios: [
-    			    	  //0
-    			      ],
-    			      permisos: [
-    			    	  $scope.informacionRegistro.permisos
-    			      ],
-    			      idAsignacionAutomatica: "string"
-    			  }
+    			
+    			nombre: $scope.informacionRegistro.nombre,
+    			apellidoPaterno: $scope.informacionRegistro.apellidoPaterno,
+    			apellidoMaterno: $scope.informacionRegistro.apellidoMaterno,
+    			numeroEmpleado: $scope.informacionRegistro.numEmpleado,
+    			usuario: $scope.informacionRegistro.usuario,
+    			password: $scope.informacionRegistro.contrasena,
+    			identificacionTributaria: $scope.informacionRegistro.rfc,
+    			identificacion: $scope.informacionRegistro.curp,
+    			genero: sexo,
+    			
+    			urlFotoPerfil: "string",
+    			
+    			correoElectronico: $scope.informacionRegistro.correo,
+    			telefonoCelular: $scope.informacionRegistro.telefonoContacto,
+    			idEstatusUsuario: 1,
+    			idGeografia: $scope.informacionRegistro.ciudadNatal,
+    			idUsuarioJefe: 12,
+    			llaveExterna: "4532",
+    			idProveedor: companiaSeleccionada,
+    			idDispositivo: "string",
+    			fechaAlta: "2021-10-06T23:16:09.089Z",
+    			workData: {
+    				geografias: $scope.informacionRegistro.geografias,
+    				idTipoUsuario: puestoSeleccionado,
+    				intervenciones: $scope.informacionRegistro.intervenciones,
+    				idOperarios: [],
+    				permisos: $scope.informacionRegistro.permisos,
+    				idAsignacionAutomatica: $scope.informacionRegistro.asignacionAutomatica
+    			}
     	};
     	
-//    	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
-//		swal.showLoading();
-//    	$q.all([
-//    		usuarioPIService.guardarUsuario(paramsRegistro)
-//        ]).then(function(results) {
-//
-//        	swal.close();
-//        });
+    	console.log(paramsRegistro);
 
     	var respuestaValidacionRegistro = $scope.validarInformacionRegistro();
     	if(respuestaValidacionRegistro){
+    		swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
+    		swal.showLoading();
+        	$q.all([
+        		usuarioPIService.guardarUsuario(paramsRegistro)
+            ]).then(function(results) {
+            	console.log(results[0].data);
+            	swal.close();
+            });
     		swal("Correcto", "¡Registro guardado con éxito!", "success");
     	}
 	}
@@ -761,12 +754,12 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 			$("#form-fechaIngresoRegistro").css("border", "1px solid #d9d9d9");
 		}
 		
-		if($("#puesto_select_sexo").val() === "" || $("#puesto_select_sexo").val() === undefined || $("#puesto_select_sexo").val() === null){
-			$("#puesto_select_sexo").css("border-bottom", "2px solid #f55756");
+		if($("#sexo_select_registro").val() === "" || $("#sexo_select_registro").val() === undefined || $("#sexo_select_registro").val() === null){
+			$("#sexo_select_registro").css("border-bottom", "2px solid #f55756");
 			validacionInformacionGeneral = false;
 			mensaje = mensaje + "<br/> *Sexo";
 		}else{
-			$("#puesto_select_sexo").css("border", "1px solid #d9d9d9");
+			$("#sexo_select_registro").css("border", "1px solid #d9d9d9");
 		}
 		
 		//PESTAÑA INTERVENCIONES
@@ -917,8 +910,8 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     });
     
     //CUANDO SELECCCIONE UN PUESTO EL INPUT REGRESA A SU ESTILO NORMAL (VALIDACIÓN) - PESTAÑA INFORMACIÓN REGISTRO USUARIO
-    $("#puesto_select_sexo").change(function() {
-    	$("#puesto_select_sexo").css("border", "1px solid #d9d9d9");
+    $("#sexo_select_registro").change(function() {
+    	$("#sexo_select_registro").css("border", "1px solid #d9d9d9");
     });
     
     //CUANDO SELECCCIONE UNA COMPANÍA EL INPUT REGRESA A SU ESTILO NORMAL (VALIDACIÓN) - PESTAÑA INFORMACIÓN REGISTRO USUARIO
