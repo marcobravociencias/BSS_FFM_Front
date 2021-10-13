@@ -577,7 +577,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     			llaveExterna: "4532",
     			idProveedor: companiaSeleccionada,
     			idDispositivo: "string",
-    			fechaAlta: "2021-10-06T23:16:09.089Z",
+    			fechaAlta: $scope.informacionRegistro.fechaIngreso,
     			workData: {
     				geografias: $scope.informacionRegistro.geografias,
     				idTipoUsuario: puestoSeleccionado,

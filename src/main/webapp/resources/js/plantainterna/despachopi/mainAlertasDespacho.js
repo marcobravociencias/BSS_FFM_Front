@@ -115,7 +115,6 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
             `
             $scope.filtrosGeneral.turnosdisponibles;
             $scope.viewTableResumen.push(arra);
-            $scope.viewTableResumen.push(arra);
             
         });
         
