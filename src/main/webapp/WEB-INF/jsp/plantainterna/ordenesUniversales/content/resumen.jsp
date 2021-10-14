@@ -157,10 +157,8 @@
 <br>
 <div class="row">
 	<div class="col-10">
-		<div id="message-success-resumen" style="display: none;"
-			class="alert alert-success" role="alert"></div>
-		<div id="message-error-resumen" style="display: none;"
-			class="alert alert-danger" role="alert"></div>
+		<div id="message-success-resumen"  ng-show="isGuardadoProcess && isGuardadoCreacion" class="alert alert-success" role="alert" ng-bind="mensajeRequestGuardado"></div>
+		<div id="message-error-resumen"    ng-show="isGuardadoProcess && !isGuardadoCreacion" class="alert alert-danger" role="alert" ng-bind="mensajeRequestGuardado"></div>
 	</div>
 	<div class="col-2">
         <span ng-click="guardarOrdenUniversal()" class="step-icon guardar-datos-cuenta"><i class="fa fa-check"></i></span>

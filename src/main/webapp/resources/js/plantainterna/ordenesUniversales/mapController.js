@@ -44,23 +44,12 @@ app.mapController = function ($scope, ordenesUniversalesService) {
             zoom : 10,
         });
 
-        marker = new google.maps.Marker({
-            map: map,
-            draggable: true,
-            animation: google.maps.Animation.DROP,
-            position: {
-            }
-        });
-
-        markerRes = new google.maps.Marker({
-            map: mapResumen,
-            draggable: false,
-            animation: google.maps.Animation.DROP,
-            position: {
-            }
-        });
+        $scope.inicializarMarkers()
         
         google.maps.event.addListener(marker, 'dragend', function (event) {
+            marker.setMap(map) 
+            markerRes.setMap(mapResumen);
+         
             $scope.latitudSelectedMap=this.getPosition().lat() ;
             $scope.longitudSelectedMap=this.getPosition().lng() ;
             $scope.$apply()
@@ -70,7 +59,10 @@ app.mapController = function ($scope, ordenesUniversalesService) {
             console.log("drag-end")
         });
         google.maps.event.addListener(map, 'dblclick', function(e) {
-            let positionDoubleclick = e.latLng;
+            marker.setMap(map) 
+            markerRes.setMap(mapResumen);
+         
+            let positionDoubleclick = e.latLng;        
             marker.setPosition(positionDoubleclick);
             markerRes.setPosition(positionDoubleclick);
             mapResumen.setCenter(positionDoubleclick);
@@ -93,7 +85,27 @@ app.mapController = function ($scope, ordenesUniversalesService) {
         });**/
         
     }
+    $scope.inicializarMarkers=function(){
+        marker = new google.maps.Marker({
+            map: map,
+            draggable: true,
+            animation: google.maps.Animation.DROP,
+            position: {
+            }
+        });
 
+        markerRes = new google.maps.Marker({
+            map: mapResumen,
+            draggable: false,
+            animation: google.maps.Animation.DROP,
+            position: {
+            }
+        });
+    }
+    $scope.limpiarMarkers=function(){
+        marker.setMap(null) 
+        markerRes.setMap(null);
+    }
     $scope.addSearchInput=function(){
         let input = document.getElementById('search-input-place');
         let searchBox = new google.maps.places.SearchBox(input);
@@ -111,6 +123,8 @@ app.mapController = function ($scope, ordenesUniversalesService) {
             }        
             console.log("places_changed")
             let bounds = new google.maps.LatLngBounds();
+            marker.setMap(map) 
+            markerRes.setMap(mapResumen);
             places.forEach(function(place) {
                 if (!place.geometry) {
                     console.log("Returned place contains no geometry");

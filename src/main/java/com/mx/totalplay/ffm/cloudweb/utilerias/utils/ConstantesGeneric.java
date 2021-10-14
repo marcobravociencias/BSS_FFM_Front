@@ -34,4 +34,7 @@ public class ConstantesGeneric implements Serializable{
 	
 	@Value("${basicauth-cred}")
 	private String authbasicCred;
+	
+	@Value("${guardarOrdenesUniversales}")
+	private String guardarOrdenesUniversales;
 }
