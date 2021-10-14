@@ -394,6 +394,10 @@ map-card .map-container iframe {
 #search{
     border-radius: 20px;
     width: 150px;
+    height: 2em !important;
+    min-height: 2em !important;
+    padding: 0 !important;
+    padding-left: 1em !important;
 }
 
 #search::placeholder {

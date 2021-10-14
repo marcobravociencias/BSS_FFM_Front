@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.mx.totalplay.ffm.cloudweb.plantainterna.model.CoordInstalacionesPI.ParamFFMCoordInstalacionesVO;
 import com.mx.totalplay.ffm.cloudweb.plantainterna.model.consultaOTPI.ParamConsultaOTPI;
 import com.mx.totalplay.ffm.cloudweb.plantainterna.service.CoordInstalacionesService;
 import com.mx.totalplay.ffm.cloudweb.plantainterna.utils.ConstCoordInst;
@@ -1004,11 +1005,33 @@ public class ImplCoordInstalacionesService implements CoordInstalacionesService{
 		logger.info("RESULT"+gson.toJson(response));
 		return response;
 	}
-	
-	
 
+	@Override
+	public DataTableResponse consultarBandejaFFM(ParamFFMCoordInstalacionesVO params) {
+		//JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		logger.info("ImplCoordInstalacionesService.class [metodo = consultarBandejaFFM() ]\n"+params);
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		
+		DataTableResponse dataResponse = DataTableResponse.builder()
+                .isRespuesta(false)
+                .data(new String[0][10])
+                .paginaActual(0)
+                .registrosTotales(0)
+                .recordsFiltered("0")
+                .recordsTotal("0")
+                //.draw(paramsOT.getDraw() + "")
+                .result(null).build();
+		
+		//jsonObject.set
+		
+		//jsonObject.get("name_os").getAsString();
+		
+        
+		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(gson.toJson(params), principalDetail.getDireccionAmbiente().concat(constCoordInst.getConsultarBandejaFFM()),
+                ServiceResponseResult.class, principalDetail.getAccess_token());
+		logger.info("##### RESULT" + gson.toJson(response) + " #######");
+		
+		return null;
+	}
 	
-	
-	
-
 }

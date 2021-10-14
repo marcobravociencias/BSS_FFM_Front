@@ -77,7 +77,12 @@ app.disponibilidadCalendar = function ($scope) {
                     if (!exists) {
                         console.log("tiene eventos")
                        
-                        let ultimonivel = $scope.obtenerNivelUltimoJerarquia()
+                        let ultimonivel;
+                        if ($scope.nGeografia) {
+                            ultimonivel = $scope.nGeografia
+                        } else {
+                            ultimonivel = $scope.obtenerNivelUltimoJerarquia() - 1;
+                        }
                         let clustersparam = $("#jstreeconsulta").jstree("get_selected", true)
                             .filter(e => e.original.nivel == ultimonivel)
                             .map(e => parseInt(e.id))

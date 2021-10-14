@@ -61,6 +61,8 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
     $scope.infoOtDetalle={}
     $scope.listadoIconosConfig=[]
 
+    $scope.listadoKmzConfig=[];
+    $scope.listadoKmzConfigVistaMapa=[]
     $scope.nfiltrogeografia=''
     $scope.nfiltrointervenciones=''
     $scope.estatusCambio = [];
@@ -956,15 +958,27 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
 
             $scope.elementosConfigGeneral=new Map(Object.entries(results[3].data.result))          
             for (const elm in results[3].data.result) {
-                console.log(elm)
                 if(elm.toUpperCase().includes("ICONO_")){
                     $scope.listadoIconosConfig.push({
                         icon: elm.substring( elm.indexOf("_")+1 , elm.length ),
                         value:elementosMapa[elm]
                     }) 
                 }   
+
+                if(elm.toUpperCase().includes("KMZ_")){
+                    $scope.listadoKmzConfig.push({
+                        identificador:elm,
+                        text: elm.substring( elm.indexOf("_")+1 , elm.length ).replaceAll('_',' '),
+                        value:elementosMapa[elm]
+                    });
+                }
             }
-            
+
+            $scope.objectVistaMapaCOnfig={
+                isOpenOpciones:false,
+                listadoKmz:angular.copy($scope.listadoKmzConfig).map(e=>{ e.isCheckedOpcion=false;  return e;})
+            }
+
             if (results[4].data !== undefined) {
                 if(results[4].data.respuesta ){
                     if(results[4].data.result ){

@@ -3,6 +3,10 @@ body {
      margin: 0;
       height: 100%;
 }
+
+body {
+    color: grey;
+}
 .header-navbar-p{
    /* border-bottom: 1px solid #eaeaea; */
    background: #f1f2f2;

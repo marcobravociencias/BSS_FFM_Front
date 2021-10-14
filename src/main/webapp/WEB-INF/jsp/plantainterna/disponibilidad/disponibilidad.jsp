@@ -45,11 +45,11 @@ pageEncoding="ISO-8859-1"%>
 				</div>
 				<div id="tipo_intervencion" class="col-sm-2 columna-filtro-ind"
 					data-intro="Opci&oacute;n tipo de intervenci&oacute;n">
-					<i class="icono-noseleccion fas fa-exclamation-circle me-2" title="No se encontro el catalogo de Intervencion" ng-show="banderaErrorIntervencion"></i><label for="tipo_select" class="label-filter">Intervenci&oacute;n</label>
+					<i class="icono-noseleccion fas fa-exclamation-circle me-2" title="No se encontro el catalogo de Intervencion" ng-show="banderaErrorIntervencion"></i><label for="tipo_select" class="label-filter">Tipo de ordenes</label>
 					<input type="text" readonly id="arbol_intervencion" style="background: white;cursor: pointer" class="input-filtro-disponibilidad form-control form-control-sm" aria-describedby="emailHelp" placeholder="Seleccione">
 				</div>
 				<div class="col-3" style="margin-top: 1.5px;">
-					<label for="tipo_select" class="label-filter" style="visibility: hidden;">Intervención</label>
+					<label for="tipo_select" class="label-filter" style="visibility: hidden;">Tipo de ordenes</label>
 					<button id="btn-consultar-disponibilidad" type="button"
 					class="btn btn-sm btn-primary"
 					ng-click="consultaDisponibilidad()"
@@ -100,7 +100,7 @@ pageEncoding="ISO-8859-1"%>
 													</tr>
 													<tr>
 														<td>
-															<span>Intervenci&oacute;n:</span>
+															<span>Tipo de orden:</span>
 															<span id="intervencion_span" class="spanTable">Sin info.</span>
 														</td>
 													</tr>

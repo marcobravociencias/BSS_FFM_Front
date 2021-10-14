@@ -15,8 +15,10 @@
         <link rel="icon" type="image/png" sizes="16x16"
             href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-16x16.png" />
         <link rel="manifest" href="${pageContext.request.contextPath}/resources/img/iconsistema/manifest.json" />
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/font-awesome.css"
+            rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/dataTables.fontAwesome.css"
+            rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap.min.css"
             rel="stylesheet" />
 
@@ -74,7 +76,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link" id="modifica-tab" data-toggle="tab" href="#modifica"
                                         onclick="resetAll()" role="tab" aria-controls="modifica" ng-show="isEdit"
-                                        aria-selected="false">Mofificar
+                                        aria-selected="false">Modificar
                                         Veh&iacute;culo</a>
                                 </li>
                                 <li class="nav-item">

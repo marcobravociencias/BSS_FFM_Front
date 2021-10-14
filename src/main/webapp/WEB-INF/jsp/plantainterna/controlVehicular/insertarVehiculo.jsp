@@ -8,7 +8,7 @@
             <a class="nav-link pills" id="pills-documentacion-tab" data-toggle="pill" href="#pills-documentacion"
                 role="tab" aria-controls="pills-documentacion" aria-selected="false">Documentaci&oacute;n</a>
         </li>
-        <li class="nav-item" role="imagenes">
+        <li class="nav-item" role="imagenes" ng-click="printImgTab()">
             <a class="nav-link pills" id="pills-imagenes-tab" data-toggle="pill" href="#pills-imagenes" role="tab"
                 aria-controls="pills-imagenes" aria-selected="false">Imagenes</a>
         </li>
@@ -24,7 +24,7 @@
                 <div class="form-row">
                     <div class="col-3 form-group">
                         <label>Placa </label>
-                        <input type="text" class="form-control form-control-sm" id="placa" onchange="buscarPlaca()"
+                        <input type="text" class="form-control form-control-sm" id="placa" onchange="buscarPlaca()" maxlength="25"
                             ng-model="vehiculo.placa" capitalize autocomplete="off" />
                     </div>
                     <div class="col-3 form-group">
@@ -68,7 +68,7 @@
                     <div class="col-3 form-group">
                         <label>N&uacute;mero de Serie </label>
                         <input type="text" class="form-control form-control-sm" id="numSerie"
-                            ng-model="vehiculo.numeroSerie" capitalize autocomplete="off" />
+                            ng-model="vehiculo.numeroSerie" capitalize autocomplete="off"  maxlength="25"/>
                     </div>
                     <div class="col-3 form-group">
                         <label>Combustible </label>
@@ -105,7 +105,7 @@
                             ng-model="vehiculo.detalle.idEncierro">
                             <option value="" selected>NO HAY SELECCI&Oacute;N</option>
                             <option value="{{enc.id}}" ng-repeat="enc in data.encierros">
-                               {{enc.descripcion}}
+                                {{enc.descripcion}}
                             </option>
                         </select>
                     </div>
@@ -133,7 +133,7 @@
                     <div class="col-3 form-group">
                         <label>N&uacute;m. de P&oacute;liza
                         </label>
-                        <input type="text" class="form-control form-control-sm" id="numPoliza"
+                        <input type="text" class="form-control form-control-sm" id="numPoliza"  maxlength="25"
                             ng-model="vehiculo.detalle.numeroPoliza" capitalize autocomplete="off" />
                     </div>
                     <div class="col-3 form-group">
@@ -146,14 +146,13 @@
                     <div class="col-3 form-group">
                         <label>N&uacute;m. de Tarjeta de Circulaci&oacute;n
                         </label>
-                        <input type="text" class="form-control form-control-sm" id="numTarjetaC"
+                        <input type="text" class="form-control form-control-sm" id="numTarjetaC"  maxlength="25"
                             ng-model="vehiculo.detalle.tarjetaCirculacion" capitalize autocomplete="off" />
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="col-3 form-group">
-                        <label style="font-size: 11px !important">Vencimiento Tarjeta de Circulaci&oacute;n<span
-                                style="color: red">*</span></label>
+                        <label style="font-size: 11px !important">Vencimiento Tarjeta de Circulaci&oacute;n</label>
                         <input type="text" class="datepicker datepickerNormal form-control form-control-sm"
                             placeholder="dd/mm/aaaa" ng-model="vehiculo.detalle.fechaVencimientoTarjeta"
                             id="vencimientoTarjeta" readonly />
@@ -161,7 +160,7 @@
                     <div class="col-3 form-group">
                         <label>N&uacute;m. de Verificaci&oacute;n
                         </label>
-                        <input type="text" class="form-control form-control-sm" id="numVerificacion"
+                        <input type="text" class="form-control form-control-sm" id="numVerificacion"  maxlength="25"
                             ng-model="vehiculo.detalle.numeroVerificacion" capitalize autocomplete="off" />
                     </div>
                     <div class="col-3 form-group">
@@ -173,7 +172,7 @@
                     </div>
                     <div class="col-3 form-group">
                         <label>Clave Pensi&oacute;n </label>
-                        <input type="text" class="form-control form-control-sm" id="clavePension"
+                        <input type="text" class="form-control form-control-sm" id="clavePension"  maxlength="25"
                             ng-model="vehiculo.detalle.clavePension" capitalize autocomplete="off" />
                     </div>
                 </div>
@@ -181,22 +180,22 @@
                     <div class="col-3 form-group">
                         <label>N&uacute;m. Tarjeta Gasolina
                         </label>
-                        <input type="text" class="form-control form-control-sm" id="numTarjetaG"
+                        <input type="text" class="form-control form-control-sm" id="numTarjetaG"  maxlength="25"
                             ng-model="vehiculo.detalle.tarjetaGasolina" capitalize autocomplete="off" />
                     </div>
                     <div class="col-3 form-group">
                         <label>Clave GPS </label>
-                        <input type="text" class="form-control form-control-sm" id="gps"
+                        <input type="text" class="form-control form-control-sm" id="gps"  maxlength="25"
                             ng-model="vehiculo.detalle.claveGps" capitalize autocomplete="off" />
                     </div>
                     <div class="col-3 form-group">
                         <label>N&uacute;m. de Motor </label>
-                        <input type="text" class="form-control form-control-sm" id="numMotor"
+                        <input type="text" class="form-control form-control-sm" id="numMotor"  maxlength="25"
                             ng-model="vehiculo.detalle.numeroMotor" capitalize autocomplete="off" />
                     </div>
                     <div class="col-3 form-group">
                         <label>N&uacute;m. de Chasis </label>
-                        <input type="text" class="form-control form-control-sm" id="numChasis"
+                        <input type="text" class="form-control form-control-sm" id="numChasis"  maxlength="25"
                             ng-model="vehiculo.detalle.numeroChasis" capitalize autocomplete="off" />
                     </div>
                 </div>
@@ -262,7 +261,7 @@
                 <div class="form-row">
                     <div class="col-12 form-group">
                         <label>Comentarios </label>
-                        <textarea class="form-control form-control-sm" id="comentarios"
+                        <textarea class="form-control form-control-sm" id="comentarios" 
                             ng-model="vehiculo.detalle.comentarios"></textarea>
                     </div>
                 </div>
@@ -282,9 +281,13 @@
                             <label class="custom-file-label" for="filePlaca" id="fotoPlaca">Cargar
                                 Imagen</label>
                         </div>
-                        <div ng-if="filePlaca.nombre" class="file-delete">
-                            <span>{{filePlaca.nombre}} <i class="fa fa-trash"
-                                    onclick="deleteFile('fotoPlaca')"></i></span>
+                        <div ng-if="vehiculo.urlFotoPlaca || filePlaca" style="text-align: center; margin-top: 20px;">
+                            <img alt="Placa" src="" class="imgResumen" id="placaImagenTab"
+                                onclick="showImgResumen(this)" />
+                        </div>
+                        <div ng-if="filePlaca.nombre" class="file-delete" style="text-align: center;">
+                            <span class="text-img">{{filePlaca.nombre}} </span><i class="fa fa-trash"
+                                onclick="deleteFile('fotoPlaca')"></i>
                         </div>
                     </div>
                     <div class="col-3 form-group">
@@ -295,9 +298,14 @@
                             <label class="custom-file-label" for="fileFoto" id="fotoVehiculo">Cargar
                                 Imagen</label>
                         </div>
-                        <div ng-if="fileVehiculo.nombre" class="file-delete">
-                            <span>{{fileVehiculo.nombre}} <i class="fa fa-trash"
-                                    onclick="deleteFile('fotoVehiculo')"></i></span>
+                        <div ng-if="vehiculo.urlFotoVehiculo || fileVehiculo"
+                            style="text-align: center; margin-top: 20px;">
+                            <img alt="Vehiculo" src="" class="imgResumen" id="vehiculoImagenTab"
+                                onclick="showImgResumen(this)" />
+                        </div>
+                        <div ng-if="fileVehiculo.nombre" class="file-delete" style="text-align: center;">
+                            <span class="text-img">{{fileVehiculo.nombre}} </span><i class="fa fa-trash"
+                                onclick="deleteFile('fotoVehiculo')"></i>
                         </div>
                     </div>
                     <div class="col-3 form-group">
@@ -309,9 +317,14 @@
                             <label class="custom-file-label" for="fileTarjeta" id="fotoTarjetaCirculaion">Cargar
                                 Imagen</label>
                         </div>
-                        <div ng-if="fileCirculacion.nombre" class="file-delete">
-                            <span>{{fileCirculacion.nombre}} <i class="fa fa-trash"
-                                    onclick="deleteFile('fotoTarjetaCirculaion')"></i></span>
+                        <div ng-if="vehiculo.detalle.urlFotoTarjetaCirculacion  || fileCirculacion"
+                            style="text-align: center; margin-top: 20px;">
+                            <img alt="Tarjeta Circulacion" src="" id="circulacionImagenTab"
+                                onclick="showImgResumen(this)" class="imgResumen" />
+                        </div>
+                        <div ng-if="fileCirculacion.nombre" class="file-delete" style="text-align: center;">
+                            <span class="text-img">{{fileCirculacion.nombre}} </span><i class="fa fa-trash"
+                                onclick="deleteFile('fotoTarjetaCirculaion')"></i>
                         </div>
                     </div>
 
@@ -323,9 +336,14 @@
                             <label class="custom-file-label" for="fileTarjetaGas" id="fotoTarjetaGasolina">Cargar
                                 Imagen</label>
                         </div>
-                        <div ng-if="fileGasolina.nombre" class="file-delete">
-                            <span>{{fileGasolina.nombre}} <i class="fa fa-trash"
-                                    onclick="deleteFile('fotoTarjetaGasolina')"></i></span>
+                        <div ng-if="vehiculo.detalle.urlFotoTarjetaGasolina || fileGasolina"
+                            style="text-align: center; margin-top: 20px;">
+                            <img alt="Tarjeta Gasolina" src="" id="gasolinaImagenTab" onclick="showImgResumen(this)"
+                                class="imgResumen" />
+                        </div>
+                        <div ng-if="fileGasolina.nombre" class="file-delete" style="text-align: center;">
+                            <span class="text-img">{{fileGasolina.nombre}} </span><i class="fa fa-trash"
+                                onclick="deleteFile('fotoTarjetaGasolina')"></i>
                         </div>
                     </div>
                 </div>
@@ -432,7 +450,7 @@
                     </tr>
                     <tr>
                         <td class="tableTextTitle">* Comentarios: </td>
-                        <td class="tableText" colspan="5">{{vehiculo.detalle.comentarios ? vehiculo.detalle.comentarios
+                        <td class="tableText" colspan="5" style="width: 835px;">{{vehiculo.detalle.comentarios ? vehiculo.detalle.comentarios
                             : 'Sin asignar'}}</td>
                     </tr>
                 </table>

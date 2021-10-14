@@ -18,7 +18,7 @@
                             </div>
                             <div class="content-list-tecnicos">
                                 <div ng-repeat="user in listadoTecnicosGeneral | filter:search.nombreCompleto">
-                                    <div class="content-tecnico"  style="border-right: 4px solid {{user.color}}" id="{{user.idTecnico}}" ng-click="detalleTecnicoRuta(user.id)">
+                                    <div class="content-tecnico"   id="{{user.idTecnico}}" ng-click="detalleTecnicoRuta(user.id)">
                                         <div class="row">
                                             <div class="col-3">
                                                 <img style="border:.2em solid {{user.color}}"
@@ -55,6 +55,28 @@
                             <div id="mapa-vista-general" class="mapa-cotizacion-despacho"
                                 style="width:100%;height:100%; border-radius: 10px;">
                             </div>
+
+                            <div  class="card div-contenedor-kmz-buttons">
+                                <div class="card-header"> 
+                                    <span class="title-tipoot">FILTROS MAPA</span> 
+                                    <span ng-click="objectVistaMapaCOnfig.isOpenOpciones=false" ng-show="objectVistaMapaCOnfig.isOpenOpciones" class="icono-accion-card fa fa-minus"></span>
+                                    <span ng-click="objectVistaMapaCOnfig.isOpenOpciones=true" ng-show="!objectVistaMapaCOnfig.isOpenOpciones" class="icono-accion-card fa fa-plus"></span>
+                                </div>
+                                <div  ng-show="objectVistaMapaCOnfig.isOpenOpciones" class="card-body">
+                                  <form class="form-body-filter">
+                                    <div ng-repeat="kmzConfig in objectVistaMapaCOnfig.listadoKmz track by $index" class="form-check form-check-vistamapa">
+                                      <input ng-change="setMapaKmlVistaMapa($index,kmzConfig)" ng-model="kmzConfig.isOpenOpciones"  type="checkbox" class="form-check-input ">
+                                      <label class="form-check-label label-form " for="ocultarmostrarlables" ng-bind="kmzConfig.text"></label>
+                                    </div>                                
+                                  </form>
+                                  <!--div class="content-ocultarmostrar">
+                                    <span class="fa fa-chevron-down icono-ocultarmostrar"></span>
+                                    <span class="text-ocultarmostrar">Ocultar tipos ots</span>
+                                  </div>
+                                  <ul class="listado-intervenciones list-group list-group-flush">
+                                  </ul-->
+                                </div>
+                              </div>
                         </div>
                     </div>
                 </div>

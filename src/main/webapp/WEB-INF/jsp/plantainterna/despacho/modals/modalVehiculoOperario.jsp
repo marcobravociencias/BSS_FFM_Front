@@ -103,22 +103,22 @@
                         <div class="col-6">
                             <div class="container-imagen-vehiculo">
                                 <h5 class="title-imgen-vehiculo">Placa</h5>
-                                <img src="{{vehiculoOperario.urlFotoPlaca}}" class="img-fluid shadow-2-strong" alt=""/>
+                                <img src="{{evidenciaPlaca}}" class="img-fluid shadow-2-strong" alt=""/>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="container-imagen-vehiculo">
                                 <h5 class="title-imgen-vehiculo">Veh&iacute;culo</h5>
-                                <img src="{{vehiculoOperario.urlFotoVehiculo}}" class="img-fluid shadow-2-strong" alt=""/>
+                                <img src="{{evidenciaVehiculo}}" class="img-fluid shadow-2-strong" alt=""/>
                             </div>
                         </div>
                     </div>
 				</div>
 			</div>
             <div class="modal-footer">
-                <button type="button" class="btn cerrar-modal-btn btn-ligh" data-mdb-dismiss="modal">
+                <button type="button" class="btn btn-cerrar-modal btn-secondary" data-mdb-dismiss="modal">
                     Cerrar
-                </button>
+                  </button>
            </div>
         </div>
     </div>

@@ -956,9 +956,10 @@ h5.title-nombrecliente {
 }
 
 .text-otpendiente-tres {
-  display: inline;
-  font-size: 0.8em;
-  color: #a2a2a2;
+	font-family: 'Montserrat' !important;
+  	display: inline;	
+  	font-size: 0.7em;
+  	color: #a2a2a2;
 }
 
 .checkbox-confirmacion {
@@ -1617,8 +1618,8 @@ span.cerrarnoticias {
 
 .text-otpendiente-tres-title {
   display: inline;
-  font-size: 0.9em;
-  color: #939db2;
+  font-family: 'Montserrat' !important;
+  font-size: .7em !important;
   font-weight: bold;
   color: black;
 }
@@ -2221,4 +2222,45 @@ b.text-no-seleccion-geografia {
     padding-top: 0em;
     overflow: auto;
     max-height: 18em;
+}
+
+.div-contenedor-kmz-buttons .card-header{
+    text-align:left !important;
+    margin-left: 0em;
+    color: black;
+    font-weight: bolder;
+}
+.div-contenedor-kmz-buttons {
+    position: absolute;
+    z-index: 9;
+    background-color: #f1f1f1;
+    border: 1px solid #d3d3d3;
+    text-align: center;
+    border: none;
+    box-shadow: 0 2px 2px 2px rgb(0 0 0 / 5%), 0 2px 2px 2px rgb(0 0 0 / 5%), 0 2px 2px 2px rgb(0 0 0 / 5%);
+    background-color: white;
+    /* padding: 2em; */
+    margin: 1em;
+    cursor: move;
+    min-width: 250px;
+    /* TOP: 0; */
+    top: 0;
+}
+
+.form-body-filter label {
+    margin-left: 0em;
+    color: dimgrey;
+    font-weight: bolder;    
+}
+.form-check-vistamapa{
+   text-align:left;
+}
+.icono-accion-card {
+    position: absolute;
+    right: 0;
+    margin-right: 1em;
+    font-size: 1.4em;
+    color: #a1a1a1;
+    font-weight: 900 !important;
+    cursor: pointer;
 }

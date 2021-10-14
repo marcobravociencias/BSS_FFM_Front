@@ -155,19 +155,19 @@
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Estado:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.domicilioCuenta.Estado}}" ng-bind="detalle.domicilioCuenta.Estado"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.domicilioCuenta.estado}}" ng-bind="detalle.domicilioCuenta.estado"></span></div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Ciudad:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.domicilioCuenta.Ciudad}}" ng-bind="detalle.domicilioCuenta.Ciudad"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.domicilioCuenta.ciudad}}" ng-bind="detalle.domicilioCuenta.ciudad"></span></div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Municipio:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.domicilioCuenta.Municipio}}" ng-bind="detalle.domicilioCuenta.Municipio"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.domicilioCuenta.municipio}}" ng-bind="detalle.domicilioCuenta.municipio"></span></div>
                 </div>
             </div>
         </div>
@@ -175,19 +175,19 @@
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Codigo postal:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.domicilioCuenta.CP}}" ng-bind="detalle.domicilioCuenta.CP"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.domicilioCuenta.cp}}" ng-bind="detalle.domicilioCuenta.cp"></span></div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Colonia:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.domicilioCuenta.Colonia}}" ng-bind="detalle.domicilioCuenta.Colonia"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.domicilioCuenta.colonia}}" ng-bind="detalle.domicilioCuenta.colonia"></span></div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Calle:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.domicilioCuenta.Calle}}" ng-bind="detalle.domicilioCuenta.Calle"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.domicilioCuenta.calle}}" ng-bind="detalle.domicilioCuenta.calle"></span></div>
                 </div>
             </div>
         </div>
@@ -195,13 +195,13 @@
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">N&uacute;mero exterior:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.domicilioCuenta.Num_exterior}}" ng-bind="detalle.domicilioCuenta.Num_exterior"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.domicilioCuenta.numExterior}}" ng-bind="detalle.domicilioCuenta.numExterior"></span></div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">N&uacute;mero interior:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.domicilioCuenta.Num_interior}}" ng-bind="detalle.domicilioCuenta.Num_interior"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.domicilioCuenta.numInterior}}" ng-bind="detalle.domicilioCuenta.numInterior"></span></div>
                 </div>
             </div>
             <div class="col-4">
@@ -238,7 +238,7 @@
                                         <span class="text-head-table">Folio de venta</span>
                                     </div>
                                 </div>
-                                <div class="row" ng-repeat="cf in detalle.arrCuentasFacturas | limitTo: limitCuentaFacturaCu" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">                                  
+                                <div class="row" ng-repeat="cf in detalle.cuentasFacturas | limitTo: limitCuentaFacturaCu" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">                                  
                                     <div class="col-4">
                                         <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(cf.id, cf.keyObject)">
                                             <span class="text-table" ng-bind="cf.numCuentaFactura"></span>
@@ -251,7 +251,7 @@
                                         <span class="text-table" ng-bind="cf.folioVenta"></span>
                                     </div>
                                 </div>
-                                <div class="row" ng-show="detalle.arrCuentasFacturas.length > 10">
+                                <div class="row" ng-show="detalle.cuentasFacturas.length > 10">
                                     <div class="col-12">
                                         <a class="style-link" href="" ng-click="mostrarMasMenosCuentaFacturaCu()">
                                             <span ng-show="limitCuentaFacturaCu === 10">Mostrar mas...</span>
@@ -259,7 +259,7 @@
                                         </a>
                                     </div>
                                 </div>
-                                <div class="row" ng-show="detalle.arrCuentasFacturas.length === 0">
+                                <div class="row" ng-show="detalle.cuentasFacturas.length === 0">
                                     <div class="col-12 ">
                                         <span class="text-table">No se encontro informaci&oacute;n</span>
                                     </div>
@@ -300,7 +300,7 @@
                                         <span class="text-head-table">Fecha cierre</span>
                                     </div>
                                 </div>
-                                <div class="row" ng-repeat="oportunidad in detalle.arrOportinidades | limitTo: limitOportunidadCu" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
+                                <div class="row" ng-repeat="oportunidad in detalle.oportinidades | limitTo: limitOportunidadCu" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
                                     <div class="col-4">
                                         <a href="" class="link-consultardetalle " ng-click="consultarDetalleObjectosSF(oportunidad.id, oportunidad.keyObject)">
                                             <span class="text-table" ng-bind="oportunidad.numeroOportunidad"></span>
@@ -313,7 +313,7 @@
                                         <span class="text-table" ng-bind="oportunidad.fechaCierre"></span>
                                     </div>
                                 </div>
-                                <div class="row" ng-show="detalle.arrOportinidades.length > 10">
+                                <div class="row" ng-show="detalle.oportinidades.length > 10">
                                     <div class="col-12">
                                         <a class="style-link" href="" ng-click="mostrarMasMenosOportunidadCu()">
                                             <span ng-show="limitOportunidadCu === 10">Mostrar mas...</span>
@@ -321,7 +321,7 @@
                                         </a>
                                     </div>
                                 </div>
-                                <div class="row" ng-show="detalle.arrOportinidades.length === 0">
+                                <div class="row" ng-show="detalle.oportinidades.length === 0">
                                     <div class="col-12 ">
                                         <span class="text-table">No se encontro informaci&oacute;n</span>
                                     </div>

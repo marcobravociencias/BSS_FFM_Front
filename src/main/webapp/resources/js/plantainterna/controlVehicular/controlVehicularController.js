@@ -28,12 +28,12 @@ app.controller('controlVehicularController',
 
 			$("#modal_cluster_arbol_vehiculo").on("hidden.bs.modal", function () {
 				let selectedElms = $('#jstreeconsulta').jstree("get_selected", true);
-				if (selectedElms.length > 0) {
+				if (selectedElms.length > 0 && $('#jstreeconsulta').jstree().settings.plugins.length == 1) {
 					document.getElementById('arbol_vehiculo_consulta').placeholder = selectedElms[0].text;
 					$scope.vehiculoText.geografiaText = selectedElms[0].text;
 					if ($('#jstreeconsulta').jstree().settings.plugins.length == 1) {
-						$scope.getParentGeografia(selectedElms[0].id);
-						$scope.loadEncierros($scope.padre, 0);
+						//$scope.getParentGeografia(selectedElms[0].id);
+						$scope.loadEncierros(selectedElms[0].id, 0);
 					}
 				} else {
 					document.getElementById('arbol_vehiculo_consulta').placeholder = 'NO HAY SELECCI\u00D3N';
@@ -61,6 +61,10 @@ app.controller('controlVehicularController',
 			$(".datepicker").on("click", function () {
 				$(".datepicker-dropdown").removeClass("datepicker-orient-top");
 				$(".datepicker-dropdown").addClass("datepicker-orient-bottom");
+			});
+
+			$('#searchGeo').on('keyup', function () {
+				$("#jstreeconsulta").jstree("search", this.value);
 			})
 
 			vehiculoTable = $('#vehiculoTable').DataTable({
@@ -149,6 +153,9 @@ app.controller('controlVehicularController',
 								$scope.geografiaList = listGeo;
 								$("#jstreeconsulta").jstree("destroy");
 								$scope.loadArbolBuscar();
+								setTimeout(function () {
+									$scope.getVehiculos();
+								}, 200)
 
 							} else {
 								mostrarMensajeWarningValidacion('No existen geografias actualmente')
@@ -163,8 +170,6 @@ app.controller('controlVehicularController',
 			}
 
 			$scope.getData = function () {
-				swal({ text: 'Espera un momento...', allowOutsideClick: false });
-				swal.showLoading();
 				$q.all([
 					controlVehicularService.consultarMarcasControlVehicular(),
 					controlVehicularService.consultarColoresControlVehicular(),
@@ -209,6 +214,12 @@ app.controller('controlVehicularController',
 			}
 
 			$scope.loadEncierros = function (geografia, encierro) {
+				if ($scope.vehiculo.detalle && $scope.vehiculo.detalle.idEncierro) {
+					$scope.vehiculo.detalle.idEncierro = "";
+				}
+
+				swal({ text: 'Espera un momento...', allowOutsideClick: false });
+				swal.showLoading();
 				$scope.data.encierros = [];
 				controlVehicularService.consultarEncierros({ "idGeografia": geografia }).then(function success(response) {
 					if (response.data.respuesta) {
@@ -216,12 +227,13 @@ app.controller('controlVehicularController',
 							swal.close();
 							if (response.data.result.encierros.length) {
 								$scope.data.encierros = response.data.result.encierros;
+
 								if ($scope.isEdit && encierro != 0) {
 									$scope.data.encierros.map(function (e) {
-										if(e.id == encierro){
+										if (e.id == encierro) {
 											$scope.vehiculo.detalle.idEncierro = encierro.toString();
 										}
-										
+
 									})
 								}
 
@@ -484,11 +496,14 @@ app.controller('controlVehicularController',
 					}
 				})
 
-				$scope.data.encierros.map(function (e) {
-					if ($scope.vehiculo.detalle && e.id == Number($scope.vehiculo.detalle.idEncierro)) {
-						$scope.vehiculoText.encierroText = e.descripcion;
-					}
-				})
+				if ($scope.data.encierros) {
+					$scope.data.encierros.map(function (e) {
+						if ($scope.vehiculo.detalle && e.id == Number($scope.vehiculo.detalle.idEncierro)) {
+							$scope.vehiculoText.encierroText = e.descripcion;
+						}
+					})
+				}
+
 
 				$scope.vehiculoText.rotulado = false;
 				if ($("#rotuladoSi").is(":checked")) {
@@ -506,6 +521,12 @@ app.controller('controlVehicularController',
 				if ($("#vencimientoPoliza").val()) {
 					$scope.vehiculoText.fechaVencimientoPoliza = $("#vencimientoPoliza").val();
 				}
+				$scope.vehiculoText.anio = $("#anio").val();
+				$scope.printImg();
+				$scope.$apply();
+			}
+
+			$scope.printImg = function () {
 				$("#placaImagen").attr("src", $scope.vehiculo.urlFotoPlaca);
 				$("#vehiculoImagen").attr("src", $scope.vehiculo.urlFotoVehiculo);
 				if ($scope.vehiculo.detalle) {
@@ -514,14 +535,12 @@ app.controller('controlVehicularController',
 					if ($scope.vehiculo.detalle.holograma) $scope.vehiculo.detalle.holograma = $scope.vehiculo.detalle.holograma.toUpperCase();
 				}
 
-
 				if ($scope.filePlaca) {
 					$("#placaImagen").attr("src", "data:image/jpeg;base64," + $scope.filePlaca.archivo);
 				}
 				if ($scope.fileVehiculo) {
 					$("#vehiculoImagen").attr("src", "data:image/jpeg;base64," + $scope.fileVehiculo.archivo);
 				}
-
 				if ($scope.fileCirculacion) {
 					$("#circulacionImagen").attr("src", "data:image/jpeg;base64," + $scope.fileCirculacion.archivo);
 				}
@@ -530,9 +549,31 @@ app.controller('controlVehicularController',
 					$("#gasolinaImagen").attr("src", "data:image/jpeg;base64," + $scope.fileGasolina.archivo);
 				}
 
-				$scope.vehiculoText.anio = $("#anio").val();
-				$scope.$apply();
 			}
+
+			$scope.printImgTab = function () {
+				$("#placaImagenTab").attr("src", $scope.vehiculo.urlFotoPlaca);
+				$("#vehiculoImagenTab").attr("src", $scope.vehiculo.urlFotoVehiculo);
+				if ($scope.vehiculo.detalle) {
+					$("#circulacionImagenTab").attr("src", $scope.vehiculo.detalle.urlFotoTarjetaCirculacion);
+					$("#gasolinaImagenTab").attr("src", $scope.vehiculo.detalle.urlFotoTarjetaGasolina);
+				}
+				if ($scope.filePlaca) {
+					$("#placaImagenTab").attr("src", "data:image/jpeg;base64," + $scope.filePlaca.archivo);
+				}
+				if ($scope.fileVehiculo) {
+					$("#vehiculoImagenTab").attr("src", "data:image/jpeg;base64," + $scope.fileVehiculo.archivo);
+				}
+				if ($scope.fileCirculacion) {
+					$("#circulacionImagenTab").attr("src", "data:image/jpeg;base64," + $scope.fileCirculacion.archivo);
+				}
+
+				if ($scope.fileGasolina) {
+					$("#gasolinaImagenTab").attr("src", "data:image/jpeg;base64," + $scope.fileGasolina.archivo);
+				}
+
+			}
+
 
 			$scope.loadMotivo = function (st) {
 				let status = Number($("#estatus").val());
@@ -662,11 +703,9 @@ app.controller('controlVehicularController',
 
 					swal({ text: 'Espera un momento...', allowOutsideClick: false });
 					swal.showLoading();
-					console.log(paramsTemp);
 					if (paramsTemp.idVehiculo) {
 						$scope.editarVehiculo(paramsTemp);
 					} else {
-
 						$scope.crearVehiculo(paramsTemp);
 					}
 
@@ -680,11 +719,23 @@ app.controller('controlVehicularController',
 						if (response.data.respuesta) {
 							if (response.data.result) {
 								swal.close();
-								toastr.success(response.data.resultDescripcion);
+								$("#searchText").val("");
 								$("#jstreeconsulta").jstree("destroy");
-								$scope.loadArbol();
+								$scope.isEdit = false;
+								toastr.success(response.data.resultDescripcion);
+								$("#alta").removeClass("active show");
+								$("#alta-tab").removeClass("active");
+								$("#consulta-tab").addClass("active");
+								$("#consulta").addClass("active show");
+							
+								$scope.loadArbolBuscar();
+							
 								$scope.clearForm();
+								
 								$scope.initWizard();
+								setTimeout(function () {
+									$scope.getVehiculos();
+								}, 200)
 							} else {
 								swal.close();
 								mostrarMensajeErrorAlert(response.data.resultDescripcion);
@@ -707,16 +758,22 @@ app.controller('controlVehicularController',
 						if (response.data.respuesta) {
 							if (response.data.result) {
 								swal.close();
-								toastr.success(response.data.resultDescripcion);
-								$scope.clearForm();
-								$scope.isEdit = false;
-								$scope.initWizard();
 								$("#searchText").val("");
 								$("#jstreeconsulta").jstree("destroy");
-								$scope.loadArbolBuscar();
+								$scope.isEdit = false;
+								toastr.success(response.data.resultDescripcion);
 								$("#alta").removeClass("active show");
 								$("#consulta-tab").addClass("active");
 								$("#consulta").addClass("active show");
+							
+								$scope.loadArbolBuscar();
+							
+								$scope.clearForm();
+								
+								$scope.initWizard();
+								setTimeout(function () {
+									$scope.getVehiculos();
+								}, 200)
 
 							} else {
 								swal.close();
@@ -948,12 +1005,13 @@ app.controller('controlVehicularController',
 							$scope.fileCirculacion = img;
 						}
 
-
 						if (name == 'fotoTarjetaGasolina') {
 							$scope.fileGasolina = img;
 						}
-
 						$scope.$apply();
+						$scope.printImgTab();
+						$scope.$apply();
+
 					};
 					reader.onerror = function (error) {
 						console.log('Error: ', error);
@@ -978,6 +1036,10 @@ app.controller('controlVehicularController',
 						$scope.fileGasolina = null;
 					}
 					$(labelFile).text('Cargar Imagen');
+					$scope.$apply();
+					$scope.printImgTab();
+					$scope.$apply();
+
 				}
 			}
 
@@ -1003,14 +1065,18 @@ app.controller('controlVehicularController',
 				}
 				$(labelFile).text('Cargar Imagen');
 				$scope.$apply();
+				$scope.printImgTab();
+				$scope.$apply();
 			}
 
 
 			$scope.abrirModalGeografia = function () {
+				$('#searchGeo').val('');
 				$("#modal_cluster_arbol_vehiculo").modal('show')
 			}
 
 			abrirModalGeografiaBuscar = function () {
+				$('#searchGeo').val('');
 				$("#modal_cluster_arbol_vehiculo").modal('show');
 			}
 
@@ -1028,7 +1094,7 @@ app.controller('controlVehicularController',
 				})
 				$('#jstreeconsulta').bind('loaded.jstree', function (e, data) {
 				}).jstree({
-					'plugins': ["wholerow", "checkbox"],
+					'plugins': ["wholerow", "checkbox", "search"],
 					'core': {
 						'data': geografia,
 						'themes': {
@@ -1036,16 +1102,16 @@ app.controller('controlVehicularController',
 							'responsive': true,
 							"icons": false
 						}
+					},
+					"search": {
+						"case_sensitive": false,
+						"show_only_matches": true
 					}
 				});
-				setTimeout(function () {
-					$scope.getVehiculos();
-				}, 1000)
-
 			}
 
 			buscarPlaca = function () {
-				if ($("#placa").val().length > 4 && $("#placa").val().length < 8) {
+				if ($("#placa").val().length > 4 && $("#placa").val().length < 8 && $scope.isEdit == false) {
 					$scope.getPlaca();
 				}
 			}
@@ -1078,8 +1144,7 @@ app.controller('controlVehicularController',
 										$scope.initWizard();
 									}
 								}).catch(err => {
-									$("#placa").val("");
-									$scope.$apply();
+
 								});
 							} else {
 								swal.close();
@@ -1136,6 +1201,7 @@ app.controller('controlVehicularController',
 				$scope.vehiculo.idEstatus = vehiculo.idEstatus.toString();
 
 
+
 				if (!vehiculo.detalle || !vehiculo.detalle.rotulado) {
 					$("#rotuladoNo").prop("checked", true);
 				}
@@ -1160,8 +1226,8 @@ app.controller('controlVehicularController',
 				}
 
 				if (vehiculo.idGeografia) {
-					$scope.getParentGeografia(vehiculo.idGeografia);
-					$scope.loadEncierros($scope.padre, vehiculo.detalle.idEncierro);
+					//$scope.getParentGeografia(vehiculo.idGeografia);
+					$scope.loadEncierros(vehiculo.idGeografia, vehiculo.detalle.idEncierro);
 
 					$("#jstreeconsulta").jstree("destroy")
 					let geografia = $scope.geografiaList;
@@ -1203,6 +1269,7 @@ app.controller('controlVehicularController',
 					$scope.vehiculoText.geografiaText = selected_arbol;
 					document.getElementById('arbol_vehiculo_consulta').placeholder = selected_arbol;
 				}
+
 			}
 
 			$scope.getParentGeografia = function (idGeografia) {
@@ -1224,22 +1291,76 @@ app.controller('controlVehicularController',
 			}
 
 			resetAll = function () {
-				$scope.isEdit = false;
-				$scope.clearForm();
-				$("#jstreeconsulta").jstree("destroy");
-				$scope.$apply();
-				$scope.loadArbol();
-				$scope.initWizard();
-
+				if ($scope.isEdit) {
+					swal({
+						title: "\u00BFSeguro que desea salir del apartado?",
+						text: "Se perder\u00E1n los datos actualizados",
+						type: "warning",
+						showCancelButton: true,
+						confirmButtonColor: '#007bff',
+						confirmButtonText: 'Si',
+						cancelButtonText: 'No'
+					}).then(function (isConfirm) {
+						if (isConfirm) {
+							$scope.isEdit = false;
+							$("#jstreeconsulta").jstree("destroy");
+							$scope.clearForm();
+							$scope.$apply();
+							$scope.loadArbol();
+							$scope.initWizard();
+						}
+					}).catch(err => {
+						$("#alta-tab").removeClass("active");
+						$("#modifica-tab").addClass("active show");
+						$scope.$apply();
+						$("#alta").addClass("active show");
+						$("#modifica-tab").addClass("active");
+					});
+				} else {
+					$("#jstreeconsulta").jstree("destroy");
+					$("#consulta-tab").removeClass("active");
+					$scope.$apply();
+					$scope.loadArbol();
+					$scope.initWizard();
+				}
 			}
 
 			resetAllSearch = function () {
-				$scope.isEdit = false;
-				$scope.initWizard();
-				$("#searchText").val("");
-				$("#jstreeconsulta").jstree("destroy");
-				$scope.$apply();
-				$scope.loadArbolBuscar();
+				if ($scope.isEdit) {
+					swal({
+						title: "\u00BFSeguro que desea salir del apartado?",
+						text: "Se perder\u00E1n los datos actualizados",
+						type: "warning",
+						showCancelButton: true,
+						confirmButtonColor: '#007bff',
+						confirmButtonText: 'Si',
+						cancelButtonText: 'No'
+					}).then(function (isConfirm) {
+						if (isConfirm) {
+							$scope.isEdit = false;
+							$("#jstreeconsulta").jstree("destroy");
+							$scope.clearForm();
+							$scope.loadArbolBuscar();
+							$scope.buildTableVehiculos($scope.vehiculos);
+							$scope.initWizard();
+							$scope.$apply();
+						}
+					}).catch(err => {
+						$("#consulta-tab").removeClass("active");
+						$("#modifica-tab").addClass("active show");
+						$("#consulta").removeClass("active show");
+						$("#alta").addClass("active show");
+						$scope.$apply();
+					});
+				} else {
+					$scope.initWizard();
+					$("#searchText").val("");
+					$("#jstreeconsulta").jstree("destroy");
+					$("#alta-tab").removeClass("active");
+					$scope.loadArbolBuscar();
+					$scope.buildTableVehiculos($scope.vehiculos);
+					$scope.$apply();
+				}
 			}
 
 			$scope.initWizard = function () {

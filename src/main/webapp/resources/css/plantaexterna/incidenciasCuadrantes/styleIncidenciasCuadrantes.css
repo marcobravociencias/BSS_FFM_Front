@@ -1,0 +1,315 @@
+/* FILTROS INCIDENCIAS CUADRANTES */
+
+.container-filtros-incidenciascuadrantes {
+    border: none !important;
+    z-index: 2;
+    position: relative;
+    padding-top: 3pt !important;
+    padding-bottom: 3pt !important;
+    max-width: 1140px;
+}
+
+.column-style-incidenciascuadrantes {
+    width: 136px !important;
+    padding-right: 0px !important;
+}
+
+.columna-filtro-ind::after {
+    content: "";
+    position: absolute;
+    right: 6%;
+    top: 67%;
+    width: 0;
+    height: 0;
+    border-left: 0.3em solid transparent;
+    border-right: 0.3em solid transparent;
+    border-top: 0.6em solid #939db2;
+    clear: both;
+    z-index: 2;
+    font-size: 14px;
+}
+
+label.label-filter {
+    margin-bottom: 0;
+    font-size: .7em;
+    font-weight: bold;
+}
+
+.input-filtro-incidenciascuadrantes {
+    border: 1px solid #dbdbdb !important;;
+    font-weight: 400;
+    font-size: 1em;
+    color: #818181 !important;
+    transition: all 0.5s ease;
+    border-bottom: 1px solid white;
+    background: white !important;
+    border-radius: .5em !important;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.07),0 1px 2px 0 rgba(0,0,0,.05)!important;
+}
+
+.input-filtro-incidenciascuadrantes::placeholder {
+    font-weight: 400;
+    font-size: 1em;
+    color: #818181 !important;
+}
+
+.input-filtro-incidenciascuadrantes:focus {
+    -webkit-box-shadow: none;
+}
+
+.input-filtro-incidenciascuadrantes:hover {
+    background: #e4e6f2 !important;
+    cursor: pointer;
+    border-bottom: 2px solid #a4b1ff !important;
+}
+
+i.icono-noseleccion {
+    color: #ff9f3b;
+    display: inline-block;
+}
+
+.div-btn-busqueda {
+    /* padding: 0% !important; */
+    text-align: right !important;
+}
+
+#btn_consultar_incidencias {
+    background-color: #ffffff;
+    color: #7716fa;
+    border: solid 1px #7716fa !important;
+    padding: 0.5em 2em;
+    border-radius: 5px;
+    font-size: 0.7em;
+    margin-top: 25px;
+}
+
+.btn-sm {
+    padding: 0.7em 0.7em;
+    /* border-radius: 50% !important; */
+    font-size: 0.64rem;
+    border: 0px !important;
+}
+
+.datepicker .datepicker-switch:hover,   
+.datepicker .next:hover,
+.datepicker .prev:hover,
+.datepicker tfoot tr th:hover {
+    background: #78a7f7;
+    color: white;
+}
+
+.element-menu-filter {
+    position: relative;
+}
+
+.element-menu-filter:hover .dropdown-menu {
+    display: block;
+}
+.element-menu-filter:hover .dropdown-menu {
+    top: 0;
+    left: 100%;
+}
+
+#todo_filtro,
+#ninguno_filtro {
+    width: 45%;
+    background: #1266f1;
+    color: white;
+    margin-top: 0.5em;
+    padding: 0;
+}
+
+label.form-check-inputfiltro {
+    display: flex;
+}
+
+.element-menu-filter {
+    position: relative;
+}
+
+.dropdown-item.item-text-filtro.ng-binding {
+    display: contents;
+    /* margin-left: 1em; */
+}
+
+.dropdown-item {
+    padding: 0.25rem 1.5rem !important;
+}
+
+.dropdown-item.item-text-filtro.ng-binding {
+    display: contents;
+    
+}
+.form-check-input {
+    margin-right: 0.5em;
+}
+
+tfoot {
+    background-color: #ebecefa1 !important;
+    color: black !important;
+}
+
+.jstree-proton .jstree-wholerow-clicked {
+    background: white;
+}
+
+.jstree-proton .jstree-clicked {
+    color: #808080;
+}
+
+/* FILTROS INCIDENCIAS CUADRANTES */
+
+/* CONTAINER INCIDENCIAS CUADRANTES */
+
+.contenedor-incidenciascuadrantes {
+    margin-top: 20px;
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+    max-width: 1115px;
+    border-radius: .5em;
+    padding: 0px !important;
+}
+
+.div-options-incidencias {
+    margin-top: .5em;
+    min-height: 1.5rem;
+    height: 1.5rem;
+}
+
+#mapaIncidenciasCuadrantes {
+    height: 550px;
+    width: 100%;
+    background-color: gray;
+}
+
+.contenedor_config{
+    display: inline;
+    margin-top: .3em;
+}
+.contenedor_config i{
+    margin-right: .5em;
+}
+
+/* TABLE INCIDENCIAS */
+#tableIncidenciasCuadrantes tr td {
+    font-size: 0.7em;
+    font-family: "Montserrat" !important;
+    text-align: center;
+}
+
+thead#thead_incidenciasCuadrantes tr th {
+    font-size: 0.7em;
+    padding: 1em 1em 1em;
+    text-align: center;
+}
+
+#thead_incidenciasCuadrantes .fa {
+    font-size: 13px;
+    color: gray;
+}
+
+thead#thead_incidenciasCuadrantes {
+    font-weight: bold !important;
+    border-top: 4px solid transparent !important;
+    border: 1px #ccc;
+    font-family: "Montserrat" !important;
+}
+
+table.dataTable.no-footer {
+    border-bottom: transparent !important;
+    margin-top: 0 !important;
+}
+
+.table.dataTable {
+    border-collapse: collapse !important;
+}
+
+table.display.table.table-hover.table-striped.dataTable {
+    font-size: small;
+}
+
+span.btn-floating.btn-sm.btn-secondary.waves-effect.waves-light.acciones {
+    background-color: #58b3bf !important;
+    border-radius: 20% !important;
+    color: #fff !important;
+    cursor: pointer;
+    -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
+      0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    font-size: 0.9em;
+}
+
+/* PAGINATION */
+.pagination {
+    display: block !important;
+}
+  
+.pagination .paginate_button a.page-link {
+    color: #828080;
+    font-family: "Montserrat";
+    background-color: white !important;
+    box-shadow: none !important;
+}
+  
+.pagination .paginate_button.active {
+    background-color: gray !important;
+}
+  
+.pagination .previous a.page-link {
+    color: white !important;
+    font-size: 0;
+}
+  
+.pagination .next a.page-link {
+    color: white !important;
+    font-size: 0;
+}
+  
+.pagination .previous a:after {
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f104";
+    visibility: visible;
+    color: #828080 !important;
+    font-size: initial !important;
+}
+  
+.pagination .next a:before {
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f105";
+    visibility: visible;
+    color: #828080 !important;
+    font-size: initial !important;
+}
+  
+.dataTables_wrapper .dataTables_paginate .paginate_button a {
+    padding: 1px 1px 1px 1px;
+}
+  
+.pagination .paginate_button > .active {
+    border: #000000 !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: initial !important;
+}
+/* PAGINATION */
+
+/* MODAL DETALLE INCIDENCIA */
+#v-tabs-tab-detalle-incidencia .nav-link {
+    border-top-right-radius: 2rem;
+    border-bottom-right-radius: 2rem;
+}
+#v-tabs-tab-detalle-incidencia .nav-link.active {
+    border-top-right-radius: 2rem;
+    border-bottom-right-radius: 2rem;
+    background-color: #2196f3;
+    /* box-shadow: 0 0 8px 0 #2196f3; */
+    border-bottom: 0;
+    color: white !important;
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%),
+      0 1px 5px 0 rgb(0 0 0 / 20%);
+    z-index: 1;
+}
+/* MODAL DETALLE INCIDENCIA */
+/* CONTAINER INCIDENCIASC CUADRANTES */

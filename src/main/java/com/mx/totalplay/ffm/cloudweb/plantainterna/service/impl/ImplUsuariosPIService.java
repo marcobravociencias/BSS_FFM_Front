@@ -198,11 +198,13 @@ public class ImplUsuariosPIService implements UsuariosPIService {
 	@Override
 	public ServiceResponseResult guardarUsuario(String params) {
 		logger.info("ImplUsuariosPIService.class [metodo = guardarUsuario() ]\n");
+		logger.info("PARAMS-------------------->>>>>>>>>>>>>>>>>>>>>>>>>>> " + params);
 		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
 		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
 		String tokenAcces=principalDetail.getAccess_token() ;
 		String url = principalDetail.getDireccionAmbiente().concat(constUsuario.getGuardarUsuario());
 		ServiceResponseResult response=restCaller.callPostBearerTokenRequest(jsonObject.toString(), url, ServiceResponseResult.class, tokenAcces);
+		logger.info("PARAMS-------------------->>>>>>>>>>>>>>>>>>>>>>>>>>> " + url);
 		logger.info("RESULT guardarUsuario " + gson.toJson(response));
 		return response;
 	}

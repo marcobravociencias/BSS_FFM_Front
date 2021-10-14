@@ -320,3 +320,59 @@ div#contenido_imagenes {
     top: 0;
     left: 2.5em;
 }
+
+.contenedorCamposOpcion{
+	margin-bottom: 0rem;
+}
+
+.btnAccionCamposOpcion{
+	font-family: 'Montserrat' !important;
+    font-size: .7em !important;
+	margin-top: .5rem;
+	padding: .5em 1em;
+	float: right;
+}
+
+.etiquetaFormOpcion{
+	font-family: 'Montserrat' !important;
+    font-size: .7em !important;
+    margin-bottom: 0rem;
+}
+
+.txtFormOpcion{
+	font-family: 'Montserrat' !important;
+    font-size: .7em !important;
+}
+
+.input-group>.form-control.buscadorOT {
+    min-height: 1.5rem;
+    height: 1.5rem;
+    padding-top: 0rem;
+    padding-bottom: 0rem;
+}
+
+.btnBuscadorOTAlerta{
+	font-family: 'Montserrat' !important;
+    font-size: .7em !important;
+	padding: .19em .5em;
+	float: right;
+}
+
+.titulosTablaAlertasPI{
+	font-family: 'Montserrat' !important;
+    font-size: .7em !important;
+    font-weight: bold;
+    color: black;
+}
+
+.scrollTablaAlertasPI {
+	padding:3px;
+	height: 90%;
+	overflow-x: hidden;
+	overflow-y: auto;
+	text-align:justify;
+}
+
+.desabilitarCampoOpcionAlerta {
+    display: none;
+}
