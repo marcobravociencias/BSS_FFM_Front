@@ -47,21 +47,20 @@ public class ImplOrdenesUniversalesService implements OrdenesUniversalesService 
 	}
 
 	@Override
-	public ServiceResponseResult getcatsdispacherintegrador(String params) {
-		// TODO Auto-generated method stub
-		return null;
+	public ServiceResponseResult consultarCatalogosOrdenesUniversales() {		
+        logger.info("ImplOrdenesUniversalesService.class [metodo = consultarCatalogosOrdenesUniversales() ]\n");
+        LoginResult principalDetail = utileriaGeneral.obtenerObjetoPrincipal();
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constOrdenesUniversales.getConsultarCatalogoOrdenesUniversales());
+        Map<String, String> paramsRequestGet = new HashMap<String, String>();
+        ServiceResponseResult response = consumeRest.callGetBearerTokenRequest(
+                paramsRequestGet,
+                urlRequest,
+                ServiceResponseResult.class,
+                tokenAcces);
+        logger.info("RESULT" + gson.toJson(response));        
+		return response;
 	}
 
-	@Override
-	public ServiceResponseResult getDisponibilidadServicioRest(String params) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ServiceResponseResult creacionAsignacionGenerica(String params) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

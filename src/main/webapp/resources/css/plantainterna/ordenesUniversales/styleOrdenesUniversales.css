@@ -502,3 +502,31 @@ a.ui-corner-all {
 	margin-top: 1.2em;
 }
 
+.icon-validate-form{
+    position: absolute;
+    right: 2%;
+    width: fit-content;
+    color: #ff6868;
+    top: 50%;
+    display: none !important;
+} 
+.icon-validate-form-rigth{
+    position: absolute;
+    right: 0%;
+    width: fit-content;
+    color: #ff6868;
+    top: 50%;
+    display: none !important;	
+}
+
+.icon-validate-form-cliente{
+    position: absolute;
+    right: 1em;
+    width: fit-content;
+    color: #ff6868;
+    top: 55%;
+    display: none !important;
+} 
+.show-validate{
+	display:flex !important;
+}
