@@ -361,6 +361,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	    }
 	}
     
+    //MÉTODO PARA VALIDAR LOS CAMPOS QUE SE REQUIEREN PARA REALIZAR LA CONSULTA DE USUARIOS
     $scope.validarDatosConsultaUsuarios = function(params){
     	let respuesta = {validacion:true, mensaje:""};
     	if(params.companias.length < 1){

@@ -2,10 +2,8 @@
     <div class="modal-dialog modal-lg" style="min-width: 95% !important; max-width: 95% !important;">
         <div class="modal-content">
             <div class="blue-gradient style_modal_header modal-header modal_header_bg" style="color: #fff;">
-                <h5 style="font-weight: bold;" class="modal-title header-title">Modificar Empleado</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h5 style="font-weight: bold;" class="modal-title header-title">Modificar usuario</h5>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close" ng-click=""></button>
             </div>
             <div class="modal-body">
                 <div class="col-12">
@@ -52,7 +50,7 @@
                 </div>
             </div>	
             <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-cerrar-modal" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-sm btn-cerrar-modal" data-mdb-dismiss="modal" aria-label="Close">Cerrar</button>
             </div>
         </div>
     </div>
