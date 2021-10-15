@@ -4,6 +4,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
 
     app.calendarController($scope, ordenesUniversalesService);
     app.mapController($scope, ordenesUniversalesService);
+    $scope.emailFormat = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
 
     $scope.respaldoCatalogo = [];
     $scope.listaIntervencion = [];
@@ -22,12 +23,14 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
     $scope.isGuardadoProcess=false 
     $scope.isGuardadoCreacion=false
     
-    
+    $scope.isValForm=false
+
     $scope.guardarOrdenUniversal=function(){
         if($.trim(  $scope.infoBasica.folio )  !== ''){
             if(!$scope.validarFolio())
                 return false            
         }
+        $scope.isValForm=true
         if( $scope.validarPrimerPaso() ){
             $(".tab-step-wizar:first").trigger('click')
         } else if( $scope.validarSegundoPaso() ) { 
@@ -35,6 +38,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
 		}else  if( $scope.validarTercerPaso() ) { 
 			$(".tab-step-wizar:eq(2)").trigger('click')
         }else{
+            $scope.isValForm=false
             $scope.guardarOrdenUniversalRegistro()
         }
     }
@@ -55,7 +59,8 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
         $q.all([
             genericService.consultarConfiguracionDespachoDespacho(params),
             genericService.consultarCatalogoIntervenciones(),
-            genericService.consulCatalogoGeografia()
+            genericService.consulCatalogoGeografia(),
+            ordenesUniversalesService.consultarCatalogosOrdenesUniversales()
         ]).then(function(results) { 
             console.log(results);
 
@@ -153,6 +158,22 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                             animation: 100
                         }
                     });
+                    swal.close();
+                } else {
+                    mostrarMensajeErrorAlert(response.data.result.mensaje)
+                    swal.close();
+                }
+            } else {
+                mostrarMensajeErrorAlert(response.data.resultDescripcion)
+                swal.close();
+            }
+
+            if (results[3].data.respuesta) {
+                if (results[3].data.result) {
+                    if(results[3].data.result.result =='0'){
+                        $scope.listadoCanalVentas=results[3].data.result.canalVentas
+                        $scope.listadoPaquete=results[3].data.result.paquetes
+                    }
                     swal.close();
                 } else {
                     mostrarMensajeErrorAlert(response.data.result.mensaje)
@@ -295,8 +316,8 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
         }).catch(err => handleError(err));
     }
 
-    $scope.validarModalesTipoIntervencionesGeografia = function() { 
-
+    $scope.validarModalesTipoIntervencionesGeografia = function(tipomodal) { 
+        let isSeleccionadoIgual=false
         //Valida geografia
         let isErrorGeograf=true;
         let elementonivel = '-1';
@@ -312,11 +333,15 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
         }
         if(  elementonivel  !== '-1'){
             let textParent=$('#jstree-distrito').jstree(true).get_node( selected_arbol.parent ).text 
+            if( tipomodal=='arbol' && $scope.infoBasica.distrito == textParent+" / "+selected_arbol.text){
+                 isSeleccionadoIgual=true
+            }
             $scope.infoBasica.distrito=textParent+" / "+selected_arbol.text
             isErrorGeograf=false;
         }else{
             $scope.infoBasica.distrito=''
         }      
+        
         
         //Valida subtipoordenes
         let isErrorTipoOrden=true;
@@ -334,6 +359,9 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
 
         if(  elementonivelTipoOrden  !== '-1'){
             let textParent=$('#jstree-tipoordenes').jstree(true).get_node( selected_tipo_orden.parent ).text 
+            if( tipomodal=='tipoorden' && $scope.infoBasica.tiposubtipoordentext == textParent+" / "+selected_tipo_orden.text){
+                isSeleccionadoIgual=true
+           }
             $scope.infoBasica.tiposubtipoordentext=textParent+" / "+selected_tipo_orden.text
             $scope.infoBasica.subTipoOrden=selected_tipo_orden.id
            
@@ -347,14 +375,15 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
             $scope.infoBasica.tipoordentext=''
             $scope.infoBasica.subtipoordentext=''
         }      
-        
-
-        if( !isErrorTipoOrden && !isErrorGeograf){
-            $scope.consultarDisponibilidad(elementonivel)	
+        $scope.$apply()
+        if(!isSeleccionadoIgual) {
+            if( !isErrorTipoOrden && !isErrorGeograf){
+                $scope.calendarDisp.removeAllEvents()
+                $scope.infoBasica.turno=''
+                $scope.consultarDisponibilidad(elementonivel)	
+            }
         }
-
-    }
-
+    }  
 
     $scope.validarPrimerPaso=function(){
         let isErrorValidate=false;
@@ -364,7 +393,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
             isErrorValidate=true;
             textError+='Selecciona subtipo de orden</br>';
         }
-        /**
+       
         if(  $scope.infoBasica.canalVenta  == undefined){
             isErrorValidate=true
             textError+='Selecciona canal de venta</br>';
@@ -373,7 +402,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
         if(   $scope.infoBasica.paquete   == undefined){
             isErrorValidate=true
             textError+='Selecciona un paquete</br>';
-        }    **/
+        }  
         let elementonivel = '-1';
         let selectedElms = $('#jstree-distrito').jstree("get_selected", true);
         let selected_arbol;
@@ -542,6 +571,9 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
         if( !$scope.informacionCliente.correo ){
             isErrorValidate=true
             textError+='Captura correo</br>';
+        }else if($scope.emailFormat.test($scope.informacionCliente.correo ) ){
+            isErrorValidate=true
+            textError+='Captura correo valido</br>';
         }
 
         if( !$scope.informacionCliente.nombreContacto ){
@@ -593,13 +625,11 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
     angular.element(document).ready(function () {   
         
         $("#modal-filtro-arbol").on("hidden.bs.modal", function () {
-            $scope.validarModalesTipoIntervencionesGeografia();        
-            $scope.$apply();
+            $scope.validarModalesTipoIntervencionesGeografia('arbol');        
         });
 
         $("#modal-filtro-tipoordenes").on("hidden.bs.modal", function () {
-            $scope.validarModalesTipoIntervencionesGeografia();        
-            $scope.$apply();
+            $scope.validarModalesTipoIntervencionesGeografia('tipoorden');        
         });
 
         $('#horaestimada-form').timepicker({
@@ -691,9 +721,9 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                 "telefonoOficina":   $scope.validarCampoNA( $scope.informacionCliente.telefono ),
                 "correoElectronico": $scope.validarCampoNA( $scope.informacionCliente.correo ),
                 "contactos": [{
-                    "nombre": $scope.informacionCliente.nombreContacto,
-                    "telefono": $scope.informacionCliente.telefonoContacto,
-                    "parentesco": "Contacto" 
+                    "nombre":       $scope.informacionCliente.nombreContacto,
+                    "telefono":     $scope.informacionCliente.telefonoContacto,
+                    "parentesco":   "Contacto" 
                 }]
             },
             "agendamiento": {
@@ -701,7 +731,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                 "idTurno":                  $scope.infoBasica.idTurnoSeleccion,                 
                 "hora":                     $scope.infoBasica.horaEstimada ,  // Formato "19:46" 
                 "comentarios":              $scope.informacionCliente.comentario ,  
-                "origen":1,                 
+                "origen":                   1,                 
                 "confirmada":                diffDays == 0 ? 1 : 0  //ESTE VALOR NO LO TENEMOS       0 = false 1 = true       si la fecha de agendamiento es de hoy nace confirmada
             },
             "direccion": {
@@ -719,7 +749,16 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                 "entreCalles":               $scope.validarCampoNA( $scope.informacionCliente.calle ) ,             
                 "pais":                      "MX",    //ESTE VALOR NO LO TENEMOS
             },
-            "informacionAdicional": [] //iconos no enviar
+            "informacionAdicional": [
+                {
+                    "nombre":   "paquete",
+                    "valor":    $scope.infoBasica.paquete.Id
+                },
+                {
+                    "nombre":   "canalVenta",
+                    "valor":    $scope.infoBasica.canalVenta.idCanalVenta 
+                }
+            ]
         }
         console.log("jsonEnvio");
         console.log(jsonEnvio)
@@ -741,7 +780,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                         $scope.longitudSelectedMap =''
                         $scope.limpiarMarkers()
                         $("#horaestimada-form").val('')
-
+                        $scope.calendarDisp.removeAllEvents()
                     }else{
                         $scope.isGuardadoCreacion=false
                     }

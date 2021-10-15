@@ -78,21 +78,22 @@ pageEncoding="ISO-8859-1"%>
 							</div>
 						</div>
 					</div>
-
-					<div class="contenedor-steps">
-						<div class="content-steps text-center border border-light p-5" style="padding: 1em!important; border-color: white!important;" ng-show="elementTab === 1">
-							<jsp:include page="./content/informacionBasica.jsp"></jsp:include>					
+					<form name="guardadoForm" >
+						<div class="contenedor-steps">
+							<div class="content-steps text-center border border-light p-5" style="padding: 1em!important; border-color: white!important;" ng-show="elementTab === 1">
+								<jsp:include page="./content/informacionBasica.jsp"></jsp:include>					
+							</div>
+							<div class="content-steps text-center border border-light p-5" style="padding: 1em!important;" ng-show="elementTab === 2">
+								<jsp:include page="./content/informacionCliente.jsp"></jsp:include>			
+							</div>
+							<div class="content-steps text-center border border-light p-5" style="padding: 1em!important;" ng-show="elementTab === 3">
+								<jsp:include page="./content/ubicacion.jsp"></jsp:include>
+							</div>						
+							<div class="content-steps text-center border border-light p-5" style="padding: 1em!important;" ng-show="elementTab === 4">
+								<jsp:include page="./content/resumen.jsp"></jsp:include>	
+							</div>
 						</div>
-						<div class="content-steps text-center border border-light p-5" style="padding: 1em!important;" ng-show="elementTab === 2">
-							<jsp:include page="./content/informacionCliente.jsp"></jsp:include>			
-						</div>
-						<div class="content-steps text-center border border-light p-5" style="padding: 1em!important;" ng-show="elementTab === 3">
-							<jsp:include page="./content/ubicacion.jsp"></jsp:include>
-						</div>						
-						<div class="content-steps text-center border border-light p-5" style="padding: 1em!important;" ng-show="elementTab === 4">
-							<jsp:include page="./content/resumen.jsp"></jsp:include>	
-						</div>
-					</div>
+					</form>
                 </div>
             </div>
         </div>

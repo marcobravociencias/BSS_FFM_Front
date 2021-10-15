@@ -38,16 +38,6 @@ app.service("ordenesUniversalesService", function ($http) {
         });
     };
 
-    this.getcatsdispacherintegrador = function (params) {
-        return $http({
-            method: "post",
-            url: "req/getcatsdispacherintegrador",
-            data: params,
-            headers: {'Content-Type': "application/json; charset=utf-8"},
-            transformRequest: angular.identity
-        });
-    };
-
     this.getDisponibilidadServicioRest = function (params) {
         return $http({
             method: "post",
@@ -66,6 +56,16 @@ app.service("ordenesUniversalesService", function ($http) {
             transformRequest: angular.identity
         });
     };
+    this.consultarCatalogosOrdenesUniversales = function () {
+        return $http({
+            method: "post",
+            url: "req/consultarCatalogoUniversales",
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
+        });
+    };
+    
+
     
 
 });

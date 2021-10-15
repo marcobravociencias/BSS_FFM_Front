@@ -1,5 +1,8 @@
 package com.mx.totalplay.ffm.cloudweb.plantainterna.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +19,7 @@ import com.mx.totalplay.ffm.cloudweb.utilerias.model.ServiceResponseResult;
 @RestController
 @RequestMapping("/req")
 public class OrdenesUniversalesController {
-	private final Logger logger = LogManager.getLogger(ControlVehicularController.class.getName());
+	private final Logger logger = LogManager.getLogger(OrdenesUniversalesController.class.getName());
 	private final OrdenesUniversalesService ordenesUniversalesService;
 	
 	@Autowired
@@ -37,40 +40,14 @@ public class OrdenesUniversalesController {
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 	
-	@PostMapping("/getcatsdispacherintegrador")
-	public ResponseEntity<?> getcatsdispacherintegrador(@RequestBody String params) {
-		logger.info("##### CONSULTANDO getcatsdispacherintegrador");
-		//ServiceResponseResult response = ordenesUniversalesService.getcatsdispacherintegrador(params);
-		ServiceResponseResult response = null;
-		/*
-		if (response.getResult() instanceof Integer){
-			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-		}
-		*/
-		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	@PostMapping("/consultarCatalogoUniversales")
+	public ResponseEntity<?> consultarCatalogoUniversales() {
+		    logger.info("##### CONSULTANDO CATALOGO UNIVERSALES");
+	        ServiceResponseResult response = ordenesUniversalesService.consultarCatalogosOrdenesUniversales();
+	        if (response.getResult() instanceof Integer) {
+	            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+	        }
+	        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 	
-	@PostMapping("/getDisponibilidadServicioRest")
-	public ResponseEntity<?> getDisponibilidadServicioRest(@RequestBody String params) {
-		logger.info("##### CONSULTANDO getDisponibilidadServicioRest");
-		//ServiceResponseResult response = ordenesUniversalesService.getDisponibilidadServicioRest(params);
-		ServiceResponseResult response = null;
-		/*
-		if (response.getResult() instanceof Integer){
-			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-		}
-		*/
-		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-	}
-	
-	@PostMapping("/creacionAsignacionGenerica")
-	public ResponseEntity<?> creacionAsignacionGenerica(@RequestBody String params) {
-		logger.info("##### CONSULTANDO creacionAsignacionGenerica");
-		ServiceResponseResult response = ordenesUniversalesService.creacionAsignacionGenerica(params);
-		if (response.getResult() instanceof Integer){
-			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-		}
-		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-	}
-
 }
