@@ -50,10 +50,12 @@ public class ImplOrdenesUniversalesService implements OrdenesUniversalesService 
 	public ServiceResponseResult consultarCatalogosOrdenesUniversales() {		
         logger.info("ImplOrdenesUniversalesService.class [metodo = consultarCatalogosOrdenesUniversales() ]\n");
         LoginResult principalDetail = utileriaGeneral.obtenerObjetoPrincipal();
+        int idUsuario=principalDetail.getIdUsuario();
         String tokenAcces = principalDetail.getAccess_token();
         String urlRequest = principalDetail.getDireccionAmbiente().concat(constOrdenesUniversales.getConsultarCatalogoOrdenesUniversales());
         logger.info("##### "+urlRequest);
-        Map<String, String> paramsRequestGet = new HashMap<String, String>();
+        Map<String, String> paramsRequestGet = new HashMap<String, String>();        
+        paramsRequestGet.put("idUsuario",idUsuario+"");
         ServiceResponseResult response = consumeRest.callGetBearerTokenRequest(
                 paramsRequestGet,
                 urlRequest,

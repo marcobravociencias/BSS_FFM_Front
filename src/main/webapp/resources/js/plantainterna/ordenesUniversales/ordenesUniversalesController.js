@@ -66,35 +66,13 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
 
             // ****************** CONFIGURACIÓN
             if (results[0].data.respuesta) {
-                if (results[0].data.result) {
-                    results[0].data.result.KMZ_RESTRICCIONES="https://firebasestorage.googleapis.com/v0/b/totalplay-ffm-core-dev.appspot.com/o/sistema%2Fweb%2Fcobertura%2Fmex%2FRestricciones.kmz?alt=media&token=b8cab115-e0a5-45fb-8433-86062de37fd1"
-                    results[0].data.result.KMZ_CRESIDENCIAL= "https://firebasestorage.googleapis.com/v0/b/totalplay-ffm-core-dev.appspot.com/o/sistema%2Fweb%2Fcobertura%2Fmex%2FCiudadesResidencial.kml?alt=media&token=9a028329-048d-4f20-ae8d-eedadfe0d1bb"
-                    results[0].data.result.KMZ_BLUEHOLES= "https://firebasestorage.googleapis.com/v0/b/totalplay-ffm-core-dev.appspot.com/o/sistema%2Fweb%2Fcobertura%2Fmex%2FBlueholes.kmz?alt=media&token=e215272e-21e3-44e2-935f-89a835cb37c7"
-                    results[0].data.result.KMZ_CEMPRESARIAL= "https://firebasestorage.googleapis.com/v0/b/totalplay-ffm-core-dev.appspot.com/o/sistema%2Fweb%2Fcobertura%2Fmex%2FCiudadesEmpresarialFibra.kmz?alt=media&token=bd677c3d-8ed2-4d17-8855-96cecf692170"
-            
-                    
+                if (results[0].data.result) {           
                     $scope.nGeografia = results[0].data.result.N_FILTRO_GEOGRAFIA ? Number(results[0].data.result.N_FILTRO_GEOGRAFIA) : null;
-                    //$scope.nTipoOrdenes = results[0].data.result.N_FILTRO_INTERVENCIONES ? Number(results[0].data.result.N_FILTRO_INTERVENCIONES) : null;
-                    $scope.nTipoOrdenes=2   
+                    $scope.nTipoOrdenes = results[0].data.result.N_FILTRO_INTERVENCIONES ? Number(results[0].data.result.N_FILTRO_INTERVENCIONES) : null;
                 }
             }
-            let elementosMapa= angular.copy(results[0].data.result);
-            $scope.listadoKmzConfig=[]
-            $scope.elementosConfigGeneral=new Map(Object.entries(results[0].data.result))          
-            for (const elm in results[0].data.result) {       
+            GenericMapa.prototype.callPrototypeMapa(results[0].data.result)
 
-                if(elm.toUpperCase().includes("KMZ_")){
-                    $scope.listadoKmzConfig.push({
-                        identificador:elm,
-                        text: elm.substring( elm.indexOf("_")+1 , elm.length ).replaceAll('_',' '),
-                        value:elementosMapa[elm]
-                    });
-                }
-            }
-            $scope.objectVistaMapaCOnfig={
-                isOpenOpciones:false,
-                listadoKmz:angular.copy($scope.listadoKmzConfig).map(e=>{ e.isCheckedOpcion=false;  return e;})
-            }
             $scope.initializeMap();
 
             // ****************** INTERVENCIONES
