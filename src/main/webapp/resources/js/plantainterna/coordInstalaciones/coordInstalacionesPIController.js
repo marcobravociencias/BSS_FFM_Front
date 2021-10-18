@@ -1,4 +1,5 @@
 var app = angular.module('coordInstalacionesPIApp', []);
+var tableTerminada = undefined;
 app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIService' ,'genericService', function($scope, $q, coordInstalacionesPIService, genericService) {
 
 	$scope.vistaCoordinacion = 0;
@@ -7,7 +8,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 	var tablePendiente = undefined;
 	var tableAsignada = undefined;
 	var tableDetenida = undefined;
-	var tableTerminada = undefined;
+	
 	var tableCancelada = undefined;
 	var tableCalendarizada = undefined;
 	var tableGestoria = undefined;
@@ -60,7 +61,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 							$scope.pintarArbol("#jstree-terminada", geografia);
 							$scope.pintarArbol("#jstree-cancelada", geografia);
 							$scope.pintarArbol("#jstree-calendarizar", geografia);
-							$scope.pintarArbol("#jstree-gestoria", geografia);
+							$scope.pintarArbol("#jstree-gestoria", geografia);e
 							*/
                         }else{
                             toastr.warning( 'No se encontraron datos para la geografia' );                
@@ -80,43 +81,14 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 		$scope.estatusSelect = [];
 		$scope.estadoSelect = [];
 		$scope.geografiaSelect = [];
-		$scope.listaEstatusCalendarizada.map((e)=>{
+		$scope.listaEstatusTerminada.map((e)=>{
 			if (e.check) {
 				$scope.estatusSelect.push(e.id);
-			}
-		});
-		$scope.listaEstadoCalendarizada.map((e)=>{
-			if (e.check) {
-				$scope.estadoSelect.push(e.id);
-			}
-		});
-		$scope.geografiaSelect = $("#jstree-calendarizar").jstree("get_selected", true).filter(e=>e.original.nivel>0).map(e=>parseInt(e.id))
-		let params = {
-			idOrdenTrabajo: '',
-			folioSistema: '',
-			idClaveCliente: '',
-			idEstatus: $scope.estatusSelect,
-			idEstados: $scope.estadoSelect,
-			idGeografias: $scope.geografiaSelect,
-			fechaInicio: $scope.getFechaFormato($("#fecha_inicio_calendarizado").val()),
-			fechaFin: $scope.getFechaFormato($("#fecha_fin_calendarizado").val()),
-			elementosPorPagina: 10
-		}
-		$scope.consultarBandejaFFM(params, "#tableCalendarizada", tableCalendarizada);
-	}
-
-	$scope.consultarPendientes = function() {
-		$scope.estatusSelect = [];
-		$scope.estadoSelect = [];
-		$scope.geografiaSelect = [];
-		$scope.listaEstatusPendiente.map((e)=>{
-			if (e.check) {
-				$scope.estatusSelect.push(e.id);
-			}
-		});
-		$scope.listaEstadoPendiente.map((e)=>{
-			if (e.check) {
-				$scope.estadoSelect.push(e.id);
+				e.estados.map((es)=>{
+					if (es.check) {
+						$scope.estadoSelect.push(es.id);
+					}
+				});
 			}
 		});
 		$scope.geografiaSelect = $("#jstree-pendiente").jstree("get_selected", true).filter(e=>e.original.nivel>0).map(e=>parseInt(e.id))
@@ -131,21 +103,78 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 			fechaFin: $scope.getFechaFormato($("#fecha_fin_pendiente").val()),
 			elementosPorPagina: 10
 		}
-		$scope.consultarBandejaFFM(params, "#table_pendiente", tablePendiente);
+
+		let mensaje = "";
+		let bandera = true;
+		if ($scope.estatusSelect.length === 0) {
+			mensaje += "<li>Seleccione algun estatus.</li>";
+			bandera = false;
+		}
+		if ($scope.estadoSelect.length === 0) {
+			mensaje += "<li>Seleccione algun estado.</li>";
+			bandera = false;
+		}
+		if (!$scope.validarFecha("fecha_inicio_pendiente","fecha_fin_pendiente")) {
+			mensaje += "<li>La fecha inicio no puede ser mayor a la fecha fin.</li>";
+			bandera = false;
+		}
+
+		if (bandera) {
+			if(tablePendiente) {
+				tablePendiente.destroy()
+			}
+			tablePendiente = $("#table_pendiente").DataTable({
+				"processing": false,
+				"ordering": false,
+				"serverSide": true,
+				"scrollX": false,
+				"paging": true,
+				"lengthChange": false,
+				"searching": false,
+				"ordering": false,
+				"pageLength": 10,
+				"ajax": {
+					"url": "req/consultarBandejaFFM",
+					"type": "POST",
+					"data": params,
+					"beforeSend": function () {
+						if(!swal.isVisible() ){
+							swal({ text: 'Cargando registros...', allowOutsideClick: false });
+							swal.showLoading();
+						}
+						
+					},
+					"dataSrc": function (json) {
+						//$scope.elementosRegistro = json.registrosTotales
+						return json.data;
+					},
+					"error":function(xhr, error, thrown){
+						handleError(xhr)
+					}, 
+					"complete": function () {
+						swal.close()
+					}
+				},
+				"columns": [null, null, null, null, null, null, null, null, null, null, null, null],
+				"language": idioma_espanol_not_font
+			});
+		} else {
+			mostrarMensajeWarningValidacion(mensaje);
+		}
 	}
 
 	$scope.consultarAsignada = function() {
 		$scope.estatusSelect = [];
 		$scope.estadoSelect = [];
 		$scope.geografiaSelect = [];
-		$scope.listaEstatusAsignada.map((e)=>{
+		$scope.listaEstatusTerminada.map((e)=>{
 			if (e.check) {
 				$scope.estatusSelect.push(e.id);
-			}
-		});
-		$scope.listaEstadoAsignada.map((e)=>{
-			if (e.check) {
-				$scope.estadoSelect.push(e.id);
+				e.estados.map((es)=>{
+					if (es.check) {
+						$scope.estadoSelect.push(es.id);
+					}
+				});
 			}
 		});
 		$scope.geografiaSelect = $("#jstree-asignado").jstree("get_selected", true).filter(e=>e.original.nivel>0).map(e=>parseInt(e.id))
@@ -160,21 +189,78 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 			fechaFin: $scope.getFechaFormato($("#fecha_fin_asignada").val()),
 			elementosPorPagina: 10
 		}
-		$scope.consultarBandejaFFM(params, "#tableAsignada", tableAsignada);
+
+		let mensaje = "";
+		let bandera = true;
+		if ($scope.estatusSelect.length === 0) {
+			mensaje += "<li>Seleccione algun estatus.</li>";
+			bandera = false;
+		}
+		if ($scope.estadoSelect.length === 0) {
+			mensaje += "<li>Seleccione algun estado.</li>";
+			bandera = false;
+		}
+		if (!$scope.validarFecha("fecha_inicio_asignada","fecha_fin_asignada")) {
+			mensaje += "<li>La fecha inicio no puede ser mayor a la fecha fin.</li>";
+			bandera = false;
+		}
+
+		if (bandera) {
+			if(tableAsignada) {
+				tableAsignada.destroy()
+			}
+			tableAsignada = $("#tableAsignada").DataTable({
+				"processing": false,
+				"ordering": false,
+				"serverSide": true,
+				"scrollX": false,
+				"paging": true,
+				"lengthChange": false,
+				"searching": false,
+				"ordering": false,
+				"pageLength": 10,
+				"ajax": {
+					"url": "req/consultarBandejaFFM",
+					"type": "POST",
+					"data": params,
+					"beforeSend": function () {
+						if(!swal.isVisible() ){
+							swal({ text: 'Cargando registros...', allowOutsideClick: false });
+							swal.showLoading();
+						}
+						
+					},
+					"dataSrc": function (json) {
+						//$scope.elementosRegistro = json.registrosTotales
+						return json.data;
+					},
+					"error":function(xhr, error, thrown){
+						handleError(xhr)
+					}, 
+					"complete": function () {
+						swal.close()
+					}
+				},
+				"columns": [null, null, null, null, null, null, null, null, null, null, null, null],
+				"language": idioma_espanol_not_font
+			});
+		} else {
+			mostrarMensajeWarningValidacion(mensaje);
+		}
 	}
 
 	$scope.consultarDetenida = function() {
 		$scope.estatusSelect = [];
 		$scope.estadoSelect = [];
 		$scope.geografiaSelect = [];
-		$scope.listaEstatusDetenida.map((e)=>{
+		$scope.listaEstatusTerminada.map((e)=>{
 			if (e.check) {
 				$scope.estatusSelect.push(e.id);
-			}
-		});
-		$scope.listaEstadoDetenida.map((e)=>{
-			if (e.check) {
-				$scope.estadoSelect.push(e.id);
+				e.estados.map((es)=>{
+					if (es.check) {
+						$scope.estadoSelect.push(es.id);
+					}
+				});
 			}
 		});
 		$scope.geografiaSelect = $("#jstree-detenido").jstree("get_selected", true).filter(e=>e.original.nivel>0).map(e=>parseInt(e.id))
@@ -189,8 +275,66 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 			fechaFin: $scope.getFechaFormato($("#fecha_fin_detenida").val()),
 			elementosPorPagina: 10
 		}
-		$scope.consultarBandejaFFM(params, "#tableDetenida", tableDetenida);
+
+		let mensaje = "";
+		let bandera = true;
+		if ($scope.estatusSelect.length === 0) {
+			mensaje += "<li>Seleccione algun estatus.</li>";
+			bandera = false;
+		}
+		if ($scope.estadoSelect.length === 0) {
+			mensaje += "<li>Seleccione algun estado.</li>";
+			bandera = false;
+		}
+		if (!$scope.validarFecha("fecha_inicio_detenida","fecha_fin_detenida")) {
+			mensaje += "<li>La fecha inicio no puede ser mayor a la fecha fin.</li>";
+			bandera = false;
+		}
+
+		if (bandera) {
+			if(tableDetenida) {
+				tableDetenida.destroy()
+			}
+			tableDetenida = $("#tableDetenida").DataTable({
+				"processing": false,
+				"ordering": false,
+				"serverSide": true,
+				"scrollX": false,
+				"paging": true,
+				"lengthChange": false,
+				"searching": false,
+				"ordering": false,
+				"pageLength": 10,
+				"ajax": {
+					"url": "req/consultarBandejaFFM",
+					"type": "POST",
+					"data": params,
+					"beforeSend": function () {
+						if(!swal.isVisible() ){
+							swal({ text: 'Cargando registros...', allowOutsideClick: false });
+							swal.showLoading();
+						}
+						
+					},
+					"dataSrc": function (json) {
+						//$scope.elementosRegistro = json.registrosTotales
+						return json.data;
+					},
+					"error":function(xhr, error, thrown){
+						handleError(xhr)
+					}, 
+					"complete": function () {
+						swal.close()
+					}
+				},
+				"columns": [null, null, null, null, null, null, null, null, null, null, null, null],
+				"language": idioma_espanol_not_font
+			});
+		} else {
+			mostrarMensajeWarningValidacion(mensaje);
+		}
 	}
+		
 
 	$scope.consultarTerminada = function() {
 		$scope.estatusSelect = [];
@@ -199,18 +343,18 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 		$scope.listaEstatusTerminada.map((e)=>{
 			if (e.check) {
 				$scope.estatusSelect.push(e.id);
+				e.estados.map((es)=>{
+					if (es.check) {
+						$scope.estadoSelect.push(es.id);
+					}
+				});
 			}
 		});
-		$scope.listaEstadoTerminada.map((e)=>{
-			if (e.check) {
-				$scope.estadoSelect.push(e.id);
-			}
-		});
-		$scope.geografiaSelect = $("#jstree-terminada").jstree("get_selected", true).filter(e=>e.original.nivel>0).map(e=>parseInt(e.id))
+		$scope.geografiaSelect = $("#jstree-terminada").jstree("get_selected", true).filter(e=>e.original.nivel === 5).map(e=>parseInt(e.id))
 		let params = {
-			idOrdenTrabajo: '',
-			folioSistema: '',
-			idClaveCliente: '',
+			idOrdenTrabajo: !$scope.objetoTerminadas.ot || $scope.objetoTerminadas.ot === "" ? undefined : $scope.objetoTerminadas.ot,
+			folioSistema: !$scope.objetoTerminadas.folio || $scope.objetoTerminadas.folio === "" ? undefined : $scope.objetoTerminadas.folio,
+			idClaveCliente: !$scope.objetoTerminadas.claveCliente || $scope.objetoTerminadas.claveCliente === "" ? undefined : $scope.objetoTerminadas.claveCliente,
 			idEstatus: $scope.estatusSelect,
 			idEstados: $scope.estadoSelect,
 			idGeografias: $scope.geografiaSelect,
@@ -218,21 +362,78 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 			fechaFin: $scope.getFechaFormato($("#fecha_fin_terminada").val()),
 			elementosPorPagina: 10
 		}
-		$scope.consultarBandejaFFM(params, "#tableTerminada", tableTerminada);
-	}
 
+		let mensaje = "";
+		let bandera = true;
+		if ($scope.estatusSelect.length === 0) {
+			mensaje += "<li>Seleccione algun estatus.</li>";
+			bandera = false;
+		}
+		if ($scope.estadoSelect.length === 0) {
+			mensaje += "<li>Seleccione algun estado.</li>";
+			bandera = false;
+		}
+		if (!$scope.validarFecha("fecha_inicio_terminada","fecha_fin_terminada")) {
+			mensaje += "<li>La fecha inicio no puede ser mayor a la fecha fin.</li>";
+			bandera = false;
+		}
+
+		if (bandera) {
+			if(tableTerminada) {
+				tableTerminada.destroy() 
+			}
+			tableTerminada = $("#tableTerminada").DataTable({
+				"processing": false,
+				"ordering": false,
+				"serverSide": true,
+				"scrollX": false,
+				"paging": true,
+				"lengthChange": false,
+				"searching": false,
+				"ordering": false,
+				"pageLength": 10,
+				"ajax": {
+					"url": "req/consultarBandejaFFM",
+					"type": "POST",
+					"data": params,
+					"beforeSend": function () {
+						if(!swal.isVisible() ){
+							swal({ text: 'Cargando registros...', allowOutsideClick: false });
+							swal.showLoading();
+						}
+						
+					},
+					"dataSrc": function (json) {
+						//$scope.elementosRegistro = json.registrosTotales
+						return json.data;
+					},
+					"error":function(xhr, error, thrown){
+						handleError(xhr)
+					}, 
+					"complete": function () {
+						swal.close()
+					}
+				},
+				"columns": [null, null, null, null, null, null, null, null, null, null, null, null],
+				"language": idioma_espanol_not_font
+			});
+		} else {
+			mostrarMensajeWarningValidacion(mensaje);
+		}
+	}
+	
 	$scope.consultarCancelada = function() {
 		$scope.estatusSelect = [];
 		$scope.estadoSelect = [];
 		$scope.geografiaSelect = [];
-		$scope.listaEstatusCancelada.map((e)=>{
+		$scope.listaEstatusTerminada.map((e)=>{
 			if (e.check) {
 				$scope.estatusSelect.push(e.id);
-			}
-		});
-		$scope.listaEstadoCancelada.map((e)=>{
-			if (e.check) {
-				$scope.estadoSelect.push(e.id);
+				e.estados.map((es)=>{
+					if (es.check) {
+						$scope.estadoSelect.push(es.id);
+					}
+				});
 			}
 		});
 		$scope.geografiaSelect = $("#jstree-cancelada").jstree("get_selected", true).filter(e=>e.original.nivel>0).map(e=>parseInt(e.id))
@@ -247,21 +448,78 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 			fechaFin: $scope.getFechaFormato($("#fecha_fin_cancelada").val()),
 			elementosPorPagina: 10
 		}
-		$scope.consultarBandejaFFM(params, "#tableCancelada", tableCancelada);
+
+		let mensaje = "";
+		let bandera = true;
+		if ($scope.estatusSelect.length === 0) {
+			mensaje += "<li>Seleccione algun estatus.</li>";
+			bandera = false;
+		}
+		if ($scope.estadoSelect.length === 0) {
+			mensaje += "<li>Seleccione algun estado.</li>";
+			bandera = false;
+		}
+		if (!$scope.validarFecha("fecha_inicio_cancelada","fecha_fin_cancelada")) {
+			mensaje += "<li>La fecha inicio no puede ser mayor a la fecha fin.</li>";
+			bandera = false;
+		}
+
+		if (bandera){
+			if(tableCancelada) {
+				tableCancelada.destroy() 
+			}
+			tableCancelada = $("#tableCancelada").DataTable({
+				"processing": false,
+				"ordering": false,
+				"serverSide": true,
+				"scrollX": false,
+				"paging": true,
+				"lengthChange": false,
+				"searching": false,
+				"ordering": false,
+				"pageLength": 10,
+				"ajax": {
+					"url": "req/consultarBandejaFFM",
+					"type": "POST",
+					"data": params,
+					"beforeSend": function () {
+						if(!swal.isVisible() ){
+							swal({ text: 'Cargando registros...', allowOutsideClick: false });
+							swal.showLoading();
+						}
+						
+					},
+					"dataSrc": function (json) {
+						//$scope.elementosRegistro = json.registrosTotales
+						return json.data;
+					},
+					"error":function(xhr, error, thrown){
+						handleError(xhr)
+					}, 
+					"complete": function () {
+						swal.close()
+					}
+				},
+				"columns": [null, null, null, null, null, null, null, null, null, null, null, null],
+				"language": idioma_espanol_not_font
+			});
+		} else {
+			mostrarMensajeWarningValidacion(mensaje);
+		}
 	}
 
 	$scope.consultarCalendarizada = function() {
 		$scope.estatusSelect = [];
 		$scope.estadoSelect = [];
 		$scope.geografiaSelect = [];
-		$scope.listaEstatusCalendarizada.map((e)=>{
+		$scope.listaEstatusTerminada.map((e)=>{
 			if (e.check) {
 				$scope.estatusSelect.push(e.id);
-			}
-		});
-		$scope.listaEstadoCalendarizada.map((e)=>{
-			if (e.check) {
-				$scope.estadoSelect.push(e.id);
+				e.estados.map((es)=>{
+					if (es.check) {
+						$scope.estadoSelect.push(es.id);
+					}
+				});
 			}
 		});
 		$scope.geografiaSelect = $("#jstree-calendarizar").jstree("get_selected", true).filter(e=>e.original.nivel>0).map(e=>parseInt(e.id))
@@ -276,21 +534,79 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 			fechaFin: $scope.getFechaFormato($("#fecha_fin_calendarizado").val()),
 			elementosPorPagina: 10
 		}
-		$scope.consultarBandejaFFM(params, "#tableCalendarizada", tableCalendarizada);
+
+		let mensaje = "";
+		let bandera = true;
+		if ($scope.estatusSelect.length === 0) {
+			mensaje += "<li>Seleccione algun estatus.</li>";
+			bandera = false;
+		}
+		if ($scope.estadoSelect.length === 0) {
+			mensaje += "<li>Seleccione algun estado.</li>";
+			bandera = false;
+		}
+		if (!$scope.validarFecha("fecha_inicio_calendarizado","fecha_fin_calendarizado")) {
+			mensaje += "<li>La fecha inicio no puede ser mayor a la fecha fin.</li>";
+			bandera = false;
+		}
+
+		if (bandera) {
+			if(tableCalendarizada) {
+				tableCalendarizada.destroy() 
+			}
+			tableCalendarizada = $("#tableCalendarizada").DataTable({
+				"processing": false,
+				"ordering": false,
+				"serverSide": true,
+				"scrollX": false,
+				"paging": true,
+				"lengthChange": false,
+				"searching": false,
+				"ordering": false,
+				"pageLength": 10,
+				"ajax": {
+					"url": "req/consultarBandejaFFM",
+					"type": "POST",
+					"data": params,
+					"beforeSend": function () {
+						if(!swal.isVisible() ){
+							swal({ text: 'Cargando registros...', allowOutsideClick: false });
+							swal.showLoading();
+						}
+						
+					},
+					"dataSrc": function (json) {
+						//$scope.elementosRegistro = json.registrosTotales
+						return json.data;
+					},
+					"error":function(xhr, error, thrown){
+						handleError(xhr)
+					}, 
+					"complete": function () {
+						swal.close()
+					}
+				},
+				"columns": [null, null, null, null, null, null, null, null, null, null, null, null],
+				"language": idioma_espanol_not_font
+			});
+		} else {
+			mostrarMensajeWarningValidacion(mensaje);
+		}
+		
 	}
 
 	$scope.consultarGestoria = function() {
 		$scope.estatusSelect = [];
 		$scope.estadoSelect = [];
 		$scope.geografiaSelect = [];
-		$scope.listaEstatusGestoria.map((e)=>{
+		$scope.listaEstatusTerminada.map((e)=>{
 			if (e.check) {
 				$scope.estatusSelect.push(e.id);
-			}
-		});
-		$scope.listaEstadoGestoria.map((e)=>{
-			if (e.check) {
-				$scope.estadoSelect.push(e.id);
+				e.estados.map((es)=>{
+					if (es.check) {
+						$scope.estadoSelect.push(es.id);
+					}
+				});
 			}
 		});
 		$scope.geografiaSelect = $("#jstree-gestoria").jstree("get_selected", true).filter(e=>e.original.nivel>0).map(e=>parseInt(e.id))
@@ -305,7 +621,206 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 			fechaFin: $scope.getFechaFormato($("#fecha_fin_gestoria").val()),
 			elementosPorPagina: 10
 		}
-		$scope.consultarBandejaFFM(params, "#tableGestoria", tableGestoria);
+
+		let mensaje = "";
+		let bandera = true;
+		if ($scope.estatusSelect.length === 0) {
+			mensaje += "<li>Seleccione algun estatus.</li>";
+			bandera = false;
+		}
+		if ($scope.estadoSelect.length === 0) {
+			mensaje += "<li>Seleccione algun estado.</li>";
+			bandera = false;
+		}
+		if (!$scope.validarFecha("fecha_inicio_gestoria","fecha_fin_gestoria")) {
+			mensaje += "<li>La fecha inicio no puede ser mayor a la fecha fin.</li>";
+			bandera = false;
+		}
+
+		if (bandera) {
+			if(tableGestoria) {
+				tableGestoria.destroy() 
+			}
+			tableGestoria = $("#tableGestoria").DataTable({
+				"processing": false,
+				"ordering": false,
+				"serverSide": true,
+				"scrollX": false,
+				"paging": true,
+				"lengthChange": false,
+				"searching": false,
+				"ordering": false,
+				"pageLength": 10,
+				"ajax": {
+					"url": "req/consultarBandejaFFM",
+					"type": "POST",
+					"data": params,
+					"beforeSend": function () {
+						if(!swal.isVisible() ){
+							swal({ text: 'Cargando registros...', allowOutsideClick: false });
+							swal.showLoading();
+						}
+						
+					},
+					"dataSrc": function (json) {
+						//$scope.elementosRegistro = json.registrosTotales
+						return json.data;
+					},
+					"error":function(xhr, error, thrown){
+						handleError(xhr)
+					}, 
+					"complete": function () {
+						swal.close()
+					}
+				},
+				"columns": [null, null, null, null, null, null, null, null, null, null, null, null],
+				"language": idioma_espanol_not_font
+			});
+		} else {
+			mostrarMensajeWarningValidacion(mensaje);
+		}
+
+		
+	}
+
+	$scope.objetoPendiente = {};
+	$scope.limpiarCamposPendiente = function(opcion) {
+		switch (opcion) {
+			case 1:
+				$scope.objetoPendiente.folio = "";
+				$scope.objetoPendiente.claveCliente = "";
+				break;
+			case 2:
+				$scope.objetoPendiente.ot = "";
+				$scope.objetoPendiente.claveCliente = "";
+				break;
+			case 3:
+				$scope.objetoPendiente.ot = "";
+				$scope.objetoPendiente.folio = "";
+				break;
+			default:
+				break;
+		}
+	}
+
+	$scope.objetoAsignada = {};
+	$scope.limpiarCamposAsignada = function(opcion) {
+		switch (opcion) {
+			case 1:
+				$scope.objetoAsignada.folio = "";
+				$scope.objetoAsignada.claveCliente = "";
+				break;
+			case 2:
+				$scope.objetoAsignada.ot = "";
+				$scope.objetoAsignada.claveCliente = "";
+				break;
+			case 3:
+				$scope.objetoAsignada.ot = "";
+				$scope.objetoAsignada.folio = "";
+				break;
+			default:
+				break;
+		}
+	}
+
+	$scope.objetoDetenida = {};
+	$scope.limpiarCamposDetenida = function(opcion) {
+		switch (opcion) {
+			case 1:
+				$scope.objetoDetenida.folio = "";
+				$scope.objetoDetenida.claveCliente = "";
+				break;
+			case 2:
+				$scope.objetoDetenida.ot = "";
+				$scope.objetoDetenida.claveCliente = "";
+				break;
+			case 3:
+				$scope.objetoDetenida.ot = "";
+				$scope.objetoDetenida.folio = "";
+				break;
+			default:
+				break;
+		}
+	}
+
+	$scope.objetoTerminadas = {};
+	$scope.limpiarCamposTerminada = function(opcion) {
+		switch (opcion) {
+			case 1:
+				$scope.objetoTerminadas.folio = "";
+				$scope.objetoTerminadas.claveCliente = "";
+				break;
+			case 2:
+				$scope.objetoTerminadas.ot = "";
+				$scope.objetoTerminadas.claveCliente = "";
+				break;
+			case 3:
+				$scope.objetoTerminadas.ot = "";
+				$scope.objetoTerminadas.folio = "";
+				break;
+			default:
+				break;
+		}
+	}
+
+	$scope.objetoCancelada = {};
+	$scope.limpiarCamposCancelada = function(opcion) {
+		switch (opcion) {
+			case 1:
+				$scope.objetoCancelada.folio = "";
+				$scope.objetoCancelada.claveCliente = "";
+				break;
+			case 2:
+				$scope.objetoCancelada.ot = "";
+				$scope.objetoCancelada.claveCliente = "";
+				break;
+			case 3:
+				$scope.objetoCancelada.ot = "";
+				$scope.objetoCancelada.folio = "";
+				break;
+			default:
+				break;
+		}
+	}
+
+	$scope.objetoCalendarizada = {};
+	$scope.limpiarCamposCalendarizada = function(opcion) {
+		switch (opcion) {
+			case 1:
+				$scope.objetoCalendarizada.folio = "";
+				$scope.objetoCalendarizada.claveCliente = "";
+				break;
+			case 2:
+				$scope.objetoCalendarizada.ot = "";
+				$scope.objetoCalendarizada.claveCliente = "";
+				break;
+			case 3:
+				$scope.objetoCalendarizada.ot = "";
+				$scope.objetoCalendarizada.folio = "";
+				break;
+			default:
+				break;
+		}
+	}
+
+	$scope.objetoGestoria = {};
+	$scope.limpiarCamposGestoria = function(opcion) {
+		switch (opcion) {
+			case 1:
+				$scope.objetoGestoria.folio = "";
+				$scope.objetoGestoria.claveCliente = "";
+				break;
+			case 2:
+				$scope.objetoGestoria.ot = "";
+				$scope.objetoGestoria.claveCliente = "";
+				break;
+			case 3:
+				$scope.objetoGestoria.ot = "";
+				$scope.objetoGestoria.folio = "";
+				break;
+			default:
+				break;
+		}
 	}
 
 	$scope.getFechaFormato = function (fecha) {
@@ -314,10 +829,10 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 	}
 
 	$scope.consultarBandejaFFM = function(params, table, tablagg) {
-		if(tablagg) {
-			tablagg.destroy() 
+		if(tableTerminada) {
+			tableTerminada.destroy() 
 		}
-		tablagg = $(table).DataTable({
+		tableTerminada = $("#tableTerminada").DataTable({
 			"processing": false,
 			"ordering": false,
 			"serverSide": true,
@@ -339,6 +854,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 					
 				},
 				"dataSrc": function (json) {
+					console.log(json);
 					$scope.elementosRegistro = json.registrosTotales
 					return json.data;
 				},
@@ -349,40 +865,53 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 					swal.close()
 				}
 			},
-			"columns": [null, null, null, null, null, null, null, null, null],
+			"columns": [null, null, null, null, null, null, null, null, null, null, null, null],
 			"language": idioma_espanol_not_font
 		});
 	}
 
 	$scope.mostrarFiltros = function() {
-		console.log("Inicinado estatus");
 		//PENDIENTE
 		$scope.listaEstatusPendiente = $scope.filtrosCatalogo.filter(e => {return e.id === 1});
-		$scope.listaEstadoPendiente = $scope.filtrosCatalogo.filter(e => {return e.idPadre === 1});
+		$scope.listaEstatusPendiente.map((es)=>{
+			es.estados = $scope.filtrosCatalogo.filter(e => {return e.idPadre === es.id});
+		});
 
 		//ASIGNADA
 		$scope.listaEstatusAsignada = $scope.filtrosCatalogo.filter(e => {return e.id === 6});
-		$scope.listaEstadoAsignada = $scope.filtrosCatalogo.filter(e => {return e.idPadre === 6});
+		$scope.listaEstatusAsignada.map((es)=>{
+			es.estados = $scope.filtrosCatalogo.filter(e => {return e.idPadre === es.id});
+		});
 
 		//DETENIDA
 		$scope.listaEstatusDetenida = $scope.filtrosCatalogo.filter(e => {return e.id === 6});
-		$scope.listaEstadoDetenida = $scope.filtrosCatalogo.filter(e => {return e.idPadre === 6});
+		$scope.listaEstatusDetenida.map((es)=>{
+			es.estados = $scope.filtrosCatalogo.filter(e => {return e.idPadre === es.id});
+		});
 
 		//TERMINADA
 		$scope.listaEstatusTerminada = $scope.filtrosCatalogo.filter(e => {return e.id === 4});
-		$scope.listaEstadoTerminada = $scope.filtrosCatalogo.filter(e => {return e.idPadre === 4});
+		$scope.listaEstatusTerminada.map((es)=>{
+			es.estados = $scope.filtrosCatalogo.filter(e => {return e.idPadre === es.id});
+		});
 
 		//CANCELADA
 		$scope.listaEstatusCancelada = $scope.filtrosCatalogo.filter(e => {return e.id === 5});
-		$scope.listaEstadoCancelada = $scope.filtrosCatalogo.filter(e => {return e.idPadre === 5});
+		$scope.listaEstatusCancelada.map((es)=>{
+			es.estados = $scope.filtrosCatalogo.filter(e => {return e.idPadre === es.id});
+		});
 
 		//CALENDARIZADO
 		$scope.listaEstatusCalendarizada = $scope.filtrosCatalogo.filter(e => {return e.id === 6});
-		$scope.listaEstadoCalendarizada = $scope.filtrosCatalogo.filter(e => {return e.idPadre === 6});
+		$scope.listaEstatusCalendarizada.map((es)=>{
+			es.estados = $scope.filtrosCatalogo.filter(e => {return e.idPadre === es.id});
+		});
 
 		//GESTORIA
 		$scope.listaEstatusGestoria = $scope.filtrosCatalogo.filter(e => {return e.id === 7});
-		$scope.listaEstadoGestoria = $scope.filtrosCatalogo.filter(e => {return e.idPadre === 7});
+		$scope.listaEstatusGestoria.map((es)=>{
+			es.estados = $scope.filtrosCatalogo.filter(e => {return e.idPadre === es.id});
+		});
 
 	}
 
@@ -541,7 +1070,6 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 	$scope.pintarArbol = function(nombreArbol, datos) {
 		console.log(nombreArbol);
 		$(nombreArbol).bind('loaded.jstree', function(e, data) {
-
 		}).jstree({
 			'plugins': ["wholerow", "checkbox"],
 			'core': {
@@ -553,6 +1081,20 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 				}
 			}
 		});
+	}
+
+	$scope.validarFecha = function(fechaInicio, fechaFin) {
+		if (document.getElementById(fechaInicio).value.trim() != "" && document.getElementById(fechaFin).value.trim() != "") {
+			var inicio = document.getElementById(fechaInicio).value.split('/');
+			var fin = document.getElementById(fechaFin).value.split('/');
+			var date_inicio = new Date(inicio[2] + '-' + inicio[1] + '-' + inicio[0]);
+			var date_fin = new Date(fin[2] + '-' + fin[1] + '-' + fin[0]);
+			if (date_inicio <= date_fin) {
+				return true;
+			} else {
+				return false;
+			}
+		}
 	}
 
 	$scope.showArbol = 0;
@@ -571,6 +1113,16 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 		lista.map((e)=>{
 			e.check = false;
 		});
+	}
+
+	$scope.clickEstatus = function(estatus) {
+		estatus.estados.map(function(estado) {
+			estado.check = !estatus.check;
+		});
+	}
+
+	$scope.clickEstado = function(estatus, estado) {
+		
 	}
 
 	angular.element(document).ready(function () {
@@ -677,6 +1229,12 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 			clearBtn: true
 		});
 		$('.datepicker').datepicker('update', new Date());
+
+		$('.drop-down-filters').on("click.bs.dropdown", function (e) {
+            e.stopPropagation();
+        });
+
+		$("#idBody").removeAttr("style");
 	});
 
 
