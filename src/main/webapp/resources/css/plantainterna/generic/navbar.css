@@ -244,3 +244,26 @@ h1.h6.subtitle-modulo {
   font-weight:bold;
   color:#3c3c3c;
 }
+
+
+.div-contenedor-kmz-buttons {
+    position: absolute;
+    z-index: 9;
+    text-align: center;
+    border: none;
+    box-shadow: 0 2px 2px 2px rgb(0 0 0 / 5%), 0 2px 2px 2px rgb(0 0 0 / 5%), 0 2px 2px 2px rgb(0 0 0 / 5%);
+    background-color: white;
+    margin: 1em;
+    min-width: 250px;
+    /* right: 0; */
+    /* bottom: 0; */
+}
+
+.form-body-filter label {
+    margin-left: 0em;
+    color: dimgrey;
+    font-weight: bolder;    
+}
+.form-check-vistamapa{
+   text-align:left;
+}

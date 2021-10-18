@@ -15,25 +15,8 @@
 <div class="col-12 row">
 	<div class="col-1"></div>
 	<div class="col-10">
-		<input id="search-input-place" class="controls" type="text"
-			placeholder="B&uacute;scar lugar en mapa" style="font-size: 16px;">
-		<div id="mapa-ubicacion" style="width: 100%; height: 400px;"></div>
-		
-		<div  class="card div-contenedor-kmz-buttons">
-			<div class="card-header"> 
-				<span class="title-tipoot">FILTROS MAPA</span> 
-				<span ng-click="objectVistaMapaCOnfig.isOpenOpciones=false" ng-show="objectVistaMapaCOnfig.isOpenOpciones" class="icono-accion-card fa fa-minus"></span>
-				<span ng-click="objectVistaMapaCOnfig.isOpenOpciones=true" ng-show="!objectVistaMapaCOnfig.isOpenOpciones" class="icono-accion-card fa fa-plus"></span>
-			</div>
-			<div  ng-show="objectVistaMapaCOnfig.isOpenOpciones" class="card-body">
-			  <form class="form-body-filter">
-				<div ng-repeat="kmzConfig in objectVistaMapaCOnfig.listadoKmz track by $index" class="form-check form-check-vistamapa">
-				  <input ng-change="setMapaKmlVistaMapa($index,kmzConfig)" ng-model="kmzConfig.isOpenOpciones"  type="checkbox" class="form-check-input ">
-				  <label class="form-check-label label-form " for="ocultarmostrarlables" ng-bind="kmzConfig.text"></label>
-				</div>                                
-			  </form>
-			</div>
-		  </div>
+		<input id="search-input-place" class="controls" type="text" placeholder="B&uacute;scar lugar en mapa" style="font-size: 16px;">
+		<div id="mapa-ubicacion" style="width: 100%; height: 400px;"></div>			
 	</div>
 	<div class="col-1"></div>
 </div>

@@ -1,3 +1,5 @@
+let objectMapaUbiacion;
+
 app.mapController = function ($scope, ordenesUniversalesService) {
     var map;
     var marker;
@@ -7,7 +9,6 @@ app.mapController = function ($scope, ordenesUniversalesService) {
 
     $scope.latitudSelectedMap;
     $scope.longitudSelectedMap;
-
     $scope.initializeMap=function(){
 
         map = new google.maps.Map(document.getElementById('mapa-ubicacion'), {
@@ -26,7 +27,10 @@ app.mapController = function ($scope, ordenesUniversalesService) {
             zoom :  10 ,
             disableDoubleClickZoom: true
         });
-
+        
+        objectMapaUbiacion=new GenericMapa(map,'mapa-ubicacion' ,$scope.objectVistaMapaCOnfig.listadoKmz,'bottom-right');
+        objectMapaUbiacion.agregarHtmlFunction()
+        
         mapResumen = new google.maps.Map(document.getElementById('mapa-resumen'), {
             center : {
                 lat : parseFloat( 0 ),
@@ -85,6 +89,7 @@ app.mapController = function ($scope, ordenesUniversalesService) {
         });**/
         
     }
+
     $scope.inicializarMarkers=function(){
         marker = new google.maps.Marker({
             map: map,
@@ -173,6 +178,5 @@ app.mapController = function ($scope, ordenesUniversalesService) {
         return isFinite(lng) && Math.abs(lng) <= 180;
     }
 
-    $scope.initializeMap();
 
 }

@@ -67,12 +67,36 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
             // ****************** CONFIGURACIÓN
             if (results[0].data.respuesta) {
                 if (results[0].data.result) {
+                    results[0].data.result.KMZ_RESTRICCIONES="https://firebasestorage.googleapis.com/v0/b/totalplay-ffm-core-dev.appspot.com/o/sistema%2Fweb%2Fcobertura%2Fmex%2FRestricciones.kmz?alt=media&token=b8cab115-e0a5-45fb-8433-86062de37fd1"
+                    results[0].data.result.KMZ_CRESIDENCIAL= "https://firebasestorage.googleapis.com/v0/b/totalplay-ffm-core-dev.appspot.com/o/sistema%2Fweb%2Fcobertura%2Fmex%2FCiudadesResidencial.kml?alt=media&token=9a028329-048d-4f20-ae8d-eedadfe0d1bb"
+                    results[0].data.result.KMZ_BLUEHOLES= "https://firebasestorage.googleapis.com/v0/b/totalplay-ffm-core-dev.appspot.com/o/sistema%2Fweb%2Fcobertura%2Fmex%2FBlueholes.kmz?alt=media&token=e215272e-21e3-44e2-935f-89a835cb37c7"
+                    results[0].data.result.KMZ_CEMPRESARIAL= "https://firebasestorage.googleapis.com/v0/b/totalplay-ffm-core-dev.appspot.com/o/sistema%2Fweb%2Fcobertura%2Fmex%2FCiudadesEmpresarialFibra.kmz?alt=media&token=bd677c3d-8ed2-4d17-8855-96cecf692170"
+            
+                    
                     $scope.nGeografia = results[0].data.result.N_FILTRO_GEOGRAFIA ? Number(results[0].data.result.N_FILTRO_GEOGRAFIA) : null;
                     //$scope.nTipoOrdenes = results[0].data.result.N_FILTRO_INTERVENCIONES ? Number(results[0].data.result.N_FILTRO_INTERVENCIONES) : null;
                     $scope.nTipoOrdenes=2   
                 }
             }
-            
+            let elementosMapa= angular.copy(results[0].data.result);
+            $scope.listadoKmzConfig=[]
+            $scope.elementosConfigGeneral=new Map(Object.entries(results[0].data.result))          
+            for (const elm in results[0].data.result) {       
+
+                if(elm.toUpperCase().includes("KMZ_")){
+                    $scope.listadoKmzConfig.push({
+                        identificador:elm,
+                        text: elm.substring( elm.indexOf("_")+1 , elm.length ).replaceAll('_',' '),
+                        value:elementosMapa[elm]
+                    });
+                }
+            }
+            $scope.objectVistaMapaCOnfig={
+                isOpenOpciones:false,
+                listadoKmz:angular.copy($scope.listadoKmzConfig).map(e=>{ e.isCheckedOpcion=false;  return e;})
+            }
+            $scope.initializeMap();
+
             // ****************** INTERVENCIONES
             if (results[1].data.respuesta) {
                 if (results[1].data.result) {
@@ -448,7 +472,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
             textError+='Captura el nombre del cliente</br>';
         }else if(regExpresionEspecialCharacters.test($scope.informacionCliente.nombre   )){
             isErrorValidate=true
-            textError+='Nombre contacto no valido</br>';
+            textError+='Nombre contacto no v\u00E1lido</br>';
         }
             
         
@@ -457,7 +481,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
             textError+='Captura el apellido paterno</br>';
         }else if(regExpresionEspecialCharacters.test($scope.informacionCliente.apaterno   )){
             isErrorValidate=true
-            textError+='Nombre contacto no valido</br>';
+            textError+='Nombre contacto no v\u00E1lido</br>';
         }
             
         
@@ -466,7 +490,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
             textError+='Captura apellido materno</br>';
         }else if(regExpresionEspecialCharacters.test($scope.informacionCliente.amaterno   )){
             isErrorValidate=apaterno
-            textError+='Nombre contacto no valido</br>';
+            textError+='Nombre contacto no v\u00E1lido</br>';
         }
             
 
@@ -480,10 +504,10 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
         
         if(!$scope.informacionCliente.numeroExt  ){
             isErrorValidate=true
-            textError+='Captura el numero exterior</br>';
+            textError+='Captura el n\u00FAmero exterior</br>';
         }	else if(regExpresionEspecialCharacters.test($scope.informacionCliente.numeroExt )){
             isErrorValidate=true
-            textError+='Numero exterior no valido</br>';
+            textError+='Numero exterior no v\u00E1lido</br>';
         }
         
 
@@ -492,7 +516,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
             textError+='Captura ciudad</br>';
         }else if(regExpresionEspecialCharacters.test( $scope.informacionCliente.ciudad   )){
             isErrorValidate=true
-            textError+='Ciudad no valido</br>';
+            textError+='Ciudad no v\u00E1lido</br>';
         }
         
         if(	!$scope.informacionCliente.municipio ){
@@ -500,7 +524,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
             textError+='Captura municipio</br>';
         }else if(regExpresionEspecialCharacters.test(  $scope.informacionCliente.municipio   )){
             isErrorValidate=true
-            textError+='Municipio no valido</br>';
+            textError+='Municipio no v\u00E1lido</br>';
         }
         
         if( !$scope.informacionCliente.estado ){
@@ -508,7 +532,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
             textError+='Captura estado</br>';
         }else if(regExpresionEspecialCharacters.test( $scope.informacionCliente.estado )){
             isErrorValidate=true
-            textError+='Estado no valido</br>';
+            textError+='Estado no v\u00E1lido</br>';
         }
 
         if(	!$scope.informacionCliente.colonia ){
@@ -516,7 +540,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
             textError+='Captura colonia</br>';
         }else if(regExpresionEspecialCharacters.test( $scope.informacionCliente.colonia  )){
             isErrorValidate=true
-            textError+='Colonia no valido</br>';
+            textError+='Colonia no v\u00E1lido</br>';
         }
 
         if( !$scope.informacionCliente.entreCalles ){
@@ -524,7 +548,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
             textError+='Captura entre calle</br>';
         }else if(regExpresionEspecialCharacters.test( $scope.informacionCliente.entreCalles )){
             isErrorValidate=true
-            textError+='Entre calle no valido</br>';
+            textError+='Entre calle no v\u00E1lido</br>';
         }
         
         if(	!$scope.informacionCliente.referencias ){
@@ -532,7 +556,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
             textError+='Captura referencia</br>';
         }else if(regExpresionEspecialCharacters.test( $scope.informacionCliente.referencias )){
             isErrorValidate=true
-            textError+='Referencias no valido</br>';
+            textError+='Referencias no v\u00E1lido</br>';
         }
         
         if(	!$scope.informacionCliente.codigoPostal ){
@@ -540,15 +564,15 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
             textError+='Captura c\u00F3digo postal</br>';
         }else if(regExpresionEspecialCharacters.test( $scope.informacionCliente.codigoPostal )){
             isErrorValidate=true
-            textError+='C\u00F3digo no valido</br>';
+            textError+='C\u00F3digo no v\u00E1lido</br>';
         }
 
         if(	!$scope.informacionCliente.telefono ){
             isErrorValidate=true
-            textError+='Captura n\u00famero telef\u00f3nico</br>';
+            textError+='Captura n\u00FAmero telef\u00f3nico</br>';
         }else if(regExpresionEspecialCharacters.test( $scope.informacionCliente.telefono  )){
             isErrorValidate=true
-            textError+='Telefono no valido</br>';
+            textError+='Tel\u00E9fono no v\u00E1lido</br>';
         }
         
         if(	!$scope.informacionCliente.celular ){
@@ -556,7 +580,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
             textError+='Captura n\u00famero de celular</br>';
         }else if(regExpresionEspecialCharacters.test( $scope.informacionCliente.celular )){
             isErrorValidate=true
-            textError+='Celular no valido</br>';
+            textError+='Celular no v\u00E1lido</br>';
         }
         
 
@@ -570,10 +594,10 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
 
         if( !$scope.informacionCliente.correo ){
             isErrorValidate=true
-            textError+='Captura correo</br>';
-        }else if($scope.emailFormat.test($scope.informacionCliente.correo ) ){
+            textError+='Captura correo v\u00E1lido</br>';
+        }else if(!$scope.emailFormat.test($scope.informacionCliente.correo ) ){
             isErrorValidate=true
-            textError+='Captura correo valido</br>';
+            textError+='Captura correo v\u00E1lido</br>';
         }
 
         if( !$scope.informacionCliente.nombreContacto ){
@@ -581,7 +605,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
             textError+='Captura el nombre del contacto</br>';
         }else if(regExpresionEspecialCharacters.test($scope.informacionCliente.nombreContacto   )){
             isErrorValidate=true
-            textError+='Nombre contacto no valido</br>';
+            textError+='Nombre contacto no v\u00E1lido</br>';
         }
         
         if(	!$scope.informacionCliente.telefonoContacto ){
@@ -589,7 +613,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
             textError+='Captura n\u00famero de tel\u00E9fono</br>';
         }else if(regExpresionEspecialCharacters.test( $scope.informacionCliente.telefonoContacto )){
             isErrorValidate=true
-            textError+='Celular no valido</br>';
+            textError+='Celular no v\u00E1lido</br>';
         }
         
 

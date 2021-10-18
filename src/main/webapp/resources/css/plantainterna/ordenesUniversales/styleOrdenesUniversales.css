@@ -452,38 +452,6 @@ a.fc-col-header-cell-cushion {
 }
 
 
-.div-contenedor-kmz-buttons .card-header{
-    text-align:left !important;
-    margin-left: 0em;
-    color: black;
-    font-weight: bolder;
-}
-.div-contenedor-kmz-buttons {
-    position: absolute;
-    z-index: 9;
-    background-color: #f1f1f1;
-    border: 1px solid #d3d3d3;
-    text-align: center;
-    border: none;
-    box-shadow: 0 2px 2px 2px rgb(0 0 0 / 5%), 0 2px 2px 2px rgb(0 0 0 / 5%), 0 2px 2px 2px rgb(0 0 0 / 5%);
-    background-color: white;
-    /* padding: 2em; */
-    margin: 1em;
-    cursor: move;
-    min-width: 250px;
-    /* TOP: 0; */
-    bottom: 0;
-    right:0;
-}
-.icono-accion-card {
-    position: absolute;
-    right: 0;
-    margin-right: 1em;
-    font-size: 1.2em;
-    color: #a1a1a1;
-    font-weight: 900 !important;
-    cursor: pointer;
-}
 a.ui-corner-all {
     padding: 0;
     font-size: .7em;
