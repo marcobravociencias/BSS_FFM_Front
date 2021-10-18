@@ -1,11 +1,11 @@
 app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
     let markerUbiacionOperario;
     let markerUbicacionRepartidor;
+    let objectVistaGeneral;
     $scope.isAbiertoDetalleDireccion = false;
     listadoLinesCurves = []
     $scope.markerTecnicos = [];
     $scope.markerOt = [];
-    $scope.kmlLayerVistaMapa=[];
     $scope.consultarUbicacionOperario = function (objectParams) {
         console.log(objectParams)
         swal({ text: 'Consultando datos ...', allowOutsideClick: false });
@@ -451,19 +451,7 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
         $scope.markerOt.map(function (e) { e.setMap(null); return e; })
         $scope.markerOt = [];
     }
-    $scope.setMapaKmlVistaMapa=function(index,elementoKm){
-        if(elementoKm.isOpenOpciones){
-            swal({ text: 'Espera ...', allowOutsideClick: false });
-            swal.showLoading();
-            setTimeout(function(){
-                $scope.kmlLayerVistaMapa[index].setMap(mapavistageneral)
-                swal.close()
-            },1500)
-        }else{
-            $scope.kmlLayerVistaMapa[index].setMap(null)
-        }
-    }
-
+ 
     $scope.consultarDetalleMapa = function () {
         $scope.limpiarMakerTecnicos();
         if (!mapavistageneral) {
@@ -485,17 +473,11 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
                 mapTypeControl: false,
                 zoom: 15
             });
+
             
-            $.each(  $scope.objectVistaMapaCOnfig.listadoKmz , function( index , elemento ){
-                let ctaLayer = new google.maps.KmlLayer({
-                    url: elemento.value,
-                    map: null,
-                    clickable: false,
-                    preserveViewport: true,
-                    elemento:elemento
-                });
-                $scope.kmlLayerVistaMapa.push(ctaLayer)
-            })
+            objectVistaGeneral=new GenericMapa(mapavistageneral,'mapa-vista-general','bottom-right');
+            objectVistaGeneral.inicializar_data()
+     
         }
 
         $scope.listadoTecnicosGeneral.forEach(tecnico =>{
