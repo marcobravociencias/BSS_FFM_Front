@@ -12,6 +12,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 	var tableCancelada = undefined;
 	var tableCalendarizada = undefined;
 	var tableGestoria = undefined;
+	$scope.nombreBandeja = "";
 
 	var geografia;
 
@@ -39,7 +40,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 				if(results[1].data.respuesta ){
                     if(results[1].data.result ){
                         if(results[1].data.result.geografia){
-                            $scope.listadogeografiacopy=results[1].data.result.geografia
+                            //$scope.listadogeografiacopy=results[1].data.result.geografia
                             geografia=results[1].data.result.geografia
 							
                             //necesario para agregar el y arbol 
@@ -53,16 +54,8 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
                                     selected: true
                                 }
                                 return e
-                            })     
-							/*  
-							$scope.pintarArbol("#jstree-pendiente", geografia);
-							$scope.pintarArbol("#jstree-asignado", geografia);
-							$scope.pintarArbol("#jstree-detenido", geografia);
-							$scope.pintarArbol("#jstree-terminada", geografia);
-							$scope.pintarArbol("#jstree-cancelada", geografia);
-							$scope.pintarArbol("#jstree-calendarizar", geografia);
-							$scope.pintarArbol("#jstree-gestoria", geografia);e
-							*/
+                            }) 
+							$scope.cambiarVista(1);
                         }else{
                             toastr.warning( 'No se encontraron datos para la geografia' );                
                         }                        
@@ -81,7 +74,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 		$scope.estatusSelect = [];
 		$scope.estadoSelect = [];
 		$scope.geografiaSelect = [];
-		$scope.listaEstatusTerminada.map((e)=>{
+		$scope.listaEstatusPendiente.map((e)=>{
 			if (e.check) {
 				$scope.estatusSelect.push(e.id);
 				e.estados.map((es)=>{
@@ -91,11 +84,11 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 				});
 			}
 		});
-		$scope.geografiaSelect = $("#jstree-pendiente").jstree("get_selected", true).filter(e=>e.original.nivel>0).map(e=>parseInt(e.id))
+		$scope.geografiaSelect = $("#jstree-pendiente").jstree("get_selected", true).filter(e=>e.original.nivel === 5).map(e=>parseInt(e.id))
 		let params = {
-			idOrdenTrabajo: '',
-			folioSistema: '',
-			idClaveCliente: '',
+			idOrdenTrabajo: !$scope.objetoPendiente.ot || $scope.objetoPendiente.ot === "" ? undefined : $scope.objetoPendiente.ot,
+			folioSistema: !$scope.objetoPendiente.folio || $scope.objetoPendiente.folio === "" ? undefined : $scope.objetoPendiente.folio,
+			idClaveCliente: !$scope.objetoPendiente.claveCliente || $scope.objetoPendiente.claveCliente === "" ? undefined : $scope.objetoPendiente.claveCliente,
 			idEstatus: $scope.estatusSelect,
 			idEstados: $scope.estadoSelect,
 			idGeografias: $scope.geografiaSelect,
@@ -167,7 +160,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 		$scope.estatusSelect = [];
 		$scope.estadoSelect = [];
 		$scope.geografiaSelect = [];
-		$scope.listaEstatusTerminada.map((e)=>{
+		$scope.listaEstatusAsignada.map((e)=>{
 			if (e.check) {
 				$scope.estatusSelect.push(e.id);
 				e.estados.map((es)=>{
@@ -177,11 +170,11 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 				});
 			}
 		});
-		$scope.geografiaSelect = $("#jstree-asignado").jstree("get_selected", true).filter(e=>e.original.nivel>0).map(e=>parseInt(e.id))
+		$scope.geografiaSelect = $("#jstree-asignado").jstree("get_selected", true).filter(e=>e.original.nivel === 5).map(e=>parseInt(e.id))
 		let params = {
-			idOrdenTrabajo: '',
-			folioSistema: '',
-			idClaveCliente: '',
+			idOrdenTrabajo: !$scope.objetoAsignada.ot || $scope.objetoAsignada.ot === "" ? undefined : $scope.objetoAsignada.ot,
+			folioSistema: !$scope.objetoAsignada.folio || $scope.objetoAsignada.folio === "" ? undefined : $scope.objetoAsignada.folio,
+			idClaveCliente: !$scope.objetoAsignada.claveCliente || $scope.objetoAsignada.claveCliente === "" ? undefined : $scope.objetoAsignada.claveCliente,
 			idEstatus: $scope.estatusSelect,
 			idEstados: $scope.estadoSelect,
 			idGeografias: $scope.geografiaSelect,
@@ -253,7 +246,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 		$scope.estatusSelect = [];
 		$scope.estadoSelect = [];
 		$scope.geografiaSelect = [];
-		$scope.listaEstatusTerminada.map((e)=>{
+		$scope.listaEstatusDetenida.map((e)=>{
 			if (e.check) {
 				$scope.estatusSelect.push(e.id);
 				e.estados.map((es)=>{
@@ -263,11 +256,11 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 				});
 			}
 		});
-		$scope.geografiaSelect = $("#jstree-detenido").jstree("get_selected", true).filter(e=>e.original.nivel>0).map(e=>parseInt(e.id))
+		$scope.geografiaSelect = $("#jstree-detenido").jstree("get_selected", true).filter(e=>e.original.nivel === 5).map(e=>parseInt(e.id))
 		let params = {
-			idOrdenTrabajo: '',
-			folioSistema: '',
-			idClaveCliente: '',
+			idOrdenTrabajo: !$scope.objetoDetenida.ot || $scope.objetoDetenida.ot === "" ? undefined : $scope.objetoDetenida.ot,
+			folioSistema: !$scope.objetoDetenida.folio || $scope.objetoDetenida.folio === "" ? undefined : $scope.objetoDetenida.folio,
+			idClaveCliente: !$scope.objetoDetenida.claveCliente || $scope.objetoDetenida.claveCliente === "" ? undefined : $scope.objetoDetenida.claveCliente,
 			idEstatus: $scope.estatusSelect,
 			idEstados: $scope.estadoSelect,
 			idGeografias: $scope.geografiaSelect,
@@ -426,7 +419,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 		$scope.estatusSelect = [];
 		$scope.estadoSelect = [];
 		$scope.geografiaSelect = [];
-		$scope.listaEstatusTerminada.map((e)=>{
+		$scope.listaEstatusCancelada.map((e)=>{
 			if (e.check) {
 				$scope.estatusSelect.push(e.id);
 				e.estados.map((es)=>{
@@ -436,11 +429,11 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 				});
 			}
 		});
-		$scope.geografiaSelect = $("#jstree-cancelada").jstree("get_selected", true).filter(e=>e.original.nivel>0).map(e=>parseInt(e.id))
+		$scope.geografiaSelect = $("#jstree-cancelada").jstree("get_selected", true).filter(e=>e.original.nivel === 5).map(e=>parseInt(e.id))
 		let params = {
-			idOrdenTrabajo: '',
-			folioSistema: '',
-			idClaveCliente: '',
+			idOrdenTrabajo: !$scope.objetoCancelada.ot || $scope.objetoCancelada.ot === "" ? undefined : $scope.objetoCancelada.ot,
+			folioSistema: !$scope.objetoCancelada.folio || $scope.objetoCancelada.folio === "" ? undefined : $scope.objetoCancelada.folio,
+			idClaveCliente: !$scope.objetoCancelada.claveCliente || $scope.objetoCancelada.claveCliente === "" ? undefined : $scope.objetoCancelada.claveCliente,
 			idEstatus: $scope.estatusSelect,
 			idEstados: $scope.estadoSelect,
 			idGeografias: $scope.geografiaSelect,
@@ -512,7 +505,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 		$scope.estatusSelect = [];
 		$scope.estadoSelect = [];
 		$scope.geografiaSelect = [];
-		$scope.listaEstatusTerminada.map((e)=>{
+		$scope.listaEstatusCalendarizada.map((e)=>{
 			if (e.check) {
 				$scope.estatusSelect.push(e.id);
 				e.estados.map((es)=>{
@@ -522,11 +515,11 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 				});
 			}
 		});
-		$scope.geografiaSelect = $("#jstree-calendarizar").jstree("get_selected", true).filter(e=>e.original.nivel>0).map(e=>parseInt(e.id))
+		$scope.geografiaSelect = $("#jstree-calendarizar").jstree("get_selected", true).filter(e=>e.original.nivel === 5).map(e=>parseInt(e.id))
 		let params = {
-			idOrdenTrabajo: '',
-			folioSistema: '',
-			idClaveCliente: '',
+			idOrdenTrabajo: !$scope.objetoCalendarizada.ot || $scope.objetoCalendarizada.ot === "" ? undefined : $scope.objetoCalendarizada.ot,
+			folioSistema: !$scope.objetoCalendarizada.folio || $scope.objetoCalendarizada.folio === "" ? undefined : $scope.objetoCalendarizada.folio,
+			idClaveCliente: !$scope.objetoCalendarizada.claveCliente || $scope.objetoCalendarizada.claveCliente === "" ? undefined : $scope.objetoCalendarizada.claveCliente,
 			idEstatus: $scope.estatusSelect,
 			idEstados: $scope.estadoSelect,
 			idGeografias: $scope.geografiaSelect,
@@ -599,7 +592,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 		$scope.estatusSelect = [];
 		$scope.estadoSelect = [];
 		$scope.geografiaSelect = [];
-		$scope.listaEstatusTerminada.map((e)=>{
+		$scope.listaEstatusGestoria.map((e)=>{
 			if (e.check) {
 				$scope.estatusSelect.push(e.id);
 				e.estados.map((es)=>{
@@ -609,11 +602,11 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 				});
 			}
 		});
-		$scope.geografiaSelect = $("#jstree-gestoria").jstree("get_selected", true).filter(e=>e.original.nivel>0).map(e=>parseInt(e.id))
+		$scope.geografiaSelect = $("#jstree-gestoria").jstree("get_selected", true).filter(e=>e.original.nivel === 5).map(e=>parseInt(e.id))
 		let params = {
-			idOrdenTrabajo: '',
-			folioSistema: '',
-			idClaveCliente: '',
+			idOrdenTrabajo: !$scope.objetoGestoria.ot || $scope.objetoGestoria.ot === "" ? undefined : $scope.objetoGestoria.ot,
+			folioSistema: !$scope.objetoGestoria.folio || $scope.objetoGestoria.folio === "" ? undefined : $scope.objetoGestoria.folio,
+			idClaveCliente: !$scope.objetoGestoria.claveCliente || $scope.objetoGestoria.claveCliente === "" ? undefined : $scope.objetoGestoria.claveCliente,
 			idEstatus: $scope.estatusSelect,
 			idEstados: $scope.estadoSelect,
 			idGeografias: $scope.geografiaSelect,
@@ -923,12 +916,11 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 	$scope.banderaGeografiaCalendarizada = false;
 	$scope.banderaGeografiaGestoria = false;
 	$scope.cambiarVista = function(opcion) {
-		$scope.vistaCoordinacion = opcion;
-
+		
 		if (opcion === 1) {
 			if(!$scope.banderaGeografiaPendiente) {
 				swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false}); 
-				swal.showLoading(); 
+				swal.showLoading();
 				$("#jstree-pendiente").bind('loaded.jstree', function(e, data) {
 					swal.close();
 					$scope.banderaGeografiaPendiente = true;
@@ -944,13 +936,15 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 					}
 				});
 			}
+			$scope.nombreBandeja = "PENDIENTE";
 		}
+		
 		if (opcion === 2) {
 			if(!$scope.banderaGeografiaAsignada) {
-				swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false}); 
-				swal.showLoading(); 
+				//swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false}); 
+				//swal.showLoading(); 
 				$("#jstree-asignado").bind('loaded.jstree', function(e, data) {
-					swal.close();
+					//swal.close();
 					$scope.banderaGeografiaAsignada = true;
 				}).jstree({
 					'plugins': ["wholerow", "checkbox"],
@@ -964,6 +958,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 					}
 				});
 			}
+			$scope.nombreBandeja = "ASIGNADA";
 		}
 		if (opcion === 3) {
 			if (!$scope.banderaGeografiaDetenida) {
@@ -984,26 +979,32 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 					}
 				});
 			}
+			$scope.nombreBandeja = "DETENIDA";
 		}
 		if (opcion === 4) {
 			if (!$scope.banderaGeografiaTerminada) {
+				
 				swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false}); 
 				swal.showLoading(); 
-				$("#jstree-terminada").bind('loaded.jstree', function(e, data) {
-					swal.close();
-					$scope.banderaGeografiaTerminada = true;
-				}).jstree({
-					'plugins': ["wholerow", "checkbox"],
-					'core': {
-						'data': geografia,
-						'themes': {
-							'name': 'proton',
-							'responsive': true,
-							"icons":false        
+				setTimeout(()=>{
+					$("#jstree-terminada").bind('loaded.jstree', function(e, data) {
+						swal.close();
+						$scope.banderaGeografiaTerminada = true;
+					}).jstree({
+						'plugins': ["wholerow", "checkbox"],
+						'core': {
+							'data': geografia,
+							'themes': {
+								'name': 'proton',
+								'responsive': true,
+								"icons":false        
+							}
 						}
-					}
-				});
+					});
+				},1000) 
+
 			}
+			$scope.nombreBandeja = "TERMINADA";
 		}
 		if (opcion === 5) {
 			if (!$scope.banderaGeografiaCancelada) {
@@ -1024,6 +1025,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 					}
 				});
 			}
+			$scope.nombreBandeja = "CANCELADA";
 		}
 		if (opcion === 6) {
 			if (!$scope.banderaGeografiaCalendarizada) {
@@ -1044,6 +1046,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 					}
 				});
 			}
+			$scope.nombreBandeja = "CALENDARIZADA";
 		}
 		if (opcion === 7) {
 			if (!$scope.banderaGeografiaGestoria) {
@@ -1064,7 +1067,10 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 					}
 				});
 			}
+			$scope.nombreBandeja = "GESTORIA";
 		}
+		
+		$scope.vistaCoordinacion = opcion;
 	}
 
 	$scope.pintarArbol = function(nombreArbol, datos) {
@@ -1139,7 +1145,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 			"language": idioma_espanol_not_font,
 			"data": []
         });
-
+		
 		tablePendiente=$('#table_pendiente').DataTable({
             "processing": false,
 			"ordering": false,

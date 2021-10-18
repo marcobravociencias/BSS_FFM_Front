@@ -48,22 +48,32 @@
             <div class="row row-parent-bandejas">
               
                 <div class="col-md-12 col-parent-bandejas">
-
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="opcion-ffm-tab" data-toggle="tab" href="#opcion-ffm" role="tab"
-                                aria-controls="opcion-ffm" aria-selected="true">Bandejas FFM</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="opcion-salesfoce-tab" data-toggle="tab" href="#opcion-salesfoce" role="tab"
-                                aria-controls="opcion-salesfoce" aria-selected="false">Bandejas SalesForce</a>
-                        </li>
-                    </ul>
+                    <div class="row">
+                        <div class="col-12" style="position: absolute; z-index: 1;">
+                            <div class="col-12">
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="opcion-ffm-tab" data-toggle="tab" href="#opcion-ffm" role="tab"
+                                            aria-controls="opcion-ffm" aria-selected="true">Bandejas FFM</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="opcion-salesfoce-tab" data-toggle="tab" href="#opcion-salesfoce" role="tab"
+                                            aria-controls="opcion-salesfoce" aria-selected="false">Bandejas SalesForce</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                        </div>
+                        <div class="col-12 text-center">
+                            <span class="span-titulo-bandeja" ng-bind="nombreBandeja"></span>
+                        </div>
+                    </div>
+                    <br>
                     <div class="tab-content" id="v-pills-tabContent">
                         <div class="tab-pane fade show active" id="opcion-ffm" role="tabpanel" aria-labelledby="opcion-ffm-tab">
                             <div class="col-12">
                                 <div class="row">
-                                    <div id="opciones-menu" class="left-menu small-menu" style="margin-left: -.9em;">
+                                    <div id="opciones-menu" class="left-menu small-menu" style="margin-left: -.9em; height: 100%;">
                                         <div class="col-md-12 opcion-menu" ng-click="cambiarVista(1);">
                                             <i ng-class="{'active-iconmenu':vistaCoordinacion==1}" class="icon-menu-left fa fa-clock"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==1}" class="titulo-menu">Pendiente</span>
                                         </div>
@@ -89,31 +99,24 @@
                                     <div class="right-content">
                                         <div class="row">
                                             <div id="vistaPendiente" class="col-12" ng-show="vistaCoordinacion === 1">
-                                                <div class="col-12 text-center">PENDIENTE</div>
                                                 <jsp:include page="./content/tablePendiente.jsp"></jsp:include>
                                             </div>
                                             <div id="vistaAsignada" class="col-12" ng-show="vistaCoordinacion === 2">
-                                                <div class="col-12 text-center">ASIGNADA</div>
                                                 <jsp:include page="./content/tableAsignada.jsp"></jsp:include>
                                             </div>
                                             <div id="vistaDetenida" class="col-12" ng-show="vistaCoordinacion === 3">
-                                                <div class="col-12 text-center">DETENIDA</div>
                                                 <jsp:include page="./content/tableDetenida.jsp"></jsp:include>
                                             </div>
                                             <div id="vistaTerminada" class="col-12" ng-show="vistaCoordinacion === 4">
-                                                <div class="col-12 text-center">TERMINADA</div>
                                                 <jsp:include page="./content/tableTerminada.jsp"></jsp:include>
                                             </div>
                                             <div id="vistaCancelada" class="col-12" ng-show="vistaCoordinacion === 5">
-                                                <div class="col-12 text-center">CANCELADA</div>
                                                 <jsp:include page="./content/tableCancelada.jsp"></jsp:include>
                                             </div>
                                             <div id="vistaCalendarizada" class="col-12" ng-show="vistaCoordinacion === 6">
-                                                <div class="col-12 text-center">CALENDARIZADA</div>
                                                 <jsp:include page="./content/tableCalendarizado.jsp"></jsp:include>
                                             </div>
                                             <div id="vistaGestoria" class="col-12" ng-show="vistaCoordinacion === 7">
-                                                <div class="col-12 text-center">GESTORIA</div>
                                                 <jsp:include page="./content/tableGestoria.jsp"></jsp:include>
                                             </div>
                                         </div>
@@ -152,7 +155,7 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jstree/js/jstree.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/angularjs/js/angular.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker_1.9.0.min.js"></script>
-
+    
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/dataTables.bootstrap4.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/sweetalert/js/sweetalert2.min.js"></script>
@@ -179,6 +182,6 @@
 	<script src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>	
     <script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/main.min.js"></script>
-    
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker.es.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/locales-all.min.js"></script>
 </html>

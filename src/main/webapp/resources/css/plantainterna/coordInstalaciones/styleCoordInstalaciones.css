@@ -1471,7 +1471,7 @@ i.fa.fa-times-circle.cancel {
     padding-top: 1em;
     margin-top: 1em;
     position: unset;
-    height: 85vh;
+    min-height: 85vh;
 }
 
 #myTab .nav-link.active {
@@ -1603,8 +1603,9 @@ span.titulo-menu.active-text-menu {
     right: 0;
     margin-left: 4%;
     /* padding-left: 4em; */
-    min-height: 100%;
+    /* min-height: 100%; */
     height: 100%;
+    min-height: 80vh;
 }
 .titulo-menu {
     position: absolute;
@@ -1755,4 +1756,12 @@ span.btn-floating.btn-evidencia.btn-sm.btn-secondary.waves-effect.waves-light {
 }
 .acciones {
   cursor: pointer;
+}
+.clear {
+  display: none!important;
+}
+.span-titulo-bandeja {
+  font-size: 1em;
+  font-weight: bold;
+  font-family: 'Montserrat' !important;
 }
