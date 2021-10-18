@@ -1,22 +1,20 @@
+
 class GenericMapa{
 	/**
 	 * 
 	 * @param {*} mapa  objeto mapa google maps
 	 * @param {*} contenedorId id contenedor mapa Ej: [ mapa-ubicacion ]
-	 * @param {*} kmzArray 	   listado kmz 
 	 * @param {*} positionCard position del card , arribaabajo-izquierdaderecha Ej: [ 'bottom-rigth' ] Ej: [ 'top-left' ]
 	 */
-
-	
-	constructor (mapa , contenedorId ,kmzArray,positionCard){
+	constructor (mapa , contenedorId ,positionCard){
 		this.mapa = mapa
 		this.contenedorId=contenedorId
-		this.kmzArray=kmzArray		
 		this.positionCard=positionCard
-		this.kmzLayerMapa=[]
+		this.arrayKmzLayerMapa=[]		
 	}
 	inicializarKmz(){
-		$.each( this.kmzArray , function( index , elemento ){
+		let kmzArray=this.arrayKmzLayerMapa
+		$.each( this.kmzConfigArray , function( index , elemento ){
 			let ctaLayer = new google.maps.KmlLayer({
 				url: elemento.value,
 				map: null,
@@ -24,16 +22,18 @@ class GenericMapa{
 				preserveViewport: true,
 				elemento:elemento
 			});
-			this.kmzLayerMapa.push(ctaLayer)
+			kmzArray.push(ctaLayer)
 		})
 	}
-	agregarHtmlFunction (){		
+	inicializar_data (){	
+		this.inicializarKmz() 
+				
 		let optionCheckBox=''
 		let tempCont=this.contenedorId
-		$.each( this.kmzArray  ,function(index,elm){
+		$.each( this.kmzConfigArray  ,function(index,elm){
 			optionCheckBox+=`
 				<div class="form-check form-check-vistamapa">
-					<input tag-index="${index}" id="${tempCont}-${index}"  type="checkbox" class="form-check-input checkinput-${tempCont}">
+					<input tag-index="${index}" id="${tempCont}-${index}"  type="checkbox" class="form-check-input checkinput-${tempCont}">			
 					<label for="${tempCont}-${index}"  class="form-check-label label-form " >${elm.text}</label>
 				</div>    
 			`
@@ -45,9 +45,8 @@ class GenericMapa{
 				`
 					<div style="${postionvertical}:0; ${postionhorizontal}:0 ;" class="card div-contenedor-kmz-buttons">
 						<div class="card-header"> 
-							<span class="title-tipoot">FILTROS MAPA</span> 
-							<span class="icono-accion-card fa fa-minus"></span>
-							<span class="icono-accion-card fa fa-plus"></span>
+							<span class="title-tipoot-map-filtros">FILTROS MAPA</span> 
+							<span class="icono-hideoptions-${this.contenedorId} icono-accion-card icono-ocultar-mostrar-map fa fa-minus"></span>
 						</div>
 						<div class="card-body">
 							<form class="form-body-filter">
@@ -56,10 +55,11 @@ class GenericMapa{
 						</div>
 					</div>
 				`)
-		let instanciaThis=this;
+
+		let kmzArray=this.arrayKmzLayerMapa
+		let mapaTemp=this.mapa
 		setTimeout(function(){
-			$(document).on('change', '.checkinput-'+tempCont, function() {
-				console.log('chagen')
+			$(document.body).on('change', '.checkinput-'+tempCont, function() {
 				let indexKmz=parseInt($(this).attr('tag-index'));
 				let isCheckedInput=$(this).is(':checked')
 
@@ -67,32 +67,44 @@ class GenericMapa{
 					swal({ text: 'Espera ...', allowOutsideClick: false });
 					swal.showLoading();
 					setTimeout(function(){
-						obtenerKmzLayers()[indexKmz].setMap( obtenerMapa() )
+						kmzArray[indexKmz].setMap(mapaTemp )
 						swal.close()
 					},1500)
 				}else{
-					obtenerKmzLayers()[indexKmz].setMap(null)
+					kmzArray[indexKmz].setMap(null)
+				}
+			});
+
+			$(document.body).on('click', '.icono-hideoptions-'+tempCont, function() {
+				if( $(this).hasClass('fa-minus') ){
+					$(this).removeClass('fa-minus fa-plus').addClass('fa-plus')
+					$(this).closest('.div-contenedor-kmz-buttons').find('.card-body').hide()
+
+				}else{
+					$(this).removeClass('fa-plus fa-minus').addClass('fa-minus')
+					$(this).closest('.div-contenedor-kmz-buttons').find('.card-body').show()
+
 				}
 			});
 		},1000)
 	}
-	obtenerMapa(){
-		return this.mapa;
+}
+GenericMapa.prototype.callPrototypeMapa=function(listadoData){
+	let listadoKmzConfig=[]
+	for (const elm in listadoData) {       
+		if(elm.toUpperCase().includes("KMZ_")){
+			listadoKmzConfig.push({
+				identificador:elm,
+				text: elm.substring( elm.indexOf("_")+1 , elm.length ).replaceAll('_',' '),
+				value:listadoData[elm]
+			});
+		}
 	}
-	obtenerKmzLayerMapa(){
-		return this.kmzLayerMapa;
-	}
-	mostrarKmzOption(index){
-		//isCheckedOpcion
-
-	}
+	console.log(listadoKmzConfig) 
+	GenericMapa.prototype.kmzConfigArray=listadoKmzConfig;
 }
 
-function callPrototypeMapa(listadoData){
-	GenericMapa.prototype.agregarKmlsGenerics = function(listadoData) {
 
-	};
-}
 
 var idioma_espanol_not_font = {
 	"sProcessing": "Procesando...",

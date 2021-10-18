@@ -267,3 +267,15 @@ h1.h6.subtitle-modulo {
 .form-check-vistamapa{
    text-align:left;
 }
+.icono-ocultar-mostrar-map{
+  position:absolute;
+  right:5%;
+  cursor:pointer;
+  color:#959595;
+}
+.title-tipoot-map-filtros{
+    margin-left: 0em;
+    color: #3c3c3c;
+    font-weight: bolder;
+    text-align:left;
+}

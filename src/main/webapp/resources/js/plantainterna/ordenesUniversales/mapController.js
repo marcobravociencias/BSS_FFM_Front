@@ -1,3 +1,4 @@
+let objectMapaResumen;
 let objectMapaUbiacion;
 
 app.mapController = function ($scope, ordenesUniversalesService) {
@@ -27,10 +28,11 @@ app.mapController = function ($scope, ordenesUniversalesService) {
             zoom :  10 ,
             disableDoubleClickZoom: true
         });
+      
+        objectMapaUbiacion=new GenericMapa(map,'mapa-ubicacion','bottom-right');
+        objectMapaUbiacion.inicializar_data()
         
-        objectMapaUbiacion=new GenericMapa(map,'mapa-ubicacion' ,$scope.objectVistaMapaCOnfig.listadoKmz,'bottom-right');
-        objectMapaUbiacion.agregarHtmlFunction()
-        
+
         mapResumen = new google.maps.Map(document.getElementById('mapa-resumen'), {
             center : {
                 lat : parseFloat( 0 ),
@@ -47,6 +49,8 @@ app.mapController = function ($scope, ordenesUniversalesService) {
             mapTypeControl: false,
             zoom : 10,
         });
+      
+
 
         $scope.inicializarMarkers()
         
