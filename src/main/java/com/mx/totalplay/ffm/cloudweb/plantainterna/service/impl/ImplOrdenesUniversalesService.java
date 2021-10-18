@@ -52,6 +52,7 @@ public class ImplOrdenesUniversalesService implements OrdenesUniversalesService 
         LoginResult principalDetail = utileriaGeneral.obtenerObjetoPrincipal();
         String tokenAcces = principalDetail.getAccess_token();
         String urlRequest = principalDetail.getDireccionAmbiente().concat(constOrdenesUniversales.getConsultarCatalogoOrdenesUniversales());
+        logger.info("##### "+urlRequest);
         Map<String, String> paramsRequestGet = new HashMap<String, String>();
         ServiceResponseResult response = consumeRest.callGetBearerTokenRequest(
                 paramsRequestGet,

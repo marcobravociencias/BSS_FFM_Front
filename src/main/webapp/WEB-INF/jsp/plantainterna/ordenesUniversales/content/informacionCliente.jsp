@@ -126,7 +126,7 @@
                 <i ng-class="{'show-validate':isValForm && !informacionCliente.razonsocial}" class="fas fa-info-circle icon-validate-form-cliente"></i>
             </div>
             <div class=" col-5" style="text-align: left;">
-                <label class="label-filter" for="ciudad-form">Correo</label>informacionCliente.correo--{{informacionCliente.correo}}
+                <label class="label-filter" for="ciudad-form">Correo</label>
                 <input id="correo-form" ng-model="informacionCliente.correo" type="text" name="mailregistro" ng-pattern="emailFormat"  required class="form-control form-control-sm mb-1 formulario-campo " placeholder="Ej. fatma@outmail.com" maxlength="35">
                 <i ng-class="{'show-validate':(isValForm && !informacionCliente.correo) || guardadoForm.mailregistro.$error.pattern}" class="fas fa-info-circle icon-validate-form-cliente"></i>
             </div>

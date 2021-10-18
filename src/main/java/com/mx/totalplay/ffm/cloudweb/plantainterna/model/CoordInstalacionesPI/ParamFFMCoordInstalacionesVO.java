@@ -18,9 +18,12 @@ public class ParamFFMCoordInstalacionesVO {
 	private List<Integer> idEstatus;
 	private List<Integer> idEstados;
 	private List<Integer> idGeografias;
+	private String start;
+	private String end;
 	private String fechaInicio;
 	private String fechaFin;
 	private Integer elementosPorPagina;
 	private Integer pagina;
+	private int draw;
 
 }

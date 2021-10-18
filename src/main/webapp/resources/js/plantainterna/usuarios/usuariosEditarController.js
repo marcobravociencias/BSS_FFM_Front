@@ -9,7 +9,7 @@ app.editarUsuarioController=function($scope,usuarioPIService){
         swal.showLoading();
         $scope.params = {};
         // $scope.params.idUsuario  = idUsuario | 0;
-        $scope.params.idUsuario  = 2;
+        $scope.params.idUsuario  = idUsuario;
         //$scope.params.IdCompany = "2";
         usuarioPIService.consultaUsuarioPorId($scope.params).then(function success(response) {
             console.log(response.data)
@@ -19,9 +19,8 @@ app.editarUsuarioController=function($scope,usuarioPIService){
                     // ********** INFORMACION
                     $scope.detalleUsuario = response.data.result.usuario;
                     console.log($scope.detalleUsuario);
-                    
                     $("#compania_select_modificacion").val(""+$scope.detalleUsuario.idCompania);
-                    $("#compania_select_modificacion").selectpicker('refresh');
+                    //$("#compania_select_modificacion").selectpicker('refresh');
 
 
                     // ********** INTERVENCIONES

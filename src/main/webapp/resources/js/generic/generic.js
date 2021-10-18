@@ -1,3 +1,99 @@
+class GenericMapa{
+	/**
+	 * 
+	 * @param {*} mapa  objeto mapa google maps
+	 * @param {*} contenedorId id contenedor mapa Ej: [ mapa-ubicacion ]
+	 * @param {*} kmzArray 	   listado kmz 
+	 * @param {*} positionCard position del card , arribaabajo-izquierdaderecha Ej: [ 'bottom-rigth' ] Ej: [ 'top-left' ]
+	 */
+
+	
+	constructor (mapa , contenedorId ,kmzArray,positionCard){
+		this.mapa = mapa
+		this.contenedorId=contenedorId
+		this.kmzArray=kmzArray		
+		this.positionCard=positionCard
+		this.kmzLayerMapa=[]
+	}
+	inicializarKmz(){
+		$.each( this.kmzArray , function( index , elemento ){
+			let ctaLayer = new google.maps.KmlLayer({
+				url: elemento.value,
+				map: null,
+				clickable: false,
+				preserveViewport: true,
+				elemento:elemento
+			});
+			this.kmzLayerMapa.push(ctaLayer)
+		})
+	}
+	agregarHtmlFunction (){		
+		let optionCheckBox=''
+		let tempCont=this.contenedorId
+		$.each( this.kmzArray  ,function(index,elm){
+			optionCheckBox+=`
+				<div class="form-check form-check-vistamapa">
+					<input tag-index="${index}" id="${tempCont}-${index}"  type="checkbox" class="form-check-input checkinput-${tempCont}">
+					<label for="${tempCont}-${index}"  class="form-check-label label-form " >${elm.text}</label>
+				</div>    
+			`
+		});
+		let postionvertical=this.positionCard.split("-")[0]
+		let postionhorizontal=this.positionCard.split("-")[1]
+
+		$('#'+this.contenedorId).parent().append(
+				`
+					<div style="${postionvertical}:0; ${postionhorizontal}:0 ;" class="card div-contenedor-kmz-buttons">
+						<div class="card-header"> 
+							<span class="title-tipoot">FILTROS MAPA</span> 
+							<span class="icono-accion-card fa fa-minus"></span>
+							<span class="icono-accion-card fa fa-plus"></span>
+						</div>
+						<div class="card-body">
+							<form class="form-body-filter">
+								${optionCheckBox}                             
+							</form>
+						</div>
+					</div>
+				`)
+		let instanciaThis=this;
+		setTimeout(function(){
+			$(document).on('change', '.checkinput-'+tempCont, function() {
+				console.log('chagen')
+				let indexKmz=parseInt($(this).attr('tag-index'));
+				let isCheckedInput=$(this).is(':checked')
+
+				if(isCheckedInput){
+					swal({ text: 'Espera ...', allowOutsideClick: false });
+					swal.showLoading();
+					setTimeout(function(){
+						obtenerKmzLayers()[indexKmz].setMap( obtenerMapa() )
+						swal.close()
+					},1500)
+				}else{
+					obtenerKmzLayers()[indexKmz].setMap(null)
+				}
+			});
+		},1000)
+	}
+	obtenerMapa(){
+		return this.mapa;
+	}
+	obtenerKmzLayerMapa(){
+		return this.kmzLayerMapa;
+	}
+	mostrarKmzOption(index){
+		//isCheckedOpcion
+
+	}
+}
+
+function callPrototypeMapa(listadoData){
+	GenericMapa.prototype.agregarKmlsGenerics = function(listadoData) {
+
+	};
+}
+
 var idioma_espanol_not_font = {
 	"sProcessing": "Procesando...",
 	"sLengthMenu": "Mostrar _MENU_ registros",
