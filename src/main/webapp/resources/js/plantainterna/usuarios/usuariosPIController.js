@@ -597,17 +597,15 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     			idGeografia: $scope.informacionRegistro.ciudadNatal,
     			idUsuarioJefe: 12,
     			llaveExterna: "4532",
+    			idTipoUsuario: puestoSeleccionado,
     			idProveedor: companiaSeleccionada,
     			idDispositivo: "string",
     			fechaAlta: $scope.informacionRegistro.fechaIngreso,
-    			workData: {
-    				geografias: $scope.informacionRegistro.geografias,
-    				idTipoUsuario: puestoSeleccionado,
-    				intervenciones: $scope.informacionRegistro.intervenciones,
-    				idOperarios: [],
-    				permisos: $scope.informacionRegistro.permisos,
-    				idAsignacionAutomatica: $scope.informacionRegistro.asignacionAutomatica
-    			}
+    			geografias: $scope.informacionRegistro.geografias,
+    			intervenciones: $scope.informacionRegistro.intervenciones,
+    			idOperarios: [],
+    			permisos: $scope.informacionRegistro.permisos,
+    			idAsignacionAutomatica: $scope.informacionRegistro.asignacionAutomatica
     	};
     	
     	console.log(paramsRegistro);

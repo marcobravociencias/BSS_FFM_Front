@@ -48,8 +48,8 @@ app.editarUsuarioController=function($scope,usuarioPIService){
                             });
                         }
                     });
-                    $("#arbolIntervencionModificacion").jstree('destroy');
-                    $('#arbolIntervencionModificacion').bind('loaded.jstree', function(e, data) {
+                    $("#arbolIntervencionMod").jstree('destroy');
+                    $('#arbolIntervencionMod').bind('loaded.jstree', function(e, data) {
                         //$(this).jstree("open_all");
                     }).jstree({
                         'plugins': ['search', 'checkbox'],
@@ -88,8 +88,8 @@ app.editarUsuarioController=function($scope,usuarioPIService){
                         });
                     });
                     console.log($scope.arbolCiudadesModificar);
-                    $("#arbolGeografiaModificacion").jstree('destroy');
-                    $('#arbolGeografiaModificacion').bind('loaded.jstree', function(e, data) {
+                    $("#arbolGeografiaMod").jstree('destroy');
+                    $('#arbolGeografiaMod').bind('loaded.jstree', function(e, data) {
                         //$(this).jstree("open_all");
                     }).jstree({
                         'plugins': ['search', 'checkbox'],
@@ -117,8 +117,8 @@ app.editarUsuarioController=function($scope,usuarioPIService){
                         });
                     });
                     
-                    $("#arbolPermisoModificar").jstree('destroy');
-                    $('#arbolPermisoModificar').bind('loaded.jstree', function(e, data) {
+                    $("#arbolPermisoMod").jstree('destroy');
+                    $('#arbolPermisoMod').bind('loaded.jstree', function(e, data) {
                         //$(this).jstree("open_all");
                     }).jstree({
                         'plugins': ['search', 'checkbox'],
@@ -150,17 +150,17 @@ app.editarUsuarioController=function($scope,usuarioPIService){
         }).catch(err => handleError(err));
     }
 
-    $("#arbolIntervencionModificacion").click(function() {
+    $("#arbolIntervencionMod").click(function() {
     	$scope.listaIntervencionesSeleccionadasMod = [];
-    	var intervencionesTree = $('#arbolIntervencionModificacion').jstree("get_selected", true);
+    	var intervencionesTree = $('#arbolIntervencionMod').jstree("get_selected", true);
     	intervencionesTree.forEach(intervencion =>{
     		$scope.listaIntervencionesSeleccionadasMod.push(intervencion.text);
     	});
     	$scope.$apply();
     });
 
-    $("#arbolGeografiaModificacion").click(function() {
-        var geografia = $('#arbolGeografiaModificacion').jstree("get_selected", true);
+    $("#arbolGeografiaMod").click(function() {
+        var geografia = $('#arbolGeografiaMod').jstree("get_selected", true);
         $scope.listaCiudadesSelecionadasMod = [];
         geografia.forEach(geo =>{
             var existePadre = false;
@@ -184,8 +184,8 @@ app.editarUsuarioController=function($scope,usuarioPIService){
         $scope.$apply();
     });
 
-    $("#arbolPermisoModificar").click(function() {
-        var permisos = $('#arbolPermisoModificar').jstree("get_selected", true);
+    $("#arbolPermisoMod").click(function() {
+        var permisos = $('#arbolPermisoMod').jstree("get_selected", true);
         $scope.listaAccesosSelecionadosMod = [];
         permisos.forEach(permiso =>{
             var existePadre = false;
