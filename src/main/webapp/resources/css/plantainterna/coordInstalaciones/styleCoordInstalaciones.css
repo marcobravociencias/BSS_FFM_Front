@@ -1499,12 +1499,12 @@ i.fa.fa-times-circle.cancel {
 .nav-tabs {
     border-bottom: 0!important;
 }
-#opciones-menu div > span {
+#opciones-menu div > span, #opciones-menu-sf div > span {
     visibility: hidden;
     opacity: 0;
     transition: visibility 0.1s, opacity 0.7s linear;
 }
-#opciones-menu:hover div > span{
+#opciones-menu:hover div > span, #opciones-menu-sf:hover div > span{
     visibility: visible;
     opacity: 1;
 }

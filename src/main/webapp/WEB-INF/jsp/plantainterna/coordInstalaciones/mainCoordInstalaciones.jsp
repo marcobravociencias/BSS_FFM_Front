@@ -126,7 +126,35 @@
                             
                         </div>
                         <div class="tab-pane fade" id="opcion-salesfoce" role="tabpanel" aria-labelledby="opcion-salesfoce-tab">
-                            SALESFOCE
+                            
+                            <div class="col-12">
+                                <div class="row">
+                                    <div id="opciones-menu-sf" class="left-menu small-menu" style="margin-left: -.9em; height: 100%;">
+                                        <div class="col-md-12 opcion-menu" ng-click="cambiarVistaSF(1);">
+                                            <i ng-class="{'active-iconmenu':vistaSf==1}" class="icon-menu-left fa fa-clock"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaSf==1}" class="titulo-menu">Pendiente</span>
+                                        </div>
+                                        <div class="col-md-12 opcion-menu" ng-click="cambiarVistaSF(2);">
+                                            <i ng-class="{'active-iconmenu':vistaSf==2}" class="icon-menu-left fa fa-pencil-square"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaSf==2}" class="titulo-menu">Asignada</span>
+                                        </div>
+                                        <div class="col-md-12 opcion-menu" ng-click="cambiarVistaSF(3);">
+                                            <i ng-class="{'active-iconmenu':vistaSf==3}" class="icon-menu-left fa fa-stop-circle"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaSf==3}" class="titulo-menu">Detenida</span>
+                                        </div>
+                                    </div>
+                                    <div class="right-content">
+                                        <div class="row">
+                                            <div id="vistaPendiente" class="col-12" ng-show="vistaSf === 1">
+                                                <jsp:include page="./content/tablePendiente.jsp"></jsp:include>
+                                            </div>
+                                            <div id="vistaAsignada" class="col-12" ng-show="vistaSf === 2">
+                                                <jsp:include page="./content/tableAsignada.jsp"></jsp:include>
+                                            </div>
+                                            <div id="vistaDetenida" class="col-12" ng-show="vistaSf === 3">
+                                                <jsp:include page="./content/tableDetenida.jsp"></jsp:include>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -144,6 +172,13 @@
         <jsp:include page="./modals/modalChat.jsp"></jsp:include>
         <jsp:include page="./modals/detalleCuenta.jsp"></jsp:include>
         <jsp:include page="./modals/modalGeografia.jsp"></jsp:include>
+        <jsp:include page="./modals/modalGeografiaAsignada.jsp"></jsp:include>
+        <jsp:include page="./modals/modalGeografiaCalendarizada.jsp"></jsp:include>
+        <jsp:include page="./modals/modalGeografiaCancelada.jsp"></jsp:include>
+        <jsp:include page="./modals/modalGeografiaDetenida.jsp"></jsp:include>
+        <jsp:include page="./modals/modalGeografiaGestoria.jsp"></jsp:include>
+        <jsp:include page="./modals/modalGeografiaPendiente.jsp"></jsp:include>
+        <jsp:include page="./modals/modalGeografiaTerminada.jsp"></jsp:include>
     </body>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-2.2.4.js" ></script>    
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=${googlkeyattrvar['gkeactok']}&libraries=geometry,places"></script>
@@ -169,7 +204,8 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/magnific_popup/jquery.magnific-popup.min.js"></script>
 
     
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/coordInstalaciones/coordInstalacionesPIController.js?"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/coordInstalaciones/coordInstalacionesPIController.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/coordInstalaciones/coordInstalacionesSFController.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/coordInstalaciones/coordInstalacionesPIService.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/coordInstalaciones/busqGral.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/coordInstalaciones/comentariosChat.js"></script>

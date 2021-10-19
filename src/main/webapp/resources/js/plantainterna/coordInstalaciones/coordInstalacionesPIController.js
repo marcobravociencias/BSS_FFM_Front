@@ -1,7 +1,16 @@
 var app = angular.module('coordInstalacionesPIApp', []);
 var tableTerminada = undefined;
+var geografia;
+var geografiaPendiente;
+var geografiaAsignada;
+var geografiaDetenida;
+var geografiaTerminada;
+var geografiaCancelada;
+var geografiaCalendarizada;
+var geografiaGestoria;
 app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIService' ,'genericService', function($scope, $q, coordInstalacionesPIService, genericService) {
 
+	app.coordInstalacionesSF($scope,coordInstalacionesPIService,$q,genericService)
 	$scope.vistaCoordinacion = 0;
 	$scope.filtrosCatalogo = [];
 
@@ -14,7 +23,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 	var tableGestoria = undefined;
 	$scope.nombreBandeja = "";
 
-	var geografia;
+	
 
 	$scope.consultarCatalogos = function() {
 		$q.all([
@@ -54,8 +63,18 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
                                     selected: true
                                 }
                                 return e
-                            }) 
+                            });
+							/*
+							geografiaPendiente = angular.copy(geografia);
+							geografiaAsignada = angular.copy(geografia);
+							geografiaDetenida = angular.copy(geografia);
+							geografiaTerminada = angular.copy(geografia);
+							geografiaCancelada = angular.copy(geografia);
+							geografiaCalendarizada = angular.copy(geografia);
+							geografiaGestoria = angular.copy(geografia);
+							*/
 							$scope.cambiarVista(1);
+							//$scope.iniciarArboles();
                         }else{
                             toastr.warning( 'No se encontraron datos para la geografia' );                
                         }                        
@@ -918,6 +937,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 	$scope.cambiarVista = function(opcion) {
 		
 		if (opcion === 1) {
+			
 			if(!$scope.banderaGeografiaPendiente) {
 				swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false}); 
 				swal.showLoading();
@@ -936,15 +956,17 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 					}
 				});
 			}
+			
 			$scope.nombreBandeja = "PENDIENTE";
 		}
 		
 		if (opcion === 2) {
+			
 			if(!$scope.banderaGeografiaAsignada) {
-				//swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false}); 
-				//swal.showLoading(); 
+				swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false}); 
+				swal.showLoading(); 
 				$("#jstree-asignado").bind('loaded.jstree', function(e, data) {
-					//swal.close();
+					swal.close();
 					$scope.banderaGeografiaAsignada = true;
 				}).jstree({
 					'plugins': ["wholerow", "checkbox"],
@@ -958,9 +980,11 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 					}
 				});
 			}
+			
 			$scope.nombreBandeja = "ASIGNADA";
 		}
 		if (opcion === 3) {
+			
 			if (!$scope.banderaGeografiaDetenida) {
 				swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false}); 
 				swal.showLoading(); 
@@ -979,30 +1003,27 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 					}
 				});
 			}
+			
 			$scope.nombreBandeja = "DETENIDA";
 		}
 		if (opcion === 4) {
 			if (!$scope.banderaGeografiaTerminada) {
-				
 				swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false}); 
 				swal.showLoading(); 
-				setTimeout(()=>{
-					$("#jstree-terminada").bind('loaded.jstree', function(e, data) {
-						swal.close();
-						$scope.banderaGeografiaTerminada = true;
-					}).jstree({
-						'plugins': ["wholerow", "checkbox"],
-						'core': {
-							'data': geografia,
-							'themes': {
-								'name': 'proton',
-								'responsive': true,
-								"icons":false        
-							}
+				$("#jstree-terminada").bind('loaded.jstree', function(e, data) {
+					swal.close();
+					$scope.banderaGeografiaTerminada = true;
+				}).jstree({
+					'plugins': ["wholerow", "checkbox"],
+					'core': {
+						'data': geografia,
+						'themes': {
+							'name': 'proton',
+							'responsive': true,
+							"icons":false        
 						}
-					});
-				},1000) 
-
+					}
+				});
 			}
 			$scope.nombreBandeja = "TERMINADA";
 		}
@@ -1073,6 +1094,115 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 		$scope.vistaCoordinacion = opcion;
 	}
 
+	$scope.iniciarArboles = function() {
+		$("#jstree-pendiente").bind('loaded.jstree', function(e, data) {
+			swal.close();
+			$scope.banderaGeografiaPendiente = true;
+		}).jstree({
+			'plugins': ["wholerow", "checkbox"],
+			'core': {
+				'data': geografiaPendiente,
+				'themes': {
+					'name': 'proton',
+					'responsive': true,
+					"icons":false        
+				}
+			}
+		});
+
+		$("#jstree-asignado").bind('loaded.jstree', function(e, data) {
+			swal.close();
+			$scope.banderaGeografiaAsignada = true;
+		}).jstree({
+			'plugins': ["wholerow", "checkbox"],
+			'core': {
+				'data': geografiaAsignada,
+				'themes': {
+					'name': 'proton',
+					'responsive': true,
+					"icons":false        
+				}
+			}
+		});
+
+		$("#jstree-detenido").bind('loaded.jstree', function(e, data) {
+			swal.close();
+			$scope.banderaGeografiaDetenida = true;
+		}).jstree({
+			'plugins': ["wholerow", "checkbox"],
+			'core': {
+				'data': geografiaDetenida,
+				'themes': {
+					'name': 'proton',
+					'responsive': true,
+					"icons":false        
+				}
+			}
+		});
+
+		$("#jstree-terminada").bind('loaded.jstree', function(e, data) {
+			swal.close();
+			$scope.banderaGeografiaTerminada = true;
+		}).jstree({
+			'plugins': ["wholerow", "checkbox"],
+			'core': {
+				'data': geografiaTerminada,
+				'themes': {
+					'name': 'proton',
+					'responsive': true,
+					"icons":false        
+				}
+			}
+		});
+
+		$("#jstree-cancelada").bind('loaded.jstree', function(e, data) {
+			swal.close();
+			$scope.banderaGeografiaCancelada = true;
+		}).jstree({
+			'plugins': ["wholerow", "checkbox"],
+			'core': {
+				'data': geografiaCancelada,
+				'themes': {
+					'name': 'proton',
+					'responsive': true,
+					"icons":false        
+				}
+			}
+		});
+
+		$("#jstree-calendarizar").bind('loaded.jstree', function(e, data) {
+			swal.close();
+			$scope.banderaGeografiaCalendarizada = true;
+		}).jstree({
+			'plugins': ["wholerow", "checkbox"],
+			'core': {
+				'data': geografiaCalendarizada,
+				'themes': {
+					'name': 'proton',
+					'responsive': true,
+					"icons":false        
+				}
+			}
+		});
+
+		$("#jstree-gestoria").bind('loaded.jstree', function(e, data) {
+			swal.close();
+			$scope.banderaGeografiaGestoria = true;
+			console.log("se crea");
+		}).jstree({	
+			'plugins': ["wholerow", "checkbox"],
+			'core': {
+				'data': geografiaGestoria,
+				'themes': {
+					'name': 'proton',
+					'responsive': true,
+					"icons":false        
+				}
+			}
+		});
+
+	}
+
 	$scope.pintarArbol = function(nombreArbol, datos) {
 		console.log(nombreArbol);
 		$(nombreArbol).bind('loaded.jstree', function(e, data) {
@@ -1105,8 +1235,35 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 
 	$scope.showArbol = 0;
 	$scope.mostrarArbol = function(opcion) {
-		$scope.showArbol = opcion;
-		$("#modal-geografia").modal("show");
+		switch (opcion) {
+			case 1:
+				$("#modal-geografia-pendiente").modal("show");
+				break;
+			case 2:
+				$("#modal-geografia-asignada").modal("show");
+				break;
+			case 3:
+				$("#modal-geografia-detenido").modal("show");
+				break;
+			case 4:
+				$("#modal-geografia-terminada").modal("show");
+				break;
+			case 5:
+				$("#modal-geografia-cancelada").modal("show");
+				break;
+			case 6:
+				$("#modal-geografia-calendarizada").modal("show");
+				break;
+			case 7:
+				$("#modal-geografia-gestoria").modal("show");
+				break;
+		
+		
+			default:
+				break;
+		}
+		//$scope.showArbol = opcion;
+		
 	}
 
 	$scope.seleccionarTodos = function(lista) {
