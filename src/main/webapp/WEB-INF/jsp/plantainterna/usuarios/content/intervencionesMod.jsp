@@ -6,8 +6,8 @@
 			<input id="buscadorIntervencionRegistro" type="text" class="form-control buscadorGenerico" placeholder="Buscar intervenci&oacute;n" ng-keyup="busquedaIntervencionRegistro()"> 
 			<span class="fa fa-search iconoBusqueda"></span>
 		</div>
-		<div class="container-treegeofria">
-			<div id="arbolIntervencionMod" class="proton-demo">
+		<div class="scrollGeneralArbol">
+			<div id="arbolIntervencionMod" class="jstree-proton-3 proton-demo">
 			</div>
 		</div>
 

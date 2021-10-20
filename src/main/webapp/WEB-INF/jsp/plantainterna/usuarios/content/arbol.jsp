@@ -24,10 +24,10 @@
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-6">
-                        <span class="text-head-table-arbol"><li class="fa fa-crosshairs"></li>&nbsp;Ciudades:</span>
+<!--                         <span class="text-head-table-arbol"><li class="fa fa-crosshairs"></li>&nbsp;Ciudades:</span> -->
                     </div>
                     <div class="col-md-6">
-                        <span class="text-head-table-arbol"><li class="fa fa-cubes"></li>&nbsp;Distritos:</span>
+<!--                         <span class="text-head-table-arbol"><li class="fa fa-cubes"></li>&nbsp;Distritos:</span> -->
                     </div>
                 </div>
                 <div id="contenedorGeografiasRegistro" class="scrollGeneralArbol">

@@ -283,8 +283,9 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
         angular.forEach(accion.campos,function(campo,index){
         	if(campo.nombreParamentro == "idEstatus"){
         		if(campo.valorDefecto != null && campo.valorDefecto != "" && campo.valorDefecto != "NA"){
-        			$scope.listaStatusAlertaAccion = campo.valorDefecto;
-        			$scope.listaEstadosAlertaAccion = $scope.estatusCambio.filter(e => {return e.idPadre == $scope.listaStatusAlertaAccion});
+        			var valDefectoStatus = campo.valorDefecto;
+        			$scope.listaEstadosAlertaAccion = $scope.estatusCambio.filter(e => {return e.idPadre == valDefectoStatus});
+        			$scope.listaStatusAlertaAccion = $scope.estatusCambio.filter(e => {return e.id == valDefectoStatus});
         		}else{
         			$scope.listaStatusAlertaAccion = $scope.estatusCambio.filter(e => {return e.idPadre == null});
         		}

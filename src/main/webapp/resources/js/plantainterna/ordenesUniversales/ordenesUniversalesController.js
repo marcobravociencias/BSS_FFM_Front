@@ -68,58 +68,14 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
             if (results[0].data.respuesta) {
                 if (results[0].data.result) {           
                     $scope.nGeografia = results[0].data.result.N_FILTRO_GEOGRAFIA ? Number(results[0].data.result.N_FILTRO_GEOGRAFIA) : null;
-                    $scope.nTipoOrdenes = results[0].data.result.N_FILTRO_INTERVENCIONES ? Number(results[0].data.result.N_FILTRO_INTERVENCIONES) : null;
+                    $scope.nTipoOrdenes =2 //results[0].data.result.N_FILTRO_INTERVENCIONES ? Number(results[0].data.result.N_FILTRO_INTERVENCIONES) : null;
                 }
             }
             GenericMapa.prototype.callPrototypeMapa(results[0].data.result)
 
             $scope.initializeMap();
 
-            // ****************** INTERVENCIONES
-            if (results[1].data.respuesta) {
-                if (results[1].data.result) {
-                    if ( $scope.nTipoOrdenes) {
-                        $scope.resultTipoOrdenes = results[1].data.result.filter(e => { return e.nivel <= $scope.nTipoOrdenes });
-                    } else {
-                        $scope.resultTipoOrdenes = results[1].data.result;
-                    }
-                    angular.forEach($scope.resultTipoOrdenes, function (element, index) {
-                        $scope.listadoTipoOrdenes.push(
-                            {
-                                id: element.id,
-                                text: element.nombre,
-                                parent: element.idPadre ==undefined ? "#" : element.idPadre,
-                                icon: 'fa fa-globe',
-                                nivel: element.nivel,
-                                state:{
-                                    opened:false
-                                }
-                            }
-                        );
-                    });
-                    $('#jstree-tipoordenes').bind('loaded.jstree', function(e, data) {	
-                        swal.close()  
-                    }).jstree({ 
-                        plugins: ["wholerow", 'search'],
-                        core : {
-                            data :  $scope.listadoTipoOrdenes,
-                            themes: {
-                                name: 'proton',
-                                responsive: true,
-                                "icons":false  
-                            },
-                            animation: 100
-                        }
-                    });
-
-                } else {
-                    mostrarMensajeErrorAlert(response.data.result.mensaje)
-                    swal.close();
-                }
-            } else {
-                mostrarMensajeErrorAlert(response.data.resultDescripcion)
-                swal.close();
-            }
+   
 
             // ****************** ARBOL
             if (results[2].data.respuesta) {
@@ -175,6 +131,34 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                     if(results[3].data.result.result =='0'){
                         $scope.listadoCanalVentas=results[3].data.result.canalVentas
                         $scope.listadoPaquete=results[3].data.result.paquetes
+                        angular.forEach(results[3].data.result.tiposOrden, function (element, index) {
+                            $scope.listadoTipoOrdenes.push(
+                                {
+                                    id: element.idOrden,
+                                    text: element.nombre,
+                                    parent: element.idPadre ==undefined ? "#" : element.idPadre,
+                                    icon: 'fa fa-globe',
+                                    nivel: parseInt(element.nivel),
+                                    state:{
+                                        opened:false
+                                    }
+                                }
+                            );
+                        });
+                        $('#jstree-tipoordenes').bind('loaded.jstree', function(e, data) {	
+                            swal.close()  
+                        }).jstree({ 
+                            plugins: ["wholerow", 'search'],
+                            core : {
+                                data :  $scope.listadoTipoOrdenes,
+                                themes: {
+                                    name: 'proton',
+                                    responsive: true,
+                                    "icons":false  
+                                },
+                                animation: 100
+                            }
+                        });
                     }
                     swal.close();
                 } else {
@@ -428,7 +412,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
             isErrorValidate=true
             textError+='Selecciona una hora estimada</br>';
         }
-        if(  $scope.infoBasica.turno  == undefined){
+        if(  $scope.infoBasica.turno  == undefined || !$scope.infoBasica.turno){
             isErrorValidate=true
             textError+='Selecciona un turno del calendario</br>';
         }
@@ -769,9 +753,9 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
         swal.showLoading();
         ordenesUniversalesService.creacionOrdenTrabajoUniversal(JSON.stringify( jsonEnvio )).then(function success(response) {
             console.log(response.data)
+            $scope.isGuardadoProcess=true 
             if (response.data.respuesta) {                         
                 if(response.data.result){
-                    $scope.isGuardadoProcess=true 
                     $scope.mensajeRequestGuardado=response.data.result.mensaje
                     if(response.data.result.idOrden){                        
                         $scope.isGuardadoCreacion=true
@@ -787,12 +771,16 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                         $scope.isGuardadoCreacion=false
                     }
                 }else{
-
+                    $scope.isGuardadoCreacion=false
+                    $scope.mensajeRequestGuardado=response.data.resultDescripcion
                 }
                 swal.close();
             } else {
-                mostrarMensajeErrorAlert(response.data.result.mensaje)
                 swal.close();
+                $scope.isGuardadoCreacion=false
+                $scope.mensajeRequestGuardado=response.data.resultDescripcion
+                mostrarMensajeErrorAlert(response.data.resultDescripcion)
+
             }            
         }).catch(err => handleError(err));      
     }
