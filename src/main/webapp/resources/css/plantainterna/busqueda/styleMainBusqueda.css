@@ -221,6 +221,7 @@ span.text-title-elementoh {
   color: #1686ff;
   text-decoration: underline;
   font-size: 0.8em;
+  cursor: pointer;
 }
 
 .text-table-click:hover {
@@ -449,11 +450,7 @@ body {
 .separador-according {
   margin-top: 1em !important;
 }
-.link-consultardetalle span{
-  color: #1686ff;
-  text-decoration: underline;
-  font-size: .8em;
-}
+
 span.link-perfiles{
   border-bottom: 1px dotted #1a88ff;
   text-decoration: none;

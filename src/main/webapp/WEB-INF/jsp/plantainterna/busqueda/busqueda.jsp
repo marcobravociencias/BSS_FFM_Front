@@ -418,9 +418,12 @@
                                 <span class="text-table" ng-bind="os.estatus"></span>
                             </div>
                             <div class="col-2">
-                                <a ng-if="os.idCsp && (os.cuentaActiva ==='false' || os.cuentaActiva ===undefined)" href="" class="link-consultardetalle" ng-click="mostrarDetalleActivarOs(os)">
+                                <a ng-if="os.idCsp && (os.cuentaActiva ==='false' || os.cuentaActiva ===undefined)" href="" class="link-consultardetalle">
                                     <span class="text-table-click">Activar</span>
                                 </a>
+                                <!-- <a ng-if="os.idCsp && (os.cuentaActiva ==='false' || os.cuentaActiva ===undefined)" href="" class="link-consultardetalle" ng-click="mostrarDetalleActivarOs(os)">
+                                    <span class="text-table-click">Activar</span>
+                                </a> -->
                                 <a ng-if="os.idCsp && os.cuentaActiva ==='true'" href="" class="link-consultardetalle" ng-click="mostrarDetalleActivarOs(os)">
                                     <span class="text-table-click">Ver configuraci&oacute;n</span>
                                 </a>
@@ -429,10 +432,15 @@
     
                             </div>
                             <div class="col-2">
-                                <a ng-if="os.idOt" href="" class="link-consultardetalle" ng-click="consultaEvidencias(os.idOt, 'Validada')">
+                                <a ng-if="os.idOt" href="" class="link-consultardetalle">
                                     <span class="text-table-click">Descargar</span>
                                 </a>
                             </div>
+                            <!-- <div class="col-2">
+                                <a ng-if="os.idOt" href="" class="link-consultardetalle" ng-click="consultaEvidencias(os.idOt, 'Validada')">
+                                    <span class="text-table-click">Descargar</span>
+                                </a>
+                            </div> -->
                         </div>
                         <div class="row" ng-show="resultBusqueda.ordenesServicio.length > 10">
                             <div class="col-12">

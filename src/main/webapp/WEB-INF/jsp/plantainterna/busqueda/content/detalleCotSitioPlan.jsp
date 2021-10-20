@@ -188,7 +188,8 @@
 
     <jsp:include page="perfiles.jsp"></jsp:include>
 
-    <div class="card-header style_card_header_detallepro-sub separador-according" ng-click="consultarProductosSF(detalle.Nombre_csp)">
+    <!-- Nota tintoreria -->
+   <!--  <div class="card-header style_card_header_detallepro-sub separador-according" ng-click="consultarProductosSF(detalle.Nombre_csp)">
         <div class="row">
             <div class="col-md-6 colTitulo">
                 <p class="mb-0 header-according-sub">Nota de tintoreria</p>
@@ -197,7 +198,7 @@
                 <i class="fa fa-chevron-down" ng-class="mostrarTintoreria ? 'fa-rotate-270' : ''"></i>
             </div>
         </div>
-    </div>
+    </div> -->
     <div class="col-12" ng-show="mostrarTintoreria">
         <div class="row">
             <div class="col-4">

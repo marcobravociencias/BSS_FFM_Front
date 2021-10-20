@@ -2,9 +2,9 @@
     <div  ng-click="regresarConsulta()" class="container-regresar-button text-center">
         <span class="regresar-elemento fa fa-undo"></span>
     </div>
-    <div  ng-click="abrirVentanaNoticias()" class="container-regresar-button text-center">
+<!--     <div  ng-click="abrirVentanaNoticias()" class="container-regresar-button text-center">
         <span class="regresar-elemento fa fa-newspaper-o"></span>
-    </div>
+    </div> -->
     <div  ng-click="regresarHome()" class="container-regresar-button text-center">
         <span class="regresar-elemento fa fa-home"></span>
     </div>

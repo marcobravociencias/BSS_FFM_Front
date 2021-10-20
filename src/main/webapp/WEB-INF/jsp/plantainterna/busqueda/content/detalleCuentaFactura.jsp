@@ -481,7 +481,8 @@
 <div ng-show="showCuentaFactura" class="col-12">
     <jsp:include page="perfiles.jsp"></jsp:include>
 
-    <div class="card-header style_card_header_detallepro-sub separador-according" ng-click="consultarResumenAndServicios(detalle.numCuentaFactura)">
+    <!-- detalle nota -->
+   <!--  <div class="card-header style_card_header_detallepro-sub separador-according" ng-click="consultarResumenAndServicios(detalle.numCuentaFactura)">
         <div class="row">
             <div class="col-md-6">
                 <p class="mb-0 header-according-sub">Detalle de la nota</p>
@@ -490,7 +491,7 @@
                 <i class="fa fa-chevron-down" ng-class="mostrarNotaCF ? 'fa-rotate-270' : ''"></i>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <div class="col-md-12" ng-show="mostrarNotaCF">
         <div class="card-header style_card_header_detallepro separador-according">
@@ -976,7 +977,8 @@
         </div>
     </div>
 
-    <div class="card-header style_card_header_detallepro-sub separador-according" ng-click="consultarIps(detalle.numCuentaFactura)">
+    <!-- ips -->
+   <!--  <div class="card-header style_card_header_detallepro-sub separador-according" ng-click="consultarIps(detalle.numCuentaFactura)">
         <div class="row">
             <div class="col-md-6">
                 <p class="mb-0 header-according-sub">Consulta de IPS</p>
@@ -985,7 +987,7 @@
                 <i class="fa fa-chevron-down" ng-class="mostrarIps ? 'fa-rotate-270' : ''"></i>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <div class="col-md-12" ng-show="mostrarIps">
         <div class="row">
