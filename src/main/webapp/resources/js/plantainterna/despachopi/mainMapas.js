@@ -2,12 +2,74 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
     let markerUbiacionOperario;
     let markerUbicacionRepartidor;
     let objectVistaGeneral;
+    let objectVistaUbicacion;
     $scope.isAbiertoDetalleDireccion = false;
     listadoLinesCurves = []
     $scope.markerTecnicos = [];
     $scope.markerOt = [];
-    $scope.consultarUbicacionOperario = function (objectParams) {
-        console.log(objectParams)
+
+    $scope.consultarUbicacionOperario = function (id) {
+        let tecnicoSelect = $scope.listadoTecnicosGeneral.find(e => { return e.idTecnico.toString() === id })
+        console.log(tecnicoSelect);
+        let latitudRes = parseFloat(tecnicoSelect.latitud)
+        let longitudRes = parseFloat(tecnicoSelect.longitud)
+        if (!mapubicacionoperario) {
+
+            mapubicacionoperario = new google.maps.Map(document.getElementById("vista_mapa_ubicacion"), {
+                mapTypeControlOptions: {
+                    style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                    position: google.maps.ControlPosition.BOTTOM_LEFT,
+                },
+                zoomControlOptions: {
+                    position: google.maps.ControlPosition.BOTTOM_LEFT,
+                },
+                streetViewControlOptions: {
+                    position: google.maps.ControlPosition.RIGHT_CENTER,
+                },
+                mapTypeControl: false,
+                zoom: 15
+            }
+            );
+            objectVistaUbicacion = new GenericMapa(mapubicacionoperario, 'vista_mapa_ubicacion', 'bottom-right');
+            objectVistaUbicacion.inicializar_data()
+        }
+        var pt = new google.maps.LatLng(latitudRes, longitudRes);
+        mapubicacionoperario.setCenter(pt);
+
+        if (markerUbiacionOperario)
+            markerUbiacionOperario.setMap(null)
+
+        $scope.markerOt.map(function (e) { e.setMap(null); return e; })
+        $scope.markerOt = [];
+
+        markerUbiacionOperario = undefined
+        markerUbiacionOperario = new google.maps.Marker({
+            map: mapubicacionoperario,
+            draggable: true,
+            animation: google.maps.Animation.DROP,
+            position: { lat: latitudRes, lng: longitudRes },
+            icon : "./resources/img/maps/pin-operario.png",
+            title : "Tecnico",
+        });
+        tecnicoSelect.listadoOts.forEach(ot => {
+            let marker_ot = new google.maps.Marker({
+                clickable: false,
+                position: {
+                    lat: parseFloat(ot.latitud),
+                    lng: parseFloat(ot.longitud)
+                },
+                title: "OT",
+                animation: google.maps.Animation.DROP,
+                map: mapubicacionoperario,
+                latitud_ot: parseFloat(ot.latitud),
+                longitud_ot: parseFloat(ot.longitud),
+                icon : "./resources/img/maps/pin-pendiente.png"
+            });
+            $scope.markerOt.push(marker_ot)
+        });
+        $("#modalUbicacionOperario").modal('show');
+
+        /*
         swal({ text: 'Consultando datos ...', allowOutsideClick: false });
         swal.showLoading();
         let params = {
@@ -64,7 +126,7 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
                 }
             }
         }).catch(err => handleError(err))
-
+        */
     }
 
     $scope.listadomarkerscotizacion = [];
@@ -440,8 +502,8 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
 
     }
 
-    
-    $scope.limpiarMakerTecnicos = () => {
+
+    $scope.limpiarMakerTecnicosGeneral = () => {
         $scope.markerTecnicos.map(e => { e.setMap(null); return e; });
         $scope.markerTecnicos = [];
 
@@ -451,15 +513,16 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
         $scope.markerOt.map(function (e) { e.setMap(null); return e; })
         $scope.markerOt = [];
     }
- 
+
     $scope.consultarDetalleMapa = function () {
-        $scope.limpiarMakerTecnicos();
+        $scope.limpiarMakerTecnicosGeneral();
         if (!mapavistageneral) {
 
             mapavistageneral = new google.maps.Map(document.getElementById("mapa-vista-general"), {
-                center: { 
-                    lat: parseFloat('19.335204'),  
-                    lng: parseFloat('-99.197374')},
+                center: {
+                    lat: parseFloat('19.335204'),
+                    lng: parseFloat('-99.197374')
+                },
                 mapTypeControlOptions: {
                     style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
                     position: google.maps.ControlPosition.BOTTOM_LEFT,
@@ -474,24 +537,32 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
                 zoom: 15
             });
 
-            
-            objectVistaGeneral=new GenericMapa(mapavistageneral,'mapa-vista-general','bottom-right');
+
+            objectVistaGeneral = new GenericMapa(mapavistageneral, 'mapa-vista-general', 'bottom-right');
             objectVistaGeneral.inicializar_data()
-     
+
         }
 
-        $scope.listadoTecnicosGeneral.forEach(tecnico =>{
+        $scope.listadoTecnicosGeneral.forEach(tecnico => {
+            $scope.pintarMarkers(tecnico.idTecnico);
+        })
+    }
+
+    $scope.pintarMarkers = function (id) {
+        let tecnicoSelect = $scope.listadoTecnicosGeneral.find(e => { return e.idTecnico === id })
+        console.log(tecnicoSelect);
+        if (tecnicoSelect.cantidadOts > 0) {
             markerUbicacionRepartidor = new google.maps.Marker({
                 clickable: false,
                 position: {
-                    lat: parseFloat(tecnico.latitud),
-                    lng: parseFloat(tecnico.longitud)
+                    lat: parseFloat(tecnicoSelect.latitud),
+                    lng: parseFloat(tecnicoSelect.longitud)
                 },
                 title: "Tecnico",
                 animation: google.maps.Animation.DROP,
                 map: mapavistageneral,
-                latitud_ot: parseFloat(tecnico.latitud),
-                longitud_ot: parseFloat(tecnico.longitud),
+                latitud_ot: parseFloat(tecnicoSelect.latitud),
+                longitud_ot: parseFloat(tecnicoSelect.longitud),
                 icon: {
                     url: "./resources/img/plantainterna/despacho/repartidor-marker.svg",
                     scaledSize: new google.maps.Size(37, 43),
@@ -499,64 +570,44 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
                     anchor: new google.maps.Point(10, 20)
                 },
             });
+            mapavistageneral.setCenter(new google.maps.LatLng(parseFloat(tecnicoSelect.latitud), parseFloat(tecnicoSelect.longitud)));
             $scope.markerTecnicos.push(markerUbicacionRepartidor);
-        })    
-       
+
+            tecnicoSelect.listadoOts.forEach(ot => {
+                let marker_ot = new google.maps.Marker({
+                    clickable: false,
+                    position: {
+                        lat: parseFloat(ot.latitud),
+                        lng: parseFloat(ot.longitud)
+                    },
+                    title: "OT",
+                    animation: google.maps.Animation.DROP,
+                    map: mapavistageneral,
+                    latitud_ot: parseFloat(ot.latitud),
+                    longitud_ot: parseFloat(ot.longitud),
+                    icon: {
+                        url: './resources/img/plantainterna/despacho/domicilio-marker.svg',
+                        scaledSize: new google.maps.Size(37, 43),
+                        origin: new google.maps.Point(0, 0),
+                        anchor: new google.maps.Point(10, 20)
+                    },
+                });
+                $scope.markerOt.push(marker_ot)
+                let pointA = new google.maps.LatLng(parseFloat(tecnicoSelect.latitud), parseFloat(tecnicoSelect.longitud)) // basel airport
+                let pointB = new google.maps.LatLng(parseFloat(ot.latitud), parseFloat(ot.longitud))
+                drawCurve(pointA, pointB, mapavistageneral);
+            });
+        }
     }
 
-    $scope.pintarOtMapTecnicoSeleccionado = function(id) {
-        $scope.limpiarMakerTecnicos();
-        let tecnicoSelect = $scope.listadoTecnicosGeneral.find(e => { return e.idTecnico === id })
-        markerUbicacionRepartidor = new google.maps.Marker({
-            clickable: false,
-            position: {
-                lat: parseFloat(tecnicoSelect.latitud),
-                lng: parseFloat(tecnicoSelect.longitud)
-            },
-            title: "Tecnico",
-            animation: google.maps.Animation.DROP,
-            map: mapavistageneral,
-            latitud_ot: parseFloat(tecnicoSelect.latitud),
-            longitud_ot: parseFloat(tecnicoSelect.longitud),
-            icon: {
-                url: "./resources/img/plantainterna/despacho/repartidor-marker.svg",
-                scaledSize: new google.maps.Size(37, 43),
-                origin: new google.maps.Point(0, 0),
-                anchor: new google.maps.Point(10, 20)
-            },
-        });
-        mapavistageneral.setCenter(new google.maps.LatLng(parseFloat(tecnicoSelect.latitud), parseFloat(tecnicoSelect.longitud)));
-        $scope.markerTecnicos.push(markerUbicacionRepartidor);
-
-        tecnicoSelect.listadoOts.forEach(ot => {
-            let marker_ot = new google.maps.Marker({
-                clickable: false,
-                position: {
-                    lat: parseFloat(ot.latitud),
-                    lng: parseFloat(ot.longitud)
-                },
-                title: "OT",
-                animation: google.maps.Animation.DROP,
-                map: mapavistageneral,
-                latitud_ot: parseFloat(ot.latitud),
-                longitud_ot: parseFloat(ot.longitud),
-                icon: {
-                    url: './resources/img/plantainterna/despacho/domicilio-marker.svg',
-                    scaledSize: new google.maps.Size(37, 43),
-                    origin: new google.maps.Point(0, 0),
-                    anchor: new google.maps.Point(10, 20)
-                },
-            });
-            $scope.markerOt.push(marker_ot)
-            let pointA = new google.maps.LatLng(parseFloat(tecnicoSelect.latitud), parseFloat(tecnicoSelect.longitud)) // basel airport
-            let pointB = new google.maps.LatLng(parseFloat(ot.latitud), parseFloat(ot.longitud))
-            drawCurve(pointA, pointB, mapavistageneral);
-        });
+    $scope.pintarOtMapTecnicoSeleccionado = function (id) {
+        $scope.limpiarMakerTecnicosGeneral();
+        $scope.pintarMarkers(id);
     }
 
     let mapaDetalleAlerta;
     let mapaDetalleTecnico;
-    $scope.inicializarMapasAlertaDetalle = function(){
+    $scope.inicializarMapasAlertaDetalle = function () {
         mapaDetalleAlerta = new google.maps.Map(document.getElementById("mapDetalleAlerta"), {
             zoom: 8,
         });
@@ -568,7 +619,7 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
     let marketsDetalleAlerta = []
     let maDetalleAlerta;
     let mDetalleTecnico;
-    $scope.pintarMarkesMapDetalleAlerta = function() {
+    $scope.pintarMarkesMapDetalleAlerta = function () {
         $scope.limpiarMakerTecnicos();
         maDetalleAlerta = new google.maps.Marker({
             clickable: false,
@@ -603,34 +654,34 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
         marketsDetalleAlerta.map(e => { e.setMap(null); return e; });
         marketsDetalleAlerta = [];
     }
-    
-    $("#guardar-datos-cuenta").click(function(){
-		if($.trim(  $("#cuenta-form").val())  !== ''){
-		
-			let validacionCaracteres=$.trim( $("#cuenta-form").val() ).substr(0,2);
-			let validacionCaracteresNuevo=$.trim( $("#cuenta-form").val() ).substr(0,2);
-			if(validacionCaracteres ==='02'){					
-			} else if(validacionCaracteresNuevo ==='1.'){					
-			} else if(validacionCaracteresNuevo ==='6.'){					
-			} else {
-				mostrarMensajeWarning('Formato de folio no valido')
-				return false;
-			}
-		}
-		if(validarPrimerPasoBool()){
-			$(".tab-step-wizar:first").trigger('click')
-		}else if(validarSegundoPasoBool()){ 
-			$(".tab-step-wizar:eq(1)").trigger('click')
-		}else if(validarTercerPaso()){
-			$(".tab-step-wizar:eq(2)").trigger('click')
-		}
-		else{
-			creacionAsignacionGenerica()
-		
-		}
-	})
 
-    let X={
+    $("#guardar-datos-cuenta").click(function () {
+        if ($.trim($("#cuenta-form").val()) !== '') {
+
+            let validacionCaracteres = $.trim($("#cuenta-form").val()).substr(0, 2);
+            let validacionCaracteresNuevo = $.trim($("#cuenta-form").val()).substr(0, 2);
+            if (validacionCaracteres === '02') {
+            } else if (validacionCaracteresNuevo === '1.') {
+            } else if (validacionCaracteresNuevo === '6.') {
+            } else {
+                mostrarMensajeWarning('Formato de folio no valido')
+                return false;
+            }
+        }
+        if (validarPrimerPasoBool()) {
+            $(".tab-step-wizar:first").trigger('click')
+        } else if (validarSegundoPasoBool()) {
+            $(".tab-step-wizar:eq(1)").trigger('click')
+        } else if (validarTercerPaso()) {
+            $(".tab-step-wizar:eq(2)").trigger('click')
+        }
+        else {
+            creacionAsignacionGenerica()
+
+        }
+    })
+
+    let X = {
         "nombreOrden": "string",
         "tipoOrden": 0,
         "subTipoOrden": 0,

@@ -23,7 +23,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 	var tableGestoria = undefined;
 	$scope.nombreBandeja = "";
 
-	
+	$scope.tipoBandeja = 1;
 
 	$scope.consultarCatalogos = function() {
 		$q.all([
@@ -113,7 +113,8 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 			idGeografias: $scope.geografiaSelect,
 			fechaInicio: $scope.getFechaFormato($("#fecha_inicio_pendiente").val()),
 			fechaFin: $scope.getFechaFormato($("#fecha_fin_pendiente").val()),
-			elementosPorPagina: 10
+			elementosPorPagina: 10,
+			fechaSeleccionada: "fechaInicio"
 		}
 
 		let mensaje = "";
@@ -199,7 +200,8 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 			idGeografias: $scope.geografiaSelect,
 			fechaInicio: $scope.getFechaFormato($("#fecha_inicio_asignada").val()),
 			fechaFin: $scope.getFechaFormato($("#fecha_fin_asignada").val()),
-			elementosPorPagina: 10
+			elementosPorPagina: 10,
+			fechaSeleccionada: "fechaInicio"
 		}
 
 		let mensaje = "";
@@ -285,7 +287,8 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 			idGeografias: $scope.geografiaSelect,
 			fechaInicio: $scope.getFechaFormato($("#fecha_inicio_detenida").val()),
 			fechaFin: $scope.getFechaFormato($("#fecha_fin_detenida").val()),
-			elementosPorPagina: 10
+			elementosPorPagina: 10,
+			fechaSeleccionada: "fechaInicio"
 		}
 
 		let mensaje = "";
@@ -372,7 +375,8 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 			idGeografias: $scope.geografiaSelect,
 			fechaInicio: $scope.getFechaFormato($("#fecha_inicio_terminada").val()),
 			fechaFin: $scope.getFechaFormato($("#fecha_fin_terminada").val()),
-			elementosPorPagina: 10
+			elementosPorPagina: 10,
+			fechaSeleccionada: "fechaInicio"
 		}
 
 		let mensaje = "";
@@ -458,7 +462,8 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 			idGeografias: $scope.geografiaSelect,
 			fechaInicio: $scope.getFechaFormato($("#fecha_inicio_cancelada").val()),
 			fechaFin: $scope.getFechaFormato($("#fecha_fin_cancelada").val()),
-			elementosPorPagina: 10
+			elementosPorPagina: 10,
+			fechaSeleccionada: "fechaInicio"
 		}
 
 		let mensaje = "";
@@ -544,7 +549,8 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 			idGeografias: $scope.geografiaSelect,
 			fechaInicio: $scope.getFechaFormato($("#fecha_inicio_calendarizado").val()),
 			fechaFin: $scope.getFechaFormato($("#fecha_fin_calendarizado").val()),
-			elementosPorPagina: 10
+			elementosPorPagina: 10,
+			fechaSeleccionada: "fechaInicio"
 		}
 
 		let mensaje = "";
@@ -631,7 +637,8 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 			idGeografias: $scope.geografiaSelect,
 			fechaInicio: $scope.getFechaFormato($("#fecha_inicio_gestoria").val()),
 			fechaFin: $scope.getFechaFormato($("#fecha_fin_gestoria").val()),
-			elementosPorPagina: 10
+			elementosPorPagina: 10,
+			fechaSeleccionada: "fechaInicio"
 		}
 
 		let mensaje = "";
@@ -882,6 +889,10 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 		});
 	}
 
+	$scope.cambioTitulo = function(opcion) {
+		$scope.tipoBandeja = opcion;
+	}
+
 	$scope.mostrarFiltros = function() {
 		//PENDIENTE
 		$scope.listaEstatusPendiente = $scope.filtrosCatalogo.filter(e => {return e.id === 1});
@@ -942,10 +953,11 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 				swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false}); 
 				swal.showLoading();
 				$("#jstree-pendiente").bind('loaded.jstree', function(e, data) {
-					swal.close();
+					//swal.close();
 					$scope.banderaGeografiaPendiente = true;
+					$scope.consultarPendientes();
 				}).jstree({
-					'plugins': ["wholerow", "checkbox"],
+					'plugins': ["wholerow", "checkbox", "search"],
 					'core': {
 						'data': geografia,
 						'themes': {
@@ -966,10 +978,11 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 				swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false}); 
 				swal.showLoading(); 
 				$("#jstree-asignado").bind('loaded.jstree', function(e, data) {
-					swal.close();
+					//swal.close();
 					$scope.banderaGeografiaAsignada = true;
+					$scope.consultarAsignada();
 				}).jstree({
-					'plugins': ["wholerow", "checkbox"],
+					'plugins': ["wholerow", "checkbox", "search"],
 					'core': {
 						'data': geografia,
 						'themes': {
@@ -989,10 +1002,11 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 				swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false}); 
 				swal.showLoading(); 
 				$("#jstree-detenido").bind('loaded.jstree', function(e, data) {
-					swal.close();
+					//swal.close();
 					$scope.banderaGeografiaDetenida = true;
+					$scope.consultarDetenida();
 				}).jstree({
-					'plugins': ["wholerow", "checkbox"],
+					'plugins': ["wholerow", "checkbox", "search"],
 					'core': {
 						'data': geografia,
 						'themes': {
@@ -1011,10 +1025,11 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 				swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false}); 
 				swal.showLoading(); 
 				$("#jstree-terminada").bind('loaded.jstree', function(e, data) {
-					swal.close();
+					//swal.close();
 					$scope.banderaGeografiaTerminada = true;
+					$scope.consultarTerminada();
 				}).jstree({
-					'plugins': ["wholerow", "checkbox"],
+					'plugins': ["wholerow", "checkbox", "search"],
 					'core': {
 						'data': geografia,
 						'themes': {
@@ -1032,10 +1047,11 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 				swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false}); 
 				swal.showLoading(); 
 				$("#jstree-cancelada").bind('loaded.jstree', function(e, data) {
-					swal.close();
+					//swal.close();
 					$scope.banderaGeografiaCancelada = true;
+					$scope.consultarCancelada();
 				}).jstree({
-					'plugins': ["wholerow", "checkbox"],
+					'plugins': ["wholerow", "checkbox", "search"],
 					'core': {
 						'data': geografia,
 						'themes': {
@@ -1053,10 +1069,11 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 				swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false}); 
 				swal.showLoading(); 
 				$("#jstree-calendarizar").bind('loaded.jstree', function(e, data) {
-					swal.close();
+					//swal.close();
 					$scope.banderaGeografiaCalendarizada = true;
+					$scope.consultarCalendarizada();
 				}).jstree({
-					'plugins': ["wholerow", "checkbox"],
+					'plugins': ["wholerow", "checkbox", "search"],
 					'core': {
 						'data': geografia,
 						'themes': {
@@ -1074,10 +1091,11 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 				swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false}); 
 				swal.showLoading(); 
 				$("#jstree-gestoria").bind('loaded.jstree', function(e, data) {
-					swal.close();
+					//swal.close();
 					$scope.banderaGeografiaGestoria = true;
+					$scope.consultarGestoria();
 				}).jstree({	
-					'plugins': ["wholerow", "checkbox"],
+					'plugins': ["wholerow", "checkbox", "search"],
 					'core': {
 						'data': geografia,
 						'themes': {
@@ -1287,6 +1305,28 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 	$scope.clickEstado = function(estatus, estado) {
 		
 	}
+
+	$scope.busquedaGeografiaFiltroPendiente = function () {
+        $("#jstree-pendiente").jstree("search", $('#searchGeografiaPendiente').val());
+    }
+	$scope.busquedaGeografiaFiltroAsignada = function () {
+		$("#jstree-asignado").jstree("search", $('#searchGeografiaAsignada').val());
+    }
+	$scope.busquedaGeografiaFiltroDetenida = function () {
+        $("#jstree-detenido").jstree("search", $('#searchGeografiaDetenida').val());
+    }
+	$scope.busquedaGeografiaFiltroTerminada = function () {
+        $("#jstree-terminada").jstree("search", $('#searchGeografiaTerminada').val());
+    }
+	$scope.busquedaGeografiaFiltroCancelada = function () {
+        $("#jstree-cancelada").jstree("search", $('#searchGeografiaCancelada').val());
+    }
+	$scope.busquedaGeografiaFiltroCalendarizada = function () {
+        $("#jstree-calendarizar").jstree("search", $('#searchGeografiaCalendarizada').val());
+    }
+	$scope.busquedaGeografiaFiltroGestoria = function () {
+        $("#jstree-gestoria").jstree("search", $('#searchGeografiaGestoria').val());
+    }
 
 	angular.element(document).ready(function () {
 

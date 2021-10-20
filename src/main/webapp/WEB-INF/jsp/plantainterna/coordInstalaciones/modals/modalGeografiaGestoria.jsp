@@ -5,8 +5,25 @@
                 <h5 class="modal-title" id="exampleModalLabel"> &Aacute;rbol geograf&iacute;a</h5>
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" style=" max-height: 300px; overflow: auto;">
-                <div id="jstree-gestoria" class="proton-demo" ></div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="input-group input-group-sm content-seach-group">
+                                <input id="searchGeografiaGestoria" type="text" class="form-control buscadorGenerico"
+                                    placeholder="Buscar geograf&iacute;a" ng-keyup="busquedaGeografiaFiltroGestoria()">
+                                <span class="fa fa-search iconoBusqueda"></span>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="col-md-12 col-conteiner-arbol">
+                            <div class="container-treegeofria">
+                                <div id="jstree-gestoria" class="proton-demo"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface" data-mdb-dismiss="modal">

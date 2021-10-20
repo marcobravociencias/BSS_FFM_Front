@@ -7,13 +7,14 @@ app.coordInstalacionesSF = function ($scope, coordInstalacionesPIService, $q, ge
         if (opcion === 1) {
             $scope.nombreBandejaSf = "PENDIENTES DE AGENDAR";
         }
-        if (opcion === 1) {
+        if (opcion === 2) {
             $scope.nombreBandejaSf = "RESCATAVENTAS";
         }
-        if (opcion === 1) {
+        if (opcion === 3) {
             $scope.nombreBandejaSf = "PENDIENTES DE ACTIVAR";
         }
         $scope.vistaSf = opcion;
     }
+    $scope.cambiarVistaSF(1);
 
 };

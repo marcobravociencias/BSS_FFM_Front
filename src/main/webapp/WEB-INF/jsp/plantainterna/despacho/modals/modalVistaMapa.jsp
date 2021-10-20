@@ -18,11 +18,11 @@
                             </div>
                             <div class="content-list-tecnicos">
                                 <div ng-repeat="user in listadoTecnicosGeneral | filter:search.nombreCompleto">
-                                    <div class="content-tecnico"   id="{{user.idTecnico}}" ng-click="detalleTecnicoRuta(user.id)">
+                                    <div class="content-tecnico"   id="mapa-{{user.idTecnico}}" ng-click="detalleTecnicoRuta(user.id)">
                                         <div class="row">
                                             <div class="col-3">
                                                 <img style="border:.2em solid {{user.color}}"
-                                                    class="efecto imagen_operario_foto" src="{{user.urlFotoPerfil ? user.urlFotoPerfil : './resources/img/plantainterna/despacho/tecnicootasignada.png'}}">
+                                                    class="efecto imagen_operario_foto_mapa" src="{{user.urlFotoPerfil ? user.urlFotoPerfil : './resources/img/plantainterna/despacho/tecnicootasignada.png'}}">
                                             </div>
                                             <div class="col-9 text-justify">
                                                 <div class="conteo-content-ots">
@@ -32,7 +32,7 @@
                                                         {{user.nombreCompleto}}</h5>
                                                 </div>
                                                 <div class="row">
-                                                    <small class="numero_empleado_telefono" style="color: red !important">
+                                                    <small class="numero_empleado_telefono" style="color: orange !important">
                                                         {{user.cantidadOts}} OTS
                                                     </small>
                                                 </div>

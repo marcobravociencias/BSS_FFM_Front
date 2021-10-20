@@ -1,5 +1,13 @@
-<div class="modal-body" style="height: 300px; max-height: 300px; overflow: auto;">
-	<div class="row content-historico-ot">
+<div class="modal-body">
+	<div ng-if="!movimientos.length" style="text-align: center; margin-top: 2em;">
+		<span style="font-size: 12px !important;color:grey; font-weight: lighter;" class="timeline__day">
+			<span class="timeline__month">
+				<i class="fa fa-exclamation-circle warning-nodata"></i>
+			</span>
+			NO SE ENCONTRARON DATOS
+		</span>
+	</div>
+	<div class="row content-historico-ot"  style="height: 300px; max-height: 300px; overflow: auto;">
 		<div class="row" ng-repeat="elementHistorico in movimientos">
 			<div class="col-2 line-time-new">
 				<div style="background-color:white;" class="timeline__date">

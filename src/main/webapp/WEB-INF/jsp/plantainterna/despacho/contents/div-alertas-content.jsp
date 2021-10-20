@@ -115,6 +115,14 @@
 
                         <div class="tab-pane fade" id="pills-historico" role="tabpanel" aria-labelledby="pills-historico-tab">
                             <div class="container">
+                                <div ng-if="!listaHistoricoAlerta.length" style="text-align: center; margin-top: 2em;">
+                                    <span style="font-size: 12px !important;color:grey; font-weight: lighter;" class="timeline__day">
+                                        <span class="timeline__month">
+                                            <i class="fa fa-exclamation-circle warning-nodata"></i>
+                                        </span>
+                                        NO SE ENCONTRARON DATOS
+                                    </span>
+                                </div>
                                 <div class="row" ng-repeat="elementHistorico in listaHistoricoAlerta">
                                     <div class="col-2 line-time-new">
                                         <div style="background-color:white;" class="timeline__date">
@@ -178,7 +186,14 @@
     
                                         </div>
                                         <div class="chat-area" style="overflow-y: scroll; height: 50vh;">
-                                            
+                                            <div ng-if="!listaComentariosAlerta.length" style="text-align: center; margin-top: 2em;">
+                                                <span style="font-size: 12px !important;color:grey; font-weight: lighter;" class="timeline__day">
+                                                    <span class="timeline__month">
+                                                        <i class="fa fa-exclamation-circle warning-nodata"></i>
+                                                    </span>
+                                                    NO SE ENCONTRARON COMENTARIOS
+                                                </span>
+                                            </div>
     
                                             <div class="chats" ng-repeat="comentario in listaComentariosAlerta">
                                                 <div class="chat" ng-if="comentario.origenSistema === 1"><!-- APP-->
