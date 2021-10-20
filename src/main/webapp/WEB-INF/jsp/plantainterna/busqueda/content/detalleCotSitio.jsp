@@ -227,7 +227,7 @@
                         </div>
                     </div>
                     <div id="collapseCotSitioPlanDeta">
-                        <div class="card-body">
+                        <div class="card-body card-body-tabla">
                             <div class="col-12">
                                 <div class="row">
                                     <div class="col-4">

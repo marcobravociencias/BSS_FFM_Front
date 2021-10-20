@@ -13,7 +13,7 @@
         </div>      
         <div class="textcontainer-header">
             <span class="text-title-elementoh">Cot sitio plan:</span>
-            <span class="title-regresar-generic"  ng-bind="detalle.Nombre_csp"></span>
+            <span class="title-regresar-generic"  ng-bind="detalle.nombreCsp || 'Sin informaci&oacute;n'"></span>
         </div>   
     </div>          
 </div>
@@ -32,19 +32,19 @@
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Nombre:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.Nombre_csp}}" ng-bind="detalle.Nombre_csp"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.nombreCsp}}" ng-bind="detalle.nombreCsp || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Paquete:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.Paquete}}" ng-bind="detalle.Paquete"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.paquete}}" ng-bind="detalle.paquete || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Acceso principal:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.accesoPrincipal}}" ng-bind="detalle.accesoPrincipal"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.accesoPrincipal}}" ng-bind="detalle.accesoPrincipal || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
         </div>
@@ -52,7 +52,7 @@
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Tipo de oportunidad:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.tipo_Oportunidad}}" ng-bind="detalle.tipo_Oportunidad"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.tipoOportunidad}}" ng-bind="detalle.tipoOportunidad"></span></div>
                 </div>
             </div>
             <div class="col-4">
@@ -98,7 +98,7 @@
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Oportunidad:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.oportunidad_Tipo}}" ng-bind="detalle.oportunidad_Tipo"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.oportunidadTipo}}" ng-bind="detalle.oportunidadTipo"></span></div>
                 </div>
             </div>
             <div class="col-4">
@@ -112,19 +112,19 @@
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Cuadrilla:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.Cuandrilla}}" ng-bind="detalle.Cuandrilla"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.cuandrilla}}" ng-bind="detalle.cuandrilla || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Fecha de aprovisionamiento:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.Fecha_aprovisionamiento}}" ng-bind="detalle.Fecha_aprovisionamiento"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.fechaAprovisionamiento}}" ng-bind="detalle.fechaAprovisionamiento"></span></div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Fecha cierre:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.Fecha_cierre}}" ng-bind="detalle.Fecha_cierre"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.fechaCierre}}" ng-bind="detalle.fechaCierre"></span></div>
                 </div>
             </div>
         </div>
@@ -152,9 +152,9 @@
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">OS:</span></div>
                     <div class="col-6 crop-text-col">
-                        <span class="content-first-title-head-answer" ng-if="detalle.detalleOs.nombre === undefined">Sin informaci&oacute;n</span>
-                        <a href="" class="link-consultardetalle" ng-if="detalle.detalleOs.nombre !== undefined" ng-click="consultarDetalleObjectosSF(detalle.detalleOs.id, detalle.detalleOs.keyObject)">
-                            <span class="content-first-title-head-answer" title="{{detalle.detalleOs.nombre}}" ng-bind="detalle.detalleOs.nombre"></span>
+                        <span class="content-first-title-head-answer" ng-if="!detalle.detalleOs.nombre">Sin informaci&oacute;n</span>
+                        <a href="" class="link-consultardetalle" ng-if="detalle.detalleOs.nombre" ng-click="consultarDetalleObjectosSF(detalle.detalleOs.id, detalle.detalleOs.keyObject)">
+                            <span class="content-first-title-head-answer" title="{{detalle.detalleOs.nombre}}" ng-bind="detalle.detalleOs.nombre || 'Sin informaci&oacute;n'"></span>
                         </a>
                     </div>
                 </div>

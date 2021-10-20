@@ -196,7 +196,7 @@
                         </div>
                     </div>
                     <div id="collapseCotSitioDeta" >
-                        <div class="card-body">
+                        <div class="card-body card-body-tabla">
                             <div class="col-12">
                                 <div class="row">
                                     <div class="col-4">
@@ -258,7 +258,7 @@
                         </div>
                     </div>
                     <div id="collapseCotSitioPlanCot" >
-                        <div class="card-body">
+                        <div class="card-body card-body-tabla">
                             <div class="col-12">
                                 <div class="row">
                                     <div class="col-6">

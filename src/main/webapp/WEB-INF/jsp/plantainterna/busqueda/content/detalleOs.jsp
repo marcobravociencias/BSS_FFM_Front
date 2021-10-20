@@ -221,13 +221,13 @@
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Ts completado:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.tSCompletado}}" ng-bind="detalle.tSCompletado"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.tscompletado}}" ng-bind="detalle.tscompletado"></span></div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Ts confirmado:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.tSConfirmado}}" ng-bind="detalle.tSConfirmado"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.tsconfirmado}}" ng-bind="detalle.tsconfirmado"></span></div>
                 </div>
             </div>
             <div class="col-4">
