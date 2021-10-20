@@ -107,7 +107,6 @@ public class ImplConsultaOTService implements ConsultaOTService {
                     dataArray = new String[ordenesArray.size()][11];
                     for (int i = 0; i < ordenesArray.size(); i++) {
                         JsonObject object = (JsonObject) ordenesArray.get(i);
-                        logger.info("objeto: " + object);
                         dataArray[count][0] = object.get("idOrden").getAsInt() != 0 ? String.valueOf(object.get("idOrden").getAsInt()) : "";
                         dataArray[count][1] = object.get("nombreCliente") != null ? object.get("nombreCliente").getAsString().trim() : "";
                         dataArray[count][2] = object.get("claveCliente") != null ? object.get("claveCliente").getAsString().trim() : "";
