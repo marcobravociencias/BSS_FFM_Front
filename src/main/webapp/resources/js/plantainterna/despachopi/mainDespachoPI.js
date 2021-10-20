@@ -580,26 +580,31 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                             break;   
                         default:
                             tipoDato = elem.valor.substring( elem.valor.indexOf(".")+1 , elem.valor.length )
-                            let iconoEncontradoConfig=$scope.listadoIconosConfig.find( e =>{return e.icon=== elem.valor } ).value
-                            switch( tipoDato ){
-                                case 'svg':
-                                    iconosText+=` <div class="content-iconos-ot-pendiente">
-                                                    <img class="iconos-ot-pendiente svg"  src="data:image/svg+xml;base64,${iconoEncontradoConfig}"/></div>`                            
-                                    break;
-                                case 'png':
-                                    iconosText+=` <div class="content-iconos-ot-pendiente">
-                                                    <img class="iconos-ot-pendiente png" src="data:image/png;base64,${iconoEncontradoConfig}"/></div>`                           
-                                    break;
-                                case 'jpg':
-                                    iconosText+=` <div class="content-iconos-ot-pendiente">
-                                                    <img class="iconos-ot-pendiente jpg" src="data:image/jpeg;charset=utf-8;base64,${iconoEncontradoConfig}"/></div>`                            
-                                    break;
-                                case 'jpeg':
-                                    iconosText+=` <div class="content-iconos-ot-pendiente">
-                                                    <img class="iconos-ot-pendiente jpeg" src="data:image/jpeg;charset=utf-8;base64,${iconoEncontradoConfig}"/></div>`                            
-                                    break;
-                                default:
+                            let iconoEncontradoConfig=$scope.listadoIconosConfig.find( e =>{return e.icon=== elem.valor } )
+                                                      
+                            if(iconoEncontradoConfig !=undefined && iconoEncontradoConfig){
+                                iconoEncontradoConfig=iconoEncontradoConfig.value
+                                switch( tipoDato ){
+                                    case 'svg':
+                                        iconosText+=` <div class="content-iconos-ot-pendiente">
+                                                        <img class="iconos-ot-pendiente svg"  src="data:image/svg+xml;base64,${iconoEncontradoConfig}"/></div>`                            
+                                        break;
+                                    case 'png':
+                                        iconosText+=` <div class="content-iconos-ot-pendiente">
+                                                        <img class="iconos-ot-pendiente png" src="data:image/png;base64,${iconoEncontradoConfig}"/></div>`                           
+                                        break;
+                                    case 'jpg':
+                                        iconosText+=` <div class="content-iconos-ot-pendiente">
+                                                        <img class="iconos-ot-pendiente jpg" src="data:image/jpeg;charset=utf-8;base64,${iconoEncontradoConfig}"/></div>`                            
+                                        break;
+                                    case 'jpeg':
+                                        iconosText+=` <div class="content-iconos-ot-pendiente">
+                                                        <img class="iconos-ot-pendiente jpeg" src="data:image/jpeg;charset=utf-8;base64,${iconoEncontradoConfig}"/></div>`                            
+                                        break;
+                                    default:
+                                }
                             }
+                       
                         }
                     }
 

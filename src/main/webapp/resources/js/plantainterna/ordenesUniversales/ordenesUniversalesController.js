@@ -68,7 +68,8 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
             if (results[0].data.respuesta) {
                 if (results[0].data.result) {           
                     $scope.nGeografia = results[0].data.result.N_FILTRO_GEOGRAFIA ? Number(results[0].data.result.N_FILTRO_GEOGRAFIA) : null;
-                    $scope.nTipoOrdenes =2 //results[0].data.result.N_FILTRO_INTERVENCIONES ? Number(results[0].data.result.N_FILTRO_INTERVENCIONES) : null;
+                    $scope.nTipoOrdenes =2//results[0].data.result.N_FILTRO_INTERVENCIONES ? Number(results[0].data.result.N_FILTRO_INTERVENCIONES) : null;
+                    $scope.nTipoOrdenesConfig=results[0].data.result.N_FILTRO_INTERVENCIONES ? Number(results[0].data.result.N_FILTRO_INTERVENCIONES) : null;
                 }
             }
             GenericMapa.prototype.callPrototypeMapa(results[0].data.result)
@@ -280,7 +281,17 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
         swal.showLoading();
         $scope.params = {};
         $scope.params.geografia2  = distrito;
-        $scope.params.subtipoIntervencion =  $scope.infoBasica.subTipoOrden
+       
+        let selectedElms = $('#jstree-tipoordenes').jstree("get_selected", true)[0].original;             
+        let isElementIgual=false;
+        while(!isElementIgual) {
+            selectedElms=$scope.listadoTipoOrdenes.find((e)=>e.id===selectedElms.parent)
+
+            if(selectedElms.nivel==$scope.nTipoOrdenesConfig)
+               isElementIgual=true;
+        }       
+    
+        $scope.params.subtipoIntervencion =  selectedElms.id       
         //$scope.params.IdCompany = "2";
         ordenesUniversalesService.getDisponibilidadServicioRest(JSON.stringify($scope.params)).then(function success(response) {
             //response.data = responseDisponibilidad;
