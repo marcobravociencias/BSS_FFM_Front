@@ -1,4 +1,5 @@
 <div class="row">
+    <!--
     <div class="col-2 offset-1 icons-filter disponible" onclick="filterByStatus(1)">
         <i class="fas fa-car-side"></i>
         <span class="disponible" ng-bind="countDisponibles"></span><span class="disponible">&nbsp;Disponibles</span>
@@ -10,14 +11,17 @@
     <div class="col-2 icons-filter noDisponible" onclick="filterByStatus(3)">
         <i class="fas fa-wrench"></i>
         <span class="servicioStyle" ng-bind="countNoDisponibles"></span><span class="servicioStyle">&nbsp;No Disponibles</span>
-    </div>
-    <div class="col-2 search-form">
-        <input placeholder="Buscar" type="text" autocomplete="off" class="search-filtro form-control form-control-sm"
+    </div>  
+    -->
+    
+    <div class="col-2 search-form form-group" style="padding-left: 2em;">
+        <label style="margin-bottom: 0;">Buscar</label>
+        <input placeholder="Buscar" style="border-radius: .5em !important;" type="text" autocomplete="off" class="search-filtro form-control form-control-sm mt-0" 
             id="searchText">
     </div>
-    <div class="col-2 search-form">
+    <div class="col-2 offset-7 search-form">
         <input readonly placeholder="Geograf&iacute;a" type="text" onclick="abrirModalGeografiaBuscar()"
-            class="search-filtro form-control form-control-sm">
+            class="search-filtro form-control form-control-sm" style="border-radius: .5em !important;">
     </div>
     <div class="col-1">
         <button id="btnBuscar" type="button" class="btn btn-primary btnTotal" ng-click="getVehiculos()">
