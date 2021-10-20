@@ -75,7 +75,7 @@ app.editarUsuarioController=function($scope,usuarioPIService){
                     $scope.arbolCiudadesModificar = [];
                     $scope.listaGeografiasRegistradasMod = [];
                     angular.forEach($scope.listaGeografiasRespaldo,(element,index) => {
-                        if(element.nivel < 4){
+                        if(element.nivel <= $scope.filtroGeografias){
                             $scope.arbolCiudadesModificar.push({
                                 id: element.id,
                                 text: element.nombre,
@@ -111,7 +111,7 @@ app.editarUsuarioController=function($scope,usuarioPIService){
                     });
 
                     $scope.listaGeografiasRegistradasMod.forEach(geo =>{
-                		if(geo.nivel == 3){
+                		if(geo.nivel == $scope.filtroGeografias){
                 			var idPadre = geo.parent;
                 			$scope.listaCiudadesSelecionadasMod.forEach(geoPadre =>{
                 				if(geoPadre.id == idPadre){
@@ -225,7 +225,7 @@ app.editarUsuarioController=function($scope,usuarioPIService){
     	$scope.listaCiudadesSelecionadasMod = [];
         var geografiaTreeMod = $('#arbolGeografiaMod').jstree("get_selected", true);
         geografiaTreeMod.forEach(geo =>{
-        	if(geo.original.nivel == 3){
+        	if(geo.original.nivel == $scope.filtroGeografias){
     			var idPadre = geo.parent;
     			$scope.listaCiudadesSelecionadasMod.forEach(geoPadre =>{
     				if(geoPadre.id == idPadre){

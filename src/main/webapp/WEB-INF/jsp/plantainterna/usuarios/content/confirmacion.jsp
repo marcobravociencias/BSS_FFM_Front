@@ -62,7 +62,7 @@
                                 </div>
                                 <form name="myForm">
                                 	<div id="contenedorConfirmacionRegistro" class="scrollListaCiudadNatal">
-	                                    <div class="row" ng-repeat="ciudad in listaGeografiasSeleccionadas | filter:buscarCiudad track by $index">
+	                                    <div class="row" ng-repeat="ciudad in listaCiudadNatalRegistro | filter:buscarCiudad track by $index">
 	                                        <div class="col-12">
 	                                            <label class="respuesta-confirmacion ciudadNatal">
 	                                                <input type="radio" ng-model="informacionRegistro.ciudadNatal" ng-value="ciudad.id" ng-click="asignarCiudadNatalRegistro()">

@@ -19,6 +19,8 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     $scope.listaIdGeografias = [];
     $scope.elementosPorPaginaTablaConsulta = 10;
     $scope.paginaTablaConsulta = 1;
+    $scope.filtroGeografias;
+    $scope.filtroIntervenciones;
     //ELEMENTOS PARA REGISTRO
     let acentos = {'á':'a','é':'e','í':'i','ó':'o','ú':'u','Á':'A','É':'E','Í':'I','Ó':'O','Ú':'U'};
     let geografiasNivelCiudad = [];
@@ -29,6 +31,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     $scope.listaIntervenciones = [];
     $scope.listaIntervencionesSeleccionadas = [];
     $scope.listaGeografiasSeleccionadas = [];
+    $scope.listaCiudadNatalRegistro = [];
     $scope.listaPermisosSeleccionados = [];
     $scope.listaTecnicos = [];
     $scope.informacionRegistro.asignacionAutomatica = 0;
@@ -59,6 +62,8 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
         ]).then(function(results) {
         	// *** CONFIGURACIÓN DESPACHO ***
         	var nivelUsuario = results[0].data.result.N_FILTRO_GEOGRAFIA;
+        	$scope.filtroGeografias = results[0].data.result.N_FILTRO_GEOGRAFIA;
+        	$scope.filtroIntervenciones = results[0].data.result.N_FILTRO_INTERVENCIONES;
         	
         	// *** COMPAÑIAS ***
         	if (results[1].data !== undefined) {
@@ -183,7 +188,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
             			let intervencionesLista = [];
 						$scope.respaldoIntervenciones = results[5].data.result;
             			results[5].data.result.forEach(intervencion =>{
-                            if (intervencion.nivel == 1) {
+                            if (intervencion.nivel <= $scope.filtroIntervenciones) {
                             	intervencionesLista.push(intervencion);
                             	$scope.listaIntervenciones.push(intervencion);
                             }
@@ -405,7 +410,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	
     	geografiasNivelCiudad = [];
     	angular.forEach($scope.listaGeografias,function(elementoGeografia,index){
-    		if(elementoGeografia.nivel < 4){
+    		if(elementoGeografia.nivel <= $scope.filtroGeografias){
     			geografiasNivelCiudad.push(elementoGeografia);
     		}
     	});
@@ -486,8 +491,10 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	$scope.informacionRegistro.intervenciones = [];
     	var intervencionesTree = $('#arbolIntervencionRegistro').jstree("get_selected", true);
     	intervencionesTree.forEach(intervencion =>{
-    		$scope.listaIntervencionesSeleccionadas.push(intervencion.text);
-    		$scope.informacionRegistro.intervenciones.push(intervencion.id);
+    		if(intervencion.original.nivel == $scope.filtroIntervenciones){
+    			$scope.listaIntervencionesSeleccionadas.push(intervencion.text);
+        		$scope.informacionRegistro.intervenciones.push(intervencion.id);
+    		}
     	});
     	$("#labelIntervencionesSeleccionadas").css("color", "rgb(70, 88, 107)");
 		$("#contenedorIntervencionesRegistro").css("border", "white solid 0px");
@@ -498,10 +505,10 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     $("#arbolGeografiaRegistro").click(function() {
     	$scope.listaGeografiasSeleccionadas = [];
     	$scope.informacionRegistro.geografias = [];
+    	$scope.listaCiudadNatalRegistro = [];
     	var geografiasTree = $('#arbolGeografiaRegistro').jstree("get_selected", true);
-    	console.log(geografiasTree);
     	geografiasTree.forEach(geo =>{
-    		if(geo.original.nivel == 3){
+    		if(geo.original.nivel == $scope.filtroGeografias){
     			var idPadre = geo.original.padre;
     			$scope.listaGeografiasSeleccionadas.forEach(geoPadre =>{
     				if(geoPadre.id == idPadre){
@@ -526,6 +533,25 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     			existePadre = false;
     		}
     	});
+
+    	$scope.listaGeografiasSeleccionadas.forEach(geoHija =>{
+    		var geo = geoHija;
+    		while(geo.nivel > 2){
+    			var x = geografiasNivelCiudad.filter(e => {return e.id == geo.parent})[0];
+    			geo = x;
+    		}
+    		var existeCiudadNatal = false;
+    		$scope.listaCiudadNatalRegistro.forEach(ciudadesNatal =>{
+    			if(ciudadesNatal.id == geo.id){
+    				existeCiudadNatal = true;
+    			}
+    		});
+    		if(existeCiudadNatal == false){
+    			$scope.listaCiudadNatalRegistro.push(geo);
+    		}
+    		
+    	});
+    	    	
     	if($scope.listaGeografiasSeleccionadas.length > 0){
     		$("#labelGeografiasSeleccionadas").css("color", "rgb(70, 88, 107)");
     		$("#contenedorGeografiasRegistro").css("border", "white solid 0px");
@@ -607,8 +633,6 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     			permisos: $scope.informacionRegistro.permisos,
     			idAsignacionAutomatica: $scope.informacionRegistro.asignacionAutomatica
     	};
-    	
-    	console.log(paramsRegistro);
 
     	var respuestaValidacionRegistro = $scope.validarInformacionRegistro();
     	if(respuestaValidacionRegistro){
@@ -617,7 +641,6 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
         	$q.all([
         		usuarioPIService.guardarUsuario(paramsRegistro)
             ]).then(function(results) {
-            	console.log(results[0].data);
             	swal.close();
             });
     		swal("Correcto", "¡Registro guardado con éxito!", "success");
