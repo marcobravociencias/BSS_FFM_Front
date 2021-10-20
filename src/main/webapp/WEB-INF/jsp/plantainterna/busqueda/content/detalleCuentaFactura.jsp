@@ -14,7 +14,7 @@
         </div>      
         <div class="textcontainer-header">
             <span class="text-title-elementoh">Cuenta factura:</span>
-            <span class="title-regresar-generic"  ng-bind="detalle.nombre"></span>
+            <span class="title-regresar-generic"  ng-bind="detalle.nombre || 'Sin informaci&oacute;n'"></span>
         </div>   
     </div>          
 </div>
@@ -31,13 +31,13 @@
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Nombre:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.nombre}}" ng-bind="detalle.nombre"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.nombre}}" ng-bind="detalle.nombre || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Responsable comercial:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.nombreResponsableComercial}}" ng-bind="detalle.nombreResponsableComercial"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.nombreResponsableComercial}}" ng-bind="detalle.nombreResponsableComercial || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
         </div>
@@ -45,19 +45,19 @@
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Email:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.email}}" ng-bind="detalle.email"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.email}}" ng-bind="detalle.email || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Email facturaci&oacute;n 1:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.emailFacturacion1}}" ng-bind="detalle.emailFacturacion1"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.emailFacturacion1}}" ng-bind="detalle.emailFacturacion1 || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Email facturaci&oacute;n 2:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.emailFacturacion2}}" ng-bind="detalle.emailFacturacion2"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.emailFacturacion2}}" ng-bind="detalle.emailFacturacion2 || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
         </div>
@@ -65,19 +65,19 @@
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Facebook:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.facebook}}" ng-bind="detalle.facebook"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.facebook}}" ng-bind="detalle.facebook || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Twitter:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.twitter}}" ng-bind="detalle.twitter"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.twitter}}" ng-bind="detalle.twitter || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Linkedin:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.linkedin}}" ng-bind="detalle.linkedin"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.linkedin}}" ng-bind="detalle.linkedin || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
         </div>
@@ -85,19 +85,19 @@
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Celular:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.celular}}" ng-bind="detalle.celular"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.celular}}" ng-bind="detalle.celular || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Telefono:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.telefonoPrincipal}}" ng-bind="detalle.telefonoPrincipal"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.telefonoPrincipal}}" ng-bind="detalle.telefonoPrincipal || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Cuenta factura:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.numCuentaFactura}}" ng-bind="detalle.numCuentaFactura"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.numCuentaFactura}}" ng-bind="detalle.numCuentaFactura || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
         </div>
@@ -105,19 +105,19 @@
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Plazo:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.plazo}}" ng-bind="detalle.plazo"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.plazo}}" ng-bind="detalle.plazo || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Portabilidad:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.portabilidad}}" ng-bind="detalle.portabilidad"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.portabilidad}}" ng-bind="detalle.portabilidad || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Folio de venta:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.folioVenta}}" ng-bind="detalle.folioVenta"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.folioVenta}}" ng-bind="detalle.folioVenta || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
         </div>
@@ -125,19 +125,19 @@
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">RFC:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.rfc}}" ng-bind="detalle.rfc"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.rfc}}" ng-bind="detalle.rfc || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Plan post venta:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.planPostVenta}}" ng-bind="detalle.planPostVenta"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.planPostVenta}}" ng-bind="detalle.planPostVenta || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Plan servicio:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.planServicio}}" ng-bind="detalle.planServicio"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.planServicio}}" ng-bind="detalle.planServicio || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
         </div>
@@ -145,19 +145,19 @@
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Tipo de facturaci&oacute;n:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.tipoFacturacion}}" ng-bind="detalle.tipoFacturacion"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.tipoFacturacion}}" ng-bind="detalle.tipoFacturacion || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Tipo de pago:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.tipoPago}}" ng-bind="detalle.tipoPago"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.tipoPago}}" ng-bind="detalle.tipoPago || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Forma de pago:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.formaPago}}" ng-bind="detalle.formaPago"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.formaPago}}" ng-bind="detalle.formaPago || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
         </div>
@@ -165,19 +165,19 @@
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Renta mensual PL:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.rentaMensualPL}}" ng-bind="detalle.rentaMensualPL"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.rentaMensualPL}}" ng-bind="detalle.rentaMensualPL || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Renta mensual PP:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.rentaMensualPP}}" ng-bind="detalle.rentaMensualPP"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.rentaMensualPP}}" ng-bind="detalle.rentaMensualPP || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Fecha de activaci&oacute;n:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.fechaActivacion}}" ng-bind="detalle.fechaActivacion"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.fechaActivacion}}" ng-bind="detalle.fechaActivacion || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
         </div>
@@ -185,7 +185,7 @@
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Fecha vencimiento:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.fechaVencimiento}}" ng-bind="detalle.fechaVencimiento"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.fechaVencimiento}}" ng-bind="detalle.fechaVencimiento || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
             <div class="col-4">
@@ -211,12 +211,12 @@
     <div class="col-12">
         <div class="row">
             <div class="col-12">
-                <div class="col-12 row style_detalle_todos">
-                    <div class="col-4 "><span class="content-first-title-head">Nombre:</span></div>
-                    <div class="col-4 crop-text-col">
-                        <span class="content-first-title-head-answer" ng-if="detalle.detalleCuenta.nombre === undefined">Sin informaci&oacute;n</span>
-                        <a href="" class="link-consultardetalle" ng-if="detalle.detalleCuenta.nombre !== undefined" ng-click="consultarDetalleObjectosSF(detalle.detalleCuenta.id, detalle.detalleCuenta.keyObject)">
-                            <span class="content-first-title-head-answer" title="{{detalle.detalleCuenta.nombre}}" ng-bind="detalle.detalleCuenta.nombre"></span>
+                <div class="col-4 row style_detalle_todos">
+                    <div class="col-6 "><span class="content-first-title-head">Nombre:</span></div>
+                    <div class="col-6 crop-text-col">
+                        <span class="content-first-title-head-answer" ng-if="!detalle.detalleCuenta.nombre">Sin informaci&oacute;n</span>
+                        <a href="" class="link-consultardetalle" ng-if="detalle.detalleCuenta.nombre" ng-click="consultarDetalleObjectosSF(detalle.detalleCuenta.id, detalle.detalleCuenta.keyObject)">
+                            <span class="content-first-title-head-answer" title="{{detalle.detalleCuenta.nombre}}" ng-bind="detalle.detalleCuenta.nombre || 'Sin informaci&oacute;n'"></span>
                         </a>
                     </div>
                 </div>
@@ -236,19 +236,19 @@
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Cluster:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.detalleGeograficoInstalacion.clusterInstalacion}}" ng-bind="detalle.detalleGeograficoInstalacion.clusterInstalacion"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.detalleGeograficoInstalacion.clusterInstalacion}}" ng-bind="detalle.detalleGeograficoInstalacion.clusterInstalacion || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Zona:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.detalleGeograficoInstalacion.zonaInstalacion}}" ng-bind="detalle.detalleGeograficoInstalacion.zonaInstalacion"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.detalleGeograficoInstalacion.zonaInstalacion}}" ng-bind="detalle.detalleGeograficoInstalacion.zonaInstalacion || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Plaza:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.detalleGeograficoInstalacion.plazaInstalacion}}" ng-bind="detalle.detalleGeograficoInstalacion.plazaInstalacion"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.detalleGeograficoInstalacion.plazaInstalacion}}" ng-bind="detalle.detalleGeograficoInstalacion.plazaInstalacion || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
         </div>
@@ -256,19 +256,19 @@
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Regi&oacute;n:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.detalleGeograficoInstalacion.regionInstalacion}}" ng-bind="detalle.detalleGeograficoInstalacion.regionInstalacion"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.detalleGeograficoInstalacion.regionInstalacion}}" ng-bind="detalle.detalleGeograficoInstalacion.regionInstalacion || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Distrito:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.detalleGeograficoInstalacion.distritoInstalacion}}" ng-bind="detalle.detalleGeograficoInstalacion.distritoInstalacion"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.detalleGeograficoInstalacion.distritoInstalacion}}" ng-bind="detalle.detalleGeograficoInstalacion.distritoInstalacion || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Estado:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.detalleGeograficoInstalacion.estadoInstalacion}}" ng-bind="detalle.detalleGeograficoInstalacion.estadoInstalacion"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.detalleGeograficoInstalacion.estadoInstalacion}}" ng-bind="detalle.detalleGeograficoInstalacion.estadoInstalacion || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
         </div>
@@ -276,19 +276,19 @@
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Delegaci&oacute;n:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.detalleGeograficoInstalacion.delegacionInstalacion}}" ng-bind="detalle.detalleGeograficoInstalacion.delegacionInstalacion"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.detalleGeograficoInstalacion.delegacionInstalacion}}" ng-bind="detalle.detalleGeograficoInstalacion.delegacionInstalacion || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Codigo postal:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.detalleGeograficoInstalacion.cpInstalacion}}" ng-bind="detalle.detalleGeograficoInstalacion.cpInstalacion"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.detalleGeograficoInstalacion.cpInstalacion}}" ng-bind="detalle.detalleGeograficoInstalacion.cpInstalacion || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Ciudad:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.detalleGeograficoInstalacion.ciudadInstalacion}}" ng-bind="detalle.detalleGeograficoInstalacion.ciudadInstalacion"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.detalleGeograficoInstalacion.ciudadInstalacion}}" ng-bind="detalle.detalleGeograficoInstalacion.ciudadInstalacion || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
         </div>
@@ -296,19 +296,19 @@
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Colonia:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.detalleGeograficoInstalacion.coloniaInstalacion}}" ng-bind="detalle.detalleGeograficoInstalacion.coloniaInstalacion"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.detalleGeograficoInstalacion.coloniaInstalacion}}" ng-bind="detalle.detalleGeograficoInstalacion.coloniaInstalacion || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Calle:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.detalleGeograficoInstalacion.calleInstalacion}}" ng-bind="detalle.detalleGeograficoInstalacion.calleInstalacion"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.detalleGeograficoInstalacion.calleInstalacion}}" ng-bind="detalle.detalleGeograficoInstalacion.calleInstalacion || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">N&uacute;mero exterior:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.detalleGeograficoInstalacion.numeroExteriorInstalacion}}" ng-bind="detalle.detalleGeograficoInstalacion.numeroExteriorInstalacion"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.detalleGeograficoInstalacion.numeroExteriorInstalacion}}" ng-bind="detalle.detalleGeograficoInstalacion.numeroExteriorInstalacion || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
         </div>
@@ -316,19 +316,19 @@
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">N&uacute;mero interior:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.detalleGeograficoInstalacion.numeroInteriorInstalacion}}" ng-bind="detalle.detalleGeograficoInstalacion.numeroInteriorInstalacion"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.detalleGeograficoInstalacion.numeroInteriorInstalacion}}" ng-bind="detalle.detalleGeograficoInstalacion.numeroInteriorInstalacion || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Latitud:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.detalleGeograficoInstalacion.latitudeInstalacion}}" ng-bind="detalle.detalleGeograficoInstalacion.latitudeInstalacion"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.detalleGeograficoInstalacion.latitudeInstalacion}}" ng-bind="detalle.detalleGeograficoInstalacion.latitudeInstalacion || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Longitud:</span></div>
-                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.detalleGeograficoInstalacion.longitudeInstalacion}}" ng-bind="detalle.detalleGeograficoInstalacion.longitudeInstalacion"></span></div>
+                    <div class="col-6 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.detalleGeograficoInstalacion.longitudeInstalacion}}" ng-bind="detalle.detalleGeograficoInstalacion.longitudeInstalacion || 'Sin informaci&oacute;n'"></span></div>
                 </div>
             </div>
         </div>

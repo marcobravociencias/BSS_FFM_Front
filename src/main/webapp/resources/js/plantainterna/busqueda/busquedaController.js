@@ -654,7 +654,7 @@ app.controller('busquedaController', ['$scope', 'busquedaService', 'genericServi
             console.log(response);
             if (response.data !== undefined) {
                 if (response.data.respuesta) {
-                    if (response.data.result.result === '0') {
+                    if (response.data.result) {
                         if (response.data.result.detalleContacto !== undefined) {
                             $scope.detalleContacto = response.data.result.detalleContacto;
                             if ($scope.detalleContacto.urlFoto !== 'NA') {
@@ -666,11 +666,11 @@ app.controller('busquedaController', ['$scope', 'busquedaService', 'genericServi
                         }
                         swal.close();
                     } else {
-                        mostrarMensajeWarning("No se encontro informaci\u00f3n");
+                        mostrarMensajeWarningValidacion("No se encontro informaci\u00f3n");
                         swal.close();
                     }
                 } else {
-                    mostrarMensajeWarning("No se encontro informaci\u00f3n");
+                    mostrarMensajeWarningValidacion("No se encontro informaci\u00f3n");
                     swal.close();
                 }
             } else {
@@ -1099,6 +1099,16 @@ app.controller('busquedaController', ['$scope', 'busquedaService', 'genericServi
             $scope.limitIps = $scope.arregloIps.length;
         } else {
             $scope.limitIps = 10;
+        }
+    }
+
+    $scope.regresarHistorialUsuario = function() {
+        if ($scope.historialUsuario.length !== 0) {
+            $scope.historialUsuario.splice(-1, 1);
+            $scope.detalleContacto = $scope.historialUsuario.slice(-1).pop();
+            $("#img-usuario").attr("src", $scope.detalleContacto.urlFoto);
+        } else {
+            console.log($scope.historialUsuario);
         }
     }
 

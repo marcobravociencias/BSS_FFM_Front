@@ -269,8 +269,8 @@
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">OS:</span></div>
                     <div class="col-6 crop-text-col">
-                        <span class="content-first-title-head-answer" ng-if="detalle.detalleOs.nombre === undefined">Sin informaci&oacute;n</span>
-                        <a href="" class="link-consultardetalle" ng-if="detalle.detalleOs.nombre !== undefined" ng-click="consultarDetalleObjectosSF(detalle.detalleOs.id, detalle.detalleOs.keyObject)">
+                        <span class="content-first-title-head-answer" ng-if="!detalle.detalleOs.nombre">Sin informaci&oacute;n</span>
+                        <a href="" class="link-consultardetalle" ng-if="detalle.detalleOs.nombre" ng-click="consultarDetalleObjectosSF(detalle.detalleOs.id, detalle.detalleOs.keyObject)">
                             <span class="content-first-title-head-answer" title="{{detalle.detalleOs.nombre}}" ng-bind="detalle.detalleOs.nombre"></span>
                         </a>
                     </div>

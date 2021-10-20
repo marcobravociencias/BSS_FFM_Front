@@ -2,10 +2,11 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"> Informaci&oacute;n del usuario</h5>
+                <li class="fa fa-arrow-left retorno-perfil" ng-show="historialUsuario.length > 1" ng-click="regresarHistorialUsuario();"></li>
+                <h5 class="modal-title" id="titulo-usuario"> Informaci&oacute;n del usuario</h5>
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" style=" max-height: 300px; overflow: auto;">
+            <div class="modal-body">
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-xl-6 col-md-6 mb-6 text-center">
@@ -86,11 +87,10 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface"
-                    data-mdb-dismiss="modal">
-                    Cerrar
-                </button>
+            <div class="modal-footer" style="display: flex !important;">                                
+                <div class="col-md-12 text-right" style="margin-top: 1em;">
+                    <Span class="info-usuario-modal">Mas informaci&oacute;n en "Edici&oacute;n de usuario"</Span>
+                </div>
             </div>
         </div>
     </div>

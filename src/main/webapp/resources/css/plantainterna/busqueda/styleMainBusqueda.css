@@ -77,8 +77,9 @@ body {
 }
 
 .column-text-busqueda {
-  width: 175px;
+  width: 225px !important;
   padding-right: 5px;
+  margin-left: 16px;
 }
 
 .colunm-btn-busqueda {
@@ -88,6 +89,7 @@ body {
 .iconsf-container,
 .textcontainer-header {
   display: table-cell;
+  padding-left: 0.3em;
 }
 .iconsf-container img {
   width: 35px;
@@ -201,13 +203,6 @@ span.text-title-elementoh {
 
 .imagen-no-results img {
   width: 15em;
-}
-
-.text-head-table {
-  font-size: 14px;
-  font-weight: bold;
-  color: #39455b;
-  font-family: "Montserrat", sans-serif;
 }
 
 .is-even-table {
@@ -452,7 +447,7 @@ body {
   padding: .2em;
 }
 .separador-according {
-  margin-top: 1em;
+  margin-top: 1em !important;
 }
 .link-consultardetalle span{
   color: #1686ff;
@@ -496,13 +491,13 @@ span.noosactivar.ng-scope {
   float:right;
 }
 .style_card_header_detallepro {
-  border-bottom: 0px;
-  background: #f3f2f2;
+  border-bottom: 0px !important;
+  background: #f3f2f2 !important;
   /* padding: .5rem .5rem .5rem; */
   border-radius: 0 !important;
   /* margin-top: .8em; */
   font-family: 'Montserrat';
-  padding: .2em .4em;
+  padding: .2em .4em !important;
   /* color: red; */
   font-size: .9em;
 }
@@ -547,6 +542,7 @@ span.noosactivar.ng-scope {
 .style-head-card {
   height: 2.5em;
   line-height: 2.5em!important;
+  background-color: #f7f7f9 !important;
 }
 .title-regresar-generic{
   font-family: 'Montserrat', sans-serif;
@@ -1605,4 +1601,18 @@ img.img_evidencia{
   cursor: pointer;
   font-size: 12px;
   font-weight: bold;
+}
+
+.asd{
+  color: inherit !important;
+  text-decoration: none !important;
+  cursor: pointer;
+}
+
+.card-body-tabla{
+  padding: 0px !important;
+}
+
+#titulo-usuario{
+  margin-left: 6em !important;
 }
