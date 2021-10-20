@@ -1,16 +1,34 @@
 #arbolGeografiaRegistro.jstree-checkbox-selection .jstree-wholerow-clicked,
+#arbolGeografiaMod.jstree-checkbox-selection .jstree-wholerow-clicked,
 #arbolIntervencionRegistro .jstree-wholerow-clicked,
+#arbolIntervencionMod .jstree-wholerow-clicked,
 #arbolPermisoRegistro .jstree-wholerow-clicked,
+#arbolPermisoMod .jstree-wholerow-clicked,
 #arbolGeografiaConsulta .jstree-wholerow-clicked {
   background: white;
 }
 
 #arbolGeografiaRegistro.jstree-checkbox-selection .jstree-clicked,
+#arbolGeografiaMod.jstree-checkbox-selection .jstree-clicked,
 #arbolIntervencionRegistro .jstree-clicked,
+#arbolIntervencionMod .jstree-clicked,
 #arbolPermisoRegistro .jstree-clicked,
+#arbolPermisoMod .jstree-clicked,
 #arbolGeografiaConsulta .jstree-clicked {
 	background: white;
   	color: #808080;
+  	box-shadow: inset 0 0 1px #fff;
+}
+
+#table-usuario-pi_filter {
+	padding-right: 1em;
+	font-size: 0.7em !important;
+    font-family: "Montserrat" !important;
+}
+
+#table-usuario-pi_filter input {
+	font-size: 0.7em !important;
+    font-family: "Montserrat" !important;
 }
 
 img.responsive-img-tecnico{
@@ -53,7 +71,7 @@ img.responsive-img-tecnico{
     content: "";
     position: absolute;
     right: 3%;
-    top: 67%;
+    top: 66%;
     width: 0;
     height: 0;
     border-left: 0.3em solid transparent;
@@ -222,6 +240,14 @@ label.form-check-inputfiltro {
 }
 
 .scrollGeneralArbol {
+	padding:4px;
+	height: 230px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	text-align:justify;
+}
+
+.scrollGeneralSelectsConsulta {
 	padding:4px;
 	height: 330px;
 	overflow-x: hidden;
@@ -691,7 +717,7 @@ div.dataTables_wrapper div.dataTables_filter input {
     background-color: #ffffff;
     color: #7716fa;
     border: solid 1px #7716fa !important;
-    padding: .6em 2.3em;
+    padding: .6em 1.5em;
     border-radius: 5px;
     font-size: 0.7em;
     position: relative;

@@ -90,6 +90,19 @@ public class ImplUsuariosPIService implements UsuariosPIService {
 		return response;
 	}
 	
+//	@Override
+//	public ServiceResponseResult consultaUsuariosPorGeoCompPuestos(String params) {
+//		logger.info("ImplUsuariosPIService.class [metodo = consultaUsuariosPorGeoCompPuestos() ]\n");
+//		logger.info("PARAMS " + params);
+//		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
+//		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+//		String tokenAcces=principalDetail.getAccess_token() ;
+//		String url = principalDetail.getDireccionAmbiente().concat(constUsuario.getConsultaUsuariosPorGeoCompPuestos());
+//		ServiceResponseResult response=restCaller.callPostBearerTokenRequest(jsonObject.toString(), url, ServiceResponseResult.class, tokenAcces);
+//		logger.info("URL " + url);
+//		logger.info("RESULT guardarUsuario " + gson.toJson(response));
+//		return response;
+//	}
 	@Override
 	public DataTableResponse consultaUsuariosPorGeoCompPuestos(ObjConsultaUsuario params) {
 		logger.info("ImplUsuariosPIService.class [metodo = consultaUsuariosPorGeoCompPuestos() ]\n");
@@ -104,7 +117,7 @@ public class ImplUsuariosPIService implements UsuariosPIService {
                 .recordsTotal("0")
                 .draw(params.getDraw() + "")
                 .result(null).build();
-        params.setPagina((Integer.parseInt(params.getStart()) + 10) / 10);
+//        params.setPagina((Integer.parseInt(params.getStart()) + 10) / 10);
         
 		String tokenAcces = principalDetail.getAccess_token() ;
 		logger.info("consultaUsuariosPorGeoCompPuestos ##+ " + tokenAcces);

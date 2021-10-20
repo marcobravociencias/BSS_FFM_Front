@@ -48,10 +48,10 @@
                             <!--h3 class="text-center">Consulta Usuarios</h3-->
                             <div class="row">
                                 <div class="col-md-3 column-style-usuarios columna-filtro-usuarios">
-									<label class="span-consulta"><i class="fa fa-building"></i> Compa&ntilde;ias</label>
+									<label class="span-consulta"><i class="fa fa-building"></i> Compa&ntilde;&iacute;as</label>
 				                    <div class="dropdown">
 				                    	<input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="SELECCIONE..." type="text" id="txtCompania" class="input-filtro-status form-control" />
-				                        <ul class="dropdown-menu drop-down-filters scrollGeneralArbol">      
+				                        <ul class="dropdown-menu drop-down-filters scrollGeneralSelectsConsulta">      
 				                        	<li style="text-align: center;">
 				                            	<button ng-click="seleccionTodos(listaCompanias, true, 'companias')" id="todo_filtro" type="button" class="btn btn-indigo btn-sm waves-effect waves-light">Todos</button>
 				                                <button ng-click="seleccionTodos(listaCompanias, false, 'companias')" id="ninguno_filtro" type="button" class="btn btn-indigo btn-sm waves-effect waves-light">Ninguno</button>
@@ -70,7 +70,7 @@
 									<label class="span-consulta"><i class="fas fa-address-card"></i> Puesto</label>
 				                    <div class="dropdown">
 				                    	<input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="SELECCIONE..." type="text" id="txtPuesto" class="input-filtro-status form-control" />
-				                        <ul class="dropdown-menu drop-down-filters scrollGeneralArbol">      
+				                        <ul class="dropdown-menu drop-down-filters scrollGeneralSelectsConsulta">      
 				                        	<li style="text-align: center;">
 				                            	<button ng-click="seleccionTodos(listaPuestos, true, 'puestos')" id="todo_filtro" type="button" class="btn btn-indigo btn-sm waves-effect waves-light">Todos</button>
 				                                <button ng-click="seleccionTodos(listaPuestos, false, 'puestos')" id="ninguno_filtro" type="button" class="btn btn-indigo btn-sm waves-effect waves-light">Ninguno</button>
@@ -91,9 +91,8 @@
                                     	<input id="txtGeografiasConsulta" type="text" class="input-filtro-status form-control" ng-click="abrirModalGeografiaConsulta()" placeholder="NO HAY SELECCI&Oacute;N" readonly autocomplete="off">
                                 	</div>
                                 </div>
-                                <div class="col-md-3">
-                                    <label style="visibility: hidden;" class="span-consulta"><i class="fas fa-map-marked"></i> Geograf&iacute;a</label>
-                                    <button  ng-click="consultaUsuariosPorGeoCompPuestos()" id="btn-consultar-disponibilidad" type="button" class="btn btn-sm btn-primary" ng-click="consultaDisponibilidad()" style="margin-top: 0; margin: 0 !important;">
+                                <div class="col-md-2">
+                                    <button  ng-click="consultaUsuariosPorGeoCompPuestos()" id="btn-consultar-disponibilidad" type="button" class="btn btn-sm btn-primary" ng-click="consultaDisponibilidad()" style="top: 46% !important;">
                                         <i class="fa fa-search"></i>
                                     </button>
                                 </div>

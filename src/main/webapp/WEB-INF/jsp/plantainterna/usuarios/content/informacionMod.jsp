@@ -9,7 +9,7 @@
         </div>
     </div>
     <div class="col-md-4">
-		<label class="span-consulta"><i class="fa fa-building"></i> Compa&ntilde;ia*</label>
+		<label class="span-consulta"><i class="fa fa-building"></i> Compa&ntilde;&iacute;a*</label>
         <div class="input-group">
         	<select class="form-control inputFormulario" id="compania_select_modificacion" aria-describedby="basic-addon3" style="height: 34px;">
         		<option disabled selected>NO HAY SELECCI&Oacute;N</option>
@@ -28,19 +28,19 @@
     <div class="col-md-4">
 		<label class="span-consulta"><i class="fa fa-user"></i> Usuario*</label>
         <div class="">
-        	<input type="text" class="form-control inputFormulario" ng-model="detalleUsuario.usuario" id="form-usuario-mod" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. PIRESIDENCIAL">
+        	<input type="text" class="form-control inputFormulario" ng-model="detalleUsuario.usuarioFfm" id="form-usuario-mod" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. PIRESIDENCIAL">
         </div>
     </div>
     <div class="col-md-4">
-    	<label class="span-consulta"><i class="fas fa-lock"></i> Password*</label>
-        <div class="">
-        	<input type="password" class="form-control inputFormulario" ng-model="detalleUsuario.contrasena" id="form-pasword-mod" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. ********">
+		<label class="span-consulta"><i class="fa fa-id-card"></i> CURP*</label>
+        <div class="input-group">
+        	<input type="text" class="form-control inputFormulario" ng-model="detalleUsuario.curp" id="form-curp-mod" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. FOBR920509HMSLRY05">
         </div>
     </div>
     <div class="col-md-4">
-		<label class="span-consulta"><i class="fas fa-lock"></i> Confirmar password*</label>
-        <div class="">
-        	<input type="password" class="form-control inputFormulario" ng-model="detalleUsuario.confirContrasena" id="form-confir-password-mod" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. ********">
+		<label class="span-consulta"><i class="fa fa-id-card"></i> RFC*</label>
+        <div class="input-group">
+        	<input type="text" class="form-control inputFormulario" ng-model="detalleUsuario.rfc" id="form-rfc-mod" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. SALJ940309U54">
         </div>
     </div>
 </div>
@@ -66,29 +66,9 @@
 </div>
 <div class="row contenedorRowForm">
 	<div class="col-md-4">
-		<label class="span-consulta"><i class="fa fa-tags"></i> Posici&oacute;n*</label>
-        <div class="">
-        	<input type="text" class="form-control inputFormulario" ng-model="detalleUsuario.posicion" id="form-posicion-mod" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. 15015997">
-        </div>
-    </div>
-    <div class="col-md-4">
-		<label class="span-consulta"><i class="fa fa-id-card"></i> CURP*</label>
-        <div class="input-group">
-        	<input type="text" class="form-control inputFormulario" ng-model="detalleUsuario.curp" id="form-curp-mod" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. FOBR920509HMSLRY05">
-        </div>
-    </div>
-    <div class="col-md-4">
-		<label class="span-consulta"><i class="fa fa-id-card"></i> RFC*</label>
-        <div class="input-group">
-        	<input type="text" class="form-control inputFormulario" ng-model="detalleUsuario.rfc" id="form-rfc-mod" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. SALJ940309U54">
-        </div>
-    </div>
-</div>
-<div class="row contenedorRowForm">
-	<div class="col-md-4">
 		<label class="span-consulta"><i class="fa fa-mobile-phone"></i> Tel&eacute;fono de contacto*</label>
         <div class="input-group">
-        	<input type="text" class="form-control inputFormulario" ng-model="detalleUsuario.telefonoContacto" id="form-telefono-contacto-mod" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. 5515798000">
+        	<input type="text" class="form-control inputFormulario" ng-model="detalleUsuario.telefono" id="form-telefono-contacto-mod" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. 5515798000">
         </div>
     </div>
     <div class="col-md-4">
@@ -110,8 +90,8 @@
         <div class="input-group">
         	<select class="form-control inputFormulario" id="sexo_select_modificacion" aria-describedby="basic-addon3" style="height: 34px;">
         		<option disabled selected>NO HAY SELECCI&Oacute;N</option>
-        		<option value="MASCULINO">Hombre</option>
-        		<option value="FEMENINO">Mujer</option>
+        		<option value="MASCULINO">Masculino</option>
+        		<option value="FEMENINO">Femenino</option>
         	</select>
         </div>
     </div>

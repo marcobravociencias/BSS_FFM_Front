@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <div id="contenedorPermisosRegistro" class="scrollGeneralArbol">
-	                <div class="row padding_resumen_ciudades" ng-repeat="modulo in listaPermisosSeleccionados track by $index">
+	                <div class="row padding_resumen_ciudades" ng-repeat="modulo in listaAccesosSelecionadosMod track by $index">
 	                    <div class="col-md-6">
 	                        <span class="text-body-table-arbol" ng-bind="modulo.nombre"></span>
 	                    </div>

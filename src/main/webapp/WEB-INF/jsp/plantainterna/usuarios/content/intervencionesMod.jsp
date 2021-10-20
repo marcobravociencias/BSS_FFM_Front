@@ -16,7 +16,7 @@
         <h6 id="labelIntervencionesSeleccionadas" class="text-center titulo-opciones">SELECCIONADAS</h6>
         <hr/>
         <div id="contenedorIntervencionesRegistro" class="scrollGeneralArbol">
-	    	<div class="row padding_resumen_ciudades" ng-repeat="intervencion in listaIntervencionesSeleccionadas track by $index">
+	    	<div class="row padding_resumen_ciudades" ng-repeat="intervencion in listaIntervencionesSeleccionadasMod track by $index">
 	        	<div class="col-md-6">
 	            	<span class="text-body-table-arbol" ng-bind="$index + 1"></span>
 	            	<span class="text-body-table-arbol" ng-bind="intervencion"></span>

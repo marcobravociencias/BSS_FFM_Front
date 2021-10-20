@@ -12,6 +12,7 @@ public interface UsuariosPIService {
 	public ServiceResponseResult consultaPermisos();
 	public ServiceResponseResult consultaUsuarioPorId(String params);
 	public DataTableResponse consultaUsuariosPorGeoCompPuestos(ObjConsultaUsuario params);
+//	public ServiceResponseResult consultaUsuariosPorGeoCompPuestos(String params);
 	public ServiceResponseResult consultaGeografias();
 	public ServiceResponseResult consultaIntervenciones();
 	public ServiceResponseResult guardarUsuario(String params);
