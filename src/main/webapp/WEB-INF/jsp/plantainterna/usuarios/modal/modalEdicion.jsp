@@ -24,7 +24,7 @@
                             <a class="nav-link" id="pills-tecnico-tab-mod" data-toggle="pill" href="#pills-tecnico-mod" ng-show="mostrarTecnicos" role="tab" aria-controls="pills-tecnico-mod" aria-selected="false">T&eacute;cnico</a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="pills-confirmar-tab-mod" data-toggle="pill" ng-click="mostrarConfirmacionModificacion()" href="#pills-confirmar-mod" role="tab" aria-controls="pills-confirmar-mod" aria-selected="false">Confirmar Usuario</a>
+                            <a class="nav-link" id="pills-confirmar-tab-mod" data-toggle="pill" ng-click="cargarInfoConfirmacionModificacion()" href="#pills-confirmar-mod" role="tab" aria-controls="pills-confirmar-mod" aria-selected="false">Confirmar Usuario</a>
                         </li>
                     </ul>
                     <div class="tab-content" id="pills-tabContent-mod">
@@ -49,7 +49,9 @@
                     </div>
                 </div>
             </div>	
+            
             <div class="modal-footer">
+            <input type="button" class="btn btn-primary" ng-click="" ng-show="verBtnModificar" value="MODIFICAR">
                 <button type="button" class="btn btn-sm btn-cerrar-modal" data-mdb-dismiss="modal" aria-label="Close">Cerrar</button>
             </div>
         </div>

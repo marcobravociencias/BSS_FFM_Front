@@ -9,7 +9,7 @@
         </div>
     </div>
     <div class="col-md-4">
-		<label class="span-consulta"><i class="fa fa-building"></i> Compa&ntilde;ia*</label>
+		<label class="span-consulta"><i class="fa fa-building"></i> Compa&ntilde;&iacute;a*</label>
         <div class="input-group">
         	<select class="form-control inputFormulario" id="compania_select_registro" aria-describedby="basic-addon3" style="height: 34px;">
         		<option disabled selected>NO HAY SELECCI&Oacute;N</option>

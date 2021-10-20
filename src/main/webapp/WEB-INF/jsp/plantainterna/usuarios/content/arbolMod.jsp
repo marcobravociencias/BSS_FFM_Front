@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <div id="contenedorGeografiasRegistro" class="scrollGeneralArbol">
-	                <div class="row padding_resumen_ciudades" ng-repeat="ciudad in listaGeografiasSeleccionadas track by $index">
+	                <div class="row padding_resumen_ciudades" ng-repeat="ciudad in listaCiudadesSelecionadasMod track by $index">
 	                    <div class="col-md-6">
 	                        <span class="text-body-table-arbol" ng-bind="ciudad.nombre"></span>
 	                    </div>

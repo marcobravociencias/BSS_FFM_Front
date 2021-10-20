@@ -25,8 +25,8 @@ public class ObjConsultaUsuario {
 	private List<Integer> geografias;
 	private List<Integer> companias;
 	private List<Integer> puestos;
-	private int elementosPorPagina;
-	private int pagina;
+//	private int elementosPorPagina;
+//	private int pagina;
 	private int draw;
 	private String start;
 }

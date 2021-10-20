@@ -63,6 +63,27 @@ app.controller('controlVehicularController',
 				$(".datepicker-dropdown").addClass("datepicker-orient-bottom");
 			});
 
+			$('#searchText').on('keyup', function () {
+				//vehiculoTable.search(this.value).draw();
+				let list = [];
+				let text = $("#searchText").val().toLowerCase();
+				let listVehiculos = angular.copy($scope.vehiculos);
+				$.each(listVehiculos, function (i, elemento) {
+					if (elemento.placa.toLowerCase().includes(text) ||
+						elemento.numeroSerie.toLowerCase().includes(text) ||
+						elemento.color.toLowerCase().includes(text) ||
+						elemento.anio.toLowerCase().includes(text) ||
+						elemento.combustible.toLowerCase().includes(text) ||
+						elemento.tipo.toLowerCase().includes(text) ||
+						elemento.marca.toLowerCase().includes(text) ||
+						elemento.modelo.toLowerCase().includes(text)
+					) {
+						list.push(elemento);
+					}
+				})
+				$scope.buildTableVehiculos(list);
+			});
+
 			$('#searchGeo').on('keyup', function () {
 				$("#jstreeconsulta").jstree("search", this.value);
 			})
@@ -271,27 +292,7 @@ app.controller('controlVehicularController',
 						if (response.data.result) {
 							if (response.data.result.vehiculo.length) {
 								$scope.vehiculos = angular.copy(response.data.result.vehiculo);
-								if ($("#searchText").val() !== "") {
-									let list = [];
-									let text = $("#searchText").val().toLowerCase();
-									let listVehiculos = angular.copy($scope.vehiculos);
-									$.each(listVehiculos, function (i, elemento) {
-										if (elemento.placa.toLowerCase().includes(text) ||
-											elemento.numeroSerie.toLowerCase().includes(text) ||
-											elemento.color.toLowerCase().includes(text) ||
-											elemento.anio.toLowerCase().includes(text) ||
-											elemento.combustible.toLowerCase().includes(text) ||
-											elemento.tipo.toLowerCase().includes(text) ||
-											elemento.marca.toLowerCase().includes(text) ||
-											elemento.modelo.toLowerCase().includes(text)
-										) {
-											list.push(elemento);
-										}
-									})
-									$scope.buildTableVehiculos(list);
-								} else {
-									$scope.buildTableVehiculos($scope.vehiculos);
-								}
+								$scope.buildTableVehiculos($scope.vehiculos);
 
 							} else {
 								swal.close();
@@ -727,11 +728,11 @@ app.controller('controlVehicularController',
 								$("#alta-tab").removeClass("active");
 								$("#consulta-tab").addClass("active");
 								$("#consulta").addClass("active show");
-							
+
 								$scope.loadArbolBuscar();
-							
+
 								$scope.clearForm();
-								
+
 								$scope.initWizard();
 								setTimeout(function () {
 									$scope.getVehiculos();
@@ -765,11 +766,11 @@ app.controller('controlVehicularController',
 								$("#alta").removeClass("active show");
 								$("#consulta-tab").addClass("active");
 								$("#consulta").addClass("active show");
-							
+
 								$scope.loadArbolBuscar();
-							
+
 								$scope.clearForm();
-								
+
 								$scope.initWizard();
 								setTimeout(function () {
 									$scope.getVehiculos();

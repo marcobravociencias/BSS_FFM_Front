@@ -61,7 +61,7 @@
 #btnBuscar {
   float: none;
   margin-bottom: 20px;
-  margin-top: 15px;
+  margin-top: 27px;
 }
 
 .btnTotal:active, .btn:focus .btn:hover{
@@ -482,7 +482,7 @@ li{
 }
 
 .search-filtro {
-  margin-top: 15px;
+  margin-top: 27px;
   align-items: stretch;
   background: white !important;
   border: 1px solid #d9d9d9 !important;

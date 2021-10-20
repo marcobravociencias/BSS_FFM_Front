@@ -36,13 +36,13 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label class="titulos-confirmacion">* Contrasena:</label>
+                                    <label class="titulos-confirmacion">* Contrase&nacute;a:</label>
                                     <div class="input-group mb-3">
                                         <span class="respuesta-confirmacion" ng-bind="confirmacionRegistro.contrasena"></span>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label class="titulos-confirmacion">* Fecha Ingreso:</label>
+                                    <label class="titulos-confirmacion">* Fecha ingreso:</label>
                                     <div class="input-group mb-3">
                                         <span class="respuesta-confirmacion" ng-bind="confirmacionRegistro.fechaIngreso"></span>
                                     </div>
@@ -58,7 +58,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label class="titulos-confirmacion">* Ciudad Natal:</label>
+                                    <label class="titulos-confirmacion">* Ciudad natal:</label>
                                 </div>
                                 <form name="myForm">
                                 	<div id="contenedorConfirmacionRegistro" class="scrollListaCiudadNatal">
