@@ -1297,8 +1297,8 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     $scope.obtenerPaquete = function(){
         if (!$scope.flagPaquete) {
             let params = {
-               // folio: $scope.detalleOtPendienteSelected.folioOrden
-               folio: 'OS-7640234'
+               folio: $scope.detalleOtPendienteSelected.folioOrden
+               //folio: 'OS-7640234'folioOrden
             }
             swal({ text: 'Espere un momento ...', allowOutsideClick: false });
             swal.showLoading();

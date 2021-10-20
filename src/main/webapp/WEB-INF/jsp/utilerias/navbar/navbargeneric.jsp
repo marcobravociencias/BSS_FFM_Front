@@ -27,11 +27,11 @@
                 <a class="logout-text-nav" href="javascript:document.getElementById('logout').submit()">Salir</a>
             </div>    
             <div class="content-header">
-                <c:if test="${userStore.urlFoto != null &&  userStore.urlFoto != ''}">
+                <c:if test="${userStore.urlFoto != null &&  userStore.urlFoto != '' && userStore.urlFoto != 'string'}">
                     <img  data-mdb-toggle="modal"
                           data-mdb-target="#modalFotoDespacho" class="img-despacho-navbar" src="${userStore.urlFoto}" height="37" alt="" loading="lazy" />        
                 </c:if>
-                <c:if test="${userStore.urlFoto == null ||  userStore.urlFoto == ''}">
+                <c:if test="${userStore.urlFoto == null ||  userStore.urlFoto == '' || userStore.urlFoto == 'string'}">
                     <img  src="${pageContext.request.contextPath}/resources/img/iconsistema/usuario-header.png"    height="37" alt="" loading="lazy" />        
                 </c:if>
                
