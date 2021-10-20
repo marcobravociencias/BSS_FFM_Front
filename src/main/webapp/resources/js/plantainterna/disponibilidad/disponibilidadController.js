@@ -407,21 +407,35 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
         let tipoIntervencion = $("#jstreeIntervencion").jstree("get_selected", true)
             .filter(e => e.original.nivel == ultimoNIntervencion)
             .map(e => parseInt(e.id))
+
         if (matutinoCant !== '') {
-            arrayTurno.push({
-                idCatTurno: 1,
-                cantidad: matutinoCant
-            })
+            if (vespertinoCant === '0' && matutinoCant === '0') {
+                mensajeError += '<li>Introducir cantidad turno matutino</li>'
+                isValido = false
+            } else {
+                arrayTurno.push({
+                    idCatTurno: 1,
+                    cantidad: matutinoCant
+                })
+                isValido = true
+            }
+
         } else {
             mensajeError += '<li>Introducir cantidad turno matutino</li>'
             isValido = false
         }
 
         if (vespertinoCant !== '') {
-            arrayTurno.push({
-                idCatTurno: 2,
-                cantidad: vespertinoCant
-            })
+            if (matutinoCant === '0' && vespertinoCant === '0') {
+                mensajeError += '<li>Introducir cantidad turno vespertino</li>'
+                isValido = false
+            } else {
+                arrayTurno.push({
+                    idCatTurno: 2,
+                    cantidad: vespertinoCant
+                })
+                isValido = true
+            }
         } else {
             mensajeError += '<li>Introducir cantidad turno vespertino</li>'
             isValido = false
@@ -525,7 +539,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             .filter(e => e.original.nivel == ultimoNIntervencion)
             .map(e => parseInt(e.id))
 
-        if (matutinoCant !== '' && matutinoCant !== '0') {
+        if (matutinoCant !== '') {
             arrayTurno.push({
                 idCatTurno: 1,
                 disponibilidadActual: matutinoCant
@@ -535,7 +549,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             isValido = false;
         }
 
-        if (vespertinoCant !== '' && vespertinoCant !== '0') {
+        if (vespertinoCant !== '') {
             arrayTurno.push({
                 idCatTurno: 2,
                 disponibilidadActual: vespertinoCant
@@ -687,6 +701,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
 
     $("#modal_cluster_arbol_diponibilidad").on("hidden.bs.modal", function () {
         let selectedElms = $('#jstreeconsulta').jstree("get_selected", true);
+        let activarBusquedaAuto = $('#jstreeIntervencion').jstree("get_selected", true);
 
         if (selectedElms.length > 0) {
             if ($scope.idCiudadActualizar) {
@@ -702,14 +717,20 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                 selected_arbol = element.text;
             });
             document.getElementById('arbol_disponibilidad_consulta').placeholder = selected_arbol
+            if (activarBusquedaAuto.length > 0) {
+                $scope.consultaDisponibilidad()
+            }
         } else {
             document.getElementById('arbol_disponibilidad_consulta').placeholder = 'Seleccione una geografia';
         }
+
+        
 
     })
 
     $("#modalArbolIntervencion").on("hidden.bs.modal", function () {
         let selectedElms = $('#jstreeIntervencion').jstree("get_selected", true);
+        let activarBusquedaAuto = $('#jstreeconsulta').jstree("get_selected", true);
 
         if (selectedElms.length > 0) {
             if ($scope.idTipoActualizar) {
@@ -725,9 +746,14 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                 selected_arbol = element.text;
             });
             document.getElementById('arbol_intervencion').placeholder = selected_arbol
+            if (activarBusquedaAuto.length > 0) {
+                $scope.consultaDisponibilidad()
+            }
         } else {
             document.getElementById('arbol_intervencion').placeholder = 'Seleccione un tipo de orden';
         }
+
+
     })
 
     document.getElementById('arbol_disponibilidad_consulta').addEventListener('click', function () {
