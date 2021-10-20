@@ -52,11 +52,11 @@
                         <div class="col-12" style="position: absolute; z-index: 1;">
                             <div class="col-12">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                    <li class="nav-item">
+                                    <li class="nav-item" ng-click="cambioTitulo(1)">
                                         <a class="nav-link active" id="opcion-ffm-tab" data-toggle="tab" href="#opcion-ffm" role="tab"
                                             aria-controls="opcion-ffm" aria-selected="true">Bandejas FFM</a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item" ng-click="cambioTitulo(2)">
                                         <a class="nav-link" id="opcion-salesfoce-tab" data-toggle="tab" href="#opcion-salesfoce" role="tab"
                                             aria-controls="opcion-salesfoce" aria-selected="false">Bandejas SalesForce</a>
                                     </li>
@@ -65,7 +65,8 @@
                             
                         </div>
                         <div class="col-12 text-center">
-                            <span class="span-titulo-bandeja" ng-bind="nombreBandeja"></span>
+                            <span class="span-titulo-bandeja" ng-show="tipoBandeja === 1" ng-bind="nombreBandeja"></span>
+                            <span class="span-titulo-bandeja" ng-show="tipoBandeja === 2" ng-bind="nombreBandejaSf"></span>
                         </div>
                     </div>
                     <br>
@@ -129,15 +130,15 @@
                             
                             <div class="col-12">
                                 <div class="row">
-                                    <div id="opciones-menu-sf" class="left-menu small-menu" style="margin-left: -.9em; height: 100%;">
+                                    <div id="opciones-menu-sf" class="left-menu small-menu small-sf" style="margin-left: -.9em; height: 100%;">
                                         <div class="col-md-12 opcion-menu" ng-click="cambiarVistaSF(1);">
-                                            <i ng-class="{'active-iconmenu':vistaSf==1}" class="icon-menu-left fa fa-clock"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaSf==1}" class="titulo-menu">Pendiente</span>
+                                            <i ng-class="{'active-iconmenu':vistaSf==1}" class="icon-menu-left fa fa-clock"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaSf==1}" class="titulo-menu">Pendiente de agendar</span>
                                         </div>
                                         <div class="col-md-12 opcion-menu" ng-click="cambiarVistaSF(2);">
-                                            <i ng-class="{'active-iconmenu':vistaSf==2}" class="icon-menu-left fa fa-pencil-square"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaSf==2}" class="titulo-menu">Asignada</span>
+                                            <i ng-class="{'active-iconmenu':vistaSf==2}" class="icon-menu-left fa fa-pencil-square"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaSf==2}" class="titulo-menu">Rescataventas</span>
                                         </div>
                                         <div class="col-md-12 opcion-menu" ng-click="cambiarVistaSF(3);">
-                                            <i ng-class="{'active-iconmenu':vistaSf==3}" class="icon-menu-left fa fa-stop-circle"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaSf==3}" class="titulo-menu">Detenida</span>
+                                            <i ng-class="{'active-iconmenu':vistaSf==3}" class="icon-menu-left fa fa-stop-circle"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaSf==3}" class="titulo-menu">Pendiente de activar</span>
                                         </div>
                                     </div>
                                     <div class="right-content">
@@ -180,7 +181,7 @@
         <jsp:include page="./modals/modalGeografiaPendiente.jsp"></jsp:include>
         <jsp:include page="./modals/modalGeografiaTerminada.jsp"></jsp:include>
     </body>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-2.2.4.js" ></script>    
+    <script src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.min.js"></script>    
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=${googlkeyattrvar['gkeactok']}&libraries=geometry,places"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/jquery-ui.min.js" ></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/typeahead/js/typeahead.bundle.js" ></script>

@@ -1523,6 +1523,9 @@ i.fa.fa-times-circle.cancel {
 .small-menu:hover{
     width: 15%;
 }
+.small-sf:hover{
+  width: 22%!important;
+}
 .titulo-opcion-menu {
     height: 5em;
     line-height: 5em;
@@ -1764,4 +1767,28 @@ span.btn-floating.btn-evidencia.btn-sm.btn-secondary.waves-effect.waves-light {
   font-size: 1em;
   font-weight: bold;
   font-family: 'Montserrat' !important;
+}
+.container-treegeofria {
+  min-height: 9em;
+  max-height: 15em;
+}
+.col-conteiner-arbol{
+  padding:4px;
+	height: 350px;
+	overflow-x: auto;
+	overflow-y: auto;
+	text-align:justify;
+}
+.buscadorGenerico {
+  height: 2em !important;
+  min-height: 2em !important;
+  padding: 0 !important;
+  padding-left: 1em !important;
+  border-radius: 1em !important;
+  border: 1px solid #e2e2e2;
+  background:#fcfcfc;
+}
+.buscadorGenerico::placeholder{
+  color:#a4a4a4;
+  font-size:1em;
 }

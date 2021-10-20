@@ -25,5 +25,6 @@ public class ParamFFMCoordInstalacionesVO {
 	private Integer elementosPorPagina;
 	private Integer pagina;
 	private int draw;
+	private String fechaSeleccionada;
 
 }
