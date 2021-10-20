@@ -965,7 +965,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
 
             }
 
-      
+            $scope.iniciarMapaAlertas();
 
             if (results[4].data !== undefined) {
                 if(results[4].data.respuesta ){

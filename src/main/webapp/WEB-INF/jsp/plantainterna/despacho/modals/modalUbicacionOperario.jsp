@@ -16,7 +16,7 @@
 				</div>
 			</div>
             <div class="modal-footer">
-                <button type="button" class="btn cerrar-modal-btn btn-ligh" data-mdb-dismiss="modal">
+                <button type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface" data-mdb-dismiss="modal">
                     Cerrar
                 </button>
            </div>

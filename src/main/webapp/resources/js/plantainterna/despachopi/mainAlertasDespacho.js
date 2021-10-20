@@ -8,7 +8,8 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
     $scope.alertaSeleccionadaObject = {};
     $scope.tipoAlertaSeleccionada = {};
     $scope.estatusAlerta = {};
-    
+    let objectVistaAlerta;
+
     $scope.listaOpcionesAlerta = [];
     
     $scope.listaStatusAlertaAccion = [];
@@ -798,8 +799,10 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
             center: { lat: -34.397, lng: 150.644 },
             zoom: 8,
         });
+        objectVistaAlerta=new GenericMapa(mapaAlerta,'mapAlerta','bottom-right');
+        objectVistaAlerta.inicializar_data()
     }
-    $scope.iniciarMapaAlertas();
+    
 
     $scope.setMarkets = function(pos){
         mapaAlerta.setCenter({lat:parseFloat(pos.latitudAlerta), lng:parseFloat(pos.longitudAlerta)});

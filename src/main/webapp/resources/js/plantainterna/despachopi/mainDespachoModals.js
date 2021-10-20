@@ -366,14 +366,8 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     }
 
 
-    abrirUbicacionOperario = function (idTecnico, nombreTecnico) {
-        /**console.log("idTecnico"+idTecnico)
-        console.log("nombreTecnico"+nombreTecnico)
-        let objectParams={
-            idTecnico:idTecnico,
-            nombreTecnico:nombreTecnico
-        }
-        $scope.consultarUbicacionOperario(objectParams)**/
+    abrirUbicacionOperario = function (idTecnico) {
+        $scope.consultarUbicacionOperario(idTecnico)
     }
 
     $scope.evidenciaPlaca = '';
@@ -810,13 +804,14 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             }
         });
         $scope.consultarDetalleMapa(listOt);
-            return true;
+        return true;
+        /*
         if (listOt.length) {
             $scope.consultarDetalleMapa(listOt);
             return true;
         } else {
             return false;
-        }
+        }*/
     }
 
     abrirModalVistaMapa = function () {
@@ -834,7 +829,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 
     $scope.detalleTecnicoRuta = function (id) {
         $(".content-tecnico").removeClass("selected-tecnico");
-        $("#" + id).addClass("selected-tecnico");
+        $("#mapa-" + id).addClass("selected-tecnico");
         $scope.pintarOtMapTecnicoSeleccionado(id);
         //$scope.getListOt(id);
     }

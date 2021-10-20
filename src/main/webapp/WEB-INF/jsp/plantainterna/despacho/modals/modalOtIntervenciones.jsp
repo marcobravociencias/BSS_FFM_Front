@@ -6,11 +6,10 @@
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div-->
             <div class="modal-body" >
-                
                 <div class="row" style="padding: 0;">
-                    <h5 class="modal-title style_modal_title">INTERVENCION</h5>
+                    <h5 class="modal-title style_modal_title">INTERVENCI&Oacute;N</h5>
                     <div class="col-12 container_table_int ">
-                        <table class="table table-hover" cellspacing="0" id="tableOtIntervencion" style="width: 100% !important;">
+                        <table class="table table-hover" cellspacing="0" id="tableOtIntervencion" width="100%">
                             <thead id="head_table_ot_intervencion">
                                 <tr>
                                     <th>CANTIDAD</th> 
@@ -19,8 +18,8 @@
                             </thead>
                             <tbody id="tbodyIntervencion">
                                 <tr ng-repeat="item in intervencionesConteo" class="title-table-ot-intervencion">
-                                    <td>{{item.cantidad}}</td>
-                                    <td>{{item.nombre}}</td>
+                                    <td style="width: 125px;">{{item.cantidad}}</td>
+                                    <td style="width: 157px;">{{item.nombre}}</td>
                                 </tr>
                             </tbody>
                         </table>
