@@ -32,8 +32,8 @@ app.controller('controlVehicularController',
 					document.getElementById('arbol_vehiculo_consulta').placeholder = selectedElms[0].text;
 					$scope.vehiculoText.geografiaText = selectedElms[0].text;
 					if ($('#jstreeconsulta').jstree().settings.plugins.length == 1) {
-						//$scope.getParentGeografia(selectedElms[0].id);
-						$scope.loadEncierros(selectedElms[0].id, 0);
+						$scope.getParentGeografia(selectedElms[0].id);
+						$scope.loadEncierros($scope.padre, 0);
 					}
 				} else {
 					document.getElementById('arbol_vehiculo_consulta').placeholder = 'NO HAY SELECCI\u00D3N';
@@ -1227,8 +1227,8 @@ app.controller('controlVehicularController',
 				}
 
 				if (vehiculo.idGeografia) {
-					//$scope.getParentGeografia(vehiculo.idGeografia);
-					$scope.loadEncierros(vehiculo.idGeografia, vehiculo.detalle.idEncierro);
+					$scope.getParentGeografia(vehiculo.idGeografia);
+					$scope.loadEncierros($scope.padre, vehiculo.detalle.idEncierro);
 
 					$("#jstreeconsulta").jstree("destroy")
 					let geografia = $scope.geografiaList;
@@ -1277,15 +1277,17 @@ app.controller('controlVehicularController',
 				let list = $scope.geografiaList;
 				list.sort(compareGeneric)[0].nivel;
 				let padre = idGeografia;
+				let hijo = "";
 				$.each(list, function (i, elemento) {
 
 					if (elemento.padre == null && elemento.id == padre) {
 						padre = elemento.id;
-						$scope.padre = padre;
+						$scope.padre = hijo;
 					}
 
 					if (elemento.id == padre) {
 						padre = elemento.padre;
+						hijo = elemento.id
 					}
 
 				})

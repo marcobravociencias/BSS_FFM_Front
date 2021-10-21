@@ -8,7 +8,7 @@
 		</span>
 	</div>
 	<div class="row content-historico-ot"  style="height: 300px; max-height: 300px; overflow: auto;">
-		<div class="row" ng-repeat="elementHistorico in movimientos">
+		<div class="row" ng-repeat="elementHistorico in movimientos" style="height: fit-content;">
 			<div class="col-2 line-time-new">
 				<div style="background-color:white;" class="timeline__date">
 					<span style="font-size: 15px !important;color:grey;" class="timeline__day">OT</span>
