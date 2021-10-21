@@ -252,7 +252,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     
     $scope.iniciarFechaRegistro = function () {
         $('#form-fechaIngresoRegistro').datepicker({
-            format: 'dd/mm/yyyy',
+            format: 'yyyy-mm-dd',
             autoclose: true,
             language: 'es',
             todayHighlight: true,
