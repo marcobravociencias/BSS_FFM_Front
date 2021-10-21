@@ -12,9 +12,7 @@ app.editarUsuarioController=function($scope,usuarioPIService){
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
         $scope.params = {};
-        // $scope.params.idUsuario  = idUsuario | 0;
         $scope.params.idUsuario  = idUsuario;
-        //$scope.params.IdCompany = "2";
         usuarioPIService.consultaUsuarioPorId($scope.params).then(function success(response) {
             if (response.data.respuesta) {
                 if (response.data.result) {
@@ -22,8 +20,13 @@ app.editarUsuarioController=function($scope,usuarioPIService){
                     // ********** INFORMACION
                     $scope.detalleUsuario = response.data.result.usuario;
                     $("#compania_select_modificacion").val(""+$scope.detalleUsuario.idCompania);
-                    $("#puesto_select_modificacion").val(""+$scope.detalleUsuario.idTipoOperario);
+                    $("#puesto_select_modificacion").val(""+$scope.detalleUsuario.idTipoUsuario);
                     $("#sexo_select_modificacion").val(""+$scope.detalleUsuario.genero);
+                    if($scope.detalleUsuario.idAsignacionAutomatica == "1"){
+                    	$("#checkAsignacionAutomaticaMod").text("  SI");
+                    }else{
+                    	$("#checkAsignacionAutomaticaMod").text("  NO");
+                    }
                     
 
 
@@ -33,13 +36,13 @@ app.editarUsuarioController=function($scope,usuarioPIService){
                     let intervencionesListaMod = [];
                     
                     angular.forEach($scope.respaldoIntervenciones,(element,index) => {
-                        if (element.nivel == 1) {
+                        if (element.nivel <= $scope.filtroIntervenciones) {
                         	intervencionesListaMod.push(element);
                         }
                     });
                     
                     angular.forEach(intervencionesListaMod,(element,index) => {
-                        if (element.nivel == 1) {
+                        if (element.nivel == $scope.filtroIntervenciones) {
                             angular.forEach($scope.detalleUsuario.intervenciones,(asignadas,index) => {
                                 if(element.id === asignadas.idTipoOrden) {
                                     element.state = {selected: true, opened: true}
@@ -302,4 +305,13 @@ app.editarUsuarioController=function($scope,usuarioPIService){
     	
     	$scope.verBtnModificar = true;
     }
+    
+  //VERIFICA EL ESTADO DEL CHECK PARA COLOCAR 'SI' O 'NO', SEGÚN EL ESTADO - PESTAÑA INFORMACIÓN REGISTRO USUARIO
+	$scope.cambiarCheckAsignacionAutomaticaMod = function() {
+		if($("#form-asignacionAutomatica-mod").prop('checked')){
+			$("#checkAsignacionAutomaticaMod").text("  SI");
+		}else{
+			$("#checkAsignacionAutomaticaMod").text("  NO");
+		}
+	}
 }

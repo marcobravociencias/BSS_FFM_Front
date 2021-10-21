@@ -28,7 +28,7 @@
     <div class="col-md-4">
 		<label class="span-consulta"><i class="fa fa-user"></i> Usuario*</label>
         <div class="">
-        	<input type="text" class="form-control inputFormulario" ng-model="detalleUsuario.usuarioFfm" id="form-usuario-mod" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. PIRESIDENCIAL">
+        	<input type="text" class="form-control inputFormulario" ng-model="detalleUsuario.usuario" id="form-usuario-mod" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. PIRESIDENCIAL">
         </div>
     </div>
     <div class="col-md-4">
@@ -68,7 +68,7 @@
 	<div class="col-md-4">
 		<label class="span-consulta"><i class="fa fa-mobile-phone"></i> Tel&eacute;fono de contacto*</label>
         <div class="input-group">
-        	<input type="text" class="form-control inputFormulario" ng-model="detalleUsuario.telefono" id="form-telefono-contacto-mod" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. 5515798000">
+        	<input type="text" class="form-control inputFormulario" ng-model="detalleUsuario.telefonoCelular" id="form-telefono-contacto-mod" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. 5515798000">
         </div>
     </div>
     <div class="col-md-4">
@@ -99,8 +99,8 @@
 		<label class="span-consulta"><i class="fas fa-sync"></i> Asignaci&oacute;n autom&aacute;tica*</label>
         <div class="input-group">
         	<div class="form-check-sm form-check form-switch" style="padding-top: .5rem;">
-				<input class="form-check-input form-check-input-sm" type="checkbox" id="form-asignacionAutomatica-mod" ng-model="detalleUsuario.asignacionAutomatica" ng-true-value="1" ng-false-value="0" ng-change="cambiarCheckAsignacionAutomatica()" />
-				<span class="text-info-regitro" id="checkAsignacionAutomatica">NO</span>
+				<input class="form-check-input form-check-input-sm" type="checkbox" id="form-asignacionAutomatica-mod" ng-model="detalleUsuario.idAsignacionAutomatica" ng-true-value="1" ng-false-value="0" ng-change="cambiarCheckAsignacionAutomaticaMod()" />
+				<span class="text-info-regitro" id="checkAsignacionAutomaticaMod">NO</span>
 			</div>
         </div>
     </div>

@@ -21,7 +21,6 @@
 }
 
 #table-usuario-pi_filter {
-	padding-right: 1em;
 	font-size: 0.7em !important;
     font-family: "Montserrat" !important;
 }
@@ -749,9 +748,6 @@ div.dataTables_wrapper div.dataTables_filter input {
 	box-shadow:none !important;
 }
 
-.columna-principal-users{
-	padding:0;
-}
 #table-usuario-pi thead .txtTablaConsultaJustificado {
 	padding:1em;
 	border: none;
@@ -881,3 +877,5 @@ span.btnEliminarUsuario {
   border-radius: 0.2rem !important;
   cursor: pointer;
 }
+
+
