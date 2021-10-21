@@ -141,13 +141,23 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
         $scope.limpiarMarkersCotizacion()
         // idot="167"
         $scope.detalleCotizacion = {}
-        $scope.detalleCotizacion.detalleOt = angular.copy($scope.listadoOtsPendientes.find((e) => e.idOrden == idot))
+       if($scope.estatusModals === 'PENDIENTE '){
+            $scope.detalleCotizacion.detalleOt = angular.copy($scope.listadoOtsPendientes.find((e) => e.idOrden == idot))
+       }else{
+            $scope.detalleCotizacion.detalleOt = angular.copy(  $scope.listadoOtsAsignadas.find((e) => e.idOrden == idot))
+       }
+        /**
+        $scope.estatusModals = 'PENDIENTE'
+        $scope.estatusModals = 'ASIGNADA'
+        */
         console.log($scope.detalleCotizacion)
         swal({ text: 'Consultando detalle de la OT ...', allowOutsideClick: false });
         swal.showLoading();
         let params = {
             "idOt": idot
         }
+
+        
         if (!mapaucotizaciondetalle) {
 
             mapaucotizaciondetalle = new google.maps.Map(document.getElementById("mapa-cotizacion-despacho"), {
@@ -184,11 +194,7 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
                                 angular.forEach(response.data.result.consultaCotizacion.direcciones, function (elem, index) {
 
                                     if (elem.direccionDetalle != undefined) {
-                                        if (index == 0) {
-                                            elem.direccionDetalle.latitud = "19.327606110757337"
-                                            elem.direccionDetalle.longitud = "-99.19763482133813"
-                                            mapaucotizaciondetalle.setCenter(new google.maps.LatLng(parseFloat(elem.direccionDetalle.latitud), parseFloat(elem.direccionDetalle.longitud)));
-                                        }
+                                     
                                         let latitud_ot = {
                                             lat: parseFloat(elem.direccionDetalle.latitud),
                                             lng: parseFloat(elem.direccionDetalle.longitud)
@@ -197,6 +203,7 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
                                             lat: parseFloat(elem.direccionDetalle.latitud),
                                             lng: parseFloat(elem.direccionDetalle.longitud)
                                         })
+                                        mapaucotizaciondetalle.setCenter(new google.maps.LatLng(parseFloat(elem.direccionDetalle.latitud), parseFloat(elem.direccionDetalle.longitud)));
 
                                         let urlTemp = ""
                                         switch (elem.accion) {
