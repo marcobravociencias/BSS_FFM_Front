@@ -88,7 +88,7 @@
 	<div class="col-md-4">
 		<label class="span-consulta"><i class="fa fa-mobile-phone"></i> Tel&eacute;fono de contacto*</label>
         <div class="input-group">
-        	<input type="text" class="form-control inputFormulario" ng-model="informacionRegistro.telefonoContacto" id="form-telefono-contacto" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. 5515798000">
+        	<input type="number" class="form-control inputFormulario" ng-model="informacionRegistro.telefonoContacto" id="form-telefono-contacto" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. 5515798000" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="10" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
         </div>
     </div>
     <div class="col-md-4">
@@ -100,7 +100,8 @@
     <div class="col-md-4">
 		<label class="span-consulta"><i class="fa fa-calendar"></i> Fecha ingreso*</label>
         <div class="input-group">
-        	<input type="date" class="form-control inputFormulario" ng-model="informacionRegistro.fechaIngreso" id="form-fechaIngresoRegistro" aria-describedby="basic-addon3" style="height: 34px;">
+<!--         	<input type="date" class="form-control inputFormulario" ng-model="informacionRegistro.fechaIngreso" id="form-fechaIngresoRegistro" aria-describedby="basic-addon3" style="height: 34px;"> -->
+        	<input readonly type="text" class="datepicker form-control inputFormulario" ng-model="informacionRegistro.fechaIngreso" id="form-fechaIngresoRegistro" aria-describedby="basic-addon3" style="height: 34px;">
         </div>
     </div>
 </div>

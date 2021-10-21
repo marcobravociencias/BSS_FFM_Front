@@ -250,6 +250,19 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     
     $scope.iniciarModuloUsuarios();
     
+    $scope.iniciarFechaRegistro = function () {
+        $('#form-fechaIngresoRegistro').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            language: 'es',
+            todayHighlight: true,
+            clearBtn: true
+        });
+        $('#form-fechaIngresoRegistro').datepicker('update', new Date());
+        $scope.informacionRegistro.fechaIngreso = $('#form-fechaIngresoRegistro').val();
+    }
+    $scope.iniciarFechaRegistro();
+    
     
   //ABRE EL MODAL DEL ÁRBOL DE LAS GEOGRAFÍAS - VISTA CONSULTA USUARIOS
     $scope.abrirModalGeografiaConsulta = function() {
@@ -359,7 +372,6 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		        ]
 	    	});
 	    	$("#modalGeografiaConsulta").modal('hide');
-		    $("#contenedorPrincipalTabla").show();
 	    }else{
 	    	toastr.warning(respuestaValidacion.mensaje);
 	    }
@@ -452,7 +464,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	}
     
     $('#puesto_select_registro').on('change', function() {
-    	$("#puesto_select_registro").css("border", "1px solid #d9d9d9");
+    	$("#puesto_select_registro").css("border", "1px solid #bdbdbd");
     	$('#arbolGeografiaRegistro').jstree("destroy");
     	$('#arbolIntervencionRegistro').jstree("deselect_all");
     	$('#arbolGeografiaRegistro').jstree("deselect_all");
@@ -490,12 +502,34 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	$scope.listaIntervencionesSeleccionadas = [];
     	$scope.informacionRegistro.intervenciones = [];
     	var intervencionesTree = $('#arbolIntervencionRegistro').jstree("get_selected", true);
+    	
     	intervencionesTree.forEach(intervencion =>{
     		if(intervencion.original.nivel == $scope.filtroIntervenciones){
-    			$scope.listaIntervencionesSeleccionadas.push(intervencion.text);
-        		$scope.informacionRegistro.intervenciones.push(intervencion.id);
+    			var idPadre = intervencion.original.parent;
+    			$scope.listaIntervencionesSeleccionadas.forEach(intervencionPadre =>{
+    				if(intervencionPadre.id == idPadre){
+    					existePadre = true;
+    					intervencionPadre.hijos.push(intervencion);
+    				}
+    			});
+    			if(existePadre){
+				}else{
+					$scope.respaldoIntervenciones.forEach(intervencionListaGeneral =>{
+						if(intervencionListaGeneral.id == idPadre){
+							$scope.listaIntervencionesSeleccionadas.push(intervencionListaGeneral);
+						}
+					});
+					$scope.listaIntervencionesSeleccionadas.forEach(intervencionPadre =>{
+	    				if(intervencionPadre.id == idPadre){
+	    					intervencionPadre.hijos = [intervencion];
+	    				}
+	    			});
+				}
+    			$scope.informacionRegistro.intervenciones.push(intervencion.id);
+    			existePadre = false;
     		}
     	});
+    	console.log($scope.informacionRegistro.intervenciones);
     	$("#labelIntervencionesSeleccionadas").css("color", "rgb(70, 88, 107)");
 		$("#contenedorIntervencionesRegistro").css("border", "white solid 0px");
     	$scope.$apply();
@@ -611,8 +645,8 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     			numeroEmpleado: $scope.informacionRegistro.numEmpleado,
     			usuario: $scope.informacionRegistro.usuario,
     			password: $scope.informacionRegistro.contrasena,
-    			identificacionTributaria: $scope.informacionRegistro.rfc,
-    			identificacion: $scope.informacionRegistro.curp,
+    			rfc: $scope.informacionRegistro.rfc,
+    			curp: $scope.informacionRegistro.curp,
     			genero: sexo,
     			
     			urlFotoPerfil: "",
@@ -621,7 +655,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     			telefonoCelular: $scope.informacionRegistro.telefonoContacto,
     			idEstatusUsuario: 1,
     			idGeografia: $scope.informacionRegistro.ciudadNatal,
-    			idUsuarioJefe: 12,
+    			//idUsuarioJefe: 12,
     			llaveExterna: "4532",
     			idTipoUsuario: puestoSeleccionado,
     			idProveedor: companiaSeleccionada,
@@ -664,7 +698,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 			validacionInformacionGeneral = false;
 			mensaje = mensaje + "<br/> *Puesto";
 		}else{
-			$("#puesto_select_registro").css("border", "1px solid #d9d9d9");
+			$("#puesto_select_registro").css("border", "1px solid #bdbdbd");
 		}
 		
 		if($("#compania_select_registro").val() === "" || $("#compania_select_registro").val() === undefined || $("#compania_select_registro").val() === null){
@@ -672,7 +706,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 			validacionInformacionGeneral = false;
 			mensaje = mensaje + "<br/> *Compañía";
 		}else{
-			$("#compania_select_registro").css("border", "1px solid #d9d9d9");
+			$("#compania_select_registro").css("border", "1px solid #bdbdbd");
 		}
 		
 		if($scope.informacionRegistro.numEmpleado === "" || $scope.informacionRegistro.numEmpleado === undefined){
@@ -680,7 +714,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 			validacionInformacionGeneral = false;
 			mensaje = mensaje + "<br/> *Número empleado";
 		}else{
-			$("#form-num-empleado").css("border", "1px solid #d9d9d9");
+			$("#form-num-empleado").css("border", "1px solid #bdbdbd");
 		}
 		
 		if($scope.informacionRegistro.usuario === "" || $scope.informacionRegistro.usuario === undefined){
@@ -688,7 +722,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 			validacionInformacionGeneral = false;
 			mensaje = mensaje + "<br/> *Usuario";
 		}else{
-			$("#form-usuario").css("border", "1px solid #d9d9d9");
+			$("#form-usuario").css("border", "1px solid #bdbdbd");
 		}
 		
 		if($scope.informacionRegistro.contrasena === "" || $scope.informacionRegistro.contrasena === undefined){
@@ -696,7 +730,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 			validacionInformacionGeneral = false;
 			mensaje = mensaje + "<br/> *Contraseña";
 		}else{
-			$("#form-pasword").css("border", "1px solid #d9d9d9");
+			$("#form-pasword").css("border", "1px solid #bdbdbd");
 		}
 		
 		if($scope.informacionRegistro.confirContrasena === "" || $scope.informacionRegistro.confirContrasena === undefined){
@@ -714,8 +748,8 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 				mensaje = mensaje + "<br/> *Confirmación de contraseña";
 	    		toastr.warning("¡Las contraseñas no coinciden!");
 	    	}else{
-	    		$("#form-pasword").css("border", "1px solid #d9d9d9");
-	    		$("#form-confir-password").css("border", "1px solid #d9d9d9");
+	    		$("#form-pasword").css("border", "1px solid #bdbdbd");
+	    		$("#form-confir-password").css("border", "1px solid #bdbdbd");
 	    	}
 		}
 		
@@ -724,7 +758,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 			validacionInformacionGeneral = false;
 			mensaje = mensaje + "<br/> *Nombre";
 		}else{
-			$("#form-nombres").css("border", "1px solid #d9d9d9");
+			$("#form-nombres").css("border", "1px solid #bdbdbd");
 		}
 		
 		if($scope.informacionRegistro.apellidoPaterno === "" || $scope.informacionRegistro.apellidoPaterno === undefined){
@@ -732,7 +766,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 			validacionInformacionGeneral = false;
 			mensaje = mensaje + "<br/> *Apellido paterno";
 		}else{
-			$("#form-a-paterno").css("border", "1px solid #d9d9d9");
+			$("#form-a-paterno").css("border", "1px solid #bdbdbd");
 		}
 		
 		if($scope.informacionRegistro.apellidoMaterno === "" || $scope.informacionRegistro.apellidoMaterno === undefined){
@@ -740,7 +774,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 			validacionInformacionGeneral = false;
 			mensaje = mensaje + "<br/> *Apellido materno";
 		}else{
-			$("#form-a-materno").css("border", "1px solid #d9d9d9");
+			$("#form-a-materno").css("border", "1px solid #bdbdbd");
 		}
 		
 		if($scope.informacionRegistro.posicion === "" || $scope.informacionRegistro.posicion === undefined){
@@ -748,7 +782,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 			validacionInformacionGeneral = false;
 			mensaje = mensaje + "<br/> *Posición";
 		}else{
-			$("#form-posicion").css("border", "1px solid #d9d9d9");
+			$("#form-posicion").css("border", "1px solid #bdbdbd");
 		}
 		
 		if($scope.informacionRegistro.curp === "" || $scope.informacionRegistro.curp === undefined){
@@ -756,7 +790,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 			validacionInformacionGeneral = false;
 			mensaje = mensaje + "<br/> *CURP";
 		}else{
-			$("#form-curp").css("border", "1px solid #d9d9d9");
+			$("#form-curp").css("border", "1px solid #bdbdbd");
 		}
 		
 		if($scope.informacionRegistro.rfc === "" || $scope.informacionRegistro.rfc === undefined){
@@ -764,7 +798,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 			validacionInformacionGeneral = false;
 			mensaje = mensaje + "<br/> *RFC";
 		}else{
-			$("#form-rfc").css("border", "1px solid #d9d9d9");
+			$("#form-rfc").css("border", "1px solid #bdbdbd");
 		}
 		
 		if($scope.informacionRegistro.telefonoContacto === "" || $scope.informacionRegistro.telefonoContacto === undefined){
@@ -772,7 +806,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 			validacionInformacionGeneral = false;
 			mensaje = mensaje + "<br/> *Teléfono de contacto";
 		}else{
-			$("#form-telefono-contacto").css("border", "1px solid #d9d9d9");
+			$("#form-telefono-contacto").css("border", "1px solid #bdbdbd");
 		}
 		
 		if($scope.informacionRegistro.correo === "" || $scope.informacionRegistro.correo === undefined){
@@ -785,7 +819,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 				validacionInformacionGeneral = false;
 				toastr.warning("¡Valida el formato del correo electrónico!");
 			}else{
-				$("#form-correo").css("border", "1px solid #d9d9d9");
+				$("#form-correo").css("border", "1px solid #bdbdbd");
 			}
 		}
 
@@ -794,7 +828,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 			validacionInformacionGeneral = false;
 			mensaje = mensaje + "<br/> *Fecha de ingreso";
 		}else{
-			$("#form-fechaIngresoRegistro").css("border", "1px solid #d9d9d9");
+			$("#form-fechaIngresoRegistro").css("border", "1px solid #bdbdbd");
 		}
 		
 		if($("#sexo_select_registro").val() === "" || $("#sexo_select_registro").val() === undefined || $("#sexo_select_registro").val() === null){
@@ -802,7 +836,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 			validacionInformacionGeneral = false;
 			mensaje = mensaje + "<br/> *Sexo";
 		}else{
-			$("#sexo_select_registro").css("border", "1px solid #d9d9d9");
+			$("#sexo_select_registro").css("border", "1px solid #bdbdbd");
 		}
 		
 		//PESTAÑA INTERVENCIONES
@@ -928,7 +962,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		if( $(this).val()  === "" || $(this).val() === undefined ){
 			$("#"+input).css("border-bottom", "2px solid #f55756");
 		}else{
-			$("#"+input).css("border", "1px solid #d9d9d9");
+			$("#"+input).css("border", "1px solid #bdbdbd");
 		}
 		if(input === "form-correo"){
 			if($("#"+input).val().indexOf('@', 0) == -1 || $("#"+input).val().indexOf('.', 0) == -1) {
@@ -947,24 +981,24 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     		$("#form-confir-password").css("border-bottom", "2px solid #f55756");
     		toastr.warning("¡Las contraseñas no coinciden!");
     	}else{
-    		$("#form-pasword").css("border", "1px solid #d9d9d9");
-    		$("#form-confir-password").css("border", "1px solid #d9d9d9");
+    		$("#form-pasword").css("border", "1px solid #bdbdbd");
+    		$("#form-confir-password").css("border", "1px solid #bdbdbd");
     	}
     });
     
     //CUANDO SELECCCIONE UN PUESTO EL INPUT REGRESA A SU ESTILO NORMAL (VALIDACIÓN) - PESTAÑA INFORMACIÓN REGISTRO USUARIO
     $("#sexo_select_registro").change(function() {
-    	$("#sexo_select_registro").css("border", "1px solid #d9d9d9");
+    	$("#sexo_select_registro").css("border", "1px solid #bdbdbd");
     });
     
     //CUANDO SELECCCIONE UNA COMPANÍA EL INPUT REGRESA A SU ESTILO NORMAL (VALIDACIÓN) - PESTAÑA INFORMACIÓN REGISTRO USUARIO
     $("#compania_select_registro").change(function() {
-    	$("#compania_select_registro").css("border", "1px solid #d9d9d9");
+    	$("#compania_select_registro").css("border", "1px solid #bdbdbd");
     });
     
     //CUANDO SELECCCIONE UNA FECHA VÁLIDA EL INPUT REGRESA A SU ESTILO NORMAL (VALIDACIÓN) - PESTAÑA INFORMACIÓN REGISTRO USUARIO
     $("#form-fechaIngresoRegistro").change(function() {
-    	$("#form-fechaIngresoRegistro").css("border", "1px solid #d9d9d9");
+    	$("#form-fechaIngresoRegistro").css("border", "1px solid #bdbdbd");
     });
     
     //MÉTODO PARA SELECCIONAR O DESELECCIONAR TODAS LAS OPCIONES DE LOS MULTISELECTS - VISTA CONSULTA USUARIOS
