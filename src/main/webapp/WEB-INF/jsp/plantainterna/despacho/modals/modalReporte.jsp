@@ -136,6 +136,10 @@
                                         <th>GEOGRAF&Iacute;A</th>
                                         <th>FECHA CREACI&Oacute;N</th>   
                                         <th>FECHA ATENCI&Oacute;N</th>
+                                        <th>FECHA CONFIRMACI&Oacute;N</th>
+                                        <th>FECHA AGENDA</th>
+                                        <th>FECHA INICIO ORDEN</th>
+                                        <th>FECHA FIN ORDEN</th>
                                         <th>TURNO</th>
                                         <th>OPERARIO</th>
                                         <th>#EMPLEADO</th>

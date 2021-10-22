@@ -41,6 +41,12 @@ public class ParamConsultaOTPI {
 	private List<Integer> estatusOt;
 	private String fechaInicio;
 	private String fechaFin;
+	private String fechaPrimeraAgenda;
+	private String fechaCreacion;
+	private String fechaConfirmacion;
+	private String fechaAgenda;
+	private String fechaInicioOrden;
+	private String fechaFinOrden;
 	private int elementosPorPagina;
 	private int pagina;
 	private int totalRegistros;

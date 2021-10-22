@@ -1919,6 +1919,20 @@ table.dataTable.no-footer {
   font-weight: bold !important;
 }
 
+#table-reporte #head_table tr th{
+  padding: 0.5em !important;
+  font-size: 0.95em !important;
+}
+
+#table-reporte tr td {
+  font-size: 0.6em !important;
+  padding: 0.5em !important;
+}
+
+#table-reporte .pagination .page-link {
+  font-size: 0.5em !important;
+}
+
 #table-reporte tr td,
 #table-ots-trabajadas-tecnico tr td {
   font-size: 0.7em;

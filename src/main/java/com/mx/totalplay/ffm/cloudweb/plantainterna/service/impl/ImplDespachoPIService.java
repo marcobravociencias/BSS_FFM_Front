@@ -887,7 +887,7 @@ public class ImplDespachoPIService implements DespachoPIService {
             if (ordenesArray.size() > 0) {
                 if (jsonObjectResponse.get("registrosTotales").getAsInt() > 0) {
                     int count = 0;
-                    dataArray = new String[ordenesArray.size()][13];
+                    dataArray = new String[ordenesArray.size()][17];
                     for (int i = 0; i < ordenesArray.size(); i++) {
                         JsonObject object = (JsonObject) ordenesArray.get(i);
                         logger.info("objeto: " + object);
@@ -899,11 +899,15 @@ public class ImplDespachoPIService implements DespachoPIService {
                         dataArray[count][5] = object.get("estatus") != null ? object.get("estatus").getAsString().trim() : "";
                         dataArray[count][6] = object.get("estado") != null ? object.get("estado").getAsString().trim() : "";
                         dataArray[count][7] = object.get("geografia") != null ? object.get("geografia").getAsString().trim() : "";
-                        dataArray[count][8] = object.get("fechaCreacion") != null ? object.get("fechaCreacion").getAsString().trim() : "";
-                        dataArray[count][9] = object.get("fechaPrimerAgenda") != null ? object.get("fechaPrimerAgenda").getAsString().trim() : "";
-                        dataArray[count][10] = object.get("turno") != null ? object.get("turno").getAsString().trim() : "";
-                        dataArray[count][11] = object.get("operario") != null ? object.get("operario").getAsString().trim() : "";
-                        dataArray[count][12] = object.get("nempleado") != null ? object.get("nempleado").getAsString().trim() : "";
+                        dataArray[count][8] = object.get("fechaCreacion") != null ? object.get("fechaCreacion").getAsString().trim().split(" ")[0] : "";
+                        dataArray[count][9] = object.get("fechaPrimeraAgenda") != null ? object.get("fechaPrimeraAgenda").getAsString().trim().split(" ")[0] : "";
+                        dataArray[count][10] = object.get("fechaConfirmacion") != null ? object.get("fechaConfirmacion").getAsString().trim().split(" ")[0] : "";
+                        dataArray[count][11] = object.get("fechaAgenda") != null ? object.get("fechaAgenda").getAsString().trim().split(" ")[0] : "";
+                        dataArray[count][12] = object.get("fechaInicioOrden") != null ? object.get("fechaInicioOrden").getAsString().trim().split(" ")[0] : "";
+                        dataArray[count][13] = object.get("fechaFinOrden") != null ? object.get("fechaFinOrden").getAsString().trim().split(" ")[0] : "";
+                        dataArray[count][14] = object.get("turno") != null ? object.get("turno").getAsString().trim() : "";
+                        dataArray[count][15] = object.get("operario") != null ? object.get("operario").getAsString().trim() : "";
+                        dataArray[count][16] = object.get("nempleado") != null ? object.get("nempleado").getAsString().trim() : "";
 
                         count++;
 
@@ -986,7 +990,11 @@ public class ImplDespachoPIService implements DespachoPIService {
                     result.addProperty("ESTADO", object.get("estado") != null ? object.get("estado").getAsString() : "");
                     result.addProperty("GEOGRAFIA", object.get("geografia") != null ? object.get("geografia").getAsString() : "");
                     result.addProperty("FECHA CREACIÓN", object.get("fechaCreacion") != null ? object.get("fechaCreacion").getAsString() : "");
-                    result.addProperty("FECHA ATENCIÓN", object.get("fechaPrimerAgenda") != null ? object.get("fechaPrimerAgenda").getAsString() : "");
+                    result.addProperty("FECHA ATENCIÓN", object.get("fechaPrimeraAgenda") != null ? object.get("fechaPrimeraAgenda").getAsString() : "");
+                    result.addProperty("FECHA CONFIRMACIÓN", object.get("fechaConfirmacion") != null ? object.get("fechaConfirmacion").getAsString() : "");
+                    result.addProperty("FECHA AGENDA", object.get("fechaAgenda") != null ? object.get("fechaAgenda").getAsString() : "");
+                    result.addProperty("FECHA INICIO ORDEN", object.get("fechaInicioOrden") != null ? object.get("fechaInicioOrden").getAsString() : "");
+                    result.addProperty("FECHA FIN ORDEN", object.get("fechaFinOrden") != null ? object.get("fechaFinOrden").getAsString() : "");
                     result.addProperty("TURNO", object.get("turno") != null ? object.get("turno").getAsString() : "");
                     result.addProperty("OPERARIO", object.get("operario") != null ? object.get("operario").getAsString() : "");
                     result.addProperty("#EMPLEADO", object.get("nempleado") != null ? object.get("nempleado").getAsString() : "");
