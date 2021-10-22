@@ -74,13 +74,13 @@
     <div class="col-md-4">
 		<label class="span-consulta"><i class="fa fa-id-card"></i> CURP*</label>
         <div class="input-group">
-        	<input type="text" class="form-control inputFormulario" ng-model="informacionRegistro.curp" id="form-curp" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. FOBR920509HMSLRY05">
+        	<input type="text" class="form-control inputFormulario" ng-model="informacionRegistro.curp" id="form-curp" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. FOBR920509HMSLRY05" maxlength="18" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
         </div>
     </div>
     <div class="col-md-4">
 		<label class="span-consulta"><i class="fa fa-id-card"></i> RFC*</label>
         <div class="input-group">
-        	<input type="text" class="form-control inputFormulario" ng-model="informacionRegistro.rfc" id="form-rfc" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. SALJ940309U54">
+        	<input type="text" class="form-control inputFormulario" ng-model="informacionRegistro.rfc" id="form-rfc" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. SALJ940309U54" maxlength="13" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
         </div>
     </div>
 </div>
@@ -88,13 +88,13 @@
 	<div class="col-md-4">
 		<label class="span-consulta"><i class="fa fa-mobile-phone"></i> Tel&eacute;fono de contacto*</label>
         <div class="input-group">
-        	<input type="number" class="form-control inputFormulario" ng-model="informacionRegistro.telefonoContacto" id="form-telefono-contacto" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. 5515798000" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="10" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+        	<input type="text" class="form-control inputFormulario" ng-model="informacionRegistro.telefonoContacto" id="form-telefono-contacto" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. 5515798000" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="10" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
         </div>
     </div>
     <div class="col-md-4">
 		<label class="span-consulta"><i class="fa fa-envelope"></i> Correo electr&oacute;nico*</label>
         <div class="input-group">
-        	<input type="email" class="form-control inputFormulario" ng-model="informacionRegistro.correo" id="form-correo" aria-describedby="basic-addon3" style="height: 34px;" placeholder="josesanchez@totalplay.com.mx">
+        	<input type="email" class="form-control inputFormulario" ng-model="informacionRegistro.correo" id="form-correo" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. josesanchez@totalplay.com.mx">
         </div>
     </div>
     <div class="col-md-4">
