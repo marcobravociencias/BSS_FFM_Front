@@ -75,7 +75,7 @@ public class ImplAutentificacionService  implements AutentificacionService{
 
 		List<String>listadoOrdenamiento=Arrays.asList(
 				Optional.of(ordenamiento).isPresent() ? ordenamiento.split(",") : new String[0]
-		);
+		); 
 		logger.info("retornarListOrdenamiento listadoOrdenamiento" + gson.toJson(listadoOrdenamiento));
 
 		permisos=permisos.stream().map(e->{ e.setOrdenConfig(-1); return e ;}) .collect(Collectors.toList());	
@@ -100,14 +100,16 @@ public class ImplAutentificacionService  implements AutentificacionService{
 				.sorted(Comparator.comparing(Permiso::getOrdenConfig))
 				.filter(e-> e.getOrdenConfig() != -1)			
 				.collect(Collectors.toList());
-		int lastOrden=permisosFound.get( permisosFound.size()-1 ).getOrdenConfig();
-		logger.info("##lastOrden "+lastOrden+"permisosFound.size()"+permisosFound.size());		
+		
+		int lastOrden=permisosFound.size() >0  ? permisosFound.get( permisosFound.size()-1 ).getOrdenConfig() : 0;
+			
 		
 		for(Permiso permis:permisoNotfound) {
 			permis.setOrdenConfig(++lastOrden);			
 		}
 		logger.info("##found "+gson.toJson(permisosFound));		
 		logger.info("## not found"+gson.toJson(permisoNotfound));
+		
 		List<Permiso>nuevoOrdenamiento=new ArrayList<Permiso>();
 		nuevoOrdenamiento.addAll(permisosFound);
 		nuevoOrdenamiento.addAll(permisoNotfound);
