@@ -88,6 +88,17 @@ app.service("usuarioPIService", function ($http) {
         });
     };
     
+    this.consultarTecnicos=function(params){
+		return $http({
+			method: "post",
+			url: "req/consultarTecnicosRegistroUsuario",
+			data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
+    
     //-----------------------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------------------
 

@@ -359,7 +359,7 @@
                                                     </span>
                                                 </div>
                                                 <div class="chats" ng-repeat="comentario in comentariosOrdenTrabajo">
-                                                    <div class="chat" ng-if="comentario.origenSistema === 1">
+                                                    <div class="chat" ng-if="comentario.origenSistema === 2">
                                                         <!-- APP-->
                                                         <div class="chat-avatar">
                                                             <a class="avatar"><i
@@ -375,7 +375,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="chat chat-right" ng-if="comentario.origenSistema !== 1">
+                                                    <div class="chat chat-right" ng-if="comentario.origenSistema !== 2">
                                                         <div class="chat-body">
                                                             <span class="text-fecha-comentario"
                                                                 ng-bind="comentario.fechaComentario"></span>

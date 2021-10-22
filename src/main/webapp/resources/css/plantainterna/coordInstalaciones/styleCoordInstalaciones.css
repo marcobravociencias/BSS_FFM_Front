@@ -1792,3 +1792,24 @@ span.btn-floating.btn-evidencia.btn-sm.btn-secondary.waves-effect.waves-light {
   color:#a4a4a4;
   font-size:1em;
 }
+.tab-content-direccion {
+  padding: 1em;
+}
+#v-tabs-tab-detalle-ot .nav-link {
+  border-top-right-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+}
+#v-tabs-tab-detalle-ot .nav-link.active {
+  border-top-right-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+  background-color: #2196f3;
+  /* box-shadow: 0 0 8px 0 #2196f3; */
+  border-bottom: 0;
+  color: white !important;
+  box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%),
+    0 1px 5px 0 rgb(0 0 0 / 20%);
+  z-index: 1;
+}
+.container.container-accion {
+  width: 60%;
+}

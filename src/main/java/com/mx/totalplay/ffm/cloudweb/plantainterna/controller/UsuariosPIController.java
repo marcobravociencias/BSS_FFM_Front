@@ -112,6 +112,16 @@ public class UsuariosPIController {
         return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
 	}
 	
+	@PostMapping("/consultarTecnicosRegistroUsuario")
+    public ResponseEntity<?> consultarTecnicosRegistroUsuario(@RequestBody String params) {
+        logger.info("*** Objeto: " + params);
+        ServiceResponseResult result = usuarioService.consultarTecnicosRegistroUsuario(params);
+        if (result.getResult() instanceof Integer){
+            return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
+    }
+	
 	//-------------------------------------------------------------------------------------------
 	//-------------------------------------------------------------------------------------------
 	

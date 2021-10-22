@@ -34,4 +34,7 @@ public class ConstUsuarioPI implements Serializable{
 	@Value("${guardarUsuario}")
 	private String guardarUsuario;
 	
+	@Value("${consultarTecnicosRegistroUsuario}")
+	private String consultarTecnicosRegistroUsuario;
+	
 }

@@ -1229,7 +1229,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                         swal.close()
                     }
                 },
-                "columns": [null, null, null, null, null, null, null, null, null, null, null, null, null],
+                "columns": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
                 "language": idioma_espanol_not_font,
                 "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">', 
                 dom: 'Bfrtip', 

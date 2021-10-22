@@ -221,6 +221,22 @@ public class ImplUsuariosPIService implements UsuariosPIService {
 		logger.info("RESULT guardarUsuario " + gson.toJson(response));
 		return response;
 	}
+	
+	@Override
+	public ServiceResponseResult consultarTecnicosRegistroUsuario(String params) {
+		logger.info("ImplUsuariosPIService.class [metodo = consultarTecnicosRegistroUsuario() ]\n");
+		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		String tokenAcces=principalDetail.getAccess_token();
+		logger.info("json object params## "+jsonObject.toString());	 
+		String url = principalDetail.getDireccionAmbiente().concat(constUsuario.getConsultarTecnicosRegistroUsuario());
+		ServiceResponseResult response= restCaller.callPostBearerTokenRequest(jsonObject.toString(), url, ServiceResponseResult.class, tokenAcces);
+		logger.info("RESULT consultarTecnicosRegistroUsuario " + gson.toJson(response));
+		return response;
+	}
+	
+	//-------------------------------------------------------------------------------------------
+	//-------------------------------------------------------------------------------------------
 
 	@Override
 	public ServiceResponseResult consultarRegionesEstructura() {

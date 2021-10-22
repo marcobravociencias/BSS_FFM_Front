@@ -34,9 +34,13 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     $scope.listaCiudadNatalRegistro = [];
     $scope.listaPermisosSeleccionados = [];
     $scope.listaTecnicos = [];
+    $scope.listaDespachos = [];
     $scope.informacionRegistro.asignacionAutomatica = 0;
-    $scope.mostrarAccesos = true;
-    $scope.mostrarTecnicos = true;
+    $scope.mostrarAccesos = false;
+    $scope.mostrarTecnicos = false;
+    $scope.mostrarDespacho = false;
+    $scope.validarTamDatos = false;
+    $scope.isTecnico = false;
     //PENDIENTES
 	$scope.respaldoIntervenciones = [];
    
@@ -252,7 +256,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     
     $scope.iniciarFechaRegistro = function () {
         $('#form-fechaIngresoRegistro').datepicker({
-            format: 'yyyy-mm-dd',
+            format: 'dd/mm/yyyy',
             autoclose: true,
             language: 'es',
             todayHighlight: true,
@@ -484,16 +488,14 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	if(puestoSeleccionado == "tecnico"){
     		$scope.mostrarAccesos = false;
     	    $scope.mostrarTecnicos = false;
+    	    $scope.isTecnico = true;
+    	    $scope.mostrarDespacho = true;
     	}else{
     		$scope.mostrarAccesos = true;
     	    $scope.mostrarTecnicos = true;
+    	    $scope.isTecnico = false;
+    	    $scope.mostrarDespacho = false;
     	}
-    	$scope.listaTecnicos = jsonTecnicos;
-    	$("#checkTotdosTecnicosRegistro").prop("checked",false);
-    	angular.forEach($scope.listaTecnicos,function(tecnico,index){
-    		tecnico.checkedOpcion = false;
-		});
-    	
     	$scope.$apply();
     });
     
@@ -529,7 +531,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     			existePadre = false;
     		}
     	});
-    	console.log($scope.informacionRegistro.intervenciones);
+
     	$("#labelIntervencionesSeleccionadas").css("color", "rgb(70, 88, 107)");
 		$("#contenedorIntervencionesRegistro").css("border", "white solid 0px");
     	$scope.$apply();
@@ -634,9 +636,25 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     
     //MÉTODO PARA REGISTRAR USUARIOS NUEVOS
     $scope.guardarUsuario = function() {
+    	$scope.informacionRegistro.tecnicos = [];
+    	$scope.informacionRegistro.despachos = [];
     	var puestoSeleccionado = $("#puesto_select_registro option:selected").val();
     	var companiaSeleccionada = $("#compania_select_registro option:selected").val();
     	var sexo = $("#sexo_select_registro option:selected").val();
+    	var fechaSeleccionada = $scope.informacionRegistro.fechaIngreso.split('/');
+    	
+    	angular.forEach($scope.listaDespachos,function(despacho,index){
+			if(despacho.checkedOpcion == true){
+				$scope.informacionRegistro.despachos.push(despacho.idUsuario);
+			}
+		});
+    	
+    	angular.forEach($scope.listaTecnicos,function(tecnico,index){
+			if(tecnico.checkedOpcion == true){
+				$scope.informacionRegistro.tecnicos.push(tecnico.idUsuario);
+			}
+		});
+    	
     	let paramsRegistro = {
     			
     			nombre: $scope.informacionRegistro.nombre,
@@ -649,7 +667,12 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     			curp: $scope.informacionRegistro.curp,
     			genero: sexo,
     			
-    			urlFotoPerfil: "",
+//    			urlFotoPerfil: "",
+    			fotoPerfil: {
+    				bucketId: "",
+    			    archivo: "",
+    			    nombre: ""
+    			  },
     			
     			correoElectronico: $scope.informacionRegistro.correo,
     			telefonoCelular: $scope.informacionRegistro.telefonoContacto,
@@ -660,10 +683,10 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     			idTipoUsuario: puestoSeleccionado,
     			idProveedor: companiaSeleccionada,
     			idDispositivo: "string",
-    			fechaAlta: $scope.informacionRegistro.fechaIngreso,
+    			fechaAlta: fechaSeleccionada[2] + '-' + fechaSeleccionada[1] + '-' + fechaSeleccionada[0],
     			geografias: $scope.informacionRegistro.geografias,
     			intervenciones: $scope.informacionRegistro.intervenciones,
-    			idOperarios: [],
+    			idOperarios: $scope.isTecnico == true ? $scope.informacionRegistro.despachos : $scope.informacionRegistro.tecnicos,
     			permisos: $scope.informacionRegistro.permisos,
     			idAsignacionAutomatica: $scope.informacionRegistro.asignacionAutomatica
     	};
@@ -676,8 +699,13 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
         		usuarioPIService.guardarUsuario(paramsRegistro)
             ]).then(function(results) {
             	swal.close();
+            	if(results[0].data.respuesta){
+            		swal("Correcto", "¡Registro guardado con éxito!", "success");
+            		$scope.limpiarDatosRegistro();
+            	}else{
+            		swal("Error", results[0].data.resultDescripcion, "error");
+            	}
             });
-    		swal("Correcto", "¡Registro guardado con éxito!", "success");
     	}
 	}
     
@@ -689,6 +717,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	var validacionArbol = true;
     	var validacionAccesos = true;
     	var validacionTecnicos = true;
+    	var validacionDespachos = true;
     	var mensaje = "VALIDA LOS SIGUIENTES CAMPOS: ";
     	
     	
@@ -790,7 +819,18 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 			validacionInformacionGeneral = false;
 			mensaje = mensaje + "<br/> *CURP";
 		}else{
-			$("#form-curp").css("border", "1px solid #bdbdbd");
+			if($scope.validarTamDatos){
+				if($scope.informacionRegistro.curp.length == 18){
+					$("#form-curp").css("border", "1px solid #bdbdbd");
+				}else{
+					$("#form-curp").css("border-bottom", "2px solid #f55756");
+					validacionInformacionGeneral = false;
+					mensaje = mensaje + "<br/> *Formato de la CURP (18 dígitos)";
+				}
+			}else{
+				$("#form-curp").css("border", "1px solid #bdbdbd");
+			}
+			
 		}
 		
 		if($scope.informacionRegistro.rfc === "" || $scope.informacionRegistro.rfc === undefined){
@@ -798,7 +838,17 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 			validacionInformacionGeneral = false;
 			mensaje = mensaje + "<br/> *RFC";
 		}else{
-			$("#form-rfc").css("border", "1px solid #bdbdbd");
+			if($scope.validarTamDatos){
+				if($scope.informacionRegistro.rfc.length == 12 || $scope.informacionRegistro.rfc.length == 13){
+					$("#form-rfc").css("border", "1px solid #bdbdbd");
+				}else{
+					$("#form-rfc").css("border-bottom", "2px solid #f55756");
+					validacionInformacionGeneral = false;
+					mensaje = mensaje + "<br/> *Formato del RFC (12-13 dígitos)";
+				}
+			}else{
+				$("#form-rfc").css("border", "1px solid #bdbdbd");
+			}
 		}
 		
 		if($scope.informacionRegistro.telefonoContacto === "" || $scope.informacionRegistro.telefonoContacto === undefined){
@@ -806,7 +856,17 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 			validacionInformacionGeneral = false;
 			mensaje = mensaje + "<br/> *Teléfono de contacto";
 		}else{
-			$("#form-telefono-contacto").css("border", "1px solid #bdbdbd");
+			if($scope.validarTamDatos){
+				if($scope.informacionRegistro.telefonoContacto.length == 10){
+					$("#form-telefono-contacto").css("border", "1px solid #bdbdbd");
+				}else{
+					$("#form-telefono-contacto").css("border-bottom", "2px solid #f55756");
+					validacionInformacionGeneral = false;
+					mensaje = mensaje + "<br/> *Formato del teléfono (10 dígitos)";
+				}
+			}else{
+				$("#form-telefono-contacto").css("border", "1px solid #bdbdbd");
+			}
 		}
 		
 		if($scope.informacionRegistro.correo === "" || $scope.informacionRegistro.correo === undefined){
@@ -861,12 +921,9 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 			$("#contenedorGeografiasRegistro").css("border", "white solid 0px");
 		}
 		
-		//PESTAÑA ACCESOS (PERMISOS)
-		var puestoSeleccionado = $("#puesto_select_registro option:selected").text().toLowerCase();
-    	puestoSeleccionado = puestoSeleccionado.split('').map( letra => acentos[letra] || letra).join('').toString();
-    	if(puestoSeleccionado == "tecnico" || puestoSeleccionado == "auxiliar"){
-    		//---
-    	}else{
+		//CHECK SI EL PUESTO SELECCIONADO ES TÉCNICO NO VALIDA (TÉCNICOS Y PERMISOS) Y SI NO ES TÉCNICO SI VALIDA DICHA INFORMACIÓN
+		if($scope.isTecnico == false){
+			//PESTAÑA ACCESOS (PERMISOS)
     		if($scope.listaPermisosSeleccionados == "" || $scope.listaPermisosSeleccionados == undefined || $scope.listaPermisosSeleccionados == null){
     			validacionAccesos = false;
     			mensaje = mensaje + "<br/> *Permiso(s)";
@@ -876,23 +933,40 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     			$("#labelPermisosSeleccionadas").css("color", "rgb(70, 88, 107)");
     			$("#contenedorPermisosRegistro").css("border", "white solid 0px");
     		}
-    	}
-    	
-    	//PESTAÑA TÉCNICOS
-    	var checkTec = 0;
-		angular.forEach($scope.listaTecnicos,function(tecnico,index){
-			if(tecnico.checkedOpcion == true){
-				checkTec++;
-			}
-		});
-		if(checkTec < 1){
-			validacionTecnicos = false;
-			mensaje = mensaje + "<br/> *Técnico(s)";
-			$("#labelTecnicosSeleccionadas").css("color", "#f55756");
-			$("#contenedorTecnicosRegistro").css("border", "#f55756 solid 1px");
+    		
+    		//PESTAÑA TÉCNICOS
+        	var checkTec = 0;
+    		angular.forEach($scope.listaTecnicos,function(tecnico,index){
+    			if(tecnico.checkedOpcion == true){
+    				checkTec++;
+    			}
+    		});
+    		if(checkTec < 1){
+    			validacionTecnicos = false;
+    			mensaje = mensaje + "<br/> *Técnico(s)";
+    			$("#labelTecnicosSeleccionadas").css("color", "#f55756");
+    			$("#contenedorTecnicosRegistro").css("border", "#f55756 solid 1px");
+    		}else{
+    			$("#labelTecnicosSeleccionadas").css("color", "rgb(70, 88, 107)");
+    			$("#contenedorTecnicosRegistro").css("border", "white solid 0px");
+    		}
 		}else{
-			$("#labelTecnicosSeleccionadas").css("color", "rgb(70, 88, 107)");
-			$("#contenedorTecnicosRegistro").css("border", "white solid 0px");
+			//PESTAÑA DESPACHOS
+        	var checkDes = 0;
+    		angular.forEach($scope.listaDespachos,function(despacho,index){
+    			if(despacho.checkedOpcion == true){
+    				checkDes++;
+    			}
+    		});
+    		if(checkDes < 1){
+    			validacionDespachos = false;
+    			mensaje = mensaje + "<br/> *Despachos(s)";
+    			$("#labelDespachosSeleccionados").css("color", "#f55756");
+    			$("#contenedorDespachosRegistro").css("border", "#f55756 solid 1px");
+    		}else{
+    			$("#labelTecnicosSeleccionadas").css("color", "rgb(70, 88, 107)");
+    			$("#contenedorDespachosRegistro").css("border", "white solid 0px");
+    		}
 		}
     	
     	//PESTAÑA CONFIRMAR USUARIO
@@ -938,6 +1012,12 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 			$("#pills-confirmar").removeClass("active show");
 			$("#pills-tecnico-tab").addClass("active");
 			$("#pills-tecnico").addClass("active show");
+		}else if(validacionDespachos == false){
+			validacion = false;
+			$("#pills-confirmar-tab").removeClass("active");
+			$("#pills-confirmar").removeClass("active show");
+			$("#pills-despacho-tab").addClass("active");
+			$("#pills-despacho").addClass("active show");
 		}else{
 			//...
 		}
@@ -1069,6 +1149,44 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		}
 	}
 	
+	//SELECCIONA O DESELECCIONA EL DESPACHO ELEGIDO - PESTAÑA DESPACHOS REGISTRO USUARIO
+	$scope.seleccionarDespachoRegistro = function(desoachoSeleccionado) {
+		if(desoachoSeleccionado.checkedOpcion){
+			desoachoSeleccionado.checkedOpcion = false;
+		}else{
+			desoachoSeleccionado.checkedOpcion = true;
+			$("#labelDespachosSeleccionados").css("color", "rgb(70, 88, 107)");
+			$("#contenedorDespachosRegistro").css("border", "white solid 0px");
+		}
+		//Verifica si todos los 'checkedOpcion' son true para activar el check de seleccionar todos
+		var check = true;
+		angular.forEach($scope.listaDespachos,function(despacho,index){
+			if(despacho.checkedOpcion != true){
+				check = false;
+			}
+		});
+		if(check){
+			$("#checkTotdosDespachoRegistro").prop("checked",true);
+		}else{
+			$("#checkTotdosDespachoRegistro").prop("checked",false);
+		}
+	}
+	
+	//SELECCIONA O DESELECCIONA TODOS LOS DESPACHOS - PESTAÑA DESPACHOS REGISTRO USUARIO
+	$scope.seleccionarTodosDespachosRegistro = function() {
+		var check;
+		if($("#checkTotdosDespachoRegistro").prop('checked')){
+			check = true;
+			$("#labelDespachosSeleccionados").css("color", "rgb(70, 88, 107)");
+			$("#contenedorDespachosRegistro").css("border", "white solid 0px");
+		}else{
+			check = false;
+		}
+		angular.forEach($scope.listaDespachos,function(despacho,index){
+			despacho.checkedOpcion = check;
+		});
+	}
+	
 	//SELECCIONA O DESELECCIONA EL TÉCNICO ELEGIDO - PESTAÑA TÉCNICOS REGISTRO USUARIO
 	$scope.seleccionarTecnicoRegistro = function(tecnicoSeleccionado) {
 		if(tecnicoSeleccionado.checkedOpcion){
@@ -1105,6 +1223,130 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		angular.forEach($scope.listaTecnicos,function(tecnico,index){
 			tecnico.checkedOpcion = check;
 		});
+	}
+	
+	$scope.consultarDespachos = function() {
+		$scope.listaDespachos = [];
+		if($scope.informacionRegistro.geografias !== undefined){
+			if($scope.informacionRegistro.geografias.length > 0){
+				let params = {idGeografia:$scope.informacionRegistro.geografias};
+		    	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
+				swal.showLoading();
+		    	$q.all([
+		    		usuarioPIService.consultarTecnicos(params)
+		        ]).then(function(results) {
+		        	if (results[0].data !== undefined) {
+		            	if(results[0].data.respuesta){
+		            		if(results[0].data.result.usuarios !== null){
+			            		if(results[0].data.result.usuarios.length > 0){
+			            			$scope.listaDespachos = results[0].data.result.usuarios;
+			            			$("#checkTotdosDespachoRegistro").prop("checked",false);
+			            	    	angular.forEach($scope.listaDespachos,function(despacho,index){
+			            	    		despacho.checkedOpcion = false;
+			            			});
+			            		}else{
+			            			toastr.warning('¡No existen despachos actualmente!');
+			            		}
+		            		}else{
+		            			toastr.warning('¡No existen despachos actualmente!');
+		            		}
+		            	}else{
+		            		toastr.warning('¡No existen despachos actualmente!');
+		            	}
+		        	}else{
+		        		toastr.error('Error interno en el servidor.');
+		        	}
+		        	swal.close();
+		        });
+			}else{
+				toastr.warning('¡Selecciona al menos una geografía!');
+			}
+		}else{
+			toastr.warning('¡Selecciona al menos una geografía!');
+		}
+	}
+	
+	$scope.consultarTecnicos = function() {
+		$scope.listaTecnicos = [];
+		if($scope.informacionRegistro.geografias !== undefined){
+			if($scope.informacionRegistro.geografias.length > 0){
+				let params = {idGeografia:$scope.informacionRegistro.geografias};
+		    	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
+				swal.showLoading();
+		    	$q.all([
+		    		usuarioPIService.consultarTecnicos(params)
+		        ]).then(function(results) {
+		        	if (results[0].data !== undefined) {
+		            	if(results[0].data.respuesta){
+		            		if(results[0].data.result.usuarios !== null){
+			            		if(results[0].data.result.usuarios.length > 0){
+			            			$scope.listaTecnicos = results[0].data.result.usuarios;
+			            			$("#checkTotdosTecnicosRegistro").prop("checked",false);
+			            	    	angular.forEach($scope.listaTecnicos,function(tecnico,index){
+			            	    		tecnico.checkedOpcion = false;
+			            			});
+			            		}else{
+			            			toastr.warning('¡No existen técnicos actualmente!');
+			            		}
+		            		}else{
+		            			toastr.warning('¡No existen técnicos actualmente!');
+		            		}
+		            	}else{
+		            		toastr.warning('¡No existen técnicos actualmente!');
+		            	}
+		        	}else{
+		        		toastr.error('Error interno en el servidor.');
+		        	}
+		        	swal.close();
+		        });
+			}else{
+				toastr.warning('¡Selecciona al menos una geografía!');
+			}
+		}else{
+			toastr.warning('¡Selecciona al menos una geografía!');
+		}
+	}
+	
+	$scope.limpiarDatosRegistro = function() {
+		$scope.informacionRegistro.intervenciones = [];
+		$scope.listaIntervencionesSeleccionadas = [];
+		$scope.informacionRegistro.geografias = [];
+		$scope.listaGeografiasSeleccionadas = [];
+		$scope.informacionRegistro.permisos = [];
+		$scope.listaPermisosSeleccionados = [];
+		$scope.informacionRegistro.tecnicos = [];
+		$scope.informacionRegistro.despachos = [];
+		$scope.listaTecnicos = [];
+		$scope.listaDespachos = [];
+		$scope.listaCiudadNatalRegistro = [];
+		$('#arbolIntervencionRegistro').jstree("deselect_all");
+		$('#arbolIntervencionRegistro').jstree("close_all");
+    	$('#arbolGeografiaRegistro').jstree("deselect_all");
+    	$('#arbolGeografiaRegistro').jstree("close_all");
+    	$('#arbolPermisoRegistro').jstree("deselect_all");
+    	$('#arbolPermisoRegistro').jstree("close_all");
+    	$("#puesto_select_registro"). prop("selectedIndex",0);
+    	$("#compania_select_registro"). prop("selectedIndex",0);
+    	$("#sexo_select_registro"). prop("selectedIndex",0);
+    	$("#checkTotdosTecnicosRegistro").prop("checked",false);
+    	$scope.informacionRegistro.ciudadNatal = "";
+		$scope.informacionRegistro = {};
+		$scope.confirmacionRegistro = {};
+		$scope.informacionRegistro.asignacionAutomatica = 0;
+		$scope.mostrarAccesos = false;
+	    $scope.mostrarTecnicos = false;
+	    $scope.mostrarDespacho = false;
+	    $scope.isTecnico = false;
+		$scope.iniciarFechaRegistro();
+		$("#pills-confirmar-tab").removeClass("active");
+		$("#pills-confirmar").removeClass("active show");
+		$("#pills-informacion-tab").addClass("active");
+		$("#pills-informacion").addClass("active show");
+		
+		$("#opcion-alta-tab").removeClass("active");
+		$("#opcion-alta").removeClass("active show");
+		$("#opcion-consulta-tab").addClass("active");
+		$("#opcion-consulta").addClass("active show");
 	}
 	
     // *** FIN CAMBIOS REYNEL *** 

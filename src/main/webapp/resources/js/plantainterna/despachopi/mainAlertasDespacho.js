@@ -649,7 +649,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
                 "comentario": $scope.comentarioAlerta,
                 //"idOrden": "3010",
                 "idOrden": $scope.alertaSeleccionadaObject.IdOT,
-                "origenSistema": "2"
+                "origenSistema": "1"
             }        
             genericService.agregarComentariosOt(params).then(function success(response) {
                 console.log(response);

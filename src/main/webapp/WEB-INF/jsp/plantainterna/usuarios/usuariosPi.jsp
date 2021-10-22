@@ -95,6 +95,9 @@
                                     </button>
                                 </div>
                             </div>
+<!--                             SE COLOCAN ESTOS INPUTS EN LO QUE SE ENCUENTRA SOLUCIÓN AL AUTOCOMPLETADO DE CHROME -->
+                            <input style="display: none;" type="search" class="form-control form-control-sm" ng-model="informacionRegistro.apellidoPaterno" name="apellidoPaterno" placeholder="apellidoPaterno">
+                            <input style="display: none;"  type="password" class="form-control inputFormulario" id="form-cword" aria-describedby="basic-addon3"placeholder="Ej. ********">
 				            <div class="row">
 								<div class="columna-principal-users col-md-12">
 									<div class="table-responsive">
@@ -135,7 +138,10 @@
                                             <a class="nav-link" id="pills-accesos-tab" data-toggle="pill" href="#pills-accesos" ng-show="mostrarAccesos" role="tab" aria-controls="pills-accesos" aria-selected="false">Accesos</a>
                                         </li>
                                         <li id="pestaniaTecnico" class="nav-item" role="presentation">
-                                            <a class="nav-link" id="pills-tecnico-tab" data-toggle="pill" href="#pills-tecnico" ng-show="mostrarTecnicos" role="tab" aria-controls="pills-tecnico" aria-selected="false">T&eacute;cnico</a>
+                                            <a class="nav-link" id="pills-tecnico-tab" ng-click="consultarTecnicos()" data-toggle="pill" href="#pills-tecnico" ng-show="mostrarTecnicos" role="tab" aria-controls="pills-tecnico" aria-selected="false">T&eacute;cnicos</a>
+                                        </li>
+                                        <li id="pestaniaDespacho" class="nav-item" role="presentation">
+                                            <a class="nav-link" id="pills-despacho-tab" ng-click="consultarDespachos()" data-toggle="pill" href="#pills-despacho" ng-show="mostrarDespacho" role="tab" aria-controls="pills-despacho" aria-selected="false">Despachos</a>
                                         </li>
                                         <li class="nav-item" role="presentation">
                                             <a class="nav-link" id="pills-confirmar-tab" ng-click="cargarInfoConfirmacionRegistro()" data-toggle="pill" ng-click="mostrarConfirmacionUsuario()" href="#pills-confirmar" role="tab" aria-controls="pills-confirmar" aria-selected="false">Confirmar Usuario</a>
@@ -156,6 +162,9 @@
                                         </div>
                                         <div class="tab-pane fade" id="pills-tecnico" role="tabpanel" aria-labelledby="pills-tecnico-tab">
                                             <jsp:include page="./content/tecnico.jsp"></jsp:include>
+                                        </div>
+                                        <div class="tab-pane fade" id="pills-despacho" role="tabpanel" aria-labelledby="pills-despacho-tab">
+                                            <jsp:include page="./content/despacho.jsp"></jsp:include>
                                         </div>
                                         <div class="tab-pane fade" id="pills-confirmar" role="tabpanel" aria-labelledby="pills-confirmar-tab">
                                             <jsp:include page="./content/confirmacion.jsp"></jsp:include>

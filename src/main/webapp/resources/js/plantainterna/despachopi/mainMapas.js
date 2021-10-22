@@ -39,16 +39,19 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
         if (markerUbiacionOperario)
             markerUbiacionOperario.setMap(null)
 
-        $scope.markerOt.map(function (e) { e.setMap(null); return e; })
-        $scope.markerOt = [];
+        $scope.limpiarMakerTecnicosGeneral();
 
         markerUbiacionOperario = undefined
         markerUbiacionOperario = new google.maps.Marker({
             map: mapubicacionoperario,
-            draggable: true,
             animation: google.maps.Animation.DROP,
             position: { lat: latitudRes, lng: longitudRes },
-            icon : "./resources/img/maps/pin-operario.png",
+            icon: {
+                url:"./resources/img/plantainterna/despacho/repartidor-marker.svg",
+                scaledSize: new google.maps.Size(37, 43),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(10, 20)
+            },
             title : "Tecnico",
         });
         tecnicoSelect.listadoOts.forEach(ot => {
@@ -63,23 +66,32 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
                 map: mapubicacionoperario,
                 latitud_ot: parseFloat(ot.latitud),
                 longitud_ot: parseFloat(ot.longitud),
-                icon : "./resources/img/maps/pin-pendiente.png"
+                icon: {
+                    url:'./resources/img/plantainterna/despacho/domicilio-marker.svg',
+                    scaledSize: new google.maps.Size(37, 43),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(10, 20)
+                },
             });
-            $scope.markerOt.push(marker_ot)
+            $scope.markerOt.push(marker_ot);
+            let pointA = new google.maps.LatLng(parseFloat(tecnicoSelect.latitud), parseFloat(tecnicoSelect.longitud)) // basel airport
+            let pointB = new google.maps.LatLng(parseFloat(ot.latitud), parseFloat(ot.longitud))
+            drawCurve(pointA, pointB, mapubicacionoperario);
         });
         $("#modalUbicacionOperario").modal('show');
 
         /*
         swal({ text: 'Consultando datos ...', allowOutsideClick: false });
         swal.showLoading();
-        let params = {
-            "Fecha_fin": "25/03/2021",
-            "Fecha_inicio": "25/02/2021",
-            "Id_subIntervencion": "48,35,49,50,51,116,1360,55,111,106,107,112,115,163,164,258,236,291,292,259,157,158,159,204,290,260,146,211,212,261,148,149,300,301,302,262,251,252,253,254,287,288,289,263,303,304,305,306,264,269,298,299,265,150,160,270,286,293,294,295,297,274,144,145,237,307,275,244,271,272,273,308,276,238,277,142,152,278,143,147,151,243",
-            "Id_turno": "1,2,3",
-            "Id_cluster": "176,596,827,848,592,538,826,847,851,164,597,598,594,825,829,832,852,591,831,528,823,828,824,535,529,175,1,830,846,525,595,593,533,532,850,849",
-            "IDSDESPAHCO": "64"
+         var params =  {
+            "Fecha_inicio": moment( moment($scope.fechaInicioFiltro, 'DD/MM/YYYY').toDate()  ).format('YYYY-MM-DD'),
+            "Fecha_fin": moment( moment($scope.fechaFinFiltro , 'DD/MM/YYYY').toDate() ).format('YYYY-MM-DD') ,
+            "Id_subIntervencion": envioIntervenciones,
+            "Id_turno": turnosdisponiblescopy,  
+            "IDSDESPAHCO": 64,
+            "Id_cluster": clustersparam
         }
+        
         mainDespachoService.consultarOtsTrabajadasDespacho(params).then(function success(response) {
             console.log(response);
             let latitudRes = parseFloat('19.342848228399788')
@@ -557,7 +569,6 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
 
     $scope.pintarMarkers = function (id) {
         let tecnicoSelect = $scope.listadoTecnicosGeneral.find(e => { return e.idTecnico === id })
-        console.log(tecnicoSelect);
         if (tecnicoSelect.cantidadOts > 0) {
             markerUbicacionRepartidor = new google.maps.Marker({
                 clickable: false,
