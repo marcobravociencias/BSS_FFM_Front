@@ -1063,7 +1063,21 @@ public class ImplCoordInstalacionesService implements CoordInstalacionesService{
                         	dataArray[count][8] = object.get("usuarioActualiza") != null ? object.get("usuarioActualiza").getAsString().trim() : "";
                         	dataArray[count][9] = object.get("tipoOrden") != null ? object.get("tipoOrden").getAsString().trim() : "";
                         	dataArray[count][10] = object.get("subTipoOrden") != null ? object.get("subTipoOrden").getAsString().trim() : "";
-                        	dataArray[count][11] = "<div class=''> <span onclick='consultaDetalleOt(" + String.valueOf(object.get("idOrden").getAsInt()) + ")' class='btn-floating btn-option btn-sm acciones'><th><i class='icono_cons_bg fa fa-bars' aria-hidden='true'></i></th></span></div>";
+                        	dataArray[count][11] = "<div class=''> <span onclick='consultaDetalleOt(" + String.valueOf(object.get("idOrden").getAsInt()) + "," + 
+                        			String.valueOf(object.get("folioSistema")) + "," +
+                        			String.valueOf(object.get("idFlujo").getAsInt()) + "," +
+                        			String.valueOf(48) + "," +
+                        			String.valueOf(107) + "," +
+                        			String.valueOf(19.336114067048) + "," +
+                        			String.valueOf(-99.1969629133) +
+                        			/*
+                        			object.get("idTipoOrden").getAsInt() + "," +
+                        			object.get("idSubTipoOrden").getAsInt() + "," +
+                        			object.get("latitud").getAsDouble() + "," +
+                        			object.get("longitud").getAsDouble() + 
+                        			*/
+                        			
+                        			")' class='btn-floating btn-option btn-sm acciones'><th><i class='icono_cons_bg fa fa-bars' aria-hidden='true'></i></th></span></div>";
                         	count++;
                         }
                         dataResponse = DataTableResponse.builder()

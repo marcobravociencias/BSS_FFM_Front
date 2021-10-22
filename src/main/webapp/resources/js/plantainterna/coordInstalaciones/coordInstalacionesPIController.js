@@ -13,6 +13,13 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 	app.coordInstalacionesSF($scope,coordInstalacionesPIService,$q,genericService)
 	$scope.vistaCoordinacion = 0;
 	$scope.filtrosCatalogo = [];
+	$scope.listadoTurnosAcciones = [];
+	$scope.listadoMotivosReagenda = [];
+	$scope.listadoMotivosCalendarizado = [];
+	$scope.listadoEstadoGestoria = [];
+	$scope.listadoMotivosGestaria = [];
+
+	$scope.filtrosGeneral = {};
 
 	var tablePendiente = undefined;
 	var tableAsignada = undefined;
@@ -28,7 +35,8 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 	$scope.consultarCatalogos = function() {
 		$q.all([
 			coordInstalacionesPIService.consultarCatalogoEstatusDespachoPI(),
-			coordInstalacionesPIService.consulCatalogoGeografiaUsuarioDespacho()
+			coordInstalacionesPIService.consulCatalogoGeografiaUsuarioDespacho(),
+			coordInstalacionesPIService.consultarCatalogoTurnosDespachoPI()
 		]).then(function(results) {  
 			if (results[0].data !== undefined) {
 				if (results[0].data.respuesta) {
@@ -85,6 +93,22 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
                     toastr.warning( results[2].data.resultDescripcion );                
                 }    
 			}
+
+			if (results[2].data !== undefined) {
+                if(results[2].data.respuesta ){
+                    if(results[2].data.result ){
+                        $scope.filtrosGeneral.turnosdisponibles=results[2].data.result
+                        $scope.filtrosGeneral.turnosdisponibles.map(e=>{e.checkedOpcion=true; return e;})
+						$scope.mostrarTurnos();
+                    }else{                      
+                        toastr.warning( 'No se encontraron catalogos turnos' );                
+                    }
+                }else{
+                    toastr.warning( results[0].data.resultDescripcion );                
+                }               
+            }else{
+                toastr.error( 'Ha ocurrido un error en la consulta de turnos' );                
+            }
 		}).catch(err => handleError(err));
 	}
 	$scope.consultarCatalogos();
@@ -698,9 +722,149 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 		} else {
 			mostrarMensajeWarningValidacion(mensaje);
 		}
-
-		
 	}
+
+	$scope.elementCalendarizado = {};
+	$scope.elementReagendaOT = {};
+	$scope.elementoPlazaComercial = {};
+	$scope.cambioStatus = function(tipo){
+        let errorMensaje = '<ul>';
+        let isValido = true;
+        let params = {};
+        $scope.tipoaccioncambioestatus=tipo
+        if (tipo === 'calendariza') {
+            if ($scope.elementCalendarizado.fechaCalendarizado.trim() === '') {
+                errorMensaje += '<li>Completa campo fecha</li>'
+                isValido = false;
+            }
+            if (!$scope.elementCalendarizado.turno) {
+                errorMensaje += '<li>Seleccione campo turno.</li>'
+                isValido = false;
+            }
+            if (!$scope.elementCalendarizado.motivo) {
+                errorMensaje += '<li>Seleccione campo motivo.</li>'
+                isValido = false;
+            }
+            if (!$scope.elementCalendarizado.comentario || $scope.elementCalendarizado.comentario.trim() === '') {
+                errorMensaje += '<li>Completa campo comnentario.</li>'
+                isValido = false;
+            }
+            if (isValido) {
+                let fechaCalendariza = $scope.elementCalendarizado.fechaCalendarizado.split('/')
+				params = {
+					tipo: tipo,
+					ot: $scope.detalleOtSeleccionada.idOrden,
+					folioSistema: $scope.detalleOtSeleccionada.folioOrden,
+					idFlujo: $scope.detalleOtSeleccionada.idFlujo,
+					idTipoOrden: $scope.detalleOtSeleccionada.idtipoOrden,
+					idSubTipoOrden: $scope.detalleOtSeleccionada.idSubtipoOrden,
+					idOrigenSistema: 1,
+					idUsuarioDespacho: 12,
+					latitud: $scope.detalleOtSeleccionada.latitud,
+					longitud: $scope.detalleOtSeleccionada.longitud,
+					comentarios: $scope.elementCalendarizado.comentario,
+					idTurno: $scope.elementCalendarizado.turno.id,
+					idMotivo: $scope.elementCalendarizado.motivo.id,
+					fechaHoraAgenda: fechaCalendariza[2] + '-' + fechaCalendariza[1] + '-' + fechaCalendariza[0]
+				}
+            }
+        } else if (tipo === 'reagendamiento') {
+            if (!$scope.elementReagendaOT || $scope.elementReagendaOT.fechaReagendamiento.trim() === '') {
+                errorMensaje += '<li>Completa campo fecha.</li>'
+                isValido = false;
+            }
+            if (!$scope.elementReagendaOT || !$scope.elementReagendaOT.turno) {
+                errorMensaje += '<li>Seleccione campo turno.</li>'
+                isValido = false;
+            }
+            if (!$scope.elementReagendaOT || !$scope.elementReagendaOT.motivo) {
+                errorMensaje += '<li>Seleccione campo motivo.</li>'
+                isValido = false;
+            }
+            if (!$scope.elementReagendaOT.comentario || $scope.elementReagendaOT.comentario.trim() === '') {
+                errorMensaje += '<li>Completa campo comentario.</li>'
+                isValido = false;
+            }
+            if (isValido) {
+                let fechaReagendamiento = $scope.elementReagendaOT.fechaReagendamiento.split('/')
+				params = {
+					tipo: tipo,
+					ot: $scope.detalleOtSeleccionada.idOrden,
+					folioSistema: $scope.detalleOtSeleccionada.folioOrden,
+					idFlujo: $scope.detalleOtSeleccionada.idFlujo,
+					idTipoOrden: $scope.detalleOtSeleccionada.idtipoOrden,
+					idSubTipoOrden: $scope.detalleOtSeleccionada.idSubtipoOrden,
+					idOrigenSistema: 1,
+					idUsuarioDespacho: 12,
+					latitud: $scope.detalleOtSeleccionada.latitud,
+					longitud: $scope.detalleOtSeleccionada.longitud,
+					comentarios: $scope.elementReagendaOT.comentario,
+					idTurno: $scope.elementReagendaOT.turno.id,
+					idMotivo: $scope.elementReagendaOT.motivo.id,
+					fechaHoraAgenda: fechaReagendamiento[2] + '-' + fechaReagendamiento[1] + '-' + fechaReagendamiento[0]
+				}
+            }
+        } else if (tipo === 'gestoria'){
+            if (!$scope.elementoPlazaComercial || !$scope.elementoPlazaComercial.estado) {
+                errorMensaje += '<li>Seleccione campo estado.</li>'
+                isValido = false;
+            }
+            if (!$scope.elementoPlazaComercial || !$scope.elementoPlazaComercial.motivo) {
+                errorMensaje += '<li>Seleccione campo motivo.</li>'
+                isValido = false;
+            }
+            if (!$scope.elementoPlazaComercial.comentario || $scope.elementoPlazaComercial.comentario.trim() === '') {
+                errorMensaje += '<li>Completa campo comentario.</li>'
+                isValido = false;
+            }
+            if (isValido) {
+				params = {
+					tipo: tipo,
+					ot: $scope.detalleOtSeleccionada.idOrden,
+					folioSistema: $scope.detalleOtSeleccionada.folioOrden,
+					idFlujo: $scope.detalleOtSeleccionada.idFlujo,
+					idTipoOrden: $scope.detalleOtSeleccionada.idtipoOrden,
+					idSubTipoOrden: $scope.detalleOtSeleccionada.idSubtipoOrden,
+					idOrigenSistema: 1,
+					idUsuarioDespacho: 12,
+					latitud: $scope.detalleOtSeleccionada.latitud,
+					longitud: $scope.detalleOtSeleccionada.longitud,
+					comentarios: $scope.elementoPlazaComercial.comentario,
+					idMotivo: $scope.elementoPlazaComercial.motivo.id,
+				}
+            }
+        }
+        if (isValido) {
+            envioCambioStatus(params);
+        } else {
+            errorMensaje += '</ul>'
+            mostrarMensajeWarningValidacion(errorMensaje)
+        }
+    }
+
+	envioCambioStatus = function(params) {
+        swal({ text: 'Cambiando estatus de la OT ...', allowOutsideClick: false });
+        swal.showLoading();
+        genericService.cambioStatusOts(params).then(result =>{
+            console.log(result);
+            swal.close();
+            
+            if(result.data.respuesta){
+                toastr.success( result.data.result.mensaje );
+				if ($scope.vistaCoordinacion === 1) {
+					$scope.consultarPendientes();
+				} else if ($scope.vistaCoordinacion === 6) {
+					$scope.consultarCalendarizada();
+				} else {
+					$scope.consultarGestoria();
+				}
+                $("#modalDetalleOt").modal('hide');
+            }else{
+                console.log(result.data.resultDescripcion)
+                toastr.warning( result.data.resultDescripcion );
+            }
+        }).catch(err => handleError(err));
+    }
 
 	$scope.objetoPendiente = {};
 	$scope.limpiarCamposPendiente = function(opcion) {
@@ -899,15 +1063,16 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 		$scope.listaEstatusPendiente.map((es)=>{
 			es.estados = $scope.filtrosCatalogo.filter(e => {return e.idPadre === es.id});
 		});
+		$scope.listadoMotivosReagenda = $scope.filtrosCatalogo.filter(e => {return e.idPadre === 201})
 
 		//ASIGNADA
-		$scope.listaEstatusAsignada = $scope.filtrosCatalogo.filter(e => {return e.id === 6});
+		$scope.listaEstatusAsignada = $scope.filtrosCatalogo.filter(e => {return e.id === 2});
 		$scope.listaEstatusAsignada.map((es)=>{
 			es.estados = $scope.filtrosCatalogo.filter(e => {return e.idPadre === es.id});
 		});
 
 		//DETENIDA
-		$scope.listaEstatusDetenida = $scope.filtrosCatalogo.filter(e => {return e.id === 6});
+		$scope.listaEstatusDetenida = $scope.filtrosCatalogo.filter(e => {return e.id === 3});
 		$scope.listaEstatusDetenida.map((es)=>{
 			es.estados = $scope.filtrosCatalogo.filter(e => {return e.idPadre === es.id});
 		});
@@ -929,13 +1094,20 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 		$scope.listaEstatusCalendarizada.map((es)=>{
 			es.estados = $scope.filtrosCatalogo.filter(e => {return e.idPadre === es.id});
 		});
+		$scope.listadoMotivosCalendarizado = $scope.filtrosCatalogo.filter(e => {return e.idPadre === 243})
 
 		//GESTORIA
 		$scope.listaEstatusGestoria = $scope.filtrosCatalogo.filter(e => {return e.id === 7});
 		$scope.listaEstatusGestoria.map((es)=>{
 			es.estados = $scope.filtrosCatalogo.filter(e => {return e.idPadre === es.id});
 		});
+		$scope.listadoEstadoGestoria = $scope.filtrosCatalogo.filter(e => {return e.idPadre === 7});
+		$scope.listadoMotivosGestaria = $scope.filtrosCatalogo.filter(e => {return e.idPadre === 249})
 
+	}
+
+	$scope.mostrarTurnos = function() {
+		$scope.listadoTurnosAcciones = $scope.filtrosGeneral.turnosdisponibles;
 	}
 
 	$scope.banderaGeografiaPendiente = false;
@@ -1284,6 +1456,33 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 		
 	}
 
+	$scope.detalleOtSeleccionada = {};
+	consultaDetalleOt = function(idOt, folio, idFlujo, idTipoOrden, idSubtipoOrden, latitud, longitud) {
+		if ($scope.vistaCoordinacion === 1 || $scope.vistaCoordinacion === 6 || $scope.vistaCoordinacion === 7) {
+			$scope.elementCalendarizado = {};
+			$scope.elementReagendaOT = {};
+			$scope.elementoPlazaComercial = {};
+			$scope.detalleOtSeleccionada = {};
+			$scope.$apply();
+			$scope.detalleOtSeleccionada.idOrden = idOt;
+			$scope.detalleOtSeleccionada.folioOrden = folio;
+			$scope.detalleOtSeleccionada.idFlujo = idFlujo;
+			$scope.detalleOtSeleccionada.idtipoOrden = idTipoOrden;
+			$scope.detalleOtSeleccionada.idSubtipoOrden = idSubtipoOrden;
+			$scope.detalleOtSeleccionada.latitud = latitud;
+			$scope.detalleOtSeleccionada.longitud = longitud;
+			$("#modalDetalleOt").modal("show");
+			$('#fecha-reagendamiento').datepicker('update',new Date());
+			$('#fecha-calendarizado').datepicker('update',   moment(new Date()).add('days', 8).toDate() );
+			if ($scope.vistaCoordinacion !== 1) {
+				document.getElementById('opcion-reagendar').click()
+			} else {
+				document.getElementById('opcion-plaza').click()
+			}
+		}
+		//$scope.vistaCoordinacion = 
+	}
+
 	$scope.seleccionarTodos = function(lista) {
 		lista.map((e)=>{
 			e.check = true;
@@ -1432,6 +1631,24 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 			clearBtn: true
 		});
 		$('.datepicker').datepicker('update', new Date());
+
+		$('#fecha-reagendamiento').datepicker({
+            format : 'dd/mm/yyyy',
+            autoclose : true,
+            language : 'es',
+            todayHighlight : true,
+            startDate :  moment(new Date()).toDate()
+        });
+        $('#fecha-reagendamiento').datepicker('update',new Date());
+
+		$('#fecha-calendarizado').datepicker({
+            format : 'dd/mm/yyyy',
+            autoclose : true,
+            language : 'es',
+            todayHighlight : true,
+            startDate :  moment(new Date()).add('days', 8).toDate()
+        });
+        $('#fecha-calendarizado').datepicker('update',   moment(new Date()).add('days', 8).toDate() );
 
 		$('.drop-down-filters').on("click.bs.dropdown", function (e) {
             e.stopPropagation();
