@@ -1118,6 +1118,24 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
 		}
 	}
 
+	$scope.limpiarCamposReporte = function(opcion) {
+		switch (opcion) {
+			case 1:
+				$scope.repDiario.idOrden = "";
+				$scope.repDiario.idCuenta = "";
+				break;
+			case 2:
+				$scope.repDiario.folio = "";
+				$scope.repDiario.idCuenta = "";
+				break;
+			case 3:
+				$scope.repDiario.folio = "";
+				$scope.repDiario.idOrden = "";
+				break;
+			default:
+				break;
+		}
+	}
 
    consultarReporteDiario = function(){
         let mensaje = '<ul>';

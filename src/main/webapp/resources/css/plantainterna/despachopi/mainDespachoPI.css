@@ -1910,7 +1910,6 @@ table.dataTable.no-footer {
 
 #head_table {
   font-size: 0.6em !important;
-  white-space: nowrap;
   text-align: center;
 }
 
@@ -1922,6 +1921,7 @@ table.dataTable.no-footer {
 #table-reporte #head_table tr th{
   padding: 0.5em !important;
   font-size: 0.95em !important;
+  white-space: initial;
 }
 
 #table-reporte tr td {
@@ -2042,6 +2042,11 @@ table.dataTable.no-footer {
 #table-ots-trabajadas-tecnico {
   font-size: 0.9em;
 }
+
+#table-reporte{
+  max-width: 100% !important;
+  width: 100% !important;
+}
 i.icono-noseleccion {
   color: #ff9f3b;
   display: inline-block;
@@ -2152,12 +2157,12 @@ b.text-no-seleccion-geografia {
 #content-cantidad {
   max-height: 20em;
 }
-
+/*
 #tbodyIntervencion{
   max-height: 13em;
   display: table-caption;
 }
-
+*/
 .col-map-datlle{
   height: 20em;
 }

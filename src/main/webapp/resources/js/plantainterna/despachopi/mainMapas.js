@@ -363,6 +363,10 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
         listadoLinesCurves = []
     }
 
+    $scope.drawCurveExt = function(p1,p2,map){
+        drawCurve(p1, p2, map);
+    }
+
     function drawCurve(P1, P2, map) {
 
         var lineLength = google.maps.geometry.spherical.computeDistanceBetween(P1, P2);

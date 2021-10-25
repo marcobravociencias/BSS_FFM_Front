@@ -659,6 +659,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
                         toastr.success(response.data.resultDescripcion);
                         $scope.comentarioAlerta = "";
                         $scope.chatAlertaConsultada = false;
+                        $(".chat-area").scrollTop(0);
                         $scope.consultarChatAlerta();
                         swal.close();
                     } else {
@@ -816,7 +817,12 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
             title : "Tecnico",
             animation : google.maps.Animation.DROP,
             map : mapaAlerta,
-            icon : "./resources/img/maps/pin-operario.png"
+            icon: {
+                url:"./resources/img/plantainterna/despacho/repartidor-marker.svg",
+                scaledSize: new google.maps.Size(37, 43),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(10, 20)
+            },
         });
         markers.push(marker);
         marker = new google.maps.Marker({
@@ -827,9 +833,21 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
             title : "OT",
             animation : google.maps.Animation.DROP,
             map : mapaAlerta,
-            icon : "./resources/img/maps/pin-pendiente.png"
+            icon: {
+                url:'./resources/img/plantainterna/despacho/domicilio-marker.svg',
+                scaledSize: new google.maps.Size(37, 43),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(10, 20)
+            },
         });
         markers.push(marker);
+
+        listadoLinesCurves.map(function (e) { e.setMap(null); return e; })
+        listadoLinesCurves = [];
+
+        let pointA = new google.maps.LatLng(parseFloat(pos.latitudTecnico), parseFloat(pos.longitudTecnico)) // basel airport
+        let pointB = new google.maps.LatLng(parseFloat(pos.latitudAlerta), parseFloat(pos.longitudAlerta))
+        $scope.drawCurveExt(pointA, pointB, mapaAlerta);
     }
 
     clearMarkers = function() {

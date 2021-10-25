@@ -1580,6 +1580,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
                         $scope.comentarioConsultaOT = '';
 						document.getElementById('comentarioConsultaOt').value = '';
 						is_consulta_comentarios = false;
+						$(".chat-area").scrollTop(0);
                         $scope.consultaChat();
                     } else {
                         toastr.error(response.data.resultDescripcion);
