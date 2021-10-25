@@ -47,6 +47,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
     app.disponibilidadCalendar($scope);
 
     $(document).ready(function () {
+        $("#idBody").removeAttr("style");
         $scope.inicialCalendario();
         $scope.inicioDisponibilidad();
         editarDisponibilidad = function (matutino, vespertino, nocturno, bloqueado, fecha) {

@@ -98,7 +98,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
     }
     angular.element(document).ready(function () {
         $("#moduloDespacho").addClass('active')
-          
+        $("#idBody").removeAttr("style");
         $('#calendar-next-back').datepicker({
             format : 'dd/mm/yyyy',
             language : 'es',

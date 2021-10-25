@@ -25,7 +25,7 @@
         <link href="${pageContext.request.contextPath}/resources/css/plantainterna/usuarios/usuariosPi.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/css/plantainterna/skillsAdms/styleSkillsFeature.css?" rel="stylesheet" />
     </head>
-    <body id="idBody" ng-controller="usuarioController">
+    <body id="idBody" ng-controller="usuarioController" style="display: none;">
     	<jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>    
         <br>
         <div class="container" id="container_usuarios_alta_consulta">
@@ -95,7 +95,7 @@
                                     </button>
                                 </div>
                             </div>
-<!--                             SE COLOCAN ESTOS INPUTS EN LO QUE SE ENCUENTRA SOLUCIÓN AL AUTOCOMPLETADO DE CHROME -->
+<!--                             SE COLOCAN ESTOS INPUTS EN LO QUE SE ENCUENTRA SOLUCION AL AUTOCOMPLETADO DE CHROME -->
                             <input style="display: none;" type="search" class="form-control form-control-sm" ng-model="informacionRegistro.apellidoPaterno" name="apellidoPaterno" placeholder="apellidoPaterno">
                             <input style="display: none;"  type="password" class="form-control inputFormulario" id="form-cword" aria-describedby="basic-addon3"placeholder="Ej. ********">
 				            <div class="row">

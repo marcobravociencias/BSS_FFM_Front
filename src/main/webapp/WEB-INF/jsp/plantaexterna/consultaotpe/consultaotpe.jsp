@@ -34,7 +34,7 @@
         <link href="${pageContext.request.contextPath}/resources/css/plantainterna/consultaOT/styleConsultaOT.css" rel="stylesheet">
         <title>FFM Total play</title>
     </head>
-    <body id="idBody" ng-controller="consultaOTPEController">
+    <body id="idBody" ng-controller="consultaOTPEController" style="display: none;">
 		<jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include> 
         <div class="container-fluid">
             <div class="row">

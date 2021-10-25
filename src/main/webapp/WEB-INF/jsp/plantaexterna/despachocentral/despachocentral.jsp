@@ -24,7 +24,7 @@
 
         <title>FFM Total play</title>
     </head>
-    <body id="idBody" ng-controller="despachoCentralController">
+    <body id="idBody" ng-controller="despachoCentralController" style="display: none;">
     
 		<jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
 		<jsp:include page="./modals/modalArbolGeografiaConsulta.jsp"></jsp:include>

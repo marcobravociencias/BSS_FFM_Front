@@ -1023,6 +1023,10 @@ $scope.abrirModalGeografiaRep=function(){
 	$scope.iniciarReporteOrdenes();  
 	$scope.initComponents();
 	$("#li-reporte-navbar").addClass('active')
+
+	angular.element(document).ready(function () {
+        $("#idBody").removeAttr("style");
+    });
 	
 	  
 	}]);

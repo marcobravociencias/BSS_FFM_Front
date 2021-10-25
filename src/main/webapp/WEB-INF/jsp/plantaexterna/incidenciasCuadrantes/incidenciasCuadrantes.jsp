@@ -30,7 +30,7 @@
     <title>FFM Total play</title>
 </head>
 
-<body id="idBody" ng-controller="incidenciasCuadrantesController">
+<body id="idBody" ng-controller="incidenciasCuadrantesController" style="display: none;">
     <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
     <div class="container-fluid container-filtros-incidenciascuadrantes">
         <div class="container container-title-header" style="padding: 0 !important;">

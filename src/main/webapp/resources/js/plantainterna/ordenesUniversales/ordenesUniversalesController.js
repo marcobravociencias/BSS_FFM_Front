@@ -620,7 +620,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
   
   
     angular.element(document).ready(function () {   
-        
+        $("#idBody").removeAttr("style");
         $("#modal-filtro-arbol").on("hidden.bs.modal", function () {
             $scope.validarModalesTipoIntervencionesGeografia('arbol');        
         });

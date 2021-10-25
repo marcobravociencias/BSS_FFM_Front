@@ -27,7 +27,7 @@ pageEncoding="ISO-8859-1"%>
 	<link href="${pageContext.request.contextPath}/resources/css/plantainterna/ordenesUniversales/styleOrdenesUniversales.css" rel="stylesheet">
 </head>
 
-<body id="idBody" ng-controller="ordenesUniversalesController" ng-init="consultarCatalogoOrdenesUniversales()">
+<body id="idBody" ng-controller="ordenesUniversalesController" ng-init="consultarCatalogoOrdenesUniversales()" style="display: none;">
 	<jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
 	
     <div class="container contenedor-steps">

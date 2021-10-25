@@ -27,7 +27,7 @@ pageEncoding="ISO-8859-1"%>
 	<link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" rel="stylesheet" />
 </head>
 
-<body ng-controller="disponibilidadController" id="idBody">
+<body ng-controller="disponibilidadController" id="idBody" style="display: none;">
 	<jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
 	<div class="container container-title-header">
 		<div class="header-modulo">

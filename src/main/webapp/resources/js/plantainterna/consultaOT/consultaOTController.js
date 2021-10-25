@@ -1767,4 +1767,8 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			}).catch(err => handleError(err));
 		}
 	}
+
+	angular.element(document).ready(function () {
+		$("#idBody").removeAttr("style");
+	});
 }])

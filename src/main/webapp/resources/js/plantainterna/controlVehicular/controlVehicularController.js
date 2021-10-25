@@ -1373,6 +1373,10 @@ app.controller('controlVehicularController',
 				$("#pills-general").addClass("active show");
 			}
 
+			angular.element(document).ready(function () {
+				$("#idBody").removeAttr("style");
+			});
+
 		}
 	]
 

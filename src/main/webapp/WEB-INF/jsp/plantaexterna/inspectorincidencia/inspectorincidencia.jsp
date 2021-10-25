@@ -29,7 +29,7 @@ pageEncoding="ISO-8859-1"%>
 
         <title>FFM Total play</title>
     </head>
-    <body id="idBody" ng-controller="inspectorIncidenciaController">
+    <body id="idBody" ng-controller="inspectorIncidenciaController" style="display: none;">
 		<jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include> 
         <div class="container-fluid container-filtros-inspectorincidencia">
             <div class="container container-title-header" style="padding: 0 !important;">

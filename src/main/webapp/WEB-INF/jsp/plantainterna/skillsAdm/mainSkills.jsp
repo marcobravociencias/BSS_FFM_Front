@@ -35,7 +35,7 @@
 		<link href="${pageContext.request.contextPath}/resources/css/plantainterna/skillsAdms/styleSkillsFeature.css?" rel="stylesheet" />
 		<link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" rel="stylesheet" />
 	</head>
-	<body class="body" ng-controller="skillsController">
+	<body id="idBody" class="body" ng-controller="skillsController" style="display: none;">
 		<jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
 		<jsp:include page="./modals/modalSkillsSeleccionadas.jsp"></jsp:include>
 	
@@ -130,7 +130,7 @@
 					</div>
 				</div>
 	
-				<!-- MULTISELECCIÓN -->
+				<!-- MULTISELECCION -->
 				<div id="modalMultiseleccion" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 					<div class="modal-dialog modal-xl">
 						<div class="modal-content">
@@ -300,7 +300,7 @@
 					</div>
 				</div>
 	
-				<!-- MODAL GEOGRAFÍA VISTA TABLA -->
+				<!-- MODAL GEOGRAFIA VISTA TABLA -->
 				<div id="modalGeografiaTabla" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 					<div class="modal-dialog">
 						<div class="modal-content">

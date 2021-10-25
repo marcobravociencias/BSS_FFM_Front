@@ -40,7 +40,7 @@
         rel="stylesheet" />
 </head>
 
-<body ng-controller="consultaOTController" class="body">
+<body id="idBody" ng-controller="consultaOTController" class="body" style="display: none;">
     <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
     <div  class="container-fluid container-filtros-consultaot">
         <div class="container container-title-header" style="padding: 0 !important;">

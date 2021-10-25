@@ -55,7 +55,7 @@
             rel="stylesheet" />
     </head>
 
-    <body ng-controller="controlVehicularController">
+    <body id="idBody" ng-controller="controlVehicularController" style="display: none;">
         <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
         <br>
         <div class="container-fluid controlContent " style="margin-top: 1em;">

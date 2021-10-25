@@ -723,4 +723,8 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 	
 	//$("#moduloSkills").addClass('active')
 	$scope.cargarFiltrosGeneric();
+
+	angular.element(document).ready(function () {
+        $("#idBody").removeAttr("style");
+    });
 }]);
