@@ -1772,4 +1772,24 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	angular.element(document).ready(function () {
 		$("#idBody").removeAttr("style");
 	});
+
+	$scope.camposFiltro = {};
+	$scope.limpiarCamposFiltro = function(opcion) {
+		switch (opcion) {
+			case 1:
+				$scope.camposFiltro.idos = "";
+				$scope.camposFiltro.cuenta = "";
+				break;
+			case 2:
+				$scope.camposFiltro.idot = "";
+				$scope.camposFiltro.cuenta = "";
+				break;
+			case 3:
+				$scope.camposFiltro.idot = "";
+				$scope.camposFiltro.idos = "";
+				break;
+			default:
+				break;
+		}
+	}
 }])

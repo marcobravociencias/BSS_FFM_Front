@@ -768,6 +768,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                         console.log("############## Comentario agregado")
                         $scope.comentarios = '';
                         $scope.flagComentarios = false;
+                        $(".chat-area").scrollTop(0);
                         $scope.consultarComentarios();
                     } else {
                         toastr.error(response.data.resultDescripcion);

@@ -761,4 +761,33 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
             "valor": "string"
         }]
     }
+
+    $scope.validateLatitudLongitudCaracteres=function(latitudOrLongintud){
+        let  regexLongitud=/[,'Â°`/;#_"$%*]/ 
+        return regexLongitud.test(latitudOrLongintud)
+    }
+    
+    $scope.isLatitude=function(lat) {
+        return isFinite(lat) && Math.abs(lat) <= 90;
+    }
+    
+    $scope.isLongitude=function(lng) {
+        return isFinite(lng) && Math.abs(lng) <= 180;
+    }
+
+    $scope.validarLatitudLongitudMap=function(latitud, longitud){
+        if( !latitud ||  !longitud){
+            return true;
+        }else{
+            if( !$scope.isLatitude( latitud ) || !$scope.isLongitude( longitud ) ){
+                return true;
+            } else if($scope.validateLatitudLongitudCaracteres( longitud ) || $scope.validateLatitudLongitudCaracteres( longitud ) ){
+                return true;
+            }else if( isNaN( latitud ) || isNaN( longitud )){
+                return true;
+            }
+        }   
+        return false;
+    }
+
 }

@@ -53,17 +53,17 @@
             <div class="row md-form" id="filtros_config">
                 <div class="col-2 column-style-consulta">
                     <label for="idot" class="label-filter">OT</label>
-                    <input type="text" id="idot" placeholder="Ej: 65434"
+                    <input type="text" id="idot" placeholder="Ej: 65434" ng-model="camposFiltro.idot"  ng-change="limpiarCamposFiltro(1)"
                     class="form-control input-filtro-consultaOT form-control-sm">
                 </div>
                 <div class="col-2 column-style-consulta">
                     <label for="idos" class="label-filter">OS</label>
-                    <input type="text" id="idos" placeholder="Ej: 23214"
+                    <input type="text" id="idos" placeholder="Ej: 23214"  ng-model="camposFiltro.idos" ng-change="limpiarCamposFiltro(2)"
                     class="form-control input-filtro-consultaOT form-control-sm">
                 </div>
                 <div class="col-2 column-style-consulta">
                     <label for="cuenta" class="label-filter">Cuenta</label>
-                    <input type="text" id="cuenta" placeholder="Ej: 0093484233"
+                    <input type="text" id="cuenta" placeholder="Ej: 0093484233"  ng-model="camposFiltro.cuenta" ng-change="limpiarCamposFiltro(3)"
                     class="form-control input-filtro-consultaOT form-control-sm">
                 </div>
                 <div class="col-2 column-style-consulta columna-filtro-ind">
