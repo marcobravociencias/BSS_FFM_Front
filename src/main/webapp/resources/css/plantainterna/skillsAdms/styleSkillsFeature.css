@@ -286,10 +286,11 @@ span#contadorTecnicos {
 }
 
 .iconoFlechaScroll{
-  padding:.2em .5em ;
+  padding:.2em .5em;
   border-radius:.2em;
   background:#e2e2e2;
   cursor:pointer;
+  /* background: red; */
  }
  .iconoFlechaScroll:hover{
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.07),0 1px 2px 0 rgba(0,0,0,.05)!important;

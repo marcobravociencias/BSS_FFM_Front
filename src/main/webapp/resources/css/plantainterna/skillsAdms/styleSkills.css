@@ -492,7 +492,12 @@ table.dataTable thead th, table.dataTable thead td{
     border:none;
     height: inherit;
 }
-
+#tablaSkilssVistaTabla tbody tr td.zui-sticky-cuerpo{
+  cursor:pointer;
+}
+#tablaSkilssVistaTabla tbody tr td.zui-sticky-cuerpo:hover{
+  background:#dbdbdb;
+}
 #tablaSkilssVistaTabla tbody tr  .zui-sticky-body-final{
 	text-align:end !important;
 	/* margin: 0 !important; */
