@@ -38,24 +38,28 @@
 	<body id="idBody" class="body" ng-controller="skillsController" style="display: none;">
 		<jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
 		<jsp:include page="./modals/modalSkillsSeleccionadas.jsp"></jsp:include>
-		<div class="header-modulo">
-			<h5 class="title-modulo">Administraci&oacute;n de Skills</h5>
-			<h1 class="h6 subtitle-modulo">En este m&oacute;dulo podr&aacute;s realizar la gesti&oacute;n de tus t&eacute;cnicos asociados</h1>
+		<div class="container">				
+			<div class="container mt-2">
+				<div class="header-modulo">
+					<h5 class="title-modulo">Administraci&oacute;n de Skills</h5>
+					<h1 class="h6 subtitle-modulo">En este m&oacute;dulo podr&aacute;s realizar la gesti&oacute;n de tus t&eacute;cnicos asociados</h1>
+				</div>
+			</div>
 		</div>
 		<div class="container">				
 			<div class="container  container-parent-skills">
 				<div class="container-icon-geografia">
-					<i class="icon-geografia-top fas fa-map-marked iconoGeografia"></i> 
-					<a class="text-icon-geografia-top nav-link a-navlink-navbar linkGeografia" href="" ng-click="abrirModalGeografiaTabla()">Geograf&iacute;a</a>			
+					<i ng-if="istipovista==2" class="icon-geografia-top fas fa-map-marked iconoGeografia"></i> 
+					<a ng-if="istipovista==2" class="text-icon-geografia-top nav-link a-navlink-navbar linkGeografia" href="" ng-click="abrirModalGeografiaTabla()">Geograf&iacute;a</a>			
 				</div>
 			
 				<ul class="nav nav-tabs" id="myTab" role="tablist">
 					<li class="nav-item">
-						<a class="nav-link active" id="vistaindividual-tab" data-toggle="tab" href="#vistaindividual" role="tab"
+						<a ng-click="istipovista=1" class="nav-link active" id="vistaindividual-tab" data-toggle="tab" href="#vistaindividual" role="tab"
 							aria-controls="vistaindividual" aria-selected="true">Vista individual</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" id="vistatabla-tab" data-toggle="tab" href="#vistatabla" role="tab"
+						<a ng-click="istipovista=2" class="nav-link" id="vistatabla-tab" data-toggle="tab" href="#vistatabla" role="tab"
 							aria-controls="vistatabla" aria-selected="false" >Vista tabla</a>
 					</li>
 				</ul>
@@ -153,13 +157,13 @@
 									</div>
 								</div>
 								<div class="col-md-7" style="text-align: center;">
-									<i class="far fa-arrow-alt-circle-left fa-2x iconoFlechaScroll" ng-click="moverScrollHorizontalIzquierda()"></i> 
-									<i class="far fa-arrow-alt-circle-right fa-2x iconoFlechaScroll" ng-click="moverScrollHorizontalDerecha()"></i>
+									<i class="fas fa-arrow-left  iconoFlechaScroll" ng-click="moverScrollHorizontalIzquierda()"></i> 
+									<i class="fas fa-arrow-right  iconoFlechaScroll" ng-click="moverScrollHorizontalDerecha()"></i>
 								</div>
 								<div class="col-md-2">
 									<div style="text-align: right;">
-										<i class="fas fa-eye iconoOjoVerColumnas" ng-click="mostrarTodasColumnasIcono()" data-toggle="tooltip" data-placement="top" title="Mostrar todas las columnas"></i> 
-										<i class="fas fa-columns iconoColumnas"	ng-click="abrirModalSkillsFiltroTabla()" data-toggle="tooltip" data-placement="top" title="Mostrar / ocultar columnas"></i>
+										<i class="fas fa-eye iconoFlechaScroll" ng-click="mostrarTodasColumnasIcono()" data-toggle="tooltip" data-placement="top" title="Mostrar todas las columnas"></i> 
+										<i class="fas fa-columns iconoFlechaScroll"	ng-click="abrirModalSkillsFiltroTabla()" data-toggle="tooltip" data-placement="top" title="Mostrar / ocultar columnas"></i>
 									</div>
 								</div>
 							</div>
@@ -171,18 +175,23 @@
 												<thead class="thead-table table-nowrap" id="idTheadTabla">
 													<tr class="zui-sticky-tr">
 														<th class="zui-sticky-col zui-text-cabeceras" scope="col">CUADRILLA</th>
-														<th class="zui-text-cabeceras" scope="col" style="text-align: center" ng-repeat="intervencion in listadoIntervenciones | orderBy:'nombre' track by $index">{{intervencion.nombre}} <i class="fas fa-eye-slash iconoOjoColumna" ng-click="displayColumnaIndividual($index+2)"></i></th>
-														<th></th>
+														<th class="zui-text-cabeceras" scope="col" style="text-align: center" ng-repeat="intervencion in listadoIntervenciones | orderBy:'nombre' track by $index">
+															{{intervencion.nombre}} <i class="fas fa-eye-slash iconoOjoColumna" ng-click="displayColumnaIndividual($index+2)"></i>
+														</th>
+														<th class="columnheader-table" ></th>
 													</tr>
 												</thead>
 												<tbody id="bodyTabla">
 													<tr ng-repeat="tecnico in tecnicosMostradas | filter: buscarTecnicoTabla" class="zui-sticky-tr trTecnico">
-														<td class="zui-sticky-body zui-text-cabeceras nombreTecnico" data-toggle="tooltip" data-placement="top" title="{{tecnico.nombre}} {{tecnico.apellidoPaterno}} {{tecnico.apellidoMaterno}}">{{tecnico.nombre}} {{tecnico.apellidoPaterno}} {{tecnico.apellidoMaterno}}</td>
+														<td class="zui-sticky-body zui-text-cabeceras nombreTecnico" data-toggle="tooltip" data-placement="top" 
+															title="{{tecnico.nombre}} {{tecnico.apellidoPaterno}} {{tecnico.apellidoMaterno}}">
+															<span class="nombre-tecnico-table">{{tecnico.nombre}} {{tecnico.apellidoPaterno}} {{tecnico.apellidoMaterno}} </span>															
+														</td>
 														<td class="zui-sticky-cuerpo" ng-repeat="skill in tecnico.todasSkills | orderBy:'nombre' track by $index" style="text-align: center" scope="col">
-															<input class="form-check-input" type="checkbox" ng-model="skill.checkTabla" ng-init="check = skill.checkTabla" ng-click="" >
+															<input class="form-check-input checkbox-intervenciones" type="checkbox" ng-model="skill.checkTabla" ng-init="check = skill.checkTabla" ng-click="" >
 														</td>
 														<td class="zui-sticky-body-final">
-															<button style="background-color: white; border-color: #7716FA;" ng-click="guardarAsignacionSkillIndividualTabla(tecnico)">
+															<button class="btn btn-sm btn-guardar-cambios  "  ng-click="guardarAsignacionSkillIndividualTabla(tecnico)">
 																<i class="fa fa-save"></i>
 															</button>
 														</td>

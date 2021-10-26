@@ -497,6 +497,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
                             })       
                             $('#jstree-proton-3').bind('loaded.jstree', function(e, data) {
 								//$(this).jstree("open_all");
+								swal.close();
                             }).jstree({
 								'core': {
 									'data': geografia,
@@ -544,7 +545,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
             }           
 
         }).catch(err => handleError(err));
-        swal.close();
+       
     }
 	
 	$scope.busquedaGeografiaIndividual=function(){
