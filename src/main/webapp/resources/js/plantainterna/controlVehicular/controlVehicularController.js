@@ -734,7 +734,7 @@ app.controller('controlVehicularController',
 								$("#alta-tab").removeClass("active");
 								$("#consulta-tab").addClass("active");
 								$("#consulta").addClass("active show");
-
+								$scope.listSelected = [];
 								$scope.loadArbolBuscar();
 
 								$scope.clearForm();
@@ -772,7 +772,7 @@ app.controller('controlVehicularController',
 								$("#alta").removeClass("active show");
 								$("#consulta-tab").addClass("active");
 								$("#consulta").addClass("active show");
-
+								$scope.listSelected = [];
 								$scope.loadArbolBuscar();
 
 								$scope.clearForm();
