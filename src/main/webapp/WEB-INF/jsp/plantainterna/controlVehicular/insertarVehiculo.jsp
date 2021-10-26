@@ -66,9 +66,9 @@
                             id="anio" readonly ng-model="vehiculo.anio" />
                     </div>
                     <div class="col-3 form-group">
-                        <label>N&uacute;mero de Serie </label>
+                        <label>N&uacute;mero de Serie <span style="margin-left: 10em;">{{vehiculo.numeroSerie.length ? vehiculo.numeroSerie.length : 0}} - 17</span></label>
                         <input type="text" class="form-control form-control-sm" id="numSerie"
-                            ng-model="vehiculo.numeroSerie" capitalize autocomplete="off"  maxlength="25"/>
+                            ng-model="vehiculo.numeroSerie" capitalize autocomplete="off"  maxlength="17"/>
                     </div>
                     <div class="col-3 form-group">
                         <label>Combustible </label>

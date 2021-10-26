@@ -20,6 +20,7 @@ app.controller('controlVehicularController',
 			$scope.banderaErrorGeografia = false;
 			$scope.geografiaList = [];
 			$scope.nGeografia = "";
+			$scope.bucketImg = "";
 			$scope.filePlaca;
 			$scope.fileVehiculo;
 			$scope.fileCirculacion;
@@ -157,6 +158,7 @@ app.controller('controlVehicularController',
 
 					if (results[0].data && results[0].data.respuesta) {
 						$scope.nGeografia = results[0].data.result.N_FILTRO_GEOGRAFIA ? Number(results[0].data.result.N_FILTRO_GEOGRAFIA) : null;
+						$scope.bucketImg = results[0].data.result.BUCKETID_FB;
 					} else {
 						toastr.warning(results[0].data.resultDescripcion);
 					}
@@ -987,11 +989,10 @@ app.controller('controlVehicularController',
 					reader.onload = function () {
 						let base64 = reader.result.toString().split(",");
 						let img = {
-							"bucketId": "totalplay-ffm-core-dev.appspot.com",
+							"bucketId": $scope.bucketImg,
 							"archivo": base64[1],
 							"nombre": e.target.files[0].name
 						}
-
 						if (name == 'fotoPlaca') {
 							$scope.filePlaca = img;
 						}
