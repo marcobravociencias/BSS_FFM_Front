@@ -344,15 +344,11 @@
 						<h5 class="modal-title">Columnas</h5>
 						<button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close" ng-click="cerrarModalSkillsFiltroTabla()"></button>
 					</div>
-				</div>
-	
-				<!-- MODAL GEOGRAFIA VISTA TABLA -->
-				<div id="modalGeografiaTabla" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title">Geograf&iacute;a</h5>
-								<button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close" ng-click="cerrarModalGeografiaTabla()"></button>
+					<div class="modal-body">
+						<div class="container">
+							<div class="input-group input-group-sm content-seach-group">
+								<input type="text" id="txtBusquedaSkillFiltro" class="form-control form-control-sm buscar-input-operario" ng-keyup="busquedaSkillFiltro()" placeholder="Buscar skill">
+								<span class="search-icon-operario-busq fa fa-search"></span>
 							</div>
 							<div class="row contenedorCheckTodasSkillsFiltro">
 								<div class="col-md-1" style="text-align:right;">
