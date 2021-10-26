@@ -631,7 +631,7 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
     let mapaDetalleTecnico;
     $scope.inicializarMapasAlertaDetalle = function () {
         mapaDetalleAlerta = new google.maps.Map(document.getElementById("mapDetalleAlerta"), {
-            zoom: 8,
+            zoom: 15,
         });
 
         mapaDetalleTecnico = new google.maps.Map(document.getElementById("mapDetalleTecnico"), {
@@ -643,33 +643,63 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
     let mDetalleTecnico;
     $scope.pintarMarkesMapDetalleAlerta = function () {
         $scope.limpiarMakerTecnicos();
-        maDetalleAlerta = new google.maps.Marker({
-            clickable: false,
-            position: {
-                lat: parseFloat($scope.objectDetalleAlerta.alerta.latitudAlerta),
-                lng: parseFloat($scope.objectDetalleAlerta.alerta.latitudAlerta)
-            },
-            animation: google.maps.Animation.DROP,
-            map: mapaDetalleAlerta,
-            latitud_ot: parseFloat($scope.objectDetalleAlerta.alerta.latitudAlerta),
-            longitud_ot: parseFloat($scope.objectDetalleAlerta.alerta.latitudAlerta),
-        });
-        mapaDetalleAlerta.setCenter(new google.maps.LatLng(parseFloat($scope.objectDetalleAlerta.alerta.latitudAlerta), parseFloat($scope.objectDetalleAlerta.alerta.latitudAlerta)));
-        marketsDetalleAlerta.push(maDetalleAlerta)
 
-        mDetalleTecnico = new google.maps.Marker({
-            clickable: false,
-            position: {
-                lat: parseFloat($scope.objectDetalleAlerta.tecnico.latitud),
-                lng: parseFloat($scope.objectDetalleAlerta.tecnico.longitud)
-            },
-            animation: google.maps.Animation.DROP,
-            map: mapaDetalleTecnico,
-            latitud_ot: parseFloat($scope.objectDetalleAlerta.tecnico.latitud),
-            longitud_ot: parseFloat($scope.objectDetalleAlerta.tecnico.longitud),
-        });
-        mapaDetalleTecnico.setCenter(new google.maps.LatLng(parseFloat($scope.objectDetalleAlerta.tecnico.latitud), parseFloat($scope.objectDetalleAlerta.tecnico.longitud)));
-        marketsDetalleAlerta.push(mDetalleTecnico)
+        let isDataMarkerTecnico = $scope.validarLatitudLongitudMap($scope.objectDetalleAlerta.tecnico.latitud, $scope.objectDetalleAlerta.tecnico.longitud);
+        let isDataMarkerAlerta = $scope.validarLatitudLongitudMap($scope.objectDetalleAlerta.alerta.latitudAlerta, $scope.objectDetalleAlerta.alerta.longitudAlerta);
+        
+        if(!isDataMarkerAlerta){
+          
+            maDetalleAlerta = new google.maps.Marker({
+                clickable: false,
+                position: {
+                    lat: parseFloat($scope.objectDetalleAlerta.alerta.latitudAlerta),
+                    lng: parseFloat($scope.objectDetalleAlerta.alerta.longitudAlerta)
+                },
+                animation: google.maps.Animation.DROP,
+                map: mapaDetalleAlerta,
+                latitud_ot: parseFloat($scope.objectDetalleAlerta.alerta.latitudAlerta),
+                longitud_ot: parseFloat($scope.objectDetalleAlerta.alerta.longitudAlerta),
+                icon: {
+                    url:'./resources/img/plantainterna/despacho/domicilio-marker.svg',
+                    scaledSize: new google.maps.Size(37, 43),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(10, 20)
+                }
+
+            });
+            mapaDetalleAlerta.setCenter(new google.maps.LatLng(parseFloat($scope.objectDetalleAlerta.alerta.latitudAlerta), parseFloat($scope.objectDetalleAlerta.alerta.longitudAlerta)));
+            marketsDetalleAlerta.push(maDetalleAlerta)
+        }else{
+            mapaDetalleAlerta.setCenter(new google.maps.LatLng(19.4326, -99.1332));
+            mapaDetalleAlerta.setZoom(5);
+        }
+
+        if(!isDataMarkerTecnico){
+            mDetalleTecnico = new google.maps.Marker({
+                clickable: false,
+                position: {
+                    lat: parseFloat($scope.objectDetalleAlerta.tecnico.latitud),
+                    lng: parseFloat($scope.objectDetalleAlerta.tecnico.longitud)
+                },
+                animation: google.maps.Animation.DROP,
+                map: mapaDetalleTecnico,
+                latitud_ot: parseFloat($scope.objectDetalleAlerta.tecnico.latitud),
+                longitud_ot: parseFloat($scope.objectDetalleAlerta.tecnico.longitud),
+                icon: {
+                    url:"./resources/img/plantainterna/despacho/repartidor-marker.svg",
+                    scaledSize: new google.maps.Size(37, 43),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(10, 20)
+                }
+
+            });
+            mapaDetalleTecnico.setCenter(new google.maps.LatLng(parseFloat($scope.objectDetalleAlerta.tecnico.latitud), parseFloat($scope.objectDetalleAlerta.tecnico.longitud)));
+            marketsDetalleAlerta.push(mDetalleTecnico);
+        }else{
+            mapaDetalleTecnico.setCenter(new google.maps.LatLng(19.4326, -99.1332));
+            mapaDetalleTecnico.setZoom(5);
+        }
+
     }
 
     $scope.limpiarMakerTecnicos = () => {
@@ -776,7 +806,7 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
     }
 
     $scope.validarLatitudLongitudMap=function(latitud, longitud){
-        if( !latitud ||  !longitud){
+        if( !latitud || !longitud){
             return true;
         }else{
             if( !$scope.isLatitude( latitud ) || !$scope.isLongitude( longitud ) ){

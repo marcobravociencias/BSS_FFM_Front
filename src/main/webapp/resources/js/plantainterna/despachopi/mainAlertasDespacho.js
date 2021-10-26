@@ -806,12 +806,11 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
     
 
     $scope.setMarkets = function(pos){
-
+      
         let isDataMarkerTecnico = $scope.validarLatitudLongitudMap(pos.latitudTecnico, pos.longitudTecnico);
         let isDataMarkerAlerta = $scope.validarLatitudLongitudMap(pos.latitudAlerta, pos.longitudAlerta);
        
         deleteMarkers();
-        clearMarkers();
         
         if(!isDataMarkerTecnico){
             var marker = new google.maps.Marker({
