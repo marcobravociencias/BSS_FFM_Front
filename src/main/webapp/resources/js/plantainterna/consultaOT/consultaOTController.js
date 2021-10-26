@@ -1719,7 +1719,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	$scope.consultarPostVentaOt = function () {
 		if (!isConsultaDetalleSoporte) {
 			let params = {
-				orden: 123050//$scope.datoOt
+				orden: $scope.datoOt
 			}
 			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 			swal.showLoading();
