@@ -1624,8 +1624,6 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 			"data": []
         });
 				
-		$('.nav-item').removeClass('active');
-		$('#otros_nav').addClass('active');
 		$("#btn_mostrar_nav").hide(500);
 		$('.datepicker').datepicker({
 			format: 'dd/mm/yyyy',
@@ -1659,6 +1657,9 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
         });
 
 		$("#idBody").removeAttr("style");
+		$('#moduloCoordInst').addClass('active');
+		$("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
+
 	});
 
 

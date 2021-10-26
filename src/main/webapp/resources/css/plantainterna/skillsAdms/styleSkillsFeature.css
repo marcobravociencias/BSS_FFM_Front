@@ -42,8 +42,8 @@ img.responsive-img, video.responsive-video {
     /* height: auto; */
     box-shadow: 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%), 0 2px 4px -1px rgb(0 0 0 / 30%);
     border-radius: 50%;
-    height: 2.5em;
-    width: 2.5em;
+    height: 2.0em;
+    width: 2.0em;
 }
 
 
@@ -64,14 +64,7 @@ img.responsive-img, video.responsive-video {
     box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
 }
 
-.content-gestion-operarios{
-        box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
-        /* padding-top:1em; */
-        padding-bottom:1em;
-        background: white;
-        border-radius: .5em;
-        /* padding-top: 1em; */
-}
+
 body{
     background:#f9f9f9
 }
@@ -90,7 +83,7 @@ p.text-adds-teccnico {
     font-size: .8em;
 }
 p.text-tecnico-nombre {
-    font-size: 1em;
+    font-size: .8em;
     font-weight: bold;
     margin-bottom: 0;
 }
@@ -150,6 +143,7 @@ p.text-tecnico-nombre {
 .content-seach-group {
     height: 1em;
     display: inline-flex;
+    margin-bottom: 1.2em;
 }
 
 .buscar-input-operario {
@@ -183,4 +177,110 @@ p.text-tecnico-nombre {
     padding-top:.2em !important;
     padding-bottom: .1em !important;
     margin-bottom:1em !important;
+}
+
+#myTab{
+  margin-bottom:1em;
+}
+#myTab .nav-item:first-child .nav-link {
+   border-top-left-radius:1em;
+   border-bottom-left-radius:1em;
+}
+#myTab .nav-item:last-child .nav-link {
+   border-top-right-radius:1em;
+   border-bottom-right-radius:1em;
+}
+#myTab .nav-link {
+  padding-top: .4em;
+  padding-bottom: .4em;
+  /* margin-top: 20px; */
+  border: solid 1px #ccc;
+  /* border-radius: 2px; */
+  /* box-shadow: 0px 0px 10px #878ee04d; */
+  
+
+}
+
+#myTab .nav-link.active {
+  color: #7716fa !important;
+  font-weight: bolder;
+  background:#f9f9f9;
+}
+
+
+.container.container-parent-skills {
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+    /* padding-top: 1em; */
+    padding-bottom: 1em;
+    background: white;
+    border-radius: .5em;
+    padding-top: 1em;
+    margin-top: 1em;
+    position: relative;
+}
+
+.container-icon-geografia{
+  position:absolute;
+  right:0; 
+}
+
+.icon-geografia-top{
+  font-size:.9em; 
+}
+.text-icon-geografia-top{
+  font-size:.9em;
+  margin: 0;
+  padding: 0;
+  margin-right: 1em;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+span#contadorTecnicos {
+    font-size: .9em;
+    font-weight: bold;
+}
+
+.multiseleccion-interve{
+    font-size: .9em;
+    margin: 0;
+    padding: 0;
+    margin-right: 1em;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.seleccion-skills{
+   font-size: .9em;
+    margin: 0;
+    padding: 0;
+    margin-right: 1em;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.table-intervenciones-skills tr td{
+    font-size:.9em;
+    font-weight:bold;
+    color:#646464;
+}
+
+.header-table-tecnico-select{
+  font-size:1em;
+  font-weight:bold;
+  /* margin-bottom:1em; */
+  margin-top: 1em;
+  margin-bottom: 1em;
+  /* color: #1266f1; */
+}
+.header-table-tecnico-select span {
+  color: #1266f1;
+  margin-left: 1em;
+  /* text-align: center; */
+  /* margin: 0 auto; */
+}
+
+
+#modalSkillsSeleccionadas .modal-body{
+    padding:0 ;
 }

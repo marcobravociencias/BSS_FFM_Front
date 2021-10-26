@@ -726,5 +726,6 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 
 	angular.element(document).ready(function () {
         $("#idBody").removeAttr("style");
+		$("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
     });
 }]);

@@ -1375,6 +1375,9 @@ app.controller('controlVehicularController',
 
 			angular.element(document).ready(function () {
 				$("#idBody").removeAttr("style");
+				$("#moduloVehiculos").addClass('active')
+				$("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
+
 			});
 
 		}

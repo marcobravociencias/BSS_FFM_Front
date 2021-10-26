@@ -639,6 +639,9 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                 console.log($scope.infoBasica.horaEstimada)
             }
         })
+        $("#moduloOrdenesUniversales").addClass("active");
+        $("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
+
     });
 
     $scope.validarCampoNA=function(campo){

@@ -343,7 +343,7 @@ table.dataTable.no-footer {
 
 .custom-file-label::after{
   font-family: FontAwesome;
-  content: "\f093";
+  content: "\f093" !important;
   color: #61cae6;
   font-size: 14px;
 }
@@ -559,3 +559,4 @@ tfoot{
 .custom-select{
   text-transform: uppercase;
 }
+

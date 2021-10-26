@@ -2274,3 +2274,14 @@ b.text-no-seleccion-geografia {
     border-radius: 25px;
     font-size: 20px !important;
 }
+
+#modalIconografiaDespacho .modal-header .btn-close{
+    position: absolute;
+    right: 1em;
+    top: 1em;
+}
+
+#modalIconografiaDespacho .modal-header .col-3{
+   padding-left:0;
+}
+

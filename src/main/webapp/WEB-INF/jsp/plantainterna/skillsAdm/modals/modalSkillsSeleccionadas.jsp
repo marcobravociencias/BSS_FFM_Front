@@ -9,26 +9,19 @@
                     class="btn-close"
                     data-mdb-dismiss="modal"
                     aria-label="Close" 
-                    ng-click="cerrarModalSkillsSeleccionadas()"
-                    >
+                    ng-click="cerrarModalSkillsSeleccionadas()" >
                 </button>
             </div>
-            <div class="modal-header">
-				<h5>TÉCNICO: {{tecnicoSeleccionado}}</h5>
-			</div>
 			<div class="modal-body">
-				<div class="container">
-					<div class="scrollGeneral">
-						<table class="table">
-							<tbody>
-								<tr ng-repeat="intervencionModal in listadoIntervencionesSeleccionadas | orderBy:'nombre' track by $index">
-									<td>{{$index +1}} </td>
-									<td>{{intervencionModal.nombre}}</td>
-								</tr>
-							</tbody>
-						</table>
-	                </div>
-				</div>
+                <h5 class="header-table-tecnico-select"><span> T&eacute;cnico: </span> {{tecnicoSeleccionado}}</h5>
+                <table class="table table-sm table-intervenciones-skills">
+                    <tbody>
+                        <tr class="intervencion-tecnico" ng-repeat="intervencionModal in listadoIntervencionesSeleccionadas | orderBy:'nombre' track by $index">
+                            <td>{{$index +1}} </td>
+                            <td>{{intervencionModal.nombre}}</td>
+                        </tr>
+                    </tbody>
+                </table>
 			</div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface" data-mdb-dismiss="modal" ng-click="cerrarModalSkillsSeleccionadas()">

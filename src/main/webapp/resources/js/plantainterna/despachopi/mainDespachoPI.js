@@ -176,7 +176,8 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             language : 'es',
             todayHighlight : true
         });
-    
+        $("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
+
 
     });
 

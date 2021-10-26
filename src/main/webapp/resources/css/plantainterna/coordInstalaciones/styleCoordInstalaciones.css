@@ -1165,9 +1165,6 @@ div#table_promociones {
   #calendar_disponibilidad{
     width: 97.9%;
   }
-  #idBody{
-    overflow=hidden !important;
-  }
   #info-factibilidad-actualiza{
     font-size: .8em;
     font-weight: 600;
