@@ -26,6 +26,7 @@ app.controller('controlVehicularController',
 			$scope.fileCirculacion;
 			$scope.fileGasolina;
 			$scope.padre;
+			$scope.listSelected = [];
 
 			$("#modal_cluster_arbol_vehiculo").on("hidden.bs.modal", function () {
 				let selectedElms = $('#jstreeconsulta').jstree("get_selected", true);
@@ -273,6 +274,9 @@ app.controller('controlVehicularController',
 			}
 
 			$scope.getVehiculos = function () {
+				let selectedElements = $("#jstreeconsulta").jstree("get_selected", true)
+				.map(e => e.id.toString());
+				$scope.listSelected = selectedElements;
 
 				let ultimonivel = $scope.obtenerNivelUltimoJerarquia()
 				let clustersparam = $("#jstreeconsulta").jstree("get_selected", true)
@@ -1085,12 +1089,18 @@ app.controller('controlVehicularController',
 			$scope.loadArbolBuscar = function () {
 				let geografia = $scope.geografiaList;
 				geografia.map((e) => {
+					let list = angular.copy($scope.listSelected);
+					let isSelected = true;
+					if($scope.listSelected.length){
+						let selected = list.find(f => { return f === e.id.toString() });
+						isSelected = selected ? true : false;
+					}		
 					e.parent = e.padre == undefined ? "#" : e.padre;
 					e.text = e.nombre;
 					e.icon = "fa fa-globe";
 					e.state = {
 						opened: false,
-						selected: true,
+						selected: isSelected,
 					}
 					return e
 				})
