@@ -1,5 +1,5 @@
-<div class="modal img fade right show" style="margin-top: 2em;" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="modal-imagen-ot" aria-hidden="true">
-	<div class="modal-dialog modal-full-height img modal-notify" style="min-width: 95%; margin: 2em;">
+<div class="modal img fade right show" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="modal-imagen-ot" aria-hidden="true">
+	<div class="modal-dialog modal-full-height img modal-notify" style="min-width: 95%;">
 		<div class="modal-content">
 			<div class="blue-gradient style_modal_header modal-header modal_header_bg" style="color: #fff;padding: 1.5rem 1.5rem 1.5rem !important;">
 					<h5 class="modal-title" id="exampleModalLabel"> OT: <span class="idoti"></span>, OS: <span class="operarioi"></span></h5>
@@ -60,13 +60,13 @@
 					</div>
 			</div>
 			<div class="modal-footer">
-				<form action="${pageContext.request.contextPath}/descargarEvidenciaConfig" method="POST">
-					<input type="text" name="paramsProcess.Id_ot" id="Id_otZip" value="0" hidden=""/>
-					<input type="text" name="paramsProcess.Propietario" id="propieZip" value="1" hidden=""/>
-					<input type="submit" id="confirmDescargaImg" hidden=""/>
-				</form>
-				<button type="button" id="descargaImg" class="btn btn-blue-grey waves-effect waves-light btn_cerrar_modal">Descargar</button>
-				<button type="button" class="btn btn-blue-grey waves-effect waves-light btn_cerrar_modal" ng-click="closeModal()" data-dismiss="modal">Cerrar</button>
+				<button type="button" id="descargaImg" class="btn btn-cerrar-modal btn-secondary ripple-surface" data-mdb-dismiss="modal">
+					Descargar
+				  </button>
+				  <button type="button" id="descargaImg" class="btn btn-cerrar-modal btn-secondary ripple-surface" ng-click="closeModal()" data-mdb-dismiss="modal">
+					Cerrar
+				  </button>
+
 			</div>
 		</div>
 	</div>

@@ -16,6 +16,7 @@
         href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-16x16.png">
     <link href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap.min.css"
         rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/plantainterna/consultaOT/styleConsultaOT.css"
         rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/jquery.dataTables.css"
@@ -32,7 +33,7 @@
         href="${pageContext.request.contextPath}/resources/libraries/datePicker/css/bootstrap-datepicker3_1.9.0.min.css"
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
-    <link href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css" rel="stylesheet">
+    
     <link href="${pageContext.request.contextPath}/resources/libraries/magnific_popup/magnific-popup.css"
         rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" rel="stylesheet" />
@@ -181,6 +182,7 @@
                         <!-- <th><i class="fa fa-wrench" id="herramienta"></i></th>
                         <th><i class="fa fa-picture-o" id="muestra_IMG"></i></th> -->
                         <th><i class="fa fa-bars" id="modalDetalleOT"></i></th>
+                        <!-- <th><i class="fa fa-picture-o" id="muestra_IMG"></i></th> -->
                     </tr>
                 </thead>
                 <tbody>
