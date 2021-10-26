@@ -34,8 +34,10 @@ app.controller('controlVehicularController',
 					document.getElementById('arbol_vehiculo_consulta').placeholder = selectedElms[0].text;
 					$scope.vehiculoText.geografiaText = selectedElms[0].text;
 					if ($('#jstreeconsulta').jstree().settings.plugins.length == 1) {
-						$scope.getParentGeografia(selectedElms[0].id);
-						$scope.loadEncierros($scope.padre, 0);
+						if ($scope.ubicacionEditar && $scope.ubicacionEditar.toString() !== selectedElms[0].id.toString()) {
+							$scope.getParentGeografia(selectedElms[0].id);
+							$scope.loadEncierros($scope.padre, 0);
+						}
 					}
 				} else {
 					document.getElementById('arbol_vehiculo_consulta').placeholder = 'NO HAY SELECCI\u00D3N';
@@ -175,11 +177,12 @@ app.controller('controlVehicularController',
 									listGeo = results[1].data.result.geografia;
 								}
 								$scope.geografiaList = listGeo;
+
 								$("#jstreeconsulta").jstree("destroy");
 								$scope.loadArbolBuscar();
 								setTimeout(function () {
 									$scope.getVehiculos();
-								}, 200)
+								}, 300)
 
 							} else {
 								mostrarMensajeWarningValidacion('No existen geografias actualmente')
@@ -275,7 +278,7 @@ app.controller('controlVehicularController',
 
 			$scope.getVehiculos = function () {
 				let selectedElements = $("#jstreeconsulta").jstree("get_selected", true)
-				.map(e => e.id.toString());
+					.map(e => e.id.toString());
 				$scope.listSelected = selectedElements;
 
 				let ultimonivel = $scope.obtenerNivelUltimoJerarquia()
@@ -742,7 +745,7 @@ app.controller('controlVehicularController',
 								$scope.initWizard();
 								setTimeout(function () {
 									$scope.getVehiculos();
-								}, 200)
+								}, 300)
 							} else {
 								swal.close();
 								mostrarMensajeErrorAlert(response.data.resultDescripcion);
@@ -780,7 +783,7 @@ app.controller('controlVehicularController',
 								$scope.initWizard();
 								setTimeout(function () {
 									$scope.getVehiculos();
-								}, 200)
+								}, 300)
 
 							} else {
 								swal.close();
@@ -963,12 +966,12 @@ app.controller('controlVehicularController',
 					$("#arbol_vehiculo_consulta").addClass("input-valid-error");
 					text += '<li>Seleccione una geograf\u00EDa</li>';
 				}
-				
+
 				if ($("#encierro").val() === "" || $("#encierro").val() === undefined) {
 					$("#encierro").addClass("input-valid-error");
 					text += "<li>Ubicaci&oacute;n CDO</li>";
 				}
-				
+
 				if (text !== "") {
 					let info = "Verifica los siguientes campos: " + text;
 					mostrarMensajeWarningValidacion(info);
@@ -1091,10 +1094,10 @@ app.controller('controlVehicularController',
 				geografia.map((e) => {
 					let list = angular.copy($scope.listSelected);
 					let isSelected = true;
-					if($scope.listSelected.length){
+					if ($scope.listSelected.length) {
 						let selected = list.find(f => { return f === e.id.toString() });
 						isSelected = selected ? true : false;
-					}		
+					}
 					e.parent = e.padre == undefined ? "#" : e.padre;
 					e.text = e.nombre;
 					e.icon = "fa fa-globe";
@@ -1201,8 +1204,9 @@ app.controller('controlVehicularController',
 					}
 				});
 			}
-
+			$scope.ubicacionEditar = null;
 			$scope.applyData = function (vehiculo) {
+
 				$scope.vehiculo = angular.copy(vehiculo);
 				$scope.vehiculo.idMarca = "";
 				$scope.vehiculo.idModelo = "";
@@ -1238,6 +1242,7 @@ app.controller('controlVehicularController',
 				}
 
 				if (vehiculo.idGeografia) {
+					$scope.ubicacionEditar = vehiculo.idGeografia;
 					$scope.getParentGeografia(vehiculo.idGeografia);
 					$scope.loadEncierros($scope.padre, vehiculo.detalle.idEncierro);
 
