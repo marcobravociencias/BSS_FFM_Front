@@ -72,7 +72,7 @@
 									<span class="search-icon-operario-busq fa fa-search"></span>
 								</div>
 								<div class="container-treegeofria scrollGeneral">
-									<div id="jstree-proton-3" class="proton-demo"></div>
+									<div id="arbolGeografiasVistaIndividual" class="proton-demo"></div>
 								</div>
 								<div id="divMensajeSeleccioneElemento" class="content-noseleccion">
 									<i class="icono-noseleccion fas fa-exclamation-circle me-2"></i> <b class="text-no-seleccion-geografia">No has seleccionado un elemento correcto</b>
@@ -182,16 +182,16 @@
 													</tr>
 												</thead>
 												<tbody id="bodyTabla">
-													<tr ng-repeat="tecnico in tecnicosMostradas | filter: buscarTecnicoTabla" class="zui-sticky-tr trTecnico">
+													<tr ng-repeat="tecnico in listaTecnicosTabla | filter: buscarTecnicoTabla" class="zui-sticky-tr trTecnico">
 														<td class="zui-sticky-body zui-text-cabeceras nombreTecnico" data-toggle="tooltip" data-placement="top" 
 															title="{{tecnico.nombre}} {{tecnico.apellidoPaterno}} {{tecnico.apellidoMaterno}}">
 															<span class="nombre-tecnico-table">{{tecnico.nombre}} {{tecnico.apellidoPaterno}} {{tecnico.apellidoMaterno}} </span>															
 														</td>
-														<td class="zui-sticky-cuerpo" ng-repeat="skill in tecnico.todasSkills | orderBy:'nombre' track by $index" style="text-align: center" scope="col">
-															<input class="form-check-input checkbox-intervenciones" type="checkbox" ng-model="skill.checkTabla" ng-init="check = skill.checkTabla" ng-click="" >
+														<td class="zui-sticky-cuerpo" ng-repeat="skill in tecnico.todasSkills | orderBy:'nombre' track by $index"  ng-click="checkIntervencionTecnicoTabla(skill)" style="text-align: center" scope="col">
+															<input id="{{skill.idCheck}}" class="form-check-input checkbox-intervenciones" type="checkbox" ng-model="skill.checkTabla" ng-init="check = skill.checkTabla" >
 														</td>
 														<td class="zui-sticky-body-final">
-															<button class="btn btn-sm btn-guardar-cambios  "  ng-click="guardarAsignacionSkillIndividualTabla(tecnico)">
+															<button class="btn btn-sm btn-guardar-cambios"  ng-click="guardarAsignacionSkillIndividualTabla(tecnico)">
 																<i class="fa fa-save"></i>
 															</button>
 														</td>
@@ -279,13 +279,13 @@
                                     </div>
                                     <div id="divContenedorSkills2" class="scrollGeneral">
                                         <div class="intervenciones-container">
-                                            <div ng-repeat="intervencion in listadoIntervenciones | orderBy:'nombre' | filter:buscarSkill track by $index" class="row">
+                                            <div ng-repeat="intervencion in listadoIntervencionesMultiseleccion | orderBy:'nombre' | filter:buscarSkill track by $index" class="row">
                                                 <div class="col-10 intervencion-col">
                                                     <h5 class="text-intervencion-title" ng-bind="intervencion.nombre"></h5>
                                                 </div>
                                                 <div class="col-2 intervencion-col">
                                                     <div class="form-check-sm form-check form-switch">
-                                                        <input class="form-check-input form-check-input-sm" type="checkbox" id="flexSwitchCheckDefault" ng-model="intervencion.check" ng-true-value="1" ng-false-value="0" value="{{intervencion.id}}" ng-click="sumarContador(intervencion.check)" />
+                                                        <input class="form-check-input form-check-input-sm" type="checkbox" id="flexSwitchCheckDefault" ng-model="intervencion.check" ng-true-value="1" ng-false-value="0" value="{{intervencion.id}}" ng-click="contadorSkillsMultiseleccion(intervencion.check)" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -294,7 +294,7 @@
 
                                     <div id="divBotonGuardarSkills">
                                         <div style="margin: 10px; text-align: right;">
-                                            <span>Skills seleccionadas: {{contadorSkillsSeleccionadas}}</span>
+                                            <span>Skills seleccionadas: {{contadorSkillsSeleccionadasMultiseleccion}}</span>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface" data-mdb-dismiss="modal" ng-click="regresarContenedorIndividual()">CERRAR</button>
