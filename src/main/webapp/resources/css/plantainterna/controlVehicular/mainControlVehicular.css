@@ -64,7 +64,7 @@
   margin-top: 4em;
 }
 
-.btnTotal:active, .btn:focus .btn:hover{
+.btnTotal:active, .btnTotal:focus .btnTotal:hover{
   background-color: white !important;
   box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
   color: #7716fa;
@@ -83,15 +83,16 @@
   float: right;
 }
 
-.btn:hover{
-  background-color: white;
+.btnTotal:hover {
+  background-color: white !important;
 }
 
-label {
+.label-vehiculo{
   color: gray;
+  margin-bottom: 0 !important;
 }
 
-.form-check {
+.check-vehiculo .form-check {
   margin-left: 30px;
 }
 
