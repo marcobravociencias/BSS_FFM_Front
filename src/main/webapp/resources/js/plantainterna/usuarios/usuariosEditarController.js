@@ -314,4 +314,8 @@ app.editarUsuarioController=function($scope,usuarioPIService){
 			$("#checkAsignacionAutomaticaMod").text("  NO");
 		}
 	}
+
+    angular.element(document).ready(function () {
+        $("#idBody").removeAttr("style");
+    });
 }

@@ -213,4 +213,8 @@ app.controller('incidenciasCuadrantesController', ['$scope', '$q', 'incidenciasC
             mostrarMensajeWarningValidacion(mensajeError);
         }
     }
+
+    angular.element(document).ready(function () {
+        $("#idBody").removeAttr("style");
+    });
 }]);

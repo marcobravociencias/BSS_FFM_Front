@@ -544,4 +544,7 @@ app.controller('despachoCentralController', ['$scope', '$q', '$filter', function
     	$("#arbolGeografiaDetalleOT").jstree("search", $('#buscadorGeografiaDetalleOT').val());
 	}
 	
+	angular.element(document).ready(function () {
+        $("#idBody").removeAttr("style");
+    });
 }]);

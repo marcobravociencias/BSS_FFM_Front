@@ -60,8 +60,8 @@
 
 #btnBuscar {
   float: none;
-  margin-bottom: 20px;
-  margin-top: 27px;
+  margin-bottom: 0 !important;
+  margin-top: 4em;
 }
 
 .btnTotal:active, .btn:focus .btn:hover{
@@ -343,7 +343,7 @@ table.dataTable.no-footer {
 
 .custom-file-label::after{
   font-family: FontAwesome;
-  content: "\f093";
+  content: "\f093" !important;
   color: #61cae6;
   font-size: 14px;
 }
@@ -482,7 +482,7 @@ li{
 }
 
 .search-filtro {
-  margin-top: 27px;
+  margin-top: 1.5em;
   align-items: stretch;
   background: white !important;
   border: 1px solid #d9d9d9 !important;
@@ -497,6 +497,8 @@ li{
 
 .search-form {
    padding-right: 0;
+   margin-top: 2em;
+   margin-bottom: 0 !important;
 }
 
 .imgResumen{
@@ -559,3 +561,4 @@ tfoot{
 .custom-select{
   text-transform: uppercase;
 }
+

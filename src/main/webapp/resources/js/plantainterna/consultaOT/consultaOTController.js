@@ -54,9 +54,9 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 
 
 		let estatusOrdenes = []
-        angular.forEach($scope.filtrosGeneral.estatusdisponibles,(e,i)=>{
-			estatusOrdenes.push(e.id); 
-        })
+		angular.forEach($scope.filtrosGeneral.estatusdisponibles, (e, i) => {
+			estatusOrdenes.push(e.id);
+		})
 
 
 		$.each(selectedElms, function () {
@@ -95,7 +95,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			errorMensaje += '<li>Seleccione geograf&iacute;a.</li>';
 			isValido = false
 		}
-		
+
 		if (document.getElementById('filtro_fecha_inicio_consultaOt').value == '') {
 			errorMensaje += '<li>Introduce Fecha Inicial</li>';
 			isValFecha = false;
@@ -115,7 +115,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				isValido = false
 			}
 		}
-		
+
 
 		if (isValido) {
 			if (otTabla) {
@@ -132,11 +132,11 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				fechaFin: $scope.getFechaFormato(document.getElementById('filtro_fecha_fin_consultaOt').value),
 				elementosPorPagina: 10
 			}
-	
+
 			console.log(otTabla.page.info())
-	
+
 			console.log(params);
-	
+
 			otTabla = $('#otTable').DataTable({
 				"processing": false,
 				"ordering": false,
@@ -152,19 +152,19 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 					"type": "POST",
 					"data": params,
 					"beforeSend": function () {
-						if(!swal.isVisible() ){
+						if (!swal.isVisible()) {
 							swal({ text: 'Cargando registros...', allowOutsideClick: false });
 							swal.showLoading();
 						}
-						
+
 					},
 					"dataSrc": function (json) {
 						$scope.elementosRegistro = json.registrosTotales
 						return json.data;
 					},
-					"error":function(xhr, error, thrown){
+					"error": function (xhr, error, thrown) {
 						handleError(xhr)
-					}, 
+					},
 					"complete": function () {
 						swal.close()
 					}
@@ -172,12 +172,12 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				"columns": [null, null, null, null, null, null, null, null, null],
 				"language": idioma_espanol_not_font
 			});
-			
+
 		} else {
 			mostrarMensajeWarningValidacion(errorMensaje);
 		}
 
-		
+
 
 	}
 
@@ -196,7 +196,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	$scope.banderaErrorEstatus = false;
 	$scope.banderaErrorIntervencion = false;
 	$scope.banderaErrorGeografia = false;
-	
+
 	$scope.consultarCatalagosPI = function () {
 		swal({ text: 'Espera un momento...', allowOutsideClick: false });
 		swal.showLoading();
@@ -222,24 +222,24 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				$scope.banderaErrorIntervencion = true;
 			}
 			if (results[2].data !== undefined) {
-                if(results[2].data.respuesta ){
-                    if(results[2].data.result ){
-                        $scope.filtrosGeneral.estatusdisponibles=$scope.realizarConversionAnidado( results[2].data.result)   
-                    }else{ 
-                        toastr.info( 'No se encontraron catalogo de estatus' );
-						$scope.banderaErrorEstatus = true;             
+				if (results[2].data.respuesta) {
+					if (results[2].data.result) {
+						$scope.filtrosGeneral.estatusdisponibles = $scope.realizarConversionAnidado(results[2].data.result)
+					} else {
+						toastr.info('No se encontraron catalogo de estatus');
+						$scope.banderaErrorEstatus = true;
 						swal.close();
-                    }
-                }else{
-                    toastr.warning( results[2].data.resultDescripcion );
+					}
+				} else {
+					toastr.warning(results[2].data.resultDescripcion);
 					$scope.banderaErrorEstatus = true;
-					swal.close();                
-                }               
-            }else{
-                toastr.error( 'Ha ocurrido un error en la consulta de catalogo de estatus' );
+					swal.close();
+				}
+			} else {
+				toastr.error('Ha ocurrido un error en la consulta de catalogo de estatus');
 				$scope.banderaErrorEstatus = true;
-				swal.close();                  
-            }
+				swal.close();
+			}
 			if (results[1].data !== undefined) {
 				if (results[1].data.respuesta) {
 					if (results[1].data.result) {
@@ -265,7 +265,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 								// $scope.consultarCatalogosAcciones();
 								$scope.consultaOT()
 							}).jstree({
-								'plugins': ["wholerow", "checkbox"],
+								'plugins': ["wholerow", "checkbox", 'search'],
 								'core': {
 									'data': geografia,
 									'themes': {
@@ -296,14 +296,14 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				$scope.banderaErrorGeografia = true;;
 			}
 
-		
+
 		}).catch(err => handleError(err));
 	}
 
 	$scope.realizarConversionAnidado = function (array) {
 		let arrayCopy = []
 		angular.forEach(array.filter(e => e.nivel == 1), function (elemento, index) {
-			
+
 			elemento.checkedOpcion = true;
 			elemento.children = array.filter(e => e.nivel == 2 && e.idPadre == elemento.id)
 			elemento.children = (elemento.children !== undefined && elemento.children.length > 0) ? elemento.children : []
@@ -315,7 +315,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				elementoJ.children = (elementoJ.children !== undefined && elementoJ.children.length > 0) ? elementoJ.children : []
 				elementoJ.children.map(e => { e.checkedOpcion = true; return e; })
 			})
-			
+
 			arrayCopy.push(elemento)
 		})
 		return arrayCopy;
@@ -382,7 +382,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		let cantidadChecked = parentFiltro.children.filter(function (e) { return e.checkedOpcion }).length
 		parentFiltro.checkedOpcion = cantidadSubfiltros !== cantidadChecked ? false : true
 	}
-	
+
 	$scope.setCheckIntervencion = function (elementoInt) {
 		console.log(elementoInt.checkedOpcion)
 		console.log("#####---------")
@@ -439,11 +439,9 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	});
 
 
-	consultaImagenesOT = function (ot, int) {
+	consultaImagenesOT = function (ot) {
 		let params = {
-			Id_ot: ot,
-			Id_tipo_img: '',
-			Propietario: '1'
+			orden: ot,
 		}
 		$('.idoti').text(ot);
 		swal({ text: 'Espera un momento...', allowOutsideClick: false });
@@ -738,7 +736,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				if (response.data !== undefined) {
 					if (response.data.respuesta) {
 						if (response.data.result.orden) {
-							$scope.infoOtDetalle = response.data.result.orden 
+							$scope.infoOtDetalle = response.data.result.orden
 							is_consulta_info_ot = true;
 							$('#modal-detalle-ot').modal('show');
 							swal.close();
@@ -831,34 +829,34 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			if (!swal.isVisible()) {
 				swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 				swal.showLoading();
-            }
+			}
 
 
-			genericService.consultarComentariosDespachoOT(params).then(function success(response) {            
-                swal.close()        
-                if (response.data !== undefined) {
-                    if(response.data.respuesta ){
-                        if(response.data.result ){
-                            if( response.data.result.detalle ){
-                                $scope.comentariosOrdenTrabajo = response.data.result.detalle;
-                                angular.forEach($scope.comentariosOrdenTrabajo,function(comentario,index){
-                                    comentario.fechaComentario = moment(comentario.fecha + ' ' + comentario.hora).format("dddd, D [de] MMMM [de] YYYY hh:mm A");
-                                });
+			genericService.consultarComentariosDespachoOT(params).then(function success(response) {
+				swal.close()
+				if (response.data !== undefined) {
+					if (response.data.respuesta) {
+						if (response.data.result) {
+							if (response.data.result.detalle) {
+								$scope.comentariosOrdenTrabajo = response.data.result.detalle;
+								angular.forEach($scope.comentariosOrdenTrabajo, function (comentario, index) {
+									comentario.fechaComentario = moment(comentario.fecha + ' ' + comentario.hora).format("dddd, D [de] MMMM [de] YYYY hh:mm A");
+								});
 								is_consulta_comentarios = true;
-							swal.close();
-                            }else{
-                                toastr.warning( response.data.result.mensaje );                
-                            }
-                        }else{                        
-                            toastr.warning( 'No se encontraron comentarios' );                
-                        }
-                    }else{
-                        toastr.warning( response.data.resultDescripcion );                
-                    }               
-                }else{
-                    toastr.warning( response.data.resultDescripcion );                
-                }               
-            }).catch(err => handleError(err));
+								swal.close();
+							} else {
+								toastr.warning(response.data.result.mensaje);
+							}
+						} else {
+							toastr.warning('No se encontraron comentarios');
+						}
+					} else {
+						toastr.warning(response.data.resultDescripcion);
+					}
+				} else {
+					toastr.warning(response.data.resultDescripcion);
+				}
+			}).catch(err => handleError(err));
 
 			/*
 			consultaOTService.consultaComentarios(JSON.stringify(params)).then(function success(response) {
@@ -935,7 +933,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			swal.showLoading();
 
 
-			genericService.consultarHistoricoDespachoOT(params).then(function(result){
+			genericService.consultarHistoricoDespachoOT(params).then(function (result) {
 				console.log(result);
 				if (result.data !== undefined) {
 					if (result.data.respuesta) {
@@ -1512,7 +1510,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		e.stopPropagation();
 	});
 
-	validarFecha = function() {
+	validarFecha = function () {
 		if (document.getElementById('filtro_fecha_inicio_consultaOt').value.trim() != "" && document.getElementById('filtro_fecha_fin_consultaOt').value.trim() != "") {
 			var inicio = document.getElementById('filtro_fecha_inicio_consultaOt').value.split('/');
 			var fin = document.getElementById('filtro_fecha_fin_consultaOt').value.split('/');
@@ -1526,75 +1524,76 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		}
 	}
 
-	$scope.seleccionTodosEstatus = function (paramFiltroParent,banderaChecked) {
+	$scope.seleccionTodosEstatus = function (paramFiltroParent, banderaChecked) {
 		paramFiltroParent.map(function (e) {
 			e.checkedOpcion = banderaChecked
 			e.children.map(function (j) {
-				j.checkedOpcion = banderaChecked	
-				j.children.map(function(k){
-					k.checkedOpcion=banderaChecked
+				j.checkedOpcion = banderaChecked
+				j.children.map(function (k) {
+					k.checkedOpcion = banderaChecked
 					return k
 				})
 				return j
 			})
 		})
-	}	
-	
-	$scope.checkFiltroEstatus=function(filtro){
+	}
+
+	$scope.checkFiltroEstatus = function (filtro) {
 		filtro.checkedOpcion = !filtro.checkedOpcion
 		filtro.children.map(function (e) {
-			e.checkedOpcion = filtro.checkedOpcion	
-			if(e.children !=undefined && e.children.length > 0) {
+			e.checkedOpcion = filtro.checkedOpcion
+			if (e.children != undefined && e.children.length > 0) {
 				e.children.map(function (j) {
-					j.checkedOpcion = filtro.checkedOpcion	
-					if(j.children !=undefined && j.children.length > 0) {
-						j.children.map(function(k){
-							k.checkedOpcion=filtro.checkedOpcion	
+					j.checkedOpcion = filtro.checkedOpcion
+					if (j.children != undefined && j.children.length > 0) {
+						j.children.map(function (k) {
+							k.checkedOpcion = filtro.checkedOpcion
 							return k
 						})
 					}
 					return j
 				})
-			}			
+			}
 		})
 	}
 
 	$scope.addComentariosConsultaOt = function () {
-        if ($scope.comentarioConsultaOT.trim() !== '' && !/^\s/.test($scope.comentarioConsultaOT)) {
+		if ($scope.comentarioConsultaOT.trim() !== '' && !/^\s/.test($scope.comentarioConsultaOT)) {
 
-            let params = {
-                idOrden: $scope.datoOt,
-                comentario: $scope.comentarioConsultaOT,
-                origenSistema: 1
-            }
+			let params = {
+				idOrden: $scope.datoOt,
+				comentario: $scope.comentarioConsultaOT,
+				origenSistema: 1
+			}
 
-            swal({ text: 'Espere un momento ...', allowOutsideClick: false });
-            swal.showLoading();
+			swal({ text: 'Espere un momento ...', allowOutsideClick: false });
+			swal.showLoading();
 
-            genericService.agregarComentariosOt(params).then(function success(response) {
+			genericService.agregarComentariosOt(params).then(function success(response) {
 				swal.close();
-                console.log(response);
-                if (response.data !== undefined) {
-                    if (response.data.respuesta) {
-                        console.log("############## Comentario agregado")
-                        $scope.comentarioConsultaOT = '';
+				console.log(response);
+				if (response.data !== undefined) {
+					if (response.data.respuesta) {
+						console.log("############## Comentario agregado")
+						$scope.comentarioConsultaOT = '';
 						document.getElementById('comentarioConsultaOt').value = '';
 						is_consulta_comentarios = false;
-                        $scope.consultaChat();
-                    } else {
-                        toastr.error(response.data.resultDescripcion);
-                    }
-                } else {
-                    toastr.error(response.data.resultDescripcion);
-                }
-            }).catch(err => handleError(err))
+						$(".chat-area").scrollTop(0);
+						$scope.consultaChat();
+					} else {
+						toastr.error(response.data.resultDescripcion);
+					}
+				} else {
+					toastr.error(response.data.resultDescripcion);
+				}
+			}).catch(err => handleError(err))
 
-        } else {
-            $scope.comentarioConsultaOT = '';
-            document.getElementById('comentarioConsultaOt').value = '';
-            toastr.warning('Intoducir un comentario.');
-        }
-    }
+		} else {
+			$scope.comentarioConsultaOT = '';
+			document.getElementById('comentarioConsultaOt').value = '';
+			toastr.warning('Intoducir un comentario.');
+		}
+	}
 
 	$scope.descargarReporteConsultaOt = function () {
 		let isValido = true;
@@ -1615,9 +1614,9 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 
 
 		let estatusOrdenes = []
-        angular.forEach($scope.filtrosGeneral.estatusdisponibles,(e,i)=>{
-			estatusOrdenes.push(e.id); 
-        })
+		angular.forEach($scope.filtrosGeneral.estatusdisponibles, (e, i) => {
+			estatusOrdenes.push(e.id);
+		})
 
 
 		$.each(selectedElms, function () {
@@ -1656,7 +1655,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			errorMensaje += '<li>Seleccione geograf&iacute;a.</li>';
 			isValido = false
 		}
-		
+
 		if (document.getElementById('filtro_fecha_inicio_consultaOt').value == '') {
 			errorMensaje += '<li>Introduce Fecha Inicial</li>';
 			isValFecha = false;
@@ -1676,13 +1675,13 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				isValido = false
 			}
 		}
-		
+
 
 		if (isValido) {
 			let params = {
-				idOrden: $.trim(document.getElementById('idot').value) !== '' ? $.trim(document.getElementById('idot').value): null,
-				folioSistema: $.trim(document.getElementById('idos').value) !== '' ? $.trim(document.getElementById('idos').value): null,
-				claveCliente: $.trim(document.getElementById('cuenta').value) !== '' ? $.trim(document.getElementById('cuenta').value): null,
+				idOrden: $.trim(document.getElementById('idot').value) !== '' ? $.trim(document.getElementById('idot').value) : null,
+				folioSistema: $.trim(document.getElementById('idos').value) !== '' ? $.trim(document.getElementById('idos').value) : null,
+				claveCliente: $.trim(document.getElementById('cuenta').value) !== '' ? $.trim(document.getElementById('cuenta').value) : null,
 				idSubTipoOrdenes: subIntTemp,
 				idEstatus: estatusOrdenes,
 				idClusters: clusters,
@@ -1692,7 +1691,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				pagina: 1
 			}
 			console.log(params);
-			
+
 			consultaOTService.consultaReporteConsultaOt(JSON.stringify(params)).then((result) => {
 				console.log(result.data)
 				if (result.data.respuesta) {
@@ -1710,32 +1709,124 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 					mostrarMensajeErrorAlert('Ocurrio un erro.')
 				}
 			}).catch(err => handleError(err))
-			
+
 		} else {
 			mostrarMensajeWarningValidacion(errorMensaje);
 		}
 	}
 
-	$scope.consultarPostVentaOt = function(){
+	$scope.detalleSoporteList = [];
+	$scope.consultarPostVentaOt = function () {
 		if (!isConsultaDetalleSoporte) {
 			let params = {
 				orden: $scope.datoOt
 			}
 			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 			swal.showLoading();
-			consultaOTService.consultaPostVentaOt(JSON.stringify(params)).then((result) =>{
+			consultaOTService.consultaPostVentaOt(JSON.stringify(params)).then((result) => {
 				swal.close()
 				console.log(result)
 				isConsultaDetalleSoporte = true
 				if (result.data.respuesta) {
-					if (result.data.result) {
-						$scope.detalleSoporteObj = result.data.result
-						$scope.detalleSoporteObj.equipoNuevo.evidencias ? $scope.evidenciaDetalleEquipoN = $scope.detalleSoporteObj.equipoNuevo.evidencias : $scope.evidenciaDetalleEquipoN = './resources/img/generic/not_found.png'
-						$scope.detalleSoporteObj.equipoViejo.evidencias ? $scope.evidenciaDetalleEquipoV = $scope.detalleSoporteObj.equipoViejo.evidencias : $scope.evidenciaDetalleEquipoV = './resources/img/generic/not_found.png'
+					if (result.data.result.detalleSoporte.length > 0) {
+						$scope.detalleSoporteList = result.data.result.detalleSoporte
+
+						setTimeout(() => {
+							$scope.detalleSoporteList.forEach(elemento => {
+								let html_tmp = "";
+								elemento.detalleCambioEquipo.forEach((detalle, index) => {
+
+									if (detalle.evidencias && detalle.evidencias.length) {
+										contenido_imagenes = retornarFormatoSliders(detalle.evidencias, index);
+									} else {
+										contenido_imagenes = '<h4 id="texto_not_arboles" style="color:#abafae; text-align:center">' +
+											'	SIN IMAGENES PARA ESTA FALLA' +
+											'</h4>';
+									}
+
+
+									html_tmp += '' +
+										'<tr>' +
+										'	<td>' +
+										'		<div class="row">' +
+										'			<div class="col-md-6 colInformacionTabla">' +
+										'				<div class="row textFallaOT">' +
+										'					<div class="col-md-5">' +
+										'						<b  class="title_span_1"> Tipo equipo:</b>' +
+										'		        	</div>				               ' +
+										'		        	<div class="col-md-7">' +
+										'		        		<span id="ot_fallas"  class="content_text" >' + detalle.descTipoEquipo + '</span>' +
+										'		        	</div>' +
+										'				</div>' +
+										'				<div class="row textFallaOT">' +
+										'					<div class="col-md-5">' +
+										'						<b  class="title_span_1"> Modelo equipo:</b>' +
+										'		        	</div>				               ' +
+										'		        	<div class="col-md-7">' +
+										'		        		<span id="tipo_falla_corte"  class="content_text" > ' + detalle.descModeloViejo + ' </span>' +
+										'		        	</div>' +
+										'				</div>' +
+										'				<div class="row textFallaOT">' +
+										'					<div class="col-md-5">' +
+										'						<b  class="title_span_1"> N&uacute;mero serie equipo:</b>' +
+										'		        	</div>				               ' +
+										'		        	<div class="col-md-7">' +
+										'		        		<span id="status_falla_corte"  class="content_text" > ' + detalle.numSerieModeloViejo + ' </span>' +
+										'		        	</div>' +
+										'				</div>' +
+										'				<div class="row textFallaOT">' +
+										'					<div class="col-md-5">' +
+										'						<b  class="title_span_1"> Modelo equipo nuevo:</b>	 ' +
+										'		        	</div>				               ' +
+										'		        	<div class="col-md-7">' +
+										'		        		<span id="tecnico_falla"  class="content_text" > ' + detalle.descModeloNuevo + ' </span>' +
+										'		        	</div>' +
+										'				</div>' +
+										'				<div class="row">' +
+										'					<div class="col-md-5">' +
+										'						<b  class="title_span_1">N&uacute;mero serie equipo nuevo:</b>' +
+										'		        	</div>				               ' +
+										'		        	<div class="col-md-7">' +
+										'		        		<span id="comentarios_falla"  class="content_text" > ' + detalle.numSerieModeloNuevo + ' </span>' +
+										'		        	</div>' +
+										'				</div>' +
+										'			</div>' +
+										'			<div class="col-md-6">' +
+										'					<div class="class-12">' +
+										contenido_imagenes +
+										'					</div>' +
+										'			</div>' +
+										'		</div>' +
+										'	</tr>' +
+										'</td>';
+
+
+								})
+
+								console.log(elemento.idFalla);
+								console.log($('#tablaOTDetalle' + elemento.idFalla));
+								//$('#tablaOTDetalle' + elemento.idFalla).destroy();
+								$('#tablaOTDetalle' + elemento.idFalla + ' tbody').empty().append(html_tmp);
+								$('#tablaOTDetalle' + elemento.idFalla).DataTable({
+									"processing": false,
+									"ordering": false,
+									"pageLength": 1,
+									"pagingType": "numbers",
+									"info": false,
+									"bInfo": false,
+									"bFilter": false,
+									"bAutoWidth": false,
+									"language": idioma_espanol_not_font,
+									"columns": [null],
+									"lengthChange": false
+
+								});
+
+							})
+						}, 1000);
+
 					} else {
 						mostrarMensajeWarningValidacion('No se encontro informaci&oacute;n')
-						$scope.evidenciaDetalleEquipoN = './resources/img/generic/not_found.png'
-						$scope.evidenciaDetalleEquipoV = './resources/img/generic/not_found.png'
 					}
 				} else {
 					mostrarMensajeErrorAlert(result.data.resultDescripcion)
@@ -1744,14 +1835,14 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		}
 	}
 
-	$scope.consultaPagosOt = function(){
+	$scope.consultaPagosOt = function () {
 		if (!isConsultaDetallePago) {
 			let params = {
 				orden: $scope.datoOt
 			}
 			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 			swal.showLoading();
-			consultaOTService.consultaPagosOt(JSON.stringify(params)).then((result) =>{
+			consultaOTService.consultaPagosOt(JSON.stringify(params)).then((result) => {
 				swal.close()
 				console.log(result)
 				isConsultaDetallePago = true
@@ -1767,4 +1858,71 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			}).catch(err => handleError(err));
 		}
 	}
+
+	angular.element(document).ready(function () {
+		$("#idBody").removeAttr("style");
+	});
+
+
+	$scope.camposFiltro = {};
+
+	$scope.limpiarCamposFiltro = function (opcion) {
+		switch (opcion) {
+			case 1:
+				$scope.camposFiltro.idos = "";
+				$scope.camposFiltro.cuenta = "";
+				break;
+			case 2:
+				$scope.camposFiltro.idot = "";
+				$scope.camposFiltro.cuenta = "";
+				break;
+			case 3:
+				$scope.camposFiltro.idot = "";
+				$scope.camposFiltro.idos = "";
+				break;
+			default:
+				break;
+		}
+	}
+
+	retornarFormatoSliders = function (imagen, contador) {
+        var imgs_blocks = "";
+        var indicators_carousel = "";
+
+		imagen.forEach((img, index) =>{
+			indicators_carousel += ' <li class="' + ((index === 0) ? 'active' : '') + '" data-target="#carouselExampleIndicators' + contador + '" data-slide-to="' + index + '" ></li>';
+
+            if (img.urlEvidencia === "") {
+                imgs_blocks += '' +
+                    '      <div class="carousel-item ' + ((index === 0) ? 'active' : '') + ' ">' +
+                    '        <img class="d-block img-fluid" style="width:100%; min-width: 100%; height: 100% !important;" src="' + contex_project + '/resources/img/generic/not_found.png" alt="First slide">' +
+                    '      </div>';
+            } else {
+                imgs_blocks += '' +
+                    '      <div class="carousel-item ' + ((index === 0) ? 'active' : '') + '">' +
+					'        <img class="d-block img-fluid" style="width:100%; min-width: 100%; height: 100% !important;" class="d-block w-100" src="' + img.urlEvidencia + '" alt="First slide">' +
+                    '      </div>';
+            }
+		})
+
+
+        return '' +
+            '  <div id="carouselExampleIndicators' + contador + '" class="carousel_componente carousel slide" data-ride="carousel">' +
+            '    <ol class="carousel-indicators">' +
+            '     	' + indicators_carousel + ' ' +
+            '    </ol>' +
+            '    <div class="carousel-inner" role="listbox">' +
+            '			' + imgs_blocks + ' ' +
+            '    </div>' +
+            '    <a class="carousel-control-prev" href="#carouselExampleIndicators' + contador + '" role="button" data-slide="prev">' +
+            '      <span class="carousel-control-prev-icon" aria-hidden="true"></span>' +
+            '      <span class="sr-only">Previous</span>' +
+            '    </a>' +
+            '    <a class="carousel-control-next" href="#carouselExampleIndicators' + contador + '" role="button" data-slide="next">' +
+            '      <span class="carousel-control-next-icon" aria-hidden="true"></span>' +
+            '      <span class="sr-only">Next</span>' +
+            '    </a>' +
+            '  </div>';
+    }
+
 }])

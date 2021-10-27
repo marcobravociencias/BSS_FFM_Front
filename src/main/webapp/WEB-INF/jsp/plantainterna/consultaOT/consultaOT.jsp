@@ -16,6 +16,7 @@
         href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-16x16.png">
     <link href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap.min.css"
         rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/plantainterna/consultaOT/styleConsultaOT.css"
         rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/jquery.dataTables.css"
@@ -32,7 +33,7 @@
         href="${pageContext.request.contextPath}/resources/libraries/datePicker/css/bootstrap-datepicker3_1.9.0.min.css"
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
-    <link href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css" rel="stylesheet">
+    
     <link href="${pageContext.request.contextPath}/resources/libraries/magnific_popup/magnific-popup.css"
         rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" rel="stylesheet" />
@@ -40,7 +41,7 @@
         rel="stylesheet" />
 </head>
 
-<body ng-controller="consultaOTController" class="body">
+<body id="idBody" ng-controller="consultaOTController" class="body" style="display: none;">
     <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
     <div  class="container-fluid container-filtros-consultaot">
         <div class="container container-title-header" style="padding: 0 !important;">
@@ -53,17 +54,17 @@
             <div class="row md-form" id="filtros_config">
                 <div class="col-2 column-style-consulta">
                     <label for="idot" class="label-filter">OT</label>
-                    <input type="text" id="idot" placeholder="Ej: 65434"
+                    <input type="text" id="idot" placeholder="Ej: 65434" ng-model="camposFiltro.idot"  ng-change="limpiarCamposFiltro(1)"
                     class="form-control input-filtro-consultaOT form-control-sm">
                 </div>
                 <div class="col-2 column-style-consulta">
                     <label for="idos" class="label-filter">OS</label>
-                    <input type="text" id="idos" placeholder="Ej: 23214"
+                    <input type="text" id="idos" placeholder="Ej: 23214"  ng-model="camposFiltro.idos" ng-change="limpiarCamposFiltro(2)"
                     class="form-control input-filtro-consultaOT form-control-sm">
                 </div>
                 <div class="col-2 column-style-consulta">
                     <label for="cuenta" class="label-filter">Cuenta</label>
-                    <input type="text" id="cuenta" placeholder="Ej: 0093484233"
+                    <input type="text" id="cuenta" placeholder="Ej: 0093484233"  ng-model="camposFiltro.cuenta" ng-change="limpiarCamposFiltro(3)"
                     class="form-control input-filtro-consultaOT form-control-sm">
                 </div>
                 <div class="col-2 column-style-consulta columna-filtro-ind">
@@ -181,6 +182,7 @@
                         <!-- <th><i class="fa fa-wrench" id="herramienta"></i></th>
                         <th><i class="fa fa-picture-o" id="muestra_IMG"></i></th> -->
                         <th><i class="fa fa-bars" id="modalDetalleOT"></i></th>
+                        <!-- <th><i class="fa fa-picture-o" id="muestra_IMG"></i></th> -->
                     </tr>
                 </thead>
                 <tbody>

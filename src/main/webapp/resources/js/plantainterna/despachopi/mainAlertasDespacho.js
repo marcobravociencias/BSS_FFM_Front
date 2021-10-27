@@ -659,6 +659,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
                         toastr.success(response.data.resultDescripcion);
                         $scope.comentarioAlerta = "";
                         $scope.chatAlertaConsultada = false;
+                        $(".chat-area").scrollTop(0);
                         $scope.consultarChatAlerta();
                         swal.close();
                     } else {
@@ -797,7 +798,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
     $scope.iniciarMapaAlertas = function() {
         mapaAlerta = new google.maps.Map(document.getElementById("mapAlerta"), {
             center: { lat: -34.397, lng: 150.644 },
-            zoom: 8,
+            zoom: 15,
         });
         objectVistaAlerta=new GenericMapa(mapaAlerta,'mapAlerta','bottom-right');
         objectVistaAlerta.inicializar_data()
@@ -805,31 +806,69 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
     
 
     $scope.setMarkets = function(pos){
-        mapaAlerta.setCenter({lat:parseFloat(pos.latitudAlerta), lng:parseFloat(pos.longitudAlerta)});
+      
+        let isDataMarkerTecnico = $scope.validarLatitudLongitudMap(pos.latitudTecnico, pos.longitudTecnico);
+        let isDataMarkerAlerta = $scope.validarLatitudLongitudMap(pos.latitudAlerta, pos.longitudAlerta);
+       
         deleteMarkers();
-        clearMarkers();
-        var marker = new google.maps.Marker({
-            position : {
-                lat : parseFloat(pos.latitudTecnico),
-                lng : parseFloat(pos.longitudTecnico)
-            },
-            title : "Tecnico",
-            animation : google.maps.Animation.DROP,
-            map : mapaAlerta,
-            icon : "./resources/img/maps/pin-operario.png"
-        });
-        markers.push(marker);
-        marker = new google.maps.Marker({
-            position : {
-                lat : parseFloat(pos.latitudAlerta),
-                lng : parseFloat(pos.longitudAlerta)
-            },
-            title : "OT",
-            animation : google.maps.Animation.DROP,
-            map : mapaAlerta,
-            icon : "./resources/img/maps/pin-pendiente.png"
-        });
-        markers.push(marker);
+        
+        if(!isDataMarkerTecnico){
+            var marker = new google.maps.Marker({
+                position : {
+                    lat : parseFloat(pos.latitudTecnico),
+                    lng : parseFloat(pos.longitudTecnico)
+                },
+                title : "Tecnico",
+                animation : google.maps.Animation.DROP,
+                map : mapaAlerta,
+                icon: {
+                    url:"./resources/img/plantainterna/despacho/repartidor-marker.svg",
+                    scaledSize: new google.maps.Size(37, 43),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(10, 20)
+                }
+            });
+            markers.push(marker);
+        }
+       
+        if(!isDataMarkerAlerta){
+            marker = new google.maps.Marker({
+                position : {
+                    lat : parseFloat(pos.latitudAlerta),
+                    lng : parseFloat(pos.longitudAlerta)
+                },
+                title : "OT",
+                animation : google.maps.Animation.DROP,
+                map : mapaAlerta,
+                icon: {
+                    url:'./resources/img/plantainterna/despacho/domicilio-marker.svg',
+                    scaledSize: new google.maps.Size(37, 43),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(10, 20)
+                },
+            });
+            markers.push(marker);
+        }
+
+        if(!isDataMarkerTecnico || !isDataMarkerAlerta){
+            if(!isDataMarkerAlerta){
+                mapaAlerta.setCenter(new google.maps.LatLng(parseFloat(pos.latitudAlerta), parseFloat(pos.longitudAlerta)));
+            }else{
+                mapaAlerta.setCenter(new google.maps.LatLng(parseFloat(pos.latitudTecnico), parseFloat(pos.longitudTecnico)));
+            }            
+        }else{
+            mapaAlerta.setCenter(new google.maps.LatLng(19.4326, -99.1332));
+            mapaAlerta.setZoom(5);
+        }
+
+        listadoLinesCurves.map(function (e) { e.setMap(null); return e; })
+        listadoLinesCurves = [];
+
+        if(!isDataMarkerTecnico && !isDataMarkerAlerta){
+            let pointA = new google.maps.LatLng(parseFloat(pos.latitudTecnico), parseFloat(pos.longitudTecnico)) // basel airport
+            let pointB = new google.maps.LatLng(parseFloat(pos.latitudAlerta), parseFloat(pos.longitudAlerta))
+            $scope.drawCurveExt(pointA, pointB, mapaAlerta);
+        }
     }
 
     clearMarkers = function() {

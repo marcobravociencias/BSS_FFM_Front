@@ -1066,17 +1066,10 @@ public class ImplCoordInstalacionesService implements CoordInstalacionesService{
                         	dataArray[count][11] = "<div class=''> <span onclick='consultaDetalleOt(" + String.valueOf(object.get("idOrden").getAsInt()) + "," + 
                         			String.valueOf(object.get("folioSistema")) + "," +
                         			String.valueOf(object.get("idFlujo").getAsInt()) + "," +
-                        			String.valueOf(48) + "," +
-                        			String.valueOf(107) + "," +
-                        			String.valueOf(19.336114067048) + "," +
-                        			String.valueOf(-99.1969629133) +
-                        			/*
-                        			object.get("idTipoOrden").getAsInt() + "," +
-                        			object.get("idSubTipoOrden").getAsInt() + "," +
-                        			object.get("latitud").getAsDouble() + "," +
-                        			object.get("longitud").getAsDouble() + 
-                        			*/
-                        			
+                        			String.valueOf(object.get("idTipoOrden").getAsInt()) + "," +
+                        			String.valueOf(object.get("idSubTipoOrden").getAsInt()) + "," +
+                        			String.valueOf(object.get("latitud").getAsDouble()) + "," +
+                        			String.valueOf(object.get("longitud").getAsDouble()) +
                         			")' class='btn-floating btn-option btn-sm acciones'><th><i class='icono_cons_bg fa fa-bars' aria-hidden='true'></i></th></span></div>";
                         	count++;
                         }

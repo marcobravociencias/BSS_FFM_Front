@@ -98,7 +98,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
     }
     angular.element(document).ready(function () {
         $("#moduloDespacho").addClass('active')
-          
+        $("#idBody").removeAttr("style");
         $('#calendar-next-back').datepicker({
             format : 'dd/mm/yyyy',
             language : 'es',
@@ -176,7 +176,8 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             language : 'es',
             todayHighlight : true
         });
-    
+        $("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
+
 
     });
 
@@ -1118,6 +1119,24 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
 		}
 	}
 
+	$scope.limpiarCamposReporte = function(opcion) {
+		switch (opcion) {
+			case 1:
+				$scope.repDiario.idOrden = "";
+				$scope.repDiario.idCuenta = "";
+				break;
+			case 2:
+				$scope.repDiario.folio = "";
+				$scope.repDiario.idCuenta = "";
+				break;
+			case 3:
+				$scope.repDiario.folio = "";
+				$scope.repDiario.idOrden = "";
+				break;
+			default:
+				break;
+		}
+	}
 
    consultarReporteDiario = function(){
         let mensaje = '<ul>';

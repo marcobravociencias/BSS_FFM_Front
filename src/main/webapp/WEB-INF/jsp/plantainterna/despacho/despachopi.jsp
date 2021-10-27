@@ -45,7 +45,7 @@
         <link href="${pageContext.request.contextPath}/resources/css/plantainterna/despachopi/mainDespachoPI.css"  rel="stylesheet"/>
 
     </head>
-    <body id="idBody" ng-controller="despachoController">        
+    <body id="idBody" ng-controller="despachoController" style="display: none;">        
 
           
     	<jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>  

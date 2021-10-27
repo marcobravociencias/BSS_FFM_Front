@@ -44,7 +44,7 @@
         <title>FFM Total play</title>
     </head>
 
-    <body ng-controller="inspectorCoberturaController">
+    <body id="idBody" ng-controller="inspectorCoberturaController" style="display: none;">
         <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
         <div class="container-fluid container-filtros-inspectorCobertura">
             <div class="container container-title-header" style="padding: 0 !important;">

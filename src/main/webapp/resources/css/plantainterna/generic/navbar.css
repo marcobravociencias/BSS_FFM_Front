@@ -279,3 +279,31 @@ h1.h6.subtitle-modulo {
     font-weight: bolder;
     text-align:left;
 }
+
+#nav-bar-otros-options ul.dropdown-menu li.active a{
+  border-right: .3em #7716FA solid;
+  color:#7716FA !important;
+  font-weight:bold;
+}
+
+#nav-bar-otros-options ul.dropdown-menu li.active a i{
+   color:#7716FA !important;
+   font-weight:bold;
+}
+
+
+#nav-bar-otros-options! > .active { 
+     background: #000 !important; 
+}
+
+
+#nav-bar-otros-options ul li.active:parent {
+   background:red !important;
+}
+
+
+
+
+.active-otros-navbar{    
+   border-bottom: .3em solid #7716FA;
+}

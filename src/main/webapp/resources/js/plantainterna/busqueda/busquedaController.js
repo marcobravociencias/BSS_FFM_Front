@@ -1112,4 +1112,10 @@ app.controller('busquedaController', ['$scope', 'busquedaService', 'genericServi
         }
     }
 
+    angular.element(document).ready(function () {
+        $("#idBody").removeAttr("style");
+        $("#moduloBusqueda").addClass('active')
+        $("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
+    });
+
 }])

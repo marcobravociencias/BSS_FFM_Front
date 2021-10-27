@@ -64,12 +64,12 @@
                         </c:if>   
                     </c:forEach>
                     <c:if test="${userStore.banderaPintarOtros}">
-                        <li class="nav-item dropdown">
+                        <li id="nav-bar-otros-options" class="nav-item dropdown">
                             <a  class="nav-link dropdown-toggle"  href="#" id="otros-option-navbar" role="button" data-mdb-toggle="dropdown" aria-expanded="false" >
                                 Otros 
                             </a>
                             <!-- Dropdown menu -->
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <ul class="dropdown-menu"   aria-labelledby="navbarDropdown">
                                 <c:forEach var="permi" items="${userStore.permisos}">
                                     <c:if test="${!permi.dentroNavbar}">
                                         <li id="${permi.clave}">

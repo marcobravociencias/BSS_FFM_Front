@@ -29,4 +29,6 @@ public interface ConsultaOTService {
     ServiceResponseResult consultaDetallePostVenta(String params);
 
 	ServiceResponseResult consultaPagos(String params);
+
+    ServiceResponseResult consultaEvidencia(String params);
 }

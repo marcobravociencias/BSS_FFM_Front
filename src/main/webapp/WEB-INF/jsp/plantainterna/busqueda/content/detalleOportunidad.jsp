@@ -312,7 +312,7 @@
     </div>
     <div class="col-12">
         <div class="row">
-            <div class="col-6">
+            <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Creado por:</span></div>
                     <div class="col-6 crop-text-col">
@@ -321,7 +321,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">&Uacute;ltima modifica:</span></div>
                     <div class="col-6 crop-text-col">
@@ -332,9 +332,9 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-6">
+            <div class="col-4">
             </div>
-            <div class="col-6">
+            <div class="col-4">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6 "><span class="content-first-title-head">Propietario del contacto:</span></div>
                     <div class="col-6 crop-text-col">

@@ -349,7 +349,7 @@
                         </div>
                     </div>
                     <div id="collapseOsCuentaFactura" >
-                        <div class="card-body">
+                        <div class="card-body card-body-tabla">
                             <div class="col-12">
                                 <div class="row">
                                     <div class="col-3">
@@ -423,7 +423,7 @@
                         </div>
                     </div>
                     <div id="collapseTkCuentaFactura" class="  detalle-table-resumen">
-                        <div class="card-body">
+                        <div class="card-body card-body-tabla">
                             <div class="col-12">
                                 <div class="row">
                                     <div class="col-3">

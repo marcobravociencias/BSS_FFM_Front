@@ -30,6 +30,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 	var tableGestoria = undefined;
 	$scope.nombreBandeja = "";
 
+	$scope.nivelArbol = 0;
 	$scope.tipoBandeja = 1;
 
 	$scope.consultarCatalogos = function() {
@@ -62,6 +63,9 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 							
                             //necesario para agregar el y arbol 
                             geografia.map((e)=>{
+								if (e.nivel > $scope.nivelArbol) {
+									$scope.nivelArbol = e.nivel;
+								}
                                 e.parent=e.padre ==undefined ? "#" : e.padre;
                                 e.text= e.nombre;
                                 e.icon= "fa fa-globe";
@@ -127,7 +131,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 				});
 			}
 		});
-		$scope.geografiaSelect = $("#jstree-pendiente").jstree("get_selected", true).filter(e=>e.original.nivel === 5).map(e=>parseInt(e.id))
+		$scope.geografiaSelect = $("#jstree-pendiente").jstree("get_selected", true).filter(e=>e.original.nivel === $scope.nivelArbol).map(e=>parseInt(e.id))
 		let params = {
 			idOrdenTrabajo: !$scope.objetoPendiente.ot || $scope.objetoPendiente.ot === "" ? undefined : $scope.objetoPendiente.ot,
 			folioSistema: !$scope.objetoPendiente.folio || $scope.objetoPendiente.folio === "" ? undefined : $scope.objetoPendiente.folio,
@@ -214,7 +218,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 				});
 			}
 		});
-		$scope.geografiaSelect = $("#jstree-asignado").jstree("get_selected", true).filter(e=>e.original.nivel === 5).map(e=>parseInt(e.id))
+		$scope.geografiaSelect = $("#jstree-asignado").jstree("get_selected", true).filter(e=>e.original.nivel === $scope.nivelArbol).map(e=>parseInt(e.id))
 		let params = {
 			idOrdenTrabajo: !$scope.objetoAsignada.ot || $scope.objetoAsignada.ot === "" ? undefined : $scope.objetoAsignada.ot,
 			folioSistema: !$scope.objetoAsignada.folio || $scope.objetoAsignada.folio === "" ? undefined : $scope.objetoAsignada.folio,
@@ -301,7 +305,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 				});
 			}
 		});
-		$scope.geografiaSelect = $("#jstree-detenido").jstree("get_selected", true).filter(e=>e.original.nivel === 5).map(e=>parseInt(e.id))
+		$scope.geografiaSelect = $("#jstree-detenido").jstree("get_selected", true).filter(e=>e.original.nivel === $scope.nivelArbol).map(e=>parseInt(e.id))
 		let params = {
 			idOrdenTrabajo: !$scope.objetoDetenida.ot || $scope.objetoDetenida.ot === "" ? undefined : $scope.objetoDetenida.ot,
 			folioSistema: !$scope.objetoDetenida.folio || $scope.objetoDetenida.folio === "" ? undefined : $scope.objetoDetenida.folio,
@@ -389,7 +393,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 				});
 			}
 		});
-		$scope.geografiaSelect = $("#jstree-terminada").jstree("get_selected", true).filter(e=>e.original.nivel === 5).map(e=>parseInt(e.id))
+		$scope.geografiaSelect = $("#jstree-terminada").jstree("get_selected", true).filter(e=>e.original.nivel === $scope.nivelArbol).map(e=>parseInt(e.id))
 		let params = {
 			idOrdenTrabajo: !$scope.objetoTerminadas.ot || $scope.objetoTerminadas.ot === "" ? undefined : $scope.objetoTerminadas.ot,
 			folioSistema: !$scope.objetoTerminadas.folio || $scope.objetoTerminadas.folio === "" ? undefined : $scope.objetoTerminadas.folio,
@@ -476,7 +480,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 				});
 			}
 		});
-		$scope.geografiaSelect = $("#jstree-cancelada").jstree("get_selected", true).filter(e=>e.original.nivel === 5).map(e=>parseInt(e.id))
+		$scope.geografiaSelect = $("#jstree-cancelada").jstree("get_selected", true).filter(e=>e.original.nivel === $scope.nivelArbol).map(e=>parseInt(e.id))
 		let params = {
 			idOrdenTrabajo: !$scope.objetoCancelada.ot || $scope.objetoCancelada.ot === "" ? undefined : $scope.objetoCancelada.ot,
 			folioSistema: !$scope.objetoCancelada.folio || $scope.objetoCancelada.folio === "" ? undefined : $scope.objetoCancelada.folio,
@@ -563,7 +567,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 				});
 			}
 		});
-		$scope.geografiaSelect = $("#jstree-calendarizar").jstree("get_selected", true).filter(e=>e.original.nivel === 5).map(e=>parseInt(e.id))
+		$scope.geografiaSelect = $("#jstree-calendarizar").jstree("get_selected", true).filter(e=>e.original.nivel === $scope.nivelArbol).map(e=>parseInt(e.id))
 		let params = {
 			idOrdenTrabajo: !$scope.objetoCalendarizada.ot || $scope.objetoCalendarizada.ot === "" ? undefined : $scope.objetoCalendarizada.ot,
 			folioSistema: !$scope.objetoCalendarizada.folio || $scope.objetoCalendarizada.folio === "" ? undefined : $scope.objetoCalendarizada.folio,
@@ -651,7 +655,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 				});
 			}
 		});
-		$scope.geografiaSelect = $("#jstree-gestoria").jstree("get_selected", true).filter(e=>e.original.nivel === 5).map(e=>parseInt(e.id))
+		$scope.geografiaSelect = $("#jstree-gestoria").jstree("get_selected", true).filter(e=>e.original.nivel === $scope.nivelArbol).map(e=>parseInt(e.id))
 		let params = {
 			idOrdenTrabajo: !$scope.objetoGestoria.ot || $scope.objetoGestoria.ot === "" ? undefined : $scope.objetoGestoria.ot,
 			folioSistema: !$scope.objetoGestoria.folio || $scope.objetoGestoria.folio === "" ? undefined : $scope.objetoGestoria.folio,
@@ -1620,8 +1624,6 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 			"data": []
         });
 				
-		$('.nav-item').removeClass('active');
-		$('#otros_nav').addClass('active');
 		$("#btn_mostrar_nav").hide(500);
 		$('.datepicker').datepicker({
 			format: 'dd/mm/yyyy',
@@ -1655,6 +1657,9 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
         });
 
 		$("#idBody").removeAttr("style");
+		$('#moduloCoordInst').addClass('active');
+		$("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
+
 	});
 
 

@@ -70,17 +70,17 @@
                         <div class="col-1 input-box">
                             <label for="idot" class="label-filter">OT</label>
                             <input type="text" id="idot-reporte" placeholder="Ej: 65434" ng-model="repDiario.idOrden"
-                                autocomplete="off" class="form-control input-filtro-reporte form-control-sm">
+                            ng-change="limpiarCamposReporte(2)" autocomplete="off" class="form-control input-filtro-reporte form-control-sm">
                         </div>
                         <div class="col-1 input-box">
                             <label for="idos" class="label-filter">OS</label>
                             <input type="text" id="idos-reporte" placeholder="Ej: 23214" ng-model="repDiario.folio"
-                                autocomplete="off" class="form-control input-filtro-reporte form-control-sm">
+                            ng-change="limpiarCamposReporte(1)" autocomplete="off" class="form-control input-filtro-reporte form-control-sm">
                         </div>
                         <div class="col-1 input-box">
                             <label for="cuenta" class="label-filter">Cuenta</label>
                             <input type="text" id="cuenta-reporte" placeholder="Ej: 0093484" ng-model="repDiario.idCuenta"
-                                autocomplete="off" class="form-control input-filtro-reporte form-control-sm">
+                            ng-change="limpiarCamposReporte(3)" autocomplete="off" class="form-control input-filtro-reporte form-control-sm">
                         </div>
                         <div class="col-2 columna-filtro-ind-rep input-box">
                             <label for="tipo_reporte" class="label-filter">Tipo fecha</label>
@@ -121,9 +121,8 @@
 
                     </div>
                     <div class="row">
-                        <div class="contenedor-table">
-                            <table class="table table-hover" cellspacing="0" id="table-reporte"
-                                style="width: 100% !important;">
+                        <div class="col-12 contenedor-table">
+                            <table class="table table-hover" cellspacing="0" id="table-reporte">
                                 <thead id="head_table">
                                     <tr>
                                         <th>OT</th> 

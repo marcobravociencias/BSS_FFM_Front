@@ -24,7 +24,7 @@
                 <div class="form-row">
                     <div class="col-3 form-group">
                         <label>Placa </label>
-                        <input type="text" class="form-control form-control-sm" id="placa" onchange="buscarPlaca()" maxlength="25"
+                        <input type="text" class="form-control form-control-sm" id="placa" onchange="buscarPlaca()" maxlength="8"
                             ng-model="vehiculo.placa" capitalize autocomplete="off" />
                     </div>
                     <div class="col-3 form-group">
@@ -66,9 +66,9 @@
                             id="anio" readonly ng-model="vehiculo.anio" />
                     </div>
                     <div class="col-3 form-group">
-                        <label>N&uacute;mero de Serie </label>
+                        <label>N&uacute;mero de Serie <span style="margin-left: 10em;">{{vehiculo.numeroSerie.length ? vehiculo.numeroSerie.length : 0}} - 17</span></label>
                         <input type="text" class="form-control form-control-sm" id="numSerie"
-                            ng-model="vehiculo.numeroSerie" capitalize autocomplete="off"  maxlength="25"/>
+                            ng-model="vehiculo.numeroSerie" capitalize autocomplete="off"  maxlength="17"/>
                     </div>
                     <div class="col-3 form-group">
                         <label>Combustible </label>
@@ -262,7 +262,7 @@
                     <div class="col-12 form-group">
                         <label>Comentarios </label>
                         <textarea class="form-control form-control-sm" id="comentarios" 
-                            ng-model="vehiculo.detalle.comentarios"></textarea>
+                            ng-model="vehiculo.detalle.comentarios" maxlength="250"></textarea>
                     </div>
                 </div>
                 <h5 class="fs-title"><i class="fas fa-exclamation-circle me-2" style="color: orange;"></i> Los datos de

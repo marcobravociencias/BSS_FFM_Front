@@ -42,7 +42,7 @@
 		<link href="${pageContext.request.contextPath}/resources/css/plantainterna/consultaOT/timeLine.css"
         rel="stylesheet" />
 </head>
-<body id="idBody" ng-controller="reportesController">
+<body id="idBody" ng-controller="reportesController" style="display: none;">
 <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
 <div class="col-md-12 style_container_reportes">
 	

@@ -486,4 +486,8 @@ app.controller('consultaOTPEController', ['$scope','$q', 'consultaService','gene
     $scope.inicializarFallas();
     $scope.initComponents();
 
+    angular.element(document).ready(function () {
+        $("#idBody").removeAttr("style");
+    });
+
 }]);

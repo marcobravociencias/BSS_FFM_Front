@@ -823,4 +823,9 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         $("#containerStatusFallas").show();
         $("#container-declinarIncidencia").hide();
     })
+
+    angular.element(document).ready(function () {
+        $("#idBody").removeAttr("style");
+        $("#moduloInspectorIncidenciasPE").addClass('active');
+    });
 }]);

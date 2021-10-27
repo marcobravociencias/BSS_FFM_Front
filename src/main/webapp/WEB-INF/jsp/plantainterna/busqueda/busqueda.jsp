@@ -25,7 +25,7 @@
 	<link href="${pageContext.request.contextPath}/resources/libraries/alertify/css/alertify.min.css" rel="stylesheet">
 </head>
 
-<body ng-controller="busquedaController" class="body">
+<body id="idBody" ng-controller="busquedaController" class="body" style="display: none;">
     <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
 
     <div class="container-fluid container-busqueda">

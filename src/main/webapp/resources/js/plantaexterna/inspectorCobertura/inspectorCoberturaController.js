@@ -495,4 +495,9 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
         */
     }
 
+    angular.element(document).ready(function () {
+        $("#idBody").removeAttr("style");
+        $("#moduloInspectorCoberturasPE").addClass('active');
+    });
+
 }]);

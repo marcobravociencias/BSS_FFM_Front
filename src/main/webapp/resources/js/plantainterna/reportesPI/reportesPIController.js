@@ -1020,9 +1020,15 @@ $scope.abrirModalGeografiaRep=function(){
 		}
 		
 	}	
-	$scope.iniciarReporteOrdenes();  
-	$scope.initComponents();
+	//$scope.iniciarReporteOrdenes();  
+	//$scope.initComponents();
 	$("#li-reporte-navbar").addClass('active')
+
+	angular.element(document).ready(function () {
+        $("#idBody").removeAttr("style");
+		$("#moduloReportesPI").addClass('active')
+		$("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
+    });
 	
 	  
 	}]);

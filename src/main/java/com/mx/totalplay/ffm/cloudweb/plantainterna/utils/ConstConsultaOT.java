@@ -46,4 +46,7 @@ private static final long serialVersionUID = 1L;
 
 	@Value("${consultaPagos}")
 	private String consultaPagos;
+
+	@Value("${consultaEvidencia}")
+	private String consultaEvidencia;
 }
