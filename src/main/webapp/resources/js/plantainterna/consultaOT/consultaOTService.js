@@ -142,4 +142,15 @@ app.service("consultaOTService", function($http){
             }
 		});
 	};
+
+    this.consultarDispositivosOrden=function(params){
+		return $http({
+			method: "post",
+			url: "req/consultaDispositivos",
+			data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
 })

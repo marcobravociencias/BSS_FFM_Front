@@ -154,4 +154,14 @@ public class ConsultaOTController {
 		}
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
+
+	@PostMapping("/consultaDispositivos")
+	public ResponseEntity<?> consultaDispositivos(@RequestBody String params){
+		logger.info("#### CONSULTANDO consultaDispositivos: " + params);
+		ServiceResponseResult response = consultaOTService.consultaDispositivos(params);
+		if (response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
 }

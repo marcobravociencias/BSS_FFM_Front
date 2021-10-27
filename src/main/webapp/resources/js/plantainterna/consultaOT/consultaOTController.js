@@ -33,6 +33,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	let isConsultaDetallePago = false;
 	$scope.evidenciaDetalleEquipoV = '';
 	$scope.evidenciaDetalleEquipoN = '';
+	let isConsultaDispositivo = false
 
 	$scope.consultaOT = function () {
 		let isValido = true;
@@ -169,7 +170,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 						swal.close()
 					}
 				},
-				"columns": [null, null, null, null, null, null, null, null, null],
+				"columns": [null, null, null, null, null, null, null, null, null, null],
 				"language": idioma_espanol_not_font
 			});
 
@@ -1390,6 +1391,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		$("#acciones").removeClass('active')
 		$("#postVenta").removeClass('active')
 		$('#pagos-Ot').removeClass('active');
+		$('#dispositivos-Ot').removeClass('active');
 		$('.contenedor_detalle').hide();
 
 		$('#comentarios').addClass('active');
@@ -1403,6 +1405,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		$("#acciones").removeClass('active')
 		$("#postVenta").removeClass('active')
 		$('#pagos-Ot').removeClass('active');
+		$('#dispositivos-Ot').removeClass('active');
 		$('.contenedor_detalle').hide();
 
 		$('#informacion-ot').addClass('active');
@@ -1416,6 +1419,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		$("#acciones").removeClass('active')
 		$("#postVenta").removeClass('active')
 		$('#pagos-Ot').removeClass('active');
+		$('#dispositivos-Ot').removeClass('active');
 		$('.contenedor_detalle').hide();
 
 		$('#info_historico').addClass('active');
@@ -1428,6 +1432,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		$("#info_historico").removeClass('active')
 		$("#informacion-ot").removeClass('active')
 		$('#pagos-Ot').removeClass('active');
+		$('#dispositivos-Ot').removeClass('active');
 		$('.contenedor_detalle').hide();
 
 		$('#postVenta').addClass('active');
@@ -1441,11 +1446,26 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		$("#acciones").removeClass('active')
 		$("#postVenta").removeClass('active')
 		$('#info_historico').removeClass('active');
+		$('#dispositivos-Ot').removeClass('active');
 		$('.contenedor_detalle').hide();
 
 		$('#pagos-Ot').addClass('active');
 		$('#content-pagos').show();
 		$scope.consultaPagosOt();
+	});
+
+	document.getElementById('dispositivo-Ot').addEventListener('click', function () {
+		$("#comentarios").removeClass('active')
+		$("#informacion-ot").removeClass('active')
+		$("#acciones").removeClass('active')
+		$("#postVenta").removeClass('active')
+		$('#info_historico').removeClass('active');
+		$('.contenedor_detalle').hide();
+		$('#pagos-Ot').removeClass('active');
+
+		$('#dispositivos-Ot').addClass('active');
+		$('#content-dispositivos').show();
+		$scope.consultarDispositivosOt();
 	});
 
 
@@ -1468,6 +1488,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		$("#acciones").removeClass('active')
 		$("#postVenta").removeClass('active')
 		$("#pagos-Ot").removeClass('active')
+		$("#dispositivo-Ot").removeClass('active')
 	})
 
 	limpiarVariablesModalDetalle = function () {
@@ -1487,11 +1508,13 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		is_consulta_actividad_tecnico = false;
 		isConsultaDetalleSoporte = false
 		isConsultaDetallePago = false
+		isConsultaDispositivo = false
 		$("#info_historico").removeClass('active')
 		$("#comentarios").removeClass('active')
 		$("#acciones").removeClass('active')
 		$("#postVenta").removeClass('active')
 		$("#pagos-Ot").removeClass('active')
+		$("#dispositivo-Ot").removeClass('active')
 		$("#informacion-ot").addClass('active')
 	}
 
@@ -1925,4 +1948,20 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
             '  </div>';
     }
 
+	
+	$scope.consultarDispositivosOt = function(){
+		if (!isConsultaDispositivo) {
+			let params = {
+				orden: 92070//$scope.datoOt
+			}
+			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
+			swal.showLoading();
+			consultaOTService.consultarDispositivosOrden(params).then((result) => {
+				swal.close()
+				console.log(result)
+				isConsultaDispositivo = true
+				
+			}).catch(err => handleError(err));
+		}
+	}
 }])

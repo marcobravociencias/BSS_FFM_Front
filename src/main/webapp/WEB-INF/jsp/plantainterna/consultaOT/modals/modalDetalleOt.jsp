@@ -17,6 +17,7 @@
                                 <li class="nav-link" id="comentarios">Comentarios</li>
                                 <li class="nav-link" id="postVenta">Detalle Soporte</li>
                                 <li class="nav-link" id="pagos-Ot">Pagos</li>
+                                <li class="nav-link" id="dispositivo-Ot">Dispositivos</li>
                                 <!-- <li class="nav-link" id="acciones">Acciones</li> -->
                             </div>
                         </div>
@@ -141,6 +142,11 @@
                             <div class="contenedor_detalle row" id="content-pagos">
                                 <div class="container">
                                     <jsp:include page="../contentTap/detallePago.jsp"></jsp:include>
+                                </div>
+                            </div>
+                            <div class="contenedor_detalle row" id="content-dispositivos">
+                                <div class="container">
+                                    <jsp:include page="../contentTap/dispositivosOt.jsp"></jsp:include>
                                 </div>
                             </div>
                             <div class="contenedor_detalle row" id="content_acciones">
@@ -345,6 +351,7 @@
                                     </div>
                                 </div>
                             </div>
+                            
                         </div>
                     </div>
                 </div>
