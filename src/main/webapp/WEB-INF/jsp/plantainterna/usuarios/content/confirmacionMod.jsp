@@ -1,7 +1,5 @@
 <div class="col-12">
-    <div class="row">
-        <div class="col-12">
-            <div class="content-confirmar-usuario">
+
                 <div class="header-confirmar-usuario">
                     <h5 class="text-center encabezado-confirmacion">DATOS AGREGADOS</h5>
                 </div>
@@ -54,12 +52,11 @@
                                 <div class="row">
                                     <label class="titulos-confirmacion">* Ciudad natal:</label>
                                 </div>
-                                <form name="myForm">
-                                	<div id="contenedorconfirmacionModificacion" class="scrollListaCiudadNatal">
-	                                    <div class="row" ng-repeat="ciudad in listaCiudadesSelecionadasMod | filter:buscarCiudad track by $index" ng-if="ciudad.nombre != null">
+                                	<div id="contenedorconfirmacionModificacion" class="scrollListaCiudadNatalMod">
+	                                    <div class="row" ng-repeat="ciudad in listaCiudadNatalMod | filter:buscarCiudad track by $index" ng-if="ciudad.nombre != null">
 	                                        <div class="col-12">
-	                                            <label class="respuesta-confirmacion ciudadNatal">
-	                                                <input type="radio" ng-model="informacionRegistro.ciudadNatal" ng-value="ciudad.id" ng-click="asignarCiudadNatalRegistro()">
+	                                            <label class="respuesta-confirmacion ciudadNatalMod">
+	                                                <input type="radio" ng-model="detalleUsuario.ciudadNatal" ng-value="ciudad.id" ng-click="asignarCiudadNatalMod()">
 	                                                {{ciudad.nombre}}
 	                                            </label>
 	                                        </div>
@@ -68,15 +65,8 @@
 											Sin asignar
 										</span>
 									</div>
-								
-                                </form>
-                                
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        
-    </div>
 </div>

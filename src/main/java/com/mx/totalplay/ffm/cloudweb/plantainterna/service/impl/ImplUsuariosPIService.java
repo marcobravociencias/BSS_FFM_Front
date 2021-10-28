@@ -235,6 +235,21 @@ public class ImplUsuariosPIService implements UsuariosPIService {
 		return response;
 	}
 	
+	@Override
+	public ServiceResponseResult modificarUsuario(String params) {
+		logger.info("ImplUsuariosPIService.class [metodo = modificarUsuario() ]\n");
+		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		Map<String, String> paramsRequestGet = new HashMap<String, String>();
+		paramsRequestGet.put("id", jsonObject.get("id").getAsString());
+		logger.info("json object params## "+ params);
+		String tokenAcces=principalDetail.getAccess_token(); 
+		String url = principalDetail.getDireccionAmbiente().concat(constUsuario.getModificarUsuario());
+		ServiceResponseResult response= restCaller.callPatchBearerTokenRequestURL(paramsRequestGet, jsonObject.toString(), url, ServiceResponseResult.class, tokenAcces);
+		logger.info("RESULT modificarUsuario " + gson.toJson(response));
+		return response;
+	}
+	
 	//-------------------------------------------------------------------------------------------
 	//-------------------------------------------------------------------------------------------
 
