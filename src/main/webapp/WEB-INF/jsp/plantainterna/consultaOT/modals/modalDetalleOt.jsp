@@ -145,7 +145,7 @@
                                 </div>
                             </div>
                             <div class="contenedor_detalle row" id="content-dispositivos">
-                                <div class="container">
+                                <div class="container container-tabla-dispositivo-consulta-ot">
                                     <jsp:include page="../contentTap/dispositivosOt.jsp"></jsp:include>
                                 </div>
                             </div>
