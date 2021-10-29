@@ -35,7 +35,13 @@ app.calendarController = function ($scope, ordenesUniversalesService) {
 
                 $scope.$apply()                           
             },
-            selectable: true
+            selectable: true,
+            datesSet :function(){
+                setTimeout(function(){
+                    $scope.calendarDisp.render()
+                },1000) 
+            }
+
         });
 
         $scope.calendarDisp.render();

@@ -15,33 +15,25 @@
     <div class="offset-1 col-md-6">
         <h6 id="labelIntervencionesSeleccionadas" class="text-center titulo-opciones">SELECCIONADAS</h6>
         <hr/>
-<!--         <div id="contenedorIntervencionesRegistro" class="scrollGeneralArbol"> -->
-<!-- 	    	<div class="row padding_resumen_ciudades" ng-repeat="intervencion in listaIntervencionesSeleccionadas track by $index"> -->
-<!-- 	        	<div class="col-md-6"> -->
-<!-- 	            	<span class="text-body-table-arbol" ng-bind="$index + 1"></span> -->
-<!-- 	            	<span class="text-body-table-arbol" ng-bind="intervencion"></span> -->
-<!-- 	            </div> -->
-<!-- 	        </div> -->
-<!--         </div> -->
         <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-6">
-                        <span class="text-head-table-arbol"><li class="fa fa-cubes"></li>&nbsp;Intervenci&oacute;n:</span>
-                    </div>
-                    <div class="col-md-6">
-                        <span class="text-head-table-arbol"><li class="fas fa-lock"></li>&nbsp;Subintervenci&oacute;n:</span>
-                    </div>
-                </div>
-                <div id="contenedorIntervencionesRegistro" class="scrollGeneralArbol">
-	                <div class="row padding_resumen_ciudades" ng-repeat="intervencion in listaIntervencionesSeleccionadas track by $index">
-	                    <div class="col-md-6">
-	                        <span class="text-body-table-arbol" ng-bind="intervencion.nombre"></span>
-	                    </div>
-	                    <div class="col-md-6">
-	                        <li class="item_ciudad_resum text-body-table-arbol" ng-repeat="inter in intervencion.hijos" ng-bind="inter.text"></li>
-	                    </div>
-	                </div>
-                </div>
-            </div>
+        	<div class="row">
+            	<div class="col-md-6">
+                	<span class="text-head-table-arbol"><li class="fa fa-cubes"></li>&nbsp;Intervenci&oacute;n:</span>
+				</div>
+                <div class="col-md-6">
+                	<span class="text-head-table-arbol"><li class="fas fa-lock"></li>&nbsp;Subintervenci&oacute;n:</span>
+				</div>
+			</div>
+            <div id="contenedorIntervencionesRegistro" class="scrollGeneralArbol">
+	        	<div class="row padding_resumen_ciudades" ng-repeat="intervencion in listaIntervencionesSeleccionadas track by $index">
+	            	<div class="col-md-6">
+	                	<span class="text-body-table-arbol" ng-bind="intervencion.nombre"></span>
+					</div>
+	                <div class="col-md-6">
+	                	<li class="item_ciudad_resum text-body-table-arbol" ng-repeat="inter in intervencion.hijos" ng-bind="inter.text"></li>
+					</div>
+				</div>
+			</div>
+		</div>
     </div>
 </div>

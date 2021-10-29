@@ -8,7 +8,7 @@ let jsonTecnicos = [{"apellidoMaterno": "APEIDO MATERNO","apellidoPaterno": "APE
 app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filter', function ($scope, $q, usuarioPIService, $filter) {
 	$("#moduloUsuarios").addClass('active');
 	
-	app.editarUsuarioController($scope,usuarioPIService);
+	app.editarUsuarioController($scope,usuarioPIService,$q);
 	//ELEMENTOS PARA CONSULTA
 	let tablaUsuarios;
 	$scope.listaCompanias = [];
@@ -29,6 +29,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     $scope.informacionRegistro = {};
     $scope.listaPermisos = [];
     $scope.listaIntervenciones = [];
+    $scope.listaIntervencionesRespaldo = [];
     $scope.listaIntervencionesSeleccionadas = [];
     $scope.listaGeografiasSeleccionadas = [];
     $scope.listaCiudadNatalRegistro = [];
@@ -195,6 +196,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
                             if (intervencion.nivel <= $scope.filtroIntervenciones) {
                             	intervencionesLista.push(intervencion);
                             	$scope.listaIntervenciones.push(intervencion);
+                            	$scope.listaIntervencionesRespaldo.push(intervencion);
                             }
                         });
             			if(intervencionesLista.length > 0){
@@ -473,7 +475,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	$('#arbolIntervencionRegistro').jstree("deselect_all");
     	$('#arbolGeografiaRegistro').jstree("deselect_all");
     	$('#arbolPermisoRegistro').jstree("deselect_all");
-    	$( "#arbolIntervencionRegistro").jstree('close_all', -1);
+    	$( "#arbolIntervencionRegistro").jstree('close_all');
     	$( "#arbolGeografiaRegistro").jstree('close_all');
     	$( "#arbolPermisoRegistro").jstree('close_all');
     	$("#buscadorIntervencionRegistro").val("");
@@ -481,6 +483,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	$("#buscadorPermisosRegistro").val("");
     	$scope.listaIntervencionesSeleccionadas = [];
     	$scope.listaGeografiasSeleccionadas = [];
+    	$scope.informacionRegistro.geografias = [];
     	$scope.listaPermisosSeleccionados = [];
     	
     	var puestoSeleccionado = $("#puesto_select_registro option:selected").text().toLowerCase();
@@ -542,6 +545,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	$scope.listaGeografiasSeleccionadas = [];
     	$scope.informacionRegistro.geografias = [];
     	$scope.listaCiudadNatalRegistro = [];
+    	$scope.listaTecnicos = [];
     	var geografiasTree = $('#arbolGeografiaRegistro').jstree("get_selected", true);
     	geografiasTree.forEach(geo =>{
     		if(geo.original.nivel == $scope.filtroGeografias){
@@ -573,8 +577,8 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	$scope.listaGeografiasSeleccionadas.forEach(geoHija =>{
     		var geo = geoHija;
     		while(geo.nivel > 2){
-    			var x = geografiasNivelCiudad.filter(e => {return e.id == geo.parent})[0];
-    			geo = x;
+    			var ciudadPadre = geografiasNivelCiudad.filter(e => {return e.id == geo.parent})[0];
+    			geo = ciudadPadre;
     		}
     		var existeCiudadNatal = false;
     		$scope.listaCiudadNatalRegistro.forEach(ciudadesNatal =>{
@@ -587,6 +591,14 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     		}
     		
     	});
+    	
+    	if(geografiasTree.length > 0){
+    		if($scope.isTecnico){
+        		$scope.consultarDespachos();
+        	}else{
+        		$scope.consultarTecnicos();
+        	}
+    	}
     	    	
     	if($scope.listaGeografiasSeleccionadas.length > 0){
     		$("#labelGeografiasSeleccionadas").css("color", "rgb(70, 88, 107)");
@@ -656,7 +668,6 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		});
     	
     	let paramsRegistro = {
-    			
     			nombre: $scope.informacionRegistro.nombre,
     			apellidoPaterno: $scope.informacionRegistro.apellidoPaterno,
     			apellidoMaterno: $scope.informacionRegistro.apellidoMaterno,
@@ -687,25 +698,40 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     			geografias: $scope.informacionRegistro.geografias,
     			intervenciones: $scope.informacionRegistro.intervenciones,
     			idOperarios: $scope.isTecnico == true ? $scope.informacionRegistro.despachos : $scope.informacionRegistro.tecnicos,
-    			permisos: $scope.informacionRegistro.permisos,
+    			permisos: $scope.isTecnico == true ? [] : $scope.informacionRegistro.permisos,
     			idAsignacionAutomatica: $scope.informacionRegistro.asignacionAutomatica
     	};
 
     	var respuestaValidacionRegistro = $scope.validarInformacionRegistro();
     	if(respuestaValidacionRegistro){
-    		swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
-    		swal.showLoading();
-        	$q.all([
-        		usuarioPIService.guardarUsuario(paramsRegistro)
-            ]).then(function(results) {
-            	swal.close();
-            	if(results[0].data.respuesta){
-            		swal("Correcto", "¡Registro guardado con éxito!", "success");
-            		$scope.limpiarDatosRegistro();
-            	}else{
-            		swal("Error", results[0].data.resultDescripcion, "error");
-            	}
-            });
+    		
+    		swal({
+    	        title: "Se guardará un nuevo usuario",
+    	        text: "\u00BFDesea registrar al usuario?",
+    	        type: "warning",
+    	        showCancelButton: true,
+    	        confirmButtonColor: '#007bff',
+    	        confirmButtonText: 'Si',
+    	        cancelButtonText: 'Cancelar'
+    	      }).then(function (isConfirm) {
+    	        if (isConfirm) {
+    	        	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
+    	    		swal.showLoading();
+    	        	$q.all([
+    	        		usuarioPIService.guardarUsuario(paramsRegistro)
+    	            ]).then(function(results) {
+    	            	swal.close();
+    	            	if(results[0].data.respuesta){
+    	            		swal("Correcto", "¡Registro guardado con éxito!", "success");
+    	            		$scope.limpiarDatosRegistro();
+    	            	}else{
+    	            		swal("Error", results[0].data.resultDescripcion, "error");
+    	            	}
+    	            });
+    	        }
+    	      }).catch(err => {
+
+    	      });
     	}
 	}
     
@@ -1227,78 +1253,83 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	
 	$scope.consultarDespachos = function() {
 		$scope.listaDespachos = [];
-		if($scope.informacionRegistro.geografias !== undefined){
-			if($scope.informacionRegistro.geografias.length > 0){
-				let params = {idGeografia:$scope.informacionRegistro.geografias};
-		    	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
-				swal.showLoading();
-		    	$q.all([
-		    		usuarioPIService.consultarTecnicos(params)
-		        ]).then(function(results) {
-		        	if (results[0].data !== undefined) {
-		            	if(results[0].data.respuesta){
-		            		if(results[0].data.result.usuarios !== null){
-			            		if(results[0].data.result.usuarios.length > 0){
-			            			$scope.listaDespachos = results[0].data.result.usuarios;
-			            			$("#checkTotdosDespachoRegistro").prop("checked",false);
-			            	    	angular.forEach($scope.listaDespachos,function(despacho,index){
-			            	    		despacho.checkedOpcion = false;
-			            			});
-			            		}else{
-			            			toastr.warning('¡No existen despachos actualmente!');
-			            		}
-		            		}else{
-		            			toastr.warning('¡No existen despachos actualmente!');
-		            		}
-		            	}else{
-		            		toastr.warning('¡No existen despachos actualmente!');
-		            	}
-		        	}else{
-		        		toastr.error('Error interno en el servidor.');
-		        	}
-		        	swal.close();
-		        });
-			}else{
-				toastr.warning('¡Selecciona al menos una geografía!');
-			}
-		}else{
-			toastr.warning('¡Selecciona al menos una geografía!');
-		}
+		let params = {idGeografia:$scope.informacionRegistro.geografias};
+    	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
+		swal.showLoading();
+    	$q.all([
+    		usuarioPIService.consultarTecnicos(params)
+        ]).then(function(results) {
+        	if (results[0].data !== undefined) {
+            	if(results[0].data.respuesta){
+            		if(results[0].data.result.usuarios !== null){
+	            		if(results[0].data.result.usuarios.length > 0){
+	            			$scope.listaDespachos = results[0].data.result.usuarios;
+	            			$("#checkTotdosDespachoRegistro").prop("checked",false);
+	            	    	angular.forEach($scope.listaDespachos,function(despacho,index){
+	            	    		despacho.checkedOpcion = false;
+	            			});
+	            		}else{
+	            			$scope.listaDespachos = [];
+	            		}
+            		}else{
+            			$scope.listaDespachos = [];
+            		}
+            	}else{
+            		$scope.listaDespachos = [];
+            	}
+        	}else{
+        		toastr.error('Error interno en el servidor.');
+        	}
+        	swal.close();
+        });
+				
 	}
 	
 	$scope.consultarTecnicos = function() {
 		$scope.listaTecnicos = [];
+		let params = {idGeografia:$scope.informacionRegistro.geografias};
+    	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
+		swal.showLoading();
+    	$q.all([
+    		usuarioPIService.consultarTecnicos(params)
+        ]).then(function(results) {
+        	if (results[0].data !== undefined) {
+            	if(results[0].data.respuesta){
+            		if(results[0].data.result.usuarios !== null){
+	            		if(results[0].data.result.usuarios.length > 0){
+	            			$scope.listaTecnicos = results[0].data.result.usuarios;
+	            			$("#checkTotdosTecnicosRegistro").prop("checked",false);
+	            	    	angular.forEach($scope.listaTecnicos,function(tecnico,index){
+	            	    		tecnico.checkedOpcion = false;
+	            			});
+	            		}else{
+	            			$scope.listaTecnicos = [];
+	            		}
+            		}else{
+            			$scope.listaTecnicos = [];
+            		}
+            	}else{
+            		$scope.listaTecnicos = [];
+            	}
+        	}else{
+        		toastr.error('Error interno en el servidor.');
+        	}
+        	swal.close();
+        });
+	}
+	
+	$scope.revisionTecnicosDespachos = function() {
 		if($scope.informacionRegistro.geografias !== undefined){
 			if($scope.informacionRegistro.geografias.length > 0){
-				let params = {idGeografia:$scope.informacionRegistro.geografias};
-		    	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
-				swal.showLoading();
-		    	$q.all([
-		    		usuarioPIService.consultarTecnicos(params)
-		        ]).then(function(results) {
-		        	if (results[0].data !== undefined) {
-		            	if(results[0].data.respuesta){
-		            		if(results[0].data.result.usuarios !== null){
-			            		if(results[0].data.result.usuarios.length > 0){
-			            			$scope.listaTecnicos = results[0].data.result.usuarios;
-			            			$("#checkTotdosTecnicosRegistro").prop("checked",false);
-			            	    	angular.forEach($scope.listaTecnicos,function(tecnico,index){
-			            	    		tecnico.checkedOpcion = false;
-			            			});
-			            		}else{
-			            			toastr.warning('¡No existen técnicos actualmente!');
-			            		}
-		            		}else{
-		            			toastr.warning('¡No existen técnicos actualmente!');
-		            		}
-		            	}else{
-		            		toastr.warning('¡No existen técnicos actualmente!');
-		            	}
-		        	}else{
-		        		toastr.error('Error interno en el servidor.');
-		        	}
-		        	swal.close();
-		        });
+				if($scope.isTecnico){
+					if($scope.listaDespachos == ""){
+						toastr.warning('¡No existen despachos actualmente!');
+					}
+				}else{
+					if($scope.listaTecnicos == ""){
+						toastr.warning('¡No existen técnicos actualmente!');
+					}
+				}
 			}else{
 				toastr.warning('¡Selecciona al menos una geografía!');
 			}
@@ -1330,9 +1361,9 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	$("#sexo_select_registro"). prop("selectedIndex",0);
     	$("#checkTotdosTecnicosRegistro").prop("checked",false);
     	$scope.informacionRegistro.ciudadNatal = "";
+    	$scope.informacionRegistro.asignacionAutomatica = 0;
 		$scope.informacionRegistro = {};
 		$scope.confirmacionRegistro = {};
-		$scope.informacionRegistro.asignacionAutomatica = 0;
 		$scope.mostrarAccesos = false;
 	    $scope.mostrarTecnicos = false;
 	    $scope.mostrarDespacho = false;
@@ -1347,6 +1378,26 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		$("#opcion-alta").removeClass("active show");
 		$("#opcion-consulta-tab").addClass("active");
 		$("#opcion-consulta").addClass("active show");
+	}
+	
+	$scope.resetearTablaUsuariosConsulta = function() {
+    	if (tablaUsuarios) {
+			tablaUsuarios.destroy();
+		}
+		tablaUsuarios = $('#table-usuario-pi').DataTable({
+			"processing": false,
+			"ordering": false,
+			"serverSide": false,
+			"scrollX": false,
+			"paging": true,
+			"lengthChange": false,
+			"searching": false,
+			"ordering": false,
+			"pageLength": 10,
+			"data": [],
+			"columns": [null, null, null, null, null, null, null, null],
+			"language": idioma_espanol_not_font
+		});
 	}
 	
     // *** FIN CAMBIOS REYNEL *** 

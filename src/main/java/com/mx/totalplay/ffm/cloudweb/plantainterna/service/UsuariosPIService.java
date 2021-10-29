@@ -17,6 +17,7 @@ public interface UsuariosPIService {
 	public ServiceResponseResult consultaIntervenciones();
 	public ServiceResponseResult guardarUsuario(String params);
 	public ServiceResponseResult consultarTecnicosRegistroUsuario(String params);
+	public ServiceResponseResult modificarUsuario(String params);
 	//FIN MAPEO
 	
 	public ServiceResponseResult consultarRegionesEstructura();

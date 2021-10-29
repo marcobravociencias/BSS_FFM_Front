@@ -31,4 +31,6 @@ public interface ConsultaOTService {
 	ServiceResponseResult consultaPagos(String params);
 
     ServiceResponseResult consultaEvidencia(String params);
+
+	ServiceResponseResult consultaDispositivos(String params);
 }

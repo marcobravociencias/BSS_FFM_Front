@@ -75,7 +75,7 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" id="modifica-tab" data-toggle="tab" href="#modifica"
-                                        onclick="resetAll()" role="tab" aria-controls="modifica" ng-show="isEdit"
+                                        role="tab" aria-controls="modifica" ng-show="isEdit"
                                         aria-selected="false">Modificar
                                         Veh&iacute;culo</a>
                                 </li>

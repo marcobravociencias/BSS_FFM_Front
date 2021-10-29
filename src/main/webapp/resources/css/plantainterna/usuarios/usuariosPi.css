@@ -262,6 +262,14 @@ label.form-check-inputfiltro {
 	text-align:justify;
 }
 
+.scrollListaCiudadNatalMod {
+	padding:3px;
+	height: 180px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	text-align:justify;
+}
+
 .scrollListaTecnicos {
 	padding:3px;
 	height: 230px;

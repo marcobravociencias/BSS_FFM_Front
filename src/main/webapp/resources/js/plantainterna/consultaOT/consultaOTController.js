@@ -33,6 +33,21 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	let isConsultaDetallePago = false;
 	$scope.evidenciaDetalleEquipoV = '';
 	$scope.evidenciaDetalleEquipoN = '';
+	let isConsultaDispositivo = false
+	$scope.dispositivosArrayTemp = [];
+	$scope.listadoConsultaOtsDisponibles=[];
+
+	let dispositivoOtTable = $('#table_dispositovos_ot').DataTable({
+		"paging": true,
+		"lengthChange": false,
+		"info": true,
+		"searching": false,
+		"ordering": false,
+		"pageLength": 10,
+		"autoWidth": true,
+		"language": idioma_espanol_not_font,
+
+	});
 
 	$scope.consultaOT = function () {
 		let isValido = true;
@@ -160,6 +175,10 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 					},
 					"dataSrc": function (json) {
 						$scope.elementosRegistro = json.registrosTotales
+						$scope.listadoConsultaOtsDisponibles=[];
+						if( json.result != undefined && json.result.ordenes != undefined)
+							$scope.listadoConsultaOtsDisponibles = json.result.ordenes;
+												
 						return json.data;
 					},
 					"error": function (xhr, error, thrown) {
@@ -169,7 +188,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 						swal.close()
 					}
 				},
-				"columns": [null, null, null, null, null, null, null, null, null],
+				"columns": [null, null, null, null, null, null, null, null, null, null],
 				"language": idioma_espanol_not_font
 			});
 
@@ -203,7 +222,9 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		$q.all([
 			genericService.consultarCatalogoIntervenciones(),
 			genericService.consulCatalogoGeografia(),
-			genericService.consultarCatalogoEstatusDespachoPI()
+			genericService.consultarCatalogoEstatusDespachoPI(),
+			consultaOTService.consultarConfiguracionDespachoDespacho({"moduloAccionesUsuario":"moduloConsultaOt"}),
+
 		]).then(function (results) {
 			if (results[0].data !== undefined) {
 				if (results[0].data.respuesta) {
@@ -295,6 +316,27 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				toastr.error('Ha ocurrido un error en la consulta de geografia')
 				$scope.banderaErrorGeografia = true;;
 			}
+
+			if (results[3].data !== undefined) {
+				if (results[3].data.respuesta) {
+					if (results[3].data.result) {
+						$scope.elementosConfigGeneral=new Map(Object.entries(results[3].data.result))    		
+					} else {
+						swal.close();
+						toastr.warning('No se encontraron datos para la geografia');
+						$scope.banderaErrorGeografia = true;
+					}
+				} else {
+					swal.close();
+					toastr.warning(results[3].data.resultDescripcion);
+					$scope.banderaErrorGeografia = true;
+				}
+			} else {
+				swal.close();
+				toastr.error('Ha ocurrido un error en la consulta de geografia')
+				$scope.banderaErrorGeografia = true;;
+			}
+
 
 
 		}).catch(err => handleError(err));
@@ -650,11 +692,11 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	$scope.datoOt;
 	$scope.datoInt;
 	$scope.datoSubInt;
-	consultaDetalleOt = function (ot, tipo, subtipo, operario, equipo) {
+	consultaDetalleOt = function (indexOtConsulta) {
 		$scope.infoOtDetalle = {};
-		$("#modal-detalle-ot").removeClass('contenedor_detalle');
+		//$("#modal-detalle-ot").removeClass('contenedor_detalle');
 		//getDetalleOTGeneric(idOT);
-		$scope.consultaDetalleOtGeneric(ot);
+		let otConsultaTemp=$scope.listadoConsultaOtsDisponibles[indexOtConsulta]
 		$('#content-ot').show();
 
 		$('#content-comentarios').hide();
@@ -670,64 +712,17 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		$('#content_trayectoria').hide();
 		$('#content-postVenta').hide();
 		$('#content-pagos').hide();
+		$('#content-dispositivos').hide();
 		$('#modal-detalle-ot .itemGeneral').removeClass('active');
 		$('#modal-detalle-ot .itemGeneral:first').addClass('active');
-		$scope.datoOt = ot;
-		$scope.datoInt = tipo;
-		$scope.datoSubInt = subtipo;
+	
 		is_consulta_info_trayectoria = false;
-		if ($scope.datoInt == "55" && $scope.datoInt == "111" || $scope.datoInt == '106' && $scope.datoSubInt == '107') {
-			$("#info_soluciones").show();
-		} else {
-			$("#info_soluciones").hide();
-		}
-
-		//sustitur por el nuevo
-		if ($scope.datoInt == '112' && $scope.datoSubInt == '115') {
-			$("#corte_individual").show();
-		} else {
-			$("#corte_individual").hide();
-		}
-
-		if ($scope.datoInt == '106' && $scope.datoSubInt == '107') {
-			$("#info_cambio_plan").show();
-		} else {
-			$("#info_cambio_plan").hide();
-		}
-
-		if ($scope.datoInt == '108' && $scope.datoSubInt == '109' || $scope.datoInt == '108' && $scope.datoSubInt == '110') {
-			$("#info_reubicacion").show();
-		} else {
-			$("#info_reubicacion").hide();
-		}
-
-		if (equipo != 'null') {
-			$("#info_cambio_equipo").show();
-		} else {
-			$("#info_cambio_equipo").hide();
-		}
-
-		if ($scope.datoInt == '141') {
-			$("#atividad_tecnico").show();
-		} else {
-			$("#atividad_tecnico").hide();
-		}
-		if ([276, 260, 263, 261, 278, 275, 277, 259, 262, 274, 265, 264, 258, 141].includes(parseInt($scope.datoInt))) {
-			$("#atividad_tecnico").show();
-		} else {
-			$("#atividad_tecnico").hide();
-		}
-		if ($scope.datoInt == '48' || $scope.datoInt == '95' || $scope.datoInt == '125') {
-			$("#info_red").show();
-		} else {
-			$("#info_red").hide()
-		}
+		$scope.consultaDetalleOtGeneric( otConsultaTemp );
 	}
 
-	$scope.consultaDetalleOtGeneric = function (ot) {
-		if (!is_consulta_info_ot) {
+	$scope.consultaDetalleOtGeneric = function (ordenObject) {
 			let params = {
-				Id_ot: ot
+				Id_ot: ordenObject.idOrden
 			}
 			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 			swal.showLoading();
@@ -738,8 +733,18 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 						if (response.data.result.orden) {
 							$scope.infoOtDetalle = response.data.result.orden
 							is_consulta_info_ot = true;
+							//$scope.permisosModal=$scope.elementosConfigGeneral.get("MODAL_FLUJO_"+ ordenObject.idFlujo ).split(",")
+							$scope.permisosModal=[
+								"tabHistoricoDespacho",
+								"tabComentariosDespacho",
+								"tabDetalleSoporte",
+								"tabConsultaPagos",
+								"tabConsultaDispositivos"
+							]
+							console.log("#permisos ,orden ", $scope.permisosModal );
 							$('#modal-detalle-ot').modal('show');
 							swal.close();
+
 						} else {
 							swal.close();
 							mostrarMensajeErrorAlert(response.data.result.mensaje)
@@ -753,7 +758,6 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 					mostrarMensajeErrorAlert("Error del servidor");
 				}
 			}).catch(err => handleError(err));
-		}
 	}
 
 	consultaMaterialesOT = function (ot, operario) {
@@ -1390,6 +1394,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		$("#acciones").removeClass('active')
 		$("#postVenta").removeClass('active')
 		$('#pagos-Ot').removeClass('active');
+		$('#dispositivo-Ot').removeClass('active');
 		$('.contenedor_detalle').hide();
 
 		$('#comentarios').addClass('active');
@@ -1403,6 +1408,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		$("#acciones").removeClass('active')
 		$("#postVenta").removeClass('active')
 		$('#pagos-Ot').removeClass('active');
+		$('#dispositivo-Ot').removeClass('active');
 		$('.contenedor_detalle').hide();
 
 		$('#informacion-ot').addClass('active');
@@ -1416,6 +1422,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		$("#acciones").removeClass('active')
 		$("#postVenta").removeClass('active')
 		$('#pagos-Ot').removeClass('active');
+		$('#dispositivo-Ot').removeClass('active');
 		$('.contenedor_detalle').hide();
 
 		$('#info_historico').addClass('active');
@@ -1428,6 +1435,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		$("#info_historico").removeClass('active')
 		$("#informacion-ot").removeClass('active')
 		$('#pagos-Ot').removeClass('active');
+		$('#dispositivo-Ot').removeClass('active');
 		$('.contenedor_detalle').hide();
 
 		$('#postVenta').addClass('active');
@@ -1441,11 +1449,26 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		$("#acciones").removeClass('active')
 		$("#postVenta").removeClass('active')
 		$('#info_historico').removeClass('active');
+		$('#dispositivo-Ot').removeClass('active');
 		$('.contenedor_detalle').hide();
 
 		$('#pagos-Ot').addClass('active');
 		$('#content-pagos').show();
 		$scope.consultaPagosOt();
+	});
+
+	document.getElementById('dispositivo-Ot').addEventListener('click', function () {
+		$("#comentarios").removeClass('active')
+		$("#informacion-ot").removeClass('active')
+		$("#acciones").removeClass('active')
+		$("#postVenta").removeClass('active')
+		$('#info_historico').removeClass('active');
+		$('.contenedor_detalle').hide();
+		$('#pagos-Ot').removeClass('active');
+
+		$('#dispositivo-Ot').addClass('active');
+		$('#content-dispositivos').show();
+		$scope.consultarDispositivosOt();
 	});
 
 
@@ -1468,6 +1491,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		$("#acciones").removeClass('active')
 		$("#postVenta").removeClass('active')
 		$("#pagos-Ot").removeClass('active')
+		$("#dispositivo-Ot").removeClass('active')
 	})
 
 	limpiarVariablesModalDetalle = function () {
@@ -1487,11 +1511,13 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		is_consulta_actividad_tecnico = false;
 		isConsultaDetalleSoporte = false
 		isConsultaDetallePago = false
+		isConsultaDispositivo = false
 		$("#info_historico").removeClass('active')
 		$("#comentarios").removeClass('active')
 		$("#acciones").removeClass('active')
 		$("#postVenta").removeClass('active')
 		$("#pagos-Ot").removeClass('active')
+		$("#dispositivo-Ot").removeClass('active')
 		$("#informacion-ot").addClass('active')
 	}
 
@@ -1886,43 +1912,157 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	}
 
 	retornarFormatoSliders = function (imagen, contador) {
-        var imgs_blocks = "";
-        var indicators_carousel = "";
+		var imgs_blocks = "";
+		var indicators_carousel = "";
 
-		imagen.forEach((img, index) =>{
+		imagen.forEach((img, index) => {
 			indicators_carousel += ' <li class="' + ((index === 0) ? 'active' : '') + '" data-target="#carouselExampleIndicators' + contador + '" data-slide-to="' + index + '" ></li>';
 
-            if (img.urlEvidencia === "") {
-                imgs_blocks += '' +
-                    '      <div class="carousel-item ' + ((index === 0) ? 'active' : '') + ' ">' +
-                    '        <img class="d-block img-fluid" style="width:100%; min-width: 100%; height: 100% !important;" src="' + contex_project + '/resources/img/generic/not_found.png" alt="First slide">' +
-                    '      </div>';
-            } else {
-                imgs_blocks += '' +
-                    '      <div class="carousel-item ' + ((index === 0) ? 'active' : '') + '">' +
+			if (img.urlEvidencia === "") {
+				imgs_blocks += '' +
+					'      <div class="carousel-item ' + ((index === 0) ? 'active' : '') + ' ">' +
+					'        <img class="d-block img-fluid" style="width:100%; min-width: 100%; height: 100% !important;" src="' + contex_project + '/resources/img/generic/not_found.png" alt="First slide">' +
+					'      </div>';
+			} else {
+				imgs_blocks += '' +
+					'      <div class="carousel-item ' + ((index === 0) ? 'active' : '') + '">' +
 					'        <img class="d-block img-fluid" style="width:100%; min-width: 100%; height: 100% !important;" class="d-block w-100" src="' + img.urlEvidencia + '" alt="First slide">' +
-                    '      </div>';
-            }
+					'      </div>';
+			}
 		})
 
 
-        return '' +
-            '  <div id="carouselExampleIndicators' + contador + '" class="carousel_componente carousel slide" data-ride="carousel">' +
-            '    <ol class="carousel-indicators">' +
-            '     	' + indicators_carousel + ' ' +
-            '    </ol>' +
-            '    <div class="carousel-inner" role="listbox">' +
-            '			' + imgs_blocks + ' ' +
-            '    </div>' +
-            '    <a class="carousel-control-prev" href="#carouselExampleIndicators' + contador + '" role="button" data-slide="prev">' +
-            '      <span class="carousel-control-prev-icon" aria-hidden="true"></span>' +
-            '      <span class="sr-only">Previous</span>' +
-            '    </a>' +
-            '    <a class="carousel-control-next" href="#carouselExampleIndicators' + contador + '" role="button" data-slide="next">' +
-            '      <span class="carousel-control-next-icon" aria-hidden="true"></span>' +
-            '      <span class="sr-only">Next</span>' +
-            '    </a>' +
-            '  </div>';
-    }
+		return '' +
+			'  <div id="carouselExampleIndicators' + contador + '" class="carousel_componente carousel slide" data-ride="carousel">' +
+			'    <ol class="carousel-indicators">' +
+			'     	' + indicators_carousel + ' ' +
+			'    </ol>' +
+			'    <div class="carousel-inner" role="listbox">' +
+			'			' + imgs_blocks + ' ' +
+			'    </div>' +
+			'    <a class="carousel-control-prev" href="#carouselExampleIndicators' + contador + '" role="button" data-slide="prev">' +
+			'      <span class="carousel-control-prev-icon" aria-hidden="true"></span>' +
+			'      <span class="sr-only">Previous</span>' +
+			'    </a>' +
+			'    <a class="carousel-control-next" href="#carouselExampleIndicators' + contador + '" role="button" data-slide="next">' +
+			'      <span class="carousel-control-next-icon" aria-hidden="true"></span>' +
+			'      <span class="sr-only">Next</span>' +
+			'    </a>' +
+			'  </div>';
+	}
 
+	$scope.pintarTablaDispositivoOt = function () {
+		if (dispositivoOtTable) {
+			dispositivoOtTable.destroy();
+		}
+
+		let arrayRow = [];
+		$scope.dispositivosArrayTemp.forEach((dispositivo, index) => {
+			let array = [];
+
+			array[0] = '<a id="mostrar-segundo-nivel-' + index + '" class="option-mas-dispositivo segundo-nivel-table-dispositivo" tag-position="' + index + '" tag-hide="false"><i id="icono-dispositivo-' + index + '" class="icono-dispositivo-consulta-ot icon-color-table-dispositivo-ot fa fa-plus" aria-hidden="true"></i></a>';
+			array[1] = dispositivo.nombreDispositivo ? dispositivo.nombreDispositivo : 'Sin dato';
+			array[2] = dispositivo.modelo ? dispositivo.modelo : 'Sin dato'
+			array[3] = dispositivo.serie ? dispositivo.serie : 'Sin dato'
+			array[4] = dispositivo.mac ? dispositivo.mac : 'Sin dato'
+
+			arrayRow.push(array)
+		})
+
+		dispositivoOtTable = $('#table_dispositovos_ot').DataTable({
+			"paging": true,
+			"lengthChange": false,
+			"searching": false,
+			"ordering": false,
+			"pageLength": 10,
+			"info": true,
+			"autoWidth": true,
+			"language": idioma_espanol_not_font,
+			"data": arrayRow
+		});
+	}
+
+
+	$scope.consultarDispositivosOt = function () {
+		if (!isConsultaDispositivo) {
+			let params = {
+				orden: 92070//$scope.datoOt
+			}
+			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
+			swal.showLoading();
+			consultaOTService.consultarDispositivosOrden(params).then((result) => {
+				swal.close()
+				console.log(result)
+				isConsultaDispositivo = true
+				if (result.data) {
+					if (result.data.respuesta) {
+						if (result.data.result) {
+							$scope.dispositivosArrayTemp = result.data.result.dispositivos
+							$scope.pintarTablaDispositivoOt();
+						} else {
+							mostrarMensajeWarningValidacion('No se encontr&oacute; informaci&oacute;n')
+						}
+					} else {
+						mostrarMensajeWarningValidacion(result.data.resultDescripcion)
+					}
+				} else {
+					mostrarMensajeErrorAlert('Error de servidor.')
+				}
+			}).catch(err => handleError(err));
+		}
+	}
+
+	$(document.body).on("click", ".segundo-nivel-table-dispositivo", function () {
+		let tr = $(this).closest('tr')
+		row = dispositivoOtTable.row(tr)
+		let index = Number($(this).attr('tag-position'))
+		if ($(this).attr('tag-hide') === 'false') {
+			$(this).attr('tag-hide', 'true')
+			document.getElementById('icono-dispositivo-' + index).classList.remove('fa-plus')
+			document.getElementById('icono-dispositivo-' + index).classList.add('fa-window-minimize')
+			let dataTable = pintarTablaSecundaria(index)
+			row.child( dataTable ).show();
+		} else {
+			$(this).attr('tag-hide', 'false')
+			document.getElementById('icono-dispositivo-' + index).classList.add('fa-plus')
+			document.getElementById('icono-dispositivo-' + index).classList.remove('fa-window-minimize')
+			row.child.hide();
+			tr.removeClass('shown');
+		}
+
+	});
+
+	pintarTablaSecundaria = function(position){
+		let dispositivo = $scope.dispositivosArrayTemp[position]
+		let arrayDetalleRed = [];
+		arrayDetalleRed.push(dispositivo.detalleRed)
+		let tableHTML = '<div class="details-container">'+
+			    '<table id="table_dispositovos_ot_nivel2" class="table table-hover table-bordered" cellspacing="0" style="width:100%">'+
+					'<thead id="thead_dispositivo_consulta_ot_nivel2">'+
+						'<tr>'+
+							'<th>NOMBRE OLT</th>'+
+							'<th>TIPO APROVISIONAMIENTO</th>'+
+							'<th>FRAME</th>'+
+							'<th>SLOT</th>'+
+							'<th>PUERTO</th>'+
+						'</tr>'+
+					'</thead>'+
+					'<tbody>';
+
+		arrayDetalleRed.forEach(detalle =>{
+			tableHTML += "<tr>" +
+							"<td>" + detalle.nombreOlt + "</td>" +
+							"<td>" + detalle.tipoAprovisionamiento + "</td>" +
+							"<td>" + detalle.frame + "</td>" +
+							"<td>" + detalle.slot + "</td>" +
+							"<td>" + detalle.puerto + "</td>" +
+						 "</tr>";
+
+		})
+		tableHTML += '</tbody></table>'+
+					 '</div>';
+		
+		console.log(tableHTML)
+		return tableHTML;	
+	}
 }])

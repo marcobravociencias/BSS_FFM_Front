@@ -138,10 +138,10 @@
                                             <a class="nav-link" id="pills-accesos-tab" data-toggle="pill" href="#pills-accesos" ng-show="mostrarAccesos" role="tab" aria-controls="pills-accesos" aria-selected="false">Accesos</a>
                                         </li>
                                         <li id="pestaniaTecnico" class="nav-item" role="presentation">
-                                            <a class="nav-link" id="pills-tecnico-tab" ng-click="consultarTecnicos()" data-toggle="pill" href="#pills-tecnico" ng-show="mostrarTecnicos" role="tab" aria-controls="pills-tecnico" aria-selected="false">T&eacute;cnicos</a>
+                                            <a class="nav-link" id="pills-tecnico-tab" ng-click="revisionTecnicosDespachos()" data-toggle="pill" href="#pills-tecnico" ng-show="mostrarTecnicos" role="tab" aria-controls="pills-tecnico" aria-selected="false">T&eacute;cnicos</a>
                                         </li>
                                         <li id="pestaniaDespacho" class="nav-item" role="presentation">
-                                            <a class="nav-link" id="pills-despacho-tab" ng-click="consultarDespachos()" data-toggle="pill" href="#pills-despacho" ng-show="mostrarDespacho" role="tab" aria-controls="pills-despacho" aria-selected="false">Despachos</a>
+                                            <a class="nav-link" id="pills-despacho-tab" ng-click="revisionTecnicosDespachos()" data-toggle="pill" href="#pills-despacho" ng-show="mostrarDespacho" role="tab" aria-controls="pills-despacho" aria-selected="false">Despachos</a>
                                         </li>
                                         <li class="nav-item" role="presentation">
                                             <a class="nav-link" id="pills-confirmar-tab" ng-click="cargarInfoConfirmacionRegistro()" data-toggle="pill" ng-click="mostrarConfirmacionUsuario()" href="#pills-confirmar" role="tab" aria-controls="pills-confirmar" aria-selected="false">Confirmar Usuario</a>

@@ -23,12 +23,12 @@
             <div class="col-12">
                 <div class="form-row">
                     <div class="col-3 form-group">
-                        <label>Placa </label>
+                        <label class="label-vehiculo">Placa </label>
                         <input type="text" class="form-control form-control-sm" id="placa" onchange="buscarPlaca()" maxlength="8"
                             ng-model="vehiculo.placa" capitalize autocomplete="off" />
                     </div>
                     <div class="col-3 form-group">
-                        <label>Tipo Veh&iacute;culo </label>
+                        <label class="label-vehiculo">Tipo Veh&iacute;culo </label>
                         <select class="form-control form-control-sm custom-select" name="tipo" id="tipo"
                             ng-change="loadMarca()" ng-model="vehiculo.idTipo">
                             <option value="" selected>NO HAY SELECCI&Oacute;N</option>
@@ -39,7 +39,7 @@
                         </select>
                     </div>
                     <div class="col-3 form-group">
-                        <label>Marca </label>
+                        <label class="label-vehiculo">Marca </label>
                         <select class="form-control form-control-sm custom-select" name="marca" id="marca"
                             ng-model="vehiculo.idMarca" ng-change="loadLinea()">
                             <option value="" selected>NO HAY SELECCI&Oacute;N</option>
@@ -49,7 +49,7 @@
                         </select>
                     </div>
                     <div class="col-3 form-group">
-                        <label>Linea de Veh&iacute;culo </label>
+                        <label class="label-vehiculo">Linea de Veh&iacute;culo </label>
                         <select class="form-control form-control-sm custom-select" name="linea" id="linea"
                             ng-model="vehiculo.idModelo">
                             <option value="" selected>NO HAY SELECCI&Oacute;N</option>
@@ -61,17 +61,17 @@
                 </div>
                 <div class="form-row">
                     <div class="col-3 form-group">
-                        <label>A&ntilde;o de Veh&iacute;culo </label>
+                        <label class="label-vehiculo">A&ntilde;o de Veh&iacute;culo </label>
                         <input type="text" class="datepicker year form-control form-control-sm" placeholder="aaaa"
                             id="anio" readonly ng-model="vehiculo.anio" />
                     </div>
                     <div class="col-3 form-group">
-                        <label>N&uacute;mero de Serie <span style="margin-left: 10em;">{{vehiculo.numeroSerie.length ? vehiculo.numeroSerie.length : 0}} - 17</span></label>
+                        <label class="label-vehiculo">N&uacute;mero de Serie <span style="margin-left: 10em;">{{vehiculo.numeroSerie.length ? vehiculo.numeroSerie.length : 0}} - 17</span></label>
                         <input type="text" class="form-control form-control-sm" id="numSerie"
                             ng-model="vehiculo.numeroSerie" capitalize autocomplete="off"  maxlength="17"/>
                     </div>
                     <div class="col-3 form-group">
-                        <label>Combustible </label>
+                        <label class="label-vehiculo">Combustible </label>
                         <select class="form-control form-control-sm custom-select" id="combustible"
                             ng-model="vehiculo.combustible">
                             <option value="" selected>NO HAY SELECCI&Oacute;N</option>
@@ -80,7 +80,7 @@
                         </select>
                     </div>
                     <div class="col-3 form-group">
-                        <label>Color </label>
+                        <label class="label-vehiculo">Color </label>
                         <select class="form-control form-control-sm custom-select" id="color"
                             ng-model="vehiculo.idColor">
                             <option value="" selected>NO HAY SELECCI&Oacute;N</option>
@@ -95,12 +95,12 @@
                             <i class="icono-noseleccion fas fa-exclamation-circle me-2" style="margin-left: -.2em;"
                                 title="No se encontro el catalogo de Geografia"></i>
                         </div>
-                        <label>Geograf&iacute;a </label>
+                        <label class="label-vehiculo">Geograf&iacute;a </label>
                         <input ng-click="abrirModalGeografia()" readonly type="text" id="arbol_vehiculo_consulta"
                             class="form-control form-control-sm" placeholder="NO HAY SELECCI&Oacute;N" />
                     </div>
                     <div class="col-3 form-group">
-                        <label>Ubicaci&oacute;n CDO</label>
+                        <label class="label-vehiculo">Ubicaci&oacute;n CDO</label>
                         <select class="form-control form-control-sm custom-select" id="encierro"
                             ng-model="vehiculo.detalle.idEncierro">
                             <option value="" selected>NO HAY SELECCI&Oacute;N</option>
@@ -119,10 +119,9 @@
         <div class="tab-pane pills-pane fade" id="pills-documentacion" role="tabpanel"
             aria-labelledby="pills-documentacion-tab">
             <div class="col-12">
-
                 <div class="form-row">
                     <div class="col-3 form-group">
-                        <label>Aseguradora </label>
+                        <label class="label-vehiculo">Aseguradora </label>
                         <select class="form-control form-control-sm custom-select" id="aseguradora"
                             ng-model="vehiculo.detalle.idAseguradora">
                             <option value="" selected>NO HAY SELECCI&Oacute;N</option>
@@ -131,20 +130,20 @@
                         </select>
                     </div>
                     <div class="col-3 form-group">
-                        <label>N&uacute;m. de P&oacute;liza
+                        <label class="label-vehiculo">N&uacute;m. de P&oacute;liza
                         </label>
                         <input type="text" class="form-control form-control-sm" id="numPoliza"  maxlength="25"
                             ng-model="vehiculo.detalle.numeroPoliza" capitalize autocomplete="off" />
                     </div>
                     <div class="col-3 form-group">
-                        <label>Fecha Vencimiento P&oacute;liza
+                        <label class="label-vehiculo">Fecha Vencimiento P&oacute;liza
                         </label>
                         <input type="text" placeholder="dd/mm/aaaa"
                             class="datepicker datepickerNormal form-control form-control-sm"
                             ng-model="vehiculo.detalle.fechaVencimientoPoliza" readonly id="vencimientoPoliza" />
                     </div>
                     <div class="col-3 form-group">
-                        <label>N&uacute;m. de Tarjeta de Circulaci&oacute;n
+                        <label class="label-vehiculo">N&uacute;m. de Tarjeta de Circulaci&oacute;n
                         </label>
                         <input type="text" class="form-control form-control-sm" id="numTarjetaC"  maxlength="25"
                             ng-model="vehiculo.detalle.tarjetaCirculacion" capitalize autocomplete="off" />
@@ -158,50 +157,50 @@
                             id="vencimientoTarjeta" readonly />
                     </div>
                     <div class="col-3 form-group">
-                        <label>N&uacute;m. de Verificaci&oacute;n
+                        <label class="label-vehiculo">N&uacute;m. de Verificaci&oacute;n
                         </label>
                         <input type="text" class="form-control form-control-sm" id="numVerificacion"  maxlength="25"
                             ng-model="vehiculo.detalle.numeroVerificacion" capitalize autocomplete="off" />
                     </div>
                     <div class="col-3 form-group">
-                        <label>Fecha de Verificaci&oacute;n
+                        <label class="label-vehiculo">Fecha de Verificaci&oacute;n
                         </label>
                         <input type="text" class="datepicker datepickerNormal form-control form-control-sm"
                             placeholder="dd/mm/aaaa" ng-model="vehiculo.detalle.fechaVerificacion" readonly
                             id="fechaVerificacion" />
                     </div>
                     <div class="col-3 form-group">
-                        <label>Clave Pensi&oacute;n </label>
+                        <label class="label-vehiculo">Clave Pensi&oacute;n </label>
                         <input type="text" class="form-control form-control-sm" id="clavePension"  maxlength="25"
                             ng-model="vehiculo.detalle.clavePension" capitalize autocomplete="off" />
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="col-3 form-group">
-                        <label>N&uacute;m. Tarjeta Gasolina
+                        <label class="label-vehiculo">N&uacute;m. Tarjeta Gasolina
                         </label>
                         <input type="text" class="form-control form-control-sm" id="numTarjetaG"  maxlength="25"
                             ng-model="vehiculo.detalle.tarjetaGasolina" capitalize autocomplete="off" />
                     </div>
                     <div class="col-3 form-group">
-                        <label>Clave GPS </label>
+                        <label class="label-vehiculo">Clave GPS </label>
                         <input type="text" class="form-control form-control-sm" id="gps"  maxlength="25"
                             ng-model="vehiculo.detalle.claveGps" capitalize autocomplete="off" />
                     </div>
                     <div class="col-3 form-group">
-                        <label>N&uacute;m. de Motor </label>
+                        <label class="label-vehiculo">N&uacute;m. de Motor </label>
                         <input type="text" class="form-control form-control-sm" id="numMotor"  maxlength="25"
                             ng-model="vehiculo.detalle.numeroMotor" capitalize autocomplete="off" />
                     </div>
                     <div class="col-3 form-group">
-                        <label>N&uacute;m. de Chasis </label>
+                        <label class="label-vehiculo">N&uacute;m. de Chasis </label>
                         <input type="text" class="form-control form-control-sm" id="numChasis"  maxlength="25"
                             ng-model="vehiculo.detalle.numeroChasis" capitalize autocomplete="off" />
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="col-3 form-group">
-                        <label>Engomado </label>
+                        <label class="label-vehiculo">Engomado </label>
                         <select class="form-control form-control-sm custom-select" id="engomado"
                             ng-model="vehiculo.detalle.engomado">
                             <option value="" selected>NO HAY SELECCI&Oacute;N</option>
@@ -213,7 +212,7 @@
                         </select>
                     </div>
                     <div class="col-3 form-group">
-                        <label>Holograma </label>
+                        <label class="label-vehiculo">Holograma </label>
                         <select class="form-control form-control-sm custom-select" id="holograma"
                             ng-model="vehiculo.detalle.holograma">
                             <option value="" selected>NO HAY SELECCI&Oacute;N</option>
@@ -224,7 +223,7 @@
                             <option value="FORANEO">FORANEO</option>
                         </select>
                     </div>
-                    <div class="col-3 form-group">
+                    <div class="col-3 form-group check-vehiculo">
                         <label class="form-label">Rotulado </label>
                         <br />
                         <div class="form-check form-check-inline">
@@ -238,7 +237,7 @@
                         </div>
                     </div>
                     <div class="col-3 form-group" ng-if="isEdit">
-                        <label>Estatus </label>
+                        <label class="label-vehiculo">Estatus </label>
                         <select class="form-control form-control-sm custom-select" id="estatus"
                             ng-model="vehiculo.idEstatus" ng-change="loadMotivo()">
                             <option value="{{status.idEstatus}}" ng-repeat="status in data.estatus">
@@ -249,7 +248,7 @@
                 </div>
                 <div class="form-row" ng-if="isEdit">
                     <div class="col-3 form-group">
-                        <label>Motivo </label>
+                        <label class="label-vehiculo">Motivo </label>
                         <span ng-if="motivos.length == 0" id="msjInterno">Seleccione Estatus</span>
                         <select ng-if="motivos.length > 0" class="form-control form-control-sm custom-select"
                             id="motivo">
@@ -260,7 +259,7 @@
                 </div>
                 <div class="form-row">
                     <div class="col-12 form-group">
-                        <label>Comentarios </label>
+                        <label class="label-vehiculo">Comentarios </label>
                         <textarea class="form-control form-control-sm" id="comentarios" 
                             ng-model="vehiculo.detalle.comentarios" maxlength="250"></textarea>
                     </div>

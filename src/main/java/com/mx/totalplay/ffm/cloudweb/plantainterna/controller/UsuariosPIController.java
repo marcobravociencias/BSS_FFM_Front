@@ -122,6 +122,16 @@ public class UsuariosPIController {
         return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
     }
 	
+	@PostMapping("/modificarUsuario")
+	public ResponseEntity<?> modificarUsuario(@RequestBody String params) {
+		logger.info("##### MODIFICAR USUARIO");
+		ServiceResponseResult result = usuarioService.modificarUsuario(params);
+        if (result.getResult() instanceof Integer){
+            return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
+	}
+	
 	//-------------------------------------------------------------------------------------------
 	//-------------------------------------------------------------------------------------------
 	

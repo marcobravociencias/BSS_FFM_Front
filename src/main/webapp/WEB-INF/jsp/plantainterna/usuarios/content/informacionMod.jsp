@@ -2,9 +2,9 @@
 	<div class="col-md-4">
 		<label class="span-consulta"><i class="fas fa-address-card"></i> Puesto*</label>
         <div class="input-group">
-        	<select class="form-control inputFormulario" id="puesto_select_modificacion" aria-describedby="basic-addon3" style="height: 34px;">
+        	<select readonly disabled class="form-control inputFormulario" id="puesto_select_modificacion" aria-describedby="basic-addon3" style="height: 34px;">
         		<option disabled selected>NO HAY SELECCI&Oacute;N</option>
-        		<option ng-repeat="puesto in listaPuestos" value="{{puesto.id}}">{{puesto.descripcion}}</option>
+        		<option ng-repeat="puesto in puestoRegistrado" value="{{puesto.id}}">{{puesto.descripcion}}</option>
         	</select>
         </div>
     </div>
@@ -34,13 +34,13 @@
     <div class="col-md-4">
 		<label class="span-consulta"><i class="fa fa-id-card"></i> CURP*</label>
         <div class="input-group">
-        	<input type="text" class="form-control inputFormulario" ng-model="detalleUsuario.curp" id="form-curp-mod" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. FOBR920509HMSLRY05">
+        	<input type="text" class="form-control inputFormulario" ng-model="detalleUsuario.curp" id="form-curp-mod" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. FOBR920509HMSLRY05" maxlength="18" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
         </div>
     </div>
     <div class="col-md-4">
 		<label class="span-consulta"><i class="fa fa-id-card"></i> RFC*</label>
         <div class="input-group">
-        	<input type="text" class="form-control inputFormulario" ng-model="detalleUsuario.rfc" id="form-rfc-mod" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. SALJ940309U54">
+        	<input type="text" class="form-control inputFormulario" ng-model="detalleUsuario.rfc" id="form-rfc-mod" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. SALJ940309U54" maxlength="13" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
         </div>
     </div>
 </div>
@@ -68,7 +68,7 @@
 	<div class="col-md-4">
 		<label class="span-consulta"><i class="fa fa-mobile-phone"></i> Tel&eacute;fono de contacto*</label>
         <div class="input-group">
-        	<input type="text" class="form-control inputFormulario" ng-model="detalleUsuario.telefonoCelular" id="form-telefono-contacto-mod" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. 5515798000">
+        	<input type="text" class="form-control inputFormulario" ng-model="detalleUsuario.telefonoCelular" id="form-telefono-contacto-mod" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. 5515798000" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="10" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
         </div>
     </div>
     <div class="col-md-4">
@@ -80,7 +80,7 @@
     <div class="col-md-4">
 		<label class="span-consulta"><i class="fa fa-calendar"></i> Fecha ingreso*</label>
         <div class="input-group">
-        	<input type="date" class="form-control inputFormulario" ng-model="detalleUsuario.fechaIngreso" id="form-fechaIngresoRegistro-mod" aria-describedby="basic-addon3" style="height: 34px;">
+        	<input readonly type="text" class="datepicker form-control inputFormulario" ng-model="detalleUsuario.fechaIngreso" id="form-fechaIngreso-mod" aria-describedby="basic-addon3" style="height: 34px;">
         </div>
     </div>
 </div>
