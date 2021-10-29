@@ -257,11 +257,11 @@
                                                         <img src="{{tecnico.urlFotoPerfil !=undefined && tecnico.urlFotoPerfil ? tecnico.urlFotoPerfil :'./resources/img/plantainterna/despacho/tecnicootasignada.png'}}" class="circle z-depth-2 responsive-img">
                                                     </div>
                                                     <div id="{{tecnico.idUsuario}}" class="col-10 pl-0" ng-click="seleccionarTecnicoMultiseleccion(tecnico.idUsuario)">
-                                                        <p class="text-tecnico-nombre">{{tecnico.nombre}}</p>
-                                                        <p class="text-adds-teccnico">{{tecnico.apellidoPaterno}} {{tecnico.apellidoMaterno}}</p>
+                                                        <label   class="text-tecnico-nombre-modal">{{tecnico.nombre}}</label>
+														<label   class="text-adds-teccnico-modal">{{tecnico.no_empleado ? tecnico.no_empleado : 'Sin dato'}} - {{tecnico.apellidoPaterno}} {{tecnico.apellidoMaterno}}</label>
                                                     </div>
                                                     <div class="content-checkbox-operario">
-                                                        <input class="form-check-input input-operario-checkbox checkedTecnicos" type="checkbox"	id="checkTecnicoMultiseleccion{{tecnico.idTecnico}}" value="{{tecnico.idUsuario}}"/>
+                                                        <input class="form-check-input input-operario-checkbox checkedTecnicos" type="checkbox"	id="checkTecnicoMultiseleccion{{tecnico.idUsuario}}" value="{{tecnico.idUsuario}}"/>
                                                     </div>
                                                 </div>
                                             </div>	
@@ -298,7 +298,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface" data-mdb-dismiss="modal" ng-click="regresarContenedorIndividual()">CERRAR</button>
-                                            <button class="btn btn-primary" ng-click="guardarAsignacionSkillsMultiseleccion()">GUARDAR</button>
+                                            <button class="btn btn-primary btn-aceptar-modal" ng-click="guardarAsignacionSkillsMultiseleccion()">GUARDAR</button>
                                         </div>
                                     </div>
                                 </div>

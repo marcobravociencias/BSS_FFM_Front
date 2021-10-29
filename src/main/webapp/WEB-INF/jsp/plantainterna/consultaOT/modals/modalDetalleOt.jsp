@@ -13,11 +13,11 @@
                         <div style="padding-left: 0;" class="col-2">
                             <div class="nav flex-column nav-tabs text-center" id="v-tabs-tab-detalle-ot" role="tablist" aria-orientation="vertical" >
                                 <li class="nav-link active" id="informacion-ot">Informaci&oacute;n</li>
-                                <li class="nav-link" id="info_historico">Hist&oacute;rico</li>
-                                <li class="nav-link" id="comentarios">Comentarios</li>
-                                <li class="nav-link" id="postVenta">Detalle Soporte</li>
-                                <li class="nav-link" id="pagos-Ot">Pagos</li>
-                                <li class="nav-link" id="dispositivo-Ot">Dispositivos</li>
+                                <li ng-show="permisosModal.indexOf('tabHistoricoDespacho') !== -1" class="nav-link" id="info_historico">Hist&oacute;rico</li>
+                                <li ng-show="permisosModal.indexOf('tabComentariosDespacho') !== -1" class="nav-link" id="comentarios">Comentarios</li>
+                                <li ng-show="permisosModal.indexOf('tabDetalleSoporte') !== -1" class="nav-link" id="postVenta">Detalle Soporte</li>
+                                <li ng-show="permisosModal.indexOf('tabConsultaPagos') !== -1" class="nav-link" id="pagos-Ot">Pagos</li>
+                                <li ng-show="permisosModal.indexOf('tabConsultaDispositivos') !== -1" class="nav-link" id="dispositivo-Ot">Dispositivos</li>
                                 <!-- <li class="nav-link" id="acciones">Acciones</li> -->
                             </div>
                         </div>

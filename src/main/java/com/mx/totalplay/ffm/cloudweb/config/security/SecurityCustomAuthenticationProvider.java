@@ -38,8 +38,6 @@ public class SecurityCustomAuthenticationProvider implements AuthenticationProvi
         put("/homePage","ROLE_USER");
         put("/enrutarUser","ROLE_USER");
         
-        put("/moduloOrdenesUniversales","ROLE_USER");
-        put("/moduloCoordInst","ROLE_USER");
     }};
     
     @Autowired

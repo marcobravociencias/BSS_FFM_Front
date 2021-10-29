@@ -35,6 +35,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	$scope.evidenciaDetalleEquipoN = '';
 	let isConsultaDispositivo = false
 	$scope.dispositivosArrayTemp = [];
+	$scope.listadoConsultaOtsDisponibles=[];
 
 	let dispositivoOtTable = $('#table_dispositovos_ot').DataTable({
 		"paging": true,
@@ -174,6 +175,10 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 					},
 					"dataSrc": function (json) {
 						$scope.elementosRegistro = json.registrosTotales
+						$scope.listadoConsultaOtsDisponibles=[];
+						if( json.result != undefined && json.result.ordenes != undefined)
+							$scope.listadoConsultaOtsDisponibles = json.result.ordenes;
+												
 						return json.data;
 					},
 					"error": function (xhr, error, thrown) {
@@ -217,7 +222,9 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		$q.all([
 			genericService.consultarCatalogoIntervenciones(),
 			genericService.consulCatalogoGeografia(),
-			genericService.consultarCatalogoEstatusDespachoPI()
+			genericService.consultarCatalogoEstatusDespachoPI(),
+			consultaOTService.consultarConfiguracionDespachoDespacho({"moduloAccionesUsuario":"moduloConsultaOt"}),
+
 		]).then(function (results) {
 			if (results[0].data !== undefined) {
 				if (results[0].data.respuesta) {
@@ -309,6 +316,27 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				toastr.error('Ha ocurrido un error en la consulta de geografia')
 				$scope.banderaErrorGeografia = true;;
 			}
+
+			if (results[3].data !== undefined) {
+				if (results[3].data.respuesta) {
+					if (results[3].data.result) {
+						$scope.elementosConfigGeneral=new Map(Object.entries(results[3].data.result))    		
+					} else {
+						swal.close();
+						toastr.warning('No se encontraron datos para la geografia');
+						$scope.banderaErrorGeografia = true;
+					}
+				} else {
+					swal.close();
+					toastr.warning(results[3].data.resultDescripcion);
+					$scope.banderaErrorGeografia = true;
+				}
+			} else {
+				swal.close();
+				toastr.error('Ha ocurrido un error en la consulta de geografia')
+				$scope.banderaErrorGeografia = true;;
+			}
+
 
 
 		}).catch(err => handleError(err));
@@ -664,11 +692,11 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	$scope.datoOt;
 	$scope.datoInt;
 	$scope.datoSubInt;
-	consultaDetalleOt = function (ot, tipo, subtipo, operario, equipo) {
+	consultaDetalleOt = function (indexOtConsulta) {
 		$scope.infoOtDetalle = {};
-		$("#modal-detalle-ot").removeClass('contenedor_detalle');
+		//$("#modal-detalle-ot").removeClass('contenedor_detalle');
 		//getDetalleOTGeneric(idOT);
-		$scope.consultaDetalleOtGeneric(ot);
+		let otConsultaTemp=$scope.listadoConsultaOtsDisponibles[indexOtConsulta]
 		$('#content-ot').show();
 
 		$('#content-comentarios').hide();
@@ -687,62 +715,14 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		$('#content-dispositivos').hide();
 		$('#modal-detalle-ot .itemGeneral').removeClass('active');
 		$('#modal-detalle-ot .itemGeneral:first').addClass('active');
-		$scope.datoOt = ot;
-		$scope.datoInt = tipo;
-		$scope.datoSubInt = subtipo;
+	
 		is_consulta_info_trayectoria = false;
-		if ($scope.datoInt == "55" && $scope.datoInt == "111" || $scope.datoInt == '106' && $scope.datoSubInt == '107') {
-			$("#info_soluciones").show();
-		} else {
-			$("#info_soluciones").hide();
-		}
-
-		//sustitur por el nuevo
-		if ($scope.datoInt == '112' && $scope.datoSubInt == '115') {
-			$("#corte_individual").show();
-		} else {
-			$("#corte_individual").hide();
-		}
-
-		if ($scope.datoInt == '106' && $scope.datoSubInt == '107') {
-			$("#info_cambio_plan").show();
-		} else {
-			$("#info_cambio_plan").hide();
-		}
-
-		if ($scope.datoInt == '108' && $scope.datoSubInt == '109' || $scope.datoInt == '108' && $scope.datoSubInt == '110') {
-			$("#info_reubicacion").show();
-		} else {
-			$("#info_reubicacion").hide();
-		}
-
-		if (equipo != 'null') {
-			$("#info_cambio_equipo").show();
-		} else {
-			$("#info_cambio_equipo").hide();
-		}
-
-		if ($scope.datoInt == '141') {
-			$("#atividad_tecnico").show();
-		} else {
-			$("#atividad_tecnico").hide();
-		}
-		if ([276, 260, 263, 261, 278, 275, 277, 259, 262, 274, 265, 264, 258, 141].includes(parseInt($scope.datoInt))) {
-			$("#atividad_tecnico").show();
-		} else {
-			$("#atividad_tecnico").hide();
-		}
-		if ($scope.datoInt == '48' || $scope.datoInt == '95' || $scope.datoInt == '125') {
-			$("#info_red").show();
-		} else {
-			$("#info_red").hide()
-		}
+		$scope.consultaDetalleOtGeneric( otConsultaTemp );
 	}
 
-	$scope.consultaDetalleOtGeneric = function (ot) {
-		if (!is_consulta_info_ot) {
+	$scope.consultaDetalleOtGeneric = function (ordenObject) {
 			let params = {
-				Id_ot: ot
+				Id_ot: ordenObject.idOrden
 			}
 			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 			swal.showLoading();
@@ -753,8 +733,18 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 						if (response.data.result.orden) {
 							$scope.infoOtDetalle = response.data.result.orden
 							is_consulta_info_ot = true;
+							//$scope.permisosModal=$scope.elementosConfigGeneral.get("MODAL_FLUJO_"+ ordenObject.idFlujo ).split(",")
+							$scope.permisosModal=[
+								"tabHistoricoDespacho",
+								"tabComentariosDespacho",
+								"tabDetalleSoporte",
+								"tabConsultaPagos",
+								"tabConsultaDispositivos"
+							]
+							console.log("#permisos ,orden ", $scope.permisosModal );
 							$('#modal-detalle-ot').modal('show');
 							swal.close();
+
 						} else {
 							swal.close();
 							mostrarMensajeErrorAlert(response.data.result.mensaje)
@@ -768,7 +758,6 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 					mostrarMensajeErrorAlert("Error del servidor");
 				}
 			}).catch(err => handleError(err));
-		}
 	}
 
 	consultaMaterialesOT = function (ot, operario) {
