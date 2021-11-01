@@ -483,11 +483,12 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	});
 
 
-	consultaImagenesOT = function (ot) {
+	consultaImagenesOT = function (ot, cuenta) {
 		let params = {
 			orden: ot,
 		}
 		$('.idoti').text(ot);
+		$('.cuenta').text(cuenta);
 		swal({ text: 'Espera un momento...', allowOutsideClick: false });
 		swal.showLoading();
 		$scope.listEvidenciaImagenes = {};
