@@ -688,6 +688,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	}
 
 	$scope.consultaDetalleOtGeneric = function (ordenObject) {
+			$scope.datoOt=ordenObject.idOrden
 			let params = {
 				Id_ot: ordenObject.idOrden
 			}
@@ -1712,7 +1713,8 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	$scope.consultarPostVentaOt = function () {
 		if (!isConsultaDetalleSoporte) {
 			let params = {
-				orden: $scope.datoOt
+				//orden: $scope.datoOt
+				orden: 123050
 			}
 			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 			swal.showLoading();
@@ -1753,7 +1755,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 										'				</div>' +
 										'				<div class="row textFallaOT">' +
 										'					<div class="col-md-5">' +
-										'						<b  class="title_span_1"> Modelo equipo:</b>' +
+										'						<b  class="title_span_1"> Modelo anterior:</b>' +
 										'		        	</div>				               ' +
 										'		        	<div class="col-md-7">' +
 										'		        		<span id="tipo_falla_corte"  class="content_text" > ' + detalle.descModeloViejo + ' </span>' +
@@ -1761,20 +1763,20 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 										'				</div>' +
 										'				<div class="row textFallaOT">' +
 										'					<div class="col-md-5">' +
-										'						<b  class="title_span_1"> N&uacute;mero serie equipo:</b>' +
-										'		        	</div>				               ' +
-										'		        	<div class="col-md-7">' +
-										'		        		<span id="status_falla_corte"  class="content_text" > ' + detalle.numSerieModeloViejo + ' </span>' +
-										'		        	</div>' +
-										'				</div>' +
-										'				<div class="row textFallaOT">' +
-										'					<div class="col-md-5">' +
-										'						<b  class="title_span_1"> Modelo equipo nuevo:</b>	 ' +
+										'						<b  class="title_span_1"> Modelo nuevo:</b>	 ' +
 										'		        	</div>				               ' +
 										'		        	<div class="col-md-7">' +
 										'		        		<span id="tecnico_falla"  class="content_text" > ' + detalle.descModeloNuevo + ' </span>' +
 										'		        	</div>' +
 										'				</div>' +
+										'				<div class="row textFallaOT">' +
+										'					<div class="col-md-5">' +
+										'						<b  class="title_span_1"> N&uacute;m. serie equipo anterior:</b>' +
+										'		        	</div>				               ' +
+										'		        	<div class="col-md-7">' +
+										'		        		<span id="status_falla_corte"  class="content_text" > ' + detalle.numSerieModeloViejo + ' </span>' +
+										'		        	</div>' +
+										'				</div>' +				
 										'				<div class="row">' +
 										'					<div class="col-md-5">' +
 										'						<b  class="title_span_1">N&uacute;mero serie equipo nuevo:</b>' +
@@ -1888,12 +1890,12 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			if (img.urlEvidencia === "") {
 				imgs_blocks += '' +
 					'      <div class="carousel-item ' + ((index === 0) ? 'active' : '') + ' ">' +
-					'        <img class="d-block img-fluid" style="width:100%; min-width: 100%; height: 100% !important;" src="' + contex_project + '/resources/img/generic/not_found.png" alt="First slide">' +
+					'        <img class="d-block img-fluid imagen-carousel-evidencia" style="width:100%; min-width: 100%; height: 100% !important;" src="' + contex_project + '/resources/img/generic/not_found.png" alt="First slide">' +
 					'      </div>';
 			} else {
 				imgs_blocks += '' +
 					'      <div class="carousel-item ' + ((index === 0) ? 'active' : '') + '">' +
-					'        <img class="d-block img-fluid" style="width:100%; min-width: 100%; height: 100% !important;" class="d-block w-100" src="' + img.urlEvidencia + '" alt="First slide">' +
+					'        <img class="d-block img-fluid imagen-carousel-evidencia" style="width:100%; min-width: 100%; height: 100% !important;" class="d-block w-100" src="' + img.urlEvidencia + '" alt="First slide">' +
 					'      </div>';
 			}
 		})
@@ -1953,7 +1955,8 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	$scope.consultarDispositivosOt = function () {
 		if (!isConsultaDispositivo) {
 			let params = {
-				orden: 92070//$scope.datoOt
+				//orden: 92070//$scope.datoOt}
+				orden: $scope.datoOt
 			}
 			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 			swal.showLoading();
@@ -2018,11 +2021,11 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 
 		arrayDetalleRed.forEach(detalle =>{
 			tableHTML += "<tr>" +
-							"<td>" + detalle.nombreOlt + "</td>" +
-							"<td>" + detalle.tipoAprovisionamiento + "</td>" +
-							"<td>" + detalle.frame + "</td>" +
-							"<td>" + detalle.slot + "</td>" +
-							"<td>" + detalle.puerto + "</td>" +
+							"<td>" +(  (detalle != undefined && detalle.nombreOlt) ? detalle.nombreOlt : 'Sin dato' )  + "</td>" +
+							"<td>" +(  (detalle != undefined && detalle.tipoAprovisionamiento) ? detalle.nombreOlt : 'Sin dato' )  + "</td>" +
+							"<td>" +(  (detalle != undefined && detalle.frame) ? detalle.nombreOlt : 'Sin dato' )  + "</td>" +
+							"<td>" +(  (detalle != undefined && detalle.slot) ? detalle.nombreOlt : 'Sin dato' )  + "</td>" +
+							"<td>" +(  (detalle != undefined && detalle.puerto) ? detalle.nombreOlt : 'Sin dato' )  + "</td>" +
 						 "</tr>";
 
 		})

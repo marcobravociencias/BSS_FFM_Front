@@ -1819,3 +1819,11 @@ thead.thead_segundo_tecnico_nivel tr th {
   text-align: center; 
   height: 100px !important;
 }
+
+.imagen-carousel-evidencia{
+    width: 100%;
+    height: 50em;
+    max-height:15em; 
+    object-fit: cover;
+    cursor:pointer;
+}
