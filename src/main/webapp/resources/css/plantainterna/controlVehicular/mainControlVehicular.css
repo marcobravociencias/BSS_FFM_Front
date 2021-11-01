@@ -242,7 +242,7 @@ thead#thead_table{
 }
 
 
-table tr td {
+#vehiculoTable tr td {
   font-size: 0.7em;
   font-family: "Montserrat" !important;
 }
@@ -275,7 +275,7 @@ div.dataTables_wrapper div.dataTables_length label {
   padding: 1px 1px 1px 1px;
 }
 
-table.dataTable.no-footer{
+#vehiculoTable.dataTable.no-footer{
     border-bottom: transparent !important;
     margin-top: 0 !important;
 }
