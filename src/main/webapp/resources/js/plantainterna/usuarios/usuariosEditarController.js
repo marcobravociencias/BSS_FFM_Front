@@ -26,6 +26,8 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     $scope.mostrarDespachoMod = false;
     $scope.validarTamDatosMod = false;
     $scope.isTecnicoMod = false;
+    
+    $scope.contadorCambioArbolGeografias = false;
 
     consultarDetalleUsuario = function(idUsuario) {
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
@@ -128,7 +130,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                 		}
                 	});
 
-                    // ********** ARBOL
+                    // ********** ÁRBOL
                     var plugins = [];
                 	if(puestoSeleccionado == "tecnico" || puestoSeleccionado == "auxiliar"){
                 		plugins = ['search'];
@@ -176,50 +178,86 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                         }
                     });
 
-                    $scope.listaGeografiasRegistradasMod.forEach(geo =>{
-                		if(geo.nivel == $scope.filtroGeografias){
-                			var idPadre = geo.parent;
-                			$scope.listaCiudadesSelecionadasMod.forEach(geoPadre =>{
-                				if(geoPadre.id == idPadre){
-                					existePadreMod = true;
-                					geoPadre.hijos.push(geo);
-                				}
-                			});
-                			if(existePadreMod){
-            				}else{
-            					$scope.listaGeografiasRespaldo.forEach(geoListaGeneral =>{
-            						if(geoListaGeneral.id == idPadre){
-            							$scope.listaCiudadesSelecionadasMod.push(geoListaGeneral);
-            						}
-            					});
-            					$scope.listaCiudadesSelecionadasMod.forEach(geoPadre =>{
-            	    				if(geoPadre.id == idPadre){
-            	    					geoPadre.hijos = [geo];
-            	    				}
-            	    			});
-            				}
-                			$scope.detalleUsuario.geografiasId.push(geo.id);
-                			existePadreMod = false;
-                		}
-                	});
-                    
-                    $scope.listaCiudadesSelecionadasMod.forEach(geoHija =>{
-                		var geo = geoHija;
-                		while(geo.nivel > 2){
-                			var ciudadPadre = $scope.listaGeografiasRespaldo.filter(e => {return e.id == geo.parent})[0];
-                			geo = ciudadPadre;
-                		}
-                		var existeCiudadNatal = false;
-                		$scope.listaCiudadNatalMod.forEach(ciudadesNatal =>{
-                			if(ciudadesNatal.id == geo.id){
-                				existeCiudadNatal = true;
-                			}
-                		});
-                		if(existeCiudadNatal == false){
-                			$scope.listaCiudadNatalMod.push(geo);
-                		}
-                		
-                	});
+                    $("#arbolGeografiaMod").on('changed.jstree', function (e, data) {
+                    	if($scope.contadorCambioArbolGeografias == true){
+                    		$scope.listaCiudadesSelecionadasMod = [];
+                        	$scope.detalleUsuario.geografiasId = [];
+                        	$scope.listaCiudadNatalMod = [];
+                        	$scope.listaTecnicosMod = [];
+                        	$scope.detalleUsuario.ciudadNatal = "";
+                        	
+                            var geografiaTreeMod = $('#arbolGeografiaMod').jstree("get_selected", true);
+                            geografiaTreeMod.forEach(geo =>{
+                            	if(geo.original.nivel == $scope.filtroGeografias){
+                        			var idPadre = geo.parent;
+                        			$scope.listaCiudadesSelecionadasMod.forEach(geoPadre =>{
+                        				if(geoPadre.id == idPadre){
+                        					existePadreMod = true;
+                        					geoPadre.hijos.push(geo);
+                        				}
+                        			});
+                        			if(existePadreMod){
+                    				}else{
+                    					$scope.listaGeografiasRespaldo.forEach(geoListaGeneral =>{
+                    						if(geoListaGeneral.id == idPadre){
+                    							$scope.listaCiudadesSelecionadasMod.push(geoListaGeneral);
+                    						}
+                    					});
+                    					$scope.listaCiudadesSelecionadasMod.forEach(geoPadre =>{
+                    	    				if(geoPadre.id == idPadre){
+                    	    					geoPadre.hijos = [geo];
+                    	    				}
+                    	    			});
+                    				}
+
+                        			$scope.detalleUsuario.geografiasId.push(geo.id);
+                        			existePadreMod = false;
+                        		}
+                            });
+                            
+                            $scope.listaCiudadesSelecionadasMod.forEach(geoHija =>{
+                        		var geo = geoHija;
+                        		while(geo.nivel > 2){
+                        			var ciudadPadre = $scope.listaGeografiasRespaldo.filter(e => {return e.id == geo.parent})[0];
+                        			geo = ciudadPadre;
+                        		}
+                        		var existeCiudadNatal = false;
+                        		$scope.listaCiudadNatalMod.forEach(ciudadesNatal =>{
+                        			if(ciudadesNatal.id == geo.id){
+                        				existeCiudadNatal = true;
+                        			}
+                        		});
+                        		if(existeCiudadNatal == false){
+                        			$scope.listaCiudadNatalMod.push(geo);
+                        		}
+                        		
+                        	});
+                            
+                            $scope.listaCiudadNatalMod.forEach(ciudadesNatal =>{
+                    			if(ciudadesNatal.id == $scope.detalleUsuario.idGeografia){
+                    				$scope.detalleUsuario.ciudadNatal = $scope.detalleUsuario.idGeografia;
+                    				$(".ciudadNatalMod").css("color", "#7c7c7d");
+                    			}
+                    		});
+                        	
+                        	if(geografiaTreeMod.length > 0){
+                        		if($scope.isTecnicoMod){
+                            		//$scope.consultarDespachos();
+                        			console.log("------");
+                            	}else{
+                            		$scope.consultarTecnicosMod();
+                            	}
+                        	}
+                        	
+                        	if($scope.listaCiudadesSelecionadasMod.length > 0){
+                        		$("#labelGeografiasSeleccionadasMod").css("color", "rgb(70, 88, 107)");
+                        		$("#contenedorGeografiasRegistroMod").css("border", "white solid 0px");
+                        	}
+                            
+                            $scope.$apply();
+                    	}
+                    	$scope.contadorCambioArbolGeografias = true;
+                    });
                     
                     // ********** ACCESOS
                     $scope.arbolAccesosModificar = angular.copy($scope.listaPermisosRespaldo);
@@ -279,7 +317,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 
                     // ********** TECNICO
                     if($scope.detalleUsuario.geografiasId.length > 0){
-                    	$scope.consultarTecnicosMod();
+                    	//$scope.consultarTecnicosMod();
                     }
 
                     // ********** CONFIRMAR USUARIO
@@ -350,84 +388,6 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
         	$("#labelIntervencionesSeleccionadasMod").css("color", "rgb(70, 88, 107)");
         	$("#contenedorIntervencionesRegistroMod").css("border", "white solid 0px");
         }
-        $scope.$apply();
-    });
-
-    $("#arbolGeografiaMod").click(function() {
-    	$scope.listaCiudadesSelecionadasMod = [];
-    	$scope.detalleUsuario.geografiasId = [];
-    	$scope.listaCiudadNatalMod = [];
-    	$scope.listaTecnicosMod = [];
-    	$scope.detalleUsuario.ciudadNatal = "";
-    	
-        var geografiaTreeMod = $('#arbolGeografiaMod').jstree("get_selected", true);
-        geografiaTreeMod.forEach(geo =>{
-        	if(geo.original.nivel == $scope.filtroGeografias){
-    			var idPadre = geo.parent;
-    			$scope.listaCiudadesSelecionadasMod.forEach(geoPadre =>{
-    				if(geoPadre.id == idPadre){
-    					existePadreMod = true;
-    					geoPadre.hijos.push(geo);
-    				}
-    			});
-    			if(existePadreMod){
-				}else{
-					$scope.listaGeografiasRespaldo.forEach(geoListaGeneral =>{
-						if(geoListaGeneral.id == idPadre){
-							$scope.listaCiudadesSelecionadasMod.push(geoListaGeneral);
-						}
-					});
-					$scope.listaCiudadesSelecionadasMod.forEach(geoPadre =>{
-	    				if(geoPadre.id == idPadre){
-	    					geoPadre.hijos = [geo];
-	    				}
-	    			});
-				}
-
-    			$scope.detalleUsuario.geografiasId.push(geo.id);
-    			existePadreMod = false;
-    		}
-        });
-        
-        $scope.listaCiudadesSelecionadasMod.forEach(geoHija =>{
-    		var geo = geoHija;
-    		while(geo.nivel > 2){
-    			var ciudadPadre = $scope.listaGeografiasRespaldo.filter(e => {return e.id == geo.parent})[0];
-    			geo = ciudadPadre;
-    		}
-    		var existeCiudadNatal = false;
-    		$scope.listaCiudadNatalMod.forEach(ciudadesNatal =>{
-    			if(ciudadesNatal.id == geo.id){
-    				existeCiudadNatal = true;
-    			}
-    		});
-    		if(existeCiudadNatal == false){
-    			$scope.listaCiudadNatalMod.push(geo);
-    		}
-    		
-    	});
-        
-        $scope.listaCiudadNatalMod.forEach(ciudadesNatal =>{
-			if(ciudadesNatal.id == $scope.detalleUsuario.idGeografia){
-				$scope.detalleUsuario.ciudadNatal = $scope.detalleUsuario.idGeografia;
-				$(".ciudadNatalMod").css("color", "#7c7c7d");
-			}
-		});
-    	
-    	if(geografiaTreeMod.length > 0){
-    		if($scope.isTecnicoMod){
-        		//$scope.consultarDespachos();
-        	}else{
-        		$scope.consultarTecnicosMod();
-        	}
-    	}
-    	
-    	if($scope.listaCiudadesSelecionadasMod.length > 0){
-    		$("#labelGeografiasSeleccionadasMod").css("color", "rgb(70, 88, 107)");
-    		$("#contenedorGeografiasRegistroMod").css("border", "white solid 0px");
-    	}
-        
-    	$scope.informacionRegistro.ciudadNatal = "";
         $scope.$apply();
     });
 
@@ -1013,6 +973,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
         $scope.mostrarDespachoMod = false;
         $scope.isTecnicoMod = false;
         $scope.verBtnModificar = false;
+        $scope.contadorCambioArbolGeografias = false;
         $scope.iniciarFechaMod();
         $("#pills-confirmar-tab-mod").removeClass("active");
 		$("#pills-confirmar-mod").removeClass("active show");

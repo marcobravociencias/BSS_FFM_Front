@@ -8,7 +8,7 @@
 			</div>
 			<div class="tecnicos-container">
 				<div class="scrollListaTecnicos" id="divTecnicos">
-					<div ng-repeat="despacho in listaDespachos | filter:buscarTecnico track by $index" class="tecnico-section" ng-if="despacho.checkedOpcion == false" ng-click="seleccionarDespachoRegistro(despacho)">
+					<div ng-repeat="despacho in listaDespachosMod | filter:buscarTecnico track by $index" class="tecnico-section" ng-if="despacho.checkedOpcion == false" ng-click="seleccionarDespachoRegistro(despacho)">
 						<div class="col-md-1">
 							<img src="{{despacho.urlFotoPerfil !=undefined && despacho.urlFotoPerfil ? despacho.urlFotoPerfil :'./resources/img/plantainterna/despacho/tecnicootasignada.png'}}" class="circle responsive-img-tecnico">
 						</div>
@@ -38,7 +38,7 @@
 			</div>
 			<div class="tecnicos-container">
 				<div class="scrollListaTecnicos" id="contenedorDespachosMod">
-					<div ng-repeat="despacho in listaDespachos | filter:buscarTecnicoSeleccionado track by $index" class="tecnico-section" ng-if="despacho.checkedOpcion == true" ng-click="seleccionarDespachoRegistro(despacho)">
+					<div ng-repeat="despacho in listaDespachosMod | filter:buscarTecnicoSeleccionado track by $index" class="tecnico-section" ng-if="despacho.checkedOpcion == true" ng-click="seleccionarDespachoRegistro(despacho)">
 						<div class="col-md-1 content-checkbox-operario" style="padding-right: 1em;">
 								<i class="fa fa-chevron-left" style="padding-top: .3em;"></i>
 						</div>

@@ -1,8 +1,16 @@
-<div class="modal fade bd-example-modal-lg" style="padding-top: 2em;" id="modalEdicionUsuario" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" style="min-width: 95% !important; max-width: 95% !important;">
+<!-- <div class="modal fade bd-example-modal-lg" style="padding-top: 2em;" id="modalEdicionUsuario" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"> -->
+<!--     <div class="modal-dialog modal-lg" style="min-width: 95% !important; max-width: 95% !important;"> -->
+<!--         <div class="modal-content"> -->
+        
+<div class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" id="modalEdicionUsuario">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
-            <div class="blue-gradient style_modal_header modal-header modal_header_bg" style="color: #fff;">
-                <h5 style="font-weight: bold;" class="modal-title header-title">Modificar usuario</h5>
+<!--             <div class="blue-gradient style_modal_header modal-header modal_header_bg" style="color: #fff;"> -->
+<!--                 <h5 style="font-weight: bold;" class="modal-title header-title">Modificar usuario</h5> -->
+<!--                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close" ng-click="cerrarModalEdicionUsuario()"></button> -->
+<!--             </div> -->
+			<div class="modal-header">
+                <h5 class="modal-title">Modificar usuario</h5>
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close" ng-click="cerrarModalEdicionUsuario()"></button>
             </div>
             <div class="modal-body">

@@ -49,6 +49,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
         e.stopPropagation();
     });
     
+    //MÉTODO QUE INICIA EL MÓDULO Y SUS VISTAS DE USUARIOS
     $scope.iniciarModuloUsuarios = function() {
     	let paramsConfiguracionDespacho ={
 				moduloAccionesUsuario: 'moduloUsuarios'
@@ -417,6 +418,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     
     //MÉTODO QUE MUESTRA EL TIPO DE ÁRBOL DE GEOGRAFÍAS SEGÚN EL PUESTO SELECCIONADO - PESTAÑA ÁRBOL REGISTRO USUARIO
     $scope.mostrarArbolGeografiaRegistro = function() {
+    	$('#arbolGeografiaRegistro').jstree("destroy");
     	var puestoSeleccionado = $("#puesto_select_registro option:selected").text().toLowerCase();
     	puestoSeleccionado = puestoSeleccionado.split('').map( letra => acentos[letra] || letra).join('').toString();
     	var plugins = [];
@@ -453,6 +455,73 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
                 }
             }
 		});
+        
+        //FUNCIÓN DEL MÉTODO (mostrarArbolGeografiaRegistro), LA CUAL ASIGNA LA/LAS GEOGRAFÍA(S) SELECCIONADA(S) A LA LISTA DE 'listaGeografiasSeleccionadas' PARA MOSTRAR - PESTAÑA ÁRBOL REGISTRO USUARIO
+        $("#arbolGeografiaRegistro").on('changed.jstree', function (e, data) {
+        	$scope.listaGeografiasSeleccionadas = [];
+        	$scope.informacionRegistro.geografias = [];
+        	$scope.listaCiudadNatalRegistro = [];
+        	$scope.listaTecnicos = [];
+        	var geografiasTree = $('#arbolGeografiaRegistro').jstree("get_selected", true);
+        	geografiasTree.forEach(geo =>{
+        		if(geo.original.nivel == $scope.filtroGeografias){
+        			var idPadre = geo.original.padre;
+        			$scope.listaGeografiasSeleccionadas.forEach(geoPadre =>{
+        				if(geoPadre.id == idPadre){
+        					existePadre = true;
+        					geoPadre.hijos.push(geo);
+        				}
+        			});
+        			if(existePadre){
+    				}else{
+    					$scope.listaGeografias.forEach(geoListaGeneral =>{
+    						if(geoListaGeneral.id == idPadre){
+    							$scope.listaGeografiasSeleccionadas.push(geoListaGeneral);
+    						}
+    					});
+    					$scope.listaGeografiasSeleccionadas.forEach(geoPadre =>{
+    	    				if(geoPadre.id == idPadre){
+    	    					geoPadre.hijos = [geo];
+    	    				}
+    	    			});
+    				}
+        			$scope.informacionRegistro.geografias.push(geo.id);
+        			existePadre = false;
+        		}
+        	});
+
+        	$scope.listaGeografiasSeleccionadas.forEach(geoHija =>{
+        		var geo = geoHija;
+        		while(geo.nivel > 2){
+        			var ciudadPadre = geografiasNivelCiudad.filter(e => {return e.id == geo.parent})[0];
+        			geo = ciudadPadre;
+        		}
+        		var existeCiudadNatal = false;
+        		$scope.listaCiudadNatalRegistro.forEach(ciudadesNatal =>{
+        			if(ciudadesNatal.id == geo.id){
+        				existeCiudadNatal = true;
+        			}
+        		});
+        		if(existeCiudadNatal == false){
+        			$scope.listaCiudadNatalRegistro.push(geo);
+        		}
+        		
+        	});
+        	
+        	if(geografiasTree.length > 0){
+        		if($scope.isTecnico){
+            		$scope.consultarDespachos();
+            	}else{
+            		$scope.consultarTecnicos();
+            	}
+        	}
+        	    	
+        	if($scope.listaGeografiasSeleccionadas.length > 0){
+        		$("#labelGeografiasSeleccionadas").css("color", "rgb(70, 88, 107)");
+        		$("#contenedorGeografiasRegistro").css("border", "white solid 0px");
+        	}
+        	$scope.informacionRegistro.ciudadNatal = "";
+        });
 	}
     
     //MÉTODO PARA VALIDACIÓN DE INFORMACIÓN DE LOS DATOS MOSTRADOS EN LA VISTA - PESTAÑA CONFIRMACIÓN REGISTRO USUARIO
@@ -469,6 +538,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	$scope.confirmacionRegistro.fechaIngreso = $scope.informacionRegistro.fechaIngreso !== undefined && $scope.informacionRegistro.fechaIngreso !== "" ? $scope.informacionRegistro.fechaIngreso : "Sin asignar";
 	}
     
+    //MÉTODO QUE SEGÚN EL PUESTO SELECCIONADO REALIZA LA CONFIGURACIÓN DE PESTAÑAS Y MANDA A LLAMAR EL MÉTODO QUE MUESTRA EL TIPO DE ÁRBOL DE GEOFRAFÍAS
     $('#puesto_select_registro').on('change', function() {
     	$("#puesto_select_registro").css("border", "1px solid #bdbdbd");
     	$('#arbolGeografiaRegistro').jstree("destroy");
@@ -485,6 +555,8 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	$scope.listaGeografiasSeleccionadas = [];
     	$scope.informacionRegistro.geografias = [];
     	$scope.listaPermisosSeleccionados = [];
+    	$scope.listaTecnicos = [];
+        $scope.listaDespachos = [];
     	
     	var puestoSeleccionado = $("#puesto_select_registro option:selected").text().toLowerCase();
     	puestoSeleccionado = puestoSeleccionado.split('').map( letra => acentos[letra] || letra).join('').toString();
@@ -499,6 +571,10 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	    $scope.isTecnico = false;
     	    $scope.mostrarDespacho = false;
     	}
+    	
+    	//LLAMADA AL MÉTODO QUE SE ENCARGA DE MOSTRAR EL TIPO DE ÁRBOL SEGÚN EL PUESTO SELECCIONADO
+    	$scope.mostrarArbolGeografiaRegistro();
+    	
     	$scope.$apply();
     });
     
@@ -538,75 +614,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	$("#labelIntervencionesSeleccionadas").css("color", "rgb(70, 88, 107)");
 		$("#contenedorIntervencionesRegistro").css("border", "white solid 0px");
     	$scope.$apply();
-    });
-    
-    //MÉTODO QUE ASIGNA LA/LAS GEOGRAFÍA(S) SELECCIONADA(S) A LA LISTA DE 'listaGeografiasSeleccionadas' PARA MOSTRAR - PESTAÑA ÁRBOL REGISTRO USUARIO
-    $("#arbolGeografiaRegistro").click(function() {
-    	$scope.listaGeografiasSeleccionadas = [];
-    	$scope.informacionRegistro.geografias = [];
-    	$scope.listaCiudadNatalRegistro = [];
-    	$scope.listaTecnicos = [];
-    	var geografiasTree = $('#arbolGeografiaRegistro').jstree("get_selected", true);
-    	geografiasTree.forEach(geo =>{
-    		if(geo.original.nivel == $scope.filtroGeografias){
-    			var idPadre = geo.original.padre;
-    			$scope.listaGeografiasSeleccionadas.forEach(geoPadre =>{
-    				if(geoPadre.id == idPadre){
-    					existePadre = true;
-    					geoPadre.hijos.push(geo);
-    				}
-    			});
-    			if(existePadre){
-				}else{
-					$scope.listaGeografias.forEach(geoListaGeneral =>{
-						if(geoListaGeneral.id == idPadre){
-							$scope.listaGeografiasSeleccionadas.push(geoListaGeneral);
-						}
-					});
-					$scope.listaGeografiasSeleccionadas.forEach(geoPadre =>{
-	    				if(geoPadre.id == idPadre){
-	    					geoPadre.hijos = [geo];
-	    				}
-	    			});
-				}
-    			$scope.informacionRegistro.geografias.push(geo.id);
-    			existePadre = false;
-    		}
-    	});
-
-    	$scope.listaGeografiasSeleccionadas.forEach(geoHija =>{
-    		var geo = geoHija;
-    		while(geo.nivel > 2){
-    			var ciudadPadre = geografiasNivelCiudad.filter(e => {return e.id == geo.parent})[0];
-    			geo = ciudadPadre;
-    		}
-    		var existeCiudadNatal = false;
-    		$scope.listaCiudadNatalRegistro.forEach(ciudadesNatal =>{
-    			if(ciudadesNatal.id == geo.id){
-    				existeCiudadNatal = true;
-    			}
-    		});
-    		if(existeCiudadNatal == false){
-    			$scope.listaCiudadNatalRegistro.push(geo);
-    		}
-    		
-    	});
-    	
-    	if(geografiasTree.length > 0){
-    		if($scope.isTecnico){
-        		$scope.consultarDespachos();
-        	}else{
-        		$scope.consultarTecnicos();
-        	}
-    	}
-    	    	
-    	if($scope.listaGeografiasSeleccionadas.length > 0){
-    		$("#labelGeografiasSeleccionadas").css("color", "rgb(70, 88, 107)");
-    		$("#contenedorGeografiasRegistro").css("border", "white solid 0px");
-    	}
-    	$scope.informacionRegistro.ciudadNatal = "";
-    	$scope.$apply();
-    });
+    });    
     
     //MÉTODO QUE ASIGNA EL/LOS PERMISO(S) SELECCIONADO(S) A LA LISTA DE 'listaPermisosSeleccionados' PARA MOSTRAR - PESTAÑA ACCESOS REGISTRO USUARIO
     $("#arbolPermisoRegistro").click(function() {
@@ -722,8 +730,8 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	            ]).then(function(results) {
     	            	swal.close();
     	            	if(results[0].data.respuesta){
-    	            		swal("Correcto", "¡Registro guardado con éxito!", "success");
     	            		$scope.limpiarDatosRegistro();
+    	            		swal("Correcto", "¡Registro guardado con éxito!", "success");
     	            	}else{
     	            		swal("Error", results[0].data.resultDescripcion, "error");
     	            	}
@@ -1251,6 +1259,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		});
 	}
 	
+	//MÉTODO PARA CONSULTAR LOS DESPACHOS A ASIGNAR AL TÉCNICO QUE SE REGISTRARÁ - PESTAÑA DESPACHOS REGISTRO USUARIO
 	$scope.consultarDespachos = function() {
 		$scope.listaDespachos = [];
 		let params = {idGeografia:$scope.informacionRegistro.geografias};
@@ -1285,6 +1294,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 				
 	}
 	
+	//MÉTODO PARA CONSULTAR LOS TÉCNICOS A ASIGNAR AL USUARIO (QUE NO SEA TÉCNICO) QUE SE REGISTRARÁ - PESTAÑA TÉCNICOS REGISTRO USUARIO
 	$scope.consultarTecnicos = function() {
 		$scope.listaTecnicos = [];
 		let params = {idGeografia:$scope.informacionRegistro.geografias};
@@ -1318,6 +1328,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
         });
 	}
 	
+	//MÉTODO PARA VALIDAR SI EXISTEN TÉCNICOS O DESPACHOS SEGÚN SEA EL CASO. Y VALIDA SI POR LO MENOS SE SELECCIONÓ 1 GEOGRAFÍA - REGISTRO USUARIO
 	$scope.revisionTecnicosDespachos = function() {
 		if($scope.informacionRegistro.geografias !== undefined){
 			if($scope.informacionRegistro.geografias.length > 0){
@@ -1338,6 +1349,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		}
 	}
 	
+	//MÉTODO PARA LIMPIAR TODOS LOS CAMPOS DE TODAS LAS PESTAÑAS DEL REGISTRO DE USUARIO
 	$scope.limpiarDatosRegistro = function() {
 		$scope.informacionRegistro.intervenciones = [];
 		$scope.listaIntervencionesSeleccionadas = [];
@@ -1380,6 +1392,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		$("#opcion-consulta").addClass("active show");
 	}
 	
+	//MÉTODO QUE SE MANDA A LLAMAR DESDE EL ARCHIVO "usuariosEditarController.js" CUANDO SE REALIZA LA MODIFICACIÓN DE UN USUARIO
 	$scope.resetearTablaUsuariosConsulta = function() {
     	if (tablaUsuarios) {
 			tablaUsuarios.destroy();
