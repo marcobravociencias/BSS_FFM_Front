@@ -41,7 +41,7 @@
 									<div class="imagen_content">
 										<div class="contenedor_img_evidencia">
 											<a href="{{img.url ? img.url : './resources/img/generic/not_found.png'}}"
-												class="magnific item imgtipo_{{img.Tipo_imagen}}"
+												class="magnific item imgtipo_{{img.idCatEvidencia}}"
 												data-title="{{img.nombreEvidencia}}">
 												<img class="z-depth-1 img_evidencia"
 													src="{{img.url ? img.url : './resources/img/generic/not_found.png'}}" width="180"

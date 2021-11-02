@@ -569,7 +569,6 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 
 	$(document.body).on("click", ".btn_categoria_img", function () {
 		var id_categoria = $.trim($(this).attr('attr_id_cat'));
-		var texto_btn_categoria = $.trim($(this).text());
 
 		if (id_categoria === '') {
 			$(".magnific.item").show();
@@ -651,6 +650,51 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 
 		});
 	}
+
+	mostarImagenesCarousel = function () {
+		var $imageLinks = $('.imagen-carousel-evidencia');
+		var items = [];
+		$imageLinks.each(function (index, elemento) {
+			var $item = $(this);
+			var magItem = {
+				src: $item.attr('src'),
+				type: 'image'
+			};
+			magItem.title = $item.data('title');
+			items.push(magItem);	
+		});
+		
+		$imageLinks.magnificPopup({
+			mainClass: 'mfp-fade',
+			items: items,
+			gallery: {
+				enabled: true,
+				tPrev: $(this).data('prev-text'),
+				tNext: $(this).data('next-text')
+			},
+			type: 'image',
+			callbacks: {
+				beforeOpen: function () {
+					var index = $imageLinks.index(this.st.el);
+					if (-1 !== index) {
+						this.goTo(index);
+					}
+				},
+				open: function () {
+					// Disabling focus enforcement by magnific
+					$.magnificPopup.instance._onFocusIn = function (e) { };
+				}
+			}
+		});
+	}
+	
+	
+	$(document.body).on("click", ".carousel-item", function () {
+		console.log('pruebas');
+		$(".item-carousel").show();
+		$('.carousel-inner:hidden').show(400);
+		setTimeout(function () { mostarImagenesCarousel(); }, 500);
+	})
 
 	$scope.closeModal = function () {
 		$('#modal-imagen-ot').modal('hide');
@@ -1890,12 +1934,12 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			if (img.urlEvidencia === "") {
 				imgs_blocks += '' +
 					'      <div class="carousel-item ' + ((index === 0) ? 'active' : '') + ' ">' +
-					'        <img class="d-block img-fluid imagen-carousel-evidencia" style="width:100%; min-width: 100%; height: 100% !important;" src="' + contex_project + '/resources/img/generic/not_found.png" alt="First slide">' +
+					'        <img data-title="'+img.nombreArchivo+'" class="d-block img-fluid imagen-carousel-evidencia" style="width:100%; min-width: 100%; height: 100% !important;" src="' + contex_project + '/resources/img/generic/not_found.png" alt="First slide" />' +
 					'      </div>';
 			} else {
 				imgs_blocks += '' +
 					'      <div class="carousel-item ' + ((index === 0) ? 'active' : '') + '">' +
-					'        <img class="d-block img-fluid imagen-carousel-evidencia" style="width:100%; min-width: 100%; height: 100% !important;" class="d-block w-100" src="' + img.urlEvidencia + '" alt="First slide">' +
+					'        <img data-title="'+img.nombreArchivo+'" class="d-block img-fluid imagen-carousel-evidencia" style="width:100%; min-width: 100%; height: 100% !important;" class="d-block w-100" src="' + img.urlEvidencia + '" alt="First slide" />' +
 					'      </div>';
 			}
 		})
