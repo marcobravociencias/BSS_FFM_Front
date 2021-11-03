@@ -4,7 +4,6 @@ metadata:
   name: ffm-web
   namespace: default
 spec:
-  sessionAffinity:  ClienteIP
   selector:
     matchLabels:
       app: ffm-web
@@ -125,3 +124,4 @@ spec:
   - name: http
     port: 8148
     targetPort: 8148
+  sessionAffinity:  ClienteIP
