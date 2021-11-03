@@ -32,4 +32,17 @@ public class CambioStatusController {
         }
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
+    
+    
+    @PostMapping("/cambioStatusOtsGeneric")
+    public ResponseEntity<?> cambioStatusOtsAlertasGeneric(@RequestBody String params){
+        logger.info("#### CAMBIO DE ESTATUS ### \n" + params);
+        ServiceResponseResult response = cambioStatusService.cambioStatusOtsAlertasGeneric(params);
+        if (response.getResult() instanceof Integer){
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
+    
+    
 }

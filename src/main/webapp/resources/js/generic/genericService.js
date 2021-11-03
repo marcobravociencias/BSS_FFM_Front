@@ -88,5 +88,15 @@ app.service("genericService", function ($http) {
             }
         });
     }
+    this.cambioStatusOtsGeneric = function (params) {
+        return $http({
+            method: "post",
+            url: "req/cambioStatusOtsGeneric",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    }
 
 })

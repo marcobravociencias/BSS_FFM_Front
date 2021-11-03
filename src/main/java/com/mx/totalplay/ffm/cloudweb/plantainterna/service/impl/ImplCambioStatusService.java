@@ -107,5 +107,41 @@ public class ImplCambioStatusService implements CambioStatusService {
 
         return response;
     }
+    
+
+
+    @Override
+    public ServiceResponseResult cambioStatusOtsAlertasGeneric(String params) {
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        LoginResult login = utilerias.obtenerObjetoPrincipal();
+        String token = login.getAccess_token();
+        Map<String, String> paramUri = new HashMap<String, String>(){{
+            put("idOrden", jsonObject.get("ot").getAsString());
+        }};
+        
+        String urlServiceBase=jsonObject.get("urlServicio").getAsString();
+        String metodoHttp=jsonObject.get("metodoHttp").getAsString().toUpperCase().trim();
+
+		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
+		jsonObject.addProperty("idUsuarioDespacho", principalDetail.getIdUsuario());
+        
+        String baseUrlService=login.getDireccionAmbiente().concat(":").concat(urlServiceBase).concat(environment.getProperty("param.idorden.accionalerta"));    
+        
+        logger.info("#### URL #### \n" + baseUrlService);
+        logger.info("### PARAM ### " + paramUri);
+        logger.info("### PARAM OBJECT ### " + gson.toJson(jsonObject));
+        
+        switch( metodoHttp ) {
+        	case "PATCH":
+                response = rest.callPostBearerTokenRequestURL2(paramUri,gson.toJson(jsonObject), baseUrlService, ServiceResponseResult.class, token);
+        		break;
+        	case "POST":
+                response = rest.callPatchBearerTokenRequestURL(paramUri, gson.toJson(jsonObject), baseUrlService, ServiceResponseResult.class, token);
+        		break;
+        	default:
+        }             
+        logger.info("#### RESULT cambioStatusOts(): \n" + gson.toJson(response));
+        return response;
+    }
  
 }

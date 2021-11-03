@@ -302,7 +302,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
         
         $scope.terminarAlerta.comentario = "";
         $scope.contadorCaracteresTextArea = 0;
-        
+        $scope.accionOtSeleccionadaAlerta=angular.copy( accion )
         //$scope.showAaccion = true;
 //        $scope.showOpcion = 0;
 //        $scope.listaMotivosAlerta = [];
@@ -751,7 +751,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
                             idTipoOrden: $scope.alertaSeleccionadaObject.idIntervencion,
                             idSubTipoOrden: $scope.alertaSeleccionadaObject.idSubIntervencion,
                             idOrigenSistema: 1,
-                            idUsuarioDespacho: 12,//
+                            idUsuarioDespacho: -1,//este va desde el back
                             latitud: $scope.alertaSeleccionadaObject.latitudAlerta,
                             longitud: $scope.alertaSeleccionadaObject.longitudAlerta,
                             comentarios: $scope.reagendaAlerta.comentario,
@@ -777,7 +777,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
 
     $scope.cambiarEstatusAlerta = function(params) {
 
-        genericService.cambioStatusOts(params).then(result =>{
+        genericService.cambiarEstatusAlertaGeneric(params).then(result =>{
             console.log(result);
             swal.close();
             if(result.data.respuesta){
@@ -1060,17 +1060,19 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
 	                idAlerta: $scope.alertaSeleccionadaObject.idAlerta,
 	                idUsuarioTecnico: $scope.alertaSeleccionadaObject.idTecnico
 	        };
-    	}else{
-    		
     	}
     	
+        params.urlServicio =  $scope.accionOtSeleccionadaAlerta.urlServicio
+        params.metodoHttp  = $scope.accionOtSeleccionadaAlerta.metodoHttp
+    
     	console.log(params);
     	var respuestaValidacion = $scope.validarDatosAccionesAlerta(params);
     	if(respuestaValidacion.validacion){
         	swal({ text: 'Cambiando estatus de la OT ...', allowOutsideClick: false });
         	swal.showLoading();
-        	genericService.cambioStatusOts(params).then(result =>{
-        		console.log(result);
+        	//genericService.cambioStatusOts(params).then(result =>{
+            genericService.cambioStatusOtsGeneric(params).then(result =>{     
+            console.log(result);
         		if(result.data.respuesta){
         			swal.close();
         			swal("Correcto", "¡Acción realizada con éxito!", "success");
