@@ -4,10 +4,11 @@ metadata:
   name: ffm-web
   namespace: default
 spec:
+  sessionAffinity:  ClienteIP
   selector:
     matchLabels:
       app: ffm-web
-  replicas: 1
+  replicas: 3
   template:
     metadata:
       labels:
@@ -95,7 +96,7 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: ffm-web
-  minReplicas: 1
+  minReplicas: 3
   maxReplicas: 3
   metrics:
   - type: Resource
