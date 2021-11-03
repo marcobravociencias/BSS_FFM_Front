@@ -35,7 +35,9 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	$scope.evidenciaDetalleEquipoN = '';
 	let isConsultaDispositivo = false
 	$scope.dispositivosArrayTemp = [];
-	$scope.listadoConsultaOtsDisponibles=[];
+	$scope.listadoConsultaOtsDisponibles = [];
+	$scope.listEvidenciaImagenes = {};
+	$scope.listImagenesTipo = [];
 
 	let dispositivoOtTable = $('#table_dispositovos_ot').DataTable({
 		"paging": true,
@@ -175,10 +177,10 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 					},
 					"dataSrc": function (json) {
 						$scope.elementosRegistro = json.registrosTotales
-						$scope.listadoConsultaOtsDisponibles=[];
-						if( json.result != undefined && json.result.ordenes != undefined)
+						$scope.listadoConsultaOtsDisponibles = [];
+						if (json.result != undefined && json.result.ordenes != undefined)
 							$scope.listadoConsultaOtsDisponibles = json.result.ordenes;
-												
+
 						return json.data;
 					},
 					"error": function (xhr, error, thrown) {
@@ -223,7 +225,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			genericService.consultarCatalogoIntervenciones(),
 			genericService.consulCatalogoGeografia(),
 			genericService.consultarCatalogoEstatusDespachoPI(),
-			consultaOTService.consultarConfiguracionDespachoDespacho({"moduloAccionesUsuario":"moduloConsultaOt"}),
+			consultaOTService.consultarConfiguracionDespachoDespacho({ "moduloAccionesUsuario": "moduloConsultaOt" }),
 
 		]).then(function (results) {
 			if (results[0].data !== undefined) {
@@ -320,7 +322,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			if (results[3].data !== undefined) {
 				if (results[3].data.respuesta) {
 					if (results[3].data.result) {
-						$scope.elementosConfigGeneral=new Map(Object.entries(results[3].data.result))    		
+						$scope.elementosConfigGeneral = new Map(Object.entries(results[3].data.result))
 					} else {
 						swal.close();
 						toastr.warning('No se encontraron datos para la geografia');
@@ -481,96 +483,60 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	});
 
 
-	consultaImagenesOT = function (ot) {
+	consultaImagenesOT = function (ot, cuenta) {
 		let params = {
 			orden: ot,
 		}
 		$('.idoti').text(ot);
+		$('.cuenta').text(cuenta);
 		swal({ text: 'Espera un momento...', allowOutsideClick: false });
 		swal.showLoading();
+		$scope.listEvidenciaImagenes = {};
 		consultaOTService.consultaImagenesOt(JSON.stringify(params)).then(function success(response) {
-			response = arrayConsultaImagen;
-			console.log(response);
 			if (response.data !== undefined) {
 				if (response.data.respuesta) {
-					if (response.data.result.result === '0') {
-						$("#categorias_div").empty();
-						$("#contenido_imagenes").empty();
-						if (response.data.result.Imagen !== undefined && response.data.result.Imagen !== null && response.data.result.Imagen.length > 0) {
-							var _HTML_TIPO = '' +
-								'<div class="content_category col-2">' +
-								'	<b class="badge accent-3" id="alerta-p-i">0</b>' +
-								'	<button type="button" id="categoria_img_0" class=" btn_categoria_img categoria_img btn btn-sm btn-fluid btn-outline-blue-grey waves-effect waves-light">' +
-								'	 TODAS ' +
-								'	</button>' +
-								'</div>';
-							var clase_btn = "";
 
+					if (response.data.result === null) {
+						$('#modal-imagen-ot').modal('show');
+						swal.close();
+					}
 
-							$.each(response.data.result.Tipo, function (index, elemento) {
-								_HTML_TIPO += '' +
-									'<div class="content_category col-2">' +
-									'	<b class="badge accent-3" id="alerta-p-i">0</b>' +
-									'	<button attr_id_cat="' + elemento.ID_Tipo + '" type="button" id="categoria_img_' + elemento.ID_Tipo + '" class=" btn_categoria_img categoria_img btn btn-sm btn-fluid  btn-outline-blue-grey waves-effect waves-light">' +
-									'	 ' + elemento.Descripcion + ' ' +
-									'	</button>' +
-									'</div>';
-							});
-							$("#categorias_div").append(_HTML_TIPO);
+					if (response.data.result.evidencias) {
+						$scope.listEvidenciaImagenes.imagenes = response.data.result.evidencias;
+						$scope.listEvidenciaImagenes.tipos = [];
+						$scope.listImagenesTipo = response.data.result.evidencias;
+						let listaTipos = [];
 
-
-							var count_cantidad_por_tipo = groupBy(response.data.result.Imagen, 'tipo_imagen');
-
-							Object.keys(count_cantidad_por_tipo).forEach(function (key) {
-								value = count_cantidad_por_tipo[key];
-								$("#categoria_img_" + key).parent().find('.badge').text(count_cantidad_por_tipo[key].length);
-							});
-
-							$("#categoria_img_0").parent().find('.badge').text(response.data.result.Imagen.length);
-
-							var _HTML_IMG = "";
-							var URL_IMG = "";
-							$.each(response.data.result.Imagen, function (index, elemento) {
-								if (elemento.Path_imagen === "") {
-									URL_IMG = '' +
-										'<a href="' + contex_project + '/resources/img/generic/not_found.png" class="magnific item imgtipo_' + elemento.Tipo_imagen + '" data-title="' + elemento.Nombre_imagen + '">' +
-										'	<img class="z-depth-1 img_evidencia"  src="' + contex_project + '/resources/img/generic/not_found.png" width="180" height="130" />' +
-										' </a>';
-								} else {
-									URL_IMG = '' +
-										'<a href="data:image/png;base64,' + elemento.Path_imagen + '"" class="magnific item imgtipo_' + elemento.Tipo_imagen + '" data-title="' + elemento.Nombre_imagen + '">' +
-										'	<img class="z-depth-1 img_evidencia"  src="data:image/png;base64,' + elemento.Path_imagen + '""  width="180" height="130" />' +
-										'</a>';
+						var count_cantidad_por_tipo = groupBy(response.data.result.evidencias, 'idCatEvidencia');
+						response.data.result.evidencias.map(function (e) {
+							let isExist = listaTipos.find((t) => e.idCatEvidencia == t.id)
+							if (!isExist) {
+								let imagenes = [];
+								if (count_cantidad_por_tipo[e.idCatEvidencia].length) {
+									imagenes = count_cantidad_por_tipo[e.idCatEvidencia]
 								}
-								_HTML_IMG += '' +
-									'	<div class="imagen_content content_img_' + elemento.Tipo_imagen + '  col-md-2">' +
-									'     <div class="contenedor_img_evidencia">' +
-									'		' + URL_IMG + ' ' +
-									'       <div class="middle_img_evidencia">' +
-									'         <div class="text_img_evidencia">' + elemento.Nombre_imagen + '  </div>' +
-									'       </div>' +
-									'     </div>' +
-									'   </div>';
-							});
-
-							$("#contenido_imagenes").append(_HTML_IMG);
-							$(".btn_categoria_img:first ").click().trigger('click')
-
-							//mostrar contenido evidencia
-							$("#parent_imagenes").show();
-							$("#not_info_evidencia").hide();
-						} else {
-							limpiarImagenesEvidencia();
-							$("#header_categoria_eviden").html('<h5 style="color:#767676" class="text-center">No se encontr\u00F3 evidencia</h5>');
-
-						}
+								listaTipos.push(
+									{
+										id: e.idCatEvidencia,
+										descripcion: e.tipoEvidencia,
+										imagenes: imagenes
+									}
+								)
+							}
+						});
+						$scope.listEvidenciaImagenes.tipos = listaTipos;
 						is_consultar_evidencia = true;
 						$('#modal-imagen-ot').modal('show');
+						setTimeout(function () {
+							$("#categoria_img_0").click();
+							$("#categoria_img_0").addClass("tipo-evidencia-selected");
+						}, 100);
 						swal.close();
 					} else {
 						swal.close();
 						mostrarMensajeErrorAlert(response.data.result.resultDescription)
 					}
+
 				} else {
 					swal.close();
 					mostrarMensajeErrorAlert(response.data.resultDescripcion);
@@ -583,33 +549,33 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 
 	}
 
-	limpiarImagenesEvidencia = function () {
-		$("#categorias_div .content_category").not(":first").remove();
-		$("#contenido_imagenes").empty();
 
-		$("#parent_imagenes").hide();
-		$("#not_info_evidencia").show();
+	$scope.getEvidenciasImagenes = function (tipo) {
+		$scope.listImagenesTipo = [];
+		if (tipo.toString() === '0') {
+			$scope.listImagenesTipo = $scope.listEvidenciaImagenes.imagenes;
+		} else {
+			$scope.listEvidenciaImagenes.tipos.map(function (e) {
+				if (e.id.toString() === tipo.toString()) {
+					$scope.listImagenesTipo = e.imagenes;
+					return false;
+				}
+			});
+		}
+		$(".tipo_evidencia").removeClass("tipo-evidencia-selected");
+		$("#categoria_img_" + tipo).addClass("tipo-evidencia-selected");
 	}
 
+
 	$(document.body).on("click", ".btn_categoria_img", function () {
-
-		if ($(this).hasClass('btn-blue-grey')) return false;
-
 		var id_categoria = $.trim($(this).attr('attr_id_cat'));
-		var texto_btn_categoria = $.trim($(this).text());
 
 		if (id_categoria === '') {
-			$(".btn_categoria_img").removeClass('btn-blue-grey').addClass('btn-outline-blue-grey');
-			$("#categoria_img_0").removeClass('btn-outline-blue-grey').addClass('btn-blue-grey');
 			$(".magnific.item").show();
 			$('.imagen_content:hidden').show(400);
 			setTimeout(function () { mostarImagenesCategoria(); }, 500);
 
 		} else {
-			$(".btn_categoria_img").removeClass('btn-blue-grey').addClass('btn-outline-blue-grey');
-			$("#categoria_img_" + id_categoria).removeClass('btn-outline-blue-grey').addClass('btn-blue-grey');
-
-
 			if ($(".imagen_content:visible").length > 0) {
 				$(".imagen_content:visible").hide(150, "linear", function () {
 
@@ -685,6 +651,51 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		});
 	}
 
+	mostarImagenesCarousel = function () {
+		var $imageLinks = $('.imagen-carousel-evidencia');
+		var items = [];
+		$imageLinks.each(function (index, elemento) {
+			var $item = $(this);
+			var magItem = {
+				src: $item.attr('src'),
+				type: 'image'
+			};
+			magItem.title = $item.data('title');
+			items.push(magItem);	
+		});
+		
+		$imageLinks.magnificPopup({
+			mainClass: 'mfp-fade',
+			items: items,
+			gallery: {
+				enabled: true,
+				tPrev: $(this).data('prev-text'),
+				tNext: $(this).data('next-text')
+			},
+			type: 'image',
+			callbacks: {
+				beforeOpen: function () {
+					var index = $imageLinks.index(this.st.el);
+					if (-1 !== index) {
+						this.goTo(index);
+					}
+				},
+				open: function () {
+					// Disabling focus enforcement by magnific
+					$.magnificPopup.instance._onFocusIn = function (e) { };
+				}
+			}
+		});
+	}
+	
+	
+	$(document.body).on("click", ".carousel-item", function () {
+		console.log('pruebas');
+		$(".item-carousel").show();
+		$('.carousel-inner:hidden').show(400);
+		setTimeout(function () { mostarImagenesCarousel(); }, 500);
+	})
+
 	$scope.closeModal = function () {
 		$('#modal-imagen-ot').modal('hide');
 	}
@@ -721,6 +732,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	}
 
 	$scope.consultaDetalleOtGeneric = function (ordenObject) {
+			$scope.datoOt=ordenObject.idOrden
 			let params = {
 				Id_ot: ordenObject.idOrden
 			}
@@ -1745,7 +1757,8 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	$scope.consultarPostVentaOt = function () {
 		if (!isConsultaDetalleSoporte) {
 			let params = {
-				orden: $scope.datoOt
+				//orden: $scope.datoOt
+				orden: 123050
 			}
 			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 			swal.showLoading();
@@ -1786,7 +1799,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 										'				</div>' +
 										'				<div class="row textFallaOT">' +
 										'					<div class="col-md-5">' +
-										'						<b  class="title_span_1"> Modelo equipo:</b>' +
+										'						<b  class="title_span_1"> Modelo anterior:</b>' +
 										'		        	</div>				               ' +
 										'		        	<div class="col-md-7">' +
 										'		        		<span id="tipo_falla_corte"  class="content_text" > ' + detalle.descModeloViejo + ' </span>' +
@@ -1794,20 +1807,20 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 										'				</div>' +
 										'				<div class="row textFallaOT">' +
 										'					<div class="col-md-5">' +
-										'						<b  class="title_span_1"> N&uacute;mero serie equipo:</b>' +
-										'		        	</div>				               ' +
-										'		        	<div class="col-md-7">' +
-										'		        		<span id="status_falla_corte"  class="content_text" > ' + detalle.numSerieModeloViejo + ' </span>' +
-										'		        	</div>' +
-										'				</div>' +
-										'				<div class="row textFallaOT">' +
-										'					<div class="col-md-5">' +
-										'						<b  class="title_span_1"> Modelo equipo nuevo:</b>	 ' +
+										'						<b  class="title_span_1"> Modelo nuevo:</b>	 ' +
 										'		        	</div>				               ' +
 										'		        	<div class="col-md-7">' +
 										'		        		<span id="tecnico_falla"  class="content_text" > ' + detalle.descModeloNuevo + ' </span>' +
 										'		        	</div>' +
 										'				</div>' +
+										'				<div class="row textFallaOT">' +
+										'					<div class="col-md-5">' +
+										'						<b  class="title_span_1"> N&uacute;m. serie equipo anterior:</b>' +
+										'		        	</div>				               ' +
+										'		        	<div class="col-md-7">' +
+										'		        		<span id="status_falla_corte"  class="content_text" > ' + detalle.numSerieModeloViejo + ' </span>' +
+										'		        	</div>' +
+										'				</div>' +				
 										'				<div class="row">' +
 										'					<div class="col-md-5">' +
 										'						<b  class="title_span_1">N&uacute;mero serie equipo nuevo:</b>' +
@@ -1921,12 +1934,12 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			if (img.urlEvidencia === "") {
 				imgs_blocks += '' +
 					'      <div class="carousel-item ' + ((index === 0) ? 'active' : '') + ' ">' +
-					'        <img class="d-block img-fluid" style="width:100%; min-width: 100%; height: 100% !important;" src="' + contex_project + '/resources/img/generic/not_found.png" alt="First slide">' +
+					'        <img data-title="'+img.nombreArchivo+'" class="d-block img-fluid imagen-carousel-evidencia" style="width:100%; min-width: 100%; height: 100% !important;" src="' + contex_project + '/resources/img/generic/not_found.png" alt="First slide" />' +
 					'      </div>';
 			} else {
 				imgs_blocks += '' +
 					'      <div class="carousel-item ' + ((index === 0) ? 'active' : '') + '">' +
-					'        <img class="d-block img-fluid" style="width:100%; min-width: 100%; height: 100% !important;" class="d-block w-100" src="' + img.urlEvidencia + '" alt="First slide">' +
+					'        <img data-title="'+img.nombreArchivo+'" class="d-block img-fluid imagen-carousel-evidencia" style="width:100%; min-width: 100%; height: 100% !important;" class="d-block w-100" src="' + img.urlEvidencia + '" alt="First slide" />' +
 					'      </div>';
 			}
 		})
@@ -1986,7 +1999,8 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	$scope.consultarDispositivosOt = function () {
 		if (!isConsultaDispositivo) {
 			let params = {
-				orden: 92070//$scope.datoOt
+				//orden: 92070//$scope.datoOt}
+				orden: $scope.datoOt
 			}
 			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 			swal.showLoading();
@@ -2051,11 +2065,11 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 
 		arrayDetalleRed.forEach(detalle =>{
 			tableHTML += "<tr>" +
-							"<td>" + detalle.nombreOlt + "</td>" +
-							"<td>" + detalle.tipoAprovisionamiento + "</td>" +
-							"<td>" + detalle.frame + "</td>" +
-							"<td>" + detalle.slot + "</td>" +
-							"<td>" + detalle.puerto + "</td>" +
+							"<td>" +(  (detalle != undefined && detalle.nombreOlt) ? detalle.nombreOlt : 'Sin dato' )  + "</td>" +
+							"<td>" +(  (detalle != undefined && detalle.tipoAprovisionamiento) ? detalle.nombreOlt : 'Sin dato' )  + "</td>" +
+							"<td>" +(  (detalle != undefined && detalle.frame) ? detalle.nombreOlt : 'Sin dato' )  + "</td>" +
+							"<td>" +(  (detalle != undefined && detalle.slot) ? detalle.nombreOlt : 'Sin dato' )  + "</td>" +
+							"<td>" +(  (detalle != undefined && detalle.puerto) ? detalle.nombreOlt : 'Sin dato' )  + "</td>" +
 						 "</tr>";
 
 		})

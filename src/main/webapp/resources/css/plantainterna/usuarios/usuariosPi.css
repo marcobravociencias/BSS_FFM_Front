@@ -26,8 +26,8 @@
 }
 
 #table-usuario-pi_filter input {
-	font-size: 0.7em !important;
-    font-family: "Montserrat" !important;
+	font-size: 0.9em !important;
+	font-family: "Montserrat" !important;
 }
 
 img.responsive-img-tecnico{
@@ -647,28 +647,6 @@ div.dataTables_wrapper div.dataTables_filter input {
     margin-left: 0.5em;
     display: inline-block;
     width: auto;
-}
-#modalEdicionUsuario .modal-header{
-    margin:0;
-    box-shadow:none;
-    border-top: 20px solid #39455b;
-    border-bottom: 0px;
-}
-
-#modalEdicionUsuario .modal-header .close.close-modal{
-    /* background: #3b4559; */
-    padding:.1px .7em;
-    border-radius:1em;
-    margin:0;
-}
-#modalEdicionUsuario .modal-footer{
-    border:none !important;
-    padding-top:0;
-}
-#modalEdicionUsuario .modal-header  .modal-title{
-    color:#39455b;
-    font-size:1.2em;
-    font-weight:bolder;
 }
 
 #container_usuarios_alta_consulta {
