@@ -65,7 +65,7 @@ public class GenericController {
 		logger.info("ENTRA DECISION");
 		return "utilerias/help/details";
 	}
-	@GetMapping("req/descargaLogFile/{fileName:.+}")
+	@GetMapping("/descargaLogFile/{fileName:.+}")
 	public void downloadLoggerFile(HttpServletRequest request, HttpServletResponse response,
 								   @PathVariable("fileName")String fileName){
 		Path pathFile= Paths.get("/u01/ffmcloudlog/",fileName);

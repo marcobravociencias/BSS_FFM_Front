@@ -36,7 +36,7 @@
 				  <tr><th class="st"> JSP Version: </th><td  align="left"><%= JspFactory.getDefaultFactory().getEngineInfo().getSpecificationVersion() %>
 				  <tr><th class="st"> JSP Version: </th><td  align="left"><%= JspFactory.getDefaultFactory().getEngineInfo() %>
                   <tr><th class="st">request.getHeader("x-forwarded-for"):</td><td  align="left"><%=(request.getHeader("x-forwarded-for")!=null)?request.getHeader("x-forwarded-for"):""%>
-                  <tr><td colspan="2" align="center"><a href="req/descargaLogFile/ffmlog.log">    FFM_web.log</a></td></tr>
+                  <tr><td colspan="2" align="center"><a href="${pageContext.request.contextPath}/descargaLogFile/ffmlog.log">    FFM_web.log</a></td></tr>
               
               </table>
               numero de visitas: ${ConstSystem.ocurrencia}             
@@ -44,13 +44,13 @@
         </div>
     </div>
 </body>
-<script src="${pageContext.request.contextPath}/js/jquery/jquery.min.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/bootstrap/js/tether.min.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/bootstrap/media/js/jquery.dataTables.min.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/bootstrap/media/js/dataTables.bootstrap4.min.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/bootstrap/alertify/alertify.js" type="text/javascript" ></script>
-<script src="${pageContext.request.contextPath}/js/help/help.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/resources/js/jquery/jquery.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/resources/bootstrap/js/tether.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/resources/bootstrap/media/js/jquery.dataTables.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/resources/bootstrap/media/js/dataTables.bootstrap4.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/resources/bootstrap/alertify/alertify.js" type="text/javascript" ></script>
+<script src="${pageContext.request.contextPath}/resources/js/help/help.js" type="text/javascript"></script>
 </html>
 
 
