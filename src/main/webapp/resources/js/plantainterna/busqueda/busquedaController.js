@@ -1,6 +1,6 @@
 var app = angular.module('busquedaApp', []);
 
-app.controller('busquedaController', ['$scope', 'busquedaService', 'genericService', function ($scope, busquedaService, genericService) {
+app.controller('busquedaController', ['$scope', '$q', 'busquedaService', 'genericService', function ($scope, $q, busquedaService, genericService) {
     $scope.showSearch = true;
     $scope.mostrarCurrentInfo = 1;
     $scope.searchSF = '';
@@ -31,7 +31,7 @@ app.controller('busquedaController', ['$scope', 'busquedaService', 'genericServi
     $scope.limitTvCf = 10;
     $scope.limitIps = 10;
 
-    app.activacionController($scope, busquedaService)
+    app.activacionController($scope, $q, busquedaService)
 
     $scope.consultaPermisos = function () {
         let params = {
@@ -601,6 +601,7 @@ app.controller('busquedaController', ['$scope', 'busquedaService', 'genericServi
         $scope.showEliminarSubTick = false;
     }
 
+    /*
     $scope.mostrarDetalleActivarOs = function (os) {
         $scope.Network_code = ''
         $scope.tipoactivacion = 'os'
@@ -629,6 +630,7 @@ app.controller('busquedaController', ['$scope', 'busquedaService', 'genericServi
         $scope.planActivo = os.cuentaActiva
         $scope.isProcesandoActivacion = 'noshow'
     }
+    */
 
     $scope.mostrarModalDetalleUsuario = function (usuario) {
         $scope.detalleContacto = usuario;

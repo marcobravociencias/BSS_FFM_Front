@@ -154,7 +154,7 @@
                             </div>
                         </div>
                     </div>
-                    <div ng-if="resultBusqueda.oportunidadesoportunidades.length==0 || !resultBusqueda.oportunidades" class="imagen-no-results text-center">
+                    <div ng-if="resultBusqueda.oportunidades.length==0 || !resultBusqueda.oportunidades" class="imagen-no-results text-center">
                         <img src="${pageContext.request.contextPath}/resources/img/generic/no-results.png">
                         <br>
                         <span class="span-no-result">No se encontraron resultados</span>
@@ -418,12 +418,12 @@
                                 <span class="text-table" ng-bind="os.estatus"></span>
                             </div>
                             <div class="col-2">
-                                <a ng-if="os.idCsp && (os.cuentaActiva ==='false' || os.cuentaActiva ===undefined)" href="" class="link-consultardetalle">
+                                <!--a ng-if="os.idCsp && (os.cuentaActiva ==='false' || os.cuentaActiva ===undefined)" href="" class="link-consultardetalle">
+                                    <span class="text-table-click">Activar</span>
+                                </a-->
+                                <a ng-if="os.idCsp && (os.cuentaActiva ==='false' || os.cuentaActiva ===undefined)" href="" class="link-consultardetalle" ng-click="mostrarDetalleActivarOs(os)">
                                     <span class="text-table-click">Activar</span>
                                 </a>
-                                <!-- <a ng-if="os.idCsp && (os.cuentaActiva ==='false' || os.cuentaActiva ===undefined)" href="" class="link-consultardetalle" ng-click="mostrarDetalleActivarOs(os)">
-                                    <span class="text-table-click">Activar</span>
-                                </a> -->
                                 <a ng-if="os.idCsp && os.cuentaActiva ==='true'" href="" class="link-consultardetalle" ng-click="mostrarDetalleActivarOs(os)">
                                     <span class="text-table-click">Ver configuraci&oacute;n</span>
                                 </a>

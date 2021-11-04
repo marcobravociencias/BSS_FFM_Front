@@ -73,6 +73,26 @@ public class BusquedaController {
         }
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
+    
+    @PostMapping("/consultarEquipos")
+    public ResponseEntity<?> consultarEquipos(@RequestBody String params){
+        logger.info("#### CONSULTAR EQUIPOS ### \n" + params);
+        ServiceResponseResult response = busquedaService.consultarEquipos(params);
+        if (response.getResult() instanceof Integer){
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
+    
+    @PostMapping("/consultarCotizacionesEquipos")
+    public ResponseEntity<?> consultarCotizacionesEquipos(@RequestBody String params){
+        logger.info("#### CONSULTAR COTIZACIONES EQUIPOS ### \n" + params);
+        ServiceResponseResult response = busquedaService.consultarCotizacionesEquipos(params);
+        if (response.getResult() instanceof Integer){
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
 
     @PostMapping("/consultarResumenServicios")
     public ResponseEntity<?> consultarResumenServicios(@RequestBody String params){
@@ -92,6 +112,46 @@ public class BusquedaController {
     public ResponseEntity<?> consultarIps(@RequestBody String params){
         logger.info("#### CONSULTAR IPS SF ### \n" + params);
         ServiceResponseResult response = busquedaService.consultarIps(params);
+        if (response.getResult() instanceof Integer){
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
+    
+    @PostMapping("/configurarServicios")
+    public ResponseEntity<?> configurarServicios(@RequestBody String params){
+        logger.info("#### CONFIGURAR SERVICIOS ### \n" + params);
+        ServiceResponseResult response = busquedaService.configurarServicios(params);
+        if (response.getResult() instanceof Integer){
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
+    
+    @PostMapping("/configurarDns")
+    public ResponseEntity<?> configurarDns(@RequestBody String params){
+        logger.info("#### CONFIGURAR DNS ### \n" + params);
+        ServiceResponseResult response = busquedaService.configurarDns(params);
+        if (response.getResult() instanceof Integer){
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
+    
+    @PostMapping("/activarServicios")
+    public ResponseEntity<?> activarServicios(@RequestBody String params){
+        logger.info("#### ACTIVAR SERVICIOS ### \n" + params);
+        ServiceResponseResult response = busquedaService.activarServicios(params);
+        if (response.getResult() instanceof Integer){
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
+    
+    @PostMapping("/consultarEstatusActivacion")
+    public ResponseEntity<?> consultarEstatusActivacion(@RequestBody String params){
+        logger.info("#### CONSULTAR ESTATUS ACTIVACION ### \n" + params);
+        ServiceResponseResult response = busquedaService.consultarEstatusActivacion(params);
         if (response.getResult() instanceof Integer){
             return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
         }

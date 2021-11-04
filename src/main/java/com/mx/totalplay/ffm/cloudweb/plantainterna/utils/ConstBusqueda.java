@@ -26,6 +26,12 @@ public class ConstBusqueda {
 
     @Value("${consultarEquiposConfigurados}")
     private String consultarEquiposConfigurados;
+    
+    @Value("${consultarEquipos}")
+    private String consultarEquipos;
+    
+    @Value("${consultarCotizacionesEquipo}")
+    private String consultarCotizacionesEquipo;
 
     @Value("${consultaResumenFacturaSF}")
     private String consultaResumenFacturaSF;
@@ -35,4 +41,16 @@ public class ConstBusqueda {
 
     @Value("${consultarIpsSF}")
     private String consultarIpsSF;
+    
+    @Value("${configurarServicios}")
+    private String configurarServicios;
+    
+    @Value("${configurarDns}")
+    private String configurarDns;
+    
+    @Value("${activarServicios}")
+    private String activarServicios;
+    
+    @Value("${consultarEstatusActivacion}")
+    private String consultarEstatusActivacion;
 }

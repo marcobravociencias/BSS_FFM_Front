@@ -106,7 +106,7 @@ app.service("busquedaService", function($http){
     this.validarActivacion = function(params) {
         return $http({
             method: "post",
-            url: "req/validarActivacion",
+            url: "req/consultarEstatusActivacion",
             data: JSON.stringify(params),
             headers: { 'Content-Type': undefined },
             transformRequest: angular.identity
@@ -117,6 +117,16 @@ app.service("busquedaService", function($http){
         return $http({
             method: "post",
             url: "req/consultarEquipos",
+            data: JSON.stringify(params),
+            headers: { 'Content-Type': undefined },
+            transformRequest: angular.identity
+        })
+    }
+
+    this.consultarCotizacionesEquipos = function(params) {
+        return $http({
+            method: "post",
+            url: "req/consultarCotizacionesEquipos",
             data: JSON.stringify(params),
             headers: { 'Content-Type': undefined },
             transformRequest: angular.identity
@@ -146,7 +156,17 @@ app.service("busquedaService", function($http){
     this.activacionEquipos = function(params) {
         return $http({
             method: "post",
-            url: "req/activacionEquipos",
+            url: "req/activarServicios",
+            data: JSON.stringify(params),
+            headers: { 'Content-Type': undefined },
+            transformRequest: angular.identity
+        })
+    }
+
+    this.configurarServicios = function(params) {
+        return $http({
+            method: "post",
+            url: "req/configurarServicios",
             data: JSON.stringify(params),
             headers: { 'Content-Type': undefined },
             transformRequest: angular.identity
