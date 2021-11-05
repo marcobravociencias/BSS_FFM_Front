@@ -1751,9 +1751,10 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	$scope.detalleSoporteList = [];
 	$scope.consultarPostVentaOt = function () {
 		if (!isConsultaDetalleSoporte) {
+			$scope.detalleSoporteList = []
 			let params = {
-				//orden: $scope.datoOt
-				orden: 123050
+				orden: $scope.datoOt
+				//orden: 123050
 			}
 			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 			swal.showLoading();
@@ -1766,7 +1767,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 						$scope.detalleSoporteList = result.data.result.detalleSoporte
 
 						setTimeout(() => {
-							$scope.detalleSoporteList.forEach(elemento => {
+							$scope.detalleSoporteList.forEach((elemento, ind) => {
 								let html_tmp = "";
 								elemento.detalleCambioEquipo.forEach((detalle, index) => {
 
@@ -1837,12 +1838,12 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 
 
 								})
-
-								console.log(elemento.idFalla);
-								console.log($('#tablaOTDetalle' + elemento.idFalla));
+								
+								console.log(ind);
+								console.log($('#tablaOTDetalle' + ind));
 								//$('#tablaOTDetalle' + elemento.idFalla).destroy();
-								$('#tablaOTDetalle' + elemento.idFalla + ' tbody').empty().append(html_tmp);
-								$('#tablaOTDetalle' + elemento.idFalla).DataTable({
+								$('#tablaOTDetalle' + ind + ' tbody').empty().append(html_tmp);
+								$('#tablaOTDetalle' + ind).DataTable({
 									"processing": false,
 									"ordering": false,
 									"pageLength": 1,
