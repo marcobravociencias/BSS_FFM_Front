@@ -133,10 +133,10 @@ public class ImplCambioStatusService implements CambioStatusService {
         
         switch( metodoHttp ) {
         	case "PATCH":
-                response = rest.callPostBearerTokenRequestURL2(paramUri,gson.toJson(jsonObject), baseUrlService, ServiceResponseResult.class, token);
+                response = rest.callPatchBearerTokenRequestURL(paramUri,gson.toJson(jsonObject), baseUrlService, ServiceResponseResult.class, token);
         		break;
         	case "POST":
-                response = rest.callPatchBearerTokenRequestURL(paramUri, gson.toJson(jsonObject), baseUrlService, ServiceResponseResult.class, token);
+                response = rest.callPostBearerTokenRequestURL2(paramUri, gson.toJson(jsonObject), baseUrlService, ServiceResponseResult.class, token);
         		break;
         	default:
         }             

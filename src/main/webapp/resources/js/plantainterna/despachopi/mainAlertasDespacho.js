@@ -1,7 +1,6 @@
 var tableAlerta;
 app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
 
-//    console.log("mainAlertasService");
     $scope.otsAlertas = [];
     $scope.vistaDespacho = true;
     $scope.alertaSeleccionada = false;
@@ -16,9 +15,6 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
     $scope.listaEstadosAlertaAccion = [];
     $scope.listaMotivosAlertaAccion = [];
     $scope.contadorCaracteresTextArea = 0;
-
-
-
 
     $scope.getDetalleAlertas = function(alerta) {
         $("#pills-mapa-tab").click();
@@ -985,23 +981,24 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
     	$scope.alertaSeleccionada = true;
 	}
     
-    $scope.cambiarSelectsAccionAlerta = function(campo) {
+    $scope.cambioOpcionSelectAccionAlerta = function(campo) {
     	var idCampo = $("#"+campo.nombreParamentro).val();
     	if(idCampo != null){
     		if(campo.nombreParamentro == "idEstatus"){
         		$scope.listaEstadosAlertaAccion = $scope.estatusCambio.filter(e => {return e.idPadre == idCampo});
-        		$("#idEstatus").css("border", "1px solid #d9d9d9");
+        		$(".idEstatus").css("border", "1px solid #d9d9d9");
         	}else if(campo.nombreParamentro == "idEstado"){
         		$scope.listaMotivosAlertaAccion = $scope.estatusCambio.filter(e => {return e.idPadre == idCampo});
-        		$("#idEstado").css("border", "1px solid #d9d9d9");
+        		$(".idEstado").css("border", "1px solid #d9d9d9");
         	}else if(campo.nombreParamentro == "idMotivo"){
-        		$("#idMotivo").css("border", "1px solid #d9d9d9");
+        		$(".idMotivo").css("border", "1px solid #d9d9d9");
+        	}else{
+        		$("."+campo.nombreParamentro).css("border", "1px solid #d9d9d9");
         	}
     	}
 	}
     
     $scope.contadorTextArea = function(etiqueta) {
-    	
     	var con =  $("#"+etiqueta).val().length;
     	if(con > 0){
     		$(".comentarios").css("border", "1px solid #d9d9d9");
@@ -1018,65 +1015,44 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
 	}
     
     $scope.guardar = function(accion) {
-    	let params = {};
-    	if(accion.descripcion.toLowerCase() == "reagenda" ){
-    	
-	    	var turnoSeleccionado = $("#idTurno").val();
-	    	var motivoSeleccionado = $("#idMotivo").val();
-	    	let fecha = $scope.terminarAlerta.fecha.split('/');
-	    	params = {
-	                tipo: 'reagendamiento',
-	                ot: $scope.alertaSeleccionadaObject.IdOT,
-	                folioSistema: $scope.alertaSeleccionadaObject.os,
-	                idFlujo: $scope.alertaSeleccionadaObject.idFlujo,
-	                idTipoOrden: $scope.alertaSeleccionadaObject.idIntervencion,
-	                idSubTipoOrden: $scope.alertaSeleccionadaObject.idSubIntervencion,
-	                idOrigenSistema: 1,
-	                idUsuarioDespacho: 12,
-	                latitud: $scope.alertaSeleccionadaObject.latitudAlerta,
-	                longitud: $scope.alertaSeleccionadaObject.longitudAlerta,
-	                comentarios: $scope.terminarAlerta.comentario,
-	                idTurno: turnoSeleccionado,
-	                idMotivo: motivoSeleccionado,
-	                fechaHoraAgenda: fecha[2] + '-' + fecha[1] + '-' + fecha[0],
-	                idAccion: accion.id,
-	                idAlerta: $scope.alertaSeleccionadaObject.idAlerta,
-	                idUsuarioTecnico: $scope.alertaSeleccionadaObject.idTecnico
-	        };
-    	}else if(accion.descripcion.toLowerCase() == "desasigna" ){
-	    	params = {
-	                tipo: 'desasigna',
-	                ot: $scope.alertaSeleccionadaObject.IdOT,
-	                folioSistema: $scope.alertaSeleccionadaObject.os,
-	                idFlujo: $scope.alertaSeleccionadaObject.idFlujo,
-	                idTipoOrden: $scope.alertaSeleccionadaObject.idIntervencion,
-	                idSubTipoOrden: $scope.alertaSeleccionadaObject.idSubIntervencion,
-	                idOrigenSistema: 1,
-	                idUsuarioDespacho: 12,
-	                latitud: $scope.alertaSeleccionadaObject.latitudAlerta,
-	                longitud: $scope.alertaSeleccionadaObject.longitudAlerta,
-	                comentarios: $scope.terminarAlerta.comentario,
-	                idAccion: accion.id,
-	                idAlerta: $scope.alertaSeleccionadaObject.idAlerta,
-	                idUsuarioTecnico: $scope.alertaSeleccionadaObject.idTecnico
-	        };
-    	}
-    	
-        params.urlServicio =  $scope.accionOtSeleccionadaAlerta.urlServicio
-        params.metodoHttp  = $scope.accionOtSeleccionadaAlerta.metodoHttp
-    
-    	console.log(params);
-    	var respuestaValidacion = $scope.validarDatosAccionesAlerta(params);
+    	var respuestaValidacion = $scope.validarDatosAccionAlerta(accion);
     	if(respuestaValidacion.validacion){
-        	swal({ text: 'Cambiando estatus de la OT ...', allowOutsideClick: false });
+    		let params = {
+        			ot: $scope.alertaSeleccionadaObject.IdOT,
+                    folioSistema: $scope.alertaSeleccionadaObject.os,
+                    idFlujo: $scope.alertaSeleccionadaObject.idFlujo,
+                    idTipoOrden: $scope.alertaSeleccionadaObject.idIntervencion,
+                    idSubTipoOrden: $scope.alertaSeleccionadaObject.idSubIntervencion,
+                    idOrigenSistema: 1,
+                    idUsuarioDespacho: 12,
+                    latitud: $scope.alertaSeleccionadaObject.latitudAlerta,
+                    longitud: $scope.alertaSeleccionadaObject.longitudAlerta,
+                    idAccion: accion.id,
+                    idAlerta: $scope.alertaSeleccionadaObject.idAlerta,
+                    idUsuarioTecnico: $scope.alertaSeleccionadaObject.idTecnico,
+                    urlServicio: $scope.accionOtSeleccionadaAlerta.urlServicio,
+                    metodoHttp: $scope.accionOtSeleccionadaAlerta.metodoHttp
+        	};
+        	
+        	angular.forEach(accion.campos,function(campo,index){
+        		if(campo.tipoCampo == "selectpicker"){
+        			let fecha = $("#"+campo.nombreParamentro).val().split('/');
+        			params[campo.nombreParamentro] = fecha[2] + '-' + fecha[1] + '-' + fecha[0];
+        		}else{
+        			params[campo.nombreParamentro] = $("#"+campo.nombreParamentro).val();
+        		}
+        	});
+        	console.log(params);
+    		
+        	swal({ text: 'Cambiando estatus de la OT...', allowOutsideClick: false });
         	swal.showLoading();
-        	//genericService.cambioStatusOts(params).then(result =>{
-            genericService.cambioStatusOtsGeneric(params).then(result =>{     
-            console.log(result);
-        		if(result.data.respuesta){
-        			swal.close();
+            genericService.cambioStatusOtsGeneric(params).then(result =>{
+            	swal.close();
+        		if(result.data.respuesta){     			
         			swal("Correcto", "¡Acción realizada con éxito!", "success");
         			$scope.cerrarAlertas();
+        		}else{
+        			toastr.error(result.data.resultDescripcion);
         		}
         	}).catch(err => handleError(err));
         	
@@ -1086,41 +1062,20 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
     	
 	}
     
-    $scope.validarDatosAccionesAlerta = function(params){
+    $scope.validarDatosAccionAlerta = function(accion){
     	let respuesta = {validacion:true, mensaje:""};
-    	if(params.tipo == "reagendamiento"){
-    		if(params.fechaHoraAgenda == null || params.fechaHoraAgenda == "" || params.fechaHoraAgenda == undefined){
-    			respuesta.validacion = false;
-    			respuesta.mensaje = respuesta.mensaje + "<br/> *Fecha";
-    			//$("#form-a-paterno").css("border-bottom", "2px solid #f55756");
+    	angular.forEach(accion.campos,function(campo,index){
+    		if(campo.tieneValidacion == 1){
+    			var valorCampo = $("#"+campo.nombreParamentro).val();
+    			if(valorCampo == null || valorCampo == "" || valorCampo == undefined){
+        			respuesta.validacion = false;
+        			respuesta.mensaje = respuesta.mensaje + "<br/> *"+campo.nombreEtiqueta;
+        			$("."+campo.nombreParamentro).css("border-bottom", "2px solid #f55756");
+        		}else{
+        			$("."+campo.nombreParamentro).css("border-bottom", "1px solid #d9d9d9");
+        		}
     		}
-    		if(params.idTurno == null || params.idTurno == "" || params.idTurno < 0 || params.idTurno == undefined){
-    			respuesta.validacion = false;
-    			respuesta.mensaje = respuesta.mensaje + "<br/> *Turno";
-    			$("#idTurno").css("border-bottom", "2px solid #f55756");
-    		}
-    		if($("#idEstado").val() == null || $("#idEstado").val() == ""|| $("#idEstado").val() == undefined){
-    			respuesta.validacion = false;
-    			respuesta.mensaje = respuesta.mensaje + "<br/> *Estado";
-    			$("#idEstado").css("border-bottom", "2px solid #f55756");
-    		}
-    		if(params.idMotivo == null || params.idMotivo == "" || params.idMotivo < 0 || params.idMotivo == undefined){
-    			respuesta.validacion = false;
-    			respuesta.mensaje = respuesta.mensaje + "<br/> *Motivo";
-    			$("#idMotivo").css("border-bottom", "2px solid #f55756");
-    		}
-    		if(params.comentarios == null || params.comentarios == "" || params.comentarios == undefined){
-    			respuesta.validacion = false;
-    			respuesta.mensaje = respuesta.mensaje + "<br/> *Comentarios";
-    			$(".comentarios").css("border-bottom", "2px solid #f55756");
-    		}
-    	}else if(params.tipo == "desasigna"){
-    		if(params.comentarios == null || params.comentarios == "" || params.comentarios == undefined){
-    			respuesta.validacion = false;
-    			respuesta.mensaje = respuesta.mensaje + "<br/> *Comentarios";
-    			$(".comentarios").css("border-bottom", "2px solid #f55756");
-    		}
-    	}
+    	});
     	
     	if(!respuesta.validacion){
 			respuesta.mensaje = "VALIDA LOS SIGUIENTES CAMPOS: " + respuesta.mensaje;
