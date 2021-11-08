@@ -436,7 +436,7 @@
                                 </div>
                                 
                                 <div class="col-12">
-                                    <button class="btn btn-primary btnAccionCamposOpcion" style="width: 100%" ng-click="guardar(opcion)">{{opcion.descripcion}}</button>
+                                    <button class="btn btn-primary btnAccionCamposOpcion" style="width: 100%" ng-click="guardarAccionAlerta(opcion)">{{opcion.descripcion}}</button>
                                 </div>
                             </div>
                         </div>

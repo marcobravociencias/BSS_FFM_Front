@@ -1014,7 +1014,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
     	$scope.contadorCaracteresTextArea = con;
 	}
     
-    $scope.guardar = function(accion) {
+    $scope.guardarAccionAlerta = function(accion) {
     	var respuestaValidacion = $scope.validarDatosAccionAlerta(accion);
     	if(respuestaValidacion.validacion){
     		let params = {
