@@ -235,30 +235,6 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
     $scope.listaCampos = [];
     $scope.listaMotivosAlerta = [];
     $scope.mostrarAccionAlerta = function(accion) {
-        /*
-        console.log(accion);
-        $scope.listaEstadoAlerta = [];
-        $scope.listaCampos = [];
-        var params = {
-            "ID_Propietario": "1"
-        }
-        //$scope.listaCampos = accion.Campo;
-        //console.log($scope.listaCampos);
-        mainAlertasService.getCatalogoStatusEstadoMotivo(params).then(function success(response) {
-            console.log(response);
-            response.data = catalogoEstatusAlerta;
-            if (response.data !== undefined) {
-                $scope.listaCatalogoEstatusAlerta = response.data.result.Ststus;
-                $scope.showAaccion = true;
-                $scope.showOpcion = 0;
-                $scope.listaEstadoAlerta = $scope.listaCatalogoEstatusAlerta.filter(estatus => estatus.Nivel === "2")
-                $scope.mostrarOpcionAlerta(accion);
-                swal.close();
-            } else {
-                swal.close();
-            }
-        }).catch(err => handleError(err));
-        */
     	$scope.alertaSeleccionada = false;
     	accion.checkedOpcion = true;
     	
@@ -297,12 +273,9 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
 		});
         
         $scope.terminarAlerta.comentario = "";
+        $(".validarCampoAccionAlerta").css("border-bottom", "1px solid #d9d9d9");
         $scope.contadorCaracteresTextArea = 0;
         $scope.accionOtSeleccionadaAlerta=angular.copy( accion )
-        //$scope.showAaccion = true;
-//        $scope.showOpcion = 0;
-//        $scope.listaMotivosAlerta = [];
-//        $scope.mostrarOpcionAlerta(accion);
     }
 
     $scope.showOpcion = 0;
@@ -981,19 +954,19 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
     	$scope.alertaSeleccionada = true;
 	}
     
-    $scope.cambioOpcionSelectAccionAlerta = function(campo) {
-    	var idCampo = $("#"+campo.nombreParamentro).val();
+    $scope.cambioOpcionSelectAccionAlerta = function(campo, accion) {
+    	var idCampo = $("#"+campo.nombreParamentro+""+accion.id).val();
     	if(idCampo != null){
     		if(campo.nombreParamentro == "idEstatus"){
         		$scope.listaEstadosAlertaAccion = $scope.estatusCambio.filter(e => {return e.idPadre == idCampo});
-        		$(".idEstatus").css("border", "1px solid #d9d9d9");
+        		$("#"+campo.nombreParamentro+""+accion.id).css("border", "1px solid #d9d9d9");
         	}else if(campo.nombreParamentro == "idEstado"){
         		$scope.listaMotivosAlertaAccion = $scope.estatusCambio.filter(e => {return e.idPadre == idCampo});
-        		$(".idEstado").css("border", "1px solid #d9d9d9");
+        		$("#"+campo.nombreParamentro+""+accion.id).css("border", "1px solid #d9d9d9");
         	}else if(campo.nombreParamentro == "idMotivo"){
-        		$(".idMotivo").css("border", "1px solid #d9d9d9");
+        		$("#"+campo.nombreParamentro+""+accion.id).css("border", "1px solid #d9d9d9");
         	}else{
-        		$("."+campo.nombreParamentro).css("border", "1px solid #d9d9d9");
+        		$("#"+campo.nombreParamentro+""+accion.id).css("border", "1px solid #d9d9d9");
         	}
     	}
 	}
@@ -1036,10 +1009,10 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
         	
         	angular.forEach(accion.campos,function(campo,index){
         		if(campo.tipoCampo == "selectpicker"){
-        			let fecha = $("#"+campo.nombreParamentro).val().split('/');
+        			let fecha = $("#"+campo.nombreParamentro+""+accion.id).val().split('/');
         			params[campo.nombreParamentro] = fecha[2] + '-' + fecha[1] + '-' + fecha[0];
         		}else{
-        			params[campo.nombreParamentro] = $("#"+campo.nombreParamentro).val();
+        			params[campo.nombreParamentro] = $("#"+campo.nombreParamentro+""+accion.id).val();
         		}
         	});
         	console.log(params);
@@ -1066,13 +1039,13 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
     	let respuesta = {validacion:true, mensaje:""};
     	angular.forEach(accion.campos,function(campo,index){
     		if(campo.tieneValidacion == 1){
-    			var valorCampo = $("#"+campo.nombreParamentro).val();
+    			var valorCampo = $("#"+campo.nombreParamentro+""+accion.id).val();
     			if(valorCampo == null || valorCampo == "" || valorCampo == undefined){
         			respuesta.validacion = false;
         			respuesta.mensaje = respuesta.mensaje + "<br/> *"+campo.nombreEtiqueta;
-        			$("."+campo.nombreParamentro).css("border-bottom", "2px solid #f55756");
+        			$("#"+campo.nombreParamentro+""+accion.id).css("border-bottom", "2px solid #f55756");
         		}else{
-        			$("."+campo.nombreParamentro).css("border-bottom", "1px solid #d9d9d9");
+        			$("#"+campo.nombreParamentro+""+accion.id).css("border-bottom", "1px solid #d9d9d9");
         		}
     		}
     	});

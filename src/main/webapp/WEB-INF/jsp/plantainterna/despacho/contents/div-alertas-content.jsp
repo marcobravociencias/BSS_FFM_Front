@@ -412,7 +412,7 @@
                                     <div class="form-group contenedorCamposOpcion" ng-switch-when="select">
 										<!-- <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o"></i> -->
                                         <label class="etiquetaFormOpcion" for="fecha-reagendamiento-alerta" ng-if="campo.esVisible == '1'">{{campo.nombreEtiqueta}}</label>
-                                        <select id="{{campo.nombreParamentro}}" class="form-control form-control-sm txtFormOpcion {{campo.esVisible == '0' ? 'desabilitarCampoOpcionAlerta' : ''}} {{campo.nombreParamentro}}" ng-switch on="campo.nombreParamentro" ng-click="cambioOpcionSelectAccionAlerta(campo)">
+                                        <select id="{{campo.nombreParamentro+''+opcion.id}}" class="form-control form-control-sm txtFormOpcion {{campo.esVisible == '0' ? 'desabilitarCampoOpcionAlerta' : ''}} {{campo.nombreParamentro}} validarCampoAccionAlerta" ng-switch on="campo.nombreParamentro" ng-click="cambioOpcionSelectAccionAlerta(campo, opcion)">
                                         	<option ng-if="campo.valorDefecto == 'NA'" disabled selected>NO HAY SELECCI&Oacute;N</option>
                                         	<option ng-switch-when="idTurno" ng-repeat="turno in filtrosGeneral.turnosdisponibles" value="{{turno.id}}">{{turno.nombre}}</option>
                                         	<option ng-switch-when="idEstatus" ng-repeat="status in listaStatusAlertaAccion" value="{{status.id}}">{{status.nombre}}</option>
@@ -424,12 +424,12 @@
                                     <div class="form-group contenedorCamposOpcion" ng-switch-when="selectpicker">
 										<!-- <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o"></i> -->
                                         <label class="etiquetaFormOpcion" for="fecha-reagendamiento-alerta">{{campo.nombreEtiqueta}}</label>
-                                       	<input id="{{campo.nombreParamentro}}" type="text" readonly placeholder="Selecciona fecha" class="datepicker campoFecha form-control form-control-sm {{campo.nombreParamentro}}" ng-model="terminarAlerta.fecha" />                               
+                                       	<input id="{{campo.nombreParamentro+''+opcion.id}}" type="text" readonly placeholder="Selecciona fecha" class="datepicker campoFecha form-control form-control-sm {{campo.nombreParamentro}} validarCampoAccionAlerta" ng-model="terminarAlerta.fecha" />                               
                                     </div>
                                     <div class="form-group contenedorCamposOpcion" ng-switch-when="textarea">
 										<!-- <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o"></i> -->
                                         <label class="etiquetaFormOpcion" for="fecha-reagendamiento-alerta">{{campo.nombreEtiqueta}}</label>
-                                        <textarea class="form-control form-control-sm txtFormOpcion {{campo.nombreParamentro}}" style=" resize: none" ng-model="terminarAlerta.comentario" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" id="{{campo.nombreParamentro}}" rows="3" ng-keyup="contadorTextArea(campo.nombreParamentro)"></textarea>                             
+                                        <textarea class="form-control form-control-sm txtFormOpcion {{campo.nombreParamentro}} validarCampoAccionAlerta" style=" resize: none" ng-model="terminarAlerta.comentario" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" id="{{campo.nombreParamentro+''+opcion.id}}" rows="3" ng-keyup="contadorTextArea(campo.nombreParamentro+''+opcion.id)"></textarea>                             
                                     	<label style="float: right;" class="etiquetaFormOpcion etiquetaContador">{{contadorCaracteresTextArea}} - 50</label>
                                     </div>
                                     
