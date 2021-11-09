@@ -1024,6 +1024,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
         		if(result.data.respuesta){     			
         			swal("Correcto", "¡Acción realizada con éxito!", "success");
         			$scope.cerrarAlertas();
+        			$scope.consultarConteoAlertasPI();
         		}else{
         			toastr.error(result.data.resultDescripcion);
         		}
