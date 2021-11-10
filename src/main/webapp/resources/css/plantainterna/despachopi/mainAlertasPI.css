@@ -301,8 +301,15 @@ div#contenido_imagenes {
 }
 .titulo-alerta-modal {
     font-weight: bold;
-    font-size: 1.2em;
+    font-size: 1em;
 }
+
+.contenedor-titulo-acciones-alerta {
+	overflow:hidden;
+    white-space:nowrap;
+    text-overflow: ellipsis;
+}
+
 .span-opciones-status-alerta {
     font-weight: bold;
     font-size: 1em;

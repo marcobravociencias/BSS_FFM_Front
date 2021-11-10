@@ -235,6 +235,9 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
     $scope.listaCampos = [];
     $scope.listaMotivosAlerta = [];
     $scope.mostrarAccionAlerta = function(accion) {
+    	
+    	$("#idTituloAccionesAlertas").text("OPCIÓN " + accion.descripcion);
+    	
     	$scope.alertaSeleccionada = false;
     	accion.checkedOpcion = true;
     	
@@ -861,6 +864,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
 	};
 
     $scope.cerrarAlertas = function() {
+    	$("#idTituloAccionesAlertas").text("OPCIONES");
         $scope.vistaDespacho = true;
         $scope.refrescarBusqueda();
     }
@@ -948,6 +952,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
 //    ---------------------------------------------------
     
     $scope.cerrarCamposAccionAlerta = function() {
+    	$("#idTituloAccionesAlertas").text("OPCIONES");
     	angular.forEach($scope.listaOpcionesAlerta,function(opcion,index){
         	opcion.checkedOpcion = false;
 		});
@@ -1021,7 +1026,8 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
         	swal.showLoading();
             genericService.cambioStatusOtsGeneric(params).then(result =>{
             	swal.close();
-        		if(result.data.respuesta){     			
+        		if(result.data.respuesta){
+        			$("#idTituloAccionesAlertas").text("OPCIONES");
         			swal("Correcto", "¡Acción realizada con éxito!", "success");
         			$scope.cerrarAlertas();
         			$scope.consultarConteoAlertasPI();
