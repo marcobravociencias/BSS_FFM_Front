@@ -64,8 +64,10 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
             arra[0] = alertaob.id ? alertaob.id : '';
             arra[1] = alertaob.folioSistema ? alertaob.folioSistema : '';
             arra[2] = `
-                <div class="card card-alertas-pendientes" onclick="consultarAccionesAlerta('${ordenobj.id}', '${ordenobj.folioSistema}', '${alertaob.latitudAlerta}', '${alertaob.longitudAlerta}', '${tecnicoObj.latitud}', '${tecnicoObj.longitud}', '${alertaob.idSubAlerta}', '${ordenobj.idIntervencion}', 
-                    '${ordenobj.idSubIntervencion}', '${tecnicoObj.id}', '${alertaob.idRegistroAlerta}', '${ordenobj.idFlujo}')">
+                <div id="cardAlerta${ordenobj.id}" class="card card-alertas-pendientes cards-lertas" onclick="consultarAccionesAlerta('${ordenobj.id}', '${ordenobj.folioSistema}', 
+                '${alertaob.latitudAlerta}', '${alertaob.longitudAlerta}', '${tecnicoObj.latitud}', '${tecnicoObj.longitud}', 
+                '${alertaob.idSubAlerta}', '${ordenobj.idIntervencion}', '${ordenobj.idSubIntervencion}', '${tecnicoObj.id}', 
+                '${alertaob.idRegistroAlerta}', '${ordenobj.idFlujo}')">
                     <div class="card-body card-body-alertas">
 
                         <div class="top-title-ot">
@@ -92,12 +94,13 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
                         <div class="info-content-otpendeinte">
                             <div class="line-content-infootpend">
                                 <b class="text-otpendiente-tres-title">Intevenci&oacute;n:</b>
-                                <span class="text-otpendiente-tres">${ordenobj.descSubIntervencion}</span>
-
+                                <span class="text-otpendiente-tres">${ordenobj.descSubIntervencion}</span>                               
+                            </div> 
+                            <div class="line-content-infootpend">
                                 <b class="text-otpendiente-tres-title">Subintervenci&oacute;n.</b>
                                 <span class="text-otpendiente-tres">${ordenobj.descIntervencion}</span>                                
                             </div>                                               
-                        </div>        
+                        </div>
                                        
                     </div>
                     <div class="card-footer text-muted card-alertas-pendientes-foot">
@@ -156,6 +159,11 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
     $scope.idAlertaSelecionada = '';
     consultarAccionesAlerta = function(ot, os, latAlerta, longAlerta, latTecnico, longTecnico, idSubTipoAlerta, idIntervencion, idSubIntervencion, idTecnico, idAlerta, idFlujo) {
         if ($scope.idAlertaSelecionada !== ot) {
+        	$(".cards-lertas").css("border-left", "1px solid #dddddd");
+        	$(".cards-lertas").css("box-shadow", "0 0 0 0 #ffffff");
+        	$("#cardAlerta"+ot).css("border-left", "4px solid #31a7ee");
+        	$("#cardAlerta"+ot).css("box-shadow", "0 2px 8px 0 rgb(0 0 0 / 16%), 0 2px 8px 0 rgb(0 0 0 / 16%)");
+        	
             $scope.idAlertaSelecionada = ot;
             $scope.evidenciaAlertaConsultada = false;
             $scope.historicoAlertaConsultada = false;

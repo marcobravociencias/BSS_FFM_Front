@@ -255,6 +255,11 @@ div#contenido_imagenes {
 #table-alertas-pi_length {
     display: none;
 }
+
+#table-alertas-pi {
+	margin-bottom: 5px !important;
+}
+
 .sorting_asc {
     display: none;
 }
@@ -378,6 +383,10 @@ div#contenido_imagenes {
 	overflow-x: hidden;
 	overflow-y: auto;
 	text-align:justify;
+}
+
+.cards-lertas{
+    margin-right: 5px;
 }
 
 .desabilitarCampoOpcionAlerta {
