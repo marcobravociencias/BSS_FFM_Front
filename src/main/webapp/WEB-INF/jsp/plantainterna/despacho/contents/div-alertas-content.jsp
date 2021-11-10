@@ -107,9 +107,8 @@
                                 <div id="not_info_evidencia" class="row h-100 justify-content-center align-items-center " style="height: 200px !important;">
                                     <h5 id="text_sin_imagenes" style="color:#abafae; padding-top: 9em; ">No se encontr&oacute; evidencia</h5>
                                 </div>
-                            <div style="margin-bottom: 1em;" id="contenido_imagenes" class="row justify-content-center ">
-                            </div>
-                              
+	                            <div style="margin-bottom: 1em;" id="contenido_imagenes" class="row justify-content-center ">
+	                            </div>                              
                             </div>
                         </div>
 
@@ -172,7 +171,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>																								
 							</div>
                         </div>
@@ -182,8 +180,6 @@
                                 <div class="container-mensajes-parent">
                                     <div class="chat-content-area">
                                         <div class="chat-header">
-                                             
-    
                                         </div>
                                         <div class="chat-area" style="overflow-y: scroll; height: 50vh;">
                                             <div ng-if="!listaComentariosAlerta.length" style="text-align: center; margin-top: 2em;">
@@ -242,8 +238,7 @@
                                       <button class="btn btn-primary btn-enviar-comentario-ot" ng-click="agregarComentario()" type="button" id="button-addon2" style="color: white!important;">Enviar</button>
                                     </div>
                                   </div>
-                            </div>
-                           
+                            </div>                          
                         </div>
 
                         <div class="tab-pane fade" id="pills-detalle" role="tabpanel" aria-labelledby="pills-detalle">
@@ -292,8 +287,7 @@
                                         <div class="col-6 col-map-datlle">
                                             <div id="mapDetalleAlerta" class="contenido-card" style="width:100%;height:100%; border-radius: 10px;"></div>
                                         </div>
-                                    </div>
-                                   
+                                    </div>                                  
                                 </div>
 
                                 <div class="tab-pane fade" id="pills-OT" role="tabpanel" aria-labelledby="pills-ot-tab">
@@ -332,8 +326,7 @@
                                                 <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.Id_ot}}" ng-bind="objectDetalleAlerta.orden.direccion || 'Sin dato'"></span> </div>
                                             </div>
                                         </div>
-                                    </div>
-                                   
+                                    </div> 
                                 </div>
 
                                 <div class="tab-pane fade" id="pills-tecnico" role="tabpanel" aria-labelledby="pills-tecnico-tab">
@@ -359,13 +352,10 @@
                                             <div id="mapDetalleTecnico" class="contenido-card" style="width:100%;height:100%; border-radius: 10px;"></div>
                                         </div>
                                     </div>
-                                   
                                 </div>
-
                                </div>
                            </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -374,10 +364,10 @@
             <div class="card cards-alertas">
                 <div class="card-header card-header-alerta-principal">
                     <div class="row">
-                        <div class="col-6">
-                            <span class="titulo-alerta-modal">Opciones</span>
+                        <div class="col-10 contenedor-titulo-acciones-alerta">
+                            <span id="idTituloAccionesAlertas" class="titulo-alerta-modal">OPCIONES</span>
                         </div>
-                        <div class="col-6 text-right">
+                        <div class="col-2 text-right">
                             <i class="fa fa-times icon-cancelar-opcion" ng-click="cerrarCamposAccionAlerta()" ng-show="!alertaSeleccionada"></i>
                         </div>
                     </div>
@@ -415,75 +405,6 @@
                     </div>
 
                     <div class="row" ng-repeat="opcion in listaOpcionesAlerta" ng-show="opcion.checkedOpcion">
-                        <!--div class="col-12" ng-repeat="campo in listaCampos | orderBy:'ID_Campo'">
-							<div class="form-group" ng-if="campo.Descripcion === 'ESTADO'">
-								<i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" id="icono_operario_status" class="fa fa-user-circle-o fa-2x"></i>
-								<label class="span-opciones-status-alerta">Estado:</label>
-								<select class="form-control" id="id-status-tecnico" ng-model="estatusAlerta.estado" ng-options="estatus.Descripcion for estatus in listaEstadoAlerta" ng-change="consultarMotivoAlerta(estatusAlerta.estado)">
-                                    <option value="">Seleccione ...</option>
-							    </select>                                               
-						  	</div>
-                            <div class="form-group" ng-if="campo.Descripcion === 'MOTIVO'">
-								<i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" id="icono_operario_status" class="fa fa-user-circle-o fa-2x"></i>
-								<label class="span-opciones-status-alerta">Motivo:</label>
-								<select class="form-control" id="id-status-tecnico" ng-model="estatusAlerta.motivo" ng-options="estatus.Descripcion for estatus in listaMotivoEstatus">
-                                    <option value="">Seleccione ...</option>
-							    </select>                                               
-						  	</div>
-                            <div class="form-group" ng-if="campo.Descripcion === 'COMENTARIOS'">
-                                <label class="span-opciones-status-alerta">Comentario:</label>
-                                <textarea class="form-control" style=" resize: none" ng-model="estatusAlerta.comentario" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" id="comentario-status-tecnico" rows="3"></textarea>
-                            </div>
-						</div-->
-                        <!--div class="col-12">
-							<div class="form-group">
-								<i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" id="icono_operario_status" class="fa fa-user-circle-o fa-2x"></i>
-								<label class="span-opciones-status-alerta">Estado:</label>
-								<select class="form-control" id="id-status-tecnico" ng-model="estatusAlerta.estado" ng-options="estatus.Descripcion for estatus in listaEstadoAlerta" ng-change="consultarMotivoAlerta(estatusAlerta.estado)">
-                                    <option value="">Seleccione ...</option>
-							    </select>                                               
-						  	</div>
-						</div>
-                        <div class="col-12">
-							<div class="form-group">
-								<i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" id="icono_operario_status" class="fa fa-user-circle-o fa-2x"></i>
-								<label class="span-opciones-status-alerta">Motivo:</label>
-								<select class="form-control" id="id-status-tecnico" ng-model="estatusAlerta.motivo" ng-options="estatus.Descripcion for estatus in listaMotivoEstatus">
-                                    <option value="">Seleccione ...</option>
-							    </select>                                               
-						  	</div>
-						</div>
-                        <div class="col-12">
-							<div class="form-group">
-						   		<label class="span-opciones-status-alerta">Comentario:</label>
-						   		<textarea class="form-control" style=" resize: none" ng-model="estatusAlerta.comentario" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" id="comentario-status-tecnico" rows="3"></textarea>
-							</div>
-						</div>
-                        <div class="col-12">
-                            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="cambiarEstatusIntegrador()">ACEPTAR</button>
-                        </div-->
-<!--                         <div class="col-12" ng-show="showOpcion === 2"> -->
-<!--                             <div class="row"> -->
-<!--                                 <div class="col-12"> -->
-<!--                                     <div class="form-group"> -->
-<!--                                         <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" id="icono_operario_status" class="fa fa-user-circle-o fa-2x"></i> -->
-<!--                                         <label class="span-opciones-status-alerta">Motivo:</label> -->
-<!--                                         <select class="form-control" id="id-status-tecnico" ng-model="rescateAlerta.motivo" ng-options="motivo.nombre for motivo in listaMotivosAlerta"> -->
-<!--                                             <option value="">Seleccione ...</option> -->
-<!--                                         </select>                                                -->
-<!--                                       </div> -->
-<!--                                 </div> -->
-<!--                                 <div class="col-12"> -->
-<!--                                     <div class="form-group"> -->
-<!--                                            <label class="span-opciones-status-alerta">Comentario:</label> -->
-<!--                                            <textarea class="form-control" style=" resize: none" ng-model="rescateAlerta.comentario" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" id="comentario-status-tecnico" rows="3"></textarea> -->
-<!--                                     </div> -->
-<!--                                 </div> -->
-<!--                                 <div class="col-12"> -->
-<!--                                     <button class="btn  btn-primary" ng-click="cambiarEstatusAlertaValidacion()">Rescate</button> -->
-<!--                                 </div> -->
-<!--                             </div> -->
-<!--                         </div> -->
                         <div class="col-12">
                             <div class="row">
                                 <div class="col-12" ng-repeat="campo in opcion.campos" ng-switch on="campo.tipoCampo">
@@ -491,7 +412,7 @@
                                     <div class="form-group contenedorCamposOpcion" ng-switch-when="select">
 										<!-- <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o"></i> -->
                                         <label class="etiquetaFormOpcion" for="fecha-reagendamiento-alerta" ng-if="campo.esVisible == '1'">{{campo.nombreEtiqueta}}</label>
-                                        <select id="{{campo.nombreParamentro}}" class="form-control form-control-sm txtFormOpcion {{campo.esVisible == '0' ? 'desabilitarCampoOpcionAlerta' : ''}}" ng-switch on="campo.nombreParamentro" ng-click="cambiarSelectsAccionAlerta(campo)">
+                                        <select id="{{campo.nombreParamentro+''+opcion.id}}" class="form-control form-control-sm txtFormOpcion {{campo.esVisible == '0' ? 'desabilitarCampoOpcionAlerta' : ''}} {{campo.nombreParamentro}} validarCampoAccionAlerta" ng-switch on="campo.nombreParamentro" ng-click="cambioOpcionSelectAccionAlerta(campo, opcion)">
                                         	<option ng-if="campo.valorDefecto == 'NA'" disabled selected>NO HAY SELECCI&Oacute;N</option>
                                         	<option ng-switch-when="idTurno" ng-repeat="turno in filtrosGeneral.turnosdisponibles" value="{{turno.id}}">{{turno.nombre}}</option>
                                         	<option ng-switch-when="idEstatus" ng-repeat="status in listaStatusAlertaAccion" value="{{status.id}}">{{status.nombre}}</option>
@@ -503,77 +424,22 @@
                                     <div class="form-group contenedorCamposOpcion" ng-switch-when="selectpicker">
 										<!-- <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o"></i> -->
                                         <label class="etiquetaFormOpcion" for="fecha-reagendamiento-alerta">{{campo.nombreEtiqueta}}</label>
-                                       	<input id="{{campo.nombreParamentro}}" type="text" readonly placeholder="Selecciona fecha" class="datepicker campoFecha form-control form-control-sm" ng-model="terminarAlerta.fecha" />                               
+                                       	<input id="{{campo.nombreParamentro+''+opcion.id}}" type="text" readonly placeholder="Selecciona fecha" class="datepicker campoFecha form-control form-control-sm {{campo.nombreParamentro}} validarCampoAccionAlerta" ng-model="terminarAlerta.fecha" />                               
                                     </div>
                                     <div class="form-group contenedorCamposOpcion" ng-switch-when="textarea">
 										<!-- <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o"></i> -->
                                         <label class="etiquetaFormOpcion" for="fecha-reagendamiento-alerta">{{campo.nombreEtiqueta}}</label>
-                                        <textarea class="form-control form-control-sm txtFormOpcion {{campo.nombreParamentro}}" style=" resize: none" ng-model="terminarAlerta.comentario" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" id="{{campo.nombreParamentro}}" rows="3" ng-keyup="contadorTextArea(campo.nombreParamentro)"></textarea>                             
+                                        <textarea class="form-control form-control-sm txtFormOpcion {{campo.nombreParamentro}} validarCampoAccionAlerta" style=" resize: none" ng-model="terminarAlerta.comentario" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" id="{{campo.nombreParamentro+''+opcion.id}}" rows="3" ng-keyup="contadorTextArea(campo.nombreParamentro+''+opcion.id)"></textarea>                             
                                     	<label style="float: right;" class="etiquetaFormOpcion etiquetaContador">{{contadorCaracteresTextArea}} - 50</label>
                                     </div>
                                     
                                 </div>
                                 
                                 <div class="col-12">
-                                    <button class="btn btn-primary btnAccionCamposOpcion" style="width: 100%" ng-click="guardar(opcion)">{{opcion.descripcion}}</button>
-<!--                                 	{{opcion.descripcion == 'REAGENDA' ? 'btn btn-primary btnAccionCamposOpcion' : 'btn btn-success'}} -->
+                                    <button class="btn btn-primary btnAccionCamposOpcion" style="width: 100%" ng-click="guardarAccionAlerta(opcion)">{{opcion.descripcion}}</button>
                                 </div>
                             </div>
                         </div>
-<!--                         <div class="col-12" ng-show="showOpcion === 3"> -->
-<!--                             <div class="row"> -->
-<!--                                 <div class="col-12"> -->
-<!--                                     <div class="form-group"> -->
-<!--                                         <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o fa-2x"></i> -->
-<!--                                         <label for="fecha-reagendamiento">Fecha calendarizado:</label> -->
-<!--                                         <input type="text" ng-model="calendarizarAlerta.fechaReagendamiento" id="fecha-reagendamiento" class="form-control ">                                  -->
-<!--                                       </div> -->
-<!--                                 </div> -->
-<!--                                 <div class="col-12"> -->
-<!--                                     <div class="form-group"> -->
-<!--                                         <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" id="icono_operario_status" class="fa fa-user-circle-o fa-2x"></i> -->
-<!--                                         <label class="span-opciones-status-alerta">Turno:</label> -->
-<!--                                         <select class="form-control" id="id-status-tecnico" ng-model="calendarizarAlerta.motivo" ng-options="turno.nombre for turno in filtrosAlertas.turnos"> -->
-<!--                                             <option value="">Seleccione ...</option> -->
-<!--                                         </select>                                                -->
-<!--                                       </div> -->
-<!--                                 </div> -->
-<!--                                 <div class="col-12"> -->
-<!--                                     <div class="form-group"> -->
-<!--                                         <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" id="icono_operario_status" class="fa fa-user-circle-o fa-2x"></i> -->
-<!--                                         <label class="span-opciones-status-alerta">Motivo:</label> -->
-<!--                                         <select class="form-control" id="id-status-tecnico" ng-model="calendarizarAlerta.motivo" ng-options="estatus.Descripcion for estatus in listaMotivoEstatus"> -->
-<!--                                             <option value="">Seleccione ...</option> -->
-<!--                                         </select>                                                -->
-<!--                                       </div> -->
-<!--                                 </div> -->
-<!--                                 <div class="col-12"> -->
-<!--                                     <div class="form-group"> -->
-<!--                                         <label class="span-opciones-status-alerta">Comentario:</label> -->
-<!--                                         <textarea class="form-control" style=" resize: none" ng-model="calendarizarAlerta.comentario" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" id="comentario-status-tecnico" rows="3"></textarea> -->
-<!--                                     </div> -->
-<!--                                 </div> -->
-<!--                             </div> -->
-<!--                         </div> -->
-<!--                         <div class="col-12" ng-show="showOpcion === 4"> -->
-<!--                             <div class="row"> -->
-<!--                                 <div class="col-12"> -->
-<!--                                     <div class="form-group"> -->
-<!--                                         <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" id="icono_operario_status" class="fa fa-user-circle-o fa-2x"></i> -->
-<!--                                         <label class="span-opciones-status-alerta">Estado:</label> -->
-<!--                                         <select class="form-control" id="id-status-tecnico" ng-model="terminarAlerta.motivo" ng-options="estatus.Descripcion for estatus in listaMotivoEstatus"> -->
-<!--                                             <option value="">Seleccione ...</option> -->
-<!--                                         </select>                                                -->
-<!--                                       </div> -->
-<!--                                 </div> -->
-<!--                                 <div class="col-12"> -->
-<!--                                     <div class="form-group"> -->
-<!--                                            <label class="span-opciones-status-alerta">Comentario:</label> -->
-<!--                                            <textarea class="form-control" style=" resize: none" ng-model="terminarAlerta.comentario" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" id="comentario-status-tecnico" rows="3"></textarea> -->
-<!--                                     </div> -->
-<!--                                 </div> -->
-<!--                             </div> -->
-<!--                         </div> -->
                     </div>
                 </div>
             </div>

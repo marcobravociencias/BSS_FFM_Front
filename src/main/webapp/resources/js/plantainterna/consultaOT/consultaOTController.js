@@ -607,7 +607,6 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	};
 
 	mostarImagenesCategoria = function () {
-
 		var $imageLinks = $('.magnific.item:visible');
 		var items = [];
 
@@ -619,9 +618,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			};
 			magItem.title = $item.data('title');
 			items.push(magItem);
-
 		});
-
 		$imageLinks.magnificPopup({
 			mainClass: 'mfp-fade',
 			items: items,
@@ -661,9 +658,8 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				type: 'image'
 			};
 			magItem.title = $item.data('title');
-			items.push(magItem);	
+			items.push(magItem);
 		});
-		
 		$imageLinks.magnificPopup({
 			mainClass: 'mfp-fade',
 			items: items,
@@ -687,14 +683,12 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			}
 		});
 	}
-	
-	
+
 	$(document.body).on("click", ".carousel-item", function () {
-		console.log('pruebas');
 		$(".item-carousel").show();
 		$('.carousel-inner:hidden').show(400);
 		setTimeout(function () { mostarImagenesCarousel(); }, 500);
-	})
+	});
 
 	$scope.closeModal = function () {
 		$('#modal-imagen-ot').modal('hide');
@@ -707,7 +701,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		$scope.infoOtDetalle = {};
 		//$("#modal-detalle-ot").removeClass('contenedor_detalle');
 		//getDetalleOTGeneric(idOT);
-		let otConsultaTemp=$scope.listadoConsultaOtsDisponibles[indexOtConsulta]
+		let otConsultaTemp = $scope.listadoConsultaOtsDisponibles[indexOtConsulta]
 		$('#content-ot').show();
 
 		$('#content-comentarios').hide();
@@ -726,50 +720,50 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		$('#content-dispositivos').hide();
 		$('#modal-detalle-ot .itemGeneral').removeClass('active');
 		$('#modal-detalle-ot .itemGeneral:first').addClass('active');
-	
+
 		is_consulta_info_trayectoria = false;
-		$scope.consultaDetalleOtGeneric( otConsultaTemp );
+		$scope.consultaDetalleOtGeneric(otConsultaTemp);
 	}
 
 	$scope.consultaDetalleOtGeneric = function (ordenObject) {
-			$scope.datoOt=ordenObject.idOrden
-			let params = {
-				Id_ot: ordenObject.idOrden
-			}
-			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
-			swal.showLoading();
-			consultaOTService.consultaInfoDetalle(JSON.stringify(params)).then(function success(response) {
-				console.log(response);
-				if (response.data !== undefined) {
-					if (response.data.respuesta) {
-						if (response.data.result.orden) {
-							$scope.infoOtDetalle = response.data.result.orden
-							is_consulta_info_ot = true;
-							//$scope.permisosModal=$scope.elementosConfigGeneral.get("MODAL_FLUJO_"+ ordenObject.idFlujo ).split(",")
-							$scope.permisosModal=[
-								"tabHistoricoDespacho",
-								"tabComentariosDespacho",
-								"tabDetalleSoporte",
-								"tabConsultaPagos",
-								"tabConsultaDispositivos"
-							]
-							console.log("#permisos ,orden ", $scope.permisosModal );
-							$('#modal-detalle-ot').modal('show');
-							swal.close();
+		$scope.datoOt = ordenObject.idOrden
+		let params = {
+			Id_ot: ordenObject.idOrden
+		}
+		swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
+		swal.showLoading();
+		consultaOTService.consultaInfoDetalle(JSON.stringify(params)).then(function success(response) {
+			console.log(response);
+			if (response.data !== undefined) {
+				if (response.data.respuesta) {
+					if (response.data.result.orden) {
+						$scope.infoOtDetalle = response.data.result.orden
+						is_consulta_info_ot = true;
+						//$scope.permisosModal=$scope.elementosConfigGeneral.get("MODAL_FLUJO_"+ ordenObject.idFlujo ).split(",")
+						$scope.permisosModal = [
+							"tabHistoricoDespacho",
+							"tabComentariosDespacho",
+							"tabDetalleSoporte",
+							"tabConsultaPagos",
+							"tabConsultaDispositivos"
+						]
+						console.log("#permisos ,orden ", $scope.permisosModal);
+						$('#modal-detalle-ot').modal('show');
+						swal.close();
 
-						} else {
-							swal.close();
-							mostrarMensajeErrorAlert(response.data.result.mensaje)
-						}
 					} else {
 						swal.close();
-						mostrarMensajeErrorAlert(response.data.resultDescripcion);
+						mostrarMensajeErrorAlert(response.data.result.mensaje)
 					}
 				} else {
 					swal.close();
-					mostrarMensajeErrorAlert("Error del servidor");
+					mostrarMensajeErrorAlert(response.data.resultDescripcion);
 				}
-			}).catch(err => handleError(err));
+			} else {
+				swal.close();
+				mostrarMensajeErrorAlert("Error del servidor");
+			}
+		}).catch(err => handleError(err));
 	}
 
 	consultaMaterialesOT = function (ot, operario) {
@@ -1453,6 +1447,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		$('#postVenta').addClass('active');
 		$('#content-postVenta').show();
 		$scope.consultarPostVentaOt();
+
 	});
 
 	document.getElementById('pagos-Ot').addEventListener('click', function () {
@@ -1756,9 +1751,10 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	$scope.detalleSoporteList = [];
 	$scope.consultarPostVentaOt = function () {
 		if (!isConsultaDetalleSoporte) {
+			$scope.detalleSoporteList = []
 			let params = {
-				//orden: $scope.datoOt
-				orden: 123050
+				orden: $scope.datoOt
+				//orden: 123050
 			}
 			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 			swal.showLoading();
@@ -1771,12 +1767,13 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 						$scope.detalleSoporteList = result.data.result.detalleSoporte
 
 						setTimeout(() => {
-							$scope.detalleSoporteList.forEach(elemento => {
+							$scope.detalleSoporteList.forEach((elemento, ind) => {
 								let html_tmp = "";
 								elemento.detalleCambioEquipo.forEach((detalle, index) => {
 
 									if (detalle.evidencias && detalle.evidencias.length) {
 										contenido_imagenes = retornarFormatoSliders(detalle.evidencias, index);
+
 									} else {
 										contenido_imagenes = '<h4 id="texto_not_arboles" style="color:#abafae; text-align:center">' +
 											'	SIN IMAGENES PARA ESTA FALLA' +
@@ -1820,7 +1817,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 										'		        	<div class="col-md-7">' +
 										'		        		<span id="status_falla_corte"  class="content_text" > ' + detalle.numSerieModeloViejo + ' </span>' +
 										'		        	</div>' +
-										'				</div>' +				
+										'				</div>' +
 										'				<div class="row">' +
 										'					<div class="col-md-5">' +
 										'						<b  class="title_span_1">N&uacute;mero serie equipo nuevo:</b>' +
@@ -1841,12 +1838,12 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 
 
 								})
-
-								console.log(elemento.idFalla);
-								console.log($('#tablaOTDetalle' + elemento.idFalla));
+								
+								console.log(ind);
+								console.log($('#tablaOTDetalle' + ind));
 								//$('#tablaOTDetalle' + elemento.idFalla).destroy();
-								$('#tablaOTDetalle' + elemento.idFalla + ' tbody').empty().append(html_tmp);
-								$('#tablaOTDetalle' + elemento.idFalla).DataTable({
+								$('#tablaOTDetalle' + ind + ' tbody').empty().append(html_tmp);
+								$('#tablaOTDetalle' + ind).DataTable({
 									"processing": false,
 									"ordering": false,
 									"pageLength": 1,
@@ -1857,13 +1854,15 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 									"bAutoWidth": false,
 									"language": idioma_espanol_not_font,
 									"columns": [null],
-									"lengthChange": false
+									"lengthChange": false,
+									"fnDrawCallback": function (oSettings) {
+										$(".carousel-item").click();
+									}
 
 								});
 
 							})
 						}, 1000);
-
 					} else {
 						mostrarMensajeWarningValidacion('No se encontro informaci&oacute;n')
 					}
@@ -1934,12 +1933,12 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			if (img.urlEvidencia === "") {
 				imgs_blocks += '' +
 					'      <div class="carousel-item ' + ((index === 0) ? 'active' : '') + ' ">' +
-					'        <img data-title="'+img.nombreArchivo+'" class="d-block img-fluid imagen-carousel-evidencia" style="width:100%; min-width: 100%; height: 100% !important;" src="' + contex_project + '/resources/img/generic/not_found.png" alt="First slide" />' +
+					'        <img data-title="' + img.nombreArchivo + '" class="d-block img-fluid imagen-carousel-evidencia" style="width:100%; min-width: 100%; height: 100% !important;" src="' + contex_project + '/resources/img/generic/not_found.png" alt="First slide" />' +
 					'      </div>';
 			} else {
 				imgs_blocks += '' +
 					'      <div class="carousel-item ' + ((index === 0) ? 'active' : '') + '">' +
-					'        <img data-title="'+img.nombreArchivo+'" class="d-block img-fluid imagen-carousel-evidencia" style="width:100%; min-width: 100%; height: 100% !important;" class="d-block w-100" src="' + img.urlEvidencia + '" alt="First slide" />' +
+					'        <img data-title="' + img.nombreArchivo + '" class="d-block img-fluid imagen-carousel-evidencia" style="width:100%; min-width: 100%; height: 100% !important;" class="d-block w-100" src="' + img.urlEvidencia + '" alt="First slide" />' +
 					'      </div>';
 			}
 		})
@@ -2035,7 +2034,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			document.getElementById('icono-dispositivo-' + index).classList.remove('fa-plus')
 			document.getElementById('icono-dispositivo-' + index).classList.add('fa-window-minimize')
 			let dataTable = pintarTablaSecundaria(index)
-			row.child( dataTable ).show();
+			row.child(dataTable).show();
 		} else {
 			$(this).attr('tag-hide', 'false')
 			document.getElementById('icono-dispositivo-' + index).classList.add('fa-plus')
@@ -2046,37 +2045,37 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 
 	});
 
-	pintarTablaSecundaria = function(position){
+	pintarTablaSecundaria = function (position) {
 		let dispositivo = $scope.dispositivosArrayTemp[position]
 		let arrayDetalleRed = [];
 		arrayDetalleRed.push(dispositivo.detalleRed)
-		let tableHTML = '<div class="details-container">'+
-			    '<table id="table_dispositovos_ot_nivel2" class="table table-hover table-bordered" cellspacing="0" style="width:100%">'+
-					'<thead id="thead_dispositivo_consulta_ot_nivel2">'+
-						'<tr>'+
-							'<th>NOMBRE OLT</th>'+
-							'<th>TIPO APROVISIONAMIENTO</th>'+
-							'<th>FRAME</th>'+
-							'<th>SLOT</th>'+
-							'<th>PUERTO</th>'+
-						'</tr>'+
-					'</thead>'+
-					'<tbody>';
+		let tableHTML = '<div class="details-container">' +
+			'<table id="table_dispositovos_ot_nivel2" class="table table-hover table-bordered" cellspacing="0" style="width:100%">' +
+			'<thead id="thead_dispositivo_consulta_ot_nivel2">' +
+			'<tr>' +
+			'<th>NOMBRE OLT</th>' +
+			'<th>TIPO APROVISIONAMIENTO</th>' +
+			'<th>FRAME</th>' +
+			'<th>SLOT</th>' +
+			'<th>PUERTO</th>' +
+			'</tr>' +
+			'</thead>' +
+			'<tbody>';
 
-		arrayDetalleRed.forEach(detalle =>{
+		arrayDetalleRed.forEach(detalle => {
 			tableHTML += "<tr>" +
-							"<td>" +(  (detalle != undefined && detalle.nombreOlt) ? detalle.nombreOlt : 'Sin dato' )  + "</td>" +
-							"<td>" +(  (detalle != undefined && detalle.tipoAprovisionamiento) ? detalle.nombreOlt : 'Sin dato' )  + "</td>" +
-							"<td>" +(  (detalle != undefined && detalle.frame) ? detalle.nombreOlt : 'Sin dato' )  + "</td>" +
-							"<td>" +(  (detalle != undefined && detalle.slot) ? detalle.nombreOlt : 'Sin dato' )  + "</td>" +
-							"<td>" +(  (detalle != undefined && detalle.puerto) ? detalle.nombreOlt : 'Sin dato' )  + "</td>" +
-						 "</tr>";
+				"<td>" + ((detalle != undefined && detalle.nombreOlt) ? detalle.nombreOlt : 'Sin dato') + "</td>" +
+				"<td>" + ((detalle != undefined && detalle.tipoAprovisionamiento) ? detalle.nombreOlt : 'Sin dato') + "</td>" +
+				"<td>" + ((detalle != undefined && detalle.frame) ? detalle.nombreOlt : 'Sin dato') + "</td>" +
+				"<td>" + ((detalle != undefined && detalle.slot) ? detalle.nombreOlt : 'Sin dato') + "</td>" +
+				"<td>" + ((detalle != undefined && detalle.puerto) ? detalle.nombreOlt : 'Sin dato') + "</td>" +
+				"</tr>";
 
 		})
-		tableHTML += '</tbody></table>'+
-					 '</div>';
-		
+		tableHTML += '</tbody></table>' +
+			'</div>';
+
 		console.log(tableHTML)
-		return tableHTML;	
+		return tableHTML;
 	}
 }])

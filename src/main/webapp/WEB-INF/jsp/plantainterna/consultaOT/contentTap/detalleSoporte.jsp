@@ -1,4 +1,4 @@
-<div ng-if="!detalleSoporteList.length" style="text-align: center; margin-top: 2em;">
+<div ng-if="detalleSoporteList.length == 0" style="text-align: center; margin-top: 2em;">
     <span style="font-size: 12px !important;color:grey; font-weight: lighter;" class="timeline__day">
         <span class="timeline__month">
             <i class="fa fa-exclamation-circle warning-nodata"></i>
@@ -7,7 +7,7 @@
     </span>
 </div>
 
-<ul class="nav nav-tabs" id="myTab" role="tablist" ng-if="detalleSoporteList.length">
+<ul class="nav nav-tabs" id="myTab" role="tablist" ng-if="detalleSoporteList.length > 0">
     <li class="nav-item" ng-repeat="item in detalleSoporteList">
         <a ng-class="{{$index}} == 0 ? 'nav-link active' : 'nav-link'" id="opcion-tab-{{$index + 1}}" data-toggle="tab" href="#opcion-{{$index + 1}}" role="tab"
             aria-controls="opcion-consulta" aria-selected="true">Soporte {{$index + 1}}</a>
@@ -57,11 +57,11 @@
         </div>
         <hr>
         <div class="row">
-            <table id="tablaOTDetalle{{item.idFalla}}" style="width:100%">
+            <table id="tablaOTDetalle{{$index}}" style="width:100%">
                 <thead id="headerT">
                     <tr><th></th></tr>
                 </thead>
-                <tbody id="mostrarOTDetalle{{item.idFalla}}">
+                <tbody id="mostrarOTDetalle{{$index}}">
                 </tbody>
             </table>
         </div>

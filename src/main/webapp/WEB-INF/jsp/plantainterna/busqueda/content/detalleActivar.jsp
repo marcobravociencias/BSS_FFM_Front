@@ -33,35 +33,35 @@
             <div class="row justify-content-center">
                 <div class="col-md-12">
                     <b class="title-info-services"> Cotizaci&oacute;n:</b> &nbsp; &nbsp;
-                    <span id="cuenta_factura" class="nombre-cotservicios content_info_ot style_nota_tint" ng-bind="objetoCotizacion.CotizacionName"> </span>
+                    <span id="cuenta_factura" class="nombre-cotservicios content_info_ot style_nota_tint" ng-bind="objetoCotizacion.nombrePaquete"> </span>
                 </div> 
                         
             </div>  
             <div class="row justify-content-center">              
                 <div class="col-md-6">
                     <b class="title-info-services">Megas subida:</b>&nbsp; &nbsp;
-                    <span id="nombre_plan" class="content_info_ot style_nota_tint" ng-bind="(objetoCotizacion.MegasSubida | number)"> </span>
+                    <span id="nombre_plan" class="content_info_ot style_nota_tint" ng-bind="(objetoCotizacion.megasSubida | number)"> </span>
                 </div>
                 <div class="col-md-6">
                     <b class="title-info-services"> Megas bajada:</b> &nbsp; &nbsp;
-                    <span id="cuenta_factura" class="content_info_ot style_nota_tint" ng-bind="(objetoCotizacion.MegasBajada | number)"> </span>
+                    <span id="cuenta_factura" class="content_info_ot style_nota_tint" ng-bind="(objetoCotizacion.megasBajada | number)"> </span>
                 </div>
             </div>
             <div class="row justify-content-center">              
                 <div class="col-md-6">
                     <b class="title-info-services">DNS totales:</b>&nbsp; &nbsp;
-                    <span id="nombre_plan" class="content_info_ot style_nota_tint" ng-bind="(objetoCotizacion.DNsTotales | number )"> </span>
+                    <span id="nombre_plan" class="content_info_ot style_nota_tint" ng-bind="(objetoCotizacion.numDns | number )"> </span>
                 </div>
                 <div class="col-md-6">
                     <b class="title-info-services"> Ips totales:</b> &nbsp; &nbsp;
-                    <span id="cuenta_factura" class="content_info_ot style_nota_tint" ng-bind="(objetoCotizacion.IpsTotales | number )"> </span>
+                    <span id="cuenta_factura" class="content_info_ot style_nota_tint" ng-bind="(objetoCotizacion.numIps | number )"> </span>
                 </div>
             </div>
             <div class="row ">              
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <span class="noconfigurables" ng-click="openModalNoConfig()" >*</span>
                     <b class="title-info-services"> Pronto pago:</b> &nbsp; &nbsp;
-                    <span id="cuenta_factura" class="content_info_ot style_nota_tint" ng-bind="(objetoCotizacion.ProntoPago | currency )"> </span>
+                    <span id="cuenta_factura" class="content_info_ot style_nota_tint" ng-bind="(objetoCotizacion.prontoPago ? objetoCotizacion.prontoPago : '0' | currency )"> </span>
                 </div>    
             </div>
             <div class="divider-detalle-table"></div>
@@ -76,12 +76,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="detail-trservicio" ng-if="servicio.servicioConfigurable" ng-repeat="servicio in objetoCotizacion.CotPlanServicios track by $index">
+                    <tr class="detail-trservicio" ng-if="servicio.servicioConfigurable" ng-repeat="servicio in objetoCotizacion.cotPlanServicios track by $index">
                   
-                        <td class="tr-servicio-ind"><span class="text-serviciotable">{{servicio.CotSitioName}}</span></td>
-                        <td class="tr-servicio-ind"><span class="text-serviciotable">{{servicio.CotPlanServicoNServicio}}</span></td>
+                        <td class="tr-servicio-ind"><span class="text-serviciotable">{{objetoCotizacion.folioCotSitio}}</span></td>
+                        <td class="tr-servicio-ind"><span class="text-serviciotable">{{servicio.nombre}}</span></td>
                         <td class="tr-servicio-ind"><span class="text-serviciotable">{{servicio.DpPlanEtiquetaBRM}}</span></td>
-                        <td class="tr-servicio-ind"><span class="text-serviciotable">{{servicio.Tipo}}</span></td>
+                        <td class="tr-servicio-ind"><span class="text-serviciotable">{{servicio.tipo}}</span></td>
                     </tr>
                 </tbody>
             </table>
@@ -112,7 +112,7 @@
                         <div class="col-12 col-title-header">
                             <div class="row">
                                 <div class="col-11">
-                                    <span class="style_seg_tex_act_ser" ng-bind="'Equipo *    '+ cotizacion.CotPlanServicoName + ' - ' + cotizacion.CotPlanServicoNServicio"></span>
+                                    <span class="style_seg_tex_act_ser" ng-bind="'Equipo *    '+ cotizacion.nombre"></span>
                                 </div>
                                 <div class="col-1" style="text-align: right; padding: 0;">
                                     <i class="icon-mostrar-equipo" ng-class="cotizacion.mostrarInfo ? 'fa fa-eye' : 'fa fa-eye-slash'" ng-click="mostrarOcultarInfo(cotizacion)"></i>
@@ -160,7 +160,7 @@
                     <div class="col-12 col-title-header">
                         <div class="row">
                             <div class="col-11">
-                                <span class="style_seg_tex_act_ser" ng-bind="'Equipo *    '+ cotizacion.CotPlanServicoName + ' - ' + cotizacion.CotPlanServicoNServicio"></span>
+                                <span class="style_seg_tex_act_ser" ng-bind="'Equipo *    '+ cotizacion.nombre"></span>
                             </div>
                             <div class="col-1" style="text-align: right; padding: 0;">
                                 <i class="icon-mostrar-equipo" ng-class="cotizacion.mostrarInfo ? 'fa fa-eye' : 'fa fa-eye-slash'" ng-click="mostrarOcultarInfo(cotizacion)"></i>
@@ -190,15 +190,15 @@
                                         </td>
                                         <td>
                                             <div>
-                                                <select class="form-control form-control-sm style_primer_select_act_ser" ng-model="cotizacion.config.modeloSelect" ng-options="model.Descripcion_Modelo for model in cotizacion.Info_Equipo.Modelo track by model.Id_Modelo">
+                                                <select class="form-control form-control-sm style_primer_select_act_ser" ng-model="cotizacion.config.modeloSelect" ng-options="model.modelo for model in cotizacion.Info_Equipo.modelo track by model.idModelo">
                                                 </select>
                                             </div>
                                         </td>
                                         <td>
-                                            <div><input type="text" placeholder="No Serie" ng-model="cotizacion.config.No_Serie" ng-blur="getMacJsonBusqueda(cotizacion.config)" class="input-equipo general-input form-control form-control-sm style_input_table_desc_equipo_act_serv"></div>
+                                            <div><input type="text" placeholder="No Serie" ng-model="cotizacion.config.numSerie" ng-blur="getMacJsonBusqueda(cotizacion.config)" class="input-equipo general-input form-control form-control-sm style_input_table_desc_equipo_act_serv"></div>
                                         </td>
                                         <td> 
-                                            <div><input type="text" placeholder="Mac" ng-model="cotizacion.config.MAC" ng-keyup="setFormatMacValidacion(cotizacion.config)" maxlength="17" class="input-equipo general-input form-control form-control-sm style_input_table_desc_equipo_act_serv"></div>
+                                            <div><input type="text" placeholder="Mac" ng-model="cotizacion.config.mac" ng-keyup="setFormatMacValidacion(cotizacion.config)" maxlength="17" class="input-equipo general-input form-control form-control-sm style_input_table_desc_equipo_act_serv"></div>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -217,7 +217,7 @@
                     <div class="col-12 col-title-header">
                         <div class="row">
                             <div class="col-11">
-                                <span class="style_seg_tex_act_ser" ng-bind="'DN    '+cotizacion.CotPlanServicoName + ' - ' + cotizacion.CotPlanServicoNServicio"></span>
+                                <span class="style_seg_tex_act_ser" ng-bind="'DN    '+cotizacion.nombre"></span>
                             </div>
                             <div class="col-1" style="text-align: right; padding: 0;">
                                 <i class="icon-mostrar-equipo" ng-class="cotizacion.mostrarInfo ? 'fa fa-eye' : 'fa fa-eye-slash'" ng-click="mostrarOcultarInfo(cotizacion)"></i>
@@ -238,7 +238,7 @@
                     <div class="col-12 row style_content_desc_dn_act_ord_serv" ng-show="cotizacion.mostrarInfo">
                         <div class="col-5 row style_des_dn_act_ord_serv">
 
-                            <table class="table table-sm" class="table_desc_equipo_act_serv" id="table_desc_equipo_act_serv">
+                            <table class="table table-sm" class="table_desc_equipo_act_serv" id="table-dns">
                                 <thead class="style_thead_table_desc_equipo_act_serv">
                                     <tr>
                                         <th style="width: 8em;">Principal</th>
@@ -246,12 +246,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="dns in cotizacion.config.DN_Conf track by $index">
+                                    <tr ng-repeat="dns in cotizacion.config.dns track by $index">
                                         <td>
-                                            <input class="check-dn-generado"  type="checkbox" id="{{'radioDns' + $index}}" style="cursor: pointer;" ng-model="dns.valor" ng-true-value="'1'" ng-false-value="'0'" ng-click="marcarPrincipal(cotizacion.config.DN_Conf, $index)">
+                                            <input class="check-dn-generado"  type="checkbox" id="{{'radioDns' + $index}}" style="cursor: pointer;" ng-model="dns.valor" ng-true-value="'1'" ng-false-value="'0'" ng-click="marcarPrincipal(cotizacion.config.dns, $index)">
                                         </td>
                                         <td>
-                                            <label  class="label-dn-generado" ng-click="marcarPrincipal(cotizacion.config.DN_Conf, $index)" style="cursor: pointer;" ng-bind="dns.DN"></label>
+                                            <label  class="label-dn-generado" ng-click="marcarPrincipal(cotizacion.config.dns, $index)" style="cursor: pointer;" ng-bind="dns.dn"></label>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -286,7 +286,7 @@
                     <div class="col-12 col-title-header">  
                         <div class="row">
                             <div class="col-11">
-                                <span class="style_seg_tex_act_ser" ng-bind="'Equipo*    '+cotizacion.CotPlanServicoName + ' - ' + cotizacion.CotPlanServicoNServicio"></span> 
+                                <span class="style_seg_tex_act_ser" ng-bind="'Equipo*    '+cotizacion.nombre"></span> 
                             </div>
                             <div class="col-1" style="text-align: right; padding: 0;">
                                 <i class="icon-mostrar-equipo" ng-class="cotizacion.mostrarInfo ? 'fa fa-eye' : 'fa fa-eye-slash'" ng-click="mostrarOcultarInfo(cotizacion)"></i>
@@ -307,7 +307,7 @@
                             <span class="title-tipo-elemento">Tipo red</span>
                             
                             <select class="form-control form-control-sm style_primer_select_act_ser" ng-model="cotizacion.config.tipoRedSelect" 
-                                ng-options="tipored.Descripcion_Aprovisionamiento for tipored in cotizacion.tipoProvisionamiento  track by tipored.Id_Aprovisionamiento">
+                                ng-options="tipored.descripcionAprovisionamiento for tipored in cotizacion.tipoProvisionamiento  track by tipored.Id_Aprovisionamiento">
                             </select>
 
                         </div>
@@ -332,30 +332,30 @@
                                     <tr>
                                         <td>
                                             <div>
-                                                <select class="form-control select_reg_table" ng-model="cotizacion.config.modeloSelect" ng-options="model.Descripcion_Modelo for model in cotizacion.Info_Equipo.Modelo track by model.Id_Modelo">
+                                                <select class="form-control select_reg_table" ng-model="cotizacion.config.modeloSelect" ng-options="model.modelo for model in cotizacion.Info_Equipo.modelo track by model.idModelo">
                                                 </select>
                                             </div>
                                         </td>
                                         <td>
-                                            <div><input type="text" placeholder="No Serie" ng-model="cotizacion.config.No_Serie" ng-blur="getMacJsonBusqueda(cotizacion.config)" class="form-control style_input_table_desc_equipo_act_serv"></div>
+                                            <div><input type="text" placeholder="No Serie" ng-model="cotizacion.config.numSerie" ng-blur="getMacJsonBusqueda(cotizacion.config)" class="form-control style_input_table_desc_equipo_act_serv"></div>
                                         </td>
                                         <td>
-                                            <div><input type="text" placeholder="MAC" ng-model="cotizacion.config.MAC" ng-keyup="setFormatMacValidacion(cotizacion.config)" maxlength="17" class="form-control style_input_table_desc_equipo_act_serv"></div>
+                                            <div><input type="text" placeholder="MAC" ng-model="cotizacion.config.mac" ng-keyup="setFormatMacValidacion(cotizacion.config)" maxlength="17" class="form-control style_input_table_desc_equipo_act_serv"></div>
                                         </td>
                                         <td>
-                                            <div><input type="text" placeholder="OLT" ng-model="cotizacion.config.OLT" class="form-control style_input_table_desc_equipo_act_serv"></div>
+                                            <div><input type="text" placeholder="OLT" ng-model="cotizacion.config.red.nombreOlt" class="form-control style_input_table_desc_equipo_act_serv"></div>
                                         </td>
                                         <td>
-                                            <div><input type="text" placeholder="Id" ng-model="cotizacion.config.Id_OLT" class="form-control style_input_table_desc_equipo_act_serv"></div>
+                                            <div><input type="text" placeholder="Id" ng-model="cotizacion.config.red.idOlt" class="form-control style_input_table_desc_equipo_act_serv"></div>
                                         </td>
                                         <td>
-                                            <div><input type="text" placeholder="Fr" ng-model="cotizacion.config.Frame" class="form-control style_input_table_desc_equipo_act_serv"></div>
+                                            <div><input type="text" placeholder="Fr" ng-model="cotizacion.config.red.frame" class="form-control style_input_table_desc_equipo_act_serv"></div>
                                         </td>
                                         <td>
-                                            <div><input type="text" placeholder="SI" ng-model="cotizacion.config.Slot" class="form-control style_input_table_desc_equipo_act_serv"></div>
+                                            <div><input type="text" placeholder="SI" ng-model="cotizacion.config.red.slot" class="form-control style_input_table_desc_equipo_act_serv"></div>
                                         </td>
                                         <td>
-                                            <div><input type="text" placeholder="PI" ng-model="cotizacion.config.Puerto" class="form-control style_input_table_desc_equipo_act_serv"></div>
+                                            <div><input type="text" placeholder="PI" ng-model="cotizacion.config.red.puerto" class="form-control style_input_table_desc_equipo_act_serv"></div>
                                         </td>
                                       
                                         <td>
@@ -370,39 +370,39 @@
                                 <div class="col-4">
                                     <div class="form-group form-group-mac">
                                         <b class="title-info-services">Tipo equipo:</b>
-                                        <span id="nombre_plan" class="content_info_captur ng-binding" ng-bind="cotizacion.config.modeloSelect.Descripcion_Modelo">50</span>
+                                        <span id="nombre_plan" class="content_info_captur ng-binding" ng-bind="cotizacion.config.modeloSelect.modelo"></span>
                                     </div>
                                     <div class="form-group form-group-mac">
                                         <b class="title-info-services">Num. serie:</b>
-                                        <span id="nombre_plan" class="content_info_captur ng-binding" ng-bind="cotizacion.config.No_Serie || 'Sin info'">50</span>
+                                        <span id="nombre_plan" class="content_info_captur ng-binding" ng-bind="cotizacion.config.numSerie || 'Sin info'"></span>
                                     </div>
                                     <div class="form-group form-group-mac">
                                         <b class="title-info-services">Mac:</b>
-                                        <span id="nombre_plan" class="content_info_captur ng-binding" ng-bind="cotizacion.config.MAC || 'Sin info'">50</span>
+                                        <span id="nombre_plan" class="content_info_captur ng-binding" ng-bind="cotizacion.config.mac || 'Sin info'"></span>
                                     </div>                             
                                 </div>
                                 <div class="col-4">
                                     <div class="form-group form-group-mac">
                                         <b class="title-info-services">OLT:</b>
-                                        <span id="nombre_plan" class="content_info_captur ng-binding" ng-bind="cotizacion.config.OLT || 'Sin info'">50</span>
+                                        <span id="nombre_plan" class="content_info_captur ng-binding" ng-bind="cotizacion.config.red.nombreOlt || 'Sin info'"></span>
                                     </div>
                                     <div class="form-group form-group-mac">
                                         <b class="title-info-services">Id OLT:</b>
-                                        <span id="nombre_plan" class="content_info_captur ng-binding" ng-bind="cotizacion.config.Id_OLT || 'Sin info'">50</span>
+                                        <span id="nombre_plan" class="content_info_captur ng-binding" ng-bind="cotizacion.config.red.idOlt || 'Sin info'"></span>
                                     </div>
                                     <div class="form-group form-group-mac">
                                         <b class="title-info-services">Frame:</b>
-                                        <span id="nombre_plan" class="content_info_captur ng-binding" ng-bind="cotizacion.config.Frame || 'Sin info'">50</span>
+                                        <span id="nombre_plan" class="content_info_captur ng-binding" ng-bind="cotizacion.config.red.frame || 'Sin info'"></span>
                                     </div>                             
                                 </div>
                                 <div class="col-4">
                                     <div class="form-group form-group-mac">
                                         <b class="title-info-services">Slot:</b>
-                                        <span id="nombre_plan" class="content_info_captur ng-binding" ng-bind="cotizacion.config.Slot || 'Sin info'">50</span>
+                                        <span id="nombre_plan" class="content_info_captur ng-binding" ng-bind="cotizacion.config.red.slot || 'Sin info'"></span>
                                     </div>
                                     <div class="form-group form-group-mac">
                                         <b class="title-info-services">Puerto:</b>
-                                        <span id="nombre_plan" class="content_info_captur ng-binding" ng-bind="cotizacion.config.Puerto || 'Sin info'">50</span>
+                                        <span id="nombre_plan" class="content_info_captur ng-binding" ng-bind="cotizacion.config.red.puerto || 'Sin info'"></span>
                                     </div>                         
                                 </div>
                              
