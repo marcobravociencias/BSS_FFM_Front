@@ -65,6 +65,13 @@ public class GenericController {
 		logger.info("ENTRA DECISION");
 		return "utilerias/help/details";
 	}
+	
+	@GetMapping("/parametrosAsignacion")
+	public String parametrosAsignacion(){
+		logger.info("ENTRA DECISION");
+		return "utilerias/parametrosasignacion/asignacionAutomatica";
+	}
+	
 	@GetMapping("/descargaLogFile/{fileName:.+}")
 	public void downloadLoggerFile(HttpServletRequest request, HttpServletResponse response,
 								   @PathVariable("fileName")String fileName){
