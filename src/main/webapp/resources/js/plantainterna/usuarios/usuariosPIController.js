@@ -42,6 +42,8 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     $scope.mostrarDespacho = false;
     $scope.validarTamDatos = false;
     $scope.isTecnico = false;
+    $scope.idPuestoTecnico = null;
+    $scope.idPuestoDespacho = null;
     //PENDIENTES
 	$scope.respaldoIntervenciones = [];
    
@@ -51,10 +53,11 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     
     //MÉTODO QUE INICIA EL MÓDULO Y SUS VISTAS DE USUARIOS
     $scope.iniciarModuloUsuarios = function() {
+//    	$("#container_usuarios_alta_consulta").css("height", (window.innerHeight - 200) );
     	let paramsConfiguracionDespacho ={
 				moduloAccionesUsuario: 'moduloUsuarios'
 	    };
-    	let params1 = {idUsuario:10};
+
     	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
 		swal.showLoading();
     	$q.all([
@@ -63,8 +66,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     		usuarioPIService.consultaPuestos(),
     		usuarioPIService.consultaPermisos(),
     		usuarioPIService.consultaGeografias(),
-    		usuarioPIService.consultaIntervenciones(),
-    		usuarioPIService.consultaUsuarioPorId(params1)
+    		usuarioPIService.consultaIntervenciones()
         ]).then(function(results) {
         	// *** CONFIGURACIÓN DESPACHO ***
         	var nivelUsuario = results[0].data.result.N_FILTRO_GEOGRAFIA;
@@ -91,6 +93,8 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
             	if(results[2].data.respuesta){
             		if(results[2].data.result.puestos.length > 0){
             			$scope.listaPuestos = results[2].data.result.puestos;
+            			$scope.idPuestoTecnico = $scope.listaPuestos.filter(e => {return e.descripcion == "TECNICO"})[0];
+            		    $scope.idPuestoDespacho = $scope.listaPuestos.filter(e => {return e.descripcion == "DESPACHO"})[0];
             		}else{
             			toastr.warning('¡No existen puestos actualmente!');
             		}
@@ -1262,17 +1266,17 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	//MÉTODO PARA CONSULTAR LOS DESPACHOS A ASIGNAR AL TÉCNICO QUE SE REGISTRARÁ - PESTAÑA DESPACHOS REGISTRO USUARIO
 	$scope.consultarDespachos = function() {
 		$scope.listaDespachos = [];
-		let params = {idGeografia:$scope.informacionRegistro.geografias};
+		let params = {idsGeografia:$scope.informacionRegistro.geografias, idTipoUsuario:$scope.idPuestoDespacho.id};
     	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
 		swal.showLoading();
     	$q.all([
-    		usuarioPIService.consultarTecnicos(params)
+    		usuarioPIService.consultarUsuariosPorPuesto(params)
         ]).then(function(results) {
         	if (results[0].data !== undefined) {
             	if(results[0].data.respuesta){
-            		if(results[0].data.result.usuarios !== null){
-	            		if(results[0].data.result.usuarios.length > 0){
-	            			$scope.listaDespachos = results[0].data.result.usuarios;
+            		if(results[0].data.result.result.usuarios !== null){
+	            		if(results[0].data.result.result.usuarios.length > 0){
+	            			$scope.listaDespachos = results[0].data.result.result.usuarios;
 	            			$("#checkTotdosDespachoRegistro").prop("checked",false);
 	            	    	angular.forEach($scope.listaDespachos,function(despacho,index){
 	            	    		despacho.checkedOpcion = false;
@@ -1297,17 +1301,17 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	//MÉTODO PARA CONSULTAR LOS TÉCNICOS A ASIGNAR AL USUARIO (QUE NO SEA TÉCNICO) QUE SE REGISTRARÁ - PESTAÑA TÉCNICOS REGISTRO USUARIO
 	$scope.consultarTecnicos = function() {
 		$scope.listaTecnicos = [];
-		let params = {idGeografia:$scope.informacionRegistro.geografias};
+		let params = {idsGeografia:$scope.informacionRegistro.geografias, idTipoUsuario:$scope.idPuestoTecnico.id};
     	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
 		swal.showLoading();
     	$q.all([
-    		usuarioPIService.consultarTecnicos(params)
+    		usuarioPIService.consultarUsuariosPorPuesto(params)
         ]).then(function(results) {
         	if (results[0].data !== undefined) {
             	if(results[0].data.respuesta){
-            		if(results[0].data.result.usuarios !== null){
-	            		if(results[0].data.result.usuarios.length > 0){
-	            			$scope.listaTecnicos = results[0].data.result.usuarios;
+            		if(results[0].data.result.result.usuarios !== null){
+	            		if(results[0].data.result.result.usuarios.length > 0){
+	            			$scope.listaTecnicos = results[0].data.result.result.usuarios;
 	            			$("#checkTotdosTecnicosRegistro").prop("checked",false);
 	            	    	angular.forEach($scope.listaTecnicos,function(tecnico,index){
 	            	    		tecnico.checkedOpcion = false;
@@ -1411,6 +1415,54 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 			"columns": [null, null, null, null, null, null, null, null],
 			"language": idioma_espanol_not_font
 		});
+	}
+	
+	//MÉTODO PARA ELIMINAR USUARIOS (BAJA LÓGICA)
+    eliminarUsuario = function(idUsuario) {
+    	
+    	let params = {
+    			idUsuarioQueModifica: idUsuario,
+    			estatus: 0,
+    			comentarios: "Se desactiva al Usuario"
+		}
+    	
+    	swal({
+	        title: "Se dará de baja al usuario",
+	        text: "\u00BFDesea eliminar el usuario?",
+	        type: "warning",
+	        input: 'text',
+	        inputPlaceholder: "Escribe el motivo",
+	        showCancelButton: true,
+	        confirmButtonColor: '#007bff',
+	        confirmButtonText: 'Si',
+	        cancelButtonText: 'Cancelar',
+	        allowOutsideClick: false
+	      }).then(function (motivo) {
+	        if (motivo) {
+	        	params.comentarios = motivo;
+	        	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
+	    		swal.showLoading();
+	        	$q.all([
+	        		usuarioPIService.eliminarUsuario(params)
+	            ]).then(function(results) {
+	            	swal.close();
+	            	if(results[0].data.respuesta){
+	            		swal("Correcto", "¡Usuario eliminado con éxito!", "success");
+	            		$scope.consultaUsuariosPorGeoCompPuestos();
+	            	}else{
+	            		swal("Error", results[0].data.resultDescripcion, "error");
+	            	}
+	            });
+	        }else{
+	        	swal({type: "warning", title:"Aviso", text:"¡Ingresa el motivo de la baja!", showConfirmButton: false, allowOutsideClick: false, allowEscapeKey : false});
+	        	setTimeout(function() {
+	        		eliminarUsuario(idUsuario);
+	        	}, 2000);
+	        }
+	      }).catch(err => {
+
+	      });
+    	
 	}
 	
     // *** FIN CAMBIOS REYNEL *** 

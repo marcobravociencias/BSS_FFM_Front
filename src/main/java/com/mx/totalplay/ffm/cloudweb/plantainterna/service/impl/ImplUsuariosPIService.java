@@ -153,7 +153,7 @@ public class ImplUsuariosPIService implements UsuariosPIService {
                         dataArray[count][4] = object.get("ciudad") != null ? object.get("ciudad").getAsString().trim() : "";
                         dataArray[count][5] = object.get("unidadNegocio") != null ? object.get("unidadNegocio").getAsString().trim() : "";
                         dataArray[count][6] = "<div class='tooltip-btn'> <span onclick='consultarDetalleUsuario(" + object.get("idUsuario").getAsString().trim() + ")' class='btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnModificarUsuario'><th><i class='fas fa-pen' aria-hidden='true'></i></th></span></div>";
-                        dataArray[count][7] = "<div class='tooltip-btn'> <span onclick='consultarDetalleUsuario(" + object.get("idUsuario").getAsString().trim() + ")' class='btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnEliminarUsuario'><th><i class='fas fa-trash-alt' aria-hidden='true'></i></th></span></div>";
+                        dataArray[count][7] = "<div class='tooltip-btn'> <span onclick='eliminarUsuario(" + object.get("idUsuario").getAsString().trim() + ")' class='btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnEliminarUsuario'><th><i class='fas fa-trash-alt' aria-hidden='true'></i></th></span></div>";
                         count++;
                     }
                     
@@ -223,15 +223,15 @@ public class ImplUsuariosPIService implements UsuariosPIService {
 	}
 	
 	@Override
-	public ServiceResponseResult consultarTecnicosRegistroUsuario(String params) {
-		logger.info("ImplUsuariosPIService.class [metodo = consultarTecnicosRegistroUsuario() ]\n");
+	public ServiceResponseResult consultarUsuariosPorTipoUsuario(String params) {
+		logger.info("ImplUsuariosPIService.class [metodo = consultarUsuariosPorTipoUsuario() ]\n");
 		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
 		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
 		String tokenAcces=principalDetail.getAccess_token();
 		logger.info("json object params## "+jsonObject.toString());	 
-		String url = principalDetail.getDireccionAmbiente().concat(constUsuario.getConsultarTecnicosRegistroUsuario());
+		String url = principalDetail.getDireccionAmbiente().concat(constUsuario.getConsultarUsuariosPorTipoUsuario());
 		ServiceResponseResult response= restCaller.callPostBearerTokenRequest(jsonObject.toString(), url, ServiceResponseResult.class, tokenAcces);
-		logger.info("RESULT consultarTecnicosRegistroUsuario " + gson.toJson(response));
+		logger.info("RESULT consultarUsuariosPorTipoUsuario " + gson.toJson(response));
 		return response;
 	}
 	
@@ -247,6 +247,20 @@ public class ImplUsuariosPIService implements UsuariosPIService {
 		String url = principalDetail.getDireccionAmbiente().concat(constUsuario.getModificarUsuario());
 		ServiceResponseResult response= restCaller.callPatchBearerTokenRequestURL(paramsRequestGet, jsonObject.toString(), url, ServiceResponseResult.class, tokenAcces);
 		logger.info("RESULT modificarUsuario " + gson.toJson(response));
+		return response;
+	}
+	
+	@Override
+	public ServiceResponseResult eliminarUsuario(String params) {
+		logger.info("ImplUsuariosPIService.class [metodo = eliminarUsuario() ]\n");
+		logger.info("PARAMS " + params);
+		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		String tokenAcces=principalDetail.getAccess_token() ;
+		String url = principalDetail.getDireccionAmbiente().concat(constUsuario.getEliminarUsuario());
+		ServiceResponseResult response=restCaller.callPostBearerTokenRequest(jsonObject.toString(), url, ServiceResponseResult.class, tokenAcces);
+		logger.info("URL " + url);
+		logger.info("RESULT eliminarUsuario " + gson.toJson(response));
 		return response;
 	}
 	
