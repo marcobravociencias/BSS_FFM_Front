@@ -112,10 +112,10 @@ public class UsuariosPIController {
         return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
 	}
 	
-	@PostMapping("/consultarTecnicosRegistroUsuario")
-    public ResponseEntity<?> consultarTecnicosRegistroUsuario(@RequestBody String params) {
+	@PostMapping("/consultarUsuariosPorTipoUsuario")
+    public ResponseEntity<?> consultarUsuariosPorTipoUsuario(@RequestBody String params) {
         logger.info("*** Objeto: " + params);
-        ServiceResponseResult result = usuarioService.consultarTecnicosRegistroUsuario(params);
+        ServiceResponseResult result = usuarioService.consultarUsuariosPorTipoUsuario(params);
         if (result.getResult() instanceof Integer){
             return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
         }
@@ -126,6 +126,16 @@ public class UsuariosPIController {
 	public ResponseEntity<?> modificarUsuario(@RequestBody String params) {
 		logger.info("##### MODIFICAR USUARIO");
 		ServiceResponseResult result = usuarioService.modificarUsuario(params);
+        if (result.getResult() instanceof Integer){
+            return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
+	}
+	
+	@PostMapping("/eliminarUsuario")
+	public ResponseEntity<?> eliminarUsuario(@RequestBody String params) {
+		logger.info("##### BAJA DE USUARIO");
+		ServiceResponseResult result = usuarioService.eliminarUsuario(params);
         if (result.getResult() instanceof Integer){
             return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
         }

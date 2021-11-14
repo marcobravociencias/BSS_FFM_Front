@@ -526,17 +526,18 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 	
 	$scope.consultarTecnicosMod = function() {
 		$scope.listaTecnicosMod = [];
-		let params = {idGeografia:$scope.detalleUsuario.geografiasId};
+		//$scope.detalleUsuario.geografiasId.push(107);
+		let params = {idsGeografia:$scope.detalleUsuario.geografiasId, idTipoUsuario:$scope.idPuestoTecnico.id};
     	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
 		swal.showLoading();
     	$q.all([
-    		usuarioPIService.consultarTecnicos(params)
+    		usuarioPIService.consultarUsuariosPorPuesto(params)
         ]).then(function(results) {
         	if (results[0].data !== undefined) {
             	if(results[0].data.respuesta){
-            		if(results[0].data.result.usuarios !== null){
-	            		if(results[0].data.result.usuarios.length > 0){
-	            			$scope.listaTecnicosMod = results[0].data.result.usuarios;
+            		if(results[0].data.result.result.usuarios !== null){
+	            		if(results[0].data.result.result.usuarios.length > 0){
+	            			$scope.listaTecnicosMod = results[0].data.result.result.usuarios;
 	            			$("#checkTotdosTecnicosMod").prop("checked",false);
 	            	    	angular.forEach($scope.listaTecnicosMod,function(tecnico,index){
 	            	    		tecnico.checkedOpcion = false;
@@ -558,6 +559,48 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
             		}
             	}else{
             		$scope.listaTecnicosMod = [];
+            	}
+        	}else{
+        		toastr.error('Error interno en el servidor.');
+        	}
+        	swal.close();
+        });
+	}
+	
+	$scope.consultarDespachosMod = function() {
+		$scope.listaDespachosMod = [];
+		let params = {idsGeografia:$scope.detalleUsuario.geografiasId, idTipoUsuario:$scope.idPuestoDespacho.id};
+    	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
+		swal.showLoading();
+    	$q.all([
+    		usuarioPIService.consultarUsuariosPorPuesto(params)
+        ]).then(function(results) {
+        	if (results[0].data !== undefined) {
+            	if(results[0].data.respuesta){
+            		if(results[0].data.result.result.usuarios !== null){
+	            		if(results[0].data.result.result.usuarios.length > 0){
+	            			$scope.listaDespachosMod = results[0].data.result.result.usuarios;
+	            			$("#checkTotdosDespachosMod").prop("checked",false);
+	            	    	angular.forEach($scope.listaDespachosMod,function(despacho,index){
+	            	    		despacho.checkedOpcion = false;
+	            			});
+	            	    	angular.forEach($scope.listaDespachosMod,function(despacho,index){
+	            	    		angular.forEach($scope.detalleUsuario.idDespachos,function(despachoRegistrado,index){
+	            	    			if(despacho.idUsuario == despachoRegistrado.idOperador){
+	            	    				despacho.checkedOpcion = true;
+	            	    			}
+	            	    		});
+	            			});
+	            	    	$("#labelDespachosSeleccionadosMod").css("color", "rgb(70, 88, 107)");
+	            			$("#contenedorDespachosMod").css("border", "white solid 0px");
+	            		}else{
+	            			$scope.listaDespachosMod = [];
+	            		}
+            		}else{
+            			$scope.listaDespachosMod = [];
+            		}
+            	}else{
+            		$scope.listaDespachosMod = [];
             	}
         	}else{
         		toastr.error('Error interno en el servidor.');
