@@ -739,14 +739,8 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 					if (response.data.result.orden) {
 						$scope.infoOtDetalle = response.data.result.orden
 						is_consulta_info_ot = true;
-						//$scope.permisosModal=$scope.elementosConfigGeneral.get("MODAL_FLUJO_"+ ordenObject.idFlujo ).split(",")
-						$scope.permisosModal = [
-							"tabHistoricoDespacho",
-							"tabComentariosDespacho",
-							"tabDetalleSoporte",
-							"tabConsultaPagos",
-							"tabConsultaDispositivos"
-						]
+						$scope.permisosModal=$scope.elementosConfigGeneral.get("MODAL_CO_FLUJO_"+ ordenObject.idFlujo ).split(",")
+						console.log("#flujo ,orden ", ordenObject.idFlujo);
 						console.log("#permisos ,orden ", $scope.permisosModal);
 						$('#modal-detalle-ot').modal('show');
 						swal.close();

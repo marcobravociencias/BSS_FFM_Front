@@ -27,11 +27,11 @@
                                     <div class="col-6">
                                         <div class="container-fluid vehiculo-content">
                                             <div class="container-text-title-detalle"><span class="text-tile-vehiculo">OT</span></div>
-                                            <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.Id_ot}}" ng-bind="infoOtDetalle.idOrden || 'Sin dato'"></span> </div>
+                                            <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.idOrden}}" ng-bind="infoOtDetalle.idOrden || 'Sin dato'"></span> </div>
                                         </div>
                                         <div class="container-fluid vehiculo-content">
                                             <div class="container-text-title-detalle"><span class="text-tile-vehiculo">OS</span></div>
-                                            <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.Folio_os}}" ng-bind="infoOtDetalle.Folio_os || 'Sin dato'"></span> </div>
+                                            <div class="container-text-content-detalle"><span class="text-content-vehiculo" title="{{infoOtDetalle.folioSistema}}" ng-bind="infoOtDetalle.folioSistema || 'Sin dato'"></span> </div>
                                         </div>
                                         <div class="container-fluid vehiculo-content">
                                             <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Cuenta</span></div>
