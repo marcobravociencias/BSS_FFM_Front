@@ -12,6 +12,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     $scope.listaCiudadNatalMod = [];
     $scope.listaTecnicosMod = [];
     $scope.listaDespachosMod = [];
+    $scope.listaIdsGeografiaCiudadNatalMod = [];
     
     $scope.detalleUsuario.intervencionesId = [];
     $scope.detalleUsuario.geografiasId = [];
@@ -26,9 +27,9 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     $scope.mostrarDespachoMod = false;
     $scope.validarTamDatosMod = false;
     $scope.isTecnicoMod = false;
-    
     $scope.contadorCambioArbolGeografias = false;
 
+    //MÉTODO QUE REALIZA LA CONSULTA ESPECÍFICA POR ID DE USUARIO (CLIC EN BOTÓN DE MODIFICAR EN LA TABLA DE CONSULTA), Y PREPARA LA VISTA DE MODIFICACIÓN
     consultarDetalleUsuario = function(idUsuario) {
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
@@ -38,7 +39,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
             if (response.data.respuesta) {
                 if (response.data.result) {
                 	
-                    // ********** INFORMACION
+                    // ********** PREPARA LOS DATOS DE LA PESTAÑA DE INFORMACION
                     $scope.detalleUsuario = response.data.result.usuario;
                     $("#compania_select_modificacion").val(""+$scope.detalleUsuario.idCompania);
                     $("#sexo_select_modificacion").val(""+$scope.detalleUsuario.genero);
@@ -72,7 +73,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                     var fecha = $scope.detalleUsuario.fechaIngreso.substring(0, 10).split('-');
                     $scope.detalleUsuario.fechaIngreso = fecha[2] + "/" + fecha[1] + "/" + fecha[0];
                     
-                    // ********** INTERVENCIONES
+                    // ********** PREPARA LOS DATOS DE LA PESTAÑA DE INTERVENCIONES
                     $scope.arbolIntervencionesModificar = angular.copy($scope.listaIntervencionesRespaldo);
                     $scope.listaIntervencionesRegistradasMod = [];
                     $scope.detalleUsuario.intervencionesId = [];
@@ -130,7 +131,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                 		}
                 	});
 
-                    // ********** ÁRBOL
+                    // ********** PREPARA LOS DATOS DE LA PESTAÑA DE ÁRBOL (GEOGRAFÍAS)
                     var plugins = [];
                 	if(puestoSeleccionado == "tecnico" || puestoSeleccionado == "auxiliar"){
                 		plugins = ['search'];
@@ -183,6 +184,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                     		$scope.listaCiudadesSelecionadasMod = [];
                         	$scope.detalleUsuario.geografiasId = [];
                         	$scope.listaCiudadNatalMod = [];
+                        	$scope.listaIdsGeografiaCiudadNatalMod = [];
                         	$scope.listaTecnicosMod = [];
                         	$scope.detalleUsuario.ciudadNatal = "";
                         	
@@ -229,6 +231,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                         		});
                         		if(existeCiudadNatal == false){
                         			$scope.listaCiudadNatalMod.push(geo);
+                        			$scope.listaIdsGeografiaCiudadNatalMod.push(geo.id);
                         		}
                         		
                         	});
@@ -242,8 +245,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                         	
                         	if(geografiaTreeMod.length > 0){
                         		if($scope.isTecnicoMod){
-                            		//$scope.consultarDespachos();
-                        			console.log("------");
+                            		$scope.consultarDespachosMod();
                             	}else{
                             		$scope.consultarTecnicosMod();
                             	}
@@ -259,7 +261,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                     	$scope.contadorCambioArbolGeografias = true;
                     });
                     
-                    // ********** ACCESOS
+                    // ********** PREPARA LOS DATOS DE LA PESTAÑA DE ACCESOS (PERMISOS)
                     $scope.arbolAccesosModificar = angular.copy($scope.listaPermisosRespaldo);
                     $scope.listaAccesosRegistradosMod = [];
                     $scope.detalleUsuario.permisosId = [];
@@ -315,21 +317,14 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                 		}
                 	});
 
-                    // ********** TECNICO
-                    if($scope.detalleUsuario.geografiasId.length > 0){
-                    	//$scope.consultarTecnicosMod();
-                    }
-
                     // ********** CONFIRMAR USUARIO
                     $scope.detalleUsuario.ciudadNatal = $scope.detalleUsuario.idGeografia;
-                    
                     
                     $("#modalEdicionUsuario").modal('show');
                     
                 } else {
                     
                 }
-                
                 swal.close();
             } else {
                 mostrarMensajeErrorAlert(response.data.result.mensaje)
@@ -339,6 +334,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
         }).catch(err => handleError(err));
     }
     
+    //INICIA EL CAMPO DE FECHA DE INGRESO
     $scope.iniciarFechaMod = function () {
         $('#form-fechaIngreso-mod').datepicker({
             format: 'dd/mm/yyyy',
@@ -350,6 +346,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     }
     $scope.iniciarFechaMod();
 
+    //MÉTODO QUE ASIGNA LA/LAS INTERVENCIÓN(ES) SELECCIONADA(S) A LA LISTA PARA MOSTRAR Y MODIFICAR - PESTAÑA INTERVENCIONES MODIFICAR USUARIO
     $("#arbolIntervencionMod").click(function() {
     	$scope.listaIntervencionesSelecionadasMod = [];
     	$scope.detalleUsuario.intervencionesId = [];
@@ -391,6 +388,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
         $scope.$apply();
     });
 
+    //MÉTODO QUE ASIGNA EL/LOS PERMISO(S) SELECCIONADO(S) A LA LISTA PARA MOSTRAR Y MODIFICAR - PESTAÑA ACCESOS MODIFICAR USUARIO
     $("#arbolPermisoMod").click(function() {
     	$scope.listaAccesosSelecionadosMod = [];
     	$scope.detalleUsuario.permisosId = [];
@@ -451,7 +449,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     	$scope.verBtnModificar = true;
     }
     
-  //VERIFICA EL ESTADO DEL CHECK PARA COLOCAR 'SI' O 'NO', SEGÚN EL ESTADO - PESTAÑA INFORMACIÓN REGISTRO USUARIO
+  //VERIFICA EL ESTADO DEL CHECK PARA COLOCAR 'SI' O 'NO', SEGÚN EL ESTADO - PESTAÑA INFORMACIÓN MODIFICACUÓN USUARIO
 	$scope.cambiarCheckAsignacionAutomaticaMod = function() {
 		if($("#form-asignacionAutomatica-mod").prop('checked')){
 			$("#checkAsignacionAutomaticaMod").text("  SI");
@@ -526,17 +524,17 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 	
 	$scope.consultarTecnicosMod = function() {
 		$scope.listaTecnicosMod = [];
-		let params = {idGeografia:$scope.detalleUsuario.geografiasId};
+		let params = {idsGeografia:$scope.listaIdsGeografiaCiudadNatalMod, idTipoUsuario:$scope.idPuestoTecnico.id};
     	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
 		swal.showLoading();
     	$q.all([
-    		usuarioPIService.consultarTecnicos(params)
+    		usuarioPIService.consultarUsuariosPorPuesto(params)
         ]).then(function(results) {
         	if (results[0].data !== undefined) {
             	if(results[0].data.respuesta){
-            		if(results[0].data.result.usuarios !== null){
-	            		if(results[0].data.result.usuarios.length > 0){
-	            			$scope.listaTecnicosMod = results[0].data.result.usuarios;
+            		if(results[0].data.result.result.usuarios !== null){
+	            		if(results[0].data.result.result.usuarios.length > 0){
+	            			$scope.listaTecnicosMod = results[0].data.result.result.usuarios;
 	            			$("#checkTotdosTecnicosMod").prop("checked",false);
 	            	    	angular.forEach($scope.listaTecnicosMod,function(tecnico,index){
 	            	    		tecnico.checkedOpcion = false;
@@ -558,6 +556,48 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
             		}
             	}else{
             		$scope.listaTecnicosMod = [];
+            	}
+        	}else{
+        		toastr.error('Error interno en el servidor.');
+        	}
+        	swal.close();
+        });
+	}
+	
+	$scope.consultarDespachosMod = function() {
+		$scope.listaDespachosMod = [];
+		let params = {idsGeografia:$scope.listaIdsGeografiaCiudadNatalMod, idTipoUsuario:$scope.idPuestoDespacho.id};
+    	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
+		swal.showLoading();
+    	$q.all([
+    		usuarioPIService.consultarUsuariosPorPuesto(params)
+        ]).then(function(results) {
+        	if (results[0].data !== undefined) {
+            	if(results[0].data.respuesta){
+            		if(results[0].data.result.result.usuarios !== null){
+	            		if(results[0].data.result.result.usuarios.length > 0){
+	            			$scope.listaDespachosMod = results[0].data.result.result.usuarios;
+	            			$("#checkTotdosDespachosMod").prop("checked",false);
+	            	    	angular.forEach($scope.listaDespachosMod,function(despacho,index){
+	            	    		despacho.checkedOpcion = false;
+	            			});
+	            	    	angular.forEach($scope.listaDespachosMod,function(despacho,index){
+	            	    		angular.forEach($scope.detalleUsuario.idDespachos,function(despachoRegistrado,index){
+	            	    			if(despacho.idUsuario == despachoRegistrado.idOperador){
+	            	    				despacho.checkedOpcion = true;
+	            	    			}
+	            	    		});
+	            			});
+	            	    	$("#labelDespachosSeleccionadosMod").css("color", "rgb(70, 88, 107)");
+	            			$("#contenedorDespachosMod").css("border", "white solid 0px");
+	            		}else{
+	            			$scope.listaDespachosMod = [];
+	            		}
+            		}else{
+            			$scope.listaDespachosMod = [];
+            		}
+            	}else{
+            		$scope.listaDespachosMod = [];
             	}
         	}else{
         		toastr.error('Error interno en el servidor.');
@@ -627,10 +667,15 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 							fechaAlta: fechaSeleccionadaMod[2] + '-' + fechaSeleccionadaMod[1] + '-' + fechaSeleccionadaMod[0],
 							geografias: $scope.detalleUsuario.geografiasId,
 							intervenciones: $scope.detalleUsuario.intervencionesId,
-							idOperarios: $scope.isTecnicoMod == true ? $scope.detalleUsuario.despachos : $scope.detalleUsuario.tecnicos,
 							permisos: $scope.isTecnicoMod == true ? [] : $scope.detalleUsuario.permisosId,
 							idAsignacionAutomatica: $scope.detalleUsuario.idAsignacionAutomatica
 					}
+		        	
+		        	if($scope.isTecnicoMod == true){
+		        		paramsMod.idDespachos = $scope.detalleUsuario.despachos;
+		        	}else{
+		        		paramsMod.idOperarios = $scope.detalleUsuario.tecnicos;
+		        	}
 					
 					swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
 		    		swal.showLoading();
@@ -642,6 +687,9 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 		            		swal("Correcto", "¡Modificación realizada con éxito!", "success");
 		            		$scope.limpiarDatosModificacion();
 		            		$scope.resetearTablaUsuariosConsulta();
+		            		setTimeout(function() {
+		            			$scope.consultaUsuariosPorGeoCompPuestos();
+		    	        	}, 1000);
 		            	}else{
 		            		swal("Error", results[0].data.resultDescripcion, "error");
 		            	}
@@ -860,23 +908,22 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     			$("#contenedorTecnicosMod").css("border", "white solid 0px");
     		}
 		}else{
-			//PESTAÑA DESPACHOS
-			//--------------------------------PENDIENTE PARA CUANDO ESTÉ EL SERVICIO DE DESPACHOS--------------------------------
-//        	var checkDes = 0;
-//    		angular.forEach($scope.listaDespachosMod,function(despacho,index){
-//    			if(despacho.checkedOpcion == true){
-//    				checkDes++;
-//    			}
-//    		});
-//    		if(checkDes < 1){
-//    			validacionDespachos = false;
-//    			mensaje = mensaje + "<br/> *Despachos(s)";
-//    			$("#labelDespachosSeleccionadosMod").css("color", "#f55756");
-//    			$("#contenedorDespachosMod").css("border", "#f55756 solid 1px");
-//    		}else{
-//    			$("#labelDespachosSeleccionadosMod").css("color", "rgb(70, 88, 107)");
-//    			$("#contenedorDespachosMod").css("border", "white solid 0px");
-//    		}
+//			PESTAÑA DESPACHOS
+        	var checkDes = 0;
+    		angular.forEach($scope.listaDespachosMod,function(despacho,index){
+    			if(despacho.checkedOpcion == true){
+    				checkDes++;
+    			}
+    		});
+    		if(checkDes < 1){
+    			validacionDespachos = false;
+    			mensaje = mensaje + "<br/> *Despachos(s)";
+    			$("#labelDespachosSeleccionadosMod").css("color", "#f55756");
+    			$("#contenedorDespachosMod").css("border", "#f55756 solid 1px");
+    		}else{
+    			$("#labelDespachosSeleccionadosMod").css("color", "rgb(70, 88, 107)");
+    			$("#contenedorDespachosMod").css("border", "white solid 0px");
+    		}
 		}
     	
     	//PESTAÑA CONFIRMAR USUARIO
@@ -935,6 +982,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 		//SI EXISTE ALGÚN CAMPO FALTANTE, MUESTRA EL MENSAJE
 		if(validacion == false){
 			toastr.warning(mensaje);
+			$scope.ocultarBotonMod();
 		}
 		
 		//REGRESA LA RESPUESTA BOLEANA
@@ -957,6 +1005,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 		$scope.listaTecnicosMod = [];
 	    $scope.listaDespachosMod = [];
 	    $scope.listaCiudadNatalMod = [];
+	    $scope.listaIdsGeografiaCiudadNatalMod = [];
 		$('#arbolIntervencionMod').jstree("destroy");
 		$('#arbolGeografiaMod').jstree("destroy");
 		$('#arbolPermisoMod').jstree("destroy");

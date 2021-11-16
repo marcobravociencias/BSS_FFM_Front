@@ -20,9 +20,6 @@ private static final long serialVersionUID = 1L;
 	@Value("${consultaOtInfoGeneral}")
 	private String consultaOtInfoGeneral;
 	
-	@Value("${consultaMaterialesOt}")
-	private String consultaMaterialesOt;
-	
 	@Value("${consultaComentariosOtOperario}")
 	private String consultaComentariosOtOperario;
 	
@@ -52,4 +49,7 @@ private static final long serialVersionUID = 1L;
 
 	@Value("${consultaDispositivos}")
 	private String consultaDispositivos;
+
+	@Value("${consultaMaterialesOt}")
+	private String consultaMaterialesOt;
 }

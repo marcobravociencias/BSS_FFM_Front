@@ -508,7 +508,7 @@ table.dataTable thead th, table.dataTable thead td{
 }
 
 .text-tecnico-nombre-modal{
-    font-size: .8em;
+    font-size: .7em;
     font-weight: bold;
     margin-bottom: 0;
     display: flex;    

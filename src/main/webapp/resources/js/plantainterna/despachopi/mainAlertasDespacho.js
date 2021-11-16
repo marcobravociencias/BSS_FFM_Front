@@ -16,7 +16,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
     $scope.listaMotivosAlertaAccion = [];
     $scope.contadorCaracteresTextArea = 0;
 
-    $scope.getDetalleAlertas = function(alerta) {
+     $scope.getDetalleAlertas = function(alerta) {
         $("#pills-mapa-tab").click();
         $scope.idAlertaSelecionada = '';
         $scope.evidenciaAlertaConsultada = false;
@@ -45,6 +45,8 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
                 $scope.vistaDespacho = false;
                 $scope.tipoAlertaSeleccionada = angular.copy(alerta);
                 $scope.mostrarDetalleAlertas($scope.otsAlertas);
+
+                $("#buscador-alertas-ot").val('')
                 //swal.close();
             } else {
                 swal.close();
@@ -156,6 +158,19 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
         });
     }
 
+    $scope.buscarOtAlertaKeyUpOt=function(event){
+        if (event.which === 13){  
+            $scope.buscarAlertasDespacho() 
+        }   
+        if($("#buscador-alertas-ot").val().trim() === '')
+            $scope.buscarAlertasDespacho()
+    }
+
+
+    $scope.buscarAlertasDespacho=function(){
+        let textbusqeuda= $("#buscador-alertas-ot").val()
+        tableAlerta.search(textbusqeuda).draw()   
+    }
     $scope.idAlertaSelecionada = '';
     consultarAccionesAlerta = function(ot, os, latAlerta, longAlerta, latTecnico, longTecnico, idSubTipoAlerta, idIntervencion, idSubIntervencion, idTecnico, idAlerta, idFlujo) {
         if ($scope.idAlertaSelecionada !== ot) {

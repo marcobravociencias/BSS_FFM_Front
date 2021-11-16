@@ -88,10 +88,10 @@ app.service("usuarioPIService", function ($http) {
         });
     };
     
-    this.consultarTecnicos=function(params){
+    this.consultarUsuariosPorPuesto=function(params){
 		return $http({
 			method: "post",
-			url: "req/consultarTecnicosRegistroUsuario",
+			url: "req/consultarUsuariosPorTipoUsuario",
 			data:JSON.stringify(params),
             headers : {
                 'Content-Type' : 'application/json'
@@ -108,6 +108,17 @@ app.service("usuarioPIService", function ($http) {
 			transformRequest: angular.identity
 		});
 	};
+	
+	this.eliminarUsuario = function (params) {
+        return $http({
+            method: "post",
+            url: "req/eliminarUsuario",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    };
     
     //-----------------------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------------------

@@ -13,7 +13,7 @@
                 </button>
             </div>
 			<div class="modal-body">
-                <h5 class="header-table-tecnico-select"><span> T&eacute;cnico: </span> {{tecnicoSeleccionado}}</h5>
+                <h5 class="header-table-tecnico-select"><span> T&Eacute;CNICO: </span> {{tecnicoSeleccionado}}</h5>
                 <table class="table table-sm table-intervenciones-skills">
                     <tbody>
                         <tr class="intervencion-tecnico" ng-repeat="intervencionModal in listadoIntervencionesSeleccionadas | orderBy:'nombre' track by $index">

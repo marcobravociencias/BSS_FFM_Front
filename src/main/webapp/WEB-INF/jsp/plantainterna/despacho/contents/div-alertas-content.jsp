@@ -14,7 +14,8 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="input-group">
-                                <input type="text" class="form-control buscadorOT" placeholder="OT/OS">
+                                <input id="buscador-alertas-ot" ng-keyup="buscarOtAlertaKeyUpOt($event)"  type="text" class="form-control buscadorOT" placeholder="OT/OS">
+
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary btnBuscadorOTAlerta" type="button" id="button-addon2"><i class="fa fa-search"></i></button>
                                 </div>
@@ -364,10 +365,10 @@
             <div class="card cards-alertas">
                 <div class="card-header card-header-alerta-principal">
                     <div class="row">
-                        <div class="col-10 contenedor-titulo-acciones-alerta">
+                        <div class="col-11 contenedor-titulo-acciones-alerta">
                             <span id="idTituloAccionesAlertas" class="titulo-alerta-modal">OPCIONES</span>
                         </div>
-                        <div class="col-2 text-right">
+                        <div class="col-1 text-right">
                             <i class="fa fa-times icon-cancelar-opcion" ng-click="cerrarCamposAccionAlerta()" ng-show="!alertaSeleccionada"></i>
                         </div>
                     </div>

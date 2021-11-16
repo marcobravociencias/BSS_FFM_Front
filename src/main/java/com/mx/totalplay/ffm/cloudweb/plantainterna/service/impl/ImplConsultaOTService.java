@@ -118,6 +118,7 @@ public class ImplConsultaOTService implements ConsultaOTService {
                         // dataArray[count][8] = "<div class='tooltip-btn'> <span onclick='consultaMaterialesOT(" + String.valueOf(object.get("idOrden").getAsInt()) + ")' class='btn-floating btn-option btn-sm btn-default waves-effect waves-light'><th><i class='icono_cons_bg fa fa-wrench' aria-hidden='true'></i></th></span></div>";
                         dataArray[count][8] = "<div class='tooltip-btn'> <span onclick='consultaDetalleOt("+i+")' class='btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones'><th><i class='icono_cons_bg fa fa-bars' aria-hidden='true'></i></th></span></div>";
                         dataArray[count][9] = "<div class='tooltip-btn'> <span onclick='consultaImagenesOT(" + String.valueOf(object.get("idOrden").getAsInt()) + ", "+ String.valueOf(object.get("claveCliente")) + ")' class='btn-option btn-floating btn-evidencia btn-sm btn-secondary waves-effect waves-light'><th><i class='icono_cons_bg fa fa-picture-o' aria-hidden='true'></i></th></span></div>";
+                        dataArray[count][10] = "<div class='tooltip-btn'> <span onclick='consultaMaterialesOT(" + i + ")' class='btn-floating btn-option btn-sm btn-default waves-effect waves-light'><th><i class='icono_cons_bg fa fa-wrench' aria-hidden='true'></i></th></span></div>";
                         count++;
 
                     }
@@ -225,50 +226,22 @@ public class ImplConsultaOTService implements ConsultaOTService {
     }
 
     @Override
-    public ServiceResponseResult consultaMaterialesOts(ParamConsultaOTPI paramsOT) {
-        ServiceResponseResult response = ServiceResponseResult.builder().isRespuesta(false)
-                .resultDescripcion("sin datos").result(null).build();
-        //List<ConsultaOTVO> responseMateriales = new ArrayList<ConsultaOTVO>();
-        //ConsultaOTVO responseConsulta = new ConsultaOTVO();
-        try {
-//			responseMateriales = consultaOTPIRepository.consultaMaterialesOt(paramsOT);
-//			logger.info("### RESULT ### " + gson.toJson(responseMateriales));
-//
-//			if (responseMateriales.isEmpty()) {
-//				String params = gson.toJson(paramsOT);
-//				JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-//				JsonObject login = new JsonObject();
-//				login.addProperty(env.getProperty("param.textus.pi"), constantesGeneric.getTextIpUsuario());
-//				login.addProperty(env.getProperty("param.textus.drowssap"), constantesGeneric.getTextCredPad());
-//				login.addProperty(env.getProperty("param.textus.resu"), constantesGeneric.getTextCredUs());
-//				jsonObject.add("Login", login);
-//				jsonObject.addProperty(env.getProperty("param.header.grant_type"),
-//						env.getProperty("param.textus.grant_type"));
-//
-//				logger.info("json object params## " + jsonObject.toString());
-//				String url = "http://10.216.47.89" + constConsultaOT.getConsultaMaterialesOt();
-//				responseConsulta = (ConsultaOTVO) restCaller.callPostReturnClassBasicAuth(url, jsonObject.toString(),
-//						ConsultaOTVO.class);
-//				logger.info("### RESULT ### " + gson.toJson(responseConsulta));
-//				if (responseConsulta.getDescripcion() != null) {
-//					response = ServiceResponseResult.builder().isRespuesta(true).resultDescripcion("Accion completada")
-//							.result(responseConsulta).build();
-//				} else {
-//					response = ServiceResponseResult.builder().isRespuesta(true).resultDescripcion("Accion completada")
-//							.result(null).build();
-//				}
-//
-//			} else {
-//				response = ServiceResponseResult.builder().isRespuesta(true).resultDescripcion("Accion completada")
-//						.result(responseMateriales).build();
-//			}
+    public ServiceResponseResult consultaMaterialesOts(String params) {
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constConsultaOT.getConsultaMaterialesOt());
+        logger.info("### URL consultaMaterialesOts(): \n" + urlRequest);
+        Map<String, String> paramsRequestGet = new HashMap<>();
+        paramsRequestGet.put("idOrden", jsonObject.get("orden").getAsString());
 
-        } catch (Exception e) {
-            logger.info(e);
-            response = ServiceResponseResult.builder().isRespuesta(false).resultDescripcion("ERROR GENERAL")
-                    .result(null).build();
-        }
-        logger.info("### RESULT ### " + gson.toJson(response));
+        ServiceResponseResult response = restCaller.callGetBearerTokenRequest(
+                paramsRequestGet,
+                urlRequest,
+                ServiceResponseResult.class,
+                tokenAcces);
+
+        logger.info("### RESULT consultaMaterialesOts(): " + gson.toJson(response));
         return response;
     }
 

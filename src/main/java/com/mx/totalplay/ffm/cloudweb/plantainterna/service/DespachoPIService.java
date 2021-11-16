@@ -58,4 +58,8 @@ public interface DespachoPIService {
 	ServiceResponseResult consultaRepoDiarioEx(String params);
 
     ServiceResponseResult consultaInformacionVehiculoTecnico(String params);
+
+    ServiceResponseResult consultarCentroAlmacenByNumeroEmpleado(String params);
+
+	ServiceResponseResult consultaMaterialesTecnico(String params);
 }
