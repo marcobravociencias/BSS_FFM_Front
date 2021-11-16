@@ -986,21 +986,23 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     		}
     		
     		//PESTAÑA TÉCNICOS
-        	var checkTec = 0;
-    		angular.forEach($scope.listaTecnicos,function(tecnico,index){
-    			if(tecnico.checkedOpcion == true){
-    				checkTec++;
-    			}
-    		});
-    		if(checkTec < 1){
-    			validacionTecnicos = false;
-    			mensaje = mensaje + "<br/> *Técnico(s)";
-    			$("#labelTecnicosSeleccionadas").css("color", "#f55756");
-    			$("#contenedorTecnicosRegistro").css("border", "#f55756 solid 1px");
-    		}else{
-    			$("#labelTecnicosSeleccionadas").css("color", "rgb(70, 88, 107)");
-    			$("#contenedorTecnicosRegistro").css("border", "white solid 0px");
-    		}
+    		//POR EL MOMENTO SE QUITA LA VALIDACIÓN DE TÉCNICOS
+//        	var checkTec = 0;
+//    		angular.forEach($scope.listaTecnicos,function(tecnico,index){
+//    			if(tecnico.checkedOpcion == true){
+//    				checkTec++;
+//    			}
+//    		});
+//    		if(checkTec < 1){
+//    			validacionTecnicos = false;
+//    			mensaje = mensaje + "<br/> *Técnico(s)";
+//    			$("#labelTecnicosSeleccionadas").css("color", "#f55756");
+//    			$("#contenedorTecnicosRegistro").css("border", "#f55756 solid 1px");
+//    		}else{
+//    			$("#labelTecnicosSeleccionadas").css("color", "rgb(70, 88, 107)");
+//    			$("#contenedorTecnicosRegistro").css("border", "white solid 0px");
+//    		}
+    		
 		}else{
 			//PESTAÑA DESPACHOS
         	var checkDes = 0;
