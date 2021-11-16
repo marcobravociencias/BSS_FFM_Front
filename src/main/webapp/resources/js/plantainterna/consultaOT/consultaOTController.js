@@ -190,7 +190,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 						swal.close()
 					}
 				},
-				"columns": [null, null, null, null, null, null, null, null, null, null],
+				"columns": [null, null, null, null, null, null, null, null, null, null, null],
 				"language": idioma_espanol_not_font
 			});
 
@@ -766,63 +766,15 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		}).catch(err => handleError(err));
 	}
 
-	consultaMaterialesOT = function (ot, operario) {
+	consultaMaterialesOT = function (position) {
 		let params = {
-			Id_OT: ot,
-			id_propietario: '1'
+			orden: $scope.listadoConsultaOtsDisponibles[position],
 		}
 		swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 		swal.showLoading();
 		consultaOTService.consultaMaterialOt(JSON.stringify(params)).then(function success(response) {
 			console.log(response);
-			if (response.data !== undefined) {
-				if (response.data.respuesta) {
-					if (response.data.result !== undefined) {
-						if (response.data.result !== null) {
-							if (response.data.result.Materiales !== undefined && !response.data.result.Materiales.length) {
-								var content = '';
-								$.each(response.data.result.Materiales.Material, function (index, mat) {
-									content += '<tr>';
-									content += '<td>' + mat.Description + '</td>';
-									content += '<td>' + mat.SKU + '</td>';
-									content += '<td>' + mat.Type + '</td>';
-									content += '<td>' + mat.Unit + '</td>';
-									content += '</tr>';
-								});
-							} else {
 
-								if ($.isEmptyObject(response.data.result)) {
-									content += '<tr><td style="text-align: center;" colspan="10">' + 'Sin informacion' + '</td></tr>';
-								}
-								$.each(response.data.result, function (index, mat) {
-									content += '<tr>';
-									content += '<td>' + mat.descripcion + '</td>';
-									content += '<td>' + mat.sku + '</td>';
-									content += '<td>' + mat.cantidad + '</td>';
-									content += '<td>' + mat.unidad_medida + '</td>';
-									content += '</tr>';
-								});
-							}
-						} else {
-							content += '<tr><td style="text-align: center;" colspan="10">' + 'Sin informacion' + '</td></tr>';
-						}
-						$('.idotm').text(ot);
-						$('.operariom').text(operario);
-						$('#contentmateriales').html(content);
-						$('#modal-material-ot').modal('show');
-						swal.close();
-					} else {
-						swal.close();
-						mostrarMensajeErrorAlert(response.data.result.resultDescription)
-					}
-				} else {
-					swal.close();
-					mostrarMensajeErrorAlert(response.data.resultDescripcion);
-				}
-			} else {
-				swal.close();
-				mostrarMensajeErrorAlert("Error del servidor");
-			}
 		}).catch(err => handleError(err));
 	}
 

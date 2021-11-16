@@ -67,8 +67,7 @@ public class ConsultaOTController {
 	@PostMapping("/consultaMaterialesOts")
 	public ResponseEntity<?> consultaMaterialesOts(@RequestBody String params) {
 		logger.info("*** ConsultaOTController.class *** Metodo consultaMaterialesOts *** Objecto: " + params);
-		paramsOT = gson.fromJson(params, ParamConsultaOTPI.class);
-		result = consultaOTService.consultaMaterialesOts(paramsOT);
+		result = consultaOTService.consultaMaterialesOts(params);
 		if (result.getResult() instanceof Integer){
 			return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
 		}

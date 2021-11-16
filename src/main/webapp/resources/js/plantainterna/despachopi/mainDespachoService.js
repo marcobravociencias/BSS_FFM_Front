@@ -161,7 +161,7 @@ app.service("mainDespachoService", function ($http) {
 	this.consultandoMaterialesPI=function(params){
 		return $http({
 			method: "post",
-			url: "req/consultandoMaterialesPI",
+			url: "req/consultarCentroAlmacenByNumeroEmpleado",
 			data:JSON.stringify(params),
             headers : {
                 'Content-Type' : 'application/json'

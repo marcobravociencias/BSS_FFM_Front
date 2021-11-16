@@ -451,6 +451,26 @@ public class DespachoPIController {
         }
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
+
+    @PostMapping("/consultarCentroAlmacenByNumeroEmpleado")
+    public ResponseEntity<?> consultarCentroAlmacenByNumeroEmpleado(@RequestBody String params){
+        LOGGER.info("#### CONSULTANDO consultarCentroAlmacenByNumeroEmpleado: " + params);
+        ServiceResponseResult response = despachoService.consultarCentroAlmacenByNumeroEmpleado(params);
+        if (response.getResult() instanceof Integer) {
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping("/consultaMaterialesTecnico")
+    public ResponseEntity<?> consultaMaterialesTecnico(@RequestBody String params){
+        LOGGER.info("#### CONSULTANDO consultarCentroAlmacenByNumeroEmpleado: " + params);
+        ServiceResponseResult response = despachoService.consultaMaterialesTecnico(params);
+        if (response.getResult() instanceof Integer) {
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
 }
 
 

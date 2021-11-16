@@ -1029,4 +1029,47 @@ public class ImplDespachoPIService implements DespachoPIService {
         logger.info("### RESULT consultaInformacionVehiculoTecnico(): " + gson.toJson(response));
         return response;
     }
+
+    @Override
+    public ServiceResponseResult consultarCentroAlmacenByNumeroEmpleado(String params) {
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constDespachoPI.getConsultaCentroAlmacen());
+        logger.info("### URL consultarCentroAlmacenByNumeroEmpleado(): \n" + urlRequest);
+        Map<String, String> paramsRequestGet = new HashMap<>();
+        paramsRequestGet.put("numeroEmpleado", jsonObject.get("numEmpleado").getAsString());
+
+        ServiceResponseResult response = restCaller.callGetBearerTokenRequest(
+                paramsRequestGet,
+                urlRequest,
+                ServiceResponseResult.class,
+                tokenAcces);
+
+        logger.info("### RESULT consultarCentroAlmacenByNumeroEmpleado(): " + gson.toJson(response));
+        return response;
+    }
+
+    @Override
+    public ServiceResponseResult consultaMaterialesTecnico(String params) {
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constDespachoPI.getConsultaCentroAlmacen());
+        logger.info("### URL consultaMaterialesTecnico(): \n" + urlRequest);
+        Map<String, String> paramsRequestGet = new HashMap<>();
+        paramsRequestGet.put("centro", jsonObject.get("centro").getAsString());
+        paramsRequestGet.put("almacen", jsonObject.get("almacen").getAsString());
+        paramsRequestGet.put("idFlujo", jsonObject.get("idFlujo").getAsString());
+        paramsRequestGet.put("idUsuario", String.valueOf(principalDetail.getIdUsuario()));
+
+        ServiceResponseResult response = restCaller.callGetBearerTokenRequest(
+                paramsRequestGet,
+                urlRequest,
+                ServiceResponseResult.class,
+                tokenAcces);
+
+        logger.info("### RESULT consultaMaterialesTecnico(): " + gson.toJson(response));
+        return response;
+    }
 }

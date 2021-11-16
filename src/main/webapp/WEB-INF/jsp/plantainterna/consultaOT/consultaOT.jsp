@@ -183,6 +183,7 @@
                         <th><i class="fa fa-picture-o" id="muestra_IMG"></i></th> -->
                         <th><i class="fa fa-bars" id="modalDetalleOT"></i></th>
                         <th><i class="fa fa-picture-o" id="muestra_IMG"></i></th>
+                        <th><i class="fa fa-wrench" id="herramienta"></i></th>
                     </tr>
                 </thead>
                 <tbody>
