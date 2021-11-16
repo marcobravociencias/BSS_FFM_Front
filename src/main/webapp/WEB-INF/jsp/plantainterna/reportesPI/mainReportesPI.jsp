@@ -54,6 +54,7 @@
 				</button>
 			</div>
 			<ul class="list-group-flush list-group">
+				<!--
 				<li id="link_reporte_ordenes" class="list-group-item list-group-item-action elemento_link nav-link active">
 					<span class="fon_size_menu">OTS Planta Interna</span>
 				</li>
@@ -68,6 +69,11 @@
 				</li>
 				<li id="link_reporte_inspector" class="list-group-item list-group-item-action elemento_link nav-link">
 					<span class="fon_size_menu">Reporte Inspector</span>
+				</li>	
+				-->
+				
+				<li id="link_reporte_seguimiento_diario" class="list-group-item list-group-item-action elemento_link nav-link active">
+					<span class="fon_size_menu">Reporte Seguimiento Diario</span>
 				</li>
 			</ul>
 
@@ -77,9 +83,9 @@
 			<a class="menuOpt" id="btn_mostrar_nav" style="display:none;  margin:10px">
 				<i class="fa fa-bars" aria-hidden="true"></i>
 			</a>
-			<h3 id="texto_header_reportes" class="text-center">Reporte Ordenes de Trabajo</h3>
+			<h3 id="texto_header_reportes" class="text-center">Reporte Seguimiento Diario</h3>
 			
-			<div class="wraper_table content_reporte" id="container_reporte_ordenes">
+			<div  style="display: none;" class="wraper_table content_reporte" id="container_reporte_ordenes">
 				<jsp:include page="./reporteOrdenes.jsp"></jsp:include>
 			</div>
 			<div style="display: none;" class="wraper_table content_reporte" id="container_reporte_tecnico">
@@ -94,6 +100,10 @@
 			</div>
 			<div style="display: none;" class="wraper_table content_reporte" id="container_reporte_inspector">
 				<jsp:include page="./reporteInspector.jsp"></jsp:include>	
+			</div>
+			
+			<div class="wraper_table content_reporte" id="container_reporte_seguimiento_diario">
+				<jsp:include page="./reporteSeguimientoDiario.jsp"></jsp:include>	
 			</div>
 		</div>
 	</div>
@@ -122,6 +132,7 @@
 
 
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/reportesPI/reportesPIController.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/reportesPI/reportesPIFilters.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/reportesPI/reportesPIService.js"></script>
 	<script type="text/javascript">let contex_project = "${pageContext.request.contextPath}";</script>
 	<script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js"></script>

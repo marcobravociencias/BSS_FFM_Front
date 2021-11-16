@@ -431,6 +431,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
   //CUANDO SELECCCIONE UNA CIUDAD NATAL LOS RADIOS REGRESAN A SU ESTILO NORMAL (VALIDACIÓN) - PESTAÑA CONFIRMACIÓN MODIFICACIÓN USUARIO
     $scope.asignarCiudadNatalMod = function() {
     	$(".ciudadNatalMod").css("color", "#7c7c7d");
+    	$scope.verBtnModificar = true;
 	}
     
   //MÉTODO PARA VALIDACIÓN DE INFORMACIÓN DE LOS DATOS MOSTRADOS EN LA VISTA - PESTAÑA CONFIRMACIÓN MOD USUARIO
@@ -892,23 +893,25 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     		}
     		
     		//PESTAÑA TÉCNICOS
-        	var checkTec = 0;
-    		angular.forEach($scope.listaTecnicosMod,function(tecnico,index){
-    			if(tecnico.checkedOpcion == true){
-    				checkTec++;
-    			}
-    		});
-    		if(checkTec < 1){
-    			validacionTecnicos = false;
-    			mensaje = mensaje + "<br/> *Técnico(s)";
-    			$("#labelTecnicosSeleccionadosMod").css("color", "#f55756");
-    			$("#contenedorTecnicosMod").css("border", "#f55756 solid 1px");
-    		}else{
-    			$("#labelTecnicosSeleccionadosMod").css("color", "rgb(70, 88, 107)");
-    			$("#contenedorTecnicosMod").css("border", "white solid 0px");
-    		}
+    		//POR EL MOMENTO SE QUITA LA VALIDACIÓN DE TÉCNICOS
+//        	var checkTec = 0;
+//    		angular.forEach($scope.listaTecnicosMod,function(tecnico,index){
+//    			if(tecnico.checkedOpcion == true){
+//    				checkTec++;
+//    			}
+//    		});
+//    		if(checkTec < 1){
+//    			validacionTecnicos = false;
+//    			mensaje = mensaje + "<br/> *Técnico(s)";
+//    			$("#labelTecnicosSeleccionadosMod").css("color", "#f55756");
+//    			$("#contenedorTecnicosMod").css("border", "#f55756 solid 1px");
+//    		}else{
+//    			$("#labelTecnicosSeleccionadosMod").css("color", "rgb(70, 88, 107)");
+//    			$("#contenedorTecnicosMod").css("border", "white solid 0px");
+//    		}
+    		
 		}else{
-//			PESTAÑA DESPACHOS
+			//PESTAÑA DESPACHOS
         	var checkDes = 0;
     		angular.forEach($scope.listaDespachosMod,function(despacho,index){
     			if(despacho.checkedOpcion == true){

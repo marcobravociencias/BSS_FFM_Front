@@ -12,8 +12,8 @@
                         <div class="col-2  columna-filtro-ind-rep input-box" style="width: 120px !important;">
                             <label for="filtro-estatus-substatus" class="label-filter"></label>
                             <div class="dropdown">
-                                <input readonly data-mdb-toggle="dropdown" aria-expanded="false"
-                                    placeholder="Estatus" type="text" id="filtro-estatus-reporte"
+                                <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Estatus"
+                                    type="text" id="filtro-estatus-reporte"
                                     class="input-filtro-reporte form-control form-control-sm" />
                                 <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-estatus-rep">
                                     <li style="text-align: center;">
@@ -70,17 +70,20 @@
                         <div class="col-1 input-box">
                             <label for="idot" class="label-filter">OT</label>
                             <input type="text" id="idot-reporte" placeholder="Ej: 65434" ng-model="repDiario.idOrden"
-                            ng-change="limpiarCamposReporte(2)" autocomplete="off" class="form-control input-filtro-reporte form-control-sm">
+                                ng-change="limpiarCamposReporte(2)" autocomplete="off"
+                                class="form-control input-filtro-reporte form-control-sm">
                         </div>
                         <div class="col-1 input-box">
                             <label for="idos" class="label-filter">OS</label>
                             <input type="text" id="idos-reporte" placeholder="Ej: 23214" ng-model="repDiario.folio"
-                            ng-change="limpiarCamposReporte(1)" autocomplete="off" class="form-control input-filtro-reporte form-control-sm">
+                                ng-change="limpiarCamposReporte(1)" autocomplete="off"
+                                class="form-control input-filtro-reporte form-control-sm">
                         </div>
                         <div class="col-1 input-box">
                             <label for="cuenta" class="label-filter">Cuenta</label>
-                            <input type="text" id="cuenta-reporte" placeholder="Ej: 0093484" ng-model="repDiario.idCuenta"
-                            ng-change="limpiarCamposReporte(3)" autocomplete="off" class="form-control input-filtro-reporte form-control-sm">
+                            <input type="text" id="cuenta-reporte" placeholder="Ej: 0093484"
+                                ng-model="repDiario.idCuenta" ng-change="limpiarCamposReporte(3)" autocomplete="off"
+                                class="form-control input-filtro-reporte form-control-sm">
                         </div>
                         <div class="col-2 columna-filtro-ind-rep input-box">
                             <label for="tipo_reporte" class="label-filter">Tipo fecha</label>
@@ -115,8 +118,8 @@
                             </button>
                         </div>
                         <div class="col-1 download-file">
-                            <img alt="excel" src="${pageContext.request.contextPath}/resources/img/generic/group-10.png" style="cursor:pointer"
-                                onclick="downloadExcelReportFile()">
+                            <img alt="excel" src="${pageContext.request.contextPath}/resources/img/generic/group-10.png"
+                                style="cursor:pointer" onclick="downloadExcelReportFile()">
                         </div>
 
                     </div>
@@ -125,23 +128,20 @@
                             <table class="table table-hover" cellspacing="0" id="table-reporte">
                                 <thead id="head_table">
                                     <tr>
-                                        <th>OT</th> 
+                                        <th>OT</th>
                                         <th>OS</th>
-                                        <th>CUENTA</th>
-                                        <th>INTERVENCI&Oacute;N</th>
-                                        <th>SUBINTERVENCI&Oacute;N</th>
-                                        <th>STATUS</th>
+                                        <th>TIPO</th>
+                                        <th>SUBTIPO</th>
+                                        <th>ESTATUS</th>
                                         <th>ESTADO</th>
-                                        <th>GEOGRAF&Iacute;A</th>
-                                        <th>FECHA CREACI&Oacute;N</th>   
-                                        <th>FECHA ATENCI&Oacute;N</th>
-                                        <th>FECHA CONFIRMACI&Oacute;N</th>
-                                        <th>FECHA AGENDA</th>
-                                        <th>FECHA INICIO ORDEN</th>
-                                        <th>FECHA FIN ORDEN</th>
-                                        <th>TURNO</th>
-                                        <th>OPERARIO</th>
+                                        <th>MOTIVO</th>
+                                        <th>CIUDAD</th>
+                                        <th>ESTADO</th>
                                         <th>#EMPLEADO</th>
+                                        <th>T&Eacute;CNICO</th>
+                                        <th>FECHA CREACI&Oacute;N</th>
+                                        <th>FECHA AGENDA</th>
+                                        <th>FECHA FIN</th>
                                     </tr>
                                 </thead>
                                 <tbody>

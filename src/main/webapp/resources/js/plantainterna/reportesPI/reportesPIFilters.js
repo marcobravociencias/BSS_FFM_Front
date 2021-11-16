@@ -1,22 +1,24 @@
 app.filtroReportes=function($scope,misProyectosManagService){
-	$scope.seleccionarTodos=function(){
-        $scope.filtrosGeneral.General_filtros.filtros.map(function(e){
+    $scope.seleccionarTodos=function(paramFiltroParent){
+        console.log(paramFiltroParent);
+        paramFiltroParent.map(function(e){
             e.checkedOpcion=true
         })
 
-        $scope.filtrosGeneral.General_filtros.filtros.map(function(e){
-            e.subfiltros.map(function(j){
+        paramFiltroParent.map(function(e){
+            e.children.map(function(j){
                 j.checkedOpcion=true
                 return j
             })
         }) 
     }
-    $scope.deseleccionarTodos=function(){
-        $scope.filtrosGeneral.General_filtros.filtros.map(function(e){
+    $scope.deseleccionarTodos=function(paramFiltroParent){
+        console.log(paramFiltroParent);
+        paramFiltroParent.map(function(e){
             e.checkedOpcion=false
         })
-        $scope.filtrosGeneral.General_filtros.filtros.map(function(e){
-            e.subfiltros.map(function(j){
+        paramFiltroParent.map(function(e){
+            e.children.map(function(j){
                 j.checkedOpcion=false
                 return j
             })
@@ -44,5 +46,21 @@ app.filtroReportes=function($scope,misProyectosManagService){
         let cantidadChecked=intervencion.subfiltros.filter(function(e){return e.checkedOpcion}).length
         intervencion.checkedOpcion=cantidadSubfiltros !== cantidadChecked ? false :true
     } 
+
+    $scope.setCheckFiltroGeneric=function( filtroParent){
+        console.log( filtroParent.checkedOpcion)
+        console.log("#####---------")
+        console.log(  filtroParent.children )
+
+         filtroParent.checkedOpcion=! filtroParent.checkedOpcion
+         filtroParent.children.map(function(e){
+            e.checkedOpcion= filtroParent.checkedOpcion
+            return e
+        })
+        console.log("#####")
+        console.log(  filtroParent.children )
+        console.log( filtroParent.checkedOpcion)
+    }
+ 
 	
 }

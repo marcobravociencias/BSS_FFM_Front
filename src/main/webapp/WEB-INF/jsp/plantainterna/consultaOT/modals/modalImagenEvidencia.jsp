@@ -44,7 +44,7 @@
 												class="magnific item imgtipo_{{img.idCatEvidencia}}"
 												data-title="{{img.nombreEvidencia}}">
 												<img class="z-depth-1 img_evidencia"
-													src="{{img.url ? img.url : './resources/img/generic/not_found.png'}}" width="180"
+													ng-src="{{img.url ? img.url : './resources/img/generic/not_found.png'}}" width="180"
 													height="130" />
 											</a>
 											<div class="middle_img_evidencia">

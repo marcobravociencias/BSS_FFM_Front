@@ -7,6 +7,7 @@ app.controller('reportesController', ['$scope','$q','reportesPIService', 'generi
 	let reporteDespachoTabla;
 	let reporteAuxiliarTabla;
 	let reporteInspectorTabla;
+	let reporteSeguimientoTable;
 	$scope.filtrosGeneral = {};
 	$scope.initComponents=function(){
 		console.log("Entra a inicializar elementos");
@@ -22,6 +23,7 @@ app.controller('reportesController', ['$scope','$q','reportesPIService', 'generi
 			$(".elemento_link ").removeClass("active");
 			$(this).addClass('active');
 			switch($(this).attr('id')){
+				/*
 				case 'link_reporte_ordenes':
 					console.log("entra ordenes")
 					$("#texto_header_reportes").text("Reporte Ordenes de Trabajo Planta Interna"); 
@@ -30,6 +32,7 @@ app.controller('reportesController', ['$scope','$q','reportesPIService', 'generi
 					$('#container_reporte_tecnico').hide();
 					$('#container_reporte_auxiliar').hide();
 					$('#container_reporte_inspector').hide();
+					$('#container_reporte_seguimiento_diario').hide();
 					//$('.content_reporte').hide();
 					//$("#reporteOrdenesTable").show(); 
 					
@@ -45,6 +48,7 @@ app.controller('reportesController', ['$scope','$q','reportesPIService', 'generi
 					$('#container_reporte_despacho').hide();
 					$('#container_reporte_auxiliar').hide();
 					$('#container_reporte_inspector').hide();
+					$('#container_reporte_seguimiento_diario').hide();
 					//$('#reporteOrdenesTable').hide();
 					console.log("sale tecnico")
 					
@@ -58,6 +62,7 @@ app.controller('reportesController', ['$scope','$q','reportesPIService', 'generi
 					$('#container_reporte_ordenes').hide();
 					$('#container_reporte_auxiliar').hide();
 					$('#container_reporte_inspector').hide();
+					$('#container_reporte_seguimiento_diario').hide();
 					//$('#reporteOrdenesTable').hide();
 					console.log("sale despacho")
 					
@@ -70,6 +75,7 @@ app.controller('reportesController', ['$scope','$q','reportesPIService', 'generi
 					$('#container_reporte_ordenes').hide();
 					$('#container_reporte_despacho').hide();
 					$('#container_reporte_inspector').hide();
+					$('#container_reporte_seguimiento_diario').hide();
 					//$('#reporteOrdenesTable').hide();
 					console.log("sale aux")
 					
@@ -80,8 +86,21 @@ app.controller('reportesController', ['$scope','$q','reportesPIService', 'generi
 					$('#container_reporte_tecnico').hide();
 					$('#container_reporte_ordenes').hide();
 					$('#container_reporte_despacho').hide();
+					$('#container_reporte_seguimiento_diario').hide();
 					$('#container_reporte_inspector').show();
 
+				break;
+				*/
+				case 'link_reporte_seguimiento_diario':
+					$("#texto_header_reportes").text("Reporte Seguimiento Diario");
+					$('#container_reporte_auxiliar').hide();
+					$('#container_reporte_tecnico').hide();
+					$('#container_reporte_ordenes').hide();
+					$('#container_reporte_despacho').hide();
+					$('#container_reporte_inspector').hide();
+					$('#container_reporte_seguimiento_diario').show();
+
+				break;
 					
 			}
 			
@@ -320,11 +339,9 @@ $scope.abrirModalGeografiaRep=function(){
 			autoclose: true,
 			language: 'es',
 			todayHighlight: true,
-			clearBtn: true
+			clearBtn: false
 		});
 		$('.datepicker').datepicker('update', new Date());
-		
-		
 		
 		
 		reporteOrdenesTabla = $('#reporteOrdenesTable').DataTable({
@@ -386,6 +403,18 @@ $scope.abrirModalGeografiaRep=function(){
 			"language": idioma_espanol_not_font,
 			"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
 
+		});
+
+		reporteSeguimientoTable = $('#reporteSeguimientoTable').DataTable({
+			"paging": true,
+			"lengthChange": false,
+			"searching": false,
+			"ordering": false,
+			"pageLength": 10,
+			"info": false,
+			"autoWidth": true,
+			"language": idioma_espanol_not_font,
+			"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
 		});
 		$scope.consultarCatalagosPI();
 		
@@ -1020,7 +1049,148 @@ $scope.abrirModalGeografiaRep=function(){
 		}
 		
 	}	
-	//$scope.iniciarReporteOrdenes();  
+
+	$scope.consultarReporteDiario = function(){
+        let mensaje = '<ul>';
+        let isValid = true;
+        let numerosOnly = /^[0-9]*$/i;
+        $scope.resultReporteDiario = {};
+
+        let statuscopy = [];
+        if($scope.filtrosGeneral.estatusdisponibles){
+            angular.forEach($scope.filtrosGeneral.estatusdisponibles,(e,i)=>{
+                statuscopy.push(e.id); 
+            })
+        }
+        
+        let intervencioncopy= [];
+        if($scope.filtrosGeneral.tipoOrdenes){
+            angular.forEach($scope.filtrosGeneral.tipoOrdenes,(e,i)=>{
+                intervencioncopy.push(e.id); 
+            })
+        }
+        
+        let paramsTemp = {};
+        
+        if(!statuscopy.length){
+            mensaje += '<li>Introducir Estatus</li>';
+            isValid = false;
+        }
+    
+        if(!intervencioncopy.length){
+            mensaje += '<li>Introducir Intervenci\u00F3n</li>';
+            isValid = false;
+        }
+
+        if(!numerosOnly.test($("#idot-reporte").val())){
+            mensaje += '<li>El campo OT debe ser n&uacute;merico</li>';
+            isValid = false;
+        }
+
+        if($("#tipo_reporte").val() == "" || $("#tipo_reporte").val() == undefined){
+            mensaje += '<li>Selecciona Tipo fecha</li>';
+            isValid = false;
+        } else {
+            $scope.repDiario.fechaSeleccionada = $("#tipo_reporte").val()
+        }
+
+        if(!validarFecha('filtro_fecha_inicio_reporte','filtro_fecha_fin_reporte')){
+            mensaje += '<li>La fecha final debe ser mayor que la fecha inicio</li>';
+            isValid = false;
+        }
+
+        if(!isValid){
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        }else{
+            paramsTemp.fechaInicio = $scope.getFechaFormato($("#filtro_fecha_inicio_reporte").val());
+            paramsTemp.fechaFin =  $scope.getFechaFormato($("#filtro_fecha_fin_reporte").val());
+            paramsTemp.tipoIntervencion =  intervencioncopy;
+            paramsTemp.estatusOt = statuscopy;
+            paramsTemp.fechaSeleccionada =  $scope.repDiario.fechaSeleccionada;
+            paramsTemp.elementosPorPagina = 10;
+            paramsTemp.pagina = 1;
+			console.log(paramsTemp);
+            if($scope.repDiario.idOrden && $scope.repDiario.idOrden != ""){
+                paramsTemp.idOrden =  $scope.repDiario.idOrden;
+            }
+
+            if($scope.repDiario.folio && $scope.repDiario.folio != ""){
+                paramsTemp.folio =  $scope.repDiario.folio;
+            }
+
+            if($scope.repDiario.idCuenta && $scope.repDiario.idCuenta != ""){
+                paramsTemp.idCuenta =  $scope.repDiario.idCuenta;
+            }
+
+            if(reporteSeguimientoTable){                              
+                reporteSeguimientoTable.destroy() 
+            }   
+            reporteSeguimientoTable = $('#reporteSeguimientoTable').DataTable({
+                "processing": false,
+                "ordering": false,
+                "serverSide": true,
+                "scrollX": false,
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": false,
+                "pageLength": 10,
+                "info": false,
+                "ajax": {
+                    "url": "req/consultarReporteDiario",
+                    "type": "POST",
+                    "data": paramsTemp,
+                    "beforeSend": function () {
+                        if(!swal.isVisible() ){
+                            swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                            swal.showLoading();
+                        }
+                        
+                    },
+                    "dataSrc": function (json) {
+                        $scope.resultReporteDiario = json.registrosTotales
+                        return json.data;
+                    },
+                    "error":function(xhr, error, thrown){
+                        handleError(xhr)
+                    }, 
+                    "complete": function () {
+                        swal.close()
+                    }
+                },
+				
+                "columns": [null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+                "language": idioma_espanol_not_font,
+                "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">', 
+                dom: 'Bfrtip', 
+                buttons:  
+                [{ 
+                    extend: 'excelHtml5', 
+                    title: 'Reporte Seguimiento Diario', 
+                    text: 'Exportar Excel' 
+                }],
+            });
+
+			if(!reporteSeguimientoTable){                              
+                reporteSeguimientoTable = $('#reporteSeguimientoTable').DataTable({
+					"paging": true,
+					"lengthChange": false,
+					"searching": false,
+					"ordering": false,
+					"pageLength": 10,
+					"info": false,
+					"autoWidth": true,
+					"language": idioma_espanol_not_font,
+					"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+				});
+            }
+        }
+    }
+    
+
+	$scope.iniciarReporteOrdenes();  
 	//$scope.initComponents();
 	$("#li-reporte-navbar").addClass('active')
 
@@ -1030,5 +1200,5 @@ $scope.abrirModalGeografiaRep=function(){
 		$("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
     });
 	
-	  
+	
 	}]);

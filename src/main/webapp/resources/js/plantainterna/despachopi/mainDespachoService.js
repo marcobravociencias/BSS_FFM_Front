@@ -168,6 +168,18 @@ app.service("mainDespachoService", function ($http) {
             }
 		});
 	}
+	this.consultaMaterialesPorAlmacenUserCentro=function(params){
+		return $http({
+			method: "post",
+			url: "req/consultaMaterialesTecnico",
+			data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	}
+
+	
 
 	this.cambiarEstatusOrdenTrabajoPI=function(params){
 		return $http({
