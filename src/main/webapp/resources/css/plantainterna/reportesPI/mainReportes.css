@@ -157,6 +157,10 @@ label#link_reporte_excel_Despacho {
     top: 0rem !important;
     margin-left: 3em;
 }
+.form-control.form-control-sm{
+    font-size: .7rem;
+}
+
 .filtro_dropdown button.btn.btn-indigo.btn-sm {
   width: 43%;
   text-align: center;
@@ -1079,7 +1083,7 @@ div#contenedor_mensual_cluster .selectLabel {
   .columna-filtro-indR::after {
     content: "";
     position: absolute;
-    right: 12%;
+    right: 5%;
     top: 40%;
     width: 0;
     height: 0;
@@ -1116,4 +1120,32 @@ div#contenedor_mensual_cluster .selectLabel {
     position: absolute;
     left: 190px;
     top: -6px;
+}
+
+
+//Reporte Seguimiento Diario
+
+div#reporteSeguimientoTable_filter {
+   display: none;
+}
+thead#thead_reporteSeguimiento tr th {
+    font-size: 0.6em;
+    padding: 1em 1em 1em;
+    text-align: center;
+}
+#reporteSeguimientoTable tr td {
+    font-size: 0.6em;
+    font-family: "Montserrat" !important;
+    text-align: center;
+}
+#reporteSeguimientoTable_length select.form-control.form-control-sm {
+    border: none;
+}
+div#reporteSeguimientoTable_filter {
+    display: none;
+}
+div#reporteSeguimientoTable_info {
+    font-family: "Montserrat";
+    font-size: 0.8em;
+    color: #a5a5a5 !important;
 }
