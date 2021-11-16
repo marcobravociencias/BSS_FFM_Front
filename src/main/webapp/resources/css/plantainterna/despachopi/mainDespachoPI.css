@@ -2285,3 +2285,15 @@ b.text-no-seleccion-geografia {
    padding-left:0;
 }
 
+
+
+img.img-tecnico-materiales {
+  /* cursor: pointer; */
+  border-radius: 5%;
+  -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+}
+
+#tabs-materiales-sap{
+  margin-bottom: 1em;
+}

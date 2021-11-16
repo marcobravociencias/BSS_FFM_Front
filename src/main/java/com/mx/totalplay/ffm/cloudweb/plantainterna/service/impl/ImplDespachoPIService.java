@@ -1050,14 +1050,16 @@ public class ImplDespachoPIService implements DespachoPIService {
         JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
         LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
         String tokenAcces = principalDetail.getAccess_token();
-        String urlRequest = principalDetail.getDireccionAmbiente().concat(constDespachoPI.getConsultaCentroAlmacen());
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constDespachoPI.getConsultaMateriales());
         logger.info("### URL consultaMaterialesTecnico(): \n" + urlRequest);
         Map<String, String> paramsRequestGet = new HashMap<>();
         paramsRequestGet.put("centro", jsonObject.get("centro").getAsString());
         paramsRequestGet.put("almacen", jsonObject.get("almacen").getAsString());
         paramsRequestGet.put("idFlujo", jsonObject.get("idFlujo").getAsString());
-        paramsRequestGet.put("idUsuario", String.valueOf(principalDetail.getIdUsuario()));
-
+        //paramsRequestGet.put("idUsuario", String.valueOf(principalDetail.getIdUsuario()));
+        paramsRequestGet.put("idUsuario", jsonObject.get("idUsuario").getAsString() );
+        
+        
         ServiceResponseResult response = restCaller.callGetBearerTokenRequest(
                 paramsRequestGet,
                 urlRequest,

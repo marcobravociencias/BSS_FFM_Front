@@ -1,3 +1,4 @@
+var tableMaterialesDespacho;
 app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericService) {
     $scope.listadoIconografia = undefined
 
@@ -394,19 +395,68 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     }
 
     abrirInformacionMateriales = function (nEmpleado) {
+        let tecnicoTemp=angular.copy($scope.listadoTecnicosGeneral.find(e=>{return e.numeroEmpleado===nEmpleado}) )
         console.log("function 15"+nEmpleado)
-
         let params =  {
-            numEmpleado: nEmpleado
-        }
+            numEmpleado: nEmpleado,
+            centro:'NA',
+            almacen:'NA',
+           // idUsuario:tecnicoTemp.idTecnico ,  
+            idUsuario:233 ,
+            idFlujo:1        
+        }          
+        $scope.tecnicoConsultaMateriales=tecnicoTemp
+        $scope.$apply()
 
-        swal({ text: 'Consultando datos ...', allowOutsideClick: false });
+      /**  if ( tableMaterialesDespacho ) 
+            tableMaterialesDespacho .destroy();
+        **/
+        swal.showLoading();
+        mainDespachoService.consultaMaterialesPorAlmacenUserCentro(params).then(function success(response) {
+           console.log(response)
+           if (response.data.respuesta) {
+               if (response.data.result) {
+                    swal.close()    
+                    $("#modalMaterialesOperario").modal('show')        
+                    let tempArrayResult=response.data.result.materiales
+                    tempArrayResult= tempArrayResult.splice(0,5)
+                    $("#table-materiales-temp tbody").empty()
+                    angular.forEach(tempArrayResult,function(elem,index){
+                        $("#table-materiales-temp tbody").append(`
+                            <tr>
+                                <td >${elem.sku} </td>
+                                <td >${elem.descripcion} </td>
+                                <td >${elem.lote} </td>
+                                <td >${elem.cantidad} </td>
+                                <td >${elem.unidadMedida} </td>
+                                <td >${elem.precio} </td>
+                                <td >${elem.familia} </td>
+                                <td >${elem.categoria} </td>
+                                <td >${elem.grupo} </td>
+                            </tr>
+                        `)
+                    })
+                   // $scope.inicializarTableMateriales()
+                    
+               } else {
+                   //$scope.inicializarTableMateriales()
+                    swal.close()
+                    mostrarMensajeWarningValidacion('No se encontro informaci&oacute;n.')
+               }
+           } else {
+               //$scope.inicializarTableMateriales()
+                swal.close()
+                mostrarMensajeErrorAlert(response.data.resultDescripcion)
+           }
+        }).catch(err => handleError(err))
+
+        /**swal({ text: 'Consultando datos ...', allowOutsideClick: false });
         swal.showLoading();
         mainDespachoService.consultandoMaterialesPI(params).then(function success(response) {
            console.log(response)
            if (response.data.respuesta) {
                if (response.data.result) {
-                   
+                    $("#modalMaterialesOperario").modal('show')
                } else {
                    swal.close()
                    mostrarMensajeWarningValidacion('No se encontro informaci&oacute;n.')
@@ -415,9 +465,25 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                swal.close()
                mostrarMensajeErrorAlert(response.data.resultDescripcion)
            }
-        }).catch(err => handleError(err))
+        }).catch(err => handleError(err)) **/
     }
- 
+
+    $scope.inicializarTableMateriales=function(){           
+        tableMaterialesDespacho=$('#table-materiales-temp').DataTable({
+            "processing": false,
+			"ordering": false,
+			"serverSide": false,
+			"scrollX": false,
+			"paging": true,
+			"lengthChange": false,
+			"searching": false,
+			"ordering": false,
+			"pageLength": 10,
+			"columns": [null, null, null, null, null, null, null, null,null],
+            "language":idioma_espanol_not_font
+        });        
+    }
+  
     $scope.cambiarEstatusOperario = function () {
         console.log("Entra a cambiar estatus:")
         var n = $('#id-status-tecnico').val();
