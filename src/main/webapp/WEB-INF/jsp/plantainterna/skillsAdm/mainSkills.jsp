@@ -91,8 +91,8 @@
 													<img src="{{tecnico.urlFotoPerfil !=undefined && tecnico.urlFotoPerfil ? tecnico.urlFotoPerfil :'./resources/img/plantainterna/despacho/tecnicootasignada.png'}}" class="circle z-depth-2 responsive-img">
 												</div>
 												<div id="{{tecnico.idUsuario}}" class="col-10 pl-0" ng-click="consultarSkillsAsignadasTecnico(tecnico.idUsuario, tecnico.nombre, tecnico.apellidoPaterno, tecnico.apellidoMaterno)">
-													<p class="text-tecnico-nombre">{{tecnico.nombre}}</p>
-													<p class="text-adds-teccnico">{{tecnico.no_empleado ? tecnico.no_empleado : 'Sin dato'}} - {{tecnico.apellidoPaterno}} {{tecnico.apellidoMaterno}}</p>
+													<p class="text-tecnico-nombre">{{tecnico.nombre}} {{tecnico.apellidoPaterno}} {{tecnico.apellidoMaterno}}</p>
+													<p class="text-adds-teccnico">{{tecnico.no_empleado ? tecnico.no_empleado : 'Sin dato'}} - {{tecnico.geografia}}</p>
 												</div>
 												<div id="checkTecnicoSeleccionado{{tecnico.idUsuario}}"	class="content-checkbox-operario checkTecnicoSeleccionado" style="display: none">
 													<input class="form-check-input input-operario-checkbox" type="checkbox" checked="checked" disabled="disabled" />

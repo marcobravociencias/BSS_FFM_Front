@@ -36,6 +36,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     $scope.listaPermisosSeleccionados = [];
     $scope.listaTecnicos = [];
     $scope.listaDespachos = [];
+    $scope.listaIdsGeografiaCiudadNatalRegistro = [];
     $scope.informacionRegistro.asignacionAutomatica = 0;
     $scope.mostrarAccesos = false;
     $scope.mostrarTecnicos = false;
@@ -465,6 +466,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
         	$scope.listaGeografiasSeleccionadas = [];
         	$scope.informacionRegistro.geografias = [];
         	$scope.listaCiudadNatalRegistro = [];
+        	$scope.listaIdsGeografiaCiudadNatalRegistro = [];
         	$scope.listaTecnicos = [];
         	var geografiasTree = $('#arbolGeografiaRegistro').jstree("get_selected", true);
         	geografiasTree.forEach(geo =>{
@@ -508,6 +510,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
         		});
         		if(existeCiudadNatal == false){
         			$scope.listaCiudadNatalRegistro.push(geo);
+        			$scope.listaIdsGeografiaCiudadNatalRegistro.push(geo.id);
         		}
         		
         	});
@@ -709,10 +712,20 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     			fechaAlta: fechaSeleccionada[2] + '-' + fechaSeleccionada[1] + '-' + fechaSeleccionada[0],
     			geografias: $scope.informacionRegistro.geografias,
     			intervenciones: $scope.informacionRegistro.intervenciones,
-    			idOperarios: $scope.isTecnico == true ? $scope.informacionRegistro.despachos : $scope.informacionRegistro.tecnicos,
+    			
+    			//DADO QUE EN EL SERVICIO SU VALIDACIÓN ES QUE VAYA UN CAMPO U OTRO (idOperarios O idDespachos), SE COMENTAN LAS SIGUIENTES 2 LÍNEAS
+//    			idOperarios: $scope.isTecnico == true ? [] : $scope.informacionRegistro.tecnicos,
+//    			idDespachos: $scope.isTecnico == true ? $scope.informacionRegistro.despachos : [],
+    			
     			permisos: $scope.isTecnico == true ? [] : $scope.informacionRegistro.permisos,
     			idAsignacionAutomatica: $scope.informacionRegistro.asignacionAutomatica
     	};
+    	
+    	if($scope.isTecnico == true){
+    		paramsRegistro.idDespachos = $scope.informacionRegistro.despachos;
+    	}else{
+    		paramsRegistro.idOperarios = $scope.informacionRegistro.tecnicos;
+    	}
 
     	var respuestaValidacionRegistro = $scope.validarInformacionRegistro();
     	if(respuestaValidacionRegistro){
@@ -1266,42 +1279,43 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	//MÉTODO PARA CONSULTAR LOS DESPACHOS A ASIGNAR AL TÉCNICO QUE SE REGISTRARÁ - PESTAÑA DESPACHOS REGISTRO USUARIO
 	$scope.consultarDespachos = function() {
 		$scope.listaDespachos = [];
-		let params = {idsGeografia:$scope.informacionRegistro.geografias, idTipoUsuario:$scope.idPuestoDespacho.id};
-    	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
-		swal.showLoading();
-    	$q.all([
-    		usuarioPIService.consultarUsuariosPorPuesto(params)
-        ]).then(function(results) {
-        	if (results[0].data !== undefined) {
-            	if(results[0].data.respuesta){
-            		if(results[0].data.result.result.usuarios !== null){
-	            		if(results[0].data.result.result.usuarios.length > 0){
-	            			$scope.listaDespachos = results[0].data.result.result.usuarios;
-	            			$("#checkTotdosDespachoRegistro").prop("checked",false);
-	            	    	angular.forEach($scope.listaDespachos,function(despacho,index){
-	            	    		despacho.checkedOpcion = false;
-	            			});
+		if($scope.listaIdsGeografiaCiudadNatalRegistro.length > 0){
+			let params = {idsGeografia:$scope.listaIdsGeografiaCiudadNatalRegistro, idTipoUsuario:$scope.idPuestoDespacho.id};
+	    	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
+			swal.showLoading();
+	    	$q.all([
+	    		usuarioPIService.consultarUsuariosPorPuesto(params)
+	        ]).then(function(results) {
+	        	if (results[0].data !== undefined) {
+	            	if(results[0].data.respuesta){
+	            		if(results[0].data.result.result.usuarios !== null){
+		            		if(results[0].data.result.result.usuarios.length > 0){
+		            			$scope.listaDespachos = results[0].data.result.result.usuarios;
+		            			$("#checkTotdosDespachoRegistro").prop("checked",false);
+		            	    	angular.forEach($scope.listaDespachos,function(despacho,index){
+		            	    		despacho.checkedOpcion = false;
+		            			});
+		            		}else{
+		            			$scope.listaDespachos = [];
+		            		}
 	            		}else{
 	            			$scope.listaDespachos = [];
 	            		}
-            		}else{
-            			$scope.listaDespachos = [];
-            		}
-            	}else{
-            		$scope.listaDespachos = [];
-            	}
-        	}else{
-        		toastr.error('Error interno en el servidor.');
-        	}
-        	swal.close();
-        });
-				
+	            	}else{
+	            		$scope.listaDespachos = [];
+	            	}
+	        	}else{
+	        		toastr.error('Error interno en el servidor.');
+	        	}
+	        	swal.close();
+	        });
+		}
 	}
 	
 	//MÉTODO PARA CONSULTAR LOS TÉCNICOS A ASIGNAR AL USUARIO (QUE NO SEA TÉCNICO) QUE SE REGISTRARÁ - PESTAÑA TÉCNICOS REGISTRO USUARIO
 	$scope.consultarTecnicos = function() {
 		$scope.listaTecnicos = [];
-		let params = {idsGeografia:$scope.informacionRegistro.geografias, idTipoUsuario:$scope.idPuestoTecnico.id};
+		let params = {idsGeografia:$scope.listaIdsGeografiaCiudadNatalRegistro, idTipoUsuario:$scope.idPuestoTecnico.id};
     	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
 		swal.showLoading();
     	$q.all([
@@ -1366,6 +1380,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		$scope.listaTecnicos = [];
 		$scope.listaDespachos = [];
 		$scope.listaCiudadNatalRegistro = [];
+		$scope.listaIdsGeografiaCiudadNatalRegistro = [];
 		$('#arbolIntervencionRegistro').jstree("deselect_all");
 		$('#arbolIntervencionRegistro').jstree("close_all");
     	$('#arbolGeografiaRegistro').jstree("deselect_all");
@@ -1454,10 +1469,10 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	            	}
 	            });
 	        }else{
-	        	swal({type: "warning", title:"Aviso", text:"¡Ingresa el motivo de la baja!", showConfirmButton: false, allowOutsideClick: false, allowEscapeKey : false});
+	        	swal({type: "warning", title:"Aviso", text:"¡Ingrese el motivo de la baja!", showConfirmButton: false, allowOutsideClick: false, allowEscapeKey : false});
 	        	setTimeout(function() {
 	        		eliminarUsuario(idUsuario);
-	        	}, 2000);
+	        	}, 2500);
 	        }
 	      }).catch(err => {
 
