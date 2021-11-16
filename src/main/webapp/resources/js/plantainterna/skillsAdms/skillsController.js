@@ -296,7 +296,27 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 		var idGeografia = $('#arbolGeografiasVistaTabla').jstree("get_selected", true);
 //		$('#arbolGeografiasVistaIndividual').jstree("deselect_all");
 //		$('#arbolGeografiasVistaIndividual').jstree('select_node', idGeografia);
-		let params = {idGeografia:[idGeografia[0].id]};
+		
+		var nivelGeoSeleccionada = idGeografia[0].original.nivel;
+		var idGeoSeleccionada = idGeografia[0].original.id;
+		let geografiasCiudades = [];
+		let idGeografiasCiudades = [];
+		if(nivelGeoSeleccionada == 1){
+			geografiasCiudades = $scope.listaGeografiasIndividual.filter(e => {return e.parent == idGeoSeleccionada});
+		}else if(nivelGeoSeleccionada > 2){
+			var geo = idGeografia[0];
+    		geo.nivel = idGeografia[0].original.nivel;
+    		while(geo.nivel > 2){
+    			geo = $scope.listaGeografiasIndividual.filter(e => {return e.id == geo.parent})[0];
+    		}
+    		idGeografiasCiudades.push(geo.id);
+		}
+		angular.forEach(geografiasCiudades,function(geoCiudad,index){
+			idGeografiasCiudades.push(geoCiudad.id);
+		});
+		idGeografiasCiudades.push(idGeoSeleccionada);
+		
+		let params = {idGeografia:idGeografiasCiudades};
 		if($scope.listadoIntervenciones == ""){
         	swal("Aviso", "¡No existen Skills actualmente!", "warning");
         }else{
