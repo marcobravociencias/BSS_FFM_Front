@@ -4,11 +4,11 @@
         	<h6 class="text-center titulo-opciones">T&Eacute;CNICOS DISPONIBLES*</h6>
             <hr/>
 			<div class="input-group input-group-sm content-seach-group">
-				<input type="text" class="form-control form-control-sm buscar-input-operario" ng-model="buscarTecnico" placeholder="Buscar t&eacute;cnico"> <span class="search-icon-operario-busq fa fa-search" id="buscar-operario"></span>
+				<input id="buscadorTecnicoMod" type="text" class="form-control form-control-sm buscar-input-operario" ng-model="buscarTecnicoMod" placeholder="Buscar t&eacute;cnico"> <span class="search-icon-operario-busq fa fa-search"></span>
 			</div>
 			<div class="tecnicos-container">
 				<div class="scrollListaTecnicos" id="divTecnicos">
-					<div ng-repeat="tecnico in listaTecnicosMod | filter:buscarTecnico track by $index" class="tecnico-section" ng-if="tecnico.checkedOpcion == false" ng-click="seleccionarTecnicoMod(tecnico)">
+					<div ng-repeat="tecnico in listaTecnicosMod | filter:buscarTecnicoMod track by $index" class="tecnico-section" ng-if="tecnico.checkedOpcion == false" ng-click="seleccionarTecnicoMod(tecnico)">
 						<div class="col-md-1">
 							<img src="{{tecnico.urlFotoPerfil !=undefined && tecnico.urlFotoPerfil ? tecnico.urlFotoPerfil :'./resources/img/plantainterna/despacho/tecnicootasignada.png'}}" class="circle responsive-img-tecnico">
 						</div>
@@ -34,11 +34,11 @@
         	<h6 id="labelTecnicosSeleccionadosMod" class="text-center titulo-opciones">T&Eacute;CNICOS SELECCIONADOS</h6>
             <hr/>
 			<div class="input-group input-group-sm content-seach-group">
-				<input type="text" class="form-control form-control-sm buscar-input-operario" ng-model="buscarTecnicoSeleccionado" placeholder="Buscar t&eacute;cnico seleccionado"> <span class="search-icon-operario-busq fa fa-search" id="buscar-operario"></span>
+				<input id="buscadorTecnicoSeleccionadoMod" type="text" class="form-control form-control-sm buscar-input-operario" ng-model="buscarTecnicoSeleccionadoMod" placeholder="Buscar t&eacute;cnico seleccionado"> <span class="search-icon-operario-busq fa fa-search"></span>
 			</div>
 			<div class="tecnicos-container">
 				<div class="scrollListaTecnicos" id="contenedorTecnicosMod">
-					<div ng-repeat="tecnico in listaTecnicosMod | filter:buscarTecnicoSeleccionado track by $index" class="tecnico-section" ng-if="tecnico.checkedOpcion == true" ng-click="seleccionarTecnicoMod(tecnico)">
+					<div ng-repeat="tecnico in listaTecnicosMod | filter:buscarTecnicoSeleccionadoMod track by $index" class="tecnico-section" ng-if="tecnico.checkedOpcion == true" ng-click="seleccionarTecnicoMod(tecnico)">
 						<div class="col-md-1 content-checkbox-operario" style="padding-right: 1em;">
 								<i class="fa fa-chevron-left" style="padding-top: .3em;"></i>
 						</div>

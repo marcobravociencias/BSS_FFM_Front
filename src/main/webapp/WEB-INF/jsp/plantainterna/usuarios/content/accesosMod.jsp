@@ -7,7 +7,7 @@
                 <div class="row">
                 	<div class="col-md-12">
 						<div class="input-group input-group-sm content-seach-group">
-							<input id="buscadorPermisosMod" type="text" class="form-control buscadorGenerico" placeholder="Buscar permiso" ng-keyup="busquedaPermisosRegistro()"> 
+							<input id="buscadorPermisosMod" type="text" class="form-control buscadorGenerico" placeholder="Buscar permiso" ng-keyup="busquedaPermisosMod()"> 
 							<span class="fa fa-search iconoBusqueda"></span>
 						</div>
 					</div>

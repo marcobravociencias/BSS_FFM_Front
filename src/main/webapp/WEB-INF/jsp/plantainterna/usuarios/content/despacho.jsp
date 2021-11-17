@@ -4,11 +4,11 @@
         	<h6 class="text-center titulo-opciones">DESPACHOS DISPONIBLES*</h6>
             <hr/>
 			<div class="input-group input-group-sm content-seach-group">
-				<input type="text" class="form-control form-control-sm buscar-input-operario" ng-model="buscarTecnico" placeholder="Buscar despacho"> <span class="search-icon-operario-busq fa fa-search" id="buscar-operario"></span>
+				<input type="text" class="form-control form-control-sm buscar-input-operario" ng-model="buscarDespacho" placeholder="Buscar despacho"> <span class="search-icon-operario-busq fa fa-search" id="buscar-operario"></span>
 			</div>
 			<div class="tecnicos-container">
 				<div class="scrollListaTecnicos" id="divTecnicos">
-					<div ng-repeat="despacho in listaDespachos | filter:buscarTecnico track by $index" class="tecnico-section" ng-if="despacho.checkedOpcion == false" ng-click="seleccionarDespachoRegistro(despacho)">
+					<div ng-repeat="despacho in listaDespachos | filter:buscarDespacho track by $index" class="tecnico-section" ng-if="despacho.checkedOpcion == false" ng-click="seleccionarDespachoRegistro(despacho)">
 						<div class="col-md-1">
 							<img src="{{despacho.urlFotoPerfil !=undefined && despacho.urlFotoPerfil ? despacho.urlFotoPerfil :'./resources/img/plantainterna/despacho/tecnicootasignada.png'}}" class="circle responsive-img-tecnico">
 						</div>
@@ -34,11 +34,11 @@
         	<h6 id="labelDespachosSeleccionados" class="text-center titulo-opciones">DESPACHOS SELECCIONADOS</h6>
             <hr/>
 			<div class="input-group input-group-sm content-seach-group">
-				<input type="text" class="form-control form-control-sm buscar-input-operario" ng-model="buscarTecnicoSeleccionado" placeholder="Buscar despacho seleccionado"> <span class="search-icon-operario-busq fa fa-search" id="buscar-operario"></span>
+				<input type="text" class="form-control form-control-sm buscar-input-operario" ng-model="buscarDespachoSeleccionado" placeholder="Buscar despacho seleccionado"> <span class="search-icon-operario-busq fa fa-search" id="buscar-operario"></span>
 			</div>
 			<div class="tecnicos-container">
 				<div class="scrollListaTecnicos" id="contenedorDespachosRegistro">
-					<div ng-repeat="despacho in listaDespachos | filter:buscarTecnicoSeleccionado track by $index" class="tecnico-section" ng-if="despacho.checkedOpcion == true" ng-click="seleccionarDespachoRegistro(despacho)">
+					<div ng-repeat="despacho in listaDespachos | filter:buscarDespachoSeleccionado track by $index" class="tecnico-section" ng-if="despacho.checkedOpcion == true" ng-click="seleccionarDespachoRegistro(despacho)">
 						<div class="col-md-1 content-checkbox-operario" style="padding-right: 1em;">
 								<i class="fa fa-chevron-left" style="padding-top: .3em;"></i>
 						</div>

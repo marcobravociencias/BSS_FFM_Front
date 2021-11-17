@@ -12,9 +12,19 @@
 				<div class="container">
               <div class="row">
                 <div class="col-4">
-                  <img src="{{tecnicoConsultaMateriales.urlFotoPerfil}}" height="180"  class="img-tecnico-materiales" alt="">
+                  <img  style="border: 0.3em {{tecnicoConsultaMateriales.color}} solid;" ng-if="tecnicoConsultaMateriales.urlFotoPerfil"   src="{{tecnicoConsultaMateriales.urlFotoPerfil}}" height="180"  class="img-tecnico-materiales" alt="">
+                  <img  style="border: 0.3em {{tecnicoConsultaMateriales.color}} solid;" ng-if="!tecnicoConsultaMateriales.urlFotoPerfil"  src="${pageContext.request.contextPath}/resources/img/plantainterna/despacho/tecnicootasignada.png" height="180"  class="img-tecnico-materiales" alt="">                
                 </div>
                 <div class="col-4">
+                    <div class="container-fluid vehiculo-content">
+                      <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Estatus t&eacute;cnico</span></div>
+                      <div class="container-text-content-detalle">
+                        <span style=" border-bottom: 0.2em solid {{tecnicoConsultaMateriales.color}};
+                                      font-weight: bold;
+                                      color: {{tecnicoConsultaMateriales.color}};"
+                             class="text-content-vehiculo ng-binding" ng-bind="tecnicoConsultaMateriales.descipcionEstatusTecnico || 'Sin dato'"></span>
+                      </div>
+                  </div>
                     <div class="container-fluid vehiculo-content">
                         <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Nombre</span></div>
                         <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="tecnicoConsultaMateriales.nombre+' '+tecnicoConsultaMateriales.apellidoPaterno+' '+tecnicoConsultaMateriales.apellidoMaterno || 'Sin dato'"></span>
@@ -37,14 +47,36 @@
                         <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="tecnicoConsultaMateriales.numContacto || 'Sin dato'"></span>
                         </div>
                     </div>
-                    <div class="container-fluid vehiculo-content">
-                        <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Estatus</span></div>
-                        <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="tecnicoConsultaMateriales.descipcionEstatusTecnico || 'Sin dato'"></span>
-                        </div>
-                    </div>
+                   <div class="container-fluid vehiculo-content">
+                      <div class="divider-materiales-centroalmacen">
+
+                      </div>
+                   </div>
+
+                   <div class="container-fluid vehiculo-content">
+                      <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Centro</span></div>
+                      <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="tecnicoConsultaMateriales.centro || 'Sin dato'"></span>
+                      </div>
+                  </div>
+
+                  <div class="container-fluid vehiculo-content">
+                      <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Almacen</span></div>
+                      <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="tecnicoConsultaMateriales.almacen || 'Sin dato'"></span>
+                      </div>
+                  </div>                  
                 </div>
                 <div class="col-4">
-                  <img  src="${pageContext.request.contextPath}/resources/img/logotipos/SAP.png" class="img-sap-materiales" height="220" alt="" loading="lazy" />
+                    <img class="img-sap-materiales" src="${pageContext.request.contextPath}/resources/img/logotipos/SAP.svg"  alt="" loading="lazy" />   
+                    
+                    <div class="container-estatus-sap">                  
+                       <div class="blob online-sap-materiales-icon"></div>
+              
+                       <span class="span-online-sap"> SAP en l&iacute;nea</span>
+                    </div>
+                    <div ng-show="true == false" class="container-estatus-sap">    
+                        <div class="blob oflline-sap-materiales-icon"></div>              
+                        <span class="span-offline-sap"> SAP fuera de l&iacute;nea </span>
+                    </div> 
                 </div>
               </div>
               <div class="row">                   

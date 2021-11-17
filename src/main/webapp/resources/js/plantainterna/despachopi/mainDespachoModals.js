@@ -408,10 +408,67 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         $scope.tecnicoConsultaMateriales=tecnicoTemp
         $scope.$apply()
 
-      /**  if ( tableMaterialesDespacho ) 
+      /**  **/ 
+        if ( tableMaterialesDespacho ) 
             tableMaterialesDespacho .destroy();
-        **/
+      
         swal.showLoading();
+        
+        $q.all([
+            mainDespachoService.consultaMaterialesPorAlmacenUserCentro(params),
+            mainDespachoService.consultandoMaterialesPI(params)
+        ]).then(function (results) {
+            if (results[0].data !== undefined) {
+                if (results[0].data.respuesta) {
+                    if (results[0].data.result) {
+                        $("#modalMaterialesOperario").modal('show')        
+                        let tempArrayResult=results[0].data.result.materiales
+                        $("#table-materiales-temp tbody").empty()
+                        angular.forEach(tempArrayResult,function(elem,index){
+                            $("#table-materiales-temp tbody").append(`
+                                <tr>
+                                    <td >${elem.sku} </td>
+                                    <td >${elem.descripcion} </td>
+                                    <td >${elem.lote} </td>
+                                    <td >${elem.cantidad} </td>
+                                    <td >${elem.unidadMedida} </td>
+                                    <td >${elem.precio} </td>
+                                    <td >${elem.familia} </td>
+                                    <td >${elem.categoria} </td>
+                                    <td >${elem.grupo} </td>
+                                </tr>
+                            `)
+                        })
+                        $scope.inicializarTableMateriales()
+                    } else {
+                        toastr.info('No se encontraron datos');
+                    }
+                } else {
+                    toastr.info(results[0].data.resultDescripcion);
+                }
+            } else {
+                toastr.error('Ha ocurrido un error en la consulta de los datos');
+            }
+            /**
+            if (results[1].data !== undefined) {
+                if (results[1].data.respuesta) {
+                    if (results[1].data.result) {
+                        
+                    } else {
+                        toastr.info('No se encontraron datos');
+                    }
+                } else {
+                    toastr.info(results[1].data.resultDescripcion);
+                }
+            } else {
+                toastr.error('Ha ocurrido un error en la consulta de los datos');
+            }**/
+            swal.close()
+        }).catch(err => handleError(err));
+
+
+
+        /**
         mainDespachoService.consultaMaterialesPorAlmacenUserCentro(params).then(function success(response) {
            console.log(response)
            if (response.data.respuesta) {
@@ -436,21 +493,18 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                             </tr>
                         `)
                     })
-                   // $scope.inicializarTableMateriales()
                     
                } else {
-                   //$scope.inicializarTableMateriales()
                     swal.close()
                     mostrarMensajeWarningValidacion('No se encontro informaci&oacute;n.')
                }
            } else {
-               //$scope.inicializarTableMateriales()
                 swal.close()
                 mostrarMensajeErrorAlert(response.data.resultDescripcion)
            }
         }).catch(err => handleError(err))
 
-        /**swal({ text: 'Consultando datos ...', allowOutsideClick: false });
+        swal({ text: 'Consultando datos ...', allowOutsideClick: false });
         swal.showLoading();
         mainDespachoService.consultandoMaterialesPI(params).then(function success(response) {
            console.log(response)
@@ -1325,7 +1379,11 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         if($scope.filtrosGeneral.tipoOrdenes){
             $scope.seleccionarTodos($scope.filtrosGeneral.tipoOrdenes);
         }
+
+        $("#jstree-proton-3").jstree("destroy");
         $scope.$apply();
+        $scope.resetArbol();
+
         $("#idot-reporte").val('');
         $("#idos-reporte").val('');
         $("#cuenta-reporte").val('');
@@ -1333,7 +1391,9 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         $('#filtro_fecha_inicio_reporte').datepicker('update',   moment(FECHA_HOY_DATE).toDate() );
         $('#filtro_fecha_fin_reporte').datepicker('update',   moment(FECHA_HOY_DATE).toDate() );
         
-        consultarReporteDiario();
+        setTimeout(function(){
+            consultarReporteDiario();
+        }, 1000);
         
         $("#modalReporte").modal('show');
     }
@@ -1346,8 +1406,31 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         if($scope.filtrosGeneral.estatusdisponibles){
             $scope.seleccionarTodos($scope.filtrosGeneral.estatusdisponibles);
         }
+
+        $("#jstree-proton-3").jstree("destroy");
         $scope.$apply();
+        $scope.resetArbol();
     });
+
+    $scope.resetArbol = function(){
+        let geografia = $scope.listadogeografiacopy;
+        $('#jstree-proton-3').bind('loaded.jstree', function(e, data) {
+        }).jstree({
+            'plugins': ["wholerow", "checkbox", "search"],
+            'core': {
+                'data': geografia,
+                'themes': {
+                    'name': 'proton',
+                    'responsive': true,
+                    "icons":false        
+                }
+            },
+            "search": {
+                "case_sensitive": false,
+                "show_only_matches": true
+            }
+        });
+    }
 
     $scope.responseServicios={}
     $scope.obtenerPaquete = function(){

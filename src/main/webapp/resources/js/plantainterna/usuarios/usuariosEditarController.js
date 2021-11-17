@@ -13,14 +13,11 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     $scope.listaTecnicosMod = [];
     $scope.listaDespachosMod = [];
     $scope.listaIdsGeografiaCiudadNatalMod = [];
-    
     $scope.detalleUsuario.intervencionesId = [];
     $scope.detalleUsuario.geografiasId = [];
     $scope.detalleUsuario.permisosId = [];
-    
     $scope.detalleUsuario.tecnicos = [];
 	$scope.detalleUsuario.despachos = [];
-    
     let acentos = {'á':'a','é':'e','í':'i','ó':'o','ú':'u','Á':'A','É':'E','Í':'I','Ó':'O','Ú':'U'};
     $scope.mostrarAccesosMod = false;
     $scope.mostrarTecnicosMod = false;
@@ -320,6 +317,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                     // ********** CONFIRMAR USUARIO
                     $scope.detalleUsuario.ciudadNatal = $scope.detalleUsuario.idGeografia;
                     
+                    $("#modalEdicionUsuario").modal({ backdrop: 'static', keyboard: false });
                     $("#modalEdicionUsuario").modal('show');
                     
                 } else {
@@ -428,13 +426,13 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
         $scope.$apply();
     });
     
-  //CUANDO SELECCCIONE UNA CIUDAD NATAL LOS RADIOS REGRESAN A SU ESTILO NORMAL (VALIDACIÓN) - PESTAÑA CONFIRMACIÓN MODIFICACIÓN USUARIO
+    //CUANDO SELECCCIONE UNA CIUDAD NATAL LOS RADIOS REGRESAN A SU ESTILO NORMAL (VALIDACIÓN) - PESTAÑA CONFIRMACIÓN MODIFICACIÓN USUARIO
     $scope.asignarCiudadNatalMod = function() {
     	$(".ciudadNatalMod").css("color", "#7c7c7d");
     	$scope.verBtnModificar = true;
 	}
     
-  //MÉTODO PARA VALIDACIÓN DE INFORMACIÓN DE LOS DATOS MOSTRADOS EN LA VISTA - PESTAÑA CONFIRMACIÓN MOD USUARIO
+    //MÉTODO PARA VALIDACIÓN DE INFORMACIÓN DE LOS DATOS MOSTRADOS EN LA VISTA - PESTAÑA CONFIRMACIÓN MOD USUARIO
     $scope.cargarInfoConfirmacionModificacion = function() {
     	$scope.confirmacionModificacion.nombre = 
           $scope.detalleUsuario.nombre !== undefined && $scope.detalleUsuario.nombre !== "" &&
@@ -450,7 +448,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     	$scope.verBtnModificar = true;
     }
     
-  //VERIFICA EL ESTADO DEL CHECK PARA COLOCAR 'SI' O 'NO', SEGÚN EL ESTADO - PESTAÑA INFORMACIÓN MODIFICACUÓN USUARIO
+    //VERIFICA EL ESTADO DEL CHECK PARA COLOCAR 'SI' O 'NO', SEGÚN EL ESTADO - PESTAÑA INFORMACIÓN MODIFICACUÓN USUARIO
 	$scope.cambiarCheckAsignacionAutomaticaMod = function() {
 		if($("#form-asignacionAutomatica-mod").prop('checked')){
 			$("#checkAsignacionAutomaticaMod").text("  SI");
@@ -501,9 +499,47 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 		});
 	}
 	
+	//SELECCIONA O DESELECCIONA TODOS LOS DESPACHOS - PESTAÑA DESPACHOS MODIFICACIÓN USUARIO
+	$scope.seleccionarTodosDespachosMod = function() {
+		var check;
+		if($("#checkTotdosDespachoMod").prop('checked')){
+			check = true;
+			$("#labelDespachosSeleccionadosMod").css("color", "rgb(70, 88, 107)");
+			$("#contenedorDespachosMod").css("border", "white solid 0px");
+		}else{
+			check = false;
+		}
+		angular.forEach($scope.listaDespachosMod,function(despacho,index){
+			despacho.checkedOpcion = check;
+		});
+	}
+	
+	//SELECCIONA O DESELECCIONA EL DESPACHO ELEGIDO - PESTAÑA DESPACHOS MODIFICACIÓN USUARIO
+	$scope.seleccionarDespachoMod = function(desoachoSeleccionado) {
+		if(desoachoSeleccionado.checkedOpcion){
+			desoachoSeleccionado.checkedOpcion = false;
+		}else{
+			desoachoSeleccionado.checkedOpcion = true;
+			$("#labelDespachosSeleccionadosMod").css("color", "rgb(70, 88, 107)");
+			$("#contenedorDespachosMod").css("border", "white solid 0px");
+		}
+		//Verifica si todos los 'checkedOpcion' son true para activar el check de seleccionar todos
+		var check = true;
+		angular.forEach($scope.listaDespachosMod,function(despacho,index){
+			if(despacho.checkedOpcion != true){
+				check = false;
+			}
+		});
+		if(check){
+			$("#checkTotdosDespachoMod").prop("checked",true);
+		}else{
+			$("#checkTotdosDespachoMod").prop("checked",false);
+		}
+	}
+	
+	//MÉTODO QUE VALIDA SI SE SELECCIONÓ POR LO MENOS 1 GEOGRAFÍA Y SI EXISTEN TÉCNICOS O DESPACHOS DE ACUERDO A LA/LAS GEOGRAFÍA(S) SELECCIONADA(S)
 	$scope.revisionTecnicosDespachosMod = function() {
 		$scope.verBtnModificar = false;
-		
 		if($scope.detalleUsuario.geografiasId !== undefined){
 			if($scope.detalleUsuario.geografiasId.length > 0){
 				if($scope.isTecnicoMod){
@@ -523,6 +559,12 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 		}
 	}
 	
+	//CUANDO SELECCCIONE UNA FECHA VÁLIDA EL INPUT REGRESA A SU ESTILO NORMAL (VALIDACIÓN) - PESTAÑA INFORMACIÓN REGISTRO USUARIO
+    $("#form-fechaIngreso-mod").change(function() {
+    	$("#form-fechaIngreso-mod").css("border", "1px solid #bdbdbd");
+    });
+	
+	//MÉTODO PARA CONSULTAR LOS TÉCNICOS A REASIGNAR AL USUARIO (QUE NO SEA TÉCNICO) QUE SE MODIFICARÁ - PESTAÑA TÉCNICOS MODIFICACIÓN USUARIO
 	$scope.consultarTecnicosMod = function() {
 		$scope.listaTecnicosMod = [];
 		let params = {idsGeografia:$scope.listaIdsGeografiaCiudadNatalMod, idTipoUsuario:$scope.idPuestoTecnico.id};
@@ -565,48 +607,52 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
         });
 	}
 	
+	//MÉTODO PARA CONSULTAR LOS DESPACHOS A REASIGNAR AL TÉCNICO QUE SE MODIFICARÁ - PESTAÑA DESPACHOS MODIFICACIÓN USUARIO
 	$scope.consultarDespachosMod = function() {
 		$scope.listaDespachosMod = [];
-		let params = {idsGeografia:$scope.listaIdsGeografiaCiudadNatalMod, idTipoUsuario:$scope.idPuestoDespacho.id};
-    	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
-		swal.showLoading();
-    	$q.all([
-    		usuarioPIService.consultarUsuariosPorPuesto(params)
-        ]).then(function(results) {
-        	if (results[0].data !== undefined) {
-            	if(results[0].data.respuesta){
-            		if(results[0].data.result.result.usuarios !== null){
-	            		if(results[0].data.result.result.usuarios.length > 0){
-	            			$scope.listaDespachosMod = results[0].data.result.result.usuarios;
-	            			$("#checkTotdosDespachosMod").prop("checked",false);
-	            	    	angular.forEach($scope.listaDespachosMod,function(despacho,index){
-	            	    		despacho.checkedOpcion = false;
-	            			});
-	            	    	angular.forEach($scope.listaDespachosMod,function(despacho,index){
-	            	    		angular.forEach($scope.detalleUsuario.idDespachos,function(despachoRegistrado,index){
-	            	    			if(despacho.idUsuario == despachoRegistrado.idOperador){
-	            	    				despacho.checkedOpcion = true;
-	            	    			}
-	            	    		});
-	            			});
-	            	    	$("#labelDespachosSeleccionadosMod").css("color", "rgb(70, 88, 107)");
-	            			$("#contenedorDespachosMod").css("border", "white solid 0px");
+		if($scope.listaIdsGeografiaCiudadNatalMod.length > 0){
+			let params = {idsGeografia:$scope.listaIdsGeografiaCiudadNatalMod, idTipoUsuario:$scope.idPuestoDespacho.id};
+	    	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
+			swal.showLoading();
+	    	$q.all([
+	    		usuarioPIService.consultarUsuariosPorPuesto(params)
+	        ]).then(function(results) {
+	        	if (results[0].data !== undefined) {
+	            	if(results[0].data.respuesta){
+	            		if(results[0].data.result.result.usuarios !== null){
+		            		if(results[0].data.result.result.usuarios.length > 0){
+		            			$scope.listaDespachosMod = results[0].data.result.result.usuarios;
+		            			$("#checkTotdosDespachosMod").prop("checked",false);
+		            	    	angular.forEach($scope.listaDespachosMod,function(despacho,index){
+		            	    		despacho.checkedOpcion = false;
+		            			});
+		            	    	angular.forEach($scope.listaDespachosMod,function(despacho,index){
+		            	    		angular.forEach($scope.detalleUsuario.idDespachos,function(despachoRegistrado,index){
+		            	    			if(despacho.idUsuario == despachoRegistrado.idOperador){
+		            	    				despacho.checkedOpcion = true;
+		            	    			}
+		            	    		});
+		            			});
+		            	    	$("#labelDespachosSeleccionadosMod").css("color", "rgb(70, 88, 107)");
+		            			$("#contenedorDespachosMod").css("border", "white solid 0px");
+		            		}else{
+		            			$scope.listaDespachosMod = [];
+		            		}
 	            		}else{
 	            			$scope.listaDespachosMod = [];
 	            		}
-            		}else{
-            			$scope.listaDespachosMod = [];
-            		}
-            	}else{
-            		$scope.listaDespachosMod = [];
-            	}
-        	}else{
-        		toastr.error('Error interno en el servidor.');
-        	}
-        	swal.close();
-        });
+	            	}else{
+	            		$scope.listaDespachosMod = [];
+	            	}
+	        	}else{
+	        		toastr.error('Error interno en el servidor.');
+	        	}
+	        	swal.close();
+	        });
+		}
 	}
 	
+	//MÉTODO QUE REALIZA LA MODIFICACIÓN DE LA INFORMACIÓN DEL USUARIO SELECCIONADO
 	$scope.modificarUsuario = function() {
 		$scope.detalleUsuario.tecnicos = [];
 		$scope.detalleUsuario.despachos = [];
@@ -653,11 +699,11 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 							rfc: $scope.detalleUsuario.rfc,
 							curp: $scope.detalleUsuario.curp,
 							genero: sexoMod,
-							fotoPerfil: {
-								bucketId: "",
-							    archivo: "",
-							    nombre: ""
-							},
+//							fotoPerfil: {
+//								bucketId: "",
+//							    archivo: "",
+//							    nombre: ""
+//							},
 							correoElectronico: $scope.detalleUsuario.correo,
 							telefonoCelular: $scope.detalleUsuario.telefonoCelular,
 							idGeografia: $scope.detalleUsuario.ciudadNatal,
@@ -700,7 +746,6 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 
 		      });
 		}
-		
 	}
 	
 	//VALIDACIÓN GENERAL DE DATOS DEL SUBMÓDULO MODIFICAR USUARIO
@@ -840,8 +885,8 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 				$("#form-correo-mod").css("border", "1px solid #bdbdbd");
 			}
 		}
-
-		if($scope.detalleUsuario.fechaIngreso === "" || $scope.detalleUsuario.fechaIngreso === undefined || $scope.detalleUsuario.fechaIngreso === null){
+		
+		if($scope.detalleUsuario.fechaIngreso === "" || $scope.detalleUsuario.fechaIngreso === undefined || $scope.detalleUsuario.fechaIngreso === null || $("#form-fechaIngreso-mod").val() === "" || $("#form-fechaIngreso-mod").val() === null){
 			$("#form-fechaIngreso-mod").css("border-bottom", "2px solid #f55756");
 			validacionInformacionGeneral = false;
 			mensaje = mensaje + "<br/> *Fecha de ingreso";
@@ -893,7 +938,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     		}
     		
     		//PESTAÑA TÉCNICOS
-    		//POR EL MOMENTO SE QUITA LA VALIDACIÓN DE TÉCNICOS
+    		//POR EL MOMENTO SE QUITA LA VALIDACIÓN DE TÉCNICOS (NO ES OBLIGATORIA LA SELECCIÓN)
 //        	var checkTec = 0;
 //    		angular.forEach($scope.listaTecnicosMod,function(tecnico,index){
 //    			if(tecnico.checkedOpcion == true){
@@ -987,16 +1032,40 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 			toastr.warning(mensaje);
 			$scope.ocultarBotonMod();
 		}
-		
 		//REGRESA LA RESPUESTA BOLEANA
 		return validacion;
 	}
     
+    //MÉTODO PARA BUSCAR INTERVENCIONES DE ACUERDO AL TEXTO INGRESADO EN EL INPUT DE BÚSQUEDA - PESTAÑA INTERVENCIONES MODIFICACIÓN USUARIO
+    $scope.busquedaIntervencionMod = function() {
+    	$("#arbolIntervencionMod").jstree("search", $('#buscadorIntervencionMod').val());
+	}
+    
+    //MÉTODO PARA BUSCAR GEOGRAFÍAS DE ACUERDO AL TEXTO INGRESADO EN EL INPUT DE BÚSQUEDA - PESTAÑA ÁRBOL MODIFICACIÓN USUARIO
+    $scope.busquedaGeografiaMod = function() {
+    	$("#arbolGeografiaMod").jstree("search", $('#buscadorGeografiaMod').val());
+	}
+    
+    //MÉTODO PARA BUSCAR PERMISOS DE ACUERDO AL TEXTO INGRESADO EN EL INPUT DE BÚSQUEDA - PESTAÑA ACCESOS MODIFICACIÓN USUARIO
+    $scope.busquedaPermisosMod = function() {
+    	$("#arbolPermisoMod").jstree("search", $('#buscadorPermisosMod').val());
+	}
+    
+    //FUNCIONALIDAD QUE SIRVE PARA OCULTAR EL BOTÓN DE 'MODIFICAR' MIENTRAS NO SE ESTÉ EN LA PESTAÑA DE 'CONFIRMAR USUARIO' O MIENTRAS NO ESTÉN VALIDADOS LOS CAMPOS
     $scope.ocultarBotonMod = function() {
     	$scope.verBtnModificar = false;
 	}
     
+    //MÉTODO PARA LIMPIAR TODOS LOS CAMPOS DE TODAS LAS PESTAÑAS DE LA MODIFICACIÓN DE USUARIO
     $scope.limpiarDatosModificacion = function() {
+    	$("#buscadorIntervencionMod").val("");
+    	$("#buscadorGeografiaMod").val("");
+    	$("#buscadorPermisosMod").val("");
+    	$scope.buscarTecnicoMod = "";
+    	$scope.buscarTecnicoSeleccionadoMod = "";
+    	$scope.buscarDespachoMod = "";
+    	$scope.buscarDespachoSeleccionadoMod = "";
+    	$scope.buscarCiudadMod = "";
     	$scope.detalleUsuario.intervencionesId = [];
     	$scope.listaIntervencionesSelecionadasMod = [];
         $scope.detalleUsuario.geografiasId = [];
@@ -1039,12 +1108,12 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 		$("#pills-arbol-mod").removeClass("active show");
 		$("#pills-intervencion-tab-mod").removeClass("active");
 		$("#pills-intervencion-mod").removeClass("active show");
-		
 		$("#pills-informacion-tab-mod").addClass("active");
 		$("#pills-informacion-mod").addClass("active show");
 		$("#modalEdicionUsuario").modal('hide');
     }
     
+    //FUNCIONALIDAD QUE CIERRA EL MODAL DE EDICIÓN Y LIMPIA TODOS LOS CAMPOS DE TODAS LAS PESTAÑAS DE LA MODIFICACIÓN DE USUARIO
     $scope.cerrarModalEdicionUsuario = function() {
     	$scope.limpiarDatosModificacion();
 	}
