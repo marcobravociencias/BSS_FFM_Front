@@ -1034,7 +1034,7 @@ public class ImplDespachoPIService implements DespachoPIService {
         logger.info("### URL consultarCentroAlmacenByNumeroEmpleado(): \n" + urlRequest);
         Map<String, String> paramsRequestGet = new HashMap<>();
         paramsRequestGet.put("numeroEmpleado", jsonObject.get("numEmpleado").getAsString());
-
+        logger.info("------paramsMap"+paramsRequestGet.toString());
         ServiceResponseResult response = restCaller.callGetBearerTokenRequest(
                 paramsRequestGet,
                 urlRequest,

@@ -2286,12 +2286,16 @@ b.text-no-seleccion-geografia {
 }
 
 
-
 img.img-tecnico-materiales {
   /* cursor: pointer; */
-  border-radius: 5%;
+  border-radius: 50%;
   -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
   box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+  max-height: 12em;
+  height: 12em;
+  width: 12em;
+  min-width: 12em;
+  object-fit: cover;
 }
 
 #tabs-materiales-sap{
@@ -2322,4 +2326,144 @@ img.img-tecnico-materiales {
   height: 1em;
   display: inline-flex;
   margin: 0em auto 1em;
+}
+
+
+.divider-materiales-centroalmacen {
+  border-bottom: 0.2em solid #f0f0f0;
+  width: 100%;
+  margin: 0.5em 0;
+}
+i.link-spa-estatusonline.fas.fa-link {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+i.link-spa-estatusoffline.fas.fa-unlink {
+  position: absolute;
+  bottom: 0;
+}
+img.img-sap-materiales {
+  height: 10em;
+}
+
+
+
+.span-offline-sap {
+    color:#858385;
+    font-weight:bold;
+}
+.span-online-sap {
+    color: #5cbc5c;
+    font-weight:bold;
+    display: inline-flex;
+    margin-bottom: 0;
+    font-size: 1em;
+}
+
+.online-sap-materiales-icon {
+	background: #5cbc5c;
+	border-radius: 50%;
+	/* margin: 1em; */
+	height: 1em;
+	width: 1em;
+	box-shadow: 0 0 0 0 rgb(126 200 126);
+	transform: scale(1);
+	animation: pulseonline 1.5s infinite;
+	display:inline-flex;
+	margin-right: .5em;
+}
+@keyframes pulseonline {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgb(92 188 92);
+	}
+
+	70% {
+		transform: scale(1);
+		box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+	}
+
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+	}
+}
+
+.oflline-sap-materiales-icon {
+	background: #9ca4b3;
+	border-radius: 50%;
+	/* margin: 1em; */
+	height: 1em;
+	width: 1em;
+	box-shadow: 0 0 0 0 #9ca4b3;
+	transform: scale(1);
+	animation: pulseoffline 1.5s infinite;
+	display:inline-flex;
+	margin-right: .5em;
+}
+@keyframes pulseoffline {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 #9ca4b3;
+	}
+
+	70% {
+		transform: scale(1);
+		box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+	}
+
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+	}
+}
+
+.container-estatus-sap{
+    margin-top:.3em;
+}
+
+#table-materiales-temp thead th {
+    position: relative;
+    background-color: #b1b1b1;
+    color: #fff;
+    border:none;
+}
+
+#table-materiales-temp tbody tr td {
+    border: none;
+}
+#table-materiales-temp>tbody>tr>td {
+    white-space: nowrap;
+    color: #39455b;
+    font-family: 'Montserrat', sans-serif;
+    font-size: .8em;
+}
+
+#table-materiales-temp tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#table-materiales-temp_wrapper .dataTables_info {
+    font-size: 0.7em;
+    font-family: "Montserrat" !important;
+    text-align: center;
+}
+
+#table-materiales-temp_wrapper  .page-link {
+    font-size: 0.7em !important;
+    font-family: "Montserrat" !important;
+}
+
+#table-materiales-temp_wrapper div.dataTables_paginate li.next a:after,#table-materiales-temp_wrapper  div.dataTables_paginate li.last a:after {
+   display:none;
+}
+
+#table-materiales-temp_wrapper div.dataTables_paginate li.previous a:before {
+   display:none;
+}
+
+#table-materiales-temp_paginate ul.pagination {
+    position: absolute;
+    right: 0;
 }
