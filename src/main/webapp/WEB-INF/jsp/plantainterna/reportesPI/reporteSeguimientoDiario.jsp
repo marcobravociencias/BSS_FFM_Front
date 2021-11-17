@@ -1,8 +1,7 @@
-<div class="container-fluid container-filtros-consultaot" style="padding-left: 0px; margin-left: 0px;">
+<div class="container-fluid container-filtros-consultaot" style="padding-left: 0px; margin-left: 0px;max-width: none;">
     <div style="padding-left: 0;padding-right: 0;" class="content-fluid">
         <div class="row md-form" id="filtros_config">
-            <div class="col-lg-2  column-style-consulta columna-filtro-indRR borderFilterR borderAlignR"
-                style="width: 100px !important;">
+            <div class="col-md-1 columna-filtro-indRR borderFilterR borderAlignR">
                 <div class="dropdown">
                     <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="ESTATUS" type="text"
                         id="filtro-estatus-reporte" class="input-filtro-consultaOT form-control form-control-sm" />
@@ -27,8 +26,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-lg-2 column-style-consulta columna-filtro-indRR borderFilterR"
-                style="width: 125px !important;">
+            <div class="col-md-2 columna-filtro-indRR borderFilterR" style="width: 130px;">
                 <div class="dropdown">
                     <input readonly data-toggle="dropdown" aria-expanded="false" placeholder="INTERVENCI&Oacute;N"
                         type="text" id="filtro-intervencionO"
@@ -44,62 +42,51 @@
                         <li ng-repeat="filtro in filtrosGeneral.tipoOrdenes " class="element-menu-filter"
                             class="element-menu-filter">
                             <label class="dropdown-item form-check-inputfiltro">
-                                <input ng-click=setCheckIntervencion(filtro) id="filtrotext-{{filtro.id}}"
+                                <input ng-click=setCheckFiltroGeneric(filtro) id="filtrotext-{{filtro.id}}"
                                     class="form-check-input" type="checkbox" ng-model="filtro.checkedOpcion"
                                     ng-checked="filtro.checkedOpcion" />
                                 <span for="filtrotext-{{filtro.id}}" class="dropdown-item item-text-filtro" href="#"
                                     ng-bind="filtro.nombre"></span>
                             </label>
-                            <ul class="dropdown-menu">
-                                <li ng-repeat="subfiltro in filtro.children" class="element-menu-filter">
-                                    <label class="dropdown-item form-check-inputfiltro">
-                                        <input ng-click=setCheckSubIntervencion(subfiltro,filtro)
-                                            id="subfiltrotext-{{subfiltro.id}}" class="form-check-input" type="checkbox"
-                                            ng-model="subfiltro.checkedOpcion" ng-checked="subfiltro.checkedOpcion" />
-                                        <span for="subfiltrotext-{{subfiltro.id}}"
-                                            class="dropdown-item item-text-filtro" href="#"
-                                            ng-bind="subfiltro.nombre"></span>
-                                    </label>
-                                </li>
-                            </ul>
+                           
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class="col-md-1 column-style-consulta borderFilterR" style="width: 90px !important;"
+            <div class="col-md-1 borderFilterR"
                 id="borderAlign">
                 <input type="text" placeholder="OT" id="idot-reporte" ng-model="repDiario.idOrden"
                     class="form-control input-filtro-consultaOT form-control-sm">
             </div>
-            <div class="col-md-1 column-style-consulta borderFilterR" style="width: 90px !important;">
+            <div class="col-md-1 borderFilterR">
                 <input type="text" placeholder="OS" id="idos-reporte" ng-model="repDiario.folio"
                     class="form-control input-filtro-consultaOT form-control-sm">
             </div>
-            <div class="col-md-1 column-style-consulta borderFilterR" style="width: 90px !important;">
+            <div class="col-md-1 borderFilterR">
                 <input type="text" placeholder="CUENTA" id="cuenta-reporte" ng-model="repDiario.idCuenta"
                     class="form-control input-filtro-consultaOT form-control-sm">
             </div>
-            <div class="col-lg-1 column-style-consulta columna-filtro-indRR borderFilterR" style="width: 110px !important;">
+            <div class="col-md-2 columna-filtro-indRR borderFilterR" style="width: 130px;">
                 <input readonly placeholder="GEOGRAF&Iacute;A" type="text" id="clusterO"
                 class="input-filtro-consultaOT form-control form-control-sm" ng-click="abrirModalGeografiaRep()"/>
             </div>
-            <div class="col-md-1 column-style-consulta columna-filtro-indR borderFilterR" style="width: 110px !important; ">
+            <div class="col-md-2 columna-filtro-indR borderFilterR" style="width: 170px;">
                 <select class="input-filtro-consultaOT form-control form-control-sm" id="tipo_reporte" 
                 style="border: 1px solid #dbdbdb !important; background: white !important;"
                     ng-model="repDiario.fechaSeleccionada">
                     <option value="" selected>TIPO FECHA</option>
-                    <option value="fechaCreacion">Fecha creaci&oacute;n</option>
-                    <option value="fechaConfirmacion">Fecha confirmaci&oacute;n</option>
-                    <option value="fechaAgenda">Fecha agenda</option>
-                    <option value="fechaAtencionInicio">Fecha atenci&oacute;n inicio</option>
-                    <option value="fechaAtencionFin">Fecha atenci&oacute;n fin</option>
+                    <option value="fechaCreacion">FECHA CREACI&Oacute;N</option>
+                    <option value="fechaConfirmacion">FECHA CONFIRMACI&Oacute;N</option>
+                    <option value="fechaAgenda">FECHA AGENDA</option>
+                    <option value="fechaAtencionInicio">FECHA ATENCI&Oacute;N INICIO</option>
+                    <option value="fechaAtencionFin">FECHA ATENCI&Oacute;N FIN</option>
                 </select>
             </div>
-            <div class="col-md-2 columna-filtro-indR borderFilterR" style="width: 100px !important;">
+            <div class="col-md-1 columna-filtro-indR borderFilterR">
                 <input readonly placeholder="Fecha Inicial" type="text" id="filtro_fecha_inicio_reporte"
                     class="datepicker input-filtro-consultaOT form-control form-control-sm" />
             </div>
-            <div class="col-md-2 columna-filtro-indR borderFilterR" style="width: 100px !important;">
+            <div class="col-md-1 columna-filtro-indR borderFilterR">
                 <input readonly placeholder="Fecha Final" type="text" id="filtro_fecha_fin_reporte" 
                     class="datepicker input-filtro-consultaOT form-control form-control-sm" />
             </div>

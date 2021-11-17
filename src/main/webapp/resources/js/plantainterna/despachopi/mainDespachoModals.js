@@ -1325,7 +1325,11 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         if($scope.filtrosGeneral.tipoOrdenes){
             $scope.seleccionarTodos($scope.filtrosGeneral.tipoOrdenes);
         }
+
+        $("#jstree-proton-3").jstree("destroy");
         $scope.$apply();
+        $scope.resetArbol();
+
         $("#idot-reporte").val('');
         $("#idos-reporte").val('');
         $("#cuenta-reporte").val('');
@@ -1333,7 +1337,9 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         $('#filtro_fecha_inicio_reporte').datepicker('update',   moment(FECHA_HOY_DATE).toDate() );
         $('#filtro_fecha_fin_reporte').datepicker('update',   moment(FECHA_HOY_DATE).toDate() );
         
-        consultarReporteDiario();
+        setTimeout(function(){
+            consultarReporteDiario();
+        }, 1000);
         
         $("#modalReporte").modal('show');
     }
@@ -1346,8 +1352,31 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         if($scope.filtrosGeneral.estatusdisponibles){
             $scope.seleccionarTodos($scope.filtrosGeneral.estatusdisponibles);
         }
+
+        $("#jstree-proton-3").jstree("destroy");
         $scope.$apply();
+        $scope.resetArbol();
     });
+
+    $scope.resetArbol = function(){
+        let geografia = $scope.listadogeografiacopy;
+        $('#jstree-proton-3').bind('loaded.jstree', function(e, data) {
+        }).jstree({
+            'plugins': ["wholerow", "checkbox", "search"],
+            'core': {
+                'data': geografia,
+                'themes': {
+                    'name': 'proton',
+                    'responsive': true,
+                    "icons":false        
+                }
+            },
+            "search": {
+                "case_sensitive": false,
+                "show_only_matches": true
+            }
+        });
+    }
 
     $scope.responseServicios={}
     $scope.obtenerPaquete = function(){

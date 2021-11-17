@@ -68,8 +68,13 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
     $scope.repDiario;
     $scope.resultReporteDiario = 0;
     
+    $('#searchGeo').on('keyup', function () {
+		$("#jstree-proton-3").jstree("search", this.value);
+	})
     
     $scope.abrirModalGeografia=function(){
+        $('#searchGeo').val('');
+		$("#jstree-proton-3").jstree("search", '');
         $("#modal-jerarquia-filtro").modal('show')
     }
 
@@ -1045,7 +1050,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                                 //$scope.consultarCatalogosAcciones();
 
                             }).jstree({
-                                'plugins': ["wholerow", "checkbox"],
+                                'plugins': ["wholerow", "checkbox", "search"],
                                 'core': {
                                     'data': geografia,
                                     'themes': {
@@ -1053,7 +1058,11 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                                         'responsive': true,
                                         "icons":false        
                                     }
-                                }
+                                },
+                                "search": {
+									"case_sensitive": false,
+									"show_only_matches": true
+								}
                             });
                             
                         }else{
@@ -1144,6 +1153,11 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
         let numerosOnly = /^[0-9]*$/i;
         $scope.resultReporteDiario = {};
 
+        let nivelBusquedaArbol= $scope.obtenerNivelUltimoJerarquia()        
+        let clustersparam=$("#jstree-proton-3").jstree("get_selected", true)
+                                               .filter(e=>e.original.nivel== nivelBusquedaArbol)
+                                               .map(e=>parseInt(e.id))
+
         let statuscopy = [];
         if($scope.filtrosGeneral.estatusdisponibles){
             angular.forEach($scope.filtrosGeneral.estatusdisponibles,(e,i)=>{
@@ -1160,6 +1174,11 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
         
         let paramsTemp = {};
         
+        if(clustersparam.length === 0){
+            mensaje += '<li>Introducir Geograf&iacute;a</li>';
+            isValid = false;
+        }
+
         if(!statuscopy.length){
             mensaje += '<li>Introducir Estatus</li>';
             isValid = false;
@@ -1199,6 +1218,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             paramsTemp.fechaSeleccionada =  $scope.repDiario.fechaSeleccionada;
             paramsTemp.elementosPorPagina = 10;
             paramsTemp.pagina = 1;
+            paramsTemp.geografias = clustersparam;
 
             if($scope.repDiario.idOrden && $scope.repDiario.idOrden != ""){
                 paramsTemp.idOrden =  $scope.repDiario.idOrden;
@@ -1265,6 +1285,11 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
 
     downloadExcelReportFile = function(){ 
         //$(".buttons-excel").click();
+        let nivelBusquedaArbol= $scope.obtenerNivelUltimoJerarquia()        
+        let clustersparam=$("#jstree-proton-3").jstree("get_selected", true)
+                                               .filter(e=>e.original.nivel== nivelBusquedaArbol)
+                                               .map(e=>parseInt(e.id))
+
         let statuscopy = [];
         if($scope.filtrosGeneral.estatusdisponibles){
             angular.forEach($scope.filtrosGeneral.estatusdisponibles,(e,i)=>{
@@ -1285,6 +1310,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
              fechaFin: $scope.getFechaFormato($('#filtro_fecha_fin_reporte').val()),
              tipoIntervencion:  intervencioncopy,
              estatusOt: statuscopy,
+             geografias: clustersparam,
              fechaSeleccionada:  $("#tipo_reporte").val(),
              elementosPorPagina: $scope.resultReporteDiario,
              pagina: 1

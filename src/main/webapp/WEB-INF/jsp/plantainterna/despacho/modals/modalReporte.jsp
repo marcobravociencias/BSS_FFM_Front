@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" id="modalReporte">
+<div class="modal fade" aria-labelledby="exampleModalLabel" aria-hidden="true" id="modalReporte">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -9,7 +9,7 @@
             <div class="modal-body">
                 <div class="col-12">
                     <div class="row">
-                        <div class="col-2  columna-filtro-ind-rep input-box" style="width: 120px !important;">
+                        <div class="col-2  columna-filtro-ind-rep input-box" style="width: 100px !important;">
                             <label for="filtro-estatus-substatus" class="label-filter"></label>
                             <div class="dropdown">
                                 <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Estatus"
@@ -38,7 +38,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="col-2  columna-filtro-ind-rep input-box" style="width: 150px !important;">
+                        <div class="col-2  columna-filtro-ind-rep input-box" style="width: 120px !important;">
                             <label for="filtro-intervencion" class="label-filter"></label>
                             <div class="dropdown">
                                 <input readonly data-mdb-toggle="dropdown" aria-expanded="false"
@@ -85,7 +85,12 @@
                                 ng-model="repDiario.idCuenta" ng-change="limpiarCamposReporte(3)" autocomplete="off"
                                 class="form-control input-filtro-reporte form-control-sm">
                         </div>
-                        <div class="col-2 columna-filtro-ind-rep input-box">
+                        <div class="col-1 input-box">
+                            <label for="cuenta" class="label-filter">Geograf&iacute;a</label>
+                            <input ng-click="abrirModalGeografia()" readonly placeholder="Geograf&iacute;a" type="text"
+                                id="filtro-geografia" class="form-control input-filtro-reporte form-control-sm" />
+                        </div>
+                        <div class="col-2 columna-filtro-ind-rep input-box" style="width: 170px;">
                             <label for="tipo_reporte" class="label-filter">Tipo fecha</label>
                             <select class="input-filtro-reporte form-control form-control-sm" id="tipo_reporte"
                                 ng-model="repDiario.fechaSeleccionada">

@@ -24,6 +24,7 @@ app.filtroReportes=function($scope,misProyectosManagService){
             })
         }) 
     }
+
     $scope.setCheckIntervencion=function(elementoInt){
         console.log(elementoInt.checkedOpcion)
         console.log("#####---------")
@@ -38,15 +39,7 @@ app.filtroReportes=function($scope,misProyectosManagService){
         console.log( elementoInt.subfiltros )
         console.log(elementoInt.checkedOpcion)
     }
-    $scope.setCheckSubIntervencion=function(subInt,intervencion){
-        subInt.checkedOpcion=!subInt.checkedOpcion
-
-
-        let cantidadSubfiltros=intervencion.subfiltros.length
-        let cantidadChecked=intervencion.subfiltros.filter(function(e){return e.checkedOpcion}).length
-        intervencion.checkedOpcion=cantidadSubfiltros !== cantidadChecked ? false :true
-    } 
-
+    
     $scope.setCheckFiltroGeneric=function( filtroParent){
         console.log( filtroParent.checkedOpcion)
         console.log("#####---------")
@@ -61,6 +54,13 @@ app.filtroReportes=function($scope,misProyectosManagService){
         console.log(  filtroParent.children )
         console.log( filtroParent.checkedOpcion)
     }
- 
+    $scope.setCheckSubFiltroGeneric=function(subFiltro,parentFiltro){
+        subFiltro.checkedOpcion=!subFiltro.checkedOpcion
+        let cantidadSubfiltros=parentFiltro.children.length        
+        let cantidadChecked=parentFiltro.children.filter(function(e){return e.checkedOpcion}).length
+        parentFiltro.checkedOpcion= cantidadSubfiltros !== cantidadChecked ? false :true
+    } 
+    
+  
 	
 }
