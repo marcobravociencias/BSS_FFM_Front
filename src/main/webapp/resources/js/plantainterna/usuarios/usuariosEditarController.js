@@ -13,14 +13,11 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     $scope.listaTecnicosMod = [];
     $scope.listaDespachosMod = [];
     $scope.listaIdsGeografiaCiudadNatalMod = [];
-    
     $scope.detalleUsuario.intervencionesId = [];
     $scope.detalleUsuario.geografiasId = [];
     $scope.detalleUsuario.permisosId = [];
-    
     $scope.detalleUsuario.tecnicos = [];
 	$scope.detalleUsuario.despachos = [];
-    
     let acentos = {'á':'a','é':'e','í':'i','ó':'o','ú':'u','Á':'A','É':'E','Í':'I','Ó':'O','Ú':'U'};
     $scope.mostrarAccesosMod = false;
     $scope.mostrarTecnicosMod = false;
@@ -429,13 +426,13 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
         $scope.$apply();
     });
     
-  //CUANDO SELECCCIONE UNA CIUDAD NATAL LOS RADIOS REGRESAN A SU ESTILO NORMAL (VALIDACIÓN) - PESTAÑA CONFIRMACIÓN MODIFICACIÓN USUARIO
+    //CUANDO SELECCCIONE UNA CIUDAD NATAL LOS RADIOS REGRESAN A SU ESTILO NORMAL (VALIDACIÓN) - PESTAÑA CONFIRMACIÓN MODIFICACIÓN USUARIO
     $scope.asignarCiudadNatalMod = function() {
     	$(".ciudadNatalMod").css("color", "#7c7c7d");
     	$scope.verBtnModificar = true;
 	}
     
-  //MÉTODO PARA VALIDACIÓN DE INFORMACIÓN DE LOS DATOS MOSTRADOS EN LA VISTA - PESTAÑA CONFIRMACIÓN MOD USUARIO
+    //MÉTODO PARA VALIDACIÓN DE INFORMACIÓN DE LOS DATOS MOSTRADOS EN LA VISTA - PESTAÑA CONFIRMACIÓN MOD USUARIO
     $scope.cargarInfoConfirmacionModificacion = function() {
     	$scope.confirmacionModificacion.nombre = 
           $scope.detalleUsuario.nombre !== undefined && $scope.detalleUsuario.nombre !== "" &&
@@ -451,7 +448,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     	$scope.verBtnModificar = true;
     }
     
-  //VERIFICA EL ESTADO DEL CHECK PARA COLOCAR 'SI' O 'NO', SEGÚN EL ESTADO - PESTAÑA INFORMACIÓN MODIFICACUÓN USUARIO
+    //VERIFICA EL ESTADO DEL CHECK PARA COLOCAR 'SI' O 'NO', SEGÚN EL ESTADO - PESTAÑA INFORMACIÓN MODIFICACUÓN USUARIO
 	$scope.cambiarCheckAsignacionAutomaticaMod = function() {
 		if($("#form-asignacionAutomatica-mod").prop('checked')){
 			$("#checkAsignacionAutomaticaMod").text("  SI");
@@ -540,9 +537,9 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 		}
 	}
 	
+	//MÉTODO QUE VALIDA SI SE SELECCIONÓ POR LO MENOS 1 GEOGRAFÍA Y SI EXISTEN TÉCNICOS O DESPACHOS DE ACUERDO A LA/LAS GEOGRAFÍA(S) SELECCIONADA(S)
 	$scope.revisionTecnicosDespachosMod = function() {
 		$scope.verBtnModificar = false;
-		
 		if($scope.detalleUsuario.geografiasId !== undefined){
 			if($scope.detalleUsuario.geografiasId.length > 0){
 				if($scope.isTecnicoMod){
@@ -562,6 +559,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 		}
 	}
 	
+	//MÉTODO PARA CONSULTAR LOS TÉCNICOS A REASIGNAR AL USUARIO (QUE NO SEA TÉCNICO) QUE SE MODIFICARÁ - PESTAÑA TÉCNICOS MODIFICACIÓN USUARIO
 	$scope.consultarTecnicosMod = function() {
 		$scope.listaTecnicosMod = [];
 		let params = {idsGeografia:$scope.listaIdsGeografiaCiudadNatalMod, idTipoUsuario:$scope.idPuestoTecnico.id};
@@ -604,6 +602,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
         });
 	}
 	
+	//MÉTODO PARA CONSULTAR LOS DESPACHOS A REASIGNAR AL TÉCNICO QUE SE MODIFICARÁ - PESTAÑA DESPACHOS MODIFICACIÓN USUARIO
 	$scope.consultarDespachosMod = function() {
 		$scope.listaDespachosMod = [];
 		if($scope.listaIdsGeografiaCiudadNatalMod.length > 0){
@@ -648,6 +647,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 		}
 	}
 	
+	//MÉTODO QUE REALIZA LA MODIFICACIÓN DE LA INFORMACIÓN DEL USUARIO SELECCIONADO
 	$scope.modificarUsuario = function() {
 		$scope.detalleUsuario.tecnicos = [];
 		$scope.detalleUsuario.despachos = [];
@@ -741,7 +741,6 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 
 		      });
 		}
-		
 	}
 	
 	//VALIDACIÓN GENERAL DE DATOS DEL SUBMÓDULO MODIFICAR USUARIO
@@ -934,7 +933,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     		}
     		
     		//PESTAÑA TÉCNICOS
-    		//POR EL MOMENTO SE QUITA LA VALIDACIÓN DE TÉCNICOS
+    		//POR EL MOMENTO SE QUITA LA VALIDACIÓN DE TÉCNICOS (NO ES OBLIGATORIA LA SELECCIÓN)
 //        	var checkTec = 0;
 //    		angular.forEach($scope.listaTecnicosMod,function(tecnico,index){
 //    			if(tecnico.checkedOpcion == true){
@@ -1028,7 +1027,6 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 			toastr.warning(mensaje);
 			$scope.ocultarBotonMod();
 		}
-		
 		//REGRESA LA RESPUESTA BOLEANA
 		return validacion;
 	}
@@ -1043,25 +1041,26 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     	$("#arbolGeografiaMod").jstree("search", $('#buscadorGeografiaMod').val());
 	}
     
-  //MÉTODO PARA BUSCAR PERMISOS DE ACUERDO AL TEXTO INGRESADO EN EL INPUT DE BÚSQUEDA - PESTAÑA ACCESOS MODIFICACIÓN USUARIO
+    //MÉTODO PARA BUSCAR PERMISOS DE ACUERDO AL TEXTO INGRESADO EN EL INPUT DE BÚSQUEDA - PESTAÑA ACCESOS MODIFICACIÓN USUARIO
     $scope.busquedaPermisosMod = function() {
     	$("#arbolPermisoMod").jstree("search", $('#buscadorPermisosMod').val());
 	}
     
+    //FUNCIONALIDAD QUE SIRVE PARA OCULTAR EL BOTÓN DE 'MODIFICAR' MIENTRAS NO SE ESTÉ EN LA PESTAÑA DE 'CONFIRMAR USUARIO' O MIENTRAS NO ESTÉN VALIDADOS LOS CAMPOS
     $scope.ocultarBotonMod = function() {
     	$scope.verBtnModificar = false;
 	}
     
+    //MÉTODO PARA LIMPIAR TODOS LOS CAMPOS DE TODAS LAS PESTAÑAS DE LA MODIFICACIÓN DE USUARIO
     $scope.limpiarDatosModificacion = function() {
     	$("#buscadorIntervencionMod").val("");
     	$("#buscadorGeografiaMod").val("");
     	$("#buscadorPermisosMod").val("");
-
     	$scope.buscarTecnicoMod = "";
     	$scope.buscarTecnicoSeleccionadoMod = "";
     	$scope.buscarDespachoMod = "";
     	$scope.buscarDespachoSeleccionadoMod = "";
-    	
+    	$scope.buscarCiudadMod = "";
     	$scope.detalleUsuario.intervencionesId = [];
     	$scope.listaIntervencionesSelecionadasMod = [];
         $scope.detalleUsuario.geografiasId = [];
@@ -1104,12 +1103,12 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 		$("#pills-arbol-mod").removeClass("active show");
 		$("#pills-intervencion-tab-mod").removeClass("active");
 		$("#pills-intervencion-mod").removeClass("active show");
-		
 		$("#pills-informacion-tab-mod").addClass("active");
 		$("#pills-informacion-mod").addClass("active show");
 		$("#modalEdicionUsuario").modal('hide');
     }
     
+    //FUNCIONALIDAD QUE CIERRA EL MODAL DE EDICIÓN Y LIMPIA TODOS LOS CAMPOS DE TODAS LAS PESTAÑAS DE LA MODIFICACIÓN DE USUARIO
     $scope.cerrarModalEdicionUsuario = function() {
     	$scope.limpiarDatosModificacion();
 	}

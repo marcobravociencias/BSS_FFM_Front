@@ -54,7 +54,6 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     
     //MÉTODO QUE INICIA EL MÓDULO Y SUS VISTAS DE USUARIOS
     $scope.iniciarModuloUsuarios = function() {
-//    	$("#container_usuarios_alta_consulta").css("height", (window.innerHeight - 200) );
     	let paramsConfiguracionDespacho ={
 				moduloAccionesUsuario: 'moduloUsuarios'
 	    };
@@ -74,7 +73,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
         	$scope.filtroGeografias = results[0].data.result.N_FILTRO_GEOGRAFIA;
         	$scope.filtroIntervenciones = results[0].data.result.N_FILTRO_INTERVENCIONES;
         	
-        	// *** COMPAÑIAS ***
+        	// *** COMPAÑÍAS ***
         	if (results[1].data !== undefined) {
             	if(results[1].data.respuesta){
             		if(results[1].data.result.companias.length > 0){
@@ -192,7 +191,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
             	toastr.error('Error interno en el servidor.');
             }
             
-         // *** INTERVENCIONES ***
+            // *** INTERVENCIONES ***
             if (results[5].data !== undefined) {
             	if(results[5].data.respuesta){
             		if(results[5].data.result !== null){
@@ -986,7 +985,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     		}
     		
     		//PESTAÑA TÉCNICOS
-    		//POR EL MOMENTO SE QUITA LA VALIDACIÓN DE TÉCNICOS
+    		//POR EL MOMENTO SE QUITA LA VALIDACIÓN DE TÉCNICOS (NO ES OBLIGATORIA LA SELECCIÓN)
 //        	var checkTec = 0;
 //    		angular.forEach($scope.listaTecnicos,function(tecnico,index){
 //    			if(tecnico.checkedOpcion == true){
@@ -1371,6 +1370,14 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	
 	//MÉTODO PARA LIMPIAR TODOS LOS CAMPOS DE TODAS LAS PESTAÑAS DEL REGISTRO DE USUARIO
 	$scope.limpiarDatosRegistro = function() {
+		$("#buscadorIntervencionRegistro").val("");
+    	$("#buscadorGeografiaRegistro").val("");
+    	$("#buscadorPermisosRegistro").val("");
+    	$scope.buscarTecnico = "";
+    	$scope.buscarTecnicoSeleccionado = "";
+    	$scope.buscarDespacho = "";
+    	$scope.buscarDespachoSeleccionado = "";
+    	$scope.buscarCiudad = "";
 		$scope.informacionRegistro.intervenciones = [];
 		$scope.listaIntervencionesSeleccionadas = [];
 		$scope.informacionRegistro.geografias = [];
@@ -1406,7 +1413,6 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		$("#pills-confirmar").removeClass("active show");
 		$("#pills-informacion-tab").addClass("active");
 		$("#pills-informacion").addClass("active show");
-		
 		$("#opcion-alta-tab").removeClass("active");
 		$("#opcion-alta").removeClass("active show");
 		$("#opcion-consulta-tab").addClass("active");
@@ -1436,12 +1442,11 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	
 	//MÉTODO PARA ELIMINAR USUARIOS (BAJA LÓGICA)
     eliminarUsuario = function(idUsuario) {
-    	
     	let params = {
     			idUsuarioQueModifica: idUsuario,
     			estatus: 0,
     			comentarios: "Se desactiva al Usuario"
-		}
+		};
     	
     	swal({
 	        title: "Se dará de baja al usuario",

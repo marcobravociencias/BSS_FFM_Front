@@ -44,7 +44,7 @@
                             	<div class="row">
                                 	<div class="col-md-12">
                                     	<div class="input-group input-group-sm content-seach-group">
-                                        	<input type="text" class="form-control buscadorGenerico" ng-model="buscarCiudad" placeholder="Buscar ciudad"> 
+                                        	<input type="text" class="form-control buscadorGenerico" ng-model="buscarCiudadMod" placeholder="Buscar ciudad"> 
                                         	<span class="fa fa-search iconoBusqueda"></span>
                                         </div>
                                     </div>
@@ -53,7 +53,7 @@
                                     <label class="titulos-confirmacion">* Ciudad natal:</label>
                                 </div>
                                 	<div id="contenedorconfirmacionModificacion" class="scrollListaCiudadNatalMod">
-	                                    <div class="row" ng-repeat="ciudad in listaCiudadNatalMod | filter:buscarCiudad track by $index" ng-if="ciudad.nombre != null">
+	                                    <div class="row" ng-repeat="ciudad in listaCiudadNatalMod | filter:buscarCiudadMod track by $index" ng-if="ciudad.nombre != null">
 	                                        <div class="col-12">
 	                                            <label class="respuesta-confirmacion ciudadNatalMod">
 	                                                <input type="radio" ng-model="detalleUsuario.ciudadNatal" ng-value="ciudad.id" ng-click="asignarCiudadNatalMod()">
