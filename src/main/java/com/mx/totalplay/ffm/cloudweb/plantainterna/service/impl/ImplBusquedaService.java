@@ -192,6 +192,7 @@ public class ImplBusquedaService implements BusquedaService {
 		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
         String tokenAcces = principalDetail.getAccess_token();
+        logger.info(principalDetail.toString());
         String urlRequest = principalDetail.getDireccionAmbiente().concat(constBusqueda.getConfigurarServicios());
         Map<String, String> paramUri = new HashMap<String, String>();
         logger.info("### json object params ## \n" + jsonObject.toString());
@@ -215,12 +216,14 @@ public class ImplBusquedaService implements BusquedaService {
 
 	@Override
 	public ServiceResponseResult activarServicios(String params) {
-		logger.info("ImplBusquedaService.class activarServicios(): \n" + params);
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
         LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        jsonObject.addProperty("idUsuario", principalDetail.getIdUsuario());
         String tokenAcces = principalDetail.getAccess_token();
         String urlRequest = principalDetail.getDireccionAmbiente().concat(constBusqueda.getActivarServicios());
+        logger.info("ImplBusquedaService.class activarServicios(): \n" + gson.toJson(jsonObject));
         logger.info("###URL consultarDetalleObjectSF(): "+ urlRequest);
-        ServiceResponseResult response = restCaller.callPostBearerTokenRequest(params, urlRequest, ServiceResponseResult.class, tokenAcces);
+        ServiceResponseResult response = restCaller.callPostBearerTokenRequest(gson.toJson(jsonObject), urlRequest, ServiceResponseResult.class, tokenAcces);
         logger.info("####RESULT: " + gson.toJson(response));
         return response;
 	}

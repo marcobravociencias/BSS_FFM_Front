@@ -46,7 +46,7 @@ app.activacionController=function($scope, $q, busquedaService){
         $scope.codigopostalplanactivacion=csp.CP
         //$scope.codigopostalplanactivacion='04519'
         $scope.idotActivacion=csp.idOt
-        $scope.unidadNegocioActivacion=csp.UnidadNegocio
+        $scope.unidadNegocioActivacion=csp.unidadNegocio
 
         $scope.consultarValidacionCuentaAsync=false     
 
@@ -70,7 +70,7 @@ app.activacionController=function($scope, $q, busquedaService){
     $scope.mostrarDetalleActivarOs = function(os) {
         $scope.Network_code=''
         $scope.tipoactivacion='os'
-        $scope.validarActivacionos=os.id
+        $scope.validarActivacionos=os.idCsp
        
         console.log(os);
         os.Folio_OS = os.nombre;
@@ -86,7 +86,7 @@ app.activacionController=function($scope, $q, busquedaService){
         $scope.iconActivacion = 1;
 
         $scope.consultarEquiposConfigurados(os);
-        $scope.unidadNegocioActivacion=os.UnidadNegocio
+        $scope.unidadNegocioActivacion=os.unidadNegocio
 
         $scope.consultarValidacionCuentaAsync=false
 
@@ -125,12 +125,12 @@ app.activacionController=function($scope, $q, busquedaService){
             mensajeError+='<li class="mensajeeerror">Seleccciona tipo de equipo</li>'
             isError=true
         }
-        if(!servicio.config.No_Serie){
+        if(!servicio.config.numSerie){
             mensajeError+='<li class="mensajeeerror">N&uacute;mero de serie</li>'
             isError=true
         }
 
-        if(!servicio.config.MAC){
+        if(!servicio.config.mac){
             mensajeError+='<li class="mensajeeerror">MAC</li>'
             isError=true
         }
@@ -152,6 +152,8 @@ app.activacionController=function($scope, $q, busquedaService){
     
         swal({ text: 'Configurando  ...', allowOutsideClick: false });
         swal.showLoading();        
+        
+        /*
         $scope.params =  
             [ {
                 "Id_OT"                 : $scope.idotActivacion,
@@ -167,19 +169,59 @@ app.activacionController=function($scope, $q, busquedaService){
 
             }]
         ;
+        */
 
-        busquedaService.configurarEquipos($scope.params).then(function success(response) {
+        $scope.equipo = {};
+        $scope.equipo.idOt = $scope.idotActivacion;
+        $scope.equipo.idCotSitioPlan = servicio.Info_Equipo.idCotPlanServicio;
+        $scope.equipo.idCotPlanServicio = servicio.id;
+        $scope.equipo.idCotModeloEquipo = servicio.Info_Equipo.idCotModeloEquipo;
+        $scope.equipo.tipoEquipo = servicio.Info_Equipo.tipoDispositivo;
+        $scope.equipo.svrMode = servicio.config.tipoEquipoSelect.nombre;
+        $scope.equipo.numeroSerie = servicio.config.numSerie;
+        $scope.equipo.mac = servicio.config.mac;
+        $scope.equipo.idModelo = servicio.config.modeloSelect.idModelo;
+        $scope.equipo.modelo = servicio.config.modeloSelect.modelo;
+        //$scope.equipo.llevaAta = servicio.idOt;
+        
+        /*
+        $scope.detalleRed = {};
+        $scope.detalleRed.idOnt = servicio.idOt;
+        $scope.detalleRed.frame = servicio.idOt;
+        $scope.detalleRed.slot = servicio.idOt;
+        $scope.detalleRed.puerto = servicio.idOt;
+        $scope.detalleRed.idOlt = servicio.idOt;
+        $scope.detalleRed.olt = servicio.idOt;
+        $scope.detalleRed.ipOlt = servicio.idOt;
+        $scope.detalleRed.tipoRed = servicio.idOt;
+        $scope.equipo.detalleRed = $scope.detalleRed;
+
+        $scope.informacionSVMRouter = {};
+        $scope.informacionSVMRouter.gateWay = servicio.idOt;
+        $scope.informacionSVMRouter.segmentoGateway = servicio.idOt;
+        $scope.informacionSVMRouter.ip = servicio.idOt;
+        $scope.informacionSVMRouter.mask = servicio.idOt;
+        $scope.informacionSVMRouter.segmentoMask = servicio.idOt;
+        $scope.informacionSVMRouter.segmentoRed = servicio.idOt;
+        $scope.informacionSVMRouter.segmentoWildCard = servicio.idOt;
+        $scope.equipo.informacionSVMRouter = $scope.informacionSVMRouter;
+        */
+        $scope.params = {};
+        $scope.params.servicios = [];
+        $scope.params.servicios.push($scope.equipo);
+
+        busquedaService.configurarServicios($scope.params).then(function success(response) {
             console.log(response);
             if (response.data !== undefined) {
-                if (response.data.success) {
-                   if(response.data.result.result === '0'){
+                if (response.data.respuesta) {
+                   if(response.data.result.mensaje === 'OK'){
                         servicio.isConfigurado=true
                         $scope.validarServiciosConfigurados()
-                        mostrarMensajeExitoAlert(response.data.result.resultDescription);
+                        mostrarMensajeExitoAlert(response.data.result.description);
                         swal.close();
                    }else{
                         swal.close();
-                        mostrarMensajeErroActivacion(response.data.result.resultDescription)    
+                        mostrarMensajeErroActivacion(response.data.result.description)    
                    }
                 } else {
                     swal.close();
@@ -302,38 +344,38 @@ app.activacionController=function($scope, $q, busquedaService){
             isError=true
         }
        
-        if(!servicio.config.No_Serie){
+        if(!servicio.config.numSerie){
             mensajeError+='<li class="mensajeeerror">Numero serie</li>'
             isError=true
         }
 
         
-        if(!servicio.config.MAC){
+        if(!servicio.config.mac){
             mensajeError+='<li class="mensajeeerror">MAC</li>'
             isError=true
         }
 
         
-        if(!servicio.config.OLT){
+        if(!servicio.config.red.nombreOlt){
             mensajeError+='<li class="mensajeeerror">OLT</li>'
             isError=true
         }
 
-        if(!servicio.config.Id_OLT){
+        if(!servicio.config.red.idOlt){
             mensajeError+='<li class="mensajeeerror">Id OLT</li>'
             isError=true
         }
 
-        if(!servicio.config.Frame){
+        if(!servicio.config.red.frame){
             mensajeError+='<li class="mensajeeerror">Frame</li>'
             isError=true
         }
 
-        if(!servicio.config.Slot){
+        if(!servicio.config.red.slot){
             mensajeError+='<li class="mensajeeerror">Slot</li>'
             isError=true
         }
-        if(!servicio.config.Puerto){
+        if(!servicio.config.red.puerto){
             mensajeError+='<li class="mensajeeerror">Puerto</li>'
             isError=true
         }
@@ -355,32 +397,60 @@ app.activacionController=function($scope, $q, busquedaService){
         swal({ text: 'Configurando ONT ...', allowOutsideClick: false });
         swal.showLoading();
 
+        /*
         $scope.params =  
             [ {
                 "Id_OT"               :$scope.idotActivacion,
                 "Id_Cot_SitioPlan"    :$scope.objectglobalactivacion.id_cotsitioplansf,
                 "Id_Cot_PlanServicio" :servicio.IdCotPlanServicio,
                 "Id_Cot_ModeloEquipo" :servicio.Info_Equipo.Id_Cot_ModeloEquipo,
-                "Frame"               :servicio.config.Frame,
+                "Frame"               :servicio.config.Frame,//
                 "MAC"                 :servicio.config.MAC,
                 "Id_Modelo"           :servicio.config.modeloSelect.Id_Modelo ,
                 "Modelo"              :servicio.config.modeloSelect.Descripcion_Modelo ,
                 "No_Serie"            :servicio.config.No_Serie,
-                "Puerto"              :servicio.config.Puerto,
+                "Puerto"              :servicio.config.Puerto,//
                 "Id_OLT"              :servicio.config.Id_OLT,
-                "OLT"                 :servicio.config.OLT,
-                "Slot"                :servicio.config.Slot,
+                "OLT"                 :servicio.config.OLT,//
+                "Slot"                :servicio.config.Slot,//
                 "Tipo_Equipo"         :servicio.Info_Equipo.Dispositivo,
                 "SRV_Mode"            :servicio.config.tipoEquipoSelect.nombre,
-                "Tipo_red"            :servicio.config.tipoRedSelect.Descripcion_Aprovisionamiento
+                "Tipo_red"            :servicio.config.tipoRedSelect.Descripcion_Aprovisionamiento//
             }]
         ;
+        */
+        
+        $scope.ont = {};
+        $scope.ont.idOt = $scope.idotActivacion;
+        $scope.ont.idCotSitioPlan = servicio.Info_Equipo.idCotPlanServicio;//
+        $scope.ont.idCotPlanServicio = servicio.id;
+        $scope.ont.idCotModeloEquipo = servicio.Info_Equipo.idCotModeloEquipo;
+        $scope.ont.tipoEquipo = servicio.Info_Equipo.tipoDispositivo;
+        $scope.ont.svrMode = servicio.config.tipoEquipoSelect.nombre;
+        $scope.ont.numeroSerie = servicio.config.numSerie;
+        $scope.ont.mac = servicio.config.mac;
+        $scope.ont.idModelo = servicio.config.modeloSelect.idModelo;
+        $scope.ont.modelo = servicio.config.modeloSelect.modelo;
 
-        busquedaService.configurarOnt($scope.params).then(function success(response) {
+        $scope.detalleRed = {};
+        //$scope.detalleRed.idOnt = servicio.config.red.frame;//
+        $scope.detalleRed.frame = servicio.config.red.frame;
+        $scope.detalleRed.slot = servicio.config.red.slot;
+        $scope.detalleRed.puerto = servicio.config.red.puerto;
+        $scope.detalleRed.idOlt = servicio.config.red.idOlt;
+        $scope.detalleRed.olt = servicio.config.red.nombreOlt;
+        //$scope.detalleRed.ipOlt = servicio.config.red.frame;
+        $scope.detalleRed.tipoRed = servicio.config.tipoRedSelect.descripcionAprovisionamiento;
+        $scope.ont.detalleRed = $scope.detalleRed;
+        $scope.params = {};
+        $scope.params.servicios = [];
+        $scope.params.servicios.push($scope.ont);
+
+        busquedaService.configurarServicios($scope.params).then(function success(response) {
             console.log(response);
             if (response.data !== undefined) {
-                if (response.data.success) {
-                   if(response.data.result.result === '0'){
+                if (response.data.respuesta) {
+                   if(response.data.result.mensaje === 'OK'){
                     swal.close()
                     swal({
                         text: 'Se configur\u00F3 correctamete la ONT',
@@ -439,12 +509,11 @@ app.activacionController=function($scope, $q, busquedaService){
 			busquedaService.consultarEquipos($scope.params),
 			busquedaService.consultarCotizacionesEquipos($scope.params)
 		]).then(function(results) {
-            console.log();
             if (results[0].data !== undefined) {
                 if (results[0].data.respuesta) {
 					if (results[0].data.result) {
-                        $scope.infoDNConfigurados = results[0].data.result.equiposConfifurados.dns;
-                        $scope.listadoInfoEquiposConfigurados = results[0].data.result.equiposConfifurados.servicios;
+                        $scope.infoDNConfigurados = results[0].data.result.equiposConfifurados.dns ? results[0].data.result.equiposConfifurados.dns : [];
+                        $scope.listadoInfoEquiposConfigurados = results[0].data.result.equiposConfifurados.servicios ? results[0].data.result.equiposConfifurados.servicios : [];
                         angular.forEach($scope.infoDNConfigurados.dns, function(el,indexj){
                             if (el.dn === results[0].data.result.equiposConfifurados.dns.dnPrincipal) {
                                 el.valor = "1";
@@ -455,7 +524,7 @@ app.activacionController=function($scope, $q, busquedaService){
                     }
                 }
             }
-
+            
             if (results[1].data !== undefined) {
                 if (results[1].data.respuesta) {
 					if (results[1].data.result) {
@@ -473,7 +542,7 @@ app.activacionController=function($scope, $q, busquedaService){
                     }
                 }
             }
-
+            
             angular.forEach($scope.listaCotizaciones, function(cotizacion, index) {
                 cotizacion.mostrarInfo = true;
                 cotizacion.tipoActiviacion = 'Bridge';
@@ -598,66 +667,8 @@ app.activacionController=function($scope, $q, busquedaService){
             $scope.historial.push($scope.elemento);
             $scope.showDetalleActivar = true;
             swal.close();
-
         }).catch(err => handleError(err));
 
-        
-        /*
-        busquedaService.consultarEquiposConfigurados($scope.params).then(function success(response) {
-            console.log(response);
-            //QUITAR!!
-            response.data = 
-            {
-                "success": true,
-                "result": {
-                    "result": "0",
-                    "resultDescription": "Operación Exitosa.",
-                    "Version": "1.0"
-                }
-            }
-            //
-            if (response.data !== undefined) {
-                if (response.data.success) {
-                   if(response.data.result.result === '0'){
-                       
-                        if(response.data.result.Info_DN_Conf ){
-                            angular.forEach( response.data.result.Info_DN_Conf , function(element,index){
-                                if(element.DN_Conf !== undefined){
-                                    angular.forEach(element.DN_Conf , function(el,indexj){
-                                        el.valor=indexj== 0 ? '1':'0'
-                                    })
-                                }
-                            })       
-                            console.log("##########33listado dns configurados",response.data.result.Info_DN_Conf)
-                            $scope.listadoInfoDNConfigurados=response.data.result.Info_DN_Conf;
-                            //$scope.listadoInfoDNConfigurados=[]
-                        }
-
-                        if(response.data.result.Info_Equipo_Conf ){
-                            console.log("##########listado equipos configurados",response.data.result.Info_Equipo_Conf )
-                            $scope.listadoInfoEquiposConfigurados=response.data.result.Info_Equipo_Conf ;
-                            //$scope.listadoInfoEquiposConfigurados=[]
-                        }
-
-                        $scope.consultarEquipos(csp)
-                      //  mostrarMensajeExitoAlert(response.data.result.resultDescription);
-                      //  swal.close();
-                   }else{
-                        swal.close();
-                        mostrarMensajeErroActivacion(response.data.result.resultDescription)    
-                   }
-                } else {
-                    swal.close();
-                    mostrarMensajeErroActivacion('No se pudo activar el plan')                                    
-                }
-            } else {
-                swal.close();
-                mostrarMensajeErroActivacion('No se pudo activar el plan')                
-            }
-        }, function error(response) {
-            swal.close();
-        });
-        */
     }
 
     $scope.consultarEquipos = function(csp) {
@@ -1056,7 +1067,7 @@ app.activacionController=function($scope, $q, busquedaService){
         let indexOnt=undefined;
         angular.forEach($scope.listaCotizaciones, function(elemento,index){
             if(elemento.Info_Equipo !== undefined){
-                if(elemento.Info_Equipo.Es_Equipo=== '1' && elemento.Info_Equipo.Tiene_Autofind==='true'){
+                if(elemento.Info_Equipo.esEquipo && elemento.Info_Equipo.tieneAutofind){
                     indexOnt=index
                 }
             }
@@ -1069,22 +1080,24 @@ app.activacionController=function($scope, $q, busquedaService){
     
         swal({ text: 'Activando datos ...', allowOutsideClick: false });
         swal.showLoading();
+        /*
         var params = new FormData();
         params.append("params.MensajeChatter", 'Activacion servicios de '+$scope.planactivaciontemp.nombre);
-        params.append("params.IdPlanServicio",  ontRegistro.IdCotPlanServicio);
+        params.append("params.IdPlanServicio",  ontRegistro.idCotPlanServicio);
         params.append("params.Id_OT",  $scope.idotActivacion);
         params.append("params.UnidadNegocio",   $scope.unidadNegocioActivacion);
+        */
 
         $scope.params = {};
-        $scope.params.idOt;
-        $scope.params.idCsp;
+        $scope.params.idOt = $scope.idotActivacion;
+        $scope.params.idCsp = $scope.objectglobalactivacion.idCsp;
         $scope.params.idUsuario;
-        $scope.params.idClaveCliente;
-        $scope.params.folioSistema;
-        $scope.params.latitud;
-        $scope.params.longitud;
-        $scope.params.idFlujo;
-        $scope.params.comentarios;
+        $scope.params.idClaveCliente = $scope.objectglobalactivacion.numeroCuentaFactura;
+        $scope.params.folioSistema = $scope.objectglobalactivacion.Folio_OS;
+        $scope.params.latitud = "1.0";
+        $scope.params.longitud = "1.0";
+        $scope.params.idFlujo = "1";
+        $scope.params.comentarios = 'Activacion servicios de ' + $scope.objectglobalactivacion.nombre;
     
         
         busquedaService.activacionEquipos($scope.params).then(function success(response) {
@@ -1096,47 +1109,43 @@ app.activacionController=function($scope, $q, busquedaService){
                 response.data.result.result='0'
                 response.data.result.Es_asyncrona='true'
                 **/
-                if (response.data.success) {
-                    if(response.data.result.result !== undefined){
+                if (response.data.respuesta) {
                      
-                            if(response.data.result.result=='0'){
+                    if(response.data.result.mensaje=='OK'){
 
-                                if( $scope.unidadNegocioActivacion === '2'  ){
-                                    //$scope.isProcesandoActivacion='cargando'                                   
-                                    $scope.statusActivacion='proceso'
-                                    setTimeout(function(){
-                                        $scope.validarActivacion()
-                                    },5000)
-                                }else{
-                                    if(response.data.result.Es_asyncrona==='true'){
-                                        //$scope.isProcesandoActivacion='cargando'                                   
-                                        $scope.statusActivacion='proceso'
-                                        setTimeout(function(){
-                                            $scope.validarActivacion()
-                                        },5000)
-                                    }
-                                   
-                                }
-                                swal.close()
-                                swal({
-                                    text:response.data.result.resultDescription,
-                                    type: 'success',
-                                    timer:3000,
-                                    showConfirmButton: true,
-                                    showCancelButton: false,
-                                    confirmButtonColor: '#3085d6',
-                                    cancelButtonColor: '#d33',
-                                    cancelConfirmText:"Cerrar",
-                                    }).then(function () {
-                                }).catch(swal.noop);
-                            }else{ 
-                                swal.close()                                               
-                                mostrarMensajeErroActivacion(response.data.result.resultDescription)                
+                        if( $scope.unidadNegocioActivacion === '2'  ){
+                            //$scope.isProcesandoActivacion='cargando'                                   
+                            $scope.statusActivacion='proceso'
+                            setTimeout(function(){
+                                $scope.validarActivacion()
+                            },5000)
+                        }else{
+                            if(response.data.result.esAsincrona){
+                                //$scope.isProcesandoActivacion='cargando'                                   
+                                $scope.statusActivacion='proceso'
+                                setTimeout(function(){
+                                    $scope.validarActivacion()
+                                },5000)
                             }
-                    }else{
+                            
+                        }
                         swal.close()
-                            mostrarMensajeErroActivacion('No se pudo activar el plan')    
+                        swal({
+                            text:response.data.result.description,
+                            type: 'success',
+                            timer:3000,
+                            showConfirmButton: true,
+                            showCancelButton: false,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            cancelConfirmText:"Cerrar",
+                            }).then(function () {
+                        }).catch(swal.noop);
+                    }else{ 
+                        swal.close()                                               
+                        mostrarMensajeErroActivacion(response.data.result.resultDescription)                
                     }
+                    
                 } else {
                     swal.close()
                     mostrarMensajeErroActivacion('No se pudo activar el plan')                                    
@@ -1154,46 +1163,42 @@ app.activacionController=function($scope, $q, busquedaService){
     
         if(!$scope.consultarValidacionCuentaAsync  ){      
             
+            /*
             var params = new FormData();        
             params.append("params.Id_os_sf", $scope.validarActivacionos);            
-            
+            */
             $scope.params = {};
             $scope.params.idCsp = $scope.validarActivacionos;
-            $scope.params.idOt
+            $scope.params.idOt = $scope.idotActivacion;
             busquedaService.validarActivacion($scope.params).then(function success(response) {
                 console.log(response);
           
                 if($scope.pruebaPeticionActivacion=='true'){
-                    response.data.result.idStatus='3'
+                    response.data.result.estatusActivacion='3'
                 }
                 /****/
                 if (response.data !== undefined) {
-                    if (response.data.success) {
-                        if (response.data.result.result === "0") {
-                            /**
-                            1 - Activación Exitosa
-                            2 - En espera (Se reconsume)
-                            Cualquier otro caso -  Error en la activación
-                            **/
-                            if(response.data.result.idStatus ==='1'){
-                                $scope.consultarValidacionCuentaAsync=true
-                                $scope.statusActivacion='true'    
-                                $scope.planActivo='true'                                                                                                
-                                $scope.objectglobalactivacion.cuentaActiva='true'
-
-                            }else if(response.data.result.idStatus ==='2' ){
-                                setTimeout(function(){
-                                    $scope.validarActivacion()
-                                },5000)
-                            }else{
-                                $scope.consultarValidacionCuentaAsync=true
-                                $scope.statusActivacion='error'       
-                                $scope.Network_code=response.data.result.Network_code                  
-                            }
-                   
+                    if (response.data.respuesta) {
                         
+                        /**
+                        1 - Activación Exitosa
+                        2 - En espera (Se reconsume)
+                        Cualquier otro caso -  Error en la activación
+                        **/
+                        if(response.data.result.estatusActivacion ===1){
+                            $scope.consultarValidacionCuentaAsync=true
+                            $scope.statusActivacion='true'    
+                            $scope.planActivo='true'                                                                                                
+                            $scope.objectglobalactivacion.cuentaActiva='true'
+
+                        }else if(response.data.result.estatusActivacion ===2 ){
+                            setTimeout(function(){
+                                $scope.validarActivacion()
+                            },5000)
                         }else{
-                            mostrarMensajeWarning(response.data.result.resultDescription);
+                            $scope.consultarValidacionCuentaAsync=true
+                            $scope.statusActivacion='error'       
+                            $scope.Network_code=response.data.result.Network_code                  
                         }
                     } else {
                         mostrarMensajeWarning(response.data.mensaje);
@@ -1216,35 +1221,40 @@ app.activacionController=function($scope, $q, busquedaService){
         swal({ text: 'Configurando DNS ...', allowOutsideClick: false });
         swal.showLoading();
 
+        /*
         $scope.params = {};
         $scope.listaDn = [];
-        angular.forEach(servicio.config.DN_Conf , function(element,index){
+        angular.forEach(servicio.config.dns , function(element,index){
             if(element.valor === "1") {
-                $scope.params.DN_Principal = element.DN;
+                $scope.params.dnPrincipal = element.dn;
             }
-            $scope.listaDn.push(element.DN);
+            $scope.listaDn.push(element.dn);
         });
-
-
         $scope.params.SRV_Mode = servicio.config.tipoEquipoSelect.nombre;
-
-        
         $scope.params.Id_OT =  $scope.idotActivacion;
         $scope.params.Id_Cot_PlanServicio = servicio.IdCotPlanServicio;
-        
-        
         $scope.params.DN = $scope.listaDn;
-
-        $scope.params.idOt
-        $scope.params.idPlanServicio
-        $scope.params.dnPrincipal
-        $scope.params.srvMode
+        */
+        
+        $scope.params = {};
+        $scope.params.idOt = $scope.idotActivacion;
+        $scope.params.idPlanServicio = servicio.id;
+        $scope.params.dnPrincipal ;
+        $scope.params.srvMode = servicio.config.tipoEquipoSelect.nombre;
+        $scope.listaDn = [];
+        angular.forEach(servicio.config.dns , function(element,index){
+            if(element.valor === "1") {
+                $scope.params.dnPrincipal = element.dn;
+            }
+            $scope.listaDn.push(element.dn);
+        });
+        $scope.params.dns = $scope.listaDn;
 
         busquedaService.configurarDns($scope.params).then(function success(response) {
             console.log(response);
             if (response.data !== undefined) {
-                if (response.data.success) {
-                   if(response.data.result.result === '0'){
+                if (response.data.respuesta) {
+                   if(response.data.result.mensaje === 'OK'){
                         swal.close();
                         swal({
                             text: 'Se configur\u00F3 correctamete ',

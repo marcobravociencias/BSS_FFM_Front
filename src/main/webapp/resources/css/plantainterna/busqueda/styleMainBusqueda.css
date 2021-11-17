@@ -705,7 +705,7 @@ button.style_btn_bsq_equipo_table_desc_equipo {
   color: white;
   font-size: .7em;
   margin-top: .3em;
-  /* padding: .8em !important; */
+  padding: .5em !important;
 }
 .stye_content_plan {
   margin-top: 1em !important;
@@ -872,14 +872,7 @@ thead.style_thead_table_desc_equipo_act_serv tr th {
   padding-left: 15px !important;
   padding-right: 15px !important;
 }
-.button-obtenerdns{
-  border-radius: .2em;
-  background: #747474;
-  /* border: 3px solid #343f53; */
-  color: white;
-  font-size: .7em;
-  margin-top: .3em;
-}
+
 
 
 b.title-info-services.dnsmensaje-config {
@@ -1659,4 +1652,25 @@ table#table_desc_equipo_act_serv tbody tr td div .style_input_table_desc_equipo_
 
 .style_thead_table_desc_equipo_act_serv  {
   border: 0px solid white !important;
+  border-top: 4px solid transparent !important;
+}
+.form-group-mac {
+  margin-bottom: .2em;
+}
+.button-obtenerdns{
+  border-radius: .2em!important;
+  background: #747474!important;
+  /* border: 3px solid #343f53; */
+  color: white!important;
+  font-size: .7em!important;
+  margin-top: .3em!important;
+}
+span.text-activacion-warning {
+  color: #6e6e6e;
+  font-size: .7em;
+  color: #fe6d06;
+  font-weight: bold;
+  /* text-decoration: dotted !important; */
+  font-style: italic;
+  float: unset;
 }
