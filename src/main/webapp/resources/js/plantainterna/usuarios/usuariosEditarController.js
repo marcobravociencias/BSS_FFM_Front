@@ -320,6 +320,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                     // ********** CONFIRMAR USUARIO
                     $scope.detalleUsuario.ciudadNatal = $scope.detalleUsuario.idGeografia;
                     
+                    $("#modalEdicionUsuario").modal({ backdrop: 'static', keyboard: false });
                     $("#modalEdicionUsuario").modal('show');
                     
                 } else {
@@ -501,6 +502,44 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 		});
 	}
 	
+	//SELECCIONA O DESELECCIONA TODOS LOS DESPACHOS - PESTAÑA DESPACHOS MODIFICACIÓN USUARIO
+	$scope.seleccionarTodosDespachosMod = function() {
+		var check;
+		if($("#checkTotdosDespachoMod").prop('checked')){
+			check = true;
+			$("#labelDespachosSeleccionadosMod").css("color", "rgb(70, 88, 107)");
+			$("#contenedorDespachosMod").css("border", "white solid 0px");
+		}else{
+			check = false;
+		}
+		angular.forEach($scope.listaDespachosMod,function(despacho,index){
+			despacho.checkedOpcion = check;
+		});
+	}
+	
+	//SELECCIONA O DESELECCIONA EL DESPACHO ELEGIDO - PESTAÑA DESPACHOS MODIFICACIÓN USUARIO
+	$scope.seleccionarDespachoMod = function(desoachoSeleccionado) {
+		if(desoachoSeleccionado.checkedOpcion){
+			desoachoSeleccionado.checkedOpcion = false;
+		}else{
+			desoachoSeleccionado.checkedOpcion = true;
+			$("#labelDespachosSeleccionadosMod").css("color", "rgb(70, 88, 107)");
+			$("#contenedorDespachosMod").css("border", "white solid 0px");
+		}
+		//Verifica si todos los 'checkedOpcion' son true para activar el check de seleccionar todos
+		var check = true;
+		angular.forEach($scope.listaDespachosMod,function(despacho,index){
+			if(despacho.checkedOpcion != true){
+				check = false;
+			}
+		});
+		if(check){
+			$("#checkTotdosDespachoMod").prop("checked",true);
+		}else{
+			$("#checkTotdosDespachoMod").prop("checked",false);
+		}
+	}
+	
 	$scope.revisionTecnicosDespachosMod = function() {
 		$scope.verBtnModificar = false;
 		
@@ -567,44 +606,46 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 	
 	$scope.consultarDespachosMod = function() {
 		$scope.listaDespachosMod = [];
-		let params = {idsGeografia:$scope.listaIdsGeografiaCiudadNatalMod, idTipoUsuario:$scope.idPuestoDespacho.id};
-    	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
-		swal.showLoading();
-    	$q.all([
-    		usuarioPIService.consultarUsuariosPorPuesto(params)
-        ]).then(function(results) {
-        	if (results[0].data !== undefined) {
-            	if(results[0].data.respuesta){
-            		if(results[0].data.result.result.usuarios !== null){
-	            		if(results[0].data.result.result.usuarios.length > 0){
-	            			$scope.listaDespachosMod = results[0].data.result.result.usuarios;
-	            			$("#checkTotdosDespachosMod").prop("checked",false);
-	            	    	angular.forEach($scope.listaDespachosMod,function(despacho,index){
-	            	    		despacho.checkedOpcion = false;
-	            			});
-	            	    	angular.forEach($scope.listaDespachosMod,function(despacho,index){
-	            	    		angular.forEach($scope.detalleUsuario.idDespachos,function(despachoRegistrado,index){
-	            	    			if(despacho.idUsuario == despachoRegistrado.idOperador){
-	            	    				despacho.checkedOpcion = true;
-	            	    			}
-	            	    		});
-	            			});
-	            	    	$("#labelDespachosSeleccionadosMod").css("color", "rgb(70, 88, 107)");
-	            			$("#contenedorDespachosMod").css("border", "white solid 0px");
+		if($scope.listaIdsGeografiaCiudadNatalMod.length > 0){
+			let params = {idsGeografia:$scope.listaIdsGeografiaCiudadNatalMod, idTipoUsuario:$scope.idPuestoDespacho.id};
+	    	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
+			swal.showLoading();
+	    	$q.all([
+	    		usuarioPIService.consultarUsuariosPorPuesto(params)
+	        ]).then(function(results) {
+	        	if (results[0].data !== undefined) {
+	            	if(results[0].data.respuesta){
+	            		if(results[0].data.result.result.usuarios !== null){
+		            		if(results[0].data.result.result.usuarios.length > 0){
+		            			$scope.listaDespachosMod = results[0].data.result.result.usuarios;
+		            			$("#checkTotdosDespachosMod").prop("checked",false);
+		            	    	angular.forEach($scope.listaDespachosMod,function(despacho,index){
+		            	    		despacho.checkedOpcion = false;
+		            			});
+		            	    	angular.forEach($scope.listaDespachosMod,function(despacho,index){
+		            	    		angular.forEach($scope.detalleUsuario.idDespachos,function(despachoRegistrado,index){
+		            	    			if(despacho.idUsuario == despachoRegistrado.idOperador){
+		            	    				despacho.checkedOpcion = true;
+		            	    			}
+		            	    		});
+		            			});
+		            	    	$("#labelDespachosSeleccionadosMod").css("color", "rgb(70, 88, 107)");
+		            			$("#contenedorDespachosMod").css("border", "white solid 0px");
+		            		}else{
+		            			$scope.listaDespachosMod = [];
+		            		}
 	            		}else{
 	            			$scope.listaDespachosMod = [];
 	            		}
-            		}else{
-            			$scope.listaDespachosMod = [];
-            		}
-            	}else{
-            		$scope.listaDespachosMod = [];
-            	}
-        	}else{
-        		toastr.error('Error interno en el servidor.');
-        	}
-        	swal.close();
-        });
+	            	}else{
+	            		$scope.listaDespachosMod = [];
+	            	}
+	        	}else{
+	        		toastr.error('Error interno en el servidor.');
+	        	}
+	        	swal.close();
+	        });
+		}
 	}
 	
 	$scope.modificarUsuario = function() {
@@ -992,11 +1033,35 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 		return validacion;
 	}
     
+    //MÉTODO PARA BUSCAR INTERVENCIONES DE ACUERDO AL TEXTO INGRESADO EN EL INPUT DE BÚSQUEDA - PESTAÑA INTERVENCIONES MODIFICACIÓN USUARIO
+    $scope.busquedaIntervencionMod = function() {
+    	$("#arbolIntervencionMod").jstree("search", $('#buscadorIntervencionMod').val());
+	}
+    
+    //MÉTODO PARA BUSCAR GEOGRAFÍAS DE ACUERDO AL TEXTO INGRESADO EN EL INPUT DE BÚSQUEDA - PESTAÑA ÁRBOL MODIFICACIÓN USUARIO
+    $scope.busquedaGeografiaMod = function() {
+    	$("#arbolGeografiaMod").jstree("search", $('#buscadorGeografiaMod').val());
+	}
+    
+  //MÉTODO PARA BUSCAR PERMISOS DE ACUERDO AL TEXTO INGRESADO EN EL INPUT DE BÚSQUEDA - PESTAÑA ACCESOS MODIFICACIÓN USUARIO
+    $scope.busquedaPermisosMod = function() {
+    	$("#arbolPermisoMod").jstree("search", $('#buscadorPermisosMod').val());
+	}
+    
     $scope.ocultarBotonMod = function() {
     	$scope.verBtnModificar = false;
 	}
     
     $scope.limpiarDatosModificacion = function() {
+    	$("#buscadorIntervencionMod").val("");
+    	$("#buscadorGeografiaMod").val("");
+    	$("#buscadorPermisosMod").val("");
+
+    	$scope.buscarTecnicoMod = "";
+    	$scope.buscarTecnicoSeleccionadoMod = "";
+    	$scope.buscarDespachoMod = "";
+    	$scope.buscarDespachoSeleccionadoMod = "";
+    	
     	$scope.detalleUsuario.intervencionesId = [];
     	$scope.listaIntervencionesSelecionadasMod = [];
         $scope.detalleUsuario.geografiasId = [];

@@ -2,7 +2,7 @@
 <!--     <div class="modal-dialog modal-lg" style="min-width: 95% !important; max-width: 95% !important;"> -->
 <!--         <div class="modal-content"> -->
         
-<div class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" id="modalEdicionUsuario">
+<div class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" id="modalEdicionUsuario" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
 <!--             <div class="blue-gradient style_modal_header modal-header modal_header_bg" style="color: #fff;"> -->

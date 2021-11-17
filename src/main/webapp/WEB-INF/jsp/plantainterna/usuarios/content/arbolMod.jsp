@@ -7,7 +7,7 @@
                 <div class="row">
                 	<div class="col-md-12">
 						<div class="input-group input-group-sm content-seach-group">
-							<input id="buscadorGeografiaMod" type="text" class="form-control buscadorGenerico" placeholder="Buscar geograf&iacute;a" ng-keyup="busquedaGeografiaRegistro()"> 
+							<input id="buscadorGeografiaMod" type="text" class="form-control buscadorGenerico" placeholder="Buscar geograf&iacute;a" ng-keyup="busquedaGeografiaMod()"> 
 							<span class="fa fa-search iconoBusqueda"></span>
 						</div>
 					</div>

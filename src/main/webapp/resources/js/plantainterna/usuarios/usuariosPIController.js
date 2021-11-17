@@ -162,7 +162,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
                     		$scope.listaGeografiasRespaldo = results[4].data.result.geografia;
                     	}
                     	geografia=listGeografias;
-                    	geografia.push({id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#"});
+                    	geografia.push({id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state:{opened: true}});
                         geografia.map((e)=>{
                         	e.parent = e.padre == null ? 0 : e.padre;
                             e.text= e.nombre;

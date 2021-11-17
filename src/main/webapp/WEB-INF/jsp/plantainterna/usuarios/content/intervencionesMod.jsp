@@ -3,7 +3,7 @@
         <h6 class="text-center titulo-opciones">SELECCI&Oacute;N*</h6>
         <hr/>
 		<div class="input-group input-group-sm content-seach-group">
-			<input id="buscadorIntervencionMod" type="text" class="form-control buscadorGenerico" placeholder="Buscar intervenci&oacute;n" ng-keyup="busquedaIntervencionRegistro()"> 
+			<input id="buscadorIntervencionMod" type="text" class="form-control buscadorGenerico" placeholder="Buscar intervenci&oacute;n" ng-keyup="busquedaIntervencionMod()"> 
 			<span class="fa fa-search iconoBusqueda"></span>
 		</div>
 		<div class="scrollGeneralArbol">
