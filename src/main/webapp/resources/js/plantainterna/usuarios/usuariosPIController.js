@@ -711,11 +711,9 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     			fechaAlta: fechaSeleccionada[2] + '-' + fechaSeleccionada[1] + '-' + fechaSeleccionada[0],
     			geografias: $scope.informacionRegistro.geografias,
     			intervenciones: $scope.informacionRegistro.intervenciones,
-    			
     			//DADO QUE EN EL SERVICIO SU VALIDACIÓN ES QUE VAYA UN CAMPO U OTRO (idOperarios O idDespachos), SE COMENTAN LAS SIGUIENTES 2 LÍNEAS
 //    			idOperarios: $scope.isTecnico == true ? [] : $scope.informacionRegistro.tecnicos,
 //    			idDespachos: $scope.isTecnico == true ? $scope.informacionRegistro.despachos : [],
-    			
     			permisos: $scope.isTecnico == true ? [] : $scope.informacionRegistro.permisos,
     			idAsignacionAutomatica: $scope.informacionRegistro.asignacionAutomatica
     	};
@@ -1470,7 +1468,9 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	            	swal.close();
 	            	if(results[0].data.respuesta){
 	            		swal("Correcto", "¡Usuario eliminado con éxito!", "success");
-	            		$scope.consultaUsuariosPorGeoCompPuestos();
+	            		setTimeout(function() {
+	            			$scope.consultaUsuariosPorGeoCompPuestos();
+	    	        	}, 1000);
 	            	}else{
 	            		swal("Error", results[0].data.resultDescripcion, "error");
 	            	}

@@ -559,6 +559,11 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 		}
 	}
 	
+	//CUANDO SELECCCIONE UNA FECHA VÁLIDA EL INPUT REGRESA A SU ESTILO NORMAL (VALIDACIÓN) - PESTAÑA INFORMACIÓN REGISTRO USUARIO
+    $("#form-fechaIngreso-mod").change(function() {
+    	$("#form-fechaIngreso-mod").css("border", "1px solid #bdbdbd");
+    });
+	
 	//MÉTODO PARA CONSULTAR LOS TÉCNICOS A REASIGNAR AL USUARIO (QUE NO SEA TÉCNICO) QUE SE MODIFICARÁ - PESTAÑA TÉCNICOS MODIFICACIÓN USUARIO
 	$scope.consultarTecnicosMod = function() {
 		$scope.listaTecnicosMod = [];
@@ -694,11 +699,11 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 							rfc: $scope.detalleUsuario.rfc,
 							curp: $scope.detalleUsuario.curp,
 							genero: sexoMod,
-							fotoPerfil: {
-								bucketId: "",
-							    archivo: "",
-							    nombre: ""
-							},
+//							fotoPerfil: {
+//								bucketId: "",
+//							    archivo: "",
+//							    nombre: ""
+//							},
 							correoElectronico: $scope.detalleUsuario.correo,
 							telefonoCelular: $scope.detalleUsuario.telefonoCelular,
 							idGeografia: $scope.detalleUsuario.ciudadNatal,
@@ -880,8 +885,8 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 				$("#form-correo-mod").css("border", "1px solid #bdbdbd");
 			}
 		}
-
-		if($scope.detalleUsuario.fechaIngreso === "" || $scope.detalleUsuario.fechaIngreso === undefined || $scope.detalleUsuario.fechaIngreso === null){
+		
+		if($scope.detalleUsuario.fechaIngreso === "" || $scope.detalleUsuario.fechaIngreso === undefined || $scope.detalleUsuario.fechaIngreso === null || $("#form-fechaIngreso-mod").val() === "" || $("#form-fechaIngreso-mod").val() === null){
 			$("#form-fechaIngreso-mod").css("border-bottom", "2px solid #f55756");
 			validacionInformacionGeneral = false;
 			mensaje = mensaje + "<br/> *Fecha de ingreso";
