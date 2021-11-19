@@ -24,6 +24,10 @@
 		<!-- CSS INTERNAS -->
         <link href="${pageContext.request.contextPath}/resources/css/plantainterna/usuarios/usuariosPi.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/css/plantainterna/skillsAdms/styleSkillsFeature.css?" rel="stylesheet" />
+		
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.js"></script>
+    	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.min.js"></script>
+    	
     </head>
     <body id="idBody" ng-controller="usuarioController" style="display: none;">
     	<jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>    

@@ -6,38 +6,44 @@
                 <div class="body-confirmar-usuario">
                     <div class="col-12">
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col-3">
+                                <label class="titulos-confirmacion">* Foto usuario </label>
+                                
                                 <div class="row">
-                                    <label class="titulos-confirmacion">* Nombre:</label>
-                                    <div class="input-group mb-3">
-                                        <span class="respuesta-confirmacion" ng-bind="confirmacionModificacion.nombre"></span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <label class="titulos-confirmacion">* Usuario:</label>
-                                    <div class="input-group mb-3">
-                                        <span class="respuesta-confirmacion" ng-bind="confirmacionModificacion.usuario"></span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <label class="titulos-confirmacion">* Puesto del empleado:</label>
-                                    <div class="input-group mb-3">
-                                        <span class="respuesta-confirmacion" ng-bind="confirmacionModificacion.puesto"></span>
-                                    </div>
-                                </div>
+		                        	<div class="col-md-9">
+		                        		<div class="custom-file">
+				                            <input type="file" class="custom-file-input" id="fileFotoUsuarioMod" ng-model="fileFotoUsuarioMod" ng-on-change="cargarFotoUsuarioMod($event)" accept="image/*" />
+				                            <label class="custom-file-label etiquetaFotoUsuario" for="fileFotoUsuarioMod">Cargar fotograf&iacute;a</label>
+				                        </div>
+		                        	</div>
+		                        	<div class="col-md-3">
+		                        		<button id="btnIniciarCamaraMod" class="botonIniciarCamara" ><i class="fas fa-camera"></i></button>
+		                        	</div>
+		                        </div>
+                                
+		                        
+		                        <div style="text-align: center; margin-top: 5px;">
+		                            <img alt="Usuario" src="./resources/img/plantainterna/despacho/tecnicootasignada.png" class="" id="imgFotoUsuarioMod" style="width: 170px; height: 170px" />
+		                        </div>
+		                        <div ng-if="fileFotoUsuarioMod" class="file-delete" style="text-align: center;">
+		                            <span class="text-img">{{fileFotoUsuarioMod.nombre}} </span><i class="fa fa-trash iconoEliminarFoto" ng-click="eliminarFotoUsuarioMod()"></i>
+		                        </div>
                             </div>
-                            <div class="col-4">
-                                <div class="row">
-                                    <label class="titulos-confirmacion">* Correo electr&oacute;nico:</label>
-                                    <div class="input-group mb-3">
-                                        <span class="respuesta-confirmacion" ng-bind="confirmacionModificacion.correo"></span>
-                                    </div>
+                            <div class="col-5" style="padding-left: 2em;">
+                            	<div class="row">
+                                    <label class="titulos-confirmacion">* Nombre: <span class="respuesta-confirmacion" ng-bind="confirmacionModificacion.nombre"></span></label>
                                 </div>
-                                <div class="row">
-                                    <label class="titulos-confirmacion">* Fecha ingreso:</label>
-                                    <div class="input-group mb-3">
-                                        <span class="respuesta-confirmacion" ng-bind="confirmacionModificacion.fechaIngreso"></span>
-                                    </div>
+                                <div class="row" style="margin-top: 1em !important;">
+                                    <label class="titulos-confirmacion">* Usuario: <span class="respuesta-confirmacion" ng-bind="confirmacionModificacion.usuario"></span></label>
+                                </div>
+                                <div class="row" style="margin-top: 1em !important;">
+                                    <label class="titulos-confirmacion">* Puesto empleado: <span class="respuesta-confirmacion" ng-bind="confirmacionModificacion.puesto"></span></label>
+                                </div>
+                                <div class="row" style="margin-top: 1em !important;">
+                                    <label class="titulos-confirmacion">* Correo electr&oacute;nico: <span class="respuesta-confirmacion" ng-bind="confirmacionModificacion.correo"></span></label>
+                                </div>
+                                <div class="row" style="margin-top: 1em !important;">
+                                    <label class="titulos-confirmacion">* Fecha ingreso: <span class="respuesta-confirmacion" ng-bind="confirmacionModificacion.fechaIngreso"></span></label>
                                 </div>
                             </div>
                             <div class="col-4">
@@ -70,3 +76,79 @@
                     </div>
                 </div>
 </div>
+
+<div id="modalTomarFotoUsuarioMod" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Fotograf&iacute;a del usuario</h5>
+				<button id="btnCerrarCamModalTomarFotoUsuarioMod" type="button" class="btn-close" ng-click="cerrarModalTomarFotoUsuarioMod()"></button>
+			</div>
+			<div class="modal-body">
+				<div class="container">
+					<div class="row" style="text-align: center;">
+						<div class="video-wrap">
+						    <video id="videoMod" width="300" height="280" playsinline autoplay></video>
+						</div>
+						<canvas id="canvasMod" width="300" height="280" style="display: none;"></canvas>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button id="btnTomarFotoMod" type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface" ng-click="obtenerFotoTomadaMod()">CAPTURAR <i class="fas fa-camera"></i></button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+
+	async function iniciarCamaraMod() {
+		swal({html: '<strong>Accediendo a la cámara...</strong>',allowOutsideClick: false});
+		swal.showLoading();
+		navigator.getUserMedia({'audio':false, 'video':true}, function(stream){
+			handleSuccessMod(stream);
+			$("#modalTomarFotoUsuarioMod").modal({ backdrop: 'static', keyboard: false });
+			$("#modalTomarFotoUsuarioMod").modal('show');
+			swal.close();
+        }, function(){
+        	swal.close();
+        	swal({
+    	        title: "No fue posible acceder a la cámara",
+    	        text: "Esto se debe a que tu equipo de cómputo no cuenta con web cam o tu navegador no tiene habilitado el permiso de acceso a la cámara.",
+    	        imageUrl: './resources/img/plantainterna/usuario/accesoCamWeb.PNG',
+    	        imageWidth: 300,
+    	        imageHeight: 100,
+    	        type: "warning",
+    	        confirmButtonColor: '#007bff',
+    	        confirmButtonText: 'Entendido',
+    	      }).then(function (isConfirm) {
+        	      
+    	      })
+        });
+	}
+
+	function handleSuccessMod(stream) {
+		window.stream = stream;
+		videoMod.srcObject = stream;
+	}
+
+	btnIniciarCamaraMod.addEventListener("click", function() {
+		iniciarCamaraMod();
+	});
+
+	//Tomar foto
+	var context = document.getElementById('canvasMod').getContext('2d');
+	console.log(context);
+	btnTomarFotoMod.addEventListener("click", function() {
+		context.drawImage(videoMod, 0, 0, 300, 280);
+	    var imgMod = document.getElementById('canvasMod').toDataURL();
+	    document.getElementById("imgFotoUsuarioMod").src = "" + imgMod;
+	    stream.getTracks()[0].stop();
+	});
+
+	btnCerrarCamModalTomarFotoUsuarioMod.addEventListener("click", function() {
+		stream.getTracks()[0].stop();
+	});
+
+</script>

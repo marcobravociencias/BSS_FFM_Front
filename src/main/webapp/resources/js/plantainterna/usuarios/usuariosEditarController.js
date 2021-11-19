@@ -25,6 +25,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     $scope.validarTamDatosMod = false;
     $scope.isTecnicoMod = false;
     $scope.contadorCambioArbolGeografias = false;
+    $scope.fileFotoUsuarioMod = null;
 
     //MÉTODO QUE REALIZA LA CONSULTA ESPECÍFICA POR ID DE USUARIO (CLIC EN BOTÓN DE MODIFICAR EN LA TABLA DE CONSULTA), Y PREPARA LA VISTA DE MODIFICACIÓN
     consultarDetalleUsuario = function(idUsuario) {
@@ -316,7 +317,15 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 
                     // ********** CONFIRMAR USUARIO
                     $scope.detalleUsuario.ciudadNatal = $scope.detalleUsuario.idGeografia;
-                    
+                    if($scope.detalleUsuario.urlFotoPerfil != null){
+                    	$scope.fileFotoUsuarioMod = {};
+                    	$scope.fileFotoUsuarioMod.nombre = "Usuario "+$scope.detalleUsuario.numeroEmpleado;
+    					$scope.fileFotoUsuarioMod.nuevaFoto = false; 
+                    	$("#imgFotoUsuarioMod").attr("src", ""+$scope.detalleUsuario.urlFotoPerfil);
+                    }else{
+                    	$scope.fileFotoUsuarioMod = null;
+                    	$("#imgFotoUsuarioMod").attr("src", "./resources/img/plantainterna/despacho/tecnicootasignada.png");
+                    }
                     $("#modalEdicionUsuario").modal({ backdrop: 'static', keyboard: false });
                     $("#modalEdicionUsuario").modal('show');
                     
@@ -699,11 +708,6 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 							rfc: $scope.detalleUsuario.rfc,
 							curp: $scope.detalleUsuario.curp,
 							genero: sexoMod,
-//							fotoPerfil: {
-//								bucketId: "",
-//							    archivo: "",
-//							    nombre: ""
-//							},
 							correoElectronico: $scope.detalleUsuario.correo,
 							telefonoCelular: $scope.detalleUsuario.telefonoCelular,
 							idGeografia: $scope.detalleUsuario.ciudadNatal,
@@ -722,6 +726,16 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 		        		paramsMod.idDespachos = $scope.detalleUsuario.despachos;
 		        	}else{
 		        		paramsMod.idOperarios = $scope.detalleUsuario.tecnicos;
+		        	}
+		        	
+		        	if($scope.fileFotoUsuarioMod != null){
+		        		if($scope.fileFotoUsuarioMod.nuevaFoto == true){
+		        			paramsMod.fotoPerfil = {
+			        				bucketId: $scope.fileFotoUsuarioMod.bucketId,
+			        			    archivo: $scope.fileFotoUsuarioMod.archivo,
+			        			    nombre: $scope.fileFotoUsuarioMod.nombre
+			        			  }
+		        		}
 		        	}
 					
 					swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
@@ -1116,6 +1130,72 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     //FUNCIONALIDAD QUE CIERRA EL MODAL DE EDICIÓN Y LIMPIA TODOS LOS CAMPOS DE TODAS LAS PESTAÑAS DE LA MODIFICACIÓN DE USUARIO
     $scope.cerrarModalEdicionUsuario = function() {
     	$scope.limpiarDatosModificacion();
+	}
+    
+    $scope.cargarFotoUsuarioMod = function (e) {
+		let labelFile = "";
+		if (e.target.files[0]) {
+			$(labelFile).text(e.target.files[0].name);
+			let reader = new FileReader();
+			reader.readAsDataURL(e.target.files[0]);
+			reader.onload = function () {
+				let base64 = reader.result.toString().split(",");
+				let imgMod = {
+					"bucketId": "totalplay-ffm-core-dev.appspot.com",
+					"archivo": base64[1],
+					"nombre": e.target.files[0].name,
+					"nuevaFoto": true 
+				}
+				
+				$scope.fileFotoUsuarioMod = {};
+				$scope.fileFotoUsuarioMod = imgMod;
+				$("#imgFotoUsuarioMod").attr("src", "data:image/jpeg;base64," + $scope.fileFotoUsuarioMod.archivo);
+				$("#fileFotoUsuarioMod").val("");
+				$scope.$apply();
+
+			};
+			reader.onerror = function (error) {
+				console.log('Error: ', error);
+			};
+		}
+	}
+    
+    $scope.eliminarFotoUsuarioMod = function (e) {
+    	if($scope.detalleUsuario.urlFotoPerfil != null){
+    		$("#imgFotoUsuarioMod").attr("src", ""+$scope.detalleUsuario.urlFotoPerfil);
+    		$scope.fileFotoUsuarioMod = {};
+    		$scope.fileFotoUsuarioMod.nombre = "Usuario "+$scope.detalleUsuario.numeroEmpleado;
+			$scope.fileFotoUsuarioMod.nuevaFoto = false; 
+    	}else{
+    		$scope.fileFotoUsuarioMod = null;
+        	$("#imgFotoUsuarioMod").attr("src", "./resources/img/plantainterna/despacho/tecnicootasignada.png");
+    	}
+    };
+    
+    $scope.obtenerFotoTomadaMod = function() {
+    	var fotoMod = document.getElementById('canvasMod');
+    	var archivoMod = fotoMod.toDataURL().split(",");
+    	console.log(archivoMod[1]);
+    	var nombreArchivoMod = "";
+    	if($scope.confirmacionModificacion.nombre == "Sin asignar"){
+    		nombreArchivoMod = "fotografiaUsuario";
+    	}else{
+    		nombreArchivoMod = $scope.confirmacionModificacion.nombre;
+    	}
+    	
+		let imgMod = {
+				"bucketId": "totalplay-ffm-core-dev.appspot.com",
+				"archivo": archivoMod[1],
+				"nombre": nombreArchivoMod,
+				"nuevaFoto": true
+			}
+
+		$scope.fileFotoUsuarioMod = imgMod;
+		$("#modalTomarFotoUsuarioMod").modal('hide');
+	}
+    
+    $scope.cerrarModalTomarFotoUsuarioMod = function() {
+    	$("#modalTomarFotoUsuarioMod").modal('hide');
 	}
 	
 	//LOS SIGUIENTES 2 MÉTODOS SE QUEDAN PENDIENTES POR SI EN ALGÚN MOMENTO SE DECIDE EDITAR TAMBIÉN EL PUESTO DEL USUARIO
