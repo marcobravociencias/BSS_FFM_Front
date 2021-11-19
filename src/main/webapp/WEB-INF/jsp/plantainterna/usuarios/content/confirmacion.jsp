@@ -119,6 +119,7 @@
 <script>
 
 	var stream;
+	navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || function(){alert('Su navegador no soporta navigator.getUserMedia().');};
 
 	async function iniciarCamara() {
 		swal({html: '<strong>Accediendo a la cámara...</strong>',allowOutsideClick: false});
