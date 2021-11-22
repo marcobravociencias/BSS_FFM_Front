@@ -139,7 +139,6 @@
 
 	//Tomar foto
 	var context = document.getElementById('canvasMod').getContext('2d');
-	console.log(context);
 	btnTomarFotoMod.addEventListener("click", function() {
 		context.drawImage(videoMod, 0, 0, 300, 280);
 	    var imgMod = document.getElementById('canvasMod').toDataURL();

@@ -159,7 +159,6 @@
 
 	//Tomar foto
 	var contextRegistro = document.getElementById('canvas').getContext('2d');
-	console.log(contextRegistro);
 	btnTomarFoto.addEventListener("click", function() {
 		contextRegistro.drawImage(video, 0, 0, 300, 280);
 	    var img = canvas.toDataURL();

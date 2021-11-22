@@ -1563,7 +1563,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	}else{
     		nombreArchivo = $scope.confirmacionRegistro.nombre;
     	}
-    	console.log(archivo[1]);
+
 		let img = {
 				"bucketId": "totalplay-ffm-core-dev.appspot.com",
 				"archivo": archivo[1],

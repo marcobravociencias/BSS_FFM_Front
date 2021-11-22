@@ -365,10 +365,10 @@
             <div class="card cards-alertas">
                 <div class="card-header card-header-alerta-principal">
                     <div class="row">
-                        <div class="col-11 contenedor-titulo-acciones-alerta">
+                        <div class="col-10 contenedor-titulo-acciones-alerta">
                             <span id="idTituloAccionesAlertas" class="titulo-alerta-modal">OPCIONES</span>
                         </div>
-                        <div class="col-1 text-right">
+                        <div class="col-2 text-right">
                             <i class="fa fa-times icon-cancelar-opcion" ng-click="cerrarCamposAccionAlerta()" ng-show="!alertaSeleccionada"></i>
                         </div>
                     </div>

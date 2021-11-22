@@ -1175,7 +1175,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     $scope.obtenerFotoTomadaMod = function() {
     	var fotoMod = document.getElementById('canvasMod');
     	var archivoMod = fotoMod.toDataURL().split(",");
-    	console.log(archivoMod[1]);
+
     	var nombreArchivoMod = "";
     	if($scope.confirmacionModificacion.nombre == "Sin asignar"){
     		nombreArchivoMod = "fotografiaUsuario";
