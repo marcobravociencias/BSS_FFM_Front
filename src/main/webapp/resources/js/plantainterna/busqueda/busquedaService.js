@@ -22,10 +22,10 @@ app.service("busquedaService", function($http){
 		})
 	};
 
-	this.consultarNoticias = function(params) {
+	this.consultarComentariosNoticiasSF = function(params) {
         return $http({
             method: "post",
-            url: "req/consultarNoticias",
+            url: "req/consultaComentariosNoticiasSF",
             data: JSON.stringify(params),
             headers: { 'Content-Type': undefined },
             transformRequest: angular.identity
@@ -35,7 +35,17 @@ app.service("busquedaService", function($http){
 	this.crearNoticia = function(params) {
         return $http({
             method: "post",
-            url: "req/crearNoticia",
+            url: "req/agregarComentariosNoticiaSF",
+            data: JSON.stringify(params),
+            headers: { 'Content-Type': undefined },
+            transformRequest: angular.identity
+        })
+    }
+
+    this.crearSubNoticia = function(params) {
+        return $http({
+            method: "post",
+            url: "req/agregarSubComentarioNoticiaSF",
             data: JSON.stringify(params),
             headers: { 'Content-Type': undefined },
             transformRequest: angular.identity

@@ -7,9 +7,9 @@ public interface BusquedaService {
 
     ServiceResponseResult consultarDetalleObjectSF(String params);
 
-    ServiceResponseResult consultarNoticias(String params);
+    ServiceResponseResult consultaComentariosNoticiasSF(String params);
 
-    ServiceResponseResult crearNoticia(String params);
+    ServiceResponseResult agregarComentariosNoticiaSF(String params);
 
     ServiceResponseResult consultarEquiposConfigurados(String params);
     
@@ -30,4 +30,6 @@ public interface BusquedaService {
     ServiceResponseResult activarServicios(String params);
     
     ServiceResponseResult consultarEstatusActivacion(String params);
+
+    ServiceResponseResult agregarSubComentarioNoticiaSF(String params);
 }

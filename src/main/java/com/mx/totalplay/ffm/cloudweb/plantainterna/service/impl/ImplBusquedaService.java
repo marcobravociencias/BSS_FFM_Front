@@ -77,22 +77,37 @@ public class ImplBusquedaService implements BusquedaService {
     }
 
     @Override
-    public ServiceResponseResult consultarNoticias(String params) {
-        response = restCaller.callPostParamString(constBusqueda.getConsultarNoticias(), params);
-        logger.info("### RESULT CONSULTAR NOTICIAS: \n" + gson.toJson(response));
+    public ServiceResponseResult consultaComentariosNoticiasSF(String params) {
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constBusqueda.getConsultarNoticias());
+        logger.info("### URL consultaComentariosNoticiasSF(): \n" + urlRequest);
+        Map<String, String> paramsRequestGet = new HashMap<>();
+        paramsRequestGet.put("objectId", jsonObject.get("objectId").getAsString());
+        paramsRequestGet.put("objectType", jsonObject.get("objectType").getAsString());
+
+        ServiceResponseResult response = restCaller.callGetBearerTokenRequest(
+                paramsRequestGet,
+                urlRequest,
+                ServiceResponseResult.class,
+                tokenAcces);
+
+        logger.info("### RESULT consultaComentariosNoticiasSF(): " + gson.toJson(response));
         return response;
     }
 
     @Override
-    public ServiceResponseResult crearNoticia(String params) {
+    public ServiceResponseResult agregarComentariosNoticiaSF(String params) {
         JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
         LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constBusqueda.getCrearNoticias());
         String nombreE = principalDetail.getUsuarioNombre().concat(" " + principalDetail.getUsuarioApellidoPaterno() + " " + principalDetail.getUsuarioApellidoMaterno());
         String text = jsonObject.get("text").getAsString();
         jsonObject.addProperty("text", principalDetail.getNumEmpleado() + " - " + nombreE + " - " + despFFM + ": " + text);
-        jsonObject.addProperty("autorId", constBusqueda.getDiResuSaleForcesComentario());
         logger.info("##### OBJECT: #####" + gson.toJson(jsonObject));
-        response = restCaller.callPostParamString(constBusqueda.getCrearNoticias(), jsonObject.toString());
+        response = restCaller.callPostBearerTokenRequest(jsonObject.toString(),urlRequest, ServiceResponseResult.class, tokenAcces);
         logger.info("##### RESULT CREACION NOTICIAS: \n" + gson.toJson(response));
         return response;
     }
@@ -243,5 +258,20 @@ public class ImplBusquedaService implements BusquedaService {
         logger.info("### RESULT busquedaGeneralSF(): " + gson.toJson(response));
         return response;
 	}
+
+    @Override
+    public ServiceResponseResult agregarSubComentarioNoticiaSF(String params) {
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constBusqueda.getCrearSubComentariosNoticias());
+        String nombreE = principalDetail.getUsuarioNombre().concat(" " + principalDetail.getUsuarioApellidoPaterno() + " " + principalDetail.getUsuarioApellidoMaterno());
+        String text = jsonObject.get("text").getAsString();
+        jsonObject.addProperty("text", principalDetail.getNumEmpleado() + " - " + nombreE + " - " + despFFM + ": " + text);
+        logger.info("##### OBJECT: #####" + gson.toJson(jsonObject));
+        response = restCaller.callPostBearerTokenRequest(jsonObject.toString(),urlRequest, ServiceResponseResult.class, tokenAcces);
+        logger.info("##### RESULT CREACION NOTICIAS: \n" + gson.toJson(response));
+        return response;
+    }
 
 }

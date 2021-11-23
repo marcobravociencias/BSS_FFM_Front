@@ -44,20 +44,30 @@ public class BusquedaController {
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
 
-    @PostMapping("/consultarNoticias")
-    public ResponseEntity<?> consultarNoticias(@RequestBody String params){
+    @PostMapping("/consultaComentariosNoticiasSF")
+    public ResponseEntity<?> consultaComentariosNoticiasSF(@RequestBody String params){
         logger.info("#### CONSULTA NOTICIAS ### \n" + params);
-        ServiceResponseResult response = busquedaService.consultarNoticias(params);
+        ServiceResponseResult response = busquedaService.consultaComentariosNoticiasSF(params);
         if (response.getResult() instanceof Integer){
             return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
         }
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
 
-    @PostMapping("/crearNoticia")
-    public ResponseEntity<?> crearNoticia(@RequestBody String params){
+    @PostMapping("/agregarComentariosNoticiaSF")
+    public ResponseEntity<?> agregarComentariosNoticiaSF(@RequestBody String params){
         logger.info("#### CREACION NOTICIAS ### \n" + params);
-        ServiceResponseResult response = busquedaService.crearNoticia(params);
+        ServiceResponseResult response = busquedaService.agregarComentariosNoticiaSF(params);
+        if (response.getResult() instanceof Integer){
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping("/agregarSubComentarioNoticiaSF")
+    public ResponseEntity<?> agregarSubComentarioNoticiaSF(@RequestBody String params){
+        logger.info("#### CREACION NOTICIAS ### \n" + params);
+        ServiceResponseResult response = busquedaService.agregarSubComentarioNoticiaSF(params);
         if (response.getResult() instanceof Integer){
             return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
         }
