@@ -1052,7 +1052,7 @@ public class ImplDespachoPIService implements DespachoPIService {
         String tokenAcces = principalDetail.getAccess_token();
         String urlRequest = principalDetail.getDireccionAmbiente().concat(constDespachoPI.getConsultaMateriales());
         logger.info("### URL consultaMaterialesTecnico(): \n" + urlRequest);
-        Map<String, String> paramsRequestGet = new HashMap<>();
+        Map<String, String> paramsRequestGet = new HashMap<>(); 
         paramsRequestGet.put("centro", jsonObject.get("centro").getAsString());
         paramsRequestGet.put("almacen", jsonObject.get("almacen").getAsString());
         paramsRequestGet.put("idFlujo", jsonObject.get("idFlujo").getAsString());

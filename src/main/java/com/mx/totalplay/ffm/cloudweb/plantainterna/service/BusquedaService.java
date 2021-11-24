@@ -32,4 +32,8 @@ public interface BusquedaService {
     ServiceResponseResult consultarEstatusActivacion(String params);
 
     ServiceResponseResult agregarSubComentarioNoticiaSF(String params);
+
+    ServiceResponseResult eliminarComentarioNoticias(String params);
+
+    ServiceResponseResult eliminarSubComentarioNoticias(String params);
 }

@@ -56,4 +56,10 @@ public class ConstBusqueda {
 
     @Value("${crearSubComentariosNoticias}")
     private String crearSubComentariosNoticias;
+
+    @Value("${eliminarComentarioNoticiasSF}")
+    private String eliminarComentarioNoticiasSF;
+
+    @Value("${eliminarSubComentarioNoticiasSF}")
+    private String eliminarSubComentarioNoticiasSF;
 }

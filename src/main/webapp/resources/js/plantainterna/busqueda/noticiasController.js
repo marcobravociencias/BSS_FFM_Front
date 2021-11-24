@@ -6,7 +6,7 @@ app.noticiasController = function ($scope, $q, busquedaService) {
     $scope.banderaShow = false;
     $scope.tipoComentario;
     $scope.noticiaAnterior;
-    
+
     $scope.abrirVentanaNoticias = function () {
         if (!$scope.isAbiertoOSNoticias && !$scope.isConsultaPrimeraVezNoticias) {
             $scope.objectoConsulta()
@@ -55,7 +55,7 @@ app.noticiasController = function ($scope, $q, busquedaService) {
                 setTimeout(function () {
                     $(".container-noticia-elemento").animate({ scrollTop: 100000000 }, 500);
                 }, 400)
-            } else{
+            } else {
                 mostrarMensajeWarningValidacion(response.data.resultDescripcion)
             }
         }).catch((err) => handleError(err));
@@ -217,43 +217,43 @@ app.noticiasController = function ($scope, $q, busquedaService) {
     }
 
 
-    $scope.responderComentario = function(numero){
+    $scope.responderComentario = function (numero) {
         $scope.showAdjuntar = true;
         if ($scope.noticiaAnterior) {
             if ($scope.noticiaAnterior !== numero) {
                 $scope.banderaShow = false;
-                document.getElementById('content-text-enviar-'+$scope.noticiaAnterior).style.display = 'none';
-                document.getElementById('content-text-e-'+$scope.noticiaAnterior).style.display = 'none';
-                document.getElementById('content-text-'+$scope.noticiaAnterior).style.display = 'none';
+                document.getElementById('content-text-enviar-' + $scope.noticiaAnterior).style.display = 'none';
+                document.getElementById('content-text-e-' + $scope.noticiaAnterior).style.display = 'none';
+                document.getElementById('content-text-' + $scope.noticiaAnterior).style.display = 'none';
             }
         }
         if ($scope.banderaShow) {
             if ($scope.tipoResponse !== 0) {
-                document.getElementById('texto-comentario-op-'+numero).value = '';
-                document.getElementById('texto-comentario-'+numero).value = '';
-                document.getElementById('texto-comentario-os-'+numero).value = '';
+                document.getElementById('texto-comentario-op-' + numero).value = '';
+                document.getElementById('texto-comentario-' + numero).value = '';
+                document.getElementById('texto-comentario-os-' + numero).value = '';
                 $scope.tipoResponse = 0;
-            } else{
-                document.getElementById('content-text-enviar-'+numero).style.display = 'none';
-                document.getElementById('content-text-e-'+numero).style.display = 'none';
-                document.getElementById('content-text-'+numero).style.display = 'none';
+            } else {
+                document.getElementById('content-text-enviar-' + numero).style.display = 'none';
+                document.getElementById('content-text-e-' + numero).style.display = 'none';
+                document.getElementById('content-text-' + numero).style.display = 'none';
                 $scope.banderaShow = false;
                 $scope.tipoResponse = null;
             }
-        } else{
-            document.getElementById('content-text-enviar-'+numero).style.display = 'block';
-            document.getElementById('content-text-e-'+numero).style.display = 'block';
-            document.getElementById('content-text-'+numero).style.display = 'block';
-            document.getElementById('texto-comentario-op-'+numero).value = '';
-            document.getElementById('texto-comentario-'+numero).value = '';
-            document.getElementById('texto-comentario-os-'+numero).value = '';
+        } else {
+            document.getElementById('content-text-enviar-' + numero).style.display = 'block';
+            document.getElementById('content-text-e-' + numero).style.display = 'block';
+            document.getElementById('content-text-' + numero).style.display = 'block';
+            document.getElementById('texto-comentario-op-' + numero).value = '';
+            document.getElementById('texto-comentario-' + numero).value = '';
+            document.getElementById('texto-comentario-os-' + numero).value = '';
             $scope.tipoResponse = 0;
             $scope.banderaShow = true;
         }
         $scope.noticiaAnterior = numero;
     }
 
-    $scope.enviarComentario = function(noticia){
+    $scope.enviarComentario = function (noticia) {
         let params = {}
         if ($scope.elemento.keyObject === 'OS') {
             if ($scope.tipoResponse === 0) {
@@ -261,7 +261,7 @@ app.noticiasController = function ($scope, $q, busquedaService) {
                     mostrarMensajeWarning('Escribir un comentario')
                     return false;
                 }
-                
+
                 params = {
                     newId: noticia,
                     text: document.getElementById('texto-comentario-os-' + noticia).value
@@ -272,8 +272,8 @@ app.noticiasController = function ($scope, $q, busquedaService) {
                 if (document.querySelector('#fileSubComentarioOs-' + noticia).files[0] !== undefined) {
                     //params.append("params.documentName", document.querySelector('#fileSubComentarioOs-' + noticia).files[0].name.split('.')[0]);
                     //params.append("params.documentExtension", document.querySelector('#fileSubComentarioOs-' + noticia).files[0].name.split('.')[1]);
-                    
-    
+
+
                     var myFile = document.querySelector('#fileSubComentarioOs-' + noticia).files[0];
                     var reader = new FileReader();
                     console.log(myFile)
@@ -296,7 +296,7 @@ app.noticiasController = function ($scope, $q, busquedaService) {
                     $scope.crearSubComnetario(params);
                 }
 
-                
+
             } else {
                 if ($scope.tipoComentario === 0) {
                     if (document.getElementById('texto-comentario-os-' + noticia).value === '') {
@@ -305,25 +305,25 @@ app.noticiasController = function ($scope, $q, busquedaService) {
                     }
                     let params = {
                         newId: noticia,
-                        text: document.getElementById('texto-comentario-os-'+noticia).value
+                        text: document.getElementById('texto-comentario-os-' + noticia).value
                     }
                     $scope.editComentario(params);
                 } else {
-                    if (document.getElementById('texto-comentario-os-'+noticia).value === '') {
+                    if (document.getElementById('texto-comentario-os-' + noticia).value === '') {
                         mostrarMensajeWarning('Escribir un comentario')
                         return false;
                     }
                     let params = {
                         subNewId: noticia,
-                        text: document.getElementById('texto-comentario-os-'+noticia).value
+                        text: document.getElementById('texto-comentario-os-' + noticia).value
                     }
                     $scope.editComentarioSub(params);
                 }
-                
+
             }
-        } else if($scope.elemento.keyObject === 'OP'){
+        } else if ($scope.elemento.keyObject === 'OP') {
             if ($scope.tipoResponse === 0) {
-                if (document.getElementById('texto-comentario-op-'+noticia).value === '') {
+                if (document.getElementById('texto-comentario-op-' + noticia).value === '') {
                     mostrarMensajeWarning('Escribir un comentario')
                     return false;
                 }
@@ -333,8 +333,8 @@ app.noticiasController = function ($scope, $q, busquedaService) {
                 if (document.querySelector('#fileSubComentarioOp-' + noticia).files[0] !== undefined) {
                     params.append("params.documentName", document.querySelector('#fileSubComentarioOp-' + noticia).files[0].name.split('.')[0]);
                     params.append("params.documentExtension", document.querySelector('#fileSubComentarioOp-' + noticia).files[0].name.split('.')[1]);
-                    
-    
+
+
                     var myFile = document.querySelector('#fileSubComentarioOp-' + noticia).files[0];
                     var reader = new FileReader();
                     console.log(myFile)
@@ -352,31 +352,31 @@ app.noticiasController = function ($scope, $q, busquedaService) {
 
             } else {
                 if ($scope.tipoComentario === 0) {
-                    if (document.getElementById('texto-comentario-op-'+noticia).value === '') {
+                    if (document.getElementById('texto-comentario-op-' + noticia).value === '') {
                         mostrarMensajeWarning('Escribir un comentario')
                         return false;
                     }
                     let params = {
                         newId: noticia,
-                        text: document.getElementById('texto-comentario-op-'+noticia).value
+                        text: document.getElementById('texto-comentario-op-' + noticia).value
                     }
                     $scope.editComentario(params);
                 } else {
-                    if (document.getElementById('texto-comentario-op-'+noticia).value === '') {
+                    if (document.getElementById('texto-comentario-op-' + noticia).value === '') {
                         mostrarMensajeWarning('Escribir un comentario')
                         return false;
                     }
                     let params = {
                         subNewId: noticia,
-                        text: document.getElementById('texto-comentario-op-'+noticia).value
+                        text: document.getElementById('texto-comentario-op-' + noticia).value
                     }
                     $scope.editComentarioSub(params);
                 }
-                
+
             }
         } else {
             if ($scope.tipoResponse === 0) {
-                if (document.getElementById('texto-comentario-'+noticia).value === '') {
+                if (document.getElementById('texto-comentario-' + noticia).value === '') {
                     mostrarMensajeWarning('Escribir un comentario')
                     return false;
                 }
@@ -386,8 +386,8 @@ app.noticiasController = function ($scope, $q, busquedaService) {
                 if (document.querySelector('#fileSubComentarioTick-' + noticia).files[0] !== undefined) {
                     params.append("params.documentName", document.querySelector('#fileSubComentarioTick-' + noticia).files[0].name.split('.')[0]);
                     params.append("params.documentExtension", document.querySelector('#fileSubComentarioTick-' + noticia).files[0].name.split('.')[1]);
-                   
-    
+
+
                     var myFile = document.querySelector('#fileSubComentarioTick-' + noticia).files[0];
                     var reader = new FileReader();
                     console.log(myFile)
@@ -399,41 +399,41 @@ app.noticiasController = function ($scope, $q, busquedaService) {
                     reader.onerror = function (error) {
                         console.log('Error: ', error);
                     };
-                } else{
+                } else {
                     $scope.crearSubComnetario(params);
                 }
 
             } else {
                 if ($scope.tipoComentario === 0) {
-                    if (document.getElementById('texto-comentario-'+noticia).value === '') {
+                    if (document.getElementById('texto-comentario-' + noticia).value === '') {
                         mostrarMensajeWarning('Escribir un comentario')
                         return false;
                     }
                     let params = {
                         newId: noticia,
-                        text: document.getElementById('texto-comentario-'+noticia).value
+                        text: document.getElementById('texto-comentario-' + noticia).value
                     }
                     $scope.editComentario(params);
                 } else {
-                    if (document.getElementById('texto-comentario-'+noticia).value === '') {
+                    if (document.getElementById('texto-comentario-' + noticia).value === '') {
                         mostrarMensajeWarning('Escribir un comentario')
                         return false;
                     }
                     let params = {
                         subNewId: noticia,
-                        text: document.getElementById('texto-comentario-'+noticia).value
+                        text: document.getElementById('texto-comentario-' + noticia).value
                     }
                     $scope.editComentarioSub(params);
                 }
-                
+
             }
         }
     }
 
-    $scope.crearSubComnetario = function(params){
+    $scope.crearSubComnetario = function (params) {
         swal({ text: 'Cargando informaci\u00f3n ...', allowOutsideClick: false });
-        swal.showLoading();	
-        busquedaService.crearSubNoticia(params).then(function success(response){
+        swal.showLoading();
+        busquedaService.crearSubNoticia(params).then(function success(response) {
             console.log(response)
             swal.close();
             if (response.data.respuesta) {
@@ -516,4 +516,118 @@ app.noticiasController = function ($scope, $q, busquedaService) {
         }
         $scope.$apply();
     });
+
+    $scope.eliminarComentario = function (noticia, tipo) {
+        swal({
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'S\u00ED',
+            cancelButtonText: "No",
+            html:
+                '<b style="font-weight: bold;">\u00BFEsta seguro de querer eliminar comentario?</b>',
+        }).then(function () {
+            let params = {};
+            if ($scope.elemento.keyObject === 'OS') {
+                if (tipo === 0) {
+                    params = {
+                        objectType: 'OrdenServicio',
+                        newId: noticia
+                    }
+                    $scope.enviarEliminarComentario(params);
+                } else {
+                    params = {
+                        objectType: 'OrdenServicio',
+                        subNewId: noticia
+                    }
+                    $scope.enviarEliminarSub(params);
+                }
+            } else if ($scope.elemento.keyObject === 'OP') {
+                if (tipo === 0) {
+                    params = {
+                        objectType: 'Oportunidad',
+                        newId: noticia
+                    }
+                    $scope.enviarEliminarComentario(params);
+                } else {
+                    params = {
+                        objectType: 'Oportunidad',
+                        subNewId: noticia
+                    }
+                    $scope.enviarEliminarSub(params);
+                }
+            } else {
+                if (tipo === 0) {
+                    params = {
+                        objectType: 'Ticket',
+                        newId: noticia
+                    }
+                    $scope.enviarEliminarComentario(params);
+                } else {
+                    params = {
+                        objectType: 'Ticket',
+                        subNewId: noticia
+                    }
+                    $scope.enviarEliminarSub(params);
+                }
+            }
+
+        }).catch(swal.noop);
+    }
+
+    $scope.enviarEliminarComentario = function (params) {
+        swal({ text: 'Cargando informaci\u00f3n ...', allowOutsideClick: false });
+        swal.showLoading();
+        busquedaService.eliminarNoticia(params).then(function success(response) {
+            if (response.data.success) {
+                if (response.data.result !== undefined) {
+                    if (response.data.result.result === '0') {
+                        $scope.objectoConsulta();
+                    } else {
+                        mostrarMensajeErrorAlertAjax(response.data.result.resultDescription)
+                        swal.close()
+                    }
+                } else {
+                    mostrarMensajeErrorAlertAjax("Error al consultar")
+                    swal.close()
+                }
+            } else {
+                mostrarMensajeErrorAlertAjax("Error en el servidor")
+                swal.close()
+            }
+
+        }, function error(response) {
+            swal.close()
+            $scope.objectoConsulta();
+            console.log(response);
+        });
+    }
+
+    $scope.enviarEliminarSub = function (params) {
+        swal({ text: 'Cargando informaci\u00f3n ...', allowOutsideClick: false });
+        swal.showLoading();
+        busquedaService.eliminarSubNoticia(params).then(function success(response) {
+            if (response.data.success) {
+                if (response.data.result !== undefined) {
+                    if (response.data.result.result === '0') {
+                        $scope.objectoConsulta();
+                    } else {
+                        mostrarMensajeErrorAlertAjax(response.data.result.resultDescription)
+                        swal.close()
+                    }
+                } else {
+                    mostrarMensajeErrorAlertAjax("Error al consultar")
+                    swal.close()
+                }
+            } else {
+                mostrarMensajeErrorAlertAjax("Error en el servidor")
+                swal.close()
+            }
+
+        }, function error(response) {
+            swal.close()
+            $scope.objectoConsulta();
+            console.log(response);
+        });
+    }
 }

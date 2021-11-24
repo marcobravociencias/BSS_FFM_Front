@@ -274,4 +274,40 @@ public class ImplBusquedaService implements BusquedaService {
         return response;
     }
 
+    @Override
+    public ServiceResponseResult eliminarComentarioNoticias(String params) {
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constBusqueda.getEliminarComentarioNoticiasSF());
+        
+        Map<String, String> paramsRequest = new HashMap<>();
+        paramsRequest.put("idNew", jsonObject.get("newId").getAsString());
+        paramsRequest.put("objectType", jsonObject.get("objectType").getAsString());
+
+        logger.info("##### OBJECT: #####" + gson.toJson(paramsRequest));
+
+        response = restCaller.callDeleteBearerTokenRequest(paramsRequest,urlRequest, ServiceResponseResult.class, tokenAcces);
+        logger.info("##### RESULT ELIMINAR NOTICIAS: \n" + gson.toJson(response));
+        return response;
+    }
+
+    @Override
+    public ServiceResponseResult eliminarSubComentarioNoticias(String params) {
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constBusqueda.getEliminarSubComentarioNoticiasSF());
+        
+        Map<String, String> paramsRequest = new HashMap<>();
+        paramsRequest.put("idNew", jsonObject.get("subNewId").getAsString());
+        paramsRequest.put("objectType", jsonObject.get("objectType").getAsString());
+
+        logger.info("##### OBJECT: #####" + gson.toJson(paramsRequest));
+        
+        response = restCaller.callDeleteBearerTokenRequest(paramsRequest,urlRequest, ServiceResponseResult.class, tokenAcces);
+        logger.info("##### RESULT ELIMINAR NOTICIAS: \n" + gson.toJson(response));
+        return response;
+    }
+
 }

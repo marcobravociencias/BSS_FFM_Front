@@ -167,4 +167,26 @@ public class BusquedaController {
         }
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
+
+      
+    @PostMapping("/eliminarSubNoticiaSF")
+    public ResponseEntity<?> eliminarSubNoticiaSF(@RequestBody String params){
+        logger.info("#### ELIMINAR SUB COMENTARIO NOTICIAS ### \n" + params);
+        ServiceResponseResult response = busquedaService.eliminarSubComentarioNoticias(params);
+        if (response.getResult() instanceof Integer){
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
+
+      
+    @PostMapping("/eliminarNoticiaSF")
+    public ResponseEntity<?> eliminarNoticiaSF(@RequestBody String params){
+        logger.info("#### ELIMINAR COMENTARIO NOTICIAS ### \n" + params);
+        ServiceResponseResult response = busquedaService.eliminarComentarioNoticias(params);
+        if (response.getResult() instanceof Integer){
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
 }

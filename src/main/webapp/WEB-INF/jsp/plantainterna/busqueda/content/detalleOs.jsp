@@ -34,8 +34,7 @@
         <div ng-if="listadoNoticias.length <= 0" class="container mt-5">
             <h5 class="noinfo-noticias">No se encontr&oacute; informaci&oacute;n</h5>
         </div>
-        <div ng-repeat="noticia in listadoNoticias track by $index" class="container-noticias row">
-                
+        <div ng-repeat="noticia in listadoNoticias track by $index" class="container-noticias">
                 <div class="col-12">
                     <div class="row">
                         <div class="col-12">
@@ -48,7 +47,7 @@
                                     <!-- <span class="option-mensajes" ng-click="editarComentario(noticia.id, noticia.text, 0)">Editar</span> -->
                                     <span class="option-mensajes" ng-click="eliminarComentario(noticia.id, 0)">Eliminar</span>
                                     <span class="text-fecha-comentario" ng-bind="noticia.createdDate"></span>
-                                    <div id="content-text-e-{{noticia.id}}" class="row content-text-send">
+                                    <div id="content-text-e-{{noticia.id}}" class="row content-text-send" style="display: none;">
                                         <div class="col-10">
                                             <input id="texto-comentario-os-{{noticia.id}}" type="text" class="form-control form-control-sm form-send">
                                         </div>
@@ -95,7 +94,7 @@
                         </div>
                     </div>
         
-                    <div ng-repeat="comentario in noticia.subComentarios track by comentario.id" class="row container-elementcommes">
+                    <div ng-repeat="comentario in noticia.subComentarios track by comentario.id" class="container-elementcommes">
                         <div class="col-11 offset-1">
                             <div class="row">
                             <div class="image-preview-owner">
@@ -106,7 +105,7 @@
                                     <!-- <span class="option-mensajes" ng-click="editarComentario(comentario.id, comentario.text, 1)">Editar</span> -->
                                     <span class="option-mensajes" ng-click="eliminarComentario(comentario.id, 1)">Eliminar</span>
                                     <span class="text-fecha-comentario" ng-bind="comentario.createdDate"></span>
-                                    <div id="content-text-e-{{comentario.id}}" class="row content-text-send">
+                                    <div id="content-text-e-{{comentario.id}}" class="row content-text-send" style="display: none;">
                                         <div class="col-10">
                                             <input id="texto-comentario-os-{{comentario.id}}" type="text" class="form-control form-control-sm form-send">
                                         </div>

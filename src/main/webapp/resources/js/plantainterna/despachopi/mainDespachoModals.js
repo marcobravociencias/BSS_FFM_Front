@@ -493,13 +493,13 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         console.log("Entra a cambiar estatus:")
         var n = $('#id-status-tecnico').val();
         console.log(n)
-        if ($scope.elementEstatusTecnico.status == null || !$scope.elementEstatusTecnico.comentario) {
-            toastr.warning('Selecciona estatus y completa campo de comentario.... ')
+        if ($scope.elementEstatusTecnico.status == null) {
+            toastr.warning('Selecciona estatus')
             return false
         }
         let params = {
 
-            "idUsuario": $scope.elementEstatusTecnico.tecnico.idTecnico,
+            "id": $scope.elementEstatusTecnico.tecnico.idTecnico,
             "idEstatusUsuario": $scope.elementEstatusTecnico.status.id
         }
 
@@ -1327,6 +1327,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 
     abrirModalReporte = function(){
         //$scope.repDiario.fechaSeleccionada = 'fechaCreacion'
+       
         if($scope.filtrosGeneral.tipoOrdenes){
             $scope.seleccionarTodos($scope.filtrosGeneral.tipoOrdenes);
         }
@@ -1342,14 +1343,13 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         $('#filtro_fecha_inicio_reporte').datepicker('update',   moment(FECHA_HOY_DATE).toDate() );
         $('#filtro_fecha_fin_reporte').datepicker('update',   moment(FECHA_HOY_DATE).toDate() );
         
-        setTimeout(function(){
-            consultarReporteDiario();
-        }, 1000);
+        consultarReporteDiario();
         
         $("#modalReporte").modal('show');
     }
 
     $('#modalReporte').on("hidden.bs.modal", function () {
+
         if($scope.filtrosGeneral.tipoOrdenes){
             $scope.seleccionarTodos($scope.filtrosGeneral.tipoOrdenes);
         }
