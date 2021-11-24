@@ -2467,3 +2467,15 @@ img.img-sap-materiales {
     position: absolute;
     right: 0;
 }
+
+
+
+#table-materiales-temp_filter {
+	font-size: 0.7em !important;
+    font-family: "Montserrat" !important;
+}
+
+#table-materiales-temp_filter input {
+	font-size: 0.9em !important;
+	font-family: "Montserrat" !important;	
+}

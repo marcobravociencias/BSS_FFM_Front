@@ -2,9 +2,9 @@
     <div  ng-click="regresarConsulta()" class="container-regresar-button text-center">
         <span class="regresar-elemento fa fa-undo"></span>
     </div>
-<!--     <div  ng-click="abrirVentanaNoticias()" class="container-regresar-button text-center">
+    <div  ng-click="abrirVentanaNoticias()" class="container-regresar-button text-center">
         <span class="regresar-elemento fa fa-newspaper-o"></span>
-    </div> -->
+    </div>
     <div  ng-click="regresarHome()" class="container-regresar-button text-center">
         <span class="regresar-elemento fa fa-home"></span>
     </div>
@@ -34,8 +34,7 @@
         <div ng-if="listadoNoticias.length <= 0" class="container mt-5">
             <h5 class="noinfo-noticias">No se encontr&oacute; informaci&oacute;n</h5>
         </div>
-        <div ng-repeat="noticia in listadoNoticias track by $index" class="container-noticias row">
-                
+        <div ng-repeat="noticia in listadoNoticias track by $index" class="container-noticias">
                 <div class="col-12">
                     <div class="row">
                         <div class="col-12">
@@ -48,12 +47,12 @@
                                     <!-- <span class="option-mensajes" ng-click="editarComentario(noticia.id, noticia.text, 0)">Editar</span> -->
                                     <span class="option-mensajes" ng-click="eliminarComentario(noticia.id, 0)">Eliminar</span>
                                     <span class="text-fecha-comentario" ng-bind="noticia.createdDate"></span>
-                                    <div id="content-text-e-{{noticia.id}}" class="row content-text-send">
+                                    <div id="content-text-e-{{noticia.id}}" class="row content-text-send" style="display: none;">
                                         <div class="col-10">
                                             <input id="texto-comentario-os-{{noticia.id}}" type="text" class="form-control form-control-sm form-send">
                                         </div>
                                         <div class="col-2 col-btn-send">
-                                            <button class="btn btn-sm btn-primary btn-send" ng-click="enviarComentario(noticia.id)"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                                            <button class="btn btn-sm btn-primary btn-send" ng-click="enviarComentario(noticia.id)">Enviar</i></button>
                                         </div>
                                             <div class="col-12 col-adjuntar-archivo" ng-show="showAdjuntar">
                                                 <form id="uploadFormSubcomentario-{{noticia.id}}" name="16" class="form-horizontal box form_drag_drop" novalidate="novalidate" enctype="multipart/form-data">
@@ -95,7 +94,7 @@
                         </div>
                     </div>
         
-                    <div ng-repeat="comentario in noticia.subComentarios track by comentario.id" class="row container-elementcommes">
+                    <div ng-repeat="comentario in noticia.subComentarios track by comentario.id" class="container-elementcommes">
                         <div class="col-11 offset-1">
                             <div class="row">
                             <div class="image-preview-owner">
@@ -106,12 +105,12 @@
                                     <!-- <span class="option-mensajes" ng-click="editarComentario(comentario.id, comentario.text, 1)">Editar</span> -->
                                     <span class="option-mensajes" ng-click="eliminarComentario(comentario.id, 1)">Eliminar</span>
                                     <span class="text-fecha-comentario" ng-bind="comentario.createdDate"></span>
-                                    <div id="content-text-e-{{comentario.id}}" class="row content-text-send">
+                                    <div id="content-text-e-{{comentario.id}}" class="row content-text-send" style="display: none;">
                                         <div class="col-10">
                                             <input id="texto-comentario-os-{{comentario.id}}" type="text" class="form-control form-control-sm form-send">
                                         </div>
                                         <div class="col-2 col-btn-send">
-                                            <button class="btn btn-sm btn-primary btn-send" ng-click="enviarComentario(comentario.id)"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                                            <button class="btn btn-sm btn-primary btn-send" ng-click="enviarComentario(comentario.id)">Enviar</button>
                                         </div>
                                     </div>
                                 </div>
@@ -148,7 +147,7 @@
                 <input id="text-general-os" type="text" class="form-control form-control-sm form-send-general">
             </div>
             <div class="col-2 col-btn-send-general">
-                <button class="btn btn-sm btn-primary btn-send" ng-click="enviarMesajeGeneral()"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                <button class="btn btn-sm btn-primary btn-send" ng-click="enviarMesajeGeneral()">Enviar</button>
             </div>
         </div>
         <div class="row">

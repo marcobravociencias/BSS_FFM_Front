@@ -77,22 +77,37 @@ public class ImplBusquedaService implements BusquedaService {
     }
 
     @Override
-    public ServiceResponseResult consultarNoticias(String params) {
-        response = restCaller.callPostParamString(constBusqueda.getConsultarNoticias(), params);
-        logger.info("### RESULT CONSULTAR NOTICIAS: \n" + gson.toJson(response));
+    public ServiceResponseResult consultaComentariosNoticiasSF(String params) {
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constBusqueda.getConsultarNoticias());
+        logger.info("### URL consultaComentariosNoticiasSF(): \n" + urlRequest);
+        Map<String, String> paramsRequestGet = new HashMap<>();
+        paramsRequestGet.put("objectId", jsonObject.get("objectId").getAsString());
+        paramsRequestGet.put("objectType", jsonObject.get("objectType").getAsString());
+
+        ServiceResponseResult response = restCaller.callGetBearerTokenRequest(
+                paramsRequestGet,
+                urlRequest,
+                ServiceResponseResult.class,
+                tokenAcces);
+
+        logger.info("### RESULT consultaComentariosNoticiasSF(): " + gson.toJson(response));
         return response;
     }
 
     @Override
-    public ServiceResponseResult crearNoticia(String params) {
+    public ServiceResponseResult agregarComentariosNoticiaSF(String params) {
         JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
         LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constBusqueda.getCrearNoticias());
         String nombreE = principalDetail.getUsuarioNombre().concat(" " + principalDetail.getUsuarioApellidoPaterno() + " " + principalDetail.getUsuarioApellidoMaterno());
         String text = jsonObject.get("text").getAsString();
         jsonObject.addProperty("text", principalDetail.getNumEmpleado() + " - " + nombreE + " - " + despFFM + ": " + text);
-        jsonObject.addProperty("autorId", constBusqueda.getDiResuSaleForcesComentario());
         logger.info("##### OBJECT: #####" + gson.toJson(jsonObject));
-        response = restCaller.callPostParamString(constBusqueda.getCrearNoticias(), jsonObject.toString());
+        response = restCaller.callPostBearerTokenRequest(jsonObject.toString(),urlRequest, ServiceResponseResult.class, tokenAcces);
         logger.info("##### RESULT CREACION NOTICIAS: \n" + gson.toJson(response));
         return response;
     }
@@ -192,6 +207,7 @@ public class ImplBusquedaService implements BusquedaService {
 		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
         String tokenAcces = principalDetail.getAccess_token();
+        logger.info(principalDetail.toString());
         String urlRequest = principalDetail.getDireccionAmbiente().concat(constBusqueda.getConfigurarServicios());
         Map<String, String> paramUri = new HashMap<String, String>();
         logger.info("### json object params ## \n" + jsonObject.toString());
@@ -215,12 +231,14 @@ public class ImplBusquedaService implements BusquedaService {
 
 	@Override
 	public ServiceResponseResult activarServicios(String params) {
-		logger.info("ImplBusquedaService.class activarServicios(): \n" + params);
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
         LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        jsonObject.addProperty("idUsuario", principalDetail.getIdUsuario());
         String tokenAcces = principalDetail.getAccess_token();
         String urlRequest = principalDetail.getDireccionAmbiente().concat(constBusqueda.getActivarServicios());
+        logger.info("ImplBusquedaService.class activarServicios(): \n" + gson.toJson(jsonObject));
         logger.info("###URL consultarDetalleObjectSF(): "+ urlRequest);
-        ServiceResponseResult response = restCaller.callPostBearerTokenRequest(params, urlRequest, ServiceResponseResult.class, tokenAcces);
+        ServiceResponseResult response = restCaller.callPostBearerTokenRequest(gson.toJson(jsonObject), urlRequest, ServiceResponseResult.class, tokenAcces);
         logger.info("####RESULT: " + gson.toJson(response));
         return response;
 	}
@@ -240,5 +258,56 @@ public class ImplBusquedaService implements BusquedaService {
         logger.info("### RESULT busquedaGeneralSF(): " + gson.toJson(response));
         return response;
 	}
+
+    @Override
+    public ServiceResponseResult agregarSubComentarioNoticiaSF(String params) {
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constBusqueda.getCrearSubComentariosNoticias());
+        String nombreE = principalDetail.getUsuarioNombre().concat(" " + principalDetail.getUsuarioApellidoPaterno() + " " + principalDetail.getUsuarioApellidoMaterno());
+        String text = jsonObject.get("text").getAsString();
+        jsonObject.addProperty("text", principalDetail.getNumEmpleado() + " - " + nombreE + " - " + despFFM + ": " + text);
+        logger.info("##### OBJECT: #####" + gson.toJson(jsonObject));
+        response = restCaller.callPostBearerTokenRequest(jsonObject.toString(),urlRequest, ServiceResponseResult.class, tokenAcces);
+        logger.info("##### RESULT CREACION NOTICIAS: \n" + gson.toJson(response));
+        return response;
+    }
+
+    @Override
+    public ServiceResponseResult eliminarComentarioNoticias(String params) {
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constBusqueda.getEliminarComentarioNoticiasSF());
+        
+        Map<String, String> paramsRequest = new HashMap<>();
+        paramsRequest.put("idNew", jsonObject.get("newId").getAsString());
+        paramsRequest.put("objectType", jsonObject.get("objectType").getAsString());
+
+        logger.info("##### OBJECT: #####" + gson.toJson(paramsRequest));
+
+        response = restCaller.callDeleteBearerTokenRequest(paramsRequest,urlRequest, ServiceResponseResult.class, tokenAcces);
+        logger.info("##### RESULT ELIMINAR NOTICIAS: \n" + gson.toJson(response));
+        return response;
+    }
+
+    @Override
+    public ServiceResponseResult eliminarSubComentarioNoticias(String params) {
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constBusqueda.getEliminarSubComentarioNoticiasSF());
+        
+        Map<String, String> paramsRequest = new HashMap<>();
+        paramsRequest.put("idNew", jsonObject.get("subNewId").getAsString());
+        paramsRequest.put("objectType", jsonObject.get("objectType").getAsString());
+
+        logger.info("##### OBJECT: #####" + gson.toJson(paramsRequest));
+        
+        response = restCaller.callDeleteBearerTokenRequest(paramsRequest,urlRequest, ServiceResponseResult.class, tokenAcces);
+        logger.info("##### RESULT ELIMINAR NOTICIAS: \n" + gson.toJson(response));
+        return response;
+    }
 
 }

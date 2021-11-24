@@ -910,7 +910,6 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             }
         }).catch(err => handleError(err));
     }
-    console.log("#####%%%%%%%%%%%%%%%123")
     /**mainDespachoService.testingServiceEureka().then(function success(response) {
         console.log("#####123")
     }, function error(response) {
@@ -1153,11 +1152,6 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
         let numerosOnly = /^[0-9]*$/i;
         $scope.resultReporteDiario = {};
 
-        let nivelBusquedaArbol= $scope.obtenerNivelUltimoJerarquia()        
-        let clustersparam=$("#jstree-proton-3").jstree("get_selected", true)
-                                               .filter(e=>e.original.nivel== nivelBusquedaArbol)
-                                               .map(e=>parseInt(e.id))
-
         let statuscopy = [];
         if($scope.filtrosGeneral.estatusdisponibles){
             angular.forEach($scope.filtrosGeneral.estatusdisponibles,(e,i)=>{
@@ -1174,10 +1168,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
         
         let paramsTemp = {};
         
-        if(clustersparam.length === 0){
-            mensaje += '<li>Introducir Geograf&iacute;a</li>';
-            isValid = false;
-        }
+        
 
         if(!statuscopy.length){
             mensaje += '<li>Introducir Estatus</li>';
@@ -1206,80 +1197,94 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             isValid = false;
         }
 
-        if(!isValid){
-            mensaje += '</ul>';
-            mostrarMensajeWarningValidacion(mensaje);
-            return false;
-        }else{
-            paramsTemp.fechaInicio = $scope.getFechaFormato($scope.repDiario.fechaInicio);
-            paramsTemp.fechaFin =  $scope.getFechaFormato($scope.repDiario.fechaFin);
-            paramsTemp.tipoIntervencion =  intervencioncopy;
-            paramsTemp.estatusOt = statuscopy;
-            paramsTemp.fechaSeleccionada =  $scope.repDiario.fechaSeleccionada;
-            paramsTemp.elementosPorPagina = 10;
-            paramsTemp.pagina = 1;
-            paramsTemp.geografias = clustersparam;
+        swal({ text: 'Cargando registros...', allowOutsideClick: false });
+        swal.showLoading();
 
-            if($scope.repDiario.idOrden && $scope.repDiario.idOrden != ""){
-                paramsTemp.idOrden =  $scope.repDiario.idOrden;
+        setTimeout(function(){
+            let nivelBusquedaArbol= $scope.obtenerNivelUltimoJerarquia()        
+            let clustersparam=$("#jstree-proton-3").jstree("get_selected", true)
+                                                   .filter(e=>e.original.nivel== nivelBusquedaArbol)
+                                                   .map(e=>parseInt(e.id))
+            if(clustersparam.length === 0){
+                mensaje += '<li>Introducir Geograf&iacute;a</li>';
+                isValid = false;
             }
 
-            if($scope.repDiario.folio && $scope.repDiario.folio != ""){
-                paramsTemp.folio =  $scope.repDiario.folio;
-            }
-
-            if($scope.repDiario.idCuenta && $scope.repDiario.idCuenta != ""){
-                paramsTemp.idCuenta =  $scope.repDiario.idCuenta;
-            }
-
-            if(tableReporte){                              
-                tableReporte.destroy() 
-            }   
-            tableReporte = $('#table-reporte').DataTable({
-                "processing": false,
-                "ordering": false,
-                "serverSide": true,
-                "scrollX": false,
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": false,
-                "pageLength": 10,
-                "info": false,
-                "ajax": {
-                    "url": "req/consultarReporteDiario",
-                    "type": "POST",
-                    "data": paramsTemp,
-                    "beforeSend": function () {
-                        if(!swal.isVisible() ){
-                            swal({ text: 'Cargando registros...', allowOutsideClick: false });
-                            swal.showLoading();
+            if(!isValid){
+                mensaje += '</ul>';
+                mostrarMensajeWarningValidacion(mensaje);
+                return false;
+            }else{
+                paramsTemp.fechaInicio = $scope.getFechaFormato($scope.repDiario.fechaInicio);
+                paramsTemp.fechaFin =  $scope.getFechaFormato($scope.repDiario.fechaFin);
+                paramsTemp.tipoIntervencion =  intervencioncopy;
+                paramsTemp.estatusOt = statuscopy;
+                paramsTemp.fechaSeleccionada =  $scope.repDiario.fechaSeleccionada;
+                paramsTemp.elementosPorPagina = 10;
+                paramsTemp.pagina = 1;
+                paramsTemp.geografias = clustersparam;
+    
+                if($scope.repDiario.idOrden && $scope.repDiario.idOrden != ""){
+                    paramsTemp.idOrden =  $scope.repDiario.idOrden;
+                }
+    
+                if($scope.repDiario.folio && $scope.repDiario.folio != ""){
+                    paramsTemp.folio =  $scope.repDiario.folio;
+                }
+    
+                if($scope.repDiario.idCuenta && $scope.repDiario.idCuenta != ""){
+                    paramsTemp.idCuenta =  $scope.repDiario.idCuenta;
+                }
+    
+                if(tableReporte){                              
+                    tableReporte.destroy() 
+                }   
+                tableReporte = $('#table-reporte').DataTable({
+                    "processing": false,
+                    "ordering": false,
+                    "serverSide": true,
+                    "scrollX": false,
+                    "paging": true,
+                    "lengthChange": false,
+                    "searching": false,
+                    "ordering": false,
+                    "pageLength": 10,
+                    "info": false,
+                    "ajax": {
+                        "url": "req/consultarReporteDiario",
+                        "type": "POST",
+                        "data": paramsTemp,
+                        "beforeSend": function () {
+                            if(!swal.isVisible() ){
+                                
+                            }
+                        },
+                        "dataSrc": function (json) {
+                            $scope.resultReporteDiario = json.registrosTotales
+                            return json.data;
+                        },
+                        "error":function(xhr, error, thrown){
+                            handleError(xhr)
+                        }, 
+                        "complete": function () {
+                            swal.close()
                         }
-                        
                     },
-                    "dataSrc": function (json) {
-                        $scope.resultReporteDiario = json.registrosTotales
-                        return json.data;
-                    },
-                    "error":function(xhr, error, thrown){
-                        handleError(xhr)
-                    }, 
-                    "complete": function () {
-                        swal.close()
-                    }
-                },
-                "columns": [null, null, null, null, null, null, null, null, null, null, null, null, null, null],
-                "language": idioma_espanol_not_font,
-                "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">', 
-                dom: 'Bfrtip', 
-                buttons:  
-                [{ 
-                    extend: 'excelHtml5', 
-                    title: 'Reporte Seguimiento Diario', 
-                    text: 'Exportar Excel' 
-                }] 
-            });
-        }
+                    "columns": [null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+                    "language": idioma_espanol_not_font,
+                    "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">', 
+                    dom: 'Bfrtip', 
+                    buttons:  
+                    [{ 
+                        extend: 'excelHtml5', 
+                        title: 'Reporte Seguimiento Diario', 
+                        text: 'Exportar Excel' 
+                    }] 
+                });
+            }
+            
+        },1000);
+      
     }
     
 

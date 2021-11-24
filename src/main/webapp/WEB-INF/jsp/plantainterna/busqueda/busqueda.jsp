@@ -541,6 +541,7 @@
 <!-- Fin -->
 
 <script src="${pageContext.request.contextPath}/resources/js/plantainterna/busqueda/busquedaController.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/plantainterna/busqueda/noticiasController.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/plantainterna/busqueda/busquedaService.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
 <script	src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>

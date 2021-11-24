@@ -31,14 +31,7 @@
 						  	</div>
 						</div>
 					</div>		
-					<div class="row">
-						<div class="col-12">
-							<div class="form-group">
-						   		<label for="exampleTextarea">Comentario:</label>
-						   		<textarea class="form-control" style=" resize: none" ng-model="elementEstatusTecnico.comentario" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" id="comentario-status-tecnico" rows="3"></textarea>
-							</div>
-						</div>
-					</div>
+					
 				</div>
 			</div>
             <div class="modal-footer">

@@ -408,76 +408,39 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         $scope.tecnicoConsultaMateriales=tecnicoTemp
         $scope.$apply()
 
-      /**  **/ 
         if ( tableMaterialesDespacho ) 
-            tableMaterialesDespacho .destroy();
-      
+            tableMaterialesDespacho.destroy();
+
+        $("#table-materiales-temp tbody").empty()
+
+        swal({ text: 'Consultando datos ...', allowOutsideClick: false });
         swal.showLoading();
-        
-        $q.all([
-            mainDespachoService.consultaMaterialesPorAlmacenUserCentro(params),
-            mainDespachoService.consultandoMaterialesPI(params)
-        ]).then(function (results) {
-            if (results[0].data !== undefined) {
-                if (results[0].data.respuesta) {
-                    if (results[0].data.result) {
-                        $("#modalMaterialesOperario").modal('show')        
-                        let tempArrayResult=results[0].data.result.materiales
-                        $("#table-materiales-temp tbody").empty()
-                        angular.forEach(tempArrayResult,function(elem,index){
-                            $("#table-materiales-temp tbody").append(`
-                                <tr>
-                                    <td >${elem.sku} </td>
-                                    <td >${elem.descripcion} </td>
-                                    <td >${elem.lote} </td>
-                                    <td >${elem.cantidad} </td>
-                                    <td >${elem.unidadMedida} </td>
-                                    <td >${elem.precio} </td>
-                                    <td >${elem.familia} </td>
-                                    <td >${elem.categoria} </td>
-                                    <td >${elem.grupo} </td>
-                                </tr>
-                            `)
-                        })
-                        $scope.inicializarTableMateriales()
-                    } else {
-                        toastr.info('No se encontraron datos');
-                    }
-                } else {
-                    toastr.info(results[0].data.resultDescripcion);
-                }
-            } else {
-                toastr.error('Ha ocurrido un error en la consulta de los datos');
-            }
-            /**
-            if (results[1].data !== undefined) {
-                if (results[1].data.respuesta) {
-                    if (results[1].data.result) {
-                        
-                    } else {
-                        toastr.info('No se encontraron datos');
-                    }
-                } else {
-                    toastr.info(results[1].data.resultDescripcion);
-                }
-            } else {
-                toastr.error('Ha ocurrido un error en la consulta de los datos');
-            }**/
-            swal.close()
-        }).catch(err => handleError(err));
-
-
-
-        /**
-        mainDespachoService.consultaMaterialesPorAlmacenUserCentro(params).then(function success(response) {
+        mainDespachoService.consultandoMaterialesPI(params).then(function success(response) {
            console.log(response)
+           $("#modalMaterialesOperario").modal('show')
+           console.log("data materiales ",response.data)
+           $scope.consultarMaterialesPorCentroAlmacenUser()
+           /***
            if (response.data.respuesta) {
                if (response.data.result) {
-                    swal.close()    
-                    $("#modalMaterialesOperario").modal('show')        
-                    let tempArrayResult=response.data.result.materiales
-                    tempArrayResult= tempArrayResult.splice(0,5)
-                    $("#table-materiales-temp tbody").empty()
+                   
+               } else {
+                   swal.close()
+                   mostrarMensajeWarningValidacion('No se encontro informaci&oacute;n.')
+               }
+           } else {
+               swal.close()
+               mostrarMensajeErrorAlert(response.data.resultDescripcion)
+           }**/
+        }).catch(err => handleError(err))
+    }
+
+    $scope.consultarMaterialesPorCentroAlmacenUser=function(params){
+        mainDespachoService.consultaMaterialesPorAlmacenUserCentro(params).then(function success(response) {
+            console.log(response)
+            if (response.data.respuesta) {
+                if (response.data.result) {
+                    let tempArrayResult=results[0].data.result.materiales
                     angular.forEach(tempArrayResult,function(elem,index){
                         $("#table-materiales-temp tbody").append(`
                             <tr>
@@ -493,33 +456,21 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                             </tr>
                         `)
                     })
-                    
-               } else {
+                    $scope.inicializarTableMateriales()
+                    $("#modalMaterialesOperario").modal('show')        
+                } else {
                     swal.close()
                     mostrarMensajeWarningValidacion('No se encontro informaci&oacute;n.')
-               }
-           } else {
+                    $scope.inicializarTableMateriales()
+
+                }
+            } else {
                 swal.close()
                 mostrarMensajeErrorAlert(response.data.resultDescripcion)
-           }
-        }).catch(err => handleError(err))
+                $scope.inicializarTableMateriales()
 
-        swal({ text: 'Consultando datos ...', allowOutsideClick: false });
-        swal.showLoading();
-        mainDespachoService.consultandoMaterialesPI(params).then(function success(response) {
-           console.log(response)
-           if (response.data.respuesta) {
-               if (response.data.result) {
-                    $("#modalMaterialesOperario").modal('show')
-               } else {
-                   swal.close()
-                   mostrarMensajeWarningValidacion('No se encontro informaci&oacute;n.')
-               }
-           } else {
-               swal.close()
-               mostrarMensajeErrorAlert(response.data.resultDescripcion)
-           }
-        }).catch(err => handleError(err)) **/
+            }
+         }).catch(err => handleError(err))
     }
 
     $scope.inicializarTableMateriales=function(){           
@@ -530,7 +481,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 			"scrollX": false,
 			"paging": true,
 			"lengthChange": false,
-			"searching": false,
+			"searching": true,
 			"ordering": false,
 			"pageLength": 10,
 			"columns": [null, null, null, null, null, null, null, null,null],
@@ -542,13 +493,13 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         console.log("Entra a cambiar estatus:")
         var n = $('#id-status-tecnico').val();
         console.log(n)
-        if ($scope.elementEstatusTecnico.status == null || !$scope.elementEstatusTecnico.comentario) {
-            toastr.warning('Selecciona estatus y completa campo de comentario.... ')
+        if ($scope.elementEstatusTecnico.status == null) {
+            toastr.warning('Selecciona estatus')
             return false
         }
         let params = {
 
-            "idUsuario": $scope.elementEstatusTecnico.tecnico.idTecnico,
+            "id": $scope.elementEstatusTecnico.tecnico.idTecnico,
             "idEstatusUsuario": $scope.elementEstatusTecnico.status.id
         }
 
@@ -1376,6 +1327,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 
     abrirModalReporte = function(){
         //$scope.repDiario.fechaSeleccionada = 'fechaCreacion'
+       
         if($scope.filtrosGeneral.tipoOrdenes){
             $scope.seleccionarTodos($scope.filtrosGeneral.tipoOrdenes);
         }
@@ -1391,14 +1343,13 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         $('#filtro_fecha_inicio_reporte').datepicker('update',   moment(FECHA_HOY_DATE).toDate() );
         $('#filtro_fecha_fin_reporte').datepicker('update',   moment(FECHA_HOY_DATE).toDate() );
         
-        setTimeout(function(){
-            consultarReporteDiario();
-        }, 1000);
+        consultarReporteDiario();
         
         $("#modalReporte").modal('show');
     }
 
     $('#modalReporte').on("hidden.bs.modal", function () {
+
         if($scope.filtrosGeneral.tipoOrdenes){
             $scope.seleccionarTodos($scope.filtrosGeneral.tipoOrdenes);
         }

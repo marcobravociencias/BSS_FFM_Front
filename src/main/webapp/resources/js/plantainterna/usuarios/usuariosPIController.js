@@ -45,6 +45,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     $scope.isTecnico = false;
     $scope.idPuestoTecnico = null;
     $scope.idPuestoDespacho = null;
+    $scope.fileFotoUsuario = null;
     //PENDIENTES
 	$scope.respaldoIntervenciones = [];
    
@@ -691,14 +692,6 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     			rfc: $scope.informacionRegistro.rfc,
     			curp: $scope.informacionRegistro.curp,
     			genero: sexo,
-    			
-//    			urlFotoPerfil: "",
-    			fotoPerfil: {
-    				bucketId: "",
-    			    archivo: "",
-    			    nombre: ""
-    			  },
-    			
     			correoElectronico: $scope.informacionRegistro.correo,
     			telefonoCelular: $scope.informacionRegistro.telefonoContacto,
     			idEstatusUsuario: 1,
@@ -723,13 +716,35 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	}else{
     		paramsRegistro.idOperarios = $scope.informacionRegistro.tecnicos;
     	}
+    	
+    	if($scope.fileFotoUsuario != null){
+    		paramsRegistro.fotoPerfil = {
+    				bucketId: $scope.fileFotoUsuario.bucketId,
+    			    archivo: $scope.fileFotoUsuario.archivo,
+    			    nombre: $scope.fileFotoUsuario.nombre
+    			  }
+    	}else{
+    		paramsRegistro.fotoPerfil = {
+				bucketId: "",
+			    archivo: "",
+			    nombre: ""
+			  }
+    	}
 
     	var respuestaValidacionRegistro = $scope.validarInformacionRegistro();
     	if(respuestaValidacionRegistro){
     		
+    		var respuestaValidacionDatosNoObligadorios = $scope.validarInformacionNoObligatoria();
+        	var tituloAlerta = "Se guardará un nuevo usuario";
+    		var textoAlerta = "¿Desea registrar al usuario?";
+        	if(respuestaValidacionDatosNoObligadorios.validacion == false){
+        		tituloAlerta = "¿Desea continuar con el registro?";
+        		textoAlerta = ""+respuestaValidacionDatosNoObligadorios.mensaje;
+        	}
+    		
     		swal({
-    	        title: "Se guardará un nuevo usuario",
-    	        text: "\u00BFDesea registrar al usuario?",
+    	        title: tituloAlerta,
+    	        text: textoAlerta,
     	        type: "warning",
     	        showCancelButton: true,
     	        confirmButtonColor: '#007bff',
@@ -755,6 +770,24 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 
     	      });
     	}
+	}
+    
+    $scope.validarInformacionNoObligatoria = function() {
+    	let respuesta = {
+    			mensaje:"Se realizará el registro sin los siguientes datos: ",
+    			validacion: true
+    	}
+    	if($scope.isTecnico == false){
+    		if($scope.informacionRegistro.tecnicos < 1){
+    			respuesta.mensaje = respuesta.mensaje + " *Técnicos ";
+    			respuesta.validacion = false;
+    		}
+    	}
+		if($scope.fileFotoUsuario == null){
+			respuesta.mensaje = respuesta.mensaje + " *Fotografía ";
+			respuesta.validacion = false;
+		}
+		return respuesta;
 	}
     
     //VALIDACIÓN GENERAL DE DATOS DEL SUBMÓDULO REGISTRAR USUARIO
@@ -1484,7 +1517,65 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	      }).catch(err => {
 
 	      });
+	}
+    
+//    --------------------------------------------------------------------------------------------------------
+//    ---------------------------FOTO---------------------------
+    
+    $scope.cargarFotoUsuarioRegistro = function (e) {
+		let labelFile = "";
+		if (e.target.files[0]) {
+			$(labelFile).text(e.target.files[0].name);
+			let reader = new FileReader();
+			reader.readAsDataURL(e.target.files[0]);
+			reader.onload = function () {
+				let base64 = reader.result.toString().split(",");
+				let img = {
+					"bucketId": "totalplay-ffm-core-dev.appspot.com",
+					"archivo": base64[1],
+					"nombre": e.target.files[0].name
+				}
+
+				$scope.fileFotoUsuario = img;
+				$("#imgFotoUsuario").attr("src", "data:image/jpeg;base64," + $scope.fileFotoUsuario.archivo);
+				$("#fileFotoUsuario").val("");
+				$scope.$apply();
+
+			};
+			reader.onerror = function (error) {
+				console.log('Error: ', error);
+			};
+		}
+	}
+    
+    $scope.eliminarFotoUsuarioRegistro = function (e) {
+    	$scope.fileFotoUsuario = null;
+    	$("#imgFotoUsuario").attr("src", "./resources/img/plantainterna/despacho/tecnicootasignada.png");
+    };
+    
+    $scope.obtenerFotoTomada = function() {
+    	var foto = document.getElementById('canvas');
     	
+    	var archivo = foto.toDataURL().split(",");
+    	var nombreArchivo = "";
+    	if($scope.confirmacionRegistro.nombre == "Sin asignar"){
+    		nombreArchivo = "fotografiaUsuarioNuevo";
+    	}else{
+    		nombreArchivo = $scope.confirmacionRegistro.nombre;
+    	}
+
+		let img = {
+				"bucketId": "totalplay-ffm-core-dev.appspot.com",
+				"archivo": archivo[1],
+				"nombre": nombreArchivo
+			}
+
+		$scope.fileFotoUsuario = img;
+		$("#modalTomarFotoUsuario").modal('hide');
+	}
+    
+    $scope.cerrarModalTomarFotoUsuario = function() {
+    	$("#modalTomarFotoUsuario").modal('hide');
 	}
 	
     // *** FIN CAMBIOS REYNEL *** 

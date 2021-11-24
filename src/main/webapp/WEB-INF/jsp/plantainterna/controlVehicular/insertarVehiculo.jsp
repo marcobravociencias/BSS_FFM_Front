@@ -151,7 +151,7 @@
                 </div>
                 <div class="form-row">
                     <div class="col-3 form-group">
-                        <label style="font-size: 11px !important">Vencimiento Tarjeta de Circulaci&oacute;n</label>
+                        <label style="font-size: 11px !important; margin-bottom: 0;">Vencimiento Tarjeta de Circulaci&oacute;n</label>
                         <input type="text" class="datepicker datepickerNormal form-control form-control-sm"
                             placeholder="dd/mm/aaaa" ng-model="vehiculo.detalle.fechaVencimientoTarjeta"
                             id="vencimientoTarjeta" readonly />
