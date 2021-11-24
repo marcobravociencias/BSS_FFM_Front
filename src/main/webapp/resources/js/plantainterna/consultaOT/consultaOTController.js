@@ -1,5 +1,5 @@
 var app = angular.module('consultaOTApp', []);
-
+var tableMaterialesDespacho;
 app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'genericService', function ($scope, $q, consultaOTService, genericService) {
 
 	$("#moduloConsultaOt").addClass('active')
@@ -34,6 +34,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	$scope.evidenciaDetalleEquipoV = '';
 	$scope.evidenciaDetalleEquipoN = '';
 	let isConsultaDispositivo = false
+	let isConsultaMateriales=false;
 	$scope.dispositivosArrayTemp = [];
 	$scope.listadoConsultaOtsDisponibles = [];
 	$scope.listEvidenciaImagenes = {};
@@ -190,7 +191,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 						swal.close()
 					}
 				},
-				"columns": [null, null, null, null, null, null, null, null, null, null, null],
+				"columns": [null, null, null, null, null, null, null, null, null, null],
 				"language": idioma_espanol_not_font
 			});
 
@@ -699,34 +700,14 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	$scope.datoSubInt;
 	consultaDetalleOt = function (indexOtConsulta) {
 		$scope.infoOtDetalle = {};
-		//$("#modal-detalle-ot").removeClass('contenedor_detalle');
-		//getDetalleOTGeneric(idOT);
 		let otConsultaTemp = $scope.listadoConsultaOtsDisponibles[indexOtConsulta]
-		$('#content-ot').show();
-
-		$('#content-comentarios').hide();
-		$('#content-historico').hide();
-		$('#content-soluciones').hide();
-		$('#content_acciones').hide();
-		$('#content_cambio_equipo').hide();
-		$('#content_reubicacion').hide();
-		$('#content_cambio_plan').hide();
-		$("#content_informacion_red").hide();
-		$("#content_actividad").hide();
-		$("#content_recoleccion_materiales").hide()
-		$('#content_trayectoria').hide();
-		$('#content-postVenta').hide();
-		$('#content-pagos').hide();
-		$('#content-dispositivos').hide();
-		$('#modal-detalle-ot .itemGeneral').removeClass('active');
-		$('#modal-detalle-ot .itemGeneral:first').addClass('active');
-
+		$scope.datoOt = otConsultaTemp.idOrden
 		is_consulta_info_trayectoria = false;
+		$scope.$apply();
 		$scope.consultaDetalleOtGeneric(otConsultaTemp);
 	}
-
+	
 	$scope.consultaDetalleOtGeneric = function (ordenObject) {
-		$scope.datoOt = ordenObject.idOrden
 		let params = {
 			Id_ot: ordenObject.idOrden
 		}
@@ -744,7 +725,6 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 						console.log("#permisos ,orden ", $scope.permisosModal);
 						$('#modal-detalle-ot').modal('show');
 						swal.close();
-
 					} else {
 						swal.close();
 						mostrarMensajeErrorAlert(response.data.result.mensaje)
@@ -760,17 +740,70 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		}).catch(err => handleError(err));
 	}
 
-	consultaMaterialesOT = function (position) {
-		let params = {
-			orden: $scope.listadoConsultaOtsDisponibles[position],
-		}
-		swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
-		swal.showLoading();
-		consultaOTService.consultaMaterialOt(JSON.stringify(params)).then(function success(response) {
-			console.log(response);
+	$scope.consultaMaterialesOT = function () {
+		
+		if(!isConsultaMateriales){
+			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
+			swal.showLoading();
 
-		}).catch(err => handleError(err));
+			if ( tableMaterialesDespacho ) 
+				tableMaterialesDespacho .destroy();			
+
+			consultaOTService.consultaMaterialOt(JSON.stringify( {idOrden:$scope.datoOt} )).then(function success(response) {
+				console.log(response);
+				$("#table-materiales-ot tbody").empty()
+				if (response.data.respuesta) {
+					if (response.data.result) {
+						let tempArrayResult=response.data.result.materiales
+						angular.forEach(tempArrayResult,function(elem,index){
+							$("#table-materiales-ot tbody").append(`
+								<tr>
+									<td >${elem.nombreUsuario} </td>
+									<td >${elem.numeroEmpleado} </td>
+									<td >${elem.centro} </td>
+									<td >${elem.almacen} </td>
+									<td >${elem.sku} </td>
+									<td >${elem.descripcionSku} </td>
+									<td >${elem.cantidad} </td>
+									<td >${elem.unidadMedida} </td>
+									<td >${elem.lote} </td>
+									<td >${elem.hora} </td>
+									<td >${elem.fechaRegistro} </td>
+								</tr>
+							`)
+						})
+						$scope.inicializarTableMaterialesOt()
+						swal.close()
+					}else{
+						mostrarMensajeInformativo(response.data.result.resultDescripcion )
+						swal.close()
+					}
+					isConsultaMateriales=true
+				}else{
+					mostrarMensajeInformativo('Ha ocurrido un error en la consulta de los datos');
+					swal.close()
+				}
+			}).catch(err => handleError(err));
+		}
 	}
+
+
+	$scope.inicializarTableMaterialesOt=function(){           
+        tableMaterialesDespacho=$('#table-materiales-ot').DataTable({
+            "processing": false,
+			"ordering": false,
+			"serverSide": false,
+			"scrollX": false,
+			"paging": true,
+			"lengthChange": false,
+			"searching": true,
+			"ordering": false,
+			"pageLength": 10,
+			"columns": [null, null, null, null, null, null, null, null,null,null,null],
+            "language":idioma_espanol_not_font
+        });        
+    }
+  
 
 	$scope.cerrarModalMaterial = function () {
 		$('#modal-material-ot').modal('hide');
@@ -1339,115 +1372,8 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	}
 
 
-
-	document.getElementById('comentarios').addEventListener('click', function () {
-		$("#informacion-ot").removeClass('active')
-		$("#info_historico").removeClass('active')
-		$("#acciones").removeClass('active')
-		$("#postVenta").removeClass('active')
-		$('#pagos-Ot').removeClass('active');
-		$('#dispositivo-Ot').removeClass('active');
-		$('.contenedor_detalle').hide();
-
-		$('#comentarios').addClass('active');
-		$('#content-comentarios').show();
-		$scope.consultaChat();
-	});
-
-	document.getElementById('informacion-ot').addEventListener('click', function () {
-		$("#comentarios").removeClass('active')
-		$("#info_historico").removeClass('active')
-		$("#acciones").removeClass('active')
-		$("#postVenta").removeClass('active')
-		$('#pagos-Ot').removeClass('active');
-		$('#dispositivo-Ot').removeClass('active');
-		$('.contenedor_detalle').hide();
-
-		$('#informacion-ot').addClass('active');
-		$('#content-ot').show();
-		$scope.consultaDetalleOtGeneric($scope.datoOt);
-	});
-
-	document.getElementById('info_historico').addEventListener('click', function () {
-		$("#comentarios").removeClass('active')
-		$("#informacion-ot").removeClass('active')
-		$("#acciones").removeClass('active')
-		$("#postVenta").removeClass('active')
-		$('#pagos-Ot').removeClass('active');
-		$('#dispositivo-Ot').removeClass('active');
-		$('.contenedor_detalle').hide();
-
-		$('#info_historico').addClass('active');
-		$('#content-historico').show();
-		$scope.consultaHistoricoOt();
-	});
-
-	document.getElementById('postVenta').addEventListener('click', function () {
-		$("#comentarios").removeClass('active')
-		$("#info_historico").removeClass('active')
-		$("#informacion-ot").removeClass('active')
-		$('#pagos-Ot').removeClass('active');
-		$('#dispositivo-Ot').removeClass('active');
-		$('.contenedor_detalle').hide();
-
-		$('#postVenta').addClass('active');
-		$('#content-postVenta').show();
-		$scope.consultarPostVentaOt();
-
-	});
-
-	document.getElementById('pagos-Ot').addEventListener('click', function () {
-		$("#comentarios").removeClass('active')
-		$("#informacion-ot").removeClass('active')
-		$("#acciones").removeClass('active')
-		$("#postVenta").removeClass('active')
-		$('#info_historico').removeClass('active');
-		$('#dispositivo-Ot').removeClass('active');
-		$('.contenedor_detalle').hide();
-
-		$('#pagos-Ot').addClass('active');
-		$('#content-pagos').show();
-		$scope.consultaPagosOt();
-	});
-
-	document.getElementById('dispositivo-Ot').addEventListener('click', function () {
-		$("#comentarios").removeClass('active')
-		$("#informacion-ot").removeClass('active')
-		$("#acciones").removeClass('active')
-		$("#postVenta").removeClass('active')
-		$('#info_historico').removeClass('active');
-		$('.contenedor_detalle').hide();
-		$('#pagos-Ot').removeClass('active');
-
-		$('#dispositivo-Ot').addClass('active');
-		$('#content-dispositivos').show();
-		$scope.consultarDispositivosOt();
-	});
-
-
-	/* document.getElementById('acciones').addEventListener('click', function () {
-		$("#comentarios").removeClass('active')
-		$("#informacion-ot").removeClass('active')
-		$("#info_historico").removeClass('active')
-		$('.contenedor_detalle').hide();
-
-		$('#acciones').addClass('active');
-		$("#content_acciones").show();
-		// $scope.consultaInformacionRed()
-	}); */
-
+	
 	$('#modal-detalle-ot').on('hidden.bs.modal', function () {
-		limpiarVariablesModalDetalle();
-		$("#informacion-ot").addClass('active')
-		$("#info_historico").removeClass('active')
-		$("#comentarios").removeClass('active')
-		$("#acciones").removeClass('active')
-		$("#postVenta").removeClass('active')
-		$("#pagos-Ot").removeClass('active')
-		$("#dispositivo-Ot").removeClass('active')
-	})
-
-	limpiarVariablesModalDetalle = function () {
 		is_consulta_info_ot = false;
 		is_consulta_comentarios = false;
 		is_consulta_historico = false;
@@ -1465,24 +1391,10 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		isConsultaDetalleSoporte = false
 		isConsultaDetallePago = false
 		isConsultaDispositivo = false
-		$("#info_historico").removeClass('active')
-		$("#comentarios").removeClass('active')
-		$("#acciones").removeClass('active')
-		$("#postVenta").removeClass('active')
-		$("#pagos-Ot").removeClass('active')
-		$("#dispositivo-Ot").removeClass('active')
-		$("#informacion-ot").addClass('active')
-	}
+		isConsultaMateriales=false
+		document.querySelector('#informacion-ot').click()
 
-	$scope.closeModalDetalle = function () {
-		$('#modal-detalle-ot').modal('hide')
-		$("#info_historico").removeClass('active')
-		$("#comentarios").removeClass('active')
-		$("#acciones").removeClass('active')
-		$("#postVenta").removeClass('active')
-		$("#pagos-Ot").removeClass('active')
-		$("#informacion-ot").addClass('active')
-	}
+	})
 
 
 	$('.drop-down-filters').on("click.bs.dropdown", function (e) {

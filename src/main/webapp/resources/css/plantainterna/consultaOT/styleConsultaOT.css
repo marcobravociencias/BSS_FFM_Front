@@ -540,7 +540,7 @@ div.dataTables_wrapper div.dataTables_length label {
   display: block !important;
 }
 
-.pagination .paginate_button a.page-link {
+ .pagination .paginate_button a.page-link {
   color: #828080;
   font-family: "Montserrat";
   background-color: white !important;
@@ -1826,4 +1826,65 @@ thead.thead_segundo_tecnico_nivel tr th {
     max-height:15em; 
     object-fit: cover;
     cursor:pointer;
+}
+
+#table-materiales-ot thead th {
+    position: relative;
+    background-color: #b1b1b1;
+    color: #fff;
+    border:none;
+    padding: 8px
+ 10px;
+    font-size: .9em;
+    padding: 8px 1;
+}
+
+#table-materiales-ot tbody tr td {
+    border: none;
+}
+#table-materiales-ot>tbody>tr>td {
+    white-space: nowrap;
+    color: #39455b;
+    font-family: 'Montserrat', sans-serif;
+    font-size: .8em;
+}
+
+#table-materiales-ot tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#table-materiales-ot_wrapper .dataTables_info {
+    font-size: 0.7em;
+    font-family: "Montserrat" !important;
+    text-align: center;
+}
+
+#table-materiales-ot_wrapper  .page-link {
+    font-size: 0.7em !important;
+    font-family: "Montserrat" !important;
+}
+
+#table-materiales-ot_wrapper div.dataTables_paginate li.next a:after,#table-materiales-ot_wrapper  div.dataTables_paginate li.last a:after {
+   display:none;
+}
+
+#table-materiales-ot_wrapper div.dataTables_paginate li.previous a:before {
+   display:none;
+}
+
+#table-materiales-ot_paginate ul.pagination {
+    position: absolute;
+    right: 0;
+}
+
+
+#table-materiales-ot_filter {
+	font-size: 0.7em !important;
+    font-family: "Montserrat" !important;
+}
+
+#table-materiales-ot_filter input {
+	font-size: 0.9em !important;
+	font-family: "Montserrat" !important;
+	
 }

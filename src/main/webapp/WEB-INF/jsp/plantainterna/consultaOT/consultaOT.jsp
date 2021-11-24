@@ -183,8 +183,6 @@
                         <th><i class="fa fa-picture-o" id="muestra_IMG"></i></th> -->
                         <th><i class="fa fa-bars" id="modalDetalleOT"></i></th>
                         <th><i class="fa fa-picture-o" id="muestra_IMG"></i></th>
-                        <!--th><i class="fa fa-wrench" id="herramienta"></i></th-->
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -203,11 +201,12 @@
 <script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/moment.min.js"></script>
 <script type="text/javascript"
     src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.min.js"></script>
-<script type="text/javascript"
-    src="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/js/mdb.min.js"></script>
+
 <script src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-ui.js"></script>
 <script src="${pageContext.request.contextPath}/resources/libraries/popper\popper.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/libraries/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+    src="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/js/mdb.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/jquery.dataTables.js"></script>
 <script src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/dataTables.bootstrap4.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/libraries/jstree/jstree.min.js"></script>

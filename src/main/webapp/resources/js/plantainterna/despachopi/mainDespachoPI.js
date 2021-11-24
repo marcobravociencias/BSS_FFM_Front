@@ -910,7 +910,6 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             }
         }).catch(err => handleError(err));
     }
-    console.log("#####%%%%%%%%%%%%%%%123")
     /**mainDespachoService.testingServiceEureka().then(function success(response) {
         console.log("#####123")
     }, function error(response) {
