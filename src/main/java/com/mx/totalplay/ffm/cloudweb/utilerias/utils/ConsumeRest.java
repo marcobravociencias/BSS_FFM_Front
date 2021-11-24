@@ -586,13 +586,11 @@ public class ConsumeRest {
             headers.set(HttpHeaders.AUTHORIZATION, "Bearer " + token);
             
             HttpEntity<String> request = new HttpEntity<>(headers);
-            logger.info("--- DELETE METHOD ---");
             responseEntity = restTemplate.exchange(
                     uriBuilder.buildAndExpand(params).toUri(),
                     HttpMethod.DELETE,
                     request,
                     String.class);
-            logger.info(responseEntity);
             String bodyResponse = responseEntity.getBody();
             logger.info("--- RESPONSE ---");
             logger.info(bodyResponse);
