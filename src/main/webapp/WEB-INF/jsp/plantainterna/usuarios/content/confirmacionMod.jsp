@@ -106,14 +106,15 @@
 	async function iniciarCamaraMod() {
 		swal({html: '<strong>Accediendo a la cámara...</strong>',allowOutsideClick: false});
 		swal.showLoading();
-		navigator.getUserMedia({'audio':false, 'video':true}, function(stream){
+		try{
+			stream = await navigator.mediaDevices.getUserMedia({'audio':false, 'video':true});
 			handleSuccessMod(stream);
 			$("#modalTomarFotoUsuarioMod").modal({ backdrop: 'static', keyboard: false });
 			$("#modalTomarFotoUsuarioMod").modal('show');
 			swal.close();
-        }, function(){
-        	swal.close();
-        	swal({
+		} catch (e) {
+			swal.close();
+			swal({
     	        title: "No fue posible acceder a la cámara",
     	        text: "Esto se debe a que tu equipo de cómputo no cuenta con web cam o tu navegador no tiene habilitado el permiso de acceso a la cámara.",
     	        imageUrl: './resources/img/plantainterna/usuario/accesoCamWeb.PNG',
@@ -124,8 +125,8 @@
     	        confirmButtonText: 'Entendido',
     	      }).then(function (isConfirm) {
         	      
-    	      })
-        });
+    	      });
+		}
 	}
 
 	function handleSuccessMod(stream) {
