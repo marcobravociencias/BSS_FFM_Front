@@ -44,18 +44,19 @@ app.noticiasController = function ($scope, $q, busquedaService) {
         $scope.noticiaAnterior = undefined;
 
         busquedaService.consultarComentariosNoticiasSF(params).then((response) => {
-            console.log(response);
-            swal.close();
             if (response.data.respuesta) {
                 if (response.data.result) {
-                    $scope.listadoNoticias = response.data.result.news
+                    $scope.listadoNoticias = response.data.result.news;
+                    swal.close();
                 } else {
+                    swal.close();
                     mostrarMensajeWarningValidacion('No se encontr&oacute; informaci&oacute;n.')
                 }
                 setTimeout(function () {
                     $(".container-noticia-elemento").animate({ scrollTop: 100000000 }, 500);
                 }, 400)
             } else {
+                swal.close();
                 mostrarMensajeWarningValidacion(response.data.resultDescripcion)
             }
         }).catch((err) => handleError(err));
@@ -441,15 +442,15 @@ app.noticiasController = function ($scope, $q, busquedaService) {
                     if (response.data.result.result === '0') {
                         $scope.objectoConsulta();
                     } else {
-                        mostrarMensajeErrorAlertAjax(response.data.result.resultDescription)
+                        mostrarMensajeErrorAlert(response.data.result.resultDescription)
                         swal.close()
                     }
                 } else {
-                    mostrarMensajeErrorAlertAjax("Hubo un error, por favor de intentar mas tarde.")
+                    mostrarMensajeErrorAlert("Hubo un error, por favor de intentar mas tarde.")
                     swal.close()
                 }
             } else {
-                mostrarMensajeErrorAlertAjax(response.data.resultDescription)
+                mostrarMensajeErrorAlert(response.data.resultDescription)
             }
 
         }).catch((err) => handleError(err));
@@ -579,26 +580,24 @@ app.noticiasController = function ($scope, $q, busquedaService) {
         swal({ text: 'Cargando informaci\u00f3n ...', allowOutsideClick: false });
         swal.showLoading();
         busquedaService.eliminarNoticia(params).then(function success(response) {
-            if (response.data.success) {
+            if (response.data.respuesta) {
                 if (response.data.result !== undefined) {
-                    if (response.data.result.result === '0') {
+                    if (response.data.result.result === "0") {
                         $scope.objectoConsulta();
                     } else {
-                        mostrarMensajeErrorAlertAjax(response.data.result.resultDescription)
+                        mostrarMensajeErrorAlert(response.data.result.resultDescription)
                         swal.close()
                     }
                 } else {
-                    mostrarMensajeErrorAlertAjax("Error al consultar")
+                    mostrarMensajeErrorAlert("Error al consultar")
                     swal.close()
                 }
             } else {
-                mostrarMensajeErrorAlertAjax("Error en el servidor")
+                mostrarMensajeErrorAlert("Error en el servidor")
                 swal.close()
             }
 
         }, function error(response) {
-            swal.close()
-            $scope.objectoConsulta();
             console.log(response);
         });
     }
@@ -607,26 +606,25 @@ app.noticiasController = function ($scope, $q, busquedaService) {
         swal({ text: 'Cargando informaci\u00f3n ...', allowOutsideClick: false });
         swal.showLoading();
         busquedaService.eliminarSubNoticia(params).then(function success(response) {
-            if (response.data.success) {
+            console.log(response);
+            if (response.data.respuesta) {
                 if (response.data.result !== undefined) {
-                    if (response.data.result.result === '0') {
+                    if (response.data.result.result === "0") {
                         $scope.objectoConsulta();
                     } else {
-                        mostrarMensajeErrorAlertAjax(response.data.result.resultDescription)
+                        mostrarMensajeErrorAlert(response.data.result.resultDescription)
                         swal.close()
                     }
                 } else {
-                    mostrarMensajeErrorAlertAjax("Error al consultar")
+                    mostrarMensajeErrorAlert("Error al consultar")
                     swal.close()
                 }
             } else {
-                mostrarMensajeErrorAlertAjax("Error en el servidor")
+                mostrarMensajeErrorAlert("Error en el servidor")
                 swal.close()
             }
 
         }, function error(response) {
-            swal.close()
-            $scope.objectoConsulta();
             console.log(response);
         });
     }

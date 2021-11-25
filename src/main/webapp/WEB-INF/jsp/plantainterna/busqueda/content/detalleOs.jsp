@@ -118,7 +118,7 @@
                             </div>
                         </div>
                         <div class="col-10 offset-1" ng-if="comentario.media">
-                        <div class="row content-archivo-comentario">
+                        <div class="content-archivo-comentario">
                             <div class="imagen-adjuntado-comment" ng-switch="comentario.media.type">
                                 <img ng-switch-when="JPG"  src="${pageContext.request.contextPath}/resources/img/iconossf/imageico.jpg" class="imagen-comment-owner" alt="">
                                 <img ng-switch-when="JPEG" src="${pageContext.request.contextPath}/resources/img/iconossf/imageico.jpg" class="imagen-comment-owner" alt="">

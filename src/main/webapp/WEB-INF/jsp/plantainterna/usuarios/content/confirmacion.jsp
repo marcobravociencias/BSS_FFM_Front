@@ -119,33 +119,31 @@
 <script>
 
 	var stream;
-	navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || function(){alert('Su navegador no soporta navigator.getUserMedia().');};
 
 	async function iniciarCamara() {
 		swal({html: '<strong>Accediendo a la cámara...</strong>',allowOutsideClick: false});
 		swal.showLoading();
-		navigator.getUserMedia({'audio':false, 'video':true}, function(stream){
+		try{
+			stream = await navigator.mediaDevices.getUserMedia({'audio':false, 'video':true});
 			handleSuccess(stream);
 			$("#modalTomarFotoUsuario").modal({ backdrop: 'static', keyboard: false });
 			$("#modalTomarFotoUsuario").modal('show');
 			swal.close();
-        }, function(){
-        	swal.close();
+		} catch (e) {
+			swal.close();
         	swal({
-    	        title: "No fue posible acceder a la cámara",
-    	        text: "Esto se debe a que tu equipo de cómputo no cuenta con web cam o tu navegador no tiene habilitado el permiso de acceso a la cámara.",
-    	        imageUrl: './resources/img/plantainterna/usuario/accesoCamWeb.PNG',
-    	        imageWidth: 300,
-    	        imageHeight: 100,
-    	        type: "warning",
-    	        confirmButtonColor: '#007bff',
-    	        confirmButtonText: 'Entendido',
-    	      }).then(function (isConfirm) {
-        	      
-    	      })
-  	      
-        });
-	
+		        title: "No fue posible acceder a la cámara",
+		        text: "Esto se debe a que tu equipo de cómputo no cuenta con web cam o tu navegador no tiene habilitado el permiso de acceso a la cámara.",
+		        imageUrl: './resources/img/plantainterna/usuario/accesoCamWeb.PNG',
+		        imageWidth: 300,
+		        imageHeight: 100,
+		        type: "warning",
+		        confirmButtonColor: '#007bff',
+		        confirmButtonText: 'Entendido',
+		      }).then(function (isConfirm) {
+	    	      
+		      });
+		}
 	}
 
 	function handleSuccess(stream) {
