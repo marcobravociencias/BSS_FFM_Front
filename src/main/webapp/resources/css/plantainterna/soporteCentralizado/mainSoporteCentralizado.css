@@ -1,0 +1,34 @@
+#container_tickets_alta_consulta {
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+    /* padding-top: 1em; */
+    padding-bottom: 1em;
+    background: white;
+    border-radius: .5em;
+    padding-top: 1em;
+    margin-top: 1em;
+}
+
+/* TABS TICKETS */
+#myTabTickets .nav-link.active {
+    color: #7716fa !important;
+    font-weight: bolder;
+    background:#f9f9f9;
+}
+#myTabTickets{
+    margin-bottom:1em;
+}
+#myTabTickets .nav-link {
+    padding-top: .4em;
+    padding-bottom: .4em;
+    border: solid 1px #ccc;
+}
+#myTabTickets .nav-item:first-child .nav-link {
+    border-top-left-radius:1em;
+    border-bottom-left-radius:1em;
+}
+#myTabTickets .nav-item:last-child .nav-link {
+    border-top-right-radius:1em;
+    border-bottom-right-radius:1em;
+}
+/* TABS TICKETS */
+

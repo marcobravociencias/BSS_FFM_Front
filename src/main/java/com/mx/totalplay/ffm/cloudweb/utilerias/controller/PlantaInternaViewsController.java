@@ -88,5 +88,10 @@ public class PlantaInternaViewsController {
 	public String controlVehicular() {		
 		return "plantainterna/controlVehicular/mainControlVehicular";
 	}
+	
+	@GetMapping("/moduloSoporteCentralizado")
+	public String soporteCentralizado() {		
+		return "plantainterna/soporteCentralizado/mainSoporteCentralizado";
+	}
 }
 
