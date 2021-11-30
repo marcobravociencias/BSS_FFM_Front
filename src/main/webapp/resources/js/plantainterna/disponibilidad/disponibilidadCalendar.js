@@ -16,7 +16,7 @@ app.disponibilidadCalendar = function ($scope) {
             displayEventTime: true,
             selectable: true,
             eventLimit: true,
-            editable: true,
+            editable: false,
             eventDurationEditable: false,
             events: arregloDisponibilidad,
             headerToolbar: {
@@ -32,7 +32,6 @@ app.disponibilidadCalendar = function ($scope) {
                 if ($scope.permisosDisponibilidad.filter(elemt => { return elemt.clave === 'accionEditaDisponibilidad'}).length === 1) {
                     console.log(info);
                     let eventObject = info.event;
-    
                     $("#matutino_actualizar").val(eventObject._def.extendedProps.matutino);
                     $("#vespertino_actualizar").val(eventObject._def.extendedProps.vespertino);
                     if ($scope.banderaNocturno) {
@@ -42,6 +41,12 @@ app.disponibilidadCalendar = function ($scope) {
                         document.getElementById('contenedor-editar-nocturno').style.display = 'none'
                     }
                     $("#fecha_actualizar").val(eventObject._def.extendedProps.fecha);
+                    let fechaSplit = eventObject._def.extendedProps.fecha.split('-')
+                    let fech = Number(fechaSplit[1]) - 1;
+                    let fechaMes = fech.length === 1 ? '0'.concat(fech) : String(fech);
+                    let fechaI = new Date(fechaSplit[0], fechaMes, fechaSplit[2])
+                    $('#fecha_inicio_updateDis').datepicker("setDate", new Date(fechaI));
+                    $('#fecha_fin_updateDis').datepicker("setDate", new Date(fechaI));
     
                     let tipo_bloque = (eventObject._def.extendedProps.bloqueo)
     

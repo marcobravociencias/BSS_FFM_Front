@@ -79,7 +79,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             autoclose: true,
             language: 'es',
             todayHighlight: true,
-            clearBtn: true
+            clearBtn: true,
         });
         //$('.datepicker').datepicker('update', new Date());
         if (!$scope.banderaNocturno) {
@@ -525,6 +525,8 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
         let vespertinoCant = $.trim(document.getElementById('vespertino_actualizar').value);
         let nocturnoCant = $.trim(document.getElementById('nocturno_actualizar').value);
         let bloqueo = $("input[name='radio-bloqueo-mod-individual']:checked").val();
+        let fechaInicio = $.trim(document.getElementById('fecha_inicio_updateDis').value);
+        let fechaFin = $.trim(document.getElementById('fecha_fin_updateDis').value);
         bloqueo = bloqueo === 'true' ? 0 : 1;
         let ultimonivel;
         if ($scope.nGeografia) {
@@ -560,6 +562,28 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             isValido = false;
         }
 
+        let fechaInicioSplit = fechaInicio.split('/');
+        let fechaFinSplit = fechaFin.split('/');
+
+        if (fechaInicioSplit[0] == "") {
+            mensajeError += '<li>Seleccione fecha inicio.</li>'
+            isValido = false
+        }
+        if (fechaFinSplit[0] == "") {
+            mensajeError += '<li>Seleccione fecha fin.</li>'
+            isValido = false
+        }
+        if (bloqueo === undefined) {
+            mensajeError += '<li>Seleccione bloqueo.</li>'
+            isValido = false
+        }
+
+        if (new Date(fechaInicioSplit[1] + "/" + fechaInicioSplit[0] + "/" + fechaInicioSplit[2]) >
+            new Date(fechaFinSplit[1] + "/" + fechaFinSplit[0] + "/" + fechaFinSplit[2])) {
+            isValido = false;
+            mensajeError += "<li>La fecha de inicio no puede ser mayor a la de fin</li>";
+        }
+
         if ($scope.banderaNocturno) {
             if (nocturnoCant !== '' && nocturnoCant !== '0') {
                 arrayTurno.push({
@@ -573,12 +597,13 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
         }
 
         if (isValido) {
-            let fechaInicioSplit = document.getElementById('fecha_actualizar').value
+            let fechaInicioC = fechaInicioSplit[2] + '-' + fechaInicioSplit[1] + '-' + fechaInicioSplit[0]
+            let fechaFinC = fechaFinSplit[2] + '-' + fechaFinSplit[1] + '-' + fechaFinSplit[0]
             let params = {
                 subtipoIntervencion: tipoIntervencion[0],
                 idGeografia2: clustersparam[0],
-                fechaInicio: fechaInicioSplit.concat('T00:00:00.000+0000'),
-                fechaFin: fechaInicioSplit.concat('T00:00:00.000+0000'),
+                fechaInicio: fechaInicioC.concat('T00:00:00.000+0000'),
+                fechaFin: fechaFinC.concat('T00:00:00.000+0000'),
                 bloqueado: bloqueo,
                 turnos: arrayTurno
             };

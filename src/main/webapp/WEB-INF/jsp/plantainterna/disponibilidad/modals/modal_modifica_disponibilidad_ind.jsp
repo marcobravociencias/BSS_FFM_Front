@@ -33,7 +33,21 @@
                       </div>
                   </div>                  
                   <input type="hidden" name="" id="fecha_actualizar" value="">
+             </div>
+             <div class="row">
+              <div class="col-md-6">
+                <div class="form-control-sm  contentMatu">   
+                    <label  class="title_campos"><i class=" fa-lg fa fa-calendar"></i>Fecha Inicio</label>                                       
+                    <input id="fecha_inicio_updateDis" readonly type="text" class="form-control form-control-sm input-filtro-disponibilidad inputDatePicker1 datepicker" placeholder="Fecha de ingreso">                     
+                </div>
               </div>
+              <div class="col-md-6">
+                <div class="form-control-sm  contentMatu">   
+                    <label  class="title_campos"><i class=" fa-lg fa fa-calendar"></i>Fecha Fin</label>                                      
+                    <input readonly type="text" id="fecha_fin_updateDis"  class="form-control form-control-sm input-filtro-disponibilidad inputDatePicker2 datepicker" placeholder="Fecha de ingreso" >                     
+                </div>
+              </div>
+          </div>  
               <div class="row">
                 <div id="contenedor-editar-nocturno" class="col-md-6">
                   <div class="form-control-sm row">   
