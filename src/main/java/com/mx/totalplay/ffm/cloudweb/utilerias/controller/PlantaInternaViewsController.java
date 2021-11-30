@@ -98,5 +98,10 @@ public class PlantaInternaViewsController {
 	public String seguimiento() {		
 		return "plantainterna/seguimientoSoporte/mainSeguimientoSoporte";
 	}
+
+	@GetMapping("/moduloTercerosGeneric")
+	public String TercerosGeneric() {		
+		return "generic/tercerosGeneric/mainTercerosGeneric";
+	}
 }
 
