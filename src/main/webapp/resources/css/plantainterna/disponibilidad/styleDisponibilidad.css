@@ -551,10 +551,12 @@ a.fc-day-grid-event.fc-h-event.fc-event.fc-start.fc-end.fc-draggable {
    /*  background-color: #1c74bfb3 !important;
     border-color: #1c74bfb3 !important; */
    font-weight: bold;
-   font-size: 11px;
+   font-size: 10px;
    white-space: pre-wrap !important;
    /* box-shadow: 0px 0px 10px #808c8c; */
    border: none;
+   top: -8px;
+   
 }
 
 #calendar_disponibilidad .fc-col-header {
