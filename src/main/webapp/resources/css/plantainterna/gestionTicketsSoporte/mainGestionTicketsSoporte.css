@@ -1,0 +1,214 @@
+#container_tickets_alta_consulta {
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+    /* padding-top: 1em; */
+    padding-bottom: 1em;
+    background: white;
+    border-radius: .5em;
+    padding-top: 1em;
+    margin-top: 1em;
+    max-width: 1140px;
+}
+
+/* TABS TICKETS */
+#myTabTickets .nav-link.active {
+    color: #7716fa !important;
+    font-weight: bolder;
+    background:#f9f9f9;
+}
+#myTabTickets{
+    margin-bottom:1em;
+}
+#myTabTickets .nav-link {
+    padding-top: .4em;
+    padding-bottom: .4em;
+    border: solid 1px #ccc;
+}
+#myTabTickets .nav-item:first-child .nav-link {
+    border-top-left-radius:1em;
+    border-bottom-left-radius:1em;
+}
+#myTabTickets .nav-item:last-child .nav-link {
+    border-top-right-radius:1em;
+    border-bottom-right-radius:1em;
+}
+/* TABS TICKETS */
+
+
+/* TAB CONSULTAR TICKETS */
+/* FILTROS CONSULTA TICKETS */
+.container-filtros-ticketsoporte {
+    border: none !important;
+    z-index: 2;
+    position: relative;
+    padding-top: 3pt !important;
+    padding-bottom: 3pt !important;
+    max-width: 1140px;
+}
+
+.column-style-ticketsoporte {
+    width: 136px !important;
+    padding-right: 0px !important;
+}
+.columna-filtro-ind::after {
+    content: "";
+    position: absolute;
+    right: 6%;
+    top: 67%;
+    width: 0;
+    height: 0;
+    border-left: 0.3em solid transparent;
+    border-right: 0.3em solid transparent;
+    border-top: 0.6em solid #939db2;
+    clear: both;
+    z-index: 2;
+    font-size: 14px;
+}
+.input-filtro-ticketsoporte {
+    border: 1px solid #dbdbdb !important;;
+    font-weight: 400;
+    font-size: 1em;
+    color: #818181 !important;
+    transition: all 0.5s ease;
+    border-bottom: 1px solid white;
+    background: white !important;
+    border-radius: .5em !important;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.07),0 1px 2px 0 rgba(0,0,0,.05)!important;
+}
+
+.input-filtro-ticketsoporte::placeholder {
+    font-weight: 400;
+    font-size: 1em;
+    color: #818181 !important;
+}
+
+.input-filtro-ticketsoporte:focus {
+    -webkit-box-shadow: none;
+}
+
+.input-filtro-ticketsoporte:hover {
+    background: #e4e6f2 !important;
+    cursor: pointer;
+    border-bottom: 2px solid #a4b1ff !important;
+}
+label.label-filter {
+    margin-bottom: 0;
+    font-size: .7em;
+    font-weight: bold;
+}
+#btn_consultar_ticketsSoporte {
+    background-color: #ffffff;
+    color: #7716fa;
+    border: solid 1px #7716fa !important;
+    padding: 0.5em 2em;
+    border-radius: 5px;
+    font-size: 0.7em;
+    margin-top: 25px;
+}
+
+.btn-sm {
+    padding: 0.7em 0.7em;
+    /* border-radius: 50% !important; */
+    font-size: 0.64rem;
+    border: 0px !important;
+}
+/* FILTROS CONSULTA TICKETS*/
+
+/* TABLE TICKETS */
+#tableTicketSoporte tr td {
+    font-size: 0.7em;
+    font-family: "Montserrat" !important;
+    text-align: center;
+}
+thead#thead_ticketSoporte tr th {
+    font-size: 0.7em;
+    padding: 1em 1em 1em;
+    text-align: center;
+}  
+#thead_ticketSoporte .fa {
+    font-size: 13px;
+    color: gray;
+}
+thead#thead_ticketSoporte {
+    font-weight: bold !important;
+    border: 1px #ccc;
+    font-family: "Montserrat" !important;
+}
+
+table.dataTable.no-footer {
+    border-bottom: transparent !important;
+    margin-top: 0 !important;
+}
+
+.table.dataTable {
+    border-collapse: collapse !important;
+}
+
+table.display.table.table-hover.table-striped.dataTable {
+    font-size: small;
+}
+/* PAGINATION */
+.pagination {
+    display: block !important;
+}
+  
+.pagination .paginate_button a.page-link {
+    color: #828080;
+    font-family: "Montserrat";
+    background-color: white !important;
+    box-shadow: none !important;
+}
+  
+.pagination .paginate_button.active {
+    background-color: gray !important;
+}
+  
+.pagination .previous a.page-link {
+    color: white !important;
+    font-size: 0;
+}
+  
+.pagination .next a.page-link {
+    color: white !important;
+    font-size: 0;
+}
+  
+.pagination .previous a:after {
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f104";
+    visibility: visible;
+    color: #828080 !important;
+    font-size: initial !important;
+}
+  
+.pagination .next a:before {
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f105";
+    visibility: visible;
+    color: #828080 !important;
+    font-size: initial !important;
+}
+  
+.dataTables_wrapper .dataTables_paginate .paginate_button a {
+    padding: 1px 1px 1px 1px;
+}
+  
+.pagination .paginate_button > .active {
+    border: #000000 !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: initial !important;
+}
+/* PAGINATION */
+/* TABLE TICKETS */
+/* TAB CONSULTAR TICKETS */
+
+/* FORM TICKETS */
+.span-form-tickets {
+    color: #9d9d9d;
+    font-size: .9em;
+    margin-bottom: 0;
+}
+/* FORM TICKETS */

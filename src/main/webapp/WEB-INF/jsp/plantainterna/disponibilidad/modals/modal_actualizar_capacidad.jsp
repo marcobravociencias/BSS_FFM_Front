@@ -1,7 +1,7 @@
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="moda-add-disponibilidad" aria-labelledby="" aria-hidden="true">
   <div class="modal-dialog ">
 
-    <div class="modal-content">
+    <div class="modal-content" style="min-height: 24em;">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">
             Agregar disponibilidad<span class=""></span>
@@ -15,20 +15,48 @@
       </div>
       <div class="modal-body body-modal-capacidad-mod">
          <div class="container-fluid">
-              <div class="row">
-                 <div class="col-md-6">
+              <div class="row" ng-if="arrayTurnosDisponibilidad.length < 3">
+                 <div class="col-md-6" ng-if="banderaMatutino">
                     <div class="form-control-sm  contentMatu">   
                         <label  class="title_campos"><i class=" fa-lg fa fa-sort-numeric-asc"></i>Matutino</label>
                         <input id="matutino_adddisp" type="text" class="form-control form-control-sm input-filtro-disponibilidad"  placeholder="" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="5" >                        
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-md-6" ng-if="banderaVespertino">
                     <div class="form-control-sm  contentMatu">   
                         <label  class="title_campos"><i class=" fa-lg fa fa-sort-numeric-asc"></i>Vespertino</label>
                         <input id="vespertino_adddisp" type="text" class="form-control form-control-sm input-filtro-disponibilidad"  placeholder="" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="5" >                     
                     </div>
                   </div>
+                  <div class="col-md-6" ng-if="banderaNocturno">
+                    <div class="form-control-sm  contentMatu">   
+                      <label  class="title_campos"><i class=" fa-lg fa fa-sort-numeric-asc"></i>Nocturno</label>
+                      <input id="nocturno_adddisp" type="text" class="form-control form-control-sm input-filtro-disponibilidad"  placeholder="" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="5" >                       
+                    </div>      
+                  </div>
               </div>
+              <div class="row" ng-if="arrayTurnosDisponibilidad.length == 3">
+                <div class="col-md-6">
+                   <div class="form-control-sm  contentMatu">   
+                       <label  class="title_campos"><i class=" fa-lg fa fa-sort-numeric-asc"></i>Matutino</label>
+                       <input id="matutino_adddisp" type="text" class="form-control form-control-sm input-filtro-disponibilidad"  placeholder="" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="5" >                        
+                   </div>
+                 </div>
+                 <div class="col-md-6">
+                   <div class="form-control-sm  contentMatu">   
+                       <label  class="title_campos"><i class=" fa-lg fa fa-sort-numeric-asc"></i>Vespertino</label>
+                       <input id="vespertino_adddisp" type="text" class="form-control form-control-sm input-filtro-disponibilidad"  placeholder="" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="5" >                     
+                   </div>
+                 </div>
+             </div>
+             <div class="row" ng-if="arrayTurnosDisponibilidad.length == 3">
+              <div class="col-md-6">
+                <div class="form-control-sm  contentMatu">   
+                  <label  class="title_campos"><i class=" fa-lg fa fa-sort-numeric-asc"></i>Nocturno</label>
+                  <input id="nocturno_adddisp" type="text" class="form-control form-control-sm input-filtro-disponibilidad"  placeholder="" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="5" >                       
+                </div>      
+              </div>
+             </div>
               <div class="row">
                   <div class="col-md-6">
                     <div class="form-control-sm  contentMatu">   
@@ -43,13 +71,7 @@
                     </div>
                   </div>
               </div>  
-              <div class="row row-content-bloqueo">
-                  <div id="container-noc" class="col-md-6">
-                    <div class="form-control-sm  contentMatu">   
-                      <label  class="title_campos"><i class=" fa-lg fa fa-sort-numeric-asc"></i>Nocturno</label>
-                      <input id="nocturno_adddisp" type="text" class="form-control form-control-sm input-filtro-disponibilidad"  placeholder="" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="5" >                       
-                    </div>      
-                  </div>
+              <div class="row">
                   <div class="col-md-6">   
                     <div class="form-control-sm  contentMatu">   
                           <label  class="title_campos"><i class=" fa-lg fa fa-lock"></i>Estatus</label>  

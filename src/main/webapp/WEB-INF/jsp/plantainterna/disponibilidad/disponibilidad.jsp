@@ -104,22 +104,10 @@ pageEncoding="ISO-8859-1"%>
 															<span id="intervencion_span" class="spanTable">Sin info.</span>
 														</td>
 													</tr>
-													<tr>
+													<tr ng-repeat="item in arrayTurnosDisponibilidad">
 														<td>
-															<span>Matutino:</span>
-															<span id="matutino_dispo" class="spanTable">Sin info.</span>
-														</td>
-													</tr>
-													<tr>
-														<td>
-															<span>Vespertino:</span>
-															<span id="vespertino_dispo" class="spanTable">Sin info.</span>
-														</td>
-													</tr>
-													<tr id="container-nocturno">
-														<td id="noctuurno_d">
-															<span>Nocturno:</span>
-															<span id="nocturno_dispo" class="spanTable">Sin info.</span>
+															<span>{{item.nombre}}</span>
+															<span id="{{item.nombre.toLowerCase()}}_disponibilidad" class="spanTable">Sin info.</span>
 														</td>
 													</tr>
 													<tr style="background: #f4f5fc;">

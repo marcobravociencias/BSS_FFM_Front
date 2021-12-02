@@ -99,4 +99,14 @@ app.service("genericService", function ($http) {
         });
     }
 
+    this.consultarCatalogosTurnos=function(){
+		return $http({
+			method: "post",
+			url: "req/consultarCatalogoTurnosDespachoPI",
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
+
 })

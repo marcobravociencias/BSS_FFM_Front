@@ -16,7 +16,7 @@ app.disponibilidadCalendar = function ($scope) {
             displayEventTime: true,
             selectable: true,
             eventLimit: true,
-            editable: true,
+            editable: false,
             eventDurationEditable: false,
             events: arregloDisponibilidad,
             headerToolbar: {
@@ -32,16 +32,23 @@ app.disponibilidadCalendar = function ($scope) {
                 if ($scope.permisosDisponibilidad.filter(elemt => { return elemt.clave === 'accionEditaDisponibilidad'}).length === 1) {
                     console.log(info);
                     let eventObject = info.event;
-    
-                    $("#matutino_actualizar").val(eventObject._def.extendedProps.matutino);
-                    $("#vespertino_actualizar").val(eventObject._def.extendedProps.vespertino);
                     if ($scope.banderaNocturno) {
-                        document.getElementById('contenedor-editar-nocturno').style.display = 'block'
+                        $("#matutino_actualizar").val(eventObject._def.extendedProps.matutino);
+                    }
+                    if ($scope.banderaVespertino) {
+                        $("#vespertino_actualizar").val(eventObject._def.extendedProps.vespertino);
+                    }
+                   
+                    if ($scope.banderaNocturno) {
                         $("#nocturno_actualizar").val(eventObject._def.extendedProps.nocturno);
-                    } else {
-                        document.getElementById('contenedor-editar-nocturno').style.display = 'none'
                     }
                     $("#fecha_actualizar").val(eventObject._def.extendedProps.fecha);
+                    let fechaSplit = eventObject._def.extendedProps.fecha.split('-')
+                    let fech = Number(fechaSplit[1]) - 1;
+                    let fechaMes = fech.length === 1 ? '0'.concat(fech) : String(fech);
+                    let fechaI = new Date(fechaSplit[0], fechaMes, fechaSplit[2])
+                    $('#fecha_inicio_updateDis').datepicker("setDate", new Date(fechaI));
+                    $('#fecha_fin_updateDis').datepicker("setDate", new Date(fechaI));
     
                     let tipo_bloque = (eventObject._def.extendedProps.bloqueo)
     
@@ -105,24 +112,23 @@ app.disponibilidadCalendar = function ($scope) {
                                     confirmButtonText: 'S\u00ED, agregar',
                                     cancelButtonText: "Cancelar",
                                 }).then(function () {
-                                    if ($scope.banderaNocturno) {
-                                        document.getElementById('container-noc').style.display = 'block'
-                                    } else {
-                                        document.getElementById('container-noc').style.display = 'none'
-                                    }
-                                    var format_mex = stringdateselected[0].split("-")
+                                    let format_mex = stringdateselected[0].split("-")
                                     let fech = Number(format_mex[1]) - 1;
                                     let fechaMes = fech.length === 1 ? '0'.concat(fech) : String(fech);
                                     let fechaI = new Date(format_mex[0], fechaMes, format_mex[2])
                                     $('#fecha_inicio_adddisp').datepicker("setDate", new Date(fechaI));
                                     $('#fecha_fin_adddisp').datepicker("setDate", new Date(fechaI));
     
-                                    //$("#fecha_inicio_adddisp").val(format_mex[2] + "/" + format_mex[1] + "/" + format_mex[0]);
-                                    //$("#fecha_fin_adddisp").val(format_mex[2] + "/" + format_mex[1] + "/" + format_mex[0]);
-    
-                                    document.getElementById('matutino_adddisp').value = '';
-                                    document.getElementById('vespertino_adddisp').value = '';
-                                    document.getElementById('nocturno_adddisp').value = '';
+                                    if ($scope.banderaMatutino) {
+                                        document.getElementById('matutino_adddisp').value = '';
+                                    }
+                                    if ($scope.banderaVespertino) {
+                                        document.getElementById('vespertino_adddisp').value = '';
+                                    }
+                                    if ($scope.banderaNocturno) {
+                                        document.getElementById('nocturno_adddisp').value = '';
+                                    }
+                                                                    
                                     document.getElementById('radio_activo_adddisp').checked = true;
                                     document.getElementById('radio_inactivo_adddisp').checked = false;
                                     $("#moda-add-disponibilidad").modal('show')
@@ -156,28 +162,27 @@ app.disponibilidadCalendar = function ($scope) {
             let totalNocturnoEvent = 0;
             let totalTurno = 0;
             datosDisponibilidad.turnos.forEach(turno =>{
-                if (turno.idCatTurno === 1) {
+                if ($scope.banderaMatutino && turno.idCatTurno === 1) {
                     totalMatutinoEvent = turno.cantidad;
                     totalMatutino += turno.cantidad;
                 }
-                if (turno.idCatTurno === 2) {
+
+                if ($scope.banderaVespertino && turno.idCatTurno === 2) {
                     totalVespertinoEvent = turno.cantidad;
                     totalVespertino += turno.cantidad;
                 }
-                if (turno.idCatTurno === 3) {
+                if ($scope.banderaNocturno && turno.idCatTurno === 3) {
                     totalNocturnoEvent = turno.cantidad;
                     totalNocturno += turno.cantidad;
                 }
             });
+            let tittleMatutino = ($scope.banderaMatutino) ? 'Matutino: ' + totalMatutinoEvent + '\n' : '';
+            let tittleVespertino = ($scope.banderaVespertino) ? 'Vespertino: ' + totalVespertinoEvent + '\n' : '';
             let TitleNocturno = ($scope.banderaNocturno) ? 'Nocturno: ' + totalNocturnoEvent + '\n' : '';
-            if ($scope.banderaNocturno) {
-                totalTurno = totalMatutinoEvent + totalVespertinoEvent + totalNocturnoEvent;
-            } else {
-                totalTurno = totalMatutinoEvent + totalVespertinoEvent;
-            }
+            totalTurno = totalMatutinoEvent + totalVespertinoEvent + totalNocturnoEvent;
             events = {
                 height: 800,
-                title: 'Matutino: ' + totalMatutinoEvent  + '\nVespertino: ' + totalVespertinoEvent + '\n' + TitleNocturno + 'Total: ' +  totalTurno,
+                title: tittleMatutino + tittleVespertino + TitleNocturno + 'Total: ' +  totalTurno,
                 start: datosDisponibilidad.fecha,
                 end: datosDisponibilidad.fecha,
                 id: index,
@@ -192,15 +197,16 @@ app.disponibilidadCalendar = function ($scope) {
             }
             arregloDisponibilidad.push(events)
         })
-        document.getElementById('matutino_dispo').innerHTML = totalMatutino;
-        document.getElementById('vespertino_dispo').innerHTML = totalVespertino;
-        if ($scope.banderaNocturno) {
-            document.getElementById('nocturno_dispo').innerHTML = totalNocturno;
-            document.getElementById('total_dispo').innerHTML = totalMatutino + totalVespertino + totalNocturno;
-        } else {
-            document.getElementById('nocturno_dispo').innerHTML = totalNocturno;
-            document.getElementById('total_dispo').innerHTML = totalMatutino + totalVespertino;
+        if ($scope.banderaMatutino) {
+            document.getElementById('matutino_disponibilidad').innerHTML = totalMatutino;
         }
+        if ($scope.banderaVespertino) {
+            document.getElementById('vespertino_disponibilidad').innerHTML = totalVespertino;
+        }
+        if ($scope.banderaNocturno) {
+            document.getElementById('nocturno_disponibilidad').innerHTML = totalNocturno;
+        } 
+        document.getElementById('total_dispo').innerHTML = totalMatutino + totalVespertino + totalNocturno;
         $scope.inicialCalendario();
     }
 

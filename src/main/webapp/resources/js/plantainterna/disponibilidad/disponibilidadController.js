@@ -3,6 +3,8 @@ var app = angular.module('disponibilidadApp', []);
 app.controller('disponibilidadController', ['$scope', 'disponibilidadService', 'genericService', '$q', function ($scope, disponibilidadService, genericService, $q) {
     $("#li-disponibilidad-navbar").addClass('active')
     $scope.banderaNocturno = false
+    $scope.banderaMatutino = false
+    $scope.banderaVespertino = false
     $scope.arrayIntervencion = [];
     $scope.intervencionSelect = undefined;
     $scope.idCompanyActualizar;
@@ -16,11 +18,11 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
         },
         {
             title: 'Matutino',
-            vista: true
+            vista: false
         },
         {
             title: 'Vespertino',
-            vista: true
+            vista: false
         },
         {
             title: 'Nocturno',
@@ -43,6 +45,8 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
     $scope.nGeografia = '';
     $scope.permisosDisponibilidad = [];
     $scope.isConsultaDisponibilidad = false
+    $scope.arrayTurnosDisponibilidad = [];
+    let timeTable = 1000;
 
     app.disponibilidadCalendar($scope);
 
@@ -51,15 +55,24 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
         $scope.inicialCalendario();
         $scope.inicioDisponibilidad();
         editarDisponibilidad = function (matutino, vespertino, nocturno, bloqueado, fecha) {
-            document.getElementById('matutino_actualizar').value = matutino;
-            document.getElementById('vespertino_actualizar').value = vespertino;
-            if (nocturno !== '') {
+            if ($scope.banderaMatutino) {
+                document.getElementById('matutino_actualizar').value = matutino;
+            }
+            if ($scope.banderaVespertino) {
+                document.getElementById('vespertino_actualizar').value = vespertino;
+            }
+            
+            if ($scope.banderaNocturno) {
                 document.getElementById('nocturno_actualizar').value = nocturno;
-                document.getElementById('contenedor-editar-nocturno').style.display = 'block'
-            } else {
-                document.getElementById('contenedor-editar-nocturno').style.display = 'none'
+                
             }
             document.getElementById('fecha_actualizar').value = fecha
+            let fechaSplit = fecha.split('-')
+            let fech = Number(fechaSplit[1]) - 1;
+            let fechaMes = fech.length === 1 ? '0'.concat(fech) : String(fech);
+            let fechaI = new Date(fechaSplit[0], fechaMes, fechaSplit[2])
+            $('#fecha_inicio_updateDis').datepicker("setDate", new Date(fechaI));
+            $('#fecha_fin_updateDis').datepicker("setDate", new Date(fechaI));
             if (!bloqueado) {
                 document.getElementById('radio_activo_mod').checked = true
                 document.getElementById('radio_inactivo_mod').checked = false
@@ -74,44 +87,44 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
 
 
     $scope.inicioDisponibilidad = function () {
+        $scope.consultarCatalogos();
         $('.datepicker').datepicker({
             format: 'dd/mm/yyyy',
             autoclose: true,
             language: 'es',
             todayHighlight: true,
-            clearBtn: true
+            clearBtn: true,
         });
         //$('.datepicker').datepicker('update', new Date());
-        if (!$scope.banderaNocturno) {
-            document.getElementById('nocturno_dispo').parentElement.style.display = 'none'
-        }
         document.getElementById('arbol_intervencion').placeholder = 'Seleccione un tipo de orden'
         document.getElementById('arbol_disponibilidad_consulta').placeholder = 'Seleccione una geografia';
         let contenTheadDetalle = '';
-        $scope.arrayTitulo.forEach(function (elemento, index) {
-            if (elemento.vista) {
-                contenTheadDetalle += `<th> ${elemento.title} </th>`;
-            }
-        });
-        $('#theadDispo').append(`<tr> ${contenTheadDetalle} </tr>`);
-        $('#datatable_disponibilidad').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": false,
-            "pageLength": 10,
-            "recordsTotal": 100,
-            "info": false,
-            "autoWidth": true,
-            "data": [],
-            "language": idioma_espanol_not_font,
-            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
-        });
+        setTimeout(() => {
+            $scope.arrayTitulo.forEach(function (elemento, index) {
+                if (elemento.vista) {
+                    contenTheadDetalle += `<th> ${elemento.title} </th>`;
+                }
+            });
+            $('#theadDispo').append(`<tr> ${contenTheadDetalle} </tr>`);
+            $('#datatable_disponibilidad').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": false,
+                "pageLength": 10,
+                "recordsTotal": 100,
+                "info": false,
+                "autoWidth": true,
+                "data": [],
+                "language": idioma_espanol_not_font,
+                "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+            });
+        }, timeTable);
+
 
         $('#moduloDisponibilidad').addClass('active');
         $("#campos_dinamicos").hide();
         $("#btn_mostrar_nav").hide(500);
-        $scope.consultarCatalogos();
     }
 
     $scope.banderaErrorIntervencion = false;
@@ -121,13 +134,15 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
     $scope.consultarCatalogos = function () {
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
+        $scope.arrayTurnosDisponibilidad = []
         let params = {
             moduloAccionesUsuario: 'moduloDisponibilidad'
         }
         $q.all([
             genericService.consultarConfiguracionDespachoDespacho(params),
             genericService.consultarCatalogoIntervenciones(),
-            genericService.consulCatalogoGeografia()
+            genericService.consulCatalogoGeografia(),
+            genericService.consultarCatalogosTurnos()
         ]).then(result => {
             swal.close();
             console.log(result);
@@ -258,6 +273,50 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                 $scope.banderaErrorGeografia = true;
                 $scope.banderaErrorGeneral = true;
             }
+
+            if (result[3].data.respuesta) {
+                if (result[3].data.result) {
+                    console.log("Result 3: " + JSON.stringify(result[3].data.result))
+                    //$scope.arrayTurnosDisponibilidad = [{"id":2,"nombre":"VESPERTINO"},{"id":3,"nombre":"NOCTURNO"}];
+                    $scope.arrayTurnosDisponibilidad = result[3].data.result
+                    result[3].data.result.forEach(elemento => {
+                        if (elemento.nombre === 'MATUTINO') {
+                            $scope.banderaMatutino = true
+                            $scope.arrayTitulo.map(titulo => {
+                                if (titulo.title === 'Matutino') {
+                                    titulo.vista = true
+                                }
+                                return titulo
+                            })
+                        } else if (elemento.nombre === 'VESPERTINO') {
+                            $scope.banderaVespertino = true
+                            $scope.arrayTitulo.map(titulo => {
+                                if (titulo.title === 'Vespertino') {
+                                    titulo.vista = true
+                                }
+                                return titulo
+                            })
+                        } else {
+                            $scope.banderaNocturno = true
+                            $scope.arrayTitulo.map(titulo => {
+                                if (titulo.title === 'Nocturno') {
+                                    titulo.vista = true
+                                }
+                                return titulo
+                            })
+                        }
+                    })
+                } else {
+                    mostrarMensajeErrorAlert(result[2].data.result.mensaje)
+                    $scope.banderaErrorGeografia = true;
+                    $scope.banderaErrorGeneral = true;
+                }
+            } else {
+                mostrarMensajeErrorAlert(result[2].data.resultDescripcion)
+                $scope.banderaErrorGeografia = true;
+                $scope.banderaErrorGeneral = true;
+            }
+
         }).catch(err => handleError(err));
     }
 
@@ -383,11 +442,20 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
 
     }
 
-    $scope.insertarDisponibilidad = function () {
-        let nocturnoCantidad = $.trim(document.getElementById('nocturno_adddisp').value);
+    $scope.insertarDisponibilidad = function () {   
         let arrayTurno = [];
-        let vespertinoCant = $.trim(document.getElementById('vespertino_adddisp').value);
-        let matutinoCant = $.trim(document.getElementById('matutino_adddisp').value);
+        let vespertinoCant;
+        let matutinoCant;
+        let nocturnoCantidad;
+        if ($scope.banderaVespertino) {
+            vespertinoCant = $.trim(document.getElementById('vespertino_adddisp').value); 
+        }
+        if ($scope.banderaMatutino) {
+            matutinoCant = $.trim(document.getElementById('matutino_adddisp').value);
+        }
+        if ($scope.banderaNocturno) {
+            nocturnoCantidad = $.trim(document.getElementById('nocturno_adddisp').value);
+        }
         let fechaInicio = $.trim(document.getElementById('fecha_inicio_adddisp').value);
         let fechaFin = $.trim(document.getElementById('fecha_fin_adddisp').value);
 
@@ -409,39 +477,73 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             .filter(e => e.original.nivel == ultimoNIntervencion)
             .map(e => parseInt(e.id))
 
-        if (matutinoCant !== '') {
-            if (vespertinoCant === '0' && matutinoCant === '0') {
+        if ($scope.banderaMatutino) {
+            if (matutinoCant !== '') {
+                if ((vespertinoCant === '0' && matutinoCant === '0' && nocturnoCantidad === undefined) || 
+                (vespertinoCant === undefined && matutinoCant === '0' && nocturnoCantidad === '0') || 
+                (vespertinoCant === '0' && matutinoCant === '0' && nocturnoCantidad === '0') || 
+                (vespertinoCant !== '0' && matutinoCant === '0' && nocturnoCantidad === '0') || 
+                (vespertinoCant === '0' && matutinoCant === '0' && nocturnoCantidad !== '0')) {
+                    mensajeError += '<li>Introducir cantidad turno matutino</li>'
+                    isValido = false
+                } else {
+                    arrayTurno.push({
+                        idCatTurno: 1,
+                        cantidad: matutinoCant
+                    })
+                    isValido = true
+                }
+    
+            } else {
                 mensajeError += '<li>Introducir cantidad turno matutino</li>'
                 isValido = false
-            } else {
-                arrayTurno.push({
-                    idCatTurno: 1,
-                    cantidad: matutinoCant
-                })
-                isValido = true
             }
-
-        } else {
-            mensajeError += '<li>Introducir cantidad turno matutino</li>'
-            isValido = false
         }
 
-        if (vespertinoCant !== '') {
-            if (matutinoCant === '0' && vespertinoCant === '0') {
+        if ($scope.banderaVespertino) {
+            if (vespertinoCant !== '') {
+                if ((vespertinoCant === '0' && matutinoCant === '0' && nocturnoCantidad === undefined) || 
+                (vespertinoCant === '0' && matutinoCant === undefined && nocturnoCantidad === '0') || 
+                (vespertinoCant === '0' && matutinoCant === '0' && nocturnoCantidad === '0') ||
+                (vespertinoCant === '0' && matutinoCant !== '0' && nocturnoCantidad === '0') ||
+                (vespertinoCant === '0' && matutinoCant === '0' && nocturnoCantidad !== '0')) {
+                    mensajeError += '<li>Introducir cantidad turno vespertino</li>'
+                    isValido = false
+                } else {
+                    arrayTurno.push({
+                        idCatTurno: 2,
+                        cantidad: vespertinoCant
+                    })
+                    isValido = true
+                }
+            } else {
                 mensajeError += '<li>Introducir cantidad turno vespertino</li>'
                 isValido = false
-            } else {
-                arrayTurno.push({
-                    idCatTurno: 2,
-                    cantidad: vespertinoCant
-                })
-                isValido = true
             }
-        } else {
-            mensajeError += '<li>Introducir cantidad turno vespertino</li>'
-            isValido = false
         }
 
+        if ($scope.banderaNocturno) {
+            if (nocturnoCantidad !== '') {
+                if ((vespertinoCant === undefined && matutinoCant === '0' && nocturnoCantidad === '0') || 
+                (vespertinoCant === '0' && matutinoCant === undefined && nocturnoCantidad === '0') || 
+                (vespertinoCant === '0' && matutinoCant === '0' && nocturnoCantidad === '0') ||
+                (vespertinoCant !== '0' && matutinoCant === '0' && nocturnoCantidad === '0') ||
+                (vespertinoCant === '0' && matutinoCant !== '0' && nocturnoCantidad === '0')) {
+                    mensajeError += '<li>Introducir cantidad turno nocturno</li>'
+                    isValido = false
+                } else {
+                    arrayTurno.push({
+                        idCatTurno: 3,
+                        cantidad: nocturnoCantidad
+                    })
+                    isValido = true
+                }
+
+            } else {
+                mensajeError += '<li>Introducir cantidad turno nocturno</li>'
+                isValido = false
+            }
+        }
 
 
         let fechaInicioSplit = fechaInicio.split('/');
@@ -466,17 +568,6 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             mensajeError += "<li>La fecha de inicio no puede ser mayor a la de fin</li>";
         }
 
-        if ($scope.banderaNocturno) {
-            if (nocturnoCantidad !== '') {
-                arrayTurno.push({
-                    idCatTurno: 3,
-                    cantidad: nocturnoCantidad
-                })
-            } else {
-                mensajeError += '<li>Introducir cantidad turno nocturno</li>'
-                isValido = false
-            }
-        }
 
         if (isValido) {
             let fechaInicioC = fechaInicioSplit[2] + '-' + fechaInicioSplit[1] + '-' + fechaInicioSplit[0]
@@ -519,12 +610,11 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
     $scope.actualizarDisponibilidad = function () {
         let isValido = true;
         let mensajeError = "<ul>";
-        let arrayTurno = [];
-
-        let matutinoCant = $.trim(document.getElementById('matutino_actualizar').value);
-        let vespertinoCant = $.trim(document.getElementById('vespertino_actualizar').value);
-        let nocturnoCant = $.trim(document.getElementById('nocturno_actualizar').value);
+        let arrayTurno = [];  
+        
         let bloqueo = $("input[name='radio-bloqueo-mod-individual']:checked").val();
+        let fechaInicio = $.trim(document.getElementById('fecha_inicio_updateDis').value);
+        let fechaFin = $.trim(document.getElementById('fecha_fin_updateDis').value);
         bloqueo = bloqueo === 'true' ? 0 : 1;
         let ultimonivel;
         if ($scope.nGeografia) {
@@ -540,28 +630,36 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             .filter(e => e.original.nivel == ultimoNIntervencion)
             .map(e => parseInt(e.id))
 
-        if (matutinoCant !== '') {
-            arrayTurno.push({
-                idCatTurno: 1,
-                disponibilidadActual: matutinoCant
-            })
-        } else {
-            mensajeError += '<li>Introducir cantidad turno matutino</li>';
-            isValido = false;
+        if ($scope.banderaMatutino) {
+            let matutinoCant = $.trim(document.getElementById('matutino_actualizar').value);
+            if (matutinoCant !== '') {
+                arrayTurno.push({
+                    idCatTurno: 1,
+                    disponibilidadActual: matutinoCant
+                })
+            } else {
+                mensajeError += '<li>Introducir cantidad turno matutino</li>';
+                isValido = false;
+            }
         }
 
-        if (vespertinoCant !== '') {
-            arrayTurno.push({
-                idCatTurno: 2,
-                disponibilidadActual: vespertinoCant
-            })
-        } else {
-            mensajeError += '<li>Introducir cantidad turno vespertino</li>';
-            isValido = false;
+        if ($scope.banderaVespertino) {
+            let vespertinoCant = $.trim(document.getElementById('vespertino_actualizar').value);
+            if (vespertinoCant !== '') {
+                arrayTurno.push({
+                    idCatTurno: 2,
+                    disponibilidadActual: vespertinoCant
+                })
+            } else {
+                mensajeError += '<li>Introducir cantidad turno vespertino</li>';
+                isValido = false;
+            }
         }
+
 
         if ($scope.banderaNocturno) {
-            if (nocturnoCant !== '' && nocturnoCant !== '0') {
+            let nocturnoCant = $.trim(document.getElementById('nocturno_actualizar').value);
+            if (nocturnoCant !== '') {
                 arrayTurno.push({
                     idCatTurno: 3,
                     disponibilidadActual: nocturnoCant
@@ -572,13 +670,36 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             }
         }
 
+        let fechaInicioSplit = fechaInicio.split('/');
+        let fechaFinSplit = fechaFin.split('/');
+
+        if (fechaInicioSplit[0] == "") {
+            mensajeError += '<li>Seleccione fecha inicio.</li>'
+            isValido = false
+        }
+        if (fechaFinSplit[0] == "") {
+            mensajeError += '<li>Seleccione fecha fin.</li>'
+            isValido = false
+        }
+        if (bloqueo === undefined) {
+            mensajeError += '<li>Seleccione bloqueo.</li>'
+            isValido = false
+        }
+
+        if (new Date(fechaInicioSplit[1] + "/" + fechaInicioSplit[0] + "/" + fechaInicioSplit[2]) >
+            new Date(fechaFinSplit[1] + "/" + fechaFinSplit[0] + "/" + fechaFinSplit[2])) {
+            isValido = false;
+            mensajeError += "<li>La fecha de inicio no puede ser mayor a la de fin</li>";
+        }
+
         if (isValido) {
-            let fechaInicioSplit = document.getElementById('fecha_actualizar').value
+            let fechaInicioC = fechaInicioSplit[2] + '-' + fechaInicioSplit[1] + '-' + fechaInicioSplit[0]
+            let fechaFinC = fechaFinSplit[2] + '-' + fechaFinSplit[1] + '-' + fechaFinSplit[0]
             let params = {
                 subtipoIntervencion: tipoIntervencion[0],
                 idGeografia2: clustersparam[0],
-                fechaInicio: fechaInicioSplit.concat('T00:00:00.000+0000'),
-                fechaFin: fechaInicioSplit.concat('T00:00:00.000+0000'),
+                fechaInicio: fechaInicioC.concat('T00:00:00.000+0000'),
+                fechaFin: fechaFinC.concat('T00:00:00.000+0000'),
                 bloqueado: bloqueo,
                 turnos: arrayTurno
             };

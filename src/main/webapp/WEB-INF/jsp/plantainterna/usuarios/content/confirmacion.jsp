@@ -130,6 +130,7 @@
 			$("#modalTomarFotoUsuario").modal('show');
 			swal.close();
 		} catch (e) {
+			console.log(e.toString());
 			swal.close();
         	swal({
 		        title: "No fue posible acceder a la cámara",
