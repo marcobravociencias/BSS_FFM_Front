@@ -116,16 +116,16 @@
                     </div>
                     <div class="row col-6" style="margin-top: 0.5em;background: #f9f9f9;border-radius: 25px;">
                         <div class="col-3 user-info-content user-filter" style="margin-top: 0;">
-                            <span ng-click="searchBy('Abierto')"><i class="fa fa-filter"></i>Abierto {{contadores.abierto ? contadores.abierto : '0'}}</span>
+                            <span ng-click="searchBy('Abierto')"><i class="fa fa-filter" id="filterAbierto"></i>Abierto {{contadores.abierto ? contadores.abierto : '0'}}</span>
                         </div>
                         <div class="col-3 user-info-content user-filter" style="margin-top: 0;">
-                            <span ng-click="searchBy('Cerrado')"><i class="fa fa-filter"></i>Cerrado {{contadores.abierto ? contadores.abierto : '0'}}</span>
+                            <span ng-click="searchBy('Cerrado')"><i class="fa fa-filter" id="filterCerrado"></i>Cerrado {{contadores.cerrado ? contadores.cerrado : '0'}}</span>
                         </div>
                         <div class="col-3 user-info-content user-filter" style="margin-top: 0;">
-                            <span ng-click="searchBy('Escalado')"><i class="fa fa-filter"></i>Escalado {{contadores.abierto ? contadores.abierto : '0'}}</span>
+                            <span ng-click="searchBy('Escalado')"><i class="fa fa-filter" id="filterEscalado"></i>Escalado {{contadores.escalado ? contadores.escalado : '0'}}</span>
                         </div>
                         <div class="col-3 user-info-content user-filter" style="margin-top: 0;">
-                            <span ng-click="searchBy('Pendiente')"><i class="fa fa-filter"></i>Pendiente {{contadores.abierto ? contadores.abierto : '0'}}</span>
+                            <span ng-click="searchBy('Pendiente')"><i class="fa fa-filter" id="filterPendiente"></i>Pendiente {{contadores.pendiente ? contadores.pendiente : '0'}}</span>
                         </div>
                     </div>
                     <div class="col-2 offset-2  form-group" style="margin-bottom: 0; margin-top: .5em;">

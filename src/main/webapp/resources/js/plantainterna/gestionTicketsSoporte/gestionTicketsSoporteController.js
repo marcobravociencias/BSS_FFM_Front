@@ -30,7 +30,8 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         ticketSoporteTable.search(this.value).draw();
     })
 
-    $scope.searchBy = function(type){
+    $scope.searchBy = function (type) {
+        $scope.filter(type);
         ticketSoporteTable.search(type).draw();
     }
 
@@ -193,7 +194,10 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             }
             let arrayRow = [];
             $scope.ticketsSoporte = arrayListadoTickets.data.result.tablaTickets;
-
+            $scope.contadores.abierto = 0;
+            $scope.contadores.cerrado = 0;
+            $scope.contadores.escalado = 0;
+            $scope.contadores.pendiente = 0;
             $.each($scope.ticketsSoporte, function (i, elemento) {
                 let row = [];
                 row[0] = elemento.ot !== undefined ? elemento.ot : 'Sin informaci&oacute;n';
@@ -214,6 +218,18 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                     '<i class="fas fa-check-circle"></i>' +
                     '</a>'
                 arrayRow.push(row);
+                if(elemento.estatus === 'Abierto')
+                     $scope.contadores.abierto += 1;
+
+                if(elemento.estatus === 'Cerrado')
+                     $scope.contadores.cerrado += 1;
+
+                if(elemento.estatus === 'Escalado')
+                     $scope.contadores.escalado += 1;
+
+                if(elemento.estatus === 'Pendiente')
+                     $scope.contadores.pendiente += 1;
+                   
             })
             ticketSoporteTable = $('#tableTicketSoporte').DataTable({
                 "paging": true,
@@ -279,9 +295,12 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
 
     }
 
-    $scope.filter = function () {
-
+    $scope.filter = function (type) {
+        let id = '#filter' + type;
+        $(".fa-filter").css('color', '#ccc')
+        $(id).css('color', 'green')
     }
+
 
 
 }]);
