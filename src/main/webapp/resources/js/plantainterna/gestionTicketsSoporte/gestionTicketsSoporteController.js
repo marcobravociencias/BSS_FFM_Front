@@ -303,7 +303,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         $(".user-filter span").removeClass('selected-filter');
         $(".fa-filter").css('color', '#ccc');
 
-        $(id).css('color', 'white');
+        $(id).css('color', '#7716fa');
         $(idSpan).addClass('selected-filter');
     }
 

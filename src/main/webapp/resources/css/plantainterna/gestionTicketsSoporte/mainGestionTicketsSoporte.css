@@ -346,9 +346,9 @@ table.display.table.table-hover.table-striped.dataTable {
 }
 
 .selected-filter{
-   background: #7716fa;
-   color: white;
+   background: #ebebeb;
+   color: #7716fa;
    font-weight: bolder;
    border-radius: 25px;
-    box-shadow: 1px 0px 0 0 rgb(0 0 0 / 16%), 1px 0 10px 0 rgb(0 0 0 / 12%);
+    box-shadow: 1px 0px 0 0 rgb(0 0 0 / 3%), 1px 0 10px 0 rgb(0 0 0 / 12%);
 }
