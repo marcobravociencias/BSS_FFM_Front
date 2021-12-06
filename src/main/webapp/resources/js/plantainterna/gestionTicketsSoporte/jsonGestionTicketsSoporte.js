@@ -1655,7 +1655,7 @@ let arrayCatalogosTicket = {
                 "descripcion": "Comida-#ffb62c"
             }, {
                 "id": "7",
-                "descripcion": "Supervisión-#458cff"
+                "descripcion": "Supervision-#458cff"
             }, {
                 "id": "8",
                 "descripcion": "Ausente-#848484"
@@ -2129,6 +2129,73 @@ let arrayListadoTickets = {
                 "padre": "5",
                 "nivel": "2"
             }]
+        }
+    }
+}
+
+var infoUsuarioEstatusHoras = {
+    "success": true,
+    "mensaje": "Se consultaron los datos",
+    "result": {
+        "catalogoEstatusUsuarios": [
+            {
+                "id": "5",
+                "descripcion": "Activo-#0cd040"
+            },
+            {
+                "id": "6",
+                "descripcion": "Comida-#ffb62c"
+            },
+            {
+                "id": "7",
+                "descripcion": "Supervision-#458cff"
+            },
+            {
+                "id": "8",
+                "descripcion": "Ausente-#848484"
+            }
+        ],
+        "infoHorasUser": {
+            "horaEntrada": "2021-11-26 11:42:57",
+            "ultimoEstatus": "Activo-#0cd040"
+        }
+    }
+}
+var ticketDetalle = {
+    "success": true,
+    "result": {
+        "result": "0",
+        "resultDescription": "Proceso terminado correctamente.",
+        "orden": {
+            "tecnicoIDC": "SISTEMAS SISTEMAS2 VISUET",
+            "ticket": "103430445",
+            "ciudad": "CIUDAD DE MEXICO-CENTRO",
+            "distrito": "CONDESA D",
+            "telefono": "7711828350",
+            "despachoId": "2075804",
+            "despachoNombre": "SUPERVISOR SOPORTE CENTRALIZADO",
+            "region": "1-CENTRO",
+            "geocerca": "COYOACAN G ",
+            "cluster": "SAN ANGEL",
+            "numeroCuenta": "0102006737",
+            "idEstatusOT": "5",
+            "estatusOT": "CANCELADA",
+            "idEstadoOT": "18",
+            "estadoOT": "CANCELADA",
+            "idMotivoOT": "416",
+            "motivoOT": "OT DUPLICADA",
+            "idEstatusTicket": "2",
+            "estatusTicket": "Cerrado",
+            "ordenServicio": "OS-13964316",
+            "tecnicoId": "161",
+            "tecnicoNombre": "SISTEMAS SISTEMAS2 VISUET",
+            "tecnicoAsignado": "2075785",
+            "codificacion": "4",
+            "nivel1": "744",
+            "nivel2": "745",
+            "nivel3": "746",
+            "comentarios": "Prueba productiva de incidencias en ticket. HACER CASO OMISO",
+            "problemaSolucionado": "1"
         }
     }
 }
