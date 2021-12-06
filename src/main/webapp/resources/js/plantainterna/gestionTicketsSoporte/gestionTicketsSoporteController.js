@@ -27,6 +27,8 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     });
 
     $('#searchTextTicket').on('keyup', function () {
+        $(".user-filter span").removeClass('selected-filter');
+        $(".fa-filter").css('color', '#ccc');
         ticketSoporteTable.search(this.value).draw();
     })
 
