@@ -149,8 +149,6 @@ div.dataTables_wrapper div.dataTables_length label {
     margin-top: 2.5em;
 }
 
-.submenu-span {}
-
 .filter-content {
     margin: 0;
     padding: 0;
@@ -182,12 +180,6 @@ div.dataTables_wrapper div.dataTables_length label {
 
 .icon-conexion {
     font-size: 1.4em !important;
-}
-
-.icon-table {
-    color: #7716fa;
-    font-size: 1.4em !important;
-    cursor: pointer;
 }
 
 #modalDetalle .title {
@@ -265,4 +257,13 @@ div.dataTables_wrapper div.dataTables_length label {
     display: inline-block !important;
     overflow: hidden;
     text-overflow: ellipsis !important;
+}
+
+#seguimientoTable .icon-table, #ticketTable .icon-table{
+    font-size: 1.3em !important;
+    cursor: pointer;
+    color: white;
+    padding: 0.3em;
+    border-radius: 0.2em;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
 }

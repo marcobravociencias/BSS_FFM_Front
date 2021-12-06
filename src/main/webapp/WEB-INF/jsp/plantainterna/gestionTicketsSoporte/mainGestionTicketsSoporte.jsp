@@ -255,7 +255,7 @@
                     <div class="form-row">
                         <div class="col-12 form-group">
                             <label class="span-form-tickets" for="descripcionProblemaTicket">Descripci&oacute;n del Problema * </label>
-                            <textarea class="form-control form-control-sm" id="descripcionProblemaTicket"></textarea>
+                            <textarea class="form-control form-control-sm" id="descripcionProblemaTicket" ng-model="ticket.descripcionProblema"></textarea>
                         </div>
                     </div>
                     <div class="row">

@@ -100,7 +100,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     $scope.loadSubcategoriaTicketSoporte = function () {
         $scope.listSubcategoriasTicket = [];
         let idCategoriaTicket = $("#categoria").val()
-        $scope.catalogosTicketsSoporte.map(function (s) {
+        $scope.catalogosTicketsSoporte.catalogoCreacionTickets.map(function (s) {
             if (s.idpadre == idCategoriaTicket) {
                 $scope.listSubcategoriasTicket.push(s);
             }
@@ -214,10 +214,10 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                 row[9] = elemento.estatus !== undefined ? elemento.estatus : 'Sin informaci&oacute;n';
                 row[10] = elemento.tiempoAbierto !== undefined ? elemento.tiempoAbierto : 'Sin informaci&oacute;n';
                 row[11] = '<a class="" id="detalleIncidencia' + elemento.ticket + '" onclick="consultaDetalle(' + "'" + elemento.id_conexion + "'" + ')" >' +
-                    '<i class="fa fa-bars"></i>' +
+                    '<i class="fa fa-bars" style="background-color: #58b3bf" title="Detalle"></i>' +
                     '</a> &nbsp;' +
                     '<a class="" id="detalleIncidencia' + elemento.ticket + '" onclick="asignaTicket(' + "'" + elemento.ticket + "'" + ')">' +
-                    '<i class="fas fa-check-circle"></i>' +
+                    '<i class="fas fa-user-check" style="background-color: #7f4c9d" title="Asignar"></i>' +
                     '</a>'
                 arrayRow.push(row);
                 if(elemento.estatus === 'Abierto')

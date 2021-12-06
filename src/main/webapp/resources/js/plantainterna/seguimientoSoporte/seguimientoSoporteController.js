@@ -104,7 +104,7 @@ app.controller('seguimientoSoporteController', ['$scope', 'seguimientoSoporteSer
                 row[5] = elemento.entrada;
                 row[6] = elemento.comida ? elemento.comida : 'Sin informaci&oacute;n';
                 row[7] = elemento.salida ? elemento.salida : 'Sin informaci&oacute;n';
-                row[8] = '<i class="fas fa-ticket-alt icon-table" title="Tickets" onclick="consultaTicket(' + "'" + elemento.id_conexion + "'" + ')"></i>';
+                row[8] = '<i class="fas fa-ticket-alt icon-table" title="Tickets" style="background-color: #7f4c9d" onclick="consultaTicket(' + "'" + elemento.id_conexion + "'" + ')"></i>';
                 arraRow.push(row);
             })
             seguimientoTable = $('#seguimientoTable').DataTable({
@@ -144,7 +144,7 @@ app.controller('seguimientoSoporteController', ['$scope', 'seguimientoSoporteSer
             row[5] = elemento.na_asignacion;
             row[6] = elemento.estatus;
             row[7] = elemento.escalado ? elemento.escalado : 'Sin informaci&oacute;n';
-            row[8] = '<i class="fas fa-bars icon-table" title="Detalle" onclick="consultaDetalle()"></i>';
+            row[8] = '<i class="fas fa-bars icon-table" title="Detalle" style="background-color: #58b3bf" onclick="consultaDetalle()"></i>';
             arraRow.push(row);
         })
         ticketTable = $('#ticketTable').DataTable({
