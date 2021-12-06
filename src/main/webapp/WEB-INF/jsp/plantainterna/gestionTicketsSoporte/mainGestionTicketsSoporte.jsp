@@ -114,18 +114,18 @@
                     <div class="col-2 form-group" style="margin-bottom: 0; margin-top: .5em;">
                             <i class="fas fa-plus-circle icon-back" ng-click="changeView()" title="Nuevo Ticket"></i>
                     </div>
-                    <div class="row col-6" style="margin-top: 0.5em;background: #f9f9f9;border-radius: 25px;">
+                    <div class="row col-6 filter-tab" style="margin-top: 0.5em;">
                         <div class="col-3 user-info-content user-filter" style="margin-top: 0;">
-                            <span ng-click="searchBy('Abierto')"><i class="fa fa-filter" id="filterAbierto"></i>Abierto {{contadores.abierto ? contadores.abierto : '0'}}</span>
+                            <span ng-click="searchBy('Abierto')" id="spanAbierto"><i class="fa fa-filter" id="filterAbierto"></i>Abierto {{contadores.abierto ? contadores.abierto : '0'}}</span>
                         </div>
                         <div class="col-3 user-info-content user-filter" style="margin-top: 0;">
-                            <span ng-click="searchBy('Cerrado')"><i class="fa fa-filter" id="filterCerrado"></i>Cerrado {{contadores.cerrado ? contadores.cerrado : '0'}}</span>
+                            <span ng-click="searchBy('Cerrado')" id="spanCerrado"><i class="fa fa-filter" id="filterCerrado"></i>Cerrado {{contadores.cerrado ? contadores.cerrado : '0'}}</span>
                         </div>
                         <div class="col-3 user-info-content user-filter" style="margin-top: 0;">
-                            <span ng-click="searchBy('Escalado')"><i class="fa fa-filter" id="filterEscalado"></i>Escalado {{contadores.escalado ? contadores.escalado : '0'}}</span>
+                            <span ng-click="searchBy('Escalado')" id="spanEscalado"><i class="fa fa-filter" id="filterEscalado"></i>Escalado {{contadores.escalado ? contadores.escalado : '0'}}</span>
                         </div>
                         <div class="col-3 user-info-content user-filter" style="margin-top: 0;">
-                            <span ng-click="searchBy('Pendiente')"><i class="fa fa-filter" id="filterPendiente"></i>Pendiente {{contadores.pendiente ? contadores.pendiente : '0'}}</span>
+                            <span ng-click="searchBy('Pendiente')" id="spanPendiente"><i class="fa fa-filter" id="filterPendiente"></i>Pendiente {{contadores.pendiente ? contadores.pendiente : '0'}}</span>
                         </div>
                     </div>
                     <div class="col-2 offset-2  form-group" style="margin-bottom: 0; margin-top: .5em;">
@@ -166,11 +166,29 @@
                 <br>
                 <div class="col-12">
                     <div class="form-row">
-                        <div class="col-4 form-group">
+                        <div class="col-3 form-group">
                             <label for="cuentaTicket" class="span-form-tickets">Cuenta *</label>
                             <input type="text" class="form-control form-control-sm" id="cuentaTicket"/>
                         </div>
-                        <div class="col-4 form-group">
+                        <div class="col-3 form-group">
+                            <label for="tecnicoTicket" class="span-form-tickets">T&eacute;cnico *</label>
+                            <input type="text" class="form-control form-control-sm" data-toggle="modal" data-target="#modalBusquedaTecnicosTicket" id="tecnicoTicket"/>
+                        </div>
+                        <div class="col-3 form-group">
+                            <label for="telefonoTicket" class="span-form-tickets">Tel&eacute;fono </label>
+                            <input type="text" class="form-control form-control-sm" id="telefonoTicket"/>
+                        </div>
+                        <div class="col-3 form-group">
+                            <label for="noSerieTicket" class="span-form-tickets">No. de serie </label>
+                            <input type="text" class="form-control form-control-sm" id="noSerieTicket"/>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-3 form-group">
+                            <label for="noSerieNuevoEquipo" class="span-form-tickets">No. de serie-Nuevo equipo </label>
+                            <input type="text" class="form-control form-control-sm" id="noSerieNuevoEquipo"/>
+                        </div>
+                        <div class="col-3 form-group">
                             <label for="fallaTicketR" class="span-form-tickets">Falla *</label>
                             <select class="form-control form-control-sm custom-select" name="fallaTicketR" id="falla" ng-change="loadCategoriaTicketSoporte()" ng-model="ticket.idFallaTicket">
                                 <option value="" selected>NO HAY SELECCI&Oacute;N</option>
@@ -179,14 +197,7 @@
                                 </option>
                             </select>
                         </div>
-                        <div class="col-4 form-group">
-                            <label for="tecnicoTicket" class="span-form-tickets">T&eacute;cnico *</label>
-                            <input type="text" class="form-control form-control-sm" data-toggle="modal" data-target="#modalBusquedaTecnicosTicket" id="tecnicoTicket"/>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="form-row">
-                        <div class="col-4 form-group">
+                        <div class="col-3 form-group">
                             <label for="categoriaTicketR" class="span-form-tickets">Categor&iacute;a *</label>
                             <select class="form-control form-control-sm custom-select" id="categoria" name="categoriaTicketR" ng-change="loadSubcategoriaTicketSoporte()" ng-model="ticket.idCategoriaTicket">
                                 <option value="" selected>NO HAY SELECCI&Oacute;N</option>
@@ -195,7 +206,7 @@
                                 </option>
                             </select>
                         </div>
-                        <div class="col-4 form-group">
+                        <div class="col-3 form-group">
                             <label for="subcategoriaTicketR" class="span-form-tickets">Subcategor&iacute;a *</label>
                             <select class="form-control form-control-sm custom-select" id="subcategoria" name="subcategoriaTicketR" ng-model="ticket.idSubcategoriaTicket">
                                 <option value="" selected>NO HAY SELECCI&Oacute;N</option>
@@ -204,21 +215,41 @@
                                 </option>
                             </select>
                         </div>
-                        <div class="col-4 form-group">
-                            <label for="telefonoTicket" class="span-form-tickets">Tel&eacute;fono </label>
-                            <input type="text" class="form-control form-control-sm" id="telefonoTicket"/>
-                        </div>
                     </div>
                     <div class="form-row">
-                        <div class="col-4 form-group">
-                            <label for="noSerieTicket" class="span-form-tickets">No. de serie </label>
-                            <input type="text" class="form-control form-control-sm" id="noSerieTicket"/>
+                        <div class="col-3 form-group">
+                            <label for="tipoOrdenTicketR" class="span-form-tickets">Tipo orden *</label>
+                            <select class="form-control form-control-sm custom-select" name="tipoOrdenTicketR" id="tipoOrden" ng-model="ticket.tipoOrden">
+                                <option value="" selected>NO HAY SELECCI&Oacute;N</option>
+                                <option value="instalacion" selected>INSTALACI&Oacute;N</option>
+                                <option value="soporte" selected>SOPORTE</option>
+                                <option value="addon" selected>ADDON</option>
+                            </select>
                         </div>
-                        <div class="col-4 form-group">
-                            <label for="noSerieNuevoEquipo" class="span-form-tickets">No. de serie-Nuevo equipo </label>
-                            <input type="text" class="form-control form-control-sm" id="noSerieNuevoEquipo"/>
+                        <div class="col-3 form-group">
+                            <label for="tipoNegocioTicketR" class="span-form-tickets">Tipo de negocio *</label>
+                            <select class="form-control form-control-sm custom-select" name="tipoNegocioTicketR" id="tipoNegocio" ng-model="ticket.tipoNegocio">
+                                <option value="" selected>NO HAY SELECCI&Oacute;N</option>
+                                <option value="residencial" selected>RESIDENCIAL</option>
+                                <option value="empresarial" selected>EMPRESARIAL</option>
+                            </select>
                         </div>
-                        <div class="col-4 form-group">
+                        <div class="col-3 form-group">
+                            <label for="regionTicketR" class="span-form-tickets">Regi&oacute;n *</label>
+                            <select class="form-control form-control-sm custom-select" name="regionTicketR" id="region" ng-model="ticket.region">
+                                <option value="" selected>NO HAY SELECCI&Oacute;N</option>
+                                <option value="colombia" selected>COLOMBIA</option>
+                                <option value="mexico" selected>M&Eacute;XICO</option>
+                            </select>
+                        </div>
+                        <div class="col-3 form-group">
+                            <label for="tecnologiaTicketR" class="span-form-tickets">Tecnolog&iacute;a *</label>
+                            <select class="form-control form-control-sm custom-select" name="tecnologiaTicketR" id="tecnologia" ng-model="ticket.tecnologia">
+                                <option value="" selected>NO HAY SELECCI&Oacute;N</option>
+                                <option value="huawei" selected>HUAWEI</option>
+                                <option value="cte" selected>ZTE</option>
+                                <option value="fiberhome" selected>FIBER HOME</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-row">

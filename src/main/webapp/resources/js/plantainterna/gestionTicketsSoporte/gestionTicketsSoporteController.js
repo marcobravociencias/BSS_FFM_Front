@@ -297,8 +297,12 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
 
     $scope.filter = function (type) {
         let id = '#filter' + type;
-        $(".fa-filter").css('color', '#ccc')
-        $(id).css('color', 'green')
+        let idSpan = '#span' + type;
+        $(".user-filter span").removeClass('selected-filter');
+        $(".fa-filter").css('color', '#ccc');
+
+        $(id).css('color', 'white');
+        $(idSpan).addClass('selected-filter');
     }
 
 
