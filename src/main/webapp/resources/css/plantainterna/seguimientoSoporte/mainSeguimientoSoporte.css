@@ -1,13 +1,4 @@
-#container_seguimiento {
-    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
-    /* padding-top: 1em; */
-    background: white;
-    border-radius: .5em;
-    margin-top: 1em;
-    padding: 0;
-}
-
-#container_ticket {
+#container_seguimiento, #container_ticket {
     box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
     /* padding-top: 1em; */
     background: white;
@@ -51,6 +42,21 @@
     cursor: pointer;
     border-bottom: 2px solid #a4b1ff !important;
 }
+
+.columna-filtro-ind::after {
+    content: "";
+    position: absolute;
+    right: 10%;
+    top: 65%;
+    width: 0;
+    height: 0;
+    border-left: 0.3em solid transparent;
+    border-right: 0.3em solid transparent;
+    border-top: 0.6em solid #939db2;
+    clear: both;
+    z-index: 2;
+    font-size: 14px;
+  }
 
 thead#thead_seguimiento tr th, thead#thead_ticket tr th {
     font-size: 0.7em;
@@ -158,8 +164,6 @@ div.dataTables_wrapper div.dataTables_length label {
     margin-top: 2.5em;
 }
 
-.submenu-span {}
-
 .filter-content {
     margin: 0;
     padding: 0;
@@ -191,12 +195,6 @@ div.dataTables_wrapper div.dataTables_length label {
 
 .icon-conexion {
     font-size: 1.4em !important;
-}
-
-.icon-table {
-    color: #7716fa;
-    font-size: 1.4em !important;
-    cursor: pointer;
 }
 
 #modalDetalle .title {
@@ -274,4 +272,13 @@ div.dataTables_wrapper div.dataTables_length label {
     display: inline-block !important;
     overflow: hidden;
     text-overflow: ellipsis !important;
+}
+
+#seguimientoTable .icon-table, #ticketTable .icon-table{
+    font-size: 1.3em !important;
+    cursor: pointer;
+    color: white;
+    padding: 0.3em;
+    border-radius: 0.2em;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
 }

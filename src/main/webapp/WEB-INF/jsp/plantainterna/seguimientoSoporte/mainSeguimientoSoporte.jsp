@@ -81,7 +81,7 @@
                         <span>Salida</span></br>
                         <span class="info">{{catalogoEstatusUsuarios.infoHorasUser.horaSalida ? catalogoEstatusUsuarios.infoHorasUser.horaSalida : 'Sin datos'}}</span>  
                     </div>
-                    <div class="col-2 columna-filtro-ind" style="margin-top: 2.3em;">
+                    <div class="col-2" style="margin-top: 2.3em;">
                         <li class="nav-item dropdown form-control form-control-sm input-filtro-seguimiento" id="estatusDropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="otros-option-navbar" role="button"
                                 data-mdb-toggle="dropdown" aria-expanded="false">

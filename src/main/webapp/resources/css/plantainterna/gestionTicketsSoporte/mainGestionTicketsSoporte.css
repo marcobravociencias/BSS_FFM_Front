@@ -1,59 +1,31 @@
-#container_tickets_alta_consulta {
+#container_ticket, #container_ticket_form {
     box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
     /* padding-top: 1em; */
-    padding-bottom: 1em;
     background: white;
     border-radius: .5em;
-    padding-top: 1em;
     margin-top: 1em;
-    max-width: 1140px;
+    padding: 0;
 }
-
-/* TABS TICKETS */
-#myTabTickets .nav-link.active {
-    color: #7716fa !important;
-    font-weight: bolder;
-    background:#f9f9f9;
-}
-#myTabTickets{
-    margin-bottom:1em;
-}
-#myTabTickets .nav-link {
-    padding-top: .4em;
-    padding-bottom: .4em;
-    border: solid 1px #ccc;
-}
-#myTabTickets .nav-item:first-child .nav-link {
-    border-top-left-radius:1em;
-    border-bottom-left-radius:1em;
-}
-#myTabTickets .nav-item:last-child .nav-link {
-    border-top-right-radius:1em;
-    border-bottom-right-radius:1em;
-}
-/* TABS TICKETS */
-
-
 /* TAB CONSULTAR TICKETS */
 /* FILTROS CONSULTA TICKETS */
-.container-filtros-ticketsoporte {
-    border: none !important;
-    z-index: 2;
-    position: relative;
-    padding-top: 3pt !important;
-    padding-bottom: 3pt !important;
-    max-width: 1140px;
+
+.input-filtro-ticket {
+    border: 1px solid #dbdbdb !important;
+    font-weight: 400;
+    font-size: 1em;
+    color: #818181 !important;
+    transition: all 0.5s ease;
+    border-bottom: 1px solid white;
+    background: white !important;
+    border-radius: 0.5em !important;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.07), 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
 }
 
-.column-style-ticketsoporte {
-    width: 136px !important;
-    padding-right: 0px !important;
-}
 .columna-filtro-ind::after {
     content: "";
     position: absolute;
-    right: 6%;
-    top: 67%;
+    right: 10%;
+    top: 65%;
     width: 0;
     height: 0;
     border-left: 0.3em solid transparent;
@@ -62,67 +34,69 @@
     clear: both;
     z-index: 2;
     font-size: 14px;
+  }
+
+.form-content {
+    font-size: 0.7em;
+    font-weight: bold !important;
+    margin-bottom: 1em;
+    margin-top: 1em;
+    font-family: "Montserrat";
+
 }
-.input-filtro-ticketsoporte {
-    border: 1px solid #dbdbdb !important;;
+
+
+.input-filtro-ticket::placeholder {
     font-weight: 400;
     font-size: 1em;
     color: #818181 !important;
-    transition: all 0.5s ease;
-    border-bottom: 1px solid white;
-    background: white !important;
-    border-radius: .5em !important;
-    box-shadow: 0 1px 3px 0 rgba(0,0,0,.07),0 1px 2px 0 rgba(0,0,0,.05)!important;
 }
 
-.input-filtro-ticketsoporte::placeholder {
-    font-weight: 400;
-    font-size: 1em;
-    color: #818181 !important;
-}
-
-.input-filtro-ticketsoporte:focus {
+.input-filtro-ticket:focus {
     -webkit-box-shadow: none;
 }
 
-.input-filtro-ticketsoporte:hover {
-    background: #e4e6f2 !important;
+.input-filtro-ticket:hover {
     cursor: pointer;
     border-bottom: 2px solid #a4b1ff !important;
 }
-label.label-filter {
-    margin-bottom: 0;
-    font-size: .7em;
-    font-weight: bold;
-}
-#btn_consultar_ticketsSoporte {
-    background-color: #ffffff;
+
+.btnTicket:active, .btnTicket:focus .btnTicket:hover {
+    background-color: white !important;
+    box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
     color: #7716fa;
-    border: solid 1px #7716fa !important;
-    padding: 0.5em 2em;
-    border-radius: 5px;
-    font-size: 0.7em;
-    margin-top: 25px;
 }
 
-.btn-sm {
-    padding: 0.7em 0.7em;
-    /* border-radius: 50% !important; */
-    font-size: 0.64rem;
-    border: 0px !important;
+.btnTicket {
+    background-color: #ffffff !important;
+    color: #7716fa !important;
+    border: solid 1px #7716fa !important;
+    padding: .5em 2.5em;
+    border-radius: 5px;
+    font-size: 0.9em;
+    position: relative;
+    display: block;
+    border-radius: .5em !important;
+    float: left;
+    margin-top: 2.5em;
 }
-/* FILTROS CONSULTA TICKETS*/
+
 
 /* TABLE TICKETS */
 #tableTicketSoporte tr td {
-    font-size: 0.7em;
+    font-size: 0.7em !important;
     font-family: "Montserrat" !important;
     text-align: center;
+    border-top: 1px white solid;
+    border-bottom: 1px white solid;
 }
+
 thead#thead_ticketSoporte tr th {
     font-size: 0.7em;
     padding: 1em 1em 1em;
     text-align: center;
+    border-top: 1px white solid;
+    border-bottom: 1px solid #ccc;
 }  
 #thead_ticketSoporte .fa {
     font-size: 13px;
@@ -136,7 +110,7 @@ thead#thead_ticketSoporte {
 
 table.dataTable.no-footer {
     border-bottom: transparent !important;
-    margin-top: 0 !important;
+    margin-top: 1.2em !important;
 }
 
 .table.dataTable {
@@ -212,3 +186,184 @@ table.display.table.table-hover.table-striped.dataTable {
     margin-bottom: 0;
 }
 /* FORM TICKETS */
+
+
+
+#estatusDropdown .nav-link {
+    padding: 0;
+    color: #818181 !important;
+}
+
+#estatusDropdown .dropdown-item:active {
+    color: #818181 !important;
+}
+
+#estatusDropdown .dropdown-toggle:after {
+    float: right;
+    border-top: 0.5em solid !important;
+    border-right: 0.5em solid transparent !important;
+    border-left: 0.5em solid transparent !important;
+    margin-top: .5em !important;
+}
+
+#estatusDropdown .dropdown-menu {
+    margin-top: 0.4em !important;
+    margin-left: -0.7em !important;
+    min-width: 12rem !important;
+    font-size: 1em !important;
+}
+
+#estatusDropdown .dropdown-item {
+    padding: 0.5rem 1rem !important;
+}
+
+.user-info-content {
+    padding-left: 0;
+    margin-top: 1.9em;
+    padding-right: 0;
+    font-size: 0.9em;
+}
+
+.user-info-content .info {
+    font-weight: lighter;
+    width: 100px !important;
+    white-space: nowrap;
+    display: inline-block !important;
+    overflow: hidden;
+    text-overflow: ellipsis !important;
+}
+
+.filter-content {
+    margin: 0;
+    padding: 0;
+    height: 1.5em;
+}
+
+.search-filtro {
+    float: right;
+    height: 2em;
+    border-radius: 1em !important;
+}
+
+.icon-search {
+    font-size: 0.7em !important;
+    float: left;
+    margin-top: -1.7em;
+    float: right;
+    margin-right: 0.5em;
+}
+
+
+#modalDetalle .title {
+    font-weight: bolder;
+    color: #000000;
+}
+
+.form-control-row {
+    margin-bottom: .5em;
+}
+
+#modalDetalle .modal-body {
+    font-size: 0.9em;
+}
+
+.content-checkbox .label-modal {
+    font-weight: bolder;
+}
+
+.content-principal label,
+.content-falla label,
+.content-comentarios label {
+    width: 30%;
+}
+
+.content-principal input,
+.content-falla select,
+.content-comentarios textarea {
+    width: 60% !important;
+}
+
+.content-checkbox .form-check-input {
+    float: right;
+}
+
+#estatusDropdown .nav-link {
+    padding: 0;
+    color: #818181 !important;
+}
+
+#estatusDropdown .dropdown-item:active {
+    color: #818181 !important;
+}
+
+#estatusDropdown .dropdown-toggle:after {
+    float: right;
+    border-top: 0.5em solid !important;
+    border-right: 0.5em solid transparent !important;
+    border-left: 0.5em solid transparent !important;
+    margin-top: .5em !important;
+}
+
+#estatusDropdown .dropdown-menu {
+    margin-top: 0.4em !important;
+    margin-left: -0.7em !important;
+    min-width: 12rem !important;
+    font-size: 1em !important;
+}
+
+#estatusDropdown .dropdown-item {
+    padding: 0.5rem 1rem !important;
+}
+
+.user-filter span{
+    cursor: pointer;
+    padding: 0.4em 1em;
+    font-size: 0.9em;
+}
+
+.user-filter {
+    border-radius: 25px;
+    text-align: center;
+}
+
+.user-filter .fa-filter{
+    font-size: 0.9em;
+    color: #ccc;
+    padding: 0.3em;
+}
+
+.filter-tab {
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 7%), 0 1px 2px 0 rgb(0 0 0 / 5%);
+}
+
+#container_ticket_form .form-control {
+    height: 2.5em;
+}
+
+.icon-back {
+    font-size: 1.3em;
+    padding-top: 0.5px;
+    color: #7716fa;
+    cursor: pointer;
+    border-radius: 25px;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+}
+
+#tableTicketSoporte i{
+    font-size: 1.2em !important;
+    cursor: pointer;
+    color: white;
+    padding: 0.3em;
+    border-radius: 0.2em;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+}
+
+.selected-filter{
+   background: #ebebeb;
+   color: #7716fa;
+   font-weight: bolder;
+   border-radius: 25px;
+    box-shadow: 1px 0px 0 0 rgb(0 0 0 / 3%), 1px 0 10px 0 rgb(0 0 0 / 12%);
+}
