@@ -43,6 +43,21 @@
     border-bottom: 2px solid #a4b1ff !important;
 }
 
+.columna-filtro-ind::after {
+    content: "";
+    position: absolute;
+    right: 10%;
+    top: 65%;
+    width: 0;
+    height: 0;
+    border-left: 0.3em solid transparent;
+    border-right: 0.3em solid transparent;
+    border-top: 0.6em solid #939db2;
+    clear: both;
+    z-index: 2;
+    font-size: 14px;
+  }
+
 thead#thead_seguimiento tr th, thead#thead_ticket tr th {
     font-size: 0.7em;
     padding: 1em 1em 1em;

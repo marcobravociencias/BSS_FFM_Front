@@ -21,6 +21,21 @@
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.07), 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
 }
 
+.columna-filtro-ind::after {
+    content: "";
+    position: absolute;
+    right: 10%;
+    top: 65%;
+    width: 0;
+    height: 0;
+    border-left: 0.3em solid transparent;
+    border-right: 0.3em solid transparent;
+    border-top: 0.6em solid #939db2;
+    clear: both;
+    z-index: 2;
+    font-size: 14px;
+  }
+
 .form-content {
     font-size: 0.7em;
     font-weight: bold !important;
@@ -95,7 +110,7 @@ thead#thead_ticketSoporte {
 
 table.dataTable.no-footer {
     border-bottom: transparent !important;
-    margin-top: 0 !important;
+    margin-top: 1.2em !important;
 }
 
 .table.dataTable {
