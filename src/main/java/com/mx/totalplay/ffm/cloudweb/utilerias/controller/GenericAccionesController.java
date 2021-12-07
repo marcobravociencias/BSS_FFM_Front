@@ -37,5 +37,4 @@ public class GenericAccionesController {
 		}
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
-
 }

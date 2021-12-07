@@ -124,4 +124,4 @@ spec:
   - name: http
     port: 8148
     targetPort: 8148
-  sessionAffinity:  ClienteIP
+  sessionAffinity:  ClientIP
