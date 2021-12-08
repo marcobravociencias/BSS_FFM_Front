@@ -44,6 +44,13 @@
     margin: 0em auto 1em;
 }
 
+#container_reportes{
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+    background: white;
+    border-radius: .5em;
+    margin-top: 1em;
+    padding: 0;
+}
 
 #texto_header_reportes {
     font-family: 'Montserrat', sans-serif;
@@ -96,10 +103,14 @@ a#dropdown_ordenes_integrador::after {
     /* background: #62a6e0; */
 }
 
-.container-filtros-consultaot .form-control:focus {
+.container-filtros .form-control:focus {
     -webkit-box-shadow: 0 1px 0 0 #4285f4 !important;
     box-shadow: 0 1px 0 0 #4285f4 !important;
     border-bottom: 1px solid #4285f4 !important;
+}
+
+.container-filtros{
+    padding-left: 0.1em;
 }
 
 .table thead th {
@@ -131,7 +142,7 @@ hr {
     border-top: 1px solid #ffffff;
 }
 
-.container-filtros-consultaot input.form-control {
+.container-filtros input.form-control {
     border-bottom: 1px solid #bdbdbd;
     background-color: transparent;
 }
@@ -190,6 +201,7 @@ i.fa.fa-globe.prefix {
 
 .drop-down-filters {
     margin-top: 0.3em;
+    min-width: 12rem;
 }
 
 i.icono_reporte_tecnico.fa.fa-plus {
@@ -716,10 +728,6 @@ input#cuenta_ordenes, .cluster_filtro, #cuenta_ordenes_nocturnas, #select_tecnic
 
 #canal_venta_ordenes, #filtro_intervenciones, #fecha_inicio_tecnico, #fecha_inicio_despacho, #fecha_inicio_auxiliar, #idos_reporte_ot_integrador, #canal_venta_ordenes_integrador, #filtro_intervenciones_integrador, div#filtro_intervenciones_ord_terminadas, #filtro_intervenciones_ot_universal, #filtro_intervenciones_historico_ot, #idot_reporte_detenciones, #filtro_intervenciones_detenciones, #fecha_fin_materiales, #empleado_reporte_materiales, #canal_venta_ordenes_nocturnas, input.cluster_reporte_geolocalizacion {
     border-top: 3px solid #773f85 !important;
-}
-
-button#btn_consultar_ordenes, #btn_consultar_tecnicos, #btn_consultar_despachos, #btn_consultar_tecnico_auxiliar, #btn_consultar_ordenes_terminadas, #btn_consultar_ot_int, #btn_consultar_ordenes_integrador, #btn_consultar_ot_universal, #btn_consultar_historico_ot, #btn_consultar_reporte_detenciones, #btn_consultarmateriales, #btn_consultar_ordenes_nocturnas, #btn_consultar_reporte_justificaciones, #btn_consultar_reporte_dias_traba, #btn_consultar_reporte_geolocalizacion, #btn_consultar_tiempos_ot {
-    /* background: #784085 !important; */
 }
 
 #fecha_inicio_ordenes_terminadas, #fecha_inicio_ot, #fecha_fin_ordenes_terminadas, #fecha_fin_ot, #fecha_inicio_ot {
@@ -1300,13 +1308,13 @@ div#reporteSeguimientoTable_filter {
 }
 
 thead#thead_reporteSeguimiento tr th {
-    font-size: 0.6em;
+    font-size: 0.7em;
     padding: 1em 1em 1em;
     text-align: center;
 }
 
 #reporteSeguimientoTable tr td {
-    font-size: 0.6em;
+    font-size: 0.7em;
     font-family: "Montserrat" !important;
     text-align: center;
 }
@@ -1323,4 +1331,324 @@ div#reporteSeguimientoTable_info {
     font-family: "Montserrat";
     font-size: 0.8em;
     color: #a5a5a5 !important;
+}
+
+/*Dev*/
+
+#opciones-menu a > span, #opciones-menu-sf a > span {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.1s, opacity 0.7s linear;
+}
+#opciones-menu:hover a > span, #opciones-menu-sf:hover a > span{
+    visibility: visible;
+    opacity: 1;
+}
+.left-menu {
+    background-color: #FFFFFF;
+    padding:0;
+    z-index: 1001;
+    position: absolute;
+    box-shadow: 0 4px 13px -3px rgb(0 0 0 / 10%);
+    border-right: 1px solid #d2d2d2;
+    padding-top: 1em;
+}
+.small-menu {
+    width: 3.8%;
+    transition: width .5s;
+}
+.small-menu:hover{
+    width: 26%;
+}
+.small-sf:hover{
+  width: 22%!important;
+}
+.titulo-opcion-menu {
+    height: 5em;
+    line-height: 5em;
+}
+.opcion-menu {
+    cursor: pointer;
+    height: 2em;
+    line-height: 2.5em;
+}
+.small-menu .opcion-menu:hover .icon-menu-left{
+    color: #7700ff;
+    font-weight: bold;
+}
+.small-menu .opcion-menu:hover .titulo-menu{
+    color: #7700ff;
+    font-weight: bold;
+}
+
+.nav-item a:hover{
+    text-decoration: none !important;
+}
+
+.small-menu .opcion-menu{
+    white-space: nowrap;
+    width: 100%;
+    text-align: center;
+    padding-left:0.5em;
+    transition: width 1s ease;
+}  
+.small-menu:hover > .opcion-menu{
+    width: 35%;
+}
+.small-menu .parent-monitor-menu{
+    white-space: nowrap;
+    width: 100%;
+    text-align: center;
+    padding-left:1em;
+    transition: width 1s ease;
+    margin-top:2em;
+    margin-bottom:2em;
+}  
+.small-menu:hover >  .parent-monitor-menu{
+    width: 65%;
+}
+.small-menu .parent-monitor-menu{
+    white-space: nowrap;
+    width: 100%;
+    text-align: center;
+    padding-left:1em;
+    transition: width 1s ease;
+    margin-top:2em;
+    margin-bottom:2em;
+}  
+.small-menu:hover >  .parent-monitor-menu{
+    width: 65%;
+}
+
+
+#container_reportes .left-menu .active span{
+    color: #7700ff !important;
+    font-weight: bold;
+}
+
+#container_reportes .left-menu .active i{
+    color: #fff !important;
+    background: #7700ff;
+    font-weight: bold;
+}
+
+#container_reportes .left-menu .active{
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    padding-right: 20%;
+    /*background: linear-gradient(to right, #7700ff1f, white);*/
+}
+
+.icon-menu-left{
+   color: #7e7e7e;
+   padding: 0.4em;
+   border-radius: 5px;
+}
+
+.parent-monitor-menu .icon-menu-left {
+    color: #7700ff;
+    font-size: 1.3em;
+}
+.parent-monitor-menu  .titulo-menu{
+    font-weight:bold;
+    font-size:1.1em;
+}
+.right-content {
+    height: 100%;
+    width: 95%;
+    /* position: absolute; */
+    right: 0;
+    margin-left: 4%;
+    /* padding-left: 4em; */
+    /* min-height: 100%; */
+    height: 100%;
+    min-height: 80vh;
+    padding-top: 1em;
+}
+
+.right-content .tab-pane{
+    padding-right: 0;
+}
+
+.titulo-menu {
+    position: absolute;
+    color: #a2a2a2;
+    font-size: 1em;
+    font-family: 'Montserrat' !important;
+    margin-left: 1em;
+
+}
+
+.input-filtro {
+    border: 1px solid #dbdbdb !important;
+    font-weight: 400;
+    font-size: 1em;
+    color: #818181 !important;
+    transition: all 0.5s ease;
+    border-bottom: 1px solid white;
+    background: white !important;
+    border-radius: 0.5em !important;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.07), 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+}
+
+.input-filtro::placeholder {
+    font-weight: 400;
+    font-size: 1em;
+    color: #818181 !important;
+}
+
+.input-filtro:focus {
+    -webkit-box-shadow: none;
+}
+
+.input-filtro:hover {
+    cursor: pointer;
+    border-bottom: 2px solid #a4b1ff !important;
+}
+
+.btn_consultar:active, .btn_consultar:focus .btn_consultar:hover {
+    background-color: white !important;
+    box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
+    color: #7716fa;
+}
+
+.btn_consultar {
+    background-color: #ffffff !important;
+    color: #7716fa !important;
+    border: solid 1px #7716fa !important;
+    padding: .5em 2.5em;
+    border-radius: 5px;
+    font-size: 0.6em;
+    position: relative;
+    display: block;
+    border-radius: .5em !important;
+    float: left;
+    margin-top: 2.5em;
+}
+
+#todo_filtro,
+#ninguno_filtro {
+  width: 45%;
+  background: #1266f1;
+  color: white;
+}
+
+label.form-check-inputfiltro {
+  display: flex;
+}
+
+.element-menu-filter {
+  position: relative;
+}
+
+.dropdown-item.item-text-filtro.ng-binding {
+  display: contents;
+  /* margin-left: 1em; */
+}
+
+.form-check-input {
+  margin-right: 0.5em;
+}
+
+.dropdown-item {
+  padding: 0.25rem 1.5rem !important;
+}
+
+thead#thead_seguimiento tr th, thead#thead_ticket tr th {
+    font-size: 0.7em;
+    padding: 1em 1em 1em;
+    text-align: center;
+    border-top: 1px white solid;
+    border-bottom: 1px solid #ccc;
+}
+
+#seguimientoTable tr td, #ticketTable tr td {
+    font-size: 0.7em;
+    font-family: "Montserrat" !important;
+    text-align: center;
+    border-top: 1px white solid;
+    border-bottom: 1px white solid;
+}
+
+div.dataTables_wrapper div.dataTables_length label {
+    font-weight: inherit !important;
+    color: #828080 !important;
+}
+
+.dataTables_length .form-control.form-control-sm {
+    color: #9a9999 !important;
+    border-bottom: 2px solid #e4e2e2 !important;
+    font-family: "Montserrat" !important;
+}
+
+#seguimientoTable_length select.form-control.form-control-sm, #ticketTable_length select.form-control.form-control-sm {
+    border: none;
+}
+
+#seguimientoTable.table.dataTable.no-footer, #ticketTable.table.dataTable.no-footer {
+    border-bottom: none;
+}
+
+.pagination {
+    display: block !important;
+}
+
+.pagination .paginate_button a.page-link {
+    color: #828080;
+    font-family: "Montserrat";
+    background-color: white !important;
+    box-shadow: none !important;
+}
+
+.pagination .paginate_button.active {
+    background-color: gray !important;
+}
+
+.pagination .previous a.page-link {
+    color: white !important;
+    font-size: 0;
+}
+
+.pagination .next a.page-link {
+    color: white !important;
+    font-size: 0;
+}
+
+.pagination .previous a:after {
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f104";
+    visibility: visible;
+    color: #828080 !important;
+    font-size: initial !important;
+}
+
+.pagination .next a:before {
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f105";
+    visibility: visible;
+    color: #828080 !important;
+    font-size: initial !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button, .dataTables_wrapper .dataTables_paginate .paginate_button a {
+    padding: 0 !important;
+}
+
+.pagination .paginate_button>.active {
+    border: #000000 !important;
+}
+
+.table.dataTable.no-footer{
+    border-bottom: 1px solid white;
+}
+
+.container-tab{
+    margin-top: 0.7em;
+    padding: 0;
+}
+
+.content-table{
+    margin-top: 0.7em;
 }

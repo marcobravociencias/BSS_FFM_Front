@@ -14,145 +14,19 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 
 	$(document).ready(function () {
 		$("#tipo_reporte").val('fechaCreacion');
-		setTimeout(function(){
+		setTimeout(function () {
 			$scope.repDiario.fechaSeleccionada = "fechaCreacion";
 			$scope.consultarReporteDiario();
-		},1500);
+		}, 1500);
+
 	});
-	
+
 	$('#searchGeo').on('keyup', function () {
 		$("#jstree-proton-3").jstree("search", this.value);
 	})
 
 	$('.drop-down-filters').on("click.bs.dropdown", function (e) {
 		e.stopPropagation();
-	});
-
-	$scope.initComponents = function () {
-		console.log("Entra a inicializar elementos");
-
-		$('.nav-item').removeClass('active');
-		$('#otros_nav').addClass('active');
-		$("#btn_mostrar_nav").hide(500);
-
-	}
-	$(".elemento_link").click(function () {
-		$(".elemento_link ").removeClass("active");
-		$(this).addClass('active');
-		switch ($(this).attr('id')) {
-			/*
-			case 'link_reporte_ordenes':
-				console.log("entra ordenes")
-				$("#texto_header_reportes").text("Reporte Ordenes de Trabajo Planta Interna"); 
-				$('#container_reporte_ordenes').show();
-				$('#container_reporte_despacho').hide();
-				$('#container_reporte_tecnico').hide();
-				$('#container_reporte_auxiliar').hide();
-				$('#container_reporte_inspector').hide();
-				$('#container_reporte_seguimiento_diario').hide();
-				//$('.content_reporte').hide();
-				//$("#reporteOrdenesTable").show(); 
-				
-				
-				console.log("sale ordenes")
-			break;
-			case 'link_reporte_tecnico':
-				console.log("entra tecnico")
-				$("#texto_header_reportes").text("Reporte por t\u00E9cnico");
-				$('#container_reporte_tecnico').show();
-				//reporteOrdenesTable.destroy();
-				$('#container_reporte_ordenes').hide();
-				$('#container_reporte_despacho').hide();
-				$('#container_reporte_auxiliar').hide();
-				$('#container_reporte_inspector').hide();
-				$('#container_reporte_seguimiento_diario').hide();
-				//$('#reporteOrdenesTable').hide();
-				console.log("sale tecnico")
-				
-				
-			break;
-			case 'link_reporte_despacho':
-				console.log("entra despacho")
-				$("#texto_header_reportes").text("Reporte Coordinador");
-				$('#container_reporte_despacho').show();
-				$('#container_reporte_tecnico').hide();
-				$('#container_reporte_ordenes').hide();
-				$('#container_reporte_auxiliar').hide();
-				$('#container_reporte_inspector').hide();
-				$('#container_reporte_seguimiento_diario').hide();
-				//$('#reporteOrdenesTable').hide();
-				console.log("sale despacho")
-				
-			break;
-			case 'link_reporte_auxiliar':
-				console.log("entra aux")
-				$("#texto_header_reportes").text("Reporte T\u00E9cnico Auxiliar");
-				$('#container_reporte_auxiliar').show();
-				$('#container_reporte_tecnico').hide();
-				$('#container_reporte_ordenes').hide();
-				$('#container_reporte_despacho').hide();
-				$('#container_reporte_inspector').hide();
-				$('#container_reporte_seguimiento_diario').hide();
-				//$('#reporteOrdenesTable').hide();
-				console.log("sale aux")
-				
-			break;
-			case 'link_reporte_inspector':
-				$("#texto_header_reportes").text("Reporte Inspector");
-				$('#container_reporte_auxiliar').hide();
-				$('#container_reporte_tecnico').hide();
-				$('#container_reporte_ordenes').hide();
-				$('#container_reporte_despacho').hide();
-				$('#container_reporte_seguimiento_diario').hide();
-				$('#container_reporte_inspector').show();
-
-			break;
-			*/
-			case 'link_reporte_seguimiento_diario':
-				$("#texto_header_reportes").text("Reporte Seguimiento Diario");
-				$('#container_reporte_auxiliar').hide();
-				$('#container_reporte_tecnico').hide();
-				$('#container_reporte_ordenes').hide();
-				$('#container_reporte_despacho').hide();
-				$('#container_reporte_inspector').hide();
-				$('#container_reporte_seguimiento_diario').show();
-				
-				break;
-
-		}
-
-
-	});
-	//Muestra contenido completo
-	$("#btn_mostrar_nav").click(function () {
-		$(this).hide();
-
-		$("#datos_tablas").attr('class', '');
-		$("#datos_tablas").addClass("col-sm-10");
-		$("#navbar_reportes").show('fade');
-		$("#borderAlign").addClass("borderAlignR");
-		$("#borderAlignt").addClass("borderAlignR");
-		$("#borderAlignt").removeClass("borderAlignRD");
-		$("#borderAlignc").addClass("borderAlignR");
-		$("#borderAlignc").removeClass("borderAlignRD");
-		$("#borderAligna").addClass("borderAlignR");
-		$("#borderAligna").removeClass("borderAlignRD");
-	});
-
-	//Función para ocultar el nav de los selects
-	$("#ocultar_nav").click(function () {
-
-		$("#navbar_reportes").hide('fade');
-		$('#btn_mostrar_nav').show();
-		$("#datos_tablas").attr("class", "");
-		$("#datos_tablas").addClass("col-sm-12 col-md-12");
-		$("#borderAlign").removeClass("borderAlignR");
-		$("#borderAlignt").removeClass("borderAlign");
-		$("#borderAlignt").addClass("borderAlignRD");
-		$("#borderAlignc").removeClass("borderAlign");
-		$("#borderAlignc").addClass("borderAlignRD");
-		$("#borderAligna").removeClass("borderAlign");
-		$("#borderAligna").addClass("borderAlignRD");
 	});
 
 	$scope.abrirModalGeografiaRep = function () {
@@ -297,10 +171,10 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		return $scope.listadogeografiacopy.sort(compareGeneric)[0].nivel
 	}
 
-	validarFecha = function () {
-		if (document.getElementById('filtro_fecha_inicio_consultaOtO').value.trim() != "" && document.getElementById('filtro_fecha_fin_consultaOtO').value.trim() != "") {
-			var inicio = document.getElementById('filtro_fecha_inicio_consultaOtO').value.split('/');
-			var fin = document.getElementById('filtro_fecha_fin_consultaOtO').value.split('/');
+	validarFecha = function (inicio, fin) {
+		if (document.getElementById(inicio).value.trim() != "" && document.getElementById(fin).value.trim() != "") {
+			var inicio = document.getElementById(inicio).value.split('/');
+			var fin = document.getElementById(fin).value.split('/');
 			var date_inicio = new Date(inicio[2] + '-' + inicio[1] + '-' + inicio[0]);
 			var date_fin = new Date(fin[2] + '-' + fin[1] + '-' + fin[0]);
 			if (date_inicio <= date_fin) {
@@ -310,45 +184,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 			}
 		}
 	}
-	validarFechaT = function () {
-		if (document.getElementById('filtro_fecha_inicio_consultaOtT').value.trim() != "" && document.getElementById('filtro_fecha_fin_consultaOtT').value.trim() != "") {
-			var inicio = document.getElementById('filtro_fecha_inicio_consultaOtT').value.split('/');
-			var fin = document.getElementById('filtro_fecha_fin_consultaOtT').value.split('/');
-			var date_inicio = new Date(inicio[2] + '-' + inicio[1] + '-' + inicio[0]);
-			var date_fin = new Date(fin[2] + '-' + fin[1] + '-' + fin[0]);
-			if (date_inicio <= date_fin) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-	}
-	validarFechaD = function () {
-		if (document.getElementById('filtro_fecha_inicio_consultaOtD').value.trim() != "" && document.getElementById('filtro_fecha_fin_consultaOtD').value.trim() != "") {
-			var inicio = document.getElementById('filtro_fecha_inicio_consultaOtD').value.split('/');
-			var fin = document.getElementById('filtro_fecha_fin_consultaOtD').value.split('/');
-			var date_inicio = new Date(inicio[2] + '-' + inicio[1] + '-' + inicio[0]);
-			var date_fin = new Date(fin[2] + '-' + fin[1] + '-' + fin[0]);
-			if (date_inicio <= date_fin) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-	}
-	validarFechaA = function () {
-		if (document.getElementById('filtro_fecha_inicio_consultaOtA').value.trim() != "" && document.getElementById('filtro_fecha_fin_consultaOtA').value.trim() != "") {
-			var inicio = document.getElementById('filtro_fecha_inicio_consultaOtA').value.split('/');
-			var fin = document.getElementById('filtro_fecha_fin_consultaOtA').value.split('/');
-			var date_inicio = new Date(inicio[2] + '-' + inicio[1] + '-' + inicio[0]);
-			var date_fin = new Date(fin[2] + '-' + fin[1] + '-' + fin[0]);
-			if (date_inicio <= date_fin) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-	}
+
 	$scope.iniciarReporteOrdenes = function () {
 		$('.datepicker').datepicker({
 			format: 'dd/mm/yyyy',
@@ -394,7 +230,6 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 			"autoWidth": true,
 			"language": idioma_espanol_not_font,
 			"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
-
 		});
 		reporteAuxiliarTabla = $('#reporteAuxiliarTable').DataTable({
 			"paging": true,
@@ -406,7 +241,6 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 			"autoWidth": true,
 			"language": idioma_espanol_not_font,
 			"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
-
 		});
 		reporteInspectorTabla = $('#reporteInspectorTable').DataTable({
 			"paging": true,
@@ -418,7 +252,6 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 			"autoWidth": true,
 			"language": idioma_espanol_not_font,
 			"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
-
 		});
 
 		reporteSeguimientoTable = $('#reporteSeguimientoTable').DataTable({
@@ -508,7 +341,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		}
 
 		if (isValFecha) {
-			if (!validarFecha()) {
+			if (!validarFecha('filtro_fecha_inicio_consultaOtO', 'filtro_fecha_fin_consultaOtO')) {
 				$('.datepicker').datepicker('update', new Date());
 				errorMensaje += '<li>La fecha inicial no tiene que ser mayor a la final.</li>';
 				isValido = false
@@ -633,7 +466,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		}
 
 		if (isValFecha) {
-			if (!validarFechaT()) {
+			if (!validarFecha('filtro_fecha_inicio_consultaOtT', 'filtro_fecha_fin_consultaOtT')) {
 				$('.datepicker').datepicker('update', new Date());
 				errorMensaje += '<li>La fecha inicial no tiene que ser mayor a la final.</li>';
 				isValido = false
@@ -758,7 +591,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		}
 
 		if (isValFecha) {
-			if (!validarFechaD()) {
+			if (!validarFecha('filtro_fecha_inicio_consultaOtD', 'filtro_fecha_fin_consultaOtD')) {
 				$('.datepicker').datepicker('update', new Date());
 				errorMensaje += '<li>La fecha inicial no tiene que ser mayor a la final.</li>';
 				isValido = false
@@ -878,7 +711,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		}
 
 		if (isValFecha) {
-			if (!validarFechaA()) {
+			if (!validarFecha('filtro_fecha_inicio_consultaOtA', 'filtro_fecha_fin_consultaOtA')) {
 				$('.datepicker').datepicker('update', new Date());
 				errorMensaje += '<li>La fecha inicial no tiene que ser mayor a la final.</li>';
 				isValido = false
@@ -998,7 +831,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		}
 
 		if (isValFecha) {
-			if (!validarFechaA()) {
+			if (!validarFecha('filtro_fecha_inicio_inspector', 'filtro_fecha_fin_inspector')) {
 				$('.datepicker').datepicker('update', new Date());
 				errorMensaje += '<li>La fecha inicial no tiene que ser mayor a la final.</li>';
 				isValido = false
