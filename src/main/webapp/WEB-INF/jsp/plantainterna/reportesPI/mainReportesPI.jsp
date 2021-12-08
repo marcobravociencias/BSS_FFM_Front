@@ -71,8 +71,8 @@
                         <li class="nav-item">
                             <a class="opcion-menu" id="auxiliar-tab" data-toggle="tab" href="#auxiliar" role="tab"
                                 aria-controls="auxiliar" aria-selected="false"><i
-                                    class="icon-menu-left fas fa-briefcase"></i>&nbsp;<span class="titulo-menu"
-                                    style="margin-left: 0.6em;">Reporte T&eacute;cnico Auxiliar</span></a>
+                                    class="icon-menu-left fas fa-briefcase"></i>&nbsp;<span class="titulo-menu">Reporte
+                                    T&eacute;cnico Auxiliar</span></a>
                         </li>
                         <li class="nav-item">
                             <a class="opcion-menu" id="inspector-tab" data-toggle="tab" href="#inspector" role="tab"
@@ -86,6 +86,7 @@
                                     class="icon-menu-left fas fa-user-alt"></i>&nbsp;<span class="titulo-menu">Reporte
                                     por Tecnico</span></a>
                         </li>
+
                     </ul>
                     <div class="right-content tab-content">
                         <div class="row tab-content">

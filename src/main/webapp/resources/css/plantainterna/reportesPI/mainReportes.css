@@ -681,7 +681,7 @@ ul.navbar-nav.mr-auto li.active {
 }
 
 div.borderFilterR {
-    padding-right: 0;
+    padding: 0;
     margin: 0px 2px;
     /* margin-left: -1em; */
     /* padding-left: 0px; */
@@ -1349,6 +1349,9 @@ div#reporteSeguimientoTable_info {
     padding:0;
     z-index: 1001;
     position: absolute;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    display: block;
     box-shadow: 0 4px 13px -3px rgb(0 0 0 / 10%);
     border-right: 1px solid #d2d2d2;
     padding-top: 1em;
@@ -1358,8 +1361,14 @@ div#reporteSeguimientoTable_info {
     transition: width .5s;
 }
 .small-menu:hover{
-    width: 26%;
+    width: 27%;
 }
+
+.left-menu.small-menu:hover{
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
 .small-sf:hover{
   width: 22%!important;
 }
