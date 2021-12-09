@@ -1,11 +1,16 @@
 package com.mx.totalplay.ffm.cloudweb.plantainterna.controller;
 
+import com.google.gson.Gson;
+import com.mx.totalplay.ffm.cloudweb.plantainterna.model.consultaOTPI.ParamConsultaOTPI;
 import com.mx.totalplay.ffm.cloudweb.plantainterna.service.SoporteCentralizadoService;
+import com.mx.totalplay.ffm.cloudweb.utilerias.model.DataTableResponse;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.ServiceResponseResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +24,8 @@ import java.util.Map;
 public class SoporteCentralizadoController {
     private final Logger logger = LogManager.getLogger(SoporteCentralizadoController.class.getName());
     private final SoporteCentralizadoService soporteCentralizadoService;
+    private DataTableResponse dataTableResponse;
+	private Gson gson = new Gson();
 
     public SoporteCentralizadoController(SoporteCentralizadoService soporteCentralizadoService) {
         this.soporteCentralizadoService = soporteCentralizadoService;
@@ -53,5 +60,35 @@ public class SoporteCentralizadoController {
         }
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
+    
+    @GetMapping("/consultaFallasTicketSoporte")
+	public ResponseEntity<?> consultaFallasTicketSoporte(){
+		logger.info("###### SoporteCentralizadoController - consultarFallasTicketSoporte");
+		ServiceResponseResult response = soporteCentralizadoService.consultaFallasTicketSoporte();
+		if(response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+    
+    @GetMapping("/consultaTicketsSoporte")
+	public ResponseEntity<DataTableResponse> consultaTicketsSoporte(@ModelAttribute ParamConsultaOTPI params) {
+		logger.info("*** Objeto: " + gson.toJson(params));
+		dataTableResponse = soporteCentralizadoService.consultaTicketsSoporte(params);
+		if (dataTableResponse.getResult() instanceof Integer){
+			return new ResponseEntity<DataTableResponse>(dataTableResponse, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<DataTableResponse>(dataTableResponse, HttpStatus.ACCEPTED);
+	}
+    
+    @PostMapping("/creaTicketSoporte")
+	public ResponseEntity<?> creaTicketSoporte(@RequestBody String params) {
+		logger.info("#### creaTicketSoporte ### \n" + params);
+        ServiceResponseResult response = soporteCentralizadoService.creaTicketSoporte(params);
+        if (response.getResult() instanceof Integer){
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
 
 }

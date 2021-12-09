@@ -47,6 +47,12 @@
     <body id="idBody" class="body" ng-controller="seguimientoSoporteController">
         <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
         <div class="container">
+            <div class="container container-title-header" style="padding: 0 !important;">
+                <div class="header-modulo">
+                    <h5 class="title-modulo">Seguimiento Tickets</h5>
+                    <h1 class="h6 subtitle-modulo"></h1>
+                </div>
+            </div>
             <div class="form-content">
                 <div class="row md-form" id="filtros_config">
                     <div class="col-2 columna-filtro-ind">

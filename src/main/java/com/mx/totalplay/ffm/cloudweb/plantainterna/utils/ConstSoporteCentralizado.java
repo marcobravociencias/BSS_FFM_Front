@@ -18,4 +18,19 @@ public class ConstSoporteCentralizado {
     @Value("${consultaDetalleSoporte}")
     private String consultaDetalleSoporte;
     
+    @Value("${consultaFallasTicketSoporte}")
+    private String consultaFallasTicketSoporte;
+    
+    @Value("${consultaHistoricoTicketSoporte}")
+    private String consultaHistoricoTicketSoporte;
+    
+    @Value("${consultaTicketsSoporte}")
+    private String consultaTicketsSoporte;
+    
+    @Value("${creaTicketSoporte}")
+    private String creaTicketSoporte;
+    
+    @Value("${consultaPropietariosTicketSoporte}")
+    private String consultaPropietariosTicketSoporte;
+
 }

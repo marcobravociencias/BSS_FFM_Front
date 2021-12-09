@@ -50,4 +50,5 @@ public class ParamConsultaOTPI {
 	private int elementosPorPagina;
 	private int pagina;
 	private int totalRegistros;
+	private String tipoFecha;
 }

@@ -9,9 +9,21 @@
                 </button>
             </div>
             <div class="modal-body">
+                <div class="col-12">
+                    <div class="row" style="margin-left: 5em;">
+                        <div class="col-9">
+                            <input placeholder="Buscar" type="text" autocomplete="off" class="search-filtro-tecnicos form-control form-control-sm" id="searchTecnicoTicket">
+                        </div>
+                        <div class="col-3">
+                            <button id="btn_buscar" type="button" class="btn btn-sm btn-primary waves-effect waves-light btnBusquedaTecnicos" ng-click="">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                  </div>
             </div>
             <div class="modal-footer border-tecnico-ticket">
-                <button type="button" class="btn btn-cerrar-modal" data-mdb-dismiss="modal" id="closeModalTecnico">
+                <button type="button" class="btn btn-cerrar-modal" data-mdb-dismiss="modal" >
                     Cerrar
                 </button>
             </div>

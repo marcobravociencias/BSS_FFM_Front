@@ -5,7 +5,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     $scope.listFallasTicket = [];
     $scope.listCategoriasTicket = [];
     $scope.listSubcategoriasTicket = [];
-    $scope.catalogosTicketsSoporte = [];
+    $scope.catalogoFallasTicketSoporte = [];
     $scope.listMotivoEscala = {};
     $scope.catalogoTickets = [];
 
@@ -14,17 +14,8 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     $scope.catalogoEstatusUsuarios = infoUsuarioEstatusHoras.result;
     $scope.contadores = {};
     $scope.isBusqueda = true;
-
-    ticketSoporteTable = $('#tableTicketSoporte').DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "ordering": false,
-        "pageLength": 10,
-        "info": false,
-        "autoWidth": true,
-        "language": idioma_espanol_not_font,
-        "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
-    });
+    $scope.ticketSoporte = {};
+    $scope.ticketSoporteR = {};
 
     $('#searchTextTicket').on('keyup', function () {
         $(".user-filter span").removeClass('selected-filter');
@@ -40,37 +31,28 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     $scope.consultarCatalogosTicketSoporte = function () {
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
-        // $q.all([
-        //     gestionTicketSoporteService.consultarCatalogoFallasTicketSoporte()
-        // ]).then(function (results) {
-        //     if (results[0].data !== undefined) {
-        //         if (results[0].data.respuesta) {
-        //             if (results[0].data.result) {
-        $scope.catalogoTickets = arrayListadoTickets.data.result.catalogoTickets;
-        let nivel1 = [];
-        $scope.catalogoTickets.map(function (e) {
-            if (e.nivel == "1") {
-                nivel1.push(e);
+        gestionTicketSoporteService.consultaFallasTicketSoporte().then(function success(response) {
+            console.log(response);
+            if (response.data.respuesta) {
+                $scope.catalogoTickets = arrayListadoTickets.data.result.catalogoTickets;
+                $scope.catalogoFallasTicketSoporte = response.data.result.soportes;
+                console.log($scope.catalogoFallasTicketSoporte);
+                console.log($scope.catalogoTickets);
+                let nivel1 = [];
+                $scope.catalogoTickets.map(function (e) {
+                    if (e.nivel == "1") {
+                        nivel1.push(e);
+                    }
+                });
+                $scope.listMotivoEscala.catalogoNivel1 = nivel1;
+                $scope.catalogoFallasTicketSoporte.map(function (e) {
+                    if (e.nivel == "1") {
+                        $scope.listFallasTicket.push(e);
+                    }
+                });
+                swal.close();
             }
         });
-        $scope.listMotivoEscala.catalogoNivel1 = nivel1;
-        $scope.catalogosTicketsSoporte = arrayCatalogosTicket.data.result;
-        swal.close();
-        $scope.catalogosTicketsSoporte.catalogoCreacionTickets.map(function (e) {
-            if (e.nivel == "1") {
-                $scope.listFallasTicket.push(e);
-            }
-        });
-        //             } else {
-        //                 toastr.warning('No se encontraron datos de Fallas');
-        //             }
-        //         } else {
-        //             toastr.warning(results[0].data.resultDescripcion);
-        //         }
-        //     } else {
-        //         toastr.error('Ha ocurrido un error en la consulta de Fallas');
-        //     }
-        // });
     }
 
     $scope.initTicketsSoporte = function () {
@@ -82,6 +64,18 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             clearBtn: true
         });
         $('.datepicker').datepicker('update', new Date());
+        ticketSoporteTable = $('#tableTicketSoporte').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "pageLength": 10,
+            "info": false,
+            "autoWidth": true,
+            "language": idioma_espanol_not_font,
+            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+
+        });
         $scope.consultarCatalogosTicketSoporte();
     }
 
@@ -90,8 +84,8 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     $scope.loadCategoriaTicketSoporte = function () {
         $scope.listCategoriasTicket = [];
         let idFallaTicket = $("#falla").val();
-        $scope.catalogosTicketsSoporte.catalogoCreacionTickets.map(function (c) {
-            if (c.idpadre == idFallaTicket) {
+        $scope.catalogoFallasTicketSoporte.map(function (c) {
+            if (c.idPadre == idFallaTicket) {
                 $scope.listCategoriasTicket.push(c);
             }
         });
@@ -100,8 +94,8 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     $scope.loadSubcategoriaTicketSoporte = function () {
         $scope.listSubcategoriasTicket = [];
         let idCategoriaTicket = $("#categoria").val()
-        $scope.catalogosTicketsSoporte.catalogoCreacionTickets.map(function (s) {
-            if (s.idpadre == idCategoriaTicket) {
+        $scope.catalogoFallasTicketSoporte.map(function (s) {
+            if (s.idPadre == idCategoriaTicket) {
                 $scope.listSubcategoriasTicket.push(s);
             }
         });
@@ -157,94 +151,182 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         }
     }
 
-    $scope.registrarTicketSoporte = function () {
+    $(".inputTicket").keyup(function () {
+        var input = $(this).attr("id");
+        if ($(this).val() === "" || $(this).val() === undefined) {
+            $("#" + input).addClass("invalid-inputTicket");
+        } else {
+            $("#" + input).removeClass("invalid-inputTicket");
+        }
+    });
+
+    $("#falla").change(function () {
+        $("#falla").removeClass("invalid-inputTicket");
+    });
+
+    $("#categoria").change(function () {
+        $("#categoria").removeClass("invalid-inputTicket");
+    });
+
+    $("#subcategoria").change(function () {
+        $("#subcategoria").removeClass("invalid-inputTicket");
+    });
+
+    $scope.registrarTicketSoporte = function (objTicket) {
+        $scope.ticketSoporteR = objTicket;
+        console.log($scope.ticketSoporteR);
         let mensajeError = '';
         let isValid = true;
 
         if ($("#cuentaTicket").val() == undefined || $("#cuentaTicket").val() == '') {
             mensajeError += "<li>Debe ingresar un n&uacute;mero de Cuenta</li>";
+            $("#cuentaTicket").addClass("invalid-inputTicket");
             isValid = false;
-        }
-        if ($("#noSerieTicket").val() == undefined || $("#noSerieTicket").val() == '') {
-            mensajeError += "<li>Debe ingresar un n&uacute;mero de Serie del Ticket</li>";
-            isValid = false;
-        }
-        if ($("#descripcionProblemaTicket").val() == undefined || $("#descripcionProblemaTicket").val() == '') {
-            mensajeError += "<li>Debe ingresar una descripci&oacute;n del Problema</li>";
-            isValid = false;
+        } else {
+            $("#cuentaTicket").removeClass("invalid-inputTicket");
         }
 
+        if ($("#noSerieTicket").val() == undefined || $("#noSerieTicket").val() == '') {
+            mensajeError += "<li>Debe ingresar un n&uacute;mero de Serie del Ticket</li>";
+            $("#noSerieTicket").addClass("invalid-inputTicket");
+            isValid = false;
+        } else {
+            $("#noSerieTicket").removeClass("invalid-inputTicket");
+        }
+
+        if ($("#descripcionProblemaTicket").val() == undefined || $("#descripcionProblemaTicket").val() == '') {
+            $("#descripcionProblemaTicket").addClass("invalid-inputTicket");
+            mensajeError += "<li>Debe ingresar una descripci&oacute;n del Problema</li>";
+            isValid = false;
+        } else {
+            $("#descripcionProblemaTicket").removeClass("invalid-inputTicket");
+        }
+
+        if ($("#falla").val() == undefined || $("#falla").val() == '') {
+            $("#falla").addClass("invalid-inputTicket");
+            mensajeError += "<li>Debe seleccionar una Falla</li>";
+            isValid = false;
+        } else {
+            $("#falla").removeClass("invalid-inputTicket");
+        }
+
+        if ($("#categoria").val() == undefined || $("#categoria").val() == '') {
+            $("#categoria").addClass("invalid-inputTicket");
+            mensajeError += "<li>Debe seleccionar una Categor&iacute;a</li>";
+            isValid = false;
+        } else {
+            $("#categoria").removeClass("invalid-inputTicket");
+        }
+
+        if ($("#subcategoria").val() == undefined || $("#subcategoria").val() == '') {
+            $("#subcategoria").addClass("invalid-inputTicket");
+            mensajeError += "<li>Debe seleccionar una Subcategor&iacute;a</li>";
+            isValid = false;
+        } else {
+            $("#subcategoria").removeClass("invalid-inputTicket");
+        }
         if (isValid) {
+            let params = {
+                "idTecnico": 0,
+                "telefonoTecnico": $scope.ticketSoporteR.telefonoTecnico,
+                "noCuenta": $scope.ticketSoporteR.cuenta,
+                "idFalla": Number($scope.ticketSoporteR.idFalla),
+                "idCategoria": Number($scope.ticket.idCategoria),
+                "idSubcategoria": Number($scope.ticket.idSubcategoria),
+                "comentarios": $scope.ticketSoporteR.descripcionProblema,
+                "noSerieOld": $scope.ticketSoporteR.noSerieOld,
+                "noSerieNew": $scope.ticketSoporteR.noSerieNew,
+                "idApplication": 2
+            }
+            console.log(params);
+            swal({ text: 'Espera un momento...', allowOutsideClick: false });
+            swal.showLoading();
+            gestionTicketSoporteService.creaTicketSoporte(params).then(function success(response) {
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        if (response.data.result) {
+                            swal.close();
+                            $scope.consultarTicketsSoporte();
+                            $scope.changeView();
+                            $scope.cleanForm();
+                            toastr.success(response.data.resultDescripcion);
+                        } else {
+                            swal.close();
+                            mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                        }
+                    } else {
+                        swal.close();
+                        mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                    }
+                } else {
+                    swal.close();
+                    mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                }
+            });
         } else {
             mostrarMensajeWarningValidacion(mensajeError);
         }
     }
 
+    $scope.getFechaFormato = function (fecha) {
+        let fechaPrueba = fecha.split('/');
+        return fechaPrueba[2] + '-' + fechaPrueba[1] + '-' + fechaPrueba[0];
+    }
+
     $scope.consultarTicketsSoporte = function () {
         let mensajeError = '';
         let isValid = true;
-        if (!$scope.validarFecha('filtro_fecha_inicio', 'filtro_fecha_fin')) {
+        if (!$scope.validarFecha('filtro_fecha_inicio_ticket', 'filtro_fecha_fin_ticket')) {
             mensajeError += "<li>La fecha inicical debe ser menor a la fecha final</li>";
             isValid = false;
         }
 
         if (isValid) {
-            swal({ text: 'Espera un momento...', allowOutsideClick: false });
-            swal.showLoading();
+            let params = {
+                fechaInicio: $scope.getFechaFormato(document.getElementById('filtro_fecha_inicio_ticket').value),
+                fechaFin: $scope.getFechaFormato(document.getElementById('filtro_fecha_fin_ticket').value),
+                elementosPorPagina: 10,
+                tipoFecha: 'creacion'
+            }
             if (ticketSoporteTable) {
                 ticketSoporteTable.destroy();
             }
-            let arrayRow = [];
-            $scope.ticketsSoporte = arrayListadoTickets.data.result.tablaTickets;
-            $scope.contadores.abierto = 0;
-            $scope.contadores.cerrado = 0;
-            $scope.contadores.escalado = 0;
-            $scope.contadores.pendiente = 0;
-            $.each($scope.ticketsSoporte, function (i, elemento) {
-                let row = [];
-                row[0] = elemento.ot !== undefined ? elemento.ot : 'Sin informaci&oacute;n';
-                row[1] = elemento.ticket !== undefined ? elemento.ticket : 'Sin informaci&oacute;n';
-                row[2] = elemento.os !== undefined ? elemento.os : 'Sin informaci&oacute;n';
-                row[3] = elemento.fecha_creacion !== undefined ? elemento.fecha_creacion : 'Sin informaci&oacute;n';
-                row[4] = elemento.falla !== undefined ? elemento.falla : 'Sin informaci&oacute;n';
-                row[5] = elemento.telefono !== undefined ? elemento.telefono : 'Sin informaci&oacute;n';
-                row[6] = elemento.tecnico !== undefined ? elemento.tecnico : 'Sin informaci&oacute;n';
-                row[7] = elemento.ingeniero !== undefined ? elemento.ingeniero : 'Sin informaci&oacute;n';
-                row[8] = elemento.horaAsignacion !== undefined ? elemento.horaAsignacion : 'Sin informaci&oacute;n';
-                row[9] = elemento.estatus !== undefined ? elemento.estatus : 'Sin informaci&oacute;n';
-                row[10] = elemento.tiempoAbierto !== undefined ? elemento.tiempoAbierto : 'Sin informaci&oacute;n';
-                row[11] = '<a class="" id="detalleIncidencia' + elemento.ticket + '" onclick="consultaDetalle(' + "'" + elemento.id_conexion + "'" + ')" >' +
-                    '<i class="fa fa-bars" style="background-color: #58b3bf" title="Detalle"></i>' +
-                    '</a> &nbsp;' +
-                    '<a class="" id="detalleIncidencia' + elemento.ticket + '" onclick="asignaTicket(' + "'" + elemento.ticket + "'" + ')">' +
-                    '<i class="fas fa-user-check" style="background-color: #7f4c9d" title="Asignar"></i>' +
-                    '</a>'
-                arrayRow.push(row);
-                if(elemento.estatus === 'Abierto')
-                     $scope.contadores.abierto += 1;
-
-                if(elemento.estatus === 'Cerrado')
-                     $scope.contadores.cerrado += 1;
-
-                if(elemento.estatus === 'Escalado')
-                     $scope.contadores.escalado += 1;
-
-                if(elemento.estatus === 'Pendiente')
-                     $scope.contadores.pendiente += 1;
-                   
-            })
+            // console.log(ticketSoporteTable.page.info())
             ticketSoporteTable = $('#tableTicketSoporte').DataTable({
+                "processing": false,
+                "ordering": false,
+                "serverSide": true,
+                "scrollX": false,
                 "paging": true,
+                "info": false,
                 "lengthChange": false,
+                "searching": false,
                 "ordering": false,
                 "pageLength": 10,
-                "info": false,
-                "data": arrayRow,
-                "autoWidth": true,
-                "language": idioma_espanol_not_font,
-                "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+                "ajax": {
+                    "url": "req/consultaTicketsSoporte",
+                    "type": "GET",
+                    "data": params,
+                    "beforeSend": function () {
+                        if (!swal.isVisible()) {
+                            swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                            swal.showLoading();
+                        }
+                    },
+                    "dataSrc": function (json) {
+                        console.log(json)
+                        return json.data;
+                    },
+                    "error": function (xhr, error, thrown) {
+                        handleError(xhr)
+                    },
+                    "complete": function () {
+                        swal.close()
+                    }
+                },
+                "columns": [null, null, null, null, null, null, null, null, null, null, null, null],
+                "language": idioma_espanol_not_font
             });
-            swal.close();
         } else {
             mostrarMensajeWarningValidacion(mensajeError);
         }
@@ -269,6 +351,10 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                 $scope.$apply();
             }
         }).catch(swal.noop);
+    }
+
+    openModalBusquedaTecnicosTicket = function () {
+        $("#modalBusquedaTecnicosTicket").modal('show');
     }
 
     consultaDetalle = function () {
@@ -307,6 +393,22 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         $(idSpan).addClass('selected-filter');
     }
 
-
-
+    $scope.cleanForm = function () {
+        $scope.ticketSoporteR = {};
+        $("#cuentaTicket").val('');
+        $("#telefonoTicket").val('');
+        $("#noSerieTicket").val('');
+        $("#noSerieNuevoEquipo").val('');
+        $("#noSerieNuevoEquipo").val('');
+        $("#falla").prop('selectedIndex', 0);
+        $("#categoria").prop('selectedIndex', 0);
+        $("#subcategoria").prop('selectedIndex', 0);
+        $("#subcategoria").prop('selectedIndex', 0);
+        $("#tipoOrden").prop('selectedIndex', 0);
+        $("#tipoOrden").prop('selectedIndex', 0);
+        $("#tipoNegocio").prop('selectedIndex', 0);
+        $("#region").prop('selectedIndex', 0);
+        $("#tecnologia").prop('selectedIndex', 0);
+        $("#descripcionProblemaTicket").val('');
+    }
 }]);
