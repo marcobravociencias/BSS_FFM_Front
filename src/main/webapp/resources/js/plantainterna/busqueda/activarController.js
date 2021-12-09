@@ -37,13 +37,13 @@ app.activacionController=function($scope, $q, busquedaService){
     $scope.mostrarDetalleActivar = function(csp) {
         $scope.Network_code=''
         $scope.tipoactivacion='csp'
-        $scope.validarActivacionos=csp.Id_OS
+        $scope.validarActivacionos=csp.idCsp
         csp.id_cotsitioplansf=csp.id
         $scope.objectglobalactivacion=csp
 
         console.log(csp)
         $scope.codigopostalplan=''
-        $scope.codigopostalplanactivacion=csp.CP
+        $scope.codigopostalplanactivacion=csp.cp
         //$scope.codigopostalplanactivacion='04519'
         $scope.idotActivacion=csp.idOt
         $scope.unidadNegocioActivacion=csp.unidadNegocio
@@ -55,7 +55,7 @@ app.activacionController=function($scope, $q, busquedaService){
         $scope.statusActivacion=csp.cuentaActiva
         
 
-        if (csp.Folio_OS) {
+        if (csp.folioOs) {
             $("#id_cot_sitio_plan_detalle_activar").text(csp.nombre)
             $scope.tituloActivacion = 'Cot sitio plan:';
             $scope.iconActivacion = 0;

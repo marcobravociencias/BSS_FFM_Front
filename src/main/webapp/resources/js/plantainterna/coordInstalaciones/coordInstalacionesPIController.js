@@ -117,10 +117,12 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 	}
 	$scope.consultarCatalogos();
 
+	$scope.resultPendientes = [];
 	$scope.consultarPendientes = function() {
 		$scope.estatusSelect = [];
 		$scope.estadoSelect = [];
 		$scope.geografiaSelect = [];
+		$scope.resultPendientes = [];
 		$scope.listaEstatusPendiente.map((e)=>{
 			if (e.check) {
 				$scope.estatusSelect.push(e.id);
@@ -186,6 +188,9 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 						
 					},
 					"dataSrc": function (json) {
+						if (json.result) {
+							$scope.resultPendientes = json.result.ordenes ? json.result.ordenes : [];
+						}
 						//$scope.elementosRegistro = json.registrosTotales
 						return json.data;
 					},
@@ -553,10 +558,12 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 		}
 	}
 
+	$scope.resultCalendarizada = [];
 	$scope.consultarCalendarizada = function() {
 		$scope.estatusSelect = [];
 		$scope.estadoSelect = [];
 		$scope.geografiaSelect = [];
+		$scope.resultCalendarizada = [];
 		$scope.listaEstatusCalendarizada.map((e)=>{
 			if (e.check) {
 				$scope.estatusSelect.push(e.id);
@@ -622,6 +629,9 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 						
 					},
 					"dataSrc": function (json) {
+						if (json.result) {
+							$scope.resultCalendarizada = json.result.ordenes ? json.result.ordenes : [];
+						}
 						//$scope.elementosRegistro = json.registrosTotales
 						return json.data;
 					},
@@ -641,10 +651,12 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 		
 	}
 
+	$scope.resultGestoria = [];
 	$scope.consultarGestoria = function() {
 		$scope.estatusSelect = [];
 		$scope.estadoSelect = [];
 		$scope.geografiaSelect = [];
+		$scope.resultGestoria = [];
 		$scope.listaEstatusGestoria.map((e)=>{
 			if (e.check) {
 				$scope.estatusSelect.push(e.id);
@@ -710,6 +722,9 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 						
 					},
 					"dataSrc": function (json) {
+						if (json.result) {
+							$scope.resultGestoria = json.result.ordenes ? json.result.ordenes : [];
+						}
 						//$scope.elementosRegistro = json.registrosTotales
 						return json.data;
 					},
@@ -1542,20 +1557,34 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 	}
 
 	$scope.detalleOtSeleccionada = {};
-	consultaDetalleOt = function(idOt, folio, idFlujo, idTipoOrden, idSubtipoOrden, latitud, longitud) {
+	consultaDetalleOt = function(index) {
 		if ($scope.vistaCoordinacion === 1 || $scope.vistaCoordinacion === 6 || $scope.vistaCoordinacion === 7) {
 			$scope.elementCalendarizado = {};
 			$scope.elementReagendaOT = {};
 			$scope.elementoPlazaComercial = {};
 			$scope.detalleOtSeleccionada = {};
 			$scope.$apply();
-			$scope.detalleOtSeleccionada.idOrden = idOt;
-			$scope.detalleOtSeleccionada.folioOrden = folio;
-			$scope.detalleOtSeleccionada.idFlujo = idFlujo;
-			$scope.detalleOtSeleccionada.idtipoOrden = idTipoOrden;
-			$scope.detalleOtSeleccionada.idSubtipoOrden = idSubtipoOrden;
-			$scope.detalleOtSeleccionada.latitud = latitud;
-			$scope.detalleOtSeleccionada.longitud = longitud;
+			$scope.objetoSelecionado = {};
+			switch ($scope.vistaCoordinacion) {
+				case 1:
+					$scope.objetoSelecionado = $scope.resultPendientes[index];
+					break;
+				case 6:
+					$scope.objetoSelecionado = $scope.resultCalendarizada[index];
+					break;
+				case 7:
+					$scope.objetoSelecionado = $scope.resultGestoria[index];
+					break;
+				default:
+					break;
+			}
+			$scope.detalleOtSeleccionada.idOrden = $scope.objetoSelecionado.idOrden;
+			$scope.detalleOtSeleccionada.folioOrden = $scope.objetoSelecionado.folioSistema;
+			$scope.detalleOtSeleccionada.idFlujo = $scope.objetoSelecionado.idFlujo;
+			$scope.detalleOtSeleccionada.idtipoOrden = $scope.objetoSelecionado.idTipoOrden;
+			$scope.detalleOtSeleccionada.idSubtipoOrden = $scope.objetoSelecionado.idSubTipoOrden;
+			$scope.detalleOtSeleccionada.latitud = $scope.objetoSelecionado.latitud;
+			$scope.detalleOtSeleccionada.longitud = $scope.objetoSelecionado.longitud;
 			$("#modalDetalleOt").modal("show");
 			$('#fecha-reagendamiento').datepicker('update',new Date());
 			$('#fecha-calendarizado').datepicker('update',   moment(new Date()).add('days', 8).toDate() );

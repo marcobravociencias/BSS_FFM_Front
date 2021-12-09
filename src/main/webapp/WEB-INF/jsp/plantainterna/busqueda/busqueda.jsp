@@ -358,13 +358,13 @@
                                 <span class="text-table" ng-bind="cotSitioPlan.accesoPrincipal"></span>
                             </div>
                             <div class="col-2">
-                                <span class="text-table" ng-bind="cotSitioPlan.Folio_OS"></span>
+                                <span class="text-table" ng-bind="cotSitioPlan.folioOs"></span>
                             </div>
                             <div class="col-2">
-                                <a ng-if="cotSitioPlan.Folio_OS && cotSitioPlan.cuentaActiva ==='false'" href="" class="link-consultardetalle" ng-click="mostrarDetalleActivar(cotSitioPlan)">
+                                <a ng-if="cotSitioPlan.folioOs && cotSitioPlan.cuentaActiva ==='false'" href="" class="link-consultardetalle" ng-click="mostrarDetalleActivar(cotSitioPlan)">
                                     <span class='text-table-click'>Activar</span>
                                 </a>
-                                <a ng-if="cotSitioPlan.Folio_OS && cotSitioPlan.cuentaActiva ==='true'" href="" class="link-consultardetalle" ng-click="mostrarDetalleActivar(cotSitioPlan)">
+                                <a ng-if="cotSitioPlan.folioOs && cotSitioPlan.cuentaActiva ==='true'" href="" class="link-consultardetalle" ng-click="mostrarDetalleActivar(cotSitioPlan)">
                                     <span class='text-table-click'>Ver configuraci&oacute;n</span>
                                 </a>
                                 <!--span  class="noosactivar" ng-if="!cotSitioPlan.idCsp" >Postventa</span-->
