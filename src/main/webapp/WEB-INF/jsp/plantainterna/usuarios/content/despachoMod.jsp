@@ -4,19 +4,20 @@
         	<h6 class="text-center titulo-opciones">DESPACHOS DISPONIBLES*</h6>
             <hr/>
 			<div class="input-group input-group-sm content-seach-group">
-				<input type="text" class="form-control form-control-sm buscar-input-operario" ng-model="buscarDespachoMod" placeholder="Buscar despacho"> <span class="search-icon-operario-busq fa fa-search" id="buscar-operario"></span>
+				<input id="buscadorDespachoMod" type="text" class="form-control form-control-sm buscar-input-operario" ng-model="buscarDespachoMod" placeholder="Buscar despacho"> <span class="search-icon-operario-busq fa fa-search" id="buscar-operario"></span>
 			</div>
 			<div class="tecnicos-container">
 				<div class="scrollListaTecnicos" id="divTecnicos">
 					<div ng-repeat="despacho in listaDespachosMod | filter:buscarDespachoMod track by $index" class="tecnico-section" ng-if="despacho.checkedOpcion == false" ng-click="seleccionarDespachoMod(despacho)">
 						<div class="col-md-1">
-							<img src="{{despacho.urlFotoPerfil !=undefined && despacho.urlFotoPerfil ? despacho.urlFotoPerfil :'./resources/img/plantainterna/despacho/tecnicootasignada.png'}}" class="circle responsive-img-tecnico">
+							<img src="{{despacho.urlFoto != undefined && despacho.urlFoto != null && despacho.urlFoto != '' ? despacho.urlFoto :'./resources/img/plantainterna/despacho/tecnicootasignada.png'}}" class="circle responsive-img-tecnico">
 						</div>
-						<div id="{{despacho.idUsuario}}" class="col-md-10">
+						<div id="{{despacho.idUsuario}}" class="col-md-10" style="padding-left: 2em;">
 							<p class="span-consultaTecnico" style="padding-top: .5em;">{{despacho.nombre}} {{despacho.apellidoPaterno}} {{despacho.apellidoMaterno}}</p>
+							<p class="span-consultaTecnico" style="padding-top: .5em;">{{despacho.noEmpleado ? despacho.noEmpleado : 'Sin dato'}} - {{despacho.geografia}}</p>
 						</div>
 						<div class="col-md-1 content-checkbox-operario">
-							<i class="fa fa-chevron-right" style="padding-top: .3em;"></i>
+							<i class="fa fa-chevron-right" style="padding-top: .9em;"></i>
 						</div>
 					</div>	
 				</div>
@@ -40,13 +41,14 @@
 				<div class="scrollListaTecnicos" id="contenedorDespachosMod">
 					<div ng-repeat="despacho in listaDespachosMod | filter:buscarDespachoSeleccionadoMod track by $index" class="tecnico-section" ng-if="despacho.checkedOpcion == true" ng-click="seleccionarDespachoMod(despacho)">
 						<div class="col-md-1 content-checkbox-operario" style="padding-right: 1em;">
-								<i class="fa fa-chevron-left" style="padding-top: .3em;"></i>
+								<i class="fa fa-chevron-left" style="padding-top: .9em;"></i>
 						</div>
 						<div class="col-md-1">
-							<img src="{{despacho.urlFotoPerfil !=undefined && despacho.urlFotoPerfil ? despacho.urlFotoPerfil :'./resources/img/plantainterna/despacho/tecnicootasignada.png'}}" class="circle responsive-img-tecnico">
+							<img src="{{despacho.urlFoto != undefined && despacho.urlFoto != null && despacho.urlFoto != '' ? despacho.urlFoto :'./resources/img/plantainterna/despacho/tecnicootasignada.png'}}" class="circle responsive-img-tecnico">
 						</div>
-						<div id="{{despacho.idUsuario}}" class="col-md-10">
+						<div id="{{despacho.idUsuario}}" class="col-md-10" style="padding-left: 2em;">
 							<p class="span-consultaTecnico" style="padding-top: .5em;">{{despacho.nombre}} {{despacho.apellidoPaterno}} {{despacho.apellidoMaterno}}</p>
+							<p class="span-consultaTecnico" style="padding-top: .5em;">{{despacho.noEmpleado ? despacho.noEmpleado : 'Sin dato'}} - {{despacho.geografia}}</p>
 						</div>
 					</div>	
 				</div>

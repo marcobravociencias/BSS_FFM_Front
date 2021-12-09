@@ -33,6 +33,9 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		$('#searchGeo').val('');
 		$("#jstree-proton-3").jstree("search", '');
 		$("#modalCluster").modal('show')
+		setTimeout(function (){
+	        $("#searchGeo").focus();
+		}, 750);
 	}
 
 	$scope.consultarCatalagosPI = function () {

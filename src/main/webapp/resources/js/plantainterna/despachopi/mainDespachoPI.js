@@ -75,7 +75,10 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
     $scope.abrirModalGeografia=function(){
         $('#searchGeo').val('');
 		$("#jstree-proton-3").jstree("search", '');
-        $("#modal-jerarquia-filtro").modal('show')
+        $("#modal-jerarquia-filtro").modal('show');
+        setTimeout(function (){
+	        $("#searchGeo").focus();
+	    }, 750);
     }
 
     triggerOperarioKeyup=function(event){

@@ -1,3 +1,25 @@
+#jstreeconsulta .jstree-search {
+	font-style: italic !important;
+    color: #8b0000 !important;
+    font-weight: bold !important;
+}
+
+#jstreeIntervencion .jstree-search {
+	font-style: italic !important;
+    color: #8b0000 !important;
+    font-weight: bold !important;
+}
+
+#jstreeconsulta .jstree-anchor {
+    font-family: 'Montserrat';
+    font-size: .8em;
+}
+
+#jstreeIntervencion .jstree-anchor {
+    font-family: 'Montserrat';
+    font-size: .8em;
+}
+
 .alineacion_inline {
   display: inline;
   color: dimgrey;

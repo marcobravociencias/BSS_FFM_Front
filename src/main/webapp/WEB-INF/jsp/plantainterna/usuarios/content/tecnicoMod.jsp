@@ -10,13 +10,14 @@
 				<div class="scrollListaTecnicos" id="divTecnicos">
 					<div ng-repeat="tecnico in listaTecnicosMod | filter:buscarTecnicoMod track by $index" class="tecnico-section" ng-if="tecnico.checkedOpcion == false" ng-click="seleccionarTecnicoMod(tecnico)">
 						<div class="col-md-1">
-							<img src="{{tecnico.urlFotoPerfil !=undefined && tecnico.urlFotoPerfil ? tecnico.urlFotoPerfil :'./resources/img/plantainterna/despacho/tecnicootasignada.png'}}" class="circle responsive-img-tecnico">
+							<img src="{{tecnico.urlFoto != undefined && tecnico.urlFoto != null && tecnico.urlFoto != '' ? tecnico.urlFoto :'./resources/img/plantainterna/despacho/tecnicootasignada.png'}}" class="circle responsive-img-tecnico">
 						</div>
-						<div id="{{tecnico.idUsuario}}" class="col-md-10">
+						<div id="{{tecnico.idUsuario}}" class="col-md-10" style="padding-left: 2em;">
 							<p class="span-consultaTecnico" style="padding-top: .5em;">{{tecnico.nombre}} {{tecnico.apellidoPaterno}} {{tecnico.apellidoMaterno}}</p>
+							<p class="span-consultaTecnico" style="padding-top: .5em;">{{tecnico.noEmpleado ? tecnico.noEmpleado : 'Sin dato'}} - {{tecnico.geografia}}</p>
 						</div>
 						<div class="col-md-1 content-checkbox-operario">
-							<i class="fa fa-chevron-right" style="padding-top: .3em;"></i>
+							<i class="fa fa-chevron-right" style="padding-top: .9em;"></i>
 						</div>
 					</div>	
 				</div>
@@ -40,13 +41,14 @@
 				<div class="scrollListaTecnicos" id="contenedorTecnicosMod">
 					<div ng-repeat="tecnico in listaTecnicosMod | filter:buscarTecnicoSeleccionadoMod track by $index" class="tecnico-section" ng-if="tecnico.checkedOpcion == true" ng-click="seleccionarTecnicoMod(tecnico)">
 						<div class="col-md-1 content-checkbox-operario" style="padding-right: 1em;">
-								<i class="fa fa-chevron-left" style="padding-top: .3em;"></i>
+								<i class="fa fa-chevron-left" style="padding-top: .9em;"></i>
 						</div>
 						<div class="col-md-1">
-							<img src="{{tecnico.urlFotoPerfil !=undefined && tecnico.urlFotoPerfil ? tecnico.urlFotoPerfil :'./resources/img/plantainterna/despacho/tecnicootasignada.png'}}" class="circle responsive-img-tecnico">
+							<img src="{{tecnico.urlFoto != undefined && tecnico.urlFoto != null && tecnico.urlFoto != '' ? tecnico.urlFoto :'./resources/img/plantainterna/despacho/tecnicootasignada.png'}}" class="circle responsive-img-tecnico">
 						</div>
-						<div id="{{tecnico.idUsuario}}" class="col-md-10">
+						<div id="{{tecnico.idUsuario}}" class="col-md-10" style="padding-left: 2em;">
 							<p class="span-consultaTecnico" style="padding-top: .5em;">{{tecnico.nombre}} {{tecnico.apellidoPaterno}} {{tecnico.apellidoMaterno}}</p>
+							<p class="span-consultaTecnico" style="padding-top: .5em;">{{tecnico.noEmpleado ? tecnico.noEmpleado : 'Sin dato'}} - {{tecnico.geografia}}</p>
 						</div>
 					</div>	
 				</div>

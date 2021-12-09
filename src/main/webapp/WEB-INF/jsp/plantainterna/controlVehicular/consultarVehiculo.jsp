@@ -1,29 +1,39 @@
-<div class="row">
-    <!--
-    <div class="col-2 offset-1 icons-filter disponible" onclick="filterByStatus(1)">
-        <i class="fas fa-car-side"></i>
-        <span class="disponible" ng-bind="countDisponibles"></span><span class="disponible">&nbsp;Disponibles</span>
-    </div>
-    <div class="col-2 icons-filter asignado" onclick="filterByStatus(2)">
-        <i class="fas fa-car"></i>
-        <span class="asignadoStyle" ng-bind="countAsignados"></span><span class="asignadoStyle">&nbsp;Asignados</span>
-    </div>
-    <div class="col-2 icons-filter noDisponible" onclick="filterByStatus(3)">
-        <i class="fas fa-wrench"></i>
-        <span class="servicioStyle" ng-bind="countNoDisponibles"></span><span class="servicioStyle">&nbsp;No Disponibles</span>
-    </div>  
-    -->
-    
-    <div class="col-2 search-form form-group" style="padding-left: 2em;">
+<div class="row">    
+    <div class="col-md-2 search-form form-group" style="padding-left: 1.5em;">
         <label style="margin-bottom: 0;">Buscar</label>
         <input placeholder="Buscar" style="border-radius: .5em !important;" type="text" autocomplete="off" class="search-filtro form-control form-control-sm mt-0" 
             id="searchText">
     </div>
-    <div class="col-2 offset-7 search-form">
+    
+    <div class="col-md-7 search-form form-group">
+        <div class="row">
+        	<div class="col-md-12">
+        		<ul class="nav nav-tabs" id="tabContadoresVehiculos" role="tablist">
+        			<li class="nav-item contenedorContadoresEstadosVehiculos" ng-click="busquedaVehiculosEstado('todos')">
+						<label class="nav-link active etiquetaContadoresEstadosVehiculos" data-toggle="tab" href="#" role="tab">Todos <i class="fas fa-th-list"></i> <p class="contadoresEstadosVehiculos">{{countTodos}}</p></label>
+					</li>
+					<li class="nav-item contenedorContadoresEstadosVehiculos" ng-click="busquedaVehiculosEstado('asignado')">
+						<label class="nav-link etiquetaContadoresEstadosVehiculos" data-toggle="tab" href="#" role="tab">Asignados <i class="fas fa-car"></i> <p class="contadoresEstadosVehiculos">{{countAsignados}}</p></label>
+					</li>
+			        <li class="nav-item contenedorContadoresEstadosVehiculos" ng-click="busquedaVehiculosEstado('disponible')">
+						<label class="nav-link etiquetaContadoresEstadosVehiculos" data-toggle="tab" href="#" role="tab">Disponibles <i class="fas fa-car-side"></i> <p class="contadoresEstadosVehiculos">{{countDisponibles}}</p></label>
+					</li>
+					<li class="nav-item contenedorContadoresEstadosVehiculos" ng-click="busquedaVehiculosEstado('no disponible')">
+						<label class="nav-link etiquetaContadoresEstadosVehiculos" data-toggle="tab" href="#" role="tab">No disponibles <i class="fas fa-tools"></i> <p class="contadoresEstadosVehiculos">{{countNoDisponibles}}</p></label>
+					</li>
+					<li class="nav-item contenedorContadoresEstadosVehiculos" ng-click="busquedaVehiculosEstado('baja')">
+						<label class="nav-link etiquetaContadoresEstadosVehiculos" data-toggle="tab" href="#" role="tab">Bajas <i class="fas fa-times"></i> <p class="contadoresEstadosVehiculos">{{countBajas}}</p></label>
+					</li>
+				</ul>
+        	</div>
+        </div>
+    </div>
+    
+    <div class="col-md-2 search-form">
         <input readonly placeholder="Geograf&iacute;a" type="text" onclick="abrirModalGeografiaBuscar()"
             class="search-filtro form-control form-control-sm" style="border-radius: .5em !important;">
     </div>
-    <div class="col-1">
+    <div class="col-md-1">
         <button id="btnBuscar" type="button" class="btn btn-primary btnTotal" ng-click="getVehiculos()">
             <i class="fa fa-search"></i>
         </button>

@@ -40,6 +40,10 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', function
         $('#arbolIntervencionesConsulta').bind('loaded.jstree', function(e, data) {
         }).jstree({
         	'plugins': ['search', 'checkbox', 'wholerow'],
+        	'search': {
+				"case_sensitive": false,
+				"show_only_matches": true
+			},
 			'core': {
 				'data': intervencionesLista,
                 'themes': {
@@ -97,6 +101,9 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', function
     
     $scope.abrirModalModalIntervencionesConsulta = function() {
     	$("#modalIntervencionesConsulta").modal('show');
+    	setTimeout(function (){
+	        $("#buscadorIntervencionConsultaGeneral").focus();
+	    }, 750);
 	}
     
     //MÉTODO PARA BUSCAR INTERVENCIONES DE ACUERDO AL TEXTO INGRESADO EN EL INPUT DE BÚSQUEDA - MODAL INTERVENCIONES CONSULTA OTS
@@ -193,6 +200,11 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', function
                     }
                 ]
             });
+    		
+    		setTimeout(function (){
+    	        $("#txtBuscadorOtsConsultaTabla").focus();
+    	    }, 750);
+    		
     	}else{
     		toastr.warning(respuestaValidacionDatos.mensaje);
     	}

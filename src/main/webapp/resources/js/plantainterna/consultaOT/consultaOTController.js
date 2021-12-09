@@ -290,6 +290,10 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 								$scope.consultaOT()
 							}).jstree({
 								'plugins': ["wholerow", "checkbox", 'search'],
+								'search': {
+        							"case_sensitive": false,
+        							"show_only_matches": true
+        						},
 								'core': {
 									'data': geografia,
 									'themes': {
@@ -481,6 +485,9 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 
 	document.getElementById('cluster').addEventListener('click', function () {
 		$('#modalCluster').modal('show');
+		setTimeout(function (){
+	        $("#searchGeografia").focus();
+	    }, 750);
 	});
 
 
@@ -1936,4 +1943,10 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		console.log(tableHTML)
 		return tableHTML;
 	}
+	
+	//MÉTODO PARA BUSCAR GEOGRAFÍAS DE ACUERDO AL TEXTO INGRESADO EN EL INPUT DE BÚSQUEDA - CONSULTA GENERAL OT
+	$scope.busquedaGeografiaConsultaOt = function() {
+		$("#jstree-proton-3").jstree("search", $('#searchGeografia').val());
+	}
+	
 }])

@@ -35,6 +35,9 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
 
     document.getElementById('cluster').addEventListener('click', function () {
         $('#modalCluster').modal('show');
+        setTimeout(function (){
+	        $('#buscadorGeografiaConsultaIncidencias').focus();
+	    }, 750);
     });
 
 
@@ -93,7 +96,11 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         })
         $('#jstree-proton-3').bind('loaded.jstree', function (e, data) {
         }).jstree({
-            'plugins': ["wholerow", "checkbox"],
+            'plugins': ["search", "wholerow", "checkbox"],
+            'search': {
+				"case_sensitive": false,
+				"show_only_matches": true
+			},
             'core': {
                 'data': geografia,
                 'themes': {
@@ -189,7 +196,11 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                             $('#jstree-proton-3').bind('loaded.jstree', function (e, data) {
 
                             }).jstree({
-                                'plugins': ["wholerow", "checkbox"],
+                                'plugins': ["search", "wholerow", "checkbox"],
+                                'search': {
+        							"case_sensitive": false,
+        							"show_only_matches": true
+        						},
                                 'core': {
                                     'data': geografia,
                                     'themes': {
@@ -823,9 +834,15 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         $("#containerStatusFallas").show();
         $("#container-declinarIncidencia").hide();
     })
+    
+    //MÉTODO PARA BUSCAR GEOGRAFÍAS DE ACUERDO AL TEXTO INGRESADO EN EL INPUT DE BÚSQUEDA - CONSULTA GENERAL DE INCIDENCIAS
+    $scope.busquedaGeografiaConsultaIncidencias = function() {
+    	$("#jstree-proton-3").jstree("search", $('#buscadorGeografiaConsultaIncidencias').val());
+	}
 
     angular.element(document).ready(function () {
         $("#idBody").removeAttr("style");
         $("#moduloInspectorIncidenciasPE").addClass('active');
     });
+    
 }]);

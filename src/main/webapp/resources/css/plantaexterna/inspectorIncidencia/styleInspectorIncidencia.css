@@ -1,5 +1,56 @@
 /* FILTROS INSPECTOR INCIDENCIA */
 
+#jstree-proton-3 .jstree-anchor {
+    font-family: 'Montserrat';
+    font-size: .8em;
+}
+
+#jstree-proton-3 .jstree-search {
+	font-style: italic !important;
+    color: #8b0000 !important;
+    font-weight: bold !important;
+}
+
+.contenedorBuscadorGeneral {
+    height: 1em;
+    display: inline-flex;
+    margin-bottom: 10px;
+}
+
+.iconoBusquedaGeneral {
+    height: 1.5em !important;
+    min-height: 1.5em !important;
+    position:absolute;
+    right:0;
+    top:30%;
+    margin-right:.5em;
+    color: #9d9d9d;
+    font-size:.8em;
+    background: transparent;
+  	top: 0.5em;
+}
+
+.txtBusquedaGeneral {
+    height: 2em !important;
+    min-height: 2em !important;
+    padding: 0 !important;
+    padding-left: 1em !important;
+    border-radius: 1em !important;
+    border: 1px solid #e2e2e2;
+    background:#fcfcfc;
+    color: #9d9d9d;
+    font-family: 'Montserrat';
+    font-size: .8em;
+}
+
+.txtBusquedaGeneral::placeholder{
+    color: #9d9d9d;
+    font-family: 'Montserrat';
+    font-size: .8em;
+}
+
+/* --------------------------------------------------------------------------------- */
+
 .container-filtros-inspectorincidencia {
     border: none !important;
     z-index: 2;

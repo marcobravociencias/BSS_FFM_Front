@@ -1134,6 +1134,10 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 					$scope.consultarPendientes();
 				}).jstree({
 					'plugins': ["wholerow", "checkbox", "search"],
+					'search': {
+						"case_sensitive": false,
+						"show_only_matches": true
+					},
 					'core': {
 						'data': geografia,
 						'themes': {
@@ -1159,6 +1163,10 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 					$scope.consultarAsignada();
 				}).jstree({
 					'plugins': ["wholerow", "checkbox", "search"],
+					'search': {
+						"case_sensitive": false,
+						"show_only_matches": true
+					},
 					'core': {
 						'data': geografia,
 						'themes': {
@@ -1183,6 +1191,10 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 					$scope.consultarDetenida();
 				}).jstree({
 					'plugins': ["wholerow", "checkbox", "search"],
+					'search': {
+						"case_sensitive": false,
+						"show_only_matches": true
+					},
 					'core': {
 						'data': geografia,
 						'themes': {
@@ -1206,6 +1218,10 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 					$scope.consultarTerminada();
 				}).jstree({
 					'plugins': ["wholerow", "checkbox", "search"],
+					'search': {
+						"case_sensitive": false,
+						"show_only_matches": true
+					},
 					'core': {
 						'data': geografia,
 						'themes': {
@@ -1228,6 +1244,10 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 					$scope.consultarCancelada();
 				}).jstree({
 					'plugins': ["wholerow", "checkbox", "search"],
+					'search': {
+						"case_sensitive": false,
+						"show_only_matches": true
+					},
 					'core': {
 						'data': geografia,
 						'themes': {
@@ -1250,6 +1270,10 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 					$scope.consultarCalendarizada();
 				}).jstree({
 					'plugins': ["wholerow", "checkbox", "search"],
+					'search': {
+						"case_sensitive": false,
+						"show_only_matches": true
+					},
 					'core': {
 						'data': geografia,
 						'themes': {
@@ -1272,6 +1296,10 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 					$scope.consultarGestoria();
 				}).jstree({	
 					'plugins': ["wholerow", "checkbox", "search"],
+					'search': {
+						"case_sensitive": false,
+						"show_only_matches": true
+					},
 					'core': {
 						'data': geografia,
 						'themes': {
@@ -1294,6 +1322,10 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 			$scope.banderaGeografiaPendiente = true;
 		}).jstree({
 			'plugins': ["wholerow", "checkbox"],
+			'search': {
+				"case_sensitive": false,
+				"show_only_matches": true
+			},
 			'core': {
 				'data': geografiaPendiente,
 				'themes': {
@@ -1309,6 +1341,10 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 			$scope.banderaGeografiaAsignada = true;
 		}).jstree({
 			'plugins': ["wholerow", "checkbox"],
+			'search': {
+				"case_sensitive": false,
+				"show_only_matches": true
+			},
 			'core': {
 				'data': geografiaAsignada,
 				'themes': {
@@ -1324,6 +1360,10 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 			$scope.banderaGeografiaDetenida = true;
 		}).jstree({
 			'plugins': ["wholerow", "checkbox"],
+			'search': {
+				"case_sensitive": false,
+				"show_only_matches": true
+			},
 			'core': {
 				'data': geografiaDetenida,
 				'themes': {
@@ -1339,6 +1379,10 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 			$scope.banderaGeografiaTerminada = true;
 		}).jstree({
 			'plugins': ["wholerow", "checkbox"],
+			'search': {
+				"case_sensitive": false,
+				"show_only_matches": true
+			},
 			'core': {
 				'data': geografiaTerminada,
 				'themes': {
@@ -1354,6 +1398,10 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 			$scope.banderaGeografiaCancelada = true;
 		}).jstree({
 			'plugins': ["wholerow", "checkbox"],
+			'search': {
+				"case_sensitive": false,
+				"show_only_matches": true
+			},
 			'core': {
 				'data': geografiaCancelada,
 				'themes': {
@@ -1369,6 +1417,10 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 			$scope.banderaGeografiaCalendarizada = true;
 		}).jstree({
 			'plugins': ["wholerow", "checkbox"],
+			'search': {
+				"case_sensitive": false,
+				"show_only_matches": true
+			},
 			'core': {
 				'data': geografiaCalendarizada,
 				'themes': {
@@ -1385,6 +1437,10 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 			console.log("se crea");
 		}).jstree({	
 			'plugins': ["wholerow", "checkbox"],
+			'search': {
+				"case_sensitive": false,
+				"show_only_matches": true
+			},
 			'core': {
 				'data': geografiaGestoria,
 				'themes': {
@@ -1402,6 +1458,10 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 		$(nombreArbol).bind('loaded.jstree', function(e, data) {
 		}).jstree({
 			'plugins': ["wholerow", "checkbox"],
+			'search': {
+				"case_sensitive": false,
+				"show_only_matches": true
+			},
 			'core': {
 				'data': datos,
 				'themes': {
@@ -1432,24 +1492,45 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 		switch (opcion) {
 			case 1:
 				$("#modal-geografia-pendiente").modal("show");
+				setTimeout(function (){
+			        $("#searchGeografiaPendiente").focus();
+			    }, 750);
 				break;
 			case 2:
 				$("#modal-geografia-asignada").modal("show");
+				setTimeout(function (){
+			        $("#searchGeografiaAsignada").focus();
+				}, 750);
 				break;
 			case 3:
 				$("#modal-geografia-detenido").modal("show");
+				setTimeout(function (){
+			        $("#searchGeografiaDetenida").focus();
+				}, 750);
 				break;
 			case 4:
 				$("#modal-geografia-terminada").modal("show");
+				setTimeout(function (){
+			        $("#searchGeografiaTerminada").focus();
+				}, 750);
 				break;
 			case 5:
 				$("#modal-geografia-cancelada").modal("show");
+				setTimeout(function (){
+			        $("#searchGeografiaCancelada").focus();
+				}, 750);
 				break;
 			case 6:
 				$("#modal-geografia-calendarizada").modal("show");
+				setTimeout(function (){
+			        $("#searchGeografiaCalendarizada").focus();
+				}, 750);
 				break;
 			case 7:
 				$("#modal-geografia-gestoria").modal("show");
+				setTimeout(function (){
+			        $("#searchGeografiaGestoria").focus();
+				}, 750);
 				break;
 		
 		

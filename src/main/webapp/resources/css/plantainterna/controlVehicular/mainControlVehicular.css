@@ -1,3 +1,50 @@
+#jstreeconsulta .jstree-anchor {
+    font-family: 'Montserrat';
+    font-size: .8em;
+}
+
+.contenedorContadoresEstadosVehiculos{
+	text-align: center !important;
+}
+
+.contenedorContadoresEstadosVehiculos:hover{
+	cursor: pointer !important;
+	color: #7716fa !important;
+}
+
+.etiquetaContadoresEstadosVehiculos{
+	margin-bottom: 0em;
+	height: 50px;
+	font-family: 'Montserrat' !important;
+    font-size: .8em !important;
+}
+
+.etiquetaContadoresEstadosVehiculos:hover{
+	cursor: pointer !important;
+}
+
+.contadoresEstadosVehiculos{
+	margin-bottom: 0em;
+	margin-top: 5px;
+	font-family: 'Montserrat' !important;
+    font-size: 1.5em !important;
+}
+
+#tabContadoresVehiculos .nav-link.active {
+    color: #7716fa !important;
+    font-weight: bolder;
+    border: solid 0px #fff;
+}
+
+#tabContadoresVehiculos .nav-link:hover {
+    background-color: #ffffff !important;
+    border-color: transparent !important;
+    cursor: pointer !important;
+    font-weight: bold;
+}
+
+/* ------------------------------------------------------------------------------- */
+
 .jstree-proton .jstree-wholerow-clicked {
   background: white;
 }

@@ -71,7 +71,7 @@
 									<input id="idBuscadorGeografia" type="text" class="form-control form-control-sm buscar-input-operario" placeholder="Buscar geograf&iacute;a" ng-keyup="busquedaGeografiaIndividual()"> 
 									<span class="search-icon-operario-busq fa fa-search"></span>
 								</div>
-								<div class="container-treegeofria scrollGeneral">
+								<div class="scrollGeneralArbolGeografiaIndividual">
 									<div id="arbolGeografiasVistaIndividual" class="proton-demo"></div>
 								</div>
 								<div id="divMensajeSeleccioneElemento" class="content-noseleccion">
@@ -80,7 +80,7 @@
 							</div>
 							<div id="divContenedorTecnicos" class="col-md-4">
 								<div class="input-group input-group-sm content-seach-group">
-									<input type="text" class="form-control form-control-sm buscar-input-operario" ng-model="buscarTecnico" placeholder="Buscar T&eacute;cnico"> 
+									<input id="buscadorTecnicoConsultaVistaIndividual" type="text" class="form-control form-control-sm buscar-input-operario" ng-model="buscarTecnico" placeholder="Buscar T&eacute;cnico"> 
 									<span class="search-icon-operario-busq fa fa-search" id="buscar-operario"></span>
 								</div>
 								<div class="tecnicos-container">
@@ -110,7 +110,7 @@
 							</div>
 							<div id="divSkills" class="col-md-5">
 								<div class="input-group input-group-sm content-seach-group">
-									<input type="text" class="form-control form-control-sm buscar-input-operario" ng-model="buscarSkill" placeholder="Buscar skill"> <span class="search-icon-operario-busq fa fa-search"></span>
+									<input id="buscadorSkillConsultaVistaIndividual" type="text" class="form-control form-control-sm buscar-input-operario" ng-model="buscarSkill" placeholder="Buscar skill"> <span class="search-icon-operario-busq fa fa-search"></span>
 								</div>
 				
 								<div id="divContenedorSkills" style="display: none">
@@ -162,8 +162,8 @@
 								</div>
 								<div class="col-md-2">
 									<div style="text-align: right;">
-										<i class="fas fa-eye iconoFlechaScroll" ng-click="mostrarTodasColumnasIcono()" data-toggle="tooltip" data-placement="top" title="Mostrar todas las columnas"></i> 
-										<i class="fas fa-columns iconoFlechaScroll"	ng-click="abrirModalSkillsFiltroTabla()" data-toggle="tooltip" data-placement="top" title="Mostrar / ocultar columnas"></i>
+										<i class="fas fa-eye iconoFlechaScroll iconoMostrarColumnas" ng-click="mostrarTodasColumnasIcono()"><span class="tooltipIconoMostrarColumnas">Mostrar todas las columnas</span></i> 
+										<i class="fas fa-columns iconoFlechaScroll iconoMostrarOcultarColumnas"	ng-click="abrirModalSkillsFiltroTabla()"><span class="tooltipIconoMostrarOcultarColumnas">Mostrar / ocultar columnas</span></i>
 									</div>
 								</div>
 							</div>
@@ -176,7 +176,7 @@
 													<tr class="zui-sticky-tr">
 														<th class="zui-sticky-col zui-text-cabeceras" scope="col">CUADRILLA</th>
 														<th class="zui-text-cabeceras" scope="col" style="text-align: center" ng-repeat="intervencion in listadoIntervenciones | orderBy:'nombre' track by $index">
-															{{intervencion.nombre}} <i class="fas fa-eye-slash iconoOjoColumna" ng-click="displayColumnaIndividual($index+2)"></i>
+															<span class="txtCabeceraTabla" ng-click="seleccionarSkillTodosTecnicos(intervencion.id)">{{intervencion.nombre}} <span class="tooltipTxtCabeceraTabla">Seleccionar todos</span></span> <i class="fas fa-eye-slash iconoOjoColumna" ng-click="displayColumnaIndividual($index+2)"><span class="tooltipIconoOjoColumna">Ocultar columna</span></i>
 														</th>
 														<th class="columnheader-table" ></th>
 													</tr>
@@ -239,7 +239,7 @@
                             <div class="row">
                                 <div class="col-md-5">
                                     <div class="input-group input-group-sm content-seach-group  ">
-                                        <input type="text" class="form-control form-control-sm buscar-input-operario" ng-model="buscarTecnico" placeholder="Buscar T&eacute;cnico"> <span class="search-icon-operario-busq fa fa-search" id="buscar-operario"></span>
+                                        <input id="buscadorTecnicoMultiseleccion" type="text" class="form-control form-control-sm buscar-input-operario" ng-model="buscarTecnico" placeholder="Buscar T&eacute;cnico"> <span class="search-icon-operario-busq fa fa-search" id="buscar-operario"></span>
                                     </div>
                                     <div class="tecnicos-container">
                                         <div class="scrollGeneral" id="divTecnicos">
@@ -318,12 +318,14 @@
 					</div>
 					<div class="modal-body">
 						<div class="container">
-							<div class="scrollGeneral">
-								<div class="input-group input-group-sm content-seach-group">
-									<input id="idBuscadorGeografiaVistaTabla" type="text" class="form-control form-control-sm buscar-input-operario" placeholder="Buscar geograf&iacute;a" ng-keyup="busquedaGeografiaVistaTabla()"> <span class="search-icon-operario-busq fa fa-search"></span>
-								</div>
-								<div class="container-treegeofria scrollGeneral">
-									<div id="arbolGeografiasVistaTabla" class="proton-demo">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="input-group input-group-sm content-seach-group">
+										<input id="idBuscadorGeografiaVistaTabla" type="text" class="form-control form-control-sm buscar-input-operario" placeholder="Buscar geograf&iacute;a" ng-keyup="busquedaGeografiaVistaTabla()"> <span class="search-icon-operario-busq fa fa-search"></span>
+									</div>
+									<div class="scrollGeneral">
+										<div id="arbolGeografiasVistaTabla" class="proton-demo">
+										</div>
 									</div>
 								</div>
 							</div>
