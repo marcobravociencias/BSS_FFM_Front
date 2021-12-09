@@ -45,7 +45,15 @@
 
     <body id="idBody" ng-controller="reportesController" style="display: none;">
         <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
+        <div class="container container-title-header" style="padding: 0 !important;">
+            <div class="header-modulo">
+                <h5 class="title-modulo">Reportes</h5>
+                <h1 class="h6 subtitle-modulo">En este m&oacute;dulo podr&aacute;s realizar la busqueda de
+                    reportes en general</h1>
+            </div>
+        </div>
         <div class="container" id="container_reportes">
+           
             <div class="row">
                 <div class="col-md-12">
                     <ul class="nav nav-tabs left-menu small-menu flex-column" id="opciones-menu" role="tablist"
