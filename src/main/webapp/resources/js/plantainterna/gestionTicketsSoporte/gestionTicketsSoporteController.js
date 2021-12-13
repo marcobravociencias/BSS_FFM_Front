@@ -18,8 +18,8 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     $scope.ticketSoporteR = {};
 
     $('#searchTextTicket').on('keyup', function () {
-        $(".user-filter span").removeClass('selected-filter');
-        $(".fa-filter").css('color', '#ccc');
+        // $(".user-filter span").removeClass('selected-filter');
+        // $(".fa-filter").css('color', '#ccc');
         ticketSoporteTable.search(this.value).draw();
     })
 
@@ -36,8 +36,8 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             if (response.data.respuesta) {
                 $scope.catalogoTickets = arrayListadoTickets.data.result.catalogoTickets;
                 $scope.catalogoFallasTicketSoporte = response.data.result.soportes;
-                console.log($scope.catalogoFallasTicketSoporte);
-                console.log($scope.catalogoTickets);
+                // console.log($scope.catalogoFallasTicketSoporte);
+                // console.log($scope.catalogoTickets);
                 let nivel1 = [];
                 $scope.catalogoTickets.map(function (e) {
                     if (e.nivel == "1") {
@@ -65,15 +65,18 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         });
         $('.datepicker').datepicker('update', new Date());
         ticketSoporteTable = $('#tableTicketSoporte').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": false,
-            "pageLength": 10,
-            "info": false,
-            "autoWidth": true,
-            "language": idioma_espanol_not_font,
-            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+            "processing": false,
+			"ordering": false,
+			"serverSide": false,
+			"scrollX": false,
+			"paging": true,
+			"lengthChange": false,
+			"searching": false,
+			"ordering": false,
+			"pageLength": 10,
+			"data": [],
+			"columns": [null, null, null, null, null, null, null, null, null, null, null, null],
+            "language": idioma_espanol_not_font
 
         });
         $scope.consultarCatalogosTicketSoporte();
@@ -276,6 +279,11 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     $scope.consultarTicketsSoporte = function () {
         let mensajeError = '';
         let isValid = true;
+        $scope.ticketSoporte = {};
+        $scope.contadores.abierto = 0;
+        $scope.contadores.cerrado = 0;
+        $scope.contadores.escalado = 0;
+        $scope.contadores.pendiente = 0;
         if (!$scope.validarFecha('filtro_fecha_inicio_ticket', 'filtro_fecha_fin_ticket')) {
             mensajeError += "<li>La fecha inicical debe ser menor a la fecha final</li>";
             isValid = false;
@@ -298,23 +306,51 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                 "serverSide": true,
                 "scrollX": false,
                 "paging": true,
-                "info": false,
+                "info": true,
                 "lengthChange": false,
-                "searching": false,
+                "searching": true,
                 "ordering": false,
+                "autoWidth": true,
                 "pageLength": 10,
                 "ajax": {
                     "url": "req/consultaTicketsSoporte",
                     "type": "GET",
                     "data": params,
                     "beforeSend": function () {
+                        console.log("entra");
                         if (!swal.isVisible()) {
                             swal({ text: 'Cargando registros...', allowOutsideClick: false });
                             swal.showLoading();
                         }
                     },
                     "dataSrc": function (json) {
-                        console.log(json)
+                        console.log("entra2");
+                        console.log(json.data)
+                        // if (json.result != undefined && json.result.tickets != undefined) {
+                        //     $scope.ticketsSoporte = json.result.tickets;
+                        //     console.log($scope.ticketsSoporte);
+                        //     $.each($scope.ticketsSoporte, function (i, elemento) {
+                        //         console.log(elemento.descripcionEstatus);
+                        //         if (elemento.descripcionEstatus == 'Abierto') {
+                        //             console.log("entro1");
+                        //             $scope.contadores.abierto += 1;
+                        //         }
+                        //         if (elemento.descripcionEstatus == 'Cerrado') {
+                        //             console.log("entro2");
+                        //             $scope.contadores.cerrado += 1;
+                        //         }
+                        //         if (elemento.descripcionEstatus == 'Escalado') {
+                        //             console.log("entro3");
+                        //             $scope.contadores.escalado += 1;
+                        //         }
+                        //         if (elemento.descripcionEstatus == 'Pendiente') {
+                        //             console.log("entro4");
+                        //             $scope.contadores.pendiente += 1;
+                        //         }
+                        //     });
+                        //     $scope.$apply();
+                        // }
+                        // console.log($scope.ticketsSoporte);
                         return json.data;
                     },
                     "error": function (xhr, error, thrown) {
@@ -357,7 +393,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         $("#modalBusquedaTecnicosTicket").modal('show');
     }
 
-    consultaDetalle = function () {
+    consultaDetalleTicketSoporte = function () {
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
         $scope.detalleCaptura = ticketDetalle.result.orden;

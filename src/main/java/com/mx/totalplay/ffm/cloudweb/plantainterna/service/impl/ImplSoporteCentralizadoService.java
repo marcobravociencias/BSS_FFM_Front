@@ -188,21 +188,23 @@ public class ImplSoporteCentralizadoService implements SoporteCentralizadoServic
 	                    dataArray = new String[ticketsArray.size()][CANTIDAD_COLUMNS_COLUMNSTICKET];
 	                    for (int i = 0; i < ticketsArray.size(); i++) {
 	                        JsonObject object = (JsonObject) ticketsArray.get(i);
-	                        dataArray[count][0] = object.get("idOrden") != null ? object.get("idOrden").getAsString().trim() : "";
+	                        dataArray[count][0] = object.get("idOrden").getAsInt() != 0 ? String.valueOf(object.get("idOrden").getAsInt()) : "";
 	                        dataArray[count][1] = object.get("ticket") != null ? object.get("ticket").getAsString().trim() : "";
 	                        dataArray[count][2] = object.get("os") != null ? object.get("os").getAsString().trim() : "";
 	                        dataArray[count][3] = object.get("fechaCreacion") != null ? object.get("fechaCreacion").getAsString().trim() : "";
 	                        dataArray[count][4] = object.get("descripcionFalla") != null ? object.get("descripcionFalla").getAsString().trim() : "";
 	                        dataArray[count][5] = object.get("telefono") != null ? object.get("telefono").getAsString().trim() : "";
-	                        dataArray[count][6] = object.get("nombreEmpleadoReporta") != null ? object.get("nombreEmpleadoReporta").getAsString().trim() : "";
-	                        dataArray[count][7] = object.get("nombreEmpleadoIng") != null ? object.get("nombreEmpleadoIng").getAsString().trim() : "";
+	                        dataArray[count][6] = (object.get("nombreEmpleadoReporta") != null ? object.get("nombreEmpleadoReporta").getAsString().trim() : "" ) + " " + (object.get("apellidoPaEmpleadoReporta").getAsString() != null ? object.get("apellidoPaEmpleadoReporta").getAsString().trim() : "" ) + " " + (object.get("apellidoMaEmpleadoReporta").getAsString() != null ? object.get("apellidoMaEmpleadoReporta").getAsString().trim() : "" );
+	                        dataArray[count][7] = (object.get("nombreEmpleadoIng") != null ? object.get("nombreEmpleadoIng").getAsString().trim() : "") + " " + (object.get("apellidoPaEmpleadoIng") != null ? object.get("apellidoPaEmpleadoIng").getAsString().trim() : "") + " " + (object.get("apellidoMaEmpleadoIng") != null ? object.get("apellidoMaEmpleadoIng").getAsString().trim() : "");
 	                        dataArray[count][8] = object.get("fechaAsignacion") != null ? object.get("fechaAsignacion").getAsString().trim() : "";
 	                        dataArray[count][9] = object.get("descripcionEstatus") != null ? object.get("descripcionEstatus").getAsString().trim() : "";
 	                        dataArray[count][10] = object.get("tiempoAtencion") != null ? object.get("tiempoAtencion").getAsString().trim() : "";
-	                        dataArray[count][11] = "<div class='tooltip-btn'><span onclick='consultaDetalleTicketSoporte(" + object.get("ticket").getAsString().trim() + ")'><th><i class='fa fa-bars' style='background-color: #58b3bf' title='Detalle'></i></th></span></div>"
-	                        		+"<div class='tooltip-btn'><span onclick='consultaDetalleTicketSoporte(" + object.get("ticket").getAsString().trim() + ")'><th><i class='fas fa-user-check' style='background-color: #7f4c9d' title='Asignar'></i></th></span></div>";
+	                        dataArray[count][11] = "<a class='' id='detalleIncidencia" + object.get("idOrden").getAsInt() + "' onclick='consultaDetalleTicketSoporte(" + object.get("idOrden").getAsInt() + ")'><i class='fa fa-bars' style='background-color: #58b3bf' title='Detalle'></i></a> &nbsp;"
+	                        		+"<a class='' id='asignarIncidencia" + object.get("idOrden").getAsInt() + "' onclick='consultaDetalleTicketSoporte(" + object.get("idOrden").getAsInt() + ")'><i class='fas fa-user-check' style='background-color: #7f4c9d' title='Asignar'></i></a>";
 	                        count++;
+	                        
 	                    }
+	                    logger.info(dataArray);
 	                    dataResponse = DataTableResponse.builder()
 	                            .isRespuesta(true)
 	                            .data( dataArray )
@@ -211,8 +213,9 @@ public class ImplSoporteCentralizadoService implements SoporteCentralizadoServic
 	                            .recordsFiltered(jsonObjectResponse.get("registrosTotales").getAsInt() + "")
 	                            .recordsTotal(jsonObjectResponse.get("registrosTotales").getAsInt() + "")
 	                            .draw(paramTicketSoporte.getDraw() + "")
-	                             .result(response.getResult()) 
+	                            .result(response.getResult()) 
 	                            .build();
+	                    logger.info(dataResponse);
 	                } else {
 	                    dataResponse = DataTableResponse.builder()
 	                            .isRespuesta(true)
@@ -226,7 +229,7 @@ public class ImplSoporteCentralizadoService implements SoporteCentralizadoServic
 	            }
 	        }
         } else {
-        	logger.info("else");
+//        	logger.info("else");
         	 dataResponse = DataTableResponse.builder()
 	                    .isRespuesta(false)
 	                    .data( dataArray )
