@@ -188,6 +188,10 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                         $('#jstreeIntervencion').bind('loaded.jstree', function (e, data) {
                         }).jstree({
                             'plugins': ["wholerow", 'search'],
+                            'search': {
+    							"case_sensitive": false,
+    							"show_only_matches": true
+    						},
                             'core': {
                                 'data': intervencionesArray,
                                 'themes': {
@@ -245,6 +249,10 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                             $('#jstreeconsulta').bind('loaded.jstree', function (e, data) {
                             }).jstree({
                                 'plugins': ["wholerow", 'search'],
+                                'search': {
+        							"case_sensitive": false,
+        							"show_only_matches": true
+        						},
                                 'core': {
                                     'data': geografia,
                                     'themes': {
@@ -880,10 +888,16 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
 
     document.getElementById('arbol_disponibilidad_consulta').addEventListener('click', function () {
         $('#modal_cluster_arbol_diponibilidad').modal('show');
+        setTimeout(function (){
+	        $("#searchGeografia").focus();
+	    }, 750);
     });
 
     document.getElementById('arbol_intervencion').addEventListener('click', function () {
-        $('#modalArbolIntervencion').modal('show')
+        $('#modalArbolIntervencion').modal('show');
+        setTimeout(function (){
+	        $("#searchIntervencion").focus();
+	    }, 750);
     })
 
     document.getElementById('calendario-tab').addEventListener('click', function () {

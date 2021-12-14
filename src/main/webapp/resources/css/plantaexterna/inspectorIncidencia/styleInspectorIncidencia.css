@@ -1,5 +1,56 @@
 /* FILTROS INSPECTOR INCIDENCIA */
 
+#jstree-proton-3 .jstree-anchor {
+    font-family: 'Montserrat';
+    font-size: .8em;
+}
+
+#jstree-proton-3 .jstree-search {
+	font-style: italic !important;
+    color: #8b0000 !important;
+    font-weight: bold !important;
+}
+
+.contenedorBuscadorGeneral {
+    height: 1em;
+    display: inline-flex;
+    margin-bottom: 10px;
+}
+
+.iconoBusquedaGeneral {
+    height: 1.5em !important;
+    min-height: 1.5em !important;
+    position:absolute;
+    right:0;
+    top:30%;
+    margin-right:.5em;
+    color: #9d9d9d;
+    font-size:.8em;
+    background: transparent;
+  	top: 0.5em;
+}
+
+.txtBusquedaGeneral {
+    height: 2em !important;
+    min-height: 2em !important;
+    padding: 0 !important;
+    padding-left: 1em !important;
+    border-radius: 1em !important;
+    border: 1px solid #e2e2e2;
+    background:#fcfcfc;
+    color: #9d9d9d;
+    font-family: 'Montserrat';
+    font-size: .8em;
+}
+
+.txtBusquedaGeneral::placeholder{
+    color: #9d9d9d;
+    font-family: 'Montserrat';
+    font-size: .8em;
+}
+
+/* --------------------------------------------------------------------------------- */
+
 .container-filtros-inspectorincidencia {
     border: none !important;
     z-index: 2;
@@ -168,14 +219,14 @@ tfoot {
 
 .contenido_color{
     display: inline;
-    margin-right: 1.5em;
+    margin-right: 1em;
 }
 .contenido_color i{
-    margin-right: .5em;
+    /* margin-right: .5em; */
 }
 .contenido_color > small{
     color:#4e5f71;
-    font-size: .9em;
+    font-size: .7em;
 }
 #colores_estados {
     margin-bottom: 10px !important;
@@ -634,3 +685,106 @@ thead#thead_incidencia {
 
 /* TABLE INCIDENCIAS */
 /* CONTAINER INSPECTOR INCIDENCIA */
+.left-menu {
+    background-color: #FFFFFF;
+    padding:0;
+    z-index: 1001;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    display: block;
+    box-shadow: 0 4px 13px -3px rgb(0 0 0 / 10%);
+    border-left: 1px solid #d2d2d2;
+    padding-top: 1em;
+    padding-left: 0;
+}
+.left-menu.small-menu:hover{
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+#container_reportes .left-menu .active span{
+    color: #7700ff !important;
+    font-weight: bold;
+}
+#container_reportes .left-menu .active i{
+    color: #fff !important;
+    background: #7700ff;
+    font-weight: bold;
+}
+#container_reportes .left-menu .active{
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    padding-right: 20%;
+}
+
+
+#opciones-menu a > span, #opciones-menu-sf a > span {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.1s, opacity 0.7s linear;
+}
+#opciones-menu:hover a > span, #opciones-menu-sf:hover a > span{
+    visibility: visible;
+    opacity: 1;
+}
+
+.titulo-opcion-menu {
+    height: 5em;
+    line-height: 5em;
+}
+.opcion-menu {
+    cursor: pointer;
+    height: 2em;
+    line-height: 2.5em;
+    margin-right: .4em;
+    margin-left: -.5em;
+}
+
+
+.nav-item a:hover{
+    text-decoration: none !important;
+}
+
+.small-menu .opcion-menu{
+    white-space: nowrap;
+    width: 100%;
+    text-align: center;
+    padding-left:0.5em;
+    transition: width 1s ease;
+}  
+
+.icon-menu-left{
+    color: #7e7e7e;
+    padding: 0.4em;
+    border-radius: 5px;
+    color: #fff !important;
+    background: #7700ff;
+    font-weight: bold;
+ }
+ 
+ .parent-monitor-menu .icon-menu-left {
+     color: #7700ff;
+     font-size: 1.3em;
+ }
+ .col-left-contenedor,.col-rigth-contenedor{
+    transition: all 0.5s ease-in-out;
+}
+.col-rigth-contenedor {
+    /* padding: 0; */
+    /* z-index: 1001; */
+    overflow-y: hidden;
+    overflow-x: hidden;
+    display: block;
+    border-left: 1px solid #d2d2d2;
+    padding-top: 1em;
+}
+.visualizar-visible {
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 2.1s, opacity 0.7s linear;
+    
+}
+.visualizar-disable {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.1s, opacity 4.7s linear;
+}

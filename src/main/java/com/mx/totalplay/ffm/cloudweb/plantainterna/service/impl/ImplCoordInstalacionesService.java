@@ -1063,13 +1063,7 @@ public class ImplCoordInstalacionesService implements CoordInstalacionesService{
                         	dataArray[count][8] = object.get("usuarioActualiza") != null ? object.get("usuarioActualiza").getAsString().trim() : "";
                         	dataArray[count][9] = object.get("tipoOrden") != null ? object.get("tipoOrden").getAsString().trim() : "";
                         	dataArray[count][10] = object.get("subTipoOrden") != null ? object.get("subTipoOrden").getAsString().trim() : "";
-                        	dataArray[count][11] = "<div class=''> <span onclick='consultaDetalleOt(" + String.valueOf(object.get("idOrden").getAsInt()) + "," + 
-                        			String.valueOf(object.get("folioSistema")) + "," +
-                        			String.valueOf(object.get("idFlujo").getAsInt()) + "," +
-                        			String.valueOf(object.get("idTipoOrden").getAsInt()) + "," +
-                        			String.valueOf(object.get("idSubTipoOrden").getAsInt()) + "," +
-                        			String.valueOf(object.get("latitud").getAsDouble()) + "," +
-                        			String.valueOf(object.get("longitud").getAsDouble()) +
+                        	dataArray[count][11] = "<div class=''> <span onclick='consultaDetalleOt(" + String.valueOf(i) + 
                         			")' class='btn-floating btn-option btn-sm acciones'><th><i class='icono_cons_bg fa fa-bars' aria-hidden='true'></i></th></span></div>";
                         	count++;
                         }
@@ -1080,7 +1074,8 @@ public class ImplCoordInstalacionesService implements CoordInstalacionesService{
                                 .registrosTotales(jsonObjectResponse.get("registrosTotales").getAsInt())
                                 .recordsFiltered(jsonObjectResponse.get("registrosTotales").getAsInt() + "")
                                 .recordsTotal(jsonObjectResponse.get("registrosTotales").getAsInt() + "")
-                                .draw(params.getDraw() + "").build();
+                                .draw(params.getDraw() + "")
+                                .result(response.getResult()).build();
         			} else {
         				dataResponse = DataTableResponse.builder()
                                 .isRespuesta(true)
@@ -1089,7 +1084,8 @@ public class ImplCoordInstalacionesService implements CoordInstalacionesService{
                                 .registrosTotales(jsonObjectResponse.get("registrosTotales").getAsInt())
                                 .recordsFiltered(jsonObjectResponse.get("registrosTotales").getAsInt() + "")
                                 .recordsTotal(jsonObjectResponse.get("registrosTotales").getAsInt() + "")
-                                .draw(params.getDraw() + "").build();
+                                .draw(params.getDraw() + "")
+                                .result(response.getResult()).build();
         			}
         		}
         	}

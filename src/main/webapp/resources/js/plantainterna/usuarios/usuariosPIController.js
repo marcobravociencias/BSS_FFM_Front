@@ -1,9 +1,5 @@
 var app = angular.module('usuarioApp', []);
 var detalleTable;
-//EL SIGUIENTE JSON DEBE QUITARSE UNA VEZ QUE SE TENGA EL SERVICIO DE CONSULTAR EL CATÁLOGO DE TÉCNICOS
-let jsonTecnicos = [{"apellidoMaterno": "APEIDO MATERNO","apellidoPaterno": "APEIDO PATERNO","geografia": "CIUDAD DE MEXICO-CENTRO","geografias": [{"idGeografia": 100, "geografia": "CIUDAD DE MEXICO-CENTRO"}],"idGeografia": 1,"idUsuario": 1250,"no_empleado": "100","nombre": "NOMBRE","nombreCompleto": "NOMBRE APEIDO PATERNO APEIDO MATERNO","skills": [102, 109],"usuario": "user19"},{"apellidoMaterno": "BRITO","apellidoPaterno": "FLORES","geografia": "CIUDAD DE MEXICO-CENTRO","geografias": [{"idGeografia": 100, "geografia": "CIUDAD DE MEXICO-CENTRO"}],"idGeografia": 100,"idUsuario": 1251,"no_empleado": "2","nombre": "REYNEL","nombreCompleto": "REYNEL FLORES BRITO","skills": [102, 109],"usuario": "user20"},{"apellidoMaterno": "SANTAMARIA","apellidoPaterno": "ORDUÑA","geografia": "CIUDAD DE MEXICO-CENTRO","geografias": [{"idGeografia": 100, "geografia": "CIUDAD DE MEXICO-CENTRO"}],"idGeografia": 100,"idUsuario": 1252,"no_empleado": "3","nombre": "HECTOR","nombreCompleto": "HECTOR SANTAMARIA ORDUÑA","skills": [102, 109],"usuario": "user21"},{"apellidoMaterno": "TORRES","apellidoPaterno": "LOPEZ","geografia": "CIUDAD DE MEXICO-CENTRO","geografias": [{"idGeografia": 100, "geografia": "CIUDAD DE MEXICO-CENTRO"}],"idGeografia": 100,"idUsuario": 1253,"no_empleado": "4","nombre": "JUAN","nombreCompleto": "JUAN LOPEZ TORRES","skills": [102, 109],"usuario": "user22"}
-	 //,{"apellidoMaterno": "APEIDO MATERNO","apellidoPaterno": "APEIDO PATERNO","geografia": "CIUDAD DE MEXICO-CENTRO","geografias": [{"idGeografia": 100, "geografia": "CIUDAD DE MEXICO-CENTRO"}],"idGeografia": 1,"idUsuario": 1250,"no_empleado": "100","nombre": "NOMBRE","nombreCompleto": "NOMBRE APEIDO PATERNO APEIDO MATERNO","skills": [102, 109],"usuario": "user19"},{"apellidoMaterno": "BRITO","apellidoPaterno": "FLORES","geografia": "CIUDAD DE MEXICO-CENTRO","geografias": [{"idGeografia": 100, "geografia": "CIUDAD DE MEXICO-CENTRO"}],"idGeografia": 100,"idUsuario": 1251,"no_empleado": "2","nombre": "REYNEL","nombreCompleto": "REYNEL FLORES BRITO","skills": [102, 109],"usuario": "user20"},{"apellidoMaterno": "SANTAMARIA","apellidoPaterno": "ORDUÑA","geografia": "CIUDAD DE MEXICO-CENTRO","geografias": [{"idGeografia": 100, "geografia": "CIUDAD DE MEXICO-CENTRO"}],"idGeografia": 100,"idUsuario": 1252,"no_empleado": "3","nombre": "HECTOR","nombreCompleto": "HECTOR SANTAMARIA ORDUÑA","skills": [102, 109],"usuario": "user21"},{"apellidoMaterno": "TORRES","apellidoPaterno": "LOPEZ","geografia": "CIUDAD DE MEXICO-CENTRO","geografias": [{"idGeografia": 100, "geografia": "CIUDAD DE MEXICO-CENTRO"}],"idGeografia": 100,"idUsuario": 1253,"no_empleado": "4","nombre": "JUAN","nombreCompleto": "JUAN LOPEZ TORRES","skills": [102, 109],"usuario": "user22"},{"apellidoMaterno": "APEIDO MATERNO","apellidoPaterno": "APEIDO PATERNO","geografia": "CIUDAD DE MEXICO-CENTRO","geografias": [{"idGeografia": 100, "geografia": "CIUDAD DE MEXICO-CENTRO"}],"idGeografia": 1,"idUsuario": 1250,"no_empleado": "100","nombre": "NOMBRE","nombreCompleto": "NOMBRE APEIDO PATERNO APEIDO MATERNO","skills": [102, 109],"usuario": "user19"},{"apellidoMaterno": "BRITO","apellidoPaterno": "FLORES","geografia": "CIUDAD DE MEXICO-CENTRO","geografias": [{"idGeografia": 100, "geografia": "CIUDAD DE MEXICO-CENTRO"}],"idGeografia": 100,"idUsuario": 1251,"no_empleado": "2","nombre": "REYNEL","nombreCompleto": "REYNEL FLORES BRITO","skills": [102, 109],"usuario": "user20"},{"apellidoMaterno": "SANTAMARIA","apellidoPaterno": "ORDUÑA","geografia": "CIUDAD DE MEXICO-CENTRO","geografias": [{"idGeografia": 100, "geografia": "CIUDAD DE MEXICO-CENTRO"}],"idGeografia": 100,"idUsuario": 1252,"no_empleado": "3","nombre": "HECTOR","nombreCompleto": "HECTOR SANTAMARIA ORDUÑA","skills": [102, 109],"usuario": "user21"},{"apellidoMaterno": "TORRES","apellidoPaterno": "LOPEZ","geografia": "CIUDAD DE MEXICO-CENTRO","geografias": [{"idGeografia": 100, "geografia": "CIUDAD DE MEXICO-CENTRO"}],"idGeografia": 100,"idUsuario": 1253,"no_empleado": "4","nombre": "JUAN","nombreCompleto": "JUAN LOPEZ TORRES","skills": [102, 109],"usuario": "user22"},{"apellidoMaterno": "APEIDO MATERNO","apellidoPaterno": "APEIDO PATERNO","geografia": "CIUDAD DE MEXICO-CENTRO","geografias": [{"idGeografia": 100, "geografia": "CIUDAD DE MEXICO-CENTRO"}],"idGeografia": 1,"idUsuario": 1250,"no_empleado": "100","nombre": "NOMBRE","nombreCompleto": "NOMBRE APEIDO PATERNO APEIDO MATERNO","skills": [102, 109],"usuario": "user19"},{"apellidoMaterno": "BRITO","apellidoPaterno": "FLORES","geografia": "CIUDAD DE MEXICO-CENTRO","geografias": [{"idGeografia": 100, "geografia": "CIUDAD DE MEXICO-CENTRO"}],"idGeografia": 100,"idUsuario": 1251,"no_empleado": "2","nombre": "REYNEL","nombreCompleto": "REYNEL FLORES BRITO","skills": [102, 109],"usuario": "user20"},{"apellidoMaterno": "SANTAMARIA","apellidoPaterno": "ORDUÑA","geografia": "CIUDAD DE MEXICO-CENTRO","geografias": [{"idGeografia": 100, "geografia": "CIUDAD DE MEXICO-CENTRO"}],"idGeografia": 100,"idUsuario": 1252,"no_empleado": "3","nombre": "HECTOR","nombreCompleto": "HECTOR SANTAMARIA ORDUÑA","skills": [102, 109],"usuario": "user21"},{"apellidoMaterno": "TORRES","apellidoPaterno": "LOPEZ","geografia": "CIUDAD DE MEXICO-CENTRO","geografias": [{"idGeografia": 100, "geografia": "CIUDAD DE MEXICO-CENTRO"}],"idGeografia": 100,"idUsuario": 1253,"no_empleado": "4","nombre": "JUAN","nombreCompleto": "JUAN LOPEZ TORRES","skills": [102, 109],"usuario": "user22"},{"apellidoMaterno": "APEIDO MATERNO","apellidoPaterno": "APEIDO PATERNO","geografia": "CIUDAD DE MEXICO-CENTRO","geografias": [{"idGeografia": 100, "geografia": "CIUDAD DE MEXICO-CENTRO"}],"idGeografia": 1,"idUsuario": 1250,"no_empleado": "100","nombre": "NOMBRE","nombreCompleto": "NOMBRE APEIDO PATERNO APEIDO MATERNO","skills": [102, 109],"usuario": "user19"},{"apellidoMaterno": "BRITO","apellidoPaterno": "FLORES","geografia": "CIUDAD DE MEXICO-CENTRO","geografias": [{"idGeografia": 100, "geografia": "CIUDAD DE MEXICO-CENTRO"}],"idGeografia": 100,"idUsuario": 1251,"no_empleado": "2","nombre": "REYNEL","nombreCompleto": "REYNEL FLORES BRITO","skills": [102, 109],"usuario": "user20"},{"apellidoMaterno": "SANTAMARIA","apellidoPaterno": "ORDUÑA","geografia": "CIUDAD DE MEXICO-CENTRO","geografias": [{"idGeografia": 100, "geografia": "CIUDAD DE MEXICO-CENTRO"}],"idGeografia": 100,"idUsuario": 1252,"no_empleado": "3","nombre": "HECTOR","nombreCompleto": "HECTOR SANTAMARIA ORDUÑA","skills": [102, 109],"usuario": "user21"},{"apellidoMaterno": "TORRES","apellidoPaterno": "LOPEZ","geografia": "CIUDAD DE MEXICO-CENTRO","geografias": [{"idGeografia": 100, "geografia": "CIUDAD DE MEXICO-CENTRO"}],"idGeografia": 100,"idUsuario": 1253,"no_empleado": "4","nombre": "JUAN","nombreCompleto": "JUAN LOPEZ TORRES","skills": [102, 109],"usuario": "user22"},{"apellidoMaterno": "APEIDO MATERNO","apellidoPaterno": "APEIDO PATERNO","geografia": "CIUDAD DE MEXICO-CENTRO","geografias": [{"idGeografia": 100, "geografia": "CIUDAD DE MEXICO-CENTRO"}],"idGeografia": 1,"idUsuario": 1250,"no_empleado": "100","nombre": "NOMBRE","nombreCompleto": "NOMBRE APEIDO PATERNO APEIDO MATERNO","skills": [102, 109],"usuario": "user19"},{"apellidoMaterno": "BRITO","apellidoPaterno": "FLORES","geografia": "CIUDAD DE MEXICO-CENTRO","geografias": [{"idGeografia": 100, "geografia": "CIUDAD DE MEXICO-CENTRO"}],"idGeografia": 100,"idUsuario": 1251,"no_empleado": "2","nombre": "REYNEL","nombreCompleto": "REYNEL FLORES BRITO","skills": [102, 109],"usuario": "user20"},{"apellidoMaterno": "SANTAMARIA","apellidoPaterno": "ORDUÑA","geografia": "CIUDAD DE MEXICO-CENTRO","geografias": [{"idGeografia": 100, "geografia": "CIUDAD DE MEXICO-CENTRO"}],"idGeografia": 100,"idUsuario": 1252,"no_empleado": "3","nombre": "HECTOR","nombreCompleto": "HECTOR SANTAMARIA ORDUÑA","skills": [102, 109],"usuario": "user21"},{"apellidoMaterno": "TORRES","apellidoPaterno": "LOPEZ","geografia": "CIUDAD DE MEXICO-CENTRO","geografias": [{"idGeografia": 100, "geografia": "CIUDAD DE MEXICO-CENTRO"}],"idGeografia": 100,"idUsuario": 1253,"no_empleado": "4","nombre": "JUAN","nombreCompleto": "JUAN LOPEZ TORRES","skills": [102, 109],"usuario": "user22"}
-	 ];
 
 app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filter', function ($scope, $q, usuarioPIService, $filter) {
 	$("#moduloUsuarios").addClass('active');
@@ -46,9 +42,12 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     $scope.idPuestoTecnico = null;
     $scope.idPuestoDespacho = null;
     $scope.fileFotoUsuario = null;
-    //PENDIENTES
 	$scope.respaldoIntervenciones = [];
    
+	angular.element(document).ready(function () {
+        $("#idBody").removeAttr("style");
+    });
+	
     $('.drop-down-filters').on("click.bs.dropdown", function (e) {
         e.stopPropagation();
     });
@@ -79,6 +78,9 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
             	if(results[1].data.respuesta){
             		if(results[1].data.result.companias.length > 0){
             			$scope.listaCompanias = results[1].data.result.companias;
+            			angular.forEach($scope.listaCompanias,function(companiaCheck,index){
+            				companiaCheck.checkedOpcion = true;
+            			});
             		}else{
                     	toastr.warning('¡No existen compañías actualmente!');
                     }
@@ -96,6 +98,9 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
             			$scope.listaPuestos = results[2].data.result.puestos;
             			$scope.idPuestoTecnico = $scope.listaPuestos.filter(e => {return e.descripcion == "TECNICO"})[0];
             		    $scope.idPuestoDespacho = $scope.listaPuestos.filter(e => {return e.descripcion == "DESPACHO"})[0];
+            		    angular.forEach($scope.listaPuestos,function(puestoCheck,index){
+            		    	puestoCheck.checkedOpcion = true;
+            			});
             		}else{
             			toastr.warning('¡No existen puestos actualmente!');
             		}
@@ -112,9 +117,9 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
             		if(results[3].data.result.permisos.length > 0){
             			let permisosLista = results[3].data.result.permisos;
             			$scope.listaPermisos = results[3].data.result.permisos;
-            			
+            			permisosLista.push({id: 0, nombre: "PERMISOS", nivel: 0, idPadre: "#", state:{opened: true}});
             			permisosLista.map((e)=>{
-                            e.parent = e.idPadre == undefined ? "#" : e.idPadre;
+            				e.parent = e.idPadre == null ? 0 : e.idPadre;
                             e.text= e.nombre;
                             e.icon= "fa fa-globe";
                             return e
@@ -124,6 +129,10 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 							//$(this).jstree("open_all");
                         }).jstree({
                         	'plugins': ['search', 'checkbox', 'wholerow'],
+                        	'search': {
+    							"case_sensitive": false,
+    							"show_only_matches": true
+    						},
 							'core': {
 								'data': permisosLista,
                                 'themes': {
@@ -153,13 +162,11 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	                            if (elemento.nivel <= nivelUsuario) {
 	                            	listGeografias.push(elemento);
 	                            	$scope.listaGeografias.push(elemento);
-									$scope.listaGeografiasRespaldo.push(elemento);
 	                            }
 	                        });
                     	}else{
                     		listGeografias = results[4].data.result.geografia;
                     		$scope.listaGeografias = results[4].data.result.geografia;
-                    		$scope.listaGeografiasRespaldo = results[4].data.result.geografia;
                     	}
                     	geografia=listGeografias;
                     	geografia.push({id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state:{opened: true}});
@@ -167,12 +174,21 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
                         	e.parent = e.padre == null ? 0 : e.padre;
                             e.text= e.nombre;
                             e.icon= "fa fa-globe";
+                            e.state = {
+									opened: true,
+									selected: true,
+								}
                             return e
                         })       
+                        $scope.listaGeografiasRespaldo = angular.copy($scope.listaGeografias);
                         $('#arbolGeografiaConsulta').bind('loaded.jstree', function(e, data) {
 							//$(this).jstree("open_all");
                         }).jstree({
                         	'plugins': ['search', 'checkbox', 'wholerow'],
+                        	'search': {
+    							"case_sensitive": false,
+    							"show_only_matches": true
+    						},
 							'core': {
 								'data': geografia,
                                 'themes': {
@@ -202,20 +218,25 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
                             if (intervencion.nivel <= $scope.filtroIntervenciones) {
                             	intervencionesLista.push(intervencion);
                             	$scope.listaIntervenciones.push(intervencion);
-                            	$scope.listaIntervencionesRespaldo.push(intervencion);
                             }
                         });
             			if(intervencionesLista.length > 0){
+            				intervencionesLista.push({id: 0, nombre: "INTERVENCIONES", nivel: 0, idPadre: "#", state:{opened: true}});
             				intervencionesLista.map((e)=>{
-                                e.parent = e.idPadre == undefined ? "#" : e.idPadre;
+                                e.parent = e.idPadre == null ? 0 : e.idPadre;
                                 e.text= e.nombre;
                                 e.icon= "fa fa-globe";
                                 return e
                             })       
+                            $scope.listaIntervencionesRespaldo = angular.copy(intervencionesLista);
                             $('#arbolIntervencionRegistro').bind('loaded.jstree', function(e, data) {
     							//$(this).jstree("open_all");
                             }).jstree({
                             	'plugins': ['search', 'checkbox', 'wholerow'],
+                            	'search': {
+        							"case_sensitive": false,
+        							"show_only_matches": true
+        						},
     							'core': {
     								'data': intervencionesLista,
                                     'themes': {
@@ -238,6 +259,12 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
             	toastr.error('Error interno en el servidor.');
             }
         	swal.close();
+        	setTimeout(function () {
+        		$scope.consultaUsuariosPorGeoCompPuestos();
+        		$scope.companiaSeleccion();
+        		$scope.puestoSeleccion();
+        		$scope.btnAceptarModalGeografiaConsulta();
+    		}, 500)
         });
     	
     	if (tablaUsuarios) {
@@ -260,8 +287,6 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		});
 	}
     
-    $scope.iniciarModuloUsuarios();
-    
     $scope.iniciarFechaRegistro = function () {
         $('#form-fechaIngresoRegistro').datepicker({
             format: 'dd/mm/yyyy',
@@ -280,6 +305,9 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     $scope.abrirModalGeografiaConsulta = function() {
     	if($scope.listaGeografias != ""){
     		$("#modalGeografiaConsulta").modal('show');
+    		setTimeout(function (){
+    	        $('#buscadorGeografiaConsulta').focus();
+    	    }, 750);
     	}else{
     		toastr.warning('¡No existen geografías actualmente!');
     	}
@@ -441,16 +469,22 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	});
     	
     	let geografia = geografiasNivelCiudad;
+    	geografia.push({id: 0, nombre: "GEOGRAFÍA", nivel: 0, padre: "#", state:{opened: true}});
         geografia.map((e)=>{
-            e.parent=e.padre == undefined ? "#" : e.padre;
+            e.parent = e.padre == null ? 0 : e.padre;
             e.text= e.nombre;
             e.icon= "fa fa-globe";
+            e.state = e.id == 0 ? {opened: true, selected: false} : {opened: false, selected: false};
             return e
         })       
         $('#arbolGeografiaRegistro').bind('loaded.jstree', function(e, data) {
 			//$(this).jstree("open_all");
         }).jstree({
         	'plugins': plugins,
+        	'search': {
+				"case_sensitive": false,
+				"show_only_matches": true
+			},
 			'core': {
 				'data': geografia,
                 'themes': {
@@ -552,12 +586,14 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	$('#arbolIntervencionRegistro').jstree("deselect_all");
     	$('#arbolGeografiaRegistro').jstree("deselect_all");
     	$('#arbolPermisoRegistro').jstree("deselect_all");
-    	$( "#arbolIntervencionRegistro").jstree('close_all');
-    	$( "#arbolGeografiaRegistro").jstree('close_all');
-    	$( "#arbolPermisoRegistro").jstree('close_all');
+    	$("#arbolIntervencionRegistro").jstree('close_all');
+    	$("#arbolGeografiaRegistro").jstree('close_all');
+    	$("#arbolPermisoRegistro").jstree('close_all');
     	$("#buscadorIntervencionRegistro").val("");
     	$("#buscadorGeografiaRegistro").val("");
     	$("#buscadorPermisosRegistro").val("");
+    	$("#arbolIntervencionRegistro").jstree('open_node', 0);
+    	$("#arbolPermisoRegistro").jstree('open_node', 0);
     	$scope.listaIntervencionesSeleccionadas = [];
     	$scope.listaGeografiasSeleccionadas = [];
     	$scope.informacionRegistro.geografias = [];
@@ -1427,6 +1463,8 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	$('#arbolGeografiaRegistro').jstree("close_all");
     	$('#arbolPermisoRegistro').jstree("deselect_all");
     	$('#arbolPermisoRegistro').jstree("close_all");
+    	$("#arbolIntervencionRegistro").jstree('open_node', 0);
+    	$("#arbolPermisoRegistro").jstree('open_node', 0);
     	$("#puesto_select_registro"). prop("selectedIndex",0);
     	$("#compania_select_registro"). prop("selectedIndex",0);
     	$("#sexo_select_registro"). prop("selectedIndex",0);
@@ -1526,6 +1564,14 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		let labelFile = "";
 		if (e.target.files[0]) {
 			$(labelFile).text(e.target.files[0].name);
+			
+			var nombreArchivo = "";
+	    	if($scope.confirmacionRegistro.nombre == "Sin asignar"){
+	    		nombreArchivo = e.target.files[0].name;
+	    	}else{
+	    		nombreArchivo = $scope.confirmacionRegistro.nombre;
+	    	}
+			
 			let reader = new FileReader();
 			reader.readAsDataURL(e.target.files[0]);
 			reader.onload = function () {
@@ -1533,7 +1579,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 				let img = {
 					"bucketId": "totalplay-ffm-core-dev.appspot.com",
 					"archivo": base64[1],
-					"nombre": e.target.files[0].name
+					"nombre": nombreArchivo
 				}
 
 				$scope.fileFotoUsuario = img;
@@ -1578,5 +1624,38 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	$("#modalTomarFotoUsuario").modal('hide');
 	}
 	
+    $("#pills-intervencion-tab").click(function() {
+    	setTimeout(function (){
+	        $("#buscadorIntervencionRegistro").focus();
+	    }, 750);
+    });
+    
+    $("#pills-arbol-tab").click(function() {
+    	setTimeout(function (){
+	        $("#buscadorGeografiaRegistro").focus();
+    	}, 750);
+    });
+    
+    $("#pills-accesos-tab").click(function() {
+    	setTimeout(function (){
+	        $("#buscadorPermisosRegistro").focus();
+    	}, 750);
+    });
+    
+    $("#pills-tecnico-tab").click(function() {
+    	setTimeout(function (){
+	        $("#buscadorTecnicoRegistro").focus();
+    	}, 750);
+    });
+    
+    $("#pills-despacho-tab").click(function() {
+    	setTimeout(function (){
+	        $("#buscadorDespachoRegistro").focus();
+    	}, 750);
+    });
+    
+    //-------------------------------------------------------------------    
+    $scope.iniciarModuloUsuarios();
+    
     // *** FIN CAMBIOS REYNEL *** 
 }]);

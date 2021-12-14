@@ -13,15 +13,25 @@
                 </button>
             </div>
 			<div class="modal-body">
-                <h5 class="header-table-tecnico-select"><span> T&Eacute;CNICO: </span> {{tecnicoSeleccionado}}</h5>
-                <table class="table table-sm table-intervenciones-skills">
-                    <tbody>
-                        <tr class="intervencion-tecnico" ng-repeat="intervencionModal in listadoIntervencionesSeleccionadas | orderBy:'nombre' track by $index">
-                            <td>{{$index +1}} </td>
-                            <td>{{intervencionModal.nombre}}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="container">
+                	<div class="row">
+                		<div class="col-md-12">
+                			<h5 class="header-table-tecnico-select">{{tecnicoSeleccionado}}</h5>
+                		</div>
+                	</div>
+                	<div class="row">
+	                	<div class="col-md-12 scrollGeneral">
+	                		<table class="table table-sm table-intervenciones-skills">
+			                    <tbody>
+			                        <tr class="intervencion-tecnico" ng-repeat="intervencionModal in listadoIntervencionesSeleccionadas | orderBy:'nombre' track by $index">
+			                            <td>{{$index +1}} </td>
+			                            <td>{{intervencionModal.nombre}}</td>
+			                        </tr>
+			                    </tbody>
+			                </table>
+	                	</div>
+	                </div>
+                </div>
 			</div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface" data-mdb-dismiss="modal" ng-click="cerrarModalSkillsSeleccionadas()">

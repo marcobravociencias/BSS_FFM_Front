@@ -17,6 +17,8 @@ app.controller('controlVehicularController',
 			$scope.countDisponibles = 0;
 			$scope.countAsignados = 0;
 			$scope.countNoDisponibles = 0;
+			$scope.countBajas = 0;
+			$scope.countTodos = 0;
 			$scope.banderaErrorGeografia = false;
 			$scope.geografiaList = [];
 			$scope.nGeografia = "";
@@ -73,6 +75,7 @@ app.controller('controlVehicularController',
 				let text = $("#searchText").val().toLowerCase();
 				let listVehiculos = angular.copy($scope.vehiculos);
 				$.each(listVehiculos, function (i, elemento) {
+					console.log(elemento);
 					if (elemento.placa.toLowerCase().includes(text) ||
 						elemento.numeroSerie.toLowerCase().includes(text) ||
 						elemento.color.toLowerCase().includes(text) ||
@@ -80,7 +83,9 @@ app.controller('controlVehicularController',
 						elemento.combustible.toLowerCase().includes(text) ||
 						elemento.tipo.toLowerCase().includes(text) ||
 						elemento.marca.toLowerCase().includes(text) ||
-						elemento.modelo.toLowerCase().includes(text)
+						elemento.modelo.toLowerCase().includes(text)||
+						elemento.geografia.toLowerCase().includes(text)||
+						elemento.estatus.toLowerCase().includes(text)
 					) {
 						list.push(elemento);
 					}
@@ -277,6 +282,12 @@ app.controller('controlVehicularController',
 			}
 
 			$scope.getVehiculos = function () {
+				$scope.countDisponibles = 0;
+				$scope.countAsignados = 0;
+				$scope.countNoDisponibles = 0;
+				$scope.countBajas = 0;
+				$scope.countTodos = 0;
+				
 				let selectedElements = $("#jstreeconsulta").jstree("get_selected", true)
 					.map(e => e.id.toString());
 				$scope.listSelected = selectedElements;
@@ -301,8 +312,28 @@ app.controller('controlVehicularController',
 						if (response.data.result) {
 							if (response.data.result.vehiculo.length) {
 								$scope.vehiculos = angular.copy(response.data.result.vehiculo);
-								$scope.buildTableVehiculos($scope.vehiculos);
+								
+								angular.forEach($scope.vehiculos,function(vehiculo,index){
+									var estadoVehiculo = vehiculo.estatus.toLowerCase();
+									if (estadoVehiculo == "asignado") {
+										$scope.countAsignados = $scope.countAsignados + 1;
+									}
 
+									if (estadoVehiculo == "baja") {
+										$scope.countBajas = $scope.countBajas + 1;
+									}
+
+									if (estadoVehiculo == "no disponible") {
+										$scope.countNoDisponibles = $scope.countNoDisponibles + 1;
+									}
+									
+									if (estadoVehiculo == "disponible") {
+										$scope.countDisponibles = $scope.countDisponibles + 1;
+									}
+									$scope.countTodos = $scope.countTodos + 1;
+								});
+								
+								$scope.buildTableVehiculos($scope.vehiculos);
 							} else {
 								swal.close();
 							}
@@ -331,26 +362,11 @@ app.controller('controlVehicularController',
 			}
 
 			$scope.buildTableVehiculos = function (list) {
-				$scope.countDisponibles = 0;
-				$scope.countAsignados = 0;
-				$scope.countNoDisponibles = 0;
 				if (vehiculoTable) {
 					vehiculoTable.destroy();
 				}
 				let arraRow = [];
 				$.each(list, function (i, elemento) {
-					if (elemento.idEstatus == 1) {
-						$scope.countDisponibles = $scope.countDisponibles + 1;
-					}
-
-					if (elemento.idEstatus == 2) {
-						$scope.countAsignados = $scope.countAsignados + 1;
-					}
-
-					if (elemento.idEstatus == 3) {
-						$scope.countNoDisponibles = $scope.countNoDisponibles + 1;
-					}
-
 					let row = [];
 					row[0] = elemento.placa;
 					row[1] = elemento.tipo;
@@ -379,6 +395,11 @@ app.controller('controlVehicularController',
 					"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">'
 				});
 				swal.close();
+
+				console.log("Dispo: " + $scope.countDisponibles);
+				console.log("Asig: " + $scope.countAsignados);
+				console.log("No dispo: " + $scope.countNoDisponibles);
+				console.log("Bajas: " + $scope.countBajas);
 			}
 
 			function compareGeneric(a, b) {
@@ -1085,12 +1106,18 @@ app.controller('controlVehicularController',
 
 			$scope.abrirModalGeografia = function () {
 				$('#searchGeo').val('');
-				$("#modal_cluster_arbol_vehiculo").modal('show')
+				$("#modal_cluster_arbol_vehiculo").modal('show');
+				setTimeout(function (){
+			        $("#searchGeo").focus();
+			    }, 750);
 			}
 
 			abrirModalGeografiaBuscar = function () {
 				$('#searchGeo').val('');
 				$("#modal_cluster_arbol_vehiculo").modal('show');
+				setTimeout(function (){
+			        $("#searchGeo").focus();
+			    }, 750);
 			}
 
 			$scope.loadArbolBuscar = function () {
@@ -1399,6 +1426,24 @@ app.controller('controlVehicularController',
 				$("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
 
 			});
+			
+			$scope.busquedaVehiculosEstado = function(estado) {
+				$("#searchText").val("");
+				let list = [];
+				let text = estado.toLowerCase();
+				let listVehiculos = angular.copy($scope.vehiculos);
+				if(estado == "todos"){
+					$scope.buildTableVehiculos(listVehiculos);
+				}else{
+					$.each(listVehiculos, function (i, elemento) {
+						console.log(elemento);
+						if (elemento.estatus.toLowerCase() == text) {
+							list.push(elemento);
+						}
+					});
+					$scope.buildTableVehiculos(list);
+				}
+			}
 
 		}
 	]

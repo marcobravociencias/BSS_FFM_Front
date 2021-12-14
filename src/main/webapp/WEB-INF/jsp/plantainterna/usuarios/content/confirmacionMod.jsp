@@ -1,80 +1,91 @@
 <div class="col-12">
-
-                <div class="header-confirmar-usuario">
-                    <h5 class="text-center encabezado-confirmacion">DATOS AGREGADOS</h5>
-                </div>
-                <div class="body-confirmar-usuario">
-                    <div class="col-12">
-                        <div class="row">
-                            <div class="col-3">
-                                <label class="titulos-confirmacion">* Foto usuario </label>
-                                
-                                <div class="row">
-		                        	<div class="col-md-9">
-		                        		<div class="custom-file">
-				                            <input type="file" class="custom-file-input" id="fileFotoUsuarioMod" ng-model="fileFotoUsuarioMod" ng-on-change="cargarFotoUsuarioMod($event)" accept="image/*" />
-				                            <label class="custom-file-label etiquetaFotoUsuario" for="fileFotoUsuarioMod">Cargar fotograf&iacute;a</label>
-				                        </div>
-		                        	</div>
-		                        	<div class="col-md-3">
-		                        		<button id="btnIniciarCamaraMod" class="botonIniciarCamara" ><i class="fas fa-camera"></i></button>
-		                        	</div>
-		                        </div>
-                                
-		                        
-		                        <div style="text-align: center; margin-top: 5px;">
-		                            <img alt="Usuario" src="./resources/img/plantainterna/despacho/tecnicootasignada.png" class="" id="imgFotoUsuarioMod" style="width: 170px; height: 170px" />
-		                        </div>
-		                        <div ng-if="fileFotoUsuarioMod" class="file-delete" style="text-align: center;">
-		                            <span class="text-img">{{fileFotoUsuarioMod.nombre}} </span><i class="fa fa-trash iconoEliminarFoto" ng-click="eliminarFotoUsuarioMod()"></i>
-		                        </div>
-                            </div>
-                            <div class="col-5" style="padding-left: 2em;">
-                            	<div class="row">
-                                    <label class="titulos-confirmacion">* Nombre: <span class="respuesta-confirmacion" ng-bind="confirmacionModificacion.nombre"></span></label>
-                                </div>
-                                <div class="row" style="margin-top: 1em !important;">
-                                    <label class="titulos-confirmacion">* Usuario: <span class="respuesta-confirmacion" ng-bind="confirmacionModificacion.usuario"></span></label>
-                                </div>
-                                <div class="row" style="margin-top: 1em !important;">
-                                    <label class="titulos-confirmacion">* Puesto empleado: <span class="respuesta-confirmacion" ng-bind="confirmacionModificacion.puesto"></span></label>
-                                </div>
-                                <div class="row" style="margin-top: 1em !important;">
-                                    <label class="titulos-confirmacion">* Correo electr&oacute;nico: <span class="respuesta-confirmacion" ng-bind="confirmacionModificacion.correo"></span></label>
-                                </div>
-                                <div class="row" style="margin-top: 1em !important;">
-                                    <label class="titulos-confirmacion">* Fecha ingreso: <span class="respuesta-confirmacion" ng-bind="confirmacionModificacion.fechaIngreso"></span></label>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                            	<div class="row">
-                                	<div class="col-md-12">
-                                    	<div class="input-group input-group-sm content-seach-group">
-                                        	<input type="text" class="form-control buscadorGenerico" ng-model="buscarCiudadMod" placeholder="Buscar ciudad"> 
-                                        	<span class="fa fa-search iconoBusqueda"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <label class="titulos-confirmacion">* Ciudad natal:</label>
-                                </div>
-                                	<div id="contenedorconfirmacionModificacion" class="scrollListaCiudadNatalMod">
-	                                    <div class="row" ng-repeat="ciudad in listaCiudadNatalMod | filter:buscarCiudadMod track by $index" ng-if="ciudad.nombre != null">
-	                                        <div class="col-12">
-	                                            <label class="respuesta-confirmacion ciudadNatalMod">
-	                                                <input type="radio" ng-model="detalleUsuario.ciudadNatal" ng-value="ciudad.id" ng-click="asignarCiudadNatalMod()">
-	                                                {{ciudad.nombre}}
-	                                            </label>
-	                                        </div>
-	                                    </div>
-	                                    <span ng-if="listaCiudadesSelecionadasMod.length < 1" class="respuesta-confirmacion ciudadNatal">
-											Sin asignar
-										</span>
+	<div class="header-confirmar-usuario">
+    	<h5 class="text-center encabezado-confirmacion">DATOS AGREGADOS</h5>
+	</div>
+	<div class="body-confirmar-usuario">
+		<div class="col-12">
+			<div class="row">
+			
+				<div class="col-3">
+                	<div id="card" class="card">
+						<div class="card-body">
+							<div class="top-title-ot">
+                                <div class="content-top-element bars-content">
+                                	<div class="row">
+										<div class="col-md-9">
+											<div class="custom-file">
+												<input type="file" class="custom-file-input" id="fileFotoUsuarioMod" ng-model="fileFotoUsuarioMod" ng-on-change="cargarFotoUsuarioMod($event)" accept="image/*" />
+												<label class="custom-file-label etiquetaFotoUsuario" for="fileFotoUsuarioMod">Cargar fotograf&iacute;a</label>
+											</div>
+										</div>
+										<div class="col-md-3">
+											<button id="btnIniciarCamaraMod" class="botonIniciarCamara" ><i class="fas fa-camera"></i></button>
+										</div>
 									</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+									<div style="text-align: center; margin-top: 5px;">
+										<img alt="Usuario" src="./resources/img/plantainterna/despacho/tecnicootasignada.png" class="" id="imgFotoUsuarioMod" />
+									</div>
+								</div>                        
+							</div>
+						</div>
+						<div id="contenedorFootCardOtsPendienteConsulta" class="card-footer">               
+							<div class="row">
+								<div class="col-md-12">
+									<div class="content_text">
+										<div ng-if="fileFotoUsuarioMod" class="file-delete" style="text-align: center;">
+											<span class="txtPieFoto">{{fileFotoUsuarioMod.nombre}} </span><i class="fa fa-trash iconoEliminarFoto" ng-click="eliminarFotoUsuarioMod()"></i>
+										</div>
+										<div ng-if="!fileFotoUsuarioMod" class="file-delete" style="text-align: center;">
+							            	<span class="txtPieFoto">Sin fotograf&iacute;a </span>
+										</div>
+									</div>
+								</div>
+							</div>                
+						</div>
+					</div>
+				</div>
+				<div class="col-5" style="padding-left: 2em;">
+					<div class="row">
+						<label class="titulos-confirmacion">* Nombre: <span class="respuesta-confirmacion" ng-bind="confirmacionModificacion.nombre"></span></label>
+					</div>
+                    <div class="row" style="margin-top: 1em !important;">
+                    	<label class="titulos-confirmacion">* Usuario: <span class="respuesta-confirmacion" ng-bind="confirmacionModificacion.usuario"></span></label>
+					</div>
+                    <div class="row" style="margin-top: 1em !important;">
+                    	<label class="titulos-confirmacion">* Puesto empleado: <span class="respuesta-confirmacion" ng-bind="confirmacionModificacion.puesto"></span></label>
+					</div>
+                    <div class="row" style="margin-top: 1em !important;">
+                    	<label class="titulos-confirmacion">* Correo electr&oacute;nico: <span class="respuesta-confirmacion" ng-bind="confirmacionModificacion.correo"></span></label>
+					</div>
+					<div class="row" style="margin-top: 1em !important;">
+                    	<label class="titulos-confirmacion">* Fecha ingreso: <span class="respuesta-confirmacion" ng-bind="confirmacionModificacion.fechaIngreso"></span></label>
+					</div>
+				</div>
+				<div class="col-4">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="input-group input-group-sm content-seach-group">
+								<input type="text" class="form-control buscadorGenerico" ng-model="buscarCiudadMod" placeholder="Buscar ciudad"> 
+								<span class="fa fa-search iconoBusqueda"></span>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<label class="titulos-confirmacion">* Ciudad natal:</label>
+					</div>
+					<div id="contenedorconfirmacionModificacion" class="scrollListaCiudadNatalMod">
+						<div class="row" ng-repeat="ciudad in listaCiudadNatalMod | filter:buscarCiudadMod track by $index" ng-if="ciudad.nombre != null">
+							<div class="col-12">
+								<label class="respuesta-confirmacion ciudadNatalMod">
+								<input type="radio" ng-model="detalleUsuario.ciudadNatal" ng-value="ciudad.id" ng-click="asignarCiudadNatalMod()">{{ciudad.nombre}}</label>
+							</div>
+						</div>
+						<span ng-if="listaCiudadesSelecionadasMod.length < 1" class="respuesta-confirmacion ciudadNatal">Sin asignar</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <div id="modalTomarFotoUsuarioMod" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -8,26 +8,47 @@
                 <div class="body-confirmar-usuario">
                     <div class="col-12">
                         <div class="row">
-                            <div class="col-3">
-                                <label class="titulos-confirmacion">* Foto usuario </label>
-		                        <div class="row">
-		                        	<div class="col-md-9">
-		                        		<div class="custom-file">
-				                            <input type="file" class="custom-file-input" id="fileFotoUsuario" ng-model="fileFotoUsuario" ng-on-change="cargarFotoUsuarioRegistro($event)" accept="image/*" />
-				                            <label class="custom-file-label etiquetaFotoUsuario" for="fileFotoUsuario">Cargar fotograf&iacute;a</label>
-				                        </div>
-		                        	</div>
-		                        	<div class="col-md-3">
-		                        		<button id="btnIniciarCamara" class="botonIniciarCamara" ><i class="fas fa-camera"></i></button>
-		                        	</div>		                        	
-		                        </div>
-		                        <div style="text-align: center; margin-top: 5px;">
-		                            <img alt="Usuario" src="./resources/img/plantainterna/despacho/tecnicootasignada.png" class="" id="imgFotoUsuario" style="width: 230px; height: 190px" />
-		                        </div>
-		                        <div ng-if="fileFotoUsuario" class="file-delete" style="text-align: center;">
-		                            <span class="text-img">{{fileFotoUsuario.nombre}} </span><i class="fa fa-trash iconoEliminarFoto" ng-click="eliminarFotoUsuarioRegistro()"></i>
-		                        </div>
-                            </div>
+                        	<div class="col-3">
+                        		<div id="card" class="card">
+			                        <div class="card-body">
+			                            <div class="top-title-ot">
+			                                <div class="content-top-element bars-content">
+			                                    <div class="row">
+						                        	<div class="col-md-9">
+						                        		<div class="custom-file">
+								                            <input type="file" class="custom-file-input" id="fileFotoUsuario" ng-model="fileFotoUsuario" ng-on-change="cargarFotoUsuarioRegistro($event)" accept="image/*" />
+								                            <label class="custom-file-label etiquetaFotoUsuario" for="fileFotoUsuario"></label>
+								                        </div>
+						                        	</div>
+						                        	<div class="col-md-3">
+						                        		<button id="btnIniciarCamara" class="botonIniciarCamara" ><i class="fas fa-camera"></i></button>
+						                        	</div>		                        	
+						                        </div>
+						                        <div style="text-align: center; margin-top: 5px;">
+						                            <img alt="Usuario" ng-src="./resources/img/plantainterna/despacho/tecnicootasignada.png" class="" id="imgFotoUsuario" />
+						                        </div>
+			                                </div>                        
+			                            </div>
+			                        </div>
+			                        
+			                        <div id="contenedorFootCardOtsPendienteConsulta" class="card-footer">               
+										<div class="row">
+											<div class="col-md-12">
+												<div class="content_text">
+													<div ng-if="fileFotoUsuario" class="file-delete" style="text-align: center;">
+						                            	<span class="txtPieFoto">{{fileFotoUsuario.nombre}} </span><i class="fa fa-trash iconoEliminarFoto" ng-click="eliminarFotoUsuarioRegistro()"></i>
+							                        </div>
+							                        <div ng-if="!fileFotoUsuario" class="file-delete" style="text-align: center;">
+							                        	<span class="txtPieFoto">Sin fotograf&iacute;a </span>
+							                        </div>
+												</div>
+											</div>
+										</div>                
+									</div>
+			                        
+			                    </div>
+                        	</div>
+                        	
                             <div class="col-5" style="padding-left: 2em;">
                             	<div class="row">
                                     <label class="titulos-confirmacion">* Nombre: <span class="respuesta-confirmacion" ng-bind="confirmacionRegistro.nombre"></span></label>

@@ -6,56 +6,46 @@
         <meta charset="ISO-8859-1" />
         <title>FFM Total play</title>
 
-        <link rel="icon" type="image/png" sizes="192x192"
-            href="${pageContext.request.contextPath}/resources/img/iconsistema/android-icon-192x192.png">
-        <link rel="icon" type="image/png" sizes="32x32"
-            href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="96x96"
-            href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-96x96.png">
-        <link rel="icon" type="image/png" sizes="16x16"
-            href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-16x16.png">
-        <link href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap.min.css"
-            rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css"
-            rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/jquery.dataTables.css"
-            rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/dataTables.bootstrap4.min.css"
-            rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/font-awesome.min.css"
-            rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/libraries/jstree/default/style.min.css"
-            rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/libraries/jstree/themes/proton/style.css"
-            rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/libraries/sweetalert/css/sweetalert2.min.css"
-            rel="stylesheet">
-        <link
-            href="${pageContext.request.contextPath}/resources/libraries/datePicker/css/bootstrap-datepicker3_1.9.0.min.css"
-            rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+        <link rel="icon" type="image/png" sizes="192x192" href="${pageContext.request.contextPath}/resources/img/iconsistema/android-icon-192x192.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-96x96.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-16x16.png">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/jquery.dataTables.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/dataTables.bootstrap4.min.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/jstree/default/style.min.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/jstree/themes/proton/style.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/sweetalert/css/sweetalert2.min.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/datePicker/css/bootstrap-datepicker3_1.9.0.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>
 
-        <link href="${pageContext.request.contextPath}/resources/libraries/magnific_popup/magnific-popup.css"
-            rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css"
-            rel="stylesheet" />
-            <link href="${pageContext.request.contextPath}/resources/css/plantainterna/gestionTicketsSoporte/mainGestionTicketsSoporte.css" rel="stylesheet" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/magnific_popup/magnific-popup.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css"/>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/plantainterna/gestionTicketsSoporte/mainGestionTicketsSoporte.css"/>
 
     </head>
 
     <body id="idBody" class="body" ng-controller="ticketsSoporteController">
         <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
         <div class="container">
+            <div class="container container-title-header" style="padding: 0 !important;">
+                <div class="header-modulo">
+                    <h5 class="title-modulo">Gesti&oacute;n de Tickets</h5>
+                    <h1 class="h6 subtitle-modulo">En este m&oacute;dulo podr&aacute;s realizar la gesti&oacute;n de Tickets de Soporte Centralizado</h1>
+                </div>
+            </div>
             <div class="form-content">
                 <div class="row md-form" id="filtros_config">
                     <div class="col-2 columna-filtro-ind" ng-show="isBusqueda">
-                        <label for="filtro_fecha_inicio" class="label-filter">Fecha inicial</label>
-                        <input readonly type="text" id="filtro_fecha_inicio"
+                        <label for="filtro_fecha_inicio_ticket" class="label-filter">Fecha inicial</label>
+                        <input readonly type="text" id="filtro_fecha_inicio_ticket"
                             class="datepicker input-filtro-ticket form-control form-control-sm" />
                     </div>
                     <div class="col-2 columna-filtro-ind" ng-show="isBusqueda">
-                        <label for="filtro_fecha_fin" class="label-filter">Fecha final</label>
-                        <input readonly type="text" id="filtro_fecha_fin"
+                        <label for="filtro_fecha_fin_ticket" class="label-filter">Fecha final</label>
+                        <input readonly type="text" id="filtro_fecha_fin_ticket"
                             class="datepicker input-filtro-ticket form-control form-control-sm" />
                     </div>
                     <div class="col-1" ng-show="isBusqueda">
@@ -129,13 +119,13 @@
                         </div>
                     </div>
                     <div class="col-2 offset-2  form-group" style="margin-bottom: 0; margin-top: .5em;">
-                        <input placeholder="Buscar" type="text" autocomplete="off"
+                        <input placeholder="Buscar" type="text" autocomplete="off" aria-controls="tableTicketSoporte"
                             class="search-filtro form-control form-control-sm mt-0" id="searchTextTicket"><i
                             class="fa fa-search icon-search"></i>
                     </div>
                 </div>
                 <div class="content-fluid" style="margin-top: 0.7em;">
-                    <table class="display table table-hover" cellspacing="0" width="100%" id="tableTicketSoporte">
+                    <table class="display table table-hover"  width="100%" id="tableTicketSoporte">
                         <thead id="thead_ticketSoporte">
                             <tr>
                                 <th>OT</th>
@@ -168,30 +158,30 @@
                     <div class="form-row">
                         <div class="col-3 form-group">
                             <label for="cuentaTicket" class="span-form-tickets">Cuenta *</label>
-                            <input type="text" class="form-control form-control-sm" id="cuentaTicket"/>
+                            <input type="text" class="form-control form-control-sm inputTicket" aria-describedby="basic-addon3" id="cuentaTicket" ng-model="ticket.cuenta"/>
                         </div>
                         <div class="col-3 form-group">
                             <label for="tecnicoTicket" class="span-form-tickets">T&eacute;cnico *</label>
-                            <input type="text" class="form-control form-control-sm" data-toggle="modal" data-target="#modalBusquedaTecnicosTicket" id="tecnicoTicket"/>
+                            <input style="cursor: pointer;" readonly class="form-control form-control-sm" onclick="openModalBusquedaTecnicosTicket()" id="tecnicoTicket"/>
                         </div>
                         <div class="col-3 form-group">
                             <label for="telefonoTicket" class="span-form-tickets">Tel&eacute;fono </label>
-                            <input type="text" class="form-control form-control-sm" id="telefonoTicket"/>
+                            <input type="text" class="form-control form-control-sm inputTicket" id="telefonoTicket" ng-model="ticket.telefonoTecnico"/>
                         </div>
                         <div class="col-3 form-group">
-                            <label for="noSerieTicket" class="span-form-tickets">No. de serie </label>
-                            <input type="text" class="form-control form-control-sm" id="noSerieTicket"/>
+                            <label for="noSerieTicket" class="span-form-tickets">No. de serie * </label>
+                            <input type="text" class="form-control form-control-sm inputTicket" id="noSerieTicket" ng-model="ticket.noSerieOld"/>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-3 form-group">
                             <label for="noSerieNuevoEquipo" class="span-form-tickets">No. de serie-Nuevo equipo </label>
-                            <input type="text" class="form-control form-control-sm" id="noSerieNuevoEquipo"/>
+                            <input type="text" class="form-control form-control-sm" id="noSerieNuevoEquipo" ng-model="ticket.noSerieNew"/>
                         </div>
                         <div class="col-3 form-group">
                             <label for="fallaTicketR" class="span-form-tickets">Falla *</label>
-                            <select class="form-control form-control-sm custom-select" name="fallaTicketR" id="falla" ng-change="loadCategoriaTicketSoporte()" ng-model="ticket.idFallaTicket">
-                                <option value="" selected>NO HAY SELECCI&Oacute;N</option>
+                            <select class="form-control form-control-sm custom-select inputTicket" name="fallaTicketR" id="falla" ng-change="loadCategoriaTicketSoporte()" ng-model="ticket.idFalla">
+                                <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
                                 <option value="{{fallaTicket.id}}" ng-repeat="fallaTicket in listFallasTicket">
                                     {{fallaTicket.descripcion}}
                                 </option>
@@ -199,8 +189,8 @@
                         </div>
                         <div class="col-3 form-group">
                             <label for="categoriaTicketR" class="span-form-tickets">Categor&iacute;a *</label>
-                            <select class="form-control form-control-sm custom-select" id="categoria" name="categoriaTicketR" ng-change="loadSubcategoriaTicketSoporte()" ng-model="ticket.idCategoriaTicket">
-                                <option value="" selected>NO HAY SELECCI&Oacute;N</option>
+                            <select class="form-control form-control-sm custom-select inputTicket" id="categoria" name="categoriaTicketR" ng-change="loadSubcategoriaTicketSoporte()" ng-model="ticket.idCategoria">
+                                <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
                                 <option value="{{categoriaTicket.id}}" ng-repeat="categoriaTicket in listCategoriasTicket">
                                     {{categoriaTicket.descripcion}}
                                 </option>
@@ -208,8 +198,8 @@
                         </div>
                         <div class="col-3 form-group">
                             <label for="subcategoriaTicketR" class="span-form-tickets">Subcategor&iacute;a *</label>
-                            <select class="form-control form-control-sm custom-select" id="subcategoria" name="subcategoriaTicketR" ng-model="ticket.idSubcategoriaTicket">
-                                <option value="" selected>NO HAY SELECCI&Oacute;N</option>
+                            <select class="form-control form-control-sm custom-select inputTicket" id="subcategoria" name="subcategoriaTicketR" ng-model="ticket.idSubcategoria">
+                                <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
                                 <option value="{{subcategoriaTicket.id}}" ng-repeat="subcategoriaTicket in listSubcategoriasTicket">
                                     {{subcategoriaTicket.descripcion}}
                                 </option>
@@ -220,7 +210,7 @@
                         <div class="col-3 form-group">
                             <label for="tipoOrdenTicketR" class="span-form-tickets">Tipo orden *</label>
                             <select class="form-control form-control-sm custom-select" name="tipoOrdenTicketR" id="tipoOrden" ng-model="ticket.tipoOrden">
-                                <option value="" selected>NO HAY SELECCI&Oacute;N</option>
+                                <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
                                 <option value="instalacion" selected>INSTALACI&Oacute;N</option>
                                 <option value="soporte" selected>SOPORTE</option>
                                 <option value="addon" selected>ADDON</option>
@@ -229,7 +219,7 @@
                         <div class="col-3 form-group">
                             <label for="tipoNegocioTicketR" class="span-form-tickets">Tipo de negocio *</label>
                             <select class="form-control form-control-sm custom-select" name="tipoNegocioTicketR" id="tipoNegocio" ng-model="ticket.tipoNegocio">
-                                <option value="" selected>NO HAY SELECCI&Oacute;N</option>
+                                <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
                                 <option value="residencial" selected>RESIDENCIAL</option>
                                 <option value="empresarial" selected>EMPRESARIAL</option>
                             </select>
@@ -237,7 +227,7 @@
                         <div class="col-3 form-group">
                             <label for="regionTicketR" class="span-form-tickets">Regi&oacute;n *</label>
                             <select class="form-control form-control-sm custom-select" name="regionTicketR" id="region" ng-model="ticket.region">
-                                <option value="" selected>NO HAY SELECCI&Oacute;N</option>
+                                <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
                                 <option value="colombia" selected>COLOMBIA</option>
                                 <option value="mexico" selected>M&Eacute;XICO</option>
                             </select>
@@ -245,7 +235,7 @@
                         <div class="col-3 form-group">
                             <label for="tecnologiaTicketR" class="span-form-tickets">Tecnolog&iacute;a *</label>
                             <select class="form-control form-control-sm custom-select" name="tecnologiaTicketR" id="tecnologia" ng-model="ticket.tecnologia">
-                                <option value="" selected>NO HAY SELECCI&Oacute;N</option>
+                                <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
                                 <option value="huawei" selected>HUAWEI</option>
                                 <option value="cte" selected>ZTE</option>
                                 <option value="fiberhome" selected>FIBER HOME</option>
@@ -255,12 +245,12 @@
                     <div class="form-row">
                         <div class="col-12 form-group">
                             <label class="span-form-tickets" for="descripcionProblemaTicket">Descripci&oacute;n del Problema * </label>
-                            <textarea class="form-control form-control-sm" id="descripcionProblemaTicket" ng-model="ticket.descripcionProblema"></textarea>
+                            <textarea class="form-control inputTicket content_text" rows="3" id="descripcionProblemaTicket" ng-model="ticket.descripcionProblema"></textarea>
                         </div>
                     </div>
                     <div class="row">
                         <div style="text-align: right; margin: 1em 0 0 0;">
-                            <input type="button" class="btn btn-primary" ng-click="registrarTicketSoporte()" value="GUARDAR">
+                            <input type="button" class="btn btn-primary" ng-click="registrarTicketSoporte(ticket)" value="GUARDAR">
                         </div> 
                     </div>
                     <br>
@@ -273,36 +263,26 @@
     <!-- Scripts libraries -->
     <script src="${pageContext.request.contextPath}/resources/libraries/angularjs/js/angular.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/moment.min.js"></script>
-    <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/js/mdb.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/js/mdb.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-ui.js"></script>
     <script src="${pageContext.request.contextPath}/resources/libraries/popper\popper.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/libraries/bootstrap/js/bootstrap.min.js"></script>
 
-    <script src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/jquery.dataTables.js"></script>
-    <script
-        src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/dataTables.bootstrap4.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/libraries/jstree/jstree.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/libraries/sweetalert/js/sweetalert2.min.js"></script>
-    <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker_1.9.0.min.js"></script>
-    <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker.es.min.js"></script>
-    <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/libraries/magnific_popup/jquery.magnific-popup.min.js"></script>
-    <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
-    <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/lib/moment.es.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker_1.9.0.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker.es.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/magnific_popup/jquery.magnific-popup.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/lib/moment.es.js"></script>
 
-    <script
-        src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionTicketsSoporte/gestionTicketsSoporteController.js"></script>
-    <script
-        src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionTicketsSoporte/gestionTicketsSoporteService.js"></script>
-    <script
-        src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionTicketsSoporte/jsonGestionTicketsSoporte.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionTicketsSoporte/gestionTicketsSoporteController.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionTicketsSoporte/gestionTicketsSoporteService.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionTicketsSoporte/jsonGestionTicketsSoporte.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>

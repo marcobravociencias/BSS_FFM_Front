@@ -1,7 +1,144 @@
 .bootstrap-select.btn-group .dropdown-menu.inner {
 	color: #1CA4FC !important;
-} 
+}
 
+.txtCabeceraTabla:hover{
+	cursor: pointer !important;
+	color: #7716fa !important;
+}
+
+.iconoOjoColumna:hover{
+	cursor: pointer !important;
+	color: #7716fa !important;
+}
+
+.iconoMostrarColumnas:hover{
+	cursor: pointer !important;
+	color: #7716fa !important;
+}
+
+.iconoMostrarOcultarColumnas:hover{
+	cursor: pointer !important;
+	color: #7716fa !important;
+}
+
+/* --------------------------------------------------------------------- */
+.txtCabeceraTabla {
+	position: relative;
+  	display: inline-block;
+}
+
+.txtCabeceraTabla .tooltipTxtCabeceraTabla {
+	visibility: hidden;
+  	width: 125px;
+  	background-color: #555;
+  	color: #fff;
+  	text-align: center;
+  	border-radius: 6px;
+  	padding: 5px 0;
+  	position: absolute;
+  	z-index: 1;
+  	top: 120%;
+  	left: 50%;
+  	margin-left: -60px;
+  	opacity: 0;
+  	transition: opacity 0.3s;
+  	font-family: 'Montserrat';
+    font-size: .9em;
+}
+
+.txtCabeceraTabla:hover .tooltipTxtCabeceraTabla {
+	visibility: visible;
+  	opacity: 1;
+}
+
+.iconoOjoColumna {
+	position: relative;
+  	display: inline-block;
+}
+
+.iconoOjoColumna .tooltipIconoOjoColumna {
+	visibility: hidden;
+  	width: 125px;
+  	background-color: #555;
+  	color: #fff;
+  	text-align: center;
+  	border-radius: 6px;
+  	padding: 5px 0;
+  	position: absolute;
+  	z-index: 1;
+  	top: 120%;
+  	left: 50%;
+  	margin-left: -60px;
+  	opacity: 0;
+  	transition: opacity 0.3s;
+  	font-family: 'Montserrat';
+    font-size: .9em;
+}
+
+.iconoOjoColumna:hover .tooltipIconoOjoColumna {
+	visibility: visible;
+  	opacity: 1;
+}
+
+.iconoMostrarColumnas {
+	position: relative;
+  	display: inline-block;
+}
+
+.iconoMostrarColumnas .tooltipIconoMostrarColumnas {
+	visibility: hidden;
+  	width: 135px;
+  	background-color: #555;
+  	color: #fff;
+  	text-align: center;
+  	border-radius: 6px;
+  	padding: 5px 0;
+  	position: absolute;
+  	z-index: 1;
+  	top: 120%;
+  	left: 50%;
+  	margin-left: -60px;
+  	opacity: 0;
+  	transition: opacity 0.3s;
+  	font-family: 'Montserrat';
+    font-size: .8em;
+}
+
+.iconoMostrarColumnas:hover .tooltipIconoMostrarColumnas {
+	visibility: visible;
+  	opacity: 1;
+}
+
+.iconoMostrarOcultarColumnas {
+	position: relative;
+  	display: inline-block;
+}
+
+.iconoMostrarOcultarColumnas .tooltipIconoMostrarOcultarColumnas {
+	visibility: hidden;
+  	width: 135px;
+  	background-color: #555;
+  	color: #fff;
+  	text-align: center;
+  	border-radius: 6px;
+  	padding: 5px 0;
+  	position: absolute;
+  	z-index: 1;
+  	top: 120%;
+  	left: 50%;
+  	margin-left: -60px;
+  	opacity: 0;
+  	transition: opacity 0.3s;
+  	font-family: 'Montserrat';
+    font-size: .8em;
+}
+
+.iconoMostrarOcultarColumnas:hover .tooltipIconoMostrarOcultarColumnas {
+	visibility: visible;
+  	opacity: 1;
+}
+/* --------------------------------------------------------------------- */
 
 table.dataTable.no-footer{
 	
@@ -310,6 +447,16 @@ table.dataTable thead th, table.dataTable thead td{
 	text-align:justify;
 }
 
+.scrollGeneralArbolGeografiaIndividual {
+    margin-bottom:.5em;
+	margin:4px, 4px;
+	padding:4px;
+	height: 330px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	text-align:justify;
+}
+
 .pestaniaActivada{
    border-bottom: .3em solid #7716FA;
 }
@@ -330,7 +477,7 @@ table.dataTable thead th, table.dataTable thead td{
     margin-left: 1em;
     padding: .2em .5em;
     border-radius: .2em;
-    background: #e2e2e2;
+/*     background: #e2e2e2; */
     cursor: pointer;
 }
 

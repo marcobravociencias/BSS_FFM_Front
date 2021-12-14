@@ -75,7 +75,6 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                     $scope.arbolIntervencionesModificar = angular.copy($scope.listaIntervencionesRespaldo);
                     $scope.listaIntervencionesRegistradasMod = [];
                     $scope.detalleUsuario.intervencionesId = [];
-                    
                     let intervencionesListaMod = [];
                     
                     angular.forEach($scope.arbolIntervencionesModificar,(element,index) => {
@@ -86,12 +85,15 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                             }
                         });
                     });
-                    
                     $("#arbolIntervencionMod").jstree('destroy');
                     $('#arbolIntervencionMod').bind('loaded.jstree', function(e, data) {
                         //$(this).jstree("open_all");
                     }).jstree({
                         'plugins': ['search', 'checkbox'],
+                        'search': {
+							"case_sensitive": false,
+							"show_only_matches": true
+						},
                         'core': {
                             'data': $scope.arbolIntervencionesModificar,
                             'themes': {
@@ -141,12 +143,13 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                     $scope.listaGeografiasRegistradasMod = [];
                     $scope.detalleUsuario.geografiasId = [];
                     
+                    $scope.arbolCiudadesModificar.push({id: 0, text: "GEOGRAFÍA", nivel: 0, parent: "#", state:{opened: true}});
                     angular.forEach($scope.listaGeografiasRespaldo,(element,index) => {
                         if(element.nivel <= $scope.filtroGeografias){
                             $scope.arbolCiudadesModificar.push({
                                 id: element.id,
                                 text: element.nombre,
-                                parent: element.padre == undefined ? "#" : element.padre,
+                                parent: element.padre == null ? 0 : element.padre,
                                 icon: "fa fa-tag",
                                 nivel: element.nivel
                             });
@@ -167,6 +170,10 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                         //$(this).jstree("open_all");
                     }).jstree({
                     	'plugins': plugins,
+                    	'search': {
+							"case_sensitive": false,
+							"show_only_matches": true
+						},
                         'core': {
                             'data': $scope.arbolCiudadesModificar,
                             'themes': {
@@ -278,6 +285,10 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                         //$(this).jstree("open_all");
                     }).jstree({
                         'plugins': ['search', 'checkbox'],
+                        'search': {
+							"case_sensitive": false,
+							"show_only_matches": true
+						},
                         'core': {
                             'data': $scope.arbolAccesosModificar,
                             'themes': {
@@ -465,10 +476,6 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 			$("#checkAsignacionAutomaticaMod").text("  NO");
 		}
 	}
-
-    angular.element(document).ready(function () {
-        $("#idBody").removeAttr("style");
-    });
 	
 	//SELECCIONA O DESELECCIONA EL TÉCNICO ELEGIDO - PESTAÑA TÉCNICOS MODIFICACUÓN USUARIO
 	$scope.seleccionarTecnicoMod = function(tecnicoSeleccionado) {
@@ -1197,6 +1204,36 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     $scope.cerrarModalTomarFotoUsuarioMod = function() {
     	$("#modalTomarFotoUsuarioMod").modal('hide');
 	}
+    
+    $("#pills-intervencion-tab-mod").click(function() {
+    	setTimeout(function (){
+	        $("#buscadorIntervencionMod").focus();
+    	}, 750);
+    });
+    
+    $("#pills-arbol-tab-mod").click(function() {
+    	setTimeout(function (){
+	        $("#buscadorGeografiaMod").focus();
+    	}, 750);
+    });
+    
+    $("#pills-accesos-tab-mod").click(function() {
+    	setTimeout(function (){
+	        $("#buscadorPermisosMod").focus();
+    	}, 750);
+    });
+    
+    $("#pills-tecnico-tab-mod").click(function() {
+    	setTimeout(function (){
+	        $("#buscadorTecnicoMod").focus();
+    	}, 750);
+    });
+    
+    $("#pills-despacho-tab-mod").click(function() {
+    	setTimeout(function (){
+	        $("#buscadorDespachoMod").focus();
+    	}, 750);
+    });
 	
 	//LOS SIGUIENTES 2 MÉTODOS SE QUEDAN PENDIENTES POR SI EN ALGÚN MOMENTO SE DECIDE EDITAR TAMBIÉN EL PUESTO DEL USUARIO
 //	$('#puesto_select_modificacion').on('change', function() {

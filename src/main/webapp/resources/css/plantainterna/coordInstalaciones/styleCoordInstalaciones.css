@@ -1,3 +1,80 @@
+#jstree-pendiente .jstree-anchor {
+    font-family: 'Montserrat';
+    font-size: .8em;
+}
+
+#jstree-asignado .jstree-anchor {
+    font-family: 'Montserrat';
+    font-size: .8em;
+}
+
+#jstree-detenido .jstree-anchor {
+    font-family: 'Montserrat';
+    font-size: .8em;
+}
+
+#jstree-terminada .jstree-anchor {
+    font-family: 'Montserrat';
+    font-size: .8em;
+}
+
+#jstree-cancelada .jstree-anchor {
+    font-family: 'Montserrat';
+    font-size: .8em;
+}
+
+#jstree-calendarizar .jstree-anchor {
+    font-family: 'Montserrat';
+    font-size: .8em;
+}
+
+#jstree-gestoria .jstree-anchor {
+    font-family: 'Montserrat';
+    font-size: .8em;
+}
+
+#jstree-pendiente .jstree-search {
+	font-style: italic !important;
+    color: #8b0000 !important;
+    font-weight: bold !important;
+}
+
+#jstree-asignado .jstree-search {
+	font-style: italic !important;
+    color: #8b0000 !important;
+    font-weight: bold !important;
+}
+
+#jstree-detenido .jstree-search {
+	font-style: italic !important;
+    color: #8b0000 !important;
+    font-weight: bold !important;
+}
+
+#jstree-terminada .jstree-search {
+	font-style: italic !important;
+    color: #8b0000 !important;
+    font-weight: bold !important;
+}
+
+#jstree-cancelada .jstree-search {
+	font-style: italic !important;
+    color: #8b0000 !important;
+    font-weight: bold !important;
+}
+
+#jstree-calendarizar .jstree-search {
+	font-style: italic !important;
+    color: #8b0000 !important;
+    font-weight: bold !important;
+}
+
+#jstree-gestoria .jstree-search {
+	font-style: italic !important;
+    color: #8b0000 !important;
+    font-weight: bold !important;
+}
+
 #navbar_reportes .list-group-item.active {
     background-color: #f2f2f2;
     border-color: #f2f2f2;
