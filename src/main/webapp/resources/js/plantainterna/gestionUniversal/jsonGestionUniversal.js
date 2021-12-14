@@ -1,0 +1,181 @@
+var listaUsuarios = {
+    "result": {
+        "result": {
+            "mensaje": "Lista de usuarios con sus tipos de ordenes asignados",
+            "usuarios": [
+                {
+                    "apellidoMaterno": "PEREZ",
+                    "apellidoPaterno": "LOPEZ",
+                    "fechaActualizacion": "2021-11-23 11:15:45.00764",
+                    "geografia": "CIUDAD DE MEXICO-CENTRO",
+                    "idGeografia": 100.0,
+                    "idUsuario": 2.0,
+                    "noEmpleado": "14102832",
+                    "nombre": "LUIS",
+                    "nombreCompleto": "LUIS LOPEZ PEREZ",
+                    "urlFoto": "https://firebasestorage.googleapis.com/v0/b/totalplay-ffm-core-dev.appspot.com/o/userProfilePhoto?alt=media&token=uuidv4()",
+                    "usuario": "FFMBACK"
+                },
+                {
+                    "apellidoMaterno": "REYES",
+                    "apellidoPaterno": "SOLIS",
+                    "fechaActualizacion": "2021-11-29 17:53:30.692038",
+                    "geografia": "CIUDAD DE MEXICO-CENTRO",
+                    "idGeografia": 100.0,
+                    "idUsuario": 11.0,
+                    "noEmpleado": "GABMXOP144",
+                    "nombre": "CARLOS ALBERTO",
+                    "nombreCompleto": "CARLOS ALBERTO SOLIS REYES",
+                    "urlFoto": "https://firebasestorage.googleapis.com/v0/b/totalplay-ffm-core-dev.appspot.com/o/usuarios%2FDavid%20Roberto%20Casta.jpg?alt=media&token=d96c41a3-3923-4118-946a-2b7b23da6cb3",
+                    "usuario": "GABMXOP144"
+                },
+                {
+                    "apellidoMaterno": "CALDER",
+                    "apellidoPaterno": "RODRIGU",
+                    "fechaActualizacion": "2021-12-03 13:23:39.20675",
+                    "geografia": "CIUDAD DE MEXICO-CENTRO",
+                    "idGeografia": 100.0,
+                    "idUsuario": 79647.0,
+                    "noEmpleado": "6506734",
+                    "nombre": "ANTONIO",
+                    "nombreCompleto": "ANTONIO RODRIGU CALDER",
+                    "urlFoto": "https://firebasestorage.googleapis.com/v0/b/totalplay-ffm-core-dev.appspot.com/o/ANTONIO RODRIGU CALDER?alt=media&token=uuidv4()",
+                    "usuario": "6506734"
+                },
+                {
+                    "apellidoMaterno": "INTERNA",
+                    "apellidoPaterno": "PLANTA",
+                    "fechaActualizacion": "2021-11-29 12:49:47.678993",
+                    "geografia": "CIUDAD DE MEXICO-CENTRO",
+                    "idGeografia": 100.0,
+                    "idUsuario": 22.0,
+                    "noEmpleado": "TECNICOPI",
+                    "nombre": "TECNICO",
+                    "nombreCompleto": "TECNICO PLANTA INTERNA",
+                    "urlFoto": "https://firebasestorage.googleapis.com/v0/b/totalplay-ffm-core-dev.appspot.com/o/usuarios%2FEder%20Guillermo%20Montejano%20Ram%C3%ADrez.jpeg?alt=media&token=f80a3155-9612-4429-b1c2-9a1bd1a337ae",
+                    "usuario": "TECNICOPI"
+                },
+                {
+                    "apellidoMaterno": "SegundoApe",
+                    "apellidoPaterno": "PrimerApe",
+                    "fechaActualizacion": "2021-10-22 12:32:58.430867",
+                    "geografia": "CIUDAD DE MEXICO-NORTE",
+                    "idGeografia": 103.0,
+                    "idUsuario": 79635.0,
+                    "noEmpleado": "15015990",
+                    "nombre": "Técnico",
+                    "nombreCompleto": "Tecnico PrimerApe SegundoApe",
+                    "urlFoto": null,
+                    "usuario": "tec15015990"
+                },
+                {
+                    "apellidoMaterno": "TESTAMATERNO",
+                    "apellidoPaterno": "TESTAPPATERNO",
+                    "fechaActualizacion": "2021-10-25 10:55:27.093022",
+                    "geografia": "CIUDAD DE MEXICO-NORTE",
+                    "idGeografia": 103.0,
+                    "idUsuario": 79641.0,
+                    "noEmpleado": "65067362",
+                    "nombre": "APP ISSAC",
+                    "nombreCompleto": "APP ISSAC TESTAPPATERNO TESTAMATERNO",
+                    "urlFoto": null,
+                    "usuario": "65067362"
+                },
+                {
+                    "apellidoMaterno": "Priego",
+                    "apellidoPaterno": "Garcia",
+                    "fechaActualizacion": "2021-11-29 12:48:43.410985",
+                    "geografia": "CIUDAD DE MEXICO-NORTE",
+                    "idGeografia": 103.0,
+                    "idUsuario": 79644.0,
+                    "noEmpleado": "15015902",
+                    "nombre": "Juan Carlos",
+                    "nombreCompleto": "Juan Carlos Garcia Priego",
+                    "urlFoto": "https://firebasestorage.googleapis.com/v0/b/totalplay-ffm-core-dev.appspot.com/o/usuarios%2FCarlos%20Alberto%20Solis%20Reyes.jpeg?alt=media&token=453064cc-4c1e-4a79-9abf-c5fc750f1ed3",
+                    "usuario": "TECNICOPI1"
+                },
+                {
+                    "apellidoMaterno": "SALGADO",
+                    "apellidoPaterno": "BRITO",
+                    "fechaActualizacion": "2021-11-24 17:40:26.401631",
+                    "geografia": "CIUDAD DE MEXICO-NORTE",
+                    "idGeografia": 103.0,
+                    "idUsuario": 79666.0,
+                    "noEmpleado": "15015002",
+                    "nombre": "ARTURO",
+                    "nombreCompleto": "ARTURO BRITO SALGADO",
+                    "urlFoto": "https://firebasestorage.googleapis.com/v0/b/totalplay-ffm-core-dev.appspot.com/o/Jose Eduardo Santamaria.jpg?alt=media&token=uuidv4()",
+                    "usuario": "15015002"
+                },
+                {
+                    "apellidoMaterno": "Ceron",
+                    "apellidoPaterno": "Aguilar",
+                    "fechaActualizacion": "2021-11-23 09:28:53.675336",
+                    "geografia": "CIUDAD DE MEXICO-NORTE",
+                    "idGeografia": 103.0,
+                    "idUsuario": 79642.0,
+                    "noEmpleado": "PRUEBASPI",
+                    "nombre": "Gamaliel",
+                    "nombreCompleto": "Gamaliel Aguilar Ceron",
+                    "urlFoto": null,
+                    "usuario": "PRUEBASPI"
+                },
+                {
+                    "apellidoMaterno": "ROMAN",
+                    "apellidoPaterno": "SANCHEZ",
+                    "fechaActualizacion": "2021-11-24 11:04:13.23299",
+                    "geografia": "CIUDAD DE MEXICO-NORTE",
+                    "idGeografia": 103.0,
+                    "idUsuario": 79669.0,
+                    "noEmpleado": "15015134",
+                    "nombre": "JOSE",
+                    "nombreCompleto": "JOSE SANCHEZ ROMAN",
+                    "urlFoto": "https://firebasestorage.googleapis.com/v0/b/totalplay-ffm-core-dev.appspot.com/o/JOSE SANCHEZ ROMAN?alt=media&token=uuidv4()",
+                    "usuario": "15015134"
+                },
+                {
+                    "apellidoMaterno": "ZAVALA",
+                    "apellidoPaterno": "CASAS",
+                    "fechaActualizacion": "2021-11-19 13:03:23.093298",
+                    "geografia": "CIUDAD DE MEXICO-NORTE",
+                    "idGeografia": 103.0,
+                    "idUsuario": 79670.0,
+                    "noEmpleado": "15015135",
+                    "nombre": "ARMANDO",
+                    "nombreCompleto": "ARMANDO CASAS ZAVALA",
+                    "urlFoto": "https://firebasestorage.googleapis.com/v0/b/totalplay-ffm-core-dev.appspot.com/o/ARMANDO CASAS ZAVALA?alt=media&token=uuidv4()",
+                    "usuario": "15015135"
+                },
+                {
+                    "apellidoMaterno": "LUNA",
+                    "apellidoPaterno": "GONZÁLEZ",
+                    "fechaActualizacion": "2021-11-24 17:41:25.480199",
+                    "geografia": "CIUDAD DE MEXICO-NORTE",
+                    "idGeografia": 103.0,
+                    "idUsuario": 79663.0,
+                    "noEmpleado": "15015041",
+                    "nombre": "RICARDO",
+                    "nombreCompleto": "RICARDO GONZALEZ LUNA",
+                    "urlFoto": "https://firebasestorage.googleapis.com/v0/b/totalplay-ffm-core-dev.appspot.com/o/RICARDO GONZÁLEZ LUNA?alt=media&token=uuidv4()",
+                    "usuario": "15015041"
+                },
+                {
+                    "apellidoMaterno": "GÓMEZ",
+                    "apellidoPaterno": "PÉREZ",
+                    "fechaActualizacion": "2021-11-24 11:03:10.905631",
+                    "geografia": "CIUDAD DE MEXICO-NORTE",
+                    "idGeografia": 103.0,
+                    "idUsuario": 79664.0,
+                    "noEmpleado": "15015037",
+                    "nombre": "LUCÍA",
+                    "nombreCompleto": "LUCÍA PEREZ GOMEZ",
+                    "urlFoto": "https://firebasestorage.googleapis.com/v0/b/totalplay-ffm-core-dev.appspot.com/o/Lucia.jpg?alt=media&token=uuidv4()",
+                    "usuario": "15015037"
+                }
+            ]
+        }
+    },
+    "resultDescripcion": "Accion completada",
+    "mensajeException": null,
+    "respuesta": true
+}

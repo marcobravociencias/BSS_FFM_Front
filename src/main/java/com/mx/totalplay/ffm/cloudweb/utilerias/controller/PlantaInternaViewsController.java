@@ -103,5 +103,11 @@ public class PlantaInternaViewsController {
 	public String TercerosGeneric() {		
 		return "generic/tercerosGeneric/mainTercerosGeneric";
 	}
+
+	
+	@GetMapping("/moduloGestionUniversal")
+	public String gestionUniversal() {		
+		return "plantainterna/gestionUniversal/mainGestionUniversal";
+	}
 }
 
