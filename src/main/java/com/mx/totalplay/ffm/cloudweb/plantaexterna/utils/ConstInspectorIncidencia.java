@@ -15,4 +15,7 @@ public class ConstInspectorIncidencia  implements Serializable{
 	
 	@Value("${consultaOTTipoOrdenesPorUsuario}")
 	private String consultaOTTipoOrdenesPorUsuario;
+	
+	@Value("${consultarIncidenciasInspectorPE}")
+	private String consultarIncidenciasInspectorPE;
 }

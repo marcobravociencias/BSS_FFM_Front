@@ -108,7 +108,7 @@ pageEncoding="ISO-8859-1"%>
         <div class="container-fluid contenedor-inspectorIncidencia">
             <div class="content-fluid">
                 <div class="row">
-                    <div class="col-5">
+                    <div class="col-left-contenedor" style="width: {{widthTable}}%;">
                         <table id="tableIncidencia" class="display table table-hover " cellspacing="0" width="100%">
                             <thead id="thead_incidencia">
                                 <tr>
@@ -116,6 +116,11 @@ pageEncoding="ISO-8859-1"%>
                                     <th>FECHA</th>
                                     <th>CLUSTER</th>
                                     <th>FALLA</th>
+                                    <th>ESTATUS</th>
+                                    <th># EMPLEADO</th>
+                                    <th>REPORTA</th>
+                                    <th>FECHA REGISTRO</th>
+                                    <th>HORA</th>
                                     <th><i class="far fa-window-restore" style="color:#808080"></i></th>
                                     <th><i class="fas fa-globe-americas" style="color:#808080"></i></th>
                                 </tr>
@@ -124,7 +129,40 @@ pageEncoding="ISO-8859-1"%>
                             </tbody>
                         </table>
                     </div>
-                    <div class="col-7">
+                    <div class="col-rigth-contenedor" style="width: {{widthMap}}%; padding-left: 0;">
+                        <div class="row">
+                            <div class="text-right" class="col-12">
+                                <a class="opcion-menu active" style="position: absolute; margin-left: -2.4em; z-index: 10;" id="seguimientoDiario-tab" data-toggle="tab" href="#seguimientoDiario" role="tab" aria-controls="seguimientoDiario"
+                                    aria-selected="false" ng-click="mostrarOcultarMapa()"><i class="icon-menu-left fas fa-map"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div style="padding-left: 1.5em; height: 2.5em; line-height: 2.5em;" class="col-12" ng-class="mostrarMapa ? 'visualizar-visible' : 'visualizar-disable'" >
+                                <div class="contenido_color" ng-show="mostrarMapa" ng-repeat="color in filtrosInspector.coloresStatus">
+                                    <i class="fa-sm fa fa-circle" style="{{'color:'+ color.id}}" aria-hidden="true"></i>
+                                    <small ng-bind="color.descripcion"></small> 
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div id="mapaInspectorIncidencia" >
+                        </div>
+                        <div class="col-7" ng-show="false">
+                            <div class="row" id="colores_estados">
+                                <div class="col-12">
+                                    <div class="contenido_color" ng-repeat="color in filtrosInspector.coloresStatus">
+                                        <i class="fa-sm fa fa-circle" style="{{'color:'+ color.id}}" aria-hidden="true"></i>
+                                        <small ng-bind="color.descripcion"></small> 
+                                    </div>			
+                                </div>			
+                            </div>			
+                            
+                        </div>
+                    </div>
+
+                    </div>
+                    <!--div class="col-7" ng-show="false">
                         <div class="row" id="colores_estados">
                             <div class="col-12">
                                 <div class="contenido_color" ng-repeat="color in filtrosInspector.coloresStatus">
@@ -135,7 +173,7 @@ pageEncoding="ISO-8859-1"%>
                         </div>			
                         <div id="mapaInspectorIncidencia">
                         </div>
-                    </div>
+                    </div-->
                 </div>
             </div>
         </div>
