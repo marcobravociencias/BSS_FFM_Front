@@ -27,4 +27,14 @@ app.service("gestionTicketSoporteService", function ($http) {
             transformRequest: angular.identity
         });
     }
+
+    this.consultaTicketsSoporte = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultaTicketsSoporte",
+            data: JSON.stringify(params),
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
+        });
+    }
 });

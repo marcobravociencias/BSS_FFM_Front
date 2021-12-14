@@ -41,15 +41,15 @@ public class SoporteCentralizadoController {
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
 
-    @PostMapping("/consultaTicketSoporte")
-    public ResponseEntity<?> consultaTicketSoporte(@RequestBody String params){
-        logger.info("#### SEGUIMIENTO SOPORTE consultaTicketSoporte ### \n" + params);
-        ServiceResponseResult response = soporteCentralizadoService.consultaTicketSoporte(params);
-        if (response.getResult() instanceof Integer){
-            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-        }
-        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-    }
+//    @PostMapping("/consultaTicketSoporte")
+//    public ResponseEntity<?> consultaTicketSoporte(@RequestBody String params){
+//        logger.info("#### SEGUIMIENTO SOPORTE consultaTicketSoporte ### \n" + params);
+//        ServiceResponseResult response = soporteCentralizadoService.consultaTicketSoporte(params);
+//        if (response.getResult() instanceof Integer){
+//            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+//        }
+//        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+//    }
 
     @PostMapping("/consultaDetalleSoporte")
     public ResponseEntity<?> consultaDetalleSoporte(@RequestBody String params){
@@ -71,14 +71,14 @@ public class SoporteCentralizadoController {
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
     
-    @GetMapping("/consultaTicketsSoporte")
-	public ResponseEntity<DataTableResponse> consultaTicketsSoporte(@ModelAttribute ParamConsultaOTPI params) {
-		logger.info("*** Objeto: " + gson.toJson(params));
-		dataTableResponse = soporteCentralizadoService.consultaTicketsSoporte(params);
-		if (dataTableResponse.getResult() instanceof Integer){
-			return new ResponseEntity<DataTableResponse>(dataTableResponse, HttpStatus.FORBIDDEN);
-		}
-		return new ResponseEntity<DataTableResponse>(dataTableResponse, HttpStatus.ACCEPTED);
+    @PostMapping("/consultaTicketsSoporte")
+	public ResponseEntity<?> consultaTicketsSoporte(@RequestBody String params) {
+		logger.info("#### consultaTicketsSoporte ### \n" + params);
+		ServiceResponseResult response = soporteCentralizadoService.consultaTicketsSoporte(params);
+		if (response.getResult() instanceof Integer){
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
     
     @PostMapping("/creaTicketSoporte")

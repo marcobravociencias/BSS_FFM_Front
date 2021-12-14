@@ -250,6 +250,7 @@
                     </div>
                     <div class="row">
                         <div style="text-align: right; margin: 1em 0 0 0;">
+                            <button type="button" class="btn btn-primary" style="background-color: #A39F9F;" ng-click="cleanForm()">CANCELAR</button>
                             <input type="button" class="btn btn-primary" ng-click="registrarTicketSoporte(ticket)" value="GUARDAR">
                         </div> 
                     </div>
