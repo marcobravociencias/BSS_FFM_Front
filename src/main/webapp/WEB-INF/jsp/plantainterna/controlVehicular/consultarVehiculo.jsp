@@ -41,7 +41,7 @@
 </div>
 <div class="container-fluid contenedor">
     <div class="content-fluid">
-        <table id="vehiculoTable" class="display table table-hover" cellspacing="0" width="100%">
+        <table id="vehiculoTable" class="display table" cellspacing="0" width="100%">
             <thead id="thead_table">
                 <tr>
                     <th>PLACA</th>

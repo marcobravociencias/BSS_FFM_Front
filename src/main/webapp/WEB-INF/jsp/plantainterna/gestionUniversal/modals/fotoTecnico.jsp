@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-body">
                 <div class="row">
-                    <img src="" id="img_tec" width="300" height="300" />
+                    <img src="" id="img_tec" width="300" height="400" />
                 </div>
             </div>
         </div>

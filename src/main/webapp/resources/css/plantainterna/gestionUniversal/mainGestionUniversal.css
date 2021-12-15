@@ -5,6 +5,7 @@
     border-radius: .5em;
     margin-top: 1em;
     padding: 0;
+    font-family: 'Montserrat' !important;
 }
 
 
@@ -38,17 +39,17 @@
     border-bottom: 0px solid !important;
 }
 
-#container_pagos_tecnicos{
+#container_pagos_tecnicos {
     padding: 0;
 }
 
 #container_gestion_Universal tr th {
     font-size: 0.7em;
-    padding: 1em 1em 1em;
+
     text-align: center;
 }
 
-#container_gestion_Universal .table td, .table th{
+#container_gestion_Universal .table td, .table th {
     border-top: 1px solid #fff;
     vertical-align: middle;
 }
@@ -63,6 +64,7 @@
     text-align: center;
     border-top: 1px white solid;
     border-bottom: 1px white solid;
+    padding: 0 !important;
 }
 
 #container_gestion_Universal div.dataTables_wrapper div.dataTables_length label {
@@ -201,29 +203,91 @@
     margin-right: 0.5em;
 }
 
-#nav-options{
+#nav-options {
     list-style-type: none;
     font-size: 1.5em;
 }
 
 #nav-options a {
-    color: grey;
+    color: #7716fa;
 }
 
-#nav-options .icon-item{
+#nav-options .icon-item {
     padding: 0.5em;
     color: #737810;
 }
 
-#nav-options .dropdown-item{
+#nav-options .dropdown-item {
     padding: 0.5em !important;
     cursor: pointer;
 }
 
-#nav-options .dropdown-item:active{
+#nav-options .dropdown-item:active {
     color: grey !important;
 }
 
-#nav-options .dropdown-menu{
-   min-width: 9em;
+#nav-options .dropdown-menu {
+    min-width: 9em;
+    margin-top: -0.7em !important;
+}
+
+#container_configura_geografia {
+    height: 23.5em;
+}
+
+.content-geografia {
+    height: 20em;
+    overflow-y: auto;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.vakata-context, .vakata-context ul {
+    background: #fff !important;
+    width: 8em;
+    box-shadow: 2px 2px 2px #99999991 !important;
+    border: 1px solid #a8a0a038 !important;
+    font-size: 0.9em;
+}
+
+.vakata-context li>a .vakata-contextmenu-sep {
+    border-left: none !important;
+}
+
+.vakata-context li>a>i.fa-trash {
+    color: #e41e2d;
+}
+
+.vakata-context li>a>i.fa-pen-fancy {
+    color: #7f4c9d;
+}
+
+.vakata-context li>a>i.fa-plus {
+    color: #5bc8e5;
+}
+
+#jstreeConfig .fas {
+    color: #ccc;
+}
+
+
+#jstreeConfig .jstree-clicked i{
+    color: #fff !important;
+}
+
+#jstreeConfig .jstree-hovered i{
+    color: #fff !important;
+}
+
+#jstreeConfig  .jstree-proton {
+    font-family: 'Montserrat' !important;
+    font-size: 0.9em;
+}
+
+.icon-search-geo {
+    margin-top: 0.6em;
+    margin-left: -2em !important;
+    z-index: 5;
+    font-size: 0.8em !important;
+    color: #9F9E9E;
 }

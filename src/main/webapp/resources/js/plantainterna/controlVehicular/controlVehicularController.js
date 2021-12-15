@@ -70,27 +70,7 @@ app.controller('controlVehicularController',
 			});
 
 			$('#searchText').on('keyup', function () {
-				//vehiculoTable.search(this.value).draw();
-				let list = [];
-				let text = $("#searchText").val().toLowerCase();
-				let listVehiculos = angular.copy($scope.vehiculos);
-				$.each(listVehiculos, function (i, elemento) {
-					console.log(elemento);
-					if (elemento.placa.toLowerCase().includes(text) ||
-						elemento.numeroSerie.toLowerCase().includes(text) ||
-						elemento.color.toLowerCase().includes(text) ||
-						elemento.anio.toLowerCase().includes(text) ||
-						elemento.combustible.toLowerCase().includes(text) ||
-						elemento.tipo.toLowerCase().includes(text) ||
-						elemento.marca.toLowerCase().includes(text) ||
-						elemento.modelo.toLowerCase().includes(text)||
-						elemento.geografia.toLowerCase().includes(text)||
-						elemento.estatus.toLowerCase().includes(text)
-					) {
-						list.push(elemento);
-					}
-				})
-				$scope.buildTableVehiculos(list);
+				vehiculoTable.search(this.value).draw();
 			});
 
 			$('#searchGeo').on('keyup', function () {
@@ -100,7 +80,6 @@ app.controller('controlVehicularController',
 			vehiculoTable = $('#vehiculoTable').DataTable({
 				"paging": true,
 				"lengthChange": false,
-				"searching": true,
 				"ordering": false,
 				"pageLength": 10,
 				"info": false,
@@ -377,8 +356,8 @@ app.controller('controlVehicularController',
 					row[6] = elemento.combustible;
 					row[7] = elemento.numeroSerie;
 					row[8] = elemento.geografia;
-					row[9] = elemento.urlFotoPlaca && elemento.urlFotoPlaca.length > 15 ? '<img style="cursor:pointer" src="' + elemento.urlFotoPlaca + '" alt="Placa" width="50" height="30" onclick="showImg(' + "'" + elemento.urlFotoPlaca + "'" + ')"/>' : "";
-					row[10] = elemento.urlFotoVehiculo && elemento.urlFotoVehiculo.length > 15 ? '<img style="cursor:pointer" src="' + elemento.urlFotoVehiculo + '" alt="Vehiculo" width="50"  height="30" onclick="showImg(' + "'" + elemento.urlFotoVehiculo + "'" + ')"/>' : "";
+					row[9] = elemento.urlFotoPlaca && elemento.urlFotoPlaca.length > 15 ? '<img style="cursor:pointer; border-radius:.5em" src="' + elemento.urlFotoPlaca + '" alt="Placa" width="50" height="30" onclick="showImg(' + "'" + elemento.urlFotoPlaca + "'" + ')"/>' : "";
+					row[10] = elemento.urlFotoVehiculo && elemento.urlFotoVehiculo.length > 15 ? '<img style="cursor:pointer; border-radius:.5em" src="' + elemento.urlFotoVehiculo + '" alt="Vehiculo" width="50"  height="30" onclick="showImg(' + "'" + elemento.urlFotoVehiculo + "'" + ')"/>' : "";
 					row[11] = elemento.estatus;
 					row[12] = '<i class="fas fa-edit" onclick="editCar(' + "'" + elemento.idVehiculo + "'" + ')"></i>';
 					arraRow.push(row);
@@ -386,7 +365,6 @@ app.controller('controlVehicularController',
 				vehiculoTable = $('#vehiculoTable').DataTable({
 					"paging": true,
 					"lengthChange": false,
-					"searching": false,
 					"ordering": false,
 					"pageLength": 10,
 					"info": false,

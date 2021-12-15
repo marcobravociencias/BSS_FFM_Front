@@ -47,10 +47,9 @@
     <body id="idBody" class="body" ng-controller="gestionUniversalController">
         <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
         <div class="container">
-            <div class="container container-title-header" style="padding: 0 !important;">
+            <div class="container-title-header" style="padding: 0 !important;">
                 <div class="header-modulo">
                     <h5 class="title-modulo">Gesti&oacute;n Universal</h5>
-                    <h1 class="h6 subtitle-modulo"></h1>
                 </div>
             </div>
             <div class="content-fluid" id="container_gestion_Universal">
@@ -62,7 +61,12 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="gestionCuadrilla-tab" data-toggle="tab" href="#gestionCuadrilla"
-                                role="tab" aria-controls="gestionCuadrilla" aria-selected="false">Gesti&oacute;n Cuadrillas</a>
+                                role="tab" aria-controls="gestionCuadrilla" aria-selected="false">Gesti&oacute;n
+                                Cuadrillas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="confiGeografia-tab" data-toggle="tab" href="#confiGeografia"
+                                role="tab" aria-controls="confiGeografia" aria-selected="false">Configuraci&oacute;n Geograf&iacute;a</a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -72,6 +76,11 @@
                         </div>
                         <div class="tab-pane fade" id="gestionCuadrilla" role="tabpanel"
                             aria-labelledby="gestionCuadrilla-tab">
+                            <jsp:include page="./content/gestionCuadrilla.jsp"></jsp:include>
+                        </div>
+                        <div class="tab-pane fade" id="confiGeografia" role="tabpanel"
+                            aria-labelledby="confiGeografia-tab">
+                            <jsp:include page="./content/configuracionGeografia.jsp"></jsp:include>
                         </div>
                     </div>
                 </div>
@@ -108,9 +117,9 @@
 
     <script
         src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionUniversal/gestionUniversalController.js"></script>
-        <script
+    <script
         src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionUniversal/jsonGestionUniversal.js"></script>
-        <script
+    <script
         src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionUniversal/gestionUniversalService.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
