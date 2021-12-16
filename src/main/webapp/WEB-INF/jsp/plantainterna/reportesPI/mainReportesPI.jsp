@@ -6,41 +6,29 @@
  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>FFM Total play</title>
       
-		<link rel="icon" type="image/png" sizes="192x192"
-        href="${pageContext.request.contextPath}/resources/img/iconsistema/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32"
-        href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96"
-        href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16"
-        href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-16x16.png">
-    <link href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap.min.css"
-        rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/jquery.dataTables.css"
-        rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/dataTables.bootstrap4.min.css"
-        rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/font-awesome.min.css"
-        rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/libraries/jstree/default/style.min.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/libraries/jstree/themes/proton/style.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/libraries/sweetalert/css/sweetalert2.min.css"
-        rel="stylesheet">
-    <link
-        href="${pageContext.request.contextPath}/resources/libraries/datePicker/css/bootstrap-datepicker3_1.9.0.min.css"
-        rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
-    <link href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/libraries/magnific_popup/magnific-popup.css"
-        rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" rel="stylesheet" />
+		<link rel="icon" type="image/png" sizes="192x192" href="${pageContext.request.contextPath}/resources/img/iconsistema/android-icon-192x192.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="96x96" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-96x96.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-16x16.png">
+		
+		<link href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/jquery.dataTables.css" rel="stylesheet">
+		<link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+		<link href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+		<link href="${pageContext.request.contextPath}/resources/libraries/jstree/default/style.min.css" rel="stylesheet">
+		<link href="${pageContext.request.contextPath}/resources/libraries/jstree/themes/proton/style.css" rel="stylesheet">
+		<link href="${pageContext.request.contextPath}/resources/libraries/sweetalert/css/sweetalert2.min.css" rel="stylesheet">
+		<link href="${pageContext.request.contextPath}/resources/libraries/datePicker/css/bootstrap-datepicker3_1.9.0.min.css" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+		<link href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css" rel="stylesheet">
+		<link href="${pageContext.request.contextPath}/resources/libraries/magnific_popup/magnific-popup.css" rel="stylesheet">
+		<link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" rel="stylesheet" />
 
 
 
         <link href="${pageContext.request.contextPath}/resources/css/plantainterna/reportesPI/mainReportes.css"  rel="stylesheet"/>
         <link href="${pageContext.request.contextPath}/resources/css/plantainterna/consultaOT/styleConsultaOT.css" rel="stylesheet">
-		<link href="${pageContext.request.contextPath}/resources/css/plantainterna/consultaOT/timeLine.css"
-        rel="stylesheet" />
+		<link href="${pageContext.request.contextPath}/resources/css/plantainterna/consultaOT/timeLine.css"rel="stylesheet" />
 </head>
 <body id="idBody" ng-controller="reportesController" style="display: none;">
 <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
