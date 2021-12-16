@@ -49,7 +49,7 @@
         <div class="container">
             <div class="container-title-header" style="padding: 0 !important;">
                 <div class="header-modulo">
-                    <h5 class="title-modulo">Gesti&oacute;n Universal</h5>
+                    <h5 class="title-modulo">Gesti&oacute;n Planning</h5>
                 </div>
             </div>
             <div class="content-fluid" id="container_gestion_Universal">
@@ -68,6 +68,10 @@
                             <a class="nav-link" id="confiGeografia-tab" data-toggle="tab" href="#confiGeografia"
                                 role="tab" aria-controls="confiGeografia" aria-selected="false">Configuraci&oacute;n Geograf&iacute;a</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="cambiaContrasena-tab" data-toggle="tab" href="#cambiaContrasena"
+                                role="tab" aria-controls="cambiaContrasena" aria-selected="false">Cambia contrase&ntilde;a</a>
+                        </li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane fade show active" id="pagoTecnico" role="tabpanel"
@@ -82,11 +86,17 @@
                             aria-labelledby="confiGeografia-tab">
                             <jsp:include page="./content/configuracionGeografia.jsp"></jsp:include>
                         </div>
+                        <div class="tab-pane fade" id="cambiaContrasena" role="tabpanel"
+                            aria-labelledby="cambiaContrasena-tab">
+                            <jsp:include page="./content/cambiaContrasena.jsp"></jsp:include>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <jsp:include page="./modals/fotoTecnico.jsp"></jsp:include>
+        <jsp:include page="./modals/geografia-filter.jsp"></jsp:include>
+        <jsp:include page="./modals/pagosLiberarTecnicos.jsp"></jsp:include>
     </body>
     <!-- Scripts libraries -->
     <script src="${pageContext.request.contextPath}/resources/libraries/angularjs/js/angular.min.js"></script>
@@ -117,8 +127,6 @@
 
     <script
         src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionUniversal/gestionUniversalController.js"></script>
-    <script
-        src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionUniversal/jsonGestionUniversal.js"></script>
     <script
         src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionUniversal/gestionUniversalService.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js"></script>
