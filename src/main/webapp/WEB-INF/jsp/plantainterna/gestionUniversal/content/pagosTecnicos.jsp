@@ -1,7 +1,16 @@
 <div class="container-fluid" id="container_pagos_tecnicos">
     <div class="row filter-content">
-        <div class="col-2 offset-10 form-group">
-            <input placeholder="Buscar" type="text" autocomplete="off"
+        <div class="col-2 form-group">
+            <input readonly placeholder="Geograf&iacute;a" type="text" ng-click="abrirModalGeografiaBuscar()"
+                class="search-filtro form-control form-control-sm" style="border-radius: .5em !important;">
+        </div>
+        <div class="col-1">
+            <button id="btnBuscar" type="button" class="btn btn-primary btnTotal">
+                <i class="fa fa-search"></i>
+            </button>
+        </div>
+        <div class="col-2 offset-7 form-group">
+            <input placeholder="Buscar" type="text" autocomplete="off" style=" height: 2em !important;"
                 class="search-filtro form-control form-control-sm mt-0" id="searchTextGeneral"><i
                 class="fa fa-search icon-search"></i>
         </div>
@@ -11,10 +20,11 @@
             <thead id="thead_pagos_tecnicos">
                 <tr>
                     <th>FOTO</th>
-                    <th>NOMBRE</th>
                     <th>#EMPLEADO</th>
                     <th>USUARIO</th>
+                    <th>NOMBRE</th>
                     <th>UBICACI&Oacute;N</th>
+                    <th>FECHA ACTUALIZACI&Oacute;N</th>
                     <th>ACCIONES</th>
                 </tr>
             </thead>
