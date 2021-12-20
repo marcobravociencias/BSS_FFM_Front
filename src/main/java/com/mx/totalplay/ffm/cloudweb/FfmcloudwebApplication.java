@@ -15,7 +15,8 @@ import org.springframework.context.annotation.PropertySources;
 	    @PropertySource("classpath:plantaexterna.properties"),
         @PropertySource("classpath:plantainterna.properties"),
         @PropertySource("classpath:generic.properties"),
-        @PropertySource("classpath:cambiostatus.properties")
+        @PropertySource("classpath:cambiostatus.properties"),
+        @PropertySource("classpath:parametrosasignacion.properties")
 })
 public class FfmcloudwebApplication extends SpringBootServletInitializer {
 
