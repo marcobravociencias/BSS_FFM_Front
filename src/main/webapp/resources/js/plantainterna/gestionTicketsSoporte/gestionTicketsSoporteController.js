@@ -13,9 +13,11 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     $scope.detalleCaptura = {};
     $scope.catalogoEstatusUsuarios = infoUsuarioEstatusHoras.result;
     $scope.contadores = {};
-    $scope.isBusqueda = true;
+    $scope.isBusqueda = 2;
     $scope.ticketSoporte = {};
     $scope.ticketSoporteR = {};
+
+    app.noticiasGestionTicketSoporte($scope, gestionTicketSoporteService);
 
     $('#searchTextTicket').on('keyup', function () {
         $(".user-filter span").removeClass('selected-filter');
@@ -374,13 +376,11 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         swal.close();
     }
 
-    $scope.changeView = function () {
-        if ($scope.isBusqueda) {
-            $scope.isBusqueda = false;
-        } else {
-            $scope.isBusqueda = true;
+    $scope.changeView = function (option) {
+        $scope.isBusqueda = option
+        if (option === 3) {
+            $scope.consultarComentariosTicketSoporte()
         }
-
     }
 
     $scope.filter = function (type) {

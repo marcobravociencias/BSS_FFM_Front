@@ -27,4 +27,37 @@ app.service("gestionTicketSoporteService", function ($http) {
             transformRequest: angular.identity
         });
     }
+
+
+    /**cambios jose */
+    this.consultarComentariosNoticiasSF = function(params) {
+        return $http({
+            method: "post",
+            url: "req/consultaComentariosNoticiasSF",
+            data: JSON.stringify(params),
+            headers: { 'Content-Type': undefined },
+            transformRequest: angular.identity
+        })
+    }
+
+    this.crearNoticia = function(params) {
+        return $http({
+            method: "post",
+            url: "req/agregarComentariosNoticiaSF",
+            data: JSON.stringify(params),
+            headers: { 'Content-Type': undefined },
+            transformRequest: angular.identity
+        })
+    }
+
+    this.crearSubNoticia = function(params) {
+        return $http({
+            method: "post",
+            url: "req/agregarSubComentarioNoticiaSF",
+            data: JSON.stringify(params),
+            headers: { 'Content-Type': undefined },
+            transformRequest: angular.identity
+        })
+    }
+    /**fin cambios jose */
 });

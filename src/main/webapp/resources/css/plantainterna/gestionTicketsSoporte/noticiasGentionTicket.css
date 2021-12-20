@@ -1,0 +1,229 @@
+.container-noticia-elemento {
+    background: #f7f7f7;
+    position: absolute;
+    width: 50%;
+    right: 0%;
+   /*  height: 100%; */
+    max-height: 35em;
+    z-index: 10;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    /* padding: 0; */
+    box-shadow: -6px 0px 15px 1px #e9e9e9;
+  }
+
+  img#btnRefresNoticias {
+    height: 1.4em;
+    margin-top: .4em;
+    margin-left: 1em;
+  }
+
+  span.cerrarnoticias {
+    position: absolute;
+    right: 0;
+    top: .2em;
+    color: #7716fa;
+    font-weight: bold;
+    font-size: .9em;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  span.subtitelheader-detalle {
+    display: block;
+  }
+
+  h1.subtitelheader-detalle {
+    font-size: .9em;
+    margin-bottom: 0;
+    color: #747474;
+  }
+
+  .box__input {
+    text-align: center !important;
+    font-family: 'Montserrat' !important;
+    font-size: .85em;
+}
+
+  .titelheader-detalle{
+    /* display: block; */
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 0;
+  }
+
+  .div-titelheader-detalle {
+    margin-left: 1em;
+  }
+
+  .img-created-by-comme {
+    width: 3em;
+    max-height: 3em;
+    display: inline-block;
+    border-radius: .4em;
+    -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+  
+  }
+
+  .option-mensajes {
+    font-size: 0.7rem;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  .option-mensajes:hover {
+    text-decoration: underline;
+  }
+
+  .text-fecha-comentario {
+    color: #aba7a7c7;
+    font-size: 12px;
+    margin-left: 30px;
+  }
+
+  .close-enviar-subcomentario{
+    width: 0em !important;
+    height: 10px !important;
+    margin-left: 5em;
+    position: absolute;
+    top: 61px;
+    left: 61%;
+  }
+
+  .container-noticias {
+    margin-top: 1em;
+    margin: 0;
+    margin-top: 1em;
+  }
+
+  .image-preview {
+    display: inline-block;
+    /* width: 2em; */
+    display: flex;
+  }
+
+  .box__file {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.eliminar_archivo_sub {
+  margin-left: 15px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.col-adjuntar-arch {
+  top: -45px;
+  padding-left: 0px;
+}
+
+.col-adjuntar-archivo {
+  top: -30px;
+  padding-left: 0px;
+}
+
+  .image-preview-owner {
+    display: inline-block;
+    display: flex;
+    margin-left: .6em;
+  }
+
+  .container-mensajes-noticias{
+    max-height: 21em;
+    overflow-y: scroll;
+  }
+
+  .col-content-text-general {
+    margin-left: 38px;
+    max-width: 50% !important;
+    margin-top: 1em;
+  }
+
+  .text_select_archivo {
+    cursor: pointer;
+    font-size: .9em;
+    font-weight: bold;
+    color: #515BA7;
+  }
+  
+  .text_select_archivo:hover {
+    text-decoration: underline #515BA7;
+  }
+
+  .col-btn-send-general {
+    padding-left: 130px;
+    margin-top: 1em;
+  }
+
+  .title-file-adjuntado {
+    display: inline-block;
+  }
+
+  h1.text-title-adjuntado.ng-binding {
+    font-size: 1em;
+    margin-bottom: 0;
+    /* font-family: 'Montserrat' !important; */
+  }
+
+  a.text-title-descarga-adjuntado {
+    font-size: .9em;
+    font-weight: bold;
+    color: #44a3fc;
+  }
+
+  .btn-send {
+    border-radius: 2em;
+    font-size: 12px;
+  }
+
+  .col-btn-send {
+    padding-left: 0px;
+    left: 76%;
+    top: -29px;
+  }
+
+  .form-send {
+    height: 28px;
+    width: 397px;
+  }
+  
+
+  .text_select_archivo_sub {
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    color: #515BA7;
+  }
+
+  .form-send-general {
+    width: 450px;
+  }
+
+  .title-coment {
+    font-size: 1em;
+    font-weight: bold;
+    margin-bottom: 0;
+  }
+
+  .title-subcomment {
+    font-size: .9em;
+    margin-bottom: 0;
+    color: #747474;
+  }
+
+  .imagen-comment-owner {
+    width: 2.3em;
+    height: 40px;
+    display: inline-block;
+    border-radius: .5em;
+    -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+  }
