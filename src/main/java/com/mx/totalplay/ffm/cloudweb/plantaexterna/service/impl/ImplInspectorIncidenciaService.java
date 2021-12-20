@@ -89,12 +89,12 @@ public class ImplInspectorIncidenciaService implements InspectorIncidenciaServic
 		String tokenAccess = principalDetail.getAccess_token();
 		logger.info("consultarIncidenciasInspectorPE ## "+tokenAccess);
 		
-		String urlRequest = principalDetail.getDireccionAmbiente().concat(constInspectorIncidencia.getConsultaOTTipoOrdenesPorUsuario());
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constInspectorIncidencia.getConsultarIncidenciasInspectorPE());
 		logger.info("URL ##" + urlRequest);
 		
 		Map<String, String> paramsRequestGet = new HashMap<String, String>();
 		
-		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest, ServiceResponseResult.class, tokenAccess);
+		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(jsonObject.toString(), urlRequest, ServiceResponseResult.class, tokenAccess);
 		
 		return response;
 	}

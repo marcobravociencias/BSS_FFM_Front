@@ -52,7 +52,7 @@ public class InspectorIncidenciaController {
 	}
 	
 	@PostMapping("/consultarIncidenciasInspectorPE")
-	public ResponseEntity<?> consultarIncidenciasInspectorPE(String params) {
+	public ResponseEntity<?> consultarIncidenciasInspectorPE(@RequestBody String params) {
 		logger.info("###### InspectorIncidenciaController - consultarIncidenciasInspectorPE");
 		ServiceResponseResult response = inspectorIncidenciaService.consultarIncidenciasInspectorPE(params);
 		if(response.getResult() instanceof Integer) {

@@ -116,7 +116,7 @@
                     </div>
                 </div>
                 <div class="content-fluid" style="margin-top: 0.7em;">
-                    <table id="seguimientoTable" class="display table table-hover " cellspacing="0" width="100%">
+                    <table id="seguimientoTable" class="display table " cellspacing="0" width="100%">
                         <thead id="thead_seguimiento">
                             <tr>
                                 <th>Conexi&oacute;n</th>
@@ -147,7 +147,7 @@
                     </div>
                 </div>
                 <div class="content-fluid" style="margin-top: 0.7em;">
-                    <table id="ticketTable" class="display table table-hover " cellspacing="0" width="100%">
+                    <table id="ticketTable" class="display table" cellspacing="0" width="100%">
                         <thead id="thead_ticket">
                             <tr>
                                 <th>OT</th>

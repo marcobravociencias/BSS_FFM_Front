@@ -277,21 +277,25 @@ span.btn-floating.btn-sm.btn-secondary.waves-effect.waves-light.acciones {
 thead#thead_table tr th {
   font-size: 0.7em;
   padding: 1.2em;
-  font-weight: lighter !important;
+  font-weight: bold !important;
+  border-top: #fff !important;
+  text-align: center;
 }
 
 thead#thead_table{
   border: 1px #ccc;
   padding: 1em;
   position: relative;
-  background-color: #b1b1b1;
-  color: #fff;
+  background-color: #fff;
+  color: #000;
 }
 
 
 #vehiculoTable tr td {
   font-size: 0.7em;
   font-family: "Montserrat" !important;
+  text-align: center;
+  vertical-align: middle;
 }
 
 div.dataTables_wrapper div.dataTables_length label {

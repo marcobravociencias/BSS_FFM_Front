@@ -26,8 +26,14 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     })
 
     $scope.searchBy = function (type) {
-        $scope.filter(type);
-        ticketSoporteTable.search(type).draw();
+        if (!$("#span" + type).hasClass('selected-filter')) {
+            $scope.filter(type);
+            ticketSoporteTable.search(type).draw();
+        } else {
+            $(".user-filter span").removeClass('selected-filter');
+            $(".fa-filter").css('color', '#ccc');
+            ticketSoporteTable.search('').draw();
+        }
     }
 
     $scope.consultarCatalogosTicketSoporte = function () {
@@ -38,8 +44,8 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             if (response.data.respuesta) {
                 $scope.catalogoTickets = arrayListadoTickets.data.result.catalogoTickets;
                 $scope.catalogoFallasTicketSoporte = response.data.result.soportes;
-                console.log($scope.catalogoFallasTicketSoporte);
-                console.log($scope.catalogoTickets);
+                // console.log($scope.catalogoFallasTicketSoporte);
+                // console.log($scope.catalogoTickets);
                 let nivel1 = [];
                 $scope.catalogoTickets.map(function (e) {
                     if (e.nivel == "1") {
@@ -228,42 +234,54 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             $("#subcategoria").removeClass("invalid-inputTicket");
         }
         if (isValid) {
-            let params = {
-                "idTecnico": 0,
-                "telefonoTecnico": $scope.ticketSoporteR.telefonoTecnico,
-                "noCuenta": $scope.ticketSoporteR.cuenta,
-                "idFalla": Number($scope.ticketSoporteR.idFalla),
-                "idCategoria": Number($scope.ticket.idCategoria),
-                "idSubcategoria": Number($scope.ticket.idSubcategoria),
-                "comentarios": $scope.ticketSoporteR.descripcionProblema,
-                "noSerieOld": $scope.ticketSoporteR.noSerieOld,
-                "noSerieNew": $scope.ticketSoporteR.noSerieNew,
-                "idApplication": 2
-            }
-            console.log(params);
-            swal({ text: 'Espera un momento...', allowOutsideClick: false });
-            swal.showLoading();
-            gestionTicketSoporteService.creaTicketSoporte(params).then(function success(response) {
-                if (response.data !== undefined) {
-                    if (response.data.respuesta) {
-                        if (response.data.result) {
-                            swal.close();
-                            $scope.consultarTicketsSoporte();
-                            $scope.changeView();
-                            $scope.cleanForm();
-                            toastr.success(response.data.resultDescripcion);
+            swal({
+                title: "\u00BFEst\u00E1 seguro de registrar el Ticket?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#007bff',
+                confirmButtonText: 'Si',
+                cancelButtonText: 'No'
+            }).then(function (isConfirm) {
+                if (isConfirm) {
+                    let params = {
+                        "idTecnico": 0,
+                        "telefonoTecnico": $scope.ticketSoporteR.telefonoTecnico,
+                        "noCuenta": $scope.ticketSoporteR.cuenta,
+                        "idFalla": Number($scope.ticketSoporteR.idFalla),
+                        "idCategoria": Number($scope.ticket.idCategoria),
+                        "idSubcategoria": Number($scope.ticket.idSubcategoria),
+                        "comentarios": $scope.ticketSoporteR.descripcionProblema,
+                        "noSerieOld": $scope.ticketSoporteR.noSerieOld,
+                        "noSerieNew": $scope.ticketSoporteR.noSerieNew,
+                        "idApplication": 2
+                    }
+                    console.log(params);
+                    swal({ text: 'Espera un momento...', allowOutsideClick: false });
+                    swal.showLoading();
+                    gestionTicketSoporteService.creaTicketSoporte(params).then(function success(response) {
+                        if (response.data !== undefined) {
+                            if (response.data.respuesta) {
+                                if (response.data.result) {
+                                    swal.close();
+                                    $scope.consultarTicketsSoporte();
+                                    $scope.changeView();
+                                    $scope.cleanForm();
+                                    toastr.success(response.data.resultDescripcion);
+                                } else {
+                                    swal.close();
+                                    mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                                }
+                            } else {
+                                swal.close();
+                                mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                            }
                         } else {
                             swal.close();
                             mostrarMensajeErrorAlert(response.data.resultDescripcion);
                         }
-                    } else {
-                        swal.close();
-                        mostrarMensajeErrorAlert(response.data.resultDescripcion);
-                    }
-                } else {
-                    swal.close();
-                    mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                    });
                 }
+            }).catch(err => {
             });
         } else {
             mostrarMensajeWarningValidacion(mensajeError);
@@ -276,8 +294,16 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     }
 
     $scope.consultarTicketsSoporte = function () {
+        $(".user-filter span").removeClass('selected-filter');
+        $(".fa-filter").css('color', '#ccc');
         let mensajeError = '';
         let isValid = true;
+        $scope.ticketSoporte = {};
+        $scope.ticketsSoporte = [];
+        $scope.contadores.abierto = 0;
+        $scope.contadores.cerrado = 0;
+        $scope.contadores.escalado = 0;
+        $scope.contadores.pendiente = 0;
         if (!$scope.validarFecha('filtro_fecha_inicio_ticket', 'filtro_fecha_fin_ticket')) {
             mensajeError += "<li>La fecha inicical debe ser menor a la fecha final</li>";
             isValid = false;
@@ -287,47 +313,86 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             let params = {
                 fechaInicio: $scope.getFechaFormato(document.getElementById('filtro_fecha_inicio_ticket').value),
                 fechaFin: $scope.getFechaFormato(document.getElementById('filtro_fecha_fin_ticket').value),
-                elementosPorPagina: 10,
                 tipoFecha: 'creacion'
             }
-            if (ticketSoporteTable) {
-                ticketSoporteTable.destroy();
-            }
-            // console.log(ticketSoporteTable.page.info())
-            ticketSoporteTable = $('#tableTicketSoporte').DataTable({
-                "processing": false,
-                "ordering": false,
-                "serverSide": true,
-                "scrollX": false,
-                "paging": true,
-                "info": false,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": false,
-                "pageLength": 10,
-                "ajax": {
-                    "url": "req/consultaTicketsSoporte",
-                    "type": "GET",
-                    "data": params,
-                    "beforeSend": function () {
-                        if (!swal.isVisible()) {
-                            swal({ text: 'Cargando registros...', allowOutsideClick: false });
-                            swal.showLoading();
+            console.log(params);
+            swal({ text: 'Espera un momento...', allowOutsideClick: false });
+            swal.showLoading();
+            gestionTicketSoporteService.consultaTicketsSoporte(params).then(function success(response) {
+                console.log(response);
+                if (response.data.respuesta) {
+                    if (response.data.result) {
+                        if (response.data.result.tickets.length) {
+                            let arrayRow = [];
+                            if (ticketSoporteTable) {
+                                ticketSoporteTable.destroy();
+                            }
+                            $scope.ticketsSoporte = response.data.result.tickets;
+                            console.log($scope.ticketsSoporte);
+                            $.each($scope.ticketsSoporte, function (i, elemento) {
+                                console.log(elemento);
+                                let row = [];
+                                row[0] = elemento.idOrden !== undefined ? elemento.idOrden : 'Sin informaci&oacute;n';
+                                row[1] = elemento.ticket !== undefined ? elemento.ticket : 'Sin informaci&oacute;n';
+                                row[2] = elemento.os !== undefined ? elemento.os : 'Sin informaci&oacute;n';
+                                row[3] = elemento.fechaCreacion !== undefined ? elemento.fechaCreacion : 'Sin informaci&oacute;n';
+                                row[4] = elemento.descripcionFalla !== undefined ? elemento.descripcionFalla : 'Sin informaci&oacute;n';
+                                row[5] = elemento.telefono !== undefined ? elemento.telefono : 'Sin informaci&oacute;n';
+                                row[6] = elemento.nombreEmpleadoReporta + " " + elemento.apellidoPaEmpleadoReporta + " " + elemento.apellidoMaEmpleadoReporta;
+                                row[7] = elemento.nombreEmpleadoIng + " " + elemento.apellidoPaEmpleadoIng + " " + elemento.apellidoMaEmpleadoIng;
+                                row[8] = elemento.fechaAsignacion !== undefined || elemento.fechaAsignacion == '' ? elemento.fechaAsignacion : 'Sin informaci&oacute;n';
+                                row[9] = elemento.descripcionEstatus !== undefined ? elemento.descripcionEstatus : 'Sin informaci&oacute;n';
+                                row[10] = elemento.tiempoAbierto !== undefined ? elemento.tiempoAbierto : 'Sin informaci&oacute;n';
+                                row[11] = '<a class="" id="detalleIncidencia' + elemento.ticket + '" onclick="consultaDetalle(' + "'" + elemento.id_conexion + "'" + ')" >' +
+                                    '<i class="fa fa-bars" style="background-color: #58b3bf" title="Detalle"></i>' +
+                                    '</a> &nbsp;' +
+                                    '<a class="" id="detalleIncidencia' + elemento.ticket + '" onclick="asignaTicket(' + "'" + elemento.ticket + "'" + ')">' +
+                                    '<i class="fas fa-user-check" style="background-color: #7f4c9d" title="Asignar"></i>' +
+                                    '</a>'
+                                arrayRow.push(row);
+                                if (elemento.descripcionEstatus === 'Abierto')
+                                    $scope.contadores.abierto += 1;
+
+                                if (elemento.descripcionEstatus === 'Cerrado')
+                                    $scope.contadores.cerrado += 1;
+
+                                if (elemento.descripcionEstatus === 'Escalado')
+                                    $scope.contadores.escalado += 1;
+
+                                if (elemento.descripcionEstatus === 'Pendiente')
+                                    $scope.contadores.pendiente += 1;
+                            });
+                            ticketSoporteTable = $('#tableTicketSoporte').DataTable({
+                                "paging": true,
+                                "lengthChange": false,
+                                "ordering": false,
+                                "pageLength": 10,
+                                "info": false,
+                                "data": arrayRow,
+                                "autoWidth": true,
+                                "language": idioma_espanol_not_font,
+                                "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+                            });
+                            swal.close();
+                        } else {
+                            ticketSoporteTable.clear();
+                            ticketSoporteTable.draw();
+                            mostrarMensajeInformativo("No se encontraron Tickets");
+                            swal.close();
                         }
-                    },
-                    "dataSrc": function (json) {
-                        console.log(json)
-                        return json.data;
-                    },
-                    "error": function (xhr, error, thrown) {
-                        handleError(xhr)
-                    },
-                    "complete": function () {
-                        swal.close()
+                    } else {
+                        ticketSoporteTable.clear();
+                        ticketSoporteTable.draw();
+                        mostrarMensajeInformativo("No se encontraron Tickets");
+                        swal.close();
                     }
-                },
-                "columns": [null, null, null, null, null, null, null, null, null, null, null, null],
-                "language": idioma_espanol_not_font
+                } else {
+                    console.log("entro")
+                    ticketSoporteTable.clear();
+                    ticketSoporteTable.draw();
+                    mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                    swal.close();
+                }
             });
         } else {
             mostrarMensajeWarningValidacion(mensajeError);
@@ -359,7 +424,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         $("#modalBusquedaTecnicosTicket").modal('show');
     }
 
-    consultaDetalle = function () {
+    consultaDetalleTicketSoporte = function () {
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
         $scope.detalleCaptura = ticketDetalle.result.orden;

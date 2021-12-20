@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header header-sin-border">
-                <h5 class="modal-title header-title-tec">T&eacute;cnicos</h5>
+                <h5 class="modal-title header-title-tec" style="color: #7716fa">Asignar T&eacute;cnico</h5>
                 <button type="button" class="close" data-mdb-dismiss="modal"  aria-label="Close" id="closeModalTecnico">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -13,8 +13,6 @@
                     <div class="row" style="margin-left: 5em;">
                         <div class="col-9">
                             <input placeholder="Buscar" type="text" autocomplete="off" class="search-filtro-tecnicos form-control form-control-sm" id="searchTecnicoTicket">
-                        </div>
-                        <div class="col-3">
                             <button id="btn_buscar" type="button" class="btn btn-sm btn-primary waves-effect waves-light btnBusquedaTecnicos" ng-click="">
                                 <i class="fa fa-search"></i>
                             </button>
