@@ -37,7 +37,7 @@ public class SecurityCustomAuthenticationProvider implements AuthenticationProvi
 		put("/loginPage","ROLE_USER");
         put("/homePage","ROLE_USER");
         put("/enrutarUser","ROLE_USER");
-        
+        put("/parametrosAsignacion","ROLE_USER");                       
     }};
     
     @Autowired
