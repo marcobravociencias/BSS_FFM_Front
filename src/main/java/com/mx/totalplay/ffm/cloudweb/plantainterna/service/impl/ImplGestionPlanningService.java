@@ -25,7 +25,8 @@ public class ImplGestionPlanningService implements GestionPlanningService {
     private Gson gson = new Gson();
 
     @Autowired
-    public ImplGestionPlanningService(ConstGestionPlanning constGestionPlanning, ConsumeRest consumeRest, UtileriaGeneral utileriaGeneral) {
+    public ImplGestionPlanningService(ConstGestionPlanning constGestionPlanning, ConsumeRest consumeRest,
+            UtileriaGeneral utileriaGeneral) {
         this.constGestionPlanning = constGestionPlanning;
         this.consumeRest = consumeRest;
         this.utileriaGeneral = utileriaGeneral;
@@ -40,8 +41,9 @@ public class ImplGestionPlanningService implements GestionPlanningService {
         LoginResult principalDetail = utileriaGeneral.obtenerObjetoPrincipal();
         String tokenAcces = principalDetail.getAccess_token();
         logger.info("consultarPagosTecnico ##+" + tokenAcces);
-        String urlRequest = principalDetail.getDireccionAmbiente().concat(constGestionPlanning.getConsultaPagosLiberarTecnico());
-        logger.info("***URL: "+ urlRequest);
+        String urlRequest = principalDetail.getDireccionAmbiente()
+                .concat(constGestionPlanning.getConsultaPagosLiberarTecnico());
+        logger.info("***URL: " + urlRequest);
         Map<String, String> paramsRequestGet = new HashMap<String, String>();
         paramsRequestGet.put("idOperador", jsonObject.get("idOperador").getAsString());
 
@@ -60,13 +62,53 @@ public class ImplGestionPlanningService implements GestionPlanningService {
         LoginResult principalDetail = utileriaGeneral.obtenerObjetoPrincipal();
         String tokenAcces = principalDetail.getAccess_token();
         logger.info("liberarPagosTecnico ##+" + tokenAcces);
-        String urlRequest = principalDetail.getDireccionAmbiente().concat(constGestionPlanning.getLiberarPagosTecnico());
-        logger.info("***URL: "+ urlRequest);
-        Map<String, String> paramsRequestGet = new HashMap<String, String>();
-        paramsRequestGet.put("idOperador", jsonObject.get("idOperador").getAsString());
+        String urlRequest = principalDetail.getDireccionAmbiente()
+                .concat(constGestionPlanning.getLiberarPagosTecnico());
+        logger.info("***URL: " + urlRequest);
+        Map<String, String> paramUri = new HashMap<String, String>();
 
-        ServiceResponseResult response = consumeRest.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
-                ServiceResponseResult.class, tokenAcces);
+        ServiceResponseResult response = consumeRest.callPatchBearerTokenRequestURL(paramUri,
+                gson.toJson(jsonObject), urlRequest, ServiceResponseResult.class, tokenAcces);
+        logger.info("RESULT" + gson.toJson(response));
+        return response;
+    }
+
+    @Override
+    public ServiceResponseResult restaurarContraseniaUsuario(String params) {
+        logger.info("ImplGestionPlanningService.class [metodo = restaurarContraseniaUsuario() ]\n" + params);
+
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+
+        LoginResult principalDetail = utileriaGeneral.obtenerObjetoPrincipal();
+        String tokenAcces = principalDetail.getAccess_token();
+        logger.info("restaurarContraseniaUsuario ##+" + tokenAcces);
+        String urlRequest = principalDetail.getDireccionAmbiente()
+                .concat(constGestionPlanning.getRestaurarContrasenaUsuario());
+        logger.info("***URL: " + urlRequest);
+        Map<String, String> paramUri = new HashMap<String, String>();
+
+        ServiceResponseResult response = consumeRest.callPatchBearerTokenRequestURL(paramUri,
+                gson.toJson(jsonObject), urlRequest, ServiceResponseResult.class, tokenAcces);
+        logger.info("RESULT" + gson.toJson(response));
+        return response;
+    }
+
+    @Override
+    public ServiceResponseResult gestionGeocercasPlanning(String params) {
+        logger.info("ImplGestionPlanningService.class [metodo = gestionGeocercasPlanning() ]\n" + params);
+
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+
+        LoginResult principalDetail = utileriaGeneral.obtenerObjetoPrincipal();
+        String tokenAcces = principalDetail.getAccess_token();
+        logger.info("gestionGeocercasPlanning ##+" + tokenAcces);
+        String urlRequest = principalDetail.getDireccionAmbiente()
+                .concat(constGestionPlanning.getGestionGeocercasPlanning());
+        logger.info("***URL: " + urlRequest);
+        Map<String, String> paramUri = new HashMap<String, String>();
+
+        ServiceResponseResult response = consumeRest.callPatchBearerTokenRequestURL(paramUri,
+                gson.toJson(jsonObject), urlRequest, ServiceResponseResult.class, tokenAcces);
         logger.info("RESULT" + gson.toJson(response));
         return response;
     }

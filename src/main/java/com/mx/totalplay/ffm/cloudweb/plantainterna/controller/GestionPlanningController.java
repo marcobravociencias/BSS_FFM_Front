@@ -41,5 +41,27 @@ public class GestionPlanningController {
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
 
+    @PostMapping("/restaurarContrasena")
+    public ResponseEntity<?> restaurarContraseniaUsuario(@RequestBody String params) {
+        logger.info("####RESTAURAR CONTRASENIA USUARIOS ***restaurarContraseniaUsuario: " + params);
+        ServiceResponseResult response = gestionPlanningService.restaurarContraseniaUsuario(params);
+        if (response.getResult() instanceof Integer){
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
+
+
+    @PostMapping("/gestionGeocercas")
+    public ResponseEntity<?> gestionGeocercasPlanning(@RequestBody String params) {
+        logger.info("####GESTION GEOCERCAS ***gestionGeocercasPlanning: " + params);
+        ServiceResponseResult response = gestionPlanningService.gestionGeocercasPlanning(params);
+        if (response.getResult() instanceof Integer){
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
+
+
 
 }
