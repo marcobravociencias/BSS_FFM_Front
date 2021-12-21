@@ -125,7 +125,7 @@
                             <span ng-click="searchBy('Pendiente')" id="spanPendiente"><i class="fa fa-filter" id="filterPendiente"></i>Pendiente {{contadores.pendiente ? contadores.pendiente : '0'}}</span>
                         </div>
                     </div>
-                    <div class="col-2 form-group" style="margin-bottom: 0; margin-top: .5em;">
+                    <div class="col-2 form-group" style="margin-bottom: 0; margin-top: .5em; margin-left: 1em;">
                         <input placeholder="Buscar" type="text" autocomplete="off"
                             class="search-filtro form-control form-control-sm mt-0" id="searchTextTicket"><i
                             class="fa fa-search icon-search"></i>
