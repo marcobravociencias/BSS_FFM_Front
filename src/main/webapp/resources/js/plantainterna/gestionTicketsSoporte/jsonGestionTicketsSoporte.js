@@ -2199,3 +2199,19 @@ var ticketDetalle = {
         }
     }
 }
+
+let arrayBusquedaTecnicos = {
+    data: {
+        "success": true,
+        "mensaje": "Se consulto el catalogo tecnicos",
+        "result": [{
+            "id": "550712",
+            "nombre": "Alberto Ovalle Mendez",
+            "telefono": "9671218912"
+        }, {
+            "id": "550713",
+            "nombre": "Alberto Ovalle Mendez",
+            "telefono": "9671218910"
+        }]
+    }
+}

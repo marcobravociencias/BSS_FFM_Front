@@ -343,8 +343,8 @@ table.display.table.table-hover.table-striped.dataTable {
     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 7%), 0 1px 2px 0 rgb(0 0 0 / 5%);
 }
 
-#container_ticket_form .form-control {
-    height: 2.5em;
+#container_ticket_form .form-controlt {
+    height: 2.5em !important;
 }
 
 .icon-back {
@@ -366,11 +366,11 @@ table.display.table.table-hover.table-striped.dataTable {
 }
 
 .selected-filter {
-   background: #ebebeb;
-   color: #7716fa;
-   font-weight: bolder;
-   border-radius: 25px;
-    box-shadow: 1px 0px 0 0 rgb(0 0 0 / 3%), 1px 0 10px 0 rgb(0 0 0 / 12%);
+    /* background: #ebebeb; */
+    color: #7716fa;
+    font-weight: bolder;
+    border-radius: 25px;
+    /* box-shadow: 1px 0px 0 0 rgb(0 0 0 / 3%), 1px 0 10px 0 rgb(0 0 0 / 12%); */
 }
 
 .search-filtro-tecnicos{
@@ -382,12 +382,14 @@ table.display.table.table-hover.table-striped.dataTable {
 .btnBusquedaTecnicos {
     background-color: #7716fa !important;
     color: #ffffff !important;
-    border: solid 2px #fff !important;
-    border-radius: 5px;
-    position: relative;
+    border: solid 3px #7716fa !important;
     display: block;
     border-radius: 1em !important;
     float: left;
+    position: absolute;
+    margin-left: 33.2em;
+    border-radius: 2em !important;
+    margin-top: 0.1em;
 }
 
 .invalid-inputTicket {
@@ -403,4 +405,49 @@ div#tableTicketSoporte_info {
     font-family: "Montserrat";
     font-size: 0.8em;
     color: #a5a5a5 !important;
-  }
+}
+
+.cardTecnicosBusqueda {
+    border-left: 4px solid #7716fa;
+    cursor: pointer;
+    box-shadow: 10px 10px 10px 1px rgb(0 0 0 / 5%) !important;
+    margin-bottom: 1em;
+    border-end-end-radius: 0.5rem;
+    border-start-end-radius: 0.5rem;
+}
+
+.carbBodyTecnicosBusqueda {
+    border-end-end-radius: 0.5rem;
+    border-start-end-radius: 0.5rem;
+    border: 1px solid #bdbdbd;
+}
+
+div.tecnico_seleccionado .icono_check_tecnico {
+    display: inline !important;
+}
+
+img.responsive-img {
+    max-width: 100%;
+    box-shadow: 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%), 0 2px 4px -1px rgb(0 0 0 / 30%);
+    border-radius: 50%;
+    height: 2.0em;
+    width: 2.0em;
+}
+
+p.text-tecnico-nombre {
+    font-size: .7em;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+p.text-adds-teccnico {
+    font-size: .7em;
+    color: #3e3e3e;
+    margin-bottom: 0;
+}
+
+.valign-wrapper {
+    border-bottom: 1px solid #eee;
+    padding: 0.3rem;
+    cursor: pointer;
+}

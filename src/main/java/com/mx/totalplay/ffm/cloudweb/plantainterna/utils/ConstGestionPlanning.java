@@ -12,4 +12,10 @@ public class ConstGestionPlanning {
 
     @Value("${liberarPagosTecnico}")
     private String liberarPagosTecnico;
+
+    @Value("${restaurarContrasenaUsuario}")
+    private String restaurarContrasenaUsuario;
+
+    @Value("${gestionGeocercasPlanning}")
+    private String gestionGeocercasPlanning;
 }
