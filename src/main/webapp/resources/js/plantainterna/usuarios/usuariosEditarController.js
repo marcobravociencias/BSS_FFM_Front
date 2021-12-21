@@ -583,7 +583,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 	//MÉTODO PARA CONSULTAR LOS TÉCNICOS A REASIGNAR AL USUARIO (QUE NO SEA TÉCNICO) QUE SE MODIFICARÁ - PESTAÑA TÉCNICOS MODIFICACIÓN USUARIO
 	$scope.consultarTecnicosMod = function() {
 		$scope.listaTecnicosMod = [];
-		let params = {idsGeografia:$scope.listaIdsGeografiaCiudadNatalMod, idTipoUsuario:$scope.idPuestoTecnico.id};
+		let params = {idsGeografia:$scope.listaIdsGeografiaCiudadNatalMod, idTipoUsuario:[$scope.idPuestoTecnico.id]};
     	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
 		swal.showLoading();
     	$q.all([
@@ -591,9 +591,9 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
         ]).then(function(results) {
         	if (results[0].data !== undefined) {
             	if(results[0].data.respuesta){
-            		if(results[0].data.result.result.usuarios !== null){
-	            		if(results[0].data.result.result.usuarios.length > 0){
-	            			$scope.listaTecnicosMod = results[0].data.result.result.usuarios;
+            		if(results[0].data.result.usuarios !== null){
+	            		if(results[0].data.result.usuarios.length > 0){
+	            			$scope.listaTecnicosMod = results[0].data.result.usuarios;
 	            			$("#checkTotdosTecnicosMod").prop("checked",false);
 	            	    	angular.forEach($scope.listaTecnicosMod,function(tecnico,index){
 	            	    		tecnico.checkedOpcion = false;
@@ -627,7 +627,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 	$scope.consultarDespachosMod = function() {
 		$scope.listaDespachosMod = [];
 		if($scope.listaIdsGeografiaCiudadNatalMod.length > 0){
-			let params = {idsGeografia:$scope.listaIdsGeografiaCiudadNatalMod, idTipoUsuario:$scope.idPuestoDespacho.id};
+			let params = {idsGeografia:$scope.listaIdsGeografiaCiudadNatalMod, idTipoUsuario:[$scope.idPuestoDespacho.id]};
 	    	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
 			swal.showLoading();
 	    	$q.all([
@@ -635,9 +635,9 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 	        ]).then(function(results) {
 	        	if (results[0].data !== undefined) {
 	            	if(results[0].data.respuesta){
-	            		if(results[0].data.result.result.usuarios !== null){
-		            		if(results[0].data.result.result.usuarios.length > 0){
-		            			$scope.listaDespachosMod = results[0].data.result.result.usuarios;
+	            		if(results[0].data.result.usuarios !== null){
+		            		if(results[0].data.result.usuarios.length > 0){
+		            			$scope.listaDespachosMod = results[0].data.result.usuarios;
 		            			$("#checkTotdosDespachosMod").prop("checked",false);
 		            	    	angular.forEach($scope.listaDespachosMod,function(despacho,index){
 		            	    		despacho.checkedOpcion = false;

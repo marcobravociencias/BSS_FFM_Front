@@ -25,7 +25,7 @@
 			                    <tbody>
 			                        <tr class="intervencion-tecnico" ng-repeat="intervencionModal in listadoIntervencionesSeleccionadas | orderBy:'nombre' track by $index">
 			                            <td>{{$index +1}} </td>
-			                            <td>{{intervencionModal.nombre}}</td>
+			                            <td>{{intervencionModal.text}}</td>
 			                        </tr>
 			                    </tbody>
 			                </table>
