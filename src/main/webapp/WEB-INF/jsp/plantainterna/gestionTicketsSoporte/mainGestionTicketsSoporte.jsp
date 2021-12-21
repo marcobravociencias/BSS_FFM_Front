@@ -21,6 +21,12 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/datePicker/css/bootstrap-datepicker3_1.9.0.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>
 
+        <link href="${pageContext.request.contextPath}/resources/libraries/magnific_popup/magnific-popup.css"
+            rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css"
+            rel="stylesheet" />
+            <link href="${pageContext.request.contextPath}/resources/css/plantainterna/gestionTicketsSoporte/mainGestionTicketsSoporte.css" rel="stylesheet" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/plantainterna/gestionTicketsSoporte\noticiasGentionTicket.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/magnific_popup/magnific-popup.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css"/>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/plantainterna/gestionTicketsSoporte/mainGestionTicketsSoporte.css"/>
@@ -99,10 +105,11 @@
                     </div>
                 </div>
             </div>
-            <div class="container-fluid" id="container_ticket" ng-show="isBusqueda">
+            
+            <div class="container-fluid" id="container_ticket" ng-show="isBusqueda == 2">
                 <div class="row filter-content">
                     <div class="col-2 form-group" style="margin-bottom: 0; margin-top: .5em;">
-                            <i class="fas fa-plus-circle icon-back" ng-click="changeView()" title="Nuevo Ticket"></i>
+                            <i class="fas fa-plus-circle icon-back" ng-click="changeView(1)" title="Nuevo Ticket"></i>
                     </div>
                     <div class="row col-6 filter-tab" style="margin-top: 0.5em;">
                         <div class="col-3 user-info-content user-filter" style="margin-top: 0;">
@@ -118,10 +125,13 @@
                             <span ng-click="searchBy('Pendiente')" id="spanPendiente"><i class="fa fa-filter" id="filterPendiente"></i>Pendiente {{contadores.pendiente ? contadores.pendiente : '0'}}</span>
                         </div>
                     </div>
-                    <div class="col-2 offset-2  form-group" style="margin-bottom: 0; margin-top: .5em;">
-                        <input placeholder="Buscar" type="text" autocomplete="off" aria-controls="tableTicketSoporte"
+                    <div class="col-2 form-group" style="margin-bottom: 0; margin-top: .5em; margin-left: 1em;">
+                        <input placeholder="Buscar" type="text" autocomplete="off"
                             class="search-filtro form-control form-control-sm mt-0" id="searchTextTicket"><i
                             class="fa fa-search icon-search"></i>
+                    </div>
+                    <div class="col-2  form-group" style="margin-bottom: 0; margin-top: .5em;">
+                        <i class="fas fa-plus-circle icon-back" ng-click="changeView(3)" title="Noticias Ticket"></i>
                     </div>
                 </div>
                 <div class="content-fluid" style="margin-top: 0.7em;">
@@ -147,10 +157,11 @@
                      </table>
                 </div>
             </div>
-            <div class="container-fluid" id="container_ticket_form" ng-show="!isBusqueda">
+
+            <div class="container-fluid" id="container_ticket_form" ng-show="isBusqueda == 1">
                 <div class="row filter-content">
                     <div class="col-1" style="margin-top: .5em;">
-                        <i class="fas fa-arrow-circle-left icon-back" ng-click="changeView()" title="Regresar"></i>
+                        <i class="fas fa-arrow-circle-left icon-back" ng-click="changeView(2)" title="Regresar"></i>
                     </div>
                     <div class="col-7 offset-4" style="margin-top: .5em;">
                         <h5 class="title-modulo" style="margin-left: 3%;">Registrar Ticket</h5>
@@ -260,6 +271,10 @@
                     <br>
                 </div>
             </div>
+            <div class="container-fluid" id="container_noticias_ticket" ng-show="isBusqueda == 3">
+                <jsp:include page="./content/noticiasGestionTicketsSoporte.jsp"></jsp:include>
+            </div>
+
         </div>
         <jsp:include page="./modals/modalBusquedaTecnico.jsp"></jsp:include>
         <jsp:include page="./modals/modalDetalle.jsp"></jsp:include>
@@ -290,5 +305,6 @@
     <script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionTicketsSoporte/noticiasGestionTicketSoporte.js"></script>
 
     </html>
