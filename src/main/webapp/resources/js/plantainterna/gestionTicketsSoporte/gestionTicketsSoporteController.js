@@ -355,7 +355,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                                 if (response.data.result) {
                                     swal.close();
                                     $scope.consultarTicketsSoporte();
-                                    $scope.changeView();
+                                    $scope.changeView(2);
                                     $scope.cleanForm();
                                     toastr.success(response.data.resultDescripcion);
                                 } else {
@@ -585,7 +585,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                 $("#regionTicket").removeClass("invalid-inputTicket");
                 $("#tecnologiaTicket").removeClass("invalid-inputTicket");
                 $("#descripcionProblemaTicket").removeClass("invalid-inputTicket");
-                $scope.changeView();
+                $scope.changeView(2);
                 $scope.consultarTicketsSoporte();
             }
         }).catch(swal.noop);
