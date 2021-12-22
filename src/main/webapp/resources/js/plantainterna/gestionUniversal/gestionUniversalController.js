@@ -4,7 +4,10 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
     $scope.nGeografia = '';
     $scope.listaGeografia = [];
     $scope.listaPuestos = [];
+    $scope.listaTecnicosPagos = [];
+    $scope.listaUsuarios = [];
     $scope.idUsuario = '';
+    $scope.usuarioFoto = {};
     $scope.isTecnicos = false;
     let pagosTecnicosTable;
     let pagosLiberarTable;
@@ -90,9 +93,29 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
         })
     }
 
-    showImage = function (url) {
-        $('#img_tec').attr('src', url);
-        $('#modalFotoTecnico').modal('show');
+    
+    showImage = function (id, type) {
+        let url = './resources/img/plantainterna/despacho/tecnicootasignada.png';
+        let usuario = {};
+
+        if (type == 'tecnico') {
+            usuario = $scope.listaTecnicosPagos.find((e) => e.no_empleado == id);
+            //usuario.nombreCompleto = usuario.nombre + ' ' + usuario.apellidoPaterno + ' ' + usuario.apellidoMaterno;
+            usuario.puesto = 'T\u00C9CNICO'
+        } else {
+            usuario = $scope.listaUsuarios.find((e) => e.noEmpleado == id);
+        }
+
+        if (usuario) {
+            console.log(usuario);
+            if (!usuario.urlFoto) {
+                usuario.urlFoto = url;
+            }
+            $scope.usuarioFoto = usuario;
+            $('#img_tec').attr('src', usuario.urlFoto);
+            $scope.$apply();
+            $('#modalFotoTecnico').modal('show');
+        }
     }
 
     function compareGeneric(a, b) {
@@ -126,6 +149,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
         gestionUniversalService.consultarTecnico(params).then(function success(response) {
             if (response.data.respuesta) {
                 if (response.data.result.usuarios) {
+                    $scope.listaTecnicosPagos = response.data.result.usuarios;
                     if (pagosTecnicosTable) {
                         pagosTecnicosTable.destroy();
                     }
@@ -137,7 +161,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                         if (elemento.urlFoto) {
                             url = elemento.urlFoto;
                         }
-                        row[0] = '<img style="cursor:pointer;border-radius: 25px" src="' + url + '" alt="Foto" width="30" height="30" onclick="showImage(' + "'" + url + "'" + ')"/>';
+                        row[0] = '<img style="cursor:pointer;border-radius: 25px" src="' + url + '" alt="Foto" width="30" height="30" onclick="showImage(' + "'" + elemento.no_empleado + "', 'tecnico'" + ')"/>';
                         row[1] = elemento.no_empleado;
                         row[2] = elemento.usuario;
                         row[3] = elemento.nombreCompleto;
@@ -170,7 +194,11 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                         "language": idioma_espanol_not_font,
                         "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
                     });
+                } else {
+                    toastr.error(response.data.resultDescripcion);
                 }
+            } else {
+                toastr.error(response.data.resultDescripcion);
             }
             swal.close();
         })
@@ -295,7 +323,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                     $.each(response.data.result.pagos, function (i, elemento) {
                         let clase = 'locked';
                         if (elemento.idEstatusPago == 3) {
-                            clase = "locked";
+                            clase = "free";
                         } else if (elemento.idEstatusPago == 1) {
                             clase = "init";
                         }
@@ -335,7 +363,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
     }
 
     changeLock = function (pago, status) {
-        if (status == 3) {
+        if (status == 2) {
             let id = "#" + pago;
             if ($(id).hasClass("locked")) {
                 $(id).removeClass("locked");
@@ -379,7 +407,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                     }
                     gestionUniversalService.liberarPago(params).then(function success(response) {
                         if (response.data.respuesta) {
-                            $scope.consultarPagosTecnico();
+
                         }
                     })
                 }
@@ -436,7 +464,8 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
         let arraRow = [];
         gestionUniversalService.consultarUsuariosPorPuesto(params).then(function success(response) {
             if (response.data.respuesta) {
-                if (response.data.result.usuarios) {
+                if (response.data.result && response.data.result.usuarios) {
+                    $scope.listaUsuarios = response.data.result.usuarios;
                     if (usuariosCambiaContrasena) {
                         usuariosCambiaContrasena.destroy();
                     }
@@ -448,13 +477,14 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                         if (elemento.urlFoto) {
                             url = elemento.urlFoto;
                         }
-                        row[0] = '<img style="cursor:pointer;border-radius: 25px" src="' + url + '" alt="Foto" width="30" height="30" onclick="showImage(' + "'" + url + "'" + ')"/>';
-                        row[1] = elemento.noEmpleado;
-                        row[2] = elemento.usuario;
-                        row[3] = elemento.nombreCompleto;
-                        row[4] = elemento.geografia;
-                        row[5] = elemento.fechaActualizacion;
-                        row[6] = '<i class="fa fa-key icon-item" title="Cambiar contrase&ntilde;a" onclick="restablecerContrasena(' + elemento.idUsuario + ')"></i>';
+                        row[0] = '<img style="cursor:pointer;border-radius: 25px" src="' + url + '" alt="Foto" width="30" height="30" onclick="showImage(' + "'" + elemento.noEmpleado + "', 'usuario'" + ')"/>';
+                        row[1] = elemento.noEmpleado ? elemento.noEmpleado : 'Sin informaci&oacute;n';
+                        row[2] = elemento.puesto ? elemento.puesto : 'Sin informaci&oacute;n';
+                        row[3] = elemento.usuario ? elemento.usuario : 'Sin informaci&oacute;n';
+                        row[4] = elemento.nombreCompleto ? elemento.nombreCompleto : 'Sin informaci&oacute;n';
+                        row[5] = elemento.geografia ? elemento.geografia : 'Sin informaci&oacute;n';
+                        row[6] = elemento.fechaActualizacion ? elemento.fechaActualizacion : 'Sin informaci&oacute;n';
+                        row[7] = '<i class="fa fa-key icon-item" title="Cambiar contrase&ntilde;a" onclick="restablecerContrasena(' + elemento.idUsuario + ')"></i>';
                         arraRow.push(row);
                     })
                     usuariosCambiaContrasena = $('#cambiaContrasenaTable').DataTable({
@@ -468,8 +498,10 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                         "language": idioma_espanol_not_font,
                         "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
                     });
+                } else {
+                    toastr.error(response.data.resultDescripcion);
                 }
-            }else{
+            } else {
                 toastr.error(response.data.resultDescripcion);
             }
             swal.close();
@@ -503,8 +535,10 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
             nuevoPassword: $("#newPassword").val(),
             comentarios: $("#comentariosPassword").val()
         }
-
+        swal({ text: 'Espera un momento...', allowOutsideClick: false });
+        swal.showLoading();
         gestionUniversalService.restaurarContrasena(params).then(function success(response) {
+            swal.close();
             if (response.data.respuesta) {
                 $("#modalRestablecerContrasena").modal('hide');
                 toastr.success('Contrase\u00F1a restablecida correctamente');

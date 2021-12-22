@@ -43,6 +43,7 @@
                 <tr>
                     <th>FOTO</th>
                     <th>#EMPLEADO</th>
+                    <th>PUESTO</th>
                     <th>USUARIO</th>
                     <th>NOMBRE</th>
                     <th>UBICACI&Oacute;N</th>

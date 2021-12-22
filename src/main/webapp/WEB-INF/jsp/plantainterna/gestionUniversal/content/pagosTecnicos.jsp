@@ -25,7 +25,7 @@
                     <th>NOMBRE</th>
                     <th>UBICACI&Oacute;N</th>
                     <th>FECHA ACTUALIZACI&Oacute;N</th>
-                    <th>PAGOS</th>
+                    <th>ACCIONES</th>
                 </tr>
             </thead>
             <tbody>
