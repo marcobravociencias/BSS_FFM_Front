@@ -174,7 +174,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
         			angular.forEach(intervencionesListaIndividual,(intervencion,index) => {
         				angular.forEach(tecnico.skills,function(skillAsignada,indexSkillAsignada){
                             if(intervencion.id == skillAsignada) {
-                            	intervencion.state = {selected: true, opened: true};
+                            	intervencion.state = {selected: true, opened: false};
                             	$scope.contadorSkillsSeleccionadas = $scope.contadorSkillsSeleccionadas + 1;
                             }
                         });
@@ -190,7 +190,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
             })       
 
             $('#arbolSkillsVistaIndividual').bind('loaded.jstree', function(e, data) {
-    			$(this).jstree("open_all");
+            	
             }).jstree({
             	'plugins': ['search', 'checkbox', 'wholerow'],
             	'search': {
@@ -206,7 +206,11 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
                     }
                 }
     		});
-    		
+        	
+        	setTimeout(function (){
+        		$("#arbolSkillsVistaIndividual").jstree().close_all();
+        	}, 100);
+
     		$('#divContenedorSkills').show();
     		$('#divBotonGuardarSkills').show();
     		$('#divMensajeSeleccionaTecnico').hide();
@@ -271,7 +275,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
         })       
 
         $('#arbolSkillsMultiseleccion').bind('loaded.jstree', function(e, data) {
-			$(this).jstree("open_all");
+			//$(this).jstree("open_all");
         }).jstree({
         	'plugins': ['search', 'checkbox', 'wholerow'],
         	'search': {
@@ -995,6 +999,24 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 	$scope.contadorSkillsVistaIndividual = function() {
 		var conSkillsArbolIndividual = $('#arbolSkillsVistaIndividual').jstree("get_selected", true).length;
 		$scope.contadorSkillsSeleccionadas = conSkillsArbolIndividual;
+	}
+	
+	$scope.seleccionarTodasSkillsMultiselect = function() {
+		if($("#checkTodasSkillsMultiSelect").prop('checked')){
+			$("#arbolSkillsMultiseleccion").jstree().check_all(true);
+		}else{
+			$("#arbolSkillsMultiseleccion").jstree().uncheck_all(true);
+		}
+		$scope.contadorSkillsMultiseleccion();
+	}
+	
+	$scope.seleccionarTodasSkillsVistaIndividual = function() {
+		if($("#checkTodasSkillsVistaIndividual").prop('checked')){
+			$("#arbolSkillsVistaIndividual").jstree().check_all(true);
+		}else{
+			$("#arbolSkillsVistaIndividual").jstree().uncheck_all(true);
+		}
+		$scope.contadorSkillsVistaIndividual();
 	}
 	
 	//-------------------------------------------------- FIN CAMBIOS REYNEL --------------------------------------------------

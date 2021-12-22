@@ -25,6 +25,24 @@
     font-weight: bold !important;
 }
 
+.contenedorCheckTodasSkills {
+	height: 30px;
+    display: -ms-flexbox;
+    margin-bottom: .5px;
+    padding-top: 0.5rem;
+    cursor: pointer;
+    display: flex;
+    position: relative;
+}
+
+.textCheckTodasOpciones {
+	font-family: 'Montserrat';
+    font-size: .9em;
+    font-weight: bold;
+    color: #959595;
+    line-height: initial;
+}
+
 .bootstrap-select.btn-group .dropdown-menu.inner {
 	color: #1CA4FC !important;
 }

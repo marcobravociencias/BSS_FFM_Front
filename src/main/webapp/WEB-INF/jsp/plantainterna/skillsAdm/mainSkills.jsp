@@ -114,9 +114,23 @@
 								</div>
 				
 								<div id="divContenedorSkills" style="display: none">
-									<div style=" text-align: right;">
-										<a class="multiseleccion-interve" ng-click="mostrarContenedoresMultiseleccion()" href="">Multiselecci&oacute;n</a>
-									</div>	
+									<div class="row">
+										<div class="col-md-7" style="padding-right: 2em;">
+											<div class="contenedorCheckTodasSkills">
+	                                            <div class="col-md-12">
+	                                            	<p class="textCheckTodasOpciones">Seleccionar todas</p>
+	                                            </div>
+	                                            <div class="content-checkbox-operario">
+	                                            	<input class="form-check-input input-todos-checkbox" type="checkbox" id="checkTodasSkillsVistaIndividual" value="option1" ng-click="seleccionarTodasSkillsVistaIndividual()" />
+	                                        	</div>
+	                                        </div>
+										</div>
+										<div class="col-md-5">
+											<div style=" text-align: right;">
+												<a class="multiseleccion-interve" ng-click="mostrarContenedoresMultiseleccion()" href="">Multiselecci&oacute;n</a>
+											</div>
+										</div>
+									</div>
 									
 									<div class="intervenciones-container scrollGeneral">
 <!-- 										<div ng-repeat="intervencion in listadoIntervenciones | orderBy:'nombre' | filter:buscarSkill track by $index" class="row "> -->
@@ -291,6 +305,14 @@
 <!--                                                 </div> -->
 <!--                                             </div> -->
 <!--                                         </div> -->
+										<div class=" valign-wrapper">
+                                            <div class="col-12 pl-0">
+                                            	<p class="text-todos-nombre">Seleccionar todas</p>
+                                            </div>
+                                            <div class="content-checkbox-operario">
+                                            	<input class="form-check-input input-todos-checkbox" type="checkbox" id="checkTodasSkillsMultiSelect" value="option1" ng-click="seleccionarTodasSkillsMultiselect()" />
+                                        	</div>
+                                        </div>
 										<div id="arbolSkillsMultiseleccion" class="jstree-proton-3 proton-demo" ng-click="contadorSkillsMultiseleccion()">
 										</div>
                                     </div>
