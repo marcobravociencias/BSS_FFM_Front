@@ -41,19 +41,16 @@
             rel="stylesheet" />
         <link href="${pageContext.request.contextPath}/resources/css/plantainterna/reportesPI/mainReportes.css"
             rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/reportesPI/mainReportes.css"
+            rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/consultaOT/timeLine.css"
+            rel="stylesheet" />
     </head>
 
     <body id="idBody" ng-controller="reportesController" style="display: none;">
+
         <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
-        <div class="container container-title-header" style="padding: 0 !important;">
-            <div class="header-modulo">
-                <h5 class="title-modulo">Reportes</h5>
-                <h1 class="h6 subtitle-modulo">En este m&oacute;dulo podr&aacute;s realizar la busqueda de
-                    reportes en general</h1>
-            </div>
-        </div>
         <div class="container" id="container_reportes">
-           
             <div class="row">
                 <div class="col-md-12">
                     <ul class="nav nav-tabs left-menu small-menu flex-column" id="opciones-menu" role="tablist"
@@ -79,8 +76,8 @@
                         <li class="nav-item">
                             <a class="opcion-menu" id="auxiliar-tab" data-toggle="tab" href="#auxiliar" role="tab"
                                 aria-controls="auxiliar" aria-selected="false"><i
-                                    class="icon-menu-left fas fa-briefcase"></i>&nbsp;<span class="titulo-menu">Reporte
-                                    T&eacute;cnico Auxiliar</span></a>
+                                    class="icon-menu-left fas fa-briefcase"></i>&nbsp;<span class="titulo-menu"
+                                    style="margin-left: 0.6em;">Reporte T&eacute;cnico Auxiliar</span></a>
                         </li>
                         <li class="nav-item">
                             <a class="opcion-menu" id="inspector-tab" data-toggle="tab" href="#inspector" role="tab"
@@ -92,43 +89,39 @@
                             <a class="opcion-menu" id="tecnico-tab" data-toggle="tab" href="#tecnico" role="tab"
                                 aria-controls="tecnico" aria-selected="false"><i
                                     class="icon-menu-left fas fa-user-alt"></i>&nbsp;<span class="titulo-menu">Reporte
+
                                     por Tecnico</span></a>
                         </li>
-
-        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/reportesPI/mainReportes.css"  rel="stylesheet"/>
-        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/consultaOT/styleConsultaOT.css" rel="stylesheet">
-		<link href="${pageContext.request.contextPath}/resources/css/plantainterna/consultaOT/timeLine.css"
-        rel="stylesheet" />
-</head>
-<body id="idBody" ng-controller="reportesController" style="display: none;">
-<jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
-<div class="col-md-12 style_container_reportes">
-	
-	<div class="row">
-		<div class="col-md-2" id="navbar_reportes" style="margin-top: 5px;">
-			<div class="align-rigth col-md-12">
-				<button id="ocultar_nav" type="button" class="close" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<ul class="list-group-flush list-group">
-				<li id="link_reporte_ordenes" class="list-group-item list-group-item-action elemento_link nav-link active">
-					<span class="fon_size_menu">OTS Planta Interna</span>
-				</li>
-				<li id="link_reporte_tecnico" class="list-group-item list-group-item-action elemento_link nav-link">
-					<span class="fon_size_menu">T&eacute;cnico</span>
-				</li>
-				<li id="link_reporte_despacho"  class="list-group-item list-group-item-action elemento_link nav-link">
-					<span class="fon_size_menu">Coordinador</span>
-				</li>
-				<li id="link_reporte_auxiliar" class="list-group-item list-group-item-action elemento_link nav-link">
-					<span class="fon_size_menu">T&eacute;cnico Auxiliar</span>
-				</li>
-				<li id="link_reporte_inspector" class="list-group-item list-group-item-action elemento_link nav-link">
-					<span class="fon_size_menu">Reporte Inspector</span>
-				</li>
-			</ul>
-
+                    </ul>
+                    <div class="right-content tab-content">
+                        <div class="row tab-content">
+                            <div class="tab-pane fade show active" id="seguimientoDiario" role="tabpanel"
+                                aria-labelledby="seguimientoDiario-tab">
+                                <h5 id="texto_header_reportes" class="text-center">Reporte Seguimiento
+                                    Diario</h5>
+                                <jsp:include page="./reporteSeguimientoDiario.jsp"></jsp:include>
+                            </div>
+                            <div class="tab-pane fade" id="ordenes" role="tabpanel" aria-labelledby="ordenes-tab">
+                                <h5 id="texto_header_reportes" class="text-center">Reporte Ordenes de Trabajo Planta
+                                    Interna</h5>
+                                <jsp:include page="./reporteOrdenes.jsp"></jsp:include>
+                            </div>
+                            <div class="tab-pane fade" id="despacho" role="tabpanel" aria-labelledby="despacho-tab">
+                                <h5 id="texto_header_reportes" class="text-center">Reporte Coordinador</h5>
+                                <jsp:include page="./reporteDespacho.jsp"></jsp:include>
+                            </div>
+                            <div class="tab-pane fade" id="auxiliar" role="tabpanel" aria-labelledby="auxiliar-tab">
+                                <h5 id="texto_header_reportes" class="text-center">Reporte T&eacute;cnico Auxiliar</h5>
+                                <jsp:include page="./reporteAuxiliar.jsp"></jsp:include>
+                            </div>
+                            <div class="tab-pane fade" id="inspector" role="tabpanel" aria-labelledby="inspector-tab">
+                                <h5 id="texto_header_reportes" class="text-center">Reporte Inspector</h5>
+                                <jsp:include page="./reporteInspector.jsp"></jsp:include>
+                            </div>
+                            <div class="tab-pane fade" id="tecnico" role="tabpanel" aria-labelledby="tecnico-tab">
+                                <h5 id="texto_header_reportes" class="text-center">Reporte por T&eacute;cnico</h5>
+                                <jsp:include page="./reporteTecnico.jsp"></jsp:include>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -165,12 +158,16 @@
     <script type="text/javascript"
         src="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/lib/moment.es.js"></script>
 
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/reportesPI/reportesPIController.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/reportesPI/reportesPIService.js"></script>
-	<script type="text/javascript">let contex_project = "${pageContext.request.contextPath}";</script>
-	<script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>
-    
-	
-</html>
+    <script type="text/javascript"
+        src="${pageContext.request.contextPath}/resources/js/plantainterna/reportesPI/reportesPIController.js"></script>
+    <script type="text/javascript"
+        src="${pageContext.request.contextPath}/resources/js/plantainterna/reportesPI/reportesPIFilters.js"></script>
+    <script type="text/javascript"
+        src="${pageContext.request.contextPath}/resources/js/plantainterna/reportesPI/reportesPIService.js"></script>
+    <script type="text/javascript">let contex_project = "${pageContext.request.contextPath}";</script>
+    <script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>
+
+
+    </html>
