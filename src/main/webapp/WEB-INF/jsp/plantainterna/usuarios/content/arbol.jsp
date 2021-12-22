@@ -1,7 +1,7 @@
 <div class="col-md-12">
     <div class="row">
         <div class="col-md-5">
-            <h6 class="text-center titulo-opciones">FFM TOTALPLAY EMPRESARIAL *</h6>
+            <h6 class="text-center titulo-opciones">FFM TOTALPLAY *</h6>
             <hr/>
             <div class="col-md-12">
                 <div class="row">

@@ -166,7 +166,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
         	});
         	
         	intervencionesListaIndividual.map((e)=>{
-                e.parent = e.idPadre == undefined ? "#" : e.idPadre;
+                e.parent = e.idPadre == null ? 0 : e.idPadre;
                 e.text= e.nombre;
                 e.icon= "fa fa-globe";
                 return e
@@ -189,9 +189,10 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
                     }
                 }
     		});
-        	
+
         	setTimeout(function (){
         		$("#arbolSkillsVistaIndividual").jstree().close_all();
+        		$("#arbolSkillsVistaIndividual").jstree("open_node", 0);
         	}, 100);
 
     		$('#divContenedorSkills').show();
@@ -212,7 +213,6 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 	}
 	
 	$scope.abrirModalSkillsSeleccionadas = function(){
-		console.log($scope.listadoIntervencionesIndividual);
 		if($scope.contadorSkillsSeleccionadas != 0){
 			$scope.listadoIntervencionesSeleccionadas = [];
 			var skills = $('#arbolSkillsVistaIndividual').jstree("get_selected", true);
@@ -242,8 +242,9 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 		});
 		
 		let intervencionesLista = $scope.listadoIntervencionesMultiseleccion;
+		intervencionesLista.push({id: 0, nombre: "SELECCIONAR TODAS", nivel: 0, idPadre: "#", state:{opened: true}});
 		intervencionesLista.map((e)=>{
-            e.parent = e.idPadre == undefined ? "#" : e.idPadre;
+            e.parent = e.idPadre == null ? 0 : e.idPadre;
             e.text= e.nombre;
             e.icon= "fa fa-globe";
             return e
@@ -655,6 +656,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
                             }
                             $scope.listadoIntervencionesMultiseleccion = angular.copy(results[2].data.result);
                             $scope.listadoIntervencionesIndividual = angular.copy(results[2].data.result);
+                            $scope.listadoIntervencionesIndividual.push({id: 0, nombre: "SELECCIONAR TODAS", nivel: 0, idPadre: "#", state:{opened: true}});
                         }else{
                             toastr.warning( 'No se encontraron datos para la geografia' );                
                         }                        

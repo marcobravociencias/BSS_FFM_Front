@@ -58,8 +58,8 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 				moduloAccionesUsuario: 'moduloUsuarios'
 	    };
 
-    	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
-		swal.showLoading();
+//    	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
+//		swal.showLoading();
     	$q.all([
     		usuarioPIService.consultarConfiguracionDespachoDespacho(paramsConfiguracionDespacho),
     		usuarioPIService.consultaCompanias(),
@@ -258,7 +258,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
             }else{
             	toastr.error('Error interno en el servidor.');
             }
-        	swal.close();
+        	//swal.close();
         	setTimeout(function () {
         		$scope.consultaUsuariosPorGeoCompPuestos();
         		$scope.companiaSeleccion();

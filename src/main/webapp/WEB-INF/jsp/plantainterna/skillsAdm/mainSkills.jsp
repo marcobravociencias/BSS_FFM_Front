@@ -116,14 +116,6 @@
 								<div id="divContenedorSkills" style="display: none">
 									<div class="row">
 										<div class="col-md-7" style="padding-right: 2em;">
-											<div class="contenedorCheckTodasSkills">
-	                                            <div class="col-md-12" ng-click="seleccionarTodasSkillsVistaIndividualText()">
-	                                            	<p class="textCheckTodasOpciones">Seleccionar todas</p>
-	                                            </div>
-	                                            <div class="content-checkbox-operario">
-	                                            	<input class="form-check-input input-todos-checkbox" type="checkbox" id="checkTodasSkillsVistaIndividual" value="option1" ng-click="seleccionarTodasSkillsVistaIndividualCheck()" />
-	                                        	</div>
-	                                        </div>
 										</div>
 										<div class="col-md-5">
 											<div style=" text-align: right;">
@@ -283,14 +275,6 @@
                                         <span class="search-icon-operario-busq fa fa-search"></span>
                                     </div>
                                     <div id="divContenedorSkills2" class="scrollGeneral">
-										<div class=" valign-wrapper">
-                                            <div class="col-12 pl-0" ng-click="seleccionarTodasSkillsMultiselectText()">
-                                            	<p class="text-todos-nombre">Seleccionar todas</p>
-                                            </div>
-                                            <div class="content-checkbox-operario">
-                                            	<input class="form-check-input input-todos-checkbox" type="checkbox" id="checkTodasSkillsMultiSelect" value="option1" ng-click="seleccionarTodasSkillsMultiselectCheck()" />
-                                        	</div>
-                                        </div>
 										<div id="arbolSkillsMultiseleccion" class="jstree-proton-3 proton-demo" ng-click="contadorSkillsMultiseleccion()">
 										</div>
                                     </div>
