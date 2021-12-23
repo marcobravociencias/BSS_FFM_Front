@@ -9,6 +9,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
     $scope.idUsuario = '';
     $scope.usuarioFoto = {};
     $scope.isTecnicos = false;
+    $scope.tecnicoPagos = {};
     let pagosTecnicosTable;
     let pagosLiberarTable;
     let usuariosCambiaContrasena;
@@ -51,8 +52,6 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
         "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
     });
 
-
-
     $('#searchTextGeneral').on('keyup', function () {
         pagosTecnicosTable.search(this.value).draw();
     })
@@ -93,21 +92,19 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
         })
     }
 
-    
     showImage = function (id, type) {
         let url = './resources/img/plantainterna/despacho/tecnicootasignada.png';
         let usuario = {};
-
         if (type == 'tecnico') {
-            usuario = $scope.listaTecnicosPagos.find((e) => e.no_empleado == id);
-            //usuario.nombreCompleto = usuario.nombre + ' ' + usuario.apellidoPaterno + ' ' + usuario.apellidoMaterno;
-            usuario.puesto = 'T\u00C9CNICO'
+            usuario = $scope.listaTecnicosPagos.find((e) => e.numEmpleado == id);
+            usuario.nombreCompleto = usuario.nombre + ' ' + usuario.apellidoPaterno + ' ' + usuario.apellidoMaterno;
+            usuario.puesto = 'T\u00C9CNICO';
+            usuario.noEmpleado = usuario.numEmpleado;
+            usuario.usuario = usuario.usuarioFFM;
         } else {
             usuario = $scope.listaUsuarios.find((e) => e.noEmpleado == id);
         }
-
         if (usuario) {
-            console.log(usuario);
             if (!usuario.urlFoto) {
                 usuario.urlFoto = url;
             }
@@ -144,62 +141,55 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
             return false;
         }
 
-        let params = { idGeografia: clusters };
+
+        let params = { idGeografias: clusters, idEstatusPagos: [1, 2, 3] };
         let arraRow = [];
-        gestionUniversalService.consultarTecnico(params).then(function success(response) {
-            if (response.data.respuesta) {
-                if (response.data.result.usuarios) {
-                    $scope.listaTecnicosPagos = response.data.result.usuarios;
-                    if (pagosTecnicosTable) {
-                        pagosTecnicosTable.destroy();
+
+        if (pagosTecnicosTable) {
+            pagosTecnicosTable.destroy();
+        }
+        gestionUniversalService.consultarPagosLiberar(params).then(function success(response) {
+            if (response.data.result) {
+                if (response.data.respuesta) {
+                    if (response.data.result.usuarios) {
+                        $scope.listaTecnicosPagos = response.data.result.usuarios;
+                        $.each(response.data.result.usuarios, function (i, elemento) {
+                            let row = [];
+                            let imgDefault = './resources/img/plantainterna/despacho/tecnicootasignada.png';
+                            let url = imgDefault;
+                            if (elemento.urlFoto) {
+                                url = elemento.urlFoto;
+                            }
+                            let nombreCompleto = elemento.nombre + ' ' + elemento.apellidoPaterno + ' ' + elemento.apellidoMaterno;
+
+                            row[0] = '<img style="cursor:pointer;border-radius: 25px" src="' + url + '" alt="Foto" width="30" height="30" onclick="showImage(' + "'" + elemento.numEmpleado + "', 'tecnico'" + ')"/>';
+                            row[1] = elemento.numEmpleado ? elemento.numEmpleado : '-';
+                            row[2] = elemento.usuarioFFM ? elemento.usuarioFFM : '-';
+                            row[3] = nombreCompleto;
+                            row[4] = elemento.ciudadOrigen ? elemento.ciudadOrigen : '-';
+                            row[5] = '<i class="fa fa-check-double icon-item" title="Liberar Pagos" onclick="consultarPagos(' + "'" + elemento.numEmpleado + "'" + ')"></i>';
+                            arraRow.push(row);
+                        })
+
+
+                    } else {
+                        toastr.error(response.data.resultDescripcion);
                     }
-                    let imgDefault = './resources/img/plantainterna/despacho/tecnicootasignada.png';
-
-                    $.each(response.data.result.usuarios, function (i, elemento) {
-                        let row = [];
-                        let url = imgDefault;
-                        if (elemento.urlFoto) {
-                            url = elemento.urlFoto;
-                        }
-                        row[0] = '<img style="cursor:pointer;border-radius: 25px" src="' + url + '" alt="Foto" width="30" height="30" onclick="showImage(' + "'" + elemento.no_empleado + "', 'tecnico'" + ')"/>';
-                        row[1] = elemento.no_empleado;
-                        row[2] = elemento.usuario;
-                        row[3] = elemento.nombreCompleto;
-                        row[4] = elemento.geografia;
-                        row[5] = elemento.fechaActualizacion;
-                        row[6] = '<i class="fa fa-check-double icon-item" title="Liberar Pagos" onclick="consultarPagos(' + elemento.idUsuario + ')"></i>';
-
-                        /*
-                        row[6] = '<li id="nav-options" class="nav-item dropdown">' +
-                            '<a  class="nav-link dropdown-toggle"  href="#" id="option-navbar" role="button" data-mdb-toggle="dropdown" aria-expanded="false">' +
-                            '<i class="fas fa-cogs"></i></a>' +
-                            '<ul class="dropdown-menu"   aria-labelledby="navbarDropdown">' +
-                            '<li onclick="consultarPagos(' + elemento.idUsuario + ')"><a class="dropdown-item">' +
-                            '<i class="fas fa-money-bill icon-item" style="color:#737810"></i>Pagos</a>' +
-                            '</li>' +
-                            '</ul>' +
-                            '</li>'
-                        */
-                        arraRow.push(row);
-                    })
-
-                    pagosTecnicosTable = $('#pagosTecnicosTable').DataTable({
-                        "paging": true,
-                        "lengthChange": false,
-                        "ordering": false,
-                        "pageLength": 10,
-                        "info": false,
-                        "data": arraRow,
-                        "autoWidth": true,
-                        "language": idioma_espanol_not_font,
-                        "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
-                    });
                 } else {
                     toastr.error(response.data.resultDescripcion);
                 }
-            } else {
-                toastr.error(response.data.resultDescripcion);
             }
+            pagosTecnicosTable = $('#pagosTecnicosTable').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "ordering": false,
+                "pageLength": 10,
+                "info": false,
+                "data": arraRow,
+                "autoWidth": true,
+                "language": idioma_espanol_not_font,
+                "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+            });
             swal.close();
         })
     }
@@ -214,12 +204,12 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
             gestionUniversalService.consultarTecnicosGeografia(),
             gestionUniversalService.consultaPuestos()
         ]).then(function (results) {
-            if (results[0].data && results[0].data.respuesta) {
+            if (results[0].data.result && results[0].data.respuesta) {
                 $scope.nGeografia = results[0].data.result.N_FILTRO_GEOGRAFIA ? Number(results[0].data.result.N_FILTRO_GEOGRAFIA) : null;
             } else {
                 mostrarMensajeErrorAlert(results[0].data.resultDescripcion)
             }
-            if (results[1].data.respuesta) {
+            if (results[1].data.result && results[1].data.respuesta) {
                 if (results[1].data.result) {
                     if (results[1].data.result.geografia || results[1].data.result.geografia.length > 0) {
                         let listGeo = [];
@@ -289,7 +279,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
             } else {
                 mostrarMensajeErrorAlert(results[1].data.resultDescripcion)
             }
-            if (results[2].data.respuesta) {
+            if (results[2].data.result && results[2].data.respuesta) {
                 $scope.listaPuestos = results[2].data.result.puestos;
                 $scope.seleccionarTodos($scope.listaPuestos);
             } else {
@@ -303,87 +293,67 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
 
     consultarPagos = function (tecnico) {
         $scope.idUsuario = tecnico;
-        $scope.consultarPagosTecnico();
-        $('#modalPagos').modal('show');
-    }
+        $scope.tecnicoPagos = $scope.listaTecnicosPagos.find((e) => e.numEmpleado == tecnico)
 
-    $scope.consultarPagosTecnico = function () {
-
-        let params = {
-            idOperador: '2' // $scope.idUsuario
+        if ($scope.tecnicoPagos.pagos.length) {
+            let arraRow = [];
+            if (pagosLiberarTable) {
+                pagosLiberarTable.destroy();
+            }
+            $.each($scope.tecnicoPagos.pagos, function (i, elemento) {
+                let clase = 'init';
+                if (elemento.idEstatusPago == 3) {
+                    clase = "free";
+                }
+                let row = [];
+                row[0] = elemento.idCveCliente ? elemento.idCveCliente : '';
+                row[1] = elemento.folioSistema ? elemento.folioSistema : '';
+                row[2] = elemento.monto ? elemento.monto : '';
+                row[3] = elemento.fechaRegistroPago ? elemento.fechaRegistroPago : '';
+                row[4] = elemento.hora ? elemento.hora : '';
+                row[5] = elemento.descEstatusPago ? elemento.descEstatusPago : '';
+                row[6] = elemento.fechaHoraCierreOT ? elemento.fechaHoraCierreOT : '';
+                row[7] = elemento.tipoIntervencion ? elemento.tipoIntervencion : '';
+                row[8] = elemento.subTipoIntervencion ? elemento.subTipoIntervencion : '';
+                row[9] = '<div class="icon-status"><span class="fas ' + clase + '" id="' + elemento.folioSistema + '" onclick="changeLock(' + "'" + elemento.folioSistema + "'," + elemento.idEstatusPago + ')"></span></div>'
+                if (elemento.idEstatusPago == 2) {
+                    row[9] = '<input type="checkbox" onclick="changeCheck(this)" class="form-check-input pagos-selected" id="' + elemento.idPago + '"/>';
+                }
+                arraRow.push(row);
+            })
+            pagosLiberarTable = $('#pagosLiberarTable').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "ordering": false,
+                "pageLength": 10,
+                "info": false,
+                "data": arraRow,
+                "autoWidth": true,
+                "language": idioma_espanol_not_font,
+                "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+            });
+            $('#modalPagos').modal('show');
+        } else {
+            toastr.warning('No se encontraron pagos para mostrar');
         }
 
-        gestionUniversalService.consultarPagosLiberar(params).then(function success(response) {
-            if (response.data.respuesta) {
-                if (response.data.result.pagos) {
-                    let arraRow = [];
-                    if (pagosLiberarTable) {
-                        pagosLiberarTable.destroy();
-                    }
-                    $.each(response.data.result.pagos, function (i, elemento) {
-                        let clase = 'locked';
-                        if (elemento.idEstatusPago == 3) {
-                            clase = "free";
-                        } else if (elemento.idEstatusPago == 1) {
-                            clase = "init";
-                        }
-                        let row = [];
-                        row[0] = elemento.idCveCliente ? elemento.idCveCliente : '';
-                        row[1] = elemento.folioSistema ? elemento.folioSistema : '';
-                        row[2] = elemento.monto ? elemento.monto : '';
-                        row[3] = elemento.fechaRegistroPago ? elemento.fechaRegistroPago : '';
-                        row[4] = elemento.hora ? elemento.hora : '';
-                        row[5] = elemento.descEstatusPago ? elemento.descEstatusPago : '';
-                        row[6] = elemento.fechaHoraCierreOT ? elemento.fechaHoraCierreOT : '';
-                        row[7] = elemento.tipoIntervencion ? elemento.tipoIntervencion : '';
-                        row[8] = elemento.subTipoIntervencion ? elemento.subTipoIntervencion : '';
-                        row[9] = '<div class="icon-status"><span class="fas ' + clase + '" id="' + elemento.idCveCliente + '" onclick="changeLock(' + elemento.idCveCliente + ', ' + elemento.idEstatusPago + ')"></span></div>'
-                        if (elemento.idEstatusPago == 3) {
-                            row[9] = '<input type="checkbox" class="form-check-input pagos-selected" id="' + elemento.idCveCliente + '"/>';
-                        }
-                        arraRow.push(row);
-                    })
-                    pagosLiberarTable = $('#pagosLiberarTable').DataTable({
-                        "paging": true,
-                        "lengthChange": false,
-                        "ordering": false,
-                        "pageLength": 10,
-                        "info": false,
-                        "data": arraRow,
-                        "autoWidth": true,
-                        "language": idioma_espanol_not_font,
-                        "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
-                    });
-                }
+    }
 
-            } else {
-                toastr.error(response.data.resultDescripcion);
+    changeCheck = function (event) {
+        $.each($scope.tecnicoPagos.pagos, function (i, elemento) {
+            if ($(event).attr('id') == elemento.idPago) {
+                elemento.isChecked = $(event).is(":checked");
             }
         })
-    }
-
-    changeLock = function (pago, status) {
-        if (status == 2) {
-            let id = "#" + pago;
-            if ($(id).hasClass("locked")) {
-                $(id).removeClass("locked");
-                $(id).addClass("unlocked");
-            } else {
-                $(id).removeClass("unlocked");
-                $(id).addClass("locked");
-            }
-        }
     }
 
     $scope.liberarPago = function () {
-        let unlocked = document.getElementsByClassName("pagos-selected");
         let ids = [];
-        $.each(unlocked, function (i, elemento) {
-            if (elemento.attributes.autocompleted) {
-                ids.push($(elemento).attr('id'));
+        $.each($scope.tecnicoPagos.pagos, function (i, elemento) {
+            if (elemento.isChecked) {
+                ids.push(elemento.idPago);
             }
         })
-
         if (ids.length) {
             swal({
                 title: "Liberar pago(s)",
@@ -398,17 +368,24 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                 cancelButtonText: "Cancelar",
             }).then(function (comentario) {
                 if (comentario == '') {
-                    toastr.warning('Para liberar los pagos debe ingresar comentario');
+                    toastr.warning('Para liberar los pagos debe ingresar un comentario');
                 } else {
                     swal({ text: 'Espera un momento...', allowOutsideClick: false });
+                    swal.showLoading();
                     let params = {
                         idsPagos: ids,
                         comentarios: comentario
                     }
                     gestionUniversalService.liberarPago(params).then(function success(response) {
                         if (response.data.respuesta) {
+                            $('#modalPagos').modal('hide');
+                            $scope.consultarTecnicosPagos();
+                            toastr.success('Se han liberado los pagos correctamente');
 
+                        }else{
+                            toastr.error(response.data.resultDescripcion);
                         }
+                        swal.close();
                     })
                 }
             }).catch(err => {
@@ -421,7 +398,10 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
 
     $scope.abrirModalGeografiaBuscar = function () {
         $scope.isTecnicos = true;
-        $("#modalGeografia").modal('show')
+        $("#modalGeografia").modal('show');
+        setTimeout(function () {
+            $("#searchGeoConsulta").focus();
+        }, 750);
     }
 
 
@@ -429,7 +409,10 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
 
     $scope.abrirModalGeografiaBuscarUsuario = function () {
         $scope.isTecnicos = false;
-        $("#modalGeografia").modal('show')
+        $("#modalGeografia").modal('show');
+        setTimeout(function () {
+            $("#searchGeoConsultaUsuarios").focus();
+        }, 750);
     }
 
     $scope.consultarUsuariosContrasena = function () {
@@ -462,48 +445,52 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
         swal.showLoading();
         let params = { idsGeografia: clusters, idTipoUsuario: puestosCopy };
         let arraRow = [];
+        if (usuariosCambiaContrasena) {
+            usuariosCambiaContrasena.destroy();
+        }
         gestionUniversalService.consultarUsuariosPorPuesto(params).then(function success(response) {
-            if (response.data.respuesta) {
-                if (response.data.result && response.data.result.usuarios) {
-                    $scope.listaUsuarios = response.data.result.usuarios;
-                    if (usuariosCambiaContrasena) {
-                        usuariosCambiaContrasena.destroy();
-                    }
-                    let imgDefault = './resources/img/plantainterna/despacho/tecnicootasignada.png';
+            if (response.data.result) {
+                if (response.data.respuesta) {
+                    if (response.data.result && response.data.result.usuarios) {
+                        $scope.listaUsuarios = response.data.result.usuarios;
 
-                    $.each(response.data.result.usuarios, function (i, elemento) {
-                        let row = [];
-                        let url = imgDefault;
-                        if (elemento.urlFoto) {
-                            url = elemento.urlFoto;
-                        }
-                        row[0] = '<img style="cursor:pointer;border-radius: 25px" src="' + url + '" alt="Foto" width="30" height="30" onclick="showImage(' + "'" + elemento.noEmpleado + "', 'usuario'" + ')"/>';
-                        row[1] = elemento.noEmpleado ? elemento.noEmpleado : 'Sin informaci&oacute;n';
-                        row[2] = elemento.puesto ? elemento.puesto : 'Sin informaci&oacute;n';
-                        row[3] = elemento.usuario ? elemento.usuario : 'Sin informaci&oacute;n';
-                        row[4] = elemento.nombreCompleto ? elemento.nombreCompleto : 'Sin informaci&oacute;n';
-                        row[5] = elemento.geografia ? elemento.geografia : 'Sin informaci&oacute;n';
-                        row[6] = elemento.fechaActualizacion ? elemento.fechaActualizacion : 'Sin informaci&oacute;n';
-                        row[7] = '<i class="fa fa-key icon-item" title="Cambiar contrase&ntilde;a" onclick="restablecerContrasena(' + elemento.idUsuario + ')"></i>';
-                        arraRow.push(row);
-                    })
-                    usuariosCambiaContrasena = $('#cambiaContrasenaTable').DataTable({
-                        "paging": true,
-                        "lengthChange": false,
-                        "ordering": false,
-                        "pageLength": 10,
-                        "info": false,
-                        "data": arraRow,
-                        "autoWidth": true,
-                        "language": idioma_espanol_not_font,
-                        "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
-                    });
+                        let imgDefault = './resources/img/plantainterna/despacho/tecnicootasignada.png';
+
+                        $.each(response.data.result.usuarios, function (i, elemento) {
+                            let row = [];
+                            let url = imgDefault;
+                            if (elemento.urlFoto) {
+                                url = elemento.urlFoto;
+                            }
+                            row[0] = '<img style="cursor:pointer;border-radius: 25px" src="' + url + '" alt="Foto" width="30" height="30" onclick="showImage(' + "'" + elemento.noEmpleado + "', 'usuario'" + ')"/>';
+                            row[1] = elemento.noEmpleado ? elemento.noEmpleado : 'Sin informaci&oacute;n';
+                            row[2] = elemento.puesto ? elemento.puesto : 'Sin informaci&oacute;n';
+                            row[3] = elemento.usuario ? elemento.usuario : 'Sin informaci&oacute;n';
+                            row[4] = elemento.nombreCompleto ? elemento.nombreCompleto : 'Sin informaci&oacute;n';
+                            row[5] = elemento.geografia ? elemento.geografia : 'Sin informaci&oacute;n';
+                            row[6] = elemento.fechaActualizacion ? elemento.fechaActualizacion : 'Sin informaci&oacute;n';
+                            row[7] = '<i class="fa fa-key icon-item" title="Cambiar contrase&ntilde;a" onclick="restablecerContrasena(' + elemento.idUsuario + ')"></i>';
+                            arraRow.push(row);
+                        })
+
+                    } else {
+                        toastr.error(response.data.resultDescripcion);
+                    }
                 } else {
                     toastr.error(response.data.resultDescripcion);
                 }
-            } else {
-                toastr.error(response.data.resultDescripcion);
             }
+            usuariosCambiaContrasena = $('#cambiaContrasenaTable').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "ordering": false,
+                "pageLength": 10,
+                "info": false,
+                "data": arraRow,
+                "autoWidth": true,
+                "language": idioma_espanol_not_font,
+                "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+            });
             swal.close();
         })
     }

@@ -71,7 +71,7 @@
     </div>
     <div class="content-table">
         <div class="content-fluid">
-            <table id="reporteDespachoTable" class="display table table-hover " cellspacing="0" width="100%">
+            <table id="reporteDespachoTable" class="display table " cellspacing="0" width="100%">
                 <thead id="thead_reporteDespacho">
                     <tr>
                         <th>OT</th>

@@ -152,16 +152,16 @@
     border: #000000 !important;
 }
 
-#pagosTecnicosTable img {
+#pagosTecnicosTable img, #cambiaContrasenaTable img {
     box-shadow: 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%), 0 2px 4px -1px rgb(0 0 0 / 30%);
 }
 
 .search-filtro {
     align-items: stretch;
     background: white !important;
-    border: 1px solid #d9d9d9 !important;
-    padding: .5rem 1rem !important;
-
+    padding: 0 0 0 1em !important;
+    border: 1px solid #e2e2e2;
+    background: #fcfcfc !important;
 }
 
 .btnTotal:active, .btnTotal:focus .btnTotal:hover {
@@ -241,11 +241,12 @@
 }
 
 .icon-search {
-    font-size: 0.7em !important;
+    font-size: 0.8em !important;
     float: left;
     margin-top: -1.7em;
     float: right;
     margin-right: 0.9em;
+    color: #888888 !important;
 }
 
 #nav-options {
@@ -360,7 +361,7 @@
     color: #808080 !important;
     font-family: 'Montserrat' !important;
     font-weight: lighter !important;
-    font-size: 0.9em;
+    font-size: 0.8em;
 }
 
 .jstreeconsulta.jstree-proton .jstree-clicked {
@@ -383,60 +384,40 @@
     margin-left: -1em;
 }
 
-.locked::before {
-    font-family: FontAwesome !important;
-    display: inline-block;
-    content: "\f023" !important;
-    visibility: visible;
-    font-size: initial !important;
-    cursor: pointer;
-    padding: 0.2em 0.7em;
-    color: #fff;
-    background-color: #e02121;
-    border-radius: 0.2rem;
-    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
-}
-
-.unlocked::before {
-    font-family: FontAwesome !important;
-    display: inline-block;
-    content: "\f13e" !important;
-    visibility: visible;
-    font-size: initial !important;
-    cursor: pointer;
-    padding: 0.2em 0.7em;
-    color: #fff;
-    background-color: #737810;
-    border-radius: 0.2rem;
-    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
-}
-
 .free::before {
     font-family: FontAwesome !important;
     display: inline-block;
-    content: "\f058" !important;
+    content: "\f00c" !important;
     visibility: visible;
     font-size: initial !important;
     cursor: not-allowed;
     padding: 0.2em 0.6em;
-    color: #fff;
-    background-color: rgb(34 142 12);
+    color: #5cbc5c;
+    /*
+    background-color: #5cbc5c;
     border-radius: 0.2rem;
     box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    */
 }
 
 .init::before {
     font-family: FontAwesome !important;
     display: inline-block;
-    content: "\f017" !important;
+    content: "\f023" !important;
     visibility: visible;
     font-size: initial !important;
     cursor: not-allowed;
     padding: 0.2em 0.6em;
-    color: #fff;
+    color: #7716fa;
+    /*
     background-color: #7716fa;
     border-radius: 0.2rem;
     box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    */
+}
+
+.pagos-selected{
+    margin: 0 !important;
 }
 
 .icon-status {

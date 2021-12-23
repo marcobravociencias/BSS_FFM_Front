@@ -43,8 +43,6 @@
             rel="stylesheet" />
         <link href="${pageContext.request.contextPath}/resources/css/plantainterna/reportesPI/mainReportes.css"
             rel="stylesheet" />
-        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/consultaOT/timeLine.css"
-            rel="stylesheet" />
     </head>
 
     <body id="idBody" ng-controller="reportesController" style="display: none;">

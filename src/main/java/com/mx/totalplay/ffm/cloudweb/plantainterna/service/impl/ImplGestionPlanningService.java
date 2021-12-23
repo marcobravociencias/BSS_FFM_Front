@@ -36,18 +36,14 @@ public class ImplGestionPlanningService implements GestionPlanningService {
     public ServiceResponseResult consultarPagosTecnico(String params) {
         logger.info("ImplGestionPlanningService.class [metodo = consultarPagosTecnico() ]\n" + params);
 
-        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-
         LoginResult principalDetail = utileriaGeneral.obtenerObjetoPrincipal();
         String tokenAcces = principalDetail.getAccess_token();
         logger.info("consultarPagosTecnico ##+" + tokenAcces);
         String urlRequest = principalDetail.getDireccionAmbiente()
                 .concat(constGestionPlanning.getConsultaPagosLiberarTecnico());
         logger.info("***URL: " + urlRequest);
-        Map<String, String> paramsRequestGet = new HashMap<String, String>();
-        paramsRequestGet.put("idOperador", jsonObject.get("idOperador").getAsString());
 
-        ServiceResponseResult response = consumeRest.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
+        ServiceResponseResult response = consumeRest.callPostBearerTokenRequest(params, urlRequest,
                 ServiceResponseResult.class, tokenAcces);
         logger.info("RESULT" + gson.toJson(response));
         return response;
