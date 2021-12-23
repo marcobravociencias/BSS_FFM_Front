@@ -399,15 +399,10 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         console.log("function 15"+nEmpleado)
         let params =  {
             numEmpleado: nEmpleado,
-            centro:'NA',
-            almacen:'NA',
-           // idUsuario:tecnicoTemp.idTecnico ,  
-            idUsuario:233 ,
-            idFlujo:1        
+            idUsuario:tecnicoTemp.idTecnico ,  
+            idFlujo:1    
         }          
-        $scope.tecnicoConsultaMateriales=tecnicoTemp
-        $scope.$apply()
-
+ 
         if ( tableMaterialesDespacho ) 
             tableMaterialesDespacho.destroy();
 
@@ -417,21 +412,28 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         swal.showLoading();
         mainDespachoService.consultandoMaterialesPI(params).then(function success(response) {
            console.log(response)
-           $("#modalMaterialesOperario").modal('show')
-           console.log("data materiales ",response.data)
-           $scope.consultarMaterialesPorCentroAlmacenUser()
-           /***
-           if (response.data.respuesta) {
-               if (response.data.result) {
+           console.log("data materiales ",response.data)           
+           if( response.data.respuesta){
+                if (response.data.result) {                    
+                    params.centro=(response.data.result.almacen='NOCONF');
+                    params.almacen=(response.data.result.centro='NOCONF');
+                    tecnicoTemp.centro=params.centro
+                    tecnicoTemp.almacen=params.almacen
+                    $scope.tecnicoConsultaMateriales=tecnicoTemp
+                   // $scope.$apply()
                    
-               } else {
-                   swal.close()
-                   mostrarMensajeWarningValidacion('No se encontro informaci&oacute;n.')
-               }
-           } else {
-               swal.close()
-               mostrarMensajeErrorAlert(response.data.resultDescripcion)
-           }**/
+                    $scope.consultarMaterialesPorCentroAlmacenUser(params)
+
+                } else {
+                    mostrarMensajeWarningValidacion('No se encontro informaci&oacute;n.')
+                    $scope.inicializarTableMateriales()
+                    swal.close()
+                }
+           }else{
+                toastr.warning("Ha ocurrido un error al consultar los materiales");
+                $scope.inicializarTableMateriales()
+                swal.close()
+           }
         }).catch(err => handleError(err))
     }
 
@@ -440,7 +442,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             console.log(response)
             if (response.data.respuesta) {
                 if (response.data.result) {
-                    let tempArrayResult=results[0].data.result.materiales
+                    let tempArrayResult=response.data.result.materiales
                     angular.forEach(tempArrayResult,function(elem,index){
                         $("#table-materiales-temp tbody").append(`
                             <tr>
@@ -457,7 +459,8 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                         `)
                     })
                     $scope.inicializarTableMateriales()
-                    $("#modalMaterialesOperario").modal('show')        
+                    swal.close()
+                    $("#modalMaterialesOperario").modal('show')                            
                 } else {
                     swal.close()
                     mostrarMensajeWarningValidacion('No se encontro informaci&oacute;n.')
