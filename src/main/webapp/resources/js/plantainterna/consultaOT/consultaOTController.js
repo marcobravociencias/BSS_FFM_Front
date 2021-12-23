@@ -778,19 +778,18 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			$scope.tecnicoConsultaMateriales={}
 
 			if ( tableMaterialesDespacho ) 
-				tableMaterialesDespacho .destroy();			
-				consultaOTService.consultaMaterialOt(JSON.stringify( 
-					{
-						idOrden:1991// $scope.datoOt
-					}
-				)).then(function success(response) {
+				tableMaterialesDespacho .destroy();				
+				consultaOTService.consultaMaterialOt(JSON.stringify( {idOrden:$scope.datoOt} )).then(function success(response) {
 				console.log(response);
 				$("#table-materiales-ot tbody").empty()
 				if (response.data.respuesta) {
 					if (response.data.result) {
 						if(response.data.result.detalleGeneral != undefined ){
 							if( response.data.result.detalleGeneral.detalleMateriales ){
-								$scope.tecnicoConsultaMateriales = response.data.result.detalleGeneral								
+								$scope.tecnicoConsultaMateriales = response.data.result.detalleGeneral		
+								$scope.tecnicoConsultaMateriales.nombreCommpleto=$scope.tecnicoConsultaMateriales.nombre +' '+ $scope.tecnicoConsultaMateriales.apellidoPaterno +' '+$scope.tecnicoConsultaMateriales.apellidoMaterno
+								
+
 								let tempArrayResult=response.data.result.detalleGeneral.detalleMateriales
 								angular.forEach(tempArrayResult,function(elem,index){
 									$("#table-materiales-ot tbody").append(`
@@ -832,7 +831,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 					isConsultaMateriales=true
 				}else{
 					$scope.inicializarTableMaterialesOt()
-					mostrarMensajeInformativo('Ha ocurrido un error en la consulta de los datos');
+					mostrarMensajeErrorAlert('Ha ocurrido un error en la consulta de los datos');
 					swal.close()
 				}
 			}).catch(err => handleError(err));

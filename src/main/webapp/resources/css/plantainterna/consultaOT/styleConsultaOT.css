@@ -1400,7 +1400,7 @@ span.content-titlehistorico.ng-binding {
 span.text-tile-vehiculo {
   font-weight: bold;
   font-size: 0.8em;
-  color: #303030;
+  color: #444444;
 }
 
 span.text-content-vehiculo {
@@ -1938,4 +1938,33 @@ img.img-recoleccion {
   background: #f4f4f4;
   font-weight: bold;
   color: #585858;
+}
+
+img.img-tecnico-materiales {
+    /* cursor: pointer; */
+    border-radius: 50%;
+    -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+    max-height: 12em;
+    height: 12em;
+    width: 12em;
+    min-width: 12em;
+    object-fit: cover;
+}
+.divider-materiales-centroalmacen {
+    border-bottom: 0.2em solid #f0f0f0;
+    width: 100%;
+    margin: 0em 40% 0 0;
+}
+
+
+.container-title-detail span {
+    font-size: .9em;
+    color:black;
+}
+
+#table-materiales-ot_wrapper{
+  margin-top:1em;
+  border-top: 1px solid #e1e1e1;
+  padding-top: .55em;
 }

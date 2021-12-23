@@ -18,10 +18,8 @@
                                 <a ng-click="consultarPostVentaOt()" data-mdb-toggle="tab" href="#content-postVenta"     ng-show="permisosModal.indexOf('tabDetalleSoporte') !== -1"       class="nav-link" id="postVenta">Detalle Soporte</a>
                                 <a ng-click="consultaPagosOt()" data-mdb-toggle="tab" href="#content-pagos"         ng-show="permisosModal.indexOf('tabConsultaPagos') !== -1"        class="nav-link" id="pagos-Ot">Pagos</a>
                                 <a ng-click="consultarDispositivosOt()" data-mdb-toggle="tab" href="#content-dispositivos"  ng-show="permisosModal.indexOf('tabConsultaDispositivos') !== -1" class="nav-link" id="dispositivo-Ot">Dispositivos</a>                                
-                                <a ng-click="consultaMaterialesOT()" data-mdb-toggle="tab" href="#content-materiales-ot"  ng-show="permisosModal.indexOf('tabConsultaDispositivos') !== -1" class="nav-link" id="dispositivo-Ot">Materiales</a>                                
-                                <a ng-click="consultarRecoleccionOt()" data-mdb-toggle="tab" href="#content-recoleccion-ot" ng-show="permisosModal.indexOf('tabConsultaDispositivos') !== -1" class="nav-link" id="recoleccion-ot">Recolecci&oacute;n</a>
-                                
-                                <!-- <li class="nav-link" id="acciones">Acciones</li> -->
+                                <a ng-click="consultaMaterialesOT()" data-mdb-toggle="tab" href="#content-materiales-ot"  ng-show="permisosModal.indexOf('tabConsultaMaterialesOT') !== -1" class="nav-link" id="dispositivo-Ot">Materiales</a>                                
+                                <a ng-click="consultarRecoleccionOt()" data-mdb-toggle="tab" href="#content-recoleccion-ot" ng-show="permisosModal.indexOf('tabConsultaRecoleccionOT') !== -1" class="nav-link" id="recoleccion-ot">Recolecci&oacute;n</a>                                
                             </div>
                         </div>
 
