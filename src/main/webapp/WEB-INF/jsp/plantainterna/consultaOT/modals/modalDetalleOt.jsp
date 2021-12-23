@@ -19,7 +19,7 @@
                                 <a ng-click="consultaPagosOt()" data-mdb-toggle="tab" href="#content-pagos"         ng-show="permisosModal.indexOf('tabConsultaPagos') !== -1"        class="nav-link" id="pagos-Ot">Pagos</a>
                                 <a ng-click="consultarDispositivosOt()" data-mdb-toggle="tab" href="#content-dispositivos"  ng-show="permisosModal.indexOf('tabConsultaDispositivos') !== -1" class="nav-link" id="dispositivo-Ot">Dispositivos</a>                                
                                 <a ng-click="consultaMaterialesOT()" data-mdb-toggle="tab" href="#content-materiales-ot"  ng-show="permisosModal.indexOf('tabConsultaDispositivos') !== -1" class="nav-link" id="dispositivo-Ot">Materiales</a>                                
-
+                                <a ng-click="consultarRecoleccionOt()" data-mdb-toggle="tab" href="#content-recoleccion-ot" ng-show="permisosModal.indexOf('tabConsultaDispositivos') !== -1" class="nav-link" id="recoleccion-ot">Recolecci&oacute;n</a>
                                 
                                 <!-- <li class="nav-link" id="acciones">Acciones</li> -->
                             </div>
@@ -160,6 +160,11 @@
                                 <div class="contenedor_detalle row tab-pane fade" id="content-materiales-ot">
                                     <div class="container container-tabla-dispositivo-consulta-ot">
                                         <jsp:include page="../contentTap/materialesOt.jsp"></jsp:include>
+                                    </div>
+                                </div>
+                                <div class="contenedor_detalle row tab-pane fade" id="content-recoleccion-ot">
+                                    <div class="container container-tabla-dispositivo-consulta-ot">
+                                        <jsp:include page="../contentTap/recoleccionConsultaOt.jsp"></jsp:include>
                                     </div>
                                 </div>
                             </div>

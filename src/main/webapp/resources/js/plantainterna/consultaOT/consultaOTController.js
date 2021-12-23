@@ -20,6 +20,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	let is_consulta_ip = false;
 	let is_consulta_informacion_Red = false;
 	let is_consulta_actividad_tecnico = false;
+	let isConsultaRecoleccionOt = false;
 	let datatable_Equipos;
 	let datatable_Dispositivos;
 	let dataTable_IP;
@@ -39,6 +40,29 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	$scope.listadoConsultaOtsDisponibles = [];
 	$scope.listEvidenciaImagenes = {};
 	$scope.listImagenesTipo = [];
+	$scope.tecnicoConsultaMateriales = {
+		almacen: "",
+		apellidoMaterno: "Calder",
+		apellidoPaterno: "Rodrigu",
+		cantidadOts: 0,
+		centro: "",
+		color: "#2424257d",
+		descipcionEstatusTecnico: "Fuera De Servicio",
+		descripcionTipoUsuario: "Tecnico",
+		id: 79647,
+		idEstatusTecnico: 5,
+		idTecnico: 79647,
+		idTipoUsuario: 7,
+		latitud: 1,
+		listadoOts: [],
+		longitud: -1,
+		nombre: "Antonio",
+		nombreCompleto: "Antonio Rodrigu Calder",
+		numContacto: "8888888888",
+		numeroEmpleado: "6506734",
+		urlFotoPerfil: "https://firebasestorage.googleapis.com/v0/b/totalplay-ffm-core-dev.appspot.com/o/ANTONIO RODRIGU CALDER?alt=media&token=uuidv4()",
+		usuarioFFM: "6506734",
+	}
 
 	let dispositivoOtTable = $('#table_dispositovos_ot').DataTable({
 		"paging": true,
@@ -1399,6 +1423,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		isConsultaDetallePago = false
 		isConsultaDispositivo = false
 		isConsultaMateriales=false
+		isConsultaRecoleccionOt = false;
 		document.querySelector('#informacion-ot').click()
 
 	})
@@ -1947,6 +1972,15 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	//MÉTODO PARA BUSCAR GEOGRAFÍAS DE ACUERDO AL TEXTO INGRESADO EN EL INPUT DE BÚSQUEDA - CONSULTA GENERAL OT
 	$scope.busquedaGeografiaConsultaOt = function() {
 		$("#jstree-proton-3").jstree("search", $('#searchGeografia').val());
+	}
+
+	$scope.consultarRecoleccionOt = function(){
+		if (!isConsultaRecoleccionOt) {
+			consultaOTService.consultarRecoleccionOt(JSON.stringify( {idOrden:$scope.datoOt} )).then(function success(response) {
+				console.log(response);
+				isConsultaRecoleccionOt = true
+			}).catch(err => handleError(err));
+		}
 	}
 	
 }])

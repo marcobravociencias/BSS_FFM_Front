@@ -153,4 +153,15 @@ app.service("consultaOTService", function($http){
             }
 		});
 	};
+
+    this.consultarRecoleccionOt=function(params){
+		return $http({
+			method: "post",
+			url: "req/consultaRecoleccionConsultaOt",
+			data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
 })

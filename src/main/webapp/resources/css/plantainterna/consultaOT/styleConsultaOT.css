@@ -1909,3 +1909,38 @@ thead.thead_segundo_tecnico_nivel tr th {
 	font-family: "Montserrat" !important;
 	
 }
+
+img.img-sap-recoleccion {
+  height: 10em;
+}
+
+img.img-recoleccion {
+  /* cursor: pointer; */
+  border-radius: 50%;
+  -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+  max-height: 12em;
+  height: 12em;
+  width: 12em;
+  min-width: 12em;
+  object-fit: cover;
+}
+
+#table-recoleccion-temp thead th {
+  position: relative;
+  background-color: #b1b1b1;
+  color: #fff;
+  border: none;
+}
+
+#tabs-recoleccion-sap {
+  margin-bottom: 1em;
+  margin-top: 1em;
+}
+
+.table-recoleccion th {
+  border-bottom: none !important;
+  background: #f4f4f4;
+  font-weight: bold;
+  color: #585858;
+}
