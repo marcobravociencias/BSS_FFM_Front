@@ -420,7 +420,6 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                     tecnicoTemp.centro=params.centro
                     tecnicoTemp.almacen=params.almacen
                     $scope.tecnicoConsultaMateriales=tecnicoTemp
-                   // $scope.$apply()
                    
                     $scope.consultarMaterialesPorCentroAlmacenUser(params)
 

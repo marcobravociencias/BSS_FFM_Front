@@ -1850,14 +1850,9 @@ thead.thead_segundo_tecnico_nivel tr th {
 }
 
 #table-materiales-ot thead th {
-    position: relative;
     background-color: #b1b1b1;
     color: #fff;
     border:none;
-    padding: 8px
- 10px;
-    font-size: .9em;
-    padding: 8px 1;
 }
 
 #table-materiales-ot tbody tr td {

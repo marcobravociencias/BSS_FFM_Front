@@ -772,45 +772,66 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	}
 
 	$scope.consultaMaterialesOT = function () {
-		
 		if(!isConsultaMateriales){
 			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 			swal.showLoading();
+			$scope.tecnicoConsultaMateriales={}
 
 			if ( tableMaterialesDespacho ) 
 				tableMaterialesDespacho .destroy();			
-
-			consultaOTService.consultaMaterialOt(JSON.stringify( {idOrden:$scope.datoOt} )).then(function success(response) {
+				consultaOTService.consultaMaterialOt(JSON.stringify( 
+					{
+						idOrden:1991// $scope.datoOt
+					}
+				)).then(function success(response) {
 				console.log(response);
 				$("#table-materiales-ot tbody").empty()
 				if (response.data.respuesta) {
 					if (response.data.result) {
-						let tempArrayResult=response.data.result.materiales
-						angular.forEach(tempArrayResult,function(elem,index){
-							$("#table-materiales-ot tbody").append(`
-								<tr>
-									<td >${elem.nombreUsuario} </td>
-									<td >${elem.numeroEmpleado} </td>
-									<td >${elem.centro} </td>
-									<td >${elem.almacen} </td>
-									<td >${elem.sku} </td>
-									<td >${elem.descripcionSku} </td>
-									<td >${elem.cantidad} </td>
-									<td >${elem.unidadMedida} </td>
-									<td >${elem.lote} </td>
-									<td >${elem.hora} </td>
-									<td >${elem.fechaRegistro} </td>
-								</tr>
-							`)
-						})
-						$scope.inicializarTableMaterialesOt()
-						swal.close()
+						if(response.data.result.detalleGeneral != undefined ){
+							if( response.data.result.detalleGeneral.detalleMateriales ){
+								$scope.tecnicoConsultaMateriales = response.data.result.detalleGeneral								
+								let tempArrayResult=response.data.result.detalleGeneral.detalleMateriales
+								angular.forEach(tempArrayResult,function(elem,index){
+									$("#table-materiales-ot tbody").append(`
+										<tr>
+											<td >${elem.sku} </td>
+											<td >${elem.descripcion} </td>
+											<td >${elem.tipo} </td>
+											<td >${elem.grupo} </td>
+											<td >${elem.lote} </td>
+											<td >${elem.numSerie} </td>
+											<td >${elem.familia} </td>
+											<td >${elem.docSap} </td>
+											<td >$ ${ transformarTextPrecio(elem.precio) } </td>
+											<td >${elem.cantidad} </td>
+											<td >$ ${ transformarTextPrecio(elem.costo) } </td>
+											<td >${elem.unidad} </td>
+											<td >${elem.comentariosSap} </td>
+
+										</tr>
+									`)
+								})												
+								$scope.inicializarTableMaterialesOt()
+								swal.close()
+							}else{
+								$scope.inicializarTableMaterialesOt()
+								mostrarMensajeInformativo( "No se encontraron datos de materiales" )
+								swal.close()
+							}					
+						}else{
+							$scope.inicializarTableMaterialesOt()
+							mostrarMensajeInformativo( "No se encontraron datos de materiales" )
+							swal.close()					
+						}					
 					}else{
-						mostrarMensajeInformativo(response.data.result.resultDescripcion )
+						$scope.inicializarTableMaterialesOt()
+						mostrarMensajeInformativo(response.data.result.description )
 						swal.close()
 					}
 					isConsultaMateriales=true
 				}else{
+					$scope.inicializarTableMaterialesOt()
 					mostrarMensajeInformativo('Ha ocurrido un error en la consulta de los datos');
 					swal.close()
 				}
@@ -818,7 +839,13 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		}
 	}
 
-
+	function transformarTextPrecio(num){
+		if( ( num && num != '' && num != '0' ) ){
+			return ( Math.round( parseFloat( num ) * 100) / 100 ).toFixed(2);
+		} else{
+			return '0.00'
+		}
+	}
 	$scope.inicializarTableMaterialesOt=function(){           
         tableMaterialesDespacho=$('#table-materiales-ot').DataTable({
             "processing": false,
@@ -830,7 +857,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			"searching": true,
 			"ordering": false,
 			"pageLength": 10,
-			"columns": [null, null, null, null, null, null, null, null,null,null,null],
+			"columns": [null, null, null, null, null, null, null, null,null,null,null,null,null],
             "language":idioma_espanol_not_font
         });        
     }
