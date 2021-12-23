@@ -415,8 +415,8 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
            console.log("data materiales ",response.data)           
            if( response.data.respuesta){
                 if (response.data.result) {                    
-                    params.centro=(response.data.result.almacen='NOCONF');
-                    params.almacen=(response.data.result.centro='NOCONF');
+                    params.centro=response.data.result.almacen;
+                    params.almacen=response.data.result.centro;
                     tecnicoTemp.centro=params.centro
                     tecnicoTemp.almacen=params.almacen
                     $scope.tecnicoConsultaMateriales=tecnicoTemp
