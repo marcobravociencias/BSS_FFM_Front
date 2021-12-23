@@ -460,4 +460,9 @@ public class ImplConsultaOTService implements ConsultaOTService {
         logger.info("### RESULT consultaDispositivos(): " + gson.toJson(response));
         return response;
     }
+
+    @Override
+    public ServiceResponseResult consultaRecoleccionConsultaOt(String params) {
+        return null;
+    }
 }

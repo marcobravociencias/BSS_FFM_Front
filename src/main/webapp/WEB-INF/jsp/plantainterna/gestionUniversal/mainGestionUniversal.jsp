@@ -66,11 +66,13 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="confiGeografia-tab" data-toggle="tab" href="#confiGeografia"
-                                role="tab" aria-controls="confiGeografia" aria-selected="false">Configuraci&oacute;n Geograf&iacute;a</a>
+                                role="tab" aria-controls="confiGeografia" aria-selected="false">Configuraci&oacute;n
+                                Geograf&iacute;a</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="cambiaContrasena-tab" data-toggle="tab" href="#cambiaContrasena"
-                                role="tab" aria-controls="cambiaContrasena" aria-selected="false">Cambia contrase&ntilde;a</a>
+                                role="tab" aria-controls="cambiaContrasena" aria-selected="false">Cambia
+                                contrase&ntilde;a</a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -94,9 +96,10 @@
                 </div>
             </div>
         </div>
-        <jsp:include page="./modals/fotoTecnico.jsp"></jsp:include>
-        <jsp:include page="./modals/geografia-filter.jsp"></jsp:include>
-        <jsp:include page="./modals/pagosLiberarTecnicos.jsp"></jsp:include>
+        <jsp:include page="./modals/modalFotoTecnico.jsp"></jsp:include>
+        <jsp:include page="./modals/modalGeografia-filter.jsp"></jsp:include>
+        <jsp:include page="./modals/modalPagosLiberarTecnicos.jsp"></jsp:include>
+        <jsp:include page="./modals/modalRestauraContrasena.jsp"></jsp:include>
     </body>
     <!-- Scripts libraries -->
     <script src="${pageContext.request.contextPath}/resources/libraries/angularjs/js/angular.min.js"></script>

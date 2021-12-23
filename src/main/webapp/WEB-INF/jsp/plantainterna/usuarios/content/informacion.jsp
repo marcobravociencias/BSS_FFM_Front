@@ -34,13 +34,13 @@
     <div class="col-md-4">
     	<label class="span-consulta"><i class="fas fa-lock"></i> Password*</label>
         <div class="">
-        	<input type="password" class="form-control inputFormulario" ng-model="informacionRegistro.contrasena" id="form-pasword" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. ********">
+        	<input type="password" autocomplete="new-password" class="form-control inputFormulario" ng-model="informacionRegistro.contrasena" id="form-pasword" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. ********">
         </div>
     </div>
     <div class="col-md-4">
 		<label class="span-consulta"><i class="fas fa-lock"></i> Confirmar password*</label>
         <div class="">
-        	<input type="password" class="form-control inputFormulario" ng-model="informacionRegistro.confirContrasena" id="form-confir-password" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. ********">
+        	<input type="password" autocomplete="new-password" class="form-control inputFormulario" ng-model="informacionRegistro.confirContrasena" id="form-confir-password" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. ********">
         </div>
     </div>
 </div>

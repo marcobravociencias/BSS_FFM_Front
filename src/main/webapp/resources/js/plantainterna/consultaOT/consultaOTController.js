@@ -20,6 +20,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	let is_consulta_ip = false;
 	let is_consulta_informacion_Red = false;
 	let is_consulta_actividad_tecnico = false;
+	let isConsultaRecoleccionOt = false;
 	let datatable_Equipos;
 	let datatable_Dispositivos;
 	let dataTable_IP;
@@ -39,6 +40,29 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	$scope.listadoConsultaOtsDisponibles = [];
 	$scope.listEvidenciaImagenes = {};
 	$scope.listImagenesTipo = [];
+	$scope.tecnicoConsultaMateriales = {
+		almacen: "",
+		apellidoMaterno: "Calder",
+		apellidoPaterno: "Rodrigu",
+		cantidadOts: 0,
+		centro: "",
+		color: "#2424257d",
+		descipcionEstatusTecnico: "Fuera De Servicio",
+		descripcionTipoUsuario: "Tecnico",
+		id: 79647,
+		idEstatusTecnico: 5,
+		idTecnico: 79647,
+		idTipoUsuario: 7,
+		latitud: 1,
+		listadoOts: [],
+		longitud: -1,
+		nombre: "Antonio",
+		nombreCompleto: "Antonio Rodrigu Calder",
+		numContacto: "8888888888",
+		numeroEmpleado: "6506734",
+		urlFotoPerfil: "https://firebasestorage.googleapis.com/v0/b/totalplay-ffm-core-dev.appspot.com/o/ANTONIO RODRIGU CALDER?alt=media&token=uuidv4()",
+		usuarioFFM: "6506734",
+	}
 
 	let dispositivoOtTable = $('#table_dispositovos_ot').DataTable({
 		"paging": true,
@@ -748,53 +772,79 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	}
 
 	$scope.consultaMaterialesOT = function () {
-		
 		if(!isConsultaMateriales){
 			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 			swal.showLoading();
+			$scope.tecnicoConsultaMateriales={}
 
 			if ( tableMaterialesDespacho ) 
-				tableMaterialesDespacho .destroy();			
-
-			consultaOTService.consultaMaterialOt(JSON.stringify( {idOrden:$scope.datoOt} )).then(function success(response) {
+				tableMaterialesDespacho .destroy();				
+				consultaOTService.consultaMaterialOt(JSON.stringify( {idOrden:$scope.datoOt} )).then(function success(response) {
 				console.log(response);
 				$("#table-materiales-ot tbody").empty()
 				if (response.data.respuesta) {
 					if (response.data.result) {
-						let tempArrayResult=response.data.result.materiales
-						angular.forEach(tempArrayResult,function(elem,index){
-							$("#table-materiales-ot tbody").append(`
-								<tr>
-									<td >${elem.nombreUsuario} </td>
-									<td >${elem.numeroEmpleado} </td>
-									<td >${elem.centro} </td>
-									<td >${elem.almacen} </td>
-									<td >${elem.sku} </td>
-									<td >${elem.descripcionSku} </td>
-									<td >${elem.cantidad} </td>
-									<td >${elem.unidadMedida} </td>
-									<td >${elem.lote} </td>
-									<td >${elem.hora} </td>
-									<td >${elem.fechaRegistro} </td>
-								</tr>
-							`)
-						})
-						$scope.inicializarTableMaterialesOt()
-						swal.close()
+						if(response.data.result.detalleGeneral != undefined ){
+							if( response.data.result.detalleGeneral.detalleMateriales ){
+								$scope.tecnicoConsultaMateriales = response.data.result.detalleGeneral		
+								$scope.tecnicoConsultaMateriales.nombreCommpleto=$scope.tecnicoConsultaMateriales.nombre +' '+ $scope.tecnicoConsultaMateriales.apellidoPaterno +' '+$scope.tecnicoConsultaMateriales.apellidoMaterno
+								
+
+								let tempArrayResult=response.data.result.detalleGeneral.detalleMateriales
+								angular.forEach(tempArrayResult,function(elem,index){
+									$("#table-materiales-ot tbody").append(`
+										<tr>
+											<td >${elem.sku} </td>
+											<td >${elem.descripcion} </td>
+											<td >${elem.tipo} </td>
+											<td >${elem.grupo} </td>
+											<td >${elem.lote} </td>
+											<td >${elem.numSerie} </td>
+											<td >${elem.familia} </td>
+											<td >${elem.docSap} </td>
+											<td >$ ${ transformarTextPrecio(elem.precio) } </td>
+											<td >${elem.cantidad} </td>
+											<td >$ ${ transformarTextPrecio(elem.costo) } </td>
+											<td >${elem.unidad} </td>
+											<td >${elem.comentariosSap} </td>
+
+										</tr>
+									`)
+								})												
+								$scope.inicializarTableMaterialesOt()
+								swal.close()
+							}else{
+								$scope.inicializarTableMaterialesOt()
+								mostrarMensajeInformativo( "No se encontraron datos de materiales" )
+								swal.close()
+							}					
+						}else{
+							$scope.inicializarTableMaterialesOt()
+							mostrarMensajeInformativo( "No se encontraron datos de materiales" )
+							swal.close()					
+						}					
 					}else{
-						mostrarMensajeInformativo(response.data.result.resultDescripcion )
+						$scope.inicializarTableMaterialesOt()
+						mostrarMensajeInformativo(response.data.result.description )
 						swal.close()
 					}
 					isConsultaMateriales=true
 				}else{
-					mostrarMensajeInformativo('Ha ocurrido un error en la consulta de los datos');
+					$scope.inicializarTableMaterialesOt()
+					mostrarMensajeErrorAlert('Ha ocurrido un error en la consulta de los datos');
 					swal.close()
 				}
 			}).catch(err => handleError(err));
 		}
 	}
 
-
+	function transformarTextPrecio(num){
+		if( ( num && num != '' && num != '0' ) ){
+			return ( Math.round( parseFloat( num ) * 100) / 100 ).toFixed(2);
+		} else{
+			return '0.00'
+		}
+	}
 	$scope.inicializarTableMaterialesOt=function(){           
         tableMaterialesDespacho=$('#table-materiales-ot').DataTable({
             "processing": false,
@@ -806,7 +856,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			"searching": true,
 			"ordering": false,
 			"pageLength": 10,
-			"columns": [null, null, null, null, null, null, null, null,null,null,null],
+			"columns": [null, null, null, null, null, null, null, null,null,null,null,null,null],
             "language":idioma_espanol_not_font
         });        
     }
@@ -1399,6 +1449,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		isConsultaDetallePago = false
 		isConsultaDispositivo = false
 		isConsultaMateriales=false
+		isConsultaRecoleccionOt = false;
 		document.querySelector('#informacion-ot').click()
 
 	})
@@ -1947,6 +1998,15 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	//MÉTODO PARA BUSCAR GEOGRAFÍAS DE ACUERDO AL TEXTO INGRESADO EN EL INPUT DE BÚSQUEDA - CONSULTA GENERAL OT
 	$scope.busquedaGeografiaConsultaOt = function() {
 		$("#jstree-proton-3").jstree("search", $('#searchGeografia').val());
+	}
+
+	$scope.consultarRecoleccionOt = function(){
+		if (!isConsultaRecoleccionOt) {
+			consultaOTService.consultarRecoleccionOt(JSON.stringify( {idOrden:$scope.datoOt} )).then(function success(response) {
+				console.log(response);
+				isConsultaRecoleccionOt = true
+			}).catch(err => handleError(err));
+		}
 	}
 	
 }])

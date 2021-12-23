@@ -58,8 +58,8 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 				moduloAccionesUsuario: 'moduloUsuarios'
 	    };
 
-    	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
-		swal.showLoading();
+//    	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
+//		swal.showLoading();
     	$q.all([
     		usuarioPIService.consultarConfiguracionDespachoDespacho(paramsConfiguracionDespacho),
     		usuarioPIService.consultaCompanias(),
@@ -258,7 +258,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
             }else{
             	toastr.error('Error interno en el servidor.');
             }
-        	swal.close();
+        	//swal.close();
         	setTimeout(function () {
         		$scope.consultaUsuariosPorGeoCompPuestos();
         		$scope.companiaSeleccion();
@@ -1348,7 +1348,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	$scope.consultarDespachos = function() {
 		$scope.listaDespachos = [];
 		if($scope.listaIdsGeografiaCiudadNatalRegistro.length > 0){
-			let params = {idsGeografia:$scope.listaIdsGeografiaCiudadNatalRegistro, idTipoUsuario:$scope.idPuestoDespacho.id};
+			let params = {idsGeografia:$scope.listaIdsGeografiaCiudadNatalRegistro, idTipoUsuario:[$scope.idPuestoDespacho.id]};
 	    	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
 			swal.showLoading();
 	    	$q.all([
@@ -1356,9 +1356,9 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	        ]).then(function(results) {
 	        	if (results[0].data !== undefined) {
 	            	if(results[0].data.respuesta){
-	            		if(results[0].data.result.result.usuarios !== null){
-		            		if(results[0].data.result.result.usuarios.length > 0){
-		            			$scope.listaDespachos = results[0].data.result.result.usuarios;
+	            		if(results[0].data.result.usuarios !== null){
+		            		if(results[0].data.result.usuarios.length > 0){
+		            			$scope.listaDespachos = results[0].data.result.usuarios;
 		            			$("#checkTotdosDespachoRegistro").prop("checked",false);
 		            	    	angular.forEach($scope.listaDespachos,function(despacho,index){
 		            	    		despacho.checkedOpcion = false;
@@ -1383,7 +1383,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	//MÉTODO PARA CONSULTAR LOS TÉCNICOS A ASIGNAR AL USUARIO (QUE NO SEA TÉCNICO) QUE SE REGISTRARÁ - PESTAÑA TÉCNICOS REGISTRO USUARIO
 	$scope.consultarTecnicos = function() {
 		$scope.listaTecnicos = [];
-		let params = {idsGeografia:$scope.listaIdsGeografiaCiudadNatalRegistro, idTipoUsuario:$scope.idPuestoTecnico.id};
+		let params = {idsGeografia:$scope.listaIdsGeografiaCiudadNatalRegistro, idTipoUsuario:[$scope.idPuestoTecnico.id]};
     	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
 		swal.showLoading();
     	$q.all([
@@ -1391,9 +1391,9 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
         ]).then(function(results) {
         	if (results[0].data !== undefined) {
             	if(results[0].data.respuesta){
-            		if(results[0].data.result.result.usuarios !== null){
-	            		if(results[0].data.result.result.usuarios.length > 0){
-	            			$scope.listaTecnicos = results[0].data.result.result.usuarios;
+            		if(results[0].data.result.usuarios !== null){
+	            		if(results[0].data.result.usuarios.length > 0){
+	            			$scope.listaTecnicos = results[0].data.result.usuarios;
 	            			$("#checkTotdosTecnicosRegistro").prop("checked",false);
 	            	    	angular.forEach($scope.listaTecnicos,function(tecnico,index){
 	            	    		tecnico.checkedOpcion = false;

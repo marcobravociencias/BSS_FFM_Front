@@ -66,7 +66,7 @@
 				<div class="tab-content" id="myTabContent">
 					<div id="vistaindividual" class="row content-gestion-operarios tab-pane fade show active" role="tabpanel" aria-labelledby="vistaindividual-tab">						
 						<div class="row">
-							<div class="col-md-3">
+							<div class="col-md-4">
 								<div class="input-group input-group-sm content-seach-group">
 									<input id="idBuscadorGeografia" type="text" class="form-control form-control-sm buscar-input-operario" placeholder="Buscar geograf&iacute;a" ng-keyup="busquedaGeografiaIndividual()"> 
 									<span class="search-icon-operario-busq fa fa-search"></span>
@@ -108,26 +108,24 @@
 									</div>
 								</div>
 							</div>
-							<div id="divSkills" class="col-md-5">
+							<div id="divSkills" class="col-md-4">
 								<div class="input-group input-group-sm content-seach-group">
-									<input id="buscadorSkillConsultaVistaIndividual" type="text" class="form-control form-control-sm buscar-input-operario" ng-model="buscarSkill" placeholder="Buscar skill"> <span class="search-icon-operario-busq fa fa-search"></span>
+									<input id="buscadorSkillConsultaVistaIndividual" type="text" class="form-control form-control-sm buscar-input-operario" placeholder="Buscar skill" ng-keyup="busquedaSkillsIndividual()"> <span class="search-icon-operario-busq fa fa-search"></span>
 								</div>
 				
 								<div id="divContenedorSkills" style="display: none">
-									<div style=" text-align: right;">
-										<a class="multiseleccion-interve" ng-click="mostrarContenedoresMultiseleccion()" href="">Multiselecci&oacute;n</a>
-									</div>	
+									<div class="row">
+										<div class="col-md-7" style="padding-right: 2em;">
+										</div>
+										<div class="col-md-5">
+											<div style=" text-align: right;">
+												<a class="multiseleccion-interve" ng-click="mostrarContenedoresMultiseleccion()" href="">Multiselecci&oacute;n</a>
+											</div>
+										</div>
+									</div>
 									
 									<div class="intervenciones-container scrollGeneral">
-										<div ng-repeat="intervencion in listadoIntervenciones | orderBy:'nombre' | filter:buscarSkill track by $index" class="row ">
-											<div class="col-9 intervencion-col">
-												<h5 class="text-intervencion-title" ng-bind="intervencion.nombre"></h5>
-											</div>
-											<div class="col-3 intervencion-col">
-												<div class="form-check-sm form-check form-switch">
-													<input class="form-check-input form-check-input-sm" type="checkbox" id="flexSwitchCheckDefault"	value="{{intervencion.id}}" ng-model="intervencion.check" ng-true-value="1" ng-false-value="0" ng-click="sumarContador(intervencion.check)" />
-												</div>
-											</div>
+										<div id="arbolSkillsVistaIndividual" class="jstree-proton-3 proton-demo" ng-click="contadorSkillsVistaIndividual()">
 										</div>
 									</div>
 								</div>
@@ -136,7 +134,7 @@
 								</div>
 								<div id="divBotonGuardarSkills" style="display: none;">
 									<div style="margin: 10px; text-align: right;">
-										<a class="seleccion-skills" ng-click="abrirModalSkillsSeleccionadas()" href="">Skills seleccionadas: {{contadorSkillsSeleccionadas}}</a>
+										<a id="txtContadorSkillsSeleccionadas" class="seleccion-skills" ng-click="abrirModalSkillsSeleccionadas()" href="">Skills seleccionadas: {{contadorSkillsSeleccionadas}}</a>
 									</div>
 									<div style="text-align: right;">
 										<input type="button" class="btn btn-primary" ng-click="guardarAsignacionSkillsIndividual()" value="GUARDAR">
@@ -237,7 +235,7 @@
                     <div class="modal-body">
                         <div class="container">
                             <div class="row">
-                                <div class="col-md-5">
+                                <div class="col-md-6" style="padding-right: 2em;">
                                     <div class="input-group input-group-sm content-seach-group  ">
                                         <input id="buscadorTecnicoMultiseleccion" type="text" class="form-control form-control-sm buscar-input-operario" ng-model="buscarTecnico" placeholder="Buscar T&eacute;cnico"> <span class="search-icon-operario-busq fa fa-search" id="buscar-operario"></span>
                                     </div>
@@ -252,16 +250,16 @@
                                                 </div>
                                             </div>
                                             <div ng-repeat="tecnico in tecnicosMostradas | filter:buscarTecnico track by $index" class="user-section">
-                                                <div id="{{tecnico.idUsuario}}" class="valign-wrapper tecnicosDiv">
-                                                    <div class="col-2 media-image online pr-0">
+                                                <div id="{{tecnico.idUsuario}}" class="valign-wrapper tecnicosDiv" style="height: 50px;">
+                                                    <div class="col-md-2 media-image online pr-0">
                                                         <img src="{{tecnico.urlFotoPerfil !=undefined && tecnico.urlFotoPerfil ? tecnico.urlFotoPerfil :'./resources/img/plantainterna/despacho/tecnicootasignada.png'}}" class="circle z-depth-2 responsive-img">
                                                     </div>
-                                                    <div id="{{tecnico.idUsuario}}" class="col-10 pl-0" ng-click="seleccionarTecnicoMultiseleccion(tecnico.idUsuario)">
+                                                    <div id="{{tecnico.idUsuario}}" class="col-md-10 pl-0" ng-click="seleccionarTecnicoMultiseleccion(tecnico.idUsuario)">
                                                         <label   class="text-tecnico-nombre-modal">{{tecnico.nombre}}</label>
 														<label   class="text-adds-teccnico-modal">{{tecnico.no_empleado ? tecnico.no_empleado : 'Sin dato'}} - {{tecnico.apellidoPaterno}} {{tecnico.apellidoMaterno}}</label>
                                                     </div>
                                                     <div class="content-checkbox-operario">
-                                                        <input class="form-check-input input-operario-checkbox checkedTecnicos" type="checkbox"	id="checkTecnicoMultiseleccion{{tecnico.idUsuario}}" value="{{tecnico.idUsuario}}"/>
+                                                        <input class="form-check-input input-operario-checkbox checkedTecnicos" type="checkbox"	id="checkTecnicoMultiseleccion{{tecnico.idUsuario}}" value="{{tecnico.idUsuario}}" checked="checked"/>
                                                     </div>
                                                 </div>
                                             </div>	
@@ -271,30 +269,19 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-1"></div>
-                                <div class="col-md-6">
+                                <div class="col-md-6" style="padding-left: 2em;">
                                     <div class="input-group input-group-sm content-seach-group">
-                                        <input type="text" class="form-control form-control-sm buscar-input-operario" ng-model="buscarSkill" placeholder="Buscar skill"> 
+                                        <input id="buscadorSkillsMultiseleccion" type="text" class="form-control form-control-sm buscar-input-operario" placeholder="Buscar skill" ng-keyup="busquedaSkillsMultiseleccion()"> 
                                         <span class="search-icon-operario-busq fa fa-search"></span>
                                     </div>
                                     <div id="divContenedorSkills2" class="scrollGeneral">
-                                        <div class="intervenciones-container">
-                                            <div ng-repeat="intervencion in listadoIntervencionesMultiseleccion | orderBy:'nombre' | filter:buscarSkill track by $index" class="row">
-                                                <div class="col-10 intervencion-col">
-                                                    <h5 class="text-intervencion-title" ng-bind="intervencion.nombre"></h5>
-                                                </div>
-                                                <div class="col-2 intervencion-col">
-                                                    <div class="form-check-sm form-check form-switch">
-                                                        <input class="form-check-input form-check-input-sm" type="checkbox" id="flexSwitchCheckDefault" ng-model="intervencion.check" ng-true-value="1" ng-false-value="0" value="{{intervencion.id}}" ng-click="contadorSkillsMultiseleccion(intervencion.check)" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+										<div id="arbolSkillsMultiseleccion" class="jstree-proton-3 proton-demo" ng-click="contadorSkillsMultiseleccion()">
+										</div>
                                     </div>
 
                                     <div id="divBotonGuardarSkills">
                                         <div style="margin: 10px; text-align: right;">
-                                            <span>Skills seleccionadas: {{contadorSkillsSeleccionadasMultiseleccion}}</span>
+                                            <span id="txtContadorSkillsMultiseleccion">Skills seleccionadas: {{contadorSkillsSeleccionadasMultiseleccion}}</span>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface" data-mdb-dismiss="modal" ng-click="regresarContenedorIndividual()">CERRAR</button>

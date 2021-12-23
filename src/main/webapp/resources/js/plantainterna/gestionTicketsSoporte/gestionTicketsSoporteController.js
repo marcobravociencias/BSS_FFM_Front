@@ -8,14 +8,17 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     $scope.catalogoFallasTicketSoporte = [];
     $scope.listMotivoEscala = {};
     $scope.catalogoTickets = [];
-
+    $scope.listadoTecnicosTicket = [];
     $scope.ticketsSoporte = [];
     $scope.detalleCaptura = {};
     $scope.catalogoEstatusUsuarios = infoUsuarioEstatusHoras.result;
     $scope.contadores = {};
-    $scope.isBusqueda = true;
+    $scope.isBusqueda = 2;
     $scope.ticketSoporte = {};
     $scope.ticketSoporteR = {};
+    $scope.tecnicoSeleccionado = '';
+
+    app.noticiasGestionTicketSoporte($scope, gestionTicketSoporteService);
 
     $('#searchTextTicket').on('keyup', function () {
         $(".user-filter span").removeClass('selected-filter');
@@ -118,31 +121,74 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         $scope.listMotivoEscala.catalogoNivel2 = nivel2;
     }
 
-    $scope.consultarTecnicosTickets = function () {
-        swal({ text: 'Cargando datos ...', allowOutsideClick: false });
-        swal.showLoading();
-        var paramsRequest = new FormData();
-        paramsRequest.append("paramsInfo.busquedaCampo", $scope.tecnicoBusqueda);
-        $scope.listadoTecnicosTicket = []
-        gestionTicketSoporteService.consultarTecnicosTickets(paramsRequest).then(function success(response) {
-            if (response.data !== undefined) {
-                if (response.data.success) {
-                    if (response.data.result !== undefined && response.data.result.length > 0) {
-                        $scope.listadoTecnicosTicket = response.data.result;
-                        swal.close()
-                    } else {
-                        mostrarMensajeWarning("No se encontraron tecnicos con el num. de empleado")
-                        swal.close()
-                    }
-                } else {
-                    mostrarMensajeErrorAlertAjax("Error al consultar tecnicos")
-                    swal.close()
-                }
-            } else {
-                mostrarMensajeErrorAlertAjax("Error en el servidor")
-                swal.close()
+    openModalBusquedaTecnicosTicket = function () {
+        $scope.listadoTecnicosTicket = [];
+        $("#searchTecnicoTicket").val('');
+        $scope.listadoTecnicosTicket = [];
+        $scope.tecnicoBusqueda = '';
+        $scope.$apply();
+        $("#modalBusquedaTecnicosTicket").modal('show');
+    }
+
+    $scope.buscarTecnicoTicket = function () {
+        let mensajeError = '';
+        let isValid = true;
+        $scope.listadoTecnicosTicket = [];
+        $scope.tecnicoBusqueda = '';
+
+        if ($("#searchTecnicoTicket").val() == undefined || $("#searchTecnicoTicket").val() == '') {
+            mensajeError += "<li>Debe ingresar un n&uacute;mero de Empleado</li>";
+            isValid = false;
+        }
+        if (isValid) {
+            swal({ text: 'Cargando datos ...', allowOutsideClick: false });
+            swal.showLoading();
+            $scope.tecnicoBusqueda = $("#searchTecnicoTicket").val();
+            let params = {
+                tecnico: $scope.tecnicoBusqueda
             }
-        });
+            console.log(params)
+            $scope.listadoTecnicosTicket = arrayBusquedaTecnicos.data.result;
+            console.log($scope.listadoTecnicosTicket);
+            swal.close();
+            // gestionTicketSoporteService.consultarTecnicosTickets(paramsRequest).then(function success(response) {
+            //     if (response.data !== undefined) {
+            //         if (response.data.success) {
+            //             if (response.data.result !== undefined && response.data.result.length > 0) {
+            //                 $scope.listadoTecnicosTicket = response.data.result;
+            //                 swal.close()
+            //             } else {
+            //                 mostrarMensajeWarning("No se encontraron tecnicos con el num. de empleado")
+            //                 swal.close()
+            //             }
+            //         } else {
+            //             mostrarMensajeErrorAlertAjax("Error al consultar tecnicos")
+            //             swal.close()
+            //         }
+            //     } else {
+            //         mostrarMensajeErrorAlertAjax("Error en el servidor")
+            //         swal.close()
+            //     }
+            // });
+        } else {
+            mostrarMensajeWarningValidacion(mensajeError);
+        }
+    }
+
+    $('#searchTecnicoTicket').keypress(function (e) {
+        if (e.which == 13) {
+          $scope.buscarTecnicoTicket();
+          $scope.$apply();
+          return false;
+        }
+      });
+
+    $scope.seleccionarTecnicoTicket = function (tecnico) {
+        $scope.tecnicoSeleccionado = angular.copy(tecnico);
+        $scope.ticketSoporteR.idTecnico = $scope.tecnicoSeleccionado.id;
+        $scope.ticketSoporteR.telefonoTecnico = $scope.tecnicoSeleccionado.telefono;
+        $scope.ticketSoporteR.tecnico = $scope.tecnicoSeleccionado.nombre;
+        console.log($scope.tecnicoSeleccionado);
     }
 
     $scope.validarFecha = function (idFechaInicio, idFechaFin) {
@@ -178,8 +224,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         $("#subcategoria").removeClass("invalid-inputTicket");
     });
 
-    $scope.registrarTicketSoporte = function (objTicket) {
-        $scope.ticketSoporteR = objTicket;
+    $scope.registrarTicketSoporte = function () {
         console.log($scope.ticketSoporteR);
         let mensajeError = '';
         let isValid = true;
@@ -190,6 +235,14 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             isValid = false;
         } else {
             $("#cuentaTicket").removeClass("invalid-inputTicket");
+        }
+
+        if ($("#tecnicoTicket").val() == undefined || $("#tecnicoTicket").val() == '') {
+            mensajeError += "<li>Debe seleccionar un T&eacute;cnico</li>";
+            $("#tecnicoTicket").addClass("invalid-inputTicket");
+            isValid = false;
+        } else {
+            $("#tecnicoTicket").removeClass("invalid-inputTicket");
         }
 
         if ($("#noSerieTicket").val() == undefined || $("#noSerieTicket").val() == '') {
@@ -208,29 +261,62 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             $("#descripcionProblemaTicket").removeClass("invalid-inputTicket");
         }
 
-        if ($("#falla").val() == undefined || $("#falla").val() == '') {
-            $("#falla").addClass("invalid-inputTicket");
+        if ($("#fallaTicket").val() == undefined || $("#fallaTicket").val() == '') {
+            $("#fallaTicket").addClass("invalid-inputTicket");
             mensajeError += "<li>Debe seleccionar una Falla</li>";
             isValid = false;
         } else {
-            $("#falla").removeClass("invalid-inputTicket");
+            $("#fallaTicket").removeClass("invalid-inputTicket");
         }
 
-        if ($("#categoria").val() == undefined || $("#categoria").val() == '') {
-            $("#categoria").addClass("invalid-inputTicket");
+        if ($("#categoriaTicket").val() == undefined || $("#categoriaTicket").val() == '') {
+            $("#categoriaTicket").addClass("invalid-inputTicket");
             mensajeError += "<li>Debe seleccionar una Categor&iacute;a</li>";
             isValid = false;
         } else {
-            $("#categoria").removeClass("invalid-inputTicket");
+            $("#categoriaTicket").removeClass("invalid-inputTicket");
         }
 
-        if ($("#subcategoria").val() == undefined || $("#subcategoria").val() == '') {
-            $("#subcategoria").addClass("invalid-inputTicket");
+        if ($("#subcategoriaTicket").val() == undefined || $("#subcategoriaTicket").val() == '') {
+            $("#subcategoriaTicket").addClass("invalid-inputTicket");
             mensajeError += "<li>Debe seleccionar una Subcategor&iacute;a</li>";
             isValid = false;
         } else {
-            $("#subcategoria").removeClass("invalid-inputTicket");
+            $("#subcategoriaTicket").removeClass("invalid-inputTicket");
         }
+
+        if ($("#tipoOrdenTicket").val() == undefined || $("#tipoOrdenTicket").val() == '') {
+            $("#tipoOrdenTicket").addClass("invalid-inputTicket");
+            mensajeError += "<li>Debe seleccionar un Tipo de Orden</li>";
+            isValid = false;
+        } else {
+            $("#tipoOrdenTicket").removeClass("invalid-inputTicket");
+        }
+
+        if ($("#tipoNegocioTicket").val() == undefined || $("#tipoNegocioTicket").val() == '') {
+            $("#tipoNegocioTicket").addClass("invalid-inputTicket");
+            mensajeError += "<li>Debe seleccionar un Tipo de Negocio</li>";
+            isValid = false;
+        } else {
+            $("#tipoNegocioTicket").removeClass("invalid-inputTicket");
+        }
+
+        if ($("#regionTicket").val() == undefined || $("#regionTicket").val() == '') {
+            $("#regionTicket").addClass("invalid-inputTicket");
+            mensajeError += "<li>Debe seleccionar una Regi&oacute;n</li>";
+            isValid = false;
+        } else {
+            $("#regionTicket").removeClass("invalid-inputTicket");
+        }
+
+        if ($("#tecnologiaTicket").val() == undefined || $("#tecnologiaTicket").val() == '') {
+            $("#tecnologiaTicket").addClass("invalid-inputTicket");
+            mensajeError += "<li>Debe seleccionar una Tecnolog&iacute;a</li>";
+            isValid = false;
+        } else {
+            $("#tecnologiaTicket").removeClass("invalid-inputTicket");
+        }
+
         if (isValid) {
             swal({
                 title: "\u00BFEst\u00E1 seguro de registrar el Ticket?",
@@ -240,29 +326,36 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                 confirmButtonText: 'Si',
                 cancelButtonText: 'No'
             }).then(function (isConfirm) {
+                console.log(isConfirm)
                 if (isConfirm) {
-                    let params = {
-                        "idTecnico": 0,
-                        "telefonoTecnico": $scope.ticketSoporteR.telefonoTecnico,
-                        "noCuenta": $scope.ticketSoporteR.cuenta,
+                    console.log(isConfirm)
+                    swal({ text: 'Espera un momento...', allowOutsideClick: false });
+                    swal.showLoading();
+                    console.log($scope.ticketSoporteR);
+                    let paramsTicket = {
+                        "idTecnico": Number($scope.ticketSoporteR.idTecnico),
+                        "telefonoTecnico": Number($scope.ticketSoporteR.telefonoTecnico),
+                        "noCuenta": Number($scope.ticketSoporteR.cuenta),
                         "idFalla": Number($scope.ticketSoporteR.idFalla),
-                        "idCategoria": Number($scope.ticket.idCategoria),
-                        "idSubcategoria": Number($scope.ticket.idSubcategoria),
+                        "idCategoria": Number($scope.ticketSoporteR.idCategoria),
+                        "idSubcategoria": Number($scope.ticketSoporteR.idSubcategoria),
                         "comentarios": $scope.ticketSoporteR.descripcionProblema,
                         "noSerieOld": $scope.ticketSoporteR.noSerieOld,
                         "noSerieNew": $scope.ticketSoporteR.noSerieNew,
+                        // "idTipoOrden": Number($scope.ticketSoporteR.tipoOrden),
+                        // "idTipoNegocio": Number($scope.ticketSoporteR.tipoNegocio),
+                        // "idRegion": Number($scope.ticketSoporteR.region),
+                        // "idTecnologia": Number($scope.ticketSoporteR.tecnologia),
                         "idApplication": 2
                     }
-                    console.log(params);
-                    swal({ text: 'Espera un momento...', allowOutsideClick: false });
-                    swal.showLoading();
-                    gestionTicketSoporteService.creaTicketSoporte(params).then(function success(response) {
+                    console.log(paramsTicket);
+                    gestionTicketSoporteService.creaTicketSoporte(paramsTicket).then(function success(response) {
                         if (response.data !== undefined) {
                             if (response.data.respuesta) {
                                 if (response.data.result) {
                                     swal.close();
                                     $scope.consultarTicketsSoporte();
-                                    $scope.changeView();
+                                    $scope.changeView(2);
                                     $scope.cleanForm();
                                     toastr.success(response.data.resultDescripcion);
                                 } else {
@@ -328,20 +421,19 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                             $scope.ticketsSoporte = response.data.result.tickets;
                             console.log($scope.ticketsSoporte);
                             $.each($scope.ticketsSoporte, function (i, elemento) {
-                                console.log(elemento);
                                 let row = [];
                                 row[0] = elemento.idOrden !== undefined ? elemento.idOrden : 'Sin informaci&oacute;n';
-                                row[1] = elemento.ticket !== undefined ? elemento.ticket : 'Sin informaci&oacute;n';
+                                row[1] = elemento.ticket == null ? 'Sin informaci&oacute;n' : elemento.ticket !== undefined ? elemento.ticket : 'Sin informaci&oacute;n';
                                 row[2] = elemento.os !== undefined ? elemento.os : 'Sin informaci&oacute;n';
                                 row[3] = elemento.fechaCreacion !== undefined ? elemento.fechaCreacion : 'Sin informaci&oacute;n';
                                 row[4] = elemento.descripcionFalla !== undefined ? elemento.descripcionFalla : 'Sin informaci&oacute;n';
                                 row[5] = elemento.telefono !== undefined ? elemento.telefono : 'Sin informaci&oacute;n';
                                 row[6] = elemento.nombreEmpleadoReporta + " " + elemento.apellidoPaEmpleadoReporta + " " + elemento.apellidoMaEmpleadoReporta;
                                 row[7] = elemento.nombreEmpleadoIng + " " + elemento.apellidoPaEmpleadoIng + " " + elemento.apellidoMaEmpleadoIng;
-                                row[8] = elemento.fechaAsignacion !== undefined || elemento.fechaAsignacion == '' ? elemento.fechaAsignacion : 'Sin informaci&oacute;n';
+                                row[8] = elemento.fechaAsignacion == null ? 'Sin informaci&oacute;n' : elemento.fechaAsignacion !== undefined ? elemento.fechaAsignacion : 'Sin informaci&oacute;n';
                                 row[9] = elemento.descripcionEstatus !== undefined ? elemento.descripcionEstatus : 'Sin informaci&oacute;n';
-                                row[10] = elemento.tiempoAbierto !== undefined ? elemento.tiempoAbierto : 'Sin informaci&oacute;n';
-                                row[11] = '<a class="" id="detalleIncidencia' + elemento.ticket + '" onclick="consultaDetalle(' + "'" + elemento.id_conexion + "'" + ')" >' +
+                                row[10] = elemento.tiempoAtencion == null ? 'Sin informaci&oacute;n' : elemento.tiempoAtencion !== undefined ? elemento.tiempoAtencion : 'Sin informaci&oacute;n';
+                                row[11] = '<a class="" id="detalleIncidencia' + elemento.ticket + '" onclick="consultaDetalleTicketSoporte(' + "'" + elemento.id_conexion + "'" + ')" >' +
                                     '<i class="fa fa-bars" style="background-color: #58b3bf" title="Detalle"></i>' +
                                     '</a> &nbsp;' +
                                     '<a class="" id="detalleIncidencia' + elemento.ticket + '" onclick="asignaTicket(' + "'" + elemento.ticket + "'" + ')">' +
@@ -401,7 +493,6 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
 
     $scope.changeEstatus = function (idEstatus) {
         let status = $scope.catalogoEstatusUsuarios.catalogoEstatusUsuarios.find((e) => parseInt(e.id) == parseInt(idEstatus));
-
         swal({
             title: "Cambio de status",
             text: '\u00BFEsta seguro de cambiar el status a ' + status.descripcion.split("-")[0] + '?',
@@ -418,10 +509,6 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         }).catch(swal.noop);
     }
 
-    openModalBusquedaTecnicosTicket = function () {
-        $("#modalBusquedaTecnicosTicket").modal('show');
-    }
-
     consultaDetalleTicketSoporte = function () {
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
@@ -434,18 +521,15 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     asignaTicket = function () {
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
-
         $("#modalBusquedaTecnicosTicket").modal('show');
         swal.close();
     }
 
-    $scope.changeView = function () {
-        if ($scope.isBusqueda) {
-            $scope.isBusqueda = false;
-        } else {
-            $scope.isBusqueda = true;
+    $scope.changeView = function (option) {
+        $scope.isBusqueda = option
+        if (option === 3) {
+            $scope.consultarComentariosTicketSoporte()
         }
-
     }
 
     $scope.filter = function (type) {
@@ -460,6 +544,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
 
     $scope.cleanForm = function () {
         $scope.ticketSoporteR = {};
+        $scope.tecnicoSeleccionado = {};
         $("#cuentaTicket").val('');
         $("#telefonoTicket").val('');
         $("#noSerieTicket").val('');
@@ -475,5 +560,34 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         $("#region").prop('selectedIndex', 0);
         $("#tecnologia").prop('selectedIndex', 0);
         $("#descripcionProblemaTicket").val('');
+    }
+
+    $scope.limpiarFormularioTicket = function () {
+        swal({
+            title: "Cancelar registro de ticket",
+            text: '\u00BFEst\u00e1 seguro de limpiar el formulario?',
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#007bff',
+            confirmButtonText: 'Si',
+            cancelButtonText: 'No'
+        }).then(function (isConfirm) {
+            if (isConfirm) {
+                $scope.cleanForm();
+                $("#cuentaTicket").removeClass("invalid-inputTicket");
+                $("#tecnicoTicket").removeClass("invalid-inputTicket");
+                $("#noSerieTicket").removeClass("invalid-inputTicket");
+                $("#fallaTicket").removeClass("invalid-inputTicket");
+                $("#categoriaTicket").removeClass("invalid-inputTicket");
+                $("#subcategoriaTicket").removeClass("invalid-inputTicket");
+                $("#tipoOrdenTicket").removeClass("invalid-inputTicket");
+                $("#tipoNegocioTicket").removeClass("invalid-inputTicket");
+                $("#regionTicket").removeClass("invalid-inputTicket");
+                $("#tecnologiaTicket").removeClass("invalid-inputTicket");
+                $("#descripcionProblemaTicket").removeClass("invalid-inputTicket");
+                $scope.changeView(2);
+                $scope.consultarTicketsSoporte();
+            }
+        }).catch(swal.noop);
     }
 }]);

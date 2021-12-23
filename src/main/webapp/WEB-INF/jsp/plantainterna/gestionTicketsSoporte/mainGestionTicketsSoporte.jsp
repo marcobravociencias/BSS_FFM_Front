@@ -21,6 +21,12 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/datePicker/css/bootstrap-datepicker3_1.9.0.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>
 
+        <link href="${pageContext.request.contextPath}/resources/libraries/magnific_popup/magnific-popup.css"
+            rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css"
+            rel="stylesheet" />
+            <link href="${pageContext.request.contextPath}/resources/css/plantainterna/gestionTicketsSoporte/mainGestionTicketsSoporte.css" rel="stylesheet" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/plantainterna/gestionTicketsSoporte\noticiasGentionTicket.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/magnific_popup/magnific-popup.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css"/>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/plantainterna/gestionTicketsSoporte/mainGestionTicketsSoporte.css"/>
@@ -99,10 +105,11 @@
                     </div>
                 </div>
             </div>
-            <div class="container-fluid" id="container_ticket" ng-show="isBusqueda">
+            
+            <div class="container-fluid" id="container_ticket" ng-show="isBusqueda == 2">
                 <div class="row filter-content">
                     <div class="col-2 form-group" style="margin-bottom: 0; margin-top: .5em;">
-                            <i class="fas fa-plus-circle icon-back" ng-click="changeView()" title="Nuevo Ticket"></i>
+                            <i class="fas fa-plus-circle icon-back" ng-click="changeView(1)" title="Nuevo Ticket"></i>
                     </div>
                     <div class="row col-6 filter-tab" style="margin-top: 0.5em;">
                         <div class="col-3 user-info-content user-filter" style="margin-top: 0;">
@@ -118,10 +125,13 @@
                             <span ng-click="searchBy('Pendiente')" id="spanPendiente"><i class="fa fa-filter" id="filterPendiente"></i>Pendiente {{contadores.pendiente ? contadores.pendiente : '0'}}</span>
                         </div>
                     </div>
-                    <div class="col-2 offset-2  form-group" style="margin-bottom: 0; margin-top: .5em;">
-                        <input placeholder="Buscar" type="text" autocomplete="off" aria-controls="tableTicketSoporte"
+                    <div class="col-2 form-group" style="margin-bottom: 0; margin-top: .5em; margin-left: 1em;">
+                        <input placeholder="Buscar" type="text" autocomplete="off"
                             class="search-filtro form-control form-control-sm mt-0" id="searchTextTicket"><i
                             class="fa fa-search icon-search"></i>
+                    </div>
+                    <div class="col-2  form-group" style="margin-bottom: 0; margin-top: .5em;">
+                        <i class="fas fa-plus-circle icon-back" ng-click="changeView(3)" title="Noticias Ticket"></i>
                     </div>
                 </div>
                 <div class="content-fluid" style="margin-top: 0.7em;">
@@ -147,10 +157,14 @@
                      </table>
                 </div>
             </div>
-            <div class="container-fluid" id="container_ticket_form" ng-show="!isBusqueda">
+
+            <div class="container-fluid" id="container_ticket_form" ng-show="isBusqueda == 1">
                 <div class="row filter-content">
                     <div class="col-1" style="margin-top: .5em;">
-                        <i class="fas fa-arrow-circle-left icon-back" ng-click="changeView()" title="Regresar"></i>
+                        <i class="fas fa-arrow-circle-left icon-back" ng-click="changeView(2)" title="Regresar"></i>
+                    </div>
+                    <div class="col-7 offset-4" style="margin-top: .5em;">
+                        <h5 class="title-modulo" style="margin-left: 3%;">Registrar Ticket</h5>
                     </div>
                 </div>
                 <br>
@@ -158,29 +172,29 @@
                     <div class="form-row">
                         <div class="col-3 form-group">
                             <label for="cuentaTicket" class="span-form-tickets">Cuenta *</label>
-                            <input type="text" class="form-control form-control-sm inputTicket" aria-describedby="basic-addon3" id="cuentaTicket" ng-model="ticket.cuenta"/>
+                            <input type="text" class="form-control form-controlt form-control-sm inputTicket" aria-describedby="basic-addon3" id="cuentaTicket" ng-model="ticketSoporteR.cuenta"/>
                         </div>
                         <div class="col-3 form-group">
                             <label for="tecnicoTicket" class="span-form-tickets">T&eacute;cnico *</label>
-                            <input style="cursor: pointer;" readonly class="form-control form-control-sm" onclick="openModalBusquedaTecnicosTicket()" id="tecnicoTicket"/>
+                            <input style="cursor: pointer;" readonly class="form-control form-controlt form-control-sm" onclick="openModalBusquedaTecnicosTicket()" id="tecnicoTicket" ng-model="ticketSoporteR.tecnico"/>
                         </div>
                         <div class="col-3 form-group">
                             <label for="telefonoTicket" class="span-form-tickets">Tel&eacute;fono </label>
-                            <input type="text" class="form-control form-control-sm inputTicket" id="telefonoTicket" ng-model="ticket.telefonoTecnico"/>
+                            <input type="text" class="form-control form-controlt form-control-sm inputTicket" id="telefonoTicket" ng-model="ticketSoporteR.telefonoTecnico" maxlength="10"/>
                         </div>
                         <div class="col-3 form-group">
                             <label for="noSerieTicket" class="span-form-tickets">No. de serie * </label>
-                            <input type="text" class="form-control form-control-sm inputTicket" id="noSerieTicket" ng-model="ticket.noSerieOld"/>
+                            <input type="text" class="form-control form-controlt form-control-sm inputTicket" id="noSerieTicket" ng-model="ticketSoporteR.noSerieOld"/>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-3 form-group">
                             <label for="noSerieNuevoEquipo" class="span-form-tickets">No. de serie-Nuevo equipo </label>
-                            <input type="text" class="form-control form-control-sm" id="noSerieNuevoEquipo" ng-model="ticket.noSerieNew"/>
+                            <input type="text" class="form-control form-controlt form-control-sm" id="noSerieNuevoEquipo" ng-model="ticketSoporteR.noSerieNew"/>
                         </div>
                         <div class="col-3 form-group">
-                            <label for="fallaTicketR" class="span-form-tickets">Falla *</label>
-                            <select class="form-control form-control-sm custom-select inputTicket" name="fallaTicketR" id="falla" ng-change="loadCategoriaTicketSoporte()" ng-model="ticket.idFalla">
+                            <label for="fallaTicket" class="span-form-tickets">Falla *</label>
+                            <select class="form-control form-controlt form-control-sm custom-select inputTicket" name="fallaTicket" id="fallaTicket" ng-change="loadCategoriaTicketSoporte()" ng-model="ticketSoporteR.idFalla">
                                 <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
                                 <option value="{{fallaTicket.id}}" ng-repeat="fallaTicket in listFallasTicket">
                                     {{fallaTicket.descripcion}}
@@ -188,8 +202,8 @@
                             </select>
                         </div>
                         <div class="col-3 form-group">
-                            <label for="categoriaTicketR" class="span-form-tickets">Categor&iacute;a *</label>
-                            <select class="form-control form-control-sm custom-select inputTicket" id="categoria" name="categoriaTicketR" ng-change="loadSubcategoriaTicketSoporte()" ng-model="ticket.idCategoria">
+                            <label for="categoriaTicket" class="span-form-tickets">Categor&iacute;a *</label>
+                            <select class="form-control form-control-sm custom-select inputTicket" id="categoriaTicket" name="categoriaTicket" ng-change="loadSubcategoriaTicketSoporte()" ng-model="ticketSoporteR.idCategoria">
                                 <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
                                 <option value="{{categoriaTicket.id}}" ng-repeat="categoriaTicket in listCategoriasTicket">
                                     {{categoriaTicket.descripcion}}
@@ -197,8 +211,8 @@
                             </select>
                         </div>
                         <div class="col-3 form-group">
-                            <label for="subcategoriaTicketR" class="span-form-tickets">Subcategor&iacute;a *</label>
-                            <select class="form-control form-control-sm custom-select inputTicket" id="subcategoria" name="subcategoriaTicketR" ng-model="ticket.idSubcategoria">
+                            <label for="subcategoriaTicket" class="span-form-tickets">Subcategor&iacute;a *</label>
+                            <select class="form-control form-controlt form-control-sm custom-select inputTicket" id="subcategoriaTicket" name="subcategoriaTicket" ng-model="ticketSoporteR.idSubcategoria">
                                 <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
                                 <option value="{{subcategoriaTicket.id}}" ng-repeat="subcategoriaTicket in listSubcategoriasTicket">
                                     {{subcategoriaTicket.descripcion}}
@@ -208,8 +222,8 @@
                     </div>
                     <div class="form-row">
                         <div class="col-3 form-group">
-                            <label for="tipoOrdenTicketR" class="span-form-tickets">Tipo orden *</label>
-                            <select class="form-control form-control-sm custom-select" name="tipoOrdenTicketR" id="tipoOrden" ng-model="ticket.tipoOrden">
+                            <label for="tipoOrdenTicket" class="span-form-tickets">Tipo orden *</label>
+                            <select class="form-control form-controlt form-control-sm custom-select" name="tipoOrdenTicket" id="tipoOrdenTicket" ng-model="ticketSoporteR.tipoOrden">
                                 <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
                                 <option value="instalacion" selected>INSTALACI&Oacute;N</option>
                                 <option value="soporte" selected>SOPORTE</option>
@@ -217,24 +231,24 @@
                             </select>
                         </div>
                         <div class="col-3 form-group">
-                            <label for="tipoNegocioTicketR" class="span-form-tickets">Tipo de negocio *</label>
-                            <select class="form-control form-control-sm custom-select" name="tipoNegocioTicketR" id="tipoNegocio" ng-model="ticket.tipoNegocio">
+                            <label for="tipoNegocioTicket" class="span-form-tickets">Tipo de negocio *</label>
+                            <select class="form-control form-controlt form-control-sm custom-select" name="tipoNegocioTicket" id="tipoNegocioTicket" ng-model="ticketSoporteR.tipoNegocio">
                                 <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
                                 <option value="residencial" selected>RESIDENCIAL</option>
                                 <option value="empresarial" selected>EMPRESARIAL</option>
                             </select>
                         </div>
                         <div class="col-3 form-group">
-                            <label for="regionTicketR" class="span-form-tickets">Regi&oacute;n *</label>
-                            <select class="form-control form-control-sm custom-select" name="regionTicketR" id="region" ng-model="ticket.region">
+                            <label for="regionTicket" class="span-form-tickets">Regi&oacute;n *</label>
+                            <select class="form-control form-controlt form-control-sm custom-select" name="regionTicket" id="regionTicket" ng-model="ticketSoporteR.region">
                                 <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
                                 <option value="colombia" selected>COLOMBIA</option>
                                 <option value="mexico" selected>M&Eacute;XICO</option>
                             </select>
                         </div>
                         <div class="col-3 form-group">
-                            <label for="tecnologiaTicketR" class="span-form-tickets">Tecnolog&iacute;a *</label>
-                            <select class="form-control form-control-sm custom-select" name="tecnologiaTicketR" id="tecnologia" ng-model="ticket.tecnologia">
+                            <label for="tecnologiaTicket" class="span-form-tickets">Tecnolog&iacute;a *</label>
+                            <select class="form-control form-controlt form-control-sm custom-select" name="tecnologiaTicket" id="tecnologiaTicket" ng-model="ticketSoporteR.tecnologia">
                                 <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
                                 <option value="huawei" selected>HUAWEI</option>
                                 <option value="cte" selected>ZTE</option>
@@ -245,18 +259,22 @@
                     <div class="form-row">
                         <div class="col-12 form-group">
                             <label class="span-form-tickets" for="descripcionProblemaTicket">Descripci&oacute;n del Problema * </label>
-                            <textarea class="form-control inputTicket content_text" rows="3" id="descripcionProblemaTicket" ng-model="ticket.descripcionProblema"></textarea>
+                            <textarea class="form-control inputTicket content_text form-control-sm" rows="3" id="descripcionProblemaTicket" ng-model="ticketSoporteR.descripcionProblema"></textarea>
                         </div>
                     </div>
                     <div class="row">
                         <div style="text-align: right; margin: 1em 0 0 0;">
-                            <button type="button" class="btn btn-primary" style="background-color: #A39F9F;" ng-click="cleanForm()">CANCELAR</button>
+                            <button type="button" class="btn btn-primary" style="background-color: #A39F9F;" ng-click="limpiarFormularioTicket()">LIMPIAR</button>
                             <input type="button" class="btn btn-primary" ng-click="registrarTicketSoporte(ticket)" value="GUARDAR">
                         </div> 
                     </div>
                     <br>
                 </div>
             </div>
+            <div class="container-fluid" id="container_noticias_ticket" ng-show="isBusqueda == 3">
+                <jsp:include page="./content/noticiasGestionTicketsSoporte.jsp"></jsp:include>
+            </div>
+
         </div>
         <jsp:include page="./modals/modalBusquedaTecnico.jsp"></jsp:include>
         <jsp:include page="./modals/modalDetalle.jsp"></jsp:include>
@@ -287,5 +305,6 @@
     <script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionTicketsSoporte/noticiasGestionTicketSoporte.js"></script>
 
     </html>

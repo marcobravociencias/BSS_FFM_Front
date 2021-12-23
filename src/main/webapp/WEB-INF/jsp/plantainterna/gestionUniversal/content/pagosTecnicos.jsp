@@ -1,11 +1,11 @@
 <div class="container-fluid" id="container_pagos_tecnicos">
     <div class="row filter-content">
-        <div class="col-2 form-group">
+        <div class="col-2 form-group columna-filtro-ind-rep">
             <input readonly placeholder="Geograf&iacute;a" type="text" ng-click="abrirModalGeografiaBuscar()"
-                class="search-filtro form-control form-control-sm" style="border-radius: .5em !important;">
+                class="search-filtro input-filtro form-control form-control-sm" style="border-radius: .5em !important;">
         </div>
         <div class="col-1">
-            <button id="btnBuscar" type="button" class="btn btn-primary btnTotal">
+            <button id="btnBuscar" type="button" class="btn btn-primary btnTotal" ng-click="consultarTecnicosPagos()">
                 <i class="fa fa-search"></i>
             </button>
         </div>
