@@ -41,19 +41,14 @@
             rel="stylesheet" />
         <link href="${pageContext.request.contextPath}/resources/css/plantainterna/reportesPI/mainReportes.css"
             rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/reportesPI/mainReportes.css"
+            rel="stylesheet" />
     </head>
 
     <body id="idBody" ng-controller="reportesController" style="display: none;">
+
         <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
-        <div class="container container-title-header" style="padding: 0 !important;">
-            <div class="header-modulo">
-                <h5 class="title-modulo">Reportes</h5>
-                <h1 class="h6 subtitle-modulo">En este m&oacute;dulo podr&aacute;s realizar la busqueda de
-                    reportes en general</h1>
-            </div>
-        </div>
         <div class="container" id="container_reportes">
-           
             <div class="row">
                 <div class="col-md-12">
                     <ul class="nav nav-tabs left-menu small-menu flex-column" id="opciones-menu" role="tablist"
@@ -79,8 +74,8 @@
                         <li class="nav-item">
                             <a class="opcion-menu" id="auxiliar-tab" data-toggle="tab" href="#auxiliar" role="tab"
                                 aria-controls="auxiliar" aria-selected="false"><i
-                                    class="icon-menu-left fas fa-briefcase"></i>&nbsp;<span class="titulo-menu">Reporte
-                                    T&eacute;cnico Auxiliar</span></a>
+                                    class="icon-menu-left fas fa-briefcase"></i>&nbsp;<span class="titulo-menu"
+                                    style="margin-left: 0.6em;">Reporte T&eacute;cnico Auxiliar</span></a>
                         </li>
                         <li class="nav-item">
                             <a class="opcion-menu" id="inspector-tab" data-toggle="tab" href="#inspector" role="tab"
@@ -92,9 +87,9 @@
                             <a class="opcion-menu" id="tecnico-tab" data-toggle="tab" href="#tecnico" role="tab"
                                 aria-controls="tecnico" aria-selected="false"><i
                                     class="icon-menu-left fas fa-user-alt"></i>&nbsp;<span class="titulo-menu">Reporte
+
                                     por Tecnico</span></a>
                         </li>
-
                     </ul>
                     <div class="right-content tab-content">
                         <div class="row tab-content">
@@ -125,7 +120,6 @@
                                 <h5 id="texto_header_reportes" class="text-center">Reporte por T&eacute;cnico</h5>
                                 <jsp:include page="./reporteTecnico.jsp"></jsp:include>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -161,7 +155,6 @@
         src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
     <script type="text/javascript"
         src="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/lib/moment.es.js"></script>
-
 
     <script type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/plantainterna/reportesPI/reportesPIController.js"></script>

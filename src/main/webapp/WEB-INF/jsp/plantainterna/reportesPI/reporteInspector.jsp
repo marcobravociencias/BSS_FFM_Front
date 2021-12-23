@@ -46,7 +46,7 @@
     </div>
     <div class="content-table">
         <div class="content-fluid">
-            <table id="reporteInspectorTable" class="display table table-hover " cellspacing="0" width="100%">
+            <table id="reporteInspectorTable" class="display table " cellspacing="0" width="100%">
                 <thead id="thead_reporteInspector">
                     <tr>
                         <th>ID</th>

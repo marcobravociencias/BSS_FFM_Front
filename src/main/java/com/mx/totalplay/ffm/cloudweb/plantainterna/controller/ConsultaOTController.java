@@ -3,11 +3,7 @@ package com.mx.totalplay.ffm.cloudweb.plantainterna.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.google.gson.Gson;
 import com.mx.totalplay.ffm.cloudweb.plantainterna.model.consultaOTPI.ParamConsultaOTPI;
@@ -158,6 +154,16 @@ public class ConsultaOTController {
 	public ResponseEntity<?> consultaDispositivos(@RequestBody String params){
 		logger.info("#### CONSULTANDO consultaDispositivos: " + params);
 		ServiceResponseResult response = consultaOTService.consultaDispositivos(params);
+		if (response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+
+	@PostMapping("/consultaRecoleccionConsultaOt")
+	public ResponseEntity<?> consultaRecoleccionConsultaOt(@RequestBody String params){
+		logger.info("#### CONSULTANDO consultaRecoleccionConsultaOt: " + params);
+		ServiceResponseResult response = consultaOTService.consultaRecoleccionConsultaOt(params);
 		if (response.getResult() instanceof Integer) {
 			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
 		}

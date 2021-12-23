@@ -2358,11 +2358,17 @@ i.link-spa-estatusoffline.fas.fa-unlink {
 img.img-sap-materiales {
   height: 10em;
 }
-
-
+.span-noconfi-sap{
+  color: #fdc149;
+  font-weight:bold;
+}
+.span-na-sap{
+  color:#b1b1b1;
+  font-weight:bold;
+}
 
 .span-offline-sap {
-    color:#858385;
+    color: #e74d21;
     font-weight:bold;
 }
 .span-online-sap {
@@ -2384,6 +2390,8 @@ img.img-sap-materiales {
 	animation: pulseonline 1.5s infinite;
 	display:inline-flex;
 	margin-right: .5em;
+    margin-left: .3em;
+
 }
 @keyframes pulseonline {
 	0% {
@@ -2403,21 +2411,22 @@ img.img-sap-materiales {
 }
 
 .oflline-sap-materiales-icon {
-	background: #9ca4b3;
+	background: #e74d21;
 	border-radius: 50%;
 	/* margin: 1em; */
 	height: 1em;
 	width: 1em;
-	box-shadow: 0 0 0 0 #9ca4b3;
+	box-shadow: 0 0 0 0 #e74d21;
 	transform: scale(1);
 	animation: pulseoffline 1.5s infinite;
 	display:inline-flex;
 	margin-right: .5em;
+	margin-left: .3em;
 }
 @keyframes pulseoffline {
 	0% {
 		transform: scale(0.95);
-		box-shadow: 0 0 0 0 #9ca4b3;
+		box-shadow: 0 0 0 0 #e74d21;
 	}
 
 	70% {

@@ -41,12 +41,17 @@
                             <div class="image-preview">
                                 <img class="img-created-by-comme" src="{{noticia.imgCreatedBy}}" alt="">
                                 <div class="div-titelheader-detalle">
-                                    <h1 class="titelheader-detalle" ng-bind="noticia.createdBy"></h1>
-                                    <h1 class="subtitelheader-detalle" ng-bind="noticia.text"></h1>
+                                    <div class="row">
+                                        <h1 class="titelheader-detalle" ng-bind="noticia.createdBy"></h1>
+                                    </div>
+                                    <div class="row">
+                                        <h1 class="subtitelheader-detalle" ng-bind="noticia.text"></h1>
+                                    </div>
                                     <span class="option-mensajes" ng-click="responderComentario(noticia.id)">Responder</span>
                                     <!-- <span class="option-mensajes" ng-click="editarComentario(noticia.id, noticia.text, 0)">Editar</span> -->
                                     <span class="option-mensajes" ng-click="eliminarComentario(noticia.id, 0)">Eliminar</span>
                                     <span class="text-fecha-comentario" ng-bind="noticia.createdDate"></span>
+                                    <button id="button-subcommet-{{noticia.id}}" type="button" class="btn-close close-enviar-subcomentario" ng-click="responderComentario(noticia.id)" data-mdb-dismiss="modal" aria-label="Close" style="display: none;"></button>
                                     <div id="content-text-e-{{noticia.id}}" class="row content-text-send" style="display: none;">
                                         <div class="col-10">
                                             <input id="texto-comentario-os-{{noticia.id}}" type="text" class="form-control form-control-sm form-send">

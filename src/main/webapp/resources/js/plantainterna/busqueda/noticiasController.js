@@ -226,6 +226,7 @@ app.noticiasController = function ($scope, $q, busquedaService) {
                 document.getElementById('content-text-enviar-' + $scope.noticiaAnterior).style.display = 'none';
                 document.getElementById('content-text-e-' + $scope.noticiaAnterior).style.display = 'none';
                 document.getElementById('content-text-' + $scope.noticiaAnterior).style.display = 'none';
+                document.getElementById('button-subcommet-' + $scope.noticiaAnterior).style.display = 'none'
             }
         }
         if ($scope.banderaShow) {
@@ -238,6 +239,7 @@ app.noticiasController = function ($scope, $q, busquedaService) {
                 document.getElementById('content-text-enviar-' + numero).style.display = 'none';
                 document.getElementById('content-text-e-' + numero).style.display = 'none';
                 document.getElementById('content-text-' + numero).style.display = 'none';
+                document.getElementById('button-subcommet-' + numero).style.display = 'none'
                 $scope.banderaShow = false;
                 $scope.tipoResponse = null;
             }
@@ -245,6 +247,7 @@ app.noticiasController = function ($scope, $q, busquedaService) {
             document.getElementById('content-text-enviar-' + numero).style.display = 'block';
             document.getElementById('content-text-e-' + numero).style.display = 'block';
             document.getElementById('content-text-' + numero).style.display = 'block';
+            document.getElementById('button-subcommet-' + numero).style.display = 'block'
             document.getElementById('texto-comentario-op-' + numero).value = '';
             document.getElementById('texto-comentario-' + numero).value = '';
             document.getElementById('texto-comentario-os-' + numero).value = '';

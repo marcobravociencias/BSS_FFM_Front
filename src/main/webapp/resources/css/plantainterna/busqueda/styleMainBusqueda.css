@@ -1659,6 +1659,12 @@ img.img_evidencia {
 .option-mensajes {
   font-size: 0.7rem;
   cursor: pointer;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.option-mensajes:hover {
+  text-decoration: underline;
 }
 
 .btn-send {
@@ -1839,4 +1845,13 @@ span.text-activacion-warning {
   /* text-decoration: dotted !important; */
   font-style: italic;
   float: unset;
+}
+
+.close-enviar-subcomentario{
+  width: 0em !important;
+  height: 10px !important;
+  margin-left: 5em;
+  position: absolute;
+  top: 61px;
+  left: 51%;
 }
