@@ -13,7 +13,6 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 	$scope.idIntervenciones = [];
 	$scope.listaGeografiasIndividual = [];
 	$scope.listaGeografiasTabla = [];
-	
 	$scope.listadoIntervencionesTecnico=null;
 	$scope.contadorSkillsSeleccionadas = 0;
 	$scope.contadorSkillsSeleccionadasMultiseleccion = 0;
@@ -22,14 +21,12 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 	$scope.tecnicoSeleccionado = null;
 	$scope.idTecnicoSeleccionado = null;
 	$scope.valorSlider = 0;
-	
 	$scope.skillsSeleccionadasIndividual = [];
 	$scope.skillsSeleccionadasMultiseleccion = [];
-	
 	$scope.nivelSkill = null;
-	
 	$scope.txtbusq='';
 	
+	//Funciones pendientes por revisar
 	$scope.busquedaT=function(){
 		var busq=$scope.txtbusq;
 		tablePermisosDinamica.search(busq).draw()
@@ -48,7 +45,9 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 		swal("Correcto", "Registros actualizados con exito", "success");
 		}, 800);
 	});
+	//Fin de funciones pendientes por revisar
 
+	//FUNCIÓN QUE VA A CONSULTAR LOS TÉCNICOS DE ACUERDO A LA GEOGRAFÍA SELECCIONADA
 	$('#arbolGeografiasVistaIndividual').on("select_node.jstree", function (e, data) {
 		$scope.tecnicosMostradas = [];
 		$scope.listaTecnicosTabla = [];
@@ -131,6 +130,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 		$scope.$apply();
     });
 	
+	//FUNCIÓN QUE CARGA EL ÁRBOL DE INTERVENCIONES / SKILLS DEL TÉCNICO SELECCIONADO
 	$scope.consultarSkillsAsignadasTecnico = function(idTecnico, nombreTecnico, primerApellido, segundoApellido){
 		$("#arbolSkillsVistaIndividual").jstree("destroy");
 		$scope.contadorSkillsSeleccionadas = 0;
@@ -204,6 +204,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 		
 	}
 	
+	//FUNCIÓN QUE AUMENTA O DISMINUYE EL CONTADOR DE SKILLS SELECCIONADAS
 	$scope.sumarContador = function(estado){
 		if(estado == 0){
 			$scope.contadorSkillsSeleccionadas = $scope.contadorSkillsSeleccionadas + 1;
@@ -212,6 +213,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 		}
 	}
 	
+	//FUNCIÓN QUE ABRE EL MODAL DE SKILLS SELECCIONADAS
 	$scope.abrirModalSkillsSeleccionadas = function(){
 		if($scope.contadorSkillsSeleccionadas != 0){
 			$scope.listadoIntervencionesSeleccionadas = [];
@@ -228,10 +230,12 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 		}
 	}
 	
+	//FUNCIÓN QUE CIERRA EL MODAL DE SKILLS SELECCIONADAS
 	$scope.cerrarModalSkillsSeleccionadas = function() {
 		$("#modalSkillsSeleccionadas").modal('hide');
 	}
 	
+	//FUNCIÓN QUE MUESTRA ES APARTADO DE MULTISELECCIÓN PARA REALIZAR LA MULTIASIGNACIÓN DE SKILLS / CARGA EL ÁRBOL DE INTERVENCIONES - SKILLS
 	$scope.mostrarContenedoresMultiseleccion = function(){
 		$(".checkedTecnicos").prop("checked",true);
 		$("#checkTotdosTecnicos").prop("checked",true);
@@ -397,7 +401,6 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
     					$('#divMensajeSeleccionaGeografia').hide();
     					$('#divMensajeSeleccioneElemento').hide();
 //    					-----------------------------------------------------------------------------------
-    					
     					$("#divMensajeSeleccionaGeografiaVistaTabla").hide();
     					$('#contenedorTablaSkilssVistaTabla').show();
     					$('#tablaSkilssVistaTabla').find("th, td").show();
@@ -423,7 +426,6 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
     								skill.idCheck = "checkTablaTecnico"+tecnico.idUsuario+"Skill"+skill.id;
     							});
     					});
-    					
     				}else{
     					$("#divMensajeSeleccionaGeografiaVistaTabla").show();
     					toastr.warning('¡No se encontraron técnicos asignados a la geografía seleccionada!');
@@ -966,6 +968,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 		$scope.contadorSkillsSeleccionadas = conSkillsArbolIndividual;
 	}
 	
+	//-------------------------------------------------- FIN CAMBIOS REYNEL --------------------------------------------------
 	$scope.seleccionarTodasSkillsMultiselectCheck = function() {
 		if($("#checkTodasSkillsMultiSelect").prop('checked')){
 			$("#arbolSkillsMultiseleccion").jstree().check_all(true);
@@ -1006,9 +1009,6 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 		$scope.contadorSkillsVistaIndividual();
 	}
 	
-	//-------------------------------------------------- FIN CAMBIOS REYNEL --------------------------------------------------
-	
-	//$("#moduloSkills").addClass('active')
 	$scope.cargarFiltrosGeneric();
 
 	angular.element(document).ready(function () {

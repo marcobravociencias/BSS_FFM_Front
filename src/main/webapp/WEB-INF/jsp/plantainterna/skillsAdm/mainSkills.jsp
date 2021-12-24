@@ -52,7 +52,6 @@
 					<i ng-if="istipovista==2" class="icon-geografia-top fas fa-map-marked iconoGeografia"></i> 
 					<a ng-if="istipovista==2" class="text-icon-geografia-top nav-link a-navlink-navbar linkGeografia" href="" ng-click="abrirModalGeografiaTabla()">Geograf&iacute;a</a>			
 				</div>
-			
 				<ul class="nav nav-tabs" id="myTab" role="tablist">
 					<li class="nav-item">
 						<a ng-click="istipovista=1" class="nav-link active" id="vistaindividual-tab" data-toggle="tab" href="#vistaindividual" role="tab"
@@ -112,7 +111,6 @@
 								<div class="input-group input-group-sm content-seach-group">
 									<input id="buscadorSkillConsultaVistaIndividual" type="text" class="form-control form-control-sm buscar-input-operario" placeholder="Buscar skill" ng-keyup="busquedaSkillsIndividual()"> <span class="search-icon-operario-busq fa fa-search"></span>
 								</div>
-				
 								<div id="divContenedorSkills" style="display: none">
 									<div class="row">
 										<div class="col-md-7" style="padding-right: 2em;">
@@ -123,7 +121,6 @@
 											</div>
 										</div>
 									</div>
-									
 									<div class="intervenciones-container scrollGeneral">
 										<div id="arbolSkillsVistaIndividual" class="jstree-proton-3 proton-demo" ng-click="contadorSkillsVistaIndividual()">
 										</div>
@@ -142,10 +139,8 @@
 								</div>
 							</div>	
 						</div>
-						
 					</div>
 					<div id="vistatabla" class="row content-gestion-operarios tab-pane fade" role="tabpanel" aria-labelledby="vistatabla-tab" >
-						
 						<div id="contenedorTablaSkilssVistaTabla" >
 							<div class="row">
 								<div class="col-md-3">
@@ -222,7 +217,6 @@
 				</div>			
 			</div>	
 		</div>
-		
 	
         <!-- MULTISELECCION -->
         <div id="modalMultiseleccion" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
