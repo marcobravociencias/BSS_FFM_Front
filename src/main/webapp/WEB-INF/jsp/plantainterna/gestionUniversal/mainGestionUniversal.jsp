@@ -59,8 +59,7 @@
                             <a class="nav-link active" id="pagoTecnico-tab" data-toggle="tab" href="#pagoTecnico"
                                 role="tab" aria-controls="pagoTecnico" aria-selected="true">Pagos T&eacute;cnicos</a>
                         </li>
-                        <!--
-                              <li class="nav-item">
+                        <li class="nav-item">
                             <a class="nav-link" id="gestionCuadrilla-tab" data-toggle="tab" href="#gestionCuadrilla"
                                 role="tab" aria-controls="gestionCuadrilla" aria-selected="false">Gesti&oacute;n
                                 Cuadrillas</a>
@@ -70,8 +69,6 @@
                                 role="tab" aria-controls="confiGeografia" aria-selected="false">Configuraci&oacute;n
                                 Geograf&iacute;a</a>
                         </li>
-                        -->
-                      
                         <li class="nav-item">
                             <a class="nav-link" id="cambiaContrasena-tab" data-toggle="tab" href="#cambiaContrasena"
                                 role="tab" aria-controls="cambiaContrasena" aria-selected="false">Cambia

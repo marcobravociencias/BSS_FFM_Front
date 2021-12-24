@@ -1,4 +1,4 @@
-<div class="modal fade bd-example-modal-lg"  aria-labelledby="modalDetalleIncidencia" aria-hidden="true"
+<div class="modal fade bd-example-modal-lg" aria-labelledby="modalDetalleIncidencia" aria-hidden="true"
     id="modalDetalleIncidencia">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -10,7 +10,7 @@
             <div class="modal-body" style=" max-height: 300px; overflow: auto;">
                 <div id="container-detalleIncidencia" class="container">
                     <div class="" id="acciones"></div>
-                    <div class="col-12 row">
+                    <div class="row" style="padding: 0;">
                         <div style="padding-left: 0;" class="col-2" ng-show="isNavTab">
                             <div class="nav flex-column nav-tabs text-center" id="v-tabs-tab-incidencia" role="tablist"
                                 aria-orientation="vertical">
@@ -21,33 +21,28 @@
                         <div class="col-10" id="containerModal">
                             <div class="container" id="containerFallas">
                                 <!-- <li class="nav-link" id="acciones">Acciones</li> -->
-                                <ul class="nav nav-tabs mb-3 nav-fill " id="headers_tab" role="tablist">
+                                <ul class="nav nav-tabs" id="headers_tab" role="tablist">
                                 </ul>
                                 <div id="content_tabs" class="tab-content"></div>
                             </div>
                             <div class="container" id="containerStatusFallas" style="display:none">
                                 <div class="row">
-                                    <div class="col-12">
-                                        <div id="content_table_detalle_status" class="">
-                                            <div class="table-wrapper">
-                                                <table id="tableDetalleStatus" class="table table-hover" cellspacing="0"
-                                                    width="100%">
-                                                    <thead id="thead_detalleincidencia">
-                                                        <tr>
-                                                            <th>#EMPLEADO</th>
-                                                            <th>NOMBRE EMPLEADO</th>
-                                                            <th>MOTIVO</th>
-                                                            <th>FECHA</th>
-                                                            <th>COMENTARIO</th>
-                                                            <th><i class="fa fa-download"></i></th>
-                                                            <th></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody id="bodyFileDetallestatus">
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
+                                    <div id="content_table_detalle_status" class="">
+                                        <table id="tableDetalleStatus" class="display table" cellspacing="0"
+                                            width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>#EMPLEADO</th>
+                                                    <th>NOMBRE EMPLEADO</th>
+                                                    <th>MOTIVO</th>
+                                                    <th>FECHA</th>
+                                                    <th>COMENTARIO</th>
+                                                    <th><i class="fa fa-download"></i></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -63,7 +58,7 @@
                                 <form id="uploadForm" name="13" class="form-horizontal box form_drag_drop"
                                     novalidate="novalidate" enctype="multipart/form-data">
                                     <div class="box__input">
-                                        <input name="myFile" type="file" class="box__file inputFile" id="file"/>
+                                        <input name="myFile" type="file" class="box__file inputFile" id="file" />
                                         <label for="file" id="etiqueta_archivo">
                                             <strong class="text_select">Selecciona un archivo</strong>
                                             <span class="box__dragndrop">o arrastra aqu&iacute;</span>
@@ -119,7 +114,10 @@
                                     <p class="title_consulta">Motivo:</p>
                                 </label>
                                 <br>
-                                <select id="select-motivo-rechazar" class="browser-default custom-select select_consulta" data-actions-box="true" ng-model="motivoRechazo.motivo" ng-options="motivo.idMotivo as motivo.motivo for motivo in listadoCatalogoRechazo" >
+                                <select id="select-motivo-rechazar"
+                                    class="browser-default custom-select select_consulta" data-actions-box="true"
+                                    ng-model="motivoRechazo.motivo"
+                                    ng-options="motivo.idMotivo as motivo.motivo for motivo in listadoCatalogoRechazo">
                                     <option value="">Seleccione...</option>
                                 </select>
                             </div>
@@ -127,11 +125,11 @@
                                 <div class="form-group">
                                     <label class="col-form-label">
                                         <p class="title_consulta">Comentario:</p>
-                                    </label> 
+                                    </label>
                                     <br />
                                     <textarea placeholder="Se sugiere un m&aacute;ximo de 50 caracteres."
-                                        class="form-control comentario_modal" rows="3"
-                                        id="comentariosRechazoPI" ng-model="motivoRechazo.comentario"></textarea>
+                                        class="form-control comentario_modal" rows="3" id="comentariosRechazoPI"
+                                        ng-model="motivoRechazo.comentario"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -140,16 +138,19 @@
             </div>
             <div class="modal-footer">
                 <div class="pull-right">
-                    <button type="button" class="btn btn-primary" ng-show="isRecuperar" ng-click="recuperarIncidencia()">Recuperar</button>
+                    <button type="button" class="btn btn-primary" ng-show="isRecuperar"
+                        ng-click="recuperarIncidencia()">Recuperar</button>
                     <button type="button" class="btn btn-primary" ng-show="isDeclinar"
-                    style="background-color: #ff8800;" ng-click="initDeclinarIncidencia()">Declinar</button>
-                    <button type="button" class="btn btn-primary" ng-show="isGenerar"
-                    style="background-color: #00c851;" ng-click="generarOTIncidencia()"><i class="fa fa-paper-plane"></i>&nbsp;Generar</button>
+                        style="background-color: #ff8800;" ng-click="initDeclinarIncidencia()">Declinar</button>
+                    <button type="button" class="btn btn-primary" ng-show="isGenerar" style="background-color: #00c851;"
+                        ng-click="generarOTIncidencia()"><i class="fa fa-paper-plane"></i>&nbsp;Generar</button>
                 </div>
                 <div class="pull-right" ng-show="isInitDeclinar">
-                    <button type="button" class="btn btn-primary" style="background-color: #A39F9F;" ng-click="cancelarDeclinar()">Cancelar</button>
-                    <button type="button" class="btn btn-primary" ng-click="declinarIncidencia(motivoRechazo)">Confirmar</button>
+                    <button type="button" class="btn btn-primary" style="background-color: #A39F9F;"
+                        ng-click="cancelarDeclinar()">Cancelar</button>
+                    <button type="button" class="btn btn-primary"
+                        ng-click="declinarIncidencia(motivoRechazo)">Confirmar</button>
                 </div>
+            </div>
         </div>
     </div>
-</div>
