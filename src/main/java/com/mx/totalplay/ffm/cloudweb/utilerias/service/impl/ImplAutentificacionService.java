@@ -44,15 +44,6 @@ public class ImplAutentificacionService  implements AutentificacionService{
 		LoginResult responseLog = (LoginResult) restCaller.callPostReturnClassBasicAuthXwwwUrlFormed(
 				urlService ,  us, crdospas, LoginResult.class
 		);
-		
-		Permiso permisoTemp=Permiso.builder().descripcion("Terceros generic").clave("moduloTercerosGeneric").build();
-		
-		List<SubPermiso> accion=new ArrayList<SubPermiso>();		
-		accion.add(SubPermiso.builder().descripcion("Consulta ots").clave("accionConsultaOtsTerceros").build());			
-		permisoTemp.setPermisos(accion);
-		
-		
-		responseLog.getPermisos().add(permisoTemp);
 				
 		logger.info(gson.toJson(responseLog));
 		if (responseLog.getIdUsuario() != 0) {
