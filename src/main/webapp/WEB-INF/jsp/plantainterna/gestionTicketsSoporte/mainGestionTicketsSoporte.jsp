@@ -33,7 +33,7 @@
 
     </head>
 
-    <body id="idBody" class="body" ng-controller="ticketsSoporteController">
+    <body id="idBody" class="body" ng-controller="ticketsSoporteController" style="display: none;">
         <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
         <div class="container">
             <div class="container container-title-header" style="padding: 0 !important;">
@@ -44,23 +44,23 @@
             </div>
             <div class="form-content">
                 <div class="row md-form" id="filtros_config">
-                    <div class="col-2 columna-filtro-ind" ng-show="isBusqueda">
+                    <div class="col-2 columna-filtro-ind" ng-show="isBusqueda == 2">
                         <label for="filtro_fecha_inicio_ticket" class="label-filter">Fecha inicial</label>
                         <input readonly type="text" id="filtro_fecha_inicio_ticket"
                             class="datepicker input-filtro-ticket form-control form-control-sm" />
                     </div>
-                    <div class="col-2 columna-filtro-ind" ng-show="isBusqueda">
+                    <div class="col-2 columna-filtro-ind" ng-show="isBusqueda == 2">
                         <label for="filtro_fecha_fin_ticket" class="label-filter">Fecha final</label>
                         <input readonly type="text" id="filtro_fecha_fin_ticket"
                             class="datepicker input-filtro-ticket form-control form-control-sm" />
                     </div>
-                    <div class="col-1" ng-show="isBusqueda">
+                    <div class="col-1" ng-show="isBusqueda == 2">
                         <button id="btn_buscar" type="button"
                             class="btn btn-sm btn-primary waves-effect waves-light btnTicket"
                             ng-click="consultarTicketsSoporte()">
                             <i class="fa fa-search"></i>
                     </div>
-                    <div class="col-1 user-info-content" ng-class="{'offset-1': isBusqueda, 'offset-6': !isBusqueda}">
+                    <div class="col-1 user-info-content" ng-class="{'offset-1': isBusqueda == 2, 'offset-6': isBusqueda != 2}">
                         <span>Entrada</span></br>
                         <span class="info">{{catalogoEstatusUsuarios.infoHorasUser.horaEntrada ?
                             catalogoEstatusUsuarios.infoHorasUser.horaEntrada : 'Sin datos'}}</span>
@@ -80,7 +80,7 @@
                         <span class="info">{{catalogoEstatusUsuarios.infoHorasUser.horaSalida ?
                             catalogoEstatusUsuarios.infoHorasUser.horaSalida : 'Sin datos'}}</span>
                     </div>
-                    <div class="col-2" style="margin-top: 2.3em;">
+                    <div class="col-2" style="margin-top: 1.4em;">
                         <li class="nav-item dropdown form-control form-control-sm input-filtro-ticket"
                             id="estatusDropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="otros-option-navbar" role="button"
@@ -105,33 +105,46 @@
                     </div>
                 </div>
             </div>
-            
+                        
             <div class="container-fluid" id="container_ticket" ng-show="isBusqueda == 2">
                 <div class="row filter-content">
                     <div class="col-2 form-group" style="margin-bottom: 0; margin-top: .5em;">
-                            <i class="fas fa-plus-circle icon-back" ng-click="changeView(1)" title="Nuevo Ticket"></i>
+                        <i class="fas fa-plus-circle icon-back" ng-click="changeView(1)" title="Nuevo Ticket"></i>
                     </div>
                     <div class="row col-6 filter-tab" style="margin-top: 0.5em;">
                         <div class="col-3 user-info-content user-filter" style="margin-top: 0;">
-                            <span ng-click="searchBy('Abierto')" id="spanAbierto"><i class="fa fa-filter" id="filterAbierto"></i>Abierto {{contadores.abierto ? contadores.abierto : '0'}}</span>
+                            <span ng-click="searchBy('Abierto')" id="spanAbierto">
+                                <i class="fa fa-filter" id="filterAbierto"></i>
+                                Abierto {{contadores.abierto ? contadores.abierto : '0'}}
+                            </span>
                         </div>
                         <div class="col-3 user-info-content user-filter" style="margin-top: 0;">
-                            <span ng-click="searchBy('Cerrado')" id="spanCerrado"><i class="fa fa-filter" id="filterCerrado"></i>Cerrado {{contadores.cerrado ? contadores.cerrado : '0'}}</span>
+                            <span ng-click="searchBy('Cerrado')" id="spanCerrado">
+                                <i class="fa fa-filter" id="filterCerrado"></i>
+                                Cerrado {{contadores.cerrado ? contadores.cerrado : '0'}}
+                            </span>
                         </div>
                         <div class="col-3 user-info-content user-filter" style="margin-top: 0;">
-                            <span ng-click="searchBy('Escalado')" id="spanEscalado"><i class="fa fa-filter" id="filterEscalado"></i>Escalado {{contadores.escalado ? contadores.escalado : '0'}}</span>
+                            <span ng-click="searchBy('Escalado')" id="spanEscalado">
+                                <i class="fa fa-filter" id="filterEscalado"></i>
+                                Escalado {{contadores.escalado ? contadores.escalado : '0'}}
+                            </span>
                         </div>
                         <div class="col-3 user-info-content user-filter" style="margin-top: 0;">
-                            <span ng-click="searchBy('Pendiente')" id="spanPendiente"><i class="fa fa-filter" id="filterPendiente"></i>Pendiente {{contadores.pendiente ? contadores.pendiente : '0'}}</span>
+                            <span ng-click="searchBy('Pendiente')" id="spanPendiente">
+                                <i class="fa fa-filter" id="filterPendiente"></i>
+                                Pendiente {{contadores.pendiente ? contadores.pendiente : '0'}}
+                            </span>
                         </div>
                     </div>
-                    <div class="col-2 form-group" style="margin-bottom: 0; margin-top: .5em; margin-left: 1em;">
-                        <input placeholder="Buscar" type="text" autocomplete="off"
-                            class="search-filtro form-control form-control-sm mt-0" id="searchTextTicket"><i
-                            class="fa fa-search icon-search"></i>
+                    <div class="col-2 offset-2 form-group" style="margin-bottom: 0; margin-top: .5em;">
+                        <input placeholder="Buscar" type="text" autocomplete="off" class="search-filtro form-control form-control-sm mt-0" id="searchTextTicket">
+                        <i class="fa fa-search icon-search"></i>
                     </div>
-                    <div class="col-2  form-group" style="margin-bottom: 0; margin-top: .5em;">
-                        <i class="fas fa-plus-circle icon-back" ng-click="changeView(3)" title="Noticias Ticket"></i>
+                </div>
+                <div class="col-12" style="padding-right: 0px;">
+                    <div class="col-12" id="container_noticias_ticket" style="display: none;">
+                        <jsp:include page="./content/noticiasGestionTicketsSoporte.jsp"></jsp:include>
                     </div>
                 </div>
                 <div class="content-fluid" style="margin-top: 0.7em;">
@@ -154,7 +167,7 @@
                         </thead>
                         <tbody>
                         </tbody>
-                     </table>
+                    </table>
                 </div>
             </div>
 
@@ -271,10 +284,7 @@
                     <br>
                 </div>
             </div>
-            <div class="container-fluid" id="container_noticias_ticket" ng-show="isBusqueda == 3">
-                <jsp:include page="./content/noticiasGestionTicketsSoporte.jsp"></jsp:include>
-            </div>
-
+            
         </div>
         <jsp:include page="./modals/modalBusquedaTecnico.jsp"></jsp:include>
         <jsp:include page="./modals/modalDetalle.jsp"></jsp:include>

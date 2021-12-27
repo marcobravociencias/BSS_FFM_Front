@@ -4,7 +4,7 @@
     width: 50%;
     right: 0%;
    /*  height: 100%; */
-    max-height: 35em;
+    max-height: 38em;
     z-index: 10;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -14,14 +14,14 @@
 
   img#btnRefresNoticias {
     height: 1.4em;
-    margin-top: .4em;
+    margin-bottom: .4em;
     margin-left: 1em;
   }
 
   span.cerrarnoticias {
     position: absolute;
     right: 0;
-    top: .2em;
+    /* top: .2em; */
     color: #7716fa;
     font-weight: bold;
     font-size: .9em;
@@ -57,8 +57,8 @@
   }
 
   .img-created-by-comme {
-    width: 3em;
-    max-height: 3em;
+    width: 2.5em;
+    max-height: 2.5em;
     display: inline-block;
     border-radius: .4em;
     -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
@@ -143,7 +143,7 @@
 
   .col-content-text-general {
     margin-left: 38px;
-    max-width: 50% !important;
+    max-width: 52% !important;
     margin-top: 1em;
   }
 
@@ -219,11 +219,62 @@
     color: #747474;
   }
 
-  .imagen-comment-owner {
-    width: 2.3em;
-    height: 40px;
-    display: inline-block;
-    border-radius: .5em;
-    -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
-    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
-  }
+.imagen-comment-owner {
+  width: 2em;
+  height: 2em;
+  display: inline-block;
+  border-radius: .5em;
+  -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+}
+
+.container-elementcommes {
+  margin-top: 1em !important;
+  margin-bottom: 1em;
+}
+
+span.text-tile-ticket {
+  font-weight: bold;
+  font-size: 0.8em;
+  color: #444444;
+}
+
+.ticket-content {
+  padding: 0;
+  display: flex;
+  /* border-bottom:1px solid #e1e1e1 */
+}
+
+.container-text-title-detalle {
+  width: 40%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+span.text-content-ticket {
+  font-size: 0.8em;
+  color: #303030;
+}
+
+.container-text-content-detalle {
+  width: 60%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#detalleTicket-tab.active {
+  color: #7716fa;
+  border-color: #7716fa;
+}
+
+#asignarTicket-tab.active {
+  color: #7716fa;
+  border-color: #7716fa;
+}
+
+#comentariosTicket-tab.active {
+  color: #7716fa;
+  border-color: #7716fa;
+}

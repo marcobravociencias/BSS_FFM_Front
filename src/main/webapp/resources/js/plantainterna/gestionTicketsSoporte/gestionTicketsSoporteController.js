@@ -177,11 +177,11 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
 
     $('#searchTecnicoTicket').keypress(function (e) {
         if (e.which == 13) {
-          $scope.buscarTecnicoTicket();
-          $scope.$apply();
-          return false;
+            $scope.buscarTecnicoTicket();
+            $scope.$apply();
+            return false;
         }
-      });
+    });
 
     $scope.seleccionarTecnicoTicket = function (tecnico) {
         $scope.tecnicoSeleccionado = angular.copy(tecnico);
@@ -385,6 +385,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     }
 
     $scope.consultarTicketsSoporte = function () {
+        $("#container_noticias_ticket").hide();
         $(".user-filter span").removeClass('selected-filter');
         $(".fa-filter").css('color', '#ccc');
         let mensajeError = '';
@@ -433,12 +434,10 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                                 row[8] = elemento.fechaAsignacion == null ? 'Sin informaci&oacute;n' : elemento.fechaAsignacion !== undefined ? elemento.fechaAsignacion : 'Sin informaci&oacute;n';
                                 row[9] = elemento.descripcionEstatus !== undefined ? elemento.descripcionEstatus : 'Sin informaci&oacute;n';
                                 row[10] = elemento.tiempoAtencion == null ? 'Sin informaci&oacute;n' : elemento.tiempoAtencion !== undefined ? elemento.tiempoAtencion : 'Sin informaci&oacute;n';
-                                row[11] = '<a class="" id="detalleIncidencia' + elemento.ticket + '" onclick="consultaDetalleTicketSoporte(' + "'" + elemento.id_conexion + "'" + ')" >' +
+                                row[11] = '<a class="" id="detalleIncidencia' + elemento.ticket + '" onclick="consultaDetalleTicketSoporte(' + "'" + elemento.idOrden + "'" + ')" >' +
                                     '<i class="fa fa-bars" style="background-color: #58b3bf" title="Detalle"></i>' +
-                                    '</a> &nbsp;' +
-                                    '<a class="" id="detalleIncidencia' + elemento.ticket + '" onclick="asignaTicket(' + "'" + elemento.ticket + "'" + ')">' +
-                                    '<i class="fas fa-user-check" style="background-color: #7f4c9d" title="Asignar"></i>' +
-                                    '</a>'
+                                    '</a>';
+                                    
                                 arrayRow.push(row);
                                 if (elemento.descripcionEstatus === 'Abierto')
                                     $scope.contadores.abierto += 1;
@@ -511,10 +510,9 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
 
     consultaDetalleTicketSoporte = function () {
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
-        swal.showLoading();
-        $scope.detalleCaptura = ticketDetalle.result.orden;
-        $scope.$apply();
-        $("#modalDetalle").modal('show');
+        // $scope.changeView(3);
+        $("#container_noticias_ticket").show();
+        $scope.consultarComentariosTicketSoporte();
         swal.close();
     }
 
@@ -591,3 +589,8 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         }).catch(swal.noop);
     }
 }]);
+
+angular.element(document).ready(function () {
+    $("#moduloGestionTickets").addClass('active');
+    $("#idBody").removeAttr("style");
+});
