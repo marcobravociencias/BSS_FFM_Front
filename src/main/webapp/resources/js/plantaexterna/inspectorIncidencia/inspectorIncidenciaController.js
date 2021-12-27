@@ -394,25 +394,14 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                 "autoWidth": true,
                 "language": idioma_espanol_not_font,
                 "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
-
             });
         }
     }
 
-    consultarDetalleIncidencia = function (idIncidencia, reporta, numeroEmpleado, descripcion, cluster, latitud, longitud, idFalla, detalleFalla, idCluster, idStatus, statusFalla) {
-        $scope.incidencia.idIncidencia = idIncidencia;
-        $scope.incidencia.reporta = reporta;
-        $scope.incidencia.numeroEmpleado = numeroEmpleado;
-        $scope.incidencia.descripcion = descripcion;
-        $scope.incidencia.cluster = cluster;
-        $scope.incidencia.latitud = latitud;
-        $scope.incidencia.longitud = longitud;
-        $scope.incidencia.idFalla = idFalla;
-        $scope.incidencia.detalleFalla = detalleFalla;
-        $scope.incidencia.idCluster = idCluster;
-        $scope.incidencia.idStatus = idStatus;
-        $scope.incidencia.statusFalla = statusFalla;
-        $scope.isInitDeclinar = false;
+    consultarDetalleIncidencia = function (idIncidencia) {
+        console.log(idIncidencia);
+        console.log( $scope.incidencias);
+        $scope.incidencia =  $scope.incidencias.find((e) => e.idIncidencia == idIncidencia);
         console.log($scope.incidencia);
         let params = {
 
@@ -420,7 +409,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         inspectorIncidenciaService.consultarDetalleIncidenciaInspectorPE(params).then(function success(response) {
             swal({ text: 'Espera un momento...', allowOutsideClick: false });
             swal.showLoading();
-            $scope.inicializarDetalleIncidencia(latitud, longitud);
+            $scope.inicializarDetalleIncidencia($scope.incidencia.latitud, $scope.incidencia.longitud);
 
             console.log($scope.incidencia.idStatus);
             // NUEVA
@@ -836,7 +825,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                     row[6] = elemento.usuarioReporta ? elemento.usuarioReporta : "";
                     row[7] = elemento.fechaRegistro ? elemento.fechaRegistro : "";
                     row[8] = elemento.horaRegistro ? elemento.horaRegistro : "";
-                    row[9] = '<a class="" id="detalleIncidencia' + elemento.idIncidencia + '" onclick="consultarDetalleIncidencia (' + elemento.idIncidencia + ",'" + elemento.usuarioReporta + "','" + elemento.NumeroEmpleado + "','" + elemento.CatIncidenteDet + "','" + elemento.nombreGeografia + "'," + elemento.Latitud + "," + elemento.Longitud + "," + elemento.IdIncidencia + ",'" + elemento.CatIncidenteDet + "','" + elemento.IdCluster + "','" + elemento.ID_Status + "','" + elemento.Status + "','" + elemento.Ot + "'" + ');">' +
+                    row[9] = '<a class="" id="detalleIncidencia' + elemento.idIncidencia + '" onclick="consultarDetalleIncidencia (' + elemento.idIncidencia + ');">' +
                         '<i class="far fa-window-restore"></i>' +
                         '</a>';
                     row[10] = '<i class="fas fa-globe-americas" style="color:' + elemento.colorEstatus + '; cursor: pointer;" onclick="pintarUbicacionIncidencia(' + i + ')"></i>'

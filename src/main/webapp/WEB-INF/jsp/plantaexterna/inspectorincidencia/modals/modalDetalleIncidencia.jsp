@@ -4,7 +4,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalDetalleIncidencia"> Reporta: {{incidencia.numeroEmpleado}} -
-                    {{incidencia.reporta}}</h5>
+                    {{incidencia.usuarioReporta}}</h5>
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" style=" max-height: 300px; overflow: auto;">
@@ -140,15 +140,15 @@
                 <div class="pull-right">
                     <button type="button" class="btn btn-primary" ng-show="isRecuperar"
                         ng-click="recuperarIncidencia()">Recuperar</button>
-                    <button type="button" class="btn btn-primary" ng-show="isDeclinar"
-                        style="background-color: #ff8800;" ng-click="initDeclinarIncidencia()">Declinar</button>
-                    <button type="button" class="btn btn-primary" ng-show="isGenerar" style="background-color: #00c851;"
+                    <button type="button" class="btn btn-warning" ng-show="isDeclinar"
+                        ng-click="initDeclinarIncidencia()">Declinar</button>
+                    <button type="button" class="btn btn-success" ng-show="isGenerar"
                         ng-click="generarOTIncidencia()"><i class="fa fa-paper-plane"></i>&nbsp;Generar</button>
                 </div>
-                <div class="pull-right" ng-show="isInitDeclinar">
-                    <button type="button" class="btn btn-primary" style="background-color: #A39F9F;"
+                <div class="pull-right" g-show="isInitDeclinnar">
+                    <button type="button" class="btn cerrar-modal-btn btn-ligh"
                         ng-click="cancelarDeclinar()">Cancelar</button>
-                    <button type="button" class="btn btn-primary"
+                    <button type="button" class="btn btn-primary btn-enviar-comentario-ot ripple-surface"
                         ng-click="declinarIncidencia(motivoRechazo)">Confirmar</button>
                 </div>
             </div>
