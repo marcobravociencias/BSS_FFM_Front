@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,7 +30,7 @@ public class InspectorCoberturaController {
 	}
 	
 	@PostMapping("/consultarFallasCoberturaPE")
-	public ResponseEntity<?> consultarFallasInspectorPE(String params) {
+	public ResponseEntity<?> consultarFallasInspectorPE(@RequestBody String params) {
 		logger.info("##### InspectorCoberturaController - consultarFallasInspectorPE");
 		ServiceResponseResult response = inspectorCoberturaService.consultarFallasCoberturaPE(params);
 		if (response.getResult() instanceof Integer){
@@ -41,7 +42,7 @@ public class InspectorCoberturaController {
 
     
 	@PostMapping("/consultarFiltrosCoberturaPE")
-	public ResponseEntity<?> consultarFiltrosCoberturaPE(String params) {
+	public ResponseEntity<?> consultarFiltrosCoberturaPE(@RequestBody String params) {
 		logger.info("##### InspectorCoberturaController - consultarFiltrosInspectorPE");
 		ServiceResponseResult response = inspectorCoberturaService.consultarFiltrosCoberturaPE(params);
 		if (response.getResult() instanceof Integer){
@@ -53,7 +54,7 @@ public class InspectorCoberturaController {
 
     
 	@PostMapping("/consultarIncidenciasCoberturaPE")
-	public ResponseEntity<?> consultarIncidenciasCoberturaPE(String params) {
+	public ResponseEntity<?> consultarIncidenciasCoberturaPE(@RequestBody String params) {
 		logger.info("##### InspectorCoberturaController - consultarIncidenciasCoberturaPE");
 		ServiceResponseResult response = inspectorCoberturaService.consultarIncidenciasCoberturaPE(params);
 		if (response.getResult() instanceof Integer){

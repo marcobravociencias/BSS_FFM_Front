@@ -2,24 +2,26 @@
     <div class="container-noticia-elemento">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" id="detalleTicket-tab" data-toggle="tab" href="#detalleTicket" role="tab" aria-controls="detalleTicket"
-                    aria-selected="true">Detalle</a>
+                <a class="nav-link active" id="detalleTicket-tab" data-toggle="tab" href="#detalleTicket" role="tab" aria-controls="detalleTicket" aria-selected="true">Detalle</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="asignarTicket-tab" data-toggle="tab" href="#asignarTicket" role="tab"
-                    aria-controls="asignarTicket" aria-selected="false">Asignar</a>
+                <a class="nav-link" id="asignarTicket-tab" data-toggle="tab" href="#asignarTicket" role="tab" aria-controls="asignarTicket" aria-selected="false">Asignar</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="comentariosTicket-tab" data-toggle="tab" href="#comentariosTicket" role="tab"
-                    aria-controls="comentariosTicket" aria-selected="false">COMENTARIOS</a>
+                <a class="nav-link" id="comentariosTicket-tab" data-toggle="tab" href="#comentariosTicket" role="tab" aria-controls="comentariosTicket" aria-selected="false">COMENTARIOS</a>
+            </li>
+            <li class="nav-item item-close">
+                <button type="button" class="close" id="closeDetalleTicket" ng-click="closeDetalleTicketSoporte()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="detalleTicket" role="tabpanel" aria-labelledby="detalleTicket-tab">
+                <div class="divider-noticias" style=" width: 100%;height: 1px; background: gainsboro;"></div>
                 <div class="col-12" style="margin-top: 1em; margin-bottom: 1em;">
                     <div class="row">
-                        <div class="col-2"></div>
-                        <div class="col-8">
+                        <div class="col-8 offset-2">
                             <div class="container-fluid ticket-content">
                                 <div class="container-text-title-detalle"><span class="text-tile-ticket">IDC</span></div>
                                 <div class="container-text-content-detalle"><span class="text-content-ticket">SISTEMAS SISTEMAS2 VISUET</span></div>
@@ -40,24 +42,23 @@
                                 <div class="container-text-title-detalle"><span class="text-tile-ticket">ESCALADA POR</span></div>
                                 <div class="container-text-content-detalle"><span class="text-content-ticket">SISTEMAS SISTEMAS2 VISUET</span></div>
                             </div>
-                        <!-- </div>
-                        <div class="col-6"> -->
                             <div class="container-fluid ticket-content">
                                 <div class="container-text-title-detalle"><span class="text-tile-ticket">TEL&Eacute;FONO</span></div>
                                 <div class="container-text-content-detalle"><span class="text-content-ticket">7711828350</span></div>
                             </div>
-                        </div>  
-                        <div class="col-2"></div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade" id="asignarTicket" role="tabpanel" aria-labelledby="asignarTicket-tab">...</div>
-            <div class="tab-pane fade" id="comentariosTicket" role="tabpanel" aria-labelledby="comentariosTicket-tab">
-                <img id="btnRefresNoticias" style="cursor: pointer;" alt="Refresh"
-                    ng-click="consultarComentariosTicketSoporte()"
-                    src="${pageContext.request.contextPath}/resources/img/generic/actualizar_icon.svg">
-                <span class="cerrarnoticias" ng-click="isAbiertoOSNoticias=false">Ocultar noticias</span>
+            <div class="tab-pane fade" id="asignarTicket" role="tabpanel" aria-labelledby="asignarTicket-tab">
                 <div class="divider-noticias" style=" width: 100%;height: 1px; background: gainsboro;"></div>
+                ...
+            </div>
+            <div class="tab-pane fade" id="comentariosTicket" role="tabpanel" aria-labelledby="comentariosTicket-tab" ng-init="consultarComentariosTicketSoporte()">
+                <div class="divider-noticias" style="width: 100%; height: 1px; background: gainsboro;"></div>
+                <div class="col-12" style="text-align: right;">
+                    <img id="btnRefresNoticias" style="cursor: pointer;" alt="Refresh" ng-click="consultarComentariosTicketSoporte()" src="${pageContext.request.contextPath}/resources/img/generic/actualizar_icon.svg">
+                </div>
                 <div ng-if="listadoNoticias.length <= 0" class="container mt-5">
                     <h5 class="noinfo-noticias">No se encontr&oacute; informaci&oacute;n</h5>
                 </div>
@@ -75,8 +76,7 @@
                                             <div class="row">
                                                 <h1 class="subtitelheader-detalle" ng-bind="noticia.text"></h1>
                                             </div>
-                                            <span class="option-mensajes"
-                                                ng-click="responderComentarioTicket(noticia.id)">Responder</span>
+                                            <span class="option-mensajes" ng-click="responderComentarioTicket(noticia.id)">Responder</span>
                                             <!-- <span class="option-mensajes" ng-click="editarComentario(noticia.id, noticia.text, 0)">Editar</span> -->
                                             <span class="option-mensajes" ng-click="eliminarComentario(noticia.id, 0)">Eliminar</span>
                                             <span class="text-fecha-comentario" ng-bind="noticia.createdDate"></span>
@@ -93,7 +93,7 @@
                                                         <div class="box__input">
                                                             <input name="fileSubComentarioTicket" type="file" class="box__file inputFile adjuntar-archivo-os" onchange="cambiar(this)" id="fileSubComentarioTicket-{{noticia.id}}" />
                                                             <label for="fileSubComentarioTicket-{{noticia.id}}" id="etiqueta_archivo">
-                                                            <span class="text_select_archivo_sub col-content-text-general" style="margin-left: -421px;">Adjuntar archivo</span>
+                                                            <span class="text_select_archivo_sub col-content-text-general" style="margin-left: -310px;">Adjuntar archivo</span>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -136,7 +136,6 @@
                                             <div class="col-contenttitle-coment">
                                                 <h1 class="title-coment" ng-bind="comentario.createdBy"></h1>
                                                 <h1 class="title-subcomment" ng-bind="comentario.text"></h1>
-                                                <!-- <span class="option-mensajes" ng-click="editarComentario(comentario.id, comentario.text, 1)">Editar</span> -->
                                                 <span class="option-mensajes" ng-click="eliminarComentario(comentario.id, 1)">Eliminar</span>
                                                 <span class="text-fecha-comentario" ng-bind="comentario.createdDate"></span>
                                                 <div id="content-text-e-{{comentario.id}}" class="row content-text-send" style="display: none;">

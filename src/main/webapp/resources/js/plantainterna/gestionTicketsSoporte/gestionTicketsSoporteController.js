@@ -512,8 +512,12 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         // $scope.changeView(3);
         $("#container_noticias_ticket").show();
-        $scope.consultarComentariosTicketSoporte();
+        // $scope.consultarComentariosTicketSoporte();
         swal.close();
+    }
+
+    $scope.closeDetalleTicketSoporte = function (){
+        $("#container_noticias_ticket").hide();
     }
 
     asignaTicket = function () {

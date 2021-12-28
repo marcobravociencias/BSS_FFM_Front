@@ -118,7 +118,7 @@
                             <span class="fa fa-search" id="buscar-falla"></span>
                         </div>
 
-                        <table id="tableCobertura" class="display table table-hover" cellspacing="0" width="100%">
+                        <table id="tableCobertura" class="display table" cellspacing="0" width="100%">
                             <thead id="thead_cobertura">
                                 <tr>
                                     <th>ID</th>
@@ -160,12 +160,12 @@
                                                         </div>
                                                     </div>
                                                     <div class="row">
-                                                        <div class="col-md-8">
+                                                        <div class="col-md-7">
                                                             <span
                                                                 class="title_span"><strong>{{item.reporta}}</strong></span><br>
                                                             <span class="title_span">{{item.falla}}</span>
                                                         </div>
-                                                        <div class="col-md-4" style="text-align: right;">
+                                                        <div class="col-md-5" style="text-align: right;">
                                                             <div class="list-card-label"></div> <span
                                                                 class="badge badge-primary badge-inspector">INP</span><br>
                                                             <small class="title_span" style="color: #039be5;"><b>Fecha:
