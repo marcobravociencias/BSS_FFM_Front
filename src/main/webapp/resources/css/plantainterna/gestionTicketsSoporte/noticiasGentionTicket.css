@@ -1,5 +1,5 @@
 .container-noticia-elemento {
-    background: #f7f7f7;
+    background: #ffff;
     position: absolute;
     width: 50%;
     right: 0%;
@@ -13,6 +13,7 @@
   }
 
   img#btnRefresNoticias {
+    margin-top: 0.4em;
     height: 1.4em;
     margin-bottom: .4em;
     margin-left: 1em;
@@ -93,9 +94,9 @@
   }
 
   .container-noticias {
-    margin-top: 1em;
+    /* margin-top: 1em; */
     margin: 0;
-    margin-top: 1em;
+    /* margin-top: 1em; */
   }
 
   .image-preview {
@@ -186,7 +187,7 @@
 
   .col-btn-send {
     padding-left: 0px;
-    left: 76%;
+    left: 93%;
     top: -29px;
   }
 
@@ -277,4 +278,21 @@ span.text-content-ticket {
 #comentariosTicket-tab.active {
   color: #7716fa;
   border-color: #7716fa;
+}
+
+.content-text-send {
+  width: 450px;
+  display: none;
+  height: 40px;
+  margin-bottom: 25px;
+}
+
+#closeDetalleTicket{
+  margin-left: 8.6em;
+}
+
+.item-close{
+  margin-left: auto;
+  margin-right: 0.5em;
+  margin-top: 0.5em;
 }

@@ -111,7 +111,7 @@
                     <div class="col-2 form-group" style="margin-bottom: 0; margin-top: .5em;">
                         <i class="fas fa-plus-circle icon-back" ng-click="changeView(1)" title="Nuevo Ticket"></i>
                     </div>
-                    <div class="row col-6 filter-tab" style="margin-top: 0.5em;">
+                    <div class="row col-7 filter-tab" style="margin-top: 0.5em;">
                         <div class="col-3 user-info-content user-filter" style="margin-top: 0;">
                             <span ng-click="searchBy('Abierto')" id="spanAbierto">
                                 <i class="fa fa-filter" id="filterAbierto"></i>
@@ -137,7 +137,7 @@
                             </span>
                         </div>
                     </div>
-                    <div class="col-2 offset-2 form-group" style="margin-bottom: 0; margin-top: .5em;">
+                    <div class="col-2 offset-1 form-group" style="margin-bottom: 0; margin-top: .5em;">
                         <input placeholder="Buscar" type="text" autocomplete="off" class="search-filtro form-control form-control-sm mt-0" id="searchTextTicket">
                         <i class="fa fa-search icon-search"></i>
                     </div>
