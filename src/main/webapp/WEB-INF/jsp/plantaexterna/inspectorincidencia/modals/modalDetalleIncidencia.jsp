@@ -145,7 +145,7 @@
                     <button type="button" class="btn btn-success" ng-show="isGenerar"
                         ng-click="generarOTIncidencia()"><i class="fa fa-paper-plane"></i>&nbsp;Generar</button>
                 </div>
-                <div class="pull-right" g-show="isInitDeclinnar">
+                <div class="pull-right" ng-show="isInitDeclinnar">
                     <button type="button" class="btn cerrar-modal-btn btn-ligh"
                         ng-click="cancelarDeclinar()">Cancelar</button>
                     <button type="button" class="btn btn-primary btn-enviar-comentario-ot ripple-surface"
