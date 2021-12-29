@@ -64,8 +64,6 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                 $('#texto_cluster_seleccionado').text('Sin selecci\u00F3n');
             }
         });
-
-
     }
 
 
@@ -114,7 +112,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
         /*
         $q.all([
             inspectorCoberturaService.consultarFallasCoberturaPE(),
-            inspectorCoberturaService.consultarFintrosCoberturaPE(),
+            inspectorCoberturaService.consultarFiltrosCoberturaPE(),
         ]).then(function (results) {
             swal.close();
             if (results[0].data !== undefined) {
@@ -189,6 +187,17 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
         }
     }
 
+    $scope.getFechaFormato = function (fecha) {
+        let fechaPrueba = fecha.split('/');
+        if (fechaPrueba.length > 1) {
+            return fechaPrueba[2] + '-' + fechaPrueba[1] + '-' + fechaPrueba[0];
+        } else {
+            return fecha;
+        }
+
+    }
+
+
     $scope.validarBusqueda = function () {
         let errorMessage = "";
 
@@ -230,12 +239,8 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                 }
             })
 
-            swal({ text: 'Espera un momento...', allowOutsideClick: false });
-            swal.showLoading();
-
-
             $.each(markers, function (i, elemento) {
-                $('#tableCobertura tbody tr:contains("' + elemento.id_marker + '")').css('background', '');
+                $('#incidencia_'+ elemento.id_marker).css('background', '');
                 elemento.setMap(null);
             });
             markers = [];
@@ -243,53 +248,69 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
             map.setZoom(15);
 
             $scope.listaIncidenciasLigar = [];
-
+            
             let params = {
-                idFalla: listFallas,
-                fechaInicio: $("#filtro_fecha_inicio_inspectorCobertura").val(),
-                fechaFin: $("#filtro_fecha_fin_inspectorCobertura").val()
+                idFalla: "41,37,2,21,62,63,64,66,67,23",
+                fechaInicio: $scope.getFechaFormato($("#filtro_fecha_inicio_inspectorCobertura").val()),
+                fechaFin: $scope.getFechaFormato($("#filtro_fecha_fin_inspectorCobertura").val())
             }
-
-            //inspectorCoberturaService.consultarIncidenciasCoberturaPE(params).then(function success(response) {
-            let arrayRow = [];
-            $scope.incidencias = arrayCobertura.data.result;
-            if (coberturaTable) {
-                coberturaTable.destroy();
-            }
-
-            $.each($scope.incidencias, function (i, elemento) {
-                let row = [];
-                row[0] = elemento.idIncidencia;
-                row[1] = elemento.fecha;
-                row[2] = elemento.reporta;
-                row[3] = elemento.catIncidenteDet;
-                row[4] = '<i class="fas fa-globe-americas" style="color:red; cursor:pointer" onclick="pintarUbicacion(' + elemento.idIncidencia + "," + elemento.latitud + "," + elemento.longitud + ",'" + elemento.reporta + "','" + elemento.catIncidenteDet + "','" + elemento.fecha + "'" + ')"></i>';
-                arrayRow.push(row);
-            })
-            coberturaTable = $('#tableCobertura').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": true,
-                "ordering": false,
-                "pageLength": 10,
-                "info": false,
-                "data": arrayRow,
-                "language": idioma_espanol_not_font,
-                "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">'
-            });
-            document.getElementById('tableCobertura_paginate').addEventListener('click', function () {
-                $('#tableCobertura tbody tr').css('background', '');
-                $.each(markers, function (i, elemento) {
-                    $('#tableCobertura tbody tr:contains("' + elemento.id_marker + '")').css('background', '#d3d3d3');
+            swal({ text: 'Espera un momento...', allowOutsideClick: false });
+            swal.showLoading();
+            inspectorCoberturaService.consultarIncidenciasCoberturaPE(params).then(function success(response) {
+                let arrayRow = [];
+                if (coberturaTable) {
+                    coberturaTable.destroy();
+                }
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        if (response.data.result) {
+                            $scope.incidencias = response.data.result.incidencias.detalleIncidencias;
+                            $.each($scope.incidencias, function (i, elemento) {
+                                let row = [];
+                                row[0] = elemento.idIncidencia;
+                                row[1] = elemento.fechaRegistro;
+                                row[2] = elemento.usuarioReporta;
+                                row[3] = elemento.descClasificacionIncidente;
+                                row[4] = '<i class="fas fa-globe-americas" style="color:red; cursor:pointer" onclick="pintarUbicacion(' + elemento.idIncidencia + ')"></i>';
+                                arrayRow.push(row);
+                            })
+                        }
+                    }else{
+                        toastr.error(response.data.resultDescripcion)
+                    }
+                    
+                }else{
+                    toastr.error(response.data.resultDescripcion)
+                }
+                coberturaTable = $('#tableCobertura').DataTable({
+                    "paging": true,
+                    "lengthChange": false,
+                    "searching": true,
+                    "ordering": false,
+                    "pageLength": 10,
+                    "info": false,
+                    "rowId": "idIncidencia",
+                    "data": arrayRow,
+                    "language": idioma_espanol_not_font,
+                    "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+                    'fnCreatedRow': function (nRow, aData, iDataIndex) {
+                        $(nRow).attr('id', 'incidencia_' + aData[0]); // or whatever you choose to set as the id
+                    },
                 });
-                $scope.$apply();
-            })
-            swal.close();
+                document.getElementById('tableCobertura_paginate').addEventListener('click', function () {
+                    $('#tableCobertura tbody tr').css('background', '');
+                    $.each(markers, function (i, elemento) {
+                        $('#incidencia_'+ elemento.id_marker).css('background', '#d3d3d3');
+                    });
+                    $scope.$apply();
+                })
+                swal.close();
+            });
         }
 
     }
 
-    pintarUbicacion = function (id, latitud, longitud, reporta, falla, fecha) {
+    pintarUbicacion = function (id) {
         if (!$("#content_mapa").hasClass('closed')) {
             $("#content_mapa").click();
         }
@@ -300,14 +321,14 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
             if (elemento.id_marker == id) {
                 index = i;
                 isMarker = true;
-                $('#tableCobertura tbody tr:contains("' + id + '")').css('background', '');
+                $('#incidencia_'+ id).css('background', '');
                 elemento.setMap(null);
                 return false;
             }
         });
 
         if (!isMarker) {
-            $scope.printMarker(id, latitud, longitud, reporta, falla, fecha);
+            $scope.printMarker(id);
         } else {
             markers.splice(index, 1);
             $.each(markers, function (i, elemento) {
@@ -330,7 +351,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
     $scope.deleteMarker = function (id) {
         $.each(markers, function (i, elemento) {
             if (elemento.id_marker == id) {
-                $('#tableCobertura tbody tr:contains("' + elemento.id_marker + '")').css('background', '');
+                $('#incidencia_'+ elemento.id_marker).css('background', '');
                 elemento.setMap(null);
                 markers.splice(i, 1);
                 $.each(markers, function (ix, elemento2) {
@@ -345,27 +366,30 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
         })
     }
 
-    $scope.printMarker = function (id, latitud, longitud, reporta, falla, fecha) {
-        $('#tableCobertura  tbody tr:contains("' + id + '")').css('background', '#d3d3d3');
+    $scope.printMarker = function (id) {
+        $(".gm-ui-hover-effect").click();
+
+        let incidencia = $scope.incidencias.find((e) => e.idIncidencia == id);
+        $('#incidencia_'+ id).css('background', '#d3d3d3');
         var contentString = '<div id="content"><div id="siteNotice"></div>' +
             '<h4 id="firstHeading" class="firstHeading"><span class="titleHeading">ID: </span>' + id + '</h4><hr>' +
             '<div id="bodyContent">' +
-            '  <b><strong >Reporta:</strong></b>&nbsp;' + reporta +
-            '  <br><br><b><strong >Falla:</strong></b>&nbsp;' + falla +
-            '  <br><br><b><strong >Fecha:</strong></b>&nbsp;' + fecha +
-            '  <br><br><b><strong >Latitud:</strong></b>&nbsp;' + latitud +
-            '  <br><br><b><strong >Longitud:</strong></b>&nbsp;' + longitud +
-            '  <br><br><button id="inc_' + id + '" class="agregarBtn btn-block btn btn-sm btn-outline-primary" onclick="agregarIncidencia(' + id + ",'" + reporta + "','" + falla + "','" + fecha + "'" + ')">Agregar</button></div></div>';
+            '  <b><strong >Reporta:</strong></b>&nbsp;' + incidencia.usuarioReporta +
+            '  <br><br><b><strong >Falla:</strong></b>&nbsp;' + incidencia.descClasificacionIncidente +
+            '  <br><br><b><strong >Fecha:</strong></b>&nbsp;' + incidencia.fechaRegistro +
+            '  <br><br><b><strong >Latitud:</strong></b>&nbsp;' + incidencia.latitud +
+            '  <br><br><b><strong >Longitud:</strong></b>&nbsp;' + incidencia.longitud +
+            '  <br><button id="inc_' + id + '" class="agregarBtn btn-block btn btn-sm btn-outline-primary" onclick="agregarIncidencia(' + id + ",'" + incidencia.usuarioReporta + "','" + incidencia.descClasificacionIncidente + "','" + incidencia.fechaRegistro + "'" + ')">Agregar</button></div></div>';
 
         var infowindows = new google.maps.InfoWindow({
             content: contentString
         });
         var marker = new google.maps.Marker({
             id_marker: id,
-            position: { lat: parseFloat(latitud), lng: parseFloat(longitud) },
+            position: { lat: parseFloat(incidencia.latitud), lng: parseFloat(incidencia.longitud) },
             map: map,
             animation: google.maps.Animation.DROP,
-            title: reporta,
+            title: incidencia.reporta,
             icon: {
                 path: google.maps.SymbolPath.CIRCLE,
                 scale: 5.5,
@@ -381,10 +405,10 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
         });
 
         markers.push(marker);
-        map.setCenter(new google.maps.LatLng(latitud, longitud));
+        map.setCenter(new google.maps.LatLng(incidencia.latitud, incidencia.longitud));
     }
 
-    //$scope.consultarCoberturas();
+    $scope.consultarCoberturas();
 
     $scope.ligarIncidencias = function () {
         $("#content_mapa").click();
@@ -435,6 +459,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
 
     agregarIncidencia = function (id, reporta, falla, fecha) {
         $scope.listaIncidenciasLigar.push({ id: id, reporta: reporta, falla: falla, fecha: fecha });
+        console.log(id);
         $("#inc_" + id).attr("disabled", true);
         $scope.$apply();
     }
@@ -470,19 +495,18 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
         const fileName = 'Reporte incidencias cobertura';
         const exportType = 'xls';
         window.exportFromJSON({ data, fileName, exportType });
-
         /*
         let params = {
-                idFalla: listFallas,
-                fechaInicio: $("#filtro_fecha_inicio_inspectorCobertura").val(),
-                fechaFin: $("#filtro_fecha_fin_inspectorCobertura").val()          
+            idFalla: "41,37,2,21,62,63,64,66,67,23",
+            fechaInicio: $scope.getFechaFormato($("#filtro_fecha_inicio_inspectorCobertura").val()),
+            fechaFin: $scope.getFechaFormato($("#filtro_fecha_fin_inspectorCobertura").val())
         }
         swal({ text: 'Cargando registros...', allowOutsideClick: false });
         swal.showLoading();
-        //inspectorCoberturaService.consultarIncidenciasCoberturaPE(params).then(function success(response) {
+        inspectorCoberturaService.consultarIncidenciasCoberturaPE(params).then(function success(response) {
             swal.close()
-            if (result.data.respuesta) {
-                const data = JSON.parse(result.data.result)
+            if (response.data.respuesta) {
+                const data = JSON.parse(response.data.result)
                 const fileName = 'Reporte incidencias cobertura'
                 const exportType = 'xls'
      

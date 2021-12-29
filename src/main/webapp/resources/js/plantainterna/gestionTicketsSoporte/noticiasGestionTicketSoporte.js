@@ -24,9 +24,10 @@ app.noticiasGestionTicketSoporte = function ($scope, gestionTicketSoporteService
                     swal.close();
                     mostrarMensajeWarningValidacion('No se encontr&oacute; informaci&oacute;n.')
                 }
-                setTimeout(function () {
-                    $(".container-noticia-elemento").animate({ scrollTop: 100000000 }, 500);
-                }, 400)
+                // setTimeout(function () {
+                //     $(".container-noticia-elemento").animate({ scrollTop: 1000000 }, 500);
+                // }, 400)
+                // $(".container-noticia-elemento").show(500);
             } else {
                 swal.close();
                 mostrarMensajeWarningValidacion(response.data.resultDescripcion)
