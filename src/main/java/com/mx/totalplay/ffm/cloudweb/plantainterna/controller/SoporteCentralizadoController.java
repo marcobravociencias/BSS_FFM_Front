@@ -90,5 +90,15 @@ public class SoporteCentralizadoController {
         }
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
+    
+    @PostMapping("/consultaCuentaClienteTicketSoporte")
+    public ResponseEntity<?> consultaCuentaClienteTicketSoporte(@RequestBody String params){
+    	logger.info("#### consultaCuentaClienteTicketSoporte ### \n" + params);
+        ServiceResponseResult response = soporteCentralizadoService.consultaCuentaClienteTicketSoporte(params);
+        if (response.getResult() instanceof Integer){
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
 
 }

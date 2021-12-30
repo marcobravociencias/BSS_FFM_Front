@@ -135,7 +135,7 @@ public class ImplSoporteCentralizadoService implements SoporteCentralizadoServic
 		logger.info("ImplSoporteCentralizadoService.class [metodo = consultaTicketsSoporte() ] \n"+ gson.toJson(params));
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();		
 		String tokenAcces = principalDetail.getAccess_token();
-        logger.info("consultaTicketsSoporte ##+" + tokenAcces);
+        logger.info("consultaTicketsSoporte ## " + tokenAcces);
         String urlRequest = principalDetail.getDireccionAmbiente().concat(constSoporteCentralizado.getConsultaTicketsSoporte());
         logger.info("URL ##+" + urlRequest);
         
@@ -178,6 +178,25 @@ public class ImplSoporteCentralizadoService implements SoporteCentralizadoServic
 		logger.info("### URL consultaPropietariosTicketSoporte():" + urlRequest);
 		
 		Map<String, String> paramsRequestGet = new HashMap<String, String>();
+		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest, ServiceResponseResult.class, tokenAccess);
+		logger.info("### RESULT consultaPropietariosTicketSoporte(): " + gson.toJson(response));   
+		return response;
+	}
+
+	@Override
+	public ServiceResponseResult consultaCuentaClienteTicketSoporte(String params) {
+		logger.info("ImplSoporteCentralizadoService.class [metodo = consultaCuentaClienteTicketSoporte() ] \n"+ gson.toJson(params));
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String tokenAccess = principalDetail.getAccess_token();
+		logger.info("consultaCuentaClienteTicketSoporte ## "+ tokenAccess);
+		
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constSoporteCentralizado.getConsultaCuentaClienteTicketSoporte());
+		logger.info("### URL consultaCuentaClienteTicketSoporte():" + urlRequest);
+		
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		Map<String, String> paramsRequestGet = new HashMap<String, String>();
+		paramsRequestGet.put("claveCliente", jsonObject.get("claveCliente").getAsString());
+		
 		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest, ServiceResponseResult.class, tokenAccess);
 		logger.info("### RESULT consultaPropietariosTicketSoporte(): " + gson.toJson(response));   
 		return response;
