@@ -1,0 +1,80 @@
+#containerGestionNoticias {
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+    padding-bottom: 1em;
+    background: white;
+    border-radius: .5em;
+    padding-top: 1em;
+    margin-top: 1em;
+    height: 80vh;
+}
+
+.tituloModulo {
+    color: rgb(70, 88, 107);
+    font-weight: bold;
+    padding: .5em;
+    border-bottom: 1px solid #f3f3f3;
+}
+
+.contenedorTituloModulo{
+	text-align: center;
+}
+
+/* -------------------------------------------- */
+
+#arbolGeografia.jstree-checkbox-selection .jstree-wholerow-clicked {
+  background: white;
+}
+
+
+#arbolGeografia .jstree-clicked {
+	background: white;
+  	color: #808080;
+  	box-shadow: inset 0 0 1px #fff;
+}
+
+#arbolGeografia .jstree-search {
+	font-style: italic !important;
+    color: #8b0000 !important;
+    font-weight: bold !important;
+}
+
+.iconoEliminarFoto{
+	color: #f55756
+}
+
+.txtPieFoto{
+	font-size: .8em !important;
+	font-family: 'Montserrat' !important;
+	color: #9d9d9d;
+}
+
+#imgFoto{
+	width: 190px; 
+	height: 190px;
+	object-fit: cover;
+}
+
+#imgFoto{
+	width: 190px; 
+	height: 190px;
+	object-fit: cover;
+}
+
+.etiquetasConsulta {
+    color: #9d9d9d;
+    font-family: 'Montserrat';
+    font-size: .8em;
+    margin-bottom:0;
+}
+
+.txtsConsulta {
+    border: 1px solid #dbdbdb;
+    font-family: 'Montserrat';
+    font-size: 0.6em;
+    color: #818181 !important;
+    transition: all 0.5s ease;
+    border-bottom: 1px solid white;
+    background: white !important;
+    border-radius: .5em !important;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.07),0 1px 2px 0 rgba(0,0,0,.05)!important;
+}
