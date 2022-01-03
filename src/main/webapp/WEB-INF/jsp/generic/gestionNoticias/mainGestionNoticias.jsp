@@ -59,4 +59,5 @@
     <script type="text/javascript">let contex_project = "${pageContext.request.contextPath}";</script>
     <script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/gestionNoticias/gestionNoticiasController.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/gestionNoticias/gestionNoticiasService.js" charset="UTF-8"></script>
 </html>

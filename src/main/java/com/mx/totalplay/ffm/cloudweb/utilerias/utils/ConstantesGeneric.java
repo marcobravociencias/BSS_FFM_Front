@@ -37,4 +37,7 @@ public class ConstantesGeneric implements Serializable{
 	
 	@Value("${guardarOrdenesUniversales}")
 	private String guardarOrdenesUniversales;
+	
+	@Value("${consultarNoticiasGeneric}")
+	private String consultarNoticiasGeneric;
 }
