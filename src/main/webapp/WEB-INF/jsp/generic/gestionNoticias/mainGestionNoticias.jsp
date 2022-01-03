@@ -24,16 +24,89 @@
 	</head>
 	<body id="idBody" ng-controller="gestionNoticiasController" >
     	<jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
-		<div id="container-noticias-pi" class="main-container">
-			<div class="container-visualiza-noticia">
-				<div class="imagen-noticia-previsualizador">
-					
-				</div>
-			</div>
-			<div class="container-datos-crea-noticia">
-                
-			</div>
-		</div>
+        <div class="container">
+            <div id="container-noticias-pi" class="main-container row">
+                <div class="container-visualiza-noticia col-4">
+                    <div class="imagen-noticia-previsualizador">
+                        <span class="text-title" ng-bind="saveObj.tituloPrincipal" ></span>
+                        <span class="text-title" ng-bind="saveObj.tituloSecundario" ></span>
+
+                    </div>
+                </div>
+                <div class="container-datos-crea-noticia col-8">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="container-registro">
+                                <div  ng-show="inhabilidarCamposRegistro" class="capa-inabilitable">
+                                </div>
+                                <form >
+                                    <div class="form  row mb-4">
+                                        <div class="col-12">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" role="switch" ng-model="inhabilidarCamposRegistro" id="inhabilidarCamposRegistro" checked />
+                                                <label class="form-check-label" for="inhabilidarCamposRegistro"> &iquest;Solo imagen? </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <form>
+                                   
+                                    <div class="form row mb-4">
+                                        <div class="col-12">
+                                            <label class="form-label" for="form1Example1">T&iacute;tulo principal</label>
+                                            <input ng-model="saveObj.tituloPrincipal" type="email" id="form1Example1" class="form-control form-control-sm" />
+                                        </div>                                
+                                    </div>                      
+                                    <div class="form row mb-4">
+                                        <div class="col-12">
+                                            <label class="form-label" for="form1Example2">T&iacute;tulo secundario</label>
+                                            <input type="text" ng-model="saveObj.tituloSecundario"  id="form1Example2" class="form-control form-control-sm" />
+                                        </div>                                
+                                    </div>
+                                    <div class="form  row mb-4">
+                                        <div class="col-12">
+                                            <label class="form-label" for="customFile">Seleccionar imagen</label>
+                                            <input type="file" class="form-control form-control-sm" id="customFile" />
+                                        </div>                                 
+                                    </div>
+                                    
+                                    <div class="form  row mb-4">
+                                        <div class="col-12">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" role="switch" ng-model="mostrarFechasDefinidas" id="flexSwitchCheckChecked" checked />
+                                                <label class="form-check-label" for="flexSwitchCheckChecked"> &iquest;Es permanente? </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div ng-show="!mostrarFechasDefinidas" class="form row">
+                                            <div class="col-6">
+                                                <div class="form mb-4">
+                                                    <label class="form-label" for="form1Example1">Fecha inicio</label>
+                                                    <input type="email" id="form1Example1" class="form-control form-control-sm" />
+                                                 </div>                                                           
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form mb-4">
+                                                    <label class="form-label" for="form1Example2">Fecha fin</label>
+                                                    <input type="password" id="form1Example2" class="form-control form-control-sm" />
+                                                 </div>
+                                            </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-block">Registrar noticia</button>
+                                </form>   
+                            </div>
+                                                 
+                        </div>
+                        <div class="col-6">
+                            <div id="jstre-content-geofrafia" class="jstre-content-geofrafia">
+                                
+                            </div>
+                        </div>
+                    </div>
+            
+                </div>
+            </div>
+        </div>
 	</body>
 	<!-- LIBRERIAS JS -->
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.js"></script>
