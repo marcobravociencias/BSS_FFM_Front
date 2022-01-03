@@ -1,10 +1,9 @@
 app.service("gestionNoticiasService", function ($http) {
 
-    this.consultarNoticiasGeneric = function (params) {
+    this.consultarNoticiasGeneric = function () {
         return $http({
             method: "post",
             url: "req/consultarNoticiasGeneric",
-            data:JSON.stringify(params),
             headers: { 'Content-Type': "application/json; charset=utf-8" },
             transformRequest: angular.identity
         });
@@ -13,7 +12,7 @@ app.service("gestionNoticiasService", function ($http) {
     this.registrarNoticia = function (params) {
         return $http({
             method: "post",
-            url: "req/consultarActividadesPMS",
+            url: "req/registrarNoticia",
             data:JSON.stringify(params),
             headers: { 'Content-Type': "application/json; charset=utf-8" },
             transformRequest: angular.identity
@@ -23,7 +22,7 @@ app.service("gestionNoticiasService", function ($http) {
     this.actualizarNoticia = function (params) {
         return $http({
             method: "post",
-            url: "req/consultarActividadesPMS",
+            url: "req/actualizarNoticia",
             data:JSON.stringify(params),
             headers: { 'Content-Type': "application/json; charset=utf-8" },
             transformRequest: angular.identity

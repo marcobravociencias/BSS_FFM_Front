@@ -25,8 +25,28 @@ public class GestionNoticiasController {
 
 	@PostMapping("/consultarNoticiasGeneric")
     public ResponseEntity<?> consultarNoticiasGeneric(){
-		logger.info("#### MisProyectosController - consultarProyectosPMS ### \n");
+		logger.info("#### GestionNoticiasController - consultarNoticiasGeneric ### \n");
 		ServiceResponseResult response = gestionNoticiasService.consultarNoticia();
+		if (response.getResult() instanceof Integer){
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	
+	@PostMapping("/registrarNoticia")
+    public ResponseEntity<?> registrarNoticia(@RequestBody String params){
+		logger.info("#### GestionNoticiasController - registrarNoticia ### \n" + params);
+		ServiceResponseResult response = gestionNoticiasService.registrarNoticia(params);
+		if (response.getResult() instanceof Integer){
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	
+	@PostMapping("/actualizarNoticia")
+    public ResponseEntity<?> actualizarNoticia(@RequestBody String params){
+		logger.info("#### GestionNoticiasController - actualizarNoticia ### \n" + params);
+		ServiceResponseResult response = gestionNoticiasService.actualizarNoticia(params);
 		if (response.getResult() instanceof Integer){
             return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
         }

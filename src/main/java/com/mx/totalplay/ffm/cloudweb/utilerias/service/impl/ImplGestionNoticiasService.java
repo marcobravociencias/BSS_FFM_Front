@@ -39,7 +39,7 @@ public class ImplGestionNoticiasService implements GestionNoticiasService{
 	public ServiceResponseResult consultarNoticia() {
         LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
         String tokenAcces = principalDetail.getAccess_token();
-        String urlRequest = principalDetail.getDireccionAmbiente().concat(constantesAmbiente.getConsultarNoticiasGeneric());
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constantesAmbiente.getGestionNoticiasGeneric());
         logger.info("### URL consultarNoticia(): \n" + urlRequest);
         Map<String, String> paramsRequestGet = new HashMap<>();
         ServiceResponseResult response = restCaller.callGetBearerTokenRequest(
@@ -54,14 +54,32 @@ public class ImplGestionNoticiasService implements GestionNoticiasService{
 
 	@Override
 	public ServiceResponseResult registrarNoticia(String params) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("ImplGestionNoticiasService.class [metodo = registrarNoticia() ]\n");
+		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		String tokenAcces=principalDetail.getAccess_token();
+		logger.info("json object params## "+jsonObject.toString());
+		String url = principalDetail.getDireccionAmbiente().concat(constantesAmbiente.getGestionNoticiasGeneric());
+		ServiceResponseResult response= restCaller.callPostBearerTokenRequest(
+				jsonObject.toString(),
+				url,
+				ServiceResponseResult.class,
+				tokenAcces);
+		logger.info("RESULT busqueda"+gson.toJson(response));
+		return response;
 	}
 
 	@Override
 	public ServiceResponseResult actualizarNoticia(String params) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("ImplGestionNoticiasService.class [metodo = actualizarNoticia() ]\n");
+		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		String tokenAcces=principalDetail.getAccess_token() ;
+		logger.info("json object params## "+jsonObject.toString());
+		String url = principalDetail.getDireccionAmbiente().concat(constantesAmbiente.getGestionNoticiasGeneric()+jsonObject.get("idNoticia"));
+		ServiceResponseResult response=restCaller.callPatchBearerTokenRequest(jsonObject.toString(), url, ServiceResponseResult.class, tokenAcces);
+		logger.info("RESULT actualizarNoticia"+gson.toJson(response));
+		return response;
 	}
 
 }
