@@ -22,126 +22,16 @@
         <!-- CSS INTERNAS -->
         <link href="${pageContext.request.contextPath}/resources/css/generic/gestionNoticias/mainGestionNoticias.css" rel="stylesheet">
 	</head>
-	<body id="idBody" ng-controller="gestionNoticiasController" style="display: none;">
+	<body id="idBody" ng-controller="gestionNoticiasController" >
     	<jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
-		<div class="container" id="container_terceros_generic">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="contenedorTituloModulo">
-						<h5 class="tituloModulo">Noticias</h5>
-					</div>
+		<div id="container-noticias-pi" class="main-container">
+			<div class="container-visualiza-noticia">
+				<div class="imagen-noticia-previsualizador">
+					
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-md-4">
-					<div id="card" class="card">
-			        	<div class="card-body">
-			            	<div class="top-title-ot">
-			                	<div class="content-top-element bars-content">
-						        	<div style="text-align: center; margin-top: 5px;">
-						            	<img alt="" ng-src="./resources/img/plantainterna/despacho/tecnicootasignada.png" class="" id="" />
-						            </div>
-			                    </div>                        
-			                </div>
-			            </div>
-						<div id="" class="card-footer">               
-							<div class="row">
-								<div class="col-md-12">
-									<div class="content_text">
-										<div ng-if="" class="file-delete" style="text-align: center;">
-						                	<span class="txtPieFoto">{{file.nombre}} </span><i class="fa fa-trash" ng-click=""></i>
-										</div>
-										<div ng-if="!file" class="file-delete" style="text-align: center;">
-											<span class="txtPieFoto">Sin fotograf&iacute;a </span>
-										</div>
-									</div>
-								</div>
-							</div>                
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="row">
-						<div class="col-md-12">
-							<label class="titulos-confirmacion">T&iacute;tulo principal: <span class="respuesta-confirmacion" ng-bind=""></span></label>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<label class="titulos-confirmacion">T&iacute;tulo secundario: <span class="respuesta-confirmacion" ng-bind=""></span></label>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<label class="titulos-confirmacion">Detalle: <span class="respuesta-confirmacion" ng-bind=""></span></label>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<label class="titulos-confirmacion">Archivo adjunto: <span class="respuesta-confirmacion" ng-bind=""></span></label>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<label class="titulos-confirmacion">Link externo: <span class="respuesta-confirmacion" ng-bind=""></span></label>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="row">
-						<div class="col-md-12">
-							<label class="titulos-confirmacion">Es permanente: <span class="respuesta-confirmacion" ng-bind=""></span></label>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<label class="titulos-confirmacion">Fecha inicial: <span class="respuesta-confirmacion" ng-bind=""></span></label>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<label class="titulos-confirmacion">Fecha final: <span class="respuesta-confirmacion" ng-bind=""></span></label>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-6">
-					<h6 class="text-center titulo-opciones">FFM TOTALPLAY *</h6>
-		            <hr/>
-		            <div class="col-md-12">
-		                <div class="row">
-		                	<div class="col-md-12">
-								<div class="input-group input-group-sm content-seach-group">
-									<input id="buscadorGeografiaRegistro" type="text" class="form-control buscadorGenerico" placeholder="Buscar geograf&iacute;a" ng-keyup="busquedaGeografiaRegistro()"> 
-									<span class="fa fa-search iconoBusqueda"></span>
-								</div>
-							</div>
-		                    <div class="scrollGeneralArbol">
-		                    	<div id="arbolGeografiaRegistro" class="jstree-proton-3 proton-demo">										
-								</div>
-		                    </div>
-		                </div>
-		            </div>
-				</div>
-				<div class="col-md-6">
-					<h6 id="labelGeografiasSeleccionadas" class="text-center titulo-opciones">SELECCIONADAS</h6>
-		            <hr/>
-		            <div class="col-md-12">
-		                <div class="row">
-			                <div id="contenedorGeografiasRegistro" class="scrollGeneralArbol">
-				                <div class="row padding_resumen_ciudades" ng-repeat="ciudad in listaGeografiasSeleccionadas track by $index">
-				                    <div class="col-md-6">
-				                        <span class="text-body-table-arbol" ng-bind="ciudad.nombre"></span>
-				                    </div>
-				                    <div class="col-md-6">
-										<li class="item_ciudad_resum text-body-table-arbol" ng-repeat="distrito in ciudad.hijos" ng-bind="distrito.text"></li>
-				                    </div>
-				                </div>
-			                </div>
-			            </div>
-					</div>
-				</div>
+			<div class="container-datos-crea-noticia">
+                
 			</div>
 		</div>
 	</body>

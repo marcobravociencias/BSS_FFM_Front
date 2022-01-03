@@ -72,6 +72,12 @@ public class GenericController {
 		return "utilerias/parametrosasignacion/asignacionAutomatica";
 	}
 	
+	@GetMapping("/noticiasAppFFM")
+	public String noticiasAppFFM(){
+		logger.info("ENTRA DECISION");
+		return "generic/gestionNoticias/mainGestionNoticias";
+	}
+	
 	@GetMapping("/descargaLogFile/{fileName:.+}")
 	public void downloadLoggerFile(HttpServletRequest request, HttpServletResponse response,
 								   @PathVariable("fileName")String fileName){
