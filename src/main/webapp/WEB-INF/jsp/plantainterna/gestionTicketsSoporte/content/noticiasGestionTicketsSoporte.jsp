@@ -10,11 +10,9 @@
             <li class="nav-item">
                 <a class="nav-link" id="comentariosTicket-tab" data-toggle="tab" href="#comentariosTicket" role="tab" aria-controls="comentariosTicket" aria-selected="false">COMENTARIOS</a>
             </li>
-            <li class="nav-item item-close">
-                <button type="button" class="close" id="closeDetalleTicket" ng-click="closeDetalleTicketSoporte()">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </li>
+            <button type="button" class="close" id="closeDetalleTicket" ng-click="closeDetalleTicketSoporte()">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </ul>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="detalleTicket" role="tabpanel" aria-labelledby="detalleTicket-tab">
@@ -31,20 +29,55 @@
                                 <div class="container-text-content-detalle"><span class="text-content-ticket">103430445</span></div>
                             </div>
                             <div class="container-fluid ticket-content">
+                                <div class="container-text-title-detalle"><span class="text-tile-ticket">PLAZA</span></div>
+                                <div class="container-text-content-detalle"><span class="text-content-ticket">CIUDAD DE MEXICO-CENTRO</span></div>
+                            </div>
+                            <div class="container-fluid ticket-content">
                                 <div class="container-text-title-detalle"><span class="text-tile-ticket">DISTRITO</span></div>
                                 <div class="container-text-content-detalle"><span class="text-content-ticket">CONDESA D</span></div>
                             </div>                     
                             <div class="container-fluid ticket-content">
-                                <div class="container-text-title-detalle"><span class="text-tile-ticket">PLAZA</span></div>
-                                <div class="container-text-content-detalle"><span class="text-content-ticket">CIUDAD DE MEXICO-CENTRO</span></div>
+                                <div class="container-text-title-detalle"><span class="text-tile-ticket">TEL&Eacute;FONO</span></div>
+                                <div class="container-text-content-detalle"><span class="text-content-ticket">7711828350</span></div>
                             </div>
                             <div class="container-fluid ticket-content">
                                 <div class="container-text-title-detalle"><span class="text-tile-ticket">ESCALADA POR</span></div>
                                 <div class="container-text-content-detalle"><span class="text-content-ticket">SISTEMAS SISTEMAS2 VISUET</span></div>
                             </div>
                             <div class="container-fluid ticket-content">
-                                <div class="container-text-title-detalle"><span class="text-tile-ticket">TEL&Eacute;FONO</span></div>
-                                <div class="container-text-content-detalle"><span class="text-content-ticket">7711828350</span></div>
+                                <div class="container-text-title-detalle"><span class="text-tile-ticket">TIPO DE ORDEN</span></div>
+                                <div class="container-text-content-detalle"><span class="text-content-ticket">INSTALACI&Oacute;N</span></div>
+                            </div>
+                            <div class="container-fluid ticket-content">
+                                <div class="container-text-title-detalle"><span class="text-tile-ticket">TIPO DE NEGOCIO</span></div>
+                                <div class="container-text-content-detalle"><span class="text-content-ticket">EMPRESARIAL</span></div>
+                            </div>
+                            <div class="container-fluid ticket-content">
+                                <div class="container-text-title-detalle"><span class="text-tile-ticket">REGI&Oacute;N</span></div>
+                                <div class="container-text-content-detalle"><span class="text-content-ticket">COLOMBIA</span></div>
+                            </div>
+                            <div class="container-fluid ticket-content">
+                                <div class="container-text-title-detalle"><span class="text-tile-ticket">TECNOLOG&Iacute;A</span></div>
+                                <div class="container-text-content-detalle"><span class="text-content-ticket">NCE</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="divider-noticias" style="width: 100%;height: 1px; background: gainsboro;"></div>
+                <div class="col-12" style="margin-top: 1em; margin-bottom: 1em;">
+                    <div class="row">
+                        <div class="col-8 offset-2">
+                            <div class="container-fluid ticket-content">
+                                <div class="container-text-title-detalle"><span class="text-tile-ticket">FALLA</span></div>
+                                <div class="container-text-content-detalle"><span class="text-content-ticket">SISTEMAS SISTEMAS2 VISUET</span></div>
+                            </div>
+                            <div class="container-fluid ticket-content">
+                                <div class="container-text-title-detalle"><span class="text-tile-ticket">CATEGOR&Iacute;A</span></div>
+                                <div class="container-text-content-detalle"><span class="text-content-ticket">SISTEMAS SISTEMAS2 VISUET</span></div>
+                            </div>
+                            <div class="container-fluid ticket-content">
+                                <div class="container-text-title-detalle"><span class="text-tile-ticket">SUBCATEGOR&Iacute;A</span></div>
+                                <div class="container-text-content-detalle"><span class="text-content-ticket">SISTEMAS SISTEMAS2 VISUET</span></div>
                             </div>
                         </div>
                     </div>
@@ -52,7 +85,36 @@
             </div>
             <div class="tab-pane fade" id="asignarTicket" role="tabpanel" aria-labelledby="asignarTicket-tab">
                 <div class="divider-noticias" style=" width: 100%;height: 1px; background: gainsboro;"></div>
-                ...
+                <div class="col-12" style="margin-top: 1em; margin-bottom: 1em;">
+                    <div class="col-12">
+                        <div class="row" style="margin-right: 3%;">
+                            <div class="col-11" style="margin-left: 7%;">
+                                <input placeholder="Buscar" type="text" autocomplete="off" class="search-filtro form-control form-control-sm mt-0" id="">
+                                <i class="fa fa-search icon-search"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div ng-repeat="tecnico in listadoTecnicosTicket" style="margin-right: 10%; margin-left: 10%;">
+                        <div id="{{tecnico.id}}" class="valign-wrapper tecnicosDiv" ng-class="{'tecnico_seleccionado':ticketSoporteR.idTecnico==tecnico.id}" ng-click="">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-2 media-image online pr-0" style="padding-left: 0;">
+                                        <img src="./resources/img/plantainterna/despacho/tecnicootasignada.png"
+                                            class="circle z-depth-2 responsive-img">
+                                    </div>
+                                    <div id="{{tecnico.id}}" class="col-8 pl-0">
+                                        <p class="text-tecnico-nombre">{{tecnico.nombre}}</p>
+                                        <p class="text-adds-teccnico">{{tecnico.telefono}}</p>
+                                    </div>
+                                    <div class="col-2 icono_check_tecnico mt-1" style="display:none;">
+                                        <i id="checkTecnico" style="color: rgb(0, 128, 0); margin-top: 0.4em; float: right;"
+                                            class="fa fa-check fa-2" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
             </div>
             <div class="tab-pane fade" id="comentariosTicket" role="tabpanel" aria-labelledby="comentariosTicket-tab" ng-init="consultarComentariosTicketSoporte()">
                 <div class="divider-noticias" style="width: 100%; height: 1px; background: gainsboro;"></div>
@@ -190,7 +252,7 @@
                             <div class="box__input">
                                 <input name="myFile" type="file" class="box__file inputFile" id="fileComentariosTicket">
                                 <label for="fileComentariosTicket" id="etiqueta_archivo">
-                                <span class="text_select_archivo col-content-text-general" style="margin-left: -500px; font-size: 1em;">Adjuntar archivo</span>
+                                <span class="text_select_archivo col-content-text-general" style="margin-left: -440px; font-size: 1em;">Adjuntar archivo</span>
                             </div>
                         </form>
                     </div>

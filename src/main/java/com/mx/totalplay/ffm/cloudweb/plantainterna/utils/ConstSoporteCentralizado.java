@@ -32,5 +32,8 @@ public class ConstSoporteCentralizado {
     
     @Value("${consultaPropietariosTicketSoporte}")
     private String consultaPropietariosTicketSoporte;
+    
+    @Value("${consultaCuentaClienteTicketSoporte}")
+    private String consultaCuentaClienteTicketSoporte;
 
 }

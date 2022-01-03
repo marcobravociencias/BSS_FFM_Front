@@ -288,7 +288,8 @@ span.text-content-ticket {
 }
 
 #closeDetalleTicket{
-  margin-left: 8.6em;
+  margin-left: auto;
+  margin-right: 0.5em;
 }
 
 .item-close{

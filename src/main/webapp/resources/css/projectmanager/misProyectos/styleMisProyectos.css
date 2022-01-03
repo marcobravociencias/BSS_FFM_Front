@@ -1,0 +1,71 @@
+
+.content-left-grafica {
+    box-shadow: 8px 10px 10px -6px #0000004b;
+    z-index: 4;
+}
+/* PRIMER NIVEL */
+.menu-primer-nivel {
+    font-size: 14px;
+    font-family: 'Montserrat';
+    line-height: 68px!important;
+    text-align: left;
+    color: #555555;
+    padding-left: 30px;
+    cursor: pointer;
+}
+.is-even-primer-nivel {
+    background-color: #F9F7FD;
+}
+.is-odd-primer-nivel {
+    background-color: #FFFFFF;
+}
+
+/* SEGUNDO NIVEL */
+.menu-segundo-nivel {
+    font-size: 14px;
+    font-family: 'Montserrat';
+    line-height: 45px!important;
+    text-align: left;
+    color: #555555;
+    padding-left: 40px;
+    cursor: pointer;
+}
+.is-even-segundo-nivel {
+    background-color: #EAE8F6;
+}
+.is-odd-segundo-nivel {
+    background-color: #E4E1F4;
+}
+
+/* TERCER NIVEL */
+.menu-tercer-nivel {
+    font-size: 14px;
+    font-family: 'Montserrat';
+    line-height: 35px!important;
+    text-align: left;
+    color: #555555;
+    padding-left: 50px;
+    cursor: pointer;
+}
+.is-even-tercer-nivel {
+    background-color: #EAE8F6;
+}
+.is-odd-tercer-nivel {
+    background-color: #E4E1F4;
+}
+
+/* CUARTO NIVEL */
+.menu-cuarto-nivel {
+    font-size: 14px;
+    font-family: 'Montserrat';
+    line-height: 35px!important;
+    text-align: left;
+    color: #555555;
+    padding-left: 60px;
+}
+.is-even-cuarto-nivel {
+    background-color: #EAE8F6;
+}
+.is-odd-cuarto-nivel {
+    background-color: #E4E1F4;
+}
