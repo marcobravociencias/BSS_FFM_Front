@@ -287,9 +287,10 @@ span.text-content-ticket {
   margin-bottom: 25px;
 }
 
-/* #closeDetalleTicket{
-  margin-left: 8.6em;
-} */
+#closeDetalleTicket{
+  margin-left: auto;
+  margin-right: 0.5em;
+}
 
 .item-close{
   margin-left: auto;

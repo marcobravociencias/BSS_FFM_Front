@@ -2500,3 +2500,11 @@ img.img-sap-materiales {
 	font-size: 0.9em !important;
 	font-family: "Montserrat" !important;	
 }
+
+.total-materiales{
+    color: #1b68c0 !important;
+    font-weight: bold;
+    font-size: 1em !important;     
+    border-bottom: 2px solid #1b68c0 !important;
+}
+

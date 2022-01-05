@@ -456,6 +456,34 @@ p.text-adds-teccnico {
     cursor: pointer;
 }
 
+#tecnicosCuentaTable tr td {
+    font-size: 0.7em !important;
+    font-family: "Montserrat" !important;
+    text-align: center;
+    border-top: 1px white solid;
+    border-bottom: 1px white solid;
+}
+
+thead#thead_tecnicosCuenta tr th {
+    font-size: 0.7em;
+    padding: 1em 1em 1em;
+    text-align: center;
+    border-top: 1px white solid;
+    border-bottom: 1px solid #ccc;
+}  
+#thead_tecnicosCuenta .fa {
+    font-size: 13px;
+    color: gray;
+}
+thead#thead_tecnicosCuenta {
+    font-weight: bold !important;
+    border: 1px #ccc;
+    font-family: "Montserrat" !important;
+}
+
+#tecnicosCuentaTable img {
+    box-shadow: 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%), 0 2px 4px -1px rgb(0 0 0 / 30%);
+}
 #ingenierosTable img{
     box-shadow: 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%), 0 2px 4px -1px rgb(0 0 0 / 30%);
 }

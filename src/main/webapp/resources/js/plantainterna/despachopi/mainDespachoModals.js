@@ -415,8 +415,8 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
            console.log("data materiales ",response.data)           
            if( response.data.respuesta){
                 if (response.data.result) {                    
-                    params.centro=response.data.result.almacen;
-                    params.almacen=response.data.result.centro;
+                    params.centro=response.data.result.centro;
+                    params.almacen=response.data.result.almacen;
                     tecnicoTemp.centro=params.centro
                     tecnicoTemp.almacen=params.almacen
                     $scope.tecnicoConsultaMateriales=tecnicoTemp
@@ -435,28 +435,47 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
            }
         }).catch(err => handleError(err))
     }
-
+    function transformarTextCantidad(num){
+        return  ( num && num != '' && num != '0' ) ?   parseInt( num )  : "0"
+	}
+	function transformarTextPrecio(num){
+		if( ( num && num != '' && num != '0' ) ){
+			return ( Math.round( parseFloat( num ) * 100) / 100 ).toFixed(2);
+		} else{
+			return '0.00'
+		}
+	}
+    function isNumeric(val) {
+        return /^-?\d+$/.test(val);
+    }
     $scope.consultarMaterialesPorCentroAlmacenUser=function(params){
+        $scope.totalMaterialesModal=0
         mainDespachoService.consultaMaterialesPorAlmacenUserCentro(params).then(function success(response) {
             console.log(response)
             if (response.data.respuesta) {
                 if (response.data.result) {
                     let tempArrayResult=response.data.result.materiales
+                    
                     angular.forEach(tempArrayResult,function(elem,index){
+                        if( !isNaN( elem.precio ) ){
+                            $scope.totalMaterialesModal+=  ( Math.round( parseFloat( elem.precio  ) * 100) / 100 )
+                        }
+
                         $("#table-materiales-temp tbody").append(`
                             <tr>
                                 <td >${elem.sku} </td>
                                 <td >${elem.descripcion} </td>
                                 <td >${elem.lote} </td>
-                                <td >${elem.cantidad} </td>
+                                <td >${ transformarTextCantidad(elem.cantidad) } </td>
                                 <td >${elem.unidadMedida} </td>
-                                <td >${elem.precio} </td>
+                                <td >$ ${ transformarTextPrecio(elem.precio) }  </td>
                                 <td >${elem.familia} </td>
                                 <td >${elem.categoria} </td>
                                 <td >${elem.grupo} </td>
                             </tr>
                         `)
                     })
+                    $scope.totalMaterialesModal='$ '+ transformarTextPrecio( $scope.totalMaterialesModal )
                     $scope.inicializarTableMateriales()
                     swal.close()
                     $("#modalMaterialesOperario").modal('show')                            
@@ -464,12 +483,15 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                     swal.close()
                     mostrarMensajeWarningValidacion('No se encontro informaci&oacute;n.')
                     $scope.inicializarTableMateriales()
+                    $scope.totalMaterialesModal='$ '+ transformarTextPrecio( $scope.totalMaterialesModal )
+
 
                 }
             } else {
                 swal.close()
                 mostrarMensajeErrorAlert(response.data.resultDescripcion)
                 $scope.inicializarTableMateriales()
+                $scope.totalMaterialesModal='$ '+ transformarTextPrecio( $scope.totalMaterialesModal )
 
             }
          }).catch(err => handleError(err))

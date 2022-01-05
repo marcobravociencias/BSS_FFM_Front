@@ -63,7 +63,12 @@
                       <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Almacen</span></div>
                       <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="tecnicoConsultaMateriales.almacen || 'Sin dato'"></span>
                       </div>
-                  </div>                  
+                  </div>    
+                  <div class="container-fluid vehiculo-content">
+                      <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Total materiales</span></div>
+                      <div class="container-text-content-detalle"><span class="text-content-vehiculo total-materiales ng-binding" ng-bind="totalMaterialesModal || 'Sin dato'"></span>
+                      </div>
+                  </div>               
                 </div>
                 <div class="col-4">
                     <img class="img-sap-materiales" src="${pageContext.request.contextPath}/resources/img/logotipos/SAP.svg"  alt="" loading="lazy" />   

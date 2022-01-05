@@ -30,7 +30,7 @@ app.service("gestionTicketSoporteService", function ($http) {
 
 
     /**cambios jose */
-    this.consultarComentariosNoticiasSF = function(params) {
+    this.consultarComentariosNoticiasSF = function (params) {
         return $http({
             method: "post",
             url: "req/consultaComentariosNoticiasSF",
@@ -40,7 +40,7 @@ app.service("gestionTicketSoporteService", function ($http) {
         })
     }
 
-    this.crearNoticia = function(params) {
+    this.crearNoticia = function (params) {
         return $http({
             method: "post",
             url: "req/agregarComentariosNoticiaSF",
@@ -50,7 +50,7 @@ app.service("gestionTicketSoporteService", function ($http) {
         })
     }
 
-    this.crearSubNoticia = function(params) {
+    this.crearSubNoticia = function (params) {
         return $http({
             method: "post",
             url: "req/agregarSubComentarioNoticiaSF",
@@ -119,17 +119,35 @@ app.service("gestionTicketSoporteService", function ($http) {
             method: "post",
             url: "req/consultaTicketsSoporte",
             data: JSON.stringify(params),
-            headers: {'Content-Type': "application/json; charset=utf-8"},
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
             transformRequest: angular.identity
         });
     }
 
-    this.consultaCuentaClienteTicketSoporte = function (params){
+    this.consultaCuentaClienteTicketSoporte = function (params) {
         return $http({
             method: "post",
             url: "req/consultaCuentaClienteTicketSoporte",
             data: JSON.stringify(params),
-            headers: {'Content-Type': "application/json; charset=utf-8"},
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
+            transformRequest: angular.identity
+        });
+    }
+
+    this.consultaCatalogoRegionTicketSoporte = function () {
+        return $http({
+            method: "post",
+            url: "req/consulCatalogoGeografiaGeneralDespacho",
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
+            transformRequest: angular.identity
+        });
+    }
+    
+    this.consultarCatalogoTipoOrdenTicketSoporte = function () {
+        return $http({
+            method: "post",
+            url: "req/consultarCatalogoTipoOrdenGeneralDespacho",
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
             transformRequest: angular.identity
         });
     }
