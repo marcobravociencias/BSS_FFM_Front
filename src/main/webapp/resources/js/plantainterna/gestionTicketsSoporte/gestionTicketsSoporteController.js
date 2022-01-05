@@ -18,6 +18,17 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     $scope.ticketSoporteR = {};
     $scope.tecnicoSeleccionado = '';
     $scope.categoriaSoporte = {};
+    $scope.ticketSoporteDetalle = {}
+    let ingenieroTable = $('#ingenierosTable').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "ordering": false,
+        "pageLength": 10,
+        "info": false,
+        "autoWidth": true,
+        "language": idioma_espanol_not_font,
+        "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+    });
 
     app.noticiasGestionTicketSoporte($scope, gestionTicketSoporteService);
 
@@ -467,7 +478,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                             $.each($scope.ticketsSoporte, function (i, elemento) {
                                 let row = [];
                                 row[0] = elemento.idOrden !== undefined ? elemento.idOrden : 'Sin informaci&oacute;n';
-                                row[1] = elemento.ticket == null ? 'Sin informaci&oacute;n' : elemento.ticket !== undefined ? elemento.ticket : 'Sin informaci&oacute;n';
+                                row[1] = elemento.idTicket == null ? 'Sin informaci&oacute;n' : elemento.idTicket !== undefined ? elemento.idTicket : 'Sin informaci&oacute;n';
                                 row[2] = elemento.os !== undefined ? elemento.os : 'Sin informaci&oacute;n';
                                 row[3] = elemento.fechaCreacion !== undefined ? elemento.fechaCreacion : 'Sin informaci&oacute;n';
                                 row[4] = elemento.descripcionFalla !== undefined ? elemento.descripcionFalla : 'Sin informaci&oacute;n';
@@ -477,8 +488,10 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                                 row[8] = elemento.fechaAsignacion == null ? 'Sin informaci&oacute;n' : elemento.fechaAsignacion !== undefined ? elemento.fechaAsignacion : 'Sin informaci&oacute;n';
                                 row[9] = elemento.descripcionEstatus !== undefined ? elemento.descripcionEstatus : 'Sin informaci&oacute;n';
                                 row[10] = elemento.tiempoAtencion == null ? 'Sin informaci&oacute;n' : elemento.tiempoAtencion !== undefined ? elemento.tiempoAtencion : 'Sin informaci&oacute;n';
-                                row[11] = '<a class="" id="detalleIncidencia' + elemento.ticket + '" onclick="consultaDetalleTicketSoporte(' + "'" + elemento.idOrden + "'" + ')" >' +
+                                row[11] = '<a class="" id="detalleIncidencia' + elemento.idTicket + '" onclick="consultaDetalleTicketSoporte(' + "'" + elemento.idTicket + "'" + ')" >' +
                                     '<i class="fa fa-bars" style="background-color: #58b3bf" title="Detalle"></i>' +
+                                    '</a> <a class="" id="detalleIncidencia' + elemento.idTicket + '" onclick="abrirModalAsignar(' + "'" + elemento.idTicket + "'" + ')" >' +
+                                    '<i class="fa fa-user-circle" style="background-color: #58b3bf" title="Asigar"></i>' +
                                     '</a>';
 
                                 arrayRow.push(row);
@@ -551,12 +564,46 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         }).catch(swal.noop);
     }
 
-    consultaDetalleTicketSoporte = function () {
+    $scope.accionesDinamicasDetalle = []
+    $scope.escalamientoListDetalle = []
+    $scope.estadoEscalamientoDetalle = []
+    $scope.ticketDetalle = 0
+    consultaDetalleTicketSoporte = function (ticket) {
+        $scope.ticketDetalle = ticket
+        $scope.ticketSoporteDetalle = {}
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         // $scope.changeView(3);
-        $("#container_noticias_ticket").show();
+       // $("#container_noticias_ticket").show();
         // $scope.consultarComentariosTicketSoporte();
-        swal.close();
+        $('#modalDetalle').modal('show')
+        $q.all([
+            gestionTicketSoporteService.consultarAccionesDinamicaDetalle(),
+            gestionTicketSoporteService.consultaPropietariosTicketSoporte()
+        ]).then(result => {
+            console.log(result)
+            swal.close();
+            if (result[0].data.respuesta) {
+                if (result[0].data.result) {
+                    $scope.accionesDinamicasDetalle = result[0].data.result.acciones
+                } else {
+                    mostrarMensajeWarningValidacion('No se pudo realizar la consulta de catalogos.')
+                }
+            } else {
+                mostrarMensajeWarningValidacion('No se pudo realizar la consulta de catalogos.')
+            }
+            if (result[1].data.respuesta) {
+                if (result[1].data.result) {
+                    $scope.escalamientoListDetalle = result[1].data.result.propietarios
+                    $scope.estadoEscalamientoDetalle = result[1].data.result.propietarios.filter(elemento => {return elemento.nivel === 1})
+                } else {
+                    mostrarMensajeWarningValidacion('No se pudo realizar la consulta de motivos.')
+                }
+            } else {
+                mostrarMensajeWarningValidacion('No se pudo realizar la consulta de motivos.')
+            }
+        }).catch((err) => handleError(err));
+
+        
     }
 
     $scope.closeDetalleTicketSoporte = function () {
@@ -632,6 +679,188 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             }
         }).catch(swal.noop);
     }
+
+
+    //Cambios Jose
+    $scope.ticketSelect = ''
+    abrirModalAsignar = function(ticket){
+        $scope.ticketSelect = ticket
+        let params = {
+            idsGeografia:[129,133,130,132,131,100,103,102,101,128,125,127,126,118,119,121,122,123,120,117,134,135,136,109,113,112,105,110,111,116,106,114,107,115,108],
+            idTipoUsuario:[7]
+        }
+        if (ingenieroTable) {
+            ingenieroTable.destroy();
+        }
+        swal({ text: 'Espera un momento...', allowOutsideClick: false });
+        swal.showLoading();
+        gestionTicketSoporteService.consultarUsuariosPorPuesto(params).then((response) => {
+            console.log(response)
+            swal.close()
+            $('#modalAsigarTicket').modal('show')
+            if (response.data.respuesta) {
+                if (response.data.result) {
+                    $scope.initTableingeniero(response.data.result.usuarios);
+                } else {
+                    mostrarMensajeWarningValidacion('No hay ingenieros')
+                }
+            } else {
+                mostrarMensajeWarningValidacion('No se pudo realizar la operaci&oacute;n')
+            }
+        }).catch((err) => handleError(err));
+        
+    }
+
+    $scope.initTableingeniero = function(data){
+        let imgDefault = './resources/img/plantainterna/despacho/tecnicootasignada.png';
+        let arraRow = []
+        data.forEach(ingeniero => {
+            let array = []
+            let url = imgDefault
+            if (ingeniero.urlFoto) {
+                url = ingeniero.urlFoto
+            }
+
+            array[0] = '<img style="cursor:pointer;border-radius: 25px" src="' + url + '" alt="Foto" width="30" height="30" onclick="showImage(' + "'" + ingeniero.noEmpleado + "', 'usuario'" + ')"/>';
+            array[1] = ingeniero.noEmpleado ? ingeniero.noEmpleado : 'Sin informaci&oacute;n';
+            array[2] = ingeniero.nombreCompleto ? ingeniero.nombreCompleto : 'Sin informaci&oacute;n';
+            array[3] = ingeniero.geografia ? ingeniero.geografia : 'Sin informaci&oacute;n';
+            array[4] = ingeniero.fechaActualizacion ? ingeniero.fechaActualizacion : 'Sin informaci&oacute;n';
+            array[5] = '<input class="form-check-input" type="checkbox" onclick="selectIngeniero(\''+ ingeniero.noEmpleado +'\')" value="" id="selectIngenieroCheck'+ ingeniero.noEmpleado +'"/>';
+            arraRow.push(array)
+        })
+        ingenieroTable = $('#ingenierosTable').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "ordering": false,
+            "pageLength": 10,
+            "info": false,
+            "data": arraRow,
+            "autoWidth": true,
+            "language": idioma_espanol_not_font,
+            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+        });
+    }
+
+    $scope.ingenieroSelect = '';
+    selectIngeniero = function(ingeniero){
+        if (document.getElementById('selectIngenieroCheck' + ingeniero).checked) {
+            if ($scope.ingenieroSelect !== '') {
+                console.log(document.getElementById('selectIngenieroCheck' + $scope.ingenieroSelect))
+                document.getElementById('selectIngenieroCheck' + $scope.ingenieroSelect).checked = false;
+            }
+            $scope.ingenieroSelect = ingeniero
+        } else {
+            $scope.ingenieroSelect = ''
+        }
+        
+        
+    }
+
+
+    $scope.siguenteAsignar = function(){
+        
+        if ($scope.ingenieroSelect) {
+            $('#modalAsigarTicket').modal('hide')
+            swal({
+                title: 'Comentarios',
+                input: 'textarea',
+                closeOnClickOutside: false,
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Asignar'
+            }).then((result) => {
+                $scope.asignarTicketIngeniero(result)
+            }).catch((result) =>{
+                $('#modalAsigarTicket').modal('show')
+            })
+        } else {
+            mostrarMensajeWarningValidacion('Seleccione un ingeniero')
+        }
+
+    }
+
+    $scope.asignarTicketIngeniero = function(comentario){
+        let params = {
+            idTicket: Number($scope.ticketSelect),
+            idIngenieroSoporte: Number($scope.ingenieroSelect),
+            comentarios: comentario
+        }
+        swal({ text: 'Espera un momento...', allowOutsideClick: false });
+        swal.showLoading();
+        gestionTicketSoporteService.asigarTicketIngeniero(params).then((response) => {
+            console.log(response)
+            swal.close()
+            if (response.data.respuesta) {
+                if (response.data.result) {
+                    
+                } else {
+                    mostrarMensajeWarningValidacion('No hay ingenieros')
+                }
+            } else {
+                mostrarMensajeWarningValidacion('No se pudo realizar la operaci&oacute;n')
+            }
+        }).catch((err) => handleError(err));
+    }
+
+    $scope.fallaList = []
+    $scope.categoriaListD = []
+    $scope.subcategoriaListD = []
+    $scope.iniciarCatalogoFallaDetalle = function(){
+        $scope.fallaList = $scope.catalogoFallasTicketSoporte.filter(elemento =>{ return elemento.nivel === 1 })
+    }
+
+    $scope.motivoEscalamientoDetalle = []
+    $scope.motivosSelectDetalle = function(){
+        $scope.motivoEscalamientoDetalle = $scope.escalamientoListDetalle.filter(elemento => {return elemento.nivel === 2 && elemento.idPadre === $scope.ticketSoporteDetalle.estado.id})
+    }
+
+    $scope.guardarTicketDetalle = function(){
+        let params;
+        if ($scope.ticketSoporteDetalle.estatus) {
+            if ($scope.ticketSoporteDetalle.estatus === 'escalacion') {
+                params = {
+                    idTicket: Number($scope.ticketDetalle),
+                    comentarios: $scope.ticketSoporteDetalle.comentarios,
+                    idPropietario: $scope.ticketSoporteDetalle.estado.id,
+                    idPropietarioSf: $scope.ticketSoporteDetalle.estado.idSalesforce,
+                    idMotivoPropietario: $scope.ticketSoporteDetalle.motivo.id,
+                    idMotivoSf: $scope.ticketSoporteDetalle.motivo.idSalesforce,
+                    tipo: $scope.ticketSoporteDetalle.estatus
+                }
+            } else{
+                params = {
+                    idTicket: Number($scope.ticketDetalle),
+                    comentarios: $scope.ticketSoporteDetalle.comentarios,
+                    tipo: $scope.ticketSoporteDetalle.estatus
+                }
+            }
+        } 
+
+        swal({ text: 'Espera un momento...', allowOutsideClick: false });
+        swal.showLoading();
+        gestionTicketSoporteService.guardarTicketDetalle(params).then(response => {
+            console.log(response)
+            swal.close()
+            if (response.data.respuesta) {
+                if (response.data.result) {
+                    $('#modalDetalle').modal('hide')
+                    mostrarMensajeExitoAlert(response.data.result.mensaje)
+                } else {
+                    mostrarMensajeWarningValidacion(response.data.result.mensaje)
+                }
+            } else {
+                mostrarMensajeWarningValidacion('No se pudo realizar la operaci&oacute;n')
+            }
+        }).catch((err) => handleError(err));
+    }
+
+    document.getElementById('searchTableIngeniero').addEventListener('keyup', function(){
+        ingenieroTable.search(this.value).draw();
+    })
+    //fin cambios Jose
 }]);
 
 angular.element(document).ready(function () {

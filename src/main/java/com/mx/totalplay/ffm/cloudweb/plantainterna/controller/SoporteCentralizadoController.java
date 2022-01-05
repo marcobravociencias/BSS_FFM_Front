@@ -101,4 +101,45 @@ public class SoporteCentralizadoController {
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
 
+    //Cambios Jose
+    @PostMapping("/asignarIngenieroTicket")
+    public  ResponseEntity<?> asignarIngenieroTicket(@RequestBody String params){
+        logger.info("#### asignarIngenieroTicket ### \n" + params);
+        ServiceResponseResult response = soporteCentralizadoService.asignarIngenieroTicket(params);
+        if (response.getResult() instanceof Integer){
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping("/consultarAccionesDinamicaDetalle")
+    public ResponseEntity<?> consultarAccionesDinamicaDetalle(){
+        logger.info("#### consultarAccionesDinamicaDetalle() ###");
+        ServiceResponseResult response = soporteCentralizadoService.consultarAccionesDinamicaDetalle();
+        if (response.getResult() instanceof Integer){
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping("/consultaPropietariosTicketSoporte")
+    public ResponseEntity<?> consultaPropietariosTicketSoporte(){
+        logger.info("#### consultaPropietariosTicketSoporte() ###");
+        ServiceResponseResult response = soporteCentralizadoService.consultaPropietariosTicketSoporte();
+        if (response.getResult() instanceof Integer){
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping("/guardarTicketDetalle")
+    public ResponseEntity<?> guardarTicketDetalle(@RequestBody String params){
+        logger.info("#### guardarTicketDetalle() ### \n" + params);
+        ServiceResponseResult response = soporteCentralizadoService.guardarTicketDetalle(params);
+        if (response.getResult() instanceof Integer){
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
+    //fin cambios jose
 }

@@ -36,4 +36,12 @@ public class ConstSoporteCentralizado {
     @Value("${consultaCuentaClienteTicketSoporte}")
     private String consultaCuentaClienteTicketSoporte;
 
+    @Value("${asignarIngenieroTicket}")
+    private String asignarIngenieroTicket;
+
+    @Value("${consultarAccionesDinamicoDetalle}")
+    private String consultarAccionesDinamicoDetalle;
+
+    @Value("${guardarTicketDetalle}")
+    private String guardarTicketDetalle;
 }

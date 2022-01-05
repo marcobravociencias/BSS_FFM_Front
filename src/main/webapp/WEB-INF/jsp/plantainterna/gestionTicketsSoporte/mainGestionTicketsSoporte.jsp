@@ -272,6 +272,7 @@
         <jsp:include page="./modals/modalBusquedaTecnico.jsp"></jsp:include>
         <jsp:include page="./modals/modalDetalle.jsp"></jsp:include>
         <jsp:include page="./modals/modalBusquedaCuenta.jsp"></jsp:include>
+        <jsp:include page="./modals/modalAsignarTicket.jsp"></jsp:include>
     </body>
     <!-- Scripts libraries -->
     <script src="${pageContext.request.contextPath}/resources/libraries/angularjs/js/angular.min.js"></script>
