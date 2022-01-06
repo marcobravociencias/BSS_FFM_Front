@@ -463,6 +463,26 @@ public class ImplConsultaOTService implements ConsultaOTService {
 
     @Override
     public ServiceResponseResult consultaRecoleccionConsultaOt(String params) {
-        return null;
+    	logger.info("ImplConsultaOTService.class [metodo = consultaRecoleccionConsultaOt() ] \n"+ gson.toJson(params));
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+    	String tokenAccess = principalDetail.getAccess_token();
+		logger.info("consultaRecoleccionConsultaOt ## "+ tokenAccess);
+		
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constConsultaOT.getConsultaRecoleccionOt());
+		logger.info("### URL consultaRecoleccionConsultaOt(): \n" + urlRequest);
+		
+		logger.info("### IDORDEN" + jsonObject.get("idOrden").getAsString());
+		Map<String, String> paramsRequestGet = new HashMap<>();
+	    paramsRequestGet.put("idOrden", jsonObject.get("idOrden").getAsString());
+	    
+	    ServiceResponseResult response = restCaller.callGetBearerTokenRequest(
+                paramsRequestGet,
+                urlRequest,
+                ServiceResponseResult.class,
+                tokenAccess);
+
+        logger.info("### RESULT consultaRecoleccionConsultaOt(): " + gson.toJson(response));
+        return response;
     }
 }
