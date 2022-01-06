@@ -61,7 +61,7 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 
 	$scope.cambiarTipoDeRegistroNoticia=function(){
 		console.log("cambio a ",$scope.inhabilidarCamposRegistro )
-		if( $scope.inhabilidarCamposRegistro ){
+		/**if( $scope.inhabilidarCamposRegistro ){
 			$scope.saveObjCopy=angular.copy($scope.saveObj)
 			$scope.saveObj={}
 
@@ -73,7 +73,7 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 
 			$scope.saveObj=angular.copy($scope.saveObjCopy)
 			$scope.saveObjCopy={}
-		}
+		}**/
 
 	}
     $scope.obtenerNivelUltimoJerarquia=function(){
@@ -244,10 +244,7 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 
 			$scope.saveObj.permanente = $scope.mostrarFechasDefinidas ? 1 : 0;
 
-
 			$scope.saveObj.urlLinkExterno=$scope.saveObj.urlLinkExterno ? $scope.saveObj.urlLinkExterno : ''
-			$scope.saveObj.tituloSecundario=$scope.saveObj.tituloSecundario ? $scope.saveObj.tituloSecundario : ''
-			$scope.saveObj.tituloPrincipal=$scope.saveObj.tituloPrincipal ? $scope.saveObj.tituloPrincipal : ''
 			$scope.saveObj.detalle=$scope.saveObj.detalle ? $scope.saveObj.detalle : ''
 
 			let selectedElements=$("#jstre-content-geofrafia").jstree("get_selected", true);
@@ -328,6 +325,16 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 
 		if(!$scope.fileCargaArchivoNoticia.archivo){
 			textErrorRegistro += '<li>Selecciona una imagen para el banner</li>';
+			isErrorRegistro=true
+		}
+
+		if(!$scope.saveObj.tituloPrincipal){
+			textErrorRegistro += '<li>Captura titulo principal</li>';
+			isErrorRegistro=true
+		}
+
+		if(!$scope.saveObj.tituloSecundario){
+			textErrorRegistro += '<li>Captura titulo secundario</li>';
 			isErrorRegistro=true
 		}
 

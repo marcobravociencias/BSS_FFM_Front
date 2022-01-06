@@ -38,10 +38,10 @@
             <div class="container-noticias-visualizador">
                 <div  class="imagen-noticia-previsualizador">                      
                     <img  ng-show="fileCargaArchivoNoticia.archivo" class="imagen-visor-creanotica" ng-src="data:image/jpeg;base64,{{fileCargaArchivoNoticia.archivo}}" alt="">
-                    <div class="content-titulo-principal">
+                    <div ng-show="!inhabilidarCamposRegistro" class="content-titulo-principal">
                         <span class="text-title titulo-principal" ng-bind="saveObj.tituloPrincipal" ></span>
                     </div>
-                    <div class="content-titulo-secundario">
+                    <div ng-show="!inhabilidarCamposRegistro" class="content-titulo-secundario">
                         <span class="text-title titulo-secundario" ng-bind="saveObj.tituloSecundario" ></span>
                     </div>
 
@@ -128,25 +128,25 @@
                         <div class="form row  row-input-crea">
                             <div class="col-12">
                                 <label class="label-noticiar-creacion form-label" for="tituloPrincipal">T&iacute;tulo principal</label>
-                                <input ng-disabled="inhabilidarCamposRegistro" ng-class="{'inactive-campo':inhabilidarCamposRegistro}"  type="text" ng-model="saveObj.tituloPrincipal" id="tituloPrincipal" class="form-control form-control-sm" />
+                                <input    type="text" ng-model="saveObj.tituloPrincipal" id="tituloPrincipal" class="form-control form-control-sm" />
                             </div>                                
                         </div>                      
                         <div class="form row  row-input-crea">
                             <div class="col-12">
                                 <label class="label-noticiar-creacion form-label" for="tituloSecundario">T&iacute;tulo secundario</label>
-                                <input ng-disabled="inhabilidarCamposRegistro" ng-class="{'inactive-campo':inhabilidarCamposRegistro}"  type="text" ng-model="saveObj.tituloSecundario" id="tituloSecundario" class="form-control form-control-sm" />
+                                <input   type="text" ng-model="saveObj.tituloSecundario" id="tituloSecundario" class="form-control form-control-sm" />
                             </div>                                
                         </div>
                         <div class="form row  row-input-crea">
                             <div class="col-12">
                                 <label class="label-noticiar-creacion form-label" for="tituloSecundario">Link externo</label>
-                                <input ng-disabled="inhabilidarCamposRegistro" ng-class="{'inactive-campo':inhabilidarCamposRegistro}"  type="text" ng-model="saveObj.urlLinkExterno" placeholder="Ej.:  www.google.com.mx" id="tituloSecundario" class="form-control form-control-sm" />
+                                <input   type="text" ng-model="saveObj.urlLinkExterno" placeholder="Ej.:  www.google.com.mx" id="tituloSecundario" class="form-control form-control-sm" />
                             </div>                                
                         </div>
                         <div class="form row  row-input-crea">
                             <div class="col-12">
                                 <label class="label-noticiar-creacion form-label" for="detalleCreaNoticia">Detalle</label>
-                                <textarea ng-disabled="inhabilidarCamposRegistro" ng-class="{'inactive-campo':inhabilidarCamposRegistro}"  class="form-control form-control-sm" ng-model="saveObj.detalle" id="detalleCreaNoticia" rows="2"></textarea>
+                                <textarea  class="form-control form-control-sm" ng-model="saveObj.detalle" id="detalleCreaNoticia" rows="2"></textarea>
                             </div>                                
                         </div>
 
