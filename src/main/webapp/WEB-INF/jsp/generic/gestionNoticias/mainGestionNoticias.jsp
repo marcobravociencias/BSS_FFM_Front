@@ -22,89 +22,48 @@
         <!-- CSS INTERNAS -->
         <link href="${pageContext.request.contextPath}/resources/css/generic/gestionNoticias/mainGestionNoticias.css" rel="stylesheet">
 	</head>
-	<body id="idBody" ng-controller="gestionNoticiasController" >
+	<body id="idBody" style="display: none;" ng-controller="gestionNoticiasController" >
     	<jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
-        <div class="container">
-            <div id="container-noticias-pi" class="main-container row">
-                <div class="container-visualiza-noticia col-4">
-                    <div class="imagen-noticia-previsualizador">
-                        <span class="text-title" ng-bind="saveObj.tituloPrincipal" ></span>
-                        <span class="text-title" ng-bind="saveObj.tituloSecundario" ></span>
+        <jsp:include page="./modals/modal-geografia-crea.jsp"></jsp:include>
 
+        <div class="container">
+            <div id="container-noticias-pi" class="main-container container">
+
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="crearnoticia-tab" data-toggle="tab" href="#crearnoticia" role="tab"
+                            aria-controls="crearnoticia" aria-selected="true">Crear noticia</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="consultatabla-tab" data-toggle="tab" href="#consultatabla" role="tab"
+                            aria-controls="consultatabla" aria-selected="false">Consulta tabla</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" id="consultamosaico-tab" data-toggle="tab" href="#consultamosaico" role="tab"
+                            aria-controls="consultamosaico" aria-selected="false">Consulta mosaico</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="crearnoticia" role="tabpanel"
+                        aria-labelledby="crearnoticia-tab">
+                        <jsp:include page="./crearContentNoticia.jsp"></jsp:include>
                     </div>
-                </div>
-                <div class="container-datos-crea-noticia col-8">
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="container-registro">
-                                <div  ng-show="inhabilidarCamposRegistro" class="capa-inabilitable">
-                                </div>
-                                <form >
-                                    <div class="form  row mb-4">
-                                        <div class="col-12">
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" role="switch" ng-model="inhabilidarCamposRegistro" id="inhabilidarCamposRegistro" checked />
-                                                <label class="form-check-label" for="inhabilidarCamposRegistro"> &iquest;Solo imagen? </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                                <form>
-                                   
-                                    <div class="form row mb-4">
-                                        <div class="col-12">
-                                            <label class="form-label" for="form1Example1">T&iacute;tulo principal</label>
-                                            <input ng-model="saveObj.tituloPrincipal" type="email" id="form1Example1" class="form-control form-control-sm" />
-                                        </div>                                
-                                    </div>                      
-                                    <div class="form row mb-4">
-                                        <div class="col-12">
-                                            <label class="form-label" for="form1Example2">T&iacute;tulo secundario</label>
-                                            <input type="text" ng-model="saveObj.tituloSecundario"  id="form1Example2" class="form-control form-control-sm" />
-                                        </div>                                
-                                    </div>
-                                    <div class="form  row mb-4">
-                                        <div class="col-12">
-                                            <label class="form-label" for="customFile">Seleccionar imagen</label>
-                                            <input type="file" class="form-control form-control-sm" id="customFile" />
-                                        </div>                                 
-                                    </div>
-                                    
-                                    <div class="form  row mb-4">
-                                        <div class="col-12">
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" role="switch" ng-model="mostrarFechasDefinidas" id="flexSwitchCheckChecked" checked />
-                                                <label class="form-check-label" for="flexSwitchCheckChecked"> &iquest;Es permanente? </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div ng-show="!mostrarFechasDefinidas" class="form row">
-                                            <div class="col-6">
-                                                <div class="form mb-4">
-                                                    <label class="form-label" for="form1Example1">Fecha inicio</label>
-                                                    <input type="email" id="form1Example1" class="form-control form-control-sm" />
-                                                 </div>                                                           
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="form mb-4">
-                                                    <label class="form-label" for="form1Example2">Fecha fin</label>
-                                                    <input type="password" id="form1Example2" class="form-control form-control-sm" />
-                                                 </div>
-                                            </div>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary btn-block">Registrar noticia</button>
-                                </form>   
-                            </div>
-                                                 
-                        </div>
-                        <div class="col-6">
-                            <div id="jstre-content-geofrafia" class="jstre-content-geofrafia">
+                    <div class="tab-pane fade" id="consultatabla" role="tabpanel" aria-labelledby="consultamosaico-tab">
+                        <table id="datatable-noticias" class="table table table-hover table-striped">
+                            <thead id="theadDispo">
                                 
-                            </div>
-                        </div>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
                     </div>
-            
+                    <div class="tab-pane fade" id="consultamosaico" role="tabpanel" aria-labelledby="consultamosaico-tab">
+                        
+                    </div>
                 </div>
+
+            
             </div>
         </div>
 	</body>

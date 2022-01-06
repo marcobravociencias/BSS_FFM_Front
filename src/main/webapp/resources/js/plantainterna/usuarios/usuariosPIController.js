@@ -37,12 +37,34 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     $scope.mostrarAccesos = false;
     $scope.mostrarTecnicos = false;
     $scope.mostrarDespacho = false;
-    $scope.validarTamDatos = false;
+    $scope.validarTamDatos = true;
     $scope.isTecnico = false;
     $scope.idPuestoTecnico = null;
     $scope.idPuestoDespacho = null;
     $scope.fileFotoUsuario = null;
 	$scope.respaldoIntervenciones = [];
+	
+//	CONFIGURACIÓN DE TABS
+	$scope.tabInformacion = true;
+	$scope.tabIntervenciones = false;
+	$scope.tabArbol = false;
+	$scope.tabAccesos = false;
+	$scope.tabTecnicos = false;
+	$scope.tabDespachos = false;
+	$scope.tabConfirmacion = false;
+	
+	$scope.tabInformacionVW_ASIG_AUTOMATICA = true;
+	$scope.tabInformacionVL_RFC = true;
+	$scope.tabInformacionVL_CURP = true;
+	$scope.tabArbol_LB_N1 = "";
+	$scope.tabArbol_LB_N2 = "";
+	$scope.tabArbol_NV_GEOGRAFIA;
+	$scope.tabIntervenciones_NV_INTERVENCIONES;
+	
+	$scope.catalogoGeografias = [];
+	$scope.geoSelect = [];
+	$scope.catalogoIntervenciones = [];
+	$scope.intervencionSelect = [];
    
 	angular.element(document).ready(function () {
         $("#idBody").removeAttr("style");
@@ -58,8 +80,6 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 				moduloAccionesUsuario: 'moduloUsuarios'
 	    };
 
-//    	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
-//		swal.showLoading();
     	$q.all([
     		usuarioPIService.consultarConfiguracionDespachoDespacho(paramsConfiguracionDespacho),
     		usuarioPIService.consultaCompanias(),
@@ -168,6 +188,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
                     		listGeografias = results[4].data.result.geografia;
                     		$scope.listaGeografias = results[4].data.result.geografia;
                     	}
+                    	$scope.catalogoGeografias = results[4].data.result.geografia;
                     	geografia=listGeografias;
                     	geografia.push({id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state:{opened: true}});
                         geografia.map((e)=>{
@@ -212,43 +233,8 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
             if (results[5].data !== undefined) {
             	if(results[5].data.respuesta){
             		if(results[5].data.result !== null){
-            			let intervencionesLista = [];
 						$scope.respaldoIntervenciones = results[5].data.result;
-            			results[5].data.result.forEach(intervencion =>{
-                            if (intervencion.nivel <= $scope.filtroIntervenciones) {
-                            	intervencionesLista.push(intervencion);
-                            	$scope.listaIntervenciones.push(intervencion);
-                            }
-                        });
-            			if(intervencionesLista.length > 0){
-            				intervencionesLista.push({id: 0, nombre: "INTERVENCIONES", nivel: 0, idPadre: "#", state:{opened: true}});
-            				intervencionesLista.map((e)=>{
-                                e.parent = e.idPadre == null ? 0 : e.idPadre;
-                                e.text= e.nombre;
-                                e.icon= "fa fa-globe";
-                                return e
-                            })       
-                            $scope.listaIntervencionesRespaldo = angular.copy(intervencionesLista);
-                            $('#arbolIntervencionRegistro').bind('loaded.jstree', function(e, data) {
-    							//$(this).jstree("open_all");
-                            }).jstree({
-                            	'plugins': ['search', 'checkbox', 'wholerow'],
-                            	'search': {
-        							"case_sensitive": false,
-        							"show_only_matches": true
-        						},
-    							'core': {
-    								'data': intervencionesLista,
-                                    'themes': {
-                                        'name': 'proton',
-                                        'responsive': true,
-                                        "icons":false        
-                                    }
-                                }
-    						});
-            			}else{
-            				toastr.warning('¡No existen intervenciones actualmente!');
-            			}
+						$scope.catalogoIntervenciones = results[5].data.result;
             		}else{
                     	toastr.warning('¡No existen intervenciones actualmente!');
                     }
@@ -463,7 +449,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	
     	geografiasNivelCiudad = [];
     	angular.forEach($scope.listaGeografias,function(elementoGeografia,index){
-    		if(elementoGeografia.nivel <= $scope.filtroGeografias){
+    		if(elementoGeografia.nivel <= $scope.tabArbol_NV_GEOGRAFIA){
     			geografiasNivelCiudad.push(elementoGeografia);
     		}
     	});
@@ -502,9 +488,15 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
         	$scope.listaCiudadNatalRegistro = [];
         	$scope.listaIdsGeografiaCiudadNatalRegistro = [];
         	$scope.listaTecnicos = [];
+        	$scope.geoSelect = [];
         	var geografiasTree = $('#arbolGeografiaRegistro').jstree("get_selected", true);
         	geografiasTree.forEach(geo =>{
-        		if(geo.original.nivel == $scope.filtroGeografias){
+        		if(geo.original.nivel == $scope.tabArbol_NV_GEOGRAFIA){
+        			geo.geoHijas = $scope.catalogoGeografias.filter(e => {return e.padre == geo.id});
+        			if(geo.geoHijas.length < 1){
+        				geo.geoHijas = [{nivel: geo.original.nivel, nombre: geo.original.nombre, padre: geo.original.padre}];
+        			}
+        			$scope.geoSelect.push(geo);
         			var idPadre = geo.original.padre;
         			$scope.listaGeografiasSeleccionadas.forEach(geoPadre =>{
         				if(geoPadre.id == idPadre){
@@ -583,6 +575,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     $('#puesto_select_registro').on('change', function() {
     	$("#puesto_select_registro").css("border", "1px solid #bdbdbd");
     	$('#arbolGeografiaRegistro').jstree("destroy");
+    	$('#arbolIntervencionRegistro').jstree("destroy");
     	$('#arbolIntervencionRegistro').jstree("deselect_all");
     	$('#arbolGeografiaRegistro').jstree("deselect_all");
     	$('#arbolPermisoRegistro').jstree("deselect_all");
@@ -600,6 +593,14 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	$scope.listaPermisosSeleccionados = [];
     	$scope.listaTecnicos = [];
         $scope.listaDespachos = [];
+        $scope.geoSelect = [];
+    	$scope.intervencionSelect = [];
+    	
+    	$scope.listaGeografiasSeleccionadas = [];
+    	$scope.informacionRegistro.geografias = [];
+    	$scope.listaCiudadNatalRegistro = [];
+    	$scope.listaIdsGeografiaCiudadNatalRegistro = [];
+    	$scope.listaTecnicos = [];
     	
     	var puestoSeleccionado = $("#puesto_select_registro option:selected").text().toLowerCase();
     	puestoSeleccionado = puestoSeleccionado.split('').map( letra => acentos[letra] || letra).join('').toString();
@@ -616,19 +617,127 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	}
     	
     	//LLAMADA AL MÉTODO QUE SE ENCARGA DE MOSTRAR EL TIPO DE ÁRBOL SEGÚN EL PUESTO SELECCIONADO
-    	$scope.mostrarArbolGeografiaRegistro();
+    	var tabsPuestoSeleccionadoRegistro = $scope.listaPuestos.filter(e => {return e.id == $(this).val()})[0];
+    	angular.forEach(tabsPuestoSeleccionadoRegistro.tabs,function(tab,index){
+    		switch(tab.llaveFront){
+            	case "tabInformacion":
+            		$scope.tabInformacion = true;
+            		break;
+            	case "tabIntervenciones":
+            		$scope.tabIntervenciones = true;
+            		break;
+            	case "tabArbol":
+            		$scope.tabArbol = true;
+            		break;
+            	case "tabAccesos":
+            		$scope.tabAccesos = true;
+            		break;
+            	case "tabTecnicos":
+            		$scope.tabTecnicos = true;
+            		break;
+            	case "tabDespachos":
+            		$scope.tabDespachos = true;
+            		break;
+            	case "tabConfirmacion":
+            		$scope.tabConfirmacion = true;
+            		break;
+    		}
+		});
+    	
+    	$scope.tabInformacionVW_ASIG_AUTOMATICA = true;
+    	$scope.tabInformacionVL_RFC = true;
+    	$scope.tabInformacionVL_CURP = true;
+    	$scope.tabArbol_LB_N1 = "";
+    	$scope.tabArbol_LB_N2 = "";
+    	$scope.tabIntervenciones_NV_INTERVENCIONES = null;
+    	$scope.tabArbol_NV_GEOGRAFIA = null;
+    	angular.forEach(tabsPuestoSeleccionadoRegistro.configuraciones,function(conf,index){
+    		if(conf.llave == "tabInformacionVW_ASIG_AUTOMATICA"){
+    			if(conf.valor == "false"){
+    				$scope.tabInformacionVW_ASIG_AUTOMATICA = false;
+    			}
+    		}else if(conf.llave == "tabArbol_LB_N1"){
+    			$scope.tabArbol_LB_N1 = conf.valor;
+    		}else if(conf.llave == "tabArbol_LB_N2"){
+    			$scope.tabArbol_LB_N2 = conf.valor;
+    		}else if(conf.llave == "tabInformacionVL_RFC"){
+    			if(conf.valor+"" == "true"){
+    				$scope.tabInformacionVL_RFC = true;
+    			}else if(conf.valor+"" == "false"){
+    				$scope.tabInformacionVL_RFC = false;
+    			}
+    		}else if(conf.llave == "tabInformacionVL_CURP"){
+    			if(conf.valor+"" == "true"){
+    				$scope.tabInformacionVL_CURP = true;
+    			}else if(conf.valor+"" == "false"){
+    				$scope.tabInformacionVL_CURP = false;
+    			}
+    		}else if(conf.llave == "tabArbol_NV_GEOGRAFIA"){
+    			$scope.tabArbol_NV_GEOGRAFIA = conf.valor;
+    		}else if(conf.llave == "tabIntervenciones_NV_INTERVENCIONES"){
+    			$scope.tabIntervenciones_NV_INTERVENCIONES = conf.valor;
+    		}
+    	});
     	
     	$scope.$apply();
+    	$scope.cargarArbolIntervenciones();
+    	$scope.mostrarArbolGeografiaRegistro();
     });
+    
+    $scope.cargarArbolIntervenciones = function() {
+    	let intervencionesLista = [];
+    	angular.forEach($scope.respaldoIntervenciones,function(intervencion,index){
+            if (intervencion.nivel <= $scope.tabIntervenciones_NV_INTERVENCIONES) {
+            	intervencionesLista.push(intervencion);
+            	$scope.listaIntervenciones.push(intervencion);
+            }
+        });
+		if(intervencionesLista.length > 0){
+			intervencionesLista.push({id: 0, nombre: "INTERVENCIONES", nivel: 0, idPadre: "#", state:{opened: true}});
+			intervencionesLista.map((e)=>{
+                e.parent = e.idPadre == null ? 0 : e.idPadre;
+                e.text= e.nombre;
+                e.icon= "fa fa-globe";
+                return e
+            })       
+            $scope.listaIntervencionesRespaldo = angular.copy(intervencionesLista);
+            $('#arbolIntervencionRegistro').bind('loaded.jstree', function(e, data) {
+				//$(this).jstree("open_all");
+            }).jstree({
+            	'plugins': ['search', 'checkbox', 'wholerow'],
+            	'search': {
+					"case_sensitive": false,
+					"show_only_matches": true
+				},
+				'core': {
+					'data': intervencionesLista,
+                    'themes': {
+                        'name': 'proton',
+                        'responsive': true,
+                        "icons":false        
+                    }
+                }
+			});
+		}else{
+			toastr.warning('¡No existen intervenciones actualmente!');
+		}
+	}
     
     //MÉTODO QUE ASIGNA LA/LAS INTERVENCIÓN(ES) SELECCIONADA(S) A LA LISTA DE 'listaIntervencionesSeleccionadas' PARA MOSTRAR - PESTAÑA INTERVENCIONES REGISTRO USUARIO
     $("#arbolIntervencionRegistro").click(function() {
     	$scope.listaIntervencionesSeleccionadas = [];
     	$scope.informacionRegistro.intervenciones = [];
+    	$scope.intervencionSelect = [];
     	var intervencionesTree = $('#arbolIntervencionRegistro').jstree("get_selected", true);
     	
     	intervencionesTree.forEach(intervencion =>{
-    		if(intervencion.original.nivel == $scope.filtroIntervenciones){
+    		if(intervencion.original.nivel == $scope.tabIntervenciones_NV_INTERVENCIONES){
+    			intervencion.intervencionesHijas = $scope.catalogoIntervenciones.filter(e => {return e.idPadre == intervencion.id});
+    			if(intervencion.intervencionesHijas.length < 1){
+    				intervencion.intervencionesHijas = [{nivel: intervencion.original.nivel, nombre: intervencion.original.nombre, idPadre: intervencion.original.idPadre}];
+    			}
+    			$scope.intervencionSelect.push(intervencion);
+    			
     			var idPadre = intervencion.original.parent;
     			$scope.listaIntervencionesSeleccionadas.forEach(intervencionPadre =>{
     				if(intervencionPadre.id == idPadre){
@@ -744,7 +853,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 //    			idOperarios: $scope.isTecnico == true ? [] : $scope.informacionRegistro.tecnicos,
 //    			idDespachos: $scope.isTecnico == true ? $scope.informacionRegistro.despachos : [],
     			permisos: $scope.isTecnico == true ? [] : $scope.informacionRegistro.permisos,
-    			idAsignacionAutomatica: $scope.informacionRegistro.asignacionAutomatica
+    			idAsignacionAutomatica: $scope.tabInformacionVW_ASIG_AUTOMATICA == true ? $scope.informacionRegistro.asignacionAutomatica : 0
     	};
     	
     	if($scope.isTecnico == true){
@@ -839,262 +948,259 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	
     	
     	//PESTAÑA INFORMACIÓN GENERAL
-		if($("#puesto_select_registro").val() === "" || $("#puesto_select_registro").val() === undefined || $("#puesto_select_registro").val() === null){
-			$("#puesto_select_registro").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Puesto";
-		}else{
-			$("#puesto_select_registro").css("border", "1px solid #bdbdbd");
-		}
-		
-		if($("#compania_select_registro").val() === "" || $("#compania_select_registro").val() === undefined || $("#compania_select_registro").val() === null){
-			$("#compania_select_registro").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Compañía";
-		}else{
-			$("#compania_select_registro").css("border", "1px solid #bdbdbd");
-		}
-		
-		if($scope.informacionRegistro.numEmpleado === "" || $scope.informacionRegistro.numEmpleado === undefined){
-			$("#form-num-empleado").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Número empleado";
-		}else{
-			$("#form-num-empleado").css("border", "1px solid #bdbdbd");
-		}
-		
-		if($scope.informacionRegistro.usuario === "" || $scope.informacionRegistro.usuario === undefined){
-			$("#form-usuario").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Usuario";
-		}else{
-			$("#form-usuario").css("border", "1px solid #bdbdbd");
-		}
-		
-		if($scope.informacionRegistro.contrasena === "" || $scope.informacionRegistro.contrasena === undefined){
-			$("#form-pasword").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Contraseña";
-		}else{
-			$("#form-pasword").css("border", "1px solid #bdbdbd");
-		}
-		
-		if($scope.informacionRegistro.confirContrasena === "" || $scope.informacionRegistro.confirContrasena === undefined){
-			$("#form-confir-password").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Confirmación de contraseña";
-		}else{
-			var password = $("#form-pasword").val();
-	    	var confirPassword =  $("#form-confir-password").val();
-	    	if(password !== confirPassword){
-	    		$("#form-pasword").css("border-bottom", "2px solid #f55756");
-	    		$("#form-confir-password").css("border-bottom", "2px solid #f55756");
-	    		validacionInformacionGeneral = false;
-	    		mensaje = mensaje + "<br/> *Contraseña";
-				mensaje = mensaje + "<br/> *Confirmación de contraseña";
-	    		toastr.warning("¡Las contraseñas no coinciden!");
-	    	}else{
-	    		$("#form-pasword").css("border", "1px solid #bdbdbd");
-	    		$("#form-confir-password").css("border", "1px solid #bdbdbd");
-	    	}
-		}
-		
-		if($scope.informacionRegistro.nombre === "" || $scope.informacionRegistro.nombre === undefined){
-			$("#form-nombres").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Nombre";
-		}else{
-			$("#form-nombres").css("border", "1px solid #bdbdbd");
-		}
-		
-		if($scope.informacionRegistro.apellidoPaterno === "" || $scope.informacionRegistro.apellidoPaterno === undefined){
-			$("#form-a-paterno").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Apellido paterno";
-		}else{
-			$("#form-a-paterno").css("border", "1px solid #bdbdbd");
-		}
-		
-		if($scope.informacionRegistro.apellidoMaterno === "" || $scope.informacionRegistro.apellidoMaterno === undefined){
-			$("#form-a-materno").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Apellido materno";
-		}else{
-			$("#form-a-materno").css("border", "1px solid #bdbdbd");
-		}
-		
-		if($scope.informacionRegistro.posicion === "" || $scope.informacionRegistro.posicion === undefined){
-			$("#form-posicion").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Posición";
-		}else{
-			$("#form-posicion").css("border", "1px solid #bdbdbd");
-		}
-		
-		if($scope.informacionRegistro.curp === "" || $scope.informacionRegistro.curp === undefined){
-			$("#form-curp").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *CURP";
-		}else{
-			if($scope.validarTamDatos){
-				if($scope.informacionRegistro.curp.length == 18){
-					$("#form-curp").css("border", "1px solid #bdbdbd");
-				}else{
-					$("#form-curp").css("border-bottom", "2px solid #f55756");
-					validacionInformacionGeneral = false;
-					mensaje = mensaje + "<br/> *Formato de la CURP (18 dígitos)";
-				}
+		if($scope.tabInformacion){
+			if($("#puesto_select_registro").val() === "" || $("#puesto_select_registro").val() === undefined || $("#puesto_select_registro").val() === null){
+				$("#puesto_select_registro").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *Puesto";
 			}else{
-				$("#form-curp").css("border", "1px solid #bdbdbd");
+				$("#puesto_select_registro").css("border", "1px solid #bdbdbd");
 			}
 			
-		}
-		
-		if($scope.informacionRegistro.rfc === "" || $scope.informacionRegistro.rfc === undefined){
-			$("#form-rfc").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *RFC";
-		}else{
-			if($scope.validarTamDatos){
-				if($scope.informacionRegistro.rfc.length == 12 || $scope.informacionRegistro.rfc.length == 13){
+			if($("#compania_select_registro").val() === "" || $("#compania_select_registro").val() === undefined || $("#compania_select_registro").val() === null){
+				$("#compania_select_registro").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *Compañía";
+			}else{
+				$("#compania_select_registro").css("border", "1px solid #bdbdbd");
+			}
+			
+			if($scope.informacionRegistro.numEmpleado === "" || $scope.informacionRegistro.numEmpleado === undefined){
+				$("#form-num-empleado").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *Número empleado";
+			}else{
+				$("#form-num-empleado").css("border", "1px solid #bdbdbd");
+			}
+			
+			if($scope.informacionRegistro.usuario === "" || $scope.informacionRegistro.usuario === undefined){
+				$("#form-usuario").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *Usuario";
+			}else{
+				$("#form-usuario").css("border", "1px solid #bdbdbd");
+			}
+			
+			if($scope.informacionRegistro.contrasena === "" || $scope.informacionRegistro.contrasena === undefined){
+				$("#form-pasword").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *Contraseña";
+			}else{
+				$("#form-pasword").css("border", "1px solid #bdbdbd");
+			}
+			
+			if($scope.informacionRegistro.confirContrasena === "" || $scope.informacionRegistro.confirContrasena === undefined){
+				$("#form-confir-password").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *Confirmación de contraseña";
+			}else{
+				var password = $("#form-pasword").val();
+		    	var confirPassword =  $("#form-confir-password").val();
+		    	if(password !== confirPassword){
+		    		$("#form-pasword").css("border-bottom", "2px solid #f55756");
+		    		$("#form-confir-password").css("border-bottom", "2px solid #f55756");
+		    		validacionInformacionGeneral = false;
+		    		mensaje = mensaje + "<br/> *Contraseña";
+					mensaje = mensaje + "<br/> *Confirmación de contraseña";
+		    		toastr.warning("¡Las contraseñas no coinciden!");
+		    	}else{
+		    		$("#form-pasword").css("border", "1px solid #bdbdbd");
+		    		$("#form-confir-password").css("border", "1px solid #bdbdbd");
+		    	}
+			}
+			
+			if($scope.informacionRegistro.nombre === "" || $scope.informacionRegistro.nombre === undefined){
+				$("#form-nombres").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *Nombre";
+			}else{
+				$("#form-nombres").css("border", "1px solid #bdbdbd");
+			}
+			
+			if($scope.informacionRegistro.apellidoPaterno === "" || $scope.informacionRegistro.apellidoPaterno === undefined){
+				$("#form-a-paterno").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *Apellido paterno";
+			}else{
+				$("#form-a-paterno").css("border", "1px solid #bdbdbd");
+			}
+			
+			if($scope.informacionRegistro.apellidoMaterno === "" || $scope.informacionRegistro.apellidoMaterno === undefined){
+				$("#form-a-materno").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *Apellido materno";
+			}else{
+				$("#form-a-materno").css("border", "1px solid #bdbdbd");
+			}
+			
+			if($scope.informacionRegistro.posicion === "" || $scope.informacionRegistro.posicion === undefined){
+				$("#form-posicion").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *Posición";
+			}else{
+				$("#form-posicion").css("border", "1px solid #bdbdbd");
+			}
+
+			if($scope.informacionRegistro.curp === "" || $scope.informacionRegistro.curp === undefined){
+				$("#form-curp").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *CURP";
+			}else{
+				if($scope.tabInformacionVL_CURP){
+					if($scope.informacionRegistro.curp.length == 18){
+						$("#form-curp").css("border", "1px solid #bdbdbd");
+					}else{
+						$("#form-curp").css("border-bottom", "2px solid #f55756");
+						validacionInformacionGeneral = false;
+						mensaje = mensaje + "<br/> *Formato de la CURP (18 dígitos)";
+					}
+				}else{
+					$("#form-curp").css("border", "1px solid #bdbdbd");
+				}
+				
+			}
+			
+			if($scope.informacionRegistro.rfc === "" || $scope.informacionRegistro.rfc === undefined){
+				$("#form-rfc").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *RFC";
+			}else{
+				if($scope.tabInformacionVL_RFC){
+					if($scope.informacionRegistro.rfc.length == 12 || $scope.informacionRegistro.rfc.length == 13){
+						$("#form-rfc").css("border", "1px solid #bdbdbd");
+					}else{
+						$("#form-rfc").css("border-bottom", "2px solid #f55756");
+						validacionInformacionGeneral = false;
+						mensaje = mensaje + "<br/> *Formato del RFC (12-13 dígitos)";
+					}
+				}else{
 					$("#form-rfc").css("border", "1px solid #bdbdbd");
-				}else{
-					$("#form-rfc").css("border-bottom", "2px solid #f55756");
-					validacionInformacionGeneral = false;
-					mensaje = mensaje + "<br/> *Formato del RFC (12-13 dígitos)";
 				}
-			}else{
-				$("#form-rfc").css("border", "1px solid #bdbdbd");
 			}
-		}
-		
-		if($scope.informacionRegistro.telefonoContacto === "" || $scope.informacionRegistro.telefonoContacto === undefined){
-			$("#form-telefono-contacto").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Teléfono de contacto";
-		}else{
-			if($scope.validarTamDatos){
-				if($scope.informacionRegistro.telefonoContacto.length == 10){
+			
+			if($scope.informacionRegistro.telefonoContacto === "" || $scope.informacionRegistro.telefonoContacto === undefined){
+				$("#form-telefono-contacto").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *Teléfono de contacto";
+			}else{
+				if($scope.validarTamDatos){
+					if($scope.informacionRegistro.telefonoContacto.length == 10){
+						$("#form-telefono-contacto").css("border", "1px solid #bdbdbd");
+					}else{
+						$("#form-telefono-contacto").css("border-bottom", "2px solid #f55756");
+						validacionInformacionGeneral = false;
+						mensaje = mensaje + "<br/> *Formato del teléfono (10 dígitos)";
+					}
+				}else{
 					$("#form-telefono-contacto").css("border", "1px solid #bdbdbd");
-				}else{
-					$("#form-telefono-contacto").css("border-bottom", "2px solid #f55756");
-					validacionInformacionGeneral = false;
-					mensaje = mensaje + "<br/> *Formato del teléfono (10 dígitos)";
 				}
-			}else{
-				$("#form-telefono-contacto").css("border", "1px solid #bdbdbd");
 			}
-		}
-		
-		if($scope.informacionRegistro.correo === "" || $scope.informacionRegistro.correo === undefined){
-			$("#form-correo").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Correo electrónico";
-		}else{
-			if($("#form-correo").val().indexOf('@', 0) == -1 || $("#form-correo").val().indexOf('.', 0) == -1) {
+			
+			if($scope.informacionRegistro.correo === "" || $scope.informacionRegistro.correo === undefined){
 				$("#form-correo").css("border-bottom", "2px solid #f55756");
 				validacionInformacionGeneral = false;
-				toastr.warning("¡Valida el formato del correo electrónico!");
+				mensaje = mensaje + "<br/> *Correo electrónico";
 			}else{
-				$("#form-correo").css("border", "1px solid #bdbdbd");
+				if($("#form-correo").val().indexOf('@', 0) == -1 || $("#form-correo").val().indexOf('.', 0) == -1) {
+					$("#form-correo").css("border-bottom", "2px solid #f55756");
+					validacionInformacionGeneral = false;
+					toastr.warning("¡Valida el formato del correo electrónico!");
+				}else{
+					$("#form-correo").css("border", "1px solid #bdbdbd");
+				}
 			}
-		}
 
-		if($scope.informacionRegistro.fechaIngreso === "" || $scope.informacionRegistro.fechaIngreso === undefined || $scope.informacionRegistro.fechaIngreso === null){
-			$("#form-fechaIngresoRegistro").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Fecha de ingreso";
-		}else{
-			$("#form-fechaIngresoRegistro").css("border", "1px solid #bdbdbd");
-		}
-		
-		if($("#sexo_select_registro").val() === "" || $("#sexo_select_registro").val() === undefined || $("#sexo_select_registro").val() === null){
-			$("#sexo_select_registro").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Sexo";
-		}else{
-			$("#sexo_select_registro").css("border", "1px solid #bdbdbd");
+			if($scope.informacionRegistro.fechaIngreso === "" || $scope.informacionRegistro.fechaIngreso === undefined || $scope.informacionRegistro.fechaIngreso === null){
+				$("#form-fechaIngresoRegistro").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *Fecha de ingreso";
+			}else{
+				$("#form-fechaIngresoRegistro").css("border", "1px solid #bdbdbd");
+			}
+			
+			if($("#sexo_select_registro").val() === "" || $("#sexo_select_registro").val() === undefined || $("#sexo_select_registro").val() === null){
+				$("#sexo_select_registro").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *Sexo";
+			}else{
+				$("#sexo_select_registro").css("border", "1px solid #bdbdbd");
+			}
 		}
 		
 		//PESTAÑA INTERVENCIONES
-		if($scope.listaIntervencionesSeleccionadas == "" || $scope.listaIntervencionesSeleccionadas == undefined || $scope.listaIntervencionesSeleccionadas == null){
-			validacionIntervenciones = false;
-			mensaje = mensaje + "<br/> *Intervención(es)";
-			$("#labelIntervencionesSeleccionadas").css("color", "#f55756");
-			$("#contenedorIntervencionesRegistro").css("border", "#f55756 solid 1px");
-		}else{
-			$("#labelIntervencionesSeleccionadas").css("color", "rgb(70, 88, 107)");
-			$("#contenedorIntervencionesRegistro").css("border", "white solid 0px");
+		if($scope.tabIntervenciones){
+			if($scope.listaIntervencionesSeleccionadas == "" || $scope.listaIntervencionesSeleccionadas == undefined || $scope.listaIntervencionesSeleccionadas == null){
+				validacionIntervenciones = false;
+				mensaje = mensaje + "<br/> *Intervención(es)";
+				$("#labelIntervencionesSeleccionadas").css("color", "#f55756");
+				$("#contenedorIntervencionesRegistro").css("border", "#f55756 solid 1px");
+			}else{
+				$("#labelIntervencionesSeleccionadas").css("color", "rgb(70, 88, 107)");
+				$("#contenedorIntervencionesRegistro").css("border", "white solid 0px");
+			}
 		}
 		
 		//PESTAÑA ÁRBOL
-		if($scope.listaGeografiasSeleccionadas == "" || $scope.listaGeografiasSeleccionadas == undefined || $scope.listaGeografiasSeleccionadas == null){
-			validacionArbol = false;
-			mensaje = mensaje + "<br/> *Geografía(s)";
-			$("#labelGeografiasSeleccionadas").css("color", "#f55756");
-			$("#contenedorGeografiasRegistro").css("border", "#f55756 solid 1px");
-		}else{
-			$("#labelGeografiasSeleccionadas").css("color", "rgb(70, 88, 107)");
-			$("#contenedorGeografiasRegistro").css("border", "white solid 0px");
+		if($scope.tabArbol){
+			if($scope.listaGeografiasSeleccionadas == "" || $scope.listaGeografiasSeleccionadas == undefined || $scope.listaGeografiasSeleccionadas == null){
+				validacionArbol = false;
+				mensaje = mensaje + "<br/> *Geografía(s)";
+				$("#labelGeografiasSeleccionadas").css("color", "#f55756");
+				$("#contenedorGeografiasRegistro").css("border", "#f55756 solid 1px");
+			}else{
+				$("#labelGeografiasSeleccionadas").css("color", "rgb(70, 88, 107)");
+				$("#contenedorGeografiasRegistro").css("border", "white solid 0px");
+			}
 		}
 		
 		//CHECK SI EL PUESTO SELECCIONADO ES TÉCNICO NO VALIDA (TÉCNICOS Y PERMISOS) Y SI NO ES TÉCNICO SI VALIDA DICHA INFORMACIÓN
 		if($scope.isTecnico == false){
 			//PESTAÑA ACCESOS (PERMISOS)
-    		if($scope.listaPermisosSeleccionados == "" || $scope.listaPermisosSeleccionados == undefined || $scope.listaPermisosSeleccionados == null){
-    			validacionAccesos = false;
-    			mensaje = mensaje + "<br/> *Permiso(s)";
-    			$("#labelPermisosSeleccionadas").css("color", "#f55756");
-    			$("#contenedorPermisosRegistro").css("border", "#f55756 solid 1px");
-    		}else{
-    			$("#labelPermisosSeleccionadas").css("color", "rgb(70, 88, 107)");
-    			$("#contenedorPermisosRegistro").css("border", "white solid 0px");
+    		if($scope.tabAccesos){
+    			if($scope.listaPermisosSeleccionados == "" || $scope.listaPermisosSeleccionados == undefined || $scope.listaPermisosSeleccionados == null){
+        			validacionAccesos = false;
+        			mensaje = mensaje + "<br/> *Permiso(s)";
+        			$("#labelPermisosSeleccionadas").css("color", "#f55756");
+        			$("#contenedorPermisosRegistro").css("border", "#f55756 solid 1px");
+        		}else{
+        			$("#labelPermisosSeleccionadas").css("color", "rgb(70, 88, 107)");
+        			$("#contenedorPermisosRegistro").css("border", "white solid 0px");
+        		}
     		}
     		
     		//PESTAÑA TÉCNICOS
     		//POR EL MOMENTO SE QUITA LA VALIDACIÓN DE TÉCNICOS (NO ES OBLIGATORIA LA SELECCIÓN)
-//        	var checkTec = 0;
-//    		angular.forEach($scope.listaTecnicos,function(tecnico,index){
-//    			if(tecnico.checkedOpcion == true){
-//    				checkTec++;
-//    			}
-//    		});
-//    		if(checkTec < 1){
-//    			validacionTecnicos = false;
-//    			mensaje = mensaje + "<br/> *Técnico(s)";
-//    			$("#labelTecnicosSeleccionadas").css("color", "#f55756");
-//    			$("#contenedorTecnicosRegistro").css("border", "#f55756 solid 1px");
-//    		}else{
-//    			$("#labelTecnicosSeleccionadas").css("color", "rgb(70, 88, 107)");
-//    			$("#contenedorTecnicosRegistro").css("border", "white solid 0px");
-//    		}
     		
 		}else{
 			//PESTAÑA DESPACHOS
-        	var checkDes = 0;
-    		angular.forEach($scope.listaDespachos,function(despacho,index){
-    			if(despacho.checkedOpcion == true){
-    				checkDes++;
-    			}
-    		});
-    		if(checkDes < 1){
-    			validacionDespachos = false;
-    			mensaje = mensaje + "<br/> *Despachos(s)";
-    			$("#labelDespachosSeleccionados").css("color", "#f55756");
-    			$("#contenedorDespachosRegistro").css("border", "#f55756 solid 1px");
-    		}else{
-    			$("#labelTecnicosSeleccionadas").css("color", "rgb(70, 88, 107)");
-    			$("#contenedorDespachosRegistro").css("border", "white solid 0px");
-    		}
+        	if($scope.tabDespachos){
+        		var checkDes = 0;
+        		angular.forEach($scope.listaDespachos,function(despacho,index){
+        			if(despacho.checkedOpcion == true){
+        				checkDes++;
+        			}
+        		});
+        		if(checkDes < 1){
+        			validacionDespachos = false;
+        			mensaje = mensaje + "<br/> *Despachos(s)";
+        			$("#labelDespachosSeleccionados").css("color", "#f55756");
+        			$("#contenedorDespachosRegistro").css("border", "#f55756 solid 1px");
+        		}else{
+        			$("#labelTecnicosSeleccionadas").css("color", "rgb(70, 88, 107)");
+        			$("#contenedorDespachosRegistro").css("border", "white solid 0px");
+        		}
+        	}
 		}
     	
     	//PESTAÑA CONFIRMAR USUARIO
-    	if($scope.informacionRegistro.ciudadNatal == "" || $scope.informacionRegistro.ciudadNatal == undefined){
-    		$(".ciudadNatal").css("color", "#f55756");
-    		validacion = false;
-			mensaje = mensaje + "<br/> *Ciudad natal";
-    	}else{
-    		$(".ciudadNatal").css("color", "#7c7c7d");
+    	if($scope.tabConfirmacion){
+    		if($scope.informacionRegistro.ciudadNatal == "" || $scope.informacionRegistro.ciudadNatal == undefined){
+        		$(".ciudadNatal").css("color", "#f55756");
+        		validacion = false;
+    			mensaje = mensaje + "<br/> *Ciudad natal";
+        	}else{
+        		$(".ciudadNatal").css("color", "#7c7c7d");
+        	}
     	}
 		
 		//VALIDACIÓN Y ACTIVACIÓN DE PESTAÑAS
@@ -1158,11 +1264,13 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     //VALIDACIÓN DE CAMPOS INGRESADOS CON LA CLASE 'inputFormulario' - PESTAÑA INFORMACIÓN REGISTRO USUARIO
     $(".inputFormulario").keyup(function() {
 		var input = $(this).attr("id");
+		
 		if( $(this).val()  === "" || $(this).val() === undefined ){
 			$("#"+input).css("border-bottom", "2px solid #f55756");
 		}else{
 			$("#"+input).css("border", "1px solid #bdbdbd");
 		}
+		
 		if(input === "form-correo"){
 			if($("#"+input).val().indexOf('@', 0) == -1 || $("#"+input).val().indexOf('.', 0) == -1) {
 				$("#"+input).css("border-bottom", "2px solid #f55756");
