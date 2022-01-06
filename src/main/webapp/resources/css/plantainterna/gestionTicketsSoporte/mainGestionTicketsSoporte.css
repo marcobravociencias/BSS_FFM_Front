@@ -484,3 +484,20 @@ thead#thead_tecnicosCuenta {
 #tecnicosCuentaTable img {
     box-shadow: 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%), 0 2px 4px -1px rgb(0 0 0 / 30%);
 }
+
+.btn-asignarTecnico {
+    font-size: .7em;
+    padding: 0.6em 2em 0.6em 2em;
+    border: 0.09rem solid #1266f1; 
+    box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
+}
+
+.checkTecnico:checked:focus {
+    background-color: #7716fa !important;
+    border-color: #7716fa !important;
+}
+
+.checkTecnico:checked {
+    background-color: #7716fa !important;
+    border-color: #7716fa !important;
+}

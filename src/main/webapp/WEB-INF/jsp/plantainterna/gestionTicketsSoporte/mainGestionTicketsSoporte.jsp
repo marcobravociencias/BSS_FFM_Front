@@ -194,16 +194,16 @@
                             <label for="fallaTicket" class="span-form-tickets">Falla *</label>
                             <select class="form-control form-controlt form-control-sm custom-select inputTicket" name="fallaTicket" id="fallaTicket" ng-change="loadCategoriaTicketSoporte()" ng-model="ticketSoporteR.fallaTicket">
                                 <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
-                                <option value="{{fallaTicket}}" ng-repeat="fallaTicket in listFallasTicket">
+                                <option value="{{fallaTicket.id}}" ng-repeat="fallaTicket in listFallasTicket">
                                     {{fallaTicket.descripcion}}
                                 </option>
                             </select>
                         </div>
                         <div class="col-3 form-group">
                             <label for="categoriaTicket" class="span-form-tickets">Categor&iacute;a *</label>
-                            <select class="form-control form-control-sm custom-select inputTicket" id="categoriaTicket" name="categoriaTicket" ng-change="loadSubcategoriaTicketSoporte()" ng-model="ticketSoporteR.idCategoria">
+                            <select class="form-control form-control-sm custom-select inputTicket" id="categoriaTicket" name="categoriaTicket" ng-change="loadSubcategoriaTicketSoporte()" ng-model="ticketSoporteR.categoriaTicket">
                                 <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
-                                <option value="{{categoriaTicket}}" ng-repeat="categoriaTicket in listCategoriasTicket">
+                                <option value="{{categoriaTicket.id}}" ng-repeat="categoriaTicket in listCategoriasTicket">
                                     {{categoriaTicket.descripcion}}
                                 </option>
                             </select>
@@ -212,7 +212,7 @@
                             <label for="subcategoriaTicket" class="span-form-tickets">Subcategor&iacute;a *</label>
                             <select class="form-control form-controlt form-control-sm custom-select inputTicket" id="subcategoriaTicket" name="subcategoriaTicket" ng-model="ticketSoporteR.subcategoriaTicket">
                                 <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
-                                <option value="{{subcategoriaTicket}}" ng-repeat="subcategoriaTicket in listSubcategoriasTicket">
+                                <option value="{{subcategoriaTicket.id}}" ng-repeat="subcategoriaTicket in listSubcategoriasTicket">
                                     {{subcategoriaTicket.descripcion}}
                                 </option>
                             </select>
@@ -221,43 +221,43 @@
                     <div class="form-row">
                         <div class="col-3 form-group">
                             <label for="tipoOrdenTicket" class="span-form-tickets">Tipo orden *</label>
-                            <input readonly style="cursor: default;" class="form-control form-controlt form-control-sm" name="tipoOrdenTicket" id="tipoOrdenTicket" ng-model="ticketSoporteR.tipoOrden"/>
-                            <!-- <select class="form-control form-controlt form-control-sm custom-select" name="tipoOrdenTicket" id="tipoOrdenTicket" ng-model="ticketSoporteR.tipoOrden">
+                            <!-- <input readonly style="cursor: default;" class="form-control form-controlt form-control-sm" name="tipoOrdenTicket" id="tipoOrdenTicket" ng-model="ticketSoporteR.tipoOrden"/> -->
+                            <select readonly disabled class="form-control form-controlt form-control-sm custom-select" name="tipoOrdenTicket" id="tipoOrdenTicket" ng-model="ticketSoporteR.tipoOrden">
                                 <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
-                                <option value="tipoOrden.id" ng-repeat="tipoOrden in listCatTipoOrdenes">
+                                <option value="{{tipoOrden.id}}" ng-repeat="tipoOrden in listCatTipoOrdenes">
                                     {{tipoOrden.nombre}}
                                 </option>
-                            </select> -->
+                            </select>
                         </div>
                         <div class="col-3 form-group">
                             <label for="tipoNegocioTicket" class="span-form-tickets">Tipo de negocio *</label>
-                            <input readonly style="cursor: default;" class="form-control form-controlt form-control-sm" name="tipoNegocioTicket" id="tipoNegocioTicket" ng-model="ticketSoporteR.tipoNegocio"/>
-                            <!-- <select class="form-control form-controlt form-control-sm custom-select" name="tipoNegocioTicket" id="tipoNegocioTicket" ng-model="ticketSoporteR.tipoNegocio">
+                            <!-- <input readonly style="cursor: default;" class="form-control form-controlt form-control-sm" name="tipoNegocioTicket" id="tipoNegocioTicket" ng-model="ticketSoporteR.tipoNegocio"/> -->
+                            <select readonly disabled class="form-control form-controlt form-control-sm custom-select" name="tipoNegocioTicket" id="tipoNegocioTicket" ng-model="ticketSoporteR.tipoNegocio">
                                 <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
                                 <option value="1" selected>RESIDENCIAL</option>
                                 <option value="2" selected>EMPRESARIAL</option>
-                            </select> -->
+                            </select>
                         </div>
                         <div class="col-3 form-group">
                             <label for="regionTicket" class="span-form-tickets">Regi&oacute;n *</label>
-                            <input readonly style="cursor: default;" class="form-control form-controlt form-control-sm" name="regionTicket" id="regionTicket" ng-model="ticketSoporteR.region"/>
-                            <!-- <select class="form-control form-controlt form-control-sm custom-select" name="regionTicket" id="regionTicket" ng-model="ticketSoporteR.region">
+                            <!-- <input readonly style="cursor: default;" class="form-control form-controlt form-control-sm" name="regionTicket" id="regionTicket" ng-model="ticketSoporteR.region"/> -->
+                            <select readonly disabled class="form-control form-controlt form-control-sm custom-select" name="regionTicket" id="regionTicket" ng-model="ticketSoporteR.region">
                                 <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
-                                <option value="regionT.id" ng-repeat="regionT in listCatRegiones">
+                                <option value="{{regionT.id}}" ng-repeat="regionT in listCatRegiones">
                                     {{regionT.nombre}}
                                 </option>
-                            </select> -->
+                            </select>
                         </div>
                         <div class="col-3 form-group">
                             <label for="tecnologiaTicket" class="span-form-tickets">Tecnolog&iacute;a *</label>
-                            <input readonly style="cursor: default;" class="form-control form-controlt form-control-sm" name="tecnologiaTicket" id="tecnologiaTicket" ng-model="ticketSoporteR.tecnologia"/>
-                            <!-- <select class="form-control form-controlt form-control-sm custom-select" name="tecnologiaTicket" id="tecnologiaTicket" ng-model="ticketSoporteR.tecnologia">
+                            <!-- <input readonly style="cursor: default;" class="form-control form-controlt form-control-sm" name="tecnologiaTicket" id="tecnologiaTicket" ng-model="ticketSoporteR.tecnologia"/> -->
+                            <select readonly disabled class="form-control form-controlt form-control-sm custom-select" name="tecnologiaTicket" id="tecnologiaTicket" ng-model="ticketSoporteR.tecnologia">
                                 <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
                                 <option value="36" selected>HUAWEI</option>
                                 <option value="37" selected>NCE</option>
                                 <option value="38" selected>ZTE</option>
                                 <option value="39" selected>FIBER HOME</option>
-                            </select> -->
+                            </select>
                         </div>
                     </div>
                     <div class="form-row">
