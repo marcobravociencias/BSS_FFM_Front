@@ -21,19 +21,21 @@ app.edicionNoticiaController=function($scope,gestionNoticiasService){
 		});
 		$('#fecha-fin-editarnoticia').datepicker('update', new Date());
     });
-    $scope.edicionNoticaContent=false
     $scope.editObj={}
+    $scope.banderaEdicionImagen=false
+
+    $scope.edicionNoticaContent=false
     abrirModalEdicion=function(index){
         $scope.editObj=$scope.litadoNoticiasTemp[index]
-        $scope.edicionNoticaContent=true;
-        
+        $scope.banderaEdicionImagen=true;
+        $scope.edicionNoticaContent=true
         $scope.fileCargaArchivoNoticiaEdit = {
-            "archivo":  $scope.edicionNoticaContent.archivoBanner,
-            "nombre":   $scope.edicionNoticaContent.nombreBanner
+            "archivo":  $scope.editObj.urlBanner,
+            "nombre":   $scope.editObj.nombreBanner
         };		        
         $scope.fileDecargaNoticaEdicion = {
-            "archivo": $scope.edicionNoticaContent.archivoArchivo,
-            "nombre":  $scope.edicionNoticaContent.nombreArchivo
+            "archivo": $scope.editObj.urlArchivo,
+            "nombre":  $scope.editObj.nombreArchivo
         };	
 
         $scope.$apply()
@@ -50,6 +52,7 @@ app.edicionNoticiaController=function($scope,gestionNoticiasService){
 		$("#archivoEditarNoticia").click();
 	}
     $scope.cargarFotoNoticiaEdicion = function (e) {
+        $scope.banderaEdicionImagen=false;
 		$scope.fileCargaArchivoNoticiaEdit={}
 		if (e.target.files[0]) {
 			let nombreArchivo = e.target.files[0].name;

@@ -263,6 +263,10 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
     $scope.consultarNoticias = function() {
 		swal({ text: 'Consultando noticias ...', allowOutsideClick: false });
 		swal.showLoading();
+		if(dataTableConsultaNoticias!=undefined){
+			dataTableConsultaNoticias.destroy()
+			$('#datatable-noticia tbody').empty();
+		}	
         $q.all([
     		gestionNoticiasService.consultarNoticiasGeneric()
         ]).then(function(results) {
@@ -332,11 +336,6 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
         });
     }
 	$scope.initDatatableNoticias=function(){
-		if(dataTableConsultaNoticias!=undefined){
-			dataTableConsultaNoticias.destroy()
-			$('#datatable-noticia tbody').empty();
-		}	
-		setTimeout(function(){
 			dataTableConsultaNoticias=$('#datatable-noticias').DataTable({
 				"paging": true,
 				"lengthChange": false,
@@ -348,9 +347,7 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 				"language": idioma_espanol_not_font,
 				"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">'
 			})
-			swal.close()
-
-		},1000)		
+			swal.close()	
 	}
     $scope.registrarNoticia = function() {
 

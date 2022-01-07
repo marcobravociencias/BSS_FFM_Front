@@ -634,6 +634,7 @@ span.link-geografia {
     margin-top: 1em;
     position: relative;
     /* padding: 0; */
+    min-height: 90vh;
 }
 #myTab{
 	margin-bottom:1em;

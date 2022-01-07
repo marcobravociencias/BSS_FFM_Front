@@ -37,7 +37,10 @@
             </div>
             <div class="container-noticias-visualizador">
                 <div  class="imagen-noticia-previsualizador">                      
-                    <img  ng-show="fileCargaArchivoNoticiaEdit.archivo" class="imagen-visor-creanotica" ng-src="data:image/jpeg;base64,{{fileCargaArchivoNoticiaEdit.archivo}}" alt="">
+                    <img  ng-show="fileCargaArchivoNoticiaEdit.archivo && banderaEdicionImagen" class="imagen-visor-creanotica" ng-src="{{fileCargaArchivoNoticiaEdit.archivo}}" alt="">
+                    <img  ng-show="fileCargaArchivoNoticiaEdit.archivo && !banderaEdicionImagen" class="imagen-visor-creanotica" ng-src="data:image/jpeg;base64,{{fileCargaArchivoNoticiaEdit.archivo}}" alt="">
+
+                    
                     <div ng-show="!inhabilidarCamposEdicion" class="content-titulo-principal">
                         <span class="text-title titulo-principal" ng-bind="editObj.tituloPrincipal" ></span>
                     </div>
@@ -184,7 +187,7 @@
                                         </div>
                                     </div>
                                     <div  ng-show="fileDecargaNoticaEdicion.archivo" class="content-detalle-archivo">
-                                        <div class="title-nombrearchivo" ng-bind="fileDecargaNoticaEdicion.archivo" ></div>
+                                        <div class="title-nombrearchivo" ng-bind="fileDecargaNoticaEdicion.nombre" ></div>
                                         <!--div class="detail-archivo">
                                             PDF,imagenes,Excel,Word
                                         </div-->
