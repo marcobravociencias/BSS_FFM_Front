@@ -28,40 +28,42 @@
 
     <body id="idBody" ng-controller="misProyectosController">
         <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
-        <p>Mis proyectos</p>
-        
-        <div class="row">
-            <div class="col-5 content-left-grafica">
-                <div class="row">
+        <div class="col-12" style="padding-left: 0px;">
+            <div class="row">
+                <div class="col-5 content-left-grafica">
+                    <div class="row" style="height: 90px;">
+                    </div>
+                    <div class="row">
 <!-- **********PROYECTOS**********PROYECTOS**********PROYECTOS**********PROYECTOS**********PROYECTOS**********PROYECTOS**********PROYECTOS**********PROYECTOS**********PROYECTOS**********PROYECTOS**********PROYECTOS**********PROYECTOS**********PROYECTOS**********PROYECTOS**********PROYECTOS**********PROYECTOS-->
-                    <div class="col-12" ng-repeat="proyecto in listaProyectosGrafica" ng-class="$index % 2 == 0 ? 'is-even-primer-nivel' : 'is-odd-primer-nivel'">
-                        <div class="row" ng-click="mostrarPuntas(proyecto)">
-                            <div class="col-12 menu-primer-nivel">
-                                <span ng-bind="proyecto.Nombre_cliente"></span>
-                            </div>
-                        </div>
-                        <div class="row" ng-show="proyecto.Id_cuenta === idProyectoSelected">
-<!-- **********PUNTAS**********PUNTAS**********PUNTAS**********PUNTAS**********PUNTAS**********PUNTAS**********PUNTAS**********PUNTAS**********PUNTAS**********PUNTAS**********PUNTAS**********PUNTAS**********PUNTAS**********PUNTAS**********PUNTAS**********PUNTAS**********PUNTAS**********PUNTAS**********PUNTAS-->
-                            <div class="col-12" ng-repeat="punta in proyecto.Puntas | filter : serachPuntas" ng-class="$index % 2 == 0 ? 'is-even-segundo-nivel' : 'is-odd-segundo-nivel'">
-                                <div class="row" ng-click="mostrarPlanes(punta)">
-                                    <div class="col-12 menu-segundo-nivel">
-                                        <span ng-bind="punta.Nombre_sitio"></span>
-                                    </div>
+                        <div class="col-12" ng-repeat="proyecto in listaProyectosGrafica" ng-class="$index % 2 == 0 ? 'is-even-primer-nivel' : 'is-odd-primer-nivel'">
+                            <div class="row" ng-click="mostrarPuntas(proyecto)">
+                                <div class="col-12 menu-primer-nivel">
+                                    <span ng-bind="proyecto.Nombre_cliente"></span>
                                 </div>
-                                <div class="row" ng-show="punta.Id_cuenta === idPuntaSelected">
-<!-- **********PLANES**********PLANES**********PLANES**********PLANES**********PLANES**********PLANES**********PLANES**********PLANES**********PLANES**********PLANES**********PLANES**********PLANES**********PLANES**********PLANES**********PLANES**********PLANES**********PLANES**********PLANES**********PLANES-->
-                                    <div class="col-12" ng-repeat="plan in punta.Planes" ng-class="$index % 2 == 0 ? 'is-even-tercer-nivel' : 'is-odd-tercer-nivel'">
-                                        <div class="row" ng-click="consultarActividadesPMS(plan)">
-                                            <div class="col-12 menu-tercer-nivel">
-                                                <span ng-bind="plan.Folio_CSP"></span>
-                                            </div>
+                            </div>
+                            <div class="row" ng-show="proyecto.Id_cuenta === idProyectoSelected">
+<!-- **********PUNTAS**********PUNTAS**********PUNTAS**********PUNTAS**********PUNTAS**********PUNTAS**********PUNTAS**********PUNTAS**********PUNTAS**********PUNTAS**********PUNTAS**********PUNTAS**********PUNTAS**********PUNTAS**********PUNTAS**********PUNTAS**********PUNTAS**********PUNTAS**********PUNTAS-->
+                                <div class="col-12" ng-repeat="punta in proyecto.Puntas | filter : serachPuntas" ng-class="$index % 2 == 0 ? 'is-even-segundo-nivel' : 'is-odd-segundo-nivel'">
+                                    <div class="row" ng-click="mostrarPlanes(punta)">
+                                        <div class="col-12 menu-segundo-nivel">
+                                            <span ng-bind="punta.Nombre_sitio"></span>
                                         </div>
-                                        <div class="row" ng-show="plan.Id_csp === idPlanSelected">
+                                    </div>
+                                    <div class="row" ng-show="punta.Id_cuenta === idPuntaSelected">
+<!-- **********PLANES**********PLANES**********PLANES**********PLANES**********PLANES**********PLANES**********PLANES**********PLANES**********PLANES**********PLANES**********PLANES**********PLANES**********PLANES**********PLANES**********PLANES**********PLANES**********PLANES**********PLANES**********PLANES-->
+                                        <div class="col-12" ng-repeat="plan in punta.Planes" ng-class="$index % 2 == 0 ? 'is-even-tercer-nivel' : 'is-odd-tercer-nivel'">
+                                            <div class="row" ng-click="consultarActividadesPMS(plan)">
+                                                <div class="col-12 menu-tercer-nivel">
+                                                    <span ng-bind="plan.Folio_CSP"></span>
+                                                </div>
+                                            </div>
+                                            <div class="row" ng-show="plan.Id_csp === idPlanSelected">
 <!-- **********ACTIVIDADES**********ACTIVIDADES**********ACTIVIDADES**********ACTIVIDADES**********ACTIVIDADES**********ACTIVIDADES**********ACTIVIDADES**********ACTIVIDADES**********ACTIVIDADES**********ACTIVIDADES**********ACTIVIDADES**********ACTIVIDADES**********ACTIVIDADES**********ACTIVIDADES**********ACTIVIDADES**********ACTIVIDADES**********ACTIVIDADES-->
-                                            <div class="col-12" ng-repeat="actividad in listaActividades" ng-class="$index % 2 == 0 ? 'is-even-cuarto-nivel' : 'is-odd-cuarto-nivel'">
-                                                <div class="row">
-                                                    <div class="col-12 menu-cuarto-nivel">
-                                                        <span ng-bind="actividad.Nombre_actividad"></span>
+                                                <div class="col-12" ng-repeat="actividad in listaActividades" ng-class="$index % 2 == 0 ? 'is-even-cuarto-nivel' : 'is-odd-cuarto-nivel'">
+                                                    <div class="row">
+                                                        <div class="col-12 menu-cuarto-nivel">
+                                                            <span ng-bind="actividad.Nombre_actividad"></span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -72,9 +74,121 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-7">
-                grafica
+<!-- ******************************************************************************************************************************************************************************************************************************** -->
+                <div class="col-7" style="overflow-x: scroll;">
+                    <div class="row" style="height: 90px;">
+                        <div class="col-12">
+                            <div class="row" ng-style="{width: widthCalendar + 'px'}">
+                                <div style="padding-left: 30px; padding-right: 30px;">
+                                    <div class="row">
+                                        <div class="text-center" ng-repeat="mes in lineaTiempo.calendarioMeses"
+                                            ng-style="{width: mes.porcentaje + '%'}" style="font-weight: bold; white-space:nowrap;">
+                                            <span class="meses" ng-bind="mes.mes"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" ng-style="{width: widthCalendar + 'px'}">
+                                <div style="padding-left: 30px; padding-right: 30px;">
+                                    <div class="row">
+                                        <div ng-repeat="dia in lineaTiempo.calendarioDias" class="content-dia" ng-style="{width: lineaTiempo.porcentajeDia + '%'}">
+                                            <span class="dias" ng-bind="dia.dia"></span>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                
+                            </div>
+                            <div class="row" ng-style="{width: widthCalendar + 'px'}">
+                                <div style="padding-left: 30px; padding-right: 30px;">
+                                    <div class="row">
+                                        <div class="content-dia" ng-style="{width: lineaTiempo.diaActual+'%'}">
+                                        </div>
+                                        <div class="content-dia" ng-style="{width: 100-lineaTiempo.diaActual+'%'}">
+                                            <span class="fechaActualDay" ng-bind="lineaTiempo.fechaActual | date : 'dd'"></span>
+                                            <div id="diaActu" class="vl" style="height: 7em; margin-left: -.1em;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+<!-- ----------PROYECTOS----------PROYECTOS----------PROYECTOS----------PROYECTOS----------PROYECTOS----------PROYECTOS----------PROYECTOS----------PROYECTOS----------PROYECTOS----------PROYECTOS----------PROYECTOS----------PROYECTOS----------PROYECTOS----------PROYECTOS----------PROYECTOS -->
+                            <div class="col-12" ng-repeat="proyecto in listaProyectosGrafica" ng-class="$index % 2 == 0 ? 'is-even-primer-nivel' : 'is-odd-primer-nivel'">
+                                <div class="row" ng-style="{width: widthCalendar + 'px'}" >
+                                    <div style="padding-left: 30px; padding-right: 30px;" class="grafica-primer-nivel" ng-class="$index % 2 == 0 ? 'is-even-primer-nivel' : 'is-odd-primer-nivel'">
+                                        <div class="row" style="margin-top: 1em;">
+                                            <div class="vacio-grafica" ng-style="{width: proyecto.porcentajeInicio+'%'}">
+                                            </div>
+                                            <div class="container-proyecto" ng-style="{width: proyecto.porcentajeProyecto+'%'}" style="background-color: #D0CFDB;">
+                                                2
+                                            </div>
+                                            <div class="vacio-grafica" ng-style="{width: proyecto.porcentajeFIn+'%'}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" ng-show="proyecto.Id_cuenta === idProyectoSelected">
+<!-- ----------PUNTAS----------PUNTAS----------PUNTAS----------PUNTAS----------PUNTAS----------PUNTAS----------PUNTAS----------PUNTAS----------PUNTAS----------PUNTAS----------PUNTAS----------PUNTAS----------PUNTAS----------PUNTAS----------PUNTAS----------PUNTAS -->
+                                    <div class="col-12" ng-repeat="punta in proyecto.Puntas | filter : serachPuntas" ng-class="$index % 2 == 0 ? 'is-even-segundo-nivel' : 'is-odd-segundo-nivel'">
+                                        <div class="row" ng-style="{width: widthCalendar + 'px'}">
+                                            <div style="padding-left: 30px; padding-right: 30px;" class="grafica-segundo-nivel" ng-class="$index % 2 == 0 ? 'is-even-segundo-nivel' : 'is-odd-segundo-nivel'">
+                                                <div class="row" style="margin-top: .8em;">
+                                                    <div class="vacio-grafica" ng-style="{width: punta.porcentajeInicio+'%'}">
+                                                    </div>
+                                                    <div class="container-punta" ng-style="{width: punta.porcentajePunta+'%'}" style="background-color: #D0CFDB;">
+                                                        2
+                                                    </div>
+                                                    <div class="vacio-grafica" ng-style="{width: punta.porcentajeFIn+'%'}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" ng-show="punta.Id_cuenta === idPuntaSelected">
+<!-- ----------PLANES----------PLANES----------PLANES----------PLANES----------PLANES----------PLANES----------PLANES----------PLANES----------PLANES----------PLANES----------PLANES----------PLANES----------PLANES----------PLANES----------PLANES----------PLANES----------PLANES----------PLANES -->
+                                            <div class="col-12" ng-repeat="plan in punta.Planes" ng-class="$index % 2 == 0 ? 'is-even-tercer-nivel' : 'is-odd-tercer-nivel'">
+                                                <div class="row" ng-style="{width: widthCalendar + 'px'}">
+                                                    <div style="padding-left: 30px; padding-right: 30px;" class="grafica-tercer-nivel" ng-style="{width: widthCalendar + 'px'}" ng-class="$index % 2 == 0 ? 'is-even-tercer-nivel' : 'is-odd-tercer-nivel'">
+                                                        <div class="row" style="margin-top: .6em;" ng-show="plan.valor">
+                                                            <div class="vacio-grafica" ng-style="{width: plan.porcentajeInicio+'%'}">
+                                                            </div>
+                                                            <div class="container-plan" ng-style="{width: plan.porcentajePlan+'%'}" style="background-color: #D0CFDB;">
+                                                                2
+                                                            </div>
+                                                            <div class="vacio-grafica" ng-style="{width: plan.porcentajeFIn+'%'}">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row" ng-show="plan.Id_csp === idPlanSelected">
+<!-- ----------ACTIVIDADES----------ACTIVIDADES----------ACTIVIDADES----------ACTIVIDADES----------ACTIVIDADES----------ACTIVIDADES----------ACTIVIDADES----------ACTIVIDADES----------ACTIVIDADES----------ACTIVIDADES----------ACTIVIDADES----------ACTIVIDADES----------ACTIVIDADES----------ACTIVIDADES -->
+                                                    <div class="col-12" ng-repeat="actividad in listaActividades" ng-class="$index % 2 == 0 ? 'is-even-cuarto-nivel' : 'is-odd-cuarto-nivel'">
+                                                        <div class="row" ng-style="{width: widthCalendar + 'px'}">
+                                                            <div style="padding-left: 30px; padding-right: 30px;" class="grafica-cuarto-nivel" ng-class="$index % 2 == 0 ? 'is-even-cuarto-nivel' : 'is-odd-cuarto-nivel'">
+                                                                <div class="row" style="margin-top: .4em;" ng-show="actividad.valor">
+                                                                    <div class="vacio-grafica" ng-style="{width: actividad.porcentajeInicio+'%'}">
+                                                                    </div>
+                                                                    <div class="container-actividad" ng-style="{width: actividad.porcentajeActividad+'%'}" style="background-color: #D0CFDB;">
+                                                                        2
+                                                                    </div>
+                                                                    <div class="vacio-grafica" ng-style="{width: actividad.porcentajeFIn+'%'}">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                        
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -82,6 +196,7 @@
     <!-- Scripts libraries -->
     <script src="${pageContext.request.contextPath}/resources/libraries/angularjs/js/angular.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/moment.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/moment-with-locales.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/js/mdb.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/libraries/popper\popper.min.js"></script>

@@ -44,4 +44,9 @@ public class LoginResult {
 	private String direccionAmbiente;
 	private List<Permiso>permisos;
 	private Map<String ,Object>configuraciones;
+	
+	private String instancia;
+	private String version;
+	private List<ConfiguracionesGenerales> configuracionesGenerales;
+	private List<Permiso>modulos;
 }

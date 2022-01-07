@@ -25,49 +25,43 @@
 	<body id="idBody" style="display: none;" ng-controller="gestionNoticiasController" >
     	<jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
         <jsp:include page="./modals/modal-geografia-crea.jsp"></jsp:include>
+        <jsp:include page="./modals/modal-geografia-consulta.jsp"></jsp:include>
 
         <div class="container">
             <div id="container-noticias-pi" class="main-container container">
 
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" id="crearnoticia-tab" data-toggle="tab" href="#crearnoticia" role="tab"
-                            aria-controls="crearnoticia" aria-selected="true">Crear noticia</a>
+                        <a class="nav-link " id="crearnoticia-tab" data-toggle="tab" href="#crearnoticia" role="tab" aria-controls="crearnoticia" aria-selected="false">Crear noticia</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="consultatabla-tab" data-toggle="tab" href="#consultatabla" role="tab"
-                            aria-controls="consultatabla" aria-selected="false">Consulta tabla</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" id="consultamosaico-tab" data-toggle="tab" href="#consultamosaico" role="tab"
-                            aria-controls="consultamosaico" aria-selected="false">Consulta mosaico</a>
+                        <a class="nav-link active" id="consultanoticias-tab" data-toggle="tab" href="#consultanoticias" role="tab" aria-controls="consultanoticias" aria-selected="true">Consulta tabla</a>
                     </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="crearnoticia" role="tabpanel"
+                    <div class="tab-pane fade fade" id="crearnoticia" role="tabpanel"
                         aria-labelledby="crearnoticia-tab">
                         <jsp:include page="./crearContentNoticia.jsp"></jsp:include>
                     </div>
-                    <div class="tab-pane fade" id="consultatabla" role="tabpanel" aria-labelledby="consultamosaico-tab">
-                        <table id="datatable-noticias" class="table table table-hover table-striped">
-                            <thead id="theadDispo">
-                                
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="tab-pane fade" id="consultamosaico" role="tabpanel" aria-labelledby="consultamosaico-tab">
-                        
+                    <div class="tab-pane show active" id="consultanoticias" role="tabpanel" aria-labelledby="consultanoticias-tab">
+                        <jsp:include page="./consultaNoticias.jsp"></jsp:include>
                     </div>
                 </div>
 
-            
+                <div ng-show="edicionNoticaContent" class="content-edicion-noticia">                    
+                    <div class="modal-header">
+                        <h5 class="modal-title">Editar noticia</h5>
+                        <button ng-click="edicionNoticaContent=false"  type="button" class="btn-close"></button>
+                    </div>
+                    <div class="content-edicionnoticia">
+                        <jsp:include page="./edicionContentNoticia.jsp"></jsp:include>
+                    </div>
+                </div>
             </div>
         </div>
 	</body>
 	<!-- LIBRERIAS JS -->
+    <script type="text/javascript">let contex_project = "${pageContext.request.contextPath}";</script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/selectPicker/js/popper.min.js"></script>
@@ -86,10 +80,9 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/lib/moment.min.js" ></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/lib/moment.es.js" ></script>
-    <!-- ARCHIVOS JS INTERNOS -->
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
-    <script type="text/javascript">let contex_project = "${pageContext.request.contextPath}";</script>
     <script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/gestionNoticias/gestionNoticiasController.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/gestionNoticias/gestionNoticiasEdicionController.js" charset="UTF-8"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/gestionNoticias/gestionNoticiasService.js" charset="UTF-8"></script>
 </html>

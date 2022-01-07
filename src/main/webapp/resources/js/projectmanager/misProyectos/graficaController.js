@@ -4,20 +4,136 @@ app.graficaController = function ($scope, $q, misProyectosService) {
 
     $scope.inicializarGrafica = function() {
         //Se itera la lista de proyectos para obtener la fecha inicio y fecha fin de la grafica
-        
         $scope.heightCalendar = 50;
-
-        $scope.lineaTiempo.fechaInicio = new Date();
-        $scope.lineaTiempo.fechaFin = new Date();
-
+        $scope.lineaTiempo.fechaInicio = moment(moment().format('MM')+"-"+moment().format('DD')+"-"+moment().format('YYYY'));
+        $scope.lineaTiempo.fechaFin = moment(moment().format('MM')+"-"+moment().format('DD')+"-"+moment().format('YYYY'));
+        $scope.lineaTiempo.fechaActual = moment(moment().format('MM')+"-"+moment().format('DD')+"-"+moment().format('YYYY'));
+        
         $scope.listaProyectosGrafica.map(function(proyecto, index) {
-
-            if (true) {
-                
+            //obtener fecha incio
+            proyecto.fechaInicioReal = moment(proyecto.fechaInicioReal);
+            proyecto.fechaInicioPlaneada = moment(proyecto.fechaInicioPlaneada);
+            if (proyecto.fechaInicioPlaneada <= $scope.lineaTiempo.fechaInicio) {
+                $scope.lineaTiempo.fechaInicio = proyecto.fechaInicioPlaneada;
+            }
+            //obtener fecha fin
+            proyecto.fechaFinReal = moment(proyecto.fechaFinReal);
+            proyecto.fechaFinPlaneada = moment(proyecto.fechaFinPlaneada);
+            if (proyecto.fechaFinPlaneada >= $scope.lineaTiempo.fechaFin) {
+                $scope.lineaTiempo.fechaFin = proyecto.fechaFinPlaneada;
             }
         });
+        //obtener el total de dias
+        $scope.lineaTiempo.dias = $scope.lineaTiempo.fechaFin.diff($scope.lineaTiempo.fechaInicio, 'days')+1;
+        //CALCULAR GRAFICA DE MIS PROYECTOS
+        $scope.listaProyectosGrafica.map(function(proyecto, index) {
+            //dias inicio del proyecto
+            proyecto.diasInicio = proyecto.fechaInicioPlaneada.diff($scope.lineaTiempo.fechaInicio, 'days');
+            //dias del proyecto
+            proyecto.diasProyecto = proyecto.fechaFinPlaneada.diff(proyecto.fechaInicioPlaneada, 'days') ; //PENDIENTE
+            if (proyecto.diasProyecto === 0) {
+                proyecto.diasProyecto = 1;
+            }
+            //dias fin proyecto
+            proyecto.diasFin = $scope.lineaTiempo.fechaFin.diff(proyecto.fechaFinPlaneada, 'days');
+            //calcular porcentajes
+            proyecto.porcentajeInicio = (proyecto.diasInicio * 100 / $scope.lineaTiempo.dias);
+            proyecto.porcentajeProyecto = (proyecto.diasProyecto * 100 / $scope.lineaTiempo.dias);
+            proyecto.porcentajeFIn = (proyecto.diasFin * 100 / $scope.lineaTiempo.dias);
+            console.log(proyecto);
+        });
 
-        console.log($scope.listaProyectosGrafica);
+        //CALCULAR EL DIA ACTUAL
+        $scope.lineaTiempo.diaActual = ($scope.lineaTiempo.fechaActual.diff($scope.lineaTiempo.fechaInicio, 'days') * 100 / $scope.lineaTiempo.dias);
+
+        //Porcentaje que tendra cada dia en el calendario
+        $scope.widthCalendar = 0;
+        var fechaInicio = angular.copy($scope.lineaTiempo.fechaInicio);
+        $scope.lineaTiempo.calendarioDias = [];
+        $scope.lineaTiempo.calendarioMeses = [];
+        $scope.calendarioMesValidacion = [];
+        $scope.lineaTiempo.porcentajeDia = (100 / $scope.lineaTiempo.dias);
+        $scope.lineaTiempo.calendarioDias.push({dia: fechaInicio.format('DD')});
+        $scope.lineaTiempo.calendarioMeses.push({mes: $scope.nombreMeses[parseInt(fechaInicio.format('M'))-1]+" "+fechaInicio.format('YYYY')});
+        $scope.calendarioMesValidacion.push(fechaInicio.format('M')+"-"+fechaInicio.format('YYYY'));
+        var counthDays = 0;
+        for (var i = 1; i < $scope.lineaTiempo.dias; i++) {
+            $scope.dia = {};
+            counthDays++;
+            
+            //moment().add(29, 'days').format('D')
+            $scope.dia.dia = fechaInicio.add(1, 'days').format('DD');
+            $scope.lineaTiempo.calendarioDias.push($scope.dia);
+            if (fechaInicio.format('DD') === "01" && !$scope.calendarioMesValidacion.includes((fechaInicio.format('M')+"-"+fechaInicio.format('YYYY')))) {
+                console.log("INGRESA NUEVO MES");
+                $scope.lineaTiempo.calendarioMeses[$scope.lineaTiempo.calendarioMeses.length - 1].porcentaje = counthDays * 100 / $scope.lineaTiempo.dias;
+                $scope.lineaTiempo.calendarioMeses[$scope.lineaTiempo.calendarioMeses.length - 1].dias = counthDays;
+                $scope.lineaTiempo.calendarioMeses.push({mes: $scope.nombreMeses[parseInt(fechaInicio.format('M'))-1]+" "+fechaInicio.format('YYYY')});
+                $scope.calendarioMesValidacion.push(fechaInicio.format('M')+"-"+fechaInicio.format('YYYY'));
+                counthDays = 0;
+                $scope.widthCalendar = $scope.widthCalendar + 1200;
+            }
+        }
+        $scope.lineaTiempo.calendarioMeses[$scope.lineaTiempo.calendarioMeses.length - 1].porcentaje = counthDays * 100 / $scope.lineaTiempo.dias;
+        $scope.lineaTiempo.calendarioMeses[$scope.lineaTiempo.calendarioMeses.length - 1].dias = counthDays;
+        $scope.widthCalendar = $scope.widthCalendar + 1200;
+    }
+
+    $scope.inicializarGraficaPuntas = function(proyecto) {
+        //CALCULAR GRAFICA DE MIS PUNTAS
+
+        proyecto.Puntas.map(function(punta) {
+            punta.fechaInicioPlaneada = moment(punta.fechaInicioPlaneada);
+            punta.fechaFinPlaneada = moment(punta.fechaFinPlaneada);
+            //Calcular los dias de inicio de la punta
+            punta.diasInicio = punta.fechaInicioPlaneada.diff($scope.lineaTiempo.fechaInicio, 'days');
+            //calcular los dias de la punta
+            punta.diasPunta = punta.fechaFinPlaneada.diff(punta.fechaInicioPlaneada, 'days');
+            //calcular los dias fin de la punta
+            punta.diasFin = punta.diasFin = $scope.lineaTiempo.fechaFin.diff(punta.fechaFinPlaneada, 'days');
+            //calcular porcentajes
+            punta.porcentajeInicio = (punta.diasInicio * 100 / $scope.lineaTiempo.dias);
+            punta.porcentajePunta = (punta.diasPunta * 100 / $scope.lineaTiempo.dias);
+            punta.porcentajeFIn = (punta.diasFin * 100 / $scope.lineaTiempo.dias);
+            console.log(punta);
+        });
+    }
+
+    $scope.inicializarGraficaPlanes = function(punta) {
+
+        punta.Planes.map(function(plan) {
+            plan.fechaInicioPlaneada = moment(plan.fechaInicioPlaneada);
+            plan.fechaFinPlaneada = moment(plan.fechaFinPlaneada);
+
+            plan.diasInicio = plan.fechaInicioPlaneada.diff($scope.lineaTiempo.fechaInicio, 'days');
+            plan.diasPlan = plan.fechaFinPlaneada.diff(plan.fechaInicioPlaneada, 'days');
+            plan.diasFin = $scope.lineaTiempo.fechaFin.diff(plan.fechaFinPlaneada, 'days');
+
+            plan.porcentajeInicio = (plan.diasInicio * 100 / $scope.lineaTiempo.dias);
+            plan.porcentajePlan = (plan.diasPlan * 100 / $scope.lineaTiempo.dias);
+            plan.porcentajeFIn = (plan.diasFin * 100 / $scope.lineaTiempo.dias);
+            
+            plan.valor = isNaN(plan.diasPlan) ? false : true;
+            console.log(plan);
+        });
+    }
+
+    $scope.inicializarGraficaActividades = function(plan) {
+        $scope.listaActividades.map(function(actividad){
+            actividad.Fecha_inicio_planeada = moment(actividad.Fecha_inicio_planeada);
+            actividad.Fecha_fin_planeada = moment(actividad.Fecha_fin_planeada);
+
+            actividad.diasInicio = actividad.Fecha_inicio_planeada.diff($scope.lineaTiempo.fechaInicio, 'days');
+            actividad.diasActividad = actividad.Fecha_fin_planeada.diff(actividad.Fecha_inicio_planeada, 'days');
+            actividad.diasFin = $scope.lineaTiempo.fechaFin.diff(actividad.Fecha_fin_planeada, 'days');
+
+            actividad.porcentajeInicio = (actividad.diasInicio * 100 / $scope.lineaTiempo.dias);
+            actividad.porcentajeActividad = (actividad.diasActividad * 100 / $scope.lineaTiempo.dias);
+            actividad.porcentajeFin = (actividad.porcentajeFin * 100 / $scope.lineaTiempo.dias);
+
+            actividad.valor = isNaN(actividad.diasActividad) ? false : true;
+            console.log(actividad);
+        });
     }
 
     $scope.resultProyectos = 
@@ -80,8 +196,8 @@ app.graficaController = function ($scope, $q, misProyectosService) {
                 "totalPuntasDevueltoVentas": "0",
                 "totalPuntasCancelado": "0",
                 "totalPuntasInstalado": "0",
-                "fechaInicioPlaneada": "",
-                "fechaFinPlaneada": "",
+                "fechaInicioPlaneada": "12-12-2021",
+                "fechaFinPlaneada": "01-27-2022",
                 "fechaInicioReal": "",
                 "fechaFinReal": "",
                 "fechaActual": "12-28-2021",
@@ -126,8 +242,8 @@ app.graficaController = function ($scope, $q, misProyectosService) {
                     "Plaza": "Ciudad De Mexico",
                     "Direccion_sitio": "Avenida San Jerónimo, 112 , La Otra Banda, Ciudad De México, 04519",
                     "esNueva": "false",
-                    "fechaInicioPlaneada": "",
-                    "fechaFinPlaneada": "",
+                    "fechaInicioPlaneada": "12-12-2021",
+                    "fechaFinPlaneada": "01-26-2022",
                     "fechaInicioReal": "",
                     "fechaFinReal": "",
                     "fechaActual": "12-28-2021",
@@ -208,8 +324,8 @@ app.graficaController = function ($scope, $q, misProyectosService) {
                         "statusCsp": "Por instalar",
                         "tipoPlan": "P",
                         "Numero_cuentaFactura": "0200000446",
-                        "fechaInicioPlaneada": "",
-                        "fechaFinPlaneada": "",
+                        "fechaInicioPlaneada": "12-12-2021",
+                        "fechaFinPlaneada": "01-25-2022",
                         "fechaInicioReal": "",
                         "fechaFinReal": "",
                         "fechaActual": "12-28-2021",
@@ -280,8 +396,8 @@ app.graficaController = function ($scope, $q, misProyectosService) {
                         "tipoPlan": "P",
                         "Numero_cuentaFactura": "0200000447",
                         "fechaInicioPlaneada": "",
-                        "fechaFinPlaneada": "",
-                        "fechaInicioReal": "",
+                        "fechaInicioPlaneada": "12-12-2021",
+                        "fechaFinPlaneada": "01-25-2022",
                         "fechaFinReal": "",
                         "fechaActual": "12-28-2021",
                         "porcentajeAvance": "0.0",
@@ -918,8 +1034,8 @@ app.graficaController = function ($scope, $q, misProyectosService) {
                 "Nombre_actividad": "Validacion Con El Cliente Y Generacion Del Plana De Trabajo",
                 "Nombre_responsable": "",
                 "Porcentaje": "0",
-                "Fecha_inicio_planeada": "",
-                "Fecha_fin_planeada": "",
+                "Fecha_inicio_planeada": "12-23-2021",
+                "Fecha_fin_planeada": "01-03-2022",
                 "Fecha_inicio_real": "",
                 "Fecha_fin_real": "",
                 "Id_dependencia": "",

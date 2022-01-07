@@ -13,6 +13,11 @@
     padding-left: 30px;
     cursor: pointer;
 }
+.grafica-primer-nivel {
+    height: 68px;
+    line-height: 68px;
+    /*padding-left: 15px;*/
+}
 .is-even-primer-nivel {
     background-color: #F9F7FD;
 }
@@ -24,48 +29,111 @@
 .menu-segundo-nivel {
     font-size: 14px;
     font-family: 'Montserrat';
-    line-height: 45px!important;
+    line-height: 58px!important;
     text-align: left;
     color: #555555;
     padding-left: 40px;
     cursor: pointer;
 }
+.grafica-segundo-nivel {
+    height: 58px;
+    line-height: 58px;
+}
 .is-even-segundo-nivel {
-    background-color: #EAE8F6;
+    background-color: #F2EDF2;
 }
 .is-odd-segundo-nivel {
-    background-color: #E4E1F4;
+    background-color: #F5F5F5;
 }
 
 /* TERCER NIVEL */
 .menu-tercer-nivel {
     font-size: 14px;
     font-family: 'Montserrat';
-    line-height: 35px!important;
+    line-height: 48px!important;
     text-align: left;
     color: #555555;
     padding-left: 50px;
     cursor: pointer;
 }
+.grafica-tercer-nivel {
+    height: 48px;
+    line-height: 48px;
+}
 .is-even-tercer-nivel {
-    background-color: #EAE8F6;
+    background-color: #E8E3E8;
 }
 .is-odd-tercer-nivel {
-    background-color: #E4E1F4;
+    background-color: #EBEBEB;
 }
 
 /* CUARTO NIVEL */
 .menu-cuarto-nivel {
     font-size: 14px;
     font-family: 'Montserrat';
-    line-height: 35px!important;
+    line-height: 38px!important;
     text-align: left;
     color: #555555;
     padding-left: 60px;
 }
+.grafica-cuarto-nivel {
+    height: 38px;
+    line-height: 38px;
+}
 .is-even-cuarto-nivel {
-    background-color: #EAE8F6;
+    background-color: #DED9DE;
 }
 .is-odd-cuarto-nivel {
-    background-color: #E4E1F4;
+    background-color: #E1E1E1;
+}
+
+.content-dia {
+    /*padding: 0;*/
+    padding-left: 0;
+    padding-right: 24px;
+
+}
+.dias {
+    margin-left: -.5em;
+}
+.fechaActualDay {
+    margin-left: -.5em;
+}
+.container-proyecto {
+    height: 100%;
+    width:100%;
+    font-size: 0;
+    border-radius: 20px;
+    height: 35px;
+}
+.container-punta {
+    height: 100%;
+    width:100%;
+    font-size: 0;
+    border-radius: 20px;
+    height: 30px;
+}
+.container-plan {
+    height: 100%;
+    width:100%;
+    font-size: 0;
+    border-radius: 20px;
+    height: 25px;
+}
+.container-actividad {
+    height: 100%;
+    width:100%;
+    font-size: 0;
+    border-radius: 20px;
+    height: 20px;
+}
+.vl {
+    border-left: 1px solid #707070;
+    position: absolute;
+    margin-top: -4em;
+    z-index: 1;
+    margin-left: .5em;
+}
+.vacio-grafica {
+    padding: 0;
 }

@@ -3,6 +3,7 @@ package com.mx.totalplay.ffm.cloudweb.utilerias.service.impl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -44,6 +45,14 @@ public class ImplAutentificacionService  implements AutentificacionService{
 		LoginResult responseLog = (LoginResult) restCaller.callPostReturnClassBasicAuthXwwwUrlFormed(
 				urlService ,  us, crdospas, LoginResult.class
 		);
+		
+		String urlPermisos=env.getProperty("dep.envirom.web").concat(":8133/ffm/configuraciones/generales/idUsuario/{idUsuario}/idOrigen/1");
+		Map<String, String> paramsGet = new HashMap<String, String>();
+		paramsGet.put("idUsuario", ""+responseLog.getIdUsuario());
+		LoginResult configuracion = (LoginResult) restCaller.callGetBearerTokenRequestReturnClass(paramsGet, urlPermisos, LoginResult.class, responseLog.getAccess_token());
+		
+		responseLog.setConfiguracionesGenerales(configuracion.getConfiguracionesGenerales());
+		responseLog.setModulos(configuracion.getModulos());
 				
 		logger.info(gson.toJson(responseLog));
 		if (responseLog.getIdUsuario() != 0) {

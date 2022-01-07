@@ -1,6 +1,8 @@
 var app = angular.module('gestionNoticiasApp', []);
+var dataTableConsultaNoticias;
 app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestionNoticiasService', function ($scope, $q, $filter, gestionNoticiasService) {
 	
+	app.edicionNoticiaController($scope,gestionNoticiasService)
 
 	$scope.isSeleccionGeografia=false;
 	$scope.saveObjCopy={}
@@ -32,6 +34,23 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 		});
 		$('#fecha-fin-crearnoticia').datepicker('update', new Date());
 
+
+		$('#filtro_fecha_inicio_consultanoticia').datepicker({
+			format: 'dd/mm/yyyy',
+			autoclose: true,
+			language: 'es',
+			todayHighlight: true
+		});
+		$('#filtro_fecha_inicio_consultanoticia').datepicker('update', new Date());
+
+
+		$('#filtro_fecha_fin_consultanoticia').datepicker({
+			format: 'dd/mm/yyyy',
+			autoclose: true,
+			language: 'es',
+			todayHighlight: true
+		});
+		$('#filtro_fecha_fin_consultanoticia').datepicker('update', new Date());
 		$('#modal-geografia-creacion').on('hidden.bs.modal', function () {
 			$scope.isSeleccionGeografia=false;
 			let clustersparam=$("#jstre-content-geofrafia").jstree("get_selected", true)
@@ -46,7 +65,9 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 		$('#modal-geografia-creacion').on('shown.bs.modal', function () {
 			$("#searchGeo").focus();
 		});
-		
+		$('#modal-geografia-consulta').on('shown.bs.modal', function () {
+			$("#searchGeoConsulta").focus();
+		});
     });
     function compareGeneric(a,b){
         let niveluno=a.nivel;
@@ -60,29 +81,18 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
     }
 
 	$scope.cambiarTipoDeRegistroNoticia=function(){
-		console.log("cambio a ",$scope.inhabilidarCamposRegistro )
-		/**if( $scope.inhabilidarCamposRegistro ){
-			$scope.saveObjCopy=angular.copy($scope.saveObj)
-			$scope.saveObj={}
-
-			$scope.fileDecargaNoticaCopy=angular.copy($scope.fileDecargaNotica)
-			$scope.fileDecargaNotica={}
-		}else{
-			$scope.fileDecargaNotica=angular.copy($scope.fileDecargaNoticaCopy)
-			$scope.fileDecargaNoticaCopy={}
-
-			$scope.saveObj=angular.copy($scope.saveObjCopy)
-			$scope.saveObjCopy={}
-		}**/
-
 	}
     $scope.obtenerNivelUltimoJerarquia=function(){
         return $scope.listadogeografiacopy.sort(compareGeneric)[0].nivel
     }
 	$scope.abrirModalGeografiaCreacion=function(){
+		$('#searchGeo').val('');
+		$("#jstre-content-geofrafia").jstree("search", '');
 		$("#modal-geografia-creacion").modal('show')
 	}
-
+	$('#searchGeo').on('keyup', function () {
+		$("#jstre-content-geofrafia").jstree("search", this.value);
+	})
 	$scope.eliminarArchivoDescarga=function(){
 		$scope.fileDecargaNotica={}
 		$("#cargarArchivoDescarga").val(''); 
@@ -97,7 +107,6 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 			reader.onload = function () {
 				let base64 = reader.result.toString().split(",");
 				$scope.fileDecargaNotica = {
-					"bucketId": "totalplay-ffm-core-dev.appspot.com",
 					"archivo": base64[1],
 					"nombre": nombreArchivo
 				};				
@@ -131,7 +140,6 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 			reader.onload = function () {
 				let base64 = reader.result.toString().split(",");
 				$scope.fileCargaArchivoNoticia = {
-					"bucketId": "totalplay-ffm-core-dev.appspot.com",
 					"archivo": base64[1],
 					"nombre": nombreArchivo
 				};				
@@ -151,6 +159,9 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 		let paramsConfiguracionDespacho ={
 			moduloAccionesUsuario: 'moduloNoticias'
 		};
+		
+		swal({ text: 'Cargando ...', allowOutsideClick: false });
+		swal.showLoading();
 		$q.all([
 			gestionNoticiasService.consultaGeografias(),
 			gestionNoticiasService.consultarConfiguracionDespachoDespacho(paramsConfiguracionDespacho),
@@ -174,7 +185,9 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 					$scope.listaGeografias = results[0].data.result.geografia;						
 					$scope.nivelGeografia=parseInt( $scope.obtenerNivelUltimoJerarquia() )
 				}
-				geografia=listGeografias;
+				let geografia=angular.copy(listGeografias );
+				let geografiaConsulta=angular.copy(listGeografias)
+				
 				geografia.push({id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state:{opened: true}});
 				geografia.map((e)=>{
 					e.parent = e.padre == null ? 0 : e.padre;
@@ -187,6 +200,17 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 					return e
 				})       
 
+				geografiaConsulta.push({id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state:{opened: true}});
+				geografiaConsulta.map((e)=>{
+					e.parent = e.padre == null ? 0 : e.padre;
+					e.text= e.nombre;
+					e.icon= "fa fa-globe";
+					e.state = {
+							opened: true,
+							selected: true,
+						}
+					return e
+				})       
 				$('#jstre-content-geofrafia').bind('loaded.jstree', function(e, data) {
 					$(this).jstree("open_all");
 				}).jstree({
@@ -204,6 +228,28 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 						}
 					}
 				});
+
+				
+				$('#jstre-content-geofrafia-consulta').bind('loaded.jstree', function(e, data) {
+					$(this).jstree("open_all");
+					setTimeout(function(){
+						$scope.consultarNoticias();
+					},1000)
+				}).jstree({
+					'plugins': ['search', 'checkbox', 'wholerow'],
+					'search': {
+						"case_sensitive": false,
+						"show_only_matches": true
+					},
+					'core': {
+						'data': geografiaConsulta,
+						'themes': {
+							'name': 'proton',
+							'responsive': true,
+							"icons":false        
+						}
+					}
+				});
 			}else{
 				toastr.warning('¡No existen geografías actualmente!');
 			}
@@ -214,15 +260,95 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 	$scope.initConsultaMetodo()
 	
 
-    $scope.cosultarNoticia = function() {
+    $scope.consultarNoticias = function() {
+		swal({ text: 'Consultando noticias ...', allowOutsideClick: false });
+		swal.showLoading();
+		if(dataTableConsultaNoticias!=undefined){
+			dataTableConsultaNoticias.destroy()
+			$('#datatable-noticia tbody').empty();
+		}	
         $q.all([
     		gestionNoticiasService.consultarNoticiasGeneric()
         ]).then(function(results) {
             console.log(results);
+			
+			if( results[0].data != undefined){
+				if( results[0].data.respuesta  ){
+					if( results[0].data.result !=undefined &&    results[0].data.result.noticias	 ){
+						$scope.litadoNoticiasTemp=results[0].data.result.noticias
+						let arratNoticias=results[0].data.result.noticias;
+						angular.forEach( arratNoticias, function(el,index){
+
+							let iconPermanente=``;
+
+							if(!el.permanente)
+								iconPermanente=`
+									<div class="content-success-generic">
+										<i class="icono-success-generic fas fa-check"></i>                                        
+									</div>`
+
+							let htmlDescarga='';
+							if(el.urlArchivo){
+								htmlDescarga=`
+									<a href="${el.urlArchivo}" download>
+										<span class="descarga-archivo"> Descargar archivo </span> 
+									</a>
+								`
+							}
+						
+							let htmlLinkExterno='';
+							if(el.urlArchivo){
+								htmlLinkExterno=`
+									<span onclick="window.open( '${el.urlLinkExterno}', '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');" class="consultaLinkExterno"> ${el.urlLinkExterno} </span>
+								`
+							}
+							let tableelemetn=`
+							<tr>
+								<td> 	<img class="banner-file-noticias" src="${el.urlBanner}">  </td>
+								<td> 	${htmlDescarga} </td>
+								<td>  	<span class="consultaTituloPrinc"> ${el.tituloPrincipal} </span> </td>
+								<td>  	<span class="consultaTituloSecund"> ${el.tituloSecundario} </span> </td>
+								<td>  	${htmlLinkExterno} </td>
+								<td>  	${iconPermanente} </td>
+								<td>  	<span class="consultaFechaNoticia"> ${el.fechaInicio} </span> </td>
+								<td>  	<span class="consultaFechaNoticia"> ${el.fechaExpiracion} </span> </td>
+								<td>  	<span class="consultaDetalleNoticia"> ${el.detalle} </span> </td>
+								<td>  	<button onclick="abrirModalEdicion( ${index} )" type="button" class="btn btn-sm btn-primary btn-editar-noticia ">
+											<i class="fas fa-pencil-alt"></i>					
+							  			</button> 
+								</td>
+
+							</tr>	
+							`
+							$("#datatable-noticias tbody").append(tableelemetn) 
+						})
+
+						$scope.initDatatableNoticias()
+					}else{
+						swal.close()						
+					}
+				}else{
+					swal.close()						
+				}
+			}else{
+				swal.close()						
+			}
         });
     }
-    $scope.cosultarNoticia();
-
+	$scope.initDatatableNoticias=function(){
+			dataTableConsultaNoticias=$('#datatable-noticias').DataTable({
+				"paging": true,
+				"lengthChange": false,
+				"searching": false,
+				"ordering": false,
+				"pageLength": 10,
+				"info": false,
+				"autoWidth": true,
+				"language": idioma_espanol_not_font,
+				"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">'
+			})
+			swal.close()	
+	}
     $scope.registrarNoticia = function() {
 
 		if( !$scope.validarRegistroNoticia() ){
@@ -362,4 +488,17 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 		
 		return isErrorRegistro;
 	}
+	/** Funciones de consultas   */
+	$scope.filtroConsulta={}
+	$scope.abrirModalGeografiaConsulta=function(){
+		$('#searchGeoConsulta').val('');
+		$("#jstre-content-geofrafia-consulta").jstree("search", '');
+		$("#modal-geografia-consulta").modal('show')
+	}
+	    
+    $('#searchGeoConsulta').on('keyup', function () {
+		$("#jstre-content-geofrafia-consulta").jstree("search", this.value);
+	})
+    
 }]);
+

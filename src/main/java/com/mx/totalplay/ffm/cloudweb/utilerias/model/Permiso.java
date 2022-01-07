@@ -17,4 +17,8 @@ public class Permiso {
 	private int ordenConfig;
 	private boolean dentroNavbar;
 	
+	private int id;
+	private int nivel;
+	private int idPadre;
+	private List<ConfiguracionesGenerales> llaves;
 }
