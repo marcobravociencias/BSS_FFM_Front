@@ -95,7 +95,7 @@
         	</select>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4" ng-if="tabInformacionVW_ASIG_AUTOMATICA_mod">
 		<label class="span-consulta"><i class="fas fa-sync"></i> Asignaci&oacute;n autom&aacute;tica*</label>
         <div class="input-group">
         	<div class="form-check-sm form-check form-switch" style="padding-top: .5rem;">

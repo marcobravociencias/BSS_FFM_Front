@@ -25,12 +25,12 @@
 				</div>
 			</div>
             <div id="contenedorIntervencionesRegistroMod" class="scrollGeneralArbol">
-	        	<div class="row padding_resumen_ciudades" ng-repeat="intervencion in listaIntervencionesSelecionadasMod track by $index">
+	        	<div class="row padding_resumen_ciudades" ng-repeat="intervencion in intervencionSelectMod track by $index">
 	            	<div class="col-md-6">
 	                	<span class="text-body-table-arbol" ng-bind="intervencion.nombre"></span>
 					</div>
 	                <div class="col-md-6">
-	                	<li class="item_ciudad_resum text-body-table-arbol" ng-repeat="inter in intervencion.hijos" ng-bind="inter.text"></li>
+	                	<li class="item_ciudad_resum text-body-table-arbol" ng-repeat="inter in intervencion.intervencionesHijas" ng-bind="inter.nombre"></li>
 					</div>
 				</div>
 			</div>

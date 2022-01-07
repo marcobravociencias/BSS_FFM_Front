@@ -22,10 +22,32 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     $scope.mostrarAccesosMod = false;
     $scope.mostrarTecnicosMod = false;
     $scope.mostrarDespachoMod = false;
-    $scope.validarTamDatosMod = false;
+    $scope.validarTamDatosMod = true;
     $scope.isTecnicoMod = false;
     $scope.contadorCambioArbolGeografias = false;
     $scope.fileFotoUsuarioMod = null;
+    
+//	CONFIGURACIÓN DE TABS
+    $scope.configuracionPuestoRegistradoMod = null;
+    
+	$scope.tabInformacionMod = true;
+	$scope.tabIntervencionesMod = false;
+	$scope.tabArbolMod = false;
+	$scope.tabAccesosMod = false;
+	$scope.tabTecnicosMod = false;
+	$scope.tabDespachosMod = false;
+	$scope.tabConfirmacionMod = false;
+	
+	$scope.tabInformacionVW_ASIG_AUTOMATICA_mod = true;
+	$scope.tabInformacionVL_RFC_mod = true;
+	$scope.tabInformacionVL_CURP_mod = true;
+	$scope.tabArbol_LB_N1_mod = "";
+	$scope.tabArbol_LB_N2_mod = "";
+	$scope.tabArbol_NV_GEOGRAFIA_mod;
+	$scope.tabIntervenciones_NV_INTERVENCIONES_mod;
+	
+	$scope.geoSelectMod = [];
+	$scope.intervencionSelectMod = [];
 
     //MÉTODO QUE REALIZA LA CONSULTA ESPECÍFICA POR ID DE USUARIO (CLIC EN BOTÓN DE MODIFICAR EN LA TABLA DE CONSULTA), Y PREPARA LA VISTA DE MODIFICACIÓN
     consultarDetalleUsuario = function(idUsuario) {
@@ -46,6 +68,69 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                     }else{
                     	$("#checkAsignacionAutomaticaMod").text("  NO");
                     }
+                    
+                    $scope.configuracionPuestoRegistradoMod = $scope.listaPuestos.filter(e => {return e.id == $scope.detalleUsuario.idTipoUsuario})[0];
+                    angular.forEach($scope.configuracionPuestoRegistradoMod.tabs,function(tab,index){
+                		switch(tab.llaveFront){
+                        	case "tabInformacion":
+                        		$scope.tabInformacionMod = true;
+                        		break;
+                        	case "tabIntervenciones":
+                        		$scope.tabIntervencionesMod = true;
+                        		break;
+                        	case "tabArbol":
+                        		$scope.tabArbolMod = true;
+                        		break;
+                        	case "tabAccesos":
+                        		$scope.tabAccesosMod = true;
+                        		break;
+                        	case "tabTecnicos":
+                        		$scope.tabTecnicosMod = true;
+                        		break;
+                        	case "tabDespachos":
+                        		$scope.tabDespachosMod = true;
+                        		break;
+                        	case "tabConfirmacion":
+                        		$scope.tabConfirmacionMod = true;
+                        		break;
+                		}
+            		});
+                    
+                    $scope.tabInformacionVW_ASIG_AUTOMATICA_mod = true;
+                	$scope.tabInformacionVL_RFC_mod = true;
+                	$scope.tabInformacionVL_CURP_mod = true;
+                	$scope.tabArbol_LB_N1_mod = "";
+                	$scope.tabArbol_LB_N2_mod = "";
+                    $scope.tabIntervenciones_NV_INTERVENCIONES_mod = null;
+                	$scope.tabArbol_NV_GEOGRAFIA_mod = null;
+                	angular.forEach($scope.configuracionPuestoRegistradoMod.configuraciones,function(conf,index){
+                		if(conf.llave == "tabInformacionVW_ASIG_AUTOMATICA"){
+                			if(conf.valor == "false"){
+                				$scope.tabInformacionVW_ASIG_AUTOMATICA_mod = false;
+                			}
+                		}else if(conf.llave == "tabArbol_LB_N1"){
+                			$scope.tabArbol_LB_N1_mod = conf.valor;
+                		}else if(conf.llave == "tabArbol_LB_N2"){
+                			$scope.tabArbol_LB_N2_mod = conf.valor;
+                		}else if(conf.llave == "tabInformacionVL_RFC"){
+                			if(conf.valor+"" == "true"){
+                				$scope.tabInformacionVL_RFC_mod = true;
+                			}else if(conf.valor+"" == "false"){
+                				$scope.tabInformacionVL_RFC_mod = false;
+                			}
+                		}else if(conf.llave == "tabInformacionVL_CURP"){
+                			if(conf.valor+"" == "true"){
+                				$scope.tabInformacionVL_CURP_mod = true;
+                			}else if(conf.valor+"" == "false"){
+                				$scope.tabInformacionVL_CURP_mod = false;
+                			}
+                		}else if(conf.llave == "tabArbol_NV_GEOGRAFIA"){
+                			$scope.tabArbol_NV_GEOGRAFIA_mod = conf.valor;
+                		}else if(conf.llave == "tabIntervenciones_NV_INTERVENCIONES"){
+                			$scope.tabIntervenciones_NV_INTERVENCIONES_mod = conf.valor;
+                		}
+                	});
+                    
                     var puestoSeleccionado = "";
                     $scope.puestoRegistrado = [];
                     angular.forEach($scope.listaPuestos,function(puesto,index){
@@ -77,7 +162,21 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                     $scope.detalleUsuario.intervencionesId = [];
                     let intervencionesListaMod = [];
                     
-                    angular.forEach($scope.arbolIntervencionesModificar,(element,index) => {
+                    angular.forEach($scope.arbolIntervencionesModificar,function(intervencion,index){
+                        if (intervencion.nivel <= $scope.tabIntervenciones_NV_INTERVENCIONES_mod) {
+                        	intervencionesListaMod.push(intervencion);
+                        }
+                    });
+                    
+                    intervencionesListaMod.push({id: 0, nombre: "INTERVENCIONES", nivel: 0, idPadre: "#", state:{opened: true}});
+                    intervencionesListaMod.map((e)=>{
+                        e.parent = e.idPadre == null ? 0 : e.idPadre;
+                        e.text= e.nombre;
+                        e.icon= "fa fa-globe";
+                        return e
+                    }) 
+                    
+                    angular.forEach(intervencionesListaMod,(element,index) => {
                         angular.forEach($scope.detalleUsuario.intervenciones,(intervencion,index) => {
                             if(element.id === intervencion.idTipoOrden) {
                                 element.state = {selected: true, opened: true}
@@ -85,6 +184,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                             }
                         });
                     });
+                    
                     $("#arbolIntervencionMod").jstree('destroy');
                     $('#arbolIntervencionMod').bind('loaded.jstree', function(e, data) {
                         //$(this).jstree("open_all");
@@ -95,7 +195,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 							"show_only_matches": true
 						},
                         'core': {
-                            'data': $scope.arbolIntervencionesModificar,
+                            'data': intervencionesListaMod,
                             'themes': {
                                 'name': 'proton',
                                 'responsive': true,
@@ -104,8 +204,16 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                         }
                     });
 
+                    $scope.intervencionSelectMod = [];
                     $scope.listaIntervencionesRegistradasMod.forEach(intervencion =>{
-                		if(intervencion.nivel == $scope.filtroIntervenciones){
+                		if(intervencion.nivel == $scope.tabIntervenciones_NV_INTERVENCIONES_mod){
+                			
+                			intervencion.intervencionesHijas = $scope.catalogoIntervenciones.filter(e => {return e.idPadre == intervencion.id});
+                			if(intervencion.intervencionesHijas.length < 1){
+                				intervencion.intervencionesHijas = [{nivel: intervencion.nivel, nombre: intervencion.nombre, idPadre: intervencion.idPadre}];
+                			}
+                			$scope.intervencionSelectMod.push(intervencion);
+                			
                 			var idPadre = intervencion.parent;
                 			$scope.listaIntervencionesSelecionadasMod.forEach(intervencionPadre =>{
                 				if(intervencionPadre.id == idPadre){
@@ -145,7 +253,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                     
                     $scope.arbolCiudadesModificar.push({id: 0, text: "GEOGRAFÍA", nivel: 0, parent: "#", state:{opened: true}});
                     angular.forEach($scope.listaGeografiasRespaldo,(element,index) => {
-                        if(element.nivel <= $scope.filtroGeografias){
+                        if(element.nivel <= $scope.tabArbol_NV_GEOGRAFIA_mod){
                             $scope.arbolCiudadesModificar.push({
                                 id: element.id,
                                 text: element.nombre,
@@ -192,10 +300,17 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                         	$scope.listaIdsGeografiaCiudadNatalMod = [];
                         	$scope.listaTecnicosMod = [];
                         	$scope.detalleUsuario.ciudadNatal = "";
-                        	
+                        	$scope.geoSelectMod = [];
                             var geografiaTreeMod = $('#arbolGeografiaMod').jstree("get_selected", true);
                             geografiaTreeMod.forEach(geo =>{
-                            	if(geo.original.nivel == $scope.filtroGeografias){
+                            	if(geo.original.nivel == $scope.tabArbol_NV_GEOGRAFIA_mod){
+                            		
+                            		geo.geoHijas = $scope.catalogoGeografias.filter(e => {return e.padre == geo.id});
+                        			if(geo.geoHijas.length < 1){
+                        				geo.geoHijas = [{nivel: geo.original.nivel, nombre: geo.original.nombre, padre: geo.original.padre}];
+                        			}
+                        			$scope.geoSelectMod.push(geo);
+                            		
                         			var idPadre = geo.parent;
                         			$scope.listaCiudadesSelecionadasMod.forEach(geoPadre =>{
                         				if(geoPadre.id == idPadre){
@@ -368,11 +483,21 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     $("#arbolIntervencionMod").click(function() {
     	$scope.listaIntervencionesSelecionadasMod = [];
     	$scope.detalleUsuario.intervencionesId = [];
+    	$scope.intervencionSelectMod = [];
     	
         var intervencionesTree = $('#arbolIntervencionMod').jstree("get_selected", true);
         intervencionesTree.forEach(intervencion =>{
             var existePadreMod = false;
-            if(intervencion.original.nivel == $scope.filtroIntervenciones){
+            if(intervencion.original.nivel == $scope.tabIntervenciones_NV_INTERVENCIONES_mod){
+            	intervencion.idPadre = intervencion.perent;
+            	intervencion.nombre = intervencion.text;
+            	
+            	intervencion.intervencionesHijas = $scope.catalogoIntervenciones.filter(e => {return e.idPadre == intervencion.id});
+    			if(intervencion.intervencionesHijas.length < 1){
+    				intervencion.intervencionesHijas = [{nivel: intervencion.nivel, nombre: intervencion.nombre, idPadre: intervencion.idPadre}];
+    			}
+    			$scope.intervencionSelectMod.push(intervencion);
+            	
     			var idPadre = intervencion.original.idPadre;
     			$scope.listaIntervencionesSelecionadasMod.forEach(intervencionPadre =>{
     				if(intervencionPadre.id == idPadre){
@@ -744,7 +869,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 			        			  }
 		        		}
 		        	}
-					
+
 					swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
 		    		swal.showLoading();
 		        	$q.all([
@@ -782,180 +907,188 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     	
     	
     	//PESTAÑA INFORMACIÓN GENERAL
-		if($("#puesto_select_modificacion").val() === "" || $("#puesto_select_modificacion").val() === undefined || $("#puesto_select_modificacion").val() === null){
-			$("#puesto_select_modificacion").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Puesto";
-		}else{
-			$("#puesto_select_modificacion").css("border", "1px solid #bdbdbd");
-		}
-		
-		if($("#compania_select_modificacion").val() === "" || $("#compania_select_modificacion").val() === undefined || $("#compania_select_modificacion").val() === null){
-			$("#compania_select_modificacion").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Compañía";
-		}else{
-			$("#compania_select_modificacion").css("border", "1px solid #bdbdbd");
-		}
-		
-		if($scope.detalleUsuario.numeroEmpleado === "" || $scope.detalleUsuario.numeroEmpleado === undefined){
-			$("#form-num-empleado-mod").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Número empleado";
-		}else{
-			$("#form-num-empleado-mod").css("border", "1px solid #bdbdbd");
-		}
-		
-		if($scope.detalleUsuario.usuario === "" || $scope.detalleUsuario.usuario === undefined){
-			$("#form-usuario-mod").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Usuario";
-		}else{
-			$("#form-usuario-mod").css("border", "1px solid #bdbdbd");
-		}
-		
-		if($scope.detalleUsuario.nombre === "" || $scope.detalleUsuario.nombre === undefined){
-			$("#form-nombres-mod").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Nombre";
-		}else{
-			$("#form-nombres-mod").css("border", "1px solid #bdbdbd");
-		}
-		
-		if($scope.detalleUsuario.apellidoPaterno === "" || $scope.detalleUsuario.apellidoPaterno === undefined){
-			$("#form-a-paterno-mod").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Apellido paterno";
-		}else{
-			$("#form-a-paterno-mod").css("border", "1px solid #bdbdbd");
-		}
-		
-		if($scope.detalleUsuario.apellidoMaterno === "" || $scope.detalleUsuario.apellidoMaterno === undefined){
-			$("#form-a-materno-mod").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Apellido materno";
-		}else{
-			$("#form-a-materno-mod").css("border", "1px solid #bdbdbd");
-		}
-		
-		if($scope.detalleUsuario.curp === "" || $scope.detalleUsuario.curp === undefined){
-			$("#form-curp-mod").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *CURP";
-		}else{
-			if($scope.validarTamDatosMod){
-				if($scope.detalleUsuario.curp.length == 18){
-					$("#form-curp-mod").css("border", "1px solid #bdbdbd");
-				}else{
-					$("#form-curp-mod").css("border-bottom", "2px solid #f55756");
-					validacionInformacionGeneral = false;
-					mensaje = mensaje + "<br/> *Formato de la CURP (18 dígitos)";
-				}
+		if($scope.tabInformacionMod){
+			if($("#puesto_select_modificacion").val() === "" || $("#puesto_select_modificacion").val() === undefined || $("#puesto_select_modificacion").val() === null){
+				$("#puesto_select_modificacion").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *Puesto";
 			}else{
-				$("#form-curp-mod").css("border", "1px solid #bdbdbd");
+				$("#puesto_select_modificacion").css("border", "1px solid #bdbdbd");
 			}
 			
-		}
-		
-		if($scope.detalleUsuario.rfc === "" || $scope.detalleUsuario.rfc === undefined){
-			$("#form-rfc-mod").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *RFC";
-		}else{
-			if($scope.validarTamDatosMod){
-				if($scope.informacionRegistro.rfc.length == 12 || $scope.informacionRegistro.rfc.length == 13){
+			if($("#compania_select_modificacion").val() === "" || $("#compania_select_modificacion").val() === undefined || $("#compania_select_modificacion").val() === null){
+				$("#compania_select_modificacion").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *Compañía";
+			}else{
+				$("#compania_select_modificacion").css("border", "1px solid #bdbdbd");
+			}
+			
+			if($scope.detalleUsuario.numeroEmpleado === "" || $scope.detalleUsuario.numeroEmpleado === undefined){
+				$("#form-num-empleado-mod").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *Número empleado";
+			}else{
+				$("#form-num-empleado-mod").css("border", "1px solid #bdbdbd");
+			}
+			
+			if($scope.detalleUsuario.usuario === "" || $scope.detalleUsuario.usuario === undefined){
+				$("#form-usuario-mod").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *Usuario";
+			}else{
+				$("#form-usuario-mod").css("border", "1px solid #bdbdbd");
+			}
+			
+			if($scope.detalleUsuario.nombre === "" || $scope.detalleUsuario.nombre === undefined){
+				$("#form-nombres-mod").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *Nombre";
+			}else{
+				$("#form-nombres-mod").css("border", "1px solid #bdbdbd");
+			}
+			
+			if($scope.detalleUsuario.apellidoPaterno === "" || $scope.detalleUsuario.apellidoPaterno === undefined){
+				$("#form-a-paterno-mod").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *Apellido paterno";
+			}else{
+				$("#form-a-paterno-mod").css("border", "1px solid #bdbdbd");
+			}
+			
+			if($scope.detalleUsuario.apellidoMaterno === "" || $scope.detalleUsuario.apellidoMaterno === undefined){
+				$("#form-a-materno-mod").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *Apellido materno";
+			}else{
+				$("#form-a-materno-mod").css("border", "1px solid #bdbdbd");
+			}
+			
+			if($scope.detalleUsuario.curp === "" || $scope.detalleUsuario.curp === undefined){
+				$("#form-curp-mod").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *CURP";
+			}else{
+				if($scope.tabInformacionVL_CURP_mod){
+					if($scope.detalleUsuario.curp.length == 18){
+						$("#form-curp-mod").css("border", "1px solid #bdbdbd");
+					}else{
+						$("#form-curp-mod").css("border-bottom", "2px solid #f55756");
+						validacionInformacionGeneral = false;
+						mensaje = mensaje + "<br/> *Formato de la CURP (18 dígitos)";
+					}
+				}else{
+					$("#form-curp-mod").css("border", "1px solid #bdbdbd");
+				}
+				
+			}
+			
+			if($scope.detalleUsuario.rfc === "" || $scope.detalleUsuario.rfc === undefined){
+				$("#form-rfc-mod").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *RFC";
+			}else{
+				if($scope.tabInformacionVL_RFC_mod){
+					if($scope.detalleUsuario.rfc.length == 12 || $scope.detalleUsuario.rfc.length == 13){
+						$("#form-rfc-mod").css("border", "1px solid #bdbdbd");
+					}else{
+						$("#form-rfc-mod").css("border-bottom", "2px solid #f55756");
+						validacionInformacionGeneral = false;
+						mensaje = mensaje + "<br/> *Formato del RFC (12-13 dígitos)";
+					}
+				}else{
 					$("#form-rfc-mod").css("border", "1px solid #bdbdbd");
-				}else{
-					$("#form-rfc-mod").css("border-bottom", "2px solid #f55756");
-					validacionInformacionGeneral = false;
-					mensaje = mensaje + "<br/> *Formato del RFC (12-13 dígitos)";
 				}
-			}else{
-				$("#form-rfc-mod").css("border", "1px solid #bdbdbd");
 			}
-		}
-		
-		if($scope.detalleUsuario.telefonoCelular === "" || $scope.detalleUsuario.telefonoCelular === undefined){
-			$("#form-telefono-contacto-mod").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Teléfono de contacto";
-		}else{
-			if($scope.validarTamDatosMod){
-				if($scope.informacionRegistro.telefonoContacto.length == 10){
+			
+			if($scope.detalleUsuario.telefonoCelular === "" || $scope.detalleUsuario.telefonoCelular === undefined){
+				$("#form-telefono-contacto-mod").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *Teléfono de contacto";
+			}else{
+				if($scope.validarTamDatosMod){
+					if($scope.detalleUsuario.telefonoCelular.length == 10){
+						$("#form-telefono-contacto-mod").css("border", "1px solid #bdbdbd");
+					}else{
+						$("#form-telefono-contacto-mod").css("border-bottom", "2px solid #f55756");
+						validacionInformacionGeneral = false;
+						mensaje = mensaje + "<br/> *Formato del teléfono (10 dígitos)";
+					}
+				}else{
 					$("#form-telefono-contacto-mod").css("border", "1px solid #bdbdbd");
-				}else{
-					$("#form-telefono-contacto-mod").css("border-bottom", "2px solid #f55756");
-					validacionInformacionGeneral = false;
-					mensaje = mensaje + "<br/> *Formato del teléfono (10 dígitos)";
 				}
-			}else{
-				$("#form-telefono-contacto-mod").css("border", "1px solid #bdbdbd");
 			}
-		}
-		
-		if($scope.detalleUsuario.correo === "" || $scope.detalleUsuario.correo === undefined){
-			$("#form-correo-mod").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Correo electrónico";
-		}else{
-			if($("#form-correo-mod").val().indexOf('@', 0) == -1 || $("#form-correo-mod").val().indexOf('.', 0) == -1) {
+			
+			if($scope.detalleUsuario.correo === "" || $scope.detalleUsuario.correo === undefined){
 				$("#form-correo-mod").css("border-bottom", "2px solid #f55756");
 				validacionInformacionGeneral = false;
-				toastr.warning("¡Valida el formato del correo electrónico!");
+				mensaje = mensaje + "<br/> *Correo electrónico";
 			}else{
-				$("#form-correo-mod").css("border", "1px solid #bdbdbd");
+				if($("#form-correo-mod").val().indexOf('@', 0) == -1 || $("#form-correo-mod").val().indexOf('.', 0) == -1) {
+					$("#form-correo-mod").css("border-bottom", "2px solid #f55756");
+					validacionInformacionGeneral = false;
+					toastr.warning("¡Valida el formato del correo electrónico!");
+				}else{
+					$("#form-correo-mod").css("border", "1px solid #bdbdbd");
+				}
 			}
-		}
-		
-		if($scope.detalleUsuario.fechaIngreso === "" || $scope.detalleUsuario.fechaIngreso === undefined || $scope.detalleUsuario.fechaIngreso === null || $("#form-fechaIngreso-mod").val() === "" || $("#form-fechaIngreso-mod").val() === null){
-			$("#form-fechaIngreso-mod").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Fecha de ingreso";
-		}else{
-			$("#form-fechaIngreso-mod").css("border", "1px solid #bdbdbd");
-		}
-		
-		if($("#sexo_select_modificacion").val() === "" || $("#sexo_select_modificacion").val() === undefined || $("#sexo_select_modificacion").val() === null){
-			$("#sexo_select_modificacion").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Sexo";
-		}else{
-			$("#sexo_select_modificacion").css("border", "1px solid #bdbdbd");
+			
+			if($scope.detalleUsuario.fechaIngreso === "" || $scope.detalleUsuario.fechaIngreso === undefined || $scope.detalleUsuario.fechaIngreso === null || $("#form-fechaIngreso-mod").val() === "" || $("#form-fechaIngreso-mod").val() === null){
+				$("#form-fechaIngreso-mod").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *Fecha de ingreso";
+			}else{
+				$("#form-fechaIngreso-mod").css("border", "1px solid #bdbdbd");
+			}
+			
+			if($("#sexo_select_modificacion").val() === "" || $("#sexo_select_modificacion").val() === undefined || $("#sexo_select_modificacion").val() === null){
+				$("#sexo_select_modificacion").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *Sexo";
+			}else{
+				$("#sexo_select_modificacion").css("border", "1px solid #bdbdbd");
+			}
 		}
 		
 		//PESTAÑA INTERVENCIONES
-		if($scope.listaIntervencionesSelecionadasMod == "" || $scope.listaIntervencionesSelecionadasMod == undefined || $scope.listaIntervencionesSelecionadasMod == null){
-			validacionIntervenciones = false;
-			mensaje = mensaje + "<br/> *Intervención(es)";
-			$("#labelIntervencionesSeleccionadasMod").css("color", "#f55756");
-			$("#contenedorIntervencionesRegistroMod").css("border", "#f55756 solid 1px");
-		}else{
-			$("#labelIntervencionesSeleccionadasMod").css("color", "rgb(70, 88, 107)");
-			$("#contenedorIntervencionesRegistroMod").css("border", "white solid 0px");
+		if($scope.tabIntervencionesMod){
+			if($scope.listaIntervencionesSelecionadasMod == "" || $scope.listaIntervencionesSelecionadasMod == undefined || $scope.listaIntervencionesSelecionadasMod == null){
+				validacionIntervenciones = false;
+				mensaje = mensaje + "<br/> *Intervención(es)";
+				$("#labelIntervencionesSeleccionadasMod").css("color", "#f55756");
+				$("#contenedorIntervencionesRegistroMod").css("border", "#f55756 solid 1px");
+			}else{
+				$("#labelIntervencionesSeleccionadasMod").css("color", "rgb(70, 88, 107)");
+				$("#contenedorIntervencionesRegistroMod").css("border", "white solid 0px");
+			}
 		}
 		
 		//PESTAÑA ÁRBOL
-		if($scope.listaCiudadesSelecionadasMod == "" || $scope.listaCiudadesSelecionadasMod == undefined || $scope.listaCiudadesSelecionadasMod == null){
-			validacionArbol = false;
-			mensaje = mensaje + "<br/> *Geografía(s)";
-			$("#labelGeografiasSeleccionadasMod").css("color", "#f55756");
-			$("#contenedorGeografiasRegistroMod").css("border", "#f55756 solid 1px");
-		}else{
-			$("#labelGeografiasSeleccionadasMod").css("color", "rgb(70, 88, 107)");
-			$("#contenedorGeografiasRegistroMod").css("border", "white solid 0px");
+		if($scope.tabArbolMod){
+			if($scope.listaCiudadesSelecionadasMod == "" || $scope.listaCiudadesSelecionadasMod == undefined || $scope.listaCiudadesSelecionadasMod == null){
+				validacionArbol = false;
+				mensaje = mensaje + "<br/> *Geografía(s)";
+				$("#labelGeografiasSeleccionadasMod").css("color", "#f55756");
+				$("#contenedorGeografiasRegistroMod").css("border", "#f55756 solid 1px");
+			}else{
+				$("#labelGeografiasSeleccionadasMod").css("color", "rgb(70, 88, 107)");
+				$("#contenedorGeografiasRegistroMod").css("border", "white solid 0px");
+			}
 		}
 		
 		//CHECK SI EL PUESTO SELECCIONADO ES TÉCNICO NO VALIDA (TÉCNICOS Y PERMISOS) Y SI NO ES TÉCNICO SI VALIDA DICHA INFORMACIÓN
 		if($scope.isTecnicoMod == false){
 			//PESTAÑA ACCESOS (PERMISOS)
-    		if($scope.listaAccesosSelecionadosMod == "" || $scope.listaAccesosSelecionadosMod == undefined || $scope.listaAccesosSelecionadosMod == null){
-    			validacionAccesos = false;
-    			mensaje = mensaje + "<br/> *Permiso(s)";
-    			$("#labelPermisosSeleccionadasMod").css("color", "#f55756");
-    			$("#contenedorPermisosRegistroMod").css("border", "#f55756 solid 1px");
-    		}else{
-    			$("#labelPermisosSeleccionadasMod").css("color", "rgb(70, 88, 107)");
-    			$("#contenedorPermisosRegistroMod").css("border", "white solid 0px");
+    		if($scope.tabAccesosMod){
+    			if($scope.listaAccesosSelecionadosMod == "" || $scope.listaAccesosSelecionadosMod == undefined || $scope.listaAccesosSelecionadosMod == null){
+        			validacionAccesos = false;
+        			mensaje = mensaje + "<br/> *Permiso(s)";
+        			$("#labelPermisosSeleccionadasMod").css("color", "#f55756");
+        			$("#contenedorPermisosRegistroMod").css("border", "#f55756 solid 1px");
+        		}else{
+        			$("#labelPermisosSeleccionadasMod").css("color", "rgb(70, 88, 107)");
+        			$("#contenedorPermisosRegistroMod").css("border", "white solid 0px");
+        		}
     		}
     		
     		//PESTAÑA TÉCNICOS
@@ -978,30 +1111,34 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     		
 		}else{
 			//PESTAÑA DESPACHOS
-        	var checkDes = 0;
-    		angular.forEach($scope.listaDespachosMod,function(despacho,index){
-    			if(despacho.checkedOpcion == true){
-    				checkDes++;
-    			}
-    		});
-    		if(checkDes < 1){
-    			validacionDespachos = false;
-    			mensaje = mensaje + "<br/> *Despachos(s)";
-    			$("#labelDespachosSeleccionadosMod").css("color", "#f55756");
-    			$("#contenedorDespachosMod").css("border", "#f55756 solid 1px");
-    		}else{
-    			$("#labelDespachosSeleccionadosMod").css("color", "rgb(70, 88, 107)");
-    			$("#contenedorDespachosMod").css("border", "white solid 0px");
-    		}
+        	if($scope.tabDespachosMod){
+        		var checkDes = 0;
+        		angular.forEach($scope.listaDespachosMod,function(despacho,index){
+        			if(despacho.checkedOpcion == true){
+        				checkDes++;
+        			}
+        		});
+        		if(checkDes < 1){
+        			validacionDespachos = false;
+        			mensaje = mensaje + "<br/> *Despachos(s)";
+        			$("#labelDespachosSeleccionadosMod").css("color", "#f55756");
+        			$("#contenedorDespachosMod").css("border", "#f55756 solid 1px");
+        		}else{
+        			$("#labelDespachosSeleccionadosMod").css("color", "rgb(70, 88, 107)");
+        			$("#contenedorDespachosMod").css("border", "white solid 0px");
+        		}
+        	}
 		}
     	
     	//PESTAÑA CONFIRMAR USUARIO
-    	if($scope.detalleUsuario.ciudadNatal == "" || $scope.detalleUsuario.ciudadNatal == undefined){
-    		$(".ciudadNatalMod").css("color", "#f55756");
-    		validacion = false;
-			mensaje = mensaje + "<br/> *Ciudad natal";
-    	}else{
-    		$(".ciudadNatalMod").css("color", "#7c7c7d");
+    	if($scope.tabConfirmacionMod){
+    		if($scope.detalleUsuario.ciudadNatal == "" || $scope.detalleUsuario.ciudadNatal == undefined){
+        		$(".ciudadNatalMod").css("color", "#f55756");
+        		validacion = false;
+    			mensaje = mensaje + "<br/> *Ciudad natal";
+        	}else{
+        		$(".ciudadNatalMod").css("color", "#7c7c7d");
+        	}
     	}
 		
 		//VALIDACIÓN Y ACTIVACIÓN DE PESTAÑAS
