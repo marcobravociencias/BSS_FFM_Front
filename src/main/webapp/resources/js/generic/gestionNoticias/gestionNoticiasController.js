@@ -15,6 +15,7 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 	$scope.saveObj.urlLinkExterno="www.google.xom.mx"
 
 	angular.element(document).ready(function () {
+		console.log("redadyyyy")
         $("#idBody").removeAttr("style");
 
 		$('#fecha-inicio-crearnoticia').datepicker({
@@ -67,7 +68,7 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 		});
 		$('#modal-geografia-consulta').on('shown.bs.modal', function () {
 			$("#searchGeoConsulta").focus();
-		});
+		});		
     });
     function compareGeneric(a,b){
         let niveluno=a.nivel;
@@ -229,7 +230,22 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 					}
 				});
 
-				
+				$('#jstre-content-geofrafia-edicon').bind('loaded.jstree', function(e, data) {
+				}).jstree({
+					'plugins': ['search', 'checkbox', 'wholerow'],
+					'search': {
+						"case_sensitive": false,
+						"show_only_matches": true
+					},
+					'core': {
+						'data': geografiaConsulta,
+						'themes': {
+							'name': 'proton',
+							'responsive': true,
+							"icons":false        
+						}
+					}
+				});
 				$('#jstre-content-geofrafia-consulta').bind('loaded.jstree', function(e, data) {
 					$(this).jstree("open_all");
 					setTimeout(function(){
@@ -265,7 +281,7 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 		swal.showLoading();
 		if(dataTableConsultaNoticias!=undefined){
 			dataTableConsultaNoticias.destroy()
-			$('#datatable-noticia tbody').empty();
+			$('#datatable-noticias tbody').empty();
 		}	
         $q.all([
     		gestionNoticiasService.consultarNoticiasGeneric()
@@ -277,9 +293,12 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 					if( results[0].data.result !=undefined &&    results[0].data.result.noticias	 ){
 						$scope.litadoNoticiasTemp=results[0].data.result.noticias
 						let arratNoticias=results[0].data.result.noticias;
+						
 						angular.forEach( arratNoticias, function(el,index){
+							el.fechaInicio=el.fechaInicio.substring( 0, el.fechaInicio.indexOf(" ")  )
+							el.fechaExpiracion=el.fechaExpiracion.substring( 0, el.fechaExpiracion.indexOf(" ") )
 
-							let iconPermanente=``;
+							let iconPermanente=``;	
 
 							if(!el.permanente)
 								iconPermanente=`
@@ -353,6 +372,11 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 
 		if( !$scope.validarRegistroNoticia() ){
 
+			if($scope.mostrarFechasDefinidas){
+				$('#fecha-inicio-crearnoticia').datepicker('update', new Date());
+				$('#fecha-fin-crearnoticia').datepicker('update', new Date());
+			}
+
 			let arrayDataInicio=document.getElementById('fecha-inicio-crearnoticia').value.split('/');
 			let arrayDataFin=document.getElementById('fecha-fin-crearnoticia').value.split('/');
 
@@ -365,8 +389,8 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 			$scope.saveObj.archivoArchivo = $scope.fileDecargaNotica.archivo ? $scope.fileDecargaNotica.archivo :'';
 			$scope.saveObj.nombreArchivo = $scope.fileDecargaNotica.nombre ?  $scope.fileDecargaNotica.nombre:'';
 			
-			$scope.saveObj.fechaInicio =  $scope.mostrarFechasDefinidas ? '' : formatFechaInicio;
-			$scope.saveObj.fechaExpiracion = $scope.mostrarFechasDefinidas ? '' : formatFechaFin;
+			$scope.saveObj.fechaInicio =   formatFechaInicio;
+			$scope.saveObj.fechaExpiracion =  formatFechaFin;
 
 			$scope.saveObj.permanente = $scope.mostrarFechasDefinidas ? 1 : 0;
 
@@ -385,7 +409,7 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 
 			$scope.saveObj.idGeografias = geografiaEnvio;
 
-			swal({ text: 'Cargando registros...', allowOutsideClick: false });
+			swal({ text: 'Guardando registro...', allowOutsideClick: false });
 			swal.showLoading();
 	
 			gestionNoticiasService.registrarNoticia($scope.saveObj).then((result) => {
@@ -406,6 +430,8 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 			}).catch((err) => handleError(err));
 		}
     }
+
+	
 	$scope.limpiarFormularioCrearNotica=function(){
 		$scope.saveObj={}		
 		$scope.removerImagenCreacion()
@@ -413,36 +439,7 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 		$('#fecha-inicio-crearnoticia').datepicker('update', new Date());
 		$('#fecha-fin-crearnoticia').datepicker('update', new Date());
 	}
-    $scope.actualizarNoticia = function() {
 
-        $scope.params = {};
-        $scope.params.idNoticia = 90;
-        $scope.params.tituloPrincipal = "Titulo Principal";
-        $scope.params.tituloSecundario = "Titulo Secundario";
-        $scope.params.detalle = "detalle";
-        $scope.params.urlLinkExterno = "www.linkexterno.com";
-        $scope.params.fechaInicio = "2022-01-03";
-        $scope.params.fechaExpiracion = "2022-01-23";
-        $scope.params.permanente = 0;
-        $scope.params.idActivoNot = 1;
-        $scope.params.idActivoCon = 1;
-        $scope.params.idGeografias = [1,2,3];
-        gestionNoticiasService.actualizarNoticia($scope.params).then((result) => {
-            console.log(result);
-            if (result.data !== undefined) {
-                if (result.data.respuesta) {
-                    toastr.success(result.data.result.description);
-                } else {
-                    console.log(result.data.resultDescripcion)
-                    toastr.warning( result.data.resultDescripcion )
-                }
-            } else {
-                console.log(result.data.resultDescripcion)
-                toastr.warning( result.data.resultDescripcion )
-            }
-        }).catch((err) => handleError(err));
-
-    }
 
 	$scope.validarRegistroNoticia=function(){
 
@@ -471,16 +468,17 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 			isErrorRegistro=true
 			textErrorRegistro += '<li>Selecciona un dato de la geografias</li>';
 		}
-
-		if (document.getElementById('fecha-inicio-crearnoticia').value.trim() != "" && document.getElementById('fecha-fin-crearnoticia').value.trim() != "") {
-			var inicio = document.getElementById('fecha-inicio-crearnoticia').value.split('/');
-			var fin = document.getElementById('fecha-fin-crearnoticia').value.split('/');
-			var date_inicio = new Date(inicio[2] + '-' + inicio[1] + '-' + inicio[0]);
-			var date_fin = new Date(fin[2] + '-' + fin[1] + '-' + fin[0]);
-			if (date_inicio > date_fin) {
-				isErrorRegistro=true
-				textErrorRegistro += '<li>La fecha inicial no tiene que ser mayor a la final</li>';
-			} 
+		if(!$scope.mostrarFechasDefinidas){
+			if (document.getElementById('fecha-inicio-crearnoticia').value.trim() != "" && document.getElementById('fecha-fin-crearnoticia').value.trim() != "") {
+				var inicio = document.getElementById('fecha-inicio-crearnoticia').value.split('/');
+				var fin = document.getElementById('fecha-fin-crearnoticia').value.split('/');
+				var date_inicio = new Date(inicio[2] + '-' + inicio[1] + '-' + inicio[0]);
+				var date_fin = new Date(fin[2] + '-' + fin[1] + '-' + fin[0]);
+				if (date_inicio > date_fin) {
+					isErrorRegistro=true
+					textErrorRegistro += '<li>La fecha inicial no tiene que ser mayor a la final</li>';
+				} 
+			}	
 		}
 
 		if(isErrorRegistro)

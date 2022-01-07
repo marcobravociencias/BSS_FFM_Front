@@ -22,6 +22,8 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     $scope.listCatTipoOrdenes = [];
     $scope.listCatRegiones = []
     $scope.listOrdenesCuenta = [];
+    $scope.catGeografiaGeneral = [];
+    $scope.catTipoOrdenesGeneral = [];
 
     app.noticiasGestionTicketSoporte($scope, gestionTicketSoporteService);
 
@@ -57,6 +59,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             gestionTicketSoporteService.consultaCatalogoRegionTicketSoporte(),
             gestionTicketSoporteService.consultarCatalogoTipoOrdenTicketSoporte()
         ]).then(function (results) {
+            console.log(results)
             if (results[0].data.respuesta) {
                 $scope.nIntervencion = results[0].data.result.N_FILTRO_GEOGRAFIA_GESTION_TICKETS ? Number(result[0].data.result.N_FILTRO_GEOGRAFIA_GESTION_TICKETS) : 1;
                 $scope.nGeografia = results[0].data.result.N_FILTRO_TIPO_ORDEN_GESTION_TICKETS ? Number(result[0].data.result.N_FILTRO_TIPO_ORDEN_GESTION_TICKETS) : 1;
@@ -239,7 +242,8 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     // });
 
     $scope.asignarTecnicoTicket = function () {
-        if ($('input[name="checkTecnico"]').is(':checked')) {
+        $scope.tecnicoAsignado = $scope.listOrdenesCuenta.find(function (elem) { return elem.isChecked == true });
+        if ($scope.tecnicoAsignado.isChecked) {
             swal({
                 title: "\u00BFEst\u00E1 seguro de asignar el Tecnico?",
                 type: "warning",
@@ -251,13 +255,11 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                 if (isConfirm) {
                     swal({ text: 'Cargando datos ...', allowOutsideClick: false });
                     swal.showLoading();
-                    let idTecnicoSeleccionado = $('input[name="checkTecnico"]:checked').val();
-                    $scope.tecnicoAsignado = $scope.listOrdenesCuenta[idTecnicoSeleccionado];
                     $scope.geografiaTecnico = {};
-                    $scope.objPrincipal = $scope.catGeografiaGeneral.find(function (elem) { return elem.id === $scope.tecnicoAsignado.idGeografia });
+                    $scope.objPrincipal = $scope.catGeografiaGeneral.find(function (elem) { return elem.id == $scope.tecnicoAsignado.idGeografia });
                     $scope.objSec = angular.copy($scope.objPrincipal);
                     for (let index = 1; index < $scope.objPrincipal.nivel; index++) {
-                        $scope.objSec = $scope.catGeografiaGeneral.find(function (elem) { return elem.id === Number($scope.objSec.padre) });
+                        $scope.objSec = $scope.catGeografiaGeneral.find(function (elem) { return elem.id == Number($scope.objSec.padre) });
                     }
                     $scope.geografiaTecnico = angular.copy($scope.objSec);
                     let nombreTecnico = $scope.tecnicoAsignado.nombre + ' ' + $scope.tecnicoAsignado.apellidoPaterno + ' ' + $scope.tecnicoAsignado.apellidoMaterno;
@@ -278,11 +280,19 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         }
     }
 
-    $(document).on('click', 'input[name="checkTecnico"]', function () {
-        $('input[name="checkTecnico"]').not(this).prop('checked', false);
-    });
-
-
+    changeCheck = function (event) {
+        $.each($scope.listOrdenesCuenta, function (i, elemento) {
+            if (elemento.isChecked) {
+                elemento.isChecked = false;
+                $('#' + elemento.id).prop('checked', elemento.isChecked);
+                $scope.$apply();
+            }
+            if ($(event).attr('id') == elemento.id) {
+                elemento.isChecked = $(event).is(":checked");
+            }
+        })
+        $scope.$apply();
+    }
 
     $scope.consultarCuentaCliente = function () {
         swal({ text: 'Cargando datos ...', allowOutsideClick: false });
@@ -302,7 +312,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                             tecnicosCuentaTable.destroy();
                         }
                         $scope.listOrdenesCuenta = response.data.result.ordenesTrabajo;
-                        console.log($scope.listOrdenesCuenta)
+                        $scope.listOrdenesCuenta.map(function (e) { e.isChecked = false; return e; })
                         $.each($scope.listOrdenesCuenta, function (i, elemento) {
                             let row = [];
                             let imgDefault = './resources/img/plantainterna/despacho/tecnicootasignada.png';
@@ -317,7 +327,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                             row[3] = elemento.numEmpleado;
                             row[4] = nombreCompleto;
                             row[5] = elemento.telefono;
-                            row[6] = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class="form-check-input checkTecnico" type="checkbox" name="checkTecnico" value="' + i + '" id="checkTecnico' + elemento.id + '">';
+                            row[6] = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class="form-check-input checkTecnico" onclick="changeCheck(this)" type="checkbox" name="checkTecnico" value="' + i + '" id="' + elemento.id + '">';
                             arrayRow.push(row);
                         });
                         tecnicosCuentaTable = $('#tecnicosCuentaTable').DataTable({
@@ -326,14 +336,23 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                             "ordering": false,
                             "pageLength": 5,
                             "info": false,
-                            "columnDefs": [{
-                                "targets": 0
-                            }],
+                            "rowId": "id",
                             "data": arrayRow,
                             "autoWidth": true,
                             "language": idioma_espanol_not_font,
                             "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+                            'fnCreatedRow': function (nRow, aData, iDataIndex) {
+                                $(nRow).attr('id', 'tecnico_' + aData[1]); // or whatever you choose to set as the id
+                            },
                         });
+                        document.getElementById('tecnicosCuentaTable_paginate').addEventListener('click', function () {
+                            $.each($scope.listOrdenesCuenta, function (i, elemento) {
+                                if (!elemento.isChecked) {
+                                    $('#' + elemento.id).prop('checked', false);
+                                }
+                                $scope.$apply();
+                            });
+                        })
                         $("#modalBusquedaCuentaTicket").modal('show');
                     } else {
                         mostrarMensajeWarningValidacion("No se encontraron &Oacute;rdenes de Trabajo asociadas a la Cuenta");

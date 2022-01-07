@@ -37,14 +37,14 @@
             </div>
             <div class="container-noticias-visualizador">
                 <div  class="imagen-noticia-previsualizador">                      
-                    <img  ng-show="fileCargaArchivoNoticiaEdit.archivo && banderaEdicionImagen" class="imagen-visor-creanotica" ng-src="{{fileCargaArchivoNoticiaEdit.archivo}}" alt="">
-                    <img  ng-show="fileCargaArchivoNoticiaEdit.archivo && !banderaEdicionImagen" class="imagen-visor-creanotica" ng-src="data:image/jpeg;base64,{{fileCargaArchivoNoticiaEdit.archivo}}" alt="">
+                    <img  ng-if="fileCargaArchivoNoticiaEdit.archivo && banderaEdicionImagen" class="imagen-visor-creanotica" ng-src="{{fileCargaArchivoNoticiaEdit.archivo}}" alt="">
+                    <img  ng-if="fileCargaArchivoNoticiaEdit.archivo && !banderaEdicionImagen" class="imagen-visor-creanotica" ng-src="data:image/jpeg;base64,{{fileCargaArchivoNoticiaEdit.archivo}}" alt="">
 
                     
-                    <div ng-show="!inhabilidarCamposEdicion" class="content-titulo-principal">
+                    <div ng-if="!inhabilidarCamposEdicion" class="content-titulo-principal">
                         <span class="text-title titulo-principal" ng-bind="editObj.tituloPrincipal" ></span>
                     </div>
-                    <div ng-show="!inhabilidarCamposEdicion" class="content-titulo-secundario">
+                    <div ng-if="!inhabilidarCamposEdicion" class="content-titulo-secundario">
                         <span class="text-title titulo-secundario" ng-bind="editObj.tituloSecundario" ></span>
                     </div>
 
@@ -224,7 +224,7 @@
 
                         <div  class="form  row  row-input-crea">
                             <div class="col-12">
-                                <span class="link-geografia" ng-click="abrirModalGeografiaCreacion()">Geograf&iacute;a</span>                                           
+                                <span class="link-geografia" ng-click="abrirGeografiaEdicion()">Geograf&iacute;a</span>                                           
                                 <div  ng-show="!isSeleccionGeografiaEdicion" ng-click="abrirGeografiaEdicion()" class="content-warning-geografia" title="sin seleccion">
                                     <i class="icono-warning-geografia fas fa-exclamation"></i>
                                 </div>
@@ -234,7 +234,7 @@
 
                             </div>
                         </div>
-                        <button ng-click="edicionNoticia()" class="btn btn-primary btn-block">Actualizar noticia</button>
+                        <button ng-click="actualizarNoticia()" class="btn btn-primary btn-block">Actualizar noticia</button>
                     </form>   
                 </div>
                                         
