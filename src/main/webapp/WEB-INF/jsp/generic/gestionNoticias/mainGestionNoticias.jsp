@@ -26,6 +26,7 @@
     	<jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
         <jsp:include page="./modals/modal-geografia-crea.jsp"></jsp:include>
         <jsp:include page="./modals/modal-geografia-consulta.jsp"></jsp:include>
+        <jsp:include page="./modals/modal-geografia-edita.jsp"></jsp:include>
 
         <div class="container">
             <div id="container-noticias-pi" class="main-container container">
