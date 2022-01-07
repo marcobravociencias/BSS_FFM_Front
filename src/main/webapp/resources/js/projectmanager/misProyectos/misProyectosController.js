@@ -3,8 +3,14 @@ var app = angular.module('misProyectosApp', []);
 app.controller('misProyectosController', ['$scope', '$q', 'misProyectosService', 'genericService', function ($scope, $q, misProyectosService, genericService) {
     app.graficaController($scope,$q,misProyectosService);
 
+    moment.locale('es-mx');
+    $scope.nombreMeses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+                "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+            ];
+
     $scope.consultarProyectosPM = function() {
 
+        /*
         $scope.params = {};
         $scope.params.bandeja = "PMS";
         $q.all([
@@ -18,6 +24,10 @@ app.controller('misProyectosController', ['$scope', '$q', 'misProyectosService',
 
             $scope.inicializarGrafica();
         });
+        */
+
+        $scope.listaProyectosGrafica = $scope.resultProyectos.result.Proyectos;
+        $scope.inicializarGrafica();
     }
     $scope.consultarProyectosPM();
 
@@ -27,6 +37,7 @@ app.controller('misProyectosController', ['$scope', '$q', 'misProyectosService',
         console.log(proyecto);
         if (proyecto.Id_cuenta !== $scope.idProyectoSelected) {
             $scope.idProyectoSelected = proyecto.Id_cuenta;
+            $scope.inicializarGraficaPuntas(proyecto);
         } else {
             $scope.idProyectoSelected = '';
             $scope.idPuntaSelected = '';
@@ -40,6 +51,7 @@ app.controller('misProyectosController', ['$scope', '$q', 'misProyectosService',
         console.log(punta);
         if (punta.Id_cuenta !== $scope.idPuntaSelected) {
             $scope.idPuntaSelected = punta.Id_cuenta;
+            $scope.inicializarGraficaPlanes(punta);
         } else {
             $scope.idPuntaSelected = '';
             $scope.idPlanSelected = '';
@@ -57,6 +69,7 @@ app.controller('misProyectosController', ['$scope', '$q', 'misProyectosService',
                 console.log("Entra jeje");
                 $scope.listaActividades = $scope.resultActividades.result.Actividades;
                 $scope.idPlanSelected = csp.Id_csp;
+                $scope.inicializarGraficaActividades(csp);
             }).catch((err) => handleError(err));
         } else {
             $scope.idPlanSelected = '';

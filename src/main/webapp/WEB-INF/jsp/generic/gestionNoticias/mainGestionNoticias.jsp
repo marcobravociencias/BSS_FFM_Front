@@ -22,93 +22,47 @@
         <!-- CSS INTERNAS -->
         <link href="${pageContext.request.contextPath}/resources/css/generic/gestionNoticias/mainGestionNoticias.css" rel="stylesheet">
 	</head>
-	<body id="idBody" ng-controller="gestionNoticiasController" >
+	<body id="idBody" style="display: none;" ng-controller="gestionNoticiasController" >
     	<jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
-        <div class="container">
-            <div id="container-noticias-pi" class="main-container row">
-                <div class="container-visualiza-noticia col-4">
-                    <div class="imagen-noticia-previsualizador">
-                        <span class="text-title" ng-bind="saveObj.tituloPrincipal" ></span>
-                        <span class="text-title" ng-bind="saveObj.tituloSecundario" ></span>
+        <jsp:include page="./modals/modal-geografia-crea.jsp"></jsp:include>
+        <jsp:include page="./modals/modal-geografia-consulta.jsp"></jsp:include>
+        <jsp:include page="./modals/modal-geografia-edita.jsp"></jsp:include>
 
+        <div class="container">
+            <div id="container-noticias-pi" class="main-container container">
+
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link " id="crearnoticia-tab" data-toggle="tab" href="#crearnoticia" role="tab" aria-controls="crearnoticia" aria-selected="false">Crear noticia</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" id="consultanoticias-tab" data-toggle="tab" href="#consultanoticias" role="tab" aria-controls="consultanoticias" aria-selected="true">Consulta tabla</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade fade" id="crearnoticia" role="tabpanel"
+                        aria-labelledby="crearnoticia-tab">
+                        <jsp:include page="./crearContentNoticia.jsp"></jsp:include>
+                    </div>
+                    <div class="tab-pane show active" id="consultanoticias" role="tabpanel" aria-labelledby="consultanoticias-tab">
+                        <jsp:include page="./consultaNoticias.jsp"></jsp:include>
                     </div>
                 </div>
-                <div class="container-datos-crea-noticia col-8">
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="container-registro">
-                                <div  ng-show="inhabilidarCamposRegistro" class="capa-inabilitable">
-                                </div>
-                                <form >
-                                    <div class="form  row mb-4">
-                                        <div class="col-12">
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" role="switch" ng-model="inhabilidarCamposRegistro" id="inhabilidarCamposRegistro" checked />
-                                                <label class="form-check-label" for="inhabilidarCamposRegistro"> &iquest;Solo imagen? </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                                <form>
-                                   
-                                    <div class="form row mb-4">
-                                        <div class="col-12">
-                                            <label class="form-label" for="form1Example1">T&iacute;tulo principal</label>
-                                            <input ng-model="saveObj.tituloPrincipal" type="email" id="form1Example1" class="form-control form-control-sm" />
-                                        </div>                                
-                                    </div>                      
-                                    <div class="form row mb-4">
-                                        <div class="col-12">
-                                            <label class="form-label" for="form1Example2">T&iacute;tulo secundario</label>
-                                            <input type="text" ng-model="saveObj.tituloSecundario"  id="form1Example2" class="form-control form-control-sm" />
-                                        </div>                                
-                                    </div>
-                                    <div class="form  row mb-4">
-                                        <div class="col-12">
-                                            <label class="form-label" for="customFile">Seleccionar imagen</label>
-                                            <input type="file" class="form-control form-control-sm" id="customFile" />
-                                        </div>                                 
-                                    </div>
-                                    
-                                    <div class="form  row mb-4">
-                                        <div class="col-12">
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" role="switch" ng-model="mostrarFechasDefinidas" id="flexSwitchCheckChecked" checked />
-                                                <label class="form-check-label" for="flexSwitchCheckChecked"> &iquest;Es permanente? </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div ng-show="!mostrarFechasDefinidas" class="form row">
-                                            <div class="col-6">
-                                                <div class="form mb-4">
-                                                    <label class="form-label" for="form1Example1">Fecha inicio</label>
-                                                    <input type="email" id="form1Example1" class="form-control form-control-sm" />
-                                                 </div>                                                           
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="form mb-4">
-                                                    <label class="form-label" for="form1Example2">Fecha fin</label>
-                                                    <input type="password" id="form1Example2" class="form-control form-control-sm" />
-                                                 </div>
-                                            </div>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary btn-block">Registrar noticia</button>
-                                </form>   
-                            </div>
-                                                 
-                        </div>
-                        <div class="col-6">
-                            <div id="jstre-content-geofrafia" class="jstre-content-geofrafia">
-                                
-                            </div>
-                        </div>
+
+                <div ng-show="edicionNoticaContent" class="content-edicion-noticia">                    
+                    <div class="modal-header">
+                        <h5 class="modal-title">Editar noticia</h5>
+                        <button ng-click="edicionNoticaContent=false"  type="button" class="btn-close"></button>
                     </div>
-            
+                    <div class="content-edicionnoticia">
+                        <jsp:include page="./edicionContentNoticia.jsp"></jsp:include>
+                    </div>
                 </div>
             </div>
         </div>
 	</body>
 	<!-- LIBRERIAS JS -->
+    <script type="text/javascript">let contex_project = "${pageContext.request.contextPath}";</script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/selectPicker/js/popper.min.js"></script>
@@ -127,10 +81,9 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/lib/moment.min.js" ></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/lib/moment.es.js" ></script>
-    <!-- ARCHIVOS JS INTERNOS -->
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
-    <script type="text/javascript">let contex_project = "${pageContext.request.contextPath}";</script>
     <script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/gestionNoticias/gestionNoticiasController.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/gestionNoticias/gestionNoticiasEdicionController.js" charset="UTF-8"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/gestionNoticias/gestionNoticiasService.js" charset="UTF-8"></script>
 </html>

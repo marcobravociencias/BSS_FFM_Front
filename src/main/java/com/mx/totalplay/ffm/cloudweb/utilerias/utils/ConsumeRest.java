@@ -619,4 +619,41 @@ public class ConsumeRest {
         }
         return response;
     }
+    
+    /**
+     * @param urlRequest             Contieene url con parametros ejemplo /despacho/{idDespachoParam}/fecha/{fechaParam}
+     * @param params          Formato Mapa con los parametros de la url Ej {idDespachoParam}=1229
+     * @param classConversion Tipo de clase de conversion
+     * @return ServiceResponseResult.class
+     */
+    public Object callGetBearerTokenRequestReturnClass(Map<String, String> params, String urlRequest, Class<?> classConversion, String token) {
+        String response = "";
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(urlRequest);
+        ResponseEntity<String> responseEntity = null;
+
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+            headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+            headers.set(HttpHeaders.AUTHORIZATION, "Bearer " + token);
+            HttpEntity<String> request = new HttpEntity<>(headers);
+            responseEntity = restTemplate.exchange(
+                    uriBuilder.buildAndExpand(params).toUri(),
+                    HttpMethod.GET,
+                    request,
+                    String.class);
+            response = responseEntity.getBody();
+            
+        }catch (HttpClientErrorException e){
+        	logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO", e.getMessage());
+
+            return gson.fromJson(gson.toJson(
+                    LoginResult.builder().
+                            mensaje("Ocurrio un error en la autenticacion")
+                            .description("Usuario o contrasena incorrectos")
+                            .build()
+            ), classConversion);
+        }
+        return gson.fromJson(response, classConversion);
+    }
 }
