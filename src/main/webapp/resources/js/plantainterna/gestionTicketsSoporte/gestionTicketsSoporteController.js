@@ -558,8 +558,11 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                 tipoFecha: 'creacion'
             }
             console.log(params);
-            swal({ text: 'Espera un momento...', allowOutsideClick: false });
-            swal.showLoading();
+            if (!swal.isVisible()) {
+                swal({ text: 'Espera un momento...', allowOutsideClick: false });
+                swal.showLoading(); 
+            }
+            
             gestionTicketSoporteService.consultaTicketsSoporte(params).then(function success(response) {
                 console.log(response);
                 if (response.data.respuesta) {
@@ -807,6 +810,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         
     }
 
+
     $scope.initTableingeniero = function(data){
         let imgDefault = './resources/img/plantainterna/despacho/tecnicootasignada.png';
         let arraRow = []
@@ -822,7 +826,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             array[2] = ingeniero.nombreCompleto ? ingeniero.nombreCompleto : 'Sin informaci&oacute;n';
             array[3] = ingeniero.geografia ? ingeniero.geografia : 'Sin informaci&oacute;n';
             array[4] = ingeniero.fechaActualizacion ? ingeniero.fechaActualizacion : 'Sin informaci&oacute;n';
-            array[5] = '<input class="form-check-input" type="checkbox" onclick="selectIngeniero(\''+ ingeniero.noEmpleado +'\')" value="" id="selectIngenieroCheck'+ ingeniero.noEmpleado +'"/>';
+            array[5] = '<input class="form-check-input" type="checkbox" onclick="selectIngeniero(\''+ ingeniero.idUsuario +'\')" value="" id="selectIngenieroCheck'+ ingeniero.idUsuario +'"/>';
             arraRow.push(array)
         })
         ingenieroTable = $('#ingenierosTable').DataTable({
@@ -848,8 +852,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             $scope.ingenieroSelect = ingeniero
         } else {
             $scope.ingenieroSelect = ''
-        }
-        
+        } 
         
     }
 
@@ -891,7 +894,8 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             swal.close()
             if (response.data.respuesta) {
                 if (response.data.result) {
-                    
+                    mostrarMensajeExitoAlert(response.data.result.mensaje)
+                    $scope.consultarTicketsSoporte();
                 } else {
                     mostrarMensajeWarningValidacion('No hay ingenieros')
                 }

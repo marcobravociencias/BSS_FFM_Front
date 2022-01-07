@@ -38,7 +38,7 @@
                     <div class="container-fluid ticket-content content-select-ticket-detalle">
                         <div class="container-text-title-detalle"><span class="text-tile-ticket">TIPO ORDEN</span></div>
                         <div class="container-text-content-detalle">
-                            <select class="form-control form-controlt form-control-sm custom-select" name="tipoOrdenTicketDetalle" id="tipoOrdenTicketDetalle" ng-model="ticketSoporteDetalle.tipoOrden">
+                            <select class="form-control form-controlt form-control-sm custom-select inputTicket" name="tipoOrdenTicketDetalle" id="tipoOrdenTicketDetalle" ng-model="ticketSoporteDetalle.tipoOrden">
                                 <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
                                 <option value="instalacion" selected>INSTALACI&Oacute;N</option>
                                 <option value="soporte" selected>SOPORTE</option>
@@ -49,7 +49,7 @@
                     <div class="container-fluid ticket-content">
                         <div class="container-text-title-detalle"><span class="text-tile-ticket">REGI&Oacute;N</span></div>
                         <div class="container-text-content-detalle">
-                            <select class="form-control form-controlt form-control-sm custom-select" name="regionTicketDetalle" id="regionTicketDetalle" ng-model="ticketSoporteDetalle.region">
+                            <select class="form-control form-controlt form-control-sm custom-select inputTicket" name="regionTicketDetalle" id="regionTicketDetalle" ng-model="ticketSoporteDetalle.region">
                                 <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
                                 <option value="colombia" selected>COLOMBIA</option>
                                 <option value="mexico" selected>M&Eacute;XICO</option>
@@ -62,13 +62,13 @@
                     <p class="title">Dictamen de folio</p>
                     <div class="container-fluid ticket-content">
                         <div class="container-text-title-detalle"><span class="text-tile-ticket">VISITA NECESARIO</span></div>
-                        <div class="container-text-content-detalle form-check form-switch" style="width: 3.5em;">
+                        <div class="container-text-content-detalle form-check form-switch">
                             <input class="form-check-input" type="checkbox">
                         </div>
                     </div>
                     <div class="container-fluid ticket-content" ng-repeat="item in accionesDinamicasDetalle">
-                        <div class="container-text-title-detalle"><span class="text-tile-ticket">{{item.descripcion.toUpperCase()}}</span></div>
-                        <div class="container-text-content-detalle form-check form-switch" style="width: 3.5em;">
+                        <div class="container-text-title-detalle titulo-acciones-dinamicas"><span class="text-tile-ticket">{{item.descripcion.toUpperCase()}}</span></div>
+                        <div class="container-text-content-detalle form-check form-switch">
                             <input class="form-check-input" type="checkbox">
                         </div>
                     </div>
