@@ -1,6 +1,6 @@
 
 <div class="content-fluid">
-    <div class="row md-form" id="filtros_config">
+    <!--div class="row md-form" id="filtros_config">
         <div class="col-2 column-style-consulta">
             <label for="idot" class="label-filter">T&iacute;tulo princ.</label>
             <input type="text" id="idot" placeholder="Ej: Paquete total " ng-model="camposFiltro.idot"  ng-change="limpiarCamposFiltro(1)"
@@ -26,13 +26,20 @@
                 </div>
         </div>
         <div class="col-1 div-btn-busqueda">
-            <button id="btn_consultar_ordenes" type="button"  class="btn btn-sm  btn-primary  waves-effect waves-light"  ng-click="consultarNoticias()">
-                <i class="fa fa-search"></i>
-            </button>
+        
+        </div>
+    </div-->
+    <div class="content-filtros-consulta">
+        <button id="btn_consultar_ordenes" type="button"  class="btn btn-sm  btn-primary  waves-effect waves-light"  ng-click="consultarNoticias()">
+            <i class="fas fa-redo"></i>
+        </button>
+        <div class="input-group input-group-sm content-seach-group">
+            <input id="searchConsultaTables" type="text" autocomplete="off" class="form-control buscadorGenerico" placeholder="Buscar noticia">
+            <span class="fa fa-search iconoBusqueda"></span>
         </div>
     </div>
-    <div class="row md-form" id="busqueda_noticias">
-        <div class="col-12">
+   
+    <div  id="busqueda_noticias">
             <table id="datatable-noticias" class="table table-sm table-hover ">
                 <thead >
                     <tr>
@@ -52,7 +59,6 @@
                 <tbody>
                 </tbody>    
             </table>
-        </div>     
     </div>
 </div>
 

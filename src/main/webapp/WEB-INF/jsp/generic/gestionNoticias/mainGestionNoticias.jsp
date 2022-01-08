@@ -28,37 +28,28 @@
         <jsp:include page="./modals/modal-geografia-consulta.jsp"></jsp:include>
         <jsp:include page="./modals/modal-geografia-edita.jsp"></jsp:include>
 
-        <div class="container">
-            <div id="container-noticias-pi" class="main-container container">
+        <div id="container-noticias-pi" class="main-container container">
 
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="crearnoticia-tab" data-toggle="tab" href="#crearnoticia" role="tab" aria-controls="crearnoticia" aria-selected="true">Crear noticia</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link " id="consultanoticias-tab" data-toggle="tab" href="#consultanoticias" role="tab" aria-controls="consultanoticias" aria-selected="false">Consulta tabla</a>
-                    </li>
-                </ul>
-                <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane show active " id="crearnoticia" role="tabpanel"
-                        aria-labelledby="crearnoticia-tab">
-                        <jsp:include page="./crearContentNoticia.jsp"></jsp:include>
-                    </div>
-                    <div class="tab-pane fade " id="consultanoticias" role="tabpanel" aria-labelledby="consultanoticias-tab">
-                        <jsp:include page="./consultaNoticias.jsp"></jsp:include>
-                    </div>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="crearnoticia-tab" data-toggle="tab" href="#crearnoticia" role="tab" aria-controls="crearnoticia" aria-selected="true">Crear noticia</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " id="consultanoticias-tab" data-toggle="tab" href="#consultanoticias" role="tab" aria-controls="consultanoticias" aria-selected="false">Consulta noticias</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane show active " id="crearnoticia" role="tabpanel"
+                    aria-labelledby="crearnoticia-tab">
+                    <jsp:include page="./crearContentNoticia.jsp"></jsp:include>
                 </div>
-
-                <div ng-show="edicionNoticaContent" class="content-edicion-noticia">                    
-                    <div class="modal-header">
-                        <h5 class="modal-title">Editar noticia</h5>
-                        <button ng-click="edicionNoticaContent=false"  type="button" class="btn-close"></button>
-                    </div>
-                    <div class="content-edicionnoticia">
-                        <jsp:include page="./edicionContentNoticia.jsp"></jsp:include>
-                    </div>
+                <div class="tab-pane fade " id="consultanoticias" role="tabpanel" aria-labelledby="consultanoticias-tab">
+                    <jsp:include page="./consultaNoticias.jsp"></jsp:include>
                 </div>
             </div>
+
+            <jsp:include page="./edicionContentNoticia.jsp"></jsp:include>
+
         </div>
 	</body>
 	<!-- LIBRERIAS JS -->

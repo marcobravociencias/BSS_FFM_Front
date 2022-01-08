@@ -1,6 +1,6 @@
 
 <div class="row">
-    <div class="container-visualiza-noticia col-4">
+    <div class="container-visualiza-noticia col-sm-6 col-md-6">
         <div class="container-celular-visualizador">
             <div class="container-header-celular">
                 <div class="left-header-celular-hora">
@@ -106,9 +106,9 @@
             </div>
         </div>                
     </div>
-    <div class="container-datos-crea-noticia col-8">
+    <div class="container-datos-crea-noticia col-sm-6 col-md-6">
         <div class="row">
-            <div class="col-6">
+            <div class="col-12">
                 <div class="container-registro">
                     
                     <div  ng-show="inhabilidarCamposRegistro" class="capa-inabilitable">
@@ -236,8 +236,6 @@
                     </div>   
                 </div>
                                         
-            </div>
-            <div class="col-6">                           
             </div>
         </div>
 
