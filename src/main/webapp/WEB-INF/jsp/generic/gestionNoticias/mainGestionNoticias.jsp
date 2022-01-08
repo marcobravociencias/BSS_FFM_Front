@@ -33,18 +33,18 @@
 
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link " id="crearnoticia-tab" data-toggle="tab" href="#crearnoticia" role="tab" aria-controls="crearnoticia" aria-selected="false">Crear noticia</a>
+                        <a class="nav-link active" id="crearnoticia-tab" data-toggle="tab" href="#crearnoticia" role="tab" aria-controls="crearnoticia" aria-selected="true">Crear noticia</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" id="consultanoticias-tab" data-toggle="tab" href="#consultanoticias" role="tab" aria-controls="consultanoticias" aria-selected="true">Consulta tabla</a>
+                        <a class="nav-link " id="consultanoticias-tab" data-toggle="tab" href="#consultanoticias" role="tab" aria-controls="consultanoticias" aria-selected="false">Consulta tabla</a>
                     </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade fade" id="crearnoticia" role="tabpanel"
+                    <div class="tab-pane show active " id="crearnoticia" role="tabpanel"
                         aria-labelledby="crearnoticia-tab">
                         <jsp:include page="./crearContentNoticia.jsp"></jsp:include>
                     </div>
-                    <div class="tab-pane show active" id="consultanoticias" role="tabpanel" aria-labelledby="consultanoticias-tab">
+                    <div class="tab-pane fade " id="consultanoticias" role="tabpanel" aria-labelledby="consultanoticias-tab">
                         <jsp:include page="./consultaNoticias.jsp"></jsp:include>
                     </div>
                 </div>

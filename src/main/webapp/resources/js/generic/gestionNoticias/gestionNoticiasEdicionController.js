@@ -3,9 +3,12 @@ app.edicionNoticiaController=function($scope,gestionNoticiasService){
     $scope.banderaEdicionImagen=false
     $scope.edicionNoticaContent=false
     $scope.isSeleccionGeografiaEdicion=false
+    $scope.banderaArchivoBanner=false;
+    $scope.banderaArchivoDescarga=false;
     abrirModalEdicion=function(index){
         $("#jstre-content-geofrafia-edicon").jstree().deselect_all(true);
-        $scope.editObj=$scope.litadoNoticiasTemp[index]
+        $scope.editObj=angular.copy( $scope.litadoNoticiasTemp[index] )
+        $scope.editObj.idNoticia=$scope.editObj.id
         $scope.banderaEdicionImagen=true;
         $scope.edicionNoticaContent=true
         $scope.fileCargaArchivoNoticiaEdit = {
@@ -41,6 +44,8 @@ app.edicionNoticiaController=function($scope,gestionNoticiasService){
         }
 
         $scope.mostrarFechasDefinidasEdicion=$scope.editObj.permanente == 1 ? true :false;
+        $scope.banderaArchivoBanner=false;
+        $scope.banderaArchivoDescarga=false;
         $scope.$apply()
         console.log("###$scope.",$scope.editObj )
     }
@@ -57,6 +62,7 @@ app.edicionNoticiaController=function($scope,gestionNoticiasService){
     $scope.cargarFotoNoticiaEdicion = function (e) {
         $scope.banderaEdicionImagen=false;
 		$scope.fileCargaArchivoNoticiaEdit={}
+        $scope.banderaArchivoBanner=true;
 		if (e.target.files[0]) {
 			let nombreArchivo = e.target.files[0].name;
 			let reader = new FileReader();
@@ -72,7 +78,9 @@ app.edicionNoticiaController=function($scope,gestionNoticiasService){
 			reader.onerror = function (error) {
 				console.log('Error: ', error);
 			};
-		}
+		}else{
+            $scope.$apply();
+        }
 	}
 
 
@@ -87,6 +95,7 @@ app.edicionNoticiaController=function($scope,gestionNoticiasService){
     $scope.cargarArchivoDescargaEdicion = function (e) {
 		console.log("trigger archivo !!! ---")
 		$scope.fileDecargaNoticaEdicion={}
+        $scope.banderaArchivoDescarga=true;
 		if (e.target.files[0]) {
 			let nombreArchivo = e.target.files[0].name;
 			let reader = new FileReader();
@@ -102,7 +111,9 @@ app.edicionNoticiaController=function($scope,gestionNoticiasService){
 			reader.onerror = function (error) {
 				console.log('Error: ', error);
 			};
-		}
+		}else{
+            $scope.$apply();
+        }
 	}
 
     $scope.abrirGeografiaEdicion=function(){
@@ -156,26 +167,44 @@ app.edicionNoticiaController=function($scope,gestionNoticiasService){
                 geografiaEnvio=selectedElements.filter(e=>e.original.nivel== $scope.nivelGeografia)
                                             .map(e=>parseInt(e.id))
             }
-
             $scope.editObj.idGeografias = geografiaEnvio;
+            
+            if( !$scope.banderaArchivoBanner ){               
+                delete $scope.editObj.archivoBanner
+                delete $scope.editObj.nombreBanner
+            }
+
+            if( !$scope.banderaArchivoDescarga ){
+                delete $scope.editObj.archivoArchivo
+                delete $scope.editObj.nombreArchivo
+            }
+
+            delete $scope.editObj.urlBanner
+            delete $scope.editObj.urlArchivo
+            delete $scope.editObj.soloImagen
+            delete $scope.editObj.ordenVisual
+            delete $scope.editObj.id;
 
             swal({ text: 'Editando registro...', allowOutsideClick: false });
             swal.showLoading();
 
             gestionNoticiasService.actualizarNoticia($scope.editObj).then((result) => {             
                 console.log(result);
-				swal.close()
 				if (result.data !== undefined) {
 					if (result.data.respuesta) {
 						toastr.success(result.data.result.description);
                         $scope.limpiarFormularioEditarNotica()
+                        $scope.consultarNoticias()
+                        $scope.edicionNoticaContent=false
 					} else {
 						console.log(result.data.resultDescripcion)
 						toastr.warning( result.data.resultDescripcion )
+           				swal.close()
 					}
 				} else {
 					console.log(result.data.resultDescripcion)
 					toastr.warning( result.data.resultDescripcion )
+       				swal.close()
 				}
 
             }).catch((err) => handleError(err));
