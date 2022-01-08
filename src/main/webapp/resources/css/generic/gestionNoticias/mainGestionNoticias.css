@@ -630,14 +630,15 @@ span.link-geografia {
     padding-top: 0 !important;
     background: white;
     border-radius: .5em;
-    padding-top: 1em;
-    margin-top: 1em;
+    /* padding-top: 1em; */
+    /* margin-top: 1em; */
     position: relative;
-    /* padding: 0; */
+    padding: 0;
     min-height: 90vh;
+    padding-top: 1em !important;
 }
 #myTab{
-	margin-bottom:1em;
+	margin-left: 1em;
 }
 #myTab .nav-item:first-child .nav-link {
    border-top-left-radius:1em;
@@ -660,7 +661,8 @@ span.link-geografia {
   background:#f9f9f9;
 }
 #crearnoticia{
-	margin-top:1em;
+	/* margin-top:1em; */
+	margin: 1em;
 }
 
 .input-filtro-consultaOT:hover {
@@ -703,7 +705,12 @@ label.label-filter {
     padding: 0.em 3em;
     border-radius: 5px;
     font-size: 0.8em;
-    margin-top: 1.5em;
+    /* height: 2em; */
+    margin-right: 1em;
+    /* margin-top: 1.5em; */
+    /* position: absolute; */
+    /* right: 1em; */
+    /* top: 0; */
 }
 
 .inactiveFechaConsulta{
@@ -741,6 +748,7 @@ img.banner-file-noticias {
     border-collapse: collapse !important;
     width: 100% !important;
     /* border: 1px solid #eceeef; */
+    /* table-layout: fixed; */
 }
 #busqueda_noticias .col-12   {
 	padding:0;
@@ -778,4 +786,19 @@ img.banner-file-noticias {
 	border-top-left-radius: .5em;
 	border-bottom-left-radius: .5em;
 	z-index: 3;
+}
+
+.content-filtros-consulta{
+    position:absolute;
+    display:flex;
+    height:1.5em;
+    right:1em;
+    top:1em;
+}
+
+.content-edicionnoticia {
+    padding: 1em;
+}
+.container-datos-crea-noticia{
+	/* padding:1em; */
 }
