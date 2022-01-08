@@ -116,7 +116,7 @@
                     
                     <div  ng-show="inhabilidarCamposEdicion" class="capa-inabilitable">
                     </div>
-                    <form >
+                    <div >
                         <div class="form row  row-input-crea">
                             <div class="col-12">
                                 <div class="form-check form-switch">
@@ -125,8 +125,8 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
-                    <form>
+                    </div>
+                    <div>
                         
                         <div class="form row  row-input-crea">
                             <div class="col-12">
@@ -235,7 +235,7 @@
                             </div>
                         </div>
                         <button ng-click="actualizarNoticia()" class="btn btn-primary btn-block">Actualizar noticia</button>
-                    </form>   
+                    </div>   
                 </div>
                                         
             </div>

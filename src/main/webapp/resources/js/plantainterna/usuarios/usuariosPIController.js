@@ -235,6 +235,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
             		if(results[5].data.result !== null){
 						$scope.respaldoIntervenciones = results[5].data.result;
 						$scope.catalogoIntervenciones = results[5].data.result;
+						$scope.listaIntervencionesRespaldo = angular.copy($scope.catalogoIntervenciones);
             		}else{
                     	toastr.warning('¡No existen intervenciones actualmente!');
                     }
@@ -617,6 +618,14 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	}
     	
     	//LLAMADA AL MÉTODO QUE SE ENCARGA DE MOSTRAR EL TIPO DE ÁRBOL SEGÚN EL PUESTO SELECCIONADO
+    	$scope.tabInformacion = true;
+    	$scope.tabIntervenciones = false;
+    	$scope.tabArbol = false;
+    	$scope.tabAccesos = false;
+    	$scope.tabTecnicos = false;
+    	$scope.tabDespachos = false;
+    	$scope.tabConfirmacion = false;
+    	
     	var tabsPuestoSeleccionadoRegistro = $scope.listaPuestos.filter(e => {return e.id == $(this).val()})[0];
     	angular.forEach(tabsPuestoSeleccionadoRegistro.tabs,function(tab,index){
     		switch(tab.llaveFront){

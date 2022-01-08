@@ -287,7 +287,7 @@ table.display.table.table-hover.table-striped.dataTable {
 .content-principal input,
 .content-falla select,
 .content-comentarios textarea {
-    width: 60% !important;
+    /* width: 60% !important; */
     font-size: .9em;
     font-family: 'Montserrat';
 }
@@ -500,4 +500,33 @@ thead#thead_tecnicosCuenta {
 .checkTecnico:checked {
     background-color: #7716fa !important;
     border-color: #7716fa !important;
+}
+#ingenierosTable img{
+    box-shadow: 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%), 0 2px 4px -1px rgb(0 0 0 / 30%);
+}
+
+#container_tabla_ingenieros .table thead {
+    border-bottom: 1px solid #ccc;
+}
+
+#container_tabla_ingenieros .table tr td {
+    font-size: 0.7em;
+    font-family: "Montserrat" !important;
+    text-align: center;
+    border-top: 1px white solid;
+    border-bottom: 1px white solid;
+}
+
+#container_tabla_ingenieros .table td, #container_tabla_ingenieros .table th {
+    border-top: 1px solid #fff;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.content-select-ticket-detalle{
+    margin-bottom: 0.5em;
+}
+
+.titulo-acciones-dinamicas{
+    width: 55% !important;
 }

@@ -277,8 +277,12 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 	
 
     $scope.consultarNoticias = function() {
-		swal({ text: 'Consultando noticias ...', allowOutsideClick: false });
-		swal.showLoading();
+
+		if(!swal.isVisible() ){
+			swal({ text: 'Consultando noticias ...', allowOutsideClick: false });
+			swal.showLoading();
+		}
+		
 		if(dataTableConsultaNoticias!=undefined){
 			dataTableConsultaNoticias.destroy()
 			$('#datatable-noticias tbody').empty();
@@ -300,7 +304,7 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 
 							let iconPermanente=``;	
 
-							if(!el.permanente)
+							if(el.permanente)
 								iconPermanente=`
 									<div class="content-success-generic">
 										<i class="icono-success-generic fas fa-check"></i>                                        
@@ -310,7 +314,7 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 							if(el.urlArchivo){
 								htmlDescarga=`
 									<a href="${el.urlArchivo}" download>
-										<span class="descarga-archivo"> Descargar archivo </span> 
+										<span class="descarga-archivo"> ${el.nombreArchivo} </span> 
 									</a>
 								`
 							}
@@ -329,8 +333,8 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 								<td>  	<span class="consultaTituloSecund"> ${el.tituloSecundario} </span> </td>
 								<td>  	${htmlLinkExterno} </td>
 								<td>  	${iconPermanente} </td>
-								<td>  	<span class="consultaFechaNoticia"> ${el.fechaInicio} </span> </td>
-								<td>  	<span class="consultaFechaNoticia"> ${el.fechaExpiracion} </span> </td>
+								<td>  	<span class="consultaFechaNoticia"> ${el.permanente? 'NA' : el.fechaInicio} </span> </td>
+								<td>  	<span class="consultaFechaNoticia"> ${el.permanente? 'NA' : el.fechaExpiracion} </span> </td>
 								<td>  	<span class="consultaDetalleNoticia"> ${el.detalle} </span> </td>
 								<td>  	<button onclick="abrirModalEdicion( ${index} )" type="button" class="btn btn-sm btn-primary btn-editar-noticia ">
 											<i class="fas fa-pencil-alt"></i>					

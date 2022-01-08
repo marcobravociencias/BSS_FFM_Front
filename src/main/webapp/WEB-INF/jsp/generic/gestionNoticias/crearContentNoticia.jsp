@@ -113,7 +113,7 @@
                     
                     <div  ng-show="inhabilidarCamposRegistro" class="capa-inabilitable">
                     </div>
-                    <form >
+                    <div >
                         <div class="form row  row-input-crea">
                             <div class="col-12">
                                 <div class="form-check form-switch">
@@ -122,8 +122,8 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
-                    <form>
+                    </div>
+                    <div>
                         
                         <div class="form row  row-input-crea">
                             <div class="col-12">
@@ -233,7 +233,7 @@
                             </div>
                         </div>
                         <button ng-click="registrarNoticia()" class="btn btn-primary btn-block">Registrar noticia</button>
-                    </form>   
+                    </div>   
                 </div>
                                         
             </div>

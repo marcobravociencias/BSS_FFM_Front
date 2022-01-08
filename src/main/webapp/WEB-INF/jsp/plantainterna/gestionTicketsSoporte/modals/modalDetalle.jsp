@@ -11,129 +11,148 @@
                 <span class="title" style="font-size: 1em;">Corroborar la informaci&oacute;n del soporte</span>
                 <div class="content-principal">
                     <p class="title">Datos principales - Soporte</p>
-                    <div class="col-12 form-group form-inline">
-                        <label class="form-label label-modal">IDC</label>
-                        <input type="text" class="form-control" ng-model="detalleCaptura.tecnicoIDC" readonly/>
+                    <div class="container-fluid ticket-content">
+                        <div class="container-text-title-detalle"><span class="text-tile-ticket">IDC</span></div>
+                        <div class="container-text-content-detalle"><span class="text-content-ticket">SISTEMAS SISTEMAS2 VISUET</span></div>
                     </div>
-                    <div class="col-12 form-group form-inline">
-                        <label class="form-label label-modal">Folio</label>
-                        <input type="text" class="form-control" ng-model="detalleCaptura.ticket" readonly/>
+                    <div class="container-fluid ticket-content">
+                        <div class="container-text-title-detalle"><span class="text-tile-ticket">FOLIO</span></div>
+                        <div class="container-text-content-detalle"><span class="text-content-ticket">103430445</span></div>
                     </div>
-                    <div class="col-12 form-group form-inline">
-                        <label class="form-label label-modal">Plaza</label>
-                        <input type="text" class="form-control" ng-model="detalleCaptura.ciudad" readonly />
+                    <div class="container-fluid ticket-content">
+                        <div class="container-text-title-detalle"><span class="text-tile-ticket">PLAZA</span></div>
+                        <div class="container-text-content-detalle"><span class="text-content-ticket">CIUDAD DE MEXICO-CENTRO</span></div>
                     </div>
-                    <div class="col-12 form-group form-inline">
-                        <label class="form-label label-modal">Distrito</label>
-                        <input type="text" class="form-control" ng-model="detalleCaptura.distrito" readonly/>
+                    <div class="container-fluid ticket-content">
+                        <div class="container-text-title-detalle"><span class="text-tile-ticket">DISTRITO</span></div>
+                        <div class="container-text-content-detalle"><span class="text-content-ticket">CONDESA D</span></div>
+                    </div>                     
+                    <div class="container-fluid ticket-content">
+                        <div class="container-text-title-detalle"><span class="text-tile-ticket">TEL&Eacute;FONO</span></div>
+                        <div class="container-text-content-detalle"><span class="text-content-ticket">7711828350</span></div>
                     </div>
-                    <div class="col-12 form-group form-inline">
-                        <label class="form-label label-modal">Tel&eacute;fono</label>
-                        <input type="text" class="form-control" ng-model="detalleCaptura.telefono" readonly />
+                    <div class="container-fluid ticket-content">
+                        <div class="container-text-title-detalle"><span class="text-tile-ticket">ESCALADA POR</span></div>
+                        <div class="container-text-content-detalle"><span class="text-content-ticket">SISTEMAS SISTEMAS2 VISUET</span></div>
                     </div>
-                    <div class="col-12 form-group form-inline">
-                        <label class="form-label label-modal">Escalada por</label>
-                        <input type="text" class="form-control" ng-model="detalleCaptura.despachoNombre" readonly />
+                    <div class="container-fluid ticket-content content-select-ticket-detalle">
+                        <div class="container-text-title-detalle"><span class="text-tile-ticket">TIPO ORDEN</span></div>
+                        <div class="container-text-content-detalle">
+                            <select class="form-control form-controlt form-control-sm custom-select inputTicket" name="tipoOrdenTicketDetalle" id="tipoOrdenTicketDetalle" ng-model="ticketSoporteDetalle.tipoOrden">
+                                <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
+                                <option value="instalacion" selected>INSTALACI&Oacute;N</option>
+                                <option value="soporte" selected>SOPORTE</option>
+                                <option value="addon" selected>ADDON</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <hr>
-                <div class="content-falla">
-                    <p class="title">Tipo de falla</p>
-                    <div class="col-12 form-group form-inline">
-                        <label class="form-label label-modal">Falla</label>
-                        <select class="form-control custom-select" id="falla"
-                            ng-model="detalleCaptura.nivel1" ng-change="loadCategoriaTicketSoporte()">
-                            <option value="{{ falla.id }}" ng-repeat="falla in listFallasTicket">
-                                {{ falla.descripcion }}
-                            </option>
-                        </select>
-                    </div>
-                    <div class="col-12 form-group form-inline">
-                        <label class="form-label label-modal">Categor&iacute;a</label>
-                        <select class="form-control custom-select" id="categoria"
-                            ng-model="detalleCaptura.nivel2" ng-change="loadSubcategoriaTicketSoporte()">
-                            <option value="{{ categoria.id }}" ng-repeat="categoria in listCategoriasTicket">
-                                {{ categoria.descripcion }}
-                            </option>
-                        </select>
-                    </div>
-                    <div class="col-12 form-group form-inline">
-                        <label class="form-label label-modal">Subcategor&iacute;a</label>
-                        <select class="form-control custom-select"
-                            ng-model="detalleCaptura.nivel3">
-                            <option value="{{ subcategoria.id }}" ng-repeat="subcategoria in listSubcategoriasTicket">
-                                {{ subcategoria.descripcion }}
-                            </option>
-                        </select>
-                    </div>
-                </div>
-                <hr>
-                <div class="row content-checkbox">
-                    <div class="col-12 form-check form-switch">
-                        <label class="col-6 label-modal">Se ejecuta aprovisionamiento de la ONT</label>
-                        <input class="col-6 form-check-input" type="checkbox">
-                    </div>
-                </div>
-                <hr>
-                <div class="row content-checkbox">
-                    <div class="col-12 form-check form-switch form-control-row">
-                        <label class="col-6 label-modal">Es necesario cambio de equipo</label>
-                        <input class="col-6 form-check-input" type="checkbox">
-                    </div>
-                </div>
-                <hr>
-                <div class="row content-checkbox">
-                    <div class="col-12 form-check form-switch form-control-row">
-                        <label class="col-6 label-modal">Se realiza un cobro al t&eacute;cnico</label>
-                        <input class="col-6 form-check-input" type="checkbox">
-                    </div>
-                </div>
-                <hr>
-                <div class="content-comentarios">
-                    <div class="col-12 form-group form-inline">
-                        <label class="form-label label-modal">Comentarios</label>
-                        <textarea class="form-control" ng-model="detalleCaptura.comentarios"></textarea>
+                    <div class="container-fluid ticket-content">
+                        <div class="container-text-title-detalle"><span class="text-tile-ticket">REGI&Oacute;N</span></div>
+                        <div class="container-text-content-detalle">
+                            <select class="form-control form-controlt form-control-sm custom-select inputTicket" name="regionTicketDetalle" id="regionTicketDetalle" ng-model="ticketSoporteDetalle.region">
+                                <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
+                                <option value="colombia" selected>COLOMBIA</option>
+                                <option value="mexico" selected>M&Eacute;XICO</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <hr>
                 <div class="content-checkbox">
                     <p class="title">Dictamen de folio</p>
-                    <div class="row content-checkbox">
-                        <div class="col-12 form-check form-switch form-control-row">
-                            <label class="col-6 label-modal">Visita necesaria</label>
-                            <input class="col-6 form-check-input" type="checkbox">
+                    <div class="container-fluid ticket-content">
+                        <div class="container-text-title-detalle"><span class="text-tile-ticket">VISITA NECESARIO</span></div>
+                        <div class="container-text-content-detalle form-check form-switch">
+                            <input class="form-check-input" type="checkbox">
                         </div>
                     </div>
-                    <div class="row content-checkbox">
-                        <div class="col-12 form-check form-switch form-control-row">
-                            <label class="col-6 label-modal">Problema solucinado</label>
-                            <input class="col-6 form-check-input" type="checkbox"
-                                ng-checked="detalleCaptura.problemaSolucionado == '1' ? true : false">
+                    <div class="container-fluid ticket-content" ng-repeat="item in accionesDinamicasDetalle">
+                        <div class="container-text-title-detalle titulo-acciones-dinamicas"><span class="text-tile-ticket">{{item.descripcion.toUpperCase()}}</span></div>
+                        <div class="container-text-content-detalle form-check form-switch">
+                            <input class="form-check-input" type="checkbox">
                         </div>
                     </div>
                 </div>
-                
-                <div class="content-falla" ng-if="detalleCaptura.despachoNombre">
-                    <hr>
-                    <div class="col-12 form-group form-inline">
-                        <label class="form-label label-modal">Escalar ticket</label>
-                        <select class="form-control custom-select" id="escalarTicket"
-                            ng-model="detalleCaptura.escalarTicket" ng-change="loadMotivoEscala()">
-                            <option value="" selected>NO HAY SELECCI&Oacute;N</option>
-                            <option value="{{ escalaUno.id }}" ng-repeat="escalaUno in listMotivoEscala.catalogoNivel1">
-                                {{ escalaUno.descripcion }}
-                            </option>
-                        </select>
+                <hr>
+                <div class="content-falla">
+                    <p class="title">Tipo de falla</p>
+                    <div class="container-fluid ticket-content content-select-ticket-detalle">
+                        <div class="container-text-title-detalle"><span class="text-tile-ticket">FALLA</span></div>
+                        <div class="container-text-content-detalle">
+                            <select class="form-control form-control-sm custom-select inputTicket" id="categoriaTicket" name="categoriaTicket" onchange="loadCategoriaTicketSoporte()">
+                                <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
+                                <option value="{{categoriaTicket}}" ng-repeat="categoriaTicket in listFallasTicket">
+                                    {{categoriaTicket.descripcion}}
+                                </option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="col-12 form-group form-inline">
-                        <label class="form-label label-modal">Motivo escalamiento</label>
-                        <select class="form-control custom-select"
-                            ng-model="detalleCaptura.motivoEscala">
-                            <option value="" selected>NO HAY SELECCI&Oacute;N</option>
-                            <option value="{{ escalaDos.id }}" ng-repeat="escalaDos in listMotivoEscala.catalogoNivel2">
-                                {{ escalaDos.descripcion }}
-                            </option>
-                        </select>
+                    <div class="container-fluid ticket-content content-select-ticket-detalle">
+                        <div class="container-text-title-detalle"><span class="text-tile-ticket">CATEGORIA</span></div>
+                        <div class="container-text-content-detalle">
+                            <select class="form-control form-control-sm custom-select inputTicket" id="categoriaTicket" name="categoriaTicket">
+                                <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
+                                <option value="{{categoriaTicket}}" ng-repeat="categoriaTicket in listCategoriasTicket">
+                                    {{categoriaTicket.descripcion}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="container-fluid ticket-content">
+                        <div class="container-text-title-detalle"><span class="text-tile-ticket">SUBCATEGORIA</span></div>
+                        <div class="container-text-content-detalle">
+                            <select class="form-control form-controlt form-control-sm custom-select inputTicket" id="subcategoriaTicket">
+                                <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
+                                <option value="{{subcategoriaTicket}}" ng-repeat="subcategoriaTicket in listSubcategoriasTicket">
+                                    {{subcategoriaTicket.descripcion}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+
+                
+                <div class="content-falla">
+                    <div class="container-fluid ticket-content content-select-ticket-detalle">
+                        <div class="container-text-title-detalle"><span class="text-tile-ticket">ESTATUS TICKET</span></div>
+                        <div class="container-text-content-detalle">
+                            <select class="form-control form-controlt form-control-sm custom-select" name="estatusTicketDetalle" id="estatusTicketDetalle" ng-model="ticketSoporteDetalle.estatus">
+                                <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
+                                <option value="escalacion" selected>ESCALAR</option>
+                                <option value="cancela" selected>CANCELAR</option>
+                                <option value="completa" selected>COMPLETADA</option>
+                                <option value="reasigna" selected>REASIGNAR</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="container-fluid ticket-content content-select-ticket-detalle" ng-show="ticketSoporteDetalle.estatus === 'escalacion'">
+                        <div class="container-text-title-detalle"><span class="text-tile-ticket">ESTADO</span></div>
+                        <div class="container-text-content-detalle">
+                            <select class="form-control form-controlt form-control-sm custom-select" name="estatusTicketDetalle" id="estatusTicketDetalle" ng-model="ticketSoporteDetalle.estado" ng-change="motivosSelectDetalle()">
+                                <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
+                                <option ng-value="item" ng-repeat="item in estadoEscalamientoDetalle">
+                                    {{item.descripcion}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="container-fluid ticket-content content-select-ticket-detalle" ng-show="ticketSoporteDetalle.estatus === 'escalacion'">
+                        <div class="container-text-title-detalle"><span class="text-tile-ticket">MOTIVO</span></div>
+                        <div class="container-text-content-detalle">
+                            <select class="form-control form-controlt form-control-sm custom-select" name="estatusTicketDetalle" id="estatusTicketDetalle" ng-model="ticketSoporteDetalle.motivo">
+                                <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
+                                <option ng-value="item" ng-repeat="item in motivoEscalamientoDetalle">
+                                    {{item.descripcion}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="container-fluid ticket-content">
+                        <div class="container-text-title-detalle"><span class="text-tile-ticket">COMENTARIOS</span></div>
+                        <div class="container-text-content-detalle">
+                            <textarea class="form-control" ng-model="ticketSoporteDetalle.comentarios"></textarea>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -141,7 +160,7 @@
                 <button type="button" class="btn cerrar-modal-btn btn-ligh" data-mdb-dismiss="modal">
                     Cancelar
                 </button>
-                <button type="button" class="btn btn-primary" >
+                <button type="button" class="btn btn-primary" ng-click="guardarTicketDetalle()">
                     Guardar
                 </button>
             </div>
