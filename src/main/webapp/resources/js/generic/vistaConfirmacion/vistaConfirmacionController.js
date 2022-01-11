@@ -35,11 +35,7 @@ app.controller('vistaConfirmacionController', ['$scope', '$q', 'vistaConfirmacio
                 $("#fechaAgendamiento").text(eventObject._def.extendedProps.fecha);
                 $("#turnoAgendamiento").text(turno.split(" ")[0]);
             },
-            selectable: true,
-            select: function (start, end, jsEvent, view) {
-
-
-            }
+            selectable: true
         });
 
         $scope.calendarDisp.render();
@@ -87,7 +83,10 @@ app.controller('vistaConfirmacionController', ['$scope', '$q', 'vistaConfirmacio
         let params = {
             idOt: ot
         }
+        swal({ text: 'Espera un momento...', allowOutsideClick: false });
+        swal.showLoading();
         vistaConfirmacionService.consultarDetalleOT(params).then(function success(response) {
+            swal.close();
             if (response.data !== undefined) {
                 if (response.data.respuesta) {
                     if (response.data.result) {

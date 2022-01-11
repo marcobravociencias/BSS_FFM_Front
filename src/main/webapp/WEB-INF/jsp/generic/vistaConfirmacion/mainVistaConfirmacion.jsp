@@ -57,8 +57,8 @@
             <div class="content-fluid" id="container_vista_confirmacion">
                 <div class="row container-fluid" style="padding: 0;">
                     <div class="col-3 container-info">
-                        <span class="title" style="color: #7716FA;">INFORMACI&Oacute;N</span>
-                        <table width="100%">
+                        <span class="title" style="font-size: 1em;">INFORMACI&Oacute;N</span>
+                        <table width="100%" style="margin-top: .5em;">
                             <tr>
                                 <td class="detail-title">OT:</td>
                                 <td class="detail-info" ng-bind="detalleOt.idOrden || 'Sin datos'"></td>
