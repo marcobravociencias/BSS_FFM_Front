@@ -22,6 +22,7 @@ import com.mx.totalplay.ffm.cloudweb.utilerias.utils.ConstantesGeneric;
 import com.mx.totalplay.ffm.cloudweb.utilerias.utils.UtileriaGeneral;
 
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -94,6 +95,12 @@ public class GenericController {
 			}
 
 		}
+	}
+	
+	@GetMapping("/moduloVistaConfirmacion")
+	public String vistaConfirmacion(@RequestParam Integer otconfirma) {		
+		logger.info("ENTRA DECISION");
+		return "generic/vistaConfirmacion/mainVistaConfirmacion";
 	}
 
 
