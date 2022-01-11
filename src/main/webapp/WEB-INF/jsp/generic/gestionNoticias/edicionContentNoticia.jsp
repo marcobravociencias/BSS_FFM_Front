@@ -1,11 +1,9 @@
 
 
 <div ng-show="edicionNoticaContent" class="content-edicion-noticia">                    
-    <div class="modal-header">
-        <h5 class="modal-title">Editar noticia</h5>
-        <button ng-click="edicionNoticaContent=false"  type="button" class="btn-close"></button>
-    </div>
     <div class="content-edicionnoticia">
+        <button ng-click="edicionNoticaContent=false"  type="button" class="btn-close cerrar-edicion-noticia" ></button>
+
         <div class="row">
             <div class="container-visualiza-noticia col-sm-6 col-md-6 ">
                 <div class="container-celular-visualizador">

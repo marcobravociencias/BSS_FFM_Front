@@ -1,6 +1,6 @@
 
 <div class="row">
-    <div class="container-visualiza-noticia col-sm-6 col-md-6">
+    <div class="container-visualiza-noticia offset-md-2 offset-sm-2 col-sm-6 col-md-4">
         <div class="container-celular-visualizador">
             <div class="container-header-celular">
                 <div class="left-header-celular-hora">
@@ -106,7 +106,7 @@
             </div>
         </div>                
     </div>
-    <div class="container-datos-crea-noticia col-sm-6 col-md-6">
+    <div class="container-datos-crea-noticia col-sm-6 col-md-4">
         <div class="row">
             <div class="col-12">
                 <div class="container-registro">
@@ -123,8 +123,7 @@
                             </div>
                         </div>
                     </div>
-                    <div>
-                        
+                    <div>                        
                         <div class="form row  row-input-crea">
                             <div class="col-12">
                                 <label class="label-noticiar-creacion form-label" for="tituloPrincipal">T&iacute;tulo principal</label>
@@ -136,7 +135,7 @@
                                 <label class="label-noticiar-creacion form-label" for="tituloSecundario">T&iacute;tulo secundario</label>
                                 <input   type="text" ng-model="saveObj.tituloSecundario" id="tituloSecundario" class="form-control form-control-sm" />
                             </div>                                
-                        </div>
+                        </div>  
                         <div class="form row  row-input-crea">
                             <div class="col-12">
                                 <label class="label-noticiar-creacion form-label" for="tituloSecundario">Link externo</label>
@@ -198,10 +197,19 @@
                             </div>                             
                         </div>
                         <div class="form row  row-input-crea">
-                            <div class="col-12">
+                            <div class="col-6">
                                 <div class="form-check form-switch">
                                     <input  class="form-check-input" type="checkbox" role="switch" ng-model="mostrarFechasDefinidas" id="switchPermanente" checked />
-                                    <label class="form-check-label label-permanente"  for="switchPermanente"> &iquest;Es permanente? </label>
+                                    <label class="form-check-label label-permanente"  for="switchPermanente">Permanente </label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <span class="link-geografia" ng-click="abrirModalGeografiaCreacion()">Geograf&iacute;a</span>                                           
+                                <div  ng-show="!isSeleccionGeografia" ng-click="abrirModalGeografiaCreacion()" class="content-warning-geografia" title="sin seleccion">
+                                    <i class="icono-warning-geografia fas fa-exclamation"></i>
+                                </div>
+                                <div  ng-show="isSeleccionGeografia" ng-click="abrirModalGeografiaCreacion()" class="content-success-geografia">
+                                    <i class="icono-success-geografia fas fa-check"></i>                                        
                                 </div>
                             </div>
                         </div>
@@ -220,25 +228,16 @@
                                 </div>
                         </div>
 
-                        <div  class="form  row  row-input-crea">
-                            <div class="col-12">
-                                <span class="link-geografia" ng-click="abrirModalGeografiaCreacion()">Geograf&iacute;a</span>                                           
-                                <div  ng-show="!isSeleccionGeografia" ng-click="abrirModalGeografiaCreacion()" class="content-warning-geografia" title="sin seleccion">
-                                    <i class="icono-warning-geografia fas fa-exclamation"></i>
-                                </div>
-                                <div  ng-show="isSeleccionGeografia" ng-click="abrirModalGeografiaCreacion()" class="content-success-geografia">
-                                    <i class="icono-success-geografia fas fa-check"></i>                                        
-                                </div>
-
-                            </div>
-                        </div>
+                
                         <button ng-click="registrarNoticia()" class="btn btn-primary btn-block">Registrar noticia</button>
                     </div>   
                 </div>
                                         
             </div>
         </div>
-
+    </div>
+    <div class="container-datos-crea-noticia col-sm-6 col-md-4">
+        
     </div>
 </div>
     

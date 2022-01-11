@@ -274,8 +274,17 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 	}
 	
 	$scope.initConsultaMetodo()
-	
-
+	$scope.isHideOverflowNoticias=false
+	abrirImagenSize=function(instanciaThis){
+		$("#full-image").attr("src", $(instanciaThis).attr("src"));
+		$('#image-viewer').show();
+		$scope.isHideOverflowNoticias=true
+		$scope.$apply()
+	}
+	$scope.cerrarGestionNotica=function(){
+		$('#image-viewer').hide();
+		$scope.isHideOverflowNoticias=false
+	}
     $scope.consultarNoticias = function() {
 
 		if(!swal.isVisible() ){
@@ -287,6 +296,7 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 			dataTableConsultaNoticias.destroy()
 			$('#datatable-noticias tbody').empty();
 		}	
+		$scope.searconsultaDatatableValue=''
         $q.all([
     		gestionNoticiasService.consultarNoticiasGeneric()
         ]).then(function(results) {
@@ -327,7 +337,7 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 							}
 							let tableelemetn=`
 							<tr>
-								<td> 	<img class="banner-file-noticias" src="${el.urlBanner}">  </td>
+								<td> 	<img   onclick="abrirImagenSize(this)"  class="banner-file-noticias hover-overlay" src="${el.urlBanner}">  </td>
 								<td> 	${htmlDescarga} </td>
 								<td>  	<span class="consultaTituloPrinc"> ${el.tituloPrincipal} </span> </td>
 								<td>  	<span class="consultaTituloSecund"> ${el.tituloSecundario} </span> </td>
@@ -345,7 +355,7 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 							`
 							$("#datatable-noticias tbody").append(tableelemetn) 
 						})
-
+						
 						$scope.initDatatableNoticias()
 					}else{
 						swal.close()						
@@ -362,7 +372,7 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 			dataTableConsultaNoticias=$('#datatable-noticias').DataTable({
 				"paging": true,
 				"lengthChange": false,
-				"searching": false,
+				"searching": true,
 				"ordering": false,
 				"pageLength": 10,
 				"info": false,
@@ -372,6 +382,13 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 			})
 			swal.close()	
 	}
+	$scope.searchDatatableNoticia=function(event){
+		if( dataTableConsultaNoticias != undefined )
+			dataTableConsultaNoticias.search( $scope.searconsultaDatatableValue ).draw()
+	}
+
+
+	
     $scope.registrarNoticia = function() {
 
 		if( !$scope.validarRegistroNoticia() ){
