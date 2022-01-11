@@ -34,7 +34,7 @@
             <i class="fas fa-redo"></i>
         </button>
         <div class="input-group input-group-sm content-seach-group">
-            <input id="searchConsultaTables" type="text" autocomplete="off" class="form-control buscadorGenerico" placeholder="Buscar noticia">
+            <input id="searchConsultaTables" ng-keyup="searchDatatableNoticia($event)" ng-model="searconsultaDatatableValue"  type="text" autocomplete="off" class="form-control buscadorGenerico" placeholder="Buscar noticia">
             <span class="fa fa-search iconoBusqueda"></span>
         </div>
     </div>

@@ -22,7 +22,7 @@
         <!-- CSS INTERNAS -->
         <link href="${pageContext.request.contextPath}/resources/css/generic/gestionNoticias/mainGestionNoticias.css" rel="stylesheet">
 	</head>
-	<body id="idBody" style="display: none;" ng-controller="gestionNoticiasController" >
+	<body id="idBody" style="display: none;" ng-class="{'is-hide-overflow':isHideOverflowNoticias}" ng-controller="gestionNoticiasController" >
     	<jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
         <jsp:include page="./modals/modal-geografia-crea.jsp"></jsp:include>
         <jsp:include page="./modals/modal-geografia-consulta.jsp"></jsp:include>
@@ -50,7 +50,12 @@
 
             <jsp:include page="./edicionContentNoticia.jsp"></jsp:include>
 
+            <div ng-click="cerrarGestionNotica()" id="image-viewer">
+                <span  class=" close">&times;</span>
+                <img class="modal-content-viewer" id="full-image">
+            </div>
         </div>
+ 
 	</body>
 	<!-- LIBRERIAS JS -->
     <script type="text/javascript">let contex_project = "${pageContext.request.contextPath}";</script>
