@@ -116,7 +116,7 @@
                     </div> -->
                 </div>
             </div>
-            <div class="tab-pane fade" id="comentariosTicket" role="tabpanel" aria-labelledby="comentariosTicket-tab" ng-init="consultarComentariosTicketSoporte()">
+            <div class="tab-pane fade" id="comentariosTicket" role="tabpanel" aria-labelledby="comentariosTicket-tab" >
                 <div class="divider-noticias" style="width: 100%; height: 1px; background: gainsboro;"></div>
                 <div class="col-12" style="text-align: right;">
                     <img id="btnRefresNoticias" style="cursor: pointer;" alt="Refresh" ng-click="consultarComentariosTicketSoporte()" src="${pageContext.request.contextPath}/resources/img/generic/actualizar_icon.svg">

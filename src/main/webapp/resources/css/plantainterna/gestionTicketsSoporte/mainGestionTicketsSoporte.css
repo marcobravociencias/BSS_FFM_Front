@@ -333,6 +333,7 @@ table.display.table.table-hover.table-striped.dataTable {
 .user-filter {
     border-radius: 25px;
     text-align: center;
+    width: 20%;
 }
 
 .user-filter .fa-filter{
