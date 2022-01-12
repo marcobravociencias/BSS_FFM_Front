@@ -46,6 +46,6 @@ public class LoginResult {
 	 
 	private String instancia;
 	private String version;
-	private List<ConfiguracionesGenerales> configuracionesGenerales;
+	private Map<String ,Object> configuracionesGenerales;
 	private List<Permiso>modulos;
 }
