@@ -67,17 +67,24 @@ app.edicionNoticiaController=function($scope,gestionNoticiasService){
 			let nombreArchivo = e.target.files[0].name;
 			let reader = new FileReader();
 			reader.readAsDataURL(e.target.files[0]);
-			reader.onload = function () {
-				let base64 = reader.result.toString().split(",");
-				$scope.fileCargaArchivoNoticiaEdit = {
-					"archivo": base64[1],
-					"nombre": nombreArchivo
-				};				
-				$scope.$apply();
-			};
-			reader.onerror = function (error) {
-				console.log('Error: ', error);
-			};
+			var archivoCargadoMod = nombreArchivo.split(".");
+			var extensionArchivoMod = archivoCargadoMod[archivoCargadoMod.length-1].toLowerCase();
+			if(extensionArchivoMod == "png" || extensionArchivoMod == "jpg" || extensionArchivoMod == "jpeg" || extensionArchivoMod == "gif" ||
+					extensionArchivoMod == "tiff" || extensionArchivoMod == "psd" || extensionArchivoMod == "bmp" || extensionArchivoMod == "svg"){
+				reader.onload = function () {
+					let base64 = reader.result.toString().split(",");
+					$scope.fileCargaArchivoNoticiaEdit = {
+						"archivo": base64[1],
+						"nombre": nombreArchivo
+					};				
+					$scope.$apply();
+				};
+				reader.onerror = function (error) {
+					console.log('Error: ', error);
+				};
+			}else{
+				swal("Formato no válido", "Asegurate de seleccionar un archivo en formato de imagen.", "warning");
+			}
 		}else{
             $scope.$apply();
         }

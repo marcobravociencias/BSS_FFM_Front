@@ -1,4 +1,3 @@
-
 <div class="content-fluid">
     <!--div class="row md-form" id="filtros_config">
         <div class="col-2 column-style-consulta">
@@ -30,6 +29,12 @@
         </div>
     </div-->
     <div class="content-filtros-consulta">
+    	<button ng-if="verVistaTabla" id="btn_vista_imagenes" type="button"  class="btn btn-sm  btn-primary  waves-effect waves-light"  ng-click="cambiarVistaConsultaNoticias()">
+            <i class="fas fa-images iconoBtnVistasConsulta"></i>
+        </button>
+        <button ng-if="!verVistaTabla" id="btn_vista_tabla" type="button"  class="btn btn-sm  btn-primary  waves-effect waves-light"  ng-click="cambiarVistaConsultaNoticias()">
+            <i class="fas fa-table iconoBtnVistasConsulta"></i>
+        </button>
         <button id="btn_consultar_ordenes" type="button"  class="btn btn-sm  btn-primary  waves-effect waves-light"  ng-click="consultarNoticias()">
             <i class="fas fa-redo"></i>
         </button>
@@ -39,26 +44,73 @@
         </div>
     </div>
    
-    <div  id="busqueda_noticias">
-            <table id="datatable-noticias" class="table table-sm table-hover ">
-                <thead >
-                    <tr>
-                        <th>Banner</th>
-                        <th>Descarga</th>          
-                        <th>T&iacute;tulo princ.</th>
-                        <th>T&iacute;tulo secund.</th>
-                        <th>Link externo</th>
-                        <th>Permanente</th>
-                        <th>Inicio</th>
-                        <th>Expiraci&oacute;n</th>
-                        <th>Detalle</th>
-                        <th>Acciones</th>
-
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>    
-            </table>
+    <div id="busqueda_noticias" ng-show="verVistaTabla">
+		<table id="datatable-noticias" class="table table-sm table-hover">
+			<thead>
+            	<tr>
+                	<th>Banner</th>
+                    <th>Descarga</th>          
+                    <th>T&iacute;tulo princ.</th>
+                    <th>T&iacute;tulo secund.</th>
+                    <th>Link externo</th>
+                    <th>Permanente</th>
+                    <th>Inicio</th>
+                    <th>Expiraci&oacute;n</th>
+                    <th>Detalle</th>
+                    <th>Acciones</th>
+				</tr>
+			</thead>
+			<tbody>
+            </tbody>    
+		</table>
     </div>
+    
+    <div id="busqueda_noticias_carrusel" ng-show="!verVistaTabla">
+    	<div class="row" style="padding: 1em;">
+    		<div class="col-md-3" ng-repeat="noticia in noticiasCarrusel" style="padding-bottom: 2em;">
+	    		<div id="card" class="card contenedorCardsConsulta">
+					<div class="card-body cuerpoCards">
+						<img class="" onclick="abrirImagenSize(this)" style="height: 100%; width: 100%; object-fit: cover;" src="{{noticia.urlBanner}}">				
+					</div>
+					<div id="" class="card-footer finCards">               
+						<div class="row">
+							<div class="col-md-12">
+								<label class="textoTituloCardsConsulta">T&iacute;tulo principal:&nbsp;</label><span class="textoCardsConsulta" ng-bind="noticia.tituloPrincipal"></span>				
+							</div>
+							<div class="col-md-12">
+								<label class="textoTituloCardsConsulta">T&iacute;tulo secundario:&nbsp;</label><span class="textoCardsConsulta" ng-bind="noticia.tituloSecundario"></span>			
+							</div>
+							<div class="col-md-12" ng-if="noticia.permanente != 1">
+								<label class="textoTituloCardsConsulta">Fecha inicio:&nbsp;</label><span class="textoCardsConsulta" ng-bind="noticia.fechaInicio"></span>		
+							</div>
+							<div class="col-md-12" ng-if="noticia.permanente != 1">
+								<label class="textoTituloCardsConsulta">Fecha fin:&nbsp;</label><span class="textoCardsConsulta" ng-bind="noticia.fechaExpiracion"></span>				
+							</div>
+							<div class="col-md-12">
+								<div class="divTextoDesbordCard">
+									<label class="textoTituloCardsConsulta">Detalle:&nbsp;</label><span class="textoCardsConsulta" ng-bind="noticia.detalle"></span>
+								</div>
+							</div>
+							<div class="col-md-12" ng-if="noticia.permanente == 1">
+								<span class="textoTituloCardsConsulta">Permanente</span>
+								<div class="contentPermanenteConsulta">
+									<i class="icono-success-generic fas fa-check"></i>                             
+								</div>			
+							</div>
+							<div class="col-md-12" ng-if="noticia.urlArchivo">
+								<span class="textoTituloCardsConsulta">Descargar</span>
+								<div class="contenedorIconoDescargaArchivo">
+									<a href="{{noticia.urlArchivo}}">
+										<i class="iconoDescargaArchivo fas fa-cloud-download-alt"></i>
+									</a>
+								</div>
+							</div>
+						</div>                
+					</div>
+				</div>
+    		</div>
+    	</div>
+    </div>
+    
 </div>
 

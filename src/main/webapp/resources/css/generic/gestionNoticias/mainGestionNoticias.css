@@ -19,6 +19,98 @@
 	text-align: center;
 }
 
+.divTextoDesbordCard {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+}
+
+.cuerpoCards{
+	height: 200px !important;
+	min-height: 200px !important;
+	max-height: 200px !important;
+	padding: 0em !important;
+}
+
+.finCards{
+	height: 180px !important;
+	min-height: 180px !important;
+	max-height: 180px !important;
+}
+
+.textoTituloCardsConsulta{
+	color: #626262;
+    font-family: 'Montserrat';
+    font-size: .7em;
+    font-weight: bold
+}
+
+.textoCardsConsulta{
+	color: #626262;
+    font-family: 'Montserrat';
+    font-size: .7em;
+}
+
+.textoLinkArchivo{
+    color: #0d6efd;
+    text-decoration: underline;
+    font-family: 'Montserrat';
+    font-size: .7em;
+    font-weight:bold;
+    cursor: pointer;
+}
+
+.contenedorCardsConsulta{
+	box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+}
+
+.contentPermanenteConsulta {
+    right: 5%;
+    top: .5em;
+    width: 1.1em;
+    height: 1.1em;
+    text-align: center;
+    background: #b2f585;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+    display: inline-block;
+}
+
+.contenedorIconoDescargaArchivo{
+	right: 5%;
+    top: 0.5em;
+    width: 1.3em;
+    height: 1.3em;
+    text-align: center;
+    background: #0d6efd;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+    display: inline-block;
+    cursor: pointer;
+}
+
+.iconoDescargaArchivo {
+    color: #ffffff;
+    font-size: .7em;
+    line-height: 1.7em !important;
+}
+
+#btn_vista_imagenes,
+#btn_vista_tabla {
+    background-color: #ffffff;
+    color: #7716fa;
+    border: solid 1px #7716fa !important;
+    padding: 0.em 3em;
+    border-radius: 5px;
+    font-size: 0.8em;
+    margin-right: 1em;
+}
+
+.iconoBtnVistasConsulta{
+	line-height: 0.5 !important;
+}
+
 /* -------------------------------------------- */
 
 #arbolGeografia.jstree-checkbox-selection .jstree-wholerow-clicked {
@@ -736,7 +828,7 @@ img.banner-file-noticias {
     border-collapse: collapse !important;
     width: 100% !important;
 }
-#busqueda_noticias .col-12   {
+#busqueda_noticias .col-12 {
 	padding:0;
 }
 #busqueda_noticias tbody tr.odd, #busqueda_noticias tbody tr.odd {

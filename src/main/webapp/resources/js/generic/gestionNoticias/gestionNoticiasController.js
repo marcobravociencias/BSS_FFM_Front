@@ -9,6 +9,9 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 	$scope.saveObj={}
 	$scope.fileDecargaNotica={}
 	$scope.fileDecargaNoticaCopy={}
+	
+	$scope.noticiasCarrusel = [];
+	$scope.verVistaTabla = true;
 
 	$scope.saveObj.tituloPrincipal="principal"
 	$scope.saveObj.tituloSecundario="secundario"
@@ -137,18 +140,25 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 		if (e.target.files[0]) {
 			let nombreArchivo = e.target.files[0].name;
 			let reader = new FileReader();
-			reader.readAsDataURL(e.target.files[0]);
-			reader.onload = function () {
-				let base64 = reader.result.toString().split(",");
-				$scope.fileCargaArchivoNoticia = {
-					"archivo": base64[1],
-					"nombre": nombreArchivo
-				};				
-				$scope.$apply();
-			};
-			reader.onerror = function (error) {
-				console.log('Error: ', error);
-			};
+			var archivoCargado = nombreArchivo.split(".");
+			var extensionArchivo = archivoCargado[archivoCargado.length-1].toLowerCase();
+			if(extensionArchivo == "png" || extensionArchivo == "jpg" || extensionArchivo == "jpeg" || extensionArchivo == "gif" ||
+					extensionArchivo == "tiff" || extensionArchivo == "psd" || extensionArchivo == "bmp" || extensionArchivo == "svg"){
+				reader.readAsDataURL(e.target.files[0]);
+				reader.onload = function () {
+					let base64 = reader.result.toString().split(",");
+					$scope.fileCargaArchivoNoticia = {
+						"archivo": base64[1],
+						"nombre": nombreArchivo
+					};				
+					$scope.$apply();
+				};
+				reader.onerror = function (error) {
+					console.log('Error: ', error);
+				};
+			}else{
+				swal("Formato no válido", "Asegurate de seleccionar un archivo en formato de imagen.", "warning");
+			}
 		}
 	}
 
@@ -307,6 +317,7 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 					if( results[0].data.result !=undefined &&    results[0].data.result.noticias	 ){
 						$scope.litadoNoticiasTemp=results[0].data.result.noticias
 						let arratNoticias=results[0].data.result.noticias;
+						$scope.noticiasCarrusel = results[0].data.result.noticias;
 						
 						angular.forEach( arratNoticias, function(el,index){
 							el.fechaInicio=el.fechaInicio.substring( 0, el.fechaInicio.indexOf(" ")  )
@@ -517,7 +528,11 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 	    
     $('#searchGeoConsulta').on('keyup', function () {
 		$("#jstre-content-geofrafia-consulta").jstree("search", this.value);
-	})
+	});
+    
+    $scope.cambiarVistaConsultaNoticias = function() {
+    	$scope.verVistaTabla = !$scope.verVistaTabla;
+	}
     
 }]);
 
