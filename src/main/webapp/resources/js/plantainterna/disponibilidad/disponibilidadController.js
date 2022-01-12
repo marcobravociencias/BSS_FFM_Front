@@ -147,10 +147,16 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             swal.close();
             console.log(result);
             if (result[0].data.respuesta) {
-                $scope.nIntervencion = result[0].data.result.N_FILTRO_INTERVENCIONES ? Number(result[0].data.result.N_FILTRO_INTERVENCIONES) : null;
-                $scope.nGeografia = result[0].data.result.N_FILTRO_GEOGRAFIA ? Number(result[0].data.result.N_FILTRO_GEOGRAFIA) : null;
-                $scope.permisosDisponibilidad = result[0].data.result.MODULO_ACCIONES_USUARIO.permisos;
-                console.log($scope.permisosDisponibilidad)
+                let resultConf= result[0].data.result
+                if( resultConf != undefined && resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves){
+                    let  llavesResult=result[0].data.result.MODULO_ACCIONES_USUARIO.llaves;                    
+                    $scope.nIntervencion = llavesResult.N_FILTRO_INTERVENCIONES ? Number( llavesResult.N_FILTRO_INTERVENCIONES ) : null;
+                    $scope.nGeografia = llavesResult.N_FILTRO_GEOGRAFIA ? Number( llavesResult.N_FILTRO_GEOGRAFIA ) : null;
+                    $scope.permisosDisponibilidad = resultConf.MODULO_ACCIONES_USUARIO.permisos;
+                    console.log($scope.permisosDisponibilidad)
+                }else{
+                    mostrarMensajeErrorAlert("No se encontraron configuraciones del usuario")
+                } 
             } else {
                 mostrarMensajeErrorAlert(result[0].data.resultDescripcion)
             }

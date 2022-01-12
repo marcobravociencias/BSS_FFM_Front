@@ -89,9 +89,18 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     		usuarioPIService.consultaIntervenciones()
         ]).then(function(results) {
         	// *** CONFIGURACIÓN DESPACHO ***
-        	var nivelUsuario = results[0].data.result.N_FILTRO_GEOGRAFIA;
-        	$scope.filtroGeografias = results[0].data.result.N_FILTRO_GEOGRAFIA;
-        	$scope.filtroIntervenciones = results[0].data.result.N_FILTRO_INTERVENCIONES;
+        	var nivelUsuario; 				
+
+			let resultConf= results[0].data.result
+			if( resultConf != undefined && resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves){
+				let  llavesResult=results[0].data.result.MODULO_ACCIONES_USUARIO.llaves;                    
+				$scope.permisosUsuariosAcciones = resultConf.MODULO_ACCIONES_USUARIO.permisos;			
+				nivelUsuario= llavesResult.N_FILTRO_GEOGRAFIA;
+				$scope.filtroGeografias = llavesResult.N_FILTRO_GEOGRAFIA;
+				$scope.filtroIntervenciones = llavesResult.N_FILTRO_INTERVENCIONES;
+			}else{
+				toastr.warning("No se encontraron configuraciones del usuario")
+			} 
         	
         	// *** COMPAÑÍAS ***
         	if (results[1].data !== undefined) {

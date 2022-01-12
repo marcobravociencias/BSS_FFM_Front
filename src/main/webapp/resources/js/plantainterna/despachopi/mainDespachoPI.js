@@ -948,11 +948,30 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             mainDespachoService.consultarCatalogoEstatusDespachoPI()
         ]).then(function(results) {              
             let elementosMapa= angular.copy(results[3].data.result);
-            $scope.listadoIconosConfig=[]         
-            $scope.nfiltrogeografia=results[3].data.result.N_FILTRO_GEOGRAFIA
-            $scope.nfiltrointervenciones=results[3].data.result.N_FILTRO_INTERVENCIONES
-            $scope.nfiltroestatuspendiente=results[3].data.result.ESTATUS_PENDIENTES           
-            $scope.permisosConfigUser=results[3].data.result.MODULO_ACCIONES_USUARIO;
+            $scope.listadoIconosConfig=[]      
+            
+            let resultConf= results[3].data.result
+            if( resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves){
+                let  llavesResult=results[3].data.result.MODULO_ACCIONES_USUARIO.llaves;
+                
+                $scope.nfiltrogeografia=llavesResult.N_FILTRO_GEOGRAFIA
+                $scope.nfiltrointervenciones=llavesResult.N_FILTRO_INTERVENCIONES
+                $scope.nfiltroestatuspendiente=llavesResult.N_ESTATUS_PENDIENTES           
+                $scope.permisosConfigUser=resultConf.MODULO_ACCIONES_USUARIO;
+
+                GenericMapa.prototype.callPrototypeMapa( resultConf )
+
+                $scope.elementosConfigGeneral=new Map(Object.entries( resultConf ))          
+                for (const elm in resultConf ) {
+                    if(elm.toUpperCase().includes("ICONO_")){
+                        $scope.listadoIconosConfig.push({
+                            icon: elm.substring( elm.indexOf("_")+1 , elm.length ),
+                            value:elementosMapa[elm]
+                        }) 
+                    }   
+                }    
+            }
+
             $scope.estatusCambio = results[4].data.result;
            
             if($scope.permisosConfigUser!=undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length >0){
@@ -965,19 +984,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                 $scope.permisosConfigUser.permisos=[]
             }
 
-            GenericMapa.prototype.callPrototypeMapa(results[3].data.result)
-
-            $scope.elementosConfigGeneral=new Map(Object.entries(results[3].data.result))          
-            for (const elm in results[3].data.result) {
-                if(elm.toUpperCase().includes("ICONO_")){
-                    $scope.listadoIconosConfig.push({
-                        icon: elm.substring( elm.indexOf("_")+1 , elm.length ),
-                        value:elementosMapa[elm]
-                    }) 
-                }   
-
-            }
-
+     
             $scope.iniciarMapaAlertas();
 
             if (results[4].data !== undefined) {
