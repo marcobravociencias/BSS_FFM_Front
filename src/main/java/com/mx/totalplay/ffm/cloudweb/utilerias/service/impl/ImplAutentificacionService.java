@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -18,7 +17,6 @@ import org.springframework.stereotype.Service;
 import com.google.gson.Gson;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.LoginResult;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.Permiso;
-import com.mx.totalplay.ffm.cloudweb.utilerias.model.SubPermiso;
 import com.mx.totalplay.ffm.cloudweb.utilerias.service.AutentificacionService;
 import com.mx.totalplay.ffm.cloudweb.utilerias.utils.ConsumeRest;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.ConfiguracionesGenerales;
@@ -54,16 +52,7 @@ public class ImplAutentificacionService  implements AutentificacionService{
 		LoginResult permisosModulos = (LoginResult) restCaller.callGetBearerTokenRequestReturnClass(paramsGet, urlPermisos, LoginResult.class, responseLog.getAccess_token());
 		
 		logger.info(gson.toJson(permisosModulos));
-				
-		permisosModulos.setConfiguraciones(null);		
-		if(responseLog.getConfiguracionesGenerales() ==null ) {
-			responseLog.setConfiguracionesGenerales(permisosModulos.getConfiguracionesGenerales());
-			Map<String, Object> z = permisosModulos.getConfiguracionesGenerales().stream().collect(Collectors.toMap(ConfiguracionesGenerales::getLlave, ConfiguracionesGenerales::getValor)) ;		
-			permisosModulos.setConfiguraciones( z );
-		}else {
-			responseLog.setConfiguracionesGenerales(new ArrayList<ConfiguracionesGenerales>());
-		}
-		
+						
 		responseLog.setModulos(permisosModulos.getModulos());
 
 	
