@@ -55,7 +55,7 @@
         <div class="container-fluid container-fludi-navbar">
             <div class="collapse navbar-collapse container-menus-hader justify-content-center" id="navbarTogglerDemo02">
                 <ul class="ul-elementos-nav navbar-nav me-auto mb-2 mb-lg-0">                        
-                    <c:forEach var="permi" items="${userStore.permisos}">
+                    <c:forEach var="permi" items="${userStore.modulos}">
                         <c:if test="${permi.dentroNavbar}">
                             <li id="${permi.clave}" class="nav-item ">
                                 <i class="${permi.icono} icon-navbar-izquierda"></i>
@@ -70,7 +70,7 @@
                             </a>
                             <!-- Dropdown menu -->
                             <ul class="dropdown-menu"   aria-labelledby="navbarDropdown">
-                                <c:forEach var="permi" items="${userStore.permisos}">
+                                <c:forEach var="permi" items="${userStore.modulos}">
                                     <c:if test="${!permi.dentroNavbar}">
                                         <li id="${permi.clave}">
                                             <a class="dropdown-item" href="${permi.clave}">

@@ -21,7 +21,7 @@ import com.mx.totalplay.ffm.cloudweb.utilerias.model.Permiso;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.SubPermiso;
 import com.mx.totalplay.ffm.cloudweb.utilerias.service.AutentificacionService;
 import com.mx.totalplay.ffm.cloudweb.utilerias.utils.ConsumeRest;
-
+import com.mx.totalplay.ffm.cloudweb.utilerias.model.ConfiguracionesGenerales;
 
 @Service
 public class ImplAutentificacionService  implements AutentificacionService{
@@ -41,36 +41,49 @@ public class ImplAutentificacionService  implements AutentificacionService{
 	@Override
 	public LoginResult getAutentificacion(String us, String crdospas) {		
 		logger.info("jgetAutentificacion## "+us+" -- "+crdospas);
-		String urlService=env.getProperty("dep.envirom.web").concat(":8151/ffm/login/auth/");		
+		String urlService=env.getProperty("dep.envirom.web").concat(":8151").concat(env.getProperty("ws.url.validausrffm"));		
 		LoginResult responseLog = (LoginResult) restCaller.callPostReturnClassBasicAuthXwwwUrlFormed(
 				urlService ,  us, crdospas, LoginResult.class
 		);
 		
-		String urlPermisos=env.getProperty("dep.envirom.web").concat(":8133/ffm/configuraciones/generales/idUsuario/{idUsuario}/idOrigen/1");
+		String urlPermisos=env.getProperty("dep.envirom.web").concat(":8133").concat(env.getProperty("ws.url.validausrffmpermisos"));
 		Map<String, String> paramsGet = new HashMap<String, String>();
 		paramsGet.put("idUsuario", ""+responseLog.getIdUsuario());
-		LoginResult configuracion = (LoginResult) restCaller.callGetBearerTokenRequestReturnClass(paramsGet, urlPermisos, LoginResult.class, responseLog.getAccess_token());
+		paramsGet.put("idOrigen", "1");
+
+		LoginResult permisosModulos = (LoginResult) restCaller.callGetBearerTokenRequestReturnClass(paramsGet, urlPermisos, LoginResult.class, responseLog.getAccess_token());
 		
-		responseLog.setConfiguracionesGenerales(configuracion.getConfiguracionesGenerales());
-		responseLog.setModulos(configuracion.getModulos());
+		logger.info(gson.toJson(permisosModulos));
 				
+		permisosModulos.setConfiguraciones(null);		
+		if(responseLog.getConfiguracionesGenerales() ==null ) {
+			responseLog.setConfiguracionesGenerales(permisosModulos.getConfiguracionesGenerales());
+			Map<String, Object> z = permisosModulos.getConfiguracionesGenerales().stream().collect(Collectors.toMap(ConfiguracionesGenerales::getLlave, ConfiguracionesGenerales::getValor)) ;		
+			permisosModulos.setConfiguraciones( z );
+		}else {
+			responseLog.setConfiguracionesGenerales(new ArrayList<ConfiguracionesGenerales>());
+		}
+		
+		responseLog.setModulos(permisosModulos.getModulos());
+
+	
 		logger.info(gson.toJson(responseLog));
 		if (responseLog.getIdUsuario() != 0) {
 			Map<String, Object> configuraciones = responseLog.getConfiguraciones();
 			String ordenamiento=(String)configuraciones.get("NAVBAR_ORDER");
-			if (responseLog.getPermisos().size() != 0) {
+			if (responseLog.getModulos().size() != 0) {
 				if (ordenamiento != null) {
 					 	
 					ordenamiento=ordenamiento.replaceAll("moduloDespachoPE", "moduloDespacho");
 
-					responseLog.setPermisos( retornarListOrdenamiento(responseLog.getPermisos(),ordenamiento));		
+					responseLog.setModulos( retornarListOrdenamiento(responseLog.getModulos(),ordenamiento));		
 					
-					Optional<Permiso> streamResult = responseLog.getPermisos()
+					Optional<Permiso> streamResult = responseLog.getModulos()
 							 .stream().filter(e-> !e.isDentroNavbar()).findAny();
 					
 					responseLog.setBanderaPintarOtros( streamResult.isPresent() );
 				} else {
-					ordenamiento=String.join(",", responseLog.getPermisos().stream().map(e-> {return e.getClave();}).collect(Collectors.toList()));
+					ordenamiento=String.join(",", responseLog.getModulos().stream().map(e-> {return e.getClave();}).collect(Collectors.toList()));
 				}
 			}
 		}	
