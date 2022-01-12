@@ -507,8 +507,8 @@ img.imagen-visor-creanotica {
     text-align: center;
     height: 1.5em;
     display: inline-block;
-    margin-left: .5em;
-    margin-right: .5em;
+    /* margin-left: .5em; */
+    /* margin-right: .5em; */
     margin-top: .3em;
     margin-bottom: .3em;
 }

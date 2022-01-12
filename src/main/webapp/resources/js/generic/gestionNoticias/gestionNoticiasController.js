@@ -306,6 +306,7 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 			dataTableConsultaNoticias.destroy()
 			$('#datatable-noticias tbody').empty();
 		}	
+		
 		$scope.searconsultaDatatableValue=''
         $q.all([
     		gestionNoticiasService.consultarNoticiasGeneric()
@@ -369,13 +370,18 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 						
 						$scope.initDatatableNoticias()
 					}else{
-						swal.close()						
+						swal.close()
+						$scope.initDatatableNoticias()
+						
 					}
 				}else{
-					swal.close()						
+					swal.close()
+					$scope.initDatatableNoticias()
+						
 				}
 			}else{
-				swal.close()						
+				swal.close()	
+				$scope.initDatatableNoticias()					
 			}
         });
     }
