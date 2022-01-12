@@ -42,9 +42,8 @@ public class LoginResult {
 	private boolean banderaPintarOtros;
 	private String googlAcceLla;
 	private String direccionAmbiente;
-	private List<Permiso>permisos;
 	private Map<String ,Object>configuraciones;
-	
+	 
 	private String instancia;
 	private String version;
 	private List<ConfiguracionesGenerales> configuracionesGenerales;

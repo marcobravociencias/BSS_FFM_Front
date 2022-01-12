@@ -60,13 +60,13 @@ public class SecurityCustomAuthenticationProvider implements AuthenticationProvi
 	        LoginResult response = autentificacionService.getAutentificacion(username, password);
 	        
 	        if (response.getMensaje() == null ) {
-	        	if (response.getPermisos().size() != 0) {
+	        	if (response.getModulos().size() != 0) {
 	        		final List<GrantedAuthority> grantedAuths = new ArrayList<GrantedAuthority>();
 		    		grantedAuths.add(new SimpleGrantedAuthority("ROLE_USER"));
 		    		
 		    		//SE AGREGAN LOS PERMISOS AL USUARIO
 		    		
-		    		for(Permiso permiso: response.getPermisos()) {
+		    		for(Permiso permiso: response.getModulos()) {
 		    			urlRoleMap.put("/"+permiso.getClave(), "ROLE_USER");
 		    		}
 		    		response.setPermiAccUs(urlRoleMap);	    	

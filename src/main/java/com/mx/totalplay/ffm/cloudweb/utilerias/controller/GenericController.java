@@ -46,10 +46,9 @@ public class GenericController {
 	public String enrutamientoUser(ModelMap model) {	
 		logger.info("Enrutando ... " );
         LoginResult principalDetail = utileriaGeneral.obtenerObjetoPrincipal();
-        List<Permiso> permisos = principalDetail.getPermisos();
-        String redirectEnrutamiento="redirect:"+permisos.get(0).getClave();
-		logger.info("Enrutando ... "+redirectEnrutamiento );
-		
+        List<Permiso> modulos = principalDetail.getModulos();
+        String redirectEnrutamiento="redirect:"+modulos.get(0).getClave();
+		logger.info("Enrutando ... "+redirectEnrutamiento );		
 		return redirectEnrutamiento;				
 	}		
 	

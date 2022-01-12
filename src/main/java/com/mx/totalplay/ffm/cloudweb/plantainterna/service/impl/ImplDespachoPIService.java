@@ -545,7 +545,7 @@ public class ImplDespachoPIService implements DespachoPIService {
 
         if (jsonObject != null) {
             String claveBusqueda = jsonObject.get("moduloAccionesUsuario").getAsString();
-            Permiso permiso = principalDetail.getPermisos()
+            Permiso permiso = principalDetail.getModulos()
                     .stream()
                     .filter(e -> claveBusqueda.equals(e.getClave()))
                     .findAny()
