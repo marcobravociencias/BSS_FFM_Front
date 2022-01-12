@@ -52,9 +52,10 @@ public class ImplAutentificacionService  implements AutentificacionService{
 		LoginResult permisosModulos = (LoginResult) restCaller.callGetBearerTokenRequestReturnClass(paramsGet, urlPermisos, LoginResult.class, responseLog.getAccess_token());
 		
 		logger.info(gson.toJson(permisosModulos));
-						
+				
+		
 		responseLog.setModulos(permisosModulos.getModulos());
-
+		responseLog.setConfiguraciones(permisosModulos.getConfiguracionesGenerales());
 	
 		logger.info(gson.toJson(responseLog));
 		if (responseLog.getIdUsuario() != 0) {
