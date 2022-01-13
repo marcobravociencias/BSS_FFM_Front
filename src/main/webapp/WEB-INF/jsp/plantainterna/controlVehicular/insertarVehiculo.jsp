@@ -480,7 +480,9 @@
                     informaci&oacute;n antes de guardar</h5>
             </div>
             <div style="text-align: right; margin: 1em 0 0 0;">
-                <input type="button" class="btn btn-primary btnTotal" value="Guardar" onclick="guardarVehiculo()" />
+                <button type="button" class="btn btn-primary ripple-surface" onclick="guardarVehiculo()" style="margin-bottom: 1em;">
+                    Guardar
+                </button>
             </div>
         </div>
     </div>
