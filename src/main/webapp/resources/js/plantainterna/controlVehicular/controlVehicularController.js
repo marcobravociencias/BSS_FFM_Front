@@ -142,10 +142,19 @@ app.controller('controlVehicularController',
 					controlVehicularService.consultarConfiguracionVehiculo({ "moduloAccionesUsuario": "moduloVehiculos" }),
 					controlVehicularService.consulCatalogoGeografiaUsuarioVehiculo()
 				]).then(function (results) {
-
+			
+					let resultConf= results[0].data.result
 					if (results[0].data && results[0].data.respuesta) {
-						$scope.nGeografia = results[0].data.result.N_FILTRO_GEOGRAFIA ? Number(results[0].data.result.N_FILTRO_GEOGRAFIA) : null;
-						$scope.bucketImg = results[0].data.result.BUCKETID_FB;
+						if( resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves){
+							let  llavesResult=results[0].data.result.MODULO_ACCIONES_USUARIO.llaves;							  						
+							$scope.nGeografia = llavesResult.N_FILTRO_GEOGRAFIA ? Number( llavesResult.N_FILTRO_GEOGRAFIA ) : null;
+							$scope.bucketImg = resultConf.BUCKETID_FB;
+							$scope.llaveEncierroVehiculo= llavesResult.N_ENCIERROS;
+							$scope.llaveGeografiaRegistro = llavesResult.N_GEOGRAFIA_REGISTRO;
+							$scope.permisosConfigUser=resultConf.MODULO_ACCIONES_USUARIO.permisos;
+						}else{
+							toastr.warning(results[0].data.resultDescripcion);
+						}						
 					} else {
 						toastr.warning(results[0].data.resultDescripcion);
 					}

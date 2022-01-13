@@ -596,8 +596,16 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
                 if(results[0].data.respuesta ){
                     if(results[0].data.result ){
                         if(results[0].data.result.geografia){
-                        	var nivelUsuario = results[1].data.result.N_FILTRO_GEOGRAFIA;
-                        	$scope.nivelSkill = results[1].data.result.N_FILTRO_INTERVENCIONES;
+                        	var nivelUsuario; 
+							let resultConf= results[1].data.result
+							if( resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves){
+								let  llavesResult=results[1].data.result.MODULO_ACCIONES_USUARIO.llaves;
+								
+								nivelUsuario=llavesResult.N_FILTRO_GEOGRAFIA
+								$scope.nivelSkill=llavesResult.N_FILTRO_INTERVENCIONES         
+								$scope.permisosConfigUser=resultConf.MODULO_ACCIONES_USUARIO;
+							}
+
 							let listGeografias = [];
                         	if(nivelUsuario !== undefined){
                         		results[0].data.result.geografia.forEach(elemento =>{
