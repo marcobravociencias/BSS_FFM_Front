@@ -718,7 +718,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
                 e.icon= "fa fa-globe";
                 return e
             })       
-            $scope.listaIntervencionesRespaldo = angular.copy(intervencionesLista);
+            //$scope.listaIntervencionesRespaldo = angular.copy(intervencionesLista);
             $('#arbolIntervencionRegistro').bind('loaded.jstree', function(e, data) {
 				//$(this).jstree("open_all");
             }).jstree({

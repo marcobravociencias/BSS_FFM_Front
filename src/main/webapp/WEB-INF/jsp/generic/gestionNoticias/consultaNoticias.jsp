@@ -38,8 +38,12 @@
         <button id="btn_consultar_ordenes" type="button"  class="btn btn-sm  btn-primary  waves-effect waves-light"  ng-click="consultarNoticias()">
             <i class="fas fa-redo"></i>
         </button>
-        <div class="input-group input-group-sm content-seach-group">
+        <div ng-show="verVistaTabla" class="input-group input-group-sm content-seach-group">
             <input id="searchConsultaTables" ng-keyup="searchDatatableNoticia($event)" ng-model="searconsultaDatatableValue"  type="text" autocomplete="off" class="form-control buscadorGenerico" placeholder="Buscar noticia">
+            <span class="fa fa-search iconoBusqueda"></span>
+        </div>
+        <div ng-show="!verVistaTabla" class="input-group input-group-sm content-seach-group">
+            <input id="" ng-keyup="" ng-model="buscarNoticiaCarrusel"  type="text" autocomplete="off" class="form-control buscadorGenerico" placeholder="Buscar noticia C">
             <span class="fa fa-search iconoBusqueda"></span>
         </div>
     </div>
@@ -67,7 +71,7 @@
     
     <div id="busqueda_noticias_carrusel" ng-show="!verVistaTabla">
     	<div class="row" style="padding: 1em;">
-    		<div class="col-md-3" ng-repeat="noticia in noticiasCarrusel" style="padding-bottom: 2em;">
+    		<div class="col-md-3" ng-repeat="noticia in noticiasCarrusel | filter:buscarNoticiaCarrusel track by $index"" style="padding-bottom: 2em;">
 	    		<div id="card" class="card contenedorCardsConsulta">
 					<div class="card-body cuerpoCards">
 						<img class="" onclick="abrirImagenSize(this)" style="height: 100%; width: 100%; object-fit: cover;" src="{{noticia.urlBanner}}">				

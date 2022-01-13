@@ -111,6 +111,99 @@
 	line-height: 0.5 !important;
 }
 
+ul.wall li:hover .iconoCrearNoticia {
+  position: absolute;
+  left: 10%;
+}
+
+.iconoCrearNoticia {
+	color: #ffffff;
+  	position: absolute;
+  	left: 30%;
+  	font-family: 'Montserrat';
+    font-size: .8em;
+}
+
+.text-icono-crear-noticia{
+    font-family: 'Montserrat';
+    font-size: .8em;
+}
+
+ul.wall li:hover .text-crear-noticia-hide {
+  display: inline-block;
+  margin-left: 2em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.text-crear-noticia-hide {
+  display: none;
+}
+
+ul.wall .red.accent-3 {
+  background-color: #e12121 !important;
+  -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%),
+    0 2px 10px 0 rgb(0 0 0 / 12%);
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+}
+
+ul.wall li .badge-alerta {
+  position: relative;
+  padding: 0.1em 0.4em;
+  right: 1em;
+  top: -9px;
+  z-index: 15;
+  font-size: 0.7em;
+}
+
+ul.wall li:last-child {
+  margin-right: 1em;
+}
+ul.wall {
+  bottom: 0;
+  margin: 0;
+  padding: 0;
+  z-index: 10;
+  border-radius: 4em;
+}
+
+ul.wall li {
+  margin-left: 3em !important;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  margin: 0 0.8em 0.8em 0;
+  color: #ffffff;
+  cursor: pointer;
+  height: 2em;
+  width: 2em;
+  border-radius: 20px;
+  -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%),
+    0 2px 10px 0 rgb(0 0 0 / 12%);
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+  margin-top: 0.3em;
+  background: #12a91b;
+  text-overflow: ellipsis;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+ul.wall li:hover {
+  width: 8.5em;
+  /* background: rgb(242 242 242) !important; */
+}
+ul.wall li:hover .iconoCrearNoticia {
+  position: absolute;
+  left: 10%;
+}
+ul.wall li:hover .text-crear-noticia-hide {
+  display: inline-block;
+  margin-left: 2em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* -------------------------------------------- */
 
 #arbolGeografia.jstree-checkbox-selection .jstree-wholerow-clicked {
@@ -878,6 +971,13 @@ img.banner-file-noticias {
     padding: 1em;
 }
 .cerrar-edicion-noticia{
+    position: absolute;
+    right: 1em;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.cerrar-crear-noticia{
     position: absolute;
     right: 1em;
     cursor: pointer;
