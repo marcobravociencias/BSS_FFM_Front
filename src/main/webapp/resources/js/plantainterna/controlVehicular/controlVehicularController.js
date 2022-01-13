@@ -29,6 +29,8 @@ app.controller('controlVehicularController',
 			$scope.fileGasolina;
 			$scope.padre;
 			$scope.listSelected = [];
+			$scope.permisosConfigUser = [];
+			$scope.accionesUserConfigText=[]
 
 			$("#modal_cluster_arbol_vehiculo").on("hidden.bs.modal", function () {
 				let selectedElms = $('#jstreeconsulta').jstree("get_selected", true);
@@ -37,7 +39,7 @@ app.controller('controlVehicularController',
 					$scope.vehiculoText.geografiaText = selectedElms[0].text;
 					if ($('#jstreeconsulta').jstree().settings.plugins.length == 1) {
 						if ($scope.ubicacionEditar.toString() !== selectedElms[0].id.toString()) {
-							$scope.getParentGeografia(selectedElms[0].id);
+							$scope.getParentGeografia(selectedElms[0].id, $scope.llaveEncierroVehiculo);
 							$scope.loadEncierros($scope.padre, 0);
 						}
 					}
@@ -138,14 +140,29 @@ app.controller('controlVehicularController',
 			}
 
 			$scope.getArbol = function () {
+				
 				$q.all([
 					controlVehicularService.consultarConfiguracionVehiculo({ "moduloAccionesUsuario": "moduloVehiculos" }),
 					controlVehicularService.consulCatalogoGeografiaUsuarioVehiculo()
 				]).then(function (results) {
-
+			
+					let resultConf= results[0].data.result
 					if (results[0].data && results[0].data.respuesta) {
-						$scope.nGeografia = results[0].data.result.N_FILTRO_GEOGRAFIA ? Number(results[0].data.result.N_FILTRO_GEOGRAFIA) : null;
-						$scope.bucketImg = results[0].data.result.BUCKETID_FB;
+						if( resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves){
+							let  llavesResult=results[0].data.result.MODULO_ACCIONES_USUARIO.llaves;							  						
+							$scope.nGeografia = llavesResult.N_FILTRO_GEOGRAFIA ? Number( llavesResult.N_FILTRO_GEOGRAFIA ) : null;
+							$scope.bucketImg = resultConf.BUCKETID_FB;
+							$scope.llaveEncierroVehiculo= llavesResult.N_ENCIERROS;
+							$scope.permisosConfigUser=resultConf.MODULO_ACCIONES_USUARIO.permisos;
+							if($scope.permisosConfigUser!=undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length >0){
+								$scope.permisosConfigUser.permisos.map(e=>{e.banderaPermiso = true ; return e;});
+								$scope.accionesUserConfigText=$scope.permisosConfigUser.permisos.map(e=>{return e.clave})
+				
+							}
+							$("#container_vehiculos").css("display","block")
+						}else{
+							toastr.warning(results[0].data.resultDescripcion);
+						}						
 					} else {
 						toastr.warning(results[0].data.resultDescripcion);
 					}
@@ -359,7 +376,12 @@ app.controller('controlVehicularController',
 					row[9] = elemento.urlFotoPlaca && elemento.urlFotoPlaca.length > 15 ? '<img style="cursor:pointer; border-radius:.5em" src="' + elemento.urlFotoPlaca + '" alt="Placa" width="50" height="30" onclick="showImg(' + "'" + elemento.urlFotoPlaca + "'" + ')"/>' : "";
 					row[10] = elemento.urlFotoVehiculo && elemento.urlFotoVehiculo.length > 15 ? '<img style="cursor:pointer; border-radius:.5em" src="' + elemento.urlFotoVehiculo + '" alt="Vehiculo" width="50"  height="30" onclick="showImg(' + "'" + elemento.urlFotoVehiculo + "'" + ')"/>' : "";
 					row[11] = elemento.estatus;
-					row[12] = '<i class="fas fa-edit" onclick="editCar(' + "'" + elemento.idVehiculo + "'" + ')"></i>';
+					if($scope.accionesUserConfigText.indexOf('accionEditaVehiculos') === -1){
+						row[12] = '<i class="fas fa-edit icon-table" title="Editar" onclick="editCar(' + "'" + elemento.idVehiculo + "'" + ')"></i>';
+					}else{
+						row[12] = '<i class="fas fa-edit icon-table" title="No tienes permisos para editar" style="cursor: not-allowed"></i>';
+
+					}
 					arraRow.push(row);
 				})
 				vehiculoTable = $('#vehiculoTable').DataTable({
@@ -1252,7 +1274,7 @@ app.controller('controlVehicularController',
 
 				if (vehiculo.idGeografia) {
 					$scope.ubicacionEditar = vehiculo.idGeografia;
-					$scope.getParentGeografia(vehiculo.idGeografia);
+					$scope.getParentGeografia(vehiculo.idGeografia, $scope.llaveEncierroVehiculo);
 					$scope.loadEncierros($scope.padre, vehiculo.detalle.idEncierro);
 
 					$("#jstreeconsulta").jstree("destroy")
@@ -1298,13 +1320,22 @@ app.controller('controlVehicularController',
 
 			}
 
-			$scope.getParentGeografia = function (idGeografia) {
+			$scope.getParentGeografia = function (idGeografia, nivel) {
 				let list = $scope.geografiaList;
 				list.sort(compareGeneric)[0].nivel;
 				let padre = idGeografia;
 				let hijo = "";
 				$.each(list, function (i, elemento) {
 
+					if(elemento.id == padre && elemento.nivel == nivel){
+						$scope.padre = elemento.id
+					}
+
+					if (elemento.id == padre) {
+						padre = elemento.padre;
+						hijo = elemento.id
+					}
+					/*
 					if (elemento.padre == null && elemento.id == padre) {
 						padre = elemento.id;
 						$scope.padre = hijo;
@@ -1314,7 +1345,7 @@ app.controller('controlVehicularController',
 						padre = elemento.padre;
 						hijo = elemento.id
 					}
-
+					*/
 				})
 			}
 

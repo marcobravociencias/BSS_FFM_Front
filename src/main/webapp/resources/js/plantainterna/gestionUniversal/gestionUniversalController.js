@@ -1,7 +1,8 @@
 var app = angular.module('gestionUniversalApp', []);
 
 app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalService', '$filter', function ($scope, $q, gestionUniversalService, $filter) {
-    $scope.nGeografia = '';
+    $scope.nGeografiaPagos = '';
+    $scope.nGeografiaContrasenia=''
     $scope.listaGeografia = [];
     $scope.listaPuestos = [];
     $scope.listaTecnicosPagos = [];
@@ -205,7 +206,14 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
             gestionUniversalService.consultaPuestos()
         ]).then(function (results) {
             if (results[0].data.result && results[0].data.respuesta) {
-                $scope.nGeografia = results[0].data.result.N_FILTRO_GEOGRAFIA ? Number(results[0].data.result.N_FILTRO_GEOGRAFIA) : null;
+                let resultConf= results[0].data.result
+                if( resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves){
+                    let  llavesResult=results[0].data.result.MODULO_ACCIONES_USUARIO.llaves;                    
+                    $scope.nGeografiaPagos = llavesResult.N_FILTRO_GEOGRAFIA_PAGOS_TECNICOS  ? Number( llavesResult.N_FILTRO_GEOGRAFIA_PAGOS_TECNICOS ) : null; 
+                    $scope.nGeografiaContrasenia = llavesResult.N_FILTRO_GEOGRAFIA_CAMBIOCONTRASENIA    ? Number(llavesResult.N_FILTRO_GEOGRAFIA_CAMBIOCONTRASENIA) : null;    
+                    $scope.nEstatusPagosTecnicos = llavesResult.N_ESTATUS_PAGOS_TECNICOS    ? Number(llavesResult.N_ESTATUS_PAGOS_TECNICOS) : null;                        
+                    $scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO.permisos; 
+                }
             } else {
                 mostrarMensajeErrorAlert(results[0].data.resultDescripcion)
             }
@@ -213,9 +221,8 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                 if (results[1].data.result) {
                     if (results[1].data.result.geografia || results[1].data.result.geografia.length > 0) {
                         let listGeo = [];
-
-                        if ($scope.nGeografia) {
-                            listGeo = results[1].data.result.geografia.filter(e => { return e.nivel <= $scope.nGeografia });
+                        if ($scope.nGeografiaPagos) {
+                            listGeo = results[1].data.result.geografia.filter(e => { return e.nivel <= $scope.nGeografiaPagos });
                         } else {
                             listGeo = results[1].data.result.geografia;
                         }

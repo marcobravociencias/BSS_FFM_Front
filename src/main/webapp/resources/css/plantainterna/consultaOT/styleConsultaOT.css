@@ -2008,3 +2008,12 @@ img.img-tecnico-materiales {
   font-size: .8em;
 }
 /* TABLE RECOLECCION */
+
+#jstree-proton-3 .fa-instagram {
+    display: none !important;
+}
+
+.jstree-node[aria-disabled="true"]:hover {
+    cursor:no-drop !important;
+    background-color:red !important;
+}

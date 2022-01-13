@@ -109,5 +109,10 @@ public class PlantaInternaViewsController {
 	public String gestionUniversal() {		
 		return "plantainterna/gestionUniversal/mainGestionUniversal";
 	}
+	
+	@GetMapping("/moduloChecklist")
+	public String vistaChecklist() {		
+		return "plantainterna/vistaChecklist/mainVistaChecklist";
+	}
 }
 

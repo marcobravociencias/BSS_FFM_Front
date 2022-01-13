@@ -57,42 +57,56 @@
 
     <body id="idBody" ng-controller="controlVehicularController" style="display: none;">
         <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
-        <br>
-        <div class="container-fluid controlContent " style="margin-top: 1em;">
-            <div class="row">
-                <div id="datos_tablas" class="col-sm-12">
-                    <a id="btn_mostrar_nav" style="display: none; position: absolute">
-                        <i class="fa fa-bars" aria-hidden="true"></i>
-                    </a>
-                    <div class="content-fluid">
-                        <div class="container-fluid">
-                            <ul class="nav nav-tabs" id="myTabVehiculo" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="consulta-tab" data-toggle="tab" href="#consulta"
-                                        role="tab" aria-controls="consulta" onclick="resetAllSearch()"
-                                        aria-selected="true">Consultar
-                                        Veh&iacute;culos</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="modifica-tab" data-toggle="tab" href="#modifica"
-                                        role="tab" aria-controls="modifica" ng-show="isEdit"
-                                        aria-selected="false">Modificar
-                                        Veh&iacute;culo</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="alta-tab" data-toggle="tab" href="#alta"
-                                        onclick="resetAll()" role="tab" aria-controls="alta" aria-selected="false">Alta
-                                        Veh&iacute;culo</a>
-                                </li>
-                            </ul>
-                            <div class="tab-content">
-                                <div class="tab-pane fade" id="alta" role="tabpanel" aria-labelledby="alta-tab">
-                                    <jsp:include page="./insertarVehiculo.jsp"></jsp:include>
+        <div class="container">
+            <div class="container-title-header" style="padding: 0 !important;">
+                <div class="header-modulo">
+                    <h5 class="title-modulo">Gesti&oacute;n Veh&iacute;culos</h5>
+                </div>
+            </div>
+            <div class="content-fluid" id="container_vehiculos" style="display: none;">
+                <div class="container-fluid" style="padding: 0;">
+                    <div ng-show="!permisosConfigUser.length" class="text-accion-nopermiso">
+                        <i class="icon-not-permiso fas fa-user-lock"></i>
+                        <b class="text-not-permiso">NO TIENES PERMISOS PARA LA GESTI&Oacute;N DEL M&Oacute;DULO</b>
+                    </div>
+                    <div class="row" ng-show="permisosConfigUser.length">
+                        <div id="datos_tablas" class="col-sm-12">
+                            <a id="btn_mostrar_nav" style="display: none; position: absolute">
+                                <i class="fa fa-bars" aria-hidden="true"></i>
+                            </a>
+                            <div class="content-fluid">
+                                <ul class="nav nav-tabs" id="myTabVehiculo" role="tablist">
+                                    <li class="nav-item"
+                                        ng-if="accionesUserConfigText.indexOf('accionConsultaVehiculos') === -1">
+                                        <a class="nav-link active" id="consulta-tab" data-toggle="tab" href="#consulta"
+                                            role="tab" aria-controls="consulta" onclick="resetAllSearch()"
+                                            aria-selected="true">Consultar
+                                            Veh&iacute;culos</a>
+                                    </li>
+                                    <li class="nav-item" ng-if="accionesUserConfigText.indexOf('accionEditaVehiculos') === -1">
+                                        <a class="nav-link" id="modifica-tab" data-toggle="tab" href="#modifica"
+                                            role="tab" aria-controls="modifica" ng-show="isEdit"
+                                            aria-selected="false">Modificar
+                                            Veh&iacute;culo</a>
+                                    </li>
+                                    <li class="nav-item"
+                                        ng-if="accionesUserConfigText.indexOf('accionCreaVehiculos') === -1">
+                                        <a class="nav-link" id="alta-tab" data-toggle="tab" href="#alta"
+                                            ng-show="permisosConfigUser" onclick="resetAll()" role="tab"
+                                            aria-controls="alta" aria-selected="false">Alta
+                                            Veh&iacute;culo</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane fade" id="alta" role="tabpanel" aria-labelledby="alta-tab">
+                                        <jsp:include page="./insertarVehiculo.jsp"></jsp:include>
+                                    </div>
+                                    <div class="tab-pane fade show active" id="consulta" role="tabpanel"
+                                        aria-labelledby="consulta-tab">
+                                        <jsp:include page="./consultarVehiculo.jsp"></jsp:include>
+                                    </div>
                                 </div>
-                                <div class="tab-pane fade show active" id="consulta" role="tabpanel"
-                                    aria-labelledby="consulta-tab">
-                                    <jsp:include page="./consultarVehiculo.jsp"></jsp:include>
-                                </div>
+
                             </div>
                         </div>
                     </div>

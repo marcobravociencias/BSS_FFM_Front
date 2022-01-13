@@ -79,37 +79,76 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 
 	});
 
+	$scope.nivelGeografia='';
+	$scope.nivelIntervenciones='';
+	$scope.nivelEstatusPendientes='';
 	$scope.consultaOT = function () {
 		let isValido = true;
 		let errorMensaje = '';
 		let isValFecha = true;
 		$scope.elementosRegistro = 0;
 
-		// let intervencion = $scope.filtrosGeneral.tipoOrdenes.filter(e => e.checkedOpcion).map(e => e.id)
-		let subIntTemp = []
-		angular.forEach($scope.filtrosGeneral.tipoOrdenes, (e, i) => {
-			e.children.filter(f => f.checkedOpcion).map((k) => { subIntTemp.push(k.id); return k; })
+		//nivel estatus
+		let tempNivelEstatus;
+		if($scope.nivelEstatusPendientes){
+			tempNivelEstatus=$scope.nivelEstatusPendientes
+		}else{
+			tempNivelEstatus=$scope.obtenerUltimoNivelEstatus()
+		}
+
+		let estatusOrdenes = []
+		angular.forEach($scope.filtrosGeneral.estatusdisponibles , (e, i) => {
+			e.children.map((k) => { 
+				if( k.checkedOpcion && tempNivelEstatus== k.nivel)
+					estatusOrdenes.push(k.id)		
+					
+				k.children.map((l) => { 
+					if( l.checkedOpcion && tempNivelEstatus== l.nivel)
+						estatusOrdenes.push(l.id)	
+					return l
+				})
+			 	return k; 
+			})
+			if( e.checkedOpcion && tempNivelEstatus== e.nivel)
+				estatusOrdenes.push(e.id)				
 		})
 
-		let ultimonivel = $scope.obtenerNivelUltimoJerarquia()
+
+		//nivel intervencion
+		let tempNivelInterven;
+		if($scope.nivelIntervenciones){
+			tempNivelInterven=$scope.nivelIntervenciones
+		}else{
+			tempNivelInterven=$scope.obtenerUltimoNivelIntervencion()
+		}
+		let subIntTemp = []
+		angular.forEach($scope.filtrosGeneral.tipoOrdenes, (e, i) => {
+			e.children.map((k) => { 
+				if( k.checkedOpcion && tempNivelInterven== k.nivel)
+					subIntTemp.push(k.id)		
+					
+				k.children.map((l) => { 
+					if( l.checkedOpcion && tempNivelInterven== l.nivel)
+						subIntTemp.push(l.id)	
+					return l
+				})
+			 	return k; 
+			})
+			if( e.checkedOpcion && tempNivelInterven== e.nivel)
+				subIntTemp.push(e.id)				
+		})
+
+		//nivel geografia
+		let ultimonivel;
+        if ($scope.nivelGeografia) {
+            ultimonivel = $scope.nivelGeografia
+        } else {
+            ultimonivel = $scope.obtenerNivelUltimoJerarquia();
+        }		
 		let clusters = $("#jstree-proton-3").jstree("get_selected", true)
 			.filter(e => e.original.nivel == ultimonivel)
 			.map(e => parseInt(e.id))
-		let selectedElms = $('#jstree').jstree("get_selected", true);
 
-
-		let estatusOrdenes = []
-		angular.forEach($scope.filtrosGeneral.estatusdisponibles, (e, i) => {
-			estatusOrdenes.push(e.id);
-		})
-
-
-		$.each(selectedElms, function () {
-			clusters.push(this.id);
-		});
-		if (clusters.length == 0) {
-			clusters = $scope.all_cluster;
-		}
 
 
 		if ($.trim(document.getElementById('idot').value) !== '') {
@@ -246,6 +285,27 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	$scope.banderaErrorIntervencion = false;
 	$scope.banderaErrorGeografia = false;
 
+	function compareGeneric(a,b){
+        let niveluno=a.nivel;
+        let niveldos=b.nivel;
+        if(niveluno>niveldos){ 
+            return -1
+        }else if( niveluno < niveldos){
+            return 1
+        } 
+        return 0
+    }
+
+    $scope.obtenerNivelUltimoJerarquia=function(){
+        return $scope.listadogeografiacopy.sort(compareGeneric)[0].nivel
+    }
+	$scope.obtenerUltimoNivelIntervencion = function () {
+        return $scope.nivelIntervenciones.sort(compareGeneric)[0].nivel
+    }
+	$scope.obtenerUltimoNivelEstatus = function () {
+        return $scope.nivelEstatusPendientes.sort(compareGeneric)[0].nivel
+    }
+
 	$scope.consultarCatalagosPI = function () {
 		swal({ text: 'Espera un momento...', allowOutsideClick: false });
 		swal.showLoading();
@@ -256,10 +316,49 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			consultaOTService.consultarConfiguracionDespachoDespacho({ "moduloAccionesUsuario": "moduloConsultaOt" }),
 
 		]).then(function (results) {
+			if (results[3].data !== undefined) {
+				if (results[3].data.respuesta) {
+					if (results[3].data.result) {
+						$scope.elementosConfigGeneral = new Map(Object.entries(results[3].data.result))
+									
+						let resultConf= results[3].data.result
+						if( resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves){
+							let  llavesResult=results[3].data.result.MODULO_ACCIONES_USUARIO.llaves;							      						
+							if(llavesResult.N_FILTRO_GEOGRAFIA)
+								$scope.nivelGeografia=parseInt(llavesResult.N_FILTRO_GEOGRAFIA)
+							
+							if(llavesResult.N_FILTRO_INTERVENCIONES )
+								$scope.nivelIntervenciones=parseInt(llavesResult.N_FILTRO_INTERVENCIONES)
+							
+							if(llavesResult.N_ESTATUS_PENDIENTES )
+								$scope.nivelEstatusPendientes=parseInt(llavesResult.N_ESTATUS_PENDIENTES)						
+
+							$scope.permisosConfigUser=resultConf.MODULO_ACCIONES_USUARIO.permisos;
+						}					
+					} else {
+						swal.close();
+						toastr.warning('No se encontraron datos para la geografia');
+						$scope.banderaErrorGeografia = true;
+					}
+				} else {
+					swal.close();
+					toastr.warning(results[3].data.resultDescripcion);
+					$scope.banderaErrorGeografia = true;
+				}
+			} else {
+				swal.close();
+				toastr.error('Ha ocurrido un error en la consulta de geografia')
+				$scope.banderaErrorGeografia = true;;
+			}
+
 			if (results[0].data !== undefined) {
 				if (results[0].data.respuesta) {
 					if (results[0].data.result) {
 						$scope.filtrosGeneral.tipoOrdenes = $scope.realizarConversionAnidado(results[0].data.result)
+						
+						if(!$scope.nivelIntervenciones)
+							$scope.nivelIntervenciones=$scope.obtenerUltimoNivelIntervencion()
+
 					} else {
 						toastr.warning('No se encontraron  tipo ordenes');
 						$scope.banderaErrorIntervencion = true;
@@ -276,6 +375,9 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				if (results[2].data.respuesta) {
 					if (results[2].data.result) {
 						$scope.filtrosGeneral.estatusdisponibles = $scope.realizarConversionAnidado(results[2].data.result)
+						
+						if(!$scope.nivelEstatusPendientes) 
+							$scope.nivelEstatusPendientes=$scope.obtenerUltimoNivelEstatus()
 					} else {
 						toastr.info('No se encontraron catalogo de estatus');
 						$scope.banderaErrorEstatus = true;
@@ -297,23 +399,19 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 						if (results[1].data.result.geografia) {
 							$scope.listadogeografiacopy = results[1].data.result.geografia
 							geografia = results[1].data.result.geografia
+							if( !$scope.nivelGeografia )
+								$scope.nivelGeografia=$scope.obtenerNivelUltimoJerarquia()
+
+							geografia=geografia.filter((e)=>e.nivel <= $scope.nivelGeografia )
 							geografia.map((e) => {
-								e.parent = e.padre == undefined ? "#" : e.padre;
-								e.text = e.nombre;
-								e.icon = "fa fa-globe";
-								e.state = {
-									opened: false,
-									selected: true,
-								}
-								return e
-							})
+                                e.parent = e.padre == undefined ? "#" : e.padre;
+                                e.text = e.nombre;   
+								e.state= { 
+                                    selected: true,
+                                }                             
+                                return e
+                            })																															
 							$('#jstree-proton-3').bind('loaded.jstree', function (e, data) {
-								// $scope.consultarCatalogoEstatusTecnico()
-								// $scope.consultarConteoAlertasPI()
-								// $scope.consultarOrdenesTrabajoAsignadasDespacho()
-								// $scope.consultarOtsPendientes()
-								// $scope.consultarTecnicosDisponibiles()
-								// $scope.consultarCatalogosAcciones();
 								$scope.consultaOT()
 							}).jstree({
 								'plugins': ["wholerow", "checkbox", 'search'],
@@ -326,7 +424,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 									'themes': {
 										'name': 'proton',
 										'responsive': true,
-										"icons": false
+										'icons':false
 									}
 								}
 							});
@@ -351,25 +449,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				$scope.banderaErrorGeografia = true;;
 			}
 
-			if (results[3].data !== undefined) {
-				if (results[3].data.respuesta) {
-					if (results[3].data.result) {
-						$scope.elementosConfigGeneral = new Map(Object.entries(results[3].data.result))
-					} else {
-						swal.close();
-						toastr.warning('No se encontraron datos para la geografia');
-						$scope.banderaErrorGeografia = true;
-					}
-				} else {
-					swal.close();
-					toastr.warning(results[3].data.resultDescripcion);
-					$scope.banderaErrorGeografia = true;
-				}
-			} else {
-				swal.close();
-				toastr.error('Ha ocurrido un error en la consulta de geografia')
-				$scope.banderaErrorGeografia = true;;
-			}
+		
 
 
 
@@ -408,9 +488,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		return 0
 	}
 
-	$scope.obtenerNivelUltimoJerarquia = function () {
-		return $scope.listadogeografiacopy.sort(compareGeneric)[0].nivel
-	}
+
 
 	$scope.seleccionarTodos = function (paramFiltroParent) {
 		paramFiltroParent.map(function (e) {
@@ -1552,31 +1630,66 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		let errorMensaje = '';
 		let isValFecha = true;
 
-		// let intervencion = $scope.filtrosGeneral.tipoOrdenes.filter(e => e.checkedOpcion).map(e => e.id)
-		let subIntTemp = []
-		angular.forEach($scope.filtrosGeneral.tipoOrdenes, (e, i) => {
-			e.children.filter(f => f.checkedOpcion).map((k) => { subIntTemp.push(k.id); return k; })
+		let tempNivelEstatus;
+		if($scope.nivelEstatusPendientes){
+			tempNivelEstatus=$scope.nivelEstatusPendientes
+		}else{
+			tempNivelEstatus=$scope.obtenerUltimoNivelEstatus()
+		}
+
+		let estatusOrdenes = []
+		angular.forEach($scope.filtrosGeneral.estatusdisponibles , (e, i) => {
+			e.children.map((k) => { 
+				if( k.checkedOpcion && tempNivelEstatus== k.nivel)
+					estatusOrdenes.push(k.id)		
+					
+				k.children.map((l) => { 
+					if( l.checkedOpcion && tempNivelEstatus== l.nivel)
+						estatusOrdenes.push(l.id)	
+					return l
+				})
+			 	return k; 
+			})
+			if( e.checkedOpcion && tempNivelEstatus== e.nivel)
+				estatusOrdenes.push(e.id)				
 		})
 
-		let ultimonivel = $scope.obtenerNivelUltimoJerarquia()
+
+		//nivel intervencion
+		let tempNivelInterven;
+		if($scope.nivelIntervenciones){
+			tempNivelInterven=$scope.nivelIntervenciones
+		}else{
+			tempNivelInterven=$scope.obtenerUltimoNivelIntervencion()
+		}
+		let subIntTemp = []
+		angular.forEach($scope.filtrosGeneral.tipoOrdenes, (e, i) => {
+			e.children.map((k) => { 
+				if( k.checkedOpcion && tempNivelInterven== k.nivel)
+					subIntTemp.push(k.id)		
+					
+				k.children.map((l) => { 
+					if( l.checkedOpcion && tempNivelInterven== l.nivel)
+						subIntTemp.push(l.id)	
+					return l
+				})
+			 	return k; 
+			})
+			if( e.checkedOpcion && tempNivelInterven== e.nivel)
+				subIntTemp.push(e.id)				
+		})
+
+		//nivel geografia
+		let ultimonivel;
+        if ($scope.nivelGeografia) {
+            ultimonivel = $scope.nivelGeografia
+        } else {
+            ultimonivel = $scope.obtenerNivelUltimoJerarquia();
+        }		
 		let clusters = $("#jstree-proton-3").jstree("get_selected", true)
 			.filter(e => e.original.nivel == ultimonivel)
 			.map(e => parseInt(e.id))
-		let selectedElms = $('#jstree').jstree("get_selected", true);
 
-
-		let estatusOrdenes = []
-		angular.forEach($scope.filtrosGeneral.estatusdisponibles, (e, i) => {
-			estatusOrdenes.push(e.id);
-		})
-
-
-		$.each(selectedElms, function () {
-			clusters.push(this.id);
-		});
-		if (clusters.length == 0) {
-			clusters = $scope.all_cluster;
-		}
 
 
 		if ($.trim(document.getElementById('idot').value) !== '') {
@@ -1602,11 +1715,11 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			errorMensaje += '<li>Seleccione intervenci&oacute;n.</li>';
 			isValido = false
 		}
-
+		/**
 		if (clusters.length === 0) {
 			errorMensaje += '<li>Seleccione geograf&iacute;a.</li>';
 			isValido = false
-		}
+		}**/
 
 		if (document.getElementById('filtro_fecha_inicio_consultaOt').value == '') {
 			errorMensaje += '<li>Introduce Fecha Inicial</li>';

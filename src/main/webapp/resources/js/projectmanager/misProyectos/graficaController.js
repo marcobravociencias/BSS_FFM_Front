@@ -8,17 +8,20 @@ app.graficaController = function ($scope, $q, misProyectosService) {
         $scope.lineaTiempo.fechaInicio = moment(moment().format('MM')+"-"+moment().format('DD')+"-"+moment().format('YYYY'));
         $scope.lineaTiempo.fechaFin = moment(moment().format('MM')+"-"+moment().format('DD')+"-"+moment().format('YYYY'));
         $scope.lineaTiempo.fechaActual = moment(moment().format('MM')+"-"+moment().format('DD')+"-"+moment().format('YYYY'));
-        
+        $scope.lineaTiempo.fechaActualFormat = $scope.lineaTiempo.fechaActual.format('DD');
         $scope.listaProyectosGrafica.map(function(proyecto, index) {
             //obtener fecha incio
             proyecto.fechaInicioReal = moment(proyecto.fechaInicioReal);
             proyecto.fechaInicioPlaneada = moment(proyecto.fechaInicioPlaneada);
+            proyecto.fechaInicioFormat = proyecto.fechaInicioPlaneada.format('L');
+            
             if (proyecto.fechaInicioPlaneada <= $scope.lineaTiempo.fechaInicio) {
                 $scope.lineaTiempo.fechaInicio = proyecto.fechaInicioPlaneada;
             }
             //obtener fecha fin
             proyecto.fechaFinReal = moment(proyecto.fechaFinReal);
             proyecto.fechaFinPlaneada = moment(proyecto.fechaFinPlaneada);
+            proyecto.fechaFinFormat = proyecto.fechaFinReal.format('L');
             if (proyecto.fechaFinPlaneada >= $scope.lineaTiempo.fechaFin) {
                 $scope.lineaTiempo.fechaFin = proyecto.fechaFinPlaneada;
             }
@@ -30,12 +33,12 @@ app.graficaController = function ($scope, $q, misProyectosService) {
             //dias inicio del proyecto
             proyecto.diasInicio = proyecto.fechaInicioPlaneada.diff($scope.lineaTiempo.fechaInicio, 'days');
             //dias del proyecto
-            proyecto.diasProyecto = proyecto.fechaFinPlaneada.diff(proyecto.fechaInicioPlaneada, 'days') ; //PENDIENTE
+            proyecto.diasProyecto = proyecto.fechaFinReal.diff(proyecto.fechaInicioPlaneada, 'days');
             if (proyecto.diasProyecto === 0) {
                 proyecto.diasProyecto = 1;
             }
             //dias fin proyecto
-            proyecto.diasFin = $scope.lineaTiempo.fechaFin.diff(proyecto.fechaFinPlaneada, 'days');
+            proyecto.diasFin = $scope.lineaTiempo.fechaFin.diff(proyecto.fechaFinReal, 'days');
             //calcular porcentajes
             proyecto.porcentajeInicio = (proyecto.diasInicio * 100 / $scope.lineaTiempo.dias);
             proyecto.porcentajeProyecto = (proyecto.diasProyecto * 100 / $scope.lineaTiempo.dias);
@@ -85,6 +88,7 @@ app.graficaController = function ($scope, $q, misProyectosService) {
         proyecto.Puntas.map(function(punta) {
             punta.fechaInicioPlaneada = moment(punta.fechaInicioPlaneada);
             punta.fechaFinPlaneada = moment(punta.fechaFinPlaneada);
+            punta.fechaInicioFormat = punta.fechaInicioPlaneada.format('L');
             //Calcular los dias de inicio de la punta
             punta.diasInicio = punta.fechaInicioPlaneada.diff($scope.lineaTiempo.fechaInicio, 'days');
             //calcular los dias de la punta
@@ -197,13 +201,13 @@ app.graficaController = function ($scope, $q, misProyectosService) {
                 "totalPuntasCancelado": "0",
                 "totalPuntasInstalado": "0",
                 "fechaInicioPlaneada": "12-12-2021",
-                "fechaFinPlaneada": "01-27-2022",
-                "fechaInicioReal": "",
-                "fechaFinReal": "",
+                "fechaFinPlaneada": "01-20-2022",
+                "fechaInicioReal": "12-12-2021",
+                "fechaFinReal": "01-20-2022",
                 "fechaActual": "12-28-2021",
-                "porcentajeAvance": ".00",
+                "porcentajeAvance": "70",
                 "porcentajeEsperado": "",
-                "semaforo": "",
+                "semaforo": "#FF0000",
                 "informacionCliente": {
                     "razonSocial": "Test Troncales",
                     "rfc": "XXX000001XX8",
@@ -247,7 +251,7 @@ app.graficaController = function ($scope, $q, misProyectosService) {
                     "fechaInicioReal": "",
                     "fechaFinReal": "",
                     "fechaActual": "12-28-2021",
-                    "porcentajeAvance": ".00",
+                    "porcentajeAvance": "60",
                     "porcentajeEsperado": "",
                     "semaforo": "",
                     "Num_fuera_tiempo": "0",

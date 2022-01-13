@@ -14,6 +14,7 @@
     cursor: pointer;
 }
 .grafica-primer-nivel {
+    padding-left: 30px; padding-right: 30px;
     height: 68px;
     line-height: 68px;
     /*padding-left: 15px;*/
@@ -24,7 +25,60 @@
 .is-odd-primer-nivel {
     background-color: #FFFFFF;
 }
-
+.avance-primer-nivel {
+    white-space:nowrap;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    display: inline-block;
+    zoom: 1;
+    vertical-align: top;
+    height: 35px;
+    line-height: 35px;
+}
+.resto-avance-primer-nivel {
+    padding: 0;
+    display: inline-block; 
+    display: inline;
+    zoom: 1;
+    vertical-align: top;
+    height: 35px;
+    width: 0;
+}
+.fecha-inicio-primer-nivel {
+    float: left;
+    z-index: 3;
+    margin-top: 0em;
+    margin-left: .5em;
+    font-size: 14px;
+    font-family: 'Montserrat';
+    color: #FFFFFF;
+    text-align: right;
+    font-weight: bold;
+    position: absolute;
+}
+.porcentaje-primer-nivel {
+    float: left;
+    z-index: 10;
+    margin-top: -3em;
+    margin-left: -1em;
+    font-weight: bold;
+    color: #546475;
+    font-size: 14px;
+    font-family: 'Montserrat';
+    text-align: center;
+}
+.fecha-fin-primer-nivel {
+    float: left;
+    z-index: 3;
+    margin-top: 0;
+    margin-left: -5.8em;
+    font-size: 14px;
+    font-family: 'Montserrat';
+    color: #555555;
+    white-space: nowrap;
+    font-weight: bold;
+    position: absolute;
+}
 /* SEGUNDO NIVEL */
 .menu-segundo-nivel {
     font-size: 14px;
@@ -98,13 +152,22 @@
 }
 .fechaActualDay {
     margin-left: -.5em;
+    border: 1px solid #707070;
+    background-color: #FFFFFF;
+    color: #707070;
+    margin-top: 0em;
+    font-size: 12px;
+    transition: opacity 0.3s;
+    width: 25px;
 }
 .container-proyecto {
+    background-color: #D0CFDB;
     height: 100%;
     width:100%;
-    font-size: 0;
     border-radius: 20px;
     height: 35px;
+    padding: 0;
+    display: flex;
 }
 .container-punta {
     height: 100%;
@@ -136,4 +199,15 @@
 }
 .vacio-grafica {
     padding: 0;
+}
+.vacio-grafica-primer-nivel {
+    padding: 0;
+    height: 35px;
+    line-height: 35px;
+}
+
+.progress:after {
+    /* content:'\A'; */
+    background:rgb(177, 0, 0);
+    width:10%;
 }
