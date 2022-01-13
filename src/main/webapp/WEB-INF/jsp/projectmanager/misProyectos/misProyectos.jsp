@@ -97,7 +97,6 @@
                                     </div>
                                     
                                 </div>
-                                
                             </div>
                             <div class="row" ng-style="{width: widthCalendar + 'px'}">
                                 <div style="padding-left: 30px; padding-right: 30px;">
@@ -105,76 +104,88 @@
                                         <div class="content-dia" ng-style="{width: lineaTiempo.diaActual+'%'}">
                                         </div>
                                         <div class="content-dia" ng-style="{width: 100-lineaTiempo.diaActual+'%'}">
-                                            <span class="fechaActualDay" ng-bind="lineaTiempo.fechaActual | date : 'dd'"></span>
+                                            <!--span class="fechaActualDay" ng-bind="lineaTiempo.fechaActualFormat"></span-->
                                             <div id="diaActu" class="vl" style="height: 7em; margin-left: -.1em;"></div>
                                         </div>
                                     </div>
                                 </div>
-                                
                             </div>
                         </div>
                     </div>
                     <div class="row">
 <!-- ----------PROYECTOS----------PROYECTOS----------PROYECTOS----------PROYECTOS----------PROYECTOS----------PROYECTOS----------PROYECTOS----------PROYECTOS----------PROYECTOS----------PROYECTOS----------PROYECTOS----------PROYECTOS----------PROYECTOS----------PROYECTOS----------PROYECTOS -->
-                            <div class="col-12" ng-repeat="proyecto in listaProyectosGrafica" ng-class="$index % 2 == 0 ? 'is-even-primer-nivel' : 'is-odd-primer-nivel'">
-                                <div class="row" ng-style="{width: widthCalendar + 'px'}" >
-                                    <div style="padding-left: 30px; padding-right: 30px;" class="grafica-primer-nivel" ng-class="$index % 2 == 0 ? 'is-even-primer-nivel' : 'is-odd-primer-nivel'">
-                                        <div class="row" style="margin-top: 1em;">
-                                            <div class="vacio-grafica" ng-style="{width: proyecto.porcentajeInicio+'%'}">
+                        <div class="col-12" ng-repeat="proyecto in listaProyectosGrafica" ng-class="$index % 2 == 0 ? 'is-even-primer-nivel' : 'is-odd-primer-nivel'">
+                            <div class="row" ng-style="{width: widthCalendar + 'px'}" >
+                                <div class="grafica-primer-nivel" ng-class="$index % 2 == 0 ? 'is-even-primer-nivel' : 'is-odd-primer-nivel'">
+                                    <div class="row" style="margin-top: 1em;">
+                                        <div class="vacio-grafica-primer-nivel" ng-style="{width: proyecto.porcentajeInicio+'%'}">
+                                        </div>
+                                        <div class="container-proyecto" ng-style="{'width': proyecto.porcentajeProyecto+'%', 'background': 'linear-gradient(to right, ' + proyecto.semaforo + ' ' + proyecto.porcentajeAvance +'%, #D0CFDB '+ proyecto.porcentajeAvance +'%)'}" >
+                                            <!-- ng-style="{'width': proyecto.porcentajeProyecto+'%', 'background': 'linear-gradient(to right, black 20%, #D0CFDB 20%)'}" -->
+                                            <div class="avance-primer-nivel" ng-style="{width: proyecto.porcentajeAvance+'%'}">
+                                                <span class="fecha-inicio-primer-nivel" ng-bind="proyecto.fechaInicioFormat"></span>
+                                                &nbsp;
                                             </div>
-                                            <div class="container-proyecto" ng-style="{width: proyecto.porcentajeProyecto+'%'}" style="background-color: #D0CFDB;">
-                                                2
+                                            <div class="resto-avance-primer-nivel"><!--ng-style="{width: 100-proyecto.porcentajeAvance+'%'}" -->
+                                                <span class="porcentaje-primer-nivel" ng-bind="proyecto.porcentajeAvance+'%'"></span>
                                             </div>
-                                            <div class="vacio-grafica" ng-style="{width: proyecto.porcentajeFIn+'%'}">
-                                            </div>
+                                        </div>
+                                        <div class="vacio-grafica-primer-nivel" ng-style="{width: proyecto.porcentajeFIn+'%'}">
+                                            <span class="fecha-fin-primer-nivel" ng-bind="proyecto.fechaFinFormat"></span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row" ng-show="proyecto.Id_cuenta === idProyectoSelected">
+                            </div>
+                            <div class="row" ng-show="proyecto.Id_cuenta === idProyectoSelected">
 <!-- ----------PUNTAS----------PUNTAS----------PUNTAS----------PUNTAS----------PUNTAS----------PUNTAS----------PUNTAS----------PUNTAS----------PUNTAS----------PUNTAS----------PUNTAS----------PUNTAS----------PUNTAS----------PUNTAS----------PUNTAS----------PUNTAS -->
-                                    <div class="col-12" ng-repeat="punta in proyecto.Puntas | filter : serachPuntas" ng-class="$index % 2 == 0 ? 'is-even-segundo-nivel' : 'is-odd-segundo-nivel'">
-                                        <div class="row" ng-style="{width: widthCalendar + 'px'}">
-                                            <div style="padding-left: 30px; padding-right: 30px;" class="grafica-segundo-nivel" ng-class="$index % 2 == 0 ? 'is-even-segundo-nivel' : 'is-odd-segundo-nivel'">
-                                                <div class="row" style="margin-top: .8em;">
-                                                    <div class="vacio-grafica" ng-style="{width: punta.porcentajeInicio+'%'}">
+                                <div class="col-12" ng-repeat="punta in proyecto.Puntas | filter : serachPuntas" ng-class="$index % 2 == 0 ? 'is-even-segundo-nivel' : 'is-odd-segundo-nivel'">
+                                    <div class="row" ng-style="{width: widthCalendar + 'px'}">
+                                        <div style="padding-left: 30px; padding-right: 30px;" class="grafica-segundo-nivel" ng-class="$index % 2 == 0 ? 'is-even-segundo-nivel' : 'is-odd-segundo-nivel'">
+                                            <div class="row" style="margin-top: .8em;">
+                                                <div class="vacio-grafica" ng-style="{width: punta.porcentajeInicio+'%'}">
+                                                </div>
+                                                <div class="container-punta" ng-style="{width: punta.porcentajePunta+'%'}" style="background-color: #D0CFDB;" ng-style="{'width': punta.porcentajePunta+'%', 'background': 'linear-gradient(to right, ' + punta.semaforo + ' ' + punta.porcentajeAvance +'%, #D0CFDB '+ punta.porcentajeAvance +'%)'}">
+                                                    <div class="avance-primer-nivel" ng-style="{width: punta.porcentajeAvance+'%'}">
+                                                        <span class="fecha-inicio-primer-nivel" ng-bind="punta.fechaInicioFormat"></span>
+                                                        &nbsp;
                                                     </div>
-                                                    <div class="container-punta" ng-style="{width: punta.porcentajePunta+'%'}" style="background-color: #D0CFDB;">
-                                                        2
+                                                    <div class="resto-avance-primer-nivel">
+                                                        <span class="porcentaje-primer-nivel" ng-bind="punta.porcentajeAvance+'%'"></span>
                                                     </div>
-                                                    <div class="vacio-grafica" ng-style="{width: punta.porcentajeFIn+'%'}">
-                                                    </div>
+                                                </div>
+                                                <div class="vacio-grafica" ng-style="{width: punta.porcentajeFIn+'%'}">
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row" ng-show="punta.Id_cuenta === idPuntaSelected">
+                                    </div>
+                                    <div class="row" ng-show="punta.Id_cuenta === idPuntaSelected">
 <!-- ----------PLANES----------PLANES----------PLANES----------PLANES----------PLANES----------PLANES----------PLANES----------PLANES----------PLANES----------PLANES----------PLANES----------PLANES----------PLANES----------PLANES----------PLANES----------PLANES----------PLANES----------PLANES -->
-                                            <div class="col-12" ng-repeat="plan in punta.Planes" ng-class="$index % 2 == 0 ? 'is-even-tercer-nivel' : 'is-odd-tercer-nivel'">
-                                                <div class="row" ng-style="{width: widthCalendar + 'px'}">
-                                                    <div style="padding-left: 30px; padding-right: 30px;" class="grafica-tercer-nivel" ng-style="{width: widthCalendar + 'px'}" ng-class="$index % 2 == 0 ? 'is-even-tercer-nivel' : 'is-odd-tercer-nivel'">
-                                                        <div class="row" style="margin-top: .6em;" ng-show="plan.valor">
-                                                            <div class="vacio-grafica" ng-style="{width: plan.porcentajeInicio+'%'}">
-                                                            </div>
-                                                            <div class="container-plan" ng-style="{width: plan.porcentajePlan+'%'}" style="background-color: #D0CFDB;">
-                                                                2
-                                                            </div>
-                                                            <div class="vacio-grafica" ng-style="{width: plan.porcentajeFIn+'%'}">
-                                                            </div>
+                                        <div class="col-12" ng-repeat="plan in punta.Planes" ng-class="$index % 2 == 0 ? 'is-even-tercer-nivel' : 'is-odd-tercer-nivel'">
+                                            <div class="row" ng-style="{width: widthCalendar + 'px'}">
+                                                <div style="padding-left: 30px; padding-right: 30px;" class="grafica-tercer-nivel" ng-style="{width: widthCalendar + 'px'}" ng-class="$index % 2 == 0 ? 'is-even-tercer-nivel' : 'is-odd-tercer-nivel'">
+                                                    <div class="row" style="margin-top: .6em;" ng-show="plan.valor">
+                                                        <div class="vacio-grafica" ng-style="{width: plan.porcentajeInicio+'%'}">
+                                                        </div>
+                                                        <div class="container-plan" ng-style="{width: plan.porcentajePlan+'%'}" style="background-color: #D0CFDB;">
+                                                            2
+                                                        </div>
+                                                        <div class="vacio-grafica" ng-style="{width: plan.porcentajeFIn+'%'}">
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="row" ng-show="plan.Id_csp === idPlanSelected">
+                                            </div>
+                                            <div class="row" ng-show="plan.Id_csp === idPlanSelected">
 <!-- ----------ACTIVIDADES----------ACTIVIDADES----------ACTIVIDADES----------ACTIVIDADES----------ACTIVIDADES----------ACTIVIDADES----------ACTIVIDADES----------ACTIVIDADES----------ACTIVIDADES----------ACTIVIDADES----------ACTIVIDADES----------ACTIVIDADES----------ACTIVIDADES----------ACTIVIDADES -->
-                                                    <div class="col-12" ng-repeat="actividad in listaActividades" ng-class="$index % 2 == 0 ? 'is-even-cuarto-nivel' : 'is-odd-cuarto-nivel'">
-                                                        <div class="row" ng-style="{width: widthCalendar + 'px'}">
-                                                            <div style="padding-left: 30px; padding-right: 30px;" class="grafica-cuarto-nivel" ng-class="$index % 2 == 0 ? 'is-even-cuarto-nivel' : 'is-odd-cuarto-nivel'">
-                                                                <div class="row" style="margin-top: .4em;" ng-show="actividad.valor">
-                                                                    <div class="vacio-grafica" ng-style="{width: actividad.porcentajeInicio+'%'}">
-                                                                    </div>
-                                                                    <div class="container-actividad" ng-style="{width: actividad.porcentajeActividad+'%'}" style="background-color: #D0CFDB;">
-                                                                        2
-                                                                    </div>
-                                                                    <div class="vacio-grafica" ng-style="{width: actividad.porcentajeFIn+'%'}">
-                                                                    </div>
+                                                <div class="col-12" ng-repeat="actividad in listaActividades" ng-class="$index % 2 == 0 ? 'is-even-cuarto-nivel' : 'is-odd-cuarto-nivel'">
+                                                    <div class="row" ng-style="{width: widthCalendar + 'px'}">
+                                                        <div style="padding-left: 30px; padding-right: 30px;" class="grafica-cuarto-nivel" ng-class="$index % 2 == 0 ? 'is-even-cuarto-nivel' : 'is-odd-cuarto-nivel'">
+                                                            <div class="row" style="margin-top: .4em;" ng-show="actividad.valor">
+                                                                <div class="vacio-grafica" ng-style="{width: actividad.porcentajeInicio+'%'}">
+                                                                </div>
+                                                                <div class="container-actividad" ng-style="{width: actividad.porcentajeActividad+'%'}" style="background-color: #D0CFDB;">
+                                                                    2
+                                                                </div>
+                                                                <div class="vacio-grafica" ng-style="{width: actividad.porcentajeFIn+'%'}">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -185,8 +196,7 @@
                                     </div>
                                 </div>
                             </div>
-                        
-                        
+                        </div>
                     </div>
                 </div>
             </div>
