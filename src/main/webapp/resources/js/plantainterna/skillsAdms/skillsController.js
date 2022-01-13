@@ -603,7 +603,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 								
 								nivelUsuario=llavesResult.N_FILTRO_GEOGRAFIA
 								$scope.nivelSkill=llavesResult.N_FILTRO_INTERVENCIONES         
-								$scope.permisosConfigUser=resultConf.MODULO_ACCIONES_USUARIO;
+								$scope.permisosConfigUser=resultConf.MODULO_ACCIONES_USUARIO.permisos;
 							}
 
 							let listGeografias = [];

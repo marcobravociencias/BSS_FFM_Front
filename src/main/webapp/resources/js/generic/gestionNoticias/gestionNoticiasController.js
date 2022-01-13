@@ -306,7 +306,6 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 			dataTableConsultaNoticias.destroy()
 			$('#datatable-noticias tbody').empty();
 		}	
-		
 		$scope.searconsultaDatatableValue=''
         $q.all([
     		gestionNoticiasService.consultarNoticiasGeneric()
