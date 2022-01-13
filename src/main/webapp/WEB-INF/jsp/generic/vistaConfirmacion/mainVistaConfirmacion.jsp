@@ -125,7 +125,7 @@
                     <div class="col-3 container-agendar">
                         <div class="form-group">
                             <label class="label-agendar">Motivo:</label>
-                            <select class="form-control input-agendar" id="motivo-agenda">
+                            <select class="form-control custom-select input-agendar" id="motivo-agenda">
                                 <option value="">Seleccione ...</option>
                                 <option value="motivo.id" ng-repeat="motivo in listadoMotivo" ng-bind="motivo.nombre">
                                 </option>
@@ -135,7 +135,7 @@
                             <label class="label-agendar">Comentario:</label>
                             <textarea class="form-control input-agendar" style=" resize: none"
                                 placeholder="Se sugiere un m&aacute;ximo de 50 caracteres"
-                                id="comentario-status-tecnico" rows="3"></textarea>
+                                id="comentario-agenda" rows="3" maxlength="50"></textarea>
                         </div>
                         <div class="form-group">
                             <label class="label-agendar">Fecha agendamiento:</label>
@@ -146,7 +146,7 @@
                             <p class="label-agendar" style="color: #7716FA;" id="turnoAgendamiento">Sin selecci&oacute;n</p>
                         </div>
                         <div class="form-group">
-                            <button id="btnReagendar" type="button" class="btn btn-primary btnTotal" style="float: right;">
+                            <button id="btnReagendar" ng-click="reagendar()" type="button" class="btn btn-primary btnTotal" style="float: right;">
                                 Reagendar
                             </button>
                         </div>

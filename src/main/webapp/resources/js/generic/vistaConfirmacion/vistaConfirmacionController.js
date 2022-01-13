@@ -6,6 +6,7 @@ app.controller('vistaConfirmacionController', ['$scope', '$q', 'vistaConfirmacio
     $scope.calendarDisp;
     $scope.listadoMotivo = [];
     let arregloDisponibilidad = [];
+    $scope.isSelected = false;
 
     $scope.inicialCalendario = function () {
         calendar_disponibilidad = document.getElementById('calendar_disponibilidad');
@@ -34,6 +35,7 @@ app.controller('vistaConfirmacionController', ['$scope', '$q', 'vistaConfirmacio
                 let turno = eventObject._def.title;
                 $("#fechaAgendamiento").text(eventObject._def.extendedProps.fecha);
                 $("#turnoAgendamiento").text(turno.split(" ")[0]);
+                $scope.isSelected = true;
             },
             selectable: true
         });
@@ -156,6 +158,25 @@ app.controller('vistaConfirmacionController', ['$scope', '$q', 'vistaConfirmacio
                 toastr.error('Ha ocurrido un error en la consulta');
             }
         })
+    }
+
+    $scope.reagendar = function(){
+
+        if($("#motivo-agenda").val() == "" || $("#motivo-agenda").val() == undefined){
+            toastr.warning('Selecciona motivo');
+            return false;
+        }
+
+        if($("#comentario-agenda").val() == ""){
+            toastr.warning('Ingresa un comentario');
+            return false;
+        }
+        
+        if(!$scope.isSelected){
+            toastr.warning('Selecciona fecha y turno en el calendario');
+            return false;
+        }
+
     }
 
 }])
