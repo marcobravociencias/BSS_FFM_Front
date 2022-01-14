@@ -1005,6 +1005,7 @@ app.controller('controlVehicularController',
 			}
 
 			editCar = function (id) {
+				$scope.isEdit = true;
 				$scope.getCarById(id);
 			}
 

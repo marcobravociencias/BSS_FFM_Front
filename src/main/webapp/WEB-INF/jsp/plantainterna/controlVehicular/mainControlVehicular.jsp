@@ -83,7 +83,7 @@
                                             aria-selected="true">Consultar
                                             Veh&iacute;culos</a>
                                     </li>
-                                    <li class="nav-item" ng-if="accionesUserConfigText.indexOf('accionEditaVehiculos') === -1">
+                                    <li class="nav-item" ng-if="isEdit && accionesUserConfigText.indexOf('accionEditaVehiculos') === -1">
                                         <a class="nav-link" id="modifica-tab" data-toggle="tab" href="#modifica"
                                             role="tab" aria-controls="modifica" ng-show="isEdit"
                                             aria-selected="false">Modificar
