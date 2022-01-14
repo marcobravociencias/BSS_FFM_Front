@@ -180,10 +180,16 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 		]).then(function(results) {
 			console.log(results);		
 			$scope.listadogeografiacopy=results[0].data.result.geografia
-			$scope.nivelGeografia = results[1].data.result.N_FILTRO_GEOGRAFIA ;			
+            let resultConf= results[1].data.result
+            if( resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves){
+                let  llavesResult=results[1].data.result.MODULO_ACCIONES_USUARIO.llaves;                
+                $scope.nivelGeografia=llavesResult.N_FILTRO_GEOGRAFIA ? llavesResult.N_FILTRO_GEOGRAFIA : undefined          
+                $scope.permisosConfigUser=resultConf.MODULO_ACCIONES_USUARIO.permisos;           
+            }
+
 			if(results[0].data.result.geografia.length > 0){
 				let listGeografias = [];				
-				if(	$scope.nivelGeografia !== undefined){
+				if(	$scope.nivelGeografia != undefined){
 					$scope.nivelGeografia=parseInt( $scope.nivelGeografia )
 					results[0].data.result.geografia.forEach(elemento =>{
 						if (elemento.nivel <= 	$scope.nivelGeografia) {
