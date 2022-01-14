@@ -379,7 +379,7 @@ app.controller('controlVehicularController',
 					if($scope.accionesUserConfigText.indexOf('accionEditaVehiculos') === -1){
 						row[12] = '<i class="fas fa-edit icon-table" title="Editar" onclick="editCar(' + "'" + elemento.idVehiculo + "'" + ')"></i>';
 					}else{
-						row[12] = '<i class="fas fa-edit icon-table" title="No tienes permisos para editar" style="cursor: not-allowed"></i>';
+						row[12] = '<i class="fas fa-edit icon-table" title="No tienes permisos para editar" style="cursor: not-allowed; background: #9d9ea2 !important;"></i>';
 
 					}
 					arraRow.push(row);
@@ -1445,7 +1445,6 @@ app.controller('controlVehicularController',
 					$scope.buildTableVehiculos(listVehiculos);
 				}else{
 					$.each(listVehiculos, function (i, elemento) {
-						console.log(elemento);
 						if (elemento.estatus.toLowerCase() == text) {
 							list.push(elemento);
 						}

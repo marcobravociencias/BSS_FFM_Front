@@ -11,13 +11,13 @@
                 <div class="row content-filters">
                     <div class="col-4 content-select">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input radio-evidencias" type="radio" name="inlineRadioOptions" id="aceptar" ng-click="seleciconarTodas('1')"
-                                value="option1">
+                            <input class="form-check-input radio-evidencias" type="radio" name="inlineRadioOptions"
+                                id="aceptar" ng-click="seleciconarTodas('1')" value="option1">
                             <label class="form-check-label" for="aceptar">Aceptar todas</i></label>
                         </div>
                         <div class="form-check form-check-inline radio-evidencias">
-                            <input class="form-check-input radio-evidencias" type="radio" name="inlineRadioOptions" id="rechazar" ng-click="seleciconarTodas('0')"
-                                value="option2">
+                            <input class="form-check-input radio-evidencias" type="radio" name="inlineRadioOptions"
+                                id="rechazar" ng-click="seleciconarTodas('0')" value="option2">
                             <label class="form-check-label" for="rechazar">Rechazar todas</label>
                         </div>
                     </div>
@@ -42,8 +42,8 @@
                     <div class="imagen_content_evidencia">
                         <div class="imagen_content">
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input checkbox-evidencia" id="exampleCheck1">
-                              </div>
+                                <input type="checkbox" ng-click="changeSelect($event)" id="check_1" class="form-check-input checkbox-evidencia">
+                            </div>
                             <div class="contenedor_img_evidencia">
                                 <a href="./resources/img/generic/not_found.png" class="magnific item"
                                     data-title="Evidencia principal">
@@ -59,8 +59,8 @@
                     <div class="imagen_content_evidencia">
                         <div class="imagen_content">
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input checkbox-evidencia" id="exampleCheck1">
-                              </div>
+                                <input type="checkbox" ng-click="changeSelect($event)" class="form-check-input checkbox-evidencia" id="check_2">
+                            </div>
                             <div class="contenedor_img_evidencia">
                                 <a href="./resources/img/generic/not_found.png" class="magnific item"
                                     data-title="Evidencia principal">
@@ -79,6 +79,9 @@
                 <button type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface"
                     data-mdb-dismiss="modal">
                     Cancelar
+                </button>
+                <button type="button" class="btn btn-primary ripple-surface" style="height: 2.75em; padding: 0.5em 2em;">
+                   Guardar
                 </button>
             </div>
         </div>

@@ -212,11 +212,11 @@ label.label-filter {
 
 .icon-table {
     background: #58b3bf;
-    font-size: 1.3em !important;
+    font-size: 0.9em !important;
     cursor: pointer;
     color: white;
-    padding: 0.3em;
-    border-radius: 0.2em;
+    padding: 5px;
+    border-radius: 0.2rem;
     box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
 }
 
@@ -436,6 +436,11 @@ img.img_evidencia {
     font-size: 1em;
 }
 
+.imagen_content_evidencia .form-check-input:hover:before {
+    opacity: 1 !important;
+    box-shadow: none;
+}
+
 .imagen_content_evidencia .form-check {
     float: right;
     padding: 0;
@@ -450,14 +455,18 @@ img.img_evidencia {
     background-color: #8b0000;
 }
 
-.rechazada-check::before{
+.rechazada-check::before {
     font-family: FontAwesome;
     display: inline-block;
     visibility: visible;
     content: "\f00d";
     color: white;
     transform: none;
+    padding: 0 0.3em;
+    opacity: 1 !important;
 }
+
+
 
 .mfp-container {
     text-align: center;

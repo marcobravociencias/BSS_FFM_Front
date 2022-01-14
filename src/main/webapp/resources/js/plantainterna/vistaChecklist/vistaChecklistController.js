@@ -42,6 +42,7 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
     $("#modalDetalle").on("hidden.bs.modal", function () {
         $(".radio-evidencias").prop("checked", false);
         $(".checkbox-evidencia").prop("checked", false);
+        $(".checkbox-evidencia").removeClass("rechazada-check");
     })
 
 
@@ -210,12 +211,22 @@ toastr.error('Ha ocurrido un error en la consulta');
     $scope.seleciconarTodas = function(isSelected){
         if(isSelected == '1'){
             $(".checkbox-evidencia").prop("checked", true);
+            $(".checkbox-evidencia").removeClass("rechazada-check");
         }else{
             $(".checkbox-evidencia").prop("checked", false);
             $(".checkbox-evidencia").addClass("rechazada-check");
         }
     }
 
+    $scope.changeSelect = function(element){
+        let id = element.target.id;
+        if($("#" + id).is(":checked")){
+            $("#" + id).removeClass("rechazada-check");
+        }else{
+            $("#" + id).addClass("rechazada-check");
+        }
+
+    }
 
 
 }])
