@@ -209,8 +209,8 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                 let resultConf = results[0].data.result
                 if (resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
                     let llavesResult = results[0].data.result.MODULO_ACCIONES_USUARIO.llaves;
-                    $scope.nGeografiaPagos = llavesResult.N_FILTRO_GEOGRAFIA_PAGOS_TECNICOS ? Number(llavesResult.N_FILTRO_GEOGRAFIA_PAGOS_TECNICOS) : null;
-                    $scope.nGeografiaContrasenia = llavesResult.N_FILTRO_GEOGRAFIA_CAMBIOCONTRASENIA ? Number(llavesResult.N_FILTRO_GEOGRAFIA_CAMBIOCONTRASENIA) : null;
+                    $scope.nGeografiaPagos = llavesResult.N_FILTRO_GEOGRAFIA_PAGOS_TECNICOS ? Number(llavesResult.N_FILTRO_GEOGRAFIA_PAGOS_TECNICOS) : 4;
+                    $scope.nGeografiaContrasenia = llavesResult.N_FILTRO_GEOGRAFIA_CAMBIOCONTRASENIA ? Number(llavesResult.N_FILTRO_GEOGRAFIA_CAMBIOCONTRASENIA) : 4;
                     $scope.nEstatusPagosTecnicos = llavesResult.N_ESTATUS_PAGOS_TECNICOS ? llavesResult.N_ESTATUS_PAGOS_TECNICOS : null;
                     $scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO.permisos;
                     if($scope.nEstatusPagosTecnicos !== null){

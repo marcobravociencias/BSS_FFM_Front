@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" id="modalDetalle">
+<div class="modal img fade right show" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" id="modalDetalle">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -23,13 +23,13 @@
                     </div>
                     <div class="row col-5 content-total">
                         <div class="col-4">
-                            <span>Total evidencia: <strong>7</strong></span>
+                            <span>Total evidencia: <strong ng-bind="detalleEvidencia.length"></strong></span>
                         </div>
                         <div class="col-4">
-                            <span>Aceptadas: <strong>0</strong></span>
+                            <span>Aceptadas: <strong ng-bind="listaTotal.aceptadas || 0"></strong></span>
                         </div>
                         <div class="col-4">
-                            <span>Rechazadas: <strong>0</strong></span>
+                            <span>Rechazadas: <strong ng-bind="listaTotal.rechazadas || 0"></strong></span>
                         </div>
                     </div>
                     <div class="col-3" style="padding: 0;margin-top:0.2em">

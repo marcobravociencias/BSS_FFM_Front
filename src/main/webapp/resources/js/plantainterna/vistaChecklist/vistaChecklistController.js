@@ -6,6 +6,7 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
     $scope.detalleEvidencia = [];
     $scope.nGeografia = '';
     $scope.listaGeografia = [];
+    $scope.listaTotal = { aceptadas: 0, rechazadas: 0 };
 
     evidenciasTable = $('#evidenciasTable').DataTable({
         "paging": true,
@@ -31,7 +32,7 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
         evidenciasTable.search(this.value).draw();
     })
 
-    $(".checkbox-evidencia").on('change', function(){
+    $(".checkbox-evidencia").on('change', function () {
         $(".radio-evidencias").prop("checked", false);
     })
 
@@ -43,6 +44,7 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
         $(".radio-evidencias").prop("checked", false);
         $(".checkbox-evidencia").prop("checked", false);
         $(".checkbox-evidencia").removeClass("rechazada-check");
+        $scope.listaTotal = { aceptadas: 0, rechazadas: 0 };
     })
 
 
@@ -174,7 +176,7 @@ toastr.error('Ha ocurrido un error en la consulta');
 
 
     consultaDetalle = function (id) {
-       
+
         /*
         let params = {
 
@@ -185,22 +187,23 @@ toastr.error('Ha ocurrido un error en la consulta');
                 if (response.data.respuesta) {
                     if (response.data.result) {
                         */
-                            $scope.detalleEvidencia = detalleEvidencias.result;
-                            console.log($scope.detalleEvidencia);
-                            $("#modalDetalle").modal('show');
-                        /*
+        $scope.detalleEvidencia = detalleEvidencias.result;
+        $scope.$apply();
+        console.log($scope.detalleEvidencia);
+        $("#modalDetalle").modal('show');
+        /*
 
-                    } else {
-                        toastr.warning('No se encontró ningún valor');
-                    }
-                } else {
-                    toastr.warning(response.data.resultDescripcion);
-                }
-            } else {
-                toastr.error('Ha ocurrido un error en la consulta');
-            }
-        })
-        */
+    } else {
+        toastr.warning('No se encontró ningún valor');
+    }
+} else {
+    toastr.warning(response.data.resultDescripcion);
+}
+} else {
+toastr.error('Ha ocurrido un error en la consulta');
+}
+})
+*/
 
     }
 
@@ -208,25 +211,31 @@ toastr.error('Ha ocurrido un error en la consulta');
         $("#modalGeografia").modal('show');
     }
 
-    $scope.seleciconarTodas = function(isSelected){
-        if(isSelected == '1'){
+    $scope.seleciconarTodas = function (isSelected) {
+        if (isSelected == '1') {
             $(".checkbox-evidencia").prop("checked", true);
             $(".checkbox-evidencia").removeClass("rechazada-check");
-        }else{
+            $scope.listaTotal.aceptadas = $scope.detalleEvidencia.length;
+            $scope.listaTotal.rechazadas = 0;
+        } else {
             $(".checkbox-evidencia").prop("checked", false);
             $(".checkbox-evidencia").addClass("rechazada-check");
+            $scope.listaTotal.rechazadas = $scope.detalleEvidencia.length;
+            $scope.listaTotal.aceptadas = 0;
         }
     }
 
-    $scope.changeSelect = function(element){
+    $scope.changeSelect = function (element) {
         let id = element.target.id;
-        if($("#" + id).is(":checked")){
+        if ($("#" + id).is(":checked")) {
             $("#" + id).removeClass("rechazada-check");
-        }else{
+            $scope.listaTotal.rechazadas = $scope.listaTotal.rechazadas !== 0 ? $scope.listaTotal.rechazadas - 1 : 0;
+            $scope.listaTotal.aceptadas = $scope.listaTotal.aceptadas + 1;
+        } else {
             $("#" + id).addClass("rechazada-check");
+            $scope.listaTotal.rechazadas = $scope.listaTotal.rechazadas + 1;
+            $scope.listaTotal.aceptadas = $scope.listaTotal.aceptadas !== 0 ? $scope.listaTotal.aceptadas - 1 : 0;
         }
-
     }
-
 
 }])

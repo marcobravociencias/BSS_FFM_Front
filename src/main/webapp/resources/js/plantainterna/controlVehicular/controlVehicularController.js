@@ -150,7 +150,7 @@ app.controller('controlVehicularController',
 					if (results[0].data && results[0].data.respuesta) {
 						if (resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
 							let llavesResult = results[0].data.result.MODULO_ACCIONES_USUARIO.llaves;
-							$scope.nGeografia = llavesResult.N_FILTRO_GEOGRAFIA ? Number(llavesResult.N_FILTRO_GEOGRAFIA) : null;
+							$scope.nGeografia = llavesResult.N_FILTRO_GEOGRAFIA ? Number(llavesResult.N_FILTRO_GEOGRAFIA) : 4;
 							$scope.bucketImg = resultConf.BUCKETID_FB;
 							$scope.llaveEncierroVehiculo = llavesResult.N_ENCIERROS;
 							$scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO.permisos;
@@ -308,6 +308,7 @@ app.controller('controlVehicularController',
 				}
 				swal({ text: 'Espera un momento...', allowOutsideClick: false });
 				swal.showLoading();
+				$scope.vehiculos = [];
 				controlVehicularService.consultarVehiculos(params).then(function success(response) {
 					if (response.data.respuesta) {
 						if (response.data.result) {
@@ -336,15 +337,18 @@ app.controller('controlVehicularController',
 
 								$scope.buildTableVehiculos($scope.vehiculos);
 							} else {
+								$scope.buildTableVehiculos($scope.vehiculos);
 								swal.close();
 							}
 
 						} else {
+							$scope.buildTableVehiculos($scope.vehiculos);
 							mostrarMensajeErrorAlert(response.data.resultDescripcion);
 							swal.close();
 						}
 
 					} else {
+						$scope.buildTableVehiculos($scope.vehiculos);
 						mostrarMensajeErrorAlert(response.data.resultDescripcion);
 						swal.close();
 					}
