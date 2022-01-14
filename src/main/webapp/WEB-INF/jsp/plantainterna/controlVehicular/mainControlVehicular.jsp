@@ -98,10 +98,10 @@
                                     </li>
                                 </ul>
                                 <div class="tab-content">
-                                    <div class="tab-pane fade" id="alta" role="tabpanel" aria-labelledby="alta-tab">
+                                    <div class="tab-pane fade" id="alta" role="tabpanel" aria-labelledby="alta-tab"  ng-if="accionesUserConfigText.indexOf('accionCreaVehiculos') === -1 || accionesUserConfigText.indexOf('accionEditaVehiculos') === -1">
                                         <jsp:include page="./insertarVehiculo.jsp"></jsp:include>
                                     </div>
-                                    <div class="tab-pane fade show active" id="consulta" role="tabpanel"
+                                    <div class="tab-pane fade show active" id="consulta" role="tabpanel" ng-if="accionesUserConfigText.indexOf('accionConsultaVehiculos') === -1"
                                         aria-labelledby="consulta-tab">
                                         <jsp:include page="./consultarVehiculo.jsp"></jsp:include>
                                     </div>
