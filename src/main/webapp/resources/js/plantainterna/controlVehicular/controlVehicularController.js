@@ -153,6 +153,7 @@ app.controller('controlVehicularController',
 							$scope.nGeografia = llavesResult.N_FILTRO_GEOGRAFIA ? Number(llavesResult.N_FILTRO_GEOGRAFIA) : 4;
 							$scope.bucketImg = resultConf.BUCKETID_FB;
 							$scope.llaveEncierroVehiculo = llavesResult.N_ENCIERROS;
+							$scope.llaveArchivoPath = llavesResult.PATH_ARCHIVOS;
 							$scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO.permisos;
 							if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
 								$scope.permisosConfigUser.permisos.map(e => { e.banderaPermiso = true; return e; });
@@ -1029,7 +1030,7 @@ app.controller('controlVehicularController',
 						let img = {
 							"bucketId": $scope.bucketImg,
 							"archivo": base64[1],
-							"nombre": e.target.files[0].name
+							"nombre": $scope.llaveArchivoPath + e.target.files[0].name
 						}
 						if (name == 'fotoPlaca') {
 							$scope.filePlaca = img;
