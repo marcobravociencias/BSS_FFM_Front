@@ -5,6 +5,7 @@ app.controller('auditoriaTecnicoController', ['$scope', '$q', 'auditoriaTecnicoS
     let tableAuditoriaTecnico;
     let tableDetalleAuditoria;
     $scope.listAuditoriasTecnico = [];
+    $scope.supervisor = {};
     $scope.listDetalleAuditoria = [];
     $scope.isDetalle = false;
     $scope.auditoriaDetalle = {};
@@ -20,13 +21,15 @@ app.controller('auditoriaTecnicoController', ['$scope', '$q', 'auditoriaTecnicoS
     $scope.listPreguntas7 = [];
     $scope.listPreguntas8 = [];
     $scope.listPreguntas12 = [];
+    $scope.contadores = {};
+    $scope.nivelGeografia = '';
 
     document.getElementById('cluster').addEventListener('click', function () {
-		$('#modalGeografia').modal('show');
-		setTimeout(function () {
-			$("#searchGeoVistaAuditoria").focus();
-		}, 750);
-	});
+        $('#modalGeografia').modal('show');
+        setTimeout(function () {
+            $("#searchGeoVistaAuditoria").focus();
+        }, 750);
+    });
 
     $('#searchGeoVistaAuditoria').on('keyup', function () {
         $("#jstree-proton-3").jstree("search", this.value);
@@ -44,27 +47,27 @@ app.controller('auditoriaTecnicoController', ['$scope', '$q', 'auditoriaTecnicoS
         return arrayCopy;
     }
 
-    function compareGeneric(a,b){
-        let niveluno=a.nivel;
-        let niveldos=b.nivel;
-        if(niveluno>niveldos){ 
+    function compareGeneric(a, b) {
+        let niveluno = a.nivel;
+        let niveldos = b.nivel;
+        if (niveluno > niveldos) {
             return -1
-        }else if( niveluno < niveldos){
+        } else if (niveluno < niveldos) {
             return 1
-        } 
+        }
         return 0
     }
 
-    $scope.obtenerNivelUltimoJerarquia=function(){
+    $scope.obtenerNivelUltimoJerarquia = function () {
         return $scope.listadogeografiacopy.sort(compareGeneric)[0].nivel
     }
 
     $scope.consultarGeografiaVistaAuditoria = function () {
-        console.log("entro");
         genericService.consulCatalogoGeografia().then(function success(response) {
             console.log(response);
             $scope.listadogeografiacopy = response.data.result.geografia
             geografia = response.data.result.geografia
+            $scope.nivelGeografia = 3;
             if (!$scope.nivelGeografia)
                 $scope.nivelGeografia = $scope.obtenerNivelUltimoJerarquia()
 
@@ -78,7 +81,7 @@ app.controller('auditoriaTecnicoController', ['$scope', '$q', 'auditoriaTecnicoS
                 return e
             })
             $('#jstree-proton-3').bind('loaded.jstree', function (e, data) {
-                
+
             }).jstree({
                 'plugins': ["wholerow", "checkbox", 'search'],
                 'search': {
@@ -194,9 +197,12 @@ app.controller('auditoriaTecnicoController', ['$scope', '$q', 'auditoriaTecnicoS
         }
     }
 
-    consultarDetalleAuditoria = function () {
+    consultarDetalleAuditoria = function (elemento) {
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
+        $scope.contadores.aprobado = 0;
+        $scope.contadores.desaprobado = 0;
+        $scope.supervisor = $scope.listAuditoriasTecnico[elemento];
         let arrayDetalleRow = [];
         if (tableDetalleAuditoria) {
             tableDetalleAuditoria.destroy();
@@ -218,6 +224,14 @@ app.controller('auditoriaTecnicoController', ['$scope', '$q', 'auditoriaTecnicoS
                 '<i class="fas fa-bars" style="background-color: #58b3bf" title="Detalle"></i>' +
                 '</a>';
             arrayDetalleRow.push(rowDetalle);
+
+            if (elemento.estatus === 'APROBADO') {
+                $scope.contadores.aprobado += 1;
+            }
+
+            if (elemento.estatus === 'DESAPROBADO') {
+                $scope.contadores.desaprobado += 1;
+            }
         });
         tableDetalleAuditoria = $('#tableDetalleAuditoria').DataTable({
             "paging": true,
@@ -255,8 +269,23 @@ app.controller('auditoriaTecnicoController', ['$scope', '$q', 'auditoriaTecnicoS
     $scope.consultarAuditoriasTecnico = function () {
         let mensajeError = '';
         let isValid = true;
-        
         $scope.changeView();
+
+        let ultimonivel;
+        if ($scope.nivelGeografia) {
+            ultimonivel = $scope.nivelGeografia
+        } else {
+            ultimonivel = $scope.obtenerNivelUltimoJerarquia();
+        }
+        let clusters = $("#jstree-proton-3").jstree("get_selected", true)
+            .filter(e => e.original.nivel == ultimonivel)
+            .map(e => parseInt(e.id))
+
+        if (clusters.length === 0) {
+            mensajeError += '<li>Seleccione geograf&iacute;a.</li>';
+            isValid = false
+        }
+
         if (!$scope.validarFecha('filtro_fecha_inicio_auditoria', 'filtro_fecha_fin_auditoria')) {
             mensajeError += "<li>La fecha inicical debe ser menor a la fecha final</li>";
             isValid = false;
@@ -286,7 +315,7 @@ app.controller('auditoriaTecnicoController', ['$scope', '$q', 'auditoriaTecnicoS
                 row[2] = elemento.distrito !== undefined ? elemento.distrito : 'Sin informaci&oacute;n';
                 row[3] = elemento.region !== undefined ? elemento.region : 'Sin informaci&oacute;n';
                 row[4] = elemento.aprobacion_cuadrillas !== undefined ? elemento.aprobacion_cuadrillas : 'Sin informaci&oacute;n';
-                row[5] = '<a class="icon-table" id="detalleAuditoria' + elemento.id_supervisor + '" onclick="consultarDetalleAuditoria()"  >' +
+                row[5] = '<a class="icon-table" id="detalleAuditoria' + elemento.id_supervisor + '" onclick="consultarDetalleAuditoria(' + i + ')"  >' +
                     '<i class="fas fa-bars" style="background-color: #58b3bf" title="Detalle"></i>' +
                     '</a>';
                 arrayRow.push(row);
@@ -303,6 +332,8 @@ app.controller('auditoriaTecnicoController', ['$scope', '$q', 'auditoriaTecnicoS
                 "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
             });
             swal.close();
+        } else {
+            mostrarMensajeWarningValidacion(mensajeError);
         }
     }
 }]);

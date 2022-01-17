@@ -82,6 +82,25 @@
                 <div class="col-1" style="margin-top: .5em;">
                     <i class="fas fa-arrow-circle-left icon-back" ng-click="changeView()" title="Regresar"></i>
                 </div>
+                <div class="row col-8 offset-3 filter-tab" style="margin-top: 0.5em;">
+                    <div class="col-6 user-info-content user-filter" style="margin-top: 0; color: #7716fa; text-align: right;">
+                        <span id="spanSupervisor">
+                            {{supervisor.supervisor}}
+                        </span>
+                    </div>
+                    <div class="col-3 user-info-content user-filter" style="margin-top: 0; text-align: center;">
+                        Aprobadas: 
+                        <span id="spanAprobado" style=" color: #7716fa;">
+                            {{contadores.aprobado ? contadores.aprobado : '0'}}
+                        </span>
+                    </div>
+                    <div class="col-3 user-info-content user-filter" style="margin-top: 0; text-align: center;">
+                        Desaprobadas: 
+                        <span id="spanDesaprobado" style=" color: #7716fa;">
+                            {{contadores.desaprobado ? contadores.desaprobado : '0'}}
+                        </span>
+                    </div>
+                </div>
             </div>
             <div class="content-fluid" style="margin-top: 0.7em;">
                 <table class="display table table-hover" width="100%" id="tableDetalleAuditoria">
