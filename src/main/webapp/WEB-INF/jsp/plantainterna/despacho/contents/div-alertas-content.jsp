@@ -1,4 +1,4 @@
-<div class="container-fluid content-alertas"ng-show="!vistaDespacho && !vistaAuditoriaEvidencia">
+<div class="container-fluid content-alertas" ng-show="!vistaDespacho">
     <div class="row">
         <div class="col-12 header-alertas">
             <i class="fa fa-times icon-exit-header-alertas" ng-click="cerrarAlertas()"></i>
@@ -34,7 +34,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-6">
+        <div class="col-6" ng-show="!vistaAuditoriaEvidencia">
             <div class="card cards-alertas">
                 <div class="card-header card-header-principal card-header-alerta-principal">
                     <ul class="nav nav-pills" id="pills-tab" role="tablist">
@@ -361,7 +361,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-3">
+        <div class="col-3" ng-show="!vistaAuditoriaEvidencia">
             <div class="card cards-alertas">
                 <div class="card-header card-header-alerta-principal">
                     <div class="row">
@@ -445,53 +445,7 @@
                 </div>
             </div>
         </div>
-    </div>
-    <br>
-</div>
-
-<div class="container-fluid content-alertas" ng-show="!vistaDespacho && vistaAuditoriaEvidencia">
-    <div class="row">
-        <div class="col-12 header-alertas">
-            <i class="fa fa-times icon-exit-header-alertas" ng-click="cerrarAlertas()"></i>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-3">
-            <div class="card cards-alertas">
-                <div class="card-header card-header-alerta-principal">
-                    <span class="titulo-alerta-modal">OTS</span>
-                </div>
-                <div class="card-body card-body-alerta-principal">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="input-group">
-                                <input id="buscador-alertas-ot" ng-keyup="buscarOtAlertaKeyUpOt($event)" type="text"
-                                    class="form-control buscadorOT" placeholder="OT/OS">
-
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary btnBuscadorOTAlerta" type="button"
-                                        id="button-addon2"><i class="fa fa-search"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="scrollTablaAlertasPI">
-                        <table id="table-alertas-pi">
-                            <thead>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-9" id="alertaAuditoriaEvidencia">
+        <div class="col-9" id="alertaAuditoriaEvidencia" ng-show="vistaAuditoriaEvidencia">
             <div class="card cards-alertas">
                 <div class="card-header card-header-alerta-principal">
                     <div class="row">
