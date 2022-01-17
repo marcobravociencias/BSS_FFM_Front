@@ -12,6 +12,7 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 	
 	$scope.noticiasCarrusel = [];
 	$scope.verVistaTabla = true;
+	$scope.crearNoticiaContent =false;
 
 	$scope.saveObj.tituloPrincipal="principal"
 	$scope.saveObj.tituloSecundario="secundario"
@@ -543,6 +544,10 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
     
     $scope.cambiarVistaConsultaNoticias = function() {
     	$scope.verVistaTabla = !$scope.verVistaTabla;
+	}
+    
+    $scope.abrirModalCrearNoticia = function() {
+    	$scope.crearNoticiaContent = true;
 	}
     
 }]);

@@ -114,5 +114,10 @@ public class PlantaInternaViewsController {
 	public String vistaChecklist() {		
 		return "plantainterna/vistaChecklist/mainVistaChecklist";
 	}
+	
+	@GetMapping("/moduloVistaAuditoria")
+	public String vistaAuditoria() {		
+		return "plantainterna/vistaAuditoria/mainVistaAuditoria";
+	}
 }
 

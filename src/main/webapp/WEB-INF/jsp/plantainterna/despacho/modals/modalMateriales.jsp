@@ -82,7 +82,14 @@
                         <div class="blob oflline-sap-materiales-icon"></div>              
                         <span class="span-offline-sap"> SAP fuera de l&iacute;nea </span>
                     </div> 
+                    <div ng-show="tecnicoConsultaMateriales.centro.trim() === 'OFFL'" class="container-estatus-sap">    
+                      <div class="blob oflline-sap-materiales-icon"></div>              
+                      <span class="span-offline-sap"> SAP fuera de l&iacute;nea </span>
+                  </div> 
                     <div ng-show="tecnicoConsultaMateriales.centro.trim() === 'NOCONF'" class="container-estatus-sap">    
+                      <span class="span-noconfi-sap"> Sin configuraci&oacute;n  </span>
+                    </div> 
+                    <div ng-show="tecnicoConsultaMateriales.centro.trim() === 'NONF'" class="container-estatus-sap">    
                       <span class="span-noconfi-sap"> Sin configuraci&oacute;n  </span>
                     </div> 
                     <div ng-show="tecnicoConsultaMateriales.centro.trim() === 'NA'" class="container-estatus-sap">    

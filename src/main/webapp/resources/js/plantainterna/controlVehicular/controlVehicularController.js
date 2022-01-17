@@ -30,7 +30,7 @@ app.controller('controlVehicularController',
 			$scope.padre;
 			$scope.listSelected = [];
 			$scope.permisosConfigUser = [];
-			$scope.accionesUserConfigText=[]
+			$scope.accionesUserConfigText = []
 
 			$("#modal_cluster_arbol_vehiculo").on("hidden.bs.modal", function () {
 				let selectedElms = $('#jstreeconsulta').jstree("get_selected", true);
@@ -140,29 +140,35 @@ app.controller('controlVehicularController',
 			}
 
 			$scope.getArbol = function () {
-				
+
 				$q.all([
 					controlVehicularService.consultarConfiguracionVehiculo({ "moduloAccionesUsuario": "moduloVehiculos" }),
 					controlVehicularService.consulCatalogoGeografiaUsuarioVehiculo()
 				]).then(function (results) {
-			
-					let resultConf= results[0].data.result
+
+					let resultConf = results[0].data.result
 					if (results[0].data && results[0].data.respuesta) {
-						if( resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves){
-							let  llavesResult=results[0].data.result.MODULO_ACCIONES_USUARIO.llaves;							  						
-							$scope.nGeografia = llavesResult.N_FILTRO_GEOGRAFIA ? Number( llavesResult.N_FILTRO_GEOGRAFIA ) : null;
+						if (resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
+							let llavesResult = results[0].data.result.MODULO_ACCIONES_USUARIO.llaves;
+							$scope.nGeografia = llavesResult.N_FILTRO_GEOGRAFIA ? Number(llavesResult.N_FILTRO_GEOGRAFIA) : 4;
 							$scope.bucketImg = resultConf.BUCKETID_FB;
-							$scope.llaveEncierroVehiculo= llavesResult.N_ENCIERROS;
-							$scope.permisosConfigUser=resultConf.MODULO_ACCIONES_USUARIO.permisos;
-							if($scope.permisosConfigUser!=undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length >0){
-								$scope.permisosConfigUser.permisos.map(e=>{e.banderaPermiso = true ; return e;});
-								$scope.accionesUserConfigText=$scope.permisosConfigUser.permisos.map(e=>{return e.clave})
-				
+							$scope.llaveEncierroVehiculo = llavesResult.N_ENCIERROS;
+							$scope.llaveArchivoPath = llavesResult.PATH_ARCHIVOS;
+							$scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO.permisos;
+							if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
+								$scope.permisosConfigUser.permisos.map(e => { e.banderaPermiso = true; return e; });
+								$scope.accionesUserConfigText = $scope.permisosConfigUser.permisos.map(e => { return e.clave })
+
 							}
-							$("#container_vehiculos").css("display","block")
-						}else{
+
+							if ($scope.accionesUserConfigText.indexOf('accionConsultaVehiculos') !== -1) {
+								$("#alta").addClass("active show");
+								$("#alta-tab").addClass("active");
+							}
+							$("#container_vehiculos").css("display", "block")
+						} else {
 							toastr.warning(results[0].data.resultDescripcion);
-						}						
+						}
 					} else {
 						toastr.warning(results[0].data.resultDescripcion);
 					}
@@ -283,7 +289,7 @@ app.controller('controlVehicularController',
 				$scope.countNoDisponibles = 0;
 				$scope.countBajas = 0;
 				$scope.countTodos = 0;
-				
+
 				let selectedElements = $("#jstreeconsulta").jstree("get_selected", true)
 					.map(e => e.id.toString());
 				$scope.listSelected = selectedElements;
@@ -303,13 +309,14 @@ app.controller('controlVehicularController',
 				}
 				swal({ text: 'Espera un momento...', allowOutsideClick: false });
 				swal.showLoading();
+				$scope.vehiculos = [];
 				controlVehicularService.consultarVehiculos(params).then(function success(response) {
 					if (response.data.respuesta) {
 						if (response.data.result) {
 							if (response.data.result.vehiculo.length) {
 								$scope.vehiculos = angular.copy(response.data.result.vehiculo);
-								
-								angular.forEach($scope.vehiculos,function(vehiculo,index){
+
+								angular.forEach($scope.vehiculos, function (vehiculo, index) {
 									var estadoVehiculo = vehiculo.estatus.toLowerCase();
 									if (estadoVehiculo == "asignado") {
 										$scope.countAsignados = $scope.countAsignados + 1;
@@ -322,24 +329,27 @@ app.controller('controlVehicularController',
 									if (estadoVehiculo == "no disponible") {
 										$scope.countNoDisponibles = $scope.countNoDisponibles + 1;
 									}
-									
+
 									if (estadoVehiculo == "disponible") {
 										$scope.countDisponibles = $scope.countDisponibles + 1;
 									}
 									$scope.countTodos = $scope.countTodos + 1;
 								});
-								
+
 								$scope.buildTableVehiculos($scope.vehiculos);
 							} else {
+								$scope.buildTableVehiculos($scope.vehiculos);
 								swal.close();
 							}
 
 						} else {
+							$scope.buildTableVehiculos($scope.vehiculos);
 							mostrarMensajeErrorAlert(response.data.resultDescripcion);
 							swal.close();
 						}
 
 					} else {
+						$scope.buildTableVehiculos($scope.vehiculos);
 						mostrarMensajeErrorAlert(response.data.resultDescripcion);
 						swal.close();
 					}
@@ -376,10 +386,10 @@ app.controller('controlVehicularController',
 					row[9] = elemento.urlFotoPlaca && elemento.urlFotoPlaca.length > 15 ? '<img style="cursor:pointer; border-radius:.5em" src="' + elemento.urlFotoPlaca + '" alt="Placa" width="50" height="30" onclick="showImg(' + "'" + elemento.urlFotoPlaca + "'" + ')"/>' : "";
 					row[10] = elemento.urlFotoVehiculo && elemento.urlFotoVehiculo.length > 15 ? '<img style="cursor:pointer; border-radius:.5em" src="' + elemento.urlFotoVehiculo + '" alt="Vehiculo" width="50"  height="30" onclick="showImg(' + "'" + elemento.urlFotoVehiculo + "'" + ')"/>' : "";
 					row[11] = elemento.estatus;
-					if($scope.accionesUserConfigText.indexOf('accionEditaVehiculos') === -1){
+					if ($scope.accionesUserConfigText.indexOf('accionEditaVehiculos') === -1) {
 						row[12] = '<i class="fas fa-edit icon-table" title="Editar" onclick="editCar(' + "'" + elemento.idVehiculo + "'" + ')"></i>';
-					}else{
-						row[12] = '<i class="fas fa-edit icon-table" title="No tienes permisos para editar" style="cursor: not-allowed"></i>';
+					} else {
+						row[12] = '<i class="fas fa-edit icon-table" title="No tienes permisos para editar" style="cursor: not-allowed; background: #9d9ea2 !important;"></i>';
 
 					}
 					arraRow.push(row);
@@ -1005,6 +1015,7 @@ app.controller('controlVehicularController',
 			}
 
 			editCar = function (id) {
+				$scope.isEdit = true;
 				$scope.getCarById(id);
 			}
 
@@ -1019,7 +1030,7 @@ app.controller('controlVehicularController',
 						let img = {
 							"bucketId": $scope.bucketImg,
 							"archivo": base64[1],
-							"nombre": e.target.files[0].name
+							"nombre": $scope.llaveArchivoPath + e.target.files[0].name
 						}
 						if (name == 'fotoPlaca') {
 							$scope.filePlaca = img;
@@ -1107,17 +1118,17 @@ app.controller('controlVehicularController',
 			$scope.abrirModalGeografia = function () {
 				$('#searchGeo').val('');
 				$("#modal_cluster_arbol_vehiculo").modal('show');
-				setTimeout(function (){
-			        $("#searchGeo").focus();
-			    }, 750);
+				setTimeout(function () {
+					$("#searchGeo").focus();
+				}, 750);
 			}
 
 			abrirModalGeografiaBuscar = function () {
 				$('#searchGeo').val('');
 				$("#modal_cluster_arbol_vehiculo").modal('show');
-				setTimeout(function (){
-			        $("#searchGeo").focus();
-			    }, 750);
+				setTimeout(function () {
+					$("#searchGeo").focus();
+				}, 750);
 			}
 
 			$scope.loadArbolBuscar = function () {
@@ -1327,7 +1338,7 @@ app.controller('controlVehicularController',
 				let hijo = "";
 				$.each(list, function (i, elemento) {
 
-					if(elemento.id == padre && elemento.nivel == nivel){
+					if (elemento.id == padre && elemento.nivel == nivel) {
 						$scope.padre = elemento.id
 					}
 
@@ -1435,17 +1446,16 @@ app.controller('controlVehicularController',
 				$("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
 
 			});
-			
-			$scope.busquedaVehiculosEstado = function(estado) {
+
+			$scope.busquedaVehiculosEstado = function (estado) {
 				$("#searchText").val("");
 				let list = [];
 				let text = estado.toLowerCase();
 				let listVehiculos = angular.copy($scope.vehiculos);
-				if(estado == "todos"){
+				if (estado == "todos") {
 					$scope.buildTableVehiculos(listVehiculos);
-				}else{
+				} else {
 					$.each(listVehiculos, function (i, elemento) {
-						console.log(elemento);
 						if (elemento.estatus.toLowerCase() == text) {
 							list.push(elemento);
 						}

@@ -75,9 +75,23 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         ]).then(function (results) {
             console.log(results)
             if (results[0].data.respuesta) {
-                $scope.nIntervencion = results[0].data.result.N_FILTRO_GEOGRAFIA_GESTION_TICKETS ? Number(result[0].data.result.N_FILTRO_GEOGRAFIA_GESTION_TICKETS) : 1;
-                $scope.nGeografia = results[0].data.result.N_FILTRO_TIPO_ORDEN_GESTION_TICKETS ? Number(result[0].data.result.N_FILTRO_TIPO_ORDEN_GESTION_TICKETS) : 1;
-                $scope.nPuestoIngeniero = results[0].data.result.N_PUESTO_INGENIERO ? Number(result[0].data.result.N_PUESTO_INGENIERO) : 1;
+                $scope.elementosConfigGeneral = new Map(Object.entries(results[0].data.result))
+                let resultConf = results[0].data.result
+                if (resultConf.MODULO_GESTION_TICKETS && resultConf.MODULO_GESTION_TICKETS.llaves) {
+                    let llavesResult = results[0].data.result.MODULO_GESTION_TICKETS.llaves;
+                    if (llavesResult.N_FILTRO_GEOGRAFIA_GESTION_TICKETS)
+                        $scope.nGeografia = parseInt(llavesResult.N_FILTRO_GEOGRAFIA_GESTION_TICKETS)
+
+                    if (llavesResult.N_FILTRO_TIPO_ORDEN_GESTION_TICKETS)
+                        $scope.nIntervencion = parseInt(llavesResult.N_FILTRO_TIPO_ORDEN_GESTION_TICKETS)
+
+                    if (llavesResult.N_PUESTO_INGENIERO)
+                        $scope.nPuestoIngeniero = parseInt(llavesResult.N_PUESTO_INGENIERO)
+                } else {
+                    $scope.nIntervencion = 1;
+                    $scope.nGeografia = 1;
+                    $scope.nPuestoIngeniero = 1;
+                }
             }
             console.log(results[1].data);
             if (results[1].data !== undefined) {

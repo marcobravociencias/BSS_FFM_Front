@@ -264,7 +264,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                     <div class="row">
                         <div class="col-8">
                             <div class="input-group input-group-sm content-seach-group  ">
-                                <input type="text" class="form-control form-control-sm buscar-input-operario" placeholder="Buscar OT" onkeyup="triggerOperarioKeyup(event);" >
+                                <input type="text" class="form-control form-control-sm buscar-input-operario" placeholder="Buscar operario" onkeyup="triggerOperarioKeyup(event);" >
                                 <span class="search-icon-operario-busq fa fa-search" id="buscar-operario"></span>
                             </div>
                         </div>

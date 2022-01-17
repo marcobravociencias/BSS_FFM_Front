@@ -2,7 +2,7 @@ var app = angular.module('gestionUniversalApp', []);
 
 app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalService', '$filter', function ($scope, $q, gestionUniversalService, $filter) {
     $scope.nGeografiaPagos = '';
-    $scope.nGeografiaContrasenia=''
+    $scope.nGeografiaContrasenia = ''
     $scope.listaGeografia = [];
     $scope.listaPuestos = [];
     $scope.listaTecnicosPagos = [];
@@ -14,6 +14,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
     let pagosTecnicosTable;
     let pagosLiberarTable;
     let usuariosCambiaContrasena;
+    $scope.listaStatus = [];
 
     $('.drop-down-filters').on("click.bs.dropdown", function (e) {
         e.stopPropagation();
@@ -142,8 +143,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
             return false;
         }
 
-
-        let params = { idGeografias: clusters, idEstatusPagos: [1, 2, 3] };
+        let params = { idGeografias: clusters, idEstatusPagos: $scope.listaStatus };
         let arraRow = [];
 
         if (pagosTecnicosTable) {
@@ -206,13 +206,22 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
             gestionUniversalService.consultaPuestos()
         ]).then(function (results) {
             if (results[0].data.result && results[0].data.respuesta) {
-                let resultConf= results[0].data.result
-                if( resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves){
-                    let  llavesResult=results[0].data.result.MODULO_ACCIONES_USUARIO.llaves;                    
-                    $scope.nGeografiaPagos = llavesResult.N_FILTRO_GEOGRAFIA_PAGOS_TECNICOS  ? Number( llavesResult.N_FILTRO_GEOGRAFIA_PAGOS_TECNICOS ) : null; 
-                    $scope.nGeografiaContrasenia = llavesResult.N_FILTRO_GEOGRAFIA_CAMBIOCONTRASENIA    ? Number(llavesResult.N_FILTRO_GEOGRAFIA_CAMBIOCONTRASENIA) : null;    
-                    $scope.nEstatusPagosTecnicos = llavesResult.N_ESTATUS_PAGOS_TECNICOS    ? Number(llavesResult.N_ESTATUS_PAGOS_TECNICOS) : null;                        
-                    $scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO.permisos; 
+                let resultConf = results[0].data.result
+                if (resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
+                    let llavesResult = results[0].data.result.MODULO_ACCIONES_USUARIO.llaves;
+                    $scope.nGeografiaPagos = llavesResult.N_FILTRO_GEOGRAFIA_PAGOS_TECNICOS ? Number(llavesResult.N_FILTRO_GEOGRAFIA_PAGOS_TECNICOS) : 4;
+                    $scope.nGeografiaContrasenia = llavesResult.N_FILTRO_GEOGRAFIA_CAMBIOCONTRASENIA ? Number(llavesResult.N_FILTRO_GEOGRAFIA_CAMBIOCONTRASENIA) : 4;
+                    $scope.nEstatusPagosTecnicos = llavesResult.N_ESTATUS_PAGOS_TECNICOS ? llavesResult.N_ESTATUS_PAGOS_TECNICOS : null;
+                    $scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO.permisos;
+                    if($scope.nEstatusPagosTecnicos !== null){
+                        let statusList = $scope.nEstatusPagosTecnicos.split(",");
+                        $scope.listaStatus = statusList;
+                    }
+                    if($scope.permisosConfigUser!=undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length >0){
+                        $scope.permisosConfigUser.permisos.map(e=>{e.banderaPermiso = true ; return e;});
+                        $scope.accionesUserConfigText=$scope.permisosConfigUser.permisos.map(e=>{return e.clave})
+                    }
+
                 }
             } else {
                 mostrarMensajeErrorAlert(results[0].data.resultDescripcion)
@@ -389,7 +398,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                             $scope.consultarTecnicosPagos();
                             toastr.success('Se han liberado los pagos correctamente');
 
-                        }else{
+                        } else {
                             toastr.error(response.data.resultDescripcion);
                         }
                         swal.close();

@@ -399,8 +399,8 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         console.log("function 15"+nEmpleado)
         let params =  {
             numEmpleado: nEmpleado,
-            idUsuario:tecnicoTemp.idTecnico ,  
-            idFlujo:1    
+            idUsuario:tecnicoTemp.idTecnico   
+            //idFlujo:1    
         }          
  
         if ( tableMaterialesDespacho ) 
@@ -440,9 +440,15 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 	}
 	function transformarTextPrecio(num){
 		if( ( num && num != '' && num != '0' ) ){
-			return ( Math.round( parseFloat( num ) * 100) / 100 ).toFixed(2);
+			return ( Math.round( parseFloat( num ) * 100) / 100 ).toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD',
+              }); 
 		} else{
-			return '0.00'
+			return parseFloat('0.00').toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD',
+              }); 
 		}
 	}
     function isNumeric(val) {
@@ -468,14 +474,14 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                                 <td >${elem.lote} </td>
                                 <td >${ transformarTextCantidad(elem.cantidad) } </td>
                                 <td >${elem.unidadMedida} </td>
-                                <td >$ ${ transformarTextPrecio(elem.precio) }  </td>
+                                <td >${ transformarTextPrecio(elem.precio) }  </td>
                                 <td >${elem.familia} </td>
                                 <td >${elem.categoria} </td>
                                 <td >${elem.grupo} </td>
                             </tr>
                         `)
                     })
-                    $scope.totalMaterialesModal='$ '+ transformarTextPrecio( $scope.totalMaterialesModal )
+                    $scope.totalMaterialesModal= transformarTextPrecio( $scope.totalMaterialesModal )
                     $scope.inicializarTableMateriales()
                     swal.close()
                     $("#modalMaterialesOperario").modal('show')                            
@@ -483,7 +489,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                     swal.close()
                     mostrarMensajeWarningValidacion('No se encontro informaci&oacute;n.')
                     $scope.inicializarTableMateriales()
-                    $scope.totalMaterialesModal='$ '+ transformarTextPrecio( $scope.totalMaterialesModal )
+                    $scope.totalMaterialesModal=transformarTextPrecio( $scope.totalMaterialesModal )
 
 
                 }
@@ -491,7 +497,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 swal.close()
                 mostrarMensajeErrorAlert(response.data.resultDescripcion)
                 $scope.inicializarTableMateriales()
-                $scope.totalMaterialesModal='$ '+ transformarTextPrecio( $scope.totalMaterialesModal )
+                $scope.totalMaterialesModal=transformarTextPrecio( $scope.totalMaterialesModal )
 
             }
          }).catch(err => handleError(err))

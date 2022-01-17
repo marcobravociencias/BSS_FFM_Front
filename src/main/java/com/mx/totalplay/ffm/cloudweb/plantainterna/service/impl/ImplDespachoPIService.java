@@ -1034,6 +1034,8 @@ public class ImplDespachoPIService implements DespachoPIService {
         String tokenAcces = principalDetail.getAccess_token();
         String urlRequest = principalDetail.getDireccionAmbiente().concat(constDespachoPI.getConsultaCentroAlmacen());
         logger.info("### URL consultarCentroAlmacenByNumeroEmpleado(): \n" + urlRequest);
+        
+        //https://totalplay-dev.apigee.net/ffm/materiales?centro=TP01&almacen=0113&idUsuario=233
         Map<String, String> paramsRequestGet = new HashMap<>();
         paramsRequestGet.put("numeroEmpleado", jsonObject.get("numEmpleado").getAsString());
         logger.info("------paramsMap"+paramsRequestGet.toString());
@@ -1057,7 +1059,7 @@ public class ImplDespachoPIService implements DespachoPIService {
         Map<String, String> paramsRequestGet = new HashMap<>(); 
         paramsRequestGet.put("centro", jsonObject.get("centro").getAsString());
         paramsRequestGet.put("almacen", jsonObject.get("almacen").getAsString());
-        paramsRequestGet.put("idFlujo", jsonObject.get("idFlujo").getAsString());
+        //paramsRequestGet.put("idFlujo", jsonObject.get("idFlujo").getAsString());
         //paramsRequestGet.put("idUsuario", String.valueOf(principalDetail.getIdUsuario()));
         paramsRequestGet.put("idUsuario", jsonObject.get("idUsuario").getAsString() );
         

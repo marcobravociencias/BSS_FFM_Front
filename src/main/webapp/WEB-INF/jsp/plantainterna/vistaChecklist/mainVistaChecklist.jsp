@@ -42,20 +42,22 @@
             rel="stylesheet">
     </head>
 
-    <body id="idBody" class="body" ng-controller="vistaChecklistController">
+    <body id="idBody" class="body" ng-controller="vistaChecklistController" class="body">
         <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
         <div class="container">
             <div class="container-title-header" style="padding: 0 !important;">
                 <div class="header-modulo">
                     <h5 class="title-modulo">Vista Checklist</h5>
-                    <h1 class="h6 subtitle-modulo">En este m&oacute;dulo podr&aacute;s realizar la busqueda de las evidencias</h1>
+                    <h1 class="h6 subtitle-modulo">En este m&oacute;dulo podr&aacute;s realizar la busqueda de las
+                        evidencias</h1>
                 </div>
             </div>
             <div class="row content-fluid">
-                <div class="col-2 columna-filtro-geo">
+                <div class="col-2 columna-filtro">
                     <label for="filtro_fecha_inicio" class="label-filter">Geograf&iacute;a</label>
                     <input readonly placeholder="Geograf&iacute;a" type="text" id="filtro_geografia"
-                        class="search-filtro input-filtro form-control form-control-sm" ng-click="abrirModalGeografia()">
+                        class="search-filtro input-filtro form-control form-control-sm"
+                        ng-click="abrirModalGeografia()">
                 </div>
                 <div class="col-2 columna-filtro">
                     <label for="filtro_fecha_inicio" class="label-filter">Fecha inicial</label>
@@ -130,14 +132,17 @@
         src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker.es.min.js"></script>
     <script type="text/javascript"
         src="${pageContext.request.contextPath}/resources/libraries/magnific_popup/jquery.magnific-popup.min.js"></script>
+
     <script type="text/javascript"
         src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
     <script type="text/javascript"
         src="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/lib/moment.es.js"></script>
     <script
         src="${pageContext.request.contextPath}/resources/js/plantainterna/vistaChecklist/vistaChecklistJson.js"></script>
-    <script   src="${pageContext.request.contextPath}/resources/js/plantainterna/vistaChecklist/vistaChecklistController.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/plantainterna/vistaChecklist/vistaChecklistService.js"></script>
+    <script
+        src="${pageContext.request.contextPath}/resources/js/plantainterna/vistaChecklist/vistaChecklistController.js"></script>
+    <script
+        src="${pageContext.request.contextPath}/resources/js/plantainterna/vistaChecklist/vistaChecklistService.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>

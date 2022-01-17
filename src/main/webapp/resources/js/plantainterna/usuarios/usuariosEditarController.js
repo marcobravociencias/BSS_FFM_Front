@@ -157,6 +157,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                     $scope.detalleUsuario.fechaIngreso = fecha[2] + "/" + fecha[1] + "/" + fecha[0];
                     
                     // ********** PREPARA LOS DATOS DE LA PESTAÑA DE INTERVENCIONES
+                    $scope.arbolIntervencionesModificar = [];
                     $scope.arbolIntervencionesModificar = angular.copy($scope.listaIntervencionesRespaldo);
                     $scope.listaIntervencionesRegistradasMod = [];
                     $scope.detalleUsuario.intervencionesId = [];

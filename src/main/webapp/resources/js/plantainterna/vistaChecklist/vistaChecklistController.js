@@ -6,6 +6,7 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
     $scope.detalleEvidencia = [];
     $scope.nGeografia = '';
     $scope.listaGeografia = [];
+    $scope.listaTotal = { aceptadas: 0, rechazadas: 0 };
 
     evidenciasTable = $('#evidenciasTable').DataTable({
         "paging": true,
@@ -31,10 +32,6 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
         evidenciasTable.search(this.value).draw();
     })
 
-    $(".checkbox-evidencia").on('change', function(){
-        $(".radio-evidencias").prop("checked", false);
-    })
-
     $('#searchGeoConsulta').on('keyup', function () {
         $("#jstreeConsulta").jstree("search", this.value);
     })
@@ -42,6 +39,8 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
     $("#modalDetalle").on("hidden.bs.modal", function () {
         $(".radio-evidencias").prop("checked", false);
         $(".checkbox-evidencia").prop("checked", false);
+        $(".checkbox-evidencia").removeClass("rechazada-check");
+        $scope.listaTotal = { aceptadas: 0, rechazadas: 0 };
     })
 
 
@@ -173,7 +172,7 @@ toastr.error('Ha ocurrido un error en la consulta');
 
 
     consultaDetalle = function (id) {
-       
+
         /*
         let params = {
 
@@ -184,22 +183,24 @@ toastr.error('Ha ocurrido un error en la consulta');
                 if (response.data.respuesta) {
                     if (response.data.result) {
                         */
-                            $scope.detalleEvidencia = detalleEvidencias.result;
-                            console.log($scope.detalleEvidencia);
-                            $("#modalDetalle").modal('show');
-                        /*
+        $scope.detalleEvidencia = detalleEvidencias.result.evidencias;
+        $scope.$apply();
+        console.log($scope.detalleEvidencia);
+        $("#modalDetalle").modal('show');
+        $scope.applyMagnific();
+        /*
 
-                    } else {
-                        toastr.warning('No se encontró ningún valor');
-                    }
-                } else {
-                    toastr.warning(response.data.resultDescripcion);
-                }
-            } else {
-                toastr.error('Ha ocurrido un error en la consulta');
-            }
-        })
-        */
+    } else {
+        toastr.warning('No se encontró ningún valor');
+    }
+} else {
+    toastr.warning(response.data.resultDescripcion);
+}
+} else {
+toastr.error('Ha ocurrido un error en la consulta');
+}
+})
+*/
 
     }
 
@@ -207,15 +208,107 @@ toastr.error('Ha ocurrido un error en la consulta');
         $("#modalGeografia").modal('show');
     }
 
-    $scope.seleciconarTodas = function(isSelected){
-        if(isSelected == '1'){
+    $scope.seleciconarTodas = function (isSelected) {
+        if (isSelected == '1') {
             $(".checkbox-evidencia").prop("checked", true);
-        }else{
+            $(".checkbox-evidencia").removeClass("rechazada-check");
+            $scope.listaTotal.aceptadas = $scope.detalleEvidencia.length;
+            $scope.listaTotal.rechazadas = 0;
+        } else {
             $(".checkbox-evidencia").prop("checked", false);
             $(".checkbox-evidencia").addClass("rechazada-check");
+            $scope.listaTotal.rechazadas = $scope.detalleEvidencia.length;
+            $scope.listaTotal.aceptadas = 0;
+        }
+    }
+
+    $scope.changeSelect = function (element) {
+        $(".radio-evidencias").prop("checked", false);
+        let id = element.target.id;
+        if ($("#" + id).is(":checked")) {
+            $("#" + id).removeClass("rechazada-check");
+            $scope.listaTotal.rechazadas = $scope.listaTotal.rechazadas !== 0 ? $scope.listaTotal.rechazadas - 1 : 0;
+            $scope.listaTotal.aceptadas = $scope.listaTotal.aceptadas + 1;
+        } else {
+            $("#" + id).addClass("rechazada-check");
+            $scope.listaTotal.aceptadas = $scope.listaTotal.aceptadas !== 0 ? $scope.listaTotal.aceptadas - 1 : 0;
+            $scope.listaTotal.rechazadas = $(".rechazada-check").length;
         }
     }
 
 
+    $scope.applyMagnific = function () {
+        var id_categoria = $.trim($(this).attr('attr_id_cat'));
+
+        if (id_categoria === '') {
+            $(".magnific.item").show();
+            $('.imagen_content:hidden').show(400);
+            setTimeout(function () { mostarImagenesCategoria(); }, 500);
+
+        } else {
+            if ($(".imagen_content:visible").length > 0) {
+                $(".imagen_content:visible").hide(150, "linear", function () {
+
+                    $(".magnific.item:not(.imgtipo_" + id_categoria + ")").hide();
+                    $(".magnific.item.imgtipo_" + id_categoria + "").show();
+
+                    $('.content_img_' + id_categoria).show(200);
+                    //Manda function magnific popup
+                    mostarImagenesCategoria();
+                });
+            } else {
+                $(".magnific.item:not(.imgtipo_" + id_categoria + ")").hide();
+                $(".magnific.item.imgtipo_" + id_categoria + "").show();
+
+                $('.content_img_' + id_categoria).show(200);
+                //Manda function magnific popup
+                mostarImagenesCategoria();
+            }
+
+        }
+
+    };
+
+    mostarImagenesCategoria = function () {
+        var $imageLinks = $('.magnific.item:visible');
+        var items = [];
+
+        $imageLinks.each(function (index, elemento) {
+            var $item = $(this);
+            var magItem = {
+                src: $item.attr('href'),
+                type: 'image'
+            };
+            magItem.title = $item.data('title');
+            items.push(magItem);
+        });
+        $imageLinks.magnificPopup({
+            mainClass: 'mfp-fade',
+            items: items,
+            gallery: {
+                enabled: true,
+                tPrev: $(this).data('prev-text'),
+                tNext: $(this).data('next-text')
+            },
+            type: 'image',
+            callbacks: {
+                beforeOpen: function () {
+                    var index = $imageLinks.index(this.st.el);
+                    if (-1 !== index) {
+                        this.goTo(index);
+
+                    }
+                    //  $('#imagenOT').modal('hide');
+                },
+
+                open: function () {
+                    // Disabling focus enforcement by magnific
+                    $.magnificPopup.instance._onFocusIn = function (e) { };
+
+                }
+            }
+
+        });
+    }
 
 }])

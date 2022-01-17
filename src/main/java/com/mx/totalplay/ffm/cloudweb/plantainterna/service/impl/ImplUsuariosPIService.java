@@ -218,6 +218,7 @@ public class ImplUsuariosPIService implements UsuariosPIService {
 		String url = principalDetail.getDireccionAmbiente().concat(constUsuario.getGuardarUsuario());
 		ServiceResponseResult response=restCaller.callPostBearerTokenRequest(jsonObject.toString(), url, ServiceResponseResult.class, tokenAcces);
 		logger.info("URL " + url);
+		logger.info("PARAMS " + params);
 		logger.info("RESULT guardarUsuario " + gson.toJson(response));
 		return response;
 	}
