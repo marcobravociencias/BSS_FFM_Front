@@ -255,6 +255,7 @@ label.label-filter {
     max-width: 15em !important;
     margin-left: 4em;
     margin-bottom: 1em;
+    margin-top: 1em;
 }
 
 .imagen_content {
@@ -315,7 +316,7 @@ img.img_evidencia {
 }
 
 .content-filters {
-    margin: 0 0 2em 0;
+    margin: 0 0 1em 0;
     font-size: 0.8em;
     font-family: "Montserrat" !important;
 }
@@ -501,4 +502,14 @@ body.modal-open.mfp-zoom-out-cur {
 
 body.ver_scroll.pg-loaded.modal-open {
     overflow: hidden;
+}
+
+.btn-guardar {
+    font-size: 0.7em;
+    background-color: #0c56d0;
+    color: white;
+    font-weight: bold;
+    padding: 0.6em 2em;
+    border: 0.09rem solid #0c56d0;
+    box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
 }

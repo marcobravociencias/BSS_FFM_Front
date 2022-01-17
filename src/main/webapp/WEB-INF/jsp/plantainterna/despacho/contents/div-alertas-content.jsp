@@ -1,4 +1,4 @@
-<div class="container-fluid content-alertas" ng-show="!vistaDespacho">
+<div class="container-fluid content-alertas"ng-show="!vistaDespacho && !vistaAuditoriaEvidencia">
     <div class="row">
         <div class="col-12 header-alertas">
             <i class="fa fa-times icon-exit-header-alertas" ng-click="cerrarAlertas()"></i>
@@ -441,6 +441,119 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+</div>
+
+<div class="container-fluid content-alertas" ng-show="!vistaDespacho && vistaAuditoriaEvidencia">
+    <div class="row">
+        <div class="col-12 header-alertas">
+            <i class="fa fa-times icon-exit-header-alertas" ng-click="cerrarAlertas()"></i>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <div class="card cards-alertas">
+                <div class="card-header card-header-alerta-principal">
+                    <span class="titulo-alerta-modal">OTS</span>
+                </div>
+                <div class="card-body card-body-alerta-principal">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="input-group">
+                                <input id="buscador-alertas-ot" ng-keyup="buscarOtAlertaKeyUpOt($event)" type="text"
+                                    class="form-control buscadorOT" placeholder="OT/OS">
+
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary btnBuscadorOTAlerta" type="button"
+                                        id="button-addon2"><i class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="scrollTablaAlertasPI">
+                        <table id="table-alertas-pi">
+                            <thead>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-9" id="alertaAuditoriaEvidencia">
+            <div class="card cards-alertas">
+                <div class="card-header card-header-alerta-principal">
+                    <div class="row">
+                        <div class="col-12 contenedor-titulo-acciones-alerta">
+                            <span id="idTituloAccionesAlertas" class="titulo-alerta-modal">EVIDENCIA</span>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="card-body card-body-alerta-principal">
+                    <div class="row content-filters">
+                        <div class="col-4 content-select">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input radio-evidencias" type="radio" name="inlineRadioOptions"
+                                    id="aceptar" ng-click="seleciconarTodas('1')" value="option1">
+                                <label class="form-check-label" for="aceptar">Aceptar todas</i></label>
+                            </div>
+                            <div class="form-check form-check-inline radio-evidencias">
+                                <input class="form-check-input radio-evidencias" type="radio" name="inlineRadioOptions"
+                                    id="rechazar" ng-click="seleciconarTodas('0')" value="option2">
+                                <label class="form-check-label" for="rechazar">Rechazar todas</label>
+                            </div>
+                        </div>
+                        <div class="row col-8 content-total">
+                            <div class="col-4">
+                                <span>Total evidencia: <strong ng-bind="detalleEvidencia.length"></strong></span>
+                            </div>
+                            <div class="col-4">
+                                <span>Aceptadas: <strong ng-bind="listaTotal.aceptadas || 0"></strong></span>
+                            </div>
+                            <div class="col-4">
+                                <span>Rechazadas: <strong ng-bind="listaTotal.rechazadas || 0"></strong></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="overflow-y: auto; height: 75%;">
+                        <div class="imagen_content_evidencia" ng-repeat="img in detalleEvidencia">
+                            <div class="imagen_content">
+                                <div class="form-check">
+                                    <input type="checkbox" ng-click="changeSelect($event)" id="check_{{img.idEvidencia}}" class="form-check-input checkbox-evidencia">
+                                </div>
+                                <div class="contenedor_img_evidencia">
+                                    <a href="{{img.url ? img.url : './resources/img/generic/not_found.png'}}"
+                                        class="magnific item imgtipo_{{img.idCatEvidencia}}"
+                                        data-title="{{img.nombreEvidencia}}">
+                                        <img class="z-depth-1 img_evidencia"
+                                            ng-src="{{img.url ? img.url : './resources/img/generic/not_found.png'}}" width="180"
+                                            height="130" />
+                                    </a>
+                                    <div class="middle_img_evidencia">
+                                        <div class="text_img_evidencia">{{img.nombreEvidencia}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12" style="margin-top: -4em; padding: 1em;">
+                    <div class="col-2 offset-10" style="text-align: right; padding-right: 0;">
+                        <button type="button" class="btn btn-primary btn-guardar ripple-surface">
+                            Guardar
+                        </button>
                     </div>
                 </div>
             </div>

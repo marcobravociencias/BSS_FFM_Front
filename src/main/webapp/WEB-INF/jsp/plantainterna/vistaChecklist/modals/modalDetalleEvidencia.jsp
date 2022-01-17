@@ -38,37 +38,22 @@
                         </button>
                     </div>
                 </div>
-                <div class="col-12">
-                    <div class="imagen_content_evidencia">
+                <div class="col-12" style="height: 23em; overflow-y: auto;">
+                    <div class="imagen_content_evidencia" ng-repeat="img in detalleEvidencia">
                         <div class="imagen_content">
                             <div class="form-check">
-                                <input type="checkbox" ng-click="changeSelect($event)" id="check_1" class="form-check-input checkbox-evidencia">
+                                <input type="checkbox" ng-click="changeSelect($event)" id="check_{{img.idEvidencia}}" class="form-check-input checkbox-evidencia">
                             </div>
                             <div class="contenedor_img_evidencia">
-                                <a href="./resources/img/generic/not_found.png" class="magnific item"
-                                    data-title="Evidencia principal">
-                                    <img class="z-depth-1 img_evidencia" ng-src="./resources/img/generic/not_found.png"
-                                        width="180" height="130" />
+                                <a href="{{img.url ? img.url : './resources/img/generic/not_found.png'}}"
+                                    class="magnific item imgtipo_{{img.idCatEvidencia}}"
+                                    data-title="{{img.nombreEvidencia}}">
+                                    <img class="z-depth-1 img_evidencia"
+                                        ng-src="{{img.url ? img.url : './resources/img/generic/not_found.png'}}" width="180"
+                                        height="130" />
                                 </a>
                                 <div class="middle_img_evidencia">
-                                    <div class="text_img_evidencia">Evidencia principal</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="imagen_content_evidencia">
-                        <div class="imagen_content">
-                            <div class="form-check">
-                                <input type="checkbox" ng-click="changeSelect($event)" class="form-check-input checkbox-evidencia" id="check_2">
-                            </div>
-                            <div class="contenedor_img_evidencia">
-                                <a href="./resources/img/generic/not_found.png" class="magnific item"
-                                    data-title="Evidencia principal">
-                                    <img class="z-depth-1 img_evidencia" ng-src="./resources/img/generic/not_found.png"
-                                        width="180" height="130" />
-                                </a>
-                                <div class="middle_img_evidencia">
-                                    <div class="text_img_evidencia">Evidencia principal</div>
+                                    <div class="text_img_evidencia">{{img.nombreEvidencia}}</div>
                                 </div>
                             </div>
                         </div>
@@ -80,7 +65,7 @@
                     data-mdb-dismiss="modal">
                     Cancelar
                 </button>
-                <button type="button" class="btn btn-primary ripple-surface" style="height: 2.75em; padding: 0.5em 2em;">
+                <button type="button" class="btn btn-primary btn-guardar ripple-surface" style="height: 2.95em">
                    Guardar
                 </button>
             </div>
