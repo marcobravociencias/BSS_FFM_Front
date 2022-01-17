@@ -65,7 +65,7 @@
                     data-mdb-dismiss="modal">
                     Cancelar
                 </button>
-                <button type="button" class="btn btn-primary btn-guardar ripple-surface" style="height: 2.95em">
+                <button type="button" ng-click="guardarEvidencia()" class="btn btn-primary btn-guardar ripple-surface" style="height: 2.95em">
                    Guardar
                 </button>
             </div>

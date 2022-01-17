@@ -1166,6 +1166,25 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
         }
     }
 
+    $scope.guardarEvidencia = function () {
+        let aceptadas = [];
+        let rechazadas = [];
+
+        $.each($scope.detalleEvidencia, function (i, elemento) {
+            if ($("#check_" + elemento.idEvidencia).is(":checked")) {
+                aceptadas.push(elemento.idEvidencia);
+            }
+        });
+
+        $.each($(".rechazada-check"), function (i, elemento) {
+            let id = (elemento.id).split("_")[1];
+            rechazadas.push(id);
+        });
+        console.log(aceptadas);
+        console.log(rechazadas);
+    }
+
+
 };
 
 

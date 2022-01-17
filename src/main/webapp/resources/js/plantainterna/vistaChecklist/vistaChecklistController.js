@@ -236,6 +236,23 @@ toastr.error('Ha ocurrido un error en la consulta');
         }
     }
 
+    $scope.guardarEvidencia = function () {
+        let aceptadas = [];
+        let rechazadas = [];
+        
+        $.each($scope.detalleEvidencia, function (i, elemento) {
+            if ($("#check_" + elemento.idEvidencia).is(":checked")) {
+                aceptadas.push(elemento.idEvidencia);
+            }
+        });
+        
+        $.each($(".rechazada-check"), function (i, elemento) {
+            let id = (elemento.id).split("_")[1];
+            rechazadas.push(id);
+        });
+        console.log(aceptadas);
+        console.log(rechazadas);
+    }
 
     $scope.applyMagnific = function () {
         var id_categoria = $.trim($(this).attr('attr_id_cat'));
