@@ -883,9 +883,9 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 											<td >${elem.numSerie} </td>
 											<td >${elem.familia} </td>
 											<td >${elem.docSap} </td>
-											<td >$ ${transformarTextPrecio(elem.precio)} </td>
+											<td >${transformarTextPrecio(elem.precio)} </td>
 											<td >${elem.cantidad} </td>
-											<td >$ ${transformarTextPrecio(elem.costo)} </td>
+											<td >${transformarTextPrecio(elem.costo)} </td>
 											<td >${elem.unidad} </td>
 											<td >${elem.comentariosSap} </td>
 
@@ -918,12 +918,17 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			}).catch(err => handleError(err));
 		}
 	}
-
-	function transformarTextPrecio(num) {
-		if ((num && num != '' && num != '0')) {
-			return (Math.round(parseFloat(num) * 100) / 100).toFixed(2);
-		} else {
-			return '0.00'
+	function transformarTextPrecio(num){
+		if( ( num && num != '' && num != '0' ) ){
+			return ( Math.round( parseFloat( num ) * 100) / 100 ).toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD',
+              }); 
+		} else{
+			return parseFloat('0.00').toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD',
+              }); 
 		}
 	}
 	$scope.inicializarTableMaterialesOt = function () {
