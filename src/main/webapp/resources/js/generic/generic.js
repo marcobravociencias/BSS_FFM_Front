@@ -281,8 +281,9 @@ cambiarContraseniaUserLogin = function () {
 
 	let params = {
 		idUsuario: null,
-		actualPassword: $("#actualPasswordUserLogin").val(),
-		nuevoPassword: $("#newPasswordUserLogin").val()
+		actualCreed: $("#actualPasswordUserLogin").val(),
+		nuevoPassword: $("#newPasswordUserLogin").val(),
+		newcred: $("#newPasswordUserLogin").val()
 	}
 
 	swal({ text: 'Espera un momento...', allowOutsideClick: false });
@@ -308,7 +309,12 @@ cambiarContraseniaUserLogin = function () {
 				$("#modalCambiaContraseniaLogin").modal('hide');
 				toastr.success('Contrase\u00F1a restablecida correctamente');
 			} else {
-				toastr.error(response.responseJSON.resultDescripcion);
+				if (response.responseJSON.result === 'credencialInvalida') {
+					toastr.warning('La contrase\u00F1a actual no coincide');
+				} else {
+					toastr.error(response.responseJSON.resultDescripcion);
+				}
+
 			}
 
 		}
