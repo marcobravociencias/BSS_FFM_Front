@@ -82,7 +82,10 @@ public class ImplGestionPlanningService implements GestionPlanningService {
                 .concat(constGestionPlanning.getRestaurarContrasenaUsuario());
         logger.info("***URL: " + urlRequest);
         Map<String, String> paramUri = new HashMap<String, String>();
-
+        if(jsonObject.get("idUsuario").isJsonNull()) {
+            jsonObject.addProperty("idUsuario", principalDetail.getIdUsuario());
+            logger.info("ImplGestionPlanningService.class [metodo = restaurarContraseniaUsuario() session ]\n" + jsonObject);
+        }
         ServiceResponseResult response = consumeRest.callPatchBearerTokenRequestURL(paramUri,
                 gson.toJson(jsonObject), urlRequest, ServiceResponseResult.class, tokenAcces);
         logger.info("RESULT" + gson.toJson(response));

@@ -213,13 +213,13 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                     $scope.nGeografiaContrasenia = llavesResult.N_FILTRO_GEOGRAFIA_CAMBIOCONTRASENIA ? Number(llavesResult.N_FILTRO_GEOGRAFIA_CAMBIOCONTRASENIA) : 4;
                     $scope.nEstatusPagosTecnicos = llavesResult.N_ESTATUS_PAGOS_TECNICOS ? llavesResult.N_ESTATUS_PAGOS_TECNICOS : null;
                     $scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO.permisos;
-                    if($scope.nEstatusPagosTecnicos !== null){
+                    if ($scope.nEstatusPagosTecnicos !== null) {
                         let statusList = $scope.nEstatusPagosTecnicos.split(",");
                         $scope.listaStatus = statusList;
                     }
-                    if($scope.permisosConfigUser!=undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length >0){
-                        $scope.permisosConfigUser.permisos.map(e=>{e.banderaPermiso = true ; return e;});
-                        $scope.accionesUserConfigText=$scope.permisosConfigUser.permisos.map(e=>{return e.clave})
+                    if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
+                        $scope.permisosConfigUser.permisos.map(e => { e.banderaPermiso = true; return e; });
+                        $scope.accionesUserConfigText = $scope.permisosConfigUser.permisos.map(e => { return e.clave })
                     }
 
                 }
@@ -522,9 +522,19 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
 
 
     $scope.restablecer = function () {
+        regex = /^(?=.*[a-z])\S{9,20}$/;
+        numero = /(?=.*\d)/;
+        allow = /(?=.*[\u0040]|[\u0024]|[\u0021]|[\u0025]|[\u002A]|[\u0023]|[\u003F]|[\u0026])/;
+        refuse = /(?=.*[\u0020]|[\u0022]|[\u0027]|[\u0028]|[\u0029]|[\u002B]|[\u002C]|[\u002D]|[\u002E]|[\u002F]|[\u003A]|[\u003B]|[\u003C]|[\u003D]|[\u003E]|[\u007B-\u00FF])/;
 
         if ($("#newPassword").val() == '' || $("#comentariosPassword").val() == '') {
-            toastr.warning('Todos los campos son obligatorios');
+            toastr.warning('Todos los campos son obligatorios 2');
+            return false;
+        }
+
+        if ($("#newPassword").val().length <= 8 || !regex.test($("#newPassword").val()) || !numero.test($("#newPassword").val())
+            || !allow.test($("#newPassword").val()) || refuse.test($("#newPassword").val())) {
+            toastr.warning('Formato invalido');
             return false;
         }
 

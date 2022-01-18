@@ -307,3 +307,9 @@ h1.h6.subtitle-modulo {
 .active-otros-navbar{    
    border-bottom: .3em solid #7716FA;
 }
+
+.message-password-warning{
+  padding: 0 1.5em;
+  font-size: 0.7em;
+  color: orange;
+}
