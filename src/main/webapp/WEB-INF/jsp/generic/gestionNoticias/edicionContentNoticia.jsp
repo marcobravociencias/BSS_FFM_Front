@@ -40,29 +40,68 @@
                             <span class="text-dia-actual">Martes 18 Mayo </span>
                         </div>
                     </div>
-                    <div class="container-noticias-visualizador">
-                        <div  class="imagen-noticia-previsualizador">                      
-                            <img  ng-if="fileCargaArchivoNoticiaEdit.archivo && banderaEdicionImagen" class="imagen-visor-creanotica" ng-src="{{fileCargaArchivoNoticiaEdit.archivo}}" alt="">
-                            <img  ng-if="fileCargaArchivoNoticiaEdit.archivo && !banderaEdicionImagen" class="imagen-visor-creanotica" ng-src="data:image/jpeg;base64,{{fileCargaArchivoNoticiaEdit.archivo}}" alt="">
-        
-                            
-                            <div ng-if="!inhabilidarCamposEdicion" class="content-titulo-principal">
-                                <span class="text-title titulo-principal" ng-bind="editObj.tituloPrincipal" ></span>
-                            </div>
-                            <div ng-if="!inhabilidarCamposEdicion" class="content-titulo-secundario">
-                                <span class="text-title titulo-secundario" ng-bind="editObj.tituloSecundario" ></span>
-                            </div>
-        
-                            <div class="content-icons-image">
-                                <div ng-click="triggerInputFileEditar()" class="icon-accion-imagen">
-                                    <i  class="fas fa-camera icono-funcion-imagen"></i>
-                                </div>
-                                <div ng-click="removerImagenEditar()" class="icon-accion-imagen">
-                                    <i  class="far fa-trash-alt icono-funcion-imagen"></i>
-                                </div>
-                            </div>
-                        </div>
+                    
+                    <div class="container-categorias-app row">
+                    	<div class="col-md-6">
+	                    	<div class="container-noticias-visualizador-mod">
+		                        <div  class="imagen-noticia-previsualizador-mod">                      
+		                            <img id="imgNoticiaMod" ng-if="fileCargaArchivoNoticiaEdit.archivo && banderaEdicionImagen" class="imagen-visor-creanotica" ng-src="{{fileCargaArchivoNoticiaEdit.archivo}}" alt="">
+		                            <img id="imgNoticiaModNueva" ng-if="fileCargaArchivoNoticiaEdit.archivo && !banderaEdicionImagen" class="imagen-visor-creanotica" ng-src="data:image/jpeg;base64,{{fileCargaArchivoNoticiaEdit.archivo}}" alt="">
+		        
+		                            
+		                            <div ng-if="!inhabilidarCamposEdicion" class="content-titulo-principal">
+		                                <span class="text-title titulo-principal" ng-bind="editObj.tituloPrincipal" ></span>
+		                            </div>
+		                            <div ng-if="!inhabilidarCamposEdicion" class="content-titulo-secundario">
+		                                <span class="text-title titulo-secundario" ng-bind="editObj.tituloSecundario" ></span>
+		                            </div>
+
+		                            <div class="content-icons-image">
+		                            	<div class="row">
+		                            		<div class="col-md-2">
+		                            			<div ng-click="triggerInputFileEditar()" class="icon-accion-imagen">
+				                                    <i  class="fas fa-camera icono-funcion-imagen"></i>
+				                                </div>
+		                            		</div>
+		                            		<div class="col-md-2">
+		                            			<div ng-click="removerImagenEditar()" class="icon-accion-imagen">
+				                                    <i  class="far fa-trash-alt icono-funcion-imagen"></i>
+				                                </div>
+		                            		</div>
+		                            		<div class="col-md-2 offset-2">
+		                            			<div ng-click="menosZoomImagenMod()" class="icon-accion-imagen">
+						                            <i class="fas fa-search-minus icono-funcion-imagen"></i>
+						                        </div>
+		                            		</div>
+		                            		<div class="col-md-2">
+		                            			<div ng-click="masZoomImagenMod()" class="icon-accion-imagen">
+						                            <i class="fas fa-search-plus icono-funcion-imagen"></i>
+						                        </div>
+		                            		</div>
+		                            	</div>
+		                            </div>
+		                        </div>
+		                    </div>
+                    	</div>
+                    	<div class="col-md-6" ng-show="segundaNoticiaVistaMod">
+	                    	<div class="container-noticias-visualizador-mod">
+		                        <div  class="imagen-noticia-previsualizador-mod">                      
+		                            <img class="imagen-visor-creanotica" ng-src="{{segundaNoticiaVistaMod.urlBanner}}" alt="">
+		        
+		                            
+		                            <div class="content-titulo-principal">
+		                                <span class="text-title titulo-principal" ng-bind="segundaNoticiaVistaMod.tituloPrincipal" ></span>
+		                            </div>
+		                            <div class="content-titulo-secundario">
+		                                <span class="text-title titulo-secundario" ng-bind="segundaNoticiaVistaMod.tituloSecundario" ></span>
+		                            </div>
+		                        </div>
+		                    </div>
+                    	</div>
                     </div>
+                    
+
+                    
                     <div class="container-categorias-app row">
                         <div class="content-categoria-app col">
                             <div class="content-img-card">

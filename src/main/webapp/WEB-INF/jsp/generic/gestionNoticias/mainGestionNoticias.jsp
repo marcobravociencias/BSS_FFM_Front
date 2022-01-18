@@ -37,7 +37,7 @@
                 <li ng-click="abrirModalCrearNoticia()"> 
                      <i class="fas fa-plus iconoCrearNoticia"></i>
                      <div class="text-crear-noticia-hide">
-                         <b class="text-icono-crear-noticia">Crear notocia</b>
+                         <b class="text-icono-crear-noticia">Crear noticia</b>
                      </div>
                 </li> 
             </ul>

@@ -544,5 +544,23 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
     	$scope.crearNoticiaContent = true;
 	}
     
+    $scope.masZoomImagenRegistro = function() {
+		$("#imgNoticiaRegistro").css("object-fit", "cover");
+	}
+    
+    $scope.menosZoomImagenRegistro = function() {
+    	$("#imgNoticiaRegistro").css("object-fit", "contain");
+	}
+    
+    $scope.masZoomImagenMod = function() {
+    	$("#imgNoticiaMod").css("object-fit", "cover");
+    	$("#imgNoticiaModNueva").css("object-fit", "cover");
+	}
+    
+    $scope.menosZoomImagenMod = function() {    	
+    	$("#imgNoticiaMod").css("object-fit", "contain");
+		$("#imgNoticiaModNueva").css("object-fit", "contain");
+	}
+    
 }]);
 

@@ -40,7 +40,7 @@
 		            </div>
 		            <div class="container-noticias-visualizador">
 		                <div  class="imagen-noticia-previsualizador">                      
-		                    <img  ng-show="fileCargaArchivoNoticia.archivo" class="imagen-visor-creanotica" ng-src="data:image/jpeg;base64,{{fileCargaArchivoNoticia.archivo}}" alt="">
+		                    <img id="imgNoticiaRegistro" ng-show="fileCargaArchivoNoticia.archivo" class="imagen-visor-creanotica" ng-src="data:image/jpeg;base64,{{fileCargaArchivoNoticia.archivo}}" alt="">
 		                    <div ng-show="!inhabilidarCamposRegistro" class="content-titulo-principal">
 		                        <span class="text-title titulo-principal" ng-bind="saveObj.tituloPrincipal" ></span>
 		                    </div>
@@ -49,12 +49,28 @@
 		                    </div>
 		
 		                    <div class="content-icons-image">
-		                        <div ng-click="triggerInputFile()" class="icon-accion-imagen">
-		                            <i  class="fas fa-camera icono-funcion-imagen"></i>
-		                        </div>
-		                        <div ng-click="removerImagenCreacion()" class="icon-accion-imagen">
-		                            <i  class="far fa-trash-alt icono-funcion-imagen"></i>
-		                        </div>
+		                    	<div class="row">
+		                    		<div class="col-md-2" style="margin-left: 0.3em;">
+		                    			<div ng-click="triggerInputFile()" class="icon-accion-imagen">
+				                            <i  class="fas fa-camera icono-funcion-imagen"></i>
+				                        </div>
+		                    		</div>
+		                    		<div class="col-md-2">
+		                    			<div ng-click="removerImagenCreacion()" class="icon-accion-imagen">
+				                            <i  class="far fa-trash-alt icono-funcion-imagen"></i>
+				                        </div>
+		                    		</div>
+		                    		<div class="col-md-2 offset-md-2" ng-show="fileCargaArchivoNoticia.archivo">
+		                    			<div ng-click="menosZoomImagenRegistro()" class="icon-accion-imagen">
+				                            <i class="fas fa-search-minus icono-funcion-imagen"></i>
+				                        </div>
+		                    		</div>
+		                    		<div class="col-md-2" ng-show="fileCargaArchivoNoticia.archivo">
+		                    			<div ng-click="masZoomImagenRegistro()" class="icon-accion-imagen">
+				                            <i class="fas fa-search-plus icono-funcion-imagen"></i>
+				                        </div>
+		                    		</div>
+		                    	</div>
 		                    </div>
 		                </div>
 		            </div>

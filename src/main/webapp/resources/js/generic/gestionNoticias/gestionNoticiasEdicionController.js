@@ -5,6 +5,7 @@ app.edicionNoticiaController=function($scope,gestionNoticiasService){
     $scope.isSeleccionGeografiaEdicion=false
     $scope.banderaArchivoBanner=false;
     $scope.banderaArchivoDescarga=false;
+    $scope.segundaNoticiaVistaMod = {};
     abrirModalEdicion=function(index){
         $("#jstre-content-geofrafia-edicon").jstree().deselect_all(true);
         $scope.editObj=angular.copy( $scope.litadoNoticiasTemp[index] )
@@ -42,6 +43,9 @@ app.edicionNoticiaController=function($scope,gestionNoticiasService){
         }else{
             $scope.isSeleccionGeografiaEdicion=false
         }
+        
+        $scope.segundaNoticiaVistaMod = $scope.litadoNoticiasTemp.filter(e => {return e.id != index})[0];
+        console.log($scope.segundaNoticiaVistaMod);
 
         $scope.mostrarFechasDefinidasEdicion=$scope.editObj.permanente == 1 ? true :false;
         $scope.banderaArchivoBanner=false;
