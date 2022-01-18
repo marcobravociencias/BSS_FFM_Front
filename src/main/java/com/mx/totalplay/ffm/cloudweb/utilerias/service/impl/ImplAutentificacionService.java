@@ -27,7 +27,7 @@ public class ImplAutentificacionService  implements AutentificacionService{
 	private final Logger logger = LogManager.getLogger(ImplAutentificacionService.class.getName());
 	private final Environment env;
 	private final ConsumeRest restCaller;
-	private final int VALOR_NAVBAR=5;
+	private final int VALOR_NAVBAR=4;
 	private Gson gson = new Gson();
 
 	@Autowired

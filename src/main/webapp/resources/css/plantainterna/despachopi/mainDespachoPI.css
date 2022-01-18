@@ -412,7 +412,7 @@ span#buscar-btn-otpend {
   color: #818181 !important;
   transition: all 0.5s ease;
   border-bottom: 1px solid white;
-  background: white !important;
+  background: transparent !important;
 }
 .input-filtro-despacho:hover {
   background: #e4e6f2 !important;
