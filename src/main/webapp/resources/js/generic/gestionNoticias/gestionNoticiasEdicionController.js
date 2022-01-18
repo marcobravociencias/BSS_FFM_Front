@@ -44,14 +44,12 @@ app.edicionNoticiaController=function($scope,gestionNoticiasService){
             $scope.isSeleccionGeografiaEdicion=false
         }
         
-        $scope.segundaNoticiaVistaMod = $scope.litadoNoticiasTemp.filter(e => {return e.id != index})[0];
-        console.log($scope.segundaNoticiaVistaMod);
+        $scope.segundaNoticiaVistaMod = $scope.litadoNoticiasTemp.filter(e => {return e.id != $scope.editObj.id})[0];
 
         $scope.mostrarFechasDefinidasEdicion=$scope.editObj.permanente == 1 ? true :false;
         $scope.banderaArchivoBanner=false;
         $scope.banderaArchivoDescarga=false;
         $scope.$apply()
-        console.log("###$scope.",$scope.editObj )
     }
 
     /** Archivos banner */
@@ -104,7 +102,6 @@ app.edicionNoticiaController=function($scope,gestionNoticiasService){
         $("#cargarArchivoDescargaEdicion").click();
     }
     $scope.cargarArchivoDescargaEdicion = function (e) {
-		console.log("trigger archivo !!! ---")
 		$scope.fileDecargaNoticaEdicion={}
         $scope.banderaArchivoDescarga=true;
 		if (e.target.files[0]) {
@@ -200,7 +197,6 @@ app.edicionNoticiaController=function($scope,gestionNoticiasService){
             swal.showLoading();
 
             gestionNoticiasService.actualizarNoticia($scope.editObj).then((result) => {             
-                console.log(result);
 				if (result.data !== undefined) {
 					if (result.data.respuesta) {
 						toastr.success(result.data.result.description);
@@ -208,12 +204,10 @@ app.edicionNoticiaController=function($scope,gestionNoticiasService){
                         $scope.consultarNoticias()
                         $scope.edicionNoticaContent=false
 					} else {
-						console.log(result.data.resultDescripcion)
 						toastr.warning( result.data.resultDescripcion )
            				swal.close()
 					}
 				} else {
-					console.log(result.data.resultDescripcion)
 					toastr.warning( result.data.resultDescripcion )
        				swal.close()
 				}

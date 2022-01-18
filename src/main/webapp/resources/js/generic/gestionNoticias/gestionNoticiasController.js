@@ -19,7 +19,6 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 	$scope.saveObj.urlLinkExterno="www.google.xom.mx"
 
 	angular.element(document).ready(function () {
-		console.log("redadyyyy")
         $("#idBody").removeAttr("style");
 
 		$('#fecha-inicio-crearnoticia').datepicker({
@@ -103,7 +102,6 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 		$("#cargarArchivoDescarga").val(''); 
 	}
 	$scope.cargarArchivoDescarga = function (e) {
-		console.log("trigger archivo !!! ---")
 		$scope.fileDecargaNotica={}
 		if (e.target.files[0]) {
 			let nombreArchivo = e.target.files[0].name;
@@ -178,8 +176,7 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 			gestionNoticiasService.consultaGeografias(),
 			gestionNoticiasService.consultarConfiguracionDespachoDespacho(paramsConfiguracionDespacho),
 	
-		]).then(function(results) {
-			console.log(results);		
+		]).then(function(results) {		
 			$scope.listadogeografiacopy=results[0].data.result.geografia
 			$scope.nivelGeografia = results[1].data.result.N_FILTRO_GEOGRAFIA ;			
 			if(results[0].data.result.geografia.length > 0){
@@ -311,8 +308,6 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
         $q.all([
     		gestionNoticiasService.consultarNoticiasGeneric()
         ]).then(function(results) {
-            console.log(results);
-			
 			if( results[0].data != undefined){
 				if( results[0].data.respuesta  ){
 					if( results[0].data.result !=undefined &&    results[0].data.result.noticias	 ){
@@ -451,18 +446,15 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 			swal.showLoading();
 	
 			gestionNoticiasService.registrarNoticia($scope.saveObj).then((result) => {
-				console.log(result);
 				swal.close()
 				if (result.data !== undefined) {
 					if (result.data.respuesta) {
 						toastr.success(result.data.result.description);
 						$scope.limpiarFormularioCrearNotica()
 					} else {
-						console.log(result.data.resultDescripcion)
 						toastr.warning( result.data.resultDescripcion )
 					}
 				} else {
-					console.log(result.data.resultDescripcion)
 					toastr.warning( result.data.resultDescripcion )
 				}
 			}).catch((err) => handleError(err));
