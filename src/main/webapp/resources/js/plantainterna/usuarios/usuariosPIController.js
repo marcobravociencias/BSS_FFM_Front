@@ -65,6 +65,13 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	$scope.geoSelect = [];
 	$scope.catalogoIntervenciones = [];
 	$scope.intervencionSelect = [];
+	
+	//CONFIGURACIÓN PERMISOS
+	$scope.permisosUsuariosAcciones = [];
+	$scope.configPermisoAccionConsultaUsuarios = false;
+	$scope.configPermisoAccionCreaUsuarios = false;
+	$scope.configPermisoAccionEditaUsuarios = false;
+	$scope.configPermisoAccionEliminaUsuarios = false;
    
 	angular.element(document).ready(function () {
         $("#idBody").removeAttr("style");
@@ -94,173 +101,184 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 			let resultConf= results[0].data.result
 			if( resultConf != undefined && resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves){
 				let  llavesResult=results[0].data.result.MODULO_ACCIONES_USUARIO.llaves;                    
-				$scope.permisosUsuariosAcciones = resultConf.MODULO_ACCIONES_USUARIO.permisos;			
 				nivelUsuario= llavesResult.N_FILTRO_GEOGRAFIA;
 				$scope.filtroGeografias = llavesResult.N_FILTRO_GEOGRAFIA;
 				$scope.filtroIntervenciones = llavesResult.N_FILTRO_INTERVENCIONES;
 			}else{
 				toastr.warning("No se encontraron configuraciones del usuario")
 			} 
-        	
-        	// *** COMPAÑÍAS ***
-        	if (results[1].data !== undefined) {
-            	if(results[1].data.respuesta){
-            		if(results[1].data.result.companias.length > 0){
-            			$scope.listaCompanias = results[1].data.result.companias;
-            			angular.forEach($scope.listaCompanias,function(companiaCheck,index){
-            				companiaCheck.checkedOpcion = true;
-            			});
-            		}else{
-                    	toastr.warning('¡No existen compañías actualmente!');
-                    }
-            	}else{
-            		toastr.warning('¡No existen compañías actualmente!');
-            	}
-            }else{
-            	toastr.error('Error interno en el servidor.');
-            }
-            
-            // *** PUESTOS ***
-        	if (results[2].data !== undefined) {
-            	if(results[2].data.respuesta){
-            		if(results[2].data.result.puestos.length > 0){
-            			$scope.listaPuestos = results[2].data.result.puestos;
-            			$scope.idPuestoTecnico = $scope.listaPuestos.filter(e => {return e.descripcion == "TECNICO"})[0];
-            		    $scope.idPuestoDespacho = $scope.listaPuestos.filter(e => {return e.descripcion == "DESPACHO"})[0];
-            		    angular.forEach($scope.listaPuestos,function(puestoCheck,index){
-            		    	puestoCheck.checkedOpcion = true;
-            			});
-            		}else{
-            			toastr.warning('¡No existen puestos actualmente!');
-            		}
-            	}else{
-            		toastr.warning('¡No existen puestos actualmente!');
-            	}
-        	}else{
-        		toastr.error('Error interno en el servidor.');
-        	}
-            
-            // *** PERMISOS ***
-        	if (results[3].data !== undefined) {
-            	if(results[3].data.respuesta){
-            		if(results[3].data.result.permisos.length > 0){
-            			let permisosLista = results[3].data.result.permisos;
-            			$scope.listaPermisos = results[3].data.result.permisos;
-            			permisosLista.push({id: 0, nombre: "PERMISOS", nivel: 0, idPadre: "#", state:{opened: true}});
-            			permisosLista.map((e)=>{
-            				e.parent = e.idPadre == null ? 0 : e.idPadre;
-                            e.text= e.nombre;
-                            e.icon= "fa fa-globe";
-                            return e
-                        })       
-						$scope.listaPermisosRespaldo = angular.copy(permisosLista);
-                        $('#arbolPermisoRegistro').bind('loaded.jstree', function(e, data) {
-							//$(this).jstree("open_all");
-                        }).jstree({
-                        	'plugins': ['search', 'checkbox', 'wholerow'],
-                        	'search': {
-    							"case_sensitive": false,
-    							"show_only_matches": true
-    						},
-							'core': {
-								'data': permisosLista,
-                                'themes': {
-                                    'name': 'proton',
-                                    'responsive': true,
-                                    "icons":false        
-                                }
-                            }
-						});
-            		}else{
-            			toastr.warning('¡No existen permisos actualmente!');
-            		}
-            	}else{
-            		toastr.warning('¡No existen permisos actualmente!');
-            	}
-        	}else{
-        		toastr.error('Error interno en el servidor.');
-        	}
-            
-            // *** GEOGRAFÍAS ***
-            if (results[4].data !== undefined) {
-            	if(results[4].data.respuesta){
-            		if(results[4].data.result.geografia.length > 0){
-            			let listGeografias = [];
-                    	if(nivelUsuario !== undefined){
-                    		results[4].data.result.geografia.forEach(elemento =>{
-	                            if (elemento.nivel <= nivelUsuario) {
-	                            	listGeografias.push(elemento);
-	                            	$scope.listaGeografias.push(elemento);
+			
+			// *** CONFIGURACIÓN DE PERMISOS ***
+			if( resultConf != undefined && resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.permisos && resultConf.MODULO_ACCIONES_USUARIO.permisos != ""){
+				$scope.permisosUsuariosAcciones = resultConf.MODULO_ACCIONES_USUARIO.permisos;
+				$scope.configPermisoAccionConsultaUsuarios = ($scope.permisosUsuariosAcciones.filter(e => {return e.clave == "accionConsultaUsuarios"})[0] != undefined);
+				$scope.configPermisoAccionCreaUsuarios = ($scope.permisosUsuariosAcciones.filter(e => {return e.clave == "accionCreaUsuarios"})[0] != undefined);
+				$scope.configPermisoAccionEditaUsuarios = ($scope.permisosUsuariosAcciones.filter(e => {return e.clave == "accionEditaUsuarios"})[0] != undefined);
+				$scope.configPermisoAccionEliminaUsuarios = ($scope.permisosUsuariosAcciones.filter(e => {return e.clave == "accionEliminaUsuarios"})[0] != undefined);
+				
+				// *** COMPAÑÍAS ***
+	        	if (results[1].data !== undefined) {
+	            	if(results[1].data.respuesta){
+	            		if(results[1].data.result.companias.length > 0){
+	            			$scope.listaCompanias = results[1].data.result.companias;
+	            			angular.forEach($scope.listaCompanias,function(companiaCheck,index){
+	            				companiaCheck.checkedOpcion = true;
+	            			});
+	            		}else{
+	                    	toastr.warning('¡No existen compañías actualmente!');
+	                    }
+	            	}else{
+	            		toastr.warning('¡No existen compañías actualmente!');
+	            	}
+	            }else{
+	            	toastr.error('Error interno en el servidor.');
+	            }
+	            
+	            // *** PUESTOS ***
+	        	if (results[2].data !== undefined) {
+	            	if(results[2].data.respuesta){
+	            		if(results[2].data.result.puestos.length > 0){
+	            			$scope.listaPuestos = results[2].data.result.puestos;
+	            			$scope.idPuestoTecnico = $scope.listaPuestos.filter(e => {return e.descripcion == "TECNICO"})[0];
+	            		    $scope.idPuestoDespacho = $scope.listaPuestos.filter(e => {return e.descripcion == "DESPACHO"})[0];
+	            		    angular.forEach($scope.listaPuestos,function(puestoCheck,index){
+	            		    	puestoCheck.checkedOpcion = true;
+	            			});
+	            		}else{
+	            			toastr.warning('¡No existen puestos actualmente!');
+	            		}
+	            	}else{
+	            		toastr.warning('¡No existen puestos actualmente!');
+	            	}
+	        	}else{
+	        		toastr.error('Error interno en el servidor.');
+	        	}
+	            
+	            // *** PERMISOS ***
+	        	if (results[3].data !== undefined) {
+	            	if(results[3].data.respuesta){
+	            		if(results[3].data.result.permisos.length > 0){
+	            			let permisosLista = results[3].data.result.permisos;
+	            			$scope.listaPermisos = results[3].data.result.permisos;
+	            			permisosLista.push({id: 0, nombre: "PERMISOS", nivel: 0, idPadre: "#", state:{opened: true}});
+	            			permisosLista.map((e)=>{
+	            				e.parent = e.idPadre == null ? 0 : e.idPadre;
+	                            e.text= e.nombre;
+	                            e.icon= "fa fa-globe";
+	                            return e
+	                        })       
+							$scope.listaPermisosRespaldo = angular.copy(permisosLista);
+	                        $('#arbolPermisoRegistro').bind('loaded.jstree', function(e, data) {
+								//$(this).jstree("open_all");
+	                        }).jstree({
+	                        	'plugins': ['search', 'checkbox', 'wholerow'],
+	                        	'search': {
+	    							"case_sensitive": false,
+	    							"show_only_matches": true
+	    						},
+								'core': {
+									'data': permisosLista,
+	                                'themes': {
+	                                    'name': 'proton',
+	                                    'responsive': true,
+	                                    "icons":false        
+	                                }
 	                            }
-	                        });
-                    	}else{
-                    		listGeografias = results[4].data.result.geografia;
-                    		$scope.listaGeografias = results[4].data.result.geografia;
-                    	}
-                    	$scope.catalogoGeografias = results[4].data.result.geografia;
-                    	geografia=listGeografias;
-                    	geografia.push({id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state:{opened: true}});
-                        geografia.map((e)=>{
-                        	e.parent = e.padre == null ? 0 : e.padre;
-                            e.text= e.nombre;
-                            e.icon= "fa fa-globe";
-                            e.state = {
-									opened: true,
-									selected: true,
-								}
-                            return e
-                        })       
-                        $scope.listaGeografiasRespaldo = angular.copy($scope.listaGeografias);
-                        $('#arbolGeografiaConsulta').bind('loaded.jstree', function(e, data) {
-							//$(this).jstree("open_all");
-                        }).jstree({
-                        	'plugins': ['search', 'checkbox', 'wholerow'],
-                        	'search': {
-    							"case_sensitive": false,
-    							"show_only_matches": true
-    						},
-							'core': {
-								'data': geografia,
-                                'themes': {
-                                    'name': 'proton',
-                                    'responsive': true,
-                                    "icons":false        
-                                }
-                            }
-						});
-                    }else{
-                    	toastr.warning('¡No existen geografías actualmente!');
-                    }
-            	}else{
-            		toastr.warning('¡No existen geografías actualmente!');
-            	}
-            }else{
-            	toastr.error('Error interno en el servidor.');
-            }
-            
-            // *** INTERVENCIONES ***
-            if (results[5].data !== undefined) {
-            	if(results[5].data.respuesta){
-            		if(results[5].data.result !== null){
-						$scope.respaldoIntervenciones = results[5].data.result;
-						$scope.catalogoIntervenciones = results[5].data.result;
-						$scope.listaIntervencionesRespaldo = angular.copy($scope.catalogoIntervenciones);
-            		}else{
-                    	toastr.warning('¡No existen intervenciones actualmente!');
-                    }
-            	}else{
-            		toastr.warning('¡No existen intervenciones actualmente!');
-            	}
-            }else{
-            	toastr.error('Error interno en el servidor.');
-            }
-        	//swal.close();
-        	setTimeout(function () {
-        		$scope.consultaUsuariosPorGeoCompPuestos();
-        		$scope.companiaSeleccion();
-        		$scope.puestoSeleccion();
-        		$scope.btnAceptarModalGeografiaConsulta();
-    		}, 500)
+							});
+	            		}else{
+	            			toastr.warning('¡No existen permisos actualmente!');
+	            		}
+	            	}else{
+	            		toastr.warning('¡No existen permisos actualmente!');
+	            	}
+	        	}else{
+	        		toastr.error('Error interno en el servidor.');
+	        	}
+	            
+	            // *** GEOGRAFÍAS ***
+	            if (results[4].data !== undefined) {
+	            	if(results[4].data.respuesta){
+	            		if(results[4].data.result.geografia.length > 0){
+	            			let listGeografias = [];
+	                    	if(nivelUsuario !== undefined){
+	                    		results[4].data.result.geografia.forEach(elemento =>{
+		                            if (elemento.nivel <= nivelUsuario) {
+		                            	listGeografias.push(elemento);
+		                            	$scope.listaGeografias.push(elemento);
+		                            }
+		                        });
+	                    	}else{
+	                    		listGeografias = results[4].data.result.geografia;
+	                    		$scope.listaGeografias = results[4].data.result.geografia;
+	                    	}
+	                    	$scope.catalogoGeografias = results[4].data.result.geografia;
+	                    	geografia=listGeografias;
+	                    	geografia.push({id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state:{opened: true}});
+	                        geografia.map((e)=>{
+	                        	e.parent = e.padre == null ? 0 : e.padre;
+	                            e.text= e.nombre;
+	                            e.icon= "fa fa-globe";
+	                            e.state = {
+										opened: true,
+										selected: true,
+									}
+	                            return e
+	                        })       
+	                        $scope.listaGeografiasRespaldo = angular.copy($scope.listaGeografias);
+	                        $('#arbolGeografiaConsulta').bind('loaded.jstree', function(e, data) {
+								//$(this).jstree("open_all");
+	                        }).jstree({
+	                        	'plugins': ['search', 'checkbox', 'wholerow'],
+	                        	'search': {
+	    							"case_sensitive": false,
+	    							"show_only_matches": true
+	    						},
+								'core': {
+									'data': geografia,
+	                                'themes': {
+	                                    'name': 'proton',
+	                                    'responsive': true,
+	                                    "icons":false        
+	                                }
+	                            }
+							});
+	                    }else{
+	                    	toastr.warning('¡No existen geografías actualmente!');
+	                    }
+	            	}else{
+	            		toastr.warning('¡No existen geografías actualmente!');
+	            	}
+	            }else{
+	            	toastr.error('Error interno en el servidor.');
+	            }
+	            
+	            // *** INTERVENCIONES ***
+	            if (results[5].data !== undefined) {
+	            	if(results[5].data.respuesta){
+	            		if(results[5].data.result !== null){
+							$scope.respaldoIntervenciones = results[5].data.result;
+							$scope.catalogoIntervenciones = results[5].data.result;
+							$scope.listaIntervencionesRespaldo = angular.copy($scope.catalogoIntervenciones);
+	            		}else{
+	                    	toastr.warning('¡No existen intervenciones actualmente!');
+	                    }
+	            	}else{
+	            		toastr.warning('¡No existen intervenciones actualmente!');
+	            	}
+	            }else{
+	            	toastr.error('Error interno en el servidor.');
+	            }
+	        	//swal.close();
+	        	setTimeout(function () {
+	        		$scope.consultaUsuariosPorGeoCompPuestos();
+	        		$scope.companiaSeleccion();
+	        		$scope.puestoSeleccion();
+	        		$scope.btnAceptarModalGeografiaConsulta();
+	    		}, 500);
+			}else{
+				swal({type: "warning", title:"Aviso", text:"¡No cuentas con ningún permiso de este módulo!"});
+			}
+        	
         });
     	
     	if (tablaUsuarios) {
@@ -336,81 +354,85 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     
     //MÉTODO QUE CONSULTA LOS USUARIOS DE ACUERDO A LA SELECCIÓN DE COMPAÑÍA(S), PUESTO(S) Y GEOGRAFÍA(S) - VISTA CONSULTA USUARIOS
     $scope.consultaUsuariosPorGeoCompPuestos = function() {
-    	$scope.listaIdGeografias = [];
-    	let companiasSeleccionadas = [];
-    	let puestosSeleccionados = [];
-    	var geografias = $('#arbolGeografiaConsulta').jstree("get_selected", true);
-		
-		angular.forEach($scope.listaCompanias,function(compania,index){
-			if(compania.checkedOpcion){
-				companiasSeleccionadas.push(compania.id);
-			}
-		});
-		
-		angular.forEach($scope.listaPuestos,function(puesto,index){
-			if(puesto.checkedOpcion){
-				puestosSeleccionados.push(puesto.id);
-			}
-		});
-    	
-		angular.forEach(geografias,(geografia,index) => {
-			$scope.listaIdGeografias.push(geografia.id);				
-		});
-	        		
-		let params = {
-				geografias: $scope.listaIdGeografias,
-	        	companias: companiasSeleccionadas,
-	        	puestos: puestosSeleccionados
+    	if($scope.configPermisoAccionConsultaUsuarios){
+    		$scope.listaIdGeografias = [];
+        	let companiasSeleccionadas = [];
+        	let puestosSeleccionados = [];
+        	var geografias = $('#arbolGeografiaConsulta').jstree("get_selected", true);
+    		
+    		angular.forEach($scope.listaCompanias,function(compania,index){
+    			if(compania.checkedOpcion){
+    				companiasSeleccionadas.push(compania.id);
+    			}
+    		});
+    		
+    		angular.forEach($scope.listaPuestos,function(puesto,index){
+    			if(puesto.checkedOpcion){
+    				puestosSeleccionados.push(puesto.id);
+    			}
+    		});
+        	
+    		angular.forEach(geografias,(geografia,index) => {
+    			$scope.listaIdGeografias.push(geografia.id);				
+    		});
+    	        		
+    		let params = {
+    				geografias: $scope.listaIdGeografias,
+    	        	companias: companiasSeleccionadas,
+    	        	puestos: puestosSeleccionados
+    		}
+    		
+    		var respuestaValidacion = $scope.validarDatosConsultaUsuarios(params);
+    	        		
+    	    if(respuestaValidacion.validacion){
+    	    	if (tablaUsuarios) {
+    	    		tablaUsuarios.destroy();
+    	    	}
+    	        			
+    	    	tablaUsuarios = $('#table-usuario-pi').DataTable({
+    	    		"processing": false,
+    		        "ordering": false,
+    		        "serverSide": false,
+    		        "scrollX": false,
+    		        "paging": true,
+    		        "lengthChange": false,
+    		        "searching": true,
+    		        "ordering": true,
+    		        "pageLength": 10,
+    		        "ajax": {
+    		        	"url": "req/consultaUsuariosPorGeoCompPuestos",
+    		        	"type": "POST",
+    		        	"data": params,
+    		        	"beforeSend": function () {
+    		        		if(!swal.isVisible() ){
+    		        			swal({ text: 'Cargando registros...', allowOutsideClick: false });
+    		        			swal.showLoading();
+    		        		}
+    		        	},
+    		        	"dataSrc": function (json) {
+    		        		return json.data;
+    		        	},
+    		        	"error":function(xhr, error, thrown){
+    		        		handleError(xhr)
+    		        	}, 
+    		        	"complete": function () {
+    		        		swal.close()
+    		        	}
+    		        },
+    		        "columns": [null, null, null, null, null, null, null, null],
+    		        "language": idioma_espanol_not_font,
+    		        "aoColumnDefs" : [ 
+    		        	{"aTargets" : [6], "sClass":  "txtTablaConsultaCentrado"},
+    		            {"aTargets" : [7], "sClass":  "txtTablaConsultaCentrado"}
+    		        ]
+    	    	});
+    	    	$("#modalGeografiaConsulta").modal('hide');
+    	    }else{
+    	    	toastr.warning(respuestaValidacion.mensaje);
+    	    }
+		}else{
+			swal({type: "warning", title:"Aviso", text:"¡No cuentas con el permiso de consulta!"});
 		}
-		
-		var respuestaValidacion = $scope.validarDatosConsultaUsuarios(params);
-	        		
-	    if(respuestaValidacion.validacion){
-	    	if (tablaUsuarios) {
-	    		tablaUsuarios.destroy();
-	    	}
-	        			
-	    	tablaUsuarios = $('#table-usuario-pi').DataTable({
-	    		"processing": false,
-		        "ordering": false,
-		        "serverSide": false,
-		        "scrollX": false,
-		        "paging": true,
-		        "lengthChange": false,
-		        "searching": true,
-		        "ordering": true,
-		        "pageLength": 10,
-		        "ajax": {
-		        	"url": "req/consultaUsuariosPorGeoCompPuestos",
-		        	"type": "POST",
-		        	"data": params,
-		        	"beforeSend": function () {
-		        		if(!swal.isVisible() ){
-		        			swal({ text: 'Cargando registros...', allowOutsideClick: false });
-		        			swal.showLoading();
-		        		}
-		        	},
-		        	"dataSrc": function (json) {
-		        		return json.data;
-		        	},
-		        	"error":function(xhr, error, thrown){
-		        		handleError(xhr)
-		        	}, 
-		        	"complete": function () {
-		        		swal.close()
-		        	}
-		        },
-		        "columns": [null, null, null, null, null, null, null, null],
-		        "language": idioma_espanol_not_font,
-		        "aoColumnDefs" : [ 
-		        	{"aTargets" : [6], "sClass":  "txtTablaConsultaCentrado"},
-		            {"aTargets" : [7], "sClass":  "txtTablaConsultaCentrado"}
-		        ]
-	    	});
-	    	$("#modalGeografiaConsulta").modal('hide');
-	    }else{
-	    	toastr.warning(respuestaValidacion.mensaje);
-	    }
 	}
     
     //MÉTODO PARA VALIDAR LOS CAMPOS QUE SE REQUIEREN PARA REALIZAR LA CONSULTA DE USUARIOS
@@ -1637,50 +1659,56 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	
 	//MÉTODO PARA ELIMINAR USUARIOS (BAJA LÓGICA)
     eliminarUsuario = function(idUsuario) {
-    	let params = {
-    			idUsuarioQueModifica: idUsuario,
-    			estatus: 0,
-    			comentarios: "Se desactiva al Usuario"
-		};
     	
-    	swal({
-	        title: "Se dará de baja al usuario",
-	        text: "\u00BFDesea eliminar el usuario?",
-	        type: "warning",
-	        input: 'text',
-	        inputPlaceholder: "Escribe el motivo",
-	        showCancelButton: true,
-	        confirmButtonColor: '#007bff',
-	        confirmButtonText: 'Si',
-	        cancelButtonText: 'Cancelar',
-	        allowOutsideClick: false
-	      }).then(function (motivo) {
-	        if (motivo) {
-	        	params.comentarios = motivo;
-	        	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
-	    		swal.showLoading();
-	        	$q.all([
-	        		usuarioPIService.eliminarUsuario(params)
-	            ]).then(function(results) {
-	            	swal.close();
-	            	if(results[0].data.respuesta){
-	            		swal("Correcto", "¡Usuario eliminado con éxito!", "success");
-	            		setTimeout(function() {
-	            			$scope.consultaUsuariosPorGeoCompPuestos();
-	    	        	}, 1000);
-	            	}else{
-	            		swal("Error", results[0].data.resultDescripcion, "error");
-	            	}
-	            });
-	        }else{
-	        	swal({type: "warning", title:"Aviso", text:"¡Ingrese el motivo de la baja!", showConfirmButton: false, allowOutsideClick: false, allowEscapeKey : false});
-	        	setTimeout(function() {
-	        		eliminarUsuario(idUsuario);
-	        	}, 2500);
-	        }
-	      }).catch(err => {
+    	if($scope.configPermisoAccionEliminaUsuarios){
+    		let params = {
+        			idUsuarioQueModifica: idUsuario,
+        			estatus: 0,
+        			comentarios: "Se desactiva al Usuario"
+    		};
+        	
+        	swal({
+    	        title: "Se dará de baja al usuario",
+    	        text: "\u00BFDesea eliminar el usuario?",
+    	        type: "warning",
+    	        input: 'text',
+    	        inputPlaceholder: "Escribe el motivo",
+    	        showCancelButton: true,
+    	        confirmButtonColor: '#007bff',
+    	        confirmButtonText: 'Si',
+    	        cancelButtonText: 'Cancelar',
+    	        allowOutsideClick: false
+    	      }).then(function (motivo) {
+    	        if (motivo) {
+    	        	params.comentarios = motivo;
+    	        	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
+    	    		swal.showLoading();
+    	        	$q.all([
+    	        		usuarioPIService.eliminarUsuario(params)
+    	            ]).then(function(results) {
+    	            	swal.close();
+    	            	if(results[0].data.respuesta){
+    	            		swal("Correcto", "¡Usuario eliminado con éxito!", "success");
+    	            		setTimeout(function() {
+    	            			$scope.consultaUsuariosPorGeoCompPuestos();
+    	    	        	}, 1000);
+    	            	}else{
+    	            		swal("Error", results[0].data.resultDescripcion, "error");
+    	            	}
+    	            });
+    	        }else{
+    	        	swal({type: "warning", title:"Aviso", text:"¡Ingrese el motivo de la baja!", showConfirmButton: false, allowOutsideClick: false, allowEscapeKey : false});
+    	        	setTimeout(function() {
+    	        		eliminarUsuario(idUsuario);
+    	        	}, 2500);
+    	        }
+    	      }).catch(err => {
 
-	      });
+    	      });
+    	}else{
+    		swal({type: "warning", title:"Aviso", text:"¡No cuentas con el permiso de eliminación!"});
+    	}
+
 	}
     
 //    --------------------------------------------------------------------------------------------------------
@@ -1779,6 +1807,18 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	        $("#buscadorDespachoRegistro").focus();
     	}, 750);
     });
+    
+    $scope.tabRevisarPermisoCrearUsuario = function() {
+    	if($scope.configPermisoAccionCreaUsuarios == false){
+    		swal({type: "warning", title:"Aviso", text:"¡No cuentas con el permiso de registro!"});
+    	}
+	}
+    
+    $scope.tabRevisarPermisoConsultarUsuarios = function() {
+    	if($scope.configPermisoAccionConsultaUsuarios == false){
+    		swal({type: "warning", title:"Aviso", text:"¡No cuentas con el permiso de consulta!"});
+    	}
+	}
     
     //-------------------------------------------------------------------    
     $scope.iniciarModuloUsuarios();
