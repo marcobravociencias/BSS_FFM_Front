@@ -1,5 +1,5 @@
 
-<div class="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true" id="modalCambiaContrasenia">
+<div class="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true" id="modalCambiaContraseniaLogin">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

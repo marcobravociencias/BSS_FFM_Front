@@ -288,7 +288,7 @@ cambiarContraseniaUserLogin = function () {
 
 	swal({ text: 'Espera un momento...', allowOutsideClick: false });
 	swal.showLoading();
-	$.ajax ({
+	$.ajax({
 		url: "req/restaurarContrasena",
 		type: "POST",
 		data: JSON.stringify(params),
@@ -306,13 +306,20 @@ cambiarContraseniaUserLogin = function () {
 			$("#comentariosPasswordUserLogin").val('');
 			swal.close();
 			if (response.responseJSON.respuesta) {
-				$("#modalCambiaContrasenia").modal('hide');
+				$("#modalCambiaContraseniaLogin").modal('hide');
 				toastr.success('Contrase\u00F1a restablecida correctamente');
 			} else {
 				toastr.error(response.responseJSON.resultDescripcion);
 			}
-			
+
 		}
 	})
 
 }
+
+$("#modalCambiaContraseniaLogin").on("hidden.bs.modal", function () {
+	$("#actualPasswordUserLogin").val('');
+	$("#newPasswordUserLogin").val('');
+	$("#confirmPasswordUserLogin").val('');
+	$("#comentariosPasswordUserLogin").val('');
+})

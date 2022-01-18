@@ -81,7 +81,7 @@
                                     </c:if>  
                                 </c:forEach>
                                 <li id="cambiaContrasenia" data-mdb-toggle="modal"
-                                data-mdb-target="#modalCambiaContrasenia">
+                                data-mdb-target="#modalCambiaContraseniaLogin">
                                     <a class="dropdown-item">
                                         <i class="fas fa-key icon-navbar-izquierda icon-otros-dropdown"></i>
                                         Cambiar contrase&ntilde;a</a>
