@@ -263,7 +263,7 @@ cambiarContraseniaUserLogin = function () {
 	allow = /(?=.*[\u0040]|[\u0024]|[\u0021]|[\u0025]|[\u002A]|[\u0023]|[\u003F]|[\u0026])/;
 	refuse = /(?=.*[\u0020]|[\u0022]|[\u0027]|[\u0028]|[\u0029]|[\u002B]|[\u002C]|[\u002D]|[\u002E]|[\u002F]|[\u003A]|[\u003B]|[\u003C]|[\u003D]|[\u003E]|[\u007B-\u00FF])/;
 
-	if ($("#newPasswordUserLogin").val() == '' || $("#actualPasswordUserLogin").val() == '' || $("#comentariosPasswordUserLogin").val() == '') {
+	if ($("#newPasswordUserLogin").val() == '' || $("#actualPasswordUserLogin").val() == '') {
 		toastr.warning('Todos los campos son obligatorios');
 		return false;
 	}
@@ -282,8 +282,7 @@ cambiarContraseniaUserLogin = function () {
 	let params = {
 		idUsuario: null,
 		actualPassword: $("#actualPasswordUserLogin").val(),
-		nuevoPassword: $("#newPasswordUserLogin").val(),
-		comentarios: $("#comentariosPasswordUserLogin").val()
+		nuevoPassword: $("#newPasswordUserLogin").val()
 	}
 
 	swal({ text: 'Espera un momento...', allowOutsideClick: false });

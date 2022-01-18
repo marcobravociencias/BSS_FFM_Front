@@ -8,6 +8,7 @@
 <link href="${pageContext.request.contextPath}/resources/css/plantainterna/generic/navbar.css"  rel="stylesheet"/>
 <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 <jsp:include page="./modalFotoDespacho.jsp"></jsp:include>   
+<jsp:include page="./modalCambiaContrasenia.jsp"></jsp:include>   
 
 <header class="header-navbar-p">           
     <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-menu-generic">
@@ -47,6 +48,12 @@
                                         </li>
                                     </c:if>  
                                 </c:forEach>
+                                <li id="cambiaContrasenia" data-mdb-toggle="modal"
+                                data-mdb-target="#modalCambiaContraseniaLogin">
+                                    <a class="dropdown-item">
+                                        <i class="fas fa-key icon-navbar-izquierda icon-otros-dropdown"></i>
+                                        Cambiar contrase&ntilde;a</a>
+                                </li>
                             </ul>
                         </li>
                     </c:if>  
