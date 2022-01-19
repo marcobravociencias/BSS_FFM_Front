@@ -103,14 +103,14 @@
                 </ul>
 
                 <div class="content-header">
-                    <div class="icon-wrapper icon-wrapper-alt rounded-circle back-groud-notifi">
+                    <div class="icon-wrapper icon-wrapper-alt-notifi rounded-circle back-groud-notifi">
                         <div class="icon-wrapper-bg bg-focus"></div>
                         <i class="fas fa-bell  icon-notificaciones-header-text"></i>    
                         <div class="badge badge-dot badge-dot-sm badge-danger"></div>              
                     </div>
                 </div>
                 <div class="content-header">                     
-                    <div class="icon-wrapper icon-wrapper-alt rounded-circle">
+                    <div class="icon-wrapper icon-wrapper-alt-pais rounded-circle">
                         <div class="icon-wrapper-bg bg-focus"></div>                
                         <c:choose>
                             <c:when test="${fn:contains(userStore.propietario, 'MEXICO')}">
@@ -124,20 +124,20 @@
                 </div>
                 <div class="content-header content-header-border">
                     <c:if test="${userStore.urlFoto != null &&  userStore.urlFoto != '' && userStore.urlFoto != 'string'}">
-                        <div class="icon-wrapper icon-wrapper-alt rounded-circle">
+                        <div class="icon-wrapper icon-wrapper-alt-user rounded-circle">
                             <img  data-mdb-toggle="modal"  data-mdb-target="#modalFotoDespacho" class="img-despacho-navbar img-user-profile-navbar" src="${userStore.urlFoto}" height="37" alt="" loading="lazy" />      
                             <div class="badge badge-dot badge-dot-sm badge-success"></div>              
                         </div>
                     </c:if>
                     <c:if test="${userStore.urlFoto == null ||  userStore.urlFoto == '' || userStore.urlFoto == 'string'}">
-                       <div class="icon-wrapper icon-wrapper-alt rounded-circle back-groud-user">
+                       <div class="icon-wrapper icon-wrapper-alt-user rounded-circle back-groud-user">
                             <div class="icon-wrapper-bg bg-focus"></div>
                             <i class="fas fa-user-alt icon-notificaciones-header-text-user"></i>
                             <div class="badge badge-dot badge-dot-sm badge-success"></div>              
                         </div>
                     </c:if>               
                 </div>
-                <div class="content-header content-header-border">
+                <div class="content-header ">
                     <h5 class="header-nombre-usuario">
                         <sec:authentication property="principal.usuarioNombre" />
                         <sec:authentication property="principal.usuarioApellidoPaterno" />                    
@@ -148,7 +148,7 @@
                         <sec:authentication property="principal.propietario" />
                     </h5>
                 </div>
-                <div class="content-header">
+                <div class="content-header content-header-border">
                     <a href="javascript:document.getElementById('logout').submit()" class="btn btn-primary button-salir">
                         <i class="fas fa-sign-out-alt"></i>
                     </a>

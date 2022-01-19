@@ -349,15 +349,29 @@ margin-bottom: .5em;
   background-size: contain;
   background-position: 50%;
   background-repeat: no-repeat;
-  width: 1.6em;
-  height: 1.6em;
+  width: 1.3em;
+  height: 1.3em;
   margin:0 auto;
 }
 
-.icon-wrapper-alt{
+.icon-wrapper-alt-pais{
   margin: 0;
-  height: 2.3em;
-  width: 2.3em;
+  height: 1.8em;
+  width: 1.8em;
+  text-align: center;
+  overflow: visible;
+  position:relative;
+  background: #e8e8eb;
+  margin:0 auto;
+}
+.icon-wrapper-alt-user{
+    width: 2.3em;
+    height: 2.3em;
+}
+.icon-wrapper-alt-notifi{
+  margin: 0;
+  height: 1.6em;
+  width: 1.6em;
   text-align: center;
   overflow: visible;
   position:relative;
@@ -401,6 +415,21 @@ margin-bottom: .5em;
 .btn-primary.button-salir {
   padding-left: .5em;
   padding-right: .5em;
+  box-shadow: none;
+  font-size: .8em;
+  font-weight: bold;
+  background: white;
+  color: #8032f9;
+  border: 1px solid #c3c3c3;
+  transition: all .3s ease-in;        
+
+}
+.btn-primary.button-salir:hover{
+  background:#8032f9;
+  color:white;
+  border: 1px solid #8032f9;
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+
 }
 
 .icon-notificaciones-header-text-user{

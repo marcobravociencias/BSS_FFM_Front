@@ -13,6 +13,8 @@ var mapubicacionoperario;
 var mapaucotizaciondetalle;
 var mapavistageneral;
 const HEIGTH_PADDING_TABLE=270;
+const HEIGTH_FULLCALENDAR=100
+const HEIGTH_FULLCALENDAR_AFTER=145
 const MILISEGUNDOS_ALERTAS=(1000*60)*3;
 function logerror(mensaje){
     console.log('%c '+mensaje, 'background: red; color: white');
@@ -185,14 +187,17 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             todayHighlight : true
         });
         $("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
-
-
+        
+        
+        window.onresize = function(event) {
+            $('#calendar').fullCalendar('option', 'contentHeight',  $(window).height()-HEIGTH_FULLCALENDAR_AFTER );    
+        };
     });
 
     $scope.initFullCalendar = function(tecnicosParams){
         fechaActualFormat = parseInt(fechaActual.getHours())-2 + ':' + fechaActual.getMinutes() + ':00';
         fullcalendarAsignadas=$('#calendar').fullCalendar({
-            height: screen.availHeight-250,
+            height:  $(window).height()-HEIGTH_FULLCALENDAR,
             nowIndicator : true,
             defaultDate:moment(FECHA_HOY_DATE).format("YYYY/MM/DD") ,
             slotLabelFormat : 'hh:ss(:mm) a',
