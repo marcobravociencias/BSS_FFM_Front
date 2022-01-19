@@ -870,7 +870,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 		        			paramsMod.fotoPerfil = {
 			        				bucketId: $scope.fileFotoUsuarioMod.bucketId,
 			        			    archivo: $scope.fileFotoUsuarioMod.archivo,
-			        			    nombre: $scope.fileFotoUsuarioMod.nombre
+			        			    nombre: "usuarios/mex/"+$scope.fileFotoUsuarioMod.nombre
 			        			  }
 		        		}
 		        	}
