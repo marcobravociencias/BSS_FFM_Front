@@ -83,31 +83,28 @@
 						</div>
 					</div>
 					<div id="" class="card-footer finCards">               
-						<div class="row">
-							<div class="col-md-12" ng-if="noticia.permanente != 1">
-								<label class="textoTituloCardsConsulta">Fecha inicio:&nbsp;</label><span class="textoCardsConsulta" ng-bind="noticia.fechaInicio"></span>		
+						<div class="row">     
+                            <div class="divTextoDesbordCard content-detalle-consulta">
+                                <span class="textoCardsConsulta text-detalle-consulta" ng-bind="noticia.detalle"></span>
+                            </div>                       
+                            <span ng-if="noticia.permanente != 1" class="textoCardsConsulta" ng-bind="noticia.fechaInicio"></span>		
+                            <span ng-if="noticia.permanente != 1" class="textoCardsConsulta" ng-bind="noticia.fechaExpiracion"></span>										
+                      
+                            <a ng-if="noticia.urlLinkExterno" class="link-archivo-noticia link-consulta-noticiaexterno" href="{{noticia.urlLinkExterno}}" download="">
+                                <span class="descarga-archivo"> {{noticia.urlLinkExterno}} </span> 
+                            </a>
+                            <div class="divider-consulta-noticia"></div>
+                            
+                            
+                            <div class="content-permanente" ng-if="noticia.permanente == 1">
+								<span class="text-titulo-permanente">Permanente</span>							
 							</div>
-							<div class="col-md-12" ng-if="noticia.permanente != 1">
-								<label class="textoTituloCardsConsulta">Fecha fin:&nbsp;</label><span class="textoCardsConsulta" ng-bind="noticia.fechaExpiracion"></span>				
-							</div>
-							<div class="col-md-12">
-								<div class="divTextoDesbordCard">
-									<label class="textoTituloCardsConsulta">Detalle:&nbsp;</label><span class="textoCardsConsulta" ng-bind="noticia.detalle"></span>
-								</div>
-							</div>
-							<div class="col-md-12" ng-if="noticia.permanente == 1">
-								<span class="textoTituloCardsConsulta">Permanente</span>
-								<div class="contentPermanenteConsulta">
-									<i class="icono-success-generic fas fa-check"></i>                             
-								</div>			
-							</div>
-							<div class="col-md-12" ng-if="noticia.urlArchivo">
-								<span class="textoTituloCardsConsulta">Descargar</span>
-								<div class="contenedorIconoDescargaArchivo">
-									<a href="{{noticia.urlArchivo}}">
-										<i class="iconoDescargaArchivo fas fa-cloud-download-alt"></i>
-									</a>
-								</div>
+
+							<div class="content-descarga-archivo content-descarga-consulta" ng-if="noticia.urlArchivo">
+                                <a href="{{noticia.urlArchivo}}">
+                                    <i class="iconoDescargaArchivo fas fa-cloud-download-alt"></i>
+                                </a>
+                                <span class="textoTituloCardsConsulta text-descarga-consulta">{{noticia.nombreArchivo}}</span>                               
 							</div>
 						</div>                
 					</div>
