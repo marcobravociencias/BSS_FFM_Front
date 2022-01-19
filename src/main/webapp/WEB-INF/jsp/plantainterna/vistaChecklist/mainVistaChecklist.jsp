@@ -42,7 +42,7 @@
             rel="stylesheet">
     </head>
 
-    <body id="idBody" class="body" ng-controller="vistaChecklistController" class="body">
+    <body id="idBody" class="body" ng-controller="vistaChecklistController">
         <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
         <div class="container">
             <div class="container-title-header" style="padding: 0 !important;">
