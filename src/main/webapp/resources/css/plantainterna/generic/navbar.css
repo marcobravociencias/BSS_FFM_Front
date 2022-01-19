@@ -332,10 +332,9 @@ font-weight:bold;
 
 
 
-.active-otros-navbar a{   
+.active-otros-navbar a.dropdown-toggle{
   color: #7716fa !important;
   font-size:.8em;
-
 }
 
 img.image-totalplayheader {
