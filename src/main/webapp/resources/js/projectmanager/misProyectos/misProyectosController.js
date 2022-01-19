@@ -61,16 +61,13 @@ app.controller('misProyectosController', ['$scope', '$q', 'misProyectosService',
     $scope.listaActividades = [];
     $scope.idPlanSelected = '';
     $scope.consultarActividadesPMS = function(csp) {
-        console.log(":: consultarActividadesPMS ::");
-        console.log(csp);
         if (csp.Id_csp !== $scope.idPlanSelected) {
             $scope.params = {};
             misProyectosService.consultarActividadesPMS($scope.params).then((result) => {
-                console.log("Entra jeje");
                 $scope.listaActividades = $scope.resultActividades.result.Actividades;
                 $scope.idPlanSelected = csp.Id_csp;
-                $scope.inicializarGraficaActividades(csp);
-            }).catch((err) => handleError(err));
+                $scope.inicializarGraficaActividades();
+            }).catch(err => handleError(err));
         } else {
             $scope.idPlanSelected = '';
         }
