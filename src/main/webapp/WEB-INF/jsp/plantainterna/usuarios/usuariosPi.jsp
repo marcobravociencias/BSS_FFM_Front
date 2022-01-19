@@ -38,17 +38,20 @@
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="opcion-consulta-tab" data-toggle="tab" href="#opcion-consulta" role="tab"
-                                aria-controls="opcion-consulta" aria-selected="true">Consultar usuarios</a>
+                                aria-controls="opcion-consulta" aria-selected="true" ng-click="tabRevisarPermisoConsultarUsuarios()">Consultar usuarios</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="opcion-alta-tab" data-toggle="tab" href="#opcion-alta" role="tab"
-                                aria-controls="opcion-alta" aria-selected="false">Alta usuarios</a>
+                                aria-controls="opcion-alta" aria-selected="false" ng-click="tabRevisarPermisoCrearUsuario()">Alta usuarios</a>
                         </li>
                     </ul>
                     <div class="tab-content" id="v-pills-tabContent">
                         <div class="tab-pane fade show active" id="opcion-consulta" role="tabpanel" aria-labelledby="opcion-consulta-tab">
-                            <!--h3 class="text-center">Consulta Usuarios</h3-->
-                            <div class="row">
+                            <div ng-show="!configPermisoAccionConsultaUsuarios">
+	                    		<h5>No cuentas con el permiso de consulta.</h5>
+	                    	</div>
+                            
+                            <div ng-show="configPermisoAccionConsultaUsuarios" class="row">
                                 <div class="col-md-3 column-style-usuarios columna-filtro-usuarios">
 									<label class="span-consulta"><i class="fa fa-building"></i> Compa&ntilde;&iacute;as</label>
 				                    <div class="dropdown">
@@ -99,7 +102,7 @@
                                     </button>
                                 </div>
                             </div>
-				            <div class="row">
+				            <div ng-show="configPermisoAccionConsultaUsuarios" class="row">
 								<div class="columna-principal-users col-md-12">
 									<div class="table-responsive">
 				                    	<table class="table" id="table-usuario-pi">
@@ -121,9 +124,12 @@
 							</div>
                         </div>
                         <div class="tab-pane fade" id="opcion-alta" role="tabpanel" aria-labelledby="opcion-alta-tab">
-                            <!--h3 class="text-center">Alta Usuarios</h3>
-                            <hr/-->
-                            <div class="row row-datos-confirmacion">
+                        	
+                        	<div ng-show="!configPermisoAccionCreaUsuarios">
+	                    		<h5>No cuentas con el permiso de registro.</h5>
+	                    	</div>
+                        
+                            <div class="row row-datos-confirmacion" ng-show="configPermisoAccionCreaUsuarios">
                                 <div class="col-12">
                                     <ul class="nav nav-pills mb-3" id="pills-tab-crearuser" role="tablist">
                                         <li class="nav-item" role="presentation" ng-if="tabInformacion">

@@ -19,7 +19,6 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 	$scope.saveObj.urlLinkExterno="www.google.xom.mx"
 
 	angular.element(document).ready(function () {
-		console.log("redadyyyy")
         $("#idBody").removeAttr("style");
 
 		$('#fecha-inicio-crearnoticia').datepicker({
@@ -103,7 +102,6 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 		$("#cargarArchivoDescarga").val(''); 
 	}
 	$scope.cargarArchivoDescarga = function (e) {
-		console.log("trigger archivo !!! ---")
 		$scope.fileDecargaNotica={}
 		if (e.target.files[0]) {
 			let nombreArchivo = e.target.files[0].name;
@@ -178,8 +176,7 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 			gestionNoticiasService.consultaGeografias(),
 			gestionNoticiasService.consultarConfiguracionDespachoDespacho(paramsConfiguracionDespacho),
 	
-		]).then(function(results) {
-			console.log(results);		
+		]).then(function(results) {		
 			$scope.listadogeografiacopy=results[0].data.result.geografia
             let resultConf= results[1].data.result
             if( resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves){
@@ -317,8 +314,6 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
         $q.all([
     		gestionNoticiasService.consultarNoticiasGeneric()
         ]).then(function(results) {
-            console.log(results);
-			
 			if( results[0].data != undefined){
 				if( results[0].data.respuesta  ){
 					if( results[0].data.result !=undefined &&    results[0].data.result.noticias	 ){
@@ -457,18 +452,15 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 			swal.showLoading();
 	
 			gestionNoticiasService.registrarNoticia($scope.saveObj).then((result) => {
-				console.log(result);
 				swal.close()
 				if (result.data !== undefined) {
 					if (result.data.respuesta) {
 						toastr.success(result.data.result.description);
 						$scope.limpiarFormularioCrearNotica()
 					} else {
-						console.log(result.data.resultDescripcion)
 						toastr.warning( result.data.resultDescripcion )
 					}
 				} else {
-					console.log(result.data.resultDescripcion)
 					toastr.warning( result.data.resultDescripcion )
 				}
 			}).catch((err) => handleError(err));
@@ -548,6 +540,24 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
     
     $scope.abrirModalCrearNoticia = function() {
     	$scope.crearNoticiaContent = true;
+	}
+    
+    $scope.masZoomImagenRegistro = function() {
+		$("#imgNoticiaRegistro").css("object-fit", "cover");
+	}
+    
+    $scope.menosZoomImagenRegistro = function() {
+    	$("#imgNoticiaRegistro").css("object-fit", "contain");
+	}
+    
+    $scope.masZoomImagenMod = function() {
+    	$("#imgNoticiaMod").css("object-fit", "cover");
+    	$("#imgNoticiaModNueva").css("object-fit", "cover");
+	}
+    
+    $scope.menosZoomImagenMod = function() {    	
+    	$("#imgNoticiaMod").css("object-fit", "contain");
+		$("#imgNoticiaModNueva").css("object-fit", "contain");
 	}
     
 }]);

@@ -48,4 +48,6 @@ public class LoginResult {
 	private String version;
 	private Map<String ,Object> configuracionesGenerales;
 	private List<Permiso>modulos;
+	
+	private String creedResult;
 }

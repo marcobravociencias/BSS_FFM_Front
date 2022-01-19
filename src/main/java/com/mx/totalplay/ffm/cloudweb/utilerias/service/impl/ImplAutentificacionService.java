@@ -2,6 +2,7 @@ package com.mx.totalplay.ffm.cloudweb.utilerias.service.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +28,7 @@ public class ImplAutentificacionService  implements AutentificacionService{
 	private final Logger logger = LogManager.getLogger(ImplAutentificacionService.class.getName());
 	private final Environment env;
 	private final ConsumeRest restCaller;
-	private final int VALOR_NAVBAR=5;
+	private final int VALOR_NAVBAR=4;
 	private Gson gson = new Gson();
 
 	@Autowired
@@ -56,12 +57,14 @@ public class ImplAutentificacionService  implements AutentificacionService{
 		
 		responseLog.setModulos(permisosModulos.getModulos());
 		responseLog.setConfiguraciones(permisosModulos.getConfiguracionesGenerales());
-	
 		logger.info(gson.toJson(responseLog));
 		if (responseLog.getIdUsuario() != 0) {
+			String base64Creds = Base64.getEncoder().encodeToString(crdospas.getBytes());
+			responseLog.setCreedResult(base64Creds);
 			Map<String, Object> configuraciones = responseLog.getConfiguraciones();
 			String ordenamiento=(String)configuraciones.get("NAVBAR_ORDER");
 			if (responseLog.getModulos().size() != 0) {
+				
 				if (ordenamiento != null) {
 					 	
 					ordenamiento=ordenamiento.replaceAll("moduloDespachoPE", "moduloDespacho");

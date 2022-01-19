@@ -43,12 +43,12 @@
             <span class="fa fa-search iconoBusqueda"></span>
         </div>
         <div ng-show="!verVistaTabla" class="input-group input-group-sm content-seach-group">
-            <input id="" ng-keyup="" ng-model="buscarNoticiaCarrusel"  type="text" autocomplete="off" class="form-control buscadorGenerico" placeholder="Buscar noticia C">
+            <input id="" ng-keyup="" ng-model="buscarNoticiaCarrusel"  type="text" autocomplete="off" class="form-control buscadorGenerico" placeholder="Buscar noticia">
             <span class="fa fa-search iconoBusqueda"></span>
         </div>
     </div>
    
-    <div id="busqueda_noticias" ng-show="verVistaTabla">
+    <div id="busqueda_noticias" ng-show="verVistaTabla"  style="overflow: auto;">
 		<table id="datatable-noticias" class="table table-sm table-hover">
 			<thead>
             	<tr>
@@ -74,16 +74,16 @@
     		<div class="col-md-3" ng-repeat="noticia in noticiasCarrusel | filter:buscarNoticiaCarrusel track by $index"" style="padding-bottom: 2em;">
 	    		<div id="card" class="card contenedorCardsConsulta">
 					<div class="card-body cuerpoCards">
-						<img class="" onclick="abrirImagenSize(this)" style="height: 100%; width: 100%; object-fit: cover;" src="{{noticia.urlBanner}}">				
+						<img class="" onclick="abrirImagenSize(this)" style="height: 100%; width: 100%; object-fit: cover;" src="{{noticia.urlBanner}}">
+						<div class="content-titulo-principal-consulta-carrusel">
+		                	<span class="text-titulo-primario-img-consulta-carrusel" ng-bind="noticia.tituloPrincipal" ></span>
+		                </div>
+		                <div class="content-titulo-secundario-consulta-carrusel">
+							<span class="text-titulo-secundario-img-consulta-carrusel" ng-bind="noticia.tituloSecundario" ></span>
+						</div>
 					</div>
 					<div id="" class="card-footer finCards">               
 						<div class="row">
-							<div class="col-md-12">
-								<label class="textoTituloCardsConsulta">T&iacute;tulo principal:&nbsp;</label><span class="textoCardsConsulta" ng-bind="noticia.tituloPrincipal"></span>				
-							</div>
-							<div class="col-md-12">
-								<label class="textoTituloCardsConsulta">T&iacute;tulo secundario:&nbsp;</label><span class="textoCardsConsulta" ng-bind="noticia.tituloSecundario"></span>			
-							</div>
 							<div class="col-md-12" ng-if="noticia.permanente != 1">
 								<label class="textoTituloCardsConsulta">Fecha inicio:&nbsp;</label><span class="textoCardsConsulta" ng-bind="noticia.fechaInicio"></span>		
 							</div>

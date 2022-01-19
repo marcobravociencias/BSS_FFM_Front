@@ -204,4 +204,11 @@ app.controller('seguimientoSoporteController', ['$scope', 'seguimientoSoporteSer
             }
         }).catch(swal.noop);
     }
+
+    angular.element(document).ready(function () {
+        $("#idBody").removeAttr("style");
+        $("#moduloSeguimiento").addClass('active')
+        $("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
+
+    });
 }])

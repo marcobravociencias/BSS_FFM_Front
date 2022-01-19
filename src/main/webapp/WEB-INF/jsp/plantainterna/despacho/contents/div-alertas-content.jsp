@@ -469,16 +469,21 @@
                                 <label class="form-check-label" for="rechazar">Rechazar todas</label>
                             </div>
                         </div>
-                        <div class="row col-8 content-total">
-                            <div class="col-4">
+                        <div class="row col-5 content-total">
+                            <div class="col-4" style="padding: 0;">
                                 <span>Total evidencia: <strong ng-bind="detalleEvidencia.length"></strong></span>
                             </div>
-                            <div class="col-4">
+                            <div class="col-4" style="padding-right: 0;">
                                 <span>Aceptadas: <strong ng-bind="listaTotal.aceptadas || 0"></strong></span>
                             </div>
-                            <div class="col-4">
+                            <div class="col-4" style="padding-right: 0;">
                                 <span>Rechazadas: <strong ng-bind="listaTotal.rechazadas || 0"></strong></span>
                             </div>
+                        </div>
+                        <div class="col-3" style="padding: 0;margin-top:0.2em">
+                            <button type="button" class="btn btn-primary ripple-surface btn-descargar">
+                                Descargar carta aceptaci&oacute;n
+                            </button>
                         </div>
                     </div>
                     <div class="row" style="overflow-y: auto; height: 75%;">
@@ -505,7 +510,7 @@
                 </div>
                 <div class="col-12" style="margin-top: -4em; padding: 1em;">
                     <div class="col-2 offset-10" style="text-align: right; padding-right: 0;">
-                        <button type="button" class="btn btn-primary btn-guardar ripple-surface">
+                        <button type="button" class="btn btn-primary btn-guardar ripple-surface" ng-click="guardarEvidencia()">
                             Guardar
                         </button>
                     </div>
