@@ -776,5 +776,12 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
 
     }
 
+    angular.element(document).ready(function () {
+        $("#idBody").removeAttr("style");
+        $("#moduloGestionUniversal").addClass('active')
+        $("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
+
+    });
+
 
 }])

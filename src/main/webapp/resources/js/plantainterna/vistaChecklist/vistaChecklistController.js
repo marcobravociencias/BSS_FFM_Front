@@ -328,4 +328,11 @@ toastr.error('Ha ocurrido un error en la consulta');
         });
     }
 
+    angular.element(document).ready(function () {
+        $("#idBody").removeAttr("style");
+        $("#moduloChecklist").addClass('active')
+        $("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
+
+    });
+
 }])
