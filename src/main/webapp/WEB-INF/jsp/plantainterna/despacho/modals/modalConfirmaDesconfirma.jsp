@@ -27,19 +27,26 @@
                             OT <p class="ptext-desconfirma" ng-bind="objConfirmaDesc.idOtConfirmaDesc"></p >?
                         </h5>
                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                               <label for="exampleTextarea">Comentario:</label>
+                               <textarea ng-model="objConfirmaDesc.comentarios" class="form-control" style=" resize: none"  placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" id="comentario-status-tecnico" rows="3"></textarea>
+                        </div>
+                    </div>
 				</div>
 			</div>
             <div class="modal-footer">
-                <button ng-click="cambiarEstatusOperario()" ng-show="objConfirmaDesc.isConfirmadoDesconfirmado" type="button" class="btn btn-primary">
-                    Confirmar
+                <button ng-disabled="objConfirmaDesc.procesando" ng-click="confirmarDesconfirmarOt()" ng-show="objConfirmaDesc.isConfirmadoDesconfirmado" type="button" class="btn btn-primary btn-aceptar-modal">
+                    {{!objConfirmaDesc.procesando ? 'Confirmar' : 'Procesando ... '}}
                 </button>
-                <button ng-click="cambiarEstatusOperario()" ng-show="!objConfirmaDesc.isConfirmadoDesconfirmado"  type="button" class="btn btn-primary">
-                    Desconfirmar
+                <button ng-disabled="objConfirmaDesc.procesando" ng-click="confirmarDesconfirmarOt()" ng-show="!objConfirmaDesc.isConfirmadoDesconfirmado"  type="button" class="btn btn-primary btn-aceptar-modal">
+                    {{!objConfirmaDesc.procesando ? 'Desconfirmar' : 'Procesando ... '}}
                 </button>
-                <button type="button" ng-click="cancelarCambioEstatus()" class="btn cerrar-modal-btn btn-ligh" data-mdb-dismiss="modal">
+                <button type="button" ng-click="cancelarCambioEstatus()" class="btn cerrar-modal-btn btn-cerrar-modal btn-ligh " data-mdb-dismiss="modal">
                     Cancelar
                 </button>
            </div>
         </div>
     </div>
+    
 </div>

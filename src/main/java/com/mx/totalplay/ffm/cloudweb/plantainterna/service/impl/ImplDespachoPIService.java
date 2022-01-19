@@ -512,8 +512,36 @@ public class ImplDespachoPIService implements DespachoPIService {
         logger.info("RESULT" + gson.toJson(response));
         return response;
     }
+    
+    @Override
+    public ServiceResponseResult confirmaDesconfirmaOtDespacho(String params) {
+        logger.info("ImplDespachoPIService.class [metodo = confirmaDesconfirmaOtDespacho() ]\n" + params);
+        logger.info(" constDespachoPI.getOrdenesPendientesDespachoP()" + constDespachoPI.getConfirmarDesconfirmarOtDespacho());
+      
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        String idOrden = jsonObject.get("idOrden").getAsString();
+        
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        String tokenAcces = principalDetail.getAccess_token();
+        logger.info("consultarOperariosAsignadosDespacho ##+" + tokenAcces);
 
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constDespachoPI.getConfirmarDesconfirmarOtDespacho()).concat(idOrden);
 
+        Map<String, String> paramsRequestGet = new HashMap<String, String>();
+        paramsRequestGet.put("idOrden", idOrden);
+        paramsRequestGet.put("idOrigen", idOrden);
+        paramsRequestGet.put("esConfirmada", idOrden);
+        paramsRequestGet.put("comentarios", idOrden);
+
+        ServiceResponseResult response = restCaller.callPatchBearerTokenRequest(
+                params,
+                urlRequest,
+                ServiceResponseResult.class,
+                tokenAcces);
+
+        logger.info("RESULT" + gson.toJson(response));
+        return response;
+    }
     @Override
     public ServiceResponseResult obtenerOrdenesTrabajoPendientesDespacho(String params) {
         logger.info("ImplDespachoPIService.class [metodo = obtenerOrdenesTrabajoPendientesDespacho() ]\n" + params);
