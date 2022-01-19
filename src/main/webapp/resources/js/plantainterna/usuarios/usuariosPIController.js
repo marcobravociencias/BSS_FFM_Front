@@ -2,7 +2,6 @@ var app = angular.module('usuarioApp', []);
 var detalleTable;
 
 app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filter', function ($scope, $q, usuarioPIService, $filter) {
-	$("#moduloUsuarios").addClass('active');
 	
 	app.editarUsuarioController($scope,usuarioPIService,$q);
 	//ELEMENTOS PARA CONSULTA
@@ -75,6 +74,8 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
    
 	angular.element(document).ready(function () {
         $("#idBody").removeAttr("style");
+        $("#moduloUsuarios").addClass('active');
+        $("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
     });
 	
     $('.drop-down-filters').on("click.bs.dropdown", function (e) {
@@ -906,7 +907,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     		paramsRegistro.fotoPerfil = {
     				bucketId: $scope.fileFotoUsuario.bucketId,
     			    archivo: $scope.fileFotoUsuario.archivo,
-    			    nombre: $scope.fileFotoUsuario.nombre
+    			    nombre: "usuarios/mex/"+$scope.fileFotoUsuario.nombre
     			  }
     	}else{
     		paramsRegistro.fotoPerfil = {
