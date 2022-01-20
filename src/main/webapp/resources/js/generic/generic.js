@@ -332,3 +332,13 @@ $("#modalCambiaContraseniaLogin").on("hidden.bs.modal", function () {
 $('.dropdown-menu-login-info').on("click.bs.dropdown", function (e) {
 	e.stopPropagation();
 });
+
+inOutImg = function (size) {
+	if (size == 'out') {
+		$('#content-in-img').css('display', 'none');
+		$('#content-out-img').css('display', 'block');
+	} else {
+		$('#content-in-img').css('display', 'block');
+		$('#content-out-img').css('display', 'none');
+	}
+}
