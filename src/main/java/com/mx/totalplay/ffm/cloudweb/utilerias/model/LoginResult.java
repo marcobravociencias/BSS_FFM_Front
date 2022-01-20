@@ -36,6 +36,8 @@ public class LoginResult {
 	private int idUnidadNegocio;
 	private int idPropietario;
 	private int idOrigen;
+	private String celular;
+	private String correo;
 
 	private long expires_in;
 	private Map<String,String> permiAccUs;

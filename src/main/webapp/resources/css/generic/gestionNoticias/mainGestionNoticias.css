@@ -255,7 +255,7 @@ ul.wall li:hover .text-crear-noticia-hide {
 }
 
 .imagen-noticia-previsualizador-mod{
-    width: 100%;
+    width: 10em;
     background-color: #818181;
     height: 10em;
     border-radius: 1em;
