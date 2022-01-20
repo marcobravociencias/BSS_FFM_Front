@@ -27,9 +27,9 @@
 }
 
 .cuerpoCards{
-	height: 200px !important;
-	min-height: 200px !important;
-	max-height: 200px !important;
+	height: 13em  !important;
+	min-height: 13em !important;
+	max-height: 13em  !important;
 	padding: 0em !important;
 }
 /**
@@ -48,8 +48,8 @@
 
 .textoCardsConsulta{
 	color: #626262;
-    font-family: 'Montserrat';
-    font-size: .7em;
+	font-family: 'Montserrat';
+	font-size: .8em;
 }
 
 .textoLinkArchivo{
@@ -182,7 +182,7 @@ ul.wall li {
     0 2px 10px 0 rgb(0 0 0 / 12%);
   box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
   margin-top: 0.3em;
-  background: #12a91b;
+  background: #9436ce;
   text-overflow: ellipsis;
   -webkit-transition: all 0.5s ease;
   transition: all 0.5s ease;
@@ -205,23 +205,25 @@ ul.wall li:hover .text-crear-noticia-hide {
 }
 
 .content-titulo-principal-consulta-carrusel {
-    background: rgb(129 122 122 / 50%);
+    background: rgb(70 70 70 / 50%);
     top: .5em;
     z-index: 2 !important;
     display: block;
     border-radius: 1em;
-    padding: 0 .3em;
-    position: absolute;
-    width: 100%;
+    padding: 0 .5em;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    max-width: 80%;
+    left: .5em;
+    line-height: initial;
+    position: absolute;
 }
 
 .text-titulo-primario-img-consulta-carrusel{
 	margin-bottom:0;
 	font-family: 'Montserrat' !important;
-	font-size: 1em;
+	font-size: .9em;
 	color:#ffffff;
 	font-weight:bold;
 	top: 0;
@@ -231,19 +233,22 @@ ul.wall li:hover .text-crear-noticia-hide {
     z-index: 2 !important;
     display: block;
     position: absolute;
-    top: 2.5em;
-    background: rgb(129 122 122 / 50%);
+    top: 2.2em;
+    background: rgb(70 70 70 / 50%);
     border-radius: 1em;
-    padding: 0 .3em;
+    padding: 0 .5em;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 100%;
+    /* width: 100%; */
+    max-width: 80%;
+    left: .5em;
+    line-height: initial;
 }
 
 .text-titulo-secundario-img-consulta-carrusel{
 	font-family: 'Montserrat' !important;
-	font-size: 0.8em;
+	font-size: 0.7em;
 	color:#ffffff;
 	font-weight:bold;
 	top: 1.5em;
@@ -628,6 +633,9 @@ div#container-noticias-pi {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    max-width: 90%;
+    line-height: initial;
+    margin-left: .2em;
 }
 
 .content-titulo-secundario {
@@ -643,7 +651,10 @@ div#container-noticias-pi {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: inherit;
+    /* width: inherit; */
+    max-width: 90%;
+    line-height: initial;
+    margin-left: .2em;
 }
 
 img.imagen-visor-creanotica {
@@ -843,9 +854,9 @@ span.link-geografia {
 }
 
 .content-seach-group {
-    height: 1em;
+    /* height: 1em; */
     display: inline-flex;
-    margin: 0em auto 1em;
+    /* margin: 0em auto 1em; */
 }
 
 
@@ -1239,7 +1250,9 @@ img#full-image {
 
 .text-detalle-consulta{
     color:#181818;
-    font-weight:bold;    
+    font-weight:bold;
+    font-size: .8em;
+    line-height: initial;
 }
 
 .link-consulta-noticiaexterno  {
@@ -1247,17 +1260,59 @@ img#full-image {
     text-decoration: underline;
     font-weight: bold;
     cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .fechas-noticia-detalle-consulta{
      display: inline-flex;
+     /* line-height: initial; */
 }
 .text-intermedio-fecha{
 	color: #626262;
-    font-family: 'Montserrat';
-    font-size: .7em;
-    margin-right:.5em;
+	font-family: 'Montserrat';
+	/* font-size: .6em; */
+	font-size: .9em;
+	margin-right:.5em;
 }
 .fecha-fin-consulta-tex,.fecha-inicio-consulta-tex {
 	font-weight:bold;
-    color: #919191;
+	color: #919191;
+	margin-right: .5em;
+	font-size: .6em;
+}
+
+
+.wrapper-icon-permanente {
+    background-color: #fff5e2 !important;
+    height: 1.4em;
+    width: 1.4em;
+    text-align: center;
+    bottom: 1px;
+    left: .5em;
+    position: absolute;
+    background: #e8e8eb;
+    margin: 0 auto;
+    align-items: center;
+    align-content: center;
+    -webkit-box-align: center;
+    border-radius:50%;
+    display: grid;
+}
+
+.icon-permanente-content {
+    background-size: contain;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    margin: 0 auto;
+    color: #fdc149;
+    font-size: .8em;
+    /* line-height: 1.4em !important; */
+}
+
+.img-consulta-cards{
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+    height: 100%; width: 100%; 
+    object-fit: cover;
 }
