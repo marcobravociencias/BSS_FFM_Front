@@ -62,6 +62,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 
     }
     abrirModalInformacion = function (idotasignada) {
+        $scope.flagPaquete = false;
         $scope.listadoMotivosRescate = $scope.estatusCambio.filter(e => {return e.idPadre === 212})
         $scope.listadoMotivosCalendarizado = $scope.estatusCambio.filter(e => {return e.idPadre === 243})
         $scope.listadoMotivosReagenda = $scope.estatusCambio.filter(e => {return e.idPadre === 201})
@@ -1433,9 +1434,16 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     $scope.responseServicios={}
     $scope.obtenerPaquete = function(){
         if (!$scope.flagPaquete) {
+            let osOtSelected='';
+            if($scope.estatusModals=='PENDIENTE'){
+                osOtSelected=$scope.detalleOtPendienteSelected.folioOrden
+            }
+
+            if($scope.estatusModals=='ASIGNADA')
+               osOtSelected=$scope.detalleOtAsignadaSelected.folioOrden
+
             let params = {
-               folio: $scope.detalleOtPendienteSelected.folioOrden
-               //folio: 'OS-7640234'folioOrden
+               folio: osOtSelected 
             }
             swal({ text: 'Espere un momento ...', allowOutsideClick: false });
             swal.showLoading();
