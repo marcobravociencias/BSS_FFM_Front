@@ -273,12 +273,12 @@ span.btn-floating.btn-sm.btn-secondary.waves-effect.waves-light.acciones {
 }
 
 thead#thead_table tr th {
-  font-size: 0.6em;
-  padding: 1.2em;
-  font-weight: bold !important;
-  border-top: #fff !important;
-  text-align: center;
-  white-space: nowrap;
+    background-color: #b1b1b1;
+    color: #fff;
+    padding: 1em auto;
+    white-space: nowrap;
+    font-family: 'Montserrat', sans-serif;
+    font-size: .6em;
 }
 
 thead#thead_table {
@@ -513,6 +513,7 @@ li {
   padding-left: 0;
   padding-right: 0;
   margin-top: 5px;
+  margin-top: 1em;
 }
 
 .input-valid-error {

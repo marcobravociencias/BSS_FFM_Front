@@ -701,21 +701,19 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
        $scope.iniciarTypeAhead( arrayBusqueda )
     }
     $scope.buscarOtPendiente=function(event){
-        if (event.which === 13){  
-            $scope.buscarOtPendienteText() 
-        }   
-        if($("#buscar-ot-pendiente").val().trim() === '')
-            $scope.buscarOtPendienteText()
+        if (event.which === 13)
+            $scope.buscarOtPendienteText()         
     }
     $scope.buscarOtPendienteText=function(){
         let textbusqeuda= $("#buscar-ot-pendiente").val()
         dataTableOtsPendientes.search(textbusqeuda).draw()   
-
-        setTimeout(function(){
-            if(dataTableOtsPendientes.page.info().recordsDisplay <= 0 ){
-                $scope.consultarLocalizacionOtDespacho(textbusqeuda)
-            }
-        },300);
+        if( $("#buscar-ot-pendiente").val().trim() !== '' ) {
+            setTimeout(function(){
+                if(dataTableOtsPendientes.page.info().recordsDisplay <= 0 )
+                    $scope.consultarLocalizacionOtDespacho(textbusqeuda)
+                
+            },300);
+        }
     }
 
     $scope.iniciarTypeAhead = function(listadoSearch){

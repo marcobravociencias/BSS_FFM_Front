@@ -31,7 +31,7 @@
                                     </tr>
                                 </thead>
                                 <tbody >
-                                    <tr ng-repeat="ot in listadoArrayOtsLocalizacio track by $index">
+                                    <tr ng-repeat="ot in listadoArrayOtsLocalizacion track by $index">
                                         <td> <h5 class="descripcion-td-termin" ng-bind="ot.idOrden"></h5> </td>
                                         <td> <h5 class="descripcion-td-termin" ng-bind="ot.folioSistema"></h5> </td>
                                         <td> <h5 class="descripcion-td-termin" ng-bind="ot.claveCliente"></h5> </td>
@@ -50,7 +50,7 @@
 				</div>
 			</div>
             <div class="modal-footer">
-                <button type="button" class="btn cerrar-modal-btn btn-ligh" data-mdb-dismiss="modal">
+                <button type="button" class="btn btn-cerrar-modal cerrar-modal-btn btn-ligh" data-mdb-dismiss="modal">
                     Cerrar
                 </button>
            </div>
