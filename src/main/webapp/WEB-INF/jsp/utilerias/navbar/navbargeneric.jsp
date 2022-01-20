@@ -252,7 +252,7 @@
                         <div class="content-logout">
                             <a href="javascript:document.getElementById('logout').submit()"
                                 class="btn btn-primary button-salir">
-                                Cerrar session
+                                Cerrar sesi&oacute;n
                             </a>
                             <c:url value="/logout" var="logoutUrl" />
                             <form id="logout" action="${logoutUrl}" method="S">

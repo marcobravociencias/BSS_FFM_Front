@@ -280,7 +280,7 @@
                             <label class="custom-file-label" for="filePlaca" id="fotoPlaca">Cargar
                                 Imagen</label>
                         </div>
-                        <div ng-if="vehiculo.urlFotoPlaca || filePlaca" style="text-align: center; margin-top: 20px;">
+                        <div ng-if="vehiculo.urlFotoPlaca || filePlaca" style="text-align: center; margin-top: 20px; width: 20em;">
                             <img alt="Placa" src="" class="imgResumen" id="placaImagenTab"
                                 onclick="showImgResumen(this)" />
                         </div>
@@ -298,7 +298,7 @@
                                 Imagen</label>
                         </div>
                         <div ng-if="vehiculo.urlFotoVehiculo || fileVehiculo"
-                            style="text-align: center; margin-top: 20px;">
+                            style="text-align: center; margin-top: 20px; width: 20em;">
                             <img alt="Vehiculo" src="" class="imgResumen" id="vehiculoImagenTab"
                                 onclick="showImgResumen(this)" />
                         </div>
@@ -317,7 +317,7 @@
                                 Imagen</label>
                         </div>
                         <div ng-if="vehiculo.detalle.urlFotoTarjetaCirculacion  || fileCirculacion"
-                            style="text-align: center; margin-top: 20px;">
+                            style="text-align: center; margin-top: 20px; width: 20em;">
                             <img alt="Tarjeta Circulacion" src="" id="circulacionImagenTab"
                                 onclick="showImgResumen(this)" class="imgResumen" />
                         </div>
@@ -336,7 +336,7 @@
                                 Imagen</label>
                         </div>
                         <div ng-if="vehiculo.detalle.urlFotoTarjetaGasolina || fileGasolina"
-                            style="text-align: center; margin-top: 20px;">
+                            style="text-align: center; margin-top: 20px; width: 20em;">
                             <img alt="Tarjeta Gasolina" src="" id="gasolinaImagenTab" onclick="showImgResumen(this)"
                                 class="imgResumen" />
                         </div>

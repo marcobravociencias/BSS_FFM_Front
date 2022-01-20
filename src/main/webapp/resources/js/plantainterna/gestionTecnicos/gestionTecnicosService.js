@@ -1,0 +1,1 @@
+app.service("gestionTecnicosService", function ($http) {});

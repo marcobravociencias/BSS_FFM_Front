@@ -447,7 +447,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                         $scope.detalleUsuario.ciudadNatal = $scope.detalleUsuario.idGeografia;
                         if($scope.detalleUsuario.urlFotoPerfil != null){
                         	$scope.fileFotoUsuarioMod = {};
-                        	$scope.fileFotoUsuarioMod.nombre = "Usuario "+$scope.detalleUsuario.numeroEmpleado;
+                        	$scope.fileFotoUsuarioMod.nombre = $scope.detalleUsuario.numeroEmpleado;
         					$scope.fileFotoUsuarioMod.nuevaFoto = false; 
                         	$("#imgFotoUsuarioMod").attr("src", ""+$scope.detalleUsuario.urlFotoPerfil);
                         }else{
@@ -870,7 +870,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 		        			paramsMod.fotoPerfil = {
 			        				bucketId: $scope.fileFotoUsuarioMod.bucketId,
 			        			    archivo: $scope.fileFotoUsuarioMod.archivo,
-			        			    nombre: "usuarios/mex/"+$scope.fileFotoUsuarioMod.nombre
+			        			    nombre: "usuarios/mex/"+$scope.detalleUsuario.numeroEmpleado+"/fotoPerfil"
 			        			  }
 		        		}
 		        	}
@@ -1285,6 +1285,14 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 		let labelFile = "";
 		if (e.target.files[0]) {
 			$(labelFile).text(e.target.files[0].name);
+			
+			var nombreArchivoMod = "";
+	    	if($scope.detalleUsuario.numeroEmpleado === "" || $scope.detalleUsuario.numeroEmpleado === undefined){
+	    		nombreArchivoMod = "Foto perfil";
+	    	}else{
+	    		nombreArchivoMod = $scope.detalleUsuario.numeroEmpleado;
+	    	}
+			
 			let reader = new FileReader();
 			reader.readAsDataURL(e.target.files[0]);
 			reader.onload = function () {
@@ -1292,7 +1300,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 				let imgMod = {
 					"bucketId": "totalplay-ffm-core-dev.appspot.com",
 					"archivo": base64[1],
-					"nombre": e.target.files[0].name,
+					"nombre": nombreArchivoMod,
 					"nuevaFoto": true 
 				}
 				
@@ -1313,7 +1321,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     	if($scope.detalleUsuario.urlFotoPerfil != null){
     		$("#imgFotoUsuarioMod").attr("src", ""+$scope.detalleUsuario.urlFotoPerfil);
     		$scope.fileFotoUsuarioMod = {};
-    		$scope.fileFotoUsuarioMod.nombre = "Usuario "+$scope.detalleUsuario.numeroEmpleado;
+    		$scope.fileFotoUsuarioMod.nombre = $scope.detalleUsuario.numeroEmpleado;
 			$scope.fileFotoUsuarioMod.nuevaFoto = false; 
     	}else{
     		$scope.fileFotoUsuarioMod = null;
@@ -1326,10 +1334,10 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     	var archivoMod = fotoMod.toDataURL().split(",");
 
     	var nombreArchivoMod = "";
-    	if($scope.confirmacionModificacion.nombre == "Sin asignar"){
-    		nombreArchivoMod = "fotografiaUsuario";
+    	if($scope.detalleUsuario.numeroEmpleado === "" || $scope.detalleUsuario.numeroEmpleado === undefined){
+    		nombreArchivoMod = "Foto perfil";
     	}else{
-    		nombreArchivoMod = $scope.confirmacionModificacion.nombre;
+    		nombreArchivoMod = $scope.detalleUsuario.numeroEmpleado;
     	}
     	
 		let imgMod = {

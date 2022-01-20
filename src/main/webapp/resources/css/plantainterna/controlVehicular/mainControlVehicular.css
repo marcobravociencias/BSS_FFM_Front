@@ -273,12 +273,16 @@ span.btn-floating.btn-sm.btn-secondary.waves-effect.waves-light.acciones {
 }
 
 thead#thead_table tr th {
-  font-size: 0.6em;
-  padding: 1.2em;
-  font-weight: bold !important;
-  border-top: #fff !important;
-  text-align: center;
-  white-space: nowrap;
+    background-color: #b1b1b1;
+    color: #fff;
+    padding: 1em auto;
+    white-space: nowrap;
+    font-family: 'Montserrat', sans-serif;
+    font-size: .6em;
+    /* padding: 1em; */
+    font-weight: normal;
+    border: none;
+    padding: 1em;
 }
 
 thead#thead_table {
@@ -288,12 +292,17 @@ thead#thead_table {
   background-color: #fff;
   color: #000;
 }
+#vehiculoTable tbody tr:nth-child(even) {
+    background: #f5f5f5;
+}
 
-
+#vehiculoTable tbody tr.odd {
+    background-color: white;
+}
 #vehiculoTable tr td {
   font-size: 0.6em;
   font-family: "Montserrat" !important;
-  text-align: center;
+  /* text-align: center; */
   vertical-align: middle;
 }
 
@@ -513,6 +522,7 @@ li {
   padding-left: 0;
   padding-right: 0;
   margin-top: 5px;
+  margin-top: 1em;
 }
 
 .input-valid-error {

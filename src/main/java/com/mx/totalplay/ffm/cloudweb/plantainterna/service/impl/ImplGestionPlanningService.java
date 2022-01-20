@@ -85,9 +85,13 @@ public class ImplGestionPlanningService implements GestionPlanningService {
 		logger.info("***URL: " + urlRequest);
 		Map<String, String> paramUri = new HashMap<String, String>();
 		String creedResOld = principalDetail.getCreedResult();
-		String creedResActual = Base64.getEncoder()
-				.encodeToString(jsonObject.get("actualCreed").getAsString().getBytes());
+		String creedResActual = "" ;  
+		
+		
+		
 		if (jsonObject.get("idUsuario").isJsonNull()) {
+			creedResActual=Base64.getEncoder()
+			.encodeToString(jsonObject.get("actualCreed").getAsString().getBytes());
 			if (creedResOld.contentEquals(creedResActual)) {
 				jsonObject.addProperty("idUsuario", principalDetail.getIdUsuario());
 				logger.info("ImplGestionPlanningService.class [metodo = restaurarContraseniaUsuario() session ]\n"
@@ -102,9 +106,11 @@ public class ImplGestionPlanningService implements GestionPlanningService {
 		ServiceResponseResult response = consumeRest.callPatchBearerTokenRequestURL(paramUri, gson.toJson(jsonObject),
 				urlRequest, ServiceResponseResult.class, tokenAcces);
 		if(response.isRespuesta()) {
-			String creedResNew = Base64.getEncoder()
-					.encodeToString(jsonObject.get("newcred").getAsString().getBytes());
-			principalDetail.setCreedResult(creedResNew);
+			if (jsonObject.get("idUsuario").isJsonNull()) {	
+				String creedResNew = Base64.getEncoder()
+						.encodeToString(jsonObject.get("newcred").getAsString().getBytes());
+				principalDetail.setCreedResult(creedResNew);
+			}
 		}
 		logger.info("RESULT" + gson.toJson(response));
 		return response;

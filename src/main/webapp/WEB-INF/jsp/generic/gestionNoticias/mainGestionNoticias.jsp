@@ -33,9 +33,6 @@
         <div id="container-noticias-pi" class="main-container container">
 
             <ul class="wall" id="" role="">
-<!--                 <li class="nav-item"> -->
-<!--                     <a class="nav-link active" id="consultanoticias-tab" data-toggle="tab" href="#consultanoticias" role="tab" aria-controls="consultanoticias" aria-selected="false">Consulta noticias</a> -->
-<!--                 </li> -->
                 <li ng-click="abrirModalCrearNoticia()"> 
                      <i class="fas fa-plus iconoCrearNoticia"></i>
                      <div class="text-crear-noticia-hide">
@@ -44,10 +41,6 @@
                 </li> 
             </ul>
             <div class="tab-content" id="myTabContent">
-<!--                 <div class="tab-pane fade" id="crearnoticia" role="tabpanel" -->
-<!--                     aria-labelledby="crearnoticia-tab"> -->
-<%--                     <jsp:include page="./crearContentNoticia.jsp"></jsp:include> --%>
-<!--                 </div> -->
                 <div class="tab-pane show active" id="consultanoticias" role="tabpanel" aria-labelledby="consultanoticias-tab">
                     <jsp:include page="./consultaNoticias.jsp"></jsp:include>
                 </div>

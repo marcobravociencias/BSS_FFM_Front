@@ -907,7 +907,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     		paramsRegistro.fotoPerfil = {
     				bucketId: $scope.fileFotoUsuario.bucketId,
     			    archivo: $scope.fileFotoUsuario.archivo,
-    			    nombre: "usuarios/mex/"+$scope.fileFotoUsuario.nombre
+    			    nombre: "usuarios/mex/"+$scope.informacionRegistro.numEmpleado+"/fotoPerfil"
     			  }
     	}else{
     		paramsRegistro.fotoPerfil = {
@@ -1721,10 +1721,10 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 			$(labelFile).text(e.target.files[0].name);
 			
 			var nombreArchivo = "";
-	    	if($scope.confirmacionRegistro.nombre == "Sin asignar"){
-	    		nombreArchivo = e.target.files[0].name;
+	    	if($scope.informacionRegistro.numEmpleado === "" || $scope.informacionRegistro.numEmpleado === undefined){
+	    		nombreArchivo = "Foto perfil";
 	    	}else{
-	    		nombreArchivo = $scope.confirmacionRegistro.nombre;
+	    		nombreArchivo = $scope.informacionRegistro.numEmpleado;
 	    	}
 			
 			let reader = new FileReader();
@@ -1759,10 +1759,10 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	
     	var archivo = foto.toDataURL().split(",");
     	var nombreArchivo = "";
-    	if($scope.confirmacionRegistro.nombre == "Sin asignar"){
-    		nombreArchivo = "fotografiaUsuarioNuevo";
+    	if($scope.informacionRegistro.numEmpleado === "" || $scope.informacionRegistro.numEmpleado === undefined){
+    		nombreArchivo = "Foto perfil";
     	}else{
-    		nombreArchivo = $scope.confirmacionRegistro.nombre;
+    		nombreArchivo = $scope.informacionRegistro.numEmpleado;
     	}
 
 		let img = {

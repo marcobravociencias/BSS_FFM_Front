@@ -682,6 +682,7 @@ app.controller('controlVehicularController',
 
 
 			guardarVehiculo = function () {
+
 				$(".form-control-sm").removeClass("input-valid-error");
 				if ($scope.validateFormGen() && $scope.validateFormDocs()) {
 					let ultimonivel = $scope.obtenerNivelUltimoJerarquia()
@@ -689,6 +690,7 @@ app.controller('controlVehicularController',
 						.filter(e => e.original.nivel == ultimonivel)
 						.map(e => parseInt(e.id))
 					let paramsTemp = angular.copy($scope.vehiculo);
+					let pathImg = $scope.llaveArchivoPath + paramsTemp.placa + '/';
 
 					if (!$scope.isEdit) {
 						paramsTemp.fotoPlaca = {
@@ -705,9 +707,11 @@ app.controller('controlVehicularController',
 					}
 
 					if ($scope.filePlaca) {
+						$scope.filePlaca.nombre = pathImg + $scope.filePlaca.nombre;
 						paramsTemp.fotoPlaca = $scope.filePlaca;
 					}
 					if ($scope.fileVehiculo) {
+						$scope.fileVehiculo.nombre = pathImg + $scope.fileVehiculo.nombre;
 						paramsTemp.fotoVehiculo = $scope.fileVehiculo;
 					}
 
@@ -723,10 +727,12 @@ app.controller('controlVehicularController',
 					}
 
 					if ($scope.fileCirculacion) {
+						$scope.fileCirculacion.nombre = pathImg + $scope.fileCirculacion.nombre;
 						paramsTemp.detalle.fotoTarjetaCirculacion = $scope.fileCirculacion;
 					}
 
 					if ($scope.fileGasolina) {
+						$scope.fileGasolina.nombre = pathImg + $scope.fileGasolina.nombre;
 						paramsTemp.detalle.fotoTarjetaGasolina = $scope.fileGasolina;
 					}
 
@@ -1027,29 +1033,34 @@ app.controller('controlVehicularController',
 					reader.readAsDataURL(e.target.files[0]);
 					reader.onload = function () {
 						let base64 = reader.result.toString().split(",");
+						let imgExt = (e.target.files[0].name).split('.')[1];
 						let img = {
 							"bucketId": $scope.bucketImg,
 							"archivo": base64[1],
-							"nombre": $scope.llaveArchivoPath + e.target.files[0].name
+							"nombre": ''
 						}
 						if (name == 'fotoPlaca') {
+							img.nombre = 'placa.' + imgExt;
 							$scope.filePlaca = img;
 							$("#filePlaca").val("");
 						}
 
 
 						if (name == 'fotoVehiculo') {
+							img.nombre = 'vehiculo.' + imgExt;
 							$scope.fileVehiculo = img;
 							$("#fileVehiculo").val("");
 						}
 
 
 						if (name == 'fotoTarjetaCirculaion') {
+							img.nombre = 'tarjetaCirculacion.' + imgExt;
 							$scope.fileCirculacion = img;
 							$("#fileCirculacion").val("");
 						}
 
 						if (name == 'fotoTarjetaGasolina') {
+							img.nombre = 'tarjetaGasolina.' + imgExt;
 							$scope.fileGasolina = img;
 							$("#fileGasolina").val("");
 						}

@@ -119,5 +119,10 @@ public class PlantaInternaViewsController {
 	public String vistaAuditoria() {		
 		return "plantainterna/vistaAuditoria/mainVistaAuditoria";
 	}
+	
+	@GetMapping("/moduloGestionTecnicos")
+	public String gestionTecnicos() {		
+		return "plantainterna/gestionTecnicos/mainGestionTecnicos";
+	}
 }
 

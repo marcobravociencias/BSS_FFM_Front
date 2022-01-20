@@ -106,7 +106,7 @@ app.controller('auditoriaTecnicoController', ['$scope', '$q', 'auditoriaTecnicoS
             autoclose: true,
             language: 'es',
             todayHighlight: true,
-            clearBtn: true
+            clearBtn: false
         });
         $('.datepicker').datepicker('update', new Date());
         tableAuditoriaTecnico = $('#tableAuditoriaTecnico').DataTable({

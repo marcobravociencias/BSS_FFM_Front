@@ -160,13 +160,13 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                     if (response.data.result) {
                         if (response.data.result.ordenes && response.data.result.ordenes.length > 0) {
                             //$scope.listadoTecnicosGeneral=tecnicosAsignacion
-                            $scope.listadoArrayOtsLocalizacio = response.data.result.ordenes
+                            $scope.listadoArrayOtsLocalizacion = response.data.result.ordenes
                             $("#modalRegistrosLocalizados").modal('show')
                         } else {
                             toastr.info(response.data.result.mensaje);
                         }
                     } else {
-                        toastr.warning('No se encontraron datos');
+                        toastr.info('No se encontraron datos');
                     }
                 } else {
                     toastr.warning(response.data.resultDescripcion);
