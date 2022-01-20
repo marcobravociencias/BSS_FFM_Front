@@ -106,7 +106,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 				$scope.filtroGeografias = llavesResult.N_FILTRO_GEOGRAFIA;
 				$scope.filtroIntervenciones = llavesResult.N_FILTRO_INTERVENCIONES;
 			}else{
-				toastr.warning("No se encontraron configuraciones del usuario")
+				toastr.info("No se encontraron configuraciones del usuario")
 			} 
 			
 			// *** CONFIGURACIÓN DE PERMISOS ***
@@ -126,10 +126,10 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	            				companiaCheck.checkedOpcion = true;
 	            			});
 	            		}else{
-	                    	toastr.warning('¡No existen compañías actualmente!');
+	                    	toastr.info('¡Actualmente no existen compañías!');
 	                    }
 	            	}else{
-	            		toastr.warning('¡No existen compañías actualmente!');
+	            		toastr.info('¡Actualmente no existen compañías!');
 	            	}
 	            }else{
 	            	toastr.error('Error interno en el servidor.');
@@ -146,10 +146,10 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	            		    	puestoCheck.checkedOpcion = true;
 	            			});
 	            		}else{
-	            			toastr.warning('¡No existen puestos actualmente!');
+	            			toastr.info('¡Actualmente no existen puestos!');
 	            		}
 	            	}else{
-	            		toastr.warning('¡No existen puestos actualmente!');
+	            		toastr.info('¡Actualmente no existen puestos!');
 	            	}
 	        	}else{
 	        		toastr.error('Error interno en el servidor.');
@@ -187,10 +187,10 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	                            }
 							});
 	            		}else{
-	            			toastr.warning('¡No existen permisos actualmente!');
+	            			toastr.info('¡Actualmente no existen permisos!');
 	            		}
 	            	}else{
-	            		toastr.warning('¡No existen permisos actualmente!');
+	            		toastr.info('¡Actualmente no existen permisos!');
 	            	}
 	        	}else{
 	        		toastr.error('Error interno en el servidor.');
@@ -244,10 +244,10 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	                            }
 							});
 	                    }else{
-	                    	toastr.warning('¡No existen geografías actualmente!');
+	                    	toastr.info('¡Actualmente no existen geografías!');
 	                    }
 	            	}else{
-	            		toastr.warning('¡No existen geografías actualmente!');
+	            		toastr.info('¡Actualmente no existen geografías!');
 	            	}
 	            }else{
 	            	toastr.error('Error interno en el servidor.');
@@ -261,10 +261,10 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 							$scope.catalogoIntervenciones = results[5].data.result;
 							$scope.listaIntervencionesRespaldo = angular.copy($scope.catalogoIntervenciones);
 	            		}else{
-	                    	toastr.warning('¡No existen intervenciones actualmente!');
+	                    	toastr.info('¡Actualmente no existen intervenciones!');
 	                    }
 	            	}else{
-	            		toastr.warning('¡No existen intervenciones actualmente!');
+	            		toastr.info('¡Actualmente no existen intervenciones!');
 	            	}
 	            }else{
 	            	toastr.error('Error interno en el servidor.');
@@ -324,7 +324,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	        $('#buscadorGeografiaConsulta').focus();
     	    }, 750);
     	}else{
-    		toastr.warning('¡No existen geografías actualmente!');
+    		toastr.info('¡Actualmente no existen geografías!');
     	}
 	}
     
@@ -760,7 +760,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
                 }
 			});
 		}else{
-			toastr.warning('¡No existen intervenciones actualmente!');
+			toastr.info('¡Actualmente no existen intervenciones!');
 		}
 	}
     
@@ -1043,7 +1043,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		    		validacionInformacionGeneral = false;
 		    		mensaje = mensaje + "<br/> *Contraseña";
 					mensaje = mensaje + "<br/> *Confirmación de contraseña";
-		    		toastr.warning("¡Las contraseñas no coinciden!");
+		    		toastr.info("¡Las contraseñas no coinciden!");
 		    	}else{
 		    		$("#form-pasword").css("border", "1px solid #bdbdbd");
 		    		$("#form-confir-password").css("border", "1px solid #bdbdbd");
@@ -1145,7 +1145,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 				if($("#form-correo").val().indexOf('@', 0) == -1 || $("#form-correo").val().indexOf('.', 0) == -1) {
 					$("#form-correo").css("border-bottom", "2px solid #f55756");
 					validacionInformacionGeneral = false;
-					toastr.warning("¡Valida el formato del correo electrónico!");
+					toastr.info("¡Valida el formato del correo electrónico!");
 				}else{
 					$("#form-correo").css("border", "1px solid #bdbdbd");
 				}
@@ -1290,7 +1290,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		
 		//SI EXISTE ALGÚN CAMPO FALTANTE, MUESTRA EL MENSAJE
 		if(validacion == false){
-			toastr.warning(mensaje);
+			toastr.info(mensaje);
 		}
 		
 		//REGRESA LA RESPUESTA BOLEANA
@@ -1327,7 +1327,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	if(password !== confirPassword){
     		$("#form-pasword").css("border-bottom", "2px solid #f55756");
     		$("#form-confir-password").css("border-bottom", "2px solid #f55756");
-    		toastr.warning("¡Las contraseñas no coinciden!");
+    		toastr.info("¡Las contraseñas no coinciden!");
     	}else{
     		$("#form-pasword").css("border", "1px solid #bdbdbd");
     		$("#form-confir-password").css("border", "1px solid #bdbdbd");
@@ -1569,18 +1569,18 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 			if($scope.informacionRegistro.geografias.length > 0){
 				if($scope.isTecnico){
 					if($scope.listaDespachos == ""){
-						toastr.warning('¡No existen despachos actualmente!');
+						toastr.info('¡Actualmente no existen despachos!');
 					}
 				}else{
 					if($scope.listaTecnicos == ""){
-						toastr.warning('¡No existen técnicos actualmente!');
+						toastr.info('¡Actualmente no existen técnicos!');
 					}
 				}
 			}else{
-				toastr.warning('¡Selecciona al menos una geografía!');
+				toastr.info('¡Selecciona al menos una geografía!');
 			}
 		}else{
-			toastr.warning('¡Selecciona al menos una geografía!');
+			toastr.info('¡Selecciona al menos una geografía!');
 		}
 	}
 	

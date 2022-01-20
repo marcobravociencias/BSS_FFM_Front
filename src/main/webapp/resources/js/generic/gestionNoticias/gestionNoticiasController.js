@@ -14,9 +14,9 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 	$scope.verVistaTabla = true;
 	$scope.crearNoticiaContent =false;
 
-	$scope.saveObj.tituloPrincipal="principal"
-	$scope.saveObj.tituloSecundario="secundario"
-	$scope.saveObj.urlLinkExterno="www.google.xom.mx"
+	$scope.saveObj.tituloPrincipal;
+	$scope.saveObj.tituloSecundario;
+	$scope.saveObj.urlLinkExterno;
 
 	angular.element(document).ready(function () {
         $("#idBody").removeAttr("style");
@@ -482,12 +482,17 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 		}
 
 		if(!$scope.saveObj.tituloPrincipal){
-			textErrorRegistro += '<li>Captura titulo principal</li>';
+			textErrorRegistro += '<li>Captura título principal</li>';
 			isErrorRegistro=true
 		}
 
 		if(!$scope.saveObj.tituloSecundario){
-			textErrorRegistro += '<li>Captura titulo secundario</li>';
+			textErrorRegistro += '<li>Captura título secundario</li>';
+			isErrorRegistro=true
+		}
+		
+		if(!$scope.saveObj.detalle){
+			textErrorRegistro += '<li>Captura detalle</li>';
 			isErrorRegistro=true
 		}
 
@@ -544,14 +549,16 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
     	$("#imgNoticiaRegistro").css("object-fit", "contain");
 	}
     
-    $scope.masZoomImagenMod = function() {
-    	$("#imgNoticiaMod").css("object-fit", "cover");
-    	$("#imgNoticiaModNueva").css("object-fit", "cover");
+    $scope.desplazarDerechaCarruselImgNoticiasRegistro = function() {
+    	$('#carruselImgNoticiasRegistro').animate({scrollLeft:'+=100'},150);
 	}
     
-    $scope.menosZoomImagenMod = function() {    	
-    	$("#imgNoticiaMod").css("object-fit", "contain");
-		$("#imgNoticiaModNueva").css("object-fit", "contain");
+    $scope.desplazarIzqCarruselImgNoticiasRegistro = function() {
+    	$('#carruselImgNoticiasRegistro').animate({scrollLeft:'-=100'},150);
+	}
+    
+    $scope.regresarInicioCarruselImgNoticiasRegistro = function() {
+    	$('#carruselImgNoticiasRegistro').animate({scrollLeft:'=0'},150);
 	}
     
 }]);

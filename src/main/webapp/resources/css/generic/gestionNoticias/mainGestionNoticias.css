@@ -268,6 +268,48 @@ ul.wall li:hover .text-crear-noticia-hide {
 	display:block;
 }
 
+.carruselImgNoticiasMod {
+	margin: 0 auto;
+	display: flex;
+	overflow-x: hidden;
+}
+
+.carruselImgNoticiasRegistro {
+	margin: 0 auto;
+	display: flex;
+	overflow-x: hidden;
+}
+
+.carouselContainer {
+	margin: 0 auto;
+	display: flex;
+}
+
+.contenedorImagenCarrusel {
+	width: 100%;
+	background-size: cover;
+}
+				        
+.btnControlesCarruselMod{
+	width: 10px;
+	height: 10em;
+	background-color: #f1f3f2;
+	color: rgb(129 122 122 / 50%);;
+	border: solid 0px #f1f3f2 !important;
+}
+
+.btnControlesCarruselRegistro{
+	width: 10px;
+	height: 10em;
+	background-color: #f1f3f2;
+	color: rgb(129 122 122 / 50%);;
+	border: solid 0px #f1f3f2 !important;
+}
+				        
+.contenedorImgOtraNoticia{
+	margin-left: 0.5em;
+}
+
 /* -------------------------------------------- */
 
 #arbolGeografia.jstree-checkbox-selection .jstree-wholerow-clicked {
@@ -560,7 +602,7 @@ img.img-icon-categoria {
  }
 
 .container-noticias-visualizador {
-    margin-left: 1em;
+    width: 100%;
     margin-bottom: 1em;
 }
 
@@ -605,7 +647,7 @@ div#container-noticias-pi {
 }
 
 img.imagen-visor-creanotica {
-    width: -webkit-fill-available;
+    width: 10em;
     height: 10em;
     object-fit: cover;
     border-radius: 1em;

@@ -690,18 +690,18 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 			if($scope.detalleUsuario.geografiasId.length > 0){
 				if($scope.isTecnicoMod){
 					if($scope.listaDespachosMod == ""){
-						toastr.warning('¡No existen despachos actualmente!');
+						toastr.info('¡Actualmente no existen despachos!');
 					}
 				}else{
 					if($scope.listaTecnicosMod == ""){
-						toastr.warning('¡No existen técnicos actualmente!');
+						toastr.info('¡Actualmente no existen técnicos!');
 					}
 				}
 			}else{
-				toastr.warning('¡Selecciona al menos una geografía!');
+				toastr.info('¡Selecciona al menos una geografía!');
 			}
 		}else{
-			toastr.warning('¡Selecciona al menos una geografía!');
+			toastr.info('¡Selecciona al menos una geografía!');
 		}
 	}
 	
@@ -1032,7 +1032,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 				if($("#form-correo-mod").val().indexOf('@', 0) == -1 || $("#form-correo-mod").val().indexOf('.', 0) == -1) {
 					$("#form-correo-mod").css("border-bottom", "2px solid #f55756");
 					validacionInformacionGeneral = false;
-					toastr.warning("¡Valida el formato del correo electrónico!");
+					toastr.info("¡Valida el formato del correo electrónico!");
 				}else{
 					$("#form-correo-mod").css("border", "1px solid #bdbdbd");
 				}
@@ -1192,7 +1192,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 		
 		//SI EXISTE ALGÚN CAMPO FALTANTE, MUESTRA EL MENSAJE
 		if(validacion == false){
-			toastr.warning(mensaje);
+			toastr.info(mensaje);
 			$scope.ocultarBotonMod();
 		}
 		//REGRESA LA RESPUESTA BOLEANA
