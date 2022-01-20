@@ -7,7 +7,7 @@
 			<div class="row">
 			
 				<div class="col-3">
-                	<div id="card" class="card">
+                	<div id="cardFotoUsuarioMod" class="card cardFotoUsuario">
 						<div class="card-body">
 							<div class="top-title-ot">
                                 <div class="content-top-element bars-content">
