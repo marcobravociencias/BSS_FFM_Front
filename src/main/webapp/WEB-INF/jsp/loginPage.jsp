@@ -51,6 +51,11 @@
 										${message}
 									</div>
 								</c:if>	
+
+								<div class="alert alert-danger mensaje-alert" id="validateLogin" role="alert" data-mdb-color="danger" style="display: none;">
+									Los campos usuario y contrase&ntilde;a son obligatorios
+								</div>
+
 							</div>
 							
 						</div>
@@ -89,12 +94,18 @@
 	<script>
 		//document.getElementById("user_user").value = "FFMBACK";
 		//document.getElementById("user_pswd").value = "accesoFFM";
-		$(document).ready(function(){
 			$("#ingresar-btn-login").click(function(){
 				//$(this).attr('disabled','disabled')
-				$(this).text('Ingresando ...')				
+				if($("#user_user").val() == '' || $("#user_user").val() == undefined || $("#user_pswd").val() == '' || $("#user_pswd").val() == undefined){
+					$("#validateLogin").css("display","block");
+					return false;
+				}else{
+					$("#validateLogin").css("display","none");
+					$(this).text('Ingresando ...')
+					return true;
+				}							
 			})
-		})
+		
 	</script>
 	
 </html>

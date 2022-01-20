@@ -5,7 +5,7 @@ app.edicionNoticiaController=function($scope,gestionNoticiasService){
     $scope.isSeleccionGeografiaEdicion=false
     $scope.banderaArchivoBanner=false;
     $scope.banderaArchivoDescarga=false;
-    $scope.segundaNoticiaVistaMod = {};
+    $scope.listaOtrasNoticiaVistaMod = [];
     abrirModalEdicion=function(index){
         $("#jstre-content-geofrafia-edicon").jstree().deselect_all(true);
         $scope.editObj=angular.copy( $scope.litadoNoticiasTemp[index] )
@@ -44,7 +44,7 @@ app.edicionNoticiaController=function($scope,gestionNoticiasService){
             $scope.isSeleccionGeografiaEdicion=false
         }
         
-        $scope.segundaNoticiaVistaMod = $scope.litadoNoticiasTemp.filter(e => {return e.id != $scope.editObj.id})[0];
+        $scope.listaOtrasNoticiaVistaMod = $scope.litadoNoticiasTemp.filter(e => {return e.id != $scope.editObj.id});
 
         $scope.mostrarFechasDefinidasEdicion=$scope.editObj.permanente == 1 ? true :false;
         $scope.banderaArchivoBanner=false;
@@ -228,12 +228,17 @@ app.edicionNoticiaController=function($scope,gestionNoticiasService){
 		}
 
 		if(!$scope.editObj.tituloPrincipal){
-			textErrorRegistro += '<li>Captura titulo principal</li>';
+			textErrorRegistro += '<li>Captura título principal</li>';
 			isErrorRegistro=true
 		}
 
 		if(!$scope.editObj.tituloSecundario){
-			textErrorRegistro += '<li>Captura titulo secundario</li>';
+			textErrorRegistro += '<li>Captura título secundario</li>';
+			isErrorRegistro=true
+		}
+		
+		if(!$scope.editObj.detalle){
+			textErrorRegistro += '<li>Captura detalle</li>';
 			isErrorRegistro=true
 		}
 
@@ -261,6 +266,28 @@ app.edicionNoticiaController=function($scope,gestionNoticiasService){
 			toastr.info( textErrorRegistro )
 		
 		return isErrorRegistro;
+	}
+	
+	$scope.masZoomImagenMod = function() {
+    	$("#imgNoticiaMod").css("object-fit", "cover");
+    	$("#imgNoticiaModNueva").css("object-fit", "cover");
+	}
+    
+    $scope.menosZoomImagenMod = function() {    	
+    	$("#imgNoticiaMod").css("object-fit", "contain");
+		$("#imgNoticiaModNueva").css("object-fit", "contain");
+	}
+    
+    $scope.desplazarDerechaCarruselImgNoticiasMod = function() {
+    	$('#carruselImgNoticiasMod').animate({scrollLeft:'+=100'},150);
+	}
+    
+    $scope.desplazarIzqCarruselImgNoticiasMod = function() {
+    	$('#carruselImgNoticiasMod').animate({scrollLeft:'-=100'},150);
+	}
+    
+    $scope.regresarInicioCarruselImgNoticiasMod = function() {
+    	$('#carruselImgNoticiasMod').animate({scrollLeft:'=0'},150);
 	}
 
     angular.element(document).ready(function () {

@@ -87,14 +87,17 @@ app.graficaController = function ($scope, $q, misProyectosService) {
 
         proyecto.Puntas.map(function(punta) {
             punta.fechaInicioPlaneada = moment(punta.fechaInicioPlaneada);
+            punta.fechaInicioReal = moment(punta.fechaInicioReal);
             punta.fechaFinPlaneada = moment(punta.fechaFinPlaneada);
+            punta.fechaFinReal = moment(punta.fechaFinReal);
             punta.fechaInicioFormat = punta.fechaInicioPlaneada.format('L');
+            punta.fechaFinFormat = punta.fechaFinReal.format('L');
             //Calcular los dias de inicio de la punta
             punta.diasInicio = punta.fechaInicioPlaneada.diff($scope.lineaTiempo.fechaInicio, 'days');
             //calcular los dias de la punta
-            punta.diasPunta = punta.fechaFinPlaneada.diff(punta.fechaInicioPlaneada, 'days');
+            punta.diasPunta = punta.fechaFinReal.diff(punta.fechaInicioPlaneada, 'days');
             //calcular los dias fin de la punta
-            punta.diasFin = punta.diasFin = $scope.lineaTiempo.fechaFin.diff(punta.fechaFinPlaneada, 'days');
+            punta.diasFin = punta.diasFin = $scope.lineaTiempo.fechaFin.diff(punta.fechaFinReal, 'days');
             //calcular porcentajes
             punta.porcentajeInicio = (punta.diasInicio * 100 / $scope.lineaTiempo.dias);
             punta.porcentajePunta = (punta.diasPunta * 100 / $scope.lineaTiempo.dias);
@@ -107,11 +110,15 @@ app.graficaController = function ($scope, $q, misProyectosService) {
 
         punta.Planes.map(function(plan) {
             plan.fechaInicioPlaneada = moment(plan.fechaInicioPlaneada);
+            plan.fechaInicioReal = moment(plan.fechaInicioReal);
             plan.fechaFinPlaneada = moment(plan.fechaFinPlaneada);
+            plan.fechaFinReal = moment(plan.fechaFinReal);
+            plan.fechaInicioFormat = plan.fechaInicioPlaneada.format('L');
+            plan.fechaFinFormat = plan.fechaFinReal.format('L');
 
             plan.diasInicio = plan.fechaInicioPlaneada.diff($scope.lineaTiempo.fechaInicio, 'days');
-            plan.diasPlan = plan.fechaFinPlaneada.diff(plan.fechaInicioPlaneada, 'days');
-            plan.diasFin = $scope.lineaTiempo.fechaFin.diff(plan.fechaFinPlaneada, 'days');
+            plan.diasPlan = plan.fechaFinReal.diff(plan.fechaInicioPlaneada, 'days');
+            plan.diasFin = $scope.lineaTiempo.fechaFin.diff(plan.fechaFinReal, 'days');
 
             plan.porcentajeInicio = (plan.diasInicio * 100 / $scope.lineaTiempo.dias);
             plan.porcentajePlan = (plan.diasPlan * 100 / $scope.lineaTiempo.dias);
@@ -122,20 +129,29 @@ app.graficaController = function ($scope, $q, misProyectosService) {
         });
     }
 
-    $scope.inicializarGraficaActividades = function(plan) {
+    $scope.inicializarGraficaActividades = function() {
         $scope.listaActividades.map(function(actividad){
             actividad.Fecha_inicio_planeada = moment(actividad.Fecha_inicio_planeada);
+            actividad.Fecha_inicio_real = moment(actividad.Fecha_inicio_real);
             actividad.Fecha_fin_planeada = moment(actividad.Fecha_fin_planeada);
-
-            actividad.diasInicio = actividad.Fecha_inicio_planeada.diff($scope.lineaTiempo.fechaInicio, 'days');
-            actividad.diasActividad = actividad.Fecha_fin_planeada.diff(actividad.Fecha_inicio_planeada, 'days');
-            actividad.diasFin = $scope.lineaTiempo.fechaFin.diff(actividad.Fecha_fin_planeada, 'days');
-
-            actividad.porcentajeInicio = (actividad.diasInicio * 100 / $scope.lineaTiempo.dias);
-            actividad.porcentajeActividad = (actividad.diasActividad * 100 / $scope.lineaTiempo.dias);
-            actividad.porcentajeFin = (actividad.porcentajeFin * 100 / $scope.lineaTiempo.dias);
-
-            actividad.valor = isNaN(actividad.diasActividad) ? false : true;
+            actividad.Fecha_fin_real = moment(actividad.Fecha_fin_real);
+            actividad.fechaInicioFormatPlaneada = actividad.Fecha_inicio_planeada.format('L');
+            actividad.fechaFinFormatReal = actividad.Fecha_fin_real.format('L');
+            //DIAS PLANEADA
+            actividad.diasInicioPlaneada = actividad.Fecha_inicio_planeada.diff($scope.lineaTiempo.fechaInicio, 'days');
+            actividad.diasActividadPlaneada = actividad.Fecha_fin_real.diff(actividad.Fecha_inicio_planeada, 'days');
+            actividad.diasFinPlaneada = $scope.lineaTiempo.fechaFin.diff(actividad.Fecha_fin_real, 'days');
+            //DIAS REAL
+            actividad.diasInicioReal = actividad.Fecha_inicio_real.diff($scope.lineaTiempo.fechaInicio, 'days');
+            actividad.diasActividadReal = actividad.Fecha_fin_real.diff(actividad.Fecha_inicio_real, 'days');
+            actividad.diasFinReal = $scope.lineaTiempo.fechaFin.diff(actividad.Fecha_fin_real, 'days');
+            actividad.porcentajeInicioPlaneada = (actividad.diasInicioPlaneada * 100 / $scope.lineaTiempo.dias);
+            actividad.porcentajeActividadPlaneada = (actividad.diasActividadPlaneada * 100 / $scope.lineaTiempo.dias);
+            actividad.porcentajeFinPlaneada = (actividad.diasFinPlaneada * 100 / $scope.lineaTiempo.dias);
+            actividad.porcentajeInicioReal = (actividad.diasInicioReal * 100 / $scope.lineaTiempo.dias);
+            actividad.porcentajeActividadReal = (actividad.diasActividadReal * 100 / $scope.lineaTiempo.dias);
+            actividad.porcentajeFinReal = (actividad.diasFinReal * 100 / $scope.lineaTiempo.dias);
+            actividad.valor = isNaN(actividad.diasActividadPlaneada) ? false : true;
             console.log(actividad);
         });
     }
@@ -247,13 +263,13 @@ app.graficaController = function ($scope, $q, misProyectosService) {
                     "Direccion_sitio": "Avenida San Jerónimo, 112 , La Otra Banda, Ciudad De México, 04519",
                     "esNueva": "false",
                     "fechaInicioPlaneada": "12-12-2021",
-                    "fechaFinPlaneada": "01-26-2022",
-                    "fechaInicioReal": "",
-                    "fechaFinReal": "",
+                    "fechaFinPlaneada": "01-18-2022",
+                    "fechaInicioReal": "12-12-2021",
+                    "fechaFinReal": "01-18-2022",
                     "fechaActual": "12-28-2021",
                     "porcentajeAvance": "60",
                     "porcentajeEsperado": "",
-                    "semaforo": "",
+                    "semaforo": "#FF0000",
                     "Num_fuera_tiempo": "0",
                     "Num_en_riesgo": "0",
                     "Num_en_tiempo": "0",
@@ -329,13 +345,13 @@ app.graficaController = function ($scope, $q, misProyectosService) {
                         "tipoPlan": "P",
                         "Numero_cuentaFactura": "0200000446",
                         "fechaInicioPlaneada": "12-12-2021",
-                        "fechaFinPlaneada": "01-25-2022",
-                        "fechaInicioReal": "",
-                        "fechaFinReal": "",
+                        "fechaFinPlaneada": "01-18-2022",
+                        "fechaInicioReal": "12-12-2021",
+                        "fechaFinReal": "01-18-2022",
                         "fechaActual": "12-28-2021",
-                        "porcentajeAvance": ".00",
+                        "porcentajeAvance": "50",
                         "porcentajeEsperado": "",
-                        "semaforo": "",
+                        "semaforo": "#FF0000",
                         "PlaneacionCerrada": "false",
                         "implementacionterminada": "false",
                         "estatusPlaneacion": "0",
@@ -1037,14 +1053,15 @@ app.graficaController = function ($scope, $q, misProyectosService) {
                 "Id_tipo_actividad": "1",
                 "Nombre_actividad": "Validacion Con El Cliente Y Generacion Del Plana De Trabajo",
                 "Nombre_responsable": "",
-                "Porcentaje": "0",
+                "Porcentaje": "50",
                 "Fecha_inicio_planeada": "12-23-2021",
                 "Fecha_fin_planeada": "01-03-2022",
-                "Fecha_inicio_real": "",
-                "Fecha_fin_real": "",
+                "Fecha_inicio_real": "12-23-2021",
+                "Fecha_fin_real": "01-03-2022",
                 "Id_dependencia": "",
                 "Fecha_creacion": "2021-12-28 00:00:00",
                 "Se_puede_eliminar": "false",
+                "semaforo": "#5DC62F",
                 "Tiene_Ot": "false",
                 "Id_implementacion": "1422",
                 "Id_csp": "a118A000001G3rcQAC",

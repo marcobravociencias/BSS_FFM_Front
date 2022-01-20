@@ -1,7 +1,6 @@
 <div ng-show="crearNoticiaContent" class="content-edicion-noticia">                    
     <div class="content-edicionnoticia">
         <button ng-click="crearNoticiaContent=false" type="button" class="btn-close cerrar-crear-noticia" ></button>
-
 		<div class="row">
 		    <div class="container-visualiza-noticia col-md-6">
 		        <div class="container-celular-visualizador">
@@ -38,42 +37,66 @@
 		                    <span class="text-dia-actual">Martes 18 Mayo </span>
 		                </div>
 		            </div>
-		            <div class="container-noticias-visualizador">
-		                <div  class="imagen-noticia-previsualizador">                      
-		                    <img id="imgNoticiaRegistro" ng-show="fileCargaArchivoNoticia.archivo" class="imagen-visor-creanotica" ng-src="data:image/jpeg;base64,{{fileCargaArchivoNoticia.archivo}}" alt="">
-		                    <div ng-show="!inhabilidarCamposRegistro" class="content-titulo-principal">
-		                        <span class="text-title titulo-principal" ng-bind="saveObj.tituloPrincipal" ></span>
-		                    </div>
-		                    <div ng-show="!inhabilidarCamposRegistro" class="content-titulo-secundario">
-		                        <span class="text-title titulo-secundario" ng-bind="saveObj.tituloSecundario" ></span>
-		                    </div>
-		
-		                    <div class="content-icons-image">
-		                    	<div class="row">
-		                    		<div class="col-md-2" style="margin-left: 0.3em;">
-		                    			<div ng-click="triggerInputFile()" class="icon-accion-imagen">
-				                            <i  class="fas fa-camera icono-funcion-imagen"></i>
-				                        </div>
-		                    		</div>
-		                    		<div class="col-md-2">
-		                    			<div ng-click="removerImagenCreacion()" class="icon-accion-imagen">
-				                            <i  class="far fa-trash-alt icono-funcion-imagen"></i>
-				                        </div>
-		                    		</div>
-		                    		<div class="col-md-2 offset-md-2" ng-show="fileCargaArchivoNoticia.archivo">
-		                    			<div ng-click="menosZoomImagenRegistro()" class="icon-accion-imagen">
-				                            <i class="fas fa-search-minus icono-funcion-imagen"></i>
-				                        </div>
-		                    		</div>
-		                    		<div class="col-md-2" ng-show="fileCargaArchivoNoticia.archivo">
-		                    			<div ng-click="masZoomImagenRegistro()" class="icon-accion-imagen">
-				                            <i class="fas fa-search-plus icono-funcion-imagen"></i>
-				                        </div>
-		                    		</div>
-		                    	</div>
-		                    </div>
-		                </div>
-		            </div>
+		            <div class="container-categorias-app carouselContainer">
+	                    <button type="button"  class="btnControlesCarruselRegistro" ng-click="desplazarIzqCarruselImgNoticiasRegistro()" style="margin-right: 8px;">
+				            <i class="fas fa-chevron-left"></i>
+				        </button>
+	                    <div id="carruselImgNoticiasRegistro" class="carruselImgNoticiasRegistro">
+	                    	<div class="contenedorImagenCarrusel">
+		                    	<div class="container-noticias-visualizador">
+					                <div  class="imagen-noticia-previsualizador">                      
+					                    <img id="imgNoticiaRegistro" ng-show="fileCargaArchivoNoticia.archivo" class="imagen-visor-creanotica" ng-src="data:image/jpeg;base64,{{fileCargaArchivoNoticia.archivo}}" alt="">
+					                    <div ng-show="!inhabilidarCamposRegistro" class="content-titulo-principal">
+					                        <span class="text-title titulo-principal" ng-bind="saveObj.tituloPrincipal" ></span>
+					                    </div>
+					                    <div ng-show="!inhabilidarCamposRegistro" class="content-titulo-secundario">
+					                        <span class="text-title titulo-secundario" ng-bind="saveObj.tituloSecundario" ></span>
+					                    </div>
+					                    <div class="content-icons-image">
+					                    	<div class="row">
+					                    		<div class="col-md-2" style="margin-left: 0.3em;">
+					                    			<div ng-click="triggerInputFile()" class="icon-accion-imagen">
+							                            <i  class="fas fa-camera icono-funcion-imagen"></i>
+							                        </div>
+					                    		</div>
+					                    		<div class="col-md-2">
+					                    			<div ng-click="removerImagenCreacion()" class="icon-accion-imagen">
+							                            <i  class="far fa-trash-alt icono-funcion-imagen"></i>
+							                        </div>
+					                    		</div>
+					                    		<div class="col-md-2 offset-md-2" ng-show="fileCargaArchivoNoticia.archivo">
+					                    			<div ng-click="menosZoomImagenRegistro()" class="icon-accion-imagen">
+							                            <i class="fas fa-search-minus icono-funcion-imagen"></i>
+							                        </div>
+					                    		</div>
+					                    		<div class="col-md-2" ng-show="fileCargaArchivoNoticia.archivo">
+					                    			<div ng-click="masZoomImagenRegistro()" class="icon-accion-imagen">
+							                            <i class="fas fa-search-plus icono-funcion-imagen"></i>
+							                        </div>
+					                    		</div>
+					                    	</div>
+					                    </div>
+					                </div>
+					            </div>
+	                    	</div>
+	                    	<div class="contenedorImagenCarrusel contenedorImgOtraNoticia" ng-repeat="otraNoticia in noticiasCarrusel">
+		                    	<div class="container-noticias-visualizador">
+			                        <div  class="imagen-noticia-previsualizador">                      
+			                            <img class="imagen-visor-creanotica" ng-src="{{otraNoticia.urlBanner}}" alt="">
+			                            <div class="content-titulo-principal">
+			                                <span class="text-title titulo-principal" ng-bind="otraNoticia.tituloPrincipal" ></span>
+			                            </div>
+			                            <div class="content-titulo-secundario">
+			                                <span class="text-title titulo-secundario" ng-bind="otraNoticia.tituloSecundario" ></span>
+			                            </div>
+			                        </div>
+			                    </div>
+	                    	</div>
+	                    </div>
+	                    <button id="avanzar" type="button"  class="btnControlesCarruselMod" ng-click="desplazarDerechaCarruselImgNoticiasRegistro()">
+				            <i class="fas fa-chevron-right"></i>
+				        </button>
+                    </div>
 		            <div class="container-categorias-app row">
 		                <div class="content-categoria-app col">
 		                    <div class="content-img-card">
@@ -129,10 +152,9 @@
 		        <div class="row">
 		            <div class="col-12">
 		                <div class="container-registro">
-		                    
 		                    <div  ng-show="inhabilidarCamposRegistro" class="capa-inabilitable">
 		                    </div>
-		                    <div >
+		                    <div>
 		                        <div class="form row  row-input-crea">
 		                            <div class="col-12">
 		                                <div class="form-check form-switch">
@@ -146,35 +168,33 @@
 		                        <div class="form row  row-input-crea">
 		                            <div class="col-12">
 		                                <label class="label-noticiar-creacion form-label" for="tituloPrincipal">T&iacute;tulo principal</label>
-		                                <input    type="text" ng-model="saveObj.tituloPrincipal" id="tituloPrincipal" class="form-control form-control-sm" />
+		                                <input type="text" ng-model="saveObj.tituloPrincipal" id="tituloPrincipal" class="form-control form-control-sm" ng-click="regresarInicioCarruselImgNoticiasRegistro()" />
 		                            </div>                                
 		                        </div>                      
 		                        <div class="form row  row-input-crea">
 		                            <div class="col-12">
 		                                <label class="label-noticiar-creacion form-label" for="tituloSecundario">T&iacute;tulo secundario</label>
-		                                <input   type="text" ng-model="saveObj.tituloSecundario" id="tituloSecundario" class="form-control form-control-sm" />
+		                                <input type="text" ng-model="saveObj.tituloSecundario" id="tituloSecundario" class="form-control form-control-sm" ng-click="regresarInicioCarruselImgNoticiasRegistro()" />
 		                            </div>                                
 		                        </div>  
 		                        <div class="form row  row-input-crea">
 		                            <div class="col-12">
 		                                <label class="label-noticiar-creacion form-label" for="tituloSecundario">Link externo</label>
-		                                <input   type="text" ng-model="saveObj.urlLinkExterno" placeholder="Ej.:  www.google.com.mx" id="tituloSecundario" class="form-control form-control-sm" />
+		                                <input type="text" ng-model="saveObj.urlLinkExterno" placeholder="Ej.:  www.google.com.mx" id="tituloSecundario" class="form-control form-control-sm" ng-click="regresarInicioCarruselImgNoticiasRegistro()" />
 		                            </div>                                
 		                        </div>
 		                        <div class="form row  row-input-crea">
 		                            <div class="col-12">
 		                                <label class="label-noticiar-creacion form-label" for="detalleCreaNoticia">Detalle</label>
-		                                <textarea  class="form-control form-control-sm" ng-model="saveObj.detalle" id="detalleCreaNoticia" rows="2"></textarea>
+		                                <textarea class="form-control form-control-sm" ng-model="saveObj.detalle" id="detalleCreaNoticia" rows="2" ng-click="regresarInicioCarruselImgNoticiasRegistro()"></textarea>
 		                            </div>                                
 		                        </div>
-		
 		                        <div style="display: none;" class="form  row  row-input-crea">
 		                            <div class="col-12">
 		                                <label class="label-noticiar-creacion form-label" for="customFile">Seleccionar imagen</label><i ng-show="fileCargaArchivoNoticia.nombre"  ng-click="removerImagenCreacion()" class="far fa-trash-alt"></i>
 		                                <input ng-on-change="cargarFotoNoticiaRegistro($event)" type="file" class="form-control form-control-sm" id="archivoCrearNoticia" />
 		                            </div>                                 
 		                        </div>
-		                
 		                        <div  class="form  row  row-input-crea">
 		                            <div style="display: none;"  class="col-12">
 		                                <input ng-on-change="cargarArchivoDescarga($event)" type="file" class="form-control form-control-sm" id="cargarArchivoDescarga" />                                            
@@ -185,7 +205,6 @@
 		                                        <div class="icono-descarga">
 		                                            <i class="fas fa-cloud-upload-alt icono-subida-archivo"></i>
 		                                        </div>
-		                                        
 		                                    </div>
 		                                    <div ng-show="!fileDecargaNotica.archivo" class="content-detalle-archivo">
 		                                        <div class="title-nombrearchivo">
@@ -195,8 +214,6 @@
 		                                            PDF,imagenes,Excel,Word
 		                                        </div>
 		                                    </div>   
-		                                    
-		                                    
 		                                    <div  ng-show="fileDecargaNotica.archivo" class="content-icono-descarga">
 		                                        <div class="icono-descarga">
 		                                            <i class="far fa-file icono-subida-archivo-success"></i>
@@ -211,7 +228,6 @@
 		                                            <i class="fas fa-times"></i>
 		                                        </div>
 		                                    </div>  
-		
 		                                </div>
 		                            </div>                             
 		                        </div>
@@ -246,19 +262,14 @@
 		                                        </div>
 		                                </div>
 		                        </div>
-		
-		                
 		                        <button ng-click="registrarNoticia()" class="btn btn-primary btn-block">Registrar noticia</button>
 		                    </div>   
 		                </div>
-		                                        
 		            </div>
 		        </div>
 		    </div>
 		    <div class="container-datos-crea-noticia col-sm-6 col-md-4">
-		        
 		    </div>
 		</div>
-		    
 	</div>
 </div>

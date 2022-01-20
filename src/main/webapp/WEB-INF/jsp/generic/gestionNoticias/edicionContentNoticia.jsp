@@ -1,9 +1,6 @@
-
-
 <div ng-show="edicionNoticaContent" class="content-edicion-noticia">                    
     <div class="content-edicionnoticia">
         <button ng-click="edicionNoticaContent=false" type="button" class="btn-close cerrar-edicion-noticia" ></button>
-
         <div class="row">
             <div class="container-visualiza-noticia col-sm-6 col-md-6 ">
                 <div class="container-celular-visualizador">
@@ -40,68 +37,67 @@
                             <span class="text-dia-actual">Martes 18 Mayo </span>
                         </div>
                     </div>
-                    
-                    <div class="container-categorias-app row">
-                    	<div class="col-md-6">
-	                    	<div class="container-noticias-visualizador-mod">
-		                        <div  class="imagen-noticia-previsualizador-mod">                      
-		                            <img id="imgNoticiaMod" ng-if="fileCargaArchivoNoticiaEdit.archivo && banderaEdicionImagen" class="imagen-visor-creanotica" ng-src="{{fileCargaArchivoNoticiaEdit.archivo}}" alt="">
-		                            <img id="imgNoticiaModNueva" ng-if="fileCargaArchivoNoticiaEdit.archivo && !banderaEdicionImagen" class="imagen-visor-creanotica" ng-src="data:image/jpeg;base64,{{fileCargaArchivoNoticiaEdit.archivo}}" alt="">
-		        
-		                            
-		                            <div ng-if="!inhabilidarCamposEdicion" class="content-titulo-principal">
-		                                <span class="text-title titulo-principal" ng-bind="editObj.tituloPrincipal" ></span>
-		                            </div>
-		                            <div ng-if="!inhabilidarCamposEdicion" class="content-titulo-secundario">
-		                                <span class="text-title titulo-secundario" ng-bind="editObj.tituloSecundario" ></span>
-		                            </div>
-
-		                            <div class="content-icons-image">
-		                            	<div class="row">
-		                            		<div class="col-md-2">
-		                            			<div ng-click="triggerInputFileEditar()" class="icon-accion-imagen">
-				                                    <i  class="fas fa-camera icono-funcion-imagen"></i>
-				                                </div>
-		                            		</div>
-		                            		<div class="col-md-2">
-		                            			<div ng-click="removerImagenEditar()" class="icon-accion-imagen">
-				                                    <i  class="far fa-trash-alt icono-funcion-imagen"></i>
-				                                </div>
-		                            		</div>
-		                            		<div class="col-md-2 offset-2">
-		                            			<div ng-click="menosZoomImagenMod()" class="icon-accion-imagen">
-						                            <i class="fas fa-search-minus icono-funcion-imagen"></i>
-						                        </div>
-		                            		</div>
-		                            		<div class="col-md-2">
-		                            			<div ng-click="masZoomImagenMod()" class="icon-accion-imagen">
-						                            <i class="fas fa-search-plus icono-funcion-imagen"></i>
-						                        </div>
-		                            		</div>
-		                            	</div>
-		                            </div>
-		                        </div>
-		                    </div>
-                    	</div>
-                    	<div class="col-md-6" ng-show="segundaNoticiaVistaMod">
-	                    	<div class="container-noticias-visualizador-mod">
-		                        <div  class="imagen-noticia-previsualizador-mod">                      
-		                            <img class="imagen-visor-creanotica" ng-src="{{segundaNoticiaVistaMod.urlBanner}}" alt="">
-		        
-		                            
-		                            <div class="content-titulo-principal">
-		                                <span class="text-title titulo-principal" ng-bind="segundaNoticiaVistaMod.tituloPrincipal" ></span>
-		                            </div>
-		                            <div class="content-titulo-secundario">
-		                                <span class="text-title titulo-secundario" ng-bind="segundaNoticiaVistaMod.tituloSecundario" ></span>
-		                            </div>
-		                        </div>
-		                    </div>
-                    	</div>
+                    <div class="container-categorias-app carouselContainer">
+	                    <button id="retroceder" type="button"  class="btnControlesCarruselMod" ng-click="desplazarIzqCarruselImgNoticiasMod()" style="margin-right: 8px;">
+				            <i class="fas fa-chevron-left"></i>
+				        </button>
+	                    <div id="carruselImgNoticiasMod" class="carruselImgNoticiasMod">
+	                    	<div class="contenedorImagenCarrusel">
+		                    	<div class="container-noticias-visualizador-mod">
+			                        <div  class="imagen-noticia-previsualizador-mod">                      
+			                            <img id="imgNoticiaMod" ng-if="fileCargaArchivoNoticiaEdit.archivo && banderaEdicionImagen" class="imagen-visor-creanotica" ng-src="{{fileCargaArchivoNoticiaEdit.archivo}}" alt="">
+			                            <img id="imgNoticiaModNueva" ng-if="fileCargaArchivoNoticiaEdit.archivo && !banderaEdicionImagen" class="imagen-visor-creanotica" ng-src="data:image/jpeg;base64,{{fileCargaArchivoNoticiaEdit.archivo}}" alt="">
+			                            <div ng-if="!inhabilidarCamposEdicion" class="content-titulo-principal">
+			                                <span class="text-title titulo-principal" ng-bind="editObj.tituloPrincipal" ></span>
+			                            </div>
+			                            <div ng-if="!inhabilidarCamposEdicion" class="content-titulo-secundario">
+			                                <span class="text-title titulo-secundario" ng-bind="editObj.tituloSecundario" ></span>
+			                            </div>
+			                            <div class="content-icons-image">
+			                            	<div class="row">
+			                            		<div class="col-md-2" style="margin-left: .4em;">
+			                            			<div ng-click="triggerInputFileEditar()" class="icon-accion-imagen">
+					                                    <i  class="fas fa-camera icono-funcion-imagen"></i>
+					                                </div>
+			                            		</div>
+			                            		<div class="col-md-2">
+			                            			<div ng-click="removerImagenEditar()" class="icon-accion-imagen">
+					                                    <i  class="far fa-trash-alt icono-funcion-imagen"></i>
+					                                </div>
+			                            		</div>
+			                            		<div class="col-md-2 offset-2">
+			                            			<div ng-click="menosZoomImagenMod()" class="icon-accion-imagen">
+							                            <i class="fas fa-search-minus icono-funcion-imagen"></i>
+							                        </div>
+			                            		</div>
+			                            		<div class="col-md-2">
+			                            			<div ng-click="masZoomImagenMod()" class="icon-accion-imagen">
+							                            <i class="fas fa-search-plus icono-funcion-imagen"></i>
+							                        </div>
+			                            		</div>
+			                            	</div>
+			                            </div>
+			                        </div>
+			                    </div>
+	                    	</div>
+	                    	<div class="contenedorImagenCarrusel contenedorImgOtraNoticia" ng-repeat="otraNoticia in listaOtrasNoticiaVistaMod">
+		                    	<div class="container-noticias-visualizador-mod">
+			                        <div  class="imagen-noticia-previsualizador-mod">                      
+			                            <img class="imagen-visor-creanotica" ng-src="{{otraNoticia.urlBanner}}" alt="">
+			                            <div class="content-titulo-principal">
+			                                <span class="text-title titulo-principal" ng-bind="otraNoticia.tituloPrincipal" ></span>
+			                            </div>
+			                            <div class="content-titulo-secundario">
+			                                <span class="text-title titulo-secundario" ng-bind="otraNoticia.tituloSecundario" ></span>
+			                            </div>
+			                        </div>
+			                    </div>
+	                    	</div>
+	                    </div>
+	                    <button id="avanzar" type="button"  class="btnControlesCarruselMod" ng-click="desplazarDerechaCarruselImgNoticiasMod()">
+				            <i class="fas fa-chevron-right"></i>
+				        </button>
                     </div>
-                    
-
-                    
                     <div class="container-categorias-app row">
                         <div class="content-categoria-app col">
                             <div class="content-img-card">
@@ -171,39 +167,36 @@
                                 </div>
                             </div>
                             <div>
-                                
                                 <div class="form row  row-input-crea">
                                     <div class="col-12">
                                         <label class="label-noticiar-creacion form-label" for="tituloPrincipalEditar">T&iacute;tulo principal</label>
-                                        <input    type="text" ng-model="editObj.tituloPrincipal" id="tituloPrincipalEditar" class="form-control form-control-sm" />
+                                        <input type="text" ng-model="editObj.tituloPrincipal" id="tituloPrincipalEditar" class="form-control form-control-sm" ng-click="regresarInicioCarruselImgNoticiasMod()" />
                                     </div>                                
                                 </div>                      
                                 <div class="form row  row-input-crea">
                                     <div class="col-12">
                                         <label class="label-noticiar-creacion form-label" for="tituloSecundarioEditar">T&iacute;tulo secundario</label>
-                                        <input   type="text" ng-model="editObj.tituloSecundario" id="tituloSecundarioEditar" class="form-control form-control-sm" />
+                                        <input type="text" ng-model="editObj.tituloSecundario" id="tituloSecundarioEditar" class="form-control form-control-sm" ng-click="regresarInicioCarruselImgNoticiasMod()" />
                                     </div>                                
                                 </div>
                                 <div class="form row  row-input-crea">
                                     <div class="col-12">
                                         <label class="label-noticiar-creacion form-label" for="tituloSecundarioEditar">Link externo</label>
-                                        <input   type="text" ng-model="editObj.urlLinkExterno" placeholder="Ej.:  www.google.com.mx" id="tituloSecundarioEditar" class="form-control form-control-sm" />
+                                        <input type="text" ng-model="editObj.urlLinkExterno" placeholder="Ej.:  www.google.com.mx" id="tituloSecundarioEditar" class="form-control form-control-sm" ng-click="regresarInicioCarruselImgNoticiasMod()" />
                                     </div>                                
                                 </div>
                                 <div class="form row  row-input-crea">
                                     <div class="col-12">
                                         <label class="label-noticiar-creacion form-label" for="detalleCreaNoticia">Detalle</label>
-                                        <textarea  class="form-control form-control-sm" ng-model="editObj.detalle" id="detalleEditaNoticia" rows="2"></textarea>
+                                        <textarea class="form-control form-control-sm" ng-model="editObj.detalle" id="detalleEditaNoticia" rows="2" ng-click="regresarInicioCarruselImgNoticiasMod()"></textarea>
                                     </div>                                
                                 </div>
-        
                                 <div style="display: none;" class="form  row  row-input-crea">
                                     <div class="col-12">
                                         <label class="label-noticiar-creacion form-label" for="archivoEditarNoticia">Seleccionar imagen</label><i ng-show="fileCargaArchivoNoticiaEdit.archivo"  ng-click="removerImagenEditar()" class="far fa-trash-alt"></i>
                                         <input ng-on-change="cargarFotoNoticiaEdicion($event)" type="file" class="form-control form-control-sm" id="archivoEditarNoticia" />
                                     </div>                                 
                                 </div>
-                        
                                 <div  class="form  row  row-input-crea">
                                     <div style="display: none;"  class="col-12">
                                         <input ng-on-change="cargarArchivoDescargaEdicion($event)" type="file" class="form-control form-control-sm" id="cargarArchivoDescargaEdicion" />                                            
@@ -223,8 +216,6 @@
                                                     PDF,imagenes,Excel,Word
                                                 </div>
                                             </div>   
-                                            
-                                            
                                             <div  ng-show="fileDecargaNoticaEdicion.archivo" class="content-icono-descarga">
                                                 <div class="icono-descarga">
                                                     <i class="far fa-file icono-subida-archivo-success"></i>
@@ -239,7 +230,6 @@
                                                     <i class="fas fa-times"></i>
                                                 </div>
                                             </div>  
-        
                                         </div>
                                     </div>                             
                                 </div>
@@ -265,7 +255,6 @@
                                                 </div>
                                         </div>
                                 </div>
-        
                                 <div  class="form  row  row-input-crea">
                                     <div class="col-12">
                                         <span class="link-geografia" ng-click="abrirGeografiaEdicion()">Geograf&iacute;a</span>                                           
@@ -275,18 +264,14 @@
                                         <div  ng-show="isSeleccionGeografiaEdicion" ng-click="abrirGeografiaEdicion()" class="content-success-geografia">
                                             <i class="icono-success-geografia fas fa-check"></i>                                        
                                         </div>
-        
                                     </div>
                                 </div>
                                 <button ng-click="actualizarNoticia()" class="btn btn-primary btn-block">Actualizar noticia</button>
                             </div>   
                         </div>
-                                                
                     </div>
                 </div>
-        
             </div>
         </div>
     </div>
 </div>
-

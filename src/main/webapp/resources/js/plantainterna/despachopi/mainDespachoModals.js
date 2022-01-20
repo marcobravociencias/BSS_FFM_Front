@@ -37,6 +37,8 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         $scope.objConfirmaDesc = {
             isConfirmadoDesconfirmado: $(instanciaThis).is(':checked'),
             idOtConfirmaDesc: idot,
+            comentarios:"",
+            procesando:false
         }
         $scope.$apply()
         $("#modalConfirmaDesconfirma").modal('show')
@@ -557,24 +559,39 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     }
 
     $scope.confirmarDesconfirmarOt = function () {
-        console.log($scope.objConfirmaDesc)
+        console.log("antes de confirma/desconfirma  ",$scope.objConfirmaDesc)
+
+        if(!$scope.objConfirmaDesc.comentarios){
+            toastr.info("Captura comentarios");
+            return false;
+        }
+
+        $scope.objConfirmaDesc.procesando=true
         swal({ text: 'Cambiando estatus de la OT ...', allowOutsideClick: false });
         swal.showLoading();
-        mainDespachoService.cambiarEstatusOperarioPI(params).then(function success(response) {
-            $scope.banderaRegresarCheckbox = true;
-            $("#modalConfirmaDesconfirma").modal('hide')
-            console.log(response);
-            swal.close()
-            toastr.success('Cambio de estatus correcto');
-            $scope.refrescarBusqueda()
+        let params = {
+            "idOrden": $scope.objConfirmaDesc.idOtConfirmaDesc,
+            "idOrigen":1,
+            "esConfirmada": $scope.objConfirmaDesc.isConfirmadoDesconfirmado ? 1 :0 ,
+            "comentarios": $scope.objConfirmaDesc.comentarios
+        }        
+        console.log("params",params)
+        mainDespachoService.confirmaDesconfirmaOtDespacho(params).then(function success(response) {
+            $scope.banderaRegresarCheckbox = true;        
             if (response.data !== undefined) {
-                if (response.data.respuesta) {
-                    if (response.data.result.result === '0') {
-                        console.log("############## catalogo")
-                        //$scope.listadoOtsPendientes=otspendientes                         
-                    }
+                if (response.data.respuesta) {                
+                    $("#modalConfirmaDesconfirma").modal('hide')
+                    console.log(response);
+                    swal.close()
+                    toastr.success('Cambio de estatus correcto');
+                    $scope.refrescarBusqueda()
+                }else{
+                    toastr.info("No se pudo cambiar el estatus de la ot");
                 }
+            }else{
+                toastr.info("No se pudo cambiar el estatus de la ot");
             }
+            $scope.objConfirmaDesc.procesando=false
         }).catch(err => handleError(err))
     }
 

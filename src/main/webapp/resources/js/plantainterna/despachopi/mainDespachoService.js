@@ -136,6 +136,16 @@ app.service("mainDespachoService", function ($http) {
             }
 		});
 	}
+	this.confirmaDesconfirmaOtDespacho=function(params){
+		return $http({
+			method: "post",
+			url: "req/confirmaDesconfirmaOtDespacho",
+			data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	}
 	this.consultarOtsTrabajadasDespacho=function(params){
 		return $http({
 			method: "post",

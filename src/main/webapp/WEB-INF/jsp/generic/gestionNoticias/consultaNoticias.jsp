@@ -75,39 +75,37 @@
 	    		<div id="card" class="card contenedorCardsConsulta">
 					<div class="card-body cuerpoCards">
 						<img class="" onclick="abrirImagenSize(this)" style="height: 100%; width: 100%; object-fit: cover;" src="{{noticia.urlBanner}}">
-						<div class="content-titulo-principal-consulta-carrusel">
+						<div ng-if="noticia.soloImagen == 1" class="content-titulo-principal-consulta-carrusel">
 		                	<span class="text-titulo-primario-img-consulta-carrusel" ng-bind="noticia.tituloPrincipal" ></span>
 		                </div>
-		                <div class="content-titulo-secundario-consulta-carrusel">
+		                <div ng-if="noticia.soloImagen == 1" class="content-titulo-secundario-consulta-carrusel">
 							<span class="text-titulo-secundario-img-consulta-carrusel" ng-bind="noticia.tituloSecundario" ></span>
 						</div>
 					</div>
 					<div id="" class="card-footer finCards">               
-						<div class="row">
-							<div class="col-md-12" ng-if="noticia.permanente != 1">
-								<label class="textoTituloCardsConsulta">Fecha inicio:&nbsp;</label><span class="textoCardsConsulta" ng-bind="noticia.fechaInicio"></span>		
+						<div class="row">     
+                            <div class="divTextoDesbordCard content-detalle-consulta">
+                                <span class="textoCardsConsulta text-detalle-consulta" ng-bind="noticia.detalle"></span>
+                            </div>       
+                            <div ng-if="noticia.permanente != 1" class="fechas-noticia-detalle-consulta">
+                                <span class="text-intermedio-fecha">De</span>
+                                <span class="textoCardsConsulta fecha-inicio-consulta-tex" ng-bind="noticia.fechaInicio"></span>
+                                <span class="text-intermedio-fecha"> a </span>
+                                <span class="textoCardsConsulta fecha-fin-consulta-tex" ng-bind="noticia.fechaExpiracion"></span>	
+                            </div>
+                            <span onclick="window.open( 'www.google.com', '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');" class="link-archivo-noticia link-consulta-noticiaexterno" > {{noticia.urlLinkExterno}} </span> 
+                            
+                            <div ng-if="noticia.permanente==1 || noticia.urlArchivo" class="divider-consulta-noticia"></div>                                                    
+                           
+                            <div class="content-permanente" ng-show="noticia.permanente == 1">
+								<span class="text-titulo-permanente">Permanente</span>							
 							</div>
-							<div class="col-md-12" ng-if="noticia.permanente != 1">
-								<label class="textoTituloCardsConsulta">Fecha fin:&nbsp;</label><span class="textoCardsConsulta" ng-bind="noticia.fechaExpiracion"></span>				
-							</div>
-							<div class="col-md-12">
-								<div class="divTextoDesbordCard">
-									<label class="textoTituloCardsConsulta">Detalle:&nbsp;</label><span class="textoCardsConsulta" ng-bind="noticia.detalle"></span>
-								</div>
-							</div>
-							<div class="col-md-12" ng-if="noticia.permanente == 1">
-								<span class="textoTituloCardsConsulta">Permanente</span>
-								<div class="contentPermanenteConsulta">
-									<i class="icono-success-generic fas fa-check"></i>                             
-								</div>			
-							</div>
-							<div class="col-md-12" ng-if="noticia.urlArchivo">
-								<span class="textoTituloCardsConsulta">Descargar</span>
-								<div class="contenedorIconoDescargaArchivo">
-									<a href="{{noticia.urlArchivo}}">
-										<i class="iconoDescargaArchivo fas fa-cloud-download-alt"></i>
-									</a>
-								</div>
+
+							<div class="content-descarga-archivo content-descarga-consulta" ng-show="noticia.urlArchivo">
+                                <a href="{{noticia.urlArchivo}}">
+                                    <i class="iconoDescargaArchivo fas fa-cloud-download-alt"></i>
+                                </a>
+                                <span class="textoTituloCardsConsulta text-descarga-consulta">{{noticia.nombreArchivo}}</span>                               
 							</div>
 						</div>                
 					</div>
