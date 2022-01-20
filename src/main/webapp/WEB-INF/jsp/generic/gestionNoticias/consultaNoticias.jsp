@@ -74,7 +74,7 @@
     		<div class="col-md-3" ng-repeat="noticia in noticiasCarrusel | filter:buscarNoticiaCarrusel track by $index"" style="padding-bottom: 2em;">
 	    		<div id="card" class="card contenedorCardsConsulta">
 					<div class="card-body cuerpoCards">
-						<img class="" onclick="abrirImagenSize(this)" style="height: 100%; width: 100%; object-fit: cover;" src="{{noticia.urlBanner}}">
+						<img class="img-consulta-cards" onclick="abrirImagenSize(this)" src="{{noticia.urlBanner}}">
 						<div ng-if="noticia.soloImagen == 1" class="content-titulo-principal-consulta-carrusel">
 		                	<span class="text-titulo-primario-img-consulta-carrusel" ng-bind="noticia.tituloPrincipal" ></span>
 		                </div>
@@ -83,23 +83,21 @@
 						</div>
 					</div>
 					<div id="" class="card-footer finCards">               
-						<div class="row">     
-                            <div class="divTextoDesbordCard content-detalle-consulta">
-                                <span class="textoCardsConsulta text-detalle-consulta" ng-bind="noticia.detalle"></span>
-                            </div>       
+						<div class="row">    
                             <div ng-if="noticia.permanente != 1" class="fechas-noticia-detalle-consulta">
-                                <span class="text-intermedio-fecha">De</span>
-                                <span class="textoCardsConsulta fecha-inicio-consulta-tex" ng-bind="noticia.fechaInicio"></span>
-                                <span class="text-intermedio-fecha"> a </span>
-                                <span class="textoCardsConsulta fecha-fin-consulta-tex" ng-bind="noticia.fechaExpiracion"></span>	
+                                <span class=" fecha-inicio-consulta-tex" ng-bind="noticia.fechaInicio"></span>
+                                <span class="text-intermedio-fecha fas fa-long-arrow-alt-right">  </span>
+                                <span class=" fecha-fin-consulta-tex" ng-bind="noticia.fechaExpiracion"></span>	
+                            </div> 
+                            <span class=" text-detalle-consulta" ng-bind="noticia.detalle"></span>                   
+                            <span onclick="window.open( 'www.google.com', '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');" class="link-archivo-noticia link-consulta-noticiaexterno" > {{noticia.urlLinkExterno}} </span>                             
+                            <div ng-if="noticia.permanente==1 || noticia.urlArchivo" class="divider-consulta-noticia"></div>                                                                                                                         
+                            <div ng-show="noticia.permanente == 1" class="parent-icon-permanente">   
+                                <div class="wrapper-icon-permanente">
+                                    <div class="icon-wrapper-bg-permanente"></div>                     
+                                    <i class="fas fa-stopwatch icon-permanente-content"></i>  
+                                </div>                                                                               
                             </div>
-                            <span onclick="window.open( 'www.google.com', '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');" class="link-archivo-noticia link-consulta-noticiaexterno" > {{noticia.urlLinkExterno}} </span> 
-                            
-                            <div ng-if="noticia.permanente==1 || noticia.urlArchivo" class="divider-consulta-noticia"></div>                                                    
-                           
-                            <div class="content-permanente" ng-show="noticia.permanente == 1">
-								<span class="text-titulo-permanente">Permanente</span>							
-							</div>
 
 							<div class="content-descarga-archivo content-descarga-consulta" ng-show="noticia.urlArchivo">
                                 <a href="{{noticia.urlArchivo}}">
