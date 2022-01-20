@@ -279,6 +279,10 @@ thead#thead_table tr th {
     white-space: nowrap;
     font-family: 'Montserrat', sans-serif;
     font-size: .6em;
+    /* padding: 1em; */
+    font-weight: normal;
+    border: none;
+    padding: 1em;
 }
 
 thead#thead_table {
@@ -288,12 +292,17 @@ thead#thead_table {
   background-color: #fff;
   color: #000;
 }
+#vehiculoTable tbody tr:nth-child(even) {
+    background: #f5f5f5;
+}
 
-
+#vehiculoTable tbody tr.odd {
+    background-color: white;
+}
 #vehiculoTable tr td {
   font-size: 0.6em;
   font-family: "Montserrat" !important;
-  text-align: center;
+  /* text-align: center; */
   vertical-align: middle;
 }
 
