@@ -108,9 +108,12 @@
 
 
 #btnBuscar {
-  float: none;
-  margin-bottom: 0 !important;
-  margin-top: 1.8em;
+  /* float: none; */
+  /* margin-bottom: 0 !important; */
+  /* margin-top: 1.8em; */
+  position: absolute;
+  bottom: 0;
+  left: 1em;
 }
 
 .btnTotal:active, .btnTotal:focus .btnTotal:hover {
@@ -123,7 +126,7 @@
   background-color: #ffffff !important;
   color: #7716fa !important;
   border: solid 1px #7716fa !important;
-  padding: .5em 2.5em;
+  padding: .53em 2.5em;
   border-radius: 5px;
   font-size: 0.65em;
   position: relative;
@@ -244,14 +247,7 @@ span.btn-floating.btn-sm.btn-default.waves-effect.waves-light {
   font-size: 0.9em;
 }
 
-span.btn-floating.btn-sm.btn-secondary.waves-effect.waves-light.acciones {
-  background-color: #58b3bf !important;
-  color: #fff !important;
-  -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
-    0 2px 10px 0 rgba(0, 0, 0, 0.12);
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-  font-size: 0.9em;
-}
+
 
 .icons-filter {
   font-size: 15px;
@@ -673,17 +669,18 @@ tfoot {
 
 
 .columna-filtro-ind-rep::after {
-  content: "";
-  position: absolute;
-  right: 10px;
-  top: 60%;
-  width: 0;
-  height: 0;
-  border-left: 0.3em solid transparent;
-  border-right: 0.3em solid transparent;
-  border-top: 0.6em solid #939db2;
-  clear: both;
-  /*z-index: 2;*/
+    content: "";
+    position: absolute;
+    right: 3%;
+    top: 66%;
+    width: 0;
+    height: 0;
+    border-left: 0.3em solid transparent;
+    border-right: 0.3em solid transparent;
+    border-top: 0.6em solid #939db2;
+    clear: both;
+    z-index: 2;
+    font-size: 14px;
 }
 
 .input-filtro {
@@ -695,6 +692,10 @@ tfoot {
   border-bottom: 1px solid white;
   background: white !important;
   border-radius: 0.5em !important;
+  margin-top: 0;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,.07),0 1px 2px 0 rgba(0,0,0,.05)!important;
+  /* position: absolute; */
+  border-bottom: 2px solid rgb(217, 217, 217) !important;
 }
 
 .input-filtro::placeholder {
@@ -710,4 +711,24 @@ tfoot {
   cursor: pointer;
   border-bottom: 2px solid #a4b1ff !important;
   background: white;
+}
+
+
+.btnModificarUsuario {
+    background-color: #7716fa !important;
+    color: #fff !important;
+    -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    /* box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%); */
+    font-size: 0.7em;
+    text-align: center;
+}
+.btn-option {
+    padding: 4px 0px !important;
+    border-radius: 0.2rem !important;
+    cursor: pointer;
+}
+.span-consulta {
+    color: #9d9d9d;
+    font-size: .9em;
+    margin: 0;
 }

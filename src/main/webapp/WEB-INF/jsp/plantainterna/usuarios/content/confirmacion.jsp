@@ -9,7 +9,7 @@
                     <div class="col-12">
                         <div class="row">
                         	<div class="col-3">
-                        		<div id="card" class="card">
+                        		<div id="cardFotoUsuarioRegistro" class="card cardFotoUsuario">
 			                        <div class="card-body">
 			                            <div class="top-title-ot">
 			                                <div class="content-top-element bars-content">

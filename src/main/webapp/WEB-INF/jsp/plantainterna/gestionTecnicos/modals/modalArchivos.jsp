@@ -8,7 +8,10 @@
             </div>
             <div class="modal-body">
                 <div class="container">
-                    <div class="content-fluid" style="margin-top: 0.7em;">
+                    <div class="content-fluid" ng-show="!isCargaArchivos">
+                        <div class="col-12 form-group" style="margin-bottom: 0; text-align: right;">
+                            <i class="fas fa-plus-circle icon-back" ng-click="changeView()" title="Cargar Archivo"></i>
+                        </div>
                         <table class="display table table-hover" width="100%" id="tableArchivosJustificacion">
                             <thead id="thead_archivosJustificacion">
                                 <tr>
@@ -21,6 +24,28 @@
                             <tbody>
                             </tbody>
                         </table>
+                    </div>
+                    <div class="content-fluid" ng-show="isCargaArchivos">
+                        <div class="col-12 form-group" style="margin-bottom: 0; text-align: right;">
+                            <i class="fas fa-arrow-circle-left icon-back" ng-click="changeView()" title="Regresar"></i>
+                        </div>
+                        <div id="content_drag_drop">
+                            <div class="col-md-12" style="text-align: right;padding: 0px 25px 10px 15px !important;">       
+                            </div> 
+                              <div style="text-align: center; padding-left: 0;" class="col-md-12">
+                                <form id="uploadFormEditaJust" name="13" class="form-horizontal box form_drag_drop" novalidate="novalidate" enctype="multipart/form-data">
+                                      <div class="box__input">
+                                        <input name="myFile" type="file" class="box__file inputFile" id="fileEditaJust" />
+                                        <label for="fileEditaJust" id="etiqueta_archivo_edita_just">
+                                          <strong class="text_select">Selecciona un archivo</strong>
+                                          <span class="box__dragndrop">o arrastra aqu&iacute;</span>
+                                        </label>
+                                        <br />
+                                      </div>
+                                    <div class="box__uploading"><i class="fas fa-cloud-upload-alt" style="display: block;"></i> </div>
+                                </form>
+                              </div>
+                        </div>
                     </div>
                 </div>
             </div>

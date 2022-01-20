@@ -62,6 +62,10 @@
     font-weight: bold !important;
 }
 
+.cardFotoUsuario{
+	box-shadow: 0 10px 20px 0 rgb(0 0 0 / 50%) !important;
+}
+
 .iconoEliminarFoto{
 	color: #f55756
 }
@@ -108,13 +112,13 @@
 #imgFotoUsuario{
 	width: 190px; 
 	height: 190px;
-	object-fit: cover;
+	object-fit: contain;
 }
 
 #imgFotoUsuarioMod{
 	width: 190px; 
 	height: 190px;
-	object-fit: cover;
+	object-fit: contain;
 }
 
 #table-usuario-pi_filter {

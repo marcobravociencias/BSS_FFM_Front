@@ -104,15 +104,15 @@
                             <div class="col-5" id="container_detalleTecnico">
                                 <div class="col-12 text-right" ng-class="isTecnicoSelected ? 'mb-0' : 'mb-5'" >
                                     <div class="container-detalle-tecnico-button" ng-show="isTecnicoSelected">
-                                        <span id="btnDetalleTecnico" ng-click="consultarDetalleTecnico()">Detalle T&eacute;cnico</span>
+                                        <span id="btnDetalleTecnico" ng-click="consultarDetalleMesTecnico()">Detalle T&eacute;cnico</span>
                                     </div>
                                 </div>
-                                <div class="col-12" id="containerTecnico_vacio" ng-show="isDetalle">
+                                <div class="col-12" id="containerTecnico_vacio" ng-show="!isDetalle">
                                     <span style="color:#7716fa; font-weight: bold;">SIN SELECCI&Oacute;N DE D&Iacute;A</span>
                                     <hr>
                                     Selecciona un d&iacute;a del calendario y podr&aacute;s visualizar el detalle
                                 </div>
-                                <div class="col-12" id="containerTecnico_detalle" ng-show="!isDetalle">
+                                <div class="col-12" id="containerTecnico_detalle" ng-show="isDetalle">
                                     <div style="text-align: center;">
                                         <span style="color:#7716fa; font-weight: bold;">Detalle Justificaci&oacute;n</span>
                                     </div>
@@ -156,11 +156,11 @@
                         </div>
                     </div>
                     <div class="col-8" id="container_detalleMesTecnico" ng-show="isDetalleMesTecnico">
-                        <div class="row filter-content">
-                            <div class="col-5" style="margin-top: .5em;">
-                                <h5 class="title-modulo" style="margin-left: 3%;">Detalle Mes</h5>
+                        <div class="row filter-content" style="margin-top: .5em;">
+                            <div class="col-6" style="margin-top: .5em;">
+                                <h5 class="title-modulo" style="margin-left: 3%;">Detalle Mes {{tituloDetalle}}</h5>
                             </div>
-                            <div class="offset-6 col-1" style="margin-top: .5em;">
+                            <div class="offset-5 col-1" style="margin-top: .5em;">
                                 <i class="fas fa-arrow-circle-left icon-back" ng-click="changeView()" title="Regresar"></i>
                             </div>
                         </div>
@@ -260,7 +260,6 @@
                                                     <th>Falla fin</th>
                                                     <th>Fecha registro</th>
                                                     <th>Fecha modificaci&oacute;n</th>
-                                                    <th>Opciones</th>
                                                 </tr>
                                             </thead>
                                             <tbody>

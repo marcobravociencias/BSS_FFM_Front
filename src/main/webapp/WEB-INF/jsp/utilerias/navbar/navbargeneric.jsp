@@ -140,44 +140,117 @@
                         test="${userStore.urlFoto == null ||  userStore.urlFoto == '' || userStore.urlFoto == 'string'}">
                         <div class="icon-wrapper icon-wrapper-alt-user rounded-circle back-groud-user dropdown-toggle"
                             id="dropdownMenuLogin" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <div class="icon-wrapper-bg bg-focus"></div>
-                            <i class="fas fa-user-alt icon-notificaciones-header-text-user"></i>
+                            <img class="img-despacho-navbar img-user-profile-navbar"
+                                src="./resources/img/plantainterna/despacho/tecnicootasignada.png" height="37" alt=""
+                                loading="lazy" />
                             <div class="badge badge-dot badge-dot-sm badge-success"></div>
                         </div>
                     </c:if>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-login-info"
                         aria-labelledby="dropdownMenuLogin">
                         <div class="dropdown-menu-header">
-                            <div class="dropdown-menu-header-inner bg-info">
-                                <div class="menu-header-content text-left">
-                                    <div class="widget-content p-0">
-                                        <div class="widget-content-wrapper">
-                                            <div class="widget-content-left mr-3">
-                                                <c:if
-                                                    test="${userStore.urlFoto != null &&  userStore.urlFoto != '' && userStore.urlFoto != 'string'}">
-                                                    <img class="img-despacho-navbar img-user-profile-navbar"
-                                                        src="${userStore.urlFoto}" height="40" alt="" loading="lazy" />
-                                                </c:if>
-                                            </div>
-                                            <div class="widget-content-left">
-                                                <div class="widget-heading">
-                                                    <strong>
-                                                        <sec:authentication property="principal.usuarioNombre" />
-                                                        <sec:authentication
-                                                            property="principal.usuarioApellidoPaterno" />
-                                                        -
-                                                        <sec:authentication property="principal.puesto" />
-                                                    </strong>
+                            <c:if
+                                test="${userStore.urlFoto != null &&  userStore.urlFoto != '' && userStore.urlFoto != 'string'}">
+                                <div class="dropdown-menu-header-inner" style="display: none;" id="content-in-img">
+                                    <div class="menu-header-content text-left">
+                                        <div class="widget-content p-0">
+                                            <div class="widget-content-wrapper">
+                                                <div class="widget-content-left mr-3">
+                                                    <c:if
+                                                        test="${userStore.urlFoto != null &&  userStore.urlFoto != '' && userStore.urlFoto != 'string'}">
+                                                        <img class="img-despacho-navbar img-user-profile-navbar"
+                                                            src="${userStore.urlFoto}" height="40" alt=""
+                                                            loading="lazy" />
+                                                    </c:if>
                                                 </div>
-                                                <div class="widget-subheading opacity-8">
-                                                    <sec:authentication property="principal.propietario" />
-                                                </div>
-                                            </div>
+                                                <div class="widget-content-left">
+                                                    <div class="widget-heading">
+                                                        <strong>
+                                                            <sec:authentication property="principal.usuarioNombre" />
+                                                            <sec:authentication
+                                                                property="principal.usuarioApellidoPaterno" />
+                                                            -
+                                                            <sec:authentication property="principal.puesto" />
+                                                        </strong>
+                                                    </div>
+                                                    <div class="widget-subheading opacity-8">
+                                                        <sec:authentication property="principal.propietario" />
+                                                    </div>
 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="widget-content-icon-size-out" onclick="inOutImg('out')">
+                                        <i class="fas fa-expand-alt" title="Expandir foto"></i>
+                                    </div>
+                                </div>
+                                <div class="dropdown-menu-header-inner-img" style="display: block;"
+                                    id="content-out-img">
+                                    <div class="menu-header-content text-left">
+                                        <div class="widget-content p-0">
+                                            <div class="widget-content-wrapper">
+                                                <div class="widget-content-left">
+                                                    <c:if
+                                                        test="${userStore.urlFoto != null &&  userStore.urlFoto != '' && userStore.urlFoto != 'string'}">
+                                                        <img class="img-despacho-navbar img-user-profile-navbar"
+                                                            style="cursor: auto;" src="${userStore.urlFoto}" height="40"
+                                                            alt="" loading="lazy" />
+                                                    </c:if>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="widget-content-left-text">
+                                        <div class="widget-heading">
+                                            <strong>
+                                                <sec:authentication property="principal.usuarioNombre" />
+                                                <sec:authentication property="principal.usuarioApellidoPaterno" />
+                                                -
+                                                <sec:authentication property="principal.puesto" />
+                                            </strong>
+                                        </div>
+                                        <div class="widget-subheading opacity-8">
+                                            <sec:authentication property="principal.propietario" />
+                                        </div>
+                                        <div class="widget-content-icon-size-in" onclick="inOutImg('in')"
+                                            title="Minimizar foto">
+                                            <i class="fas fa-compress-alt"></i>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </c:if>
+                            <c:if
+                                test="${userStore.urlFoto == null ||  userStore.urlFoto == '' || userStore.urlFoto == 'string'}">
+                                <div class="dropdown-menu-header-inner">
+                                    <div class="menu-header-content text-left">
+                                        <div class="widget-content p-0">
+                                            <div class="widget-content-wrapper">
+                                                <div class="widget-content-left mr-3">
+                                                    <img class="img-despacho-navbar img-user-profile-navbar"
+                                                        src="./resources/img/plantainterna/despacho/tecnicootasignada.png"
+                                                        height="40" alt="" loading="lazy" />
+                                                </div>
+                                                <div class="widget-content-left">
+                                                    <div class="widget-heading">
+                                                        <strong>
+                                                            <sec:authentication property="principal.usuarioNombre" />
+                                                            <sec:authentication
+                                                                property="principal.usuarioApellidoPaterno" />
+                                                            -
+                                                            <sec:authentication property="principal.puesto" />
+                                                        </strong>
+                                                    </div>
+                                                    <div class="widget-subheading opacity-8">
+                                                        <sec:authentication property="principal.propietario" />
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:if>
                         </div>
                         <div class="dropdown-menu-info">
                             <div
@@ -261,7 +334,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="content-header" style="padding-left: .5em;">
+                <div class="content-header">
                     <h5 class="header-nombre-usuario">
                         <sec:authentication property="principal.usuarioNombre" />
                         <sec:authentication property="principal.usuarioApellidoPaterno" />

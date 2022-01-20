@@ -30,21 +30,26 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <label for="cuentaTicket" class="span-form-tecnicos">Fecha inicio</label>
-                                <input readonly type="text" id="filtro_fecha_inicio_tecnico" class="datepicker input-filtro-tecnico form-control form-control-sm" />
+                                <label for="filtro_fecha_inicio_justificacion" class="span-form-tecnicos">Fecha inicio</label>
+                                <input readonly type="text" id="filtro_fecha_inicio_justificacion" class="datepicker input-filtro-tecnico form-control form-control-sm" />
                             </div>
                             <div class="form-group">
-                                <label for="cuentaTicket" class="span-form-tecnicos">Fecha fin</label>
-                                <input readonly type="text" id="filtro_fecha_fin_tecnico" class="datepicker input-filtro-tecnico form-control form-control-sm" />
+                                <label for="filtro_fecha_fin_justificacion" class="span-form-tecnicos">Fecha fin</label>
+                                <input readonly type="text" id="filtro_fecha_fin_justificacion" class="datepicker input-filtro-tecnico form-control form-control-sm" />
                             </div>
                             <div class="form-group">
-                                <label for="cuentaTicket" class="span-form-tecnicos">Motivo</label>
-                                <input type="text" class="form-control form-controlt form-control-sm inputTicket" aria-describedby="basic-addon3" id="cuentaTicket" ng-model="ticketSoporteR.cuenta" />
+                                <label for="motivoJustificacion" class="span-form-tecnicos">Motivo</label>
+                                <select class="form-control form-controlt form-control-sm custom-select" name="motivo" id="motivoJustificacion" ng-model="justificacionE.motivo">
+                                    <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
+                                    <option value="{{motivo.idMotivo}}" ng-repeat="motivo in listMotivosJustificacion">
+                                        {{motivo.Motivo}}
+                                    </option>
+                                </select>
                             </div>
                             <div class="form-row">
                                 <div class="col-12 form-group">
                                     <label class="span-form-tecnicos" for="comentarioEliminar">Comentario </label>
-                                    <textarea class="form-control inputTicket content_text form-control-sm" style="resize: none" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" rows="3" id="comentarioEditar" ng-model=""></textarea>
+                                    <textarea class="form-control inputTicket content_text form-control-sm" style="resize: none" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" rows="3" id="comentarioEditar" ng-model="justificacionE.comentario"></textarea>
                                 </div>
                             </div>
                         </div>
