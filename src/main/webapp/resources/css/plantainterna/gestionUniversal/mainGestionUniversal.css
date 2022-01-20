@@ -264,12 +264,13 @@
 }
 */
 .icon-item {
-    padding: 0.5em 0.7em;
+    padding: 5px;
     color: #fff;
     background-color: #58b3bf;
     border-radius: 0.2rem;
     box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
     cursor: pointer;
+    font-size: 0.9em !important;
 }
 
 #nav-options .dropdown-item {

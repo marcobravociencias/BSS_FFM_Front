@@ -328,3 +328,7 @@ $("#modalCambiaContraseniaLogin").on("hidden.bs.modal", function () {
 	$("#confirmPasswordUserLogin").val('');
 	$("#comentariosPasswordUserLogin").val('');
 })
+
+$('.dropdown-menu-login-info').on("click.bs.dropdown", function (e) {
+	e.stopPropagation();
+});
