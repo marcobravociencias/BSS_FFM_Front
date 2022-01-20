@@ -150,7 +150,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             autoclose: true,
             language: 'es',
             todayHighlight: true,
-            clearBtn: true
+            clearBtn: false
         });
         $('.datepicker').datepicker('update', new Date());
         ticketSoporteTable = $('#tableTicketSoporte').DataTable({
