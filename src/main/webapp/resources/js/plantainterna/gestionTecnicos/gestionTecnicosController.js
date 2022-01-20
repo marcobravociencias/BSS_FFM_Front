@@ -8,17 +8,23 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
     let tableDiasTrabajados;
     let tableArchivosJustificacion;
     let tableDetalleTrabajo;
+	let eventosDisponibilidad = [];
     $scope.listTecnicos = [];
     $scope.calendarTec;
     $scope.isDetalle = false;
     $scope.isTecnicoSelected = false;
     $scope.isDetalleMesTecnico = false;
+    $scope.isCargaArchivos = false;
     $scope.tecnicoDisp = {};
     $scope.auxDisp = {};
+    $scope.detalleJustificacion = {};
     $scope.listMotivosJustificacion = []
     $scope.comentariosJustificacion = [];
     $scope.listArchivosJustificacion = [];
     $scope.listDetalleTrabajo = [];
+    $scope.listDiasTrabajados = [];
+    $scope.listOtsTrabajadas = [];
+    $scope.listJustificaciones = [];
 
     $scope.initCalendario = function () {
         calendar_gestionTecnicos = document.getElementById('calendar_gestionTecnicos');
@@ -54,13 +60,13 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
         $scope.calendarTec.render();
     }
 
-    $scope.consultarCatalogosGestionTecnicos = function(){
+    $scope.consultarCatalogosGestionTecnicos = function () {
         $scope.listMotivosJustificacion = arrayCatMotivoJustificacion.data.result.MotivosJustificacion;
     }
 
     $scope.initGestionTecnicos = function () {
         $scope.initCalendario();
-        $scope.listMotivosJustificacion();
+        $scope.consultarCatalogosGestionTecnicos();
         $('.datepicker').datepicker({
             format: 'dd/mm/yyyy',
             autoclose: true,
@@ -141,30 +147,87 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
     $scope.consultarTecnicos();
 
     $scope.consultarDisponibilidadTecnico = function (tecnico) {
+        swal({ text: 'Cargando datos ...', allowOutsideClick: false });
+        swal.showLoading();
         $scope.tecnicoDisp = {};
         $scope.tecnicoDisp = tecnico;
+        $.each($scope.listTecnicos, function (i, elemento) {
+            document.getElementById('' + elemento.id).style.backgroundColor = "white";
+        });
+        document.getElementById('' + $scope.tecnicoDisp.id).style.backgroundColor = "#DCDEDC";
         $scope.isTecnicoSelected = true;
         $scope.changeView();
         console.log($scope.tecnicoDisp);
+        swal.close();
     }
 
     $scope.consultarDisponibilidadAux = function (tecnico) {
+        swal({ text: 'Cargando datos ...', allowOutsideClick: false });
+        swal.showLoading();
         $scope.tecnicoDisp = {};
         $scope.tecnicoDisp = tecnico;
+        $scope.listTecnicos
+        $.each($scope.listTecnicos, function (i, elemento) {
+            document.getElementById('' + elemento.id).style.backgroundColor = "white";
+        });
+        document.getElementById('' + $scope.tecnicoDisp.id).style.backgroundColor = "#DCDEDC";
         $scope.isTecnicoSelected = true;
         $scope.changeView();
         console.log($scope.tecnicoDisp);
+        swal.close();
     }
 
-    $scope.consultarDetalleTecnico = function () {
-        $scope.isDetalleMesTecnico = true;
-        console.log($scope.tecnicoDisp)
+    $scope.pintarTablaJustificaciones = function () {
+        let arrayJustificacionRow = [];
+        if (tableJustificaciones) {
+            tableJustificaciones.destroy();
+        }
+        $.each($scope.listJustificaciones, function (i, elemento) {
+            let rowJ = [];
+            rowJ[0] = elemento.emp_crea;
+            rowJ[1] = elemento.nomb_crea;
+            rowJ[2] = elemento.folio;
+            rowJ[3] = elemento.inicio;
+            rowJ[4] = elemento.fin;
+            rowJ[5] = elemento.fecha_registro;
+            rowJ[6] = elemento.fecha_modificacion;
+            arrayJustificacionRow.push(rowJ);
+        });
+        tableJustificaciones = $('#tableJustificaciones').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "ordering": false,
+            "pageLength": 10,
+            "info": false,
+            "data": arrayJustificacionRow,
+            "autoWidth": true,
+            "language": idioma_espanol_not_font,
+            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+        });
+    }
 
+    $scope.consultarDetalleJustificacion = function () {
+        $scope.detalleJustificacion = arrayDetalleJustificacion.data.result.Detalle;
+        console.log($scope.detalleJustificacion);
+    }
+
+    $scope.consultarDetalleMesTecnico = function () {
+        $scope.isDetalleMesTecnico = true;
+        const mesActual = document.getElementsByClassName('fc-toolbar-title')[0].innerText;
+        $scope.tituloDetalle = mesActual.toUpperCase();
+        const fechaArray = mesActual.split(" ");
+        $scope.listJustificaciones = arrayTableDetalleJustificacion.data.result;
+        $scope.pintarTablaJustificaciones();
     }
 
     $scope.changeView = function () {
         if ($scope.isDetalleMesTecnico) {
             $scope.isDetalleMesTecnico = false;
+        }
+        if (!$scope.isCargaArchivos) {
+            $scope.isCargaArchivos = true;
+        } else {
+            $scope.isCargaArchivos = false;
         }
     }
 
@@ -180,6 +243,7 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
     $scope.consultarArchivosJustificacion = function () {
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
+        $scope.isCargaArchivos = false;
         let arrayRow = [];
         if (tableArchivosJustificacion) {
             tableArchivosJustificacion.destroy();

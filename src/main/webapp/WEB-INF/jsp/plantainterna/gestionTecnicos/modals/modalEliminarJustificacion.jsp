@@ -23,7 +23,9 @@
                                             </label>
                                             <br />
                                           </div>
-                                        <div class="box__uploading"><i class="fas fa-cloud-upload-alt" style="display: block;"></i> </div>
+                                        <div class="box__uploading">
+                                            <i class="fas fa-cloud-upload-alt" style="display: block;"></i>
+                                        </div>
                                     </form>
                                   </div>
                             </div>
@@ -33,7 +35,7 @@
                                 <div class="form-row">
                                     <div class="col-12 form-group">
                                         <label class="span-form-tickets" for="comentarioEliminar">Comentario </label>
-                                        <textarea class="form-control inputTicket content_text form-control-sm" style="resize: none" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" rows="7" id="comentarioEliminar" ng-model=""></textarea>
+                                        <textarea class="form-control inputTicket content_text form-control-sm" style="resize: none" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" rows="7" id="comentarioEliminar" ng-model="justificacionD.comentario"></textarea>
                                     </div>
                                 </div>
                             </div>
