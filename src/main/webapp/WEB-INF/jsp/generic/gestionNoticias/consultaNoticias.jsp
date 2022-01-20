@@ -75,10 +75,10 @@
 	    		<div id="card" class="card contenedorCardsConsulta">
 					<div class="card-body cuerpoCards">
 						<img class="" onclick="abrirImagenSize(this)" style="height: 100%; width: 100%; object-fit: cover;" src="{{noticia.urlBanner}}">
-						<div class="content-titulo-principal-consulta-carrusel">
+						<div ng-if="noticia.soloImagen == 1" class="content-titulo-principal-consulta-carrusel">
 		                	<span class="text-titulo-primario-img-consulta-carrusel" ng-bind="noticia.tituloPrincipal" ></span>
 		                </div>
-		                <div class="content-titulo-secundario-consulta-carrusel">
+		                <div ng-if="noticia.soloImagen == 1" class="content-titulo-secundario-consulta-carrusel">
 							<span class="text-titulo-secundario-img-consulta-carrusel" ng-bind="noticia.tituloSecundario" ></span>
 						</div>
 					</div>
@@ -86,21 +86,22 @@
 						<div class="row">     
                             <div class="divTextoDesbordCard content-detalle-consulta">
                                 <span class="textoCardsConsulta text-detalle-consulta" ng-bind="noticia.detalle"></span>
-                            </div>                       
-                            <span ng-if="noticia.permanente != 1" class="textoCardsConsulta" ng-bind="noticia.fechaInicio"></span>		
-                            <span ng-if="noticia.permanente != 1" class="textoCardsConsulta" ng-bind="noticia.fechaExpiracion"></span>										
-                      
-                            <a ng-if="noticia.urlLinkExterno" class="link-archivo-noticia link-consulta-noticiaexterno" href="{{noticia.urlLinkExterno}}" download="">
-                                <span class="descarga-archivo"> {{noticia.urlLinkExterno}} </span> 
-                            </a>
-                            <div class="divider-consulta-noticia"></div>
+                            </div>       
+                            <div ng-if="noticia.permanente != 1" class="fechas-noticia-detalle-consulta">
+                                <span class="text-intermedio-fecha">De</span>
+                                <span class="textoCardsConsulta fecha-inicio-consulta-tex" ng-bind="noticia.fechaInicio"></span>
+                                <span class="text-intermedio-fecha"> a </span>
+                                <span class="textoCardsConsulta fecha-fin-consulta-tex" ng-bind="noticia.fechaExpiracion"></span>	
+                            </div>
+                            <span onclick="window.open( 'www.google.com', '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');" class="link-archivo-noticia link-consulta-noticiaexterno" > {{noticia.urlLinkExterno}} </span> 
                             
-                            
-                            <div class="content-permanente" ng-if="noticia.permanente == 1">
+                            <div ng-if="noticia.permanente==1 || noticia.urlArchivo" class="divider-consulta-noticia"></div>                                                    
+                           
+                            <div class="content-permanente" ng-show="noticia.permanente == 1">
 								<span class="text-titulo-permanente">Permanente</span>							
 							</div>
 
-							<div class="content-descarga-archivo content-descarga-consulta" ng-if="noticia.urlArchivo">
+							<div class="content-descarga-archivo content-descarga-consulta" ng-show="noticia.urlArchivo">
                                 <a href="{{noticia.urlArchivo}}">
                                     <i class="iconoDescargaArchivo fas fa-cloud-download-alt"></i>
                                 </a>
