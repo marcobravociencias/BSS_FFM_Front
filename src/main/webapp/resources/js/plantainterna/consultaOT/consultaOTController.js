@@ -251,7 +251,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 						return json.data;
 					},
 					"error": function (xhr, error, thrown) {
-						handleError(xhr)
+						handleError(xhr);
 					},
 					"complete": function () {
 						swal.close()
@@ -565,7 +565,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			autoclose: true,
 			language: 'es',
 			todayHighlight: true,
-			clearBtn: true
+			clearBtn: false
 		});
 		$('.datepicker').datepicker('update', new Date());
 
@@ -942,6 +942,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			"searching": true,
 			"ordering": false,
 			"pageLength": 10,
+			"bAutoWidth": false,
 			"columns": [null, null, null, null, null, null, null, null, null, null, null, null, null],
 			"language": idioma_espanol_not_font
 		});
@@ -2163,12 +2164,11 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 								"lengthChange": false,
 								"ordering": false,
 								"pageLength": 10,
-								"info": false,
+								"info": true,
 								"scrollX": false,
 								"data": arrayRow,
-								"autoWidth": true,
-								"language": idioma_espanol_not_font,
-								"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+								"autoWidth": false,
+								"language": idioma_espanol_not_font
 							});
 							console.log($scope.equiposTecnicoRecoleccion);
 							console.log($scope.tecnicoConsultaRecoleccion);
