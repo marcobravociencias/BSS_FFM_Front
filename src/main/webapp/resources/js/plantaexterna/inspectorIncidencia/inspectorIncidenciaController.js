@@ -485,7 +485,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         $scope.incidencia =  $scope.incidencias.find((e) => e.idIncidencia == idIncidencia);
         console.log($scope.incidencia);
         let params = {
-
+            incidencia: idIncidencia
         }
         inspectorIncidenciaService.consultarDetalleIncidenciaInspectorPE(params).then(function success(response) {
             swal({ text: 'Espera un momento...', allowOutsideClick: false });
@@ -568,7 +568,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
             $("#modalDetalleIncidencia").modal('show');
             $("#container-declinarIncidencia").hide();
             swal.close();
-        })
+        }).catch(err => handleError(err));
     }
 
     cargarDetalle = function (idIncidencia) {
@@ -906,7 +906,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                     row[6] = elemento.usuarioReporta ? elemento.usuarioReporta : "";
                     row[7] = elemento.fechaRegistro ? elemento.fechaRegistro : "";
                     row[8] = elemento.horaRegistro ? elemento.horaRegistro : "";
-                    row[9] = '<a class="" id="detalleIncidencia' + elemento.idIncidencia + '" onclick="consultarDetalleIncidencia (' + elemento.idIncidencia + ');">' +
+                    row[9] = '<a class="btn-inpector-incidencia" id="detalleIncidencia' + elemento.idIncidencia + '" onclick="consultarDetalleIncidencia(' + elemento.idIncidencia + ');">' +
                         '<i class="far fa-window-restore"></i>' +
                         '</a>';
                     row[10] = '<i class="fas fa-globe-americas" style="color:' + elemento.colorEstatus + '; cursor: pointer;" onclick="pintarUbicacionIncidencia(' + i + ')"></i>'
