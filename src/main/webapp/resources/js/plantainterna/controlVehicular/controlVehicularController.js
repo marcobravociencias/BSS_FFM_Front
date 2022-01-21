@@ -32,6 +32,17 @@ app.controller('controlVehicularController',
 			$scope.permisosConfigUser = [];
 			$scope.accionesUserConfigText = []
 
+		
+			angular.element(document).ready(function () {
+				$("#modal_cluster_arbol_vehiculo").on("hidden.bs.modal", function () {
+					var geografias = $('#jstreeconsulta').jstree("get_selected", true);
+					let textoGeografias = [];
+					angular.forEach(geografias,(geografia,index) => {
+						textoGeografias.push(geografia.text);				
+					});
+					$('#geografia-seleccionada-consulta').val(textoGeografias);
+				})
+			});
 			$("#modal_cluster_arbol_vehiculo").on("hidden.bs.modal", function () {
 				let selectedElms = $('#jstreeconsulta').jstree("get_selected", true);
 				if (selectedElms.length > 0 && $('#jstreeconsulta').jstree().settings.plugins.length == 1) {
@@ -387,7 +398,7 @@ app.controller('controlVehicularController',
 					row[10] = elemento.urlFotoVehiculo && elemento.urlFotoVehiculo.length > 15 ? '<img style="cursor:pointer; border-radius:.5em" src="' + elemento.urlFotoVehiculo + '" alt="Vehiculo" width="50"  height="30" onclick="showImg(' + "'" + elemento.urlFotoVehiculo + "'" + ')"/>' : "";
 					row[11] = elemento.estatus;
 					if ($scope.accionesUserConfigText.indexOf('accionEditaVehiculos') === -1) {
-						row[12] = '<i class="fas fa-edit icon-table" title="Editar" onclick="editCar(' + "'" + elemento.idVehiculo + "'" + ')"></i>';
+						row[12] = '<span onclick="editCar(' + "'" + elemento.idVehiculo + "'" + ')" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnModificarUsuario"><i class="fas fa-pen" aria-hidden="true"></i></span>';
 					} else {
 						row[12] = '<i class="fas fa-edit icon-table" title="No tienes permisos para editar" style="cursor: not-allowed; background: #9d9ea2 !important;"></i>';
 
@@ -1161,6 +1172,12 @@ app.controller('controlVehicularController',
 					return e
 				})
 				$('#jstreeconsulta').bind('loaded.jstree', function (e, data) {
+					var geografias = $('#jstreeconsulta').jstree("get_selected", true);
+					let textoGeografias = [];
+					angular.forEach(geografias,(geografia,index) => {
+						textoGeografias.push(geografia.text);				
+					});
+					$('#geografia-seleccionada-consulta').val(textoGeografias);
 				}).jstree({
 					'plugins': ["wholerow", "checkbox", "search"],
 					'core': {
