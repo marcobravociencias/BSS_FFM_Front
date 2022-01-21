@@ -335,3 +335,24 @@ let arrayCatMotivoJustificacion = {
         }
     }
 }
+
+let arrayDisponibilidadTec = {
+    data: {
+        "success": true,
+        "mensaje": "No se encontró disponibilidad",
+        "result": {
+            "result": "0",
+            "resultDescription": "Operación exitosa.",
+            "Version": "1.2",
+            "Disponibilidad": [{
+                "idJustificacion": "361",
+                "Fecha": "03/01/2022",
+                "Tipo": "DIA JUSTIFICADO"
+            }, {
+                "idJustificacion": "381",
+                "Fecha": "12/01/2022",
+                "Tipo": "DIA JUSTIFICADO"
+            }]
+        }
+    }
+}

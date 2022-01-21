@@ -79,6 +79,34 @@ p.text-adds-teccnico {
 }
 
 /* CALENDARIO */
+div.actividades-contadorac {
+    width: 18px;
+    height: 15px;
+    background: #08d85c;
+    border-radius: 50px;
+    color: white;
+    margin-top: 0.3em;
+    margin-left: 0.5em;
+    font-size: 0.8em;
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14),
+      0 7px 10px -5px hsla(0, 0%, 60%, 0.4);
+    text-align: center;
+}
+div.actividades-contadorac-gris {
+    width: 18px;
+    height: 15px;
+    background: #b9bfbc;
+    border-radius: 50px;
+    color: white;
+    margin-top: 0.3em;
+    margin-left: 0.5em;
+    font-size: 0.8em;
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14),
+      0 7px 10px -5px hsla(0, 0%, 60%, 0.4);
+    text-align: center;
+    display: flex;
+    /* padding: 1em 1em 1em; */
+  }
 a,
 a.disabled:hover,
 a:disabled:hover {
