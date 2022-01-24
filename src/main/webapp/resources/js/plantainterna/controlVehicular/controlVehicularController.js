@@ -32,17 +32,40 @@ app.controller('controlVehicularController',
 			$scope.permisosConfigUser = [];
 			$scope.accionesUserConfigText = []
 
-		
+
 			angular.element(document).ready(function () {
 				$("#modal_cluster_arbol_vehiculo").on("hidden.bs.modal", function () {
 					var geografias = $('#jstreeconsulta').jstree("get_selected", true);
 					let textoGeografias = [];
-					angular.forEach(geografias,(geografia,index) => {
-						textoGeografias.push(geografia.text);				
+					angular.forEach(geografias, (geografia, index) => {
+						textoGeografias.push(geografia.text);
 					});
 					$('#geografia-seleccionada-consulta').val(textoGeografias);
 				})
+				$('.year').datepicker({
+					format: 'yyyy',
+					viewMode: "years",
+					minViewMode: "years",
+					autoclose: true,
+					language: 'es',
+					todayHighlight: true,
+					clearBtn: false
+				});
+
+				$('.datepickerNormal').datepicker({
+					format: 'dd/mm/yyyy',
+					autoclose: true,
+					language: 'es',
+					todayHighlight: true,
+					clearBtn: false
+				});
+
+				$(".datepicker").on("click", function () {
+					$(".datepicker-dropdown").removeClass("datepicker-orient-top");
+					$(".datepicker-dropdown").addClass("datepicker-orient-bottom");
+				});
 			});
+
 			$("#modal_cluster_arbol_vehiculo").on("hidden.bs.modal", function () {
 				let selectedElms = $('#jstreeconsulta').jstree("get_selected", true);
 				if (selectedElms.length > 0 && $('#jstreeconsulta').jstree().settings.plugins.length == 1) {
@@ -59,28 +82,8 @@ app.controller('controlVehicularController',
 				}
 			})
 
-			$('.year').datepicker({
-				format: 'yyyy',
-				viewMode: "years",
-				minViewMode: "years",
-				autoclose: true,
-				language: 'es',
-				todayHighlight: true,
-				clearBtn: true
-			});
 
-			$('.datepickerNormal').datepicker({
-				format: 'dd/mm/yyyy',
-				autoclose: true,
-				language: 'es',
-				todayHighlight: true,
-				clearBtn: true
-			});
 
-			$(".datepicker").on("click", function () {
-				$(".datepicker-dropdown").removeClass("datepicker-orient-top");
-				$(".datepicker-dropdown").addClass("datepicker-orient-bottom");
-			});
 
 			$('#searchText').on('keyup', function () {
 				vehiculoTable.search(this.value).draw();
@@ -95,10 +98,10 @@ app.controller('controlVehicularController',
 				"lengthChange": false,
 				"ordering": false,
 				"pageLength": 10,
-				"info": false,
+				"info": true,
 				"autoWidth": true,
 				"language": idioma_espanol_not_font,
-				"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+				"sDom": 'Rfrtlip'
 			});
 
 			historicoTable = $('#historicoTable').DataTable({
@@ -110,7 +113,7 @@ app.controller('controlVehicularController',
 				"info": false,
 				"autoWidth": true,
 				"language": idioma_espanol_not_font,
-				"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+				"dom": '<"top"i>rt<"bottom"flp><"clear">'
 			});
 
 			openHistory = function () {
@@ -382,7 +385,7 @@ app.controller('controlVehicularController',
 				if (vehiculoTable) {
 					vehiculoTable.destroy();
 				}
-				let arraRow = [];
+				let arrayRow = [];
 				$.each(list, function (i, elemento) {
 					let row = [];
 					row[0] = elemento.placa;
@@ -390,37 +393,32 @@ app.controller('controlVehicularController',
 					row[2] = elemento.marca;
 					row[3] = elemento.modelo;
 					row[4] = elemento.anio;
-					row[5] = elemento.color;
-					row[6] = elemento.combustible;
-					row[7] = elemento.numeroSerie;
-					row[8] = elemento.geografia;
-					row[9] = elemento.urlFotoPlaca && elemento.urlFotoPlaca.length > 15 ? '<img style="cursor:pointer; border-radius:.5em" src="' + elemento.urlFotoPlaca + '" alt="Placa" width="50" height="30" onclick="showImg(' + "'" + elemento.urlFotoPlaca + "'" + ')"/>' : "";
-					row[10] = elemento.urlFotoVehiculo && elemento.urlFotoVehiculo.length > 15 ? '<img style="cursor:pointer; border-radius:.5em" src="' + elemento.urlFotoVehiculo + '" alt="Vehiculo" width="50"  height="30" onclick="showImg(' + "'" + elemento.urlFotoVehiculo + "'" + ')"/>' : "";
-					row[11] = elemento.estatus;
+					row[5] = elemento.numeroSerie;
+					row[6] = elemento.geografia;
+					row[7] = elemento.urlFotoPlaca && elemento.urlFotoPlaca.length > 15 ? '<img style="cursor:pointer; border-radius:.5em" src="' + elemento.urlFotoPlaca + '" alt="Placa" width="50" height="30" onclick="showImg(' + "'" + elemento.urlFotoPlaca + "'" + ')"/>' : "";
+					row[8] = elemento.urlFotoVehiculo && elemento.urlFotoVehiculo.length > 15 ? '<img style="cursor:pointer; border-radius:.5em" src="' + elemento.urlFotoVehiculo + '" alt="Vehiculo" width="50"  height="30" onclick="showImg(' + "'" + elemento.urlFotoVehiculo + "'" + ')"/>' : "";
+					row[9] = elemento.estatus;
 					if ($scope.accionesUserConfigText.indexOf('accionEditaVehiculos') === -1) {
-						row[12] = '<span onclick="editCar(' + "'" + elemento.idVehiculo + "'" + ')" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnModificarUsuario"><i class="fas fa-pen" aria-hidden="true"></i></span>';
+						row[10] = '<span onclick="editCar(' + "'" + elemento.idVehiculo + "'" + ')" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnModificarUsuario"><i class="fas fa-pen" aria-hidden="true"></i></span>';
 					} else {
-						row[12] = '<i class="fas fa-edit icon-table" title="No tienes permisos para editar" style="cursor: not-allowed; background: #9d9ea2 !important;"></i>';
+						row[11] = '<i class="fas fa-edit icon-table" title="No tienes permisos para editar" style="cursor: not-allowed; background: #9d9ea2 !important;"></i>';
 
 					}
-					arraRow.push(row);
+					arrayRow.push(row);
 				})
 				vehiculoTable = $('#vehiculoTable').DataTable({
 					"paging": true,
 					"lengthChange": false,
 					"ordering": false,
 					"pageLength": 10,
-					"info": false,
-					"data": arraRow,
+					"info": true,
+					"scrollX": false,
+					"data": arrayRow,
+					"autoWidth": false,
 					"language": idioma_espanol_not_font,
-					"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">'
 				});
 				swal.close();
 
-				console.log("Dispo: " + $scope.countDisponibles);
-				console.log("Asig: " + $scope.countAsignados);
-				console.log("No dispo: " + $scope.countNoDisponibles);
-				console.log("Bajas: " + $scope.countBajas);
 			}
 
 			function compareGeneric(a, b) {
@@ -1174,8 +1172,8 @@ app.controller('controlVehicularController',
 				$('#jstreeconsulta').bind('loaded.jstree', function (e, data) {
 					var geografias = $('#jstreeconsulta').jstree("get_selected", true);
 					let textoGeografias = [];
-					angular.forEach(geografias,(geografia,index) => {
-						textoGeografias.push(geografia.text);				
+					angular.forEach(geografias, (geografia, index) => {
+						textoGeografias.push(geografia.text);
 					});
 					$('#geografia-seleccionada-consulta').val(textoGeografias);
 				}).jstree({

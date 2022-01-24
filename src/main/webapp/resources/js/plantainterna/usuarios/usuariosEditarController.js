@@ -1319,10 +1319,15 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     
     $scope.eliminarFotoUsuarioMod = function (e) {
     	if($scope.detalleUsuario.urlFotoPerfil != null){
-    		$("#imgFotoUsuarioMod").attr("src", ""+$scope.detalleUsuario.urlFotoPerfil);
-    		$scope.fileFotoUsuarioMod = {};
-    		$scope.fileFotoUsuarioMod.nombre = $scope.detalleUsuario.numeroEmpleado;
-			$scope.fileFotoUsuarioMod.nuevaFoto = false; 
+    		if($scope.fileFotoUsuarioMod.nuevaFoto){
+    			$("#imgFotoUsuarioMod").attr("src", ""+$scope.detalleUsuario.urlFotoPerfil);
+        		$scope.fileFotoUsuarioMod = {};
+        		$scope.fileFotoUsuarioMod.nombre = $scope.detalleUsuario.numeroEmpleado;
+    			$scope.fileFotoUsuarioMod.nuevaFoto = false; 
+    		}else{
+    			$scope.fileFotoUsuarioMod = null;
+            	$("#imgFotoUsuarioMod").attr("src", "./resources/img/plantainterna/despacho/tecnicootasignada.png");
+    		}
     	}else{
     		$scope.fileFotoUsuarioMod = null;
         	$("#imgFotoUsuarioMod").attr("src", "./resources/img/plantainterna/despacho/tecnicootasignada.png");
