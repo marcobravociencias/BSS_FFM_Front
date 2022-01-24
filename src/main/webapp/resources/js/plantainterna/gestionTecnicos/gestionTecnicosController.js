@@ -39,19 +39,35 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
         } else {
             fecha2 = anio + '-' + mes + '-' + '01';
         }
+        console.log(eventosDisponibilidad);
         calendar_gestionTecnicos = document.getElementById('calendar_gestionTecnicos');
         $scope.calendarTec = new FullCalendar.Calendar(calendar_gestionTecnicos, {
             height: 500,
             locale: 'es',
             displayEventTime: true,
-            selectable: false,
+            selectable: true,
             editable: false,
             eventDurationEditable: false,
+            events : eventosDisponibilidad,
             headerToolbar: {
                 start: "",
                 center: "title",
                 end: "prev today next"
             },
+            eventContent : function(eventObj) {
+                console.log(eventObj);
+                console.log(eventObj.event.title);
+                var customHtml = '';
+                if(eventObj.event._def.extendedProps.tipoevento==='horaingreso'){
+                    console.log("gg");
+                    customHtml +=  "<div class='fc-event-title'><span class='ingreso-icon fa fa-arrow-right'></span><span> " + eventObj.event.title + "</span></div>";	
+                    return { html: customHtml }
+                }
+                if(eventObj.event._def.extendedProps.tipoevento==='horasalida' ){
+                    customHtml +=  "<div class='fc-event-title'><span class='salida-icon fa fa-arrow-left'></span><span> " + eventObj.event.title + "</span></div>";	
+                    return { html: customHtml }
+                }
+			},
             eventClick: function (info, jsEvent, view) {
                 console.log(info)
             },
@@ -62,54 +78,30 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
                 console.log(FechaJustMod)
                 console.log(fechaMod)
             },
-            selectable: false,
+            selectable: true,
             datesSet: function () {
                 setTimeout(function () {
                     $scope.calendarTec.render()
                 }, 1000)
             }
+            
+                
         });
-        console.log(eventosDisponibilidad)
-        if (eventosDisponibilidad.length > 0) {
-            console.log("entro")
-            let fecha;
-            let fechaNoT;
-            let index = 0;
-            eventosDisponibilidad.forEach(event => {
-                if (event.tipo === 'TRABAJADO') {
-                    if (fecha !== undefined) {
-                        let fechaS = $scope.convertDate(event.start);
-                        let fecha2 = $scope.convertDate(fecha);
-                        console.log(event.start)
-                        if (fechaS !== fecha2) {
-                            fecha = event.start;
-                            $('.fc-day[data-date="' + moment(event.start).format('YYYY-MM-DD') + '"]').append('<div  class="actividades-contadorac" data-value=' + event.objetodisponibilidad.idJustificacion + ' >&nbsp;</div> ')
-                        }
-                    } else {
-                        fecha = event.start;
-                        $('.fc-day[data-date="' + moment(event.start).format('YYYY-MM-DD') + '"]').append('<div  class="actividades-contadorac" data-value=' + event.objetodisponibilidad.idJustificacion + ' >&nbsp;</div> ')
+        setTimeout(function(){
+            if (eventosDisponibilidad.length > 0) {
+                eventosDisponibilidad.forEach(event =>{
+                    if (event.tipo === 'TRABAJADO') {
+                        console.log(moment(event.start).format('YYYY-MM-DD'));
+                        $('.fc-daygrid-day[data-date="'+ moment(event.start).format('YYYY-MM-DD') +'"] .fc-daygrid-day-frame .fc-daygrid-day-top').append('<div  class="actividades-contadorac" data-value="'+event.objetodisponibilidad.idJustificacion+'" >&nbsp;</div> ')
+                        console.log("jala");
+                    } else if (event.tipo === 'DIA JUSTIFICADO') {
+                        console.log(moment(event.start).format('YYYY-MM-DD'));
+                        $('.fc-daygrid-day[data-date="'+ moment(event.start).format('YYYY-MM-DD') +'"] .fc-daygrid-day-frame .fc-daygrid-day-top').append('<div  class="actividades-contadorac-gris" data-value="'+event.objetodisponibilidad.idJustificacion+'" >&nbsp;</div> ')
+                        console.log("jala");
                     }
-                } else if (event.tipo === 'DIA JUSTIFICADO') {
-                    console.log("entro")
-                    if (fechaNoT !== undefined) {
-                        console.log(event.start)
-                        let fechaStart = $scope.convertDate(event.start);
-                        let fechaNoT2 = $scope.convertDate(fechaNoT);
-                        if (fechaStart !== fechaNoT2) {
-                            console.log("entro")
-                            fechaNoT = event.start;
-                            $('.fc-day[data-date="' + moment(event.start).format('YYYY-MM-DD') + '"]').append('<div class="actividades-contadorac-gris" data-value=' + event.objetodisponibilidad.idJustificacion + ' >&nbsp;</div> ')
-                        }
-                    } else {
-                        console.log("entro")
-                        console.log(moment(event.start).format('YYYY-MM-DD'))
-                        fechaNoT = event.start;
-                        $('[data-date="' + moment(event.start).format('YYYY-MM-DD') + '"]').append('<div  class="actividades-contadorac-gris" data-value=' + event.objetodisponibilidad.idJustificacion + ' >&nbsp;</div> ')
-                    }
-                }
-                index++;
-            })
-        }
+                });
+            }
+        }, 0500);
         $scope.calendarTec.render();
     }
 
@@ -231,13 +223,16 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
         eventosDisponibilidad = [];
         let eventDisponibilidad = {};
         if (listDisponibilidad !== undefined) {
+            var index = 0;
             listDisponibilidad.forEach(disponibilidad => {
                 let newFecha;
                 let fechaInicio;
                 let fechaN;
+                let fetchtl;
                 if (disponibilidad.Fecha.includes('/')) {
                     fechaInicio = disponibilidad.Fecha.split('/');
                     fechaN = fechaInicio[1] + '/' + fechaInicio[0] + '/' + fechaInicio[2];
+                    fetchtl = fechaInicio[2] + '-' + fechaInicio[1] + '-' + fechaInicio[0];
                     newFecha = new Date(fechaN);
                 } else {
                     fechaInicio = disponibilidad.Fecha.split('-');
@@ -249,6 +244,7 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
                 let arrayValidacion = eventosDisponibilidad.filter(function (element) { return $scope.convertDate(element.start) === $scope.convertDate(newFecha) });
                 if (arrayValidacion.length === 0) {
                     if (disponibilidad.idJustificacion === '0') {
+                        
                         if (disponibilidad.Disponible !== undefined) {
                             eventDisponibilidad = {
                                 title: "Tiempo Disponible: " + disponibilidad.Disponible,
@@ -273,16 +269,22 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
                             }
                             eventosDisponibilidad.push(eventDisponibilidad);
                         }
+                        
                         if (disponibilidad.HoraFin !== undefined) {
                             let horaFin = disponibilidad.HoraFin.split(' ');
                             eventDisponibilidad = {
+                                height: 800,
                                 title: disponibilidad.HoraFin == 'SIN INFORMACION' ? 'sin informacion' : moment(horaFin[0], "hh::mm").format('LT'),
                                 tipo: 'TRABAJADO',
                                 start: newFecha,
                                 end: newFecha,
                                 tipoevento: 'horasalida',
+                                color: '#6da4ff',
+                                textColor: 'white',
+                                id: index,
                                 usuario: $scope.idTecnico,
-                                objetodisponibilidad: disponibilidad
+                                objetodisponibilidad: disponibilidad,
+                                classNames: 'evento-calendar'
                             }
                             eventosDisponibilidad.push(eventDisponibilidad);
                         }
@@ -301,6 +303,7 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
                         }
                     } else {
                         eventDisponibilidad = {
+                            title: "prueba",
                             tipo: 'DIA JUSTIFICADO',
                             start: newFecha,
                             end: newFecha,
@@ -313,6 +316,7 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
                     }
                 }
             });
+            /*
             listOts.forEach(ot => {
                 console.log(ot);
                 let newFecha;
@@ -332,15 +336,16 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
                 eventDisponibilidad = {
                     title: "OTs Atendidas: " + ot.Cantidad,
                     tipo: 'TRABAJADAS',
-                    start: newFecha,
-                    end: newFecha,
+                    start: fetchtl,
+                    end: fetchtl,
                     tipoevento: 'trabajadas',
-                    className: 'ggPerro',
+                    classNames: 'ggPerro',
                     usuario: $scope.idTecnico,
                     objetoOT: ot
                 }
                 eventosDisponibilidad.push(eventDisponibilidad);
             });
+            */
             $scope.initCalendario(mes, anio);
             document.querySelector('button.fc-prev-button').addEventListener('click', function () {
                 if ($scope.tipoConsulta === 'TEC') {
