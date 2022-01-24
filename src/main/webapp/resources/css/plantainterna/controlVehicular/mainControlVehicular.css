@@ -256,18 +256,6 @@ span.btn-floating.btn-sm.btn-default.waves-effect.waves-light {
   font-weight: bold;
 }
 
-.disponible {
-  color: #ABD641;
-}
-
-.asignado {
-  color: #61cae6;
-}
-
-.noDisponible {
-  color: #FD7CD0;
-}
-
 /* CSS TABLE */
 
 #vehiculoTable tbody tr:nth-child(even) {
