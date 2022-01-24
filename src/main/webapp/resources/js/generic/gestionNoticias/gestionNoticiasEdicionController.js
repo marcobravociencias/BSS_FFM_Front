@@ -155,8 +155,8 @@ app.edicionNoticiaController=function($scope,gestionNoticiasService){
             $scope.editObj.archivoBanner =$scope.fileCargaArchivoNoticiaEdit.archivo ? $scope.fileCargaArchivoNoticiaEdit.archivo : '' ;
             $scope.editObj.nombreBanner = $scope.fileCargaArchivoNoticiaEdit.nombre ? $scope.fileCargaArchivoNoticiaEdit.nombre : '';
 
-            $scope.editObj.archivoArchivo = $scope.fileDecargaNoticaEdicion.archivo ? $scope.fileDecargaNoticaEdicion.archivo :'';
-            $scope.editObj.nombreArchivo = $scope.fileDecargaNoticaEdicion.nombre ?  $scope.fileDecargaNoticaEdicion.nombre:'';
+            $scope.editObj.archivoArchivo = $scope.fileDecargaNoticaEdicion.archivo ? $scope.fileDecargaNoticaEdicion.archivo :"";
+            $scope.editObj.nombreArchivo = $scope.fileDecargaNoticaEdicion.nombre ?  $scope.fileDecargaNoticaEdicion.nombre:"";
             
             $scope.editObj.fechaInicio =   formatFechaInicio;
             $scope.editObj.fechaExpiracion =  formatFechaFin;
@@ -182,10 +182,10 @@ app.edicionNoticiaController=function($scope,gestionNoticiasService){
                 delete $scope.editObj.nombreBanner
             }
 
-            if( !$scope.banderaArchivoDescarga ){
-                delete $scope.editObj.archivoArchivo
-                delete $scope.editObj.nombreArchivo
-            }
+//            if( !$scope.banderaArchivoDescarga ){
+//                delete $scope.editObj.archivoArchivo
+//                delete $scope.editObj.nombreArchivo
+//            }
 
             delete $scope.editObj.urlBanner
             delete $scope.editObj.urlArchivo
