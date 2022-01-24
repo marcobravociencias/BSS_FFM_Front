@@ -56,6 +56,15 @@
                 color: #e5164c;
             }
 
+            .text-notification-regresar {
+                font-size: 2em;
+                font-family: 'Bungee';
+                margin: 0;
+                color: #f9b700;
+                text-decoration: underline;
+                cursor: pointer;
+            }
+
             .content-error {
                 text-align: center;
                 margin-top: 10%;
@@ -250,6 +259,7 @@
                 <use xlink:href="#tornillo" x="230" y="65"></use>
             </svg>
             <h1 class="text-notification">No tienes permisos para ingresar</h1>
+            <h1 class="text-notification-regresar" id="btnRegresar">Regresar</h1>
         </div>
     </body>
     <script>
@@ -300,6 +310,12 @@
             root.style.setProperty("--mouse-x", x);
             root.style.setProperty("--mouse-y", y);
         });
+
+        var regresar = document.getElementById('btnRegresar');
+        regresar.addEventListener("click", function () {
+            window.history.back();
+        }, false);
+
     </script>
 
     </html>
