@@ -5,6 +5,9 @@
     <head>
         <meta charset="ISO-8859-1">
         <title>ERROR 403</title>
+        <link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-96x96.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-16x16.png">
         <link href="https://fonts.googleapis.com/css?family=Bungee" rel="stylesheet" />
 
         <style>
@@ -68,14 +71,6 @@
             .content-error {
                 text-align: center;
                 margin-top: 5%;
-            }
-
-            .triangle {
-                width: 500px;
-            }
-
-            #mascota {
-                z-index: 3;
             }
 
             .cls-1 {
