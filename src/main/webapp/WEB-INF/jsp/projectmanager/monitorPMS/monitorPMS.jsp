@@ -42,13 +42,13 @@
                         </li>
                         <li class="nav-item">
                             <a class="opcion-menu" id="puntaSinEIM-tab" data-toggle="tab" href="#puntaSinEIM" role="tab"
-                                aria-controls="puntaSinEIM" aria-selected="false" ng-click="consultaPuntasSinEIM()"><i
+                                aria-controls="puntaSinEIM" aria-selected="false" ng-click="peticionPuntasEIM()"><i
                                     class="icon-menu-left fas fa-plus-square"></i>&nbsp;<span
                                     class="titulo-menu">Punta sin EIM</span></a>
                         </li>
                         <li class="nav-item">
                             <a class="opcion-menu" id="segmento-tab" data-toggle="tab" href="#segmento" role="tab"
-                                aria-controls="segmento" aria-selected="false" ng-click="consultarsinSegmentoBandeja()"><i
+                                aria-controls="segmento" aria-selected="false" ng-click="primerPeticionSinSeg()"><i
                                     class="icon-menu-left fas fa-file-alt"></i>&nbsp;<span class="titulo-menu">Sin segmento</span></a>
                         </li>
                         <li class="nav-item">

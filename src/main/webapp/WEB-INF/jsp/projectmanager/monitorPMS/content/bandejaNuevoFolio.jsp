@@ -2,7 +2,7 @@
     <div class="container-filtros">
         <div class="row filtro-monitor-pm">
             <div class="col-3" style="margin-bottom: 0; margin-top: .5em; width: 16em;">
-                <input type="text" autocomplete="off" class="search-detalle-filtro form-control form-control-sm mt-0" id="searchTextTicket">
+                <input type="text" autocomplete="off" class="search-detalle-filtro form-control form-control-sm mt-0">
              </div>
              <div class="col-2" style="margin-bottom: 0; margin-top: .5em; width: 6em;">
                 <button type="button" class="btn btn-sm btn-encabezado">

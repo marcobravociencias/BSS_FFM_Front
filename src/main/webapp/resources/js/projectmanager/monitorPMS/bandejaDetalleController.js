@@ -1,5 +1,6 @@
+let bandejaDetalleTable;
 app.bandejaDetalleController = function ($scope, monitorPMSServices) {
-  let bandejaDetalleTable;
+
   $scope.list = []
   $scope.isCansultaDetalle = false;
   $scope.datelleList = []
@@ -283,7 +284,7 @@ app.bandejaDetalleController = function ($scope, monitorPMSServices) {
 
   $scope.aplicarFiltrarPorDetalle = function () {
     angular.forEach($scope.filtroPorDetalle, (elemento, index) => {
-      if (index !== 0) {
+      if (index !== 0 && index !== 1) {
         bandejaDetalleTable.column(index).search($('#detalleSearch' + index).val().trim());
       }
     });
