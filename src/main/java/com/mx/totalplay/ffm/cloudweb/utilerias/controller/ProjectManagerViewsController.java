@@ -36,4 +36,8 @@ public class ProjectManagerViewsController {
 		return "projectmanager/misProyectos/misProyectos";
 	}
 
+	@GetMapping("/moduloMonitorPMS")
+	public String monitorPMS() {
+		return "projectmanager/monitorPMS/monitorPMS";
+	}
 }

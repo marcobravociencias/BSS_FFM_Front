@@ -342,3 +342,37 @@ inOutImg = function (size) {
 		$('#content-out-img').css('display', 'none');
 	}
 }
+
+var monster = document.getElementById('monsterPlay');
+var monsterAnimation  = 0;
+
+setInterval(() => {
+	console.log('interval');
+	monster.style.animation = 'none';
+	if(monsterAnimation == 3){
+		monsterAnimation  = 0;
+	}
+	setTimeout(() => {
+		console.log('timeout');
+		console.log(monsterAnimation);
+		switch (monsterAnimation) {
+			case 0:
+				monster.style.animation = 'monster-play 5s 1';
+				break;
+
+			case 1:
+				monster.style.animation = 'monster-show 10s 1';
+				break;
+
+			case 2:
+				monster.style.animation = 'monster-run 5s 1';
+				break;
+
+			default:
+				break;
+		}
+		monsterAnimation = monsterAnimation + 1;
+	}, 1000);
+	
+}, 180000);
+

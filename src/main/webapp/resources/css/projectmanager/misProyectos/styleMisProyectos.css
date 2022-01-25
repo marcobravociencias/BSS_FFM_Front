@@ -186,6 +186,7 @@
     font-size: 14px;
     font-family: 'Montserrat';
     line-height: 48px!important;
+    height: 48px!important;
     text-align: left;
     color: #555555;
     padding-left: 50px;
@@ -274,6 +275,7 @@
     font-size: 14px;
     font-family: 'Montserrat';
     line-height: 38px!important;
+    height: 38px!important;
     text-align: left;
     color: #555555;
     padding-left: 60px;
@@ -387,10 +389,40 @@
 .vacio-grafica {
     padding: 0;
 }
-
-
 .progress:after {
     /* content:'\A'; */
     background:rgb(177, 0, 0);
     width:10%;
+}
+.style_fa_angle {
+    width: 18px;
+    height: 18px;
+    border: 1px solid #7716fa;
+    color: #7716fa;
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    border-radius: 50%;
+}
+.crop-text-col {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.text-content-plan {
+    font-size: .8em;
+    color: #828282 !important;
+    font-weight: bold;
+}
+.text-content-estatus-plan {
+    font-size: .8em;
+    color: #7e7e7e !important;
+}.header-text-actividad {
+    font-size: .9em;
+    color: #7716FA !important;
+    font-weight:bold;
+}
+.text-content-actividad {
+    font-size: .8em;
+    color: #828282 !important;
 }

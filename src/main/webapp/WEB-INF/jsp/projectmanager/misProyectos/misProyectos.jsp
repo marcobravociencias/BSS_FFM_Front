@@ -38,7 +38,14 @@
                         <div class="col-12" ng-repeat="proyecto in listaProyectosGrafica" ng-class="$index % 2 == 0 ? 'is-even-primer-nivel' : 'is-odd-primer-nivel'">
                             <div class="row" ng-click="mostrarPuntas(proyecto)">
                                 <div class="col-12 menu-primer-nivel">
-                                    <span ng-bind="proyecto.Nombre_cliente"></span>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <span ng-bind="proyecto.Nombre_cliente"></span>
+                                        </div>
+                                        <div class="col-6">
+                                            <i class="style_fa_angle" ng-class="proyecto.Id_cuenta === idProyectoSelected ? 'fa fa-angle-down' : 'fa fa-angle-right' "></i>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row" ng-show="proyecto.Id_cuenta === idProyectoSelected">
@@ -46,7 +53,14 @@
                                 <div class="col-12" ng-repeat="punta in proyecto.Puntas | filter : serachPuntas" ng-class="$index % 2 == 0 ? 'is-even-segundo-nivel' : 'is-odd-segundo-nivel'">
                                     <div class="row" ng-click="mostrarPlanes(punta)">
                                         <div class="col-12 menu-segundo-nivel">
-                                            <span ng-bind="punta.Nombre_sitio"></span>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <span ng-bind="punta.Nombre_sitio"></span>
+                                                </div>
+                                                <div class="col-6">
+                                                    <i class="style_fa_angle" ng-class="punta.Id_cuenta === idPuntaSelected ? 'fa fa-angle-down' : 'fa fa-angle-right' "></i>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row" ng-show="punta.Id_cuenta === idPuntaSelected">
@@ -54,17 +68,65 @@
                                         <div class="col-12" ng-repeat="plan in punta.Planes" ng-class="$index % 2 == 0 ? 'is-even-tercer-nivel' : 'is-odd-tercer-nivel'">
                                             <div class="row" ng-click="consultarActividadesPMS(plan)">
                                                 <div class="col-12 menu-tercer-nivel">
-                                                    <span ng-bind="plan.Folio_CSP"></span>
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <span class="text-content-plan" ng-bind="plan.Folio_CSP"></span><span class="text-content-estatus-plan" ng-bind="' / ' + plan.statusCsp"></span>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <i class="style_fa_angle" ng-class="plan.Id_csp === idPlanSelected ? 'fa fa-angle-down' : 'fa fa-angle-right' "></i>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="row" ng-show="plan.Id_csp === idPlanSelected">
+                                                <div class="col-12" style="background-color: white; height: 30px; line-height: 30px; padding-left: 60px;">
+                                                    <div class="row">
+                                                        <div class="col-5">
+                                                            <span class="header-text-actividad">Actividades</span>
+                                                        </div>
+                                                        <div class="col-3" style="padding: 0;">
+                                                            <span class="header-text-actividad">Responsable</span>
+                                                        </div>
+                                                        <div class="col-2" style="padding: 0;">
+                                                            <span class="header-text-actividad">Entrega</span>
+                                                        </div>
+                                                        <div class="col-1" style="padding: 0;">
+                                                            <span class="header-text-actividad">%</span>
+                                                        </div>
+                                                        <div class="col-1">
+                                                            <i class="fa fa-eye"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
 <!-- **********ACTIVIDADES**********ACTIVIDADES**********ACTIVIDADES**********ACTIVIDADES**********ACTIVIDADES**********ACTIVIDADES**********ACTIVIDADES**********ACTIVIDADES**********ACTIVIDADES**********ACTIVIDADES**********ACTIVIDADES**********ACTIVIDADES**********ACTIVIDADES**********ACTIVIDADES**********ACTIVIDADES**********ACTIVIDADES**********ACTIVIDADES-->
                                                 <div class="col-12" ng-repeat="actividad in listaActividades" ng-class="$index % 2 == 0 ? 'is-even-cuarto-nivel' : 'is-odd-cuarto-nivel'">
                                                     <div class="row">
                                                         <div class="col-12 menu-cuarto-nivel">
-                                                            <span ng-bind="actividad.Nombre_actividad"></span>
+                                                            <div class="row">
+                                                                <div class="col-5 crop-text-col">
+                                                                    <span class="text-content-actividad" title="{{actividad.Nombre_actividad}}" ng-bind="actividad.Nombre_actividad"></span>
+                                                                </div>
+                                                                <div class="col-3 crop-text-col" style="padding: 0;">
+                                                                    <span class="text-content-actividad" title="{{actividad.Nombre_responsable}}" ng-bind="actividad.Nombre_responsable"></span>
+                                                                </div>
+                                                                <div class="col-2 crop-text-col" style="padding: 0;">
+                                                                    <span class="text-content-actividad" title="{{actividad.fechaFinFormatReal}}" ng-bind="actividad.Fecha_fin_real._i !== NaN ? actividad.fechaFinFormatReal : ''"></span>
+                                                                </div>
+                                                                <div class="col-1 crop-text-col" style="padding: 0;">
+                                                                    <span class="text-content-actividad" ng-bind="actividad.Porcentaje + '%'"></span>
+                                                                </div>
+                                                                <div class="col-1">
+
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="col-12" style="height: 40px; line-height: 40px; background-color: white;">
+                                                    <span>Anadir</span>
+                                                </div>
+                                                <div class="col-12" style="height: 40px; line-height: 40px; background-color: white;">
+                                                    <span>Finalizar planeacion</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -183,6 +245,11 @@
                                                 </div>
                                             </div>
                                             <div class="row" ng-show="plan.Id_csp === idPlanSelected">
+                                                <div class="col-12" style="background-color: white; height: 30px;">
+                                                    <div class="row">
+                                                        &nbsp;
+                                                    </div>
+                                                </div>
 <!-- ----------ACTIVIDADES----------ACTIVIDADES----------ACTIVIDADES----------ACTIVIDADES----------ACTIVIDADES----------ACTIVIDADES----------ACTIVIDADES----------ACTIVIDADES----------ACTIVIDADES----------ACTIVIDADES----------ACTIVIDADES----------ACTIVIDADES----------ACTIVIDADES----------ACTIVIDADES -->
                                                 <div class="col-12" ng-repeat="actividad in listaActividades" ng-class="$index % 2 == 0 ? 'is-even-cuarto-nivel' : 'is-odd-cuarto-nivel'">
                                                     <div class="row" ng-style="{width: widthCalendar + 'px'}">
@@ -205,6 +272,9 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div style="height: 80px; line-height: 80px; background-color: white;">
+                                                    &nbsp;
                                                 </div>
                                             </div>
                                         </div>

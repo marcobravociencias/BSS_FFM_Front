@@ -1052,7 +1052,7 @@ app.graficaController = function ($scope, $q, misProyectosService) {
                 "orden": "1",
                 "Id_tipo_actividad": "1",
                 "Nombre_actividad": "Validacion Con El Cliente Y Generacion Del Plana De Trabajo",
-                "Nombre_responsable": "",
+                "Nombre_responsable": "Antonio Calderon Rodriguez",
                 "Porcentaje": "50",
                 "Fecha_inicio_planeada": "12-23-2021",
                 "Fecha_fin_planeada": "01-03-2022",

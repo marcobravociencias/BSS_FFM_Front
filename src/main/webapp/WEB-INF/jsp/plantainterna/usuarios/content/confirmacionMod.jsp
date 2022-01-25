@@ -99,9 +99,9 @@
 				<div class="container">
 					<div class="row" style="text-align: center;">
 						<div class="video-wrap">
-						    <video id="videoMod" width="300" height="280" playsinline autoplay></video>
+						    <video id="videoMod" width="270" height="203" playsinline autoplay></video>
 						</div>
-						<canvas id="canvasMod" width="300" height="280" style="display: none;"></canvas>
+						<canvas id="canvasMod" width="594" height="420" style="display: none;"></canvas>
 					</div>
 				</div>
 			</div>
@@ -153,7 +153,7 @@
 	//Tomar foto
 	var context = document.getElementById('canvasMod').getContext('2d');
 	btnTomarFotoMod.addEventListener("click", function() {
-		context.drawImage(videoMod, 0, 0, 300, 280);
+		context.drawImage(videoMod, 0, 0, 594, 420);
 	    var imgMod = document.getElementById('canvasMod').toDataURL();
 	    document.getElementById("imgFotoUsuarioMod").src = "" + imgMod;
 	    stream.getTracks()[0].stop();

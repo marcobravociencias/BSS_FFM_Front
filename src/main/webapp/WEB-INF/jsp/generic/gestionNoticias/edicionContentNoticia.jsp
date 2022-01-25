@@ -65,12 +65,12 @@
 					                                    <i  class="far fa-trash-alt icono-funcion-imagen"></i>
 					                                </div>
 			                            		</div>
-			                            		<div class="col-md-2 offset-2">
+			                            		<div class="col-md-2 offset-2" ng-show="fileCargaArchivoNoticiaEdit.archivo">
 			                            			<div ng-click="menosZoomImagenMod()" class="icon-accion-imagen">
 							                            <i class="fas fa-search-minus icono-funcion-imagen"></i>
 							                        </div>
 			                            		</div>
-			                            		<div class="col-md-2">
+			                            		<div class="col-md-2" ng-show="fileCargaArchivoNoticiaEdit.archivo">
 			                            			<div ng-click="masZoomImagenMod()" class="icon-accion-imagen">
 							                            <i class="fas fa-search-plus icono-funcion-imagen"></i>
 							                        </div>
@@ -223,9 +223,6 @@
                                             </div>
                                             <div  ng-show="fileDecargaNoticaEdicion.archivo" class="content-detalle-archivo">
                                                 <div class="title-nombrearchivo" ng-bind="fileDecargaNoticaEdicion.nombre" ></div>
-                                                <!--div class="detail-archivo">
-                                                    PDF,imagenes,Excel,Word
-                                                </div-->
                                                 <div ng-click="eliminarArchivoDescargaEdicion();$event.stopPropagation();" class="content-delete-descargafile">
                                                     <i class="fas fa-times"></i>
                                                 </div>

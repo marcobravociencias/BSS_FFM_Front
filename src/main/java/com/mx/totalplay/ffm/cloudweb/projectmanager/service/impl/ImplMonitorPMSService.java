@@ -1,0 +1,1 @@
+package com.mx.totalplay.ffm.cloudweb.projectmanager.service.impl;import com.mx.totalplay.ffm.cloudweb.projectmanager.service.MonitorPMSService;import org.springframework.stereotype.Service;@Servicepublic class ImplMonitorPMSService implements MonitorPMSService {}

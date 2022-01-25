@@ -865,3 +865,7 @@ thead#thead_incidencia {
     font-size: 0.8em;
     z-index: 3;
 }
+
+.btn-inpector-incidencia{
+    cursor: pointer;
+}

@@ -873,6 +873,12 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 			        			    nombre: "usuarios/mex/"+$scope.detalleUsuario.numeroEmpleado+"/fotoPerfil"
 			        			  }
 		        		}
+		        	}else{
+		        		paramsMod.fotoPerfil = {
+		        				bucketId: "",
+		        			    archivo: "",
+		        			    nombre: ""
+		        			  }
 		        	}
 
 					swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
@@ -1298,7 +1304,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 			reader.onload = function () {
 				let base64 = reader.result.toString().split(",");
 				let imgMod = {
-					"bucketId": "totalplay-ffm-core-dev.appspot.com",
+					"bucketId": $scope.bucketIdImg,
 					"archivo": base64[1],
 					"nombre": nombreArchivoMod,
 					"nuevaFoto": true 
@@ -1319,10 +1325,15 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     
     $scope.eliminarFotoUsuarioMod = function (e) {
     	if($scope.detalleUsuario.urlFotoPerfil != null){
-    		$("#imgFotoUsuarioMod").attr("src", ""+$scope.detalleUsuario.urlFotoPerfil);
-    		$scope.fileFotoUsuarioMod = {};
-    		$scope.fileFotoUsuarioMod.nombre = $scope.detalleUsuario.numeroEmpleado;
-			$scope.fileFotoUsuarioMod.nuevaFoto = false; 
+    		if($scope.fileFotoUsuarioMod.nuevaFoto){
+    			$("#imgFotoUsuarioMod").attr("src", ""+$scope.detalleUsuario.urlFotoPerfil);
+        		$scope.fileFotoUsuarioMod = {};
+        		$scope.fileFotoUsuarioMod.nombre = $scope.detalleUsuario.numeroEmpleado;
+    			$scope.fileFotoUsuarioMod.nuevaFoto = false; 
+    		}else{
+    			$scope.fileFotoUsuarioMod = null;
+            	$("#imgFotoUsuarioMod").attr("src", "./resources/img/plantainterna/despacho/tecnicootasignada.png");
+    		}
     	}else{
     		$scope.fileFotoUsuarioMod = null;
         	$("#imgFotoUsuarioMod").attr("src", "./resources/img/plantainterna/despacho/tecnicootasignada.png");
@@ -1341,7 +1352,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     	}
     	
 		let imgMod = {
-				"bucketId": "totalplay-ffm-core-dev.appspot.com",
+				"bucketId": $scope.bucketIdImg,
 				"archivo": archivoMod[1],
 				"nombre": nombreArchivoMod,
 				"nuevaFoto": true

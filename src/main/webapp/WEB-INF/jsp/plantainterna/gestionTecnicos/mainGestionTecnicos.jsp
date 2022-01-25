@@ -20,8 +20,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/sweetalert/css/sweetalert2.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/datePicker/css/bootstrap-datepicker3_1.9.0.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/fullcalendar/main.css">
-
+    <link href="${pageContext.request.contextPath}/resources/libraries/fullcalendar/main.css" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/magnific_popup/magnific-popup.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/plantainterna/gestionTecnicos/mainGestionTecnicos.css" />
@@ -282,12 +281,13 @@
 </body>
 <!-- Scripts libraries -->
 <script src="${pageContext.request.contextPath}/resources/libraries/angularjs/js/angular.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/moment.min.js"></script>
+
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/js/mdb.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-ui.js"></script>
 <script src="${pageContext.request.contextPath}/resources/libraries/popper\popper.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/libraries/bootstrap/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/moment.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/main.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/locales-all.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/jquery-ui.min.js"></script>
@@ -301,7 +301,6 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker.es.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/magnific_popup/jquery.magnific-popup.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/lib/moment.es.js"></script>
 
 <script src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionTecnicos/gestionTecnicosController.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionTecnicos/gestionTecnicosService.js"></script>

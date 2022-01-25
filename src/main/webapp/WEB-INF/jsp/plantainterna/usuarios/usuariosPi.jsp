@@ -104,7 +104,7 @@
                                 </div>
                             </div>
 				            <div ng-show="configPermisoAccionConsultaUsuarios" class="row">
-								<div class="columna-principal-users col-md-12">
+								<div class="columna-principal-users col-md-12" style="padding: 0;">
 									<div class="table-responsive">
 				                    	<table class="table" id="table-usuario-pi">
 				                        	<thead>
