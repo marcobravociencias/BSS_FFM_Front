@@ -223,9 +223,6 @@
                                             </div>
                                             <div  ng-show="fileDecargaNoticaEdicion.archivo" class="content-detalle-archivo">
                                                 <div class="title-nombrearchivo" ng-bind="fileDecargaNoticaEdicion.nombre" ></div>
-                                                <!--div class="detail-archivo">
-                                                    PDF,imagenes,Excel,Word
-                                                </div-->
                                                 <div ng-click="eliminarArchivoDescargaEdicion();$event.stopPropagation();" class="content-delete-descargafile">
                                                     <i class="fas fa-times"></i>
                                                 </div>

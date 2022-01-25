@@ -73,6 +73,7 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 			$("#searchGeoConsulta").focus();
 		});		
     });
+	
     function compareGeneric(a,b){
         let niveluno=a.nivel;
         let niveldos=b.nivel;
@@ -167,7 +168,7 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 	
 	$scope.initConsultaMetodo = function() {
 		let paramsConfiguracionDespacho ={
-			moduloAccionesUsuario: 'moduloNoticias'
+			moduloAccionesUsuario: 'noticiasAppFFM'
 		};
 		
 		swal({ text: 'Cargando ...', allowOutsideClick: false });
