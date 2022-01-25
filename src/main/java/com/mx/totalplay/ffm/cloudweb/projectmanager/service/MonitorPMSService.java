@@ -1,0 +1,1 @@
+package com.mx.totalplay.ffm.cloudweb.projectmanager.service;public interface MonitorPMSService {}

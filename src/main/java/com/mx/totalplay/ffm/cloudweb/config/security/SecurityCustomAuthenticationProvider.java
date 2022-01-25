@@ -41,6 +41,7 @@ public class SecurityCustomAuthenticationProvider implements AuthenticationProvi
         
     	//put("/noticiasAppFFM","ROLE_USER");
 		put("/moduloMisProyectos","ROLE_USER");
+		put("/moduloMonitorPMS","ROLE_USER");
     }};
     
     @Autowired
