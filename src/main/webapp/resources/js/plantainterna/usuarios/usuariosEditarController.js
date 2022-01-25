@@ -873,6 +873,12 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 			        			    nombre: "usuarios/mex/"+$scope.detalleUsuario.numeroEmpleado+"/fotoPerfil"
 			        			  }
 		        		}
+		        	}else{
+		        		paramsMod.fotoPerfil = {
+		        				bucketId: "",
+		        			    archivo: "",
+		        			    nombre: ""
+		        			  }
 		        	}
 
 					swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
