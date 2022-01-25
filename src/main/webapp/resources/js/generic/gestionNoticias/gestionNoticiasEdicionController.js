@@ -96,6 +96,7 @@ app.edicionNoticiaController=function($scope,gestionNoticiasService){
     /** Archivos descarga */
     $scope.eliminarArchivoDescargaEdicion=function(){
 		$scope.fileDecargaNoticaEdicion={}
+		$scope.banderaArchivoDescarga = true;
 		$("#cargarArchivoDescargaEdicion").val(''); 
 	}
     $scope.triggerArchivoDescargaEdicion=function(){
@@ -152,8 +153,8 @@ app.edicionNoticiaController=function($scope,gestionNoticiasService){
             let formatFechaInicio=arrayDataInicio[2]+"-"+arrayDataInicio[1]+"-"+arrayDataInicio[0]
             let formatFechaFin=arrayDataFin[2]+"-"+arrayDataFin[1]+"-"+arrayDataFin[0]
             
-            $scope.editObj.archivoBanner =$scope.fileCargaArchivoNoticiaEdit.archivo ? $scope.fileCargaArchivoNoticiaEdit.archivo : '' ;
-            $scope.editObj.nombreBanner = $scope.fileCargaArchivoNoticiaEdit.nombre ? $scope.fileCargaArchivoNoticiaEdit.nombre : '';
+            $scope.editObj.archivoBanner =$scope.fileCargaArchivoNoticiaEdit.archivo ? $scope.fileCargaArchivoNoticiaEdit.archivo : "" ;
+            $scope.editObj.nombreBanner = $scope.fileCargaArchivoNoticiaEdit.nombre ? $scope.fileCargaArchivoNoticiaEdit.nombre : "";
 
             $scope.editObj.archivoArchivo = $scope.fileDecargaNoticaEdicion.archivo ? $scope.fileDecargaNoticaEdicion.archivo :"";
             $scope.editObj.nombreArchivo = $scope.fileDecargaNoticaEdicion.nombre ?  $scope.fileDecargaNoticaEdicion.nombre:"";
@@ -182,10 +183,10 @@ app.edicionNoticiaController=function($scope,gestionNoticiasService){
                 delete $scope.editObj.nombreBanner
             }
 
-//            if( !$scope.banderaArchivoDescarga ){
-//                delete $scope.editObj.archivoArchivo
-//                delete $scope.editObj.nombreArchivo
-//            }
+            if( !$scope.banderaArchivoDescarga ){
+                delete $scope.editObj.archivoArchivo
+                delete $scope.editObj.nombreArchivo
+            }
 
             delete $scope.editObj.urlBanner
             delete $scope.editObj.urlArchivo
@@ -196,7 +197,7 @@ app.edicionNoticiaController=function($scope,gestionNoticiasService){
             swal({ text: 'Editando registro...', allowOutsideClick: false });
             swal.showLoading();
 
-            gestionNoticiasService.actualizarNoticia($scope.editObj).then((result) => {             
+            gestionNoticiasService.actualizarNoticia($scope.editObj).then((result) => {       
 				if (result.data !== undefined) {
 					if (result.data.respuesta) {
 						toastr.success(result.data.result.description);

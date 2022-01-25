@@ -1304,7 +1304,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 			reader.onload = function () {
 				let base64 = reader.result.toString().split(",");
 				let imgMod = {
-					"bucketId": "totalplay-ffm-core-dev.appspot.com",
+					"bucketId": $scope.bucketIdImg,
 					"archivo": base64[1],
 					"nombre": nombreArchivoMod,
 					"nuevaFoto": true 
@@ -1352,7 +1352,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     	}
     	
 		let imgMod = {
-				"bucketId": "totalplay-ffm-core-dev.appspot.com",
+				"bucketId": $scope.bucketIdImg,
 				"archivo": archivoMod[1],
 				"nombre": nombreArchivoMod,
 				"nuevaFoto": true
