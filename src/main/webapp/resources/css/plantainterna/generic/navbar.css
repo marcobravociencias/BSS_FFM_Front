@@ -661,3 +661,37 @@ img.img-despacho-navbar.img-user-profile-navbar {
   color:#2955c8;
   border:1px solid #2955c8 !important:
 }
+
+.monster{
+  position: relative;
+  animation: 'none';
+  visibility: hidden;
+}
+
+@keyframes monster-play {
+  0% { transform: rotate(0deg); right: 0px; visibility: visible;  opacity: 0;}
+  25% { transform: rotate(20deg); right: 0px; visibility: visible; opacity: 1;}
+  50% { transform: rotate(0deg); right: 200px;  visibility: visible; opacity: 1;}
+  55% { transform: rotate(0deg); right: 200px;  visibility: visible; opacity: 1;}
+  70% { transform: rotate(0deg); right: 200px;  visibility: visible; opacity: 1;}
+  95% { transform: rotate(-360deg); right: 10px;  visibility: visible; opacity: 1;}
+  100% { transform: rotate(-360deg); right: 0px;  visibility: visible; opacity: 0;}
+}
+
+@keyframes monster-show {
+  0% { transform: rotate(180deg); right: 100px; visibility: visible;  opacity: 0; top:-10px}
+  25% { transform: rotate(160deg); right: 100px;  visibility: visible; opacity: 1;  top:-10px}
+  70% { transform: rotate(250deg); right: 100px;   visibility: visible; opacity: 1;  top:-10px}
+  100% { transform: rotate(180deg); right: 100px;  visibility: visible; top: 0;  top:-80px}
+}
+
+@keyframes monster-run {
+  0% { transform: rotate(270deg); visibility: visible;  opacity: 0;  right: -40px;}
+  35% {  transform: rotate(270deg);  visibility: visible; opacity: 1;   right:  -40px;}
+  55% {  transform: rotate(0deg);   visibility: visible; opacity: 1;  right: 100px;}
+  65% {  transform: rotate(0deg);    visibility: visible; opacity: 1;  right: 200px;}
+  85% {  transform: rotate(0deg);    visibility: visible; opacity: 1;  right: 200px;}
+  100% { transform: rotate(0deg);  visibility: visible; opacity: 0; right: 200px; }
+}
+
+
