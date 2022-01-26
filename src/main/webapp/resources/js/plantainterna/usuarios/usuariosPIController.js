@@ -59,6 +59,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	$scope.tabArbol_LB_N2 = "";
 	$scope.tabArbol_NV_GEOGRAFIA;
 	$scope.tabIntervenciones_NV_INTERVENCIONES;
+	$scope.bucketIdImg = "";
 	
 	$scope.catalogoGeografias = [];
 	$scope.geoSelect = [];
@@ -116,6 +117,8 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 				$scope.configPermisoAccionCreaUsuarios = ($scope.permisosUsuariosAcciones.filter(e => {return e.clave == "accionCreaUsuarios"})[0] != undefined);
 				$scope.configPermisoAccionEditaUsuarios = ($scope.permisosUsuariosAcciones.filter(e => {return e.clave == "accionEditaUsuarios"})[0] != undefined);
 				$scope.configPermisoAccionEliminaUsuarios = ($scope.permisosUsuariosAcciones.filter(e => {return e.clave == "accionEliminaUsuarios"})[0] != undefined);
+				
+				$scope.bucketIdImg = resultConf.BUCKETID_FB;
 				
 				// *** COMPAÑÍAS ***
 	        	if (results[1].data !== undefined) {
@@ -1732,7 +1735,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 			reader.onload = function () {
 				let base64 = reader.result.toString().split(",");
 				let img = {
-					"bucketId": "totalplay-ffm-core-dev.appspot.com",
+					"bucketId": $scope.bucketIdImg,
 					"archivo": base64[1],
 					"nombre": nombreArchivo
 				}
@@ -1766,7 +1769,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	}
 
 		let img = {
-				"bucketId": "totalplay-ffm-core-dev.appspot.com",
+				"bucketId": $scope.bucketIdImg,
 				"archivo": archivo[1],
 				"nombre": nombreArchivo
 			}
