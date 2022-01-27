@@ -52,7 +52,10 @@
     padding: 0;
 }
 
-#texto_header_reportes {
+#texto_header_detalle,
+#texto_header_puntaEIM,
+#texto_header_segmento,
+#texto_header_folio {
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -1624,7 +1627,14 @@ div.dataTables_wrapper div.dataTables_length label {
     color: #7716fa;
 }
 
-#refrescar-detalle{
+#refrescar-detalle,
+#refrescar-puntaEIM,
+#puntaEIM-filtro,
+#refrescar-detalle-filtro,
+#refrescar-folio, 
+#folio_filtros, 
+#refrescar-segmento, 
+#segmento-filtros{
     background-color: white;
     color: #7716fa;
     border: solid 1px #7716fa;

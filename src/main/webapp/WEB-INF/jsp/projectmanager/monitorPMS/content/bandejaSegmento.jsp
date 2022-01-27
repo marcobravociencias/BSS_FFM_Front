@@ -10,17 +10,17 @@
                 </button>
              </div>
              <div class="col-2" style="margin-bottom: 0; width: 3em;">
-                <button id="refrescar-detalle" type="button" class="btn btn-sm  btn-primary  waves-effect waves-light" >
+                <button id="refrescar-segmento" type="button" class="btn btn-sm  btn-primary  waves-effect waves-light" >
                     <i class="fas fa-redo"></i>
                 </button>  
              </div>
              <div class="col-2" style="margin-bottom: 0;">
-                <button id="refrescar-detalle" type="button" class="btn btn-sm btn-primary waves-effect waves-light" >
+                <button id="segmento-filtros" type="button" class="btn btn-sm btn-primary waves-effect waves-light" ng-click="openfiltroSinSegmento()">
                     <i class="fas fa-filter"></i>
                 </button>  
              </div>
        </div>
-       <div class="row col-12" style="padding-right: 0px;" >
+       <div class="row col-12" style="padding-right: 0px;" ng-show="mostrarfiltroSinSegmento">
             <div class="col-12" id="container-filtro-segmento">
                 <jsp:include page="filtroSegmento.jsp"></jsp:include>
             </div>

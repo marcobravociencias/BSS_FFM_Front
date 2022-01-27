@@ -10,21 +10,21 @@
                 </button>
              </div>
              <div class="col-2" style="margin-bottom: 0; width: 3em;">
-                <button id="refrescar-detalle" type="button" class="btn btn-sm  btn-primary  waves-effect waves-light" ng-click="consultaPuntasSinEIM()">
+                <button id="refrescar-puntaEIM" type="button" class="btn btn-sm  btn-primary  waves-effect waves-light" ng-click="consultaPuntasSinEIM()">
                     <i class="fas fa-redo"></i>
                 </button>  
              </div>
              <div class="col-2" style="margin-bottom: 0;">
-                <button id="refrescar-detalle" type="button" class="btn btn-sm btn-primary waves-effect waves-light" ng-clic="openfiltro()">
+                <button id="puntaEIM-filtro" type="button" class="btn btn-sm btn-primary waves-effect waves-light" ng-click="openfiltro()">
                     <i class="fas fa-filter"></i>
                 </button>  
              </div>
        </div>
-       <div class="row col-12" style="padding-right: 0px;" >
+       <div class="row col-12" style="padding-right: 0px;" ng-show="mostrarfiltro">
             <div class="col-12" id="container-filtro-puntaEIM">
                 <jsp:include page="filtroPuntaEIM.jsp"></jsp:include>
             </div>
-       </div>
+       </div> 
     </div>
     <div class="content-table">
         <div class="content-fluid table-responsive">

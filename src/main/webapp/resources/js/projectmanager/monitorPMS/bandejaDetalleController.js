@@ -171,15 +171,17 @@ app.bandejaDetalleController = function ($scope, monitorPMSServices) {
         bandejaDetalleTable.destroy();
 
 
-    $('#bandejaDetalleTable tbody').empty()
-    $('#detalleThead').empty();
+    
 
 
     setTimeout(function () {
 
+     $('#bandejaDetalleTable tbody').empty()
+     $('#detalleThead').empty();
+
       $scope.list = [];
       let arreTempResultDetalle = [];
-      angular.forEach(arrayDetalle.result.detallePmo, elem => {
+      angular.forEach($scope.datelleList, elem => {
         arre = [];
         arre[0] = validarUndefined(elem.top5000) === 'true' ? '<i class="top-cincomil fa fa-star"></i>' : '<i class="top-cincomil-no fa fa-star"></i>';
         arre[1] = validarUndefined(elem.segmentoCliente);
@@ -266,7 +268,7 @@ app.bandejaDetalleController = function ($scope, monitorPMSServices) {
     let params = {}
     swal({ text: 'Cargando datos ...', allowOutsideClick: false });
     swal.showLoading();
-    $scope.datelleList = arrayDetalle.result.detallePmo
+    //$scope.datelleList = arrayDetalle.result.detallePmo
     //$scope.$apply()
     $scope.llenarTablaDetalleBandeja()
     /*  monitorPMSServices.consultarBandejaDetalle(params).then(result => {
