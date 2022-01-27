@@ -991,13 +991,13 @@ app.controller('controlVehicularController',
 						text += "<li>Placas (alfan&uacute;merico)</li>";
 						allRequired = false;
 					} else {
-						if ($("#tipo").val() == "1" && $("#placa").val().length !== 6) {
+						if ($("#tipo").val() == "1" && ($("#placa").val().length < 6 || $("#placa").val().length > 7)) {
 							$("#placa").addClass("input-valid-error");
-							text += "<li>Placas (6 car&aacute;cteres)</li>";
+							text += "<li>Placas (6 a 7 car&aacute;cteres)</li>";
 							allRequired = false;
-						} else if ($("#tipo").val() == "2" && $("#placa").val().length !== 5) {
+						} else if ($("#tipo").val() == "2" && ($("#placa").val().length < 5 || $("#placa").val().length > 6)) {
 							$("#placa").addClass("input-valid-error");
-							text += "<li>Placas (5 car&aacute;cteres)</li>";
+							text += "<li>Placas (5 a 6 car&aacute;cteres)</li>";
 						}
 					}
 				}
