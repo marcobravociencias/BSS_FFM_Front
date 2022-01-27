@@ -181,7 +181,7 @@ app.bandejaDetalleController = function ($scope, monitorPMSServices) {
 
       $scope.list = [];
       let arreTempResultDetalle = [];
-      angular.forEach($scope.datelleList, elem => {
+      angular.forEach(arrayDetalle.result.detallePmo, elem => {
         arre = [];
         arre[0] = validarUndefined(elem.top5000) === 'true' ? '<i class="top-cincomil fa fa-star"></i>' : '<i class="top-cincomil-no fa fa-star"></i>';
         arre[1] = validarUndefined(elem.segmentoCliente);
