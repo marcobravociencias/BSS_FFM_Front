@@ -133,25 +133,25 @@
                             <div class="row row-datos-confirmacion" ng-show="configPermisoAccionCreaUsuarios">
                                 <div class="col-12">
                                     <ul class="nav nav-pills mb-3" id="pills-tab-crearuser" role="tablist">
-                                        <li class="nav-item" role="presentation" ng-if="tabInformacion">
+                                        <li class="nav-item" role="presentation" ng-show="tabInformacion">
                                             <a class="nav-link active" id="pills-informacion-tab" data-toggle="pill" href="#pills-informacion" role="tab" aria-controls="pills-informacion" aria-selected="true">Informaci&oacute;n</a>
                                         </li>
-                                        <li class="nav-item" role="presentation" ng-if="tabIntervenciones">
+                                        <li class="nav-item" role="presentation" ng-show="tabIntervenciones">
                                             <a class="nav-link" id="pills-intervencion-tab" data-toggle="pill" href="#pills-intervencion" role="tab" aria-controls="pills-intervencion" aria-selected="false">Intervenciones</a>
                                         </li>
-                                        <li class="nav-item" role="presentation" ng-if="tabArbol">
+                                        <li class="nav-item" role="presentation" ng-show="tabArbol">
                                             <a class="nav-link" id="pills-arbol-tab" data-toggle="pill" href="#pills-arbol" role="tab" aria-controls="pills-arbol" aria-selected="false">&Aacute;rbol</a>
                                         </li>
-                                        <li id="pestaniaPermisos" class="nav-item" role="presentation" ng-if="tabAccesos">
+                                        <li id="pestaniaPermisos" class="nav-item" role="presentation" ng-show="tabAccesos">
                                             <a class="nav-link" id="pills-accesos-tab" data-toggle="pill" href="#pills-accesos" ng-show="mostrarAccesos" role="tab" aria-controls="pills-accesos" aria-selected="false">Accesos</a>
                                         </li>
-                                        <li id="pestaniaTecnico" class="nav-item" role="presentation" ng-if="tabTecnicos">
+                                        <li id="pestaniaTecnico" class="nav-item" role="presentation" ng-show="tabTecnicos">
                                             <a class="nav-link" id="pills-tecnico-tab" ng-click="revisionTecnicosDespachos()" data-toggle="pill" href="#pills-tecnico" ng-show="mostrarTecnicos" role="tab" aria-controls="pills-tecnico" aria-selected="false">T&eacute;cnicos</a>
                                         </li>
-                                        <li id="pestaniaDespacho" class="nav-item" role="presentation" ng-if="tabDespachos">
+                                        <li id="pestaniaDespacho" class="nav-item" role="presentation" ng-show="tabDespachos">
                                             <a class="nav-link" id="pills-despacho-tab" ng-click="revisionTecnicosDespachos()" data-toggle="pill" href="#pills-despacho" ng-show="mostrarDespacho" role="tab" aria-controls="pills-despacho" aria-selected="false">Despachos</a>
                                         </li>
-                                        <li class="nav-item" role="presentation" ng-if="tabConfirmacion">
+                                        <li class="nav-item" role="presentation" ng-show="tabConfirmacion">
                                             <a class="nav-link" id="pills-confirmar-tab" ng-click="cargarInfoConfirmacionRegistro()" data-toggle="pill" ng-click="mostrarConfirmacionUsuario()" href="#pills-confirmar" role="tab" aria-controls="pills-confirmar" aria-selected="false">Confirmar Usuario</a>
                                         </li>
                                     </ul>
