@@ -284,6 +284,18 @@ let arrayDetalleTrabajo = {
             "fechaInicio": "2022-01-03 11:29:57.0",
             "fechaFin": "03/01/2022 11:32 21",
             "ot": "68970"
+        },{
+            "os": "NO APLICA",
+            "cuenta": "NO APLICA",
+            "tipo": "SOPORTES SERVICE DESK",
+            "subtipo": "SOPORTES",
+            "puntualidad": "A TIEMPO",
+            "estado": "COMPLETA",
+            "cliente": "CLIENTE",
+            "fechaAgenda": "03/01/2022 12:00",
+            "fechaInicio": "2022-01-03 11:29:57.0",
+            "fechaFin": "03/01/2022 11:32 21",
+            "ot": "68970"
         }]
     }
 }

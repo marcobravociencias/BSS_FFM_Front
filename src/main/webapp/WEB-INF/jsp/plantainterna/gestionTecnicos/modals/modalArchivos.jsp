@@ -2,15 +2,16 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" style="color: grey;">Archivos</h5>
+                <h5 class="modal-title" style="color: #7716fa">Archivos</h5>
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close">
                 </button>
             </div>
             <div class="modal-body">
                 <div class="container">
                     <div class="content-fluid" ng-show="!isCargaArchivos">
-                        <div class="col-12 form-group" style="margin-bottom: 0; text-align: right;">
+                        <div class="col-12 form-group" style="margin-bottom: 0; padding-left: 0;">
                             <i class="fas fa-plus-circle icon-back" ng-click="changeView()" title="Cargar Archivo"></i>
+                            <!-- <span style="margin-bottom: 0.1em;">Cargar Archivo</span> -->
                         </div>
                         <table class="display table table-hover" width="100%" id="tableArchivosJustificacion">
                             <thead id="thead_archivosJustificacion">
@@ -35,8 +36,8 @@
                               <div style="text-align: center; padding-left: 0;" class="col-md-12">
                                 <form id="uploadFormEditaJust" name="13" class="form-horizontal box form_drag_drop" novalidate="novalidate" enctype="multipart/form-data">
                                       <div class="box__input">
-                                        <input name="myFile" type="file" class="box__file inputFile" id="fileEditaJust" />
-                                        <label for="fileEditaJust" id="etiqueta_archivo_edita_just">
+                                        <input name="myFile" type="file" class="box__file inputFile" id="fileArch" />
+                                        <label for="fileArch" id="etiqueta_archivo_edita_just">
                                           <strong class="text_select">Selecciona un archivo</strong>
                                           <span class="box__dragndrop">o arrastra aqu&iacute;</span>
                                         </label>

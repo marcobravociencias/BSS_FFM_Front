@@ -12,20 +12,18 @@
     <link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-16x16.png">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/jquery.dataTables.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/dataTables.fontAwesome.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/jstree/default/style.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/jstree/themes/proton/style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/sweetalert/css/sweetalert2.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/datePicker/css/bootstrap-datepicker3_1.9.0.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
-    <link href="${pageContext.request.contextPath}/resources/libraries/fullcalendar/main.css" rel="stylesheet">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/fullcalendar/main.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/magnific_popup/magnific-popup.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/plantainterna/gestionTecnicos/mainGestionTecnicos.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/magnific_popup/magnific-popup.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" />
 
 </head>
 
@@ -75,7 +73,7 @@
                     </div>
                     <div class="col-8" id="container_calendarioDetalle" ng-show="!isDetalleMesTecnico">
                         <div class="row">
-                            <div class="col-7" id="container_calendarioActividades">
+                            <div class="col-7" id="container_calendarioActividades" style="padding-right: 0;">
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="contenido_color">
@@ -116,39 +114,46 @@
                                         <span style="color:#7716fa; font-weight: bold;">Detalle Justificaci&oacute;n</span>
                                     </div>
                                     <hr>
-                                    <div class="container-fluid tecnico-content">
-                                        <div class=""><span class="text-title-tecnico">USUARIO QUE CREA</span></div>
-                                        <div class=""><span class="text-content-tecnico">FFMENLACE</span></div>
+                                    <div ng-show="isJustificacion">
+                                        <div class="container-fluid tecnico-content">
+                                            <div class=""><span class="text-title-tecnico">USUARIO QUE CREA</span></div>
+                                            <div class=""><span class="text-content-tecnico">{{justificacionDetalle.UsuarioCrea}}</span></div>
+                                        </div>
+                                        <div class="container-fluid tecnico-content">
+                                            <div class=""><span class="text-title-tecnico">NOMBRE QUE CREA</span></div>
+                                            <div class=""><span class="text-content-tecnico">{{justificacionDetalle.NombreCrea}}</span></div>
+                                        </div>
+                                        <div class="container-fluid tecnico-content">
+                                            <div class=""><span class="text-title-tecnico">FECHA DE REGISTRO</span></div>
+                                            <div class=""><span class="text-content-tecnico">{{justificacionDetalle.FechaRegistro}}</span></div>
+                                        </div>
+                                        <div class="container-fluid tecnico-content">
+                                            <div class=""><span class="text-title-tecnico">MOTIVO DE JUSTIFICACI&Oacute;N</span></div>
+                                            <div class=""><span class="text-content-tecnico">{{justificacionDetalle.MotivoJustificacion}}</span></div>
+                                        </div>
+                                        <div class="container-fluid tecnico-content">
+                                            <div class=""><span class="text-title-tecnico">FOLIO DE JUSTIFICACI&Oacute;N</span></div>
+                                            <div class=""><span class="text-content-tecnico">{{justificacionDetalle.FolioJustificacion}}</span></div>
+                                        </div>
+                                        <div class="container-fluid tecnico-content">
+                                            <div class=""><span class="text-title-tecnico">INICIO DE JUSTIFICACI&Oacute;N</span></div>
+                                            <div class=""><span class="text-content-tecnico">{{justificacionDetalle.InicioJustificacion}}</span></div>
+                                        </div>
+                                        <div class="container-fluid tecnico-content">
+                                            <div class=""><span class="text-title-tecnico">FIN DE JUSTIFICACI&Oacute;N</span></div>
+                                            <div class=""><span class="text-content-tecnico">{{justificacionDetalle.FinJustificacion}}</span></div>
+                                        </div>
+                                        <div class="container-fluid tecnico-content text-center mb-1">
+                                            <button class="btn btn-sm btnDetalleJustificacion" ng-click="consultarComentariosJustificacion()"><i class="fa fa-comments"></i></button>
+                                            <button class="btn btn-sm btnDetalleJustificacion" ng-click="consultarArchivosJustificacion()" style="padding: 0.3em 0.7em !important;"><i class="fa fa-file"></i></button>
+                                            <button class="btn btn-sm btnDetalleJustificacion" ng-click="openModalEditarJustificacion()"><i class="fa fa-pencil-square"></i></button>
+                                            <button class="btn btn-sm btnDetalleJustificacion" ng-click="openModalEliminarJustificacion()"><i class="far fa-trash-alt"></i></button>
+                                        </div>
                                     </div>
-                                    <div class="container-fluid tecnico-content">
-                                        <div class=""><span class="text-title-tecnico">NOMBRE QUE CREA</span></div>
-                                        <div class=""><span class="text-content-tecnico">RICARDO MARTINEZ HERNANDEZ</span></div>
-                                    </div>
-                                    <div class="container-fluid tecnico-content">
-                                        <div class=""><span class="text-title-tecnico">FECHA DE REGISTRO</span></div>
-                                        <div class=""><span class="text-content-tecnico">03/01/2022 12:07 40</span></div>
-                                    </div>
-                                    <div class="container-fluid tecnico-content">
-                                        <div class=""><span class="text-title-tecnico">MOTIVO DE JUSTIFICACI&Oacute;N</span></div>
-                                        <div class=""><span class="text-content-tecnico">INCAPACIDAD</span></div>
-                                    </div>
-                                    <div class="container-fluid tecnico-content">
-                                        <div class=""><span class="text-title-tecnico">FOLIO DE JUSTIFICACI&Oacute;N</span></div>
-                                        <div class=""><span class="text-content-tecnico">INC341</span></div>
-                                    </div>
-                                    <div class="container-fluid tecnico-content">
-                                        <div class=""><span class="text-title-tecnico">INICIO DE JUSTIFICACI&Oacute;N</span></div>
-                                        <div class=""><span class="text-content-tecnico">03/01/2022</span></div>
-                                    </div>
-                                    <div class="container-fluid tecnico-content">
-                                        <div class=""><span class="text-title-tecnico">FIN DE JUSTIFICACI&Oacute;N</span></div>
-                                        <div class=""><span class="text-content-tecnico">03/01/2022</span></div>
-                                    </div>
-                                    <div class="container-fluid tecnico-content text-center mb-1">
-                                        <button class="btn btn-sm btnDetalleJustificacion" ng-click="consultarComentariosJustificacion()"><i class="fa fa-comments"></i></button>
-                                        <button class="btn btn-sm btnDetalleJustificacion" ng-click="consultarArchivosJustificacion()" style="padding: 0.3em 0.7em !important;"><i class="fa fa-file"></i></button>
-                                        <button class="btn btn-sm btnDetalleJustificacion" ng-click="editarJustificacion()"><i class="fa fa-pencil-square"></i></button>
-                                        <button class="btn btn-sm btnDetalleJustificacion" ng-click="eliminarJustificacion()"><i class="far fa-trash-alt"></i></button>
+                                    <div ng-show="!isJustificacion">
+                                        <div style="text-align: center;">
+                                            <span style="color:#7716fa; font-weight: bold;">No se encontr&oacute; informaci&oacute;n</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -164,7 +169,7 @@
                             </div>
                         </div>
                         <br>
-                        <div class="col-12">
+                        <div class="col-12" style="padding-left: 0;">
                             <div class="row">
                                 <div class="col-7">
                                     <div class="container-fluid tecnico-content-detalle">
@@ -209,61 +214,67 @@
                             <div class="tab-content">
                                 <div class="tab-pane fade show active" id="opcion-dias" role="tabpanel" aria-labelledby="opcion-dias-tab">
                                     <div class="content-fluid" style="margin-top: 0.7em;">
-                                        <table class="display table table-hover" width="100%" id="tableDiasTrabajados">
-                                            <thead id="thead_diasTrabajados">
-                                                <tr>
-                                                    <th>Fecha</th>
-                                                    <th>Hora inicio</th>
-                                                    <th>Hora fin</th>
-                                                    <th>OTS</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                        </table>
+                                        <div class="table-responsive">
+                                            <table class="display table" width="100%" id="tableDiasTrabajados">
+                                                <thead id="thead_diasTrabajados">
+                                                    <tr>
+                                                        <th>Fecha</th>
+                                                        <th>Hora inicio</th>
+                                                        <th>Hora fin</th>
+                                                        <th>OTS</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="opcion-ots" role="tabpanel" aria-labelledby="opcion-ots-tab">
                                     <div class="content-fluid" style="margin-top: 0.7em;">
-                                        <table class="display table table-hover" width="100%" id="tableOtsTrabajadas">
-                                            <thead id="thead_otsTrabajadas">
-                                                <tr>
-                                                    <th>OT</th>
-                                                    <th>OS</th>
-                                                    <th>Cuenta</th>
-                                                    <th>Tipo</th>
-                                                    <th>Subtipo</th>
-                                                    <th>Fecha inicio</th>
-                                                    <th>Fecha fin</th>
-                                                    <th>Usuario auxiliar</th>
-                                                    <th>Auxiliar</th>
-                                                    <th>Puntualidad</th>
-                                                    <th>Tiempo total</th>
-                                                    <th>Opciones</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                        </table>
+                                        <div class="table-responsive">
+                                            <table class="display table" width="100%" id="tableOtsTrabajadas">
+                                                <thead id="thead_otsTrabajadas">
+                                                    <tr>
+                                                        <th>OT</th>
+                                                        <th>OS</th>
+                                                        <th>Cuenta</th>
+                                                        <th>Tipo</th>
+                                                        <th>Subtipo</th>
+                                                        <th>Fecha inicio</th>
+                                                        <th>Fecha fin</th>
+                                                        <th>Usuario auxiliar</th>
+                                                        <th>Auxiliar</th>
+                                                        <th>Puntualidad</th>
+                                                        <th>Tiempo total</th>
+                                                        <th>Opciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="opcion-justificaciones" role="tabpanel" aria-labelledby="opcion-justificaciones-tab">
                                     <div class="content-fluid" style="margin-top: 0.7em;">
-                                        <table class="display table table-hover" width="100%" id="tableJustificaciones">
-                                            <thead id="thead_justificaciones">
-                                                <tr>
-                                                    <th>#Empleado creador</th>
-                                                    <th>Empleado creador</th>
-                                                    <th>Folio</th>
-                                                    <th>Fecha inicio</th>
-                                                    <th>Falla fin</th>
-                                                    <th>Fecha registro</th>
-                                                    <th>Fecha modificaci&oacute;n</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                        </table>
+                                        <div class="table-responsive">
+                                            <table class="display table" width="100%" id="tableJustificaciones">
+                                                <thead id="thead_justificaciones">
+                                                    <tr>
+                                                        <th>#Empleado creador</th>
+                                                        <th>Empleado creador</th>
+                                                        <th>Folio</th>
+                                                        <th>Fecha inicio</th>
+                                                        <th>Falla fin</th>
+                                                        <th>Fecha registro</th>
+                                                        <th>Fecha modificaci&oacute;n</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -276,7 +287,7 @@
     <jsp:include page="./modals/modalComentarios.jsp"></jsp:include>
     <jsp:include page="./modals/modalArchivos.jsp"></jsp:include>
     <jsp:include page="./modals/modalEditarJustificacion.jsp"></jsp:include>
-    <jsp:include page="./modals/modalEliminarJustificacion.jsp"></jsp:include>
+    <jsp:include page="./modals/modalAgregarJustificacion.jsp"></jsp:include>
     <jsp:include page="./modals/modalDetalleTrabajo.jsp"></jsp:include>
 </body>
 <!-- Scripts libraries -->
