@@ -72,11 +72,9 @@ app.controller('controlVehicularController',
 					document.getElementById('arbol_vehiculo_consulta').placeholder = selectedElms[0].text;
 					$scope.vehiculoText.geografiaText = selectedElms[0].text;
 					if ($('#jstreeconsulta').jstree().settings.plugins.length == 1) {
-						if ($scope.ubicacionEditar.toString() !== selectedElms[0].id.toString()) {
 							$scope.getParentGeografia(selectedElms[0].id, $scope.llaveEncierroVehiculo);
 							$scope.loadEncierros($scope.padre, 0);
-						}
-					}
+					} 
 				} else {
 					document.getElementById('arbol_vehiculo_consulta').placeholder = 'NO HAY SELECCI\u00D3N';
 				}
