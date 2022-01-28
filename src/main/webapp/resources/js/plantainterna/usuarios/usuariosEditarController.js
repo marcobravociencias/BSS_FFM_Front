@@ -7,7 +7,6 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     $scope.listaIntervencionesSelecionadasMod = [];
     $scope.confirmacionModificacion = {};
     $scope.listaCiudadesSelecionadasMod = [];
-    $scope.verBtnModificar = false;
     $scope.puestoRegistrado = [];
     $scope.listaCiudadNatalMod = [];
     $scope.listaTecnicosMod = [];
@@ -579,7 +578,6 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     //CUANDO SELECCCIONE UNA CIUDAD NATAL LOS RADIOS REGRESAN A SU ESTILO NORMAL (VALIDACIÓN) - PESTAÑA CONFIRMACIÓN MODIFICACIÓN USUARIO
     $scope.asignarCiudadNatalMod = function() {
     	$(".ciudadNatalMod").css("color", "#7c7c7d");
-    	$scope.verBtnModificar = true;
 	}
     
     //MÉTODO PARA VALIDACIÓN DE INFORMACIÓN DE LOS DATOS MOSTRADOS EN LA VISTA - PESTAÑA CONFIRMACIÓN MOD USUARIO
@@ -594,8 +592,6 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     	$scope.confirmacionModificacion.contrasena = $scope.detalleUsuario.contrasena !== undefined && $scope.detalleUsuario.contrasena !== "" ? $scope.detalleUsuario.contrasena : "Sin asignar";
     	$scope.confirmacionModificacion.puesto = $("#puesto_select_modificacion option:selected").text();
     	$scope.confirmacionModificacion.fechaIngreso = $scope.detalleUsuario.fechaIngreso !== undefined && $scope.detalleUsuario.fechaIngreso !== "" ? $scope.detalleUsuario.fechaIngreso : "Sin asignar";
-    	
-    	$scope.verBtnModificar = true;
     }
     
     //VERIFICA EL ESTADO DEL CHECK PARA COLOCAR 'SI' O 'NO', SEGÚN EL ESTADO - PESTAÑA INFORMACIÓN MODIFICACUÓN USUARIO
@@ -685,7 +681,6 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 	
 	//MÉTODO QUE VALIDA SI SE SELECCIONÓ POR LO MENOS 1 GEOGRAFÍA Y SI EXISTEN TÉCNICOS O DESPACHOS DE ACUERDO A LA/LAS GEOGRAFÍA(S) SELECCIONADA(S)
 	$scope.revisionTecnicosDespachosMod = function() {
-		$scope.verBtnModificar = false;
 		if($scope.detalleUsuario.geografiasId !== undefined){
 			if($scope.detalleUsuario.geografiasId.length > 0){
 				if($scope.isTecnicoMod){
@@ -1155,20 +1150,20 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 		//VALIDACIÓN Y ACTIVACIÓN DE PESTAÑAS
 		if(validacionInformacionGeneral == false){
 			validacion = false;
-			$("#pills-confirmar-tab-mod").removeClass("active");
-			$("#pills-confirmar-mod").removeClass("active show");
+			$("#pills-tab-mod li a").removeClass('active');
+			$("#pills-tabContent-mod .tab-pane").removeClass('active show');
 			$("#pills-informacion-tab-mod").addClass("active");
 			$("#pills-informacion-mod").addClass("active show");
 		}else if(validacionIntervenciones == false){
 			validacion = false;
-			$("#pills-confirmar-tab-mod").removeClass("active");
-			$("#pills-confirmar-mod").removeClass("active show");
+			$("#pills-tab-mod li a").removeClass('active');
+			$("#pills-tabContent-mod .tab-pane").removeClass('active show');
 			$("#pills-intervencion-tab-mod").addClass("active");
 			$("#pills-intervencion-mod").addClass("active show");
 		}else if(validacionArbol == false){
 			validacion = false;
-			$("#pills-confirmar-tab-mod").removeClass("active");
-			$("#pills-confirmar-mod").removeClass("active show");
+			$("#pills-tab-mod li a").removeClass('active');
+			$("#pills-tabContent-mod .tab-pane").removeClass('active show');
 			$('#arbolGeografiaRegistro-mod').jstree("destroy");
 	    	$('#arbolGeografiaRegistro-mod').jstree("deselect_all");
 			$scope.mostrarArbolGeografiaRegistro();
@@ -1176,20 +1171,20 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 			$("#pills-arbol-mod").addClass("active show");
 		}else if(validacionAccesos == false){
 			validacion = false;
-			$("#pills-confirmar-tab-mod").removeClass("active");
-			$("#pills-confirmar-mod").removeClass("active show");
+			$("#pills-tab-mod li a").removeClass('active');
+			$("#pills-tabContent-mod .tab-pane").removeClass('active show');
 			$("#pills-accesos-tab-mod").addClass("active");
 			$("#pills-accesos-mod").addClass("active show");
 		}else if(validacionTecnicos == false){
 			validacion = false;
-			$("#pills-confirmar-tab-mod").removeClass("active");
-			$("#pills-confirmar-mod").removeClass("active show");
+			$("#pills-tab-mod li a").removeClass('active');
+			$("#pills-tabContent-mod .tab-pane").removeClass('active show');
 			$("#pills-tecnico-tab-mod").addClass("active");
 			$("#pills-tecnico-mod").addClass("active show");
 		}else if(validacionDespachos == false){
 			validacion = false;
-			$("#pills-confirmar-tab-mod").removeClass("active");
-			$("#pills-confirmar-mod").removeClass("active show");
+			$("#pills-tab-mod li a").removeClass('active');
+			$("#pills-tabContent-mod .tab-pane").removeClass('active show');
 			$("#pills-despacho-tab-mod").addClass("active");
 			$("#pills-despacho-mod").addClass("active show");
 		}else{
@@ -1199,7 +1194,6 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 		//SI EXISTE ALGÚN CAMPO FALTANTE, MUESTRA EL MENSAJE
 		if(validacion == false){
 			toastr.info(mensaje);
-			$scope.ocultarBotonMod();
 		}
 		//REGRESA LA RESPUESTA BOLEANA
 		return validacion;
@@ -1218,11 +1212,6 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     //MÉTODO PARA BUSCAR PERMISOS DE ACUERDO AL TEXTO INGRESADO EN EL INPUT DE BÚSQUEDA - PESTAÑA ACCESOS MODIFICACIÓN USUARIO
     $scope.busquedaPermisosMod = function() {
     	$("#arbolPermisoMod").jstree("search", $('#buscadorPermisosMod').val());
-	}
-    
-    //FUNCIONALIDAD QUE SIRVE PARA OCULTAR EL BOTÓN DE 'MODIFICAR' MIENTRAS NO SE ESTÉ EN LA PESTAÑA DE 'CONFIRMAR USUARIO' O MIENTRAS NO ESTÉN VALIDADOS LOS CAMPOS
-    $scope.ocultarBotonMod = function() {
-    	$scope.verBtnModificar = false;
 	}
     
     //MÉTODO PARA LIMPIAR TODOS LOS CAMPOS DE TODAS LAS PESTAÑAS DE LA MODIFICACIÓN DE USUARIO
@@ -1262,7 +1251,6 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
         $scope.mostrarTecnicosMod = false;
         $scope.mostrarDespachoMod = false;
         $scope.isTecnicoMod = false;
-        $scope.verBtnModificar = false;
         $scope.contadorCambioArbolGeografias = false;
         $scope.iniciarFechaMod();
         $("#pills-confirmar-tab-mod").removeClass("active");

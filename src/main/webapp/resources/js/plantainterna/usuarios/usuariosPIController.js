@@ -950,6 +950,10 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	            	if(results[0].data.respuesta){
     	            		$scope.limpiarDatosRegistro();
     	            		swal("Correcto", "¡Registro guardado con éxito!", "success");
+    	            		$scope.resetearTablaUsuariosConsulta();
+		            		setTimeout(function() {
+		            			$scope.consultaUsuariosPorGeoCompPuestos();
+		    	        	}, 1000);
     	            	}else{
     	            		swal("Error", results[0].data.resultDescripcion, "error");
     	            	}
