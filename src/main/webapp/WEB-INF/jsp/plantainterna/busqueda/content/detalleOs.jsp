@@ -34,7 +34,8 @@
         <div ng-if="listadoNoticias.length <= 0" class="container mt-5">
             <h5 class="noinfo-noticias">No se encontr&oacute; informaci&oacute;n</h5>
         </div>
-        <div ng-repeat="noticia in listadoNoticias track by $index" class="container-noticias">
+        <div class="row" style="max-height: 28em; overflow-y: scroll;">
+            <div ng-repeat="noticia in listadoNoticias track by $index" class="container-noticias">
                 <div class="col-12">
                     <div class="row">
                         <div class="col-12">
@@ -146,6 +147,8 @@
                     </div>
                 </div>
         </div>
+        </div>
+
         <div class="divider-noticias" style=" width: 100%;height: 1px; background: gainsboro;"></div>
         <div class="row">
             <div class="col-10 col-content-text-general">
@@ -156,7 +159,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
+            <div class="col-3" style="text-align: center;">
                 <form id="uploadForm" name="13" class="form-horizontal box form_drag_drop" novalidate="novalidate" enctype="multipart/form-data">
                     <div class="box__input">
                         <input name="myFile" type="file" class="box__file inputFile" id="fileOs">	
@@ -165,10 +168,7 @@
                      </div>
                 </form>
             </div>
-            
-        </div>
-        <div class="row">
-            <div class="col-12">
+            <div class="col-2">
                 <span class="eliminar_archivo" ng-show="showEliminarOs" ng-click="resetFile()">Eliminar</span>
             </div>
         </div>

@@ -47,7 +47,10 @@ app.noticiasController = function ($scope, $q, busquedaService) {
             if (response.data.respuesta) {
                 if (response.data.result) {
                     $scope.listadoNoticias = response.data.result.news;
-                    swal.close();
+                    setTimeout(() => {
+                        swal.close();
+                    }, 1000);
+                    
                 } else {
                     swal.close();
                     mostrarMensajeWarningValidacion('No se encontr&oacute; informaci&oacute;n.')
@@ -384,12 +387,17 @@ app.noticiasController = function ($scope, $q, busquedaService) {
                     mostrarMensajeWarning('Escribir un comentario')
                     return false;
                 }
-                params.append("params.newId", noticia);
-                params.append("params.text", document.getElementById('texto-comentario-' + noticia).value);
+
+                params = {
+                    newId: noticia,
+                    text:  document.getElementById('texto-comentario-' + noticia).value
+                }
+                //params.append("params.newId", noticia);
+                //params.append("params.text", document.getElementById('texto-comentario-' + noticia).value);
                 //params.append("params.autorId", $scope.autorIdSalect);
                 if (document.querySelector('#fileSubComentarioTick-' + noticia).files[0] !== undefined) {
-                    params.append("params.documentName", document.querySelector('#fileSubComentarioTick-' + noticia).files[0].name.split('.')[0]);
-                    params.append("params.documentExtension", document.querySelector('#fileSubComentarioTick-' + noticia).files[0].name.split('.')[1]);
+                   // params.append("params.documentName", document.querySelector('#fileSubComentarioTick-' + noticia).files[0].name.split('.')[0]);
+                    //params.append("params.documentExtension", document.querySelector('#fileSubComentarioTick-' + noticia).files[0].name.split('.')[1]);
 
 
                     var myFile = document.querySelector('#fileSubComentarioTick-' + noticia).files[0];
@@ -397,7 +405,14 @@ app.noticiasController = function ($scope, $q, busquedaService) {
                     console.log(myFile)
                     reader.readAsDataURL(myFile);
                     reader.onload = function () {
-                        params.append("params.document", reader.result.split(",")[1]);
+                       // params.append("params.document", reader.result.split(",")[1]);
+                        params = {
+                            newId: noticia,
+                            text: document.getElementById('texto-comentario-' + noticia).value,
+                            documentName: document.querySelector('#fileSubComentarioTick-' + noticia).files[0].name.split('.')[0],
+                            documentExtension: document.querySelector('#fileSubComentarioTick-' + noticia).files[0].name.split('.')[1],
+                            document: reader.result.split(",")[1]
+                        }
                         $scope.crearSubComnetario(params);
                     };
                     reader.onerror = function (error) {
@@ -630,5 +645,40 @@ app.noticiasController = function ($scope, $q, busquedaService) {
         }, function error(response) {
             console.log(response);
         });
+    }
+
+    cambiar = function(evento) {
+        if ($scope.elemento.keyObject === 'OS') {
+            if( $('#'+evento.id).get(0).files[0] === undefined ){
+                $(".text_select_archivo_sub").text("Adjuntar archivo");
+                $scope.showEliminarSubOs = false;
+            }else{
+                $(".text_select_archivo_sub").text( $('#'+evento.id).get(0).files[0].name );
+                $scope.showEliminarSubOs = true;
+            }		
+            $scope.$apply();  
+            
+        } else if($scope.elemento.keyObject === 'OP'){
+            if( $('#'+evento.id).get(0).files[0] === undefined ){
+                $(".text_select_archivo_sub").text("Adjuntar archivo");
+                $scope.showEliminarSubOp = false;
+            }else{
+                $(".text_select_archivo_sub").text( $('#'+evento.id).get(0).files[0].name );
+                $scope.showEliminarSubOp = true;
+            }		
+            $scope.$apply();  
+            
+        } else {
+            if( $('#'+evento.id).get(0).files[0] === undefined ){
+                $(".text_select_archivo_sub").text("Adjuntar archivo");
+                $scope.showEliminarSubTick = false;
+            }else{
+                $(".text_select_archivo_sub").text( $('#'+evento.id).get(0).files[0].name );
+                $scope.showEliminarSubTick = true;
+            }		
+            $scope.$apply();  
+           
+        }
+ 
     }
 }
