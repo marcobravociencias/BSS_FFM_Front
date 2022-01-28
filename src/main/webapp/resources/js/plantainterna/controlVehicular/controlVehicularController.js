@@ -50,7 +50,7 @@ app.controller('controlVehicularController',
 					language: 'es',
 					todayHighlight: true,
 					clearBtn: false,
-					orientation:"bottom"
+					orientation: "bottom"
 				});
 
 				$('.datepickerNormal').datepicker({
@@ -59,7 +59,7 @@ app.controller('controlVehicularController',
 					language: 'es',
 					todayHighlight: true,
 					clearBtn: false,
-					orientation:"bottom"
+					orientation: "bottom"
 				});
 
 			});
@@ -69,10 +69,13 @@ app.controller('controlVehicularController',
 				if (selectedElms.length > 0 && $('#jstreeconsulta').jstree().settings.plugins.length == 1) {
 					document.getElementById('arbol_vehiculo_consulta').placeholder = selectedElms[0].text;
 					$scope.vehiculoText.geografiaText = selectedElms[0].text;
-					if ($('#jstreeconsulta').jstree().settings.plugins.length == 1) {
-							$scope.getParentGeografia(selectedElms[0].id, $scope.llaveEncierroVehiculo);
-							$scope.loadEncierros($scope.padre, 0);
-					} 
+					if ($('#jstreeconsulta').jstree().settings.plugins.length == 1 && selectedElms[0].original.nivel >= $scope.llaveEncierroVehiculo) {
+						$scope.getParentGeografia(selectedElms[0].id, $scope.llaveEncierroVehiculo);
+						$scope.loadEncierros($scope.padre, 0);
+					}
+					if (selectedElms[0].original.nivel < $scope.llaveEncierroVehiculo && $('#jstreeconsulta').jstree().settings.plugins.length == 1) {
+						toastr.warning('Selecciona una geograf\u00EDa valida');
+					}
 				} else {
 					document.getElementById('arbol_vehiculo_consulta').placeholder = 'NO HAY SELECCI\u00D3N';
 				}
@@ -93,9 +96,9 @@ app.controller('controlVehicularController',
 				"ordering": false,
 				"pageLength": 10,
 				"info": true,
-				"autoWidth": true,
+				"scrollX": false,
+				"autoWidth": false,
 				"language": idioma_espanol_not_font,
-				"sDom": 'Rfrtlip'
 			});
 
 			historicoTable = $('#historicoTable').DataTable({
@@ -103,11 +106,10 @@ app.controller('controlVehicularController',
 				"lengthChange": false,
 				"ordering": false,
 				"pageLength": 10,
-				"recordsTotal": 100,
-				"info": false,
-				"autoWidth": true,
+				"info": true,
+				"scrollX": false,
+				"autoWidth": false,
 				"language": idioma_espanol_not_font,
-				"dom": '<"top"i>rt<"bottom"flp><"clear">'
 			});
 
 			openHistory = function () {
@@ -200,7 +202,7 @@ app.controller('controlVehicularController',
 								}, 300)
 
 							} else {
-								mostrarMensajeWarningValidacion('No existen geografias actualmente')
+								mostrarMensajeWarningValidacion('No existen geograf\u00EDas actualmente')
 							}
 						} else {
 							mostrarMensajeErrorAlert(results[1].data.result.mensaje)
@@ -292,6 +294,10 @@ app.controller('controlVehicularController',
 			}
 
 			$scope.getVehiculos = function () {
+
+				$(".etiquetaContadoresEstadosVehiculos").removeClass('active');
+				$("#todosVehiculos .nav-link").addClass('active');
+
 				$scope.countDisponibles = 0;
 				$scope.countAsignados = 0;
 				$scope.countNoDisponibles = 0;

@@ -337,9 +337,11 @@ inOutImg = function (size) {
 	if (size == 'out') {
 		$('#content-in-img').css('display', 'none');
 		$('#content-out-img').css('display', 'block');
+		
 	} else {
-		$('#content-in-img').css('display', 'block');
 		$('#content-out-img').css('display', 'none');
+		$('#content-in-img').css('display', 'block');
+
 	}
 }
 
@@ -347,14 +349,11 @@ var monster = document.getElementById('monsterPlay');
 var monsterAnimation  = 0;
 
 setInterval(() => {
-	console.log('interval');
 	monster.style.animation = 'none';
 	if(monsterAnimation == 3){
 		monsterAnimation  = 0;
 	}
 	setTimeout(() => {
-		console.log('timeout');
-		console.log(monsterAnimation);
 		switch (monsterAnimation) {
 			case 0:
 				monster.style.animation = 'monster-play 5s 1';

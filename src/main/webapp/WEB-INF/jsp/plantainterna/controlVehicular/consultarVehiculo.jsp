@@ -13,7 +13,7 @@
         </div>
         <div class="col-md-9 search-form form-group" style="padding-left: 3em;">
             <ul class="nav nav-tabs" id="tabContadoresVehiculos" role="tablist">
-                <li class="nav-item contenedorContadoresEstadosVehiculos" ng-click="busquedaVehiculosEstado('todos')">
+                <li class="nav-item contenedorContadoresEstadosVehiculos" ng-click="busquedaVehiculosEstado('todos')" id="todosVehiculos">
                     <label class="nav-link active etiquetaContadoresEstadosVehiculos" data-toggle="tab" href="#"
                         style="padding-right: 0;" role="tab">Todos <i class="fas fa-th-list"></i>
                         <p class="contadoresEstadosVehiculos">{{countTodos}}</p>

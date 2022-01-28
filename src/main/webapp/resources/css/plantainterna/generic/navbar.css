@@ -496,6 +496,7 @@ img.img-despacho-navbar.img-user-profile-navbar {
   border-top-left-radius: 0.25rem;
   border-top-right-radius: 0.25rem;
   background-color: #7f4c9d !important;
+  animation: img-perfil-show 1s 1;
 }
 
 #user-info-login .dropdown-menu-header .widget-content-wrapper {
@@ -617,6 +618,8 @@ img.img-despacho-navbar.img-user-profile-navbar {
   border-radius: 0;
   border-top-left-radius: 0.25em;
   border-top-right-radius: 0.25em;
+  animation: img-perfil-show 1s 1;
+
   /* box-shadow: 0 5px 15px 0 rgb(0 0 0 / 5%); */
   box-shadow: 0 0.46875rem 2.1875rem rgb(4 9 20 / 3%), 0 0.9375rem 1.40625rem rgb(4 9 20 / 3%), 0 0.25rem 0.53125rem rgb(4 9 20 / 5%), 0 0.125rem 0.1875rem rgb(4 9 20 / 3%);
 }
@@ -695,3 +698,7 @@ img.img-despacho-navbar.img-user-profile-navbar {
 }
 
 
+@keyframes img-perfil-show {
+  0% { opacity: 0;}
+  100% { opacity: 1;}
+}
