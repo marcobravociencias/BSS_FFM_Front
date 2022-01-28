@@ -52,7 +52,10 @@
     padding: 0;
 }
 
-#texto_header_reportes {
+#texto_header_detalle,
+#texto_header_puntaEIM,
+#texto_header_segmento,
+#texto_header_folio {
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -1624,7 +1627,14 @@ div.dataTables_wrapper div.dataTables_length label {
     color: #7716fa;
 }
 
-#refrescar-detalle{
+#refrescar-detalle,
+#refrescar-puntaEIM,
+#puntaEIM-filtro,
+#refrescar-detalle-filtro,
+#refrescar-folio, 
+#folio_filtros, 
+#refrescar-segmento, 
+#segmento-filtros{
     background-color: white;
     color: #7716fa;
     border: solid 1px #7716fa;
@@ -1642,7 +1652,9 @@ div.dataTables_wrapper div.dataTables_length label {
     width: 32em;
 }
 
-#container-filtro-monitor-pm {
+#container-filtro-monitor-pm, 
+#container-filtro-puntaEIM,
+#container-filtro-segmento {
     box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
     /* padding-top: 1em; */
     background: white;
@@ -1651,18 +1663,18 @@ div.dataTables_wrapper div.dataTables_length label {
     padding: 0;
     position: absolute;
     z-index: 1;
-    width: 20em;
+    width: 27em;
     right: 0;
 }
 
 .filtro-content {
     padding: 0;
     display: flex;
-    width: 18em;
+    width: 25em;
 }
 
 .container-text-title-detalle {
-    width: 130%;
+    width: 94%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1675,7 +1687,7 @@ span.text-tile-filtro {
 }
 
 .container-text-content-filtro {
-    width: 16%;
+    width: 11%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1690,4 +1702,15 @@ span.text-tile-filtro {
     margin-top: 0.7em;
     margin-left: 0em;
     margin-bottom: 0.7em;
+}
+
+.container-text-content-filtro-por {
+    width: 131%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.col-btn-cerrar-filtro{
+    padding-right: 0;
 }

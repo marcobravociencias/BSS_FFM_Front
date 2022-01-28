@@ -15,7 +15,7 @@
                 </button>  
              </div>
              <div class="col-2" style="margin-bottom: 0;">
-                <button id="refrescar-detalle" type="button" class="btn btn-sm btn-primary waves-effect waves-light" ng-click="openfiltroDetalle()">
+                <button id="refrescar-detalle-filtro" type="button" class="btn btn-sm btn-primary waves-effect waves-light" ng-click="openfiltroDetalle()">
                     <i class="fas fa-filter"></i>
                 </button>  
              </div>

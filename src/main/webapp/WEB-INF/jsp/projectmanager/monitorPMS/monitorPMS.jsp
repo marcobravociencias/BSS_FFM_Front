@@ -42,18 +42,18 @@
                         </li>
                         <li class="nav-item">
                             <a class="opcion-menu" id="puntaSinEIM-tab" data-toggle="tab" href="#puntaSinEIM" role="tab"
-                                aria-controls="puntaSinEIM" aria-selected="false" ng-click="consultaPuntasSinEIM()"><i
+                                aria-controls="puntaSinEIM" aria-selected="false" ng-click="peticionPuntasEIM()"><i
                                     class="icon-menu-left fas fa-plus-square"></i>&nbsp;<span
                                     class="titulo-menu">Punta sin EIM</span></a>
                         </li>
                         <li class="nav-item">
                             <a class="opcion-menu" id="segmento-tab" data-toggle="tab" href="#segmento" role="tab"
-                                aria-controls="segmento" aria-selected="false" ng-click="consultarsinSegmentoBandeja()"><i
+                                aria-controls="segmento" aria-selected="false" ng-click="primerPeticionSinSeg()"><i
                                     class="icon-menu-left fas fa-file-alt"></i>&nbsp;<span class="titulo-menu">Sin segmento</span></a>
                         </li>
                         <li class="nav-item">
                             <a class="opcion-menu" id="nuevoFolio-tab" data-toggle="tab" href="#nuevoFolio" role="tab"
-                                aria-controls="nuevoFolio" aria-selected="false" ng-click="consultarBandejaNuevoFolio()"><i
+                                aria-controls="nuevoFolio" aria-selected="false" ng-click="primerPeticionNuevosFolios()"><i
                                     class="icon-menu-left fas fa-folder-open"></i>&nbsp;<span class="titulo-menu"
                                     style="margin-left: 0.6em;">Nuevos folios</span></a>
                         </li>
@@ -62,19 +62,19 @@
                         <div class="row tab-content">
                             <div class="tab-pane fade show active" id="detallePM" role="tabpanel"
                                 aria-labelledby="detallePM-tab">
-                                <h5 id="texto_header_reportes" class="text-center">Detalle</h5>
+                                <h5 id="texto_header_detalle" class="text-center">Detalle</h5>
                                 <jsp:include page="./content/bandejaDetalle.jsp"></jsp:include>
                             </div>
                             <div class="tab-pane fade" id="puntaSinEIM" role="tabpanel" aria-labelledby="puntaSinEIM-tab">
-                                <h5 id="texto_header_reportes" class="text-center">Punta sin EIM</h5>
+                                <h5 id="texto_header_puntaEIM" class="text-center">Punta sin EIM</h5>
                                 <jsp:include page="./content/bandejaPuntaEIM.jsp"></jsp:include>
                             </div>
                             <div class="tab-pane fade" id="segmento" role="tabpanel" aria-labelledby="segmento-tab">
-                                <h5 id="texto_header_reportes" class="text-center">Folios sin segmento</h5>
+                                <h5 id="texto_header_segmento" class="text-center">Folios sin segmento</h5>
                                 <jsp:include page="./content/bandejaSegmento.jsp"></jsp:include>
                             </div>
                             <div class="tab-pane fade" id="nuevoFolio" role="tabpanel" aria-labelledby="nuevoFolio-tab">
-                                <h5 id="texto_header_reportes" class="text-center">Nuevos Folios</h5>
+                                <h5 id="texto_header_folio" class="text-center">Nuevos Folios</h5>
                                 <jsp:include page="./content/bandejaNuevoFolio.jsp"></jsp:include>
                             </div>
                         </div>

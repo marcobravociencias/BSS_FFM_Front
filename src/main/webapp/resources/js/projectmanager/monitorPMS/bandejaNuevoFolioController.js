@@ -96,9 +96,9 @@ app.bandejaNuevoFolioController = function($scope,monitorPMSServices){
 				$scope.encabezadosNuevoFolioList = JSON.parse(localStorage.getItem('filtroFolio'));
 				$scope.filtroPorFolio = $scope.encabezadosNuevoFolioList.filter(function(elemento){ return elemento.vista === true });
 				if ($scope.filtroPorFolio.length === $scope.encabezadosNuevoFolioList.length) {
-					document.getElementById('checkTodoColumnaNuevoFolio').checked = false;
-				} else {
 					document.getElementById('checkTodoColumnaNuevoFolio').checked = true;
+				} else {
+					document.getElementById('checkTodoColumnaNuevoFolio').checked = false;
 				}
 			} else {
 				document.getElementById('checkTodoColumnaNuevoFolio').checked = true;

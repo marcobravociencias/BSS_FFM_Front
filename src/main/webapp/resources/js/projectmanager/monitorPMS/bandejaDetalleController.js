@@ -1,5 +1,6 @@
+let bandejaDetalleTable;
 app.bandejaDetalleController = function ($scope, monitorPMSServices) {
-  let bandejaDetalleTable;
+
   $scope.list = []
   $scope.isCansultaDetalle = false;
   $scope.datelleList = []
@@ -170,11 +171,13 @@ app.bandejaDetalleController = function ($scope, monitorPMSServices) {
         bandejaDetalleTable.destroy();
 
 
-    $('#bandejaDetalleTable tbody').empty()
-    $('#detalleThead').empty();
+    
 
 
     setTimeout(function () {
+
+     $('#bandejaDetalleTable tbody').empty()
+     $('#detalleThead').empty();
 
       $scope.list = [];
       let arreTempResultDetalle = [];
@@ -265,7 +268,7 @@ app.bandejaDetalleController = function ($scope, monitorPMSServices) {
     let params = {}
     swal({ text: 'Cargando datos ...', allowOutsideClick: false });
     swal.showLoading();
-    $scope.datelleList = arrayDetalle.result.detallePmo
+    //$scope.datelleList = arrayDetalle.result.detallePmo
     //$scope.$apply()
     $scope.llenarTablaDetalleBandeja()
     /*  monitorPMSServices.consultarBandejaDetalle(params).then(result => {
@@ -283,7 +286,7 @@ app.bandejaDetalleController = function ($scope, monitorPMSServices) {
 
   $scope.aplicarFiltrarPorDetalle = function () {
     angular.forEach($scope.filtroPorDetalle, (elemento, index) => {
-      if (index !== 0) {
+      if (index !== 0 && index !== 1) {
         bandejaDetalleTable.column(index).search($('#detalleSearch' + index).val().trim());
       }
     });
