@@ -49,7 +49,8 @@ app.controller('controlVehicularController',
 					autoclose: true,
 					language: 'es',
 					todayHighlight: true,
-					clearBtn: false
+					clearBtn: false,
+					orientation:"bottom"
 				});
 
 				$('.datepickerNormal').datepicker({
@@ -57,13 +58,10 @@ app.controller('controlVehicularController',
 					autoclose: true,
 					language: 'es',
 					todayHighlight: true,
-					clearBtn: false
+					clearBtn: false,
+					orientation:"bottom"
 				});
 
-				$(".datepicker").on("click", function () {
-					$(".datepicker-dropdown").removeClass("datepicker-orient-top");
-					$(".datepicker-dropdown").addClass("datepicker-orient-bottom");
-				});
 			});
 
 			$("#modal_cluster_arbol_vehiculo").on("hidden.bs.modal", function () {
@@ -79,8 +77,6 @@ app.controller('controlVehicularController',
 					document.getElementById('arbol_vehiculo_consulta').placeholder = 'NO HAY SELECCI\u00D3N';
 				}
 			})
-
-
 
 
 			$('#searchText').on('keyup', function () {
