@@ -153,18 +153,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             clearBtn: false
         });
         $('.datepicker').datepicker('update', new Date());
-        ticketSoporteTable = $('#tableTicketSoporte').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": false,
-            "pageLength": 10,
-            "info": false,
-            "autoWidth": true,
-            "language": idioma_espanol_not_font,
-            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
 
-        });
         tecnicosCuentaTable = $('#tecnicosCuentaTable').DataTable({
             "paging": true,
             "lengthChange": false,
@@ -179,6 +168,18 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         });
         $scope.consultarCatalogosTicketSoporte();
     }
+
+    ticketSoporteTable = $('#tableTicketSoporte').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "ordering": false,
+        "pageLength": 10,
+        "info": true,
+        "autoWidth": true,
+        "language": idioma_espanol_not_font,
+        "sDom": 'Rfrtlip'
+
+    });
 
     $scope.initTicketsSoporte();
 
@@ -610,11 +611,12 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                                 row[8] = elemento.fechaAsignacion == null ? 'Sin informaci&oacute;n' : elemento.fechaAsignacion !== undefined ? elemento.fechaAsignacion : 'Sin informaci&oacute;n';
                                 row[9] = elemento.descripcionEstatus !== undefined ? elemento.descripcionEstatus : 'Sin informaci&oacute;n';
                                 row[10] = elemento.tiempoAtencion == null ? 'Sin informaci&oacute;n' : elemento.tiempoAtencion !== undefined ? elemento.tiempoAtencion : 'Sin informaci&oacute;n';
-                                row[11] = '<a class="" id="detalleIncidencia' + elemento.idTicket + '" onclick="consultaDetalleTicketSoporte(' + "'" + elemento.idTicket + "'" + ')" >' +
-                                    '<i class="fa fa-bars" style="background-color: #58b3bf" title="Detalle"></i>' +
-                                    '</a> <a class="" id="detalleIncidencia' + elemento.idTicket + '" onclick="abrirModalAsignar(' + "'" + elemento.idTicket + "'" + ')" >' +
-                                    '<i class="fa fa-user-circle" style="background-color: #58b3bf" title="Asigar"></i>' +
-                                    '</a>';
+                                row[11] = '<span style="background-color: #7716fa" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnTables" id="detalleIncidencia' + elemento.idTicket + '" onclick="consultaDetalleTicketSoporte(' + "'" + elemento.idTicket + "'" + ')" >' +
+                                    '<i class="fa fa-bars" title="Detalle"></i>' +
+                                    '</span> &nbsp;' +
+                                    '<span style="background-color: #58b3bf" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnTables" id="asignarIngeniero' + elemento.idTicket + '" onclick="abrirModalAsignar(' + "'" + elemento.idTicket + "'" + ')" >' +
+                                    '<i class="fa fa-user-circle" title="Asignar"></i>' +
+                                    '</span>';
 
                                 arrayRow.push(row);
                                 if (elemento.descripcionEstatus === 'Abierto')
@@ -637,11 +639,11 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                                 "lengthChange": false,
                                 "ordering": false,
                                 "pageLength": 10,
-                                "info": false,
+                                "info": true,
+                                "scrollX": false,
                                 "data": arrayRow,
-                                "autoWidth": true,
+                                "autoWidth": false,
                                 "language": idioma_espanol_not_font,
-                                "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
                             });
                             swal.close();
                         } else {
