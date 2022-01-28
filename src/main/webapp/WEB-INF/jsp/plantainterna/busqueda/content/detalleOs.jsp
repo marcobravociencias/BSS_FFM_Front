@@ -52,7 +52,7 @@
                                     <!-- <span class="option-mensajes" ng-click="editarComentario(noticia.id, noticia.text, 0)">Editar</span> -->
                                     <span class="option-mensajes" ng-click="eliminarComentario(noticia.id, 0)">Eliminar</span>
                                     <span class="text-fecha-comentario" ng-bind="noticia.createdDate"></span>
-                                    <button id="button-subcommet-{{noticia.id}}" type="button" class="btn-close close-enviar-subcomentario" ng-click="responderComentario(noticia.id)" data-mdb-dismiss="modal" aria-label="Close" style="display: none;"></button>
+                                    <button id="button-subcommet-{{noticia.id}}" type="button" class="btn-close close-enviar-subcomentario" ng-click="responderComentario(noticia.id)" aria-label="Close" style="display: none;"></button>
                                     <div id="content-text-e-{{noticia.id}}" class="row content-text-send" style="display: none;">
                                         <div class="col-10">
                                             <input id="texto-comentario-os-{{noticia.id}}" type="text" class="form-control form-control-sm form-send">
@@ -158,17 +158,17 @@
                 <button class="btn btn-sm btn-primary btn-send" ng-click="enviarMesajeGeneral()">Enviar</button>
             </div>
         </div>
+        <div class="col-12" style="padding-left: 0em;">
+            <form id="uploadForm" name="13" class="form-horizontal box form_drag_drop" novalidate="novalidate" enctype="multipart/form-data">
+                <div class="box__input">
+                    <input name="myFile" type="file" class="box__file inputFile" id="fileOs">	
+                    <label for="fileOs" id="etiqueta_archivo">
+                        <span class="text_select_archivo col-content-text-general">Adjuntar archivo</span>
+                 </div>
+            </form>
+        </div>
         <div class="row">
-            <div class="col-3" style="text-align: center;">
-                <form id="uploadForm" name="13" class="form-horizontal box form_drag_drop" novalidate="novalidate" enctype="multipart/form-data">
-                    <div class="box__input">
-                        <input name="myFile" type="file" class="box__file inputFile" id="fileOs">	
-                        <label for="fileOs" id="etiqueta_archivo">
-                            <span class="text_select_archivo col-content-text-general">Adjuntar archivo</span>
-                     </div>
-                </form>
-            </div>
-            <div class="col-2">
+            <div class="col-12" style="top: -1em;">
                 <span class="eliminar_archivo" ng-show="showEliminarOs" ng-click="resetFile()">Eliminar</span>
             </div>
         </div>
