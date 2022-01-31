@@ -435,7 +435,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	    	toastr.warning(respuestaValidacion.mensaje);
     	    }
 		}else{
-			swal({type: "warning", title:"Aviso", text:"¡No cuentas con el permiso de consulta!"});
+			//swal({type: "warning", title:"Aviso", text:"¡No cuentas con el permiso de consulta!"});
 		}
 	}
     
@@ -1818,13 +1818,13 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     
     $scope.tabRevisarPermisoCrearUsuario = function() {
     	if($scope.configPermisoAccionCreaUsuarios == false){
-    		swal({type: "warning", title:"Aviso", text:"¡No cuentas con el permiso de registro!"});
+    		//swal({type: "warning", title:"Aviso", text:"¡No cuentas con el permiso de registro!"});
     	}
 	}
     
     $scope.tabRevisarPermisoConsultarUsuarios = function() {
     	if($scope.configPermisoAccionConsultaUsuarios == false){
-    		swal({type: "warning", title:"Aviso", text:"¡No cuentas con el permiso de consulta!"});
+    		//swal({type: "warning", title:"Aviso", text:"¡No cuentas con el permiso de consulta!"});
     	}
 	}
     

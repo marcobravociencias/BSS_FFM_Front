@@ -149,6 +149,28 @@ img.responsive-img-tecnico {
     border-bottom: 1px solid #eee;
 }
 
+.text-accion-nopermiso {
+  font-size: 12px;
+  color: grey;
+  padding: 1em;
+  font-weight: bold;
+}
+
+.text-accion-nopermiso .icon-not-permiso {
+  color: white;
+  font-size: 1.3em;
+  padding: 0.5em;
+  border-radius: 50%;
+  background: orange;
+  width: 2em;
+  height: 2em;
+  box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
+}
+
+.text-not-permiso{
+	margin-left: 0.5em;
+}
+
 /* -------------------------------------------------------------------------------------------------- */
 
 .form-switch .form-check-input:after {

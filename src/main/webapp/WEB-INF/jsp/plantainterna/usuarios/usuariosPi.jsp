@@ -48,9 +48,10 @@
                     </ul>
                     <div class="tab-content" id="v-pills-tabContent">
                         <div class="tab-pane fade show active" id="opcion-consulta" role="tabpanel" aria-labelledby="opcion-consulta-tab">
-                            <div ng-show="!configPermisoAccionConsultaUsuarios">
-	                    		<h5>No cuentas con el permiso de consulta.</h5>
-	                    	</div>
+	                    	<div ng-show="!configPermisoAccionConsultaUsuarios" class="text-accion-nopermiso">
+		                        <i class="icon-not-permiso fas fa-user-lock"></i>
+		                        <b class="text-not-permiso">No cuentas con el permiso de consulta.</b>
+		                    </div>
                             
                             <div ng-show="configPermisoAccionConsultaUsuarios" class="row">
                                 <div class="col-md-3 column-style-usuarios columna-filtro-usuarios">
@@ -125,10 +126,11 @@
 							</div>
                         </div>
                         <div class="tab-pane fade" id="opcion-alta" role="tabpanel" aria-labelledby="opcion-alta-tab">
-                        	
-                        	<div ng-show="!configPermisoAccionCreaUsuarios">
-	                    		<h5>No cuentas con el permiso de registro.</h5>
-	                    	</div>
+
+	                    	<div ng-show="!configPermisoAccionCreaUsuarios" class="text-accion-nopermiso">
+		                        <i class="icon-not-permiso fas fa-user-lock"></i>
+		                        <b class="text-not-permiso">No cuentas con el permiso de registro.</b>
+		                    </div>
                         
                             <div class="row row-datos-confirmacion" ng-show="configPermisoAccionCreaUsuarios">
                                 <div class="col-12">
