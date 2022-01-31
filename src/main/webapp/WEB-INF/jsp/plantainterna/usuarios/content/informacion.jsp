@@ -28,7 +28,7 @@
     <div class="col-md-4">
 		<label class="span-consulta"><i class="fa fa-user"></i> Usuario*</label>
         <div class="">
-        	<input type="text" class="form-control inputFormulario" ng-model="informacionRegistro.usuario" id="form-usuario" ng-keyup="quitarEspaciosNombreUsuario()" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. PIRESIDENCIAL">
+        	<input type="text" class="form-control inputFormulario" ng-model="informacionRegistro.usuario" id="form-usuario" ng-keyup="quitarEspaciosNombreUsuario('form-usuario')" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. PIRESIDENCIAL">
         </div>
     </div>
     <div class="col-md-4">
