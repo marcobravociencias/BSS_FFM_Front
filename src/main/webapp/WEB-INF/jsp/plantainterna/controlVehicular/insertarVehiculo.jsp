@@ -1,4 +1,4 @@
-<div class="col-12  box-row">
+<div class="col-12  box-row formulario-vehiculo">
     <ul class="nav nav-pills mb-3" id="pills-tab-vehiculo" role="tablist">
         <li class="nav-item" role="general">
             <a class="nav-link pills active" id="pills-general-tab" data-toggle="pill" href="#pills-general" role="tab"
@@ -10,7 +10,7 @@
         </li>
         <li class="nav-item" role="imagenes" ng-click="printImgTab()">
             <a class="nav-link pills" id="pills-imagenes-tab" data-toggle="pill" href="#pills-imagenes" role="tab"
-                aria-controls="pills-imagenes" aria-selected="false">Imagenes</a>
+                aria-controls="pills-imagenes" aria-selected="false">Im&aacute;genes</a>
         </li>
         <li class="nav-item" role="resumen" onclick="getNameText()">
             <a class="nav-link pills" id="pills-resumen-tab" data-toggle="pill" href="#pills-resumen" role="tab"
@@ -24,11 +24,11 @@
                 <div class="form-row">
                     <div class="col-3 form-group">
                         <label class="label-vehiculo">Placa </label>
-                        <input type="text" class="form-control form-control-sm" id="placa" onchange="buscarPlaca()" maxlength="8"
-                            ng-model="vehiculo.placa" capitalize autocomplete="off" />
+                        <input type="text" class="form-control form-control-sm" id="placa" onchange="buscarPlaca()"
+                            maxlength="8" ng-model="vehiculo.placa" capitalize autocomplete="off" />
                     </div>
                     <div class="col-3 form-group">
-                        <label class="label-vehiculo">Tipo Veh&iacute;culo </label>
+                        <label class="label-vehiculo">Tipo veh&iacute;culo </label>
                         <select class="form-control form-control-sm custom-select" name="tipo" id="tipo"
                             ng-change="loadMarca()" ng-model="vehiculo.idTipo">
                             <option value="" selected>NO HAY SELECCI&Oacute;N</option>
@@ -49,7 +49,7 @@
                         </select>
                     </div>
                     <div class="col-3 form-group">
-                        <label class="label-vehiculo">Linea de Veh&iacute;culo </label>
+                        <label class="label-vehiculo">L&iacute;nea veh&iacute;culo </label>
                         <select class="form-control form-control-sm custom-select" name="linea" id="linea"
                             ng-model="vehiculo.idModelo">
                             <option value="" selected>NO HAY SELECCI&Oacute;N</option>
@@ -61,14 +61,16 @@
                 </div>
                 <div class="form-row">
                     <div class="col-3 form-group">
-                        <label class="label-vehiculo">A&ntilde;o de Veh&iacute;culo </label>
+                        <label class="label-vehiculo">A&ntilde;o veh&iacute;culo </label>
                         <input type="text" class="datepicker year form-control form-control-sm" placeholder="aaaa"
                             id="anio" readonly ng-model="vehiculo.anio" />
                     </div>
                     <div class="col-3 form-group">
-                        <label class="label-vehiculo">N&uacute;mero de Serie <span style="margin-left: 8em;">{{vehiculo.numeroSerie.length ? vehiculo.numeroSerie.length : 0}} - 17</span></label>
+                        <label class="label-vehiculo">N&uacute;mero serie <span
+                                style="margin-left: 10em;">{{vehiculo.numeroSerie.length ? vehiculo.numeroSerie.length :
+                                0}} - 17</span></label>
                         <input type="text" class="form-control form-control-sm" id="numSerie"
-                            ng-model="vehiculo.numeroSerie" capitalize autocomplete="off"  maxlength="17"/>
+                            ng-model="vehiculo.numeroSerie" capitalize autocomplete="off" maxlength="17" />
                     </div>
                     <div class="col-3 form-group">
                         <label class="label-vehiculo">Combustible </label>
@@ -130,71 +132,71 @@
                         </select>
                     </div>
                     <div class="col-3 form-group">
-                        <label class="label-vehiculo">N&uacute;m. de P&oacute;liza
+                        <label class="label-vehiculo">N&uacute;m. p&oacute;liza
                         </label>
-                        <input type="text" class="form-control form-control-sm" id="numPoliza"  maxlength="25"
+                        <input type="text" class="form-control form-control-sm" id="numPoliza" maxlength="25"
                             ng-model="vehiculo.detalle.numeroPoliza" capitalize autocomplete="off" />
                     </div>
                     <div class="col-3 form-group">
-                        <label class="label-vehiculo">Fecha Vencimiento P&oacute;liza
+                        <label class="label-vehiculo">Fecha vencimiento p&oacute;liza
                         </label>
                         <input type="text" placeholder="dd/mm/aaaa"
                             class="datepicker datepickerNormal form-control form-control-sm"
                             ng-model="vehiculo.detalle.fechaVencimientoPoliza" readonly id="vencimientoPoliza" />
                     </div>
                     <div class="col-3 form-group">
-                        <label class="label-vehiculo">N&uacute;m. de Tarjeta de Circulaci&oacute;n
+                        <label class="label-vehiculo">N&uacute;m. tarjeta circulaci&oacute;n
                         </label>
-                        <input type="text" class="form-control form-control-sm" id="numTarjetaC"  maxlength="25"
+                        <input type="text" class="form-control form-control-sm" id="numTarjetaC" maxlength="25"
                             ng-model="vehiculo.detalle.tarjetaCirculacion" capitalize autocomplete="off" />
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="col-3 form-group">
-                        <label style="font-size: 11px !important; margin-bottom: 0;">Vencimiento Tarjeta de Circulaci&oacute;n</label>
+                        <label class="label-vehiculo">Vencimiento tarjeta circulaci&oacute;n</label>
                         <input type="text" class="datepicker datepickerNormal form-control form-control-sm"
                             placeholder="dd/mm/aaaa" ng-model="vehiculo.detalle.fechaVencimientoTarjeta"
                             id="vencimientoTarjeta" readonly />
                     </div>
                     <div class="col-3 form-group">
-                        <label class="label-vehiculo">N&uacute;m. de Verificaci&oacute;n
+                        <label class="label-vehiculo">N&uacute;m. verificaci&oacute;n
                         </label>
-                        <input type="text" class="form-control form-control-sm" id="numVerificacion"  maxlength="25"
+                        <input type="text" class="form-control form-control-sm" id="numVerificacion" maxlength="25"
                             ng-model="vehiculo.detalle.numeroVerificacion" capitalize autocomplete="off" />
                     </div>
                     <div class="col-3 form-group">
-                        <label class="label-vehiculo">Fecha de Verificaci&oacute;n
+                        <label class="label-vehiculo">Fecha verificaci&oacute;n
                         </label>
                         <input type="text" class="datepicker datepickerNormal form-control form-control-sm"
                             placeholder="dd/mm/aaaa" ng-model="vehiculo.detalle.fechaVerificacion" readonly
                             id="fechaVerificacion" />
                     </div>
                     <div class="col-3 form-group">
-                        <label class="label-vehiculo">Clave Pensi&oacute;n </label>
-                        <input type="text" class="form-control form-control-sm" id="clavePension"  maxlength="25"
+                        <label class="label-vehiculo">Clave pensi&oacute;n </label>
+                        <input type="text" class="form-control form-control-sm" id="clavePension" maxlength="25"
                             ng-model="vehiculo.detalle.clavePension" capitalize autocomplete="off" />
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="col-3 form-group">
-                        <label class="label-vehiculo">N&uacute;m. Tarjeta Gasolina
+                        <label class="label-vehiculo">N&uacute;m. tarjeta gasolina
                         </label>
-                        <input type="text" class="form-control form-control-sm" id="numTarjetaG"  maxlength="25"
+                        <input type="text" class="form-control form-control-sm" id="numTarjetaG" maxlength="25"
                             ng-model="vehiculo.detalle.tarjetaGasolina" capitalize autocomplete="off" />
                     </div>
                     <div class="col-3 form-group">
                         <label class="label-vehiculo">Clave GPS </label>
-                        <input type="text" class="form-control form-control-sm" id="gps"  maxlength="25"
+                        <input type="text" class="form-control form-control-sm" id="gps" maxlength="25"
                             ng-model="vehiculo.detalle.claveGps" capitalize autocomplete="off" />
                     </div>
                     <div class="col-3 form-group">
-                        <label class="label-vehiculo">N&uacute;m. de Motor </label>
-                        <input type="text" class="form-control form-control-sm" id="numMotor"  maxlength="25"
+                        <label class="label-vehiculo">N&uacute;m. motor </label>
+                        <input type="text" class="form-control form-control-sm" id="numMotor" maxlength="25"
                             ng-model="vehiculo.detalle.numeroMotor" capitalize autocomplete="off" />
                     </div>
                     <div class="col-3 form-group">
-                        <label class="label-vehiculo">N&uacute;m. de Chasis </label>
-                        <input type="text" class="form-control form-control-sm" id="numChasis"  maxlength="25"
+                        <label class="label-vehiculo">N&uacute;m. chasis </label>
+                        <input type="text" class="form-control form-control-sm" id="numChasis" maxlength="25"
                             ng-model="vehiculo.detalle.numeroChasis" capitalize autocomplete="off" />
                     </div>
                 </div>
@@ -253,14 +255,14 @@
                         <select ng-if="motivos.length > 0" class="form-control form-control-sm custom-select"
                             id="motivo">
                             <option value="" selected>-- Seleccione motivo --</option>
-                            <option value="mot.idEstatus" ng-repeat="mot in motivos">{{mot.nombre}}</option>
+                            <option value="{{mot.idEstatus}}" ng-repeat="mot in motivos">{{mot.nombre}}</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="col-12 form-group">
                         <label class="label-vehiculo">Comentarios </label>
-                        <textarea class="form-control form-control-sm" id="comentarios" 
+                        <textarea class="form-control form-control-sm" id="comentarios"
                             ng-model="vehiculo.detalle.comentarios" maxlength="250"></textarea>
                     </div>
                 </div>
@@ -273,14 +275,15 @@
             <div class="col-12">
                 <div class="form-row">
                     <div class="col-3 form-group">
-                        <label>Foto Placa </label>
+                        <label class="label-vehiculo">Foto placa </label>
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" id="filePlaca" ng-model="filePlaca"
                                 ng-on-change="subirArchivo($event, 'fotoPlaca')" accept="image/*" />
                             <label class="custom-file-label" for="filePlaca" id="fotoPlaca">Cargar
                                 Imagen</label>
                         </div>
-                        <div ng-if="vehiculo.urlFotoPlaca || filePlaca" style="text-align: center; margin-top: 20px; width: 20em;">
+                        <div ng-if="vehiculo.urlFotoPlaca || filePlaca"
+                            style="text-align: center; margin-top: 20px; width: 20em;">
                             <img alt="Placa" src="" class="imgResumen" id="placaImagenTab"
                                 onclick="showImgResumen(this)" />
                         </div>
@@ -288,9 +291,12 @@
                             <span class="text-img">{{filePlaca.nombre}} </span><i class="fa fa-trash"
                                 onclick="deleteFile('fotoPlaca')"></i>
                         </div>
+                        <div ng-if="vehiculo.urlFotoPlaca && !filePlaca.nombre" class="file-delete" style="text-align: center;"><span class="text-img">placa</span>
+                            <i class="fa fa-trash" ng-click="deleteFileUrl('fotoPlaca')"></i>
+                        </div>
                     </div>
                     <div class="col-3 form-group">
-                        <label>Foto de Veh&iacute;culo </label>
+                        <label class="label-vehiculo">Foto veh&iacute;culo </label>
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" id="fileFoto" accept="image/*"
                                 ng-model="fileFoto" ng-on-change="subirArchivo($event, 'fotoVehiculo')" />
@@ -302,13 +308,17 @@
                             <img alt="Vehiculo" src="" class="imgResumen" id="vehiculoImagenTab"
                                 onclick="showImgResumen(this)" />
                         </div>
-                        <div ng-if="fileVehiculo.nombre" class="file-delete" style="text-align: center;">
-                            <span class="text-img">{{fileVehiculo.nombre}} </span><i class="fa fa-trash"
-                                onclick="deleteFile('fotoVehiculo')"></i>
+                        <div ng-if="fileVehiculo.nombre" class="file-delete" style="text-align: center;"> <span
+                                class="text-img">{{fileVehiculo.nombre}} </span>
+                            <i class="fa fa-trash" onclick="deleteFile('fotoVehiculo')"></i>
+                        </div>
+                        <div ng-if="vehiculo.urlFotoVehiculo && !fileVehiculo.nombre" class="file-delete" style="text-align: center;">
+                            <span class="text-img">vehiculo</span>
+                            <i class="fa fa-trash" ng-click="deleteFileUrl('fotoVehiculo')"></i>
                         </div>
                     </div>
                     <div class="col-3 form-group">
-                        <label>Tarjeta Circulaci&oacute;n
+                        <label class="label-vehiculo">Tarjeta circulaci&oacute;n
                         </label>
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" id="fileTarjeta" accept="image/*"
@@ -325,10 +335,14 @@
                             <span class="text-img">{{fileCirculacion.nombre}} </span><i class="fa fa-trash"
                                 onclick="deleteFile('fotoTarjetaCirculaion')"></i>
                         </div>
+                        <div ng-if="vehiculo.detalle.urlFotoTarjetaCirculacion && !fileCirculacion.nombre" class="file-delete"
+                            style="text-align: center;"> <span class="text-img">tarjetaCirculacion</span>
+                            <i class="fa fa-trash" ng-click="deleteFileUrl('fotoTarjetaCirculaion')"></i>
+                        </div>
                     </div>
 
                     <div class="col-3 form-group">
-                        <label>Tarjeta Gasolina </label>
+                        <label class="label-vehiculo">Tarjeta gasolina </label>
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" id="fileTarjetaGas" accept="image/*"
                                 ng-on-change="subirArchivo($event, 'fotoTarjetaGasolina')" ng-model="fileTarjetaGas" />
@@ -344,6 +358,10 @@
                             <span class="text-img">{{fileGasolina.nombre}} </span><i class="fa fa-trash"
                                 onclick="deleteFile('fotoTarjetaGasolina')"></i>
                         </div>
+                        <div ng-if="vehiculo.detalle.urlFotoTarjetaGasolina && !fileGasolina.nombre" class="file-delete"
+                            style="text-align: center;"> <span class="text-img">tarjetaGasolina</span>
+                            <i class="fa fa-trash" ng-click="deleteFileUrl('fotoTarjetaGasolina')"></i>
+                        </div>
                     </div>
                 </div>
                 <h5 class="fs-title"> <i class="fas fa-exclamation-circle me-2" style="color: orange;"></i> Los datos de
@@ -358,11 +376,11 @@
                         <td class="tableText">{{vehiculo.placa ? vehiculo.placa : 'Sin asignar'}}</td>
                         <td class="tableTextTitle">* A&ntilde;o: </td>
                         <td class="tableText">{{vehiculoText.anio ? vehiculoText.anio : 'Sin asignar'}}</td>
-                        <td class="tableTextTitle">* N&uacute;mero de serie: </td>
+                        <td class="tableTextTitle">* N&uacute;m. serie: </td>
                         <td class="tableText">{{vehiculo.numeroSerie ? vehiculo.numeroSerie : 'Sin asignar'}}</td>
                     </tr>
                     <tr>
-                        <td class="tableTextTitle">* Tipo Veh&iacute;culo: </td>
+                        <td class="tableTextTitle">* Tipo veh&iacute;culo: </td>
                         <td class="tableText">{{vehiculoText.tipoText ? vehiculoText.tipoText : 'Sin asignar'}}</td>
                         <td class="tableTextTitle">* Marca: </td>
                         <td class="tableText">{{vehiculoText.marcaText ? vehiculoText.marcaText : 'Sin asignar'}}</td>
@@ -385,7 +403,7 @@
                         <td class="tableTextTitle">* Aseguradora: </td>
                         <td class="tableText">{{vehiculoText.aseguradoraText ? vehiculoText.aseguradoraText :
                             'Sin asignar'}}</td>
-                        <td class="tableTextTitle">* N&uacute;mero de poliza: </td>
+                        <td class="tableTextTitle">* N&uacute;m. poliza: </td>
                         <td class="tableText">{{vehiculo.detalle.numeroPoliza ? vehiculo.detalle.numeroPoliza :
                             'Sin asignar'}}</td>
                         <td class="tableTextTitle">* Fecha vencimiento poliza: </td>
@@ -394,19 +412,19 @@
                             'Sin asignar'}}</td>
                     </tr>
                     <tr>
-                        <td class="tableTextTitle">* N&uacute;m. Tarjeta de circulaci&oacute;n: </td>
+                        <td class="tableTextTitle">* N&uacute;m. tarjeta de circulaci&oacute;n: </td>
                         <td class="tableText">{{vehiculo.detalle.tarjetaCirculacion ?
                             vehiculo.detalle.tarjetaCirculacion : 'Sin asignar'}}</td>
                         <td class="tableTextTitle">* Vencimiento tarjeta circulaci&oacute;n: </td>
                         <td class="tableText">{{vehiculoText.fechaVencimientoTarjeta ?
                             vehiculoText.fechaVencimientoTarjeta :
                             'Sin asignar'}}</td>
-                        <td class="tableTextTitle">* N&uacute;mero de verificaci&oacute;n: </td>
+                        <td class="tableTextTitle">* N&uacute;m. verificaci&oacute;n: </td>
                         <td class="tableText">{{vehiculo.detalle.numeroVerificacion ?
                             vehiculo.detalle.numeroVerificacion : 'Sin asignar'}}</td>
                     </tr>
                     <tr>
-                        <td class="tableTextTitle">* Fecha de verificaci&oacute;n: </td>
+                        <td class="tableTextTitle">* Fecha verificaci&oacute;n: </td>
                         <td class="tableText">{{vehiculoText.fechaVerificacion ?
                             vehiculoText.fechaVerificacion : 'Sin asignar'}}</td>
                         <td class="tableTextTitle">* Clave pensi&oacute;n: </td>
@@ -421,10 +439,10 @@
                         <td class="tableTextTitle">* Clave GPS: </td>
                         <td class="tableText">{{vehiculo.detalle.claveGps ? vehiculo.detalle.claveGps : 'Sin asignar'}}
                         </td>
-                        <td class="tableTextTitle">* N&uacute;m motor: </td>
+                        <td class="tableTextTitle">* N&uacute;m. motor: </td>
                         <td class="tableText">{{vehiculo.detalle.numeroMotor ? vehiculo.detalle.numeroMotor :
                             'Sin asignar'}}</td>
-                        <td class="tableTextTitle">* N&uacute;m chasis: </td>
+                        <td class="tableTextTitle">* N&uacute;m. chasis: </td>
                         <td class="tableText">{{vehiculo.detalle.numeroChasis ? vehiculo.detalle.numeroChasis :
                             'Sin asignar'}}</td>
                     </tr>
@@ -444,12 +462,16 @@
                         <td class="tableTextTitle">* Rotulado: </td>
                         <td class="tableText">{{vehiculoText.rotulado ? 'Si' : 'No'}}</td>
                         <td class="tableTextTitle" ng-if="vehiculo.estatus">* Estatus: </td>
-                        <td class="tableText" ng-if="vehiculo.estatus">{{vehiculo.estatus ? vehiculo.estatus : 'BAJA'}}
-                        </td>
+                        <td class="tableText" ng-if="vehiculo.estatus">{{vehiculoText.estatus ? vehiculoText.estatus :
+                            'BAJA'}}</td>
+                        <td class="tableTextTitle" ng-if="vehiculo.estatus">* Motivo: </td>
+                        <td class="tableText" ng-if="vehiculo.estatus">{{vehiculoText.motivo ? vehiculoText.motivo :
+                            'Sin Asignar'}}</td>
                     </tr>
                     <tr>
                         <td class="tableTextTitle">* Comentarios: </td>
-                        <td class="tableText" colspan="5" style="width: 835px;">{{vehiculo.detalle.comentarios ? vehiculo.detalle.comentarios
+                        <td class="tableText" colspan="5" style="width: 835px;">{{vehiculo.detalle.comentarios ?
+                            vehiculo.detalle.comentarios
                             : 'Sin asignar'}}</td>
                     </tr>
                 </table>
@@ -480,7 +502,8 @@
                     informaci&oacute;n antes de guardar</h5>
             </div>
             <div style="text-align: right; margin: 1em 0 0 0;">
-                <button type="button" class="btn btn-primary ripple-surface" onclick="guardarVehiculo()" style="margin-bottom: 1em;">
+                <button type="button" class="btn btn-primary ripple-surface" onclick="guardarCambios()"
+                    style="margin-bottom: 1em;">
                     Guardar
                 </button>
             </div>
