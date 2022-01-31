@@ -28,7 +28,7 @@
     <div class="col-md-4">
 		<label class="span-consulta"><i class="fa fa-user"></i> Usuario*</label>
         <div class="">
-        	<input type="text" class="form-control inputFormulario" ng-model="detalleUsuario.usuario" id="form-usuario-mod" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. PIRESIDENCIAL">
+        	<input type="text" class="form-control inputFormulario" ng-model="detalleUsuario.usuario" id="form-usuario-mod" ng-keyup="quitarEspaciosNombreUsuarioMod()" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. PIRESIDENCIAL">
         </div>
     </div>
     <div class="col-md-4">

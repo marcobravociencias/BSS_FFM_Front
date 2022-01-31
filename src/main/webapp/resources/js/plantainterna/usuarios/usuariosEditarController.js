@@ -1383,6 +1383,10 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 	        $("#buscadorDespachoMod").focus();
     	}, 750);
     });
+    
+    $scope.quitarEspaciosNombreUsuarioMod = function() {
+    	$scope.detalleUsuario.usuario = $scope.detalleUsuario.usuario.replace(/ /g, "");
+	}
 	
 	//LOS SIGUIENTES 2 MÉTODOS SE QUEDAN PENDIENTES POR SI EN ALGÚN MOMENTO SE DECIDE EDITAR TAMBIÉN EL PUESTO DEL USUARIO
 //	$('#puesto_select_modificacion').on('change', function() {

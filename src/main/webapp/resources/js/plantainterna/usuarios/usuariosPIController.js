@@ -1828,6 +1828,10 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	}
 	}
     
+    $scope.quitarEspaciosNombreUsuario = function() {
+    	$scope.informacionRegistro.usuario = $scope.informacionRegistro.usuario.replace(/ /g, "");
+	}
+    
     //-------------------------------------------------------------------    
     $scope.iniciarModuloUsuarios();
     
