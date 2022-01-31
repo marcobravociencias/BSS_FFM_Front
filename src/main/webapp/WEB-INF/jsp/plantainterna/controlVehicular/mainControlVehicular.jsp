@@ -6,14 +6,10 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>FFM Total play</title>
 
-        <link rel="icon" type="image/png" sizes="192x192"
-            href="${pageContext.request.contextPath}/resources/img/iconsistema/android-icon-192x192.png" />
-        <link rel="icon" type="image/png" sizes="32x32"
-            href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="96x96"
-            href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-96x96.png" />
-        <link rel="icon" type="image/png" sizes="16x16"
-            href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-16x16.png" />
+        <link rel="icon" type="image/png" sizes="192x192" href="${pageContext.request.contextPath}/resources/img/iconsistema/android-icon-192x192.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="96x96" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-96x96.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-16x16.png" />
         <link rel="manifest" href="${pageContext.request.contextPath}/resources/img/iconsistema/manifest.json" />
         <link href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap-select.min.css" rel="stylesheet">
@@ -28,11 +24,8 @@
         <link href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" rel="stylesheet" />
 		<!-- CSS INTERNAS -->
-        <link
-            href="${pageContext.request.contextPath}/resources/css/plantainterna/controlVehicular/mainControlVehicular.css"
-            rel="stylesheet" />
-        <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css"
-            rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/controlVehicular/mainControlVehicular.css?v=${sessionScope.versionDepl}" rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" rel="stylesheet" />
     </head>
 
     <body id="idBody" ng-controller="controlVehicularController" style="display: none;">
@@ -102,39 +95,26 @@
     </body>
     <!-- LIBRERIAS -->
     <script src="${pageContext.request.contextPath}/resources/libraries/angularjs/js/angular.min.js"></script>
-    <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/selectPicker/js/popper.min.js"></script>
-    <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/js/mdb.min.js"></script>
-
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/js/mdb.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/libraries/popper/popper.min.js"></script>
-    <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/libraries/bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/libraries/selectPicker/js/bootstrap-select.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/jquery.dataTables.js"></script>
-        <script
-            src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/dataTables.bootstrap4.min.js"></script>
-    <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/libraries/selectPicker/js/i18n/defaults-es_ES.js"></script>
-    <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/libraries/jstree/jstree.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/selectPicker/js/bootstrap-select.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/jquery.dataTables.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/selectPicker/js/i18n/defaults-es_ES.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jstree/jstree.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/libraries/sweetalert/js/sweetalert2.min.js"></script>
-    <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
-        <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker_1.9.0.min.js"></script>
-    <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker.es.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker_1.9.0.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker.es.min.js"></script>
 
     <!-- ARCHIVOS JS  -->
-    <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/plantainterna/controlVehicular/controlVehicularController.js"></script>
-    <script
-        src="${pageContext.request.contextPath}/resources/js/plantainterna/controlVehicular/controlVehicularService.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/controlVehicular/controlVehicularController.js?v=${sessionScope.versionDepl}"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/plantainterna/controlVehicular/controlVehicularService.js?v=${sessionScope.versionDepl}"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js?v=${sessionScope.versionDepl}"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js?v=${sessionScope.versionDepl}"></script>
 
     </html>

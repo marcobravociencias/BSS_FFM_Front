@@ -30,8 +30,8 @@
     <link href="${pageContext.request.contextPath}/resources/libraries/magnific_popup/magnific-popup.css"
         rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" rel="stylesheet" />
-        <link href="${pageContext.request.contextPath}/resources/css/plantaexterna/consultaotpe/mainConsultaOTPE.css?" rel="stylesheet"/>
-        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/consultaOT/styleConsultaOT.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/css/plantaexterna/consultaotpe/mainConsultaOTPE.css?v=${sessionScope.versionDepl}" rel="stylesheet"/>
+        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/consultaOT/styleConsultaOT.css?v=${sessionScope.versionDepl}" rel="stylesheet">
         <title>FFM Total play</title>
     </head>
     <body id="idBody" ng-controller="consultaOTPEController" style="display: none;">
@@ -117,11 +117,11 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/lib/moment.es.js" ></script>
     <!-- ARCHIVOS JS -->
     
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantaexterna/consultaotpe/consultaOTPEController.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantaexterna/consultaotpe/consultaOTPEService.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantaexterna/consultaotpe/ConsultaOTInspector.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantaexterna/consultaotpe/consultaOTPEController.js?v=${sessionScope.versionDepl}"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantaexterna/consultaotpe/consultaOTPEService.js?v=${sessionScope.versionDepl}"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantaexterna/consultaotpe/ConsultaOTInspector.js?v=${sessionScope.versionDepl}"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
     
 
 </html>

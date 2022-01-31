@@ -38,7 +38,7 @@
             rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css"
             rel="stylesheet" />
-        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/vistaChecklist/vistaChecklist.css"
+        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/vistaChecklist/vistaChecklist.css?v=${sessionScope.versionDepl}"
             rel="stylesheet">
     </head>
 
@@ -138,13 +138,13 @@
     <script type="text/javascript"
         src="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/lib/moment.es.js"></script>
     <script
-        src="${pageContext.request.contextPath}/resources/js/plantainterna/vistaChecklist/vistaChecklistJson.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/plantainterna/vistaChecklist/vistaChecklistJson.js?v=${sessionScope.versionDepl}"></script>
     <script
-        src="${pageContext.request.contextPath}/resources/js/plantainterna/vistaChecklist/vistaChecklistController.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/plantainterna/vistaChecklist/vistaChecklistController.js?v=${sessionScope.versionDepl}"></script>
     <script
-        src="${pageContext.request.contextPath}/resources/js/plantainterna/vistaChecklist/vistaChecklistService.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/plantainterna/vistaChecklist/vistaChecklistService.js?v=${sessionScope.versionDepl}"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js?v=${sessionScope.versionDepl}"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js?v=${sessionScope.versionDepl}"></script>
 
     </html>

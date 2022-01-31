@@ -21,7 +21,7 @@
         <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" rel="stylesheet" />
         
         <!-- CSS INTERNAS -->
-        <link href="${pageContext.request.contextPath}/resources/css/plantaexterna/despachoCentralPe/despachoCentralPe.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/css/plantaexterna/despachoCentralPe/despachoCentralPe.css?v=${sessionScope.versionDepl}" rel="stylesheet">
 
         <title>FFM Total play</title>
     </head>
@@ -171,10 +171,10 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/js/mdb.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
     <!-- ARCHIVOS JS -->
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantaexterna/despachoCentralPe/despachoCentralPeController.js" charset="UTF-8"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantaexterna/despachoCentralPe/funcionMapsOT.js" charset="UTF-8"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/geoxml3/geoxml3.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantaexterna/despachoCentralPe/despachoCentralPeController.js?v=${sessionScope.versionDepl}" charset="UTF-8"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantaexterna/despachoCentralPe/funcionMapsOT.js?v=${sessionScope.versionDepl}" charset="UTF-8"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/geoxml3/geoxml3.js?v=${sessionScope.versionDepl}" charset="UTF-8"></script>
 
     
 

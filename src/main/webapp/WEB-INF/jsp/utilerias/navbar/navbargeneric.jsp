@@ -4,7 +4,7 @@
 
 <sec:authentication property="principal" var="userStore" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
-<link href="${pageContext.request.contextPath}/resources/css/plantainterna/generic/navbar.css" rel="stylesheet" />
+<link href="${pageContext.request.contextPath}/resources/css/plantainterna/generic/navbar.css?v=${sessionScope.versionDepl}" rel="stylesheet" />
 <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 <jsp:include page="./modalFotoDespacho.jsp"></jsp:include>
 <jsp:include page="./modalCambiaContrasenia.jsp"></jsp:include>

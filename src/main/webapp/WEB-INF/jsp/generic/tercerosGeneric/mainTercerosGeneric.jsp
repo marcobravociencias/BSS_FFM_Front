@@ -21,7 +21,7 @@
         <link href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" rel="stylesheet" />
         <!-- CSS INTERNAS -->
-        <link href="${pageContext.request.contextPath}/resources/css/generic/tercerosGeneric/mainTercerosGeneric.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/css/generic/tercerosGeneric/mainTercerosGeneric.css?v=${sessionScope.versionDepl}" rel="stylesheet">
         
 	</head>
 	<body id="idBody" ng-controller="tercerosGenericController" style="display: none;">
@@ -162,10 +162,10 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/lib/moment.es.js" ></script>
     
     <!-- ARCHIVOS JS INTERNOS -->
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
     <script type="text/javascript">let contex_project = "${pageContext.request.contextPath}";</script>
-    <script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js?v=${sessionScope.versionDepl}"></script>
     
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/tercerosGeneric/tercerosGenericController.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/tercerosGeneric/tercerosGenericController.js?v=${sessionScope.versionDepl}" charset="UTF-8"></script>
 	
 </html>

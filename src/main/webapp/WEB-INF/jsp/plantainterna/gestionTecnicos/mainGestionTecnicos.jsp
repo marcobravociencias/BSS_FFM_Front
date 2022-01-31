@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/fullcalendar/main.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/magnific_popup/magnific-popup.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/plantainterna/gestionTecnicos/mainGestionTecnicos.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/plantainterna/gestionTecnicos/mainGestionTecnicos.css?v=${sessionScope.versionDepl}" />
 
 </head>
 
@@ -292,7 +292,6 @@
 </body>
 <!-- Scripts libraries -->
 <script src="${pageContext.request.contextPath}/resources/libraries/angularjs/js/angular.min.js"></script>
-
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/js/mdb.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-ui.js"></script>
@@ -302,7 +301,6 @@
 <script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/main.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/locales-all.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/jquery-ui.min.js"></script>
-
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/jquery.dataTables.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/dataTables.bootstrap4.min.js"></script>
@@ -312,12 +310,12 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker.es.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/magnific_popup/jquery.magnific-popup.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
-
-<script src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionTecnicos/gestionTecnicosController.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionTecnicos/gestionTecnicosService.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionTecnicos/jsonGestionTecnicos.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>
+<!-- fin -->
+<script src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionTecnicos/gestionTecnicosController.js?v=${sessionScope.versionDepl}"></script>
+<script src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionTecnicos/gestionTecnicosService.js?v=${sessionScope.versionDepl}"></script>
+<script src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionTecnicos/jsonGestionTecnicos.js?v=${sessionScope.versionDepl}"></script>
+<script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js?v=${sessionScope.versionDepl}"></script>
+<script src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
+<script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js?v=${sessionScope.versionDepl}"></script>
 
 </html>

@@ -21,7 +21,7 @@
         <link href="${pageContext.request.contextPath}/resources/libraries/fullcalendar/main.css" rel="stylesheet">
 
         <link
-            href="${pageContext.request.contextPath}/resources/css/generic/vistaConfirmacion/vistaConfirmacion.css"
+            href="${pageContext.request.contextPath}/resources/css/generic/vistaConfirmacion/vistaConfirmacion.css?v=${sessionScope.versionDepl}"
             rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/jquery.dataTables.css"
             rel="stylesheet">
@@ -186,11 +186,11 @@
     <script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/jquery-ui.min.js"></script>
 
     <script
-        src="${pageContext.request.contextPath}/resources/js/generic/vistaConfirmacion/vistaConfirmacionController.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/generic/vistaConfirmacion/vistaConfirmacionController.js?v=${sessionScope.versionDepl}"></script>
     <script
-        src="${pageContext.request.contextPath}/resources/js/generic/vistaConfirmacion/vistaConfirmacionService.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/generic/vistaConfirmacion/vistaConfirmacionService.js?v=${sessionScope.versionDepl}"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js?v=${sessionScope.versionDepl}"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js?v=${sessionScope.versionDepl}"></script>
 
     </html>

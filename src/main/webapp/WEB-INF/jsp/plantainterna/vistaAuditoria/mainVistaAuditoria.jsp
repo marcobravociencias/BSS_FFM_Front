@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/magnific_popup/magnific-popup.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/plantainterna/vistaAuditoria/mainVistaAuditoria.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/plantainterna/vistaAuditoria/mainVistaAuditoria.css?v=${sessionScope.versionDepl}" />
 
 </head>
 
@@ -143,11 +143,11 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/lib/moment.es.js"></script>
 
-<script src="${pageContext.request.contextPath}/resources/js/plantainterna/vistaAuditoria/vistaAuditoriaController.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/plantainterna/vistaAuditoria/vistaAuditoriaService.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/plantainterna/vistaAuditoria/jsonVistaAuditoria.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/plantainterna/vistaAuditoria/vistaAuditoriaController.js?v=${sessionScope.versionDepl}"></script>
+<script src="${pageContext.request.contextPath}/resources/js/plantainterna/vistaAuditoria/vistaAuditoriaService.js?v=${sessionScope.versionDepl}"></script>
+<script src="${pageContext.request.contextPath}/resources/js/plantainterna/vistaAuditoria/jsonVistaAuditoria.js?v=${sessionScope.versionDepl}"></script>
+<script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js?v=${sessionScope.versionDepl}"></script>
+<script src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
+<script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js?v=${sessionScope.versionDepl}"></script>
 
 </html>

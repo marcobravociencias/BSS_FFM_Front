@@ -19,7 +19,7 @@
         <link href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css"
             rel="stylesheet">
         <link
-            href="${pageContext.request.contextPath}/resources/css/plantainterna/seguimientoSoporte/mainSeguimientoSoporte.css"
+            href="${pageContext.request.contextPath}/resources/css/plantainterna/seguimientoSoporte/mainSeguimientoSoporte.css?v=${sessionScope.versionDepl}"
             rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/jquery.dataTables.css"
             rel="stylesheet">
@@ -197,12 +197,12 @@
         src="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/lib/moment.es.js"></script>
 
     <script
-        src="${pageContext.request.contextPath}/resources/js/plantainterna/seguimientoSoporte/seguimientoSoporteController.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/plantainterna/seguimientoSoporte/seguimientoSoporteController.js?v=${sessionScope.versionDepl}"></script>
     <script
-        src="${pageContext.request.contextPath}/resources/js/plantainterna/seguimientoSoporte/seguimientoSoporteService.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/plantainterna/seguimientoSoporte/jsonTemp.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/plantainterna/seguimientoSoporte/seguimientoSoporteService.js?v=${sessionScope.versionDepl}"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/plantainterna/seguimientoSoporte/jsonTemp.js?v=${sessionScope.versionDepl}"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js?v=${sessionScope.versionDepl}"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js?v=${sessionScope.versionDepl}"></script>
 
     </html>

@@ -22,7 +22,7 @@
         <link href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/magnific_popup/magnific-popup.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" rel="stylesheet" />
-        <link href="${pageContext.request.contextPath}/resources/css/projectmanager/monitorPMS/styleMonitorPMS.css" rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/resources/css/projectmanager/monitorPMS/styleMonitorPMS.css?v=${sessionScope.versionDepl}" rel="stylesheet" />
 
     </head>
 
@@ -103,16 +103,16 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/lib/moment.es.js"></script>
     <!-- -->
 
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/projectmanager/monitorPMS/monitorPMSController.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/projectmanager/monitorPMS/monitorPMSServices.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/projectmanager/monitorPMS/bandejaDetalleController.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/projectmanager/monitorPMS/mockArrayBandejas.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/projectmanager/monitorPMS/bandejaPuntaEIMController.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/projectmanager/monitorPMS/bandejaSinSegmentoController.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/projectmanager/monitorPMS/bandejaNuevoFolioController.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/projectmanager/monitorPMS/monitorPMSController.js?v=${sessionScope.versionDepl}"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/projectmanager/monitorPMS/monitorPMSServices.js?v=${sessionScope.versionDepl}"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/projectmanager/monitorPMS/bandejaDetalleController.js?v=${sessionScope.versionDepl}"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/projectmanager/monitorPMS/mockArrayBandejas.js?v=${sessionScope.versionDepl}"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/projectmanager/monitorPMS/bandejaPuntaEIMController.js?v=${sessionScope.versionDepl}"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/projectmanager/monitorPMS/bandejaSinSegmentoController.js?v=${sessionScope.versionDepl}"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/projectmanager/monitorPMS/bandejaNuevoFolioController.js?v=${sessionScope.versionDepl}"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js?v=${sessionScope.versionDepl}"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js?v=${sessionScope.versionDepl}"></script>
 
     
 
