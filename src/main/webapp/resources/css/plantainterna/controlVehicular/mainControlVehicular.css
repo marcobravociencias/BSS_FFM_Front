@@ -142,6 +142,7 @@
 .label-vehiculo {
   color: gray;
   margin-bottom: 0 !important;
+  font-size: 0.9em !important;
 }
 
 .check-vehiculo .form-check {
@@ -280,11 +281,11 @@ span.btn-floating.btn-sm.btn-default.waves-effect.waves-light {
   padding: 1em;
   border: none;
   font-weight: normal;
-
+  text-align: center;
 }
 
 #vehiculoTable tbody tr td {
-  padding: 1em;
+  padding: 0.7em;
   border: none;
 }
 
@@ -429,7 +430,6 @@ li {
   /* margin-top: .5em; */
   border-top: 1px solid #d7d7d7;
   padding-top: .7em;
-  font-size: 0.8em;
 }
 
 .input-valid-error {

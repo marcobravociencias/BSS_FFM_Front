@@ -73,7 +73,7 @@ app.controller('controlVehicularController',
 						$scope.getParentGeografia(selectedElms[0].id, $scope.llaveEncierroVehiculo);
 						$scope.loadEncierros($scope.padre, 0);
 					}
-					if (selectedElms[0].original.nivel < $scope.llaveEncierroVehiculo && $('#jstreeconsulta').jstree().settings.plugins.length == 1) {
+					if (selectedElms[0].original.nivel !== $scope.nGeografia && $('#jstreeconsulta').jstree().settings.plugins.length == 1) {
 						toastr.warning('Selecciona una geograf\u00EDa v&aacute;lida');
 					}
 				} else {
@@ -741,6 +741,9 @@ app.controller('controlVehicularController',
 					}
 				}
 
+				if($scope.isEdit){
+
+				}
 				if ($scope.filePlaca) {
 					$scope.filePlaca.nombre = pathImg + $scope.filePlaca.nombre;
 					paramsTemp.fotoPlaca = $scope.filePlaca;
@@ -1168,21 +1171,22 @@ app.controller('controlVehicularController',
 			$scope.deleteFileUrl = function (name) {
 
 				if (name == 'fotoPlaca') {
-					$scope.vehiculo.urlFotoPlaca = null;
+					$scope.vehiculo.urlFotoPlaca = 'delete';
+
 				}
 
 				if (name == 'fotoVehiculo') {
-					$scope.vehiculo.urlFotoVehiculo = null;
+					$scope.vehiculo.urlFotoVehiculo = 'delete';
 				}
 
 
 				if (name == 'fotoTarjetaCirculaion') {
-					$scope.vehiculo.detalle.urlFotoTarjetaCirculacion = null;
+					$scope.vehiculo.detalle.urlFotoTarjetaCirculacion ='delete';
 				}
 
 
 				if (name == 'fotoTarjetaGasolina') {
-					$scope.vehiculo.detalle.urlFotoTarjetaGasolina = null;
+					$scope.vehiculo.detalle.urlFotoTarjetaGasolina = 'delete';
 				}
 			}
 
