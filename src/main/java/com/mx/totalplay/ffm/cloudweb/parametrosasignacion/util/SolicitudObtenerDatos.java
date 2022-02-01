@@ -249,8 +249,18 @@ public class SolicitudObtenerDatos {
 	}
 	
 	public void obtenerTokenAcces (Solicitud solicitudObj) {
-		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
-		String tokenAcces=principalDetail.getAccess_token() ;
-		solicitudObj.setToken(tokenAcces);
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String tokenAcces = principalDetail.getAccess_token() ;
+		int idPuesto = principalDetail.getIdPuesto();
+		
+		if ( idPuesto == 19 ) {
+			// Solo el tipo de usuario 19 puede acceder
+			solicitudObj.setToken(tokenAcces);
+		}
+		else {
+			solicitudObj.setToken("Sin permisos de Acceso: idPuesto incorrecto");
+		}
+		
+		
 	}
 }
