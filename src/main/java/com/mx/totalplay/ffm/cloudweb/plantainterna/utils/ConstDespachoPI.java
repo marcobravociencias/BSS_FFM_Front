@@ -11,6 +11,11 @@ public class ConstDespachoPI implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
+	
+	@Value("${confirmardesconfirmarotdespacho}")
+	private String confirmarDesconfirmarOtDespacho;
+	
+	
 	@Value("${consultarComplementosDespacho}")
 	private String consultarComplementosDespacho;
 	

@@ -12,6 +12,10 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 	$scope.filtrosGeneral = {};
 	$scope.repDiario = {};
 
+	$scope.nfiltrogeografiaSeguimientoDiario = "";
+	$scope.nfiltrointervencionesSeguimientoDiario = "";
+	$scope.nfiltroestatuspendienteSeguimientoDiario = "";
+
 	$(document).ready(function () {
 		$("#tipo_reporte").val('fechaCreacion');
 		setTimeout(function () {
@@ -42,13 +46,24 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		$q.all([
 			genericService.consulCatalogoGeografia(),
 			genericService.consultarCatalogoIntervenciones(),
-			genericService.consultarCatalogoEstatusDespachoPI()
+			genericService.consultarCatalogoEstatusDespachoPI(),
+			reportesPIService.consultarConfiguracionDespachoDespacho({"moduloAccionesUsuario":"moduloReportesPI"})
 		]).then(function (results) {
+			let resultConf = results[3].data.result
+			if( resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves){
+                let  llavesResult=results[3].data.result.MODULO_ACCIONES_USUARIO.llaves;
+                
+                $scope.nfiltrogeografiaSeguimientoDiario=llavesResult.N_FILTRO_GEOGRAFIA_SEGUIMIENTODIARIO;
+                $scope.nfiltrointervencionesSeguimientoDiario=llavesResult.N_FILTRO_INTERVENCIONES_SEGUIMIENTODIARIO;
+                $scope.nfiltroestatuspendienteSeguimientoDiario=undefined;
+            }
+
 			//    console.log("entra de cualquier manera")
 			if (results[1].data !== undefined) {
 				if (results[1].data.respuesta) {
 					if (results[1].data.result) {
-						$scope.filtrosGeneral.tipoOrdenes = $scope.realizarConversionAnidado(results[1].data.result)
+						$scope.nfiltrointervencionesSeguimientoDiario = $scope.nfiltrointervencionesSeguimientoDiario ? $scope.nfiltrointervencionesSeguimientoDiario : $scope.obtenerNivelUltimoJerarquiaGeneric(results[1].data.result);
+						$scope.filtrosGeneral.tipoOrdenes = $scope.realizarConversionAnidado(results[1].data.result.filter(e=>e.nivel<= parseInt($scope.nfiltrointervencionesSeguimientoDiario)));
 
 					} else {
 						toastr.warning('No se encontraron  tipo ordenes');
@@ -62,7 +77,8 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 			if (results[2].data !== undefined) {
 				if (results[2].data.respuesta) {
 					if (results[2].data.result) {
-						$scope.filtrosGeneral.estatusdisponibles = $scope.realizarConversionAnidado(results[2].data.result)
+						$scope.nfiltroestatuspendienteSeguimientoDiario = $scope.nfiltroestatuspendienteSeguimientoDiario ? $scope.nfiltroestatuspendienteSeguimientoDiario : $scope.obtenerNivelUltimoJerarquiaGeneric(results[2].data.result);
+						$scope.filtrosGeneral.estatusdisponibles = $scope.realizarConversionAnidado(results[2].data.result.filter(e=>e.nivel<= parseInt($scope.nfiltroestatuspendienteSeguimientoDiario)));
 					} else {
 						toastr.info('No se encontraron catalogo de estatus');
 					}
@@ -79,7 +95,8 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 							$scope.listadogeografiacopy = results[0].data.result.geografia
 							//console.log("######")
 							//console.log(results[0].data.result)
-							geografia = results[0].data.result.geografia
+							$scope.nfiltrogeografiaSeguimientoDiario = $scope.nfiltrogeografiaSeguimientoDiario ? $scope.nfiltrogeografiaSeguimientoDiario : $scope.obtenerNivelUltimoJerarquia();
+							geografia = results[0].data.result.geografia.filter(e=>e.nivel<= parseInt($scope.nfiltrogeografiaSeguimientoDiario));
 							geografia.map((e) => {
 								e.parent = e.padre == undefined ? "#" : e.padre;
 								e.text = e.nombre;
@@ -172,6 +189,10 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 	}
 	$scope.obtenerNivelUltimoJerarquia = function () {
 		return $scope.listadogeografiacopy.sort(compareGeneric)[0].nivel
+	}
+
+	$scope.obtenerNivelUltimoJerarquiaGeneric = function (list) {
+		return list.sort(compareGeneric)[0].nivel
 	}
 
 	validarFecha = function (inicio, fin) {

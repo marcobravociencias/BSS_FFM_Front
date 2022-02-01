@@ -12,105 +12,128 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
 public class ImplGestionPlanningService implements GestionPlanningService {
 
-    private final Logger logger = LogManager.getLogger(ImplGestionPlanningService.class.getName());
-    private final ConstGestionPlanning constGestionPlanning;
-    private final ConsumeRest consumeRest;
-    private final UtileriaGeneral utileriaGeneral;
-    private Gson gson = new Gson();
+	private final Logger logger = LogManager.getLogger(ImplGestionPlanningService.class.getName());
+	private final ConstGestionPlanning constGestionPlanning;
+	private final ConsumeRest consumeRest;
+	private final UtileriaGeneral utileriaGeneral;
+	private Gson gson = new Gson();
 
-    @Autowired
-    public ImplGestionPlanningService(ConstGestionPlanning constGestionPlanning, ConsumeRest consumeRest,
-            UtileriaGeneral utileriaGeneral) {
-        this.constGestionPlanning = constGestionPlanning;
-        this.consumeRest = consumeRest;
-        this.utileriaGeneral = utileriaGeneral;
-    }
+	@Autowired
+	public ImplGestionPlanningService(ConstGestionPlanning constGestionPlanning, ConsumeRest consumeRest,
+			UtileriaGeneral utileriaGeneral) {
+		this.constGestionPlanning = constGestionPlanning;
+		this.consumeRest = consumeRest;
+		this.utileriaGeneral = utileriaGeneral;
+	}
 
-    @Override
-    public ServiceResponseResult consultarPagosTecnico(String params) {
-        logger.info("ImplGestionPlanningService.class [metodo = consultarPagosTecnico() ]\n" + params);
+	@Override
+	public ServiceResponseResult consultarPagosTecnico(String params) {
+		logger.info("ImplGestionPlanningService.class [metodo = consultarPagosTecnico() ]\n" + params);
 
-        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		LoginResult principalDetail = utileriaGeneral.obtenerObjetoPrincipal();
+		String tokenAcces = principalDetail.getAccess_token();
+		logger.info("consultarPagosTecnico ##+" + tokenAcces);
+		String urlRequest = principalDetail.getDireccionAmbiente()
+				.concat(constGestionPlanning.getConsultaPagosLiberarTecnico());
+		logger.info("***URL: " + urlRequest);
 
-        LoginResult principalDetail = utileriaGeneral.obtenerObjetoPrincipal();
-        String tokenAcces = principalDetail.getAccess_token();
-        logger.info("consultarPagosTecnico ##+" + tokenAcces);
-        String urlRequest = principalDetail.getDireccionAmbiente()
-                .concat(constGestionPlanning.getConsultaPagosLiberarTecnico());
-        logger.info("***URL: " + urlRequest);
-        Map<String, String> paramsRequestGet = new HashMap<String, String>();
-        paramsRequestGet.put("idOperador", jsonObject.get("idOperador").getAsString());
+		ServiceResponseResult response = consumeRest.callPostBearerTokenRequest(params, urlRequest,
+				ServiceResponseResult.class, tokenAcces);
+		logger.info("RESULT" + gson.toJson(response));
+		return response;
+	}
 
-        ServiceResponseResult response = consumeRest.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
-                ServiceResponseResult.class, tokenAcces);
-        logger.info("RESULT" + gson.toJson(response));
-        return response;
-    }
+	@Override
+	public ServiceResponseResult liberarPagosTecnicos(String params) {
+		logger.info("ImplGestionPlanningService.class [metodo = liberarPagosTecnico() ]\n" + params);
 
-    @Override
-    public ServiceResponseResult liberarPagosTecnicos(String params) {
-        logger.info("ImplGestionPlanningService.class [metodo = liberarPagosTecnico() ]\n" + params);
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
 
-        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		LoginResult principalDetail = utileriaGeneral.obtenerObjetoPrincipal();
+		String tokenAcces = principalDetail.getAccess_token();
+		logger.info("liberarPagosTecnico ##+" + tokenAcces);
+		String urlRequest = principalDetail.getDireccionAmbiente()
+				.concat(constGestionPlanning.getLiberarPagosTecnico());
+		logger.info("***URL: " + urlRequest);
+		Map<String, String> paramUri = new HashMap<String, String>();
 
-        LoginResult principalDetail = utileriaGeneral.obtenerObjetoPrincipal();
-        String tokenAcces = principalDetail.getAccess_token();
-        logger.info("liberarPagosTecnico ##+" + tokenAcces);
-        String urlRequest = principalDetail.getDireccionAmbiente()
-                .concat(constGestionPlanning.getLiberarPagosTecnico());
-        logger.info("***URL: " + urlRequest);
-        Map<String, String> paramUri = new HashMap<String, String>();
+		ServiceResponseResult response = consumeRest.callPatchBearerTokenRequestURL(paramUri, gson.toJson(jsonObject),
+				urlRequest, ServiceResponseResult.class, tokenAcces);
+		logger.info("RESULT" + gson.toJson(response));
+		return response;
+	}
 
-        ServiceResponseResult response = consumeRest.callPatchBearerTokenRequestURL(paramUri,
-                gson.toJson(jsonObject), urlRequest, ServiceResponseResult.class, tokenAcces);
-        logger.info("RESULT" + gson.toJson(response));
-        return response;
-    }
+	@Override
+	public ServiceResponseResult restaurarContraseniaUsuario(String params) {
+		logger.info("ImplGestionPlanningService.class [metodo = restaurarContraseniaUsuario() ]\n" + params);
 
-    @Override
-    public ServiceResponseResult restaurarContraseniaUsuario(String params) {
-        logger.info("ImplGestionPlanningService.class [metodo = restaurarContraseniaUsuario() ]\n" + params);
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
 
-        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		LoginResult principalDetail = utileriaGeneral.obtenerObjetoPrincipal();
+		String tokenAcces = principalDetail.getAccess_token();
+		logger.info("restaurarContraseniaUsuario ##+" + tokenAcces);
+		String urlRequest = principalDetail.getDireccionAmbiente()
+				.concat(constGestionPlanning.getRestaurarContrasenaUsuario());
+		logger.info("***URL: " + urlRequest);
+		Map<String, String> paramUri = new HashMap<String, String>();
+		String creedResOld = principalDetail.getCreedResult();
+		String creedResActual = "" ;  
+		
+		
+		
+		if (jsonObject.get("idUsuario").isJsonNull()) {
+			creedResActual=Base64.getEncoder()
+			.encodeToString(jsonObject.get("actualCreed").getAsString().getBytes());
+			if (creedResOld.contentEquals(creedResActual)) {
+				jsonObject.addProperty("idUsuario", principalDetail.getIdUsuario());
+				logger.info("ImplGestionPlanningService.class [metodo = restaurarContraseniaUsuario() session ]\n"
+						+ jsonObject);
+			}else {
+				ServiceResponseResult response = ServiceResponseResult.builder()
+						.isRespuesta(false).resultDescripcion("Credencial invalida").build();
+				response.setResult("credencialInvalida");
+				return response;
+			}
+		}
+		ServiceResponseResult response = consumeRest.callPatchBearerTokenRequestURL(paramUri, gson.toJson(jsonObject),
+				urlRequest, ServiceResponseResult.class, tokenAcces);
+		if(response.isRespuesta()) {
+			if (jsonObject.get("idUsuario").isJsonNull()) {	
+				String creedResNew = Base64.getEncoder()
+						.encodeToString(jsonObject.get("newcred").getAsString().getBytes());
+				principalDetail.setCreedResult(creedResNew);
+			}
+		}
+		logger.info("RESULT" + gson.toJson(response));
+		return response;
+	}
 
-        LoginResult principalDetail = utileriaGeneral.obtenerObjetoPrincipal();
-        String tokenAcces = principalDetail.getAccess_token();
-        logger.info("restaurarContraseniaUsuario ##+" + tokenAcces);
-        String urlRequest = principalDetail.getDireccionAmbiente()
-                .concat(constGestionPlanning.getRestaurarContrasenaUsuario());
-        logger.info("***URL: " + urlRequest);
-        Map<String, String> paramUri = new HashMap<String, String>();
+	@Override
+	public ServiceResponseResult gestionGeocercasPlanning(String params) {
+		logger.info("ImplGestionPlanningService.class [metodo = gestionGeocercasPlanning() ]\n" + params);
 
-        ServiceResponseResult response = consumeRest.callPatchBearerTokenRequestURL(paramUri,
-                gson.toJson(jsonObject), urlRequest, ServiceResponseResult.class, tokenAcces);
-        logger.info("RESULT" + gson.toJson(response));
-        return response;
-    }
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
 
-    @Override
-    public ServiceResponseResult gestionGeocercasPlanning(String params) {
-        logger.info("ImplGestionPlanningService.class [metodo = gestionGeocercasPlanning() ]\n" + params);
+		LoginResult principalDetail = utileriaGeneral.obtenerObjetoPrincipal();
+		String tokenAcces = principalDetail.getAccess_token();
+		logger.info("gestionGeocercasPlanning ##+" + tokenAcces);
+		String urlRequest = principalDetail.getDireccionAmbiente()
+				.concat(constGestionPlanning.getGestionGeocercasPlanning());
+		logger.info("***URL: " + urlRequest);
+		Map<String, String> paramUri = new HashMap<String, String>();
 
-        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-
-        LoginResult principalDetail = utileriaGeneral.obtenerObjetoPrincipal();
-        String tokenAcces = principalDetail.getAccess_token();
-        logger.info("gestionGeocercasPlanning ##+" + tokenAcces);
-        String urlRequest = principalDetail.getDireccionAmbiente()
-                .concat(constGestionPlanning.getGestionGeocercasPlanning());
-        logger.info("***URL: " + urlRequest);
-        Map<String, String> paramUri = new HashMap<String, String>();
-
-        ServiceResponseResult response = consumeRest.callPatchBearerTokenRequestURL(paramUri,
-                gson.toJson(jsonObject), urlRequest, ServiceResponseResult.class, tokenAcces);
-        logger.info("RESULT" + gson.toJson(response));
-        return response;
-    }
+		ServiceResponseResult response = consumeRest.callPatchBearerTokenRequestURL(paramUri, gson.toJson(jsonObject),
+				urlRequest, ServiceResponseResult.class, tokenAcces);
+		logger.info("RESULT" + gson.toJson(response));
+		return response;
+	}
 
 }

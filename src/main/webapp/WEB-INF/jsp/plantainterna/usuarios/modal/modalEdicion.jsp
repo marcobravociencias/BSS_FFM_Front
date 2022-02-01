@@ -16,25 +16,25 @@
             <div class="modal-body">
                 <div class="col-12">
                     <ul class="nav nav-pills mb-3" id="pills-tab-mod" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link active" id="pills-informacion-tab-mod" ng-click="ocultarBotonMod()" data-toggle="pill" href="#pills-informacion-mod" role="tab" aria-controls="pills-informacion-mod" aria-selected="true">Informaci&oacute;n</a>
+                        <li class="nav-item" role="presentation" ng-show="tabInformacionMod">
+                            <a class="nav-link active" id="pills-informacion-tab-mod" data-toggle="pill" href="#pills-informacion-mod" role="tab" aria-controls="pills-informacion-mod" aria-selected="true">Informaci&oacute;n</a>
                         </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="pills-intervencion-tab-mod" ng-click="ocultarBotonMod()" data-toggle="pill" href="#pills-intervencion-mod" role="tab" aria-controls="pills-intervencion-mod" aria-selected="false">Intervenciones</a>
+                        <li class="nav-item" role="presentation" ng-show="tabIntervencionesMod">
+                            <a class="nav-link" id="pills-intervencion-tab-mod" data-toggle="pill" href="#pills-intervencion-mod" role="tab" aria-controls="pills-intervencion-mod" aria-selected="false">Intervenciones</a>
                         </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="pills-arbol-tab-mod" ng-click="ocultarBotonMod()" data-toggle="pill" href="#pills-arbol-mod" role="tab" aria-controls="pills-arbol" aria-selected="false">&Aacute;rbol</a>
+                        <li class="nav-item" role="presentation" ng-show="tabArbolMod">
+                            <a class="nav-link" id="pills-arbol-tab-mod" data-toggle="pill" href="#pills-arbol-mod" role="tab" aria-controls="pills-arbol" aria-selected="false">&Aacute;rbol</a>
                         </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="pills-accesos-tab-mod" ng-click="ocultarBotonMod()" data-toggle="pill" href="#pills-accesos-mod" ng-show="mostrarAccesosMod" role="tab" aria-controls="pills-accesos-mod" aria-selected="false">Accesos</a>
+                        <li class="nav-item" role="presentation" ng-show="tabAccesosMod">
+                            <a class="nav-link" id="pills-accesos-tab-mod" data-toggle="pill" href="#pills-accesos-mod" ng-show="mostrarAccesosMod" role="tab" aria-controls="pills-accesos-mod" aria-selected="false">Accesos</a>
                         </li>
-                        <li class="nav-item" role="presentation">
+                        <li class="nav-item" role="presentation" ng-show="tabTecnicosMod">
                             <a class="nav-link" id="pills-tecnico-tab-mod" ng-click="revisionTecnicosDespachosMod()" data-toggle="pill" href="#pills-tecnico-mod" ng-show="mostrarTecnicosMod" role="tab" aria-controls="pills-tecnico-mod" aria-selected="false">T&eacute;cnicos</a>
                         </li>
-                        <li class="nav-item" role="presentation">
+                        <li class="nav-item" role="presentation" ng-show="tabDespachosMod">
                         	<a class="nav-link" id="pills-despacho-tab-mod" ng-click="revisionTecnicosDespachosMod()" data-toggle="pill" href="#pills-despacho-mod" ng-show="mostrarDespachoMod" role="tab" aria-controls="pills-despacho-mod" aria-selected="false">Despachos</a>
                         </li>
-                        <li class="nav-item" role="presentation">
+                        <li class="nav-item" role="presentation" ng-show="tabConfirmacionMod">
                             <a class="nav-link" id="pills-confirmar-tab-mod" data-toggle="pill" ng-click="cargarInfoConfirmacionModificacion()" href="#pills-confirmar-mod" role="tab" aria-controls="pills-confirmar-mod" aria-selected="false">Confirmar Usuario</a>
                         </li>
                     </ul>
@@ -65,7 +65,7 @@
             </div>	
             
             <div class="modal-footer">
-            	<button type="button" class="btn btn-sm btn-primary" ng-click="modificarUsuario()" ng-show="verBtnModificar" style="padding: 0.6em 2em 0.6em 2em;">MODIFICAR</button>
+            	<button type="button" class="btn btn-sm btn-primary" ng-click="modificarUsuario()" style="padding: 0.6em 2em 0.6em 2em;">MODIFICAR</button>
                 <button type="button" class="btn btn-sm btn-cerrar-modal" ng-click="cerrarModalEdicionUsuario()" data-mdb-dismiss="modal" aria-label="Close">Cerrar</button>
             </div>
         </div>

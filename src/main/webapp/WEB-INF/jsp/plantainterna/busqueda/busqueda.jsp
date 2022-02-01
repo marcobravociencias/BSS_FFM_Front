@@ -11,7 +11,7 @@
     <link rel="icon" type="image/png" sizes="96x96" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-16x16.png">
     <link href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/css/plantainterna/busqueda/styleMainBusqueda.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/plantainterna/busqueda/styleMainBusqueda.css?v=${sessionScope.versionDepl}" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/jquery.dataTables.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
@@ -540,14 +540,14 @@
 <script src="${pageContext.request.contextPath}/resources/libraries/sweetalert/js/sweetalert2.min.js"></script>
 <!-- Fin -->
 
-<script src="${pageContext.request.contextPath}/resources/js/plantainterna/busqueda/busquedaController.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/plantainterna/busqueda/noticiasController.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/plantainterna/busqueda/busquedaService.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
-<script	src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/generic/directives.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/plantainterna/busqueda/activarController.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/plantainterna/busqueda/arrayEvidencia.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/plantainterna/busqueda/busquedaController.js?v=${sessionScope.versionDepl}"></script>
+<script src="${pageContext.request.contextPath}/resources/js/plantainterna/busqueda/noticiasController.js?v=${sessionScope.versionDepl}"></script>
+<script src="${pageContext.request.contextPath}/resources/js/plantainterna/busqueda/busquedaService.js?v=${sessionScope.versionDepl}"></script>
+<script src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
+<script	src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js?v=${sessionScope.versionDepl}"></script>
+<script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js?v=${sessionScope.versionDepl}"></script>
+<script src="${pageContext.request.contextPath}/resources/js/generic/directives.js?v=${sessionScope.versionDepl}"></script>
+<script src="${pageContext.request.contextPath}/resources/js/plantainterna/busqueda/activarController.js?v=${sessionScope.versionDepl}"></script>
+<script src="${pageContext.request.contextPath}/resources/js/plantainterna/busqueda/arrayEvidencia.js?v=${sessionScope.versionDepl}"></script>
 
 </html>

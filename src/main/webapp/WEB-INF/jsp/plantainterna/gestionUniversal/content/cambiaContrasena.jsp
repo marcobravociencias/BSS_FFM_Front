@@ -34,7 +34,7 @@
         <div class="col-2 offset-5 form-group">
             <input placeholder="Buscar" type="text" autocomplete="off" style=" height: 2em !important;"
                 class="search-filtro form-control form-control-sm mt-0" id="searchTextUsuario"><i
-                class="fa fa-search icon-search"></i>
+                class="fa fa-search icon-search" style="margin-top: -1.5em;"></i>
         </div>
     </div>
     <div class="content-fluid" style="margin-top: 0.7em;">
@@ -43,6 +43,7 @@
                 <tr>
                     <th>FOTO</th>
                     <th>#EMPLEADO</th>
+                    <th>PUESTO</th>
                     <th>USUARIO</th>
                     <th>NOMBRE</th>
                     <th>UBICACI&Oacute;N</th>

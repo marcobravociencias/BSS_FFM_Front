@@ -34,7 +34,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-6">
+        <div class="col-6" ng-show="!vistaAuditoriaEvidencia">
             <div class="card cards-alertas">
                 <div class="card-header card-header-principal card-header-alerta-principal">
                     <ul class="nav nav-pills" id="pills-tab" role="tablist">
@@ -361,7 +361,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-3">
+        <div class="col-3" ng-show="!vistaAuditoriaEvidencia">
             <div class="card cards-alertas">
                 <div class="card-header card-header-alerta-principal">
                     <div class="row">
@@ -441,6 +441,78 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-9" id="alertaAuditoriaEvidencia" ng-show="vistaAuditoriaEvidencia">
+            <div class="card cards-alertas">
+                <div class="card-header card-header-alerta-principal">
+                    <div class="row">
+                        <div class="col-12 contenedor-titulo-acciones-alerta">
+                            <span id="idTituloAccionesAlertas" class="titulo-alerta-modal">EVIDENCIA</span>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="card-body card-body-alerta-principal">
+                    <div class="row content-filters">
+                        <div class="col-4 content-select">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input radio-evidencias" type="radio" name="inlineRadioOptions"
+                                    id="aceptar" ng-click="seleciconarTodas('1')" value="option1">
+                                <label class="form-check-label" for="aceptar">Aceptar todas</i></label>
+                            </div>
+                            <div class="form-check form-check-inline radio-evidencias">
+                                <input class="form-check-input radio-evidencias" type="radio" name="inlineRadioOptions"
+                                    id="rechazar" ng-click="seleciconarTodas('0')" value="option2">
+                                <label class="form-check-label" for="rechazar">Rechazar todas</label>
+                            </div>
+                        </div>
+                        <div class="row col-5 content-total">
+                            <div class="col-4" style="padding: 0;">
+                                <span>Total evidencia: <strong ng-bind="detalleEvidencia.length"></strong></span>
+                            </div>
+                            <div class="col-4" style="padding-right: 0;">
+                                <span>Aceptadas: <strong ng-bind="listaTotal.aceptadas || 0"></strong></span>
+                            </div>
+                            <div class="col-4" style="padding-right: 0;">
+                                <span>Rechazadas: <strong ng-bind="listaTotal.rechazadas || 0"></strong></span>
+                            </div>
+                        </div>
+                        <div class="col-3" style="padding: 0;margin-top:0.2em">
+                            <button type="button" class="btn btn-primary ripple-surface btn-descargar">
+                                Descargar carta aceptaci&oacute;n
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row" style="overflow-y: auto; height: 75%;">
+                        <div class="imagen_content_evidencia" ng-repeat="img in detalleEvidencia">
+                            <div class="imagen_content">
+                                <div class="form-check">
+                                    <input type="checkbox" ng-click="changeSelect($event)" id="check_{{img.idEvidencia}}" class="form-check-input checkbox-evidencia">
+                                </div>
+                                <div class="contenedor_img_evidencia">
+                                    <a href="{{img.url ? img.url : './resources/img/generic/not_found.png'}}"
+                                        class="magnific item imgtipo_{{img.idCatEvidencia}}"
+                                        data-title="{{img.nombreEvidencia}}">
+                                        <img class="z-depth-1 img_evidencia"
+                                            ng-src="{{img.url ? img.url : './resources/img/generic/not_found.png'}}" width="180"
+                                            height="130" />
+                                    </a>
+                                    <div class="middle_img_evidencia">
+                                        <div class="text_img_evidencia">{{img.nombreEvidencia}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12" style="margin-top: -4em; padding: 1em;">
+                    <div class="col-2 offset-10" style="text-align: right; padding-right: 0;">
+                        <button type="button" class="btn btn-primary btn-guardar ripple-surface" ng-click="guardarEvidencia()">
+                            Guardar
+                        </button>
                     </div>
                 </div>
             </div>

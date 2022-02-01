@@ -7,12 +7,18 @@
       </div>
       <div class="modal-body" style=" max-height: 300px; overflow: auto;">
         <div class="form-group">
-          <input placeholder="Buscar" type="text" autocomplete="off" style=" height: 2em !important;margin-bottom: 1em;"
-            class="search-filtro form-control form-control-sm mt-0" id="searchGeoConsulta" ng-show="isTecnicos"><i
-            class="fa fa-search icon-search" style="margin-top: -2.7em;"></i>
-          <input placeholder="Buscar" type="text" autocomplete="off" style=" height: 2em !important;margin-bottom: 1em;"
-            class="search-filtro form-control form-control-sm mt-0" id="searchGeoConsultaUsuarios"
-            ng-show="!isTecnicos"><i class="fa fa-search icon-search" style="margin-top: -2.7em;"></i>
+          <div ng-show="isTecnicos">
+            <input placeholder="Buscar geograf&iacute;a" type="text" autocomplete="off"
+              style=" height: 2em !important;margin-bottom: 0.5em;"
+              class="search-filtro form-control form-control-sm mt-0" id="searchGeoConsulta"><i
+              class="fa fa-search icon-search" style="margin-top: -1.9em;"></i>
+          </div>
+          <div ng-show="!isTecnicos">
+            <input placeholder="Buscar geograf&iacute;a" type="text" autocomplete="off"
+              style=" height: 2em !important;margin-bottom: 0.5em;"
+              class="search-filtro form-control form-control-sm mt-0" id="searchGeoConsultaUsuarios"><i
+              class="fa fa-search icon-search" style="margin-top: -1.9em;"></i>
+          </div>
         </div>
         <div id="jstreeConsultaTecnicos" class="proton-demo jstreeconsulta" ng-show="isTecnicos"></div>
         <div id="jstreeConsultaUsuarios" class="proton-demo jstreeconsulta" ng-show="!isTecnicos"></div>

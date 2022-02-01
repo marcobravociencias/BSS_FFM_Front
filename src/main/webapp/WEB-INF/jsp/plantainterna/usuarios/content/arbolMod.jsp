@@ -1,7 +1,7 @@
 <div class="col-md-12">
     <div class="row">
         <div class="col-md-5">
-            <h6 class="text-center titulo-opciones">FFM TOTALPLAY EMPRESARIAL *</h6>
+            <h6 class="text-center titulo-opciones">FFM TOTALPLAY *</h6>
             <hr/>
             <div class="col-md-12">
                 <div class="row">
@@ -24,19 +24,19 @@
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-6">
-                        <span class="text-head-table-arbol"><li class="fa fa-crosshairs"></li>&nbsp;Ciudades:</span>
+                        <span class="text-head-table-arbol"><li class="fa fa-crosshairs"></li>&nbsp;{{tabArbol_LB_N1_mod}}:</span>
                     </div>
                     <div class="col-md-6">
-                        <span class="text-head-table-arbol"><li class="fa fa-cubes"></li>&nbsp;Distritos:</span>
+                        <span class="text-head-table-arbol"><li class="fa fa-cubes"></li>&nbsp;{{tabArbol_LB_N2_mod}}:</span>
                     </div>
                 </div>
                 <div id="contenedorGeografiasRegistroMod" class="scrollGeneralArbol">
-	                <div class="row padding_resumen_ciudades" ng-repeat="ciudad in listaCiudadesSelecionadasMod track by $index">
+	                <div class="row padding_resumen_ciudades" ng-repeat="geoPadre in geoSelectMod track by $index">
 	                    <div class="col-md-6">
-	                        <span class="text-body-table-arbol" ng-bind="ciudad.nombre"></span>
+	                        <span class="text-body-table-arbol" ng-bind="geoPadre.text"></span>
 	                    </div>
 	                    <div class="col-md-6">
-	                        <li class="item_ciudad_resum text-body-table-arbol" ng-repeat="distrito in ciudad.hijos" ng-bind="distrito.text"></li>
+	                        <li class="item_ciudad_resum text-body-table-arbol" ng-repeat="geoHija in geoPadre.geoHijas" ng-bind="geoHija.nombre"></li>
 	                    </div>
 	                </div>
                 </div>

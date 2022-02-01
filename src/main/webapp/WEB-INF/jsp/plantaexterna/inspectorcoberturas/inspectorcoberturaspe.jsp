@@ -1,4 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <!DOCTYPE html>
+
     <html lang="es" ng-app="inspectorCoberturaApp">
 
     <head>
@@ -38,7 +40,7 @@
         <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css"
             rel="stylesheet" />
         <link
-            href="${pageContext.request.contextPath}/resources/css/plantaexterna/inspectorCobertura/styleInspectorCobertura.css"
+            href="${pageContext.request.contextPath}/resources/css/plantaexterna/inspectorCobertura/styleInspectorCobertura.css?v=${sessionScope.versionDepl}"
             rel="stylesheet">
 
         <title>FFM Total play</title>
@@ -118,7 +120,7 @@
                             <span class="fa fa-search" id="buscar-falla"></span>
                         </div>
 
-                        <table id="tableCobertura" class="display table table-hover" cellspacing="0" width="100%">
+                        <table id="tableCobertura" class="display table" cellspacing="0" width="100%">
                             <thead id="thead_cobertura">
                                 <tr>
                                     <th>ID</th>
@@ -160,12 +162,12 @@
                                                         </div>
                                                     </div>
                                                     <div class="row">
-                                                        <div class="col-md-8">
+                                                        <div class="col-md-7">
                                                             <span
                                                                 class="title_span"><strong>{{item.reporta}}</strong></span><br>
                                                             <span class="title_span">{{item.falla}}</span>
                                                         </div>
-                                                        <div class="col-md-4" style="text-align: right;">
+                                                        <div class="col-md-5" style="text-align: right;">
                                                             <div class="list-card-label"></div> <span
                                                                 class="badge badge-primary badge-inspector">INP</span><br>
                                                             <small class="title_span" style="color: #039be5;"><b>Fecha:
@@ -247,12 +249,12 @@
         src="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/lib/moment.es.js"></script>
     <script src="${pageContext.request.contextPath}/resources/libraries/exportExcel/index.min.js"></script>
 
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
     <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/plantaexterna/inspectorCobertura/inspectorCoberturaController.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/plantaexterna/inspectorCobertura/inspectorCoberturaController.js?v=${sessionScope.versionDepl}"></script>
     <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/plantaexterna/inspectorCobertura/inspectorCoberturaService.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/plantaexterna/inspectorCobertura/inspectorCoberturaService.js?v=${sessionScope.versionDepl}"></script>
     <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/plantaexterna/inspectorCobertura/jsonInspectorCobertura.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/plantaexterna/inspectorCobertura/jsonInspectorCobertura.js?v=${sessionScope.versionDepl}"></script>
 
     </html>

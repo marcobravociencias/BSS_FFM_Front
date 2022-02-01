@@ -1,6 +1,7 @@
 package com.mx.totalplay.ffm.cloudweb.utilerias.model;
 
 import java.util.List;
+import java.util.Map;
 
 import lombok.Builder;
 import lombok.Data;
@@ -17,4 +18,8 @@ public class Permiso {
 	private int ordenConfig;
 	private boolean dentroNavbar;
 	
+	private int id;
+	private int nivel;
+	private int idPadre;
+	private Map<String ,Object> llaves;
 }

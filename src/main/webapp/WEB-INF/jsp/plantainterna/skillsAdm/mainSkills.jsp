@@ -30,9 +30,9 @@
 		<link href="${pageContext.request.contextPath}/resources/libraries/jstree/css/style.min.css" rel="stylesheet" />
 		<link href="${pageContext.request.contextPath}/resources/libraries/jstree/css/proton/style.css" rel="stylesheet" />
 		<link href="${pageContext.request.contextPath}/resources/libraries/sweetalert/css/sweetalert2.min.css" rel="stylesheet">
-		<link href="${pageContext.request.contextPath}/resources/css/plantainterna/despachopi/loaders.css" rel="stylesheet" />
-		<link href="${pageContext.request.contextPath}/resources/css/plantainterna/skillsAdms/styleSkills.css?" rel="stylesheet" />
-		<link href="${pageContext.request.contextPath}/resources/css/plantainterna/skillsAdms/styleSkillsFeature.css?" rel="stylesheet" />
+		<link href="${pageContext.request.contextPath}/resources/css/plantainterna/despachopi/loaders.css?v=${sessionScope.versionDepl}" rel="stylesheet" />
+		<link href="${pageContext.request.contextPath}/resources/css/plantainterna/skillsAdms/styleSkills.css?v=${sessionScope.versionDepl}" rel="stylesheet" />
+		<link href="${pageContext.request.contextPath}/resources/css/plantainterna/skillsAdms/styleSkillsFeature.css?v=${sessionScope.versionDepl}" rel="stylesheet" />
 		<link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" rel="stylesheet" />
 	</head>
 	<body id="idBody" class="body" ng-controller="skillsController" style="display: none;">
@@ -52,7 +52,6 @@
 					<i ng-if="istipovista==2" class="icon-geografia-top fas fa-map-marked iconoGeografia"></i> 
 					<a ng-if="istipovista==2" class="text-icon-geografia-top nav-link a-navlink-navbar linkGeografia" href="" ng-click="abrirModalGeografiaTabla()">Geograf&iacute;a</a>			
 				</div>
-			
 				<ul class="nav nav-tabs" id="myTab" role="tablist">
 					<li class="nav-item">
 						<a ng-click="istipovista=1" class="nav-link active" id="vistaindividual-tab" data-toggle="tab" href="#vistaindividual" role="tab"
@@ -112,23 +111,17 @@
 								<div class="input-group input-group-sm content-seach-group">
 									<input id="buscadorSkillConsultaVistaIndividual" type="text" class="form-control form-control-sm buscar-input-operario" placeholder="Buscar skill" ng-keyup="busquedaSkillsIndividual()"> <span class="search-icon-operario-busq fa fa-search"></span>
 								</div>
-				
 								<div id="divContenedorSkills" style="display: none">
-									<div style=" text-align: right;">
-										<a class="multiseleccion-interve" ng-click="mostrarContenedoresMultiseleccion()" href="">Multiselecci&oacute;n</a>
-									</div>	
-									
+									<div class="row">
+										<div class="col-md-7" style="padding-right: 2em;">
+										</div>
+										<div class="col-md-5">
+											<div style=" text-align: right;">
+												<a class="multiseleccion-interve" ng-click="mostrarContenedoresMultiseleccion()" href="">Multiselecci&oacute;n</a>
+											</div>
+										</div>
+									</div>
 									<div class="intervenciones-container scrollGeneral">
-<!-- 										<div ng-repeat="intervencion in listadoIntervenciones | orderBy:'nombre' | filter:buscarSkill track by $index" class="row "> -->
-<!-- 											<div class="col-9 intervencion-col"> -->
-<!-- 												<h5 class="text-intervencion-title" ng-bind="intervencion.nombre"></h5> -->
-<!-- 											</div> -->
-<!-- 											<div class="col-3 intervencion-col"> -->
-<!-- 												<div class="form-check-sm form-check form-switch"> -->
-<!-- 													<input class="form-check-input form-check-input-sm" type="checkbox" id="flexSwitchCheckDefault"	value="{{intervencion.id}}" ng-model="intervencion.check" ng-true-value="1" ng-false-value="0" ng-click="sumarContador(intervencion.check)" /> -->
-<!-- 												</div> -->
-<!-- 											</div> -->
-<!-- 										</div> -->
 										<div id="arbolSkillsVistaIndividual" class="jstree-proton-3 proton-demo" ng-click="contadorSkillsVistaIndividual()">
 										</div>
 									</div>
@@ -146,10 +139,8 @@
 								</div>
 							</div>	
 						</div>
-						
 					</div>
 					<div id="vistatabla" class="row content-gestion-operarios tab-pane fade" role="tabpanel" aria-labelledby="vistatabla-tab" >
-						
 						<div id="contenedorTablaSkilssVistaTabla" >
 							<div class="row">
 								<div class="col-md-3">
@@ -226,7 +217,6 @@
 				</div>			
 			</div>	
 		</div>
-		
 	
         <!-- MULTISELECCION -->
         <div id="modalMultiseleccion" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -279,18 +269,6 @@
                                         <span class="search-icon-operario-busq fa fa-search"></span>
                                     </div>
                                     <div id="divContenedorSkills2" class="scrollGeneral">
-<!--                                         <div class="intervenciones-container"> -->
-<!--                                             <div ng-repeat="intervencion in listadoIntervencionesMultiseleccion | orderBy:'nombre' | filter:buscarSkill track by $index" class="row"> -->
-<!--                                                 <div class="col-10 intervencion-col"> -->
-<!--                                                     <h5 class="text-intervencion-title" ng-bind="intervencion.nombre"></h5> -->
-<!--                                                 </div> -->
-<!--                                                 <div class="col-2 intervencion-col"> -->
-<!--                                                     <div class="form-check-sm form-check form-switch"> -->
-<!--                                                         <input class="form-check-input form-check-input-sm" type="checkbox" id="flexSwitchCheckDefault" ng-model="intervencion.check" ng-true-value="1" ng-false-value="0" value="{{intervencion.id}}" ng-click="contadorSkillsMultiseleccion(intervencion.check)" /> -->
-<!--                                                     </div> -->
-<!--                                                 </div> -->
-<!--                                             </div> -->
-<!--                                         </div> -->
 										<div id="arbolSkillsMultiseleccion" class="jstree-proton-3 proton-demo" ng-click="contadorSkillsMultiseleccion()">
 										</div>
                                     </div>
@@ -405,12 +383,12 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/alertify/alertify.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/js/mdb.min.js"></script>
 	<!-- ARCHIVOS JS -->
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/skillsAdms/skillsController.js?" charset="UTF-8"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/skillsAdms/skillsService.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/skillsAdms/jsonSkills.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/genericService.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/despachopi/mainDespachoService.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/skillsAdms/skillsController.js?v=${sessionScope.versionDepl}" charset="UTF-8"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/skillsAdms/skillsService.js?v=${sessionScope.versionDepl}"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/skillsAdms/jsonSkills.js?v=${sessionScope.versionDepl}"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/genericService.js?v=${sessionScope.versionDepl}"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/despachopi/mainDespachoService.js?v=${sessionScope.versionDepl}"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
-	<script	src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>
+	<script	src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js?v=${sessionScope.versionDepl}"></script>
 </html>

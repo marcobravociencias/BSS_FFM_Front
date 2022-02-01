@@ -100,6 +100,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 	
 	@Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/resources/**","/detailsHelp","/descargaLogFile/**");
+        web.ignoring().antMatchers("/resources/**","/detailsHelp","/descargaLogFile/**","/moduloVistaConfirmacion**");
     }
 }

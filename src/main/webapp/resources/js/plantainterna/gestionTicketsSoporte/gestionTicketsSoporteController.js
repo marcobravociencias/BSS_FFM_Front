@@ -1,7 +1,8 @@
 var app = angular.module('ticketsSoporteApp', []);
 
-app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoporteService', function ($scope, $q, gestionTicketSoporteService) {
+app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoporteService', 'genericService', function ($scope, $q, gestionTicketSoporteService, genericService) {
     let ticketSoporteTable;
+    let tecnicosCuentaTable;
     $scope.listFallasTicket = [];
     $scope.listCategoriasTicket = [];
     $scope.listSubcategoriasTicket = [];
@@ -17,6 +18,26 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     $scope.ticketSoporte = {};
     $scope.ticketSoporteR = {};
     $scope.tecnicoSeleccionado = '';
+    $scope.categoriaSoporte = {};
+    $scope.listCatTipoOrdenes = [];
+    $scope.listCatRegiones = []
+    $scope.listOrdenesCuenta = [];
+    $scope.catGeografiaGeneral = [];
+    $scope.catTipoOrdenesGeneral = [];
+    $scope.ticketSoporteDetalle = {};
+    $scope.listIngenieros = [];
+    $scope.ingenieroSelect = {};
+
+    let ingenieroTable = $('#ingenierosTable').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "ordering": false,
+        "pageLength": 10,
+        "info": false,
+        "autoWidth": true,
+        "language": idioma_espanol_not_font,
+        "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+    });
 
     app.noticiasGestionTicketSoporte($scope, gestionTicketSoporteService);
 
@@ -24,6 +45,12 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         $(".user-filter span").removeClass('selected-filter');
         $(".fa-filter").css('color', '#ccc');
         ticketSoporteTable.search(this.value).draw();
+    })
+
+    $('#searchTextCuenta').on('keyup', function () {
+        $(".user-filter span").removeClass('selected-filter');
+        $(".fa-filter").css('color', '#ccc');
+        tecnicosCuentaTable.search(this.value).draw();
     })
 
     $scope.searchBy = function (type) {
@@ -40,26 +67,79 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     $scope.consultarCatalogosTicketSoporte = function () {
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
-        gestionTicketSoporteService.consultaFallasTicketSoporte().then(function success(response) {
-            console.log(response);
-            if (response.data.respuesta) {
-                $scope.catalogoTickets = arrayListadoTickets.data.result.catalogoTickets;
-                $scope.catalogoFallasTicketSoporte = response.data.result.soportes;
-                // console.log($scope.catalogoFallasTicketSoporte);
-                // console.log($scope.catalogoTickets);
-                let nivel1 = [];
-                $scope.catalogoTickets.map(function (e) {
-                    if (e.nivel == "1") {
-                        nivel1.push(e);
+        $q.all([
+            genericService.consultarConfiguracionDespachoDespacho(),
+            gestionTicketSoporteService.consultaFallasTicketSoporte(),
+            gestionTicketSoporteService.consultaCatalogoRegionTicketSoporte(),
+            gestionTicketSoporteService.consultarCatalogoTipoOrdenTicketSoporte()
+        ]).then(function (results) {
+            console.log(results)
+            if (results[0].data.respuesta) {
+                $scope.elementosConfigGeneral = new Map(Object.entries(results[0].data.result))
+                let resultConf = results[0].data.result
+                if (resultConf.MODULO_GESTION_TICKETS && resultConf.MODULO_GESTION_TICKETS.llaves) {
+                    let llavesResult = results[0].data.result.MODULO_GESTION_TICKETS.llaves;
+                    if (llavesResult.N_FILTRO_GEOGRAFIA_GESTION_TICKETS)
+                        $scope.nGeografia = parseInt(llavesResult.N_FILTRO_GEOGRAFIA_GESTION_TICKETS)
+
+                    if (llavesResult.N_FILTRO_TIPO_ORDEN_GESTION_TICKETS)
+                        $scope.nIntervencion = parseInt(llavesResult.N_FILTRO_TIPO_ORDEN_GESTION_TICKETS)
+
+                    if (llavesResult.N_PUESTO_INGENIERO)
+                        $scope.nPuestoIngeniero = parseInt(llavesResult.N_PUESTO_INGENIERO)
+                } else {
+                    $scope.nIntervencion = 1;
+                    $scope.nGeografia = 1;
+                    $scope.nPuestoIngeniero = 1;
+                }
+            }
+            console.log(results[1].data);
+            if (results[1].data !== undefined) {
+                if (results[1].data.respuesta) {
+                    $scope.catalogoTickets = arrayListadoTickets.data.result.catalogoTickets;
+                    $scope.catalogoFallasTicketSoporte = results[1].data.result.soportes;
+                    let nivel1 = [];
+                    $scope.catalogoTickets.map(function (e) {
+                        if (e.nivel == "1") {
+                            nivel1.push(e);
+                        }
+                    });
+                    $scope.listMotivoEscala.catalogoNivel1 = nivel1;
+                    $scope.catalogoFallasTicketSoporte.map(function (e) {
+                        if (e.nivel == "1") {
+                            $scope.listFallasTicket.push(e);
+                        }
+                    });
+                    swal.close();
+                }
+            } else {
+                mostrarMensajeWarningValidacion('No se pudo realizar la consulta de catalogos.')
+            }
+            console.log(results[2].data);
+            if (results[2].data !== undefined) {
+                if (results[2].data.respuesta) {
+                    $scope.catGeografiaGeneral = results[2].data.result.geografia;
+                    if ($scope.nGeografia) {
+                        $scope.listCatRegiones = results[2].data.result.geografia.filter(elemento => { return elemento.nivel <= $scope.nGeografia });
+                    } else {
+                        $scope.listCatRegiones = results[2].data.result.geografia;
                     }
-                });
-                $scope.listMotivoEscala.catalogoNivel1 = nivel1;
-                $scope.catalogoFallasTicketSoporte.map(function (e) {
-                    if (e.nivel == "1") {
-                        $scope.listFallasTicket.push(e);
+                }
+            } else {
+                mostrarMensajeWarningValidacion('No se pudo realizar la consulta de catalogos.')
+            }
+            console.log(results[3].data);
+            if (results[3].data !== undefined) {
+                if (results[3].data.respuesta) {
+                    $scope.catTipoOrdenesGeneral = results[3].data.result;
+                    if ($scope.nIntervencion) {
+                        $scope.listCatTipoOrdenes = results[3].data.result.filter(elemento => { return elemento.nivel <= $scope.nIntervencion });
+                    } else {
+                        $scope.listCatTipoOrdenes = results[3].data.result;
                     }
-                });
-                swal.close();
+                }
+            } else {
+                mostrarMensajeWarningValidacion('No se pudo realizar la consulta de catalogos.')
             }
         });
     }
@@ -70,10 +150,11 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             autoclose: true,
             language: 'es',
             todayHighlight: true,
-            clearBtn: true
+            clearBtn: false
         });
         $('.datepicker').datepicker('update', new Date());
-        ticketSoporteTable = $('#tableTicketSoporte').DataTable({
+
+        tecnicosCuentaTable = $('#tecnicosCuentaTable').DataTable({
             "paging": true,
             "lengthChange": false,
             "searching": false,
@@ -88,11 +169,23 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         $scope.consultarCatalogosTicketSoporte();
     }
 
+    ticketSoporteTable = $('#tableTicketSoporte').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "ordering": false,
+        "pageLength": 10,
+        "info": true,
+        "autoWidth": true,
+        "language": idioma_espanol_not_font,
+        "sDom": 'Rfrtlip'
+
+    });
+
     $scope.initTicketsSoporte();
 
     $scope.loadCategoriaTicketSoporte = function () {
         $scope.listCategoriasTicket = [];
-        let idFallaTicket = $("#falla").val();
+        let idFallaTicket = $("#fallaTicket").val();
         $scope.catalogoFallasTicketSoporte.map(function (c) {
             if (c.idPadre == idFallaTicket) {
                 $scope.listCategoriasTicket.push(c);
@@ -102,7 +195,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
 
     $scope.loadSubcategoriaTicketSoporte = function () {
         $scope.listSubcategoriasTicket = [];
-        let idCategoriaTicket = $("#categoria").val()
+        let idCategoriaTicket = $("#categoriaTicket").val()
         $scope.catalogoFallasTicketSoporte.map(function (s) {
             if (s.idPadre == idCategoriaTicket) {
                 $scope.listSubcategoriasTicket.push(s);
@@ -130,66 +223,138 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         $("#modalBusquedaTecnicosTicket").modal('show');
     }
 
-    $scope.buscarTecnicoTicket = function () {
-        let mensajeError = '';
-        let isValid = true;
-        $scope.listadoTecnicosTicket = [];
-        $scope.tecnicoBusqueda = '';
-
-        if ($("#searchTecnicoTicket").val() == undefined || $("#searchTecnicoTicket").val() == '') {
-            mensajeError += "<li>Debe ingresar un n&uacute;mero de Empleado</li>";
-            isValid = false;
-        }
-        if (isValid) {
-            swal({ text: 'Cargando datos ...', allowOutsideClick: false });
-            swal.showLoading();
-            $scope.tecnicoBusqueda = $("#searchTecnicoTicket").val();
-            let params = {
-                tecnico: $scope.tecnicoBusqueda
-            }
-            console.log(params)
-            $scope.listadoTecnicosTicket = arrayBusquedaTecnicos.data.result;
-            console.log($scope.listadoTecnicosTicket);
-            swal.close();
-            // gestionTicketSoporteService.consultarTecnicosTickets(paramsRequest).then(function success(response) {
-            //     if (response.data !== undefined) {
-            //         if (response.data.success) {
-            //             if (response.data.result !== undefined && response.data.result.length > 0) {
-            //                 $scope.listadoTecnicosTicket = response.data.result;
-            //                 swal.close()
-            //             } else {
-            //                 mostrarMensajeWarning("No se encontraron tecnicos con el num. de empleado")
-            //                 swal.close()
-            //             }
-            //         } else {
-            //             mostrarMensajeErrorAlertAjax("Error al consultar tecnicos")
-            //             swal.close()
-            //         }
-            //     } else {
-            //         mostrarMensajeErrorAlertAjax("Error en el servidor")
-            //         swal.close()
-            //     }
-            // });
+    $scope.asignarTecnicoTicket = function () {
+        $scope.tecnicoAsignado = $scope.listOrdenesCuenta.find(function (elem) { return elem.isChecked == true });
+        if ($scope.tecnicoAsignado.isChecked) {
+            swal({
+                title: "\u00BFEst\u00E1 seguro de asignar el Tecnico?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#007bff',
+                confirmButtonText: 'Si',
+                cancelButtonText: 'No'
+            }).then(function (isConfirm) {
+                if (isConfirm) {
+                    swal({ text: 'Cargando datos ...', allowOutsideClick: false });
+                    swal.showLoading();
+                    $scope.geografiaTecnico = {};
+                    $scope.objPrincipal = $scope.catGeografiaGeneral.find(function (elem) { return elem.id == $scope.tecnicoAsignado.idGeografia });
+                    $scope.objSec = angular.copy($scope.objPrincipal);
+                    for (let index = 1; index < $scope.objPrincipal.nivel; index++) {
+                        $scope.objSec = $scope.catGeografiaGeneral.find(function (elem) { return elem.id == Number($scope.objSec.padre) });
+                    }
+                    $scope.geografiaTecnico = angular.copy($scope.objSec);
+                    let nombreTecnico = $scope.tecnicoAsignado.nombre + ' ' + $scope.tecnicoAsignado.apellidoPaterno + ' ' + $scope.tecnicoAsignado.apellidoMaterno;
+                    $scope.ticketSoporteR.tipoOrden = $scope.tecnicoAsignado.idIntervencion.toString();
+                    $scope.ticketSoporteR.region = $scope.geografiaTecnico.id.toString();
+                    $scope.ticketSoporteR.tipoNegocio = $scope.tecnicoAsignado.idUnidadNegocio.toString();
+                    $scope.ticketSoporteR.tecnico = nombreTecnico;
+                    $scope.ticketSoporteR.telefonoTecnico = $scope.tecnicoAsignado.telefono;
+                    $scope.ticketSoporteR.idOrden = $scope.tecnicoAsignado.id;
+                    $scope.ticketSoporteR.idTecnico = $scope.tecnicoAsignado.idUsuario;
+                    $("#modalBusquedaCuentaTicket").modal('hide');
+                    swal.close();
+                    $scope.$apply();
+                }
+            });
         } else {
-            mostrarMensajeWarningValidacion(mensajeError);
+            mostrarMensajeWarningValidacion("Debes seleccionar un T&eacute;cnico para poder asignarlo");
         }
     }
 
-    $('#searchTecnicoTicket').keypress(function (e) {
+    changeCheck = function (event) {
+        $.each($scope.listOrdenesCuenta, function (i, elemento) {
+            if (elemento.isChecked) {
+                elemento.isChecked = false;
+                $('#' + elemento.id).prop('checked', elemento.isChecked);
+                $scope.$apply();
+            }
+            if ($(event).attr('id') == elemento.id) {
+                elemento.isChecked = $(event).is(":checked");
+            }
+        })
+        $scope.$apply();
+    }
+
+    $scope.consultarCuentaCliente = function () {
+        swal({ text: 'Cargando datos ...', allowOutsideClick: false });
+        swal.showLoading();
+        $scope.listOrdenesCuenta = [];
+        $scope.claveCliente = $('#cuentaTicket').val();
+        let paramsCuenta = {
+            'claveCliente': $scope.claveCliente
+        }
+        gestionTicketSoporteService.consultaCuentaClienteTicketSoporte(paramsCuenta).then(function success(response) {
+            console.log(response);
+            if (response.data.respuesta) {
+                if (response.data.result) {
+                    if (response.data.result.ordenesTrabajo.length) {
+                        let arrayRow = [];
+                        if (tecnicosCuentaTable) {
+                            tecnicosCuentaTable.destroy();
+                        }
+                        $scope.listOrdenesCuenta = response.data.result.ordenesTrabajo;
+                        $scope.listOrdenesCuenta.map(function (e) { e.isChecked = false; return e; })
+                        $.each($scope.listOrdenesCuenta, function (i, elemento) {
+                            let row = [];
+                            let imgDefault = './resources/img/plantainterna/despacho/tecnicootasignada.png';
+                            let url = imgDefault;
+                            if (elemento.urlFoto) {
+                                url = elemento.urlFoto;
+                            }
+                            let nombreCompleto = elemento.nombre + ' ' + elemento.apellidoPaterno + ' ' + elemento.apellidoMaterno;
+                            row[0] = '<img style="cursor:pointer;border-radius: 25px" src="' + url + '" alt="Foto" width="30" height="30"/>';
+                            row[1] = elemento.id;
+                            row[2] = elemento.folioSistema;
+                            row[3] = elemento.numEmpleado;
+                            row[4] = nombreCompleto;
+                            row[5] = elemento.telefono;
+                            row[6] = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class="form-check-input checkTecnico" onclick="changeCheck(this)" type="checkbox" name="checkTecnico" value="' + i + '" id="' + elemento.id + '">';
+                            arrayRow.push(row);
+                        });
+                        tecnicosCuentaTable = $('#tecnicosCuentaTable').DataTable({
+                            "paging": true,
+                            "lengthChange": false,
+                            "ordering": false,
+                            "pageLength": 10,
+                            "info": false,
+                            "rowId": "id",
+                            "data": arrayRow,
+                            "autoWidth": true,
+                            "language": idioma_espanol_not_font,
+                            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+                            'fnCreatedRow': function (nRow, aData, iDataIndex) {
+                                $(nRow).attr('id', 'tecnico_' + aData[1]); // or whatever you choose to set as the id
+                            },
+                        });
+                        document.getElementById('tecnicosCuentaTable_paginate').addEventListener('click', function () {
+                            $.each($scope.listOrdenesCuenta, function (i, elemento) {
+                                if (!elemento.isChecked) {
+                                    $('#' + elemento.id).prop('checked', false);
+                                }
+                                $scope.$apply();
+                            });
+                        })
+                        $("#modalBusquedaCuentaTicket").modal('show');
+                    } else {
+                        mostrarMensajeWarningValidacion("No se encontraron &Oacute;rdenes de Trabajo asociadas a la Cuenta");
+                    }
+                } else {
+                    mostrarMensajeWarningValidacion("No se encontraron &Oacute;rdenes de Trabajo asociadas a la Cuenta");
+                }
+            } else {
+                mostrarMensajeErrorAlert(response.data.resultDescripcion);
+            }
+            swal.close();
+        });
+    }
+
+    $('#cuentaTicket').keypress(function (e) {
         if (e.which == 13) {
-          $scope.buscarTecnicoTicket();
-          $scope.$apply();
-          return false;
+            $scope.consultarCuentaCliente();
+            return false;
         }
-      });
-
-    $scope.seleccionarTecnicoTicket = function (tecnico) {
-        $scope.tecnicoSeleccionado = angular.copy(tecnico);
-        $scope.ticketSoporteR.idTecnico = $scope.tecnicoSeleccionado.id;
-        $scope.ticketSoporteR.telefonoTecnico = $scope.tecnicoSeleccionado.telefono;
-        $scope.ticketSoporteR.tecnico = $scope.tecnicoSeleccionado.nombre;
-        console.log($scope.tecnicoSeleccionado);
-    }
+    });
 
     $scope.validarFecha = function (idFechaInicio, idFechaFin) {
         var inicio = document.getElementById(idFechaInicio).value.split('/');
@@ -212,20 +377,19 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         }
     });
 
-    $("#falla").change(function () {
-        $("#falla").removeClass("invalid-inputTicket");
+    $("#fallaTicket").change(function () {
+        $("#fallaTicket").removeClass("invalid-inputTicket");
     });
 
-    $("#categoria").change(function () {
-        $("#categoria").removeClass("invalid-inputTicket");
+    $("#categoriaTicket").change(function () {
+        $("#categoriaTicket").removeClass("invalid-inputTicket");
     });
 
-    $("#subcategoria").change(function () {
-        $("#subcategoria").removeClass("invalid-inputTicket");
+    $("#subcategoriaTicket").change(function () {
+        $("#subcategoriaTicket").removeClass("invalid-inputTicket");
     });
 
     $scope.registrarTicketSoporte = function () {
-        console.log($scope.ticketSoporteR);
         let mensajeError = '';
         let isValid = true;
 
@@ -309,13 +473,13 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             $("#regionTicket").removeClass("invalid-inputTicket");
         }
 
-        if ($("#tecnologiaTicket").val() == undefined || $("#tecnologiaTicket").val() == '') {
-            $("#tecnologiaTicket").addClass("invalid-inputTicket");
-            mensajeError += "<li>Debe seleccionar una Tecnolog&iacute;a</li>";
-            isValid = false;
-        } else {
-            $("#tecnologiaTicket").removeClass("invalid-inputTicket");
-        }
+        // if ($("#tecnologiaTicket").val() == undefined || $("#tecnologiaTicket").val() == '') {
+        //     $("#tecnologiaTicket").addClass("invalid-inputTicket");
+        //     mensajeError += "<li>Debe seleccionar una Tecnolog&iacute;a</li>";
+        //     isValid = false;
+        // } else {
+        //     $("#tecnologiaTicket").removeClass("invalid-inputTicket");
+        // }
 
         if (isValid) {
             swal({
@@ -326,19 +490,25 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                 confirmButtonText: 'Si',
                 cancelButtonText: 'No'
             }).then(function (isConfirm) {
-                console.log(isConfirm)
                 if (isConfirm) {
-                    console.log(isConfirm)
                     swal({ text: 'Espera un momento...', allowOutsideClick: false });
                     swal.showLoading();
-                    console.log($scope.ticketSoporteR);
+                    $scope.fallaTicketR = $scope.catalogoFallasTicketSoporte.find(function (elem) { return elem.id === Number($scope.ticketSoporteR.fallaTicket) });
+                    $scope.categoriaTicketR = $scope.catalogoFallasTicketSoporte.find(function (elem) { return elem.id === Number($scope.ticketSoporteR.categoriaTicket) });
+                    $scope.subcategoriaTicketR = $scope.catalogoFallasTicketSoporte.find(function (elem) { return elem.id === Number($scope.ticketSoporteR.subcategoriaTicket) });
                     let paramsTicket = {
                         "idTecnico": Number($scope.ticketSoporteR.idTecnico),
+                        "idOrden": $scope.ticketSoporteR.idOrden,
+                        "origenSistema": 3,
                         "telefonoTecnico": Number($scope.ticketSoporteR.telefonoTecnico),
-                        "noCuenta": Number($scope.ticketSoporteR.cuenta),
-                        "idFalla": Number($scope.ticketSoporteR.idFalla),
-                        "idCategoria": Number($scope.ticketSoporteR.idCategoria),
-                        "idSubcategoria": Number($scope.ticketSoporteR.idSubcategoria),
+                        "noCuenta": $scope.ticketSoporteR.cuenta,
+                        "idFalla": Number($scope.fallaTicketR.id),
+                        "idcodificacionSfFalla": $scope.fallaTicketR.codificacionSf,
+                        "idCategoria": Number($scope.categoriaTicketR.id),
+                        "idcodificacionSfCategoria": $scope.categoriaTicketR.codificacionSf,
+                        "idSubCategoria": Number($scope.subcategoriaTicketR.id),
+                        "idcodificacionSfSubCategoria": $scope.subcategoriaTicketR.codificacionSf,
+                        "idGrupoCodificacionSf": $scope.subcategoriaTicketR.grupoCodificadorSf,
                         "comentarios": $scope.ticketSoporteR.descripcionProblema,
                         "noSerieOld": $scope.ticketSoporteR.noSerieOld,
                         "noSerieNew": $scope.ticketSoporteR.noSerieNew,
@@ -346,10 +516,12 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                         // "idTipoNegocio": Number($scope.ticketSoporteR.tipoNegocio),
                         // "idRegion": Number($scope.ticketSoporteR.region),
                         // "idTecnologia": Number($scope.ticketSoporteR.tecnologia),
-                        "idApplication": 2
+                        "idApplication": 1,
+                        "informacionAdicional": [{}]
                     }
-                    console.log(paramsTicket);
+                    // console.log(paramsTicket);
                     gestionTicketSoporteService.creaTicketSoporte(paramsTicket).then(function success(response) {
+                        console.log(response);
                         if (response.data !== undefined) {
                             if (response.data.respuesta) {
                                 if (response.data.result) {
@@ -385,6 +557,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     }
 
     $scope.consultarTicketsSoporte = function () {
+        $("#container_noticias_ticket").hide();
         $(".user-filter span").removeClass('selected-filter');
         $(".fa-filter").css('color', '#ccc');
         let mensajeError = '';
@@ -395,6 +568,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         $scope.contadores.cerrado = 0;
         $scope.contadores.escalado = 0;
         $scope.contadores.pendiente = 0;
+        $scope.contadores.cancelado = 0;
         if (!$scope.validarFecha('filtro_fecha_inicio_ticket', 'filtro_fecha_fin_ticket')) {
             mensajeError += "<li>La fecha inicical debe ser menor a la fecha final</li>";
             isValid = false;
@@ -406,9 +580,12 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                 fechaFin: $scope.getFechaFormato(document.getElementById('filtro_fecha_fin_ticket').value),
                 tipoFecha: 'creacion'
             }
-            console.log(params);
-            swal({ text: 'Espera un momento...', allowOutsideClick: false });
-            swal.showLoading();
+            // console.log(params);
+            if (!swal.isVisible()) {
+                swal({ text: 'Espera un momento...', allowOutsideClick: false });
+                swal.showLoading();
+            }
+
             gestionTicketSoporteService.consultaTicketsSoporte(params).then(function success(response) {
                 console.log(response);
                 if (response.data.respuesta) {
@@ -419,26 +596,28 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                                 ticketSoporteTable.destroy();
                             }
                             $scope.ticketsSoporte = response.data.result.tickets;
-                            console.log($scope.ticketsSoporte);
                             $.each($scope.ticketsSoporte, function (i, elemento) {
                                 let row = [];
+                                let nombreTecnico = elemento.nombreEmpleadoReporta + " " + elemento.apellidoPaEmpleadoReporta + " " + elemento.apellidoMaEmpleadoReporta;
+                                let nombreIngeniero = elemento.nombreEmpleadoIng + " " + elemento.apellidoPaEmpleadoIng + " " + elemento.apellidoMaEmpleadoIng;
                                 row[0] = elemento.idOrden !== undefined ? elemento.idOrden : 'Sin informaci&oacute;n';
-                                row[1] = elemento.ticket == null ? 'Sin informaci&oacute;n' : elemento.ticket !== undefined ? elemento.ticket : 'Sin informaci&oacute;n';
+                                row[1] = elemento.idTicket == null ? 'Sin informaci&oacute;n' : elemento.idTicket !== undefined ? elemento.idTicket : 'Sin informaci&oacute;n';
                                 row[2] = elemento.os !== undefined ? elemento.os : 'Sin informaci&oacute;n';
                                 row[3] = elemento.fechaCreacion !== undefined ? elemento.fechaCreacion : 'Sin informaci&oacute;n';
                                 row[4] = elemento.descripcionFalla !== undefined ? elemento.descripcionFalla : 'Sin informaci&oacute;n';
                                 row[5] = elemento.telefono !== undefined ? elemento.telefono : 'Sin informaci&oacute;n';
-                                row[6] = elemento.nombreEmpleadoReporta + " " + elemento.apellidoPaEmpleadoReporta + " " + elemento.apellidoMaEmpleadoReporta;
-                                row[7] = elemento.nombreEmpleadoIng + " " + elemento.apellidoPaEmpleadoIng + " " + elemento.apellidoMaEmpleadoIng;
+                                row[6] = nombreTecnico;
+                                row[7] = nombreIngeniero;
                                 row[8] = elemento.fechaAsignacion == null ? 'Sin informaci&oacute;n' : elemento.fechaAsignacion !== undefined ? elemento.fechaAsignacion : 'Sin informaci&oacute;n';
                                 row[9] = elemento.descripcionEstatus !== undefined ? elemento.descripcionEstatus : 'Sin informaci&oacute;n';
                                 row[10] = elemento.tiempoAtencion == null ? 'Sin informaci&oacute;n' : elemento.tiempoAtencion !== undefined ? elemento.tiempoAtencion : 'Sin informaci&oacute;n';
-                                row[11] = '<a class="" id="detalleIncidencia' + elemento.ticket + '" onclick="consultaDetalleTicketSoporte(' + "'" + elemento.id_conexion + "'" + ')" >' +
-                                    '<i class="fa fa-bars" style="background-color: #58b3bf" title="Detalle"></i>' +
-                                    '</a> &nbsp;' +
-                                    '<a class="" id="detalleIncidencia' + elemento.ticket + '" onclick="asignaTicket(' + "'" + elemento.ticket + "'" + ')">' +
-                                    '<i class="fas fa-user-check" style="background-color: #7f4c9d" title="Asignar"></i>' +
-                                    '</a>'
+                                row[11] = '<span style="background-color: #7716fa" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnTables" id="detalleIncidencia' + elemento.idTicket + '" onclick="consultaDetalleTicketSoporte(' + "'" + elemento.idTicket + "'" + ')" >' +
+                                    '<i class="fa fa-bars" title="Detalle"></i>' +
+                                    '</span> &nbsp;' +
+                                    '<span style="background-color: #58b3bf" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnTables" id="asignarIngeniero' + elemento.idTicket + '" onclick="abrirModalAsignar(' + "'" + elemento.idTicket + "'" + ')" >' +
+                                    '<i class="fa fa-user-circle" title="Asignar"></i>' +
+                                    '</span>';
+
                                 arrayRow.push(row);
                                 if (elemento.descripcionEstatus === 'Abierto')
                                     $scope.contadores.abierto += 1;
@@ -451,17 +630,20 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
 
                                 if (elemento.descripcionEstatus === 'Pendiente')
                                     $scope.contadores.pendiente += 1;
+
+                                if (elemento.descripcionEstatus === 'Cancelado')
+                                    $scope.contadores.cancelado += 1;
                             });
                             ticketSoporteTable = $('#tableTicketSoporte').DataTable({
                                 "paging": true,
                                 "lengthChange": false,
                                 "ordering": false,
                                 "pageLength": 10,
-                                "info": false,
+                                "info": true,
+                                "scrollX": false,
                                 "data": arrayRow,
-                                "autoWidth": true,
+                                "autoWidth": false,
                                 "language": idioma_espanol_not_font,
-                                "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
                             });
                             swal.close();
                         } else {
@@ -477,7 +659,6 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                         swal.close();
                     }
                 } else {
-                    console.log("entro")
                     ticketSoporteTable.clear();
                     ticketSoporteTable.draw();
                     mostrarMensajeErrorAlert(response.data.resultDescripcion);
@@ -509,13 +690,49 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         }).catch(swal.noop);
     }
 
-    consultaDetalleTicketSoporte = function () {
+    $scope.accionesDinamicasDetalle = []
+    $scope.escalamientoListDetalle = []
+    $scope.estadoEscalamientoDetalle = []
+    $scope.ticketDetalle = 0
+    consultaDetalleTicketSoporte = function (ticket) {
+        $scope.ticketDetalle = ticket
+        $scope.ticketSoporteDetalle = {}
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
-        $scope.detalleCaptura = ticketDetalle.result.orden;
-        $scope.$apply();
-        $("#modalDetalle").modal('show');
-        swal.close();
+        // $scope.changeView(3);
+        // $("#container_noticias_ticket").show();
+        // $scope.consultarComentariosTicketSoporte();
+        $('#modalDetalle').modal('show')
+        $q.all([
+            gestionTicketSoporteService.consultarAccionesDinamicaDetalle(),
+            gestionTicketSoporteService.consultaPropietariosTicketSoporte()
+        ]).then(result => {
+            console.log(result)
+            swal.close();
+            if (result[0].data.respuesta) {
+                if (result[0].data.result) {
+                    $scope.accionesDinamicasDetalle = result[0].data.result.acciones
+                } else {
+                    mostrarMensajeWarningValidacion('No se pudo realizar la consulta de catalogos.')
+                }
+            } else {
+                mostrarMensajeWarningValidacion('No se pudo realizar la consulta de catalogos.')
+            }
+            if (result[1].data.respuesta) {
+                if (result[1].data.result) {
+                    $scope.escalamientoListDetalle = result[1].data.result.propietarios
+                    $scope.estadoEscalamientoDetalle = result[1].data.result.propietarios.filter(elemento => { return elemento.nivel === 1 })
+                } else {
+                    mostrarMensajeWarningValidacion('No se pudo realizar la consulta de motivos.')
+                }
+            } else {
+                mostrarMensajeWarningValidacion('No se pudo realizar la consulta de motivos.')
+            }
+        }).catch((err) => handleError(err));
+    }
+
+    $scope.closeDetalleTicketSoporte = function () {
+        $("#container_noticias_ticket").hide();
     }
 
     asignaTicket = function () {
@@ -549,16 +766,13 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         $("#telefonoTicket").val('');
         $("#noSerieTicket").val('');
         $("#noSerieNuevoEquipo").val('');
-        $("#noSerieNuevoEquipo").val('');
-        $("#falla").prop('selectedIndex', 0);
-        $("#categoria").prop('selectedIndex', 0);
-        $("#subcategoria").prop('selectedIndex', 0);
-        $("#subcategoria").prop('selectedIndex', 0);
-        $("#tipoOrden").prop('selectedIndex', 0);
-        $("#tipoOrden").prop('selectedIndex', 0);
+        $("#fallaTicket").prop('selectedIndex', 0);
+        $("#categoriaTicket").prop('selectedIndex', 0);
+        $("#subcategoriaTicket").prop('selectedIndex', 0);
+        $("#tipoOrdenTicket").prop('selectedIndex', 0);
         $("#tipoNegocio").prop('selectedIndex', 0);
-        $("#region").prop('selectedIndex', 0);
-        $("#tecnologia").prop('selectedIndex', 0);
+        $("#regionTicket").prop('selectedIndex', 0);
+        $("#tecnologiaTicket").prop('selectedIndex', 0);
         $("#descripcionProblemaTicket").val('');
     }
 
@@ -590,4 +804,199 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             }
         }).catch(swal.noop);
     }
+
+    $scope.ticketSelect = '';
+    abrirModalAsignar = function (ticket) {
+        $scope.ticketSelect = ticket
+        let params = {
+            idsGeografia: [129, 133, 130, 132, 131, 100, 103, 102, 101, 128, 125, 127, 126, 118, 119, 121, 122, 123, 120, 117, 134, 135, 136, 109, 113, 112, 105, 110, 111, 116, 106, 114, 107, 115, 108],
+            idTipoUsuario: [7]
+        }
+        if (ingenieroTable) {
+            ingenieroTable.destroy();
+        }
+        swal({ text: 'Espera un momento...', allowOutsideClick: false });
+        swal.showLoading();
+        gestionTicketSoporteService.consultarUsuariosPorPuesto(params).then((response) => {
+            console.log(response)
+            swal.close()
+            $('#modalAsigarTicket').modal('show')
+            if (response.data.respuesta) {
+                if (response.data.result) {
+                    $scope.listIngenieros = response.data.result.usuarios;
+                    $scope.listIngenieros.map(function (e) { e.isChecked = false; return e; })
+                    $scope.initTableingeniero();
+                } else {
+                    mostrarMensajeWarningValidacion('No hay ingenieros')
+                }
+            } else {
+                mostrarMensajeWarningValidacion('No se pudo realizar la operaci&oacute;n')
+            }
+        }).catch((err) => handleError(err));
+
+    }
+
+    $scope.initTableingeniero = function () {
+        let imgDefault = './resources/img/plantainterna/despacho/tecnicootasignada.png';
+        let arraRow = []
+        $.each($scope.listIngenieros, function (i, ingeniero) {
+            let array = []
+            let url = imgDefault
+            if (ingeniero.urlFoto) {
+                url = ingeniero.urlFoto
+            }
+            array[0] = '<img style="cursor:pointer;border-radius: 25px" src="' + url + '" alt="Foto" width="30" height="30" onclick="showImage(' + "'" + ingeniero.noEmpleado + "', 'usuario'" + ')"/>';
+            array[1] = ingeniero.noEmpleado ? ingeniero.noEmpleado : 'Sin informaci&oacute;n';
+            array[2] = ingeniero.nombreCompleto ? ingeniero.nombreCompleto : 'Sin informaci&oacute;n';
+            array[3] = ingeniero.geografia ? ingeniero.geografia : 'Sin informaci&oacute;n';
+            array[4] = ingeniero.fechaActualizacion ? ingeniero.fechaActualizacion : 'Sin informaci&oacute;n';
+            array[5] = '<input class="form-check-input" type="checkbox" onclick="selectIngeniero(this)" value="' + i + '" id="' + ingeniero.idUsuario + '"/>';
+            arraRow.push(array)
+        })
+        ingenieroTable = $('#ingenierosTable').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "ordering": false,
+            "pageLength": 10,
+            "info": false,
+            "data": arraRow,
+            "autoWidth": true,
+            "language": idioma_espanol_not_font,
+            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+            'fnCreatedRow': function (nRow, aData, iDataIndex) {
+                $(nRow).attr('id', 'ingeniero_' + aData[1]);
+            },
+        });
+        document.getElementById('ingenierosTable_paginate').addEventListener('click', function () {
+            $.each($scope.listIngenieros, function (i, elemento) {
+                if (!elemento.isChecked) {
+                    $('#' + elemento.idUsuario).prop('checked', false);
+                }
+                $scope.$apply();
+            });
+        })
+    }
+
+    selectIngeniero = function (ingeniero) {
+        $.each($scope.listIngenieros, function (i, elemento) {
+            if (elemento.isChecked) {
+                elemento.isChecked = false;
+                $('#' + elemento.idUsuario).prop('checked', false);
+                $scope.$apply();
+            }
+            if ($(ingeniero).attr('id') == elemento.idUsuario) {
+                elemento.isChecked = $(ingeniero).is(":checked");
+            }
+        })
+        $scope.$apply();
+    }
+
+    $scope.siguenteAsignar = function () {
+        $scope.ingenieroSelect = $scope.listIngenieros.find(function (elem) { return elem.isChecked == true });
+        if ($scope.ingenieroSelect) {
+            $('#modalAsigarTicket').modal('hide')
+            swal({
+                title: 'Comentarios',
+                input: 'textarea',
+                closeOnClickOutside: false,
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Asignar'
+            }).then((result) => {
+                $scope.asignarTicketIngeniero(result)
+            }).catch((result) => {
+                $('#modalAsigarTicket').modal('show')
+            })
+        } else {
+            mostrarMensajeWarningValidacion('Seleccione un ingeniero')
+        }
+
+    }
+
+    $scope.asignarTicketIngeniero = function (comentario) {
+        let params = {
+            idTicket: Number($scope.ticketSelect),
+            idIngenieroSoporte: Number($scope.ingenieroSelect.idUsuario),
+            comentarios: comentario
+        }
+        swal({ text: 'Espera un momento...', allowOutsideClick: false });
+        swal.showLoading();
+        gestionTicketSoporteService.asigarTicketIngeniero(params).then((response) => {
+            console.log(response)
+            swal.close()
+            if (response.data.respuesta) {
+                if (response.data.result) {
+                    mostrarMensajeExitoAlert(response.data.result.mensaje)
+                    $scope.consultarTicketsSoporte();
+                } else {
+                    mostrarMensajeWarningValidacion('No hay ingenieros')
+                }
+            } else {
+                mostrarMensajeWarningValidacion('No se pudo realizar la operaci&oacute;n')
+            }
+        }).catch((err) => handleError(err));
+    }
+
+    $scope.fallaList = []
+    $scope.categoriaListD = []
+    $scope.subcategoriaListD = []
+    $scope.iniciarCatalogoFallaDetalle = function () {
+        $scope.fallaList = $scope.catalogoFallasTicketSoporte.filter(elemento => { return elemento.nivel === 1 })
+    }
+
+    $scope.motivoEscalamientoDetalle = []
+    $scope.motivosSelectDetalle = function () {
+        $scope.motivoEscalamientoDetalle = $scope.escalamientoListDetalle.filter(elemento => { return elemento.nivel === 2 && elemento.idPadre === $scope.ticketSoporteDetalle.estado.id })
+    }
+
+    $scope.guardarTicketDetalle = function () {
+        let params;
+        if ($scope.ticketSoporteDetalle.estatus) {
+            if ($scope.ticketSoporteDetalle.estatus === 'escalacion') {
+                params = {
+                    idTicket: Number($scope.ticketDetalle),
+                    comentarios: $scope.ticketSoporteDetalle.comentarios,
+                    idPropietario: $scope.ticketSoporteDetalle.estado.id,
+                    idPropietarioSf: $scope.ticketSoporteDetalle.estado.idSalesforce,
+                    idMotivoPropietario: $scope.ticketSoporteDetalle.motivo.id,
+                    idMotivoSf: $scope.ticketSoporteDetalle.motivo.idSalesforce,
+                    tipo: $scope.ticketSoporteDetalle.estatus
+                }
+            } else {
+                params = {
+                    idTicket: Number($scope.ticketDetalle),
+                    comentarios: $scope.ticketSoporteDetalle.comentarios,
+                    tipo: $scope.ticketSoporteDetalle.estatus
+                }
+            }
+        }
+
+        swal({ text: 'Espera un momento...', allowOutsideClick: false });
+        swal.showLoading();
+        gestionTicketSoporteService.guardarTicketDetalle(params).then(response => {
+            console.log(response)
+            swal.close()
+            if (response.data.respuesta) {
+                if (response.data.result) {
+                    $('#modalDetalle').modal('hide')
+                    mostrarMensajeExitoAlert(response.data.result.mensaje)
+                } else {
+                    mostrarMensajeWarningValidacion(response.data.result.mensaje)
+                }
+            } else {
+                mostrarMensajeWarningValidacion('No se pudo realizar la operaci&oacute;n')
+            }
+        }).catch((err) => handleError(err));
+    }
+
+    document.getElementById('searchTableIngeniero').addEventListener('keyup', function () {
+        ingenieroTable.search(this.value).draw();
+    })
 }]);
+
+angular.element(document).ready(function () {
+    $("#moduloGestionTickets").addClass('active');
+    $("#idBody").removeAttr("style");
+});

@@ -4,9 +4,9 @@
     <div  ng-click="regresarConsulta()" class="container-regresar-button text-center">
         <span class="regresar-elemento fa fa-undo"></span>
     </div>
-<!--     <div  ng-click="abrirVentanaNoticias()" class="container-regresar-button text-center">
+    <div  ng-click="abrirVentanaNoticias()" class="container-regresar-button text-center">
         <span class="regresar-elemento fa fa-newspaper-o"></span>
-    </div> -->
+    </div>
     <div  ng-click="regresarHome()" class="container-regresar-button text-center">
         <span class="regresar-elemento fa fa-home"></span>
     </div>
@@ -32,39 +32,44 @@
         <div ng-if="listadoNoticias.length <= 0" class="container mt-5">
             <h5 class="noinfo-noticias">No se encontr&oacute; informaci&oacute;n</h5>
         </div>
-        <div ng-repeat="noticia in listadoNoticias track by $index" class="container-noticias row">
-                
+        <div class="row" style="max-height: 22.8em; overflow-y: scroll;">
+            <div ng-repeat="noticia in listadoNoticias track by $index" class="container-noticias">
                 <div class="col-12">
                     <div class="row">
                         <div class="col-12">
                             <div class="image-preview">
                                 <img class="img-created-by-comme" src="{{noticia.imgCreatedBy}}" alt="">
                                 <div class="div-titelheader-detalle">
-                                    <h1 class="titelheader-detalle" ng-bind="noticia.createdBy"></h1>
-                                    <h1 class="subtitelheader-detalle" ng-bind="noticia.text"></h1>
+                                    <div class="row">
+                                        <h1 class="titelheader-detalle" ng-bind="noticia.createdBy"></h1>
+                                    </div>
+                                    <div class="row">
+                                        <h1 class="subtitelheader-detalle" ng-bind="noticia.text"></h1>
+                                    </div>
                                     <span class="option-mensajes" ng-click="responderComentario(noticia.id)">Responder</span>
                                     <!-- <span class="option-mensajes" ng-click="editarComentario(noticia.id, noticia.text, 0)">Editar</span> -->
                                     <span class="option-mensajes" ng-click="eliminarComentario(noticia.id, 0)">Eliminar</span>
                                     <span class="text-fecha-comentario" ng-bind="noticia.createdDate"></span>
-                                    <div id="content-text-{{noticia.id}}" class="row content-text-send">
+                                    <button id="button-subcommet-ticket-{{noticia.id}}" type="button" class="btn-close close-enviar-subcomentario" ng-click="responderComentario(noticia.id)" aria-label="Close" style="display: none;"></button>
+                                    <div id="content-text-{{noticia.id}}" class="row content-text-send" style="display: none;">
                                         <div class="col-10">
                                             <input id="texto-comentario-{{noticia.id}}" type="text" class="form-control form-control-sm form-send">
                                         </div>
                                         <div class="col-2 col-btn-send">
-                                            <button class="btn btn-sm btn-primary btn-send" ng-click="enviarComentario(noticia.id)"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                                            <button class="btn btn-sm btn-primary btn-send" ng-click="enviarComentario(noticia.id)">Enviar</i></button>
                                         </div>
-                                        <div class="col-12 col-adjuntar-archivo" ng-show="showAdjuntar">
-                                            <form id="uploadFormSubcomentario-{{noticia.id}}" name="18" class="form-horizontal box form_drag_drop" novalidate="novalidate" enctype="multipart/form-data">
-                                                <div class="box__input">
-                                                    <input name="myFileSubOs" type="file" class="box__file inputFile adjuntar-archivo-os" onchange="cambiar(this)" id="fileSubComentarioTick-{{noticia.id}}"/>	
-                                                    <label for="fileSubComentarioTick-{{noticia.id}}" id="etiqueta_archivo">
-                                                        <span class="text_select_archivo_sub col-content-text-general">Adjuntar archivo</span>
-                                                 </div>
-                                            </form>
-                                        </div>
-                                        <div class="col-12 col-adjuntar-arch" ng-show="showAdjuntar">
-                                            <span class="eliminar_archivo_sub" ng-show="showEliminarSubTick" ng-click="resetFile(noticia.id)">Eliminar</span>
-                                        </div>
+                                            <div class="col-12 col-adjuntar-archivo" ng-show="showAdjuntar">
+                                                <form id="uploadFormSubcomentario-{{noticia.id}}" name="16" class="form-horizontal box form_drag_drop" novalidate="novalidate" enctype="multipart/form-data">
+                                                    <div class="box__input">
+                                                        <input name="myFileSubOs" type="file" class="box__file inputFile adjuntar-archivo-os" onchange="cambiar(this)" id="fileSubComentarioTick-{{noticia.id}}"/>	
+                                                        <label for="fileSubComentarioTick-{{noticia.id}}" id="etiqueta_archivo">
+                                                            <span class="text_select_archivo_sub col-content-text-general">Adjuntar archivo</span>
+                                                     </div>
+                                                </form>
+                                            </div>
+                                            <div class="col-12 col-adjuntar-arch" ng-show="showAdjuntar">
+                                                <span class="eliminar_archivo_sub" ng-show="showEliminarSubTick" ng-click="resetFile(noticia.id)">Eliminar</span>
+                                            </div>
                                     </div>
                                 </div>
                             </div>
@@ -93,7 +98,7 @@
                         </div>
                     </div>
         
-                    <div ng-repeat="comentario in noticia.subComentarios track by comentario.id" class="row container-elementcommes">
+                    <div ng-repeat="comentario in noticia.subComentarios track by comentario.id" class="container-elementcommes">
                         <div class="col-11 offset-1">
                             <div class="row">
                             <div class="image-preview-owner">
@@ -104,12 +109,12 @@
                                     <!-- <span class="option-mensajes" ng-click="editarComentario(comentario.id, comentario.text, 1)">Editar</span> -->
                                     <span class="option-mensajes" ng-click="eliminarComentario(comentario.id, 1)">Eliminar</span>
                                     <span class="text-fecha-comentario" ng-bind="comentario.createdDate"></span>
-                                    <div id="content-text-{{comentario.id}}" class="row content-text-send">
+                                    <div id="content-text-{{comentario.id}}" class="row content-text-send" style="display: none;">
                                         <div class="col-10">
                                             <input id="texto-comentario-{{comentario.id}}" type="text" class="form-control form-control-sm form-send">
                                         </div>
                                         <div class="col-2 col-btn-send">
-                                            <button class="btn btn-sm btn-primary btn-send" ng-click="enviarComentario(comentario.id)"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                                            <button class="btn btn-sm btn-primary btn-send" ng-click="enviarComentario(comentario.id)">Enviar</button>
                                         </div>
                                     </div>
                                 </div>
@@ -117,7 +122,7 @@
                             </div>
                         </div>
                         <div class="col-10 offset-1" ng-if="comentario.media">
-                        <div class="row content-archivo-comentario">
+                        <div class="content-archivo-comentario">
                             <div class="imagen-adjuntado-comment" ng-switch="comentario.media.type">
                                 <img ng-switch-when="JPG"  src="${pageContext.request.contextPath}/resources/img/iconossf/imageico.jpg" class="imagen-comment-owner" alt="">
                                 <img ng-switch-when="JPEG" src="${pageContext.request.contextPath}/resources/img/iconossf/imageico.jpg" class="imagen-comment-owner" alt="">
@@ -140,18 +145,20 @@
                     </div>
                 </div>
         </div>
+        </div>
+
         <div class="divider-noticias" style=" width: 100%;height: 1px; background: gainsboro;"></div>
         <div class="row">
             <div class="col-10 col-content-text-general">
                 <input id="text-general-ticket" type="text" class="form-control form-control-sm form-send-general">
             </div>
             <div class="col-2 col-btn-send-general">
-                <button class="btn btn-sm btn-primary btn-send" ng-click="enviarMesajeGeneral()"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                <button class="btn btn-sm btn-primary btn-send" ng-click="enviarMesajeGeneral()">Enviar</button>
             </div>
         </div>
         <div class="row">
             <div class="col-12">
-                <form id="uploadFormT" name="15" class="form-horizontal box form_drag_drop" novalidate="novalidate" enctype="multipart/form-data">
+                <form id="uploadForm" name="13" class="form-horizontal box form_drag_drop" novalidate="novalidate" enctype="multipart/form-data">
                     <div class="box__input">
                         <input name="myFile" type="file" class="box__file inputFile" id="fileTicket">	
                         <label for="fileTicket" id="etiqueta_archivo">
@@ -162,7 +169,7 @@
             
         </div>
         <div class="row">
-            <div class="col-12">
+            <div class="col-12" style="top: -1em;">
                 <span class="eliminar_archivo" ng-show="showEliminarTicket" ng-click="resetFile()">Eliminar</span>
             </div>
         </div>

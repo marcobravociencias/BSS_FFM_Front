@@ -26,7 +26,7 @@
     <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" rel="stylesheet" />
     <link href="${pageContext.request.contextPath}/resources/libraries/alertify/css/alertify.min.css" rel="stylesheet">
 
-    <link href="${pageContext.request.contextPath}/resources/css/plantaexterna/incidenciasCuadrantes/styleIncidenciasCuadrantes.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/plantaexterna/incidenciasCuadrantes/styleIncidenciasCuadrantes.css?v=${sessionScope.versionDepl}" rel="stylesheet">
     <title>FFM Total play</title>
 </head>
 
@@ -227,13 +227,13 @@
     src="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/lib/moment.es.js"></script>
 
 <!-- ARCHIVOS JS -->
-<script src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
 <script type="text/javascript"
-    src="${pageContext.request.contextPath}/resources/js/plantaexterna/incidenciasCuadrantes/incidenciasCuadrantesController.js"></script>
+    src="${pageContext.request.contextPath}/resources/js/plantaexterna/incidenciasCuadrantes/incidenciasCuadrantesController.js?v=${sessionScope.versionDepl}"></script>
 <script type="text/javascript"
-    src="${pageContext.request.contextPath}/resources/js/plantaexterna/incidenciasCuadrantes/incidenciasCuadrantesService.js"></script>
+    src="${pageContext.request.contextPath}/resources/js/plantaexterna/incidenciasCuadrantes/incidenciasCuadrantesService.js?v=${sessionScope.versionDepl}"></script>
 <script type="text/javascript"
-    src="${pageContext.request.contextPath}/resources/js/plantaexterna/incidenciasCuadrantes/jsonIncidenciasCuadrantes.js"></script>
+    src="${pageContext.request.contextPath}/resources/js/plantaexterna/incidenciasCuadrantes/jsonIncidenciasCuadrantes.js?v=${sessionScope.versionDepl}"></script>
 <script>
     var context_project = "${pageContext.request.contextPath}/resources"
 </script>

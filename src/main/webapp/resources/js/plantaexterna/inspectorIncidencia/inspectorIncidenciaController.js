@@ -1,10 +1,11 @@
 var app = angular.module('inspectorIncidenciaApp', []);
 var incidenciaTable = undefined;
-app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncidenciaService', function ($scope, $q, inspectorIncidenciaService) {
+var tableDetalleStatus = undefined;
+app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncidenciaService', 'genericService', function ($scope, $q, inspectorIncidenciaService, genericService) {
 
     $scope.filtrosInspector = {};
     $scope.incidencias = [];
-    
+
     $scope.latIncidencia = "";
     $scope.longIncidencia = "";
     $scope.detalleIncidencia = {};
@@ -35,9 +36,9 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
 
     document.getElementById('cluster').addEventListener('click', function () {
         $('#modalCluster').modal('show');
-        setTimeout(function (){
-	        $('#buscadorGeografiaConsultaIncidencias').focus();
-	    }, 750);
+        setTimeout(function () {
+            $('#buscadorGeografiaConsultaIncidencias').focus();
+        }, 750);
     });
 
 
@@ -79,6 +80,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         swal.showLoading();
         $scope.filtrosInspector.fallas = arrayFallas.data.result;
         $scope.filtrosInspector.fallas.map(function (e) { e.checkedOpcion = true; return e; })
+        /*
         $scope.filtrosInspector.statusFallas = arrayStatusFallas.data.result;
         $scope.filtrosInspector.statusFallas.map(function (e) { e.checkedOpcion = true; return e; })
         $scope.filtrosInspector.coloresStatus = arrayColoresStatus.data.result[3];
@@ -94,13 +96,14 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
             }
             return e
         })
+        
         $('#jstree-proton-3').bind('loaded.jstree', function (e, data) {
         }).jstree({
             'plugins': ["search", "wholerow", "checkbox"],
             'search': {
-				"case_sensitive": false,
-				"show_only_matches": true
-			},
+                "case_sensitive": false,
+                "show_only_matches": true
+            },
             'core': {
                 'data': geografia,
                 'themes': {
@@ -110,16 +113,31 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                 }
             }
         });
+        
         console.log("FILTROSSS***********");
         console.log($scope.filtrosInspector);
         console.log("********************");
         swal.close();
+        */
         incidenciaTable = $('#tableIncidencia').DataTable({
             "paging": true,
             "lengthChange": false,
             "searching": false,
             "ordering": false,
             "pageLength": 10,
+            "info": false,
+            "autoWidth": true,
+            "language": idioma_espanol_not_font,
+            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+
+        });
+
+        tableDetalleStatus = $('#tableDetalleStatus').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "pageLength": 5,
             "info": false,
             "autoWidth": true,
             "language": idioma_espanol_not_font,
@@ -133,11 +151,86 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
         $q.all([
-            inspectorIncidenciaService.consultarFallasInspectorIncidencia(),
-            inspectorIncidenciaService.consultarStatusFallasInspectorIncidencia(),
-            inspectorIncidenciaService.systemColor(),
+            inspectorIncidenciaService.consultarConfiguracionDespachoDespacho({"moduloAccionesUsuario":"moduloInspectorIncidenciasPE"}),
+            inspectorIncidenciaService.consulCatalogoGeografia(),
+            genericService.consultarCatalogoEstatusDespachoPI(),
+            //inspectorIncidenciaService.systemColor(),
             // inspectorIncidenciaService.systemColor(),
         ]).then(function (results) {
+
+            let resultConf = results[0].data.result
+			if( resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves){
+                let  llavesResult=results[0].data.result.MODULO_ACCIONES_USUARIO.llaves;
+                
+                $scope.nfiltrogeografia=llavesResult.N_FILTRO_GEOGRAFIA;
+                $scope.nfiltroestatuspendiente=llavesResult.N_ESTATUS_PENDIENTES;
+            }
+            if (results[1].data !== undefined) {
+				if (results[1].data.respuesta) {
+					if (results[1].data.result) {
+						if (results[1].data.result.geografia) {
+							$scope.listadogeografiacopy = results[0].data.result.geografia
+							//console.log("######")
+							//console.log(results[0].data.result)
+							$scope.nfiltrogeografia = $scope.nfiltrogeografia ? $scope.nfiltrogeografia : $scope.obtenerNivelUltimoJerarquiaGeneric(results[1].data.result.geografia);
+							geografia = results[1].data.result.geografia.filter(e=>e.nivel<= parseInt($scope.nfiltrogeografia));
+							console.log(geografia);
+							geografia.map((e) => {
+								e.parent = e.padre == undefined ? "#" : e.padre;
+								e.text = e.nombre;
+								e.icon = "fa fa-globe";
+								e.state = {
+									opened: false,
+									selected: true,
+								}
+								return e
+							})
+							$('#jstree-proton-3').bind('loaded.jstree', function (e, data) {
+
+							}).jstree({
+								'plugins': ["wholerow", "checkbox", "search"],
+								'core': {
+									'data': geografia,
+									'themes': {
+										'name': 'proton',
+										'responsive': true,
+										"icons": false
+									}
+								},
+								"search": {
+									"case_sensitive": false,
+									"show_only_matches": true
+								}
+							});
+
+						} else {
+							toastr.warning('No se encontraron datos para la geografia');
+						}
+					} else {
+						toastr.warning('No se encontraron datos para la geografia');
+					}
+				} else {
+					toastr.warning(results[0].data.resultDescripcion);
+				}
+			} else {
+				toastr.error('Ha ocurrido un error en la consulta de turnos');
+			}
+            if (results[2].data !== undefined) {
+				if (results[2].data.respuesta) {
+					if (results[2].data.result) {
+						$scope.nfiltroestatuspendiente = $scope.nfiltroestatuspendiente ? $scope.nfiltroestatuspendiente : $scope.obtenerNivelUltimoJerarquiaGeneric(results[2].data.result);
+						$scope.filtrosInspector.statusFallas = $scope.realizarConversionAnidado(results[2].data.result.filter(e=>e.nivel<= parseInt($scope.nfiltroestatuspendiente)));
+					} else {
+						toastr.info('No se encontraron catalogo de estatus');
+					}
+				} else {
+					toastr.warning(results[2].data.resultDescripcion);
+				}
+			} else {
+				toastr.error('Ha ocurrido un error en la consulta de catalogo de estatus');
+			}
+            swal.close();
+            /*
             if (results[0].data !== undefined) {
                 if (results[0].data.respuesta) {
                     if (results[0].data.result) {
@@ -198,15 +291,15 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                             }).jstree({
                                 'plugins': ["search", "wholerow", "checkbox"],
                                 'search': {
-        							"case_sensitive": false,
-        							"show_only_matches": true
-        						},
+                                    "case_sensitive": false,
+                                    "show_only_matches": true
+                                },
                                 'core': {
                                     'data': geografia,
                                     'themes': {
                                         'name': 'proton',
                                         'responsive': true,
-                                        "icons":false        
+                                        "icons": false
                                     }
                                 }
                             });
@@ -230,8 +323,10 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                 toastr.error('Ha ocurrido un error en la consulta de geografia')
                 $scope.banderaErrorGeografia = true;;
             }
+            */
         }).catch(err => handleError(err));
     }
+    $scope.consultarCatalogosInspectorIncidencia();
 
     $scope.seleccionTodos = function (paramFiltroParent, banderaChecked) {
         paramFiltroParent.map(function (e) {
@@ -329,7 +424,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
             }
             header_tabs += '' +
                 '<li class="nav-item">' +
-                '<a class="nav-link ' + ((i === 0) ? "active" : "") + ' " id="header_tab_' + i + '" data-toggle="tab" href="#content_tab_' + i + '" role="tab" aria-controls="content_tab_' + i + '" aria-selected="true">Falla #' + (i + 1) + '</a>';
+                '<a class="nav-link ' + ((i === 0) ? "active" : "") + ' " id="header_tab_' + i + '" data-toggle="tab" href="#content_tab_' + i + '" role="tab" aria-controls="content_tab_' + i + '" aria-selected="true">Falla ' + (i + 1) + '</a>';
             '</li>';
 
             content_tabs += '' +
@@ -348,52 +443,54 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         $("#content_tabs").append(content_tabs);
 
         console.log($scope.detalleIncidencia);
+
         if ($scope.detalleIncidencia.DetalleStatus.length == 0) {
-            $scope.isNavTab = true;
-            $("#bodyFileDetallestatus").append('<tr><td class="sin_datos" colspan="10" style="text-align:center;">Sin datos para mostrar</td></tr>')
+            $scope.isNavTab = false;
         } else {
             $scope.isNavTab = true;
-            var body = $("#bodyFileDetallestatus");
-            body.html('');
-            let contBody = '';
-            $.each($scope.detalleIncidencia.DetalleStatus, function (index, element) {
-                contBody += ''
-                    + '<tr>'
-                    + '<td>' + element.NumEmpleado + '</td>'
-                    + '<td>' + element.Empleado + '</td>'
-                    + '<td>' + element.Motivo + '</td>'
-                    + '<td>' + element.Fecha + '</td>'
-                    + '<td>' + element.Comentario + '</td>'
-                    + '<td><i class="fa fa-download style_icono_ajaxDownloadFile" onclick=" (\'' + element.NombreArchivo + '\', \'' + $('#idincidenciaI').val() + '\')"></i></td>'
-                    + '<td class="head_center"></td>  '
-                    + '</tr>';
+            let arraRow = [];
+
+            console.log($scope.detalleIncidencia);
+            $.each($scope.detalleIncidencia.DetalleStatus, function (i, elemento) {
+                let row = [];
+                row[0] = elemento.NumEmpleado ? elemento.NumEmpleado : '-';
+                row[1] = elemento.Empleado ? elemento.Empleado : '-';
+                row[2] = elemento.Motivo ? elemento.Motivo : '-';
+                row[3] = elemento.Fecha ? elemento.Fecha : '-';
+                row[4] = elemento.Comentario ? elemento.Comentario : '-';
+                row[5] = '<i class="fa fa-download style_icono_ajaxDownloadFile" title="Descargar evidencia" onclick="downloadFile(\'' + elemento.NombreArchivo + '\', \'' + elemento.Url+ '\')"></i>';
+                arraRow.push(row);
+            })
+            if (tableDetalleStatus) {
+                tableDetalleStatus.destroy();
+            }
+            tableDetalleStatus = $('#tableDetalleStatus').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": false,
+                "pageLength": 5,
+                "info": false,
+                "data": arraRow,
+                "autoWidth": true,
+                "language": idioma_espanol_not_font,
+                "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
             });
-            body.html(contBody);
         }
     }
 
-    consultarDetalleIncidencia = function (idIncidencia, reporta, numeroEmpleado, descripcion, cluster, latitud, longitud, idFalla, detalleFalla, idCluster, idStatus, statusFalla) {
-        $scope.incidencia.idIncidencia = idIncidencia;
-        $scope.incidencia.reporta = reporta;
-        $scope.incidencia.numeroEmpleado = numeroEmpleado;
-        $scope.incidencia.descripcion = descripcion;
-        $scope.incidencia.cluster = cluster;
-        $scope.incidencia.latitud = latitud;
-        $scope.incidencia.longitud = longitud;
-        $scope.incidencia.idFalla = idFalla;
-        $scope.incidencia.detalleFalla = detalleFalla;
-        $scope.incidencia.idCluster = idCluster;
-        $scope.incidencia.idStatus = idStatus;
-        $scope.incidencia.statusFalla = statusFalla;
-        $scope.isInitDeclinar = false;
+    consultarDetalleIncidencia = function (idIncidencia) {
+        console.log(idIncidencia);
+        console.log( $scope.incidencias);
+        $scope.incidencia =  $scope.incidencias.find((e) => e.idIncidencia == idIncidencia);
         console.log($scope.incidencia);
         let params = {
-
+            incidencia: idIncidencia
         }
         inspectorIncidenciaService.consultarDetalleIncidenciaInspectorPE(params).then(function success(response) {
             swal({ text: 'Espera un momento...', allowOutsideClick: false });
             swal.showLoading();
-            $scope.inicializarDetalleIncidencia(latitud, longitud);
+            $scope.inicializarDetalleIncidencia($scope.incidencia.latitud, $scope.incidencia.longitud);
 
             console.log($scope.incidencia.idStatus);
             // NUEVA
@@ -471,7 +568,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
             $("#modalDetalleIncidencia").modal('show');
             $("#container-declinarIncidencia").hide();
             swal.close();
-        })
+        }).catch(err => handleError(err));
     }
 
     cargarDetalle = function (idIncidencia) {
@@ -482,7 +579,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         let isUbicacion = false;
         let index = 0;
         $scope.incidenciaSeleccionada = $scope.incidencias[indexI];
-        
+
         $.each(markers, function (i, elemento) {
             if (elemento.id_incidencia == $scope.incidenciaSeleccionada.idIncidencia) {
                 index = i;
@@ -494,12 +591,12 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         });
 
         if (!isUbicacion) {
-            $scope.pintarUbicacion($scope.incidenciaSeleccionada.idIncidencia, 
-                $scope.incidenciaSeleccionada.latitud, 
-                $scope.incidenciaSeleccionada.longitud, 
-                $scope.incidenciaSeleccionada.descClasificacionIncidente, 
-                $scope.incidenciaSeleccionada.usuarioReporta, 
-                $scope.incidenciaSeleccionada.fecha, 
+            $scope.pintarUbicacion($scope.incidenciaSeleccionada.idIncidencia,
+                $scope.incidenciaSeleccionada.latitud,
+                $scope.incidenciaSeleccionada.longitud,
+                $scope.incidenciaSeleccionada.descClasificacionIncidente,
+                $scope.incidenciaSeleccionada.usuarioReporta,
+                $scope.incidenciaSeleccionada.fecha,
                 $scope.incidenciaSeleccionada.colorEstatus);
         } else {
             markers.splice(index, 1);
@@ -606,7 +703,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         $scope.isGenerar = false;
         $scope.isDeclinar = false;
         let params = {};
-        $('#select-motivo-rechazar').val("") 
+        $('#select-motivo-rechazar').val("")
         $('#select-motivo-rechazar').val() === undefined || $('#select-motivo-rechazar').val() === ""
         $("#container-detalleIncidencia").hide();
         $("#container-declinarIncidencia").show();
@@ -620,7 +717,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         $scope.isRecuperar = false;
         $scope.isGenerar = true;
         $scope.isDeclinar = true;
-        $('#select-motivo-rechazar').val("") 
+        $('#select-motivo-rechazar').val("")
         $("#container-detalleIncidencia").show();
         $("#container-declinarIncidencia").hide();
     }
@@ -681,16 +778,16 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
 
     $scope.recuperarIncidencia = function () {
         swal({
-            title: " Recuperar\u00E1s la incidencia "+$scope.incidencia.idIncidencia+" ",
-			text: "Comentarios:",
+            title: " Recuperar\u00E1s la incidencia " + $scope.incidencia.idIncidencia + " ",
+            text: "Comentarios:",
             type: "warning",
             input: "textarea",
             reverseButtons: true,
-			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#d33',
-			confirmButtonText: 'S\u00ED, recuperar',
-			cancelButtonText:"Cancelar",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'S\u00ED, recuperar',
+            cancelButtonText: "Cancelar",
         }).then(function (comentarioRecuperar) {
             if (comentarioRecuperar == '') {
                 toastr.warning('Para recuperar la incidencia debe de ingresar un comentario');
@@ -716,7 +813,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
     }
 
     $scope.generarOTIncidencia = function () {
-        $('.swal2-container.swal2-shown ').css('background-color', '#fff');  
+        $('.swal2-container.swal2-shown ').css('background-color', '#fff');
         swal({
             title: " Generar\u00E1s la incidencia " + $scope.incidencia.idIncidencia + " como OT",
             showCancelButton: true,
@@ -789,9 +886,9 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
             }
             $scope.initMapa();
             $scope.params = {};
-            $scope.params.idEstatus = [1,2,3];
-            $scope.params.idSubTipoFallas = [1,2,4];
-            $scope.params.idGeografias = [1,2,4];
+            $scope.params.idEstatus = [1, 2, 3];
+            $scope.params.idSubTipoFallas = [1, 2, 4];
+            $scope.params.idGeografias = [1, 2, 4];
             $scope.params.fechaInicio = "2021-09-10";
             $scope.params.fechaFin = "2021-12-10";
             inspectorIncidenciaService.consultarIncidenciasInspectorPE($scope.params).then(function success(response) {
@@ -809,7 +906,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                     row[6] = elemento.usuarioReporta ? elemento.usuarioReporta : "";
                     row[7] = elemento.fechaRegistro ? elemento.fechaRegistro : "";
                     row[8] = elemento.horaRegistro ? elemento.horaRegistro : "";
-                    row[9] = '<a class="" id="detalleIncidencia' + elemento.idIncidencia + '" onclick="consultarDetalleIncidencia (' + elemento.idIncidencia + ",'" + elemento.usuarioReporta + "','" + elemento.NumeroEmpleado + "','" + elemento.CatIncidenteDet + "','" + elemento.nombreGeografia + "'," + elemento.Latitud + "," + elemento.Longitud + "," + elemento.IdIncidencia + ",'" + elemento.CatIncidenteDet + "','" + elemento.IdCluster + "','" + elemento.ID_Status + "','" + elemento.Status + "','" + elemento.Ot + "'" + ');">' +
+                    row[9] = '<a class="btn-inpector-incidencia" id="detalleIncidencia' + elemento.idIncidencia + '" onclick="consultarDetalleIncidencia(' + elemento.idIncidencia + ');">' +
                         '<i class="far fa-window-restore"></i>' +
                         '</a>';
                     row[10] = '<i class="fas fa-globe-americas" style="color:' + elemento.colorEstatus + '; cursor: pointer;" onclick="pintarUbicacionIncidencia(' + i + ')"></i>'
@@ -851,7 +948,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
     $scope.widthTable = 95;
     $scope.widthMap = 5;
     $scope.mostrarMapa = false;
-    $scope.mostrarOcultarMapa = function() {
+    $scope.mostrarOcultarMapa = function () {
         if ($scope.mostrarMapa) {
             $scope.mostrarMapa = false;
             $scope.mostrarMapa2 = false;
@@ -889,25 +986,43 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         $("#containerStatusFallas").show();
         $("#container-declinarIncidencia").hide();
     })
-    
+
     //MÉTODO PARA BUSCAR GEOGRAFÍAS DE ACUERDO AL TEXTO INGRESADO EN EL INPUT DE BÚSQUEDA - CONSULTA GENERAL DE INCIDENCIAS
-    $scope.busquedaGeografiaConsultaIncidencias = function() {
-    	$("#jstree-proton-3").jstree("search", $('#buscadorGeografiaConsultaIncidencias').val());
-	}
+    $scope.busquedaGeografiaConsultaIncidencias = function () {
+        $("#jstree-proton-3").jstree("search", $('#buscadorGeografiaConsultaIncidencias').val());
+    }
 
     angular.element(document).ready(function () {
         $("#idBody").removeAttr("style");
         $("#moduloInspectorIncidenciasPE").addClass('active');
 
-        $('a.toggle-vis').on( 'click', function (e) {
+        $('a.toggle-vis').on('click', function (e) {
             e.preventDefault();
-     
+
             // Get the column API object
-            var column = table.column( $(this).attr('data-column') );
+            var column = table.column($(this).attr('data-column'));
             console.log(column);
             // Toggle the visibility
-            column.visible( ! column.visible() );
-        } );
+            column.visible(!column.visible());
+        });
     });
-    
+
+
+
+    // NUEVO
+    function compareGeneric(a, b) {
+		let niveluno = a.nivel;
+		let niveldos = b.nivel;
+		if (niveluno > niveldos) {
+			return -1
+		} else if (niveluno < niveldos) {
+			return 1
+		}
+		return 0
+	}
+
+    $scope.obtenerNivelUltimoJerarquiaGeneric = function (list) {
+		return list.sort(compareGeneric)[0].nivel
+	}
+
 }]);

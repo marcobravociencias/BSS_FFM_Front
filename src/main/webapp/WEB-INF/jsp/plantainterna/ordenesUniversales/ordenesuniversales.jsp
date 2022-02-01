@@ -11,7 +11,6 @@ pageEncoding="ISO-8859-1"%>
 	<link rel="icon" type="image/png" sizes="96x96" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-96x96.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-16x16.png">
 	<link href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap.css" rel="stylesheet">
-	
 	<link href="${pageContext.request.contextPath}/resources/libraries/fullcalendar/main.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/dataTables.bootstrap.min.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/dataTables.fontAwesome.css" rel="stylesheet">
@@ -24,7 +23,7 @@ pageEncoding="ISO-8859-1"%>
 	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" rel="stylesheet" />
-	<link href="${pageContext.request.contextPath}/resources/css/plantainterna/ordenesUniversales/styleOrdenesUniversales.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/resources/css/plantainterna/ordenesUniversales/styleOrdenesUniversales.css?v=${sessionScope.versionDepl}" rel="stylesheet">
 </head>
 
 <body id="idBody" ng-controller="ordenesUniversalesController" ng-init="consultarCatalogoOrdenesUniversales()" style="display: none;">
@@ -136,13 +135,13 @@ pageEncoding="ISO-8859-1"%>
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 	<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 
-	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/ordenesUniversales/ordenesUniversalesController.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/ordenesUniversales/calendarController.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/ordenesUniversales/mapController.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/ordenesUniversales/ordenesUniversalesService.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/ordenesUniversales/jsonResult.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/ordenesUniversales/ordenesUniversalesController.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/ordenesUniversales/calendarController.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/ordenesUniversales/mapController.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/ordenesUniversales/ordenesUniversalesService.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/ordenesUniversales/jsonResult.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js?v=${sessionScope.versionDepl}"></script>
 	<script type="text/javascript">let contex_project = "${pageContext.request.contextPath}";</script>
-	<script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js?v=${sessionScope.versionDepl}"></script>
 </html>

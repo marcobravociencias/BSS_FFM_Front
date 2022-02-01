@@ -9,17 +9,6 @@ app.service("gestionUniversalService", function ($http) {
         });
     };
 
-    this.consultarTecnico = function (params) {
-        return $http({
-            method: "post",
-            url: "req/consultarBusquedaSkills",
-            data: JSON.stringify(params),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-    };
-
     this.consultarTecnicosGeografia = function () {
         return $http({
             method: "post",

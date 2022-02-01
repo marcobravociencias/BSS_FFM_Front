@@ -13,7 +13,6 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 	$scope.idIntervenciones = [];
 	$scope.listaGeografiasIndividual = [];
 	$scope.listaGeografiasTabla = [];
-	
 	$scope.listadoIntervencionesTecnico=null;
 	$scope.contadorSkillsSeleccionadas = 0;
 	$scope.contadorSkillsSeleccionadasMultiseleccion = 0;
@@ -22,14 +21,12 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 	$scope.tecnicoSeleccionado = null;
 	$scope.idTecnicoSeleccionado = null;
 	$scope.valorSlider = 0;
-	
 	$scope.skillsSeleccionadasIndividual = [];
 	$scope.skillsSeleccionadasMultiseleccion = [];
-	
 	$scope.nivelSkill = null;
-	
 	$scope.txtbusq='';
 	
+	//Funciones pendientes por revisar
 	$scope.busquedaT=function(){
 		var busq=$scope.txtbusq;
 		tablePermisosDinamica.search(busq).draw()
@@ -48,7 +45,9 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 		swal("Correcto", "Registros actualizados con exito", "success");
 		}, 800);
 	});
+	//Fin de funciones pendientes por revisar
 
+	//FUNCIÓN QUE VA A CONSULTAR LOS TÉCNICOS DE ACUERDO A LA GEOGRAFÍA SELECCIONADA
 	$('#arbolGeografiasVistaIndividual').on("select_node.jstree", function (e, data) {
 		$scope.tecnicosMostradas = [];
 		$scope.listaTecnicosTabla = [];
@@ -131,6 +130,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 		$scope.$apply();
     });
 	
+	//FUNCIÓN QUE CARGA EL ÁRBOL DE INTERVENCIONES / SKILLS DEL TÉCNICO SELECCIONADO
 	$scope.consultarSkillsAsignadasTecnico = function(idTecnico, nombreTecnico, primerApellido, segundoApellido){
 		$("#arbolSkillsVistaIndividual").jstree("destroy");
 		$scope.contadorSkillsSeleccionadas = 0;
@@ -146,23 +146,6 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 		if($scope.listadoIntervenciones == ""){
         	toastr.warning('¡No existen Skills actualmente!');
         }else{
-//        	angular.forEach($scope.listadoIntervenciones,function(intervencion,index){
-//    			intervencion.check = 0;
-//    		});
-//    		
-//    		angular.forEach($scope.tecnicosMostradas,function(tecnico,index){
-//    			if(idTecnico == tecnico.idUsuario){
-//    				angular.forEach($scope.listadoIntervenciones,function(intervencion,index){
-//    					angular.forEach(tecnico.skills,function(skillAsignada,indexSkillAsignada){
-//    						if(intervencion.id == skillAsignada && intervencion.check == 0){
-//    							intervencion.check = 1;
-//    							$scope.contadorSkillsSeleccionadas = $scope.contadorSkillsSeleccionadas + 1;
-//    						}
-//    					});
-//    				});
-//    			}
-//    		});
-        	
         	let intervencionesListaIndividual = $scope.listadoIntervencionesIndividual;
         	
         	angular.forEach(intervencionesListaIndividual,(intervencion,index) => {
@@ -174,7 +157,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
         			angular.forEach(intervencionesListaIndividual,(intervencion,index) => {
         				angular.forEach(tecnico.skills,function(skillAsignada,indexSkillAsignada){
                             if(intervencion.id == skillAsignada) {
-                            	intervencion.state = {selected: true, opened: true};
+                            	intervencion.state = {selected: true, opened: false};
                             	$scope.contadorSkillsSeleccionadas = $scope.contadorSkillsSeleccionadas + 1;
                             }
                         });
@@ -183,14 +166,14 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
         	});
         	
         	intervencionesListaIndividual.map((e)=>{
-                e.parent = e.idPadre == undefined ? "#" : e.idPadre;
+                e.parent = e.idPadre == null ? 0 : e.idPadre;
                 e.text= e.nombre;
                 e.icon= "fa fa-globe";
                 return e
             })       
 
             $('#arbolSkillsVistaIndividual').bind('loaded.jstree', function(e, data) {
-    			$(this).jstree("open_all");
+            	
             }).jstree({
             	'plugins': ['search', 'checkbox', 'wholerow'],
             	'search': {
@@ -206,7 +189,12 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
                     }
                 }
     		});
-    		
+
+        	setTimeout(function (){
+        		$("#arbolSkillsVistaIndividual").jstree().close_all();
+        		$("#arbolSkillsVistaIndividual").jstree("open_node", 0);
+        	}, 100);
+
     		$('#divContenedorSkills').show();
     		$('#divBotonGuardarSkills').show();
     		$('#divMensajeSeleccionaTecnico').hide();
@@ -216,6 +204,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 		
 	}
 	
+	//FUNCIÓN QUE AUMENTA O DISMINUYE EL CONTADOR DE SKILLS SELECCIONADAS
 	$scope.sumarContador = function(estado){
 		if(estado == 0){
 			$scope.contadorSkillsSeleccionadas = $scope.contadorSkillsSeleccionadas + 1;
@@ -224,16 +213,8 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 		}
 	}
 	
-//	$scope.contadorSkillsMultiseleccion = function(estado){
-//		if(estado == 0){
-//			$scope.contadorSkillsSeleccionadasMultiseleccion = $scope.contadorSkillsSeleccionadasMultiseleccion + 1;
-//		}else{
-//			$scope.contadorSkillsSeleccionadasMultiseleccion = $scope.contadorSkillsSeleccionadasMultiseleccion - 1;
-//		}
-//	}
-	
+	//FUNCIÓN QUE ABRE EL MODAL DE SKILLS SELECCIONADAS
 	$scope.abrirModalSkillsSeleccionadas = function(){
-		console.log($scope.listadoIntervencionesIndividual);
 		if($scope.contadorSkillsSeleccionadas != 0){
 			$scope.listadoIntervencionesSeleccionadas = [];
 			var skills = $('#arbolSkillsVistaIndividual').jstree("get_selected", true);
@@ -249,10 +230,12 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 		}
 	}
 	
+	//FUNCIÓN QUE CIERRA EL MODAL DE SKILLS SELECCIONADAS
 	$scope.cerrarModalSkillsSeleccionadas = function() {
 		$("#modalSkillsSeleccionadas").modal('hide');
 	}
 	
+	//FUNCIÓN QUE MUESTRA ES APARTADO DE MULTISELECCIÓN PARA REALIZAR LA MULTIASIGNACIÓN DE SKILLS / CARGA EL ÁRBOL DE INTERVENCIONES - SKILLS
 	$scope.mostrarContenedoresMultiseleccion = function(){
 		$(".checkedTecnicos").prop("checked",true);
 		$("#checkTotdosTecnicos").prop("checked",true);
@@ -263,15 +246,16 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 		});
 		
 		let intervencionesLista = $scope.listadoIntervencionesMultiseleccion;
+		intervencionesLista.push({id: 0, nombre: "SELECCIONAR TODAS", nivel: 0, idPadre: "#", state:{opened: true}});
 		intervencionesLista.map((e)=>{
-            e.parent = e.idPadre == undefined ? "#" : e.idPadre;
+            e.parent = e.idPadre == null ? 0 : e.idPadre;
             e.text= e.nombre;
             e.icon= "fa fa-globe";
             return e
         })       
 
         $('#arbolSkillsMultiseleccion').bind('loaded.jstree', function(e, data) {
-			$(this).jstree("open_all");
+			//$(this).jstree("open_all");
         }).jstree({
         	'plugins': ['search', 'checkbox', 'wholerow'],
         	'search': {
@@ -417,7 +401,6 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
     					$('#divMensajeSeleccionaGeografia').hide();
     					$('#divMensajeSeleccioneElemento').hide();
 //    					-----------------------------------------------------------------------------------
-    					
     					$("#divMensajeSeleccionaGeografiaVistaTabla").hide();
     					$('#contenedorTablaSkilssVistaTabla').show();
     					$('#tablaSkilssVistaTabla').find("th, td").show();
@@ -443,9 +426,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
     								skill.idCheck = "checkTablaTecnico"+tecnico.idUsuario+"Skill"+skill.id;
     							});
     					});
-    					
     				}else{
-    					//$('#contenedorTablaSkilssVistaTabla').hide();
     					$("#divMensajeSeleccionaGeografiaVistaTabla").show();
     					toastr.warning('¡No se encontraron técnicos asignados a la geografía seleccionada!');
     				}
@@ -615,8 +596,16 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
                 if(results[0].data.respuesta ){
                     if(results[0].data.result ){
                         if(results[0].data.result.geografia){
-                        	var nivelUsuario = results[1].data.result.N_FILTRO_GEOGRAFIA;
-                        	$scope.nivelSkill = results[1].data.result.N_FILTRO_INTERVENCIONES;
+                        	var nivelUsuario; 
+							let resultConf= results[1].data.result
+							if( resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves){
+								let  llavesResult=results[1].data.result.MODULO_ACCIONES_USUARIO.llaves;
+								
+								nivelUsuario=llavesResult.N_FILTRO_GEOGRAFIA
+								$scope.nivelSkill=llavesResult.N_FILTRO_INTERVENCIONES         
+								$scope.permisosConfigUser=resultConf.MODULO_ACCIONES_USUARIO.permisos;
+							}
+
 							let listGeografias = [];
                         	if(nivelUsuario !== undefined){
                         		results[0].data.result.geografia.forEach(elemento =>{
@@ -677,6 +666,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
                             }
                             $scope.listadoIntervencionesMultiseleccion = angular.copy(results[2].data.result);
                             $scope.listadoIntervencionesIndividual = angular.copy(results[2].data.result);
+                            $scope.listadoIntervencionesIndividual.push({id: 0, nombre: "SELECCIONAR TODAS", nivel: 0, idPadre: "#", state:{opened: true}});
                         }else{
                             toastr.warning( 'No se encontraron datos para la geografia' );                
                         }                        
@@ -712,11 +702,6 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 	        	$scope.skillsSeleccionadasIndividual = [];
 	    		swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
 	    		swal.showLoading();
-//	    		angular.forEach($scope.listadoIntervenciones,function(skillSeleccionada,index){
-//	    			if(skillSeleccionada.check === 1){
-//	    				$scope.skillsSeleccionadasIndividual.push(skillSeleccionada.id);
-//	    			}
-//	    		});
 	    		
 	    		var skillsArbolIndividual = $('#arbolSkillsVistaIndividual').jstree("get_selected", true);
 	    		angular.forEach(skillsArbolIndividual,function(skillSeleccionada,index){
@@ -868,11 +853,6 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 	
 	$scope.guardarAsignacionSkillsMultiseleccion = function() {
 		$scope.skillsSeleccionadasMultiseleccion = [];
-//		angular.forEach($scope.listadoIntervencionesMultiseleccion,function(skillSeleccionada,index){
-//			if(skillSeleccionada.check === 1){
-//				$scope.skillsSeleccionadasMultiseleccion.push(skillSeleccionada.id);
-//			}
-//		});
 		var skillsArbolMultiseleccion = $('#arbolSkillsMultiseleccion').jstree("get_selected", true);
 		angular.forEach(skillsArbolMultiseleccion,function(skillSeleccionada,index){
 			if(skillSeleccionada.original.nivel == $scope.nivelSkill){
@@ -926,7 +906,6 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 					$("#divMensajeSeleccionaGeografia").show();
 					$("#divMensajeSeleccionaTecnico").show();
 					$('#arbolGeografiasVistaIndividual').jstree("deselect_all");
-//			    	$( "#arbolGeografiasVistaIndividual").jstree('close_all');
 				}
 			}).catch(err => {
 
@@ -998,8 +977,46 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 	}
 	
 	//-------------------------------------------------- FIN CAMBIOS REYNEL --------------------------------------------------
+	$scope.seleccionarTodasSkillsMultiselectCheck = function() {
+		if($("#checkTodasSkillsMultiSelect").prop('checked')){
+			$("#arbolSkillsMultiseleccion").jstree().check_all(true);
+		}else{
+			$("#arbolSkillsMultiseleccion").jstree().uncheck_all(true);
+		}
+		$scope.contadorSkillsMultiseleccion();
+	}
 	
-	//$("#moduloSkills").addClass('active')
+	$scope.seleccionarTodasSkillsMultiselectText = function() {
+		if($("#checkTodasSkillsMultiSelect").prop('checked')){
+			$("#checkTodasSkillsMultiSelect").prop("checked",false);
+			$("#arbolSkillsMultiseleccion").jstree().uncheck_all(true);
+		}else{
+			$("#checkTodasSkillsMultiSelect").prop("checked",true);
+			$("#arbolSkillsMultiseleccion").jstree().check_all(true);
+		}
+		$scope.contadorSkillsMultiseleccion();
+	}
+	
+	$scope.seleccionarTodasSkillsVistaIndividualCheck = function() {
+		if($("#checkTodasSkillsVistaIndividual").prop('checked')){
+			$("#arbolSkillsVistaIndividual").jstree().check_all(true);
+		}else{
+			$("#arbolSkillsVistaIndividual").jstree().uncheck_all(true);
+		}
+		$scope.contadorSkillsVistaIndividual();
+	}
+	
+	$scope.seleccionarTodasSkillsVistaIndividualText = function() {
+		if($("#checkTodasSkillsVistaIndividual").prop('checked')){
+			$("#checkTodasSkillsVistaIndividual").prop("checked",false);
+			$("#arbolSkillsVistaIndividual").jstree().uncheck_all(true);
+		}else{
+			$("#checkTodasSkillsVistaIndividual").prop("checked",true);
+			$("#arbolSkillsVistaIndividual").jstree().check_all(true);
+		}
+		$scope.contadorSkillsVistaIndividual();
+	}
+	
 	$scope.cargarFiltrosGeneric();
 
 	angular.element(document).ready(function () {

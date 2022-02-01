@@ -19,7 +19,7 @@
         <link href="${pageContext.request.contextPath}/resources/libraries/datePicker/css/bootstrap-datepicker3.min.css" rel="stylesheet">
 
         <!-- ARCHIVOS CSS -->
-        <link href="${pageContext.request.contextPath}/resources/css/plantaexterna/despachope/mainDespachoPE.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/css/plantaexterna/despachope/mainDespachoPE.css?v=${sessionScope.versionDepl}" rel="stylesheet">
 
         <title>FFM Total play</title>
     </head>
@@ -357,9 +357,9 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jstree/jstree.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker_1.9.0.min.js"></script>
     <!-- ARCHIVOS JS -->
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantaexterna/despachope/despachoPEController.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantaexterna/despachope/despachoPEService.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantaexterna/despachope/despachoPEController.js?v=${sessionScope.versionDepl}"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantaexterna/despachope/despachoPEService.js?v=${sessionScope.versionDepl}"></script>
 
     
 

@@ -2,7 +2,6 @@ var app = angular.module('usuarioApp', []);
 var detalleTable;
 
 app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filter', function ($scope, $q, usuarioPIService, $filter) {
-	$("#moduloUsuarios").addClass('active');
 	
 	app.editarUsuarioController($scope,usuarioPIService,$q);
 	//ELEMENTOS PARA CONSULTA
@@ -37,15 +36,47 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     $scope.mostrarAccesos = false;
     $scope.mostrarTecnicos = false;
     $scope.mostrarDespacho = false;
-    $scope.validarTamDatos = false;
+    $scope.validarTamDatos = true;
     $scope.isTecnico = false;
     $scope.idPuestoTecnico = null;
     $scope.idPuestoDespacho = null;
     $scope.fileFotoUsuario = null;
 	$scope.respaldoIntervenciones = [];
+	
+//	CONFIGURACIÓN DE TABS
+	$scope.tabInformacion = true;
+	$scope.tabIntervenciones = false;
+	$scope.tabArbol = false;
+	$scope.tabAccesos = false;
+	$scope.tabTecnicos = false;
+	$scope.tabDespachos = false;
+	$scope.tabConfirmacion = false;
+	
+	$scope.tabInformacionVW_ASIG_AUTOMATICA = true;
+	$scope.tabInformacionVL_RFC = true;
+	$scope.tabInformacionVL_CURP = true;
+	$scope.tabArbol_LB_N1 = "";
+	$scope.tabArbol_LB_N2 = "";
+	$scope.tabArbol_NV_GEOGRAFIA;
+	$scope.tabIntervenciones_NV_INTERVENCIONES;
+	$scope.bucketIdImg = "";
+	
+	$scope.catalogoGeografias = [];
+	$scope.geoSelect = [];
+	$scope.catalogoIntervenciones = [];
+	$scope.intervencionSelect = [];
+	
+	//CONFIGURACIÓN PERMISOS
+	$scope.permisosUsuariosAcciones = [];
+	$scope.configPermisoAccionConsultaUsuarios = false;
+	$scope.configPermisoAccionCreaUsuarios = false;
+	$scope.configPermisoAccionEditaUsuarios = false;
+	$scope.configPermisoAccionEliminaUsuarios = false;
    
 	angular.element(document).ready(function () {
         $("#idBody").removeAttr("style");
+        $("#moduloUsuarios").addClass('active');
+        $("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
     });
 	
     $('.drop-down-filters').on("click.bs.dropdown", function (e) {
@@ -58,8 +89,6 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 				moduloAccionesUsuario: 'moduloUsuarios'
 	    };
 
-    	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
-		swal.showLoading();
     	$q.all([
     		usuarioPIService.consultarConfiguracionDespachoDespacho(paramsConfiguracionDespacho),
     		usuarioPIService.consultaCompanias(),
@@ -69,202 +98,191 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     		usuarioPIService.consultaIntervenciones()
         ]).then(function(results) {
         	// *** CONFIGURACIÓN DESPACHO ***
-        	var nivelUsuario = results[0].data.result.N_FILTRO_GEOGRAFIA;
-        	$scope.filtroGeografias = results[0].data.result.N_FILTRO_GEOGRAFIA;
-        	$scope.filtroIntervenciones = results[0].data.result.N_FILTRO_INTERVENCIONES;
-        	
-        	// *** COMPAÑÍAS ***
-        	if (results[1].data !== undefined) {
-            	if(results[1].data.respuesta){
-            		if(results[1].data.result.companias.length > 0){
-            			$scope.listaCompanias = results[1].data.result.companias;
-            			angular.forEach($scope.listaCompanias,function(companiaCheck,index){
-            				companiaCheck.checkedOpcion = true;
-            			});
-            		}else{
-                    	toastr.warning('¡No existen compañías actualmente!');
-                    }
-            	}else{
-            		toastr.warning('¡No existen compañías actualmente!');
-            	}
-            }else{
-            	toastr.error('Error interno en el servidor.');
-            }
-            
-            // *** PUESTOS ***
-        	if (results[2].data !== undefined) {
-            	if(results[2].data.respuesta){
-            		if(results[2].data.result.puestos.length > 0){
-            			$scope.listaPuestos = results[2].data.result.puestos;
-            			$scope.idPuestoTecnico = $scope.listaPuestos.filter(e => {return e.descripcion == "TECNICO"})[0];
-            		    $scope.idPuestoDespacho = $scope.listaPuestos.filter(e => {return e.descripcion == "DESPACHO"})[0];
-            		    angular.forEach($scope.listaPuestos,function(puestoCheck,index){
-            		    	puestoCheck.checkedOpcion = true;
-            			});
-            		}else{
-            			toastr.warning('¡No existen puestos actualmente!');
-            		}
-            	}else{
-            		toastr.warning('¡No existen puestos actualmente!');
-            	}
-        	}else{
-        		toastr.error('Error interno en el servidor.');
-        	}
-            
-            // *** PERMISOS ***
-        	if (results[3].data !== undefined) {
-            	if(results[3].data.respuesta){
-            		if(results[3].data.result.permisos.length > 0){
-            			let permisosLista = results[3].data.result.permisos;
-            			$scope.listaPermisos = results[3].data.result.permisos;
-            			permisosLista.push({id: 0, nombre: "PERMISOS", nivel: 0, idPadre: "#", state:{opened: true}});
-            			permisosLista.map((e)=>{
-            				e.parent = e.idPadre == null ? 0 : e.idPadre;
-                            e.text= e.nombre;
-                            e.icon= "fa fa-globe";
-                            return e
-                        })       
-						$scope.listaPermisosRespaldo = angular.copy(permisosLista);
-                        $('#arbolPermisoRegistro').bind('loaded.jstree', function(e, data) {
-							//$(this).jstree("open_all");
-                        }).jstree({
-                        	'plugins': ['search', 'checkbox', 'wholerow'],
-                        	'search': {
-    							"case_sensitive": false,
-    							"show_only_matches": true
-    						},
-							'core': {
-								'data': permisosLista,
-                                'themes': {
-                                    'name': 'proton',
-                                    'responsive': true,
-                                    "icons":false        
-                                }
-                            }
-						});
-            		}else{
-            			toastr.warning('¡No existen permisos actualmente!');
-            		}
-            	}else{
-            		toastr.warning('¡No existen permisos actualmente!');
-            	}
-        	}else{
-        		toastr.error('Error interno en el servidor.');
-        	}
-            
-            // *** GEOGRAFÍAS ***
-            if (results[4].data !== undefined) {
-            	if(results[4].data.respuesta){
-            		if(results[4].data.result.geografia.length > 0){
-            			let listGeografias = [];
-                    	if(nivelUsuario !== undefined){
-                    		results[4].data.result.geografia.forEach(elemento =>{
-	                            if (elemento.nivel <= nivelUsuario) {
-	                            	listGeografias.push(elemento);
-	                            	$scope.listaGeografias.push(elemento);
+        	var nivelUsuario; 				
+
+			let resultConf= results[0].data.result
+			if( resultConf != undefined && resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves){
+				let  llavesResult=results[0].data.result.MODULO_ACCIONES_USUARIO.llaves;                    
+				nivelUsuario= llavesResult.N_FILTRO_GEOGRAFIA;
+				$scope.filtroGeografias = llavesResult.N_FILTRO_GEOGRAFIA;
+				$scope.filtroIntervenciones = llavesResult.N_FILTRO_INTERVENCIONES;
+			}else{
+				toastr.info("No se encontraron configuraciones del usuario")
+			} 
+			
+			// *** CONFIGURACIÓN DE PERMISOS ***
+			if( resultConf != undefined && resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.permisos && resultConf.MODULO_ACCIONES_USUARIO.permisos != ""){
+				$scope.permisosUsuariosAcciones = resultConf.MODULO_ACCIONES_USUARIO.permisos;
+				$scope.configPermisoAccionConsultaUsuarios = ($scope.permisosUsuariosAcciones.filter(e => {return e.clave == "accionConsultaUsuarios"})[0] != undefined);
+				$scope.configPermisoAccionCreaUsuarios = ($scope.permisosUsuariosAcciones.filter(e => {return e.clave == "accionCreaUsuarios"})[0] != undefined);
+				$scope.configPermisoAccionEditaUsuarios = ($scope.permisosUsuariosAcciones.filter(e => {return e.clave == "accionEditaUsuarios"})[0] != undefined);
+				$scope.configPermisoAccionEliminaUsuarios = ($scope.permisosUsuariosAcciones.filter(e => {return e.clave == "accionEliminaUsuarios"})[0] != undefined);
+				
+				$scope.bucketIdImg = resultConf.BUCKETID_FB;
+				
+				// *** COMPAÑÍAS ***
+	        	if (results[1].data !== undefined) {
+	            	if(results[1].data.respuesta){
+	            		if(results[1].data.result.companias.length > 0){
+	            			$scope.listaCompanias = results[1].data.result.companias;
+	            			angular.forEach($scope.listaCompanias,function(companiaCheck,index){
+	            				companiaCheck.checkedOpcion = true;
+	            			});
+	            		}else{
+	                    	toastr.info('¡Actualmente no existen compañías!');
+	                    }
+	            	}else{
+	            		toastr.info('¡Actualmente no existen compañías!');
+	            	}
+	            }else{
+	            	toastr.error('Error interno en el servidor.');
+	            }
+	            
+	            // *** PUESTOS ***
+	        	if (results[2].data !== undefined) {
+	            	if(results[2].data.respuesta){
+	            		if(results[2].data.result.puestos.length > 0){
+	            			$scope.listaPuestos = results[2].data.result.puestos;
+	            			$scope.idPuestoTecnico = $scope.listaPuestos.filter(e => {return e.descripcion == "TECNICO"})[0];
+	            		    $scope.idPuestoDespacho = $scope.listaPuestos.filter(e => {return e.descripcion == "DESPACHO"})[0];
+	            		    angular.forEach($scope.listaPuestos,function(puestoCheck,index){
+	            		    	puestoCheck.checkedOpcion = true;
+	            			});
+	            		}else{
+	            			toastr.info('¡Actualmente no existen puestos!');
+	            		}
+	            	}else{
+	            		toastr.info('¡Actualmente no existen puestos!');
+	            	}
+	        	}else{
+	        		toastr.error('Error interno en el servidor.');
+	        	}
+	            
+	            // *** PERMISOS ***
+	        	if (results[3].data !== undefined) {
+	            	if(results[3].data.respuesta){
+	            		if(results[3].data.result.permisos.length > 0){
+	            			let permisosLista = results[3].data.result.permisos;
+	            			$scope.listaPermisos = results[3].data.result.permisos;
+	            			permisosLista.push({id: 0, nombre: "PERMISOS", nivel: 0, idPadre: "#", state:{opened: true}});
+	            			permisosLista.map((e)=>{
+	            				e.parent = e.idPadre == null ? 0 : e.idPadre;
+	                            e.text= e.nombre;
+	                            e.icon= "fa fa-globe";
+	                            return e
+	                        })       
+							$scope.listaPermisosRespaldo = angular.copy(permisosLista);
+	                        $('#arbolPermisoRegistro').bind('loaded.jstree', function(e, data) {
+								//$(this).jstree("open_all");
+	                        }).jstree({
+	                        	'plugins': ['search', 'checkbox', 'wholerow'],
+	                        	'search': {
+	    							"case_sensitive": false,
+	    							"show_only_matches": true
+	    						},
+								'core': {
+									'data': permisosLista,
+	                                'themes': {
+	                                    'name': 'proton',
+	                                    'responsive': true,
+	                                    "icons":false        
+	                                }
 	                            }
-	                        });
-                    	}else{
-                    		listGeografias = results[4].data.result.geografia;
-                    		$scope.listaGeografias = results[4].data.result.geografia;
-                    	}
-                    	geografia=listGeografias;
-                    	geografia.push({id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state:{opened: true}});
-                        geografia.map((e)=>{
-                        	e.parent = e.padre == null ? 0 : e.padre;
-                            e.text= e.nombre;
-                            e.icon= "fa fa-globe";
-                            e.state = {
-									opened: true,
-									selected: true,
-								}
-                            return e
-                        })       
-                        $scope.listaGeografiasRespaldo = angular.copy($scope.listaGeografias);
-                        $('#arbolGeografiaConsulta').bind('loaded.jstree', function(e, data) {
-							//$(this).jstree("open_all");
-                        }).jstree({
-                        	'plugins': ['search', 'checkbox', 'wholerow'],
-                        	'search': {
-    							"case_sensitive": false,
-    							"show_only_matches": true
-    						},
-							'core': {
-								'data': geografia,
-                                'themes': {
-                                    'name': 'proton',
-                                    'responsive': true,
-                                    "icons":false        
-                                }
-                            }
-						});
-                    }else{
-                    	toastr.warning('¡No existen geografías actualmente!');
-                    }
-            	}else{
-            		toastr.warning('¡No existen geografías actualmente!');
-            	}
-            }else{
-            	toastr.error('Error interno en el servidor.');
-            }
-            
-            // *** INTERVENCIONES ***
-            if (results[5].data !== undefined) {
-            	if(results[5].data.respuesta){
-            		if(results[5].data.result !== null){
-            			let intervencionesLista = [];
-						$scope.respaldoIntervenciones = results[5].data.result;
-            			results[5].data.result.forEach(intervencion =>{
-                            if (intervencion.nivel <= $scope.filtroIntervenciones) {
-                            	intervencionesLista.push(intervencion);
-                            	$scope.listaIntervenciones.push(intervencion);
-                            }
-                        });
-            			if(intervencionesLista.length > 0){
-            				intervencionesLista.push({id: 0, nombre: "INTERVENCIONES", nivel: 0, idPadre: "#", state:{opened: true}});
-            				intervencionesLista.map((e)=>{
-                                e.parent = e.idPadre == null ? 0 : e.idPadre;
-                                e.text= e.nombre;
-                                e.icon= "fa fa-globe";
-                                return e
-                            })       
-                            $scope.listaIntervencionesRespaldo = angular.copy(intervencionesLista);
-                            $('#arbolIntervencionRegistro').bind('loaded.jstree', function(e, data) {
-    							//$(this).jstree("open_all");
-                            }).jstree({
-                            	'plugins': ['search', 'checkbox', 'wholerow'],
-                            	'search': {
-        							"case_sensitive": false,
-        							"show_only_matches": true
-        						},
-    							'core': {
-    								'data': intervencionesLista,
-                                    'themes': {
-                                        'name': 'proton',
-                                        'responsive': true,
-                                        "icons":false        
-                                    }
-                                }
-    						});
-            			}else{
-            				toastr.warning('¡No existen intervenciones actualmente!');
-            			}
-            		}else{
-                    	toastr.warning('¡No existen intervenciones actualmente!');
-                    }
-            	}else{
-            		toastr.warning('¡No existen intervenciones actualmente!');
-            	}
-            }else{
-            	toastr.error('Error interno en el servidor.');
-            }
-        	swal.close();
-        	setTimeout(function () {
-        		$scope.consultaUsuariosPorGeoCompPuestos();
-        		$scope.companiaSeleccion();
-        		$scope.puestoSeleccion();
-        		$scope.btnAceptarModalGeografiaConsulta();
-    		}, 500)
+							});
+	            		}else{
+	            			toastr.info('¡Actualmente no existen permisos!');
+	            		}
+	            	}else{
+	            		toastr.info('¡Actualmente no existen permisos!');
+	            	}
+	        	}else{
+	        		toastr.error('Error interno en el servidor.');
+	        	}
+	            
+	            // *** GEOGRAFÍAS ***
+	            if (results[4].data !== undefined) {
+	            	if(results[4].data.respuesta){
+	            		if(results[4].data.result.geografia.length > 0){
+	            			let listGeografias = [];
+	                    	if(nivelUsuario !== undefined){
+	                    		results[4].data.result.geografia.forEach(elemento =>{
+		                            if (elemento.nivel <= nivelUsuario) {
+		                            	listGeografias.push(elemento);
+		                            	$scope.listaGeografias.push(elemento);
+		                            }
+		                        });
+	                    	}else{
+	                    		listGeografias = results[4].data.result.geografia;
+	                    		$scope.listaGeografias = results[4].data.result.geografia;
+	                    	}
+	                    	$scope.catalogoGeografias = results[4].data.result.geografia;
+	                    	geografia=listGeografias;
+	                    	geografia.push({id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state:{opened: true}});
+	                        geografia.map((e)=>{
+	                        	e.parent = e.padre == null ? 0 : e.padre;
+	                            e.text= e.nombre;
+	                            e.icon= "fa fa-globe";
+	                            e.state = {
+										opened: true,
+										selected: true,
+									}
+	                            return e
+	                        })       
+	                        $scope.listaGeografiasRespaldo = angular.copy($scope.listaGeografias);
+	                        $('#arbolGeografiaConsulta').bind('loaded.jstree', function(e, data) {
+								//$(this).jstree("open_all");
+	                        }).jstree({
+	                        	'plugins': ['search', 'checkbox', 'wholerow'],
+	                        	'search': {
+	    							"case_sensitive": false,
+	    							"show_only_matches": true
+	    						},
+								'core': {
+									'data': geografia,
+	                                'themes': {
+	                                    'name': 'proton',
+	                                    'responsive': true,
+	                                    "icons":false        
+	                                }
+	                            }
+							});
+	                    }else{
+	                    	toastr.info('¡Actualmente no existen geografías!');
+	                    }
+	            	}else{
+	            		toastr.info('¡Actualmente no existen geografías!');
+	            	}
+	            }else{
+	            	toastr.error('Error interno en el servidor.');
+	            }
+	            
+	            // *** INTERVENCIONES ***
+	            if (results[5].data !== undefined) {
+	            	if(results[5].data.respuesta){
+	            		if(results[5].data.result !== null){
+							$scope.respaldoIntervenciones = results[5].data.result;
+							$scope.catalogoIntervenciones = results[5].data.result;
+							$scope.listaIntervencionesRespaldo = angular.copy($scope.catalogoIntervenciones);
+	            		}else{
+	                    	toastr.info('¡Actualmente no existen intervenciones!');
+	                    }
+	            	}else{
+	            		toastr.info('¡Actualmente no existen intervenciones!');
+	            	}
+	            }else{
+	            	toastr.error('Error interno en el servidor.');
+	            }
+	        	//swal.close();
+	        	setTimeout(function () {
+	        		$scope.consultaUsuariosPorGeoCompPuestos();
+	        		$scope.companiaSeleccion();
+	        		$scope.puestoSeleccion();
+	        		$scope.btnAceptarModalGeografiaConsulta();
+	    		}, 500);
+			}else{
+				swal({type: "warning", title:"Aviso", text:"¡No cuentas con ningún permiso de este módulo!"});
+			}
+        	
         });
     	
     	if (tablaUsuarios) {
@@ -309,7 +327,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	        $('#buscadorGeografiaConsulta').focus();
     	    }, 750);
     	}else{
-    		toastr.warning('¡No existen geografías actualmente!');
+    		toastr.info('¡Actualmente no existen geografías!');
     	}
 	}
     
@@ -340,81 +358,85 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     
     //MÉTODO QUE CONSULTA LOS USUARIOS DE ACUERDO A LA SELECCIÓN DE COMPAÑÍA(S), PUESTO(S) Y GEOGRAFÍA(S) - VISTA CONSULTA USUARIOS
     $scope.consultaUsuariosPorGeoCompPuestos = function() {
-    	$scope.listaIdGeografias = [];
-    	let companiasSeleccionadas = [];
-    	let puestosSeleccionados = [];
-    	var geografias = $('#arbolGeografiaConsulta').jstree("get_selected", true);
-		
-		angular.forEach($scope.listaCompanias,function(compania,index){
-			if(compania.checkedOpcion){
-				companiasSeleccionadas.push(compania.id);
-			}
-		});
-		
-		angular.forEach($scope.listaPuestos,function(puesto,index){
-			if(puesto.checkedOpcion){
-				puestosSeleccionados.push(puesto.id);
-			}
-		});
-    	
-		angular.forEach(geografias,(geografia,index) => {
-			$scope.listaIdGeografias.push(geografia.id);				
-		});
-	        		
-		let params = {
-				geografias: $scope.listaIdGeografias,
-	        	companias: companiasSeleccionadas,
-	        	puestos: puestosSeleccionados
+    	if($scope.configPermisoAccionConsultaUsuarios){
+    		$scope.listaIdGeografias = [];
+        	let companiasSeleccionadas = [];
+        	let puestosSeleccionados = [];
+        	var geografias = $('#arbolGeografiaConsulta').jstree("get_selected", true);
+    		
+    		angular.forEach($scope.listaCompanias,function(compania,index){
+    			if(compania.checkedOpcion){
+    				companiasSeleccionadas.push(compania.id);
+    			}
+    		});
+    		
+    		angular.forEach($scope.listaPuestos,function(puesto,index){
+    			if(puesto.checkedOpcion){
+    				puestosSeleccionados.push(puesto.id);
+    			}
+    		});
+        	
+    		angular.forEach(geografias,(geografia,index) => {
+    			$scope.listaIdGeografias.push(geografia.id);				
+    		});
+    	        		
+    		let params = {
+    				geografias: $scope.listaIdGeografias,
+    	        	companias: companiasSeleccionadas,
+    	        	puestos: puestosSeleccionados
+    		}
+    		
+    		var respuestaValidacion = $scope.validarDatosConsultaUsuarios(params);
+    	        		
+    	    if(respuestaValidacion.validacion){
+    	    	if (tablaUsuarios) {
+    	    		tablaUsuarios.destroy();
+    	    	}
+    	        			
+    	    	tablaUsuarios = $('#table-usuario-pi').DataTable({
+    	    		"processing": false,
+    		        "ordering": false,
+    		        "serverSide": false,
+    		        "scrollX": false,
+    		        "paging": true,
+    		        "lengthChange": false,
+    		        "searching": true,
+    		        "ordering": true,
+    		        "pageLength": 10,
+    		        "ajax": {
+    		        	"url": "req/consultaUsuariosPorGeoCompPuestos",
+    		        	"type": "POST",
+    		        	"data": params,
+    		        	"beforeSend": function () {
+    		        		if(!swal.isVisible() ){
+    		        			swal({ text: 'Cargando registros...', allowOutsideClick: false });
+    		        			swal.showLoading();
+    		        		}
+    		        	},
+    		        	"dataSrc": function (json) {
+    		        		return json.data;
+    		        	},
+    		        	"error":function(xhr, error, thrown){
+    		        		handleError(xhr)
+    		        	}, 
+    		        	"complete": function () {
+    		        		swal.close()
+    		        	}
+    		        },
+    		        "columns": [null, null, null, null, null, null, null, null],
+    		        "language": idioma_espanol_not_font,
+    		        "aoColumnDefs" : [ 
+    		        	{"aTargets" : [6], "sClass":  "txtTablaConsultaCentrado"},
+    		            {"aTargets" : [7], "sClass":  "txtTablaConsultaCentrado"}
+    		        ]
+    	    	});
+    	    	$("#modalGeografiaConsulta").modal('hide');
+    	    }else{
+    	    	toastr.warning(respuestaValidacion.mensaje);
+    	    }
+		}else{
+			//swal({type: "warning", title:"Aviso", text:"¡No cuentas con el permiso de consulta!"});
 		}
-		
-		var respuestaValidacion = $scope.validarDatosConsultaUsuarios(params);
-	        		
-	    if(respuestaValidacion.validacion){
-	    	if (tablaUsuarios) {
-	    		tablaUsuarios.destroy();
-	    	}
-	        			
-	    	tablaUsuarios = $('#table-usuario-pi').DataTable({
-	    		"processing": false,
-		        "ordering": false,
-		        "serverSide": false,
-		        "scrollX": false,
-		        "paging": true,
-		        "lengthChange": false,
-		        "searching": true,
-		        "ordering": true,
-		        "pageLength": 10,
-		        "ajax": {
-		        	"url": "req/consultaUsuariosPorGeoCompPuestos",
-		        	"type": "POST",
-		        	"data": params,
-		        	"beforeSend": function () {
-		        		if(!swal.isVisible() ){
-		        			swal({ text: 'Cargando registros...', allowOutsideClick: false });
-		        			swal.showLoading();
-		        		}
-		        	},
-		        	"dataSrc": function (json) {
-		        		return json.data;
-		        	},
-		        	"error":function(xhr, error, thrown){
-		        		handleError(xhr)
-		        	}, 
-		        	"complete": function () {
-		        		swal.close()
-		        	}
-		        },
-		        "columns": [null, null, null, null, null, null, null, null],
-		        "language": idioma_espanol_not_font,
-		        "aoColumnDefs" : [ 
-		        	{"aTargets" : [6], "sClass":  "txtTablaConsultaCentrado"},
-		            {"aTargets" : [7], "sClass":  "txtTablaConsultaCentrado"}
-		        ]
-	    	});
-	    	$("#modalGeografiaConsulta").modal('hide');
-	    }else{
-	    	toastr.warning(respuestaValidacion.mensaje);
-	    }
 	}
     
     //MÉTODO PARA VALIDAR LOS CAMPOS QUE SE REQUIEREN PARA REALIZAR LA CONSULTA DE USUARIOS
@@ -463,7 +485,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	
     	geografiasNivelCiudad = [];
     	angular.forEach($scope.listaGeografias,function(elementoGeografia,index){
-    		if(elementoGeografia.nivel <= $scope.filtroGeografias){
+    		if(elementoGeografia.nivel <= $scope.tabArbol_NV_GEOGRAFIA){
     			geografiasNivelCiudad.push(elementoGeografia);
     		}
     	});
@@ -502,9 +524,15 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
         	$scope.listaCiudadNatalRegistro = [];
         	$scope.listaIdsGeografiaCiudadNatalRegistro = [];
         	$scope.listaTecnicos = [];
+        	$scope.geoSelect = [];
         	var geografiasTree = $('#arbolGeografiaRegistro').jstree("get_selected", true);
         	geografiasTree.forEach(geo =>{
-        		if(geo.original.nivel == $scope.filtroGeografias){
+        		if(geo.original.nivel == $scope.tabArbol_NV_GEOGRAFIA){
+        			geo.geoHijas = $scope.catalogoGeografias.filter(e => {return e.padre == geo.id});
+        			if(geo.geoHijas.length < 1){
+        				geo.geoHijas = [{nivel: geo.original.nivel, nombre: geo.original.nombre, padre: geo.original.padre}];
+        			}
+        			$scope.geoSelect.push(geo);
         			var idPadre = geo.original.padre;
         			$scope.listaGeografiasSeleccionadas.forEach(geoPadre =>{
         				if(geoPadre.id == idPadre){
@@ -583,6 +611,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     $('#puesto_select_registro').on('change', function() {
     	$("#puesto_select_registro").css("border", "1px solid #bdbdbd");
     	$('#arbolGeografiaRegistro').jstree("destroy");
+    	$('#arbolIntervencionRegistro').jstree("destroy");
     	$('#arbolIntervencionRegistro').jstree("deselect_all");
     	$('#arbolGeografiaRegistro').jstree("deselect_all");
     	$('#arbolPermisoRegistro').jstree("deselect_all");
@@ -600,6 +629,14 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	$scope.listaPermisosSeleccionados = [];
     	$scope.listaTecnicos = [];
         $scope.listaDespachos = [];
+        $scope.geoSelect = [];
+    	$scope.intervencionSelect = [];
+    	
+    	$scope.listaGeografiasSeleccionadas = [];
+    	$scope.informacionRegistro.geografias = [];
+    	$scope.listaCiudadNatalRegistro = [];
+    	$scope.listaIdsGeografiaCiudadNatalRegistro = [];
+    	$scope.listaTecnicos = [];
     	
     	var puestoSeleccionado = $("#puesto_select_registro option:selected").text().toLowerCase();
     	puestoSeleccionado = puestoSeleccionado.split('').map( letra => acentos[letra] || letra).join('').toString();
@@ -616,19 +653,135 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	}
     	
     	//LLAMADA AL MÉTODO QUE SE ENCARGA DE MOSTRAR EL TIPO DE ÁRBOL SEGÚN EL PUESTO SELECCIONADO
-    	$scope.mostrarArbolGeografiaRegistro();
+    	$scope.tabInformacion = true;
+    	$scope.tabIntervenciones = false;
+    	$scope.tabArbol = false;
+    	$scope.tabAccesos = false;
+    	$scope.tabTecnicos = false;
+    	$scope.tabDespachos = false;
+    	$scope.tabConfirmacion = false;
+    	
+    	var tabsPuestoSeleccionadoRegistro = $scope.listaPuestos.filter(e => {return e.id == $(this).val()})[0];
+    	angular.forEach(tabsPuestoSeleccionadoRegistro.tabs,function(tab,index){
+    		switch(tab.llaveFront){
+            	case "tabInformacion":
+            		$scope.tabInformacion = true;
+            		break;
+            	case "tabIntervenciones":
+            		$scope.tabIntervenciones = true;
+            		break;
+            	case "tabArbol":
+            		$scope.tabArbol = true;
+            		break;
+            	case "tabAccesos":
+            		$scope.tabAccesos = true;
+            		break;
+            	case "tabTecnicos":
+            		$scope.tabTecnicos = true;
+            		break;
+            	case "tabDespachos":
+            		$scope.tabDespachos = true;
+            		break;
+            	case "tabConfirmacion":
+            		$scope.tabConfirmacion = true;
+            		break;
+    		}
+		});
+    	
+    	$scope.tabInformacionVW_ASIG_AUTOMATICA = true;
+    	$scope.tabInformacionVL_RFC = true;
+    	$scope.tabInformacionVL_CURP = true;
+    	$scope.tabArbol_LB_N1 = "";
+    	$scope.tabArbol_LB_N2 = "";
+    	$scope.tabIntervenciones_NV_INTERVENCIONES = null;
+    	$scope.tabArbol_NV_GEOGRAFIA = null;
+    	angular.forEach(tabsPuestoSeleccionadoRegistro.configuraciones,function(conf,index){
+    		if(conf.llave == "tabInformacionVW_ASIG_AUTOMATICA"){
+    			if(conf.valor == "false"){
+    				$scope.tabInformacionVW_ASIG_AUTOMATICA = false;
+    			}
+    		}else if(conf.llave == "tabArbol_LB_N1"){
+    			$scope.tabArbol_LB_N1 = conf.valor;
+    		}else if(conf.llave == "tabArbol_LB_N2"){
+    			$scope.tabArbol_LB_N2 = conf.valor;
+    		}else if(conf.llave == "tabInformacionVL_RFC"){
+    			if(conf.valor+"" == "true"){
+    				$scope.tabInformacionVL_RFC = true;
+    			}else if(conf.valor+"" == "false"){
+    				$scope.tabInformacionVL_RFC = false;
+    			}
+    		}else if(conf.llave == "tabInformacionVL_CURP"){
+    			if(conf.valor+"" == "true"){
+    				$scope.tabInformacionVL_CURP = true;
+    			}else if(conf.valor+"" == "false"){
+    				$scope.tabInformacionVL_CURP = false;
+    			}
+    		}else if(conf.llave == "tabArbol_NV_GEOGRAFIA"){
+    			$scope.tabArbol_NV_GEOGRAFIA = conf.valor;
+    		}else if(conf.llave == "tabIntervenciones_NV_INTERVENCIONES"){
+    			$scope.tabIntervenciones_NV_INTERVENCIONES = conf.valor;
+    		}
+    	});
     	
     	$scope.$apply();
+    	$scope.cargarArbolIntervenciones();
+    	$scope.mostrarArbolGeografiaRegistro();
     });
+    
+    $scope.cargarArbolIntervenciones = function() {
+    	let intervencionesLista = [];
+    	angular.forEach($scope.respaldoIntervenciones,function(intervencion,index){
+            if (intervencion.nivel <= $scope.tabIntervenciones_NV_INTERVENCIONES) {
+            	intervencionesLista.push(intervencion);
+            	$scope.listaIntervenciones.push(intervencion);
+            }
+        });
+		if(intervencionesLista.length > 0){
+			intervencionesLista.push({id: 0, nombre: "INTERVENCIONES", nivel: 0, idPadre: "#", state:{opened: true}});
+			intervencionesLista.map((e)=>{
+                e.parent = e.idPadre == null ? 0 : e.idPadre;
+                e.text= e.nombre;
+                e.icon= "fa fa-globe";
+                return e
+            })       
+            //$scope.listaIntervencionesRespaldo = angular.copy(intervencionesLista);
+            $('#arbolIntervencionRegistro').bind('loaded.jstree', function(e, data) {
+				//$(this).jstree("open_all");
+            }).jstree({
+            	'plugins': ['search', 'checkbox', 'wholerow'],
+            	'search': {
+					"case_sensitive": false,
+					"show_only_matches": true
+				},
+				'core': {
+					'data': intervencionesLista,
+                    'themes': {
+                        'name': 'proton',
+                        'responsive': true,
+                        "icons":false        
+                    }
+                }
+			});
+		}else{
+			toastr.info('¡Actualmente no existen intervenciones!');
+		}
+	}
     
     //MÉTODO QUE ASIGNA LA/LAS INTERVENCIÓN(ES) SELECCIONADA(S) A LA LISTA DE 'listaIntervencionesSeleccionadas' PARA MOSTRAR - PESTAÑA INTERVENCIONES REGISTRO USUARIO
     $("#arbolIntervencionRegistro").click(function() {
     	$scope.listaIntervencionesSeleccionadas = [];
     	$scope.informacionRegistro.intervenciones = [];
+    	$scope.intervencionSelect = [];
     	var intervencionesTree = $('#arbolIntervencionRegistro').jstree("get_selected", true);
     	
     	intervencionesTree.forEach(intervencion =>{
-    		if(intervencion.original.nivel == $scope.filtroIntervenciones){
+    		if(intervencion.original.nivel == $scope.tabIntervenciones_NV_INTERVENCIONES){
+    			intervencion.intervencionesHijas = $scope.catalogoIntervenciones.filter(e => {return e.idPadre == intervencion.id});
+    			if(intervencion.intervencionesHijas.length < 1){
+    				intervencion.intervencionesHijas = [{nivel: intervencion.original.nivel, nombre: intervencion.original.nombre, idPadre: intervencion.original.idPadre}];
+    			}
+    			$scope.intervencionSelect.push(intervencion);
+    			
     			var idPadre = intervencion.original.parent;
     			$scope.listaIntervencionesSeleccionadas.forEach(intervencionPadre =>{
     				if(intervencionPadre.id == idPadre){
@@ -744,7 +897,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 //    			idOperarios: $scope.isTecnico == true ? [] : $scope.informacionRegistro.tecnicos,
 //    			idDespachos: $scope.isTecnico == true ? $scope.informacionRegistro.despachos : [],
     			permisos: $scope.isTecnico == true ? [] : $scope.informacionRegistro.permisos,
-    			idAsignacionAutomatica: $scope.informacionRegistro.asignacionAutomatica
+    			idAsignacionAutomatica: $scope.tabInformacionVW_ASIG_AUTOMATICA == true ? $scope.informacionRegistro.asignacionAutomatica : 0
     	};
     	
     	if($scope.isTecnico == true){
@@ -757,7 +910,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     		paramsRegistro.fotoPerfil = {
     				bucketId: $scope.fileFotoUsuario.bucketId,
     			    archivo: $scope.fileFotoUsuario.archivo,
-    			    nombre: $scope.fileFotoUsuario.nombre
+    			    nombre: "usuarios/mex/"+$scope.informacionRegistro.numEmpleado+"/fotoPerfil"
     			  }
     	}else{
     		paramsRegistro.fotoPerfil = {
@@ -797,6 +950,10 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	            	if(results[0].data.respuesta){
     	            		$scope.limpiarDatosRegistro();
     	            		swal("Correcto", "¡Registro guardado con éxito!", "success");
+    	            		$scope.resetearTablaUsuariosConsulta();
+		            		setTimeout(function() {
+		            			$scope.consultaUsuariosPorGeoCompPuestos();
+		    	        	}, 1000);
     	            	}else{
     	            		swal("Error", results[0].data.resultDescripcion, "error");
     	            	}
@@ -839,262 +996,259 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	
     	
     	//PESTAÑA INFORMACIÓN GENERAL
-		if($("#puesto_select_registro").val() === "" || $("#puesto_select_registro").val() === undefined || $("#puesto_select_registro").val() === null){
-			$("#puesto_select_registro").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Puesto";
-		}else{
-			$("#puesto_select_registro").css("border", "1px solid #bdbdbd");
-		}
-		
-		if($("#compania_select_registro").val() === "" || $("#compania_select_registro").val() === undefined || $("#compania_select_registro").val() === null){
-			$("#compania_select_registro").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Compañía";
-		}else{
-			$("#compania_select_registro").css("border", "1px solid #bdbdbd");
-		}
-		
-		if($scope.informacionRegistro.numEmpleado === "" || $scope.informacionRegistro.numEmpleado === undefined){
-			$("#form-num-empleado").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Número empleado";
-		}else{
-			$("#form-num-empleado").css("border", "1px solid #bdbdbd");
-		}
-		
-		if($scope.informacionRegistro.usuario === "" || $scope.informacionRegistro.usuario === undefined){
-			$("#form-usuario").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Usuario";
-		}else{
-			$("#form-usuario").css("border", "1px solid #bdbdbd");
-		}
-		
-		if($scope.informacionRegistro.contrasena === "" || $scope.informacionRegistro.contrasena === undefined){
-			$("#form-pasword").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Contraseña";
-		}else{
-			$("#form-pasword").css("border", "1px solid #bdbdbd");
-		}
-		
-		if($scope.informacionRegistro.confirContrasena === "" || $scope.informacionRegistro.confirContrasena === undefined){
-			$("#form-confir-password").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Confirmación de contraseña";
-		}else{
-			var password = $("#form-pasword").val();
-	    	var confirPassword =  $("#form-confir-password").val();
-	    	if(password !== confirPassword){
-	    		$("#form-pasword").css("border-bottom", "2px solid #f55756");
-	    		$("#form-confir-password").css("border-bottom", "2px solid #f55756");
-	    		validacionInformacionGeneral = false;
-	    		mensaje = mensaje + "<br/> *Contraseña";
-				mensaje = mensaje + "<br/> *Confirmación de contraseña";
-	    		toastr.warning("¡Las contraseñas no coinciden!");
-	    	}else{
-	    		$("#form-pasword").css("border", "1px solid #bdbdbd");
-	    		$("#form-confir-password").css("border", "1px solid #bdbdbd");
-	    	}
-		}
-		
-		if($scope.informacionRegistro.nombre === "" || $scope.informacionRegistro.nombre === undefined){
-			$("#form-nombres").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Nombre";
-		}else{
-			$("#form-nombres").css("border", "1px solid #bdbdbd");
-		}
-		
-		if($scope.informacionRegistro.apellidoPaterno === "" || $scope.informacionRegistro.apellidoPaterno === undefined){
-			$("#form-a-paterno").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Apellido paterno";
-		}else{
-			$("#form-a-paterno").css("border", "1px solid #bdbdbd");
-		}
-		
-		if($scope.informacionRegistro.apellidoMaterno === "" || $scope.informacionRegistro.apellidoMaterno === undefined){
-			$("#form-a-materno").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Apellido materno";
-		}else{
-			$("#form-a-materno").css("border", "1px solid #bdbdbd");
-		}
-		
-		if($scope.informacionRegistro.posicion === "" || $scope.informacionRegistro.posicion === undefined){
-			$("#form-posicion").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Posición";
-		}else{
-			$("#form-posicion").css("border", "1px solid #bdbdbd");
-		}
-		
-		if($scope.informacionRegistro.curp === "" || $scope.informacionRegistro.curp === undefined){
-			$("#form-curp").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *CURP";
-		}else{
-			if($scope.validarTamDatos){
-				if($scope.informacionRegistro.curp.length == 18){
-					$("#form-curp").css("border", "1px solid #bdbdbd");
-				}else{
-					$("#form-curp").css("border-bottom", "2px solid #f55756");
-					validacionInformacionGeneral = false;
-					mensaje = mensaje + "<br/> *Formato de la CURP (18 dígitos)";
-				}
+		if($scope.tabInformacion){
+			if($("#puesto_select_registro").val() === "" || $("#puesto_select_registro").val() === undefined || $("#puesto_select_registro").val() === null){
+				$("#puesto_select_registro").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *Puesto";
 			}else{
-				$("#form-curp").css("border", "1px solid #bdbdbd");
+				$("#puesto_select_registro").css("border", "1px solid #bdbdbd");
 			}
 			
-		}
-		
-		if($scope.informacionRegistro.rfc === "" || $scope.informacionRegistro.rfc === undefined){
-			$("#form-rfc").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *RFC";
-		}else{
-			if($scope.validarTamDatos){
-				if($scope.informacionRegistro.rfc.length == 12 || $scope.informacionRegistro.rfc.length == 13){
+			if($("#compania_select_registro").val() === "" || $("#compania_select_registro").val() === undefined || $("#compania_select_registro").val() === null){
+				$("#compania_select_registro").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *Compañía";
+			}else{
+				$("#compania_select_registro").css("border", "1px solid #bdbdbd");
+			}
+			
+			if($scope.informacionRegistro.numEmpleado === "" || $scope.informacionRegistro.numEmpleado === undefined){
+				$("#form-num-empleado").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *Número empleado";
+			}else{
+				$("#form-num-empleado").css("border", "1px solid #bdbdbd");
+			}
+			
+			if($scope.informacionRegistro.usuario === "" || $scope.informacionRegistro.usuario === undefined){
+				$("#form-usuario").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *Usuario";
+			}else{
+				$("#form-usuario").css("border", "1px solid #bdbdbd");
+			}
+			
+			if($scope.informacionRegistro.contrasena === "" || $scope.informacionRegistro.contrasena === undefined){
+				$("#form-pasword").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *Contraseña";
+			}else{
+				$("#form-pasword").css("border", "1px solid #bdbdbd");
+			}
+			
+			if($scope.informacionRegistro.confirContrasena === "" || $scope.informacionRegistro.confirContrasena === undefined){
+				$("#form-confir-password").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *Confirmación de contraseña";
+			}else{
+				var password = $("#form-pasword").val();
+		    	var confirPassword =  $("#form-confir-password").val();
+		    	if(password !== confirPassword){
+		    		$("#form-pasword").css("border-bottom", "2px solid #f55756");
+		    		$("#form-confir-password").css("border-bottom", "2px solid #f55756");
+		    		validacionInformacionGeneral = false;
+		    		mensaje = mensaje + "<br/> *Contraseña";
+					mensaje = mensaje + "<br/> *Confirmación de contraseña";
+		    		toastr.info("¡Las contraseñas no coinciden!");
+		    	}else{
+		    		$("#form-pasword").css("border", "1px solid #bdbdbd");
+		    		$("#form-confir-password").css("border", "1px solid #bdbdbd");
+		    	}
+			}
+			
+			if($scope.informacionRegistro.nombre === "" || $scope.informacionRegistro.nombre === undefined){
+				$("#form-nombres").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *Nombre";
+			}else{
+				$("#form-nombres").css("border", "1px solid #bdbdbd");
+			}
+			
+			if($scope.informacionRegistro.apellidoPaterno === "" || $scope.informacionRegistro.apellidoPaterno === undefined){
+				$("#form-a-paterno").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *Apellido paterno";
+			}else{
+				$("#form-a-paterno").css("border", "1px solid #bdbdbd");
+			}
+			
+			if($scope.informacionRegistro.apellidoMaterno === "" || $scope.informacionRegistro.apellidoMaterno === undefined){
+				$("#form-a-materno").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *Apellido materno";
+			}else{
+				$("#form-a-materno").css("border", "1px solid #bdbdbd");
+			}
+			
+			if($scope.informacionRegistro.posicion === "" || $scope.informacionRegistro.posicion === undefined){
+				$("#form-posicion").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *Posición";
+			}else{
+				$("#form-posicion").css("border", "1px solid #bdbdbd");
+			}
+
+			if($scope.informacionRegistro.curp === "" || $scope.informacionRegistro.curp === undefined){
+				$("#form-curp").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *CURP";
+			}else{
+				if($scope.tabInformacionVL_CURP){
+					if($scope.informacionRegistro.curp.length == 18){
+						$("#form-curp").css("border", "1px solid #bdbdbd");
+					}else{
+						$("#form-curp").css("border-bottom", "2px solid #f55756");
+						validacionInformacionGeneral = false;
+						mensaje = mensaje + "<br/> *Formato de la CURP (18 dígitos)";
+					}
+				}else{
+					$("#form-curp").css("border", "1px solid #bdbdbd");
+				}
+				
+			}
+			
+			if($scope.informacionRegistro.rfc === "" || $scope.informacionRegistro.rfc === undefined){
+				$("#form-rfc").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *RFC";
+			}else{
+				if($scope.tabInformacionVL_RFC){
+					if($scope.informacionRegistro.rfc.length == 12 || $scope.informacionRegistro.rfc.length == 13){
+						$("#form-rfc").css("border", "1px solid #bdbdbd");
+					}else{
+						$("#form-rfc").css("border-bottom", "2px solid #f55756");
+						validacionInformacionGeneral = false;
+						mensaje = mensaje + "<br/> *Formato del RFC (12-13 dígitos)";
+					}
+				}else{
 					$("#form-rfc").css("border", "1px solid #bdbdbd");
-				}else{
-					$("#form-rfc").css("border-bottom", "2px solid #f55756");
-					validacionInformacionGeneral = false;
-					mensaje = mensaje + "<br/> *Formato del RFC (12-13 dígitos)";
 				}
-			}else{
-				$("#form-rfc").css("border", "1px solid #bdbdbd");
 			}
-		}
-		
-		if($scope.informacionRegistro.telefonoContacto === "" || $scope.informacionRegistro.telefonoContacto === undefined){
-			$("#form-telefono-contacto").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Teléfono de contacto";
-		}else{
-			if($scope.validarTamDatos){
-				if($scope.informacionRegistro.telefonoContacto.length == 10){
+			
+			if($scope.informacionRegistro.telefonoContacto === "" || $scope.informacionRegistro.telefonoContacto === undefined){
+				$("#form-telefono-contacto").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *Teléfono de contacto";
+			}else{
+				if($scope.validarTamDatos){
+					if($scope.informacionRegistro.telefonoContacto.length == 10){
+						$("#form-telefono-contacto").css("border", "1px solid #bdbdbd");
+					}else{
+						$("#form-telefono-contacto").css("border-bottom", "2px solid #f55756");
+						validacionInformacionGeneral = false;
+						mensaje = mensaje + "<br/> *Formato del teléfono (10 dígitos)";
+					}
+				}else{
 					$("#form-telefono-contacto").css("border", "1px solid #bdbdbd");
-				}else{
-					$("#form-telefono-contacto").css("border-bottom", "2px solid #f55756");
-					validacionInformacionGeneral = false;
-					mensaje = mensaje + "<br/> *Formato del teléfono (10 dígitos)";
 				}
-			}else{
-				$("#form-telefono-contacto").css("border", "1px solid #bdbdbd");
 			}
-		}
-		
-		if($scope.informacionRegistro.correo === "" || $scope.informacionRegistro.correo === undefined){
-			$("#form-correo").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Correo electrónico";
-		}else{
-			if($("#form-correo").val().indexOf('@', 0) == -1 || $("#form-correo").val().indexOf('.', 0) == -1) {
+			
+			if($scope.informacionRegistro.correo === "" || $scope.informacionRegistro.correo === undefined){
 				$("#form-correo").css("border-bottom", "2px solid #f55756");
 				validacionInformacionGeneral = false;
-				toastr.warning("¡Valida el formato del correo electrónico!");
+				mensaje = mensaje + "<br/> *Correo electrónico";
 			}else{
-				$("#form-correo").css("border", "1px solid #bdbdbd");
+				if($("#form-correo").val().indexOf('@', 0) == -1 || $("#form-correo").val().indexOf('.', 0) == -1) {
+					$("#form-correo").css("border-bottom", "2px solid #f55756");
+					validacionInformacionGeneral = false;
+					toastr.info("¡Valida el formato del correo electrónico!");
+				}else{
+					$("#form-correo").css("border", "1px solid #bdbdbd");
+				}
 			}
-		}
 
-		if($scope.informacionRegistro.fechaIngreso === "" || $scope.informacionRegistro.fechaIngreso === undefined || $scope.informacionRegistro.fechaIngreso === null){
-			$("#form-fechaIngresoRegistro").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Fecha de ingreso";
-		}else{
-			$("#form-fechaIngresoRegistro").css("border", "1px solid #bdbdbd");
-		}
-		
-		if($("#sexo_select_registro").val() === "" || $("#sexo_select_registro").val() === undefined || $("#sexo_select_registro").val() === null){
-			$("#sexo_select_registro").css("border-bottom", "2px solid #f55756");
-			validacionInformacionGeneral = false;
-			mensaje = mensaje + "<br/> *Sexo";
-		}else{
-			$("#sexo_select_registro").css("border", "1px solid #bdbdbd");
+			if($scope.informacionRegistro.fechaIngreso === "" || $scope.informacionRegistro.fechaIngreso === undefined || $scope.informacionRegistro.fechaIngreso === null){
+				$("#form-fechaIngresoRegistro").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *Fecha de ingreso";
+			}else{
+				$("#form-fechaIngresoRegistro").css("border", "1px solid #bdbdbd");
+			}
+			
+			if($("#sexo_select_registro").val() === "" || $("#sexo_select_registro").val() === undefined || $("#sexo_select_registro").val() === null){
+				$("#sexo_select_registro").css("border-bottom", "2px solid #f55756");
+				validacionInformacionGeneral = false;
+				mensaje = mensaje + "<br/> *Sexo";
+			}else{
+				$("#sexo_select_registro").css("border", "1px solid #bdbdbd");
+			}
 		}
 		
 		//PESTAÑA INTERVENCIONES
-		if($scope.listaIntervencionesSeleccionadas == "" || $scope.listaIntervencionesSeleccionadas == undefined || $scope.listaIntervencionesSeleccionadas == null){
-			validacionIntervenciones = false;
-			mensaje = mensaje + "<br/> *Intervención(es)";
-			$("#labelIntervencionesSeleccionadas").css("color", "#f55756");
-			$("#contenedorIntervencionesRegistro").css("border", "#f55756 solid 1px");
-		}else{
-			$("#labelIntervencionesSeleccionadas").css("color", "rgb(70, 88, 107)");
-			$("#contenedorIntervencionesRegistro").css("border", "white solid 0px");
+		if($scope.tabIntervenciones){
+			if($scope.listaIntervencionesSeleccionadas == "" || $scope.listaIntervencionesSeleccionadas == undefined || $scope.listaIntervencionesSeleccionadas == null){
+				validacionIntervenciones = false;
+				mensaje = mensaje + "<br/> *Intervención(es)";
+				$("#labelIntervencionesSeleccionadas").css("color", "#f55756");
+				$("#contenedorIntervencionesRegistro").css("border", "#f55756 solid 1px");
+			}else{
+				$("#labelIntervencionesSeleccionadas").css("color", "rgb(70, 88, 107)");
+				$("#contenedorIntervencionesRegistro").css("border", "white solid 0px");
+			}
 		}
 		
 		//PESTAÑA ÁRBOL
-		if($scope.listaGeografiasSeleccionadas == "" || $scope.listaGeografiasSeleccionadas == undefined || $scope.listaGeografiasSeleccionadas == null){
-			validacionArbol = false;
-			mensaje = mensaje + "<br/> *Geografía(s)";
-			$("#labelGeografiasSeleccionadas").css("color", "#f55756");
-			$("#contenedorGeografiasRegistro").css("border", "#f55756 solid 1px");
-		}else{
-			$("#labelGeografiasSeleccionadas").css("color", "rgb(70, 88, 107)");
-			$("#contenedorGeografiasRegistro").css("border", "white solid 0px");
+		if($scope.tabArbol){
+			if($scope.listaGeografiasSeleccionadas == "" || $scope.listaGeografiasSeleccionadas == undefined || $scope.listaGeografiasSeleccionadas == null){
+				validacionArbol = false;
+				mensaje = mensaje + "<br/> *Geografía(s)";
+				$("#labelGeografiasSeleccionadas").css("color", "#f55756");
+				$("#contenedorGeografiasRegistro").css("border", "#f55756 solid 1px");
+			}else{
+				$("#labelGeografiasSeleccionadas").css("color", "rgb(70, 88, 107)");
+				$("#contenedorGeografiasRegistro").css("border", "white solid 0px");
+			}
 		}
 		
 		//CHECK SI EL PUESTO SELECCIONADO ES TÉCNICO NO VALIDA (TÉCNICOS Y PERMISOS) Y SI NO ES TÉCNICO SI VALIDA DICHA INFORMACIÓN
 		if($scope.isTecnico == false){
 			//PESTAÑA ACCESOS (PERMISOS)
-    		if($scope.listaPermisosSeleccionados == "" || $scope.listaPermisosSeleccionados == undefined || $scope.listaPermisosSeleccionados == null){
-    			validacionAccesos = false;
-    			mensaje = mensaje + "<br/> *Permiso(s)";
-    			$("#labelPermisosSeleccionadas").css("color", "#f55756");
-    			$("#contenedorPermisosRegistro").css("border", "#f55756 solid 1px");
-    		}else{
-    			$("#labelPermisosSeleccionadas").css("color", "rgb(70, 88, 107)");
-    			$("#contenedorPermisosRegistro").css("border", "white solid 0px");
+    		if($scope.tabAccesos){
+    			if($scope.listaPermisosSeleccionados == "" || $scope.listaPermisosSeleccionados == undefined || $scope.listaPermisosSeleccionados == null){
+        			validacionAccesos = false;
+        			mensaje = mensaje + "<br/> *Permiso(s)";
+        			$("#labelPermisosSeleccionadas").css("color", "#f55756");
+        			$("#contenedorPermisosRegistro").css("border", "#f55756 solid 1px");
+        		}else{
+        			$("#labelPermisosSeleccionadas").css("color", "rgb(70, 88, 107)");
+        			$("#contenedorPermisosRegistro").css("border", "white solid 0px");
+        		}
     		}
     		
     		//PESTAÑA TÉCNICOS
     		//POR EL MOMENTO SE QUITA LA VALIDACIÓN DE TÉCNICOS (NO ES OBLIGATORIA LA SELECCIÓN)
-//        	var checkTec = 0;
-//    		angular.forEach($scope.listaTecnicos,function(tecnico,index){
-//    			if(tecnico.checkedOpcion == true){
-//    				checkTec++;
-//    			}
-//    		});
-//    		if(checkTec < 1){
-//    			validacionTecnicos = false;
-//    			mensaje = mensaje + "<br/> *Técnico(s)";
-//    			$("#labelTecnicosSeleccionadas").css("color", "#f55756");
-//    			$("#contenedorTecnicosRegistro").css("border", "#f55756 solid 1px");
-//    		}else{
-//    			$("#labelTecnicosSeleccionadas").css("color", "rgb(70, 88, 107)");
-//    			$("#contenedorTecnicosRegistro").css("border", "white solid 0px");
-//    		}
     		
 		}else{
 			//PESTAÑA DESPACHOS
-        	var checkDes = 0;
-    		angular.forEach($scope.listaDespachos,function(despacho,index){
-    			if(despacho.checkedOpcion == true){
-    				checkDes++;
-    			}
-    		});
-    		if(checkDes < 1){
-    			validacionDespachos = false;
-    			mensaje = mensaje + "<br/> *Despachos(s)";
-    			$("#labelDespachosSeleccionados").css("color", "#f55756");
-    			$("#contenedorDespachosRegistro").css("border", "#f55756 solid 1px");
-    		}else{
-    			$("#labelTecnicosSeleccionadas").css("color", "rgb(70, 88, 107)");
-    			$("#contenedorDespachosRegistro").css("border", "white solid 0px");
-    		}
+        	if($scope.tabDespachos){
+        		var checkDes = 0;
+        		angular.forEach($scope.listaDespachos,function(despacho,index){
+        			if(despacho.checkedOpcion == true){
+        				checkDes++;
+        			}
+        		});
+        		if(checkDes < 1){
+        			validacionDespachos = false;
+        			mensaje = mensaje + "<br/> *Despachos(s)";
+        			$("#labelDespachosSeleccionados").css("color", "#f55756");
+        			$("#contenedorDespachosRegistro").css("border", "#f55756 solid 1px");
+        		}else{
+        			$("#labelTecnicosSeleccionadas").css("color", "rgb(70, 88, 107)");
+        			$("#contenedorDespachosRegistro").css("border", "white solid 0px");
+        		}
+        	}
 		}
     	
     	//PESTAÑA CONFIRMAR USUARIO
-    	if($scope.informacionRegistro.ciudadNatal == "" || $scope.informacionRegistro.ciudadNatal == undefined){
-    		$(".ciudadNatal").css("color", "#f55756");
-    		validacion = false;
-			mensaje = mensaje + "<br/> *Ciudad natal";
-    	}else{
-    		$(".ciudadNatal").css("color", "#7c7c7d");
+    	if($scope.tabConfirmacion){
+    		if($scope.informacionRegistro.ciudadNatal == "" || $scope.informacionRegistro.ciudadNatal == undefined){
+        		$(".ciudadNatal").css("color", "#f55756");
+        		validacion = false;
+    			mensaje = mensaje + "<br/> *Ciudad natal";
+        	}else{
+        		$(".ciudadNatal").css("color", "#7c7c7d");
+        	}
     	}
 		
 		//VALIDACIÓN Y ACTIVACIÓN DE PESTAÑAS
@@ -1143,7 +1297,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		
 		//SI EXISTE ALGÚN CAMPO FALTANTE, MUESTRA EL MENSAJE
 		if(validacion == false){
-			toastr.warning(mensaje);
+			toastr.info(mensaje);
 		}
 		
 		//REGRESA LA RESPUESTA BOLEANA
@@ -1158,11 +1312,13 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     //VALIDACIÓN DE CAMPOS INGRESADOS CON LA CLASE 'inputFormulario' - PESTAÑA INFORMACIÓN REGISTRO USUARIO
     $(".inputFormulario").keyup(function() {
 		var input = $(this).attr("id");
+		
 		if( $(this).val()  === "" || $(this).val() === undefined ){
 			$("#"+input).css("border-bottom", "2px solid #f55756");
 		}else{
 			$("#"+input).css("border", "1px solid #bdbdbd");
 		}
+		
 		if(input === "form-correo"){
 			if($("#"+input).val().indexOf('@', 0) == -1 || $("#"+input).val().indexOf('.', 0) == -1) {
 				$("#"+input).css("border-bottom", "2px solid #f55756");
@@ -1178,7 +1334,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	if(password !== confirPassword){
     		$("#form-pasword").css("border-bottom", "2px solid #f55756");
     		$("#form-confir-password").css("border-bottom", "2px solid #f55756");
-    		toastr.warning("¡Las contraseñas no coinciden!");
+    		toastr.info("¡Las contraseñas no coinciden!");
     	}else{
     		$("#form-pasword").css("border", "1px solid #bdbdbd");
     		$("#form-confir-password").css("border", "1px solid #bdbdbd");
@@ -1420,18 +1576,18 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 			if($scope.informacionRegistro.geografias.length > 0){
 				if($scope.isTecnico){
 					if($scope.listaDespachos == ""){
-						toastr.warning('¡No existen despachos actualmente!');
+						toastr.info('¡Actualmente no existen despachos!');
 					}
 				}else{
 					if($scope.listaTecnicos == ""){
-						toastr.warning('¡No existen técnicos actualmente!');
+						toastr.info('¡Actualmente no existen técnicos!');
 					}
 				}
 			}else{
-				toastr.warning('¡Selecciona al menos una geografía!');
+				toastr.info('¡Selecciona al menos una geografía!');
 			}
 		}else{
-			toastr.warning('¡Selecciona al menos una geografía!');
+			toastr.info('¡Selecciona al menos una geografía!');
 		}
 	}
 	
@@ -1511,50 +1667,56 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	
 	//MÉTODO PARA ELIMINAR USUARIOS (BAJA LÓGICA)
     eliminarUsuario = function(idUsuario) {
-    	let params = {
-    			idUsuarioQueModifica: idUsuario,
-    			estatus: 0,
-    			comentarios: "Se desactiva al Usuario"
-		};
     	
-    	swal({
-	        title: "Se dará de baja al usuario",
-	        text: "\u00BFDesea eliminar el usuario?",
-	        type: "warning",
-	        input: 'text',
-	        inputPlaceholder: "Escribe el motivo",
-	        showCancelButton: true,
-	        confirmButtonColor: '#007bff',
-	        confirmButtonText: 'Si',
-	        cancelButtonText: 'Cancelar',
-	        allowOutsideClick: false
-	      }).then(function (motivo) {
-	        if (motivo) {
-	        	params.comentarios = motivo;
-	        	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
-	    		swal.showLoading();
-	        	$q.all([
-	        		usuarioPIService.eliminarUsuario(params)
-	            ]).then(function(results) {
-	            	swal.close();
-	            	if(results[0].data.respuesta){
-	            		swal("Correcto", "¡Usuario eliminado con éxito!", "success");
-	            		setTimeout(function() {
-	            			$scope.consultaUsuariosPorGeoCompPuestos();
-	    	        	}, 1000);
-	            	}else{
-	            		swal("Error", results[0].data.resultDescripcion, "error");
-	            	}
-	            });
-	        }else{
-	        	swal({type: "warning", title:"Aviso", text:"¡Ingrese el motivo de la baja!", showConfirmButton: false, allowOutsideClick: false, allowEscapeKey : false});
-	        	setTimeout(function() {
-	        		eliminarUsuario(idUsuario);
-	        	}, 2500);
-	        }
-	      }).catch(err => {
+    	if($scope.configPermisoAccionEliminaUsuarios){
+    		let params = {
+        			idUsuarioQueModifica: idUsuario,
+        			estatus: 0,
+        			comentarios: "Se desactiva al Usuario"
+    		};
+        	
+        	swal({
+    	        title: "Se dará de baja al usuario",
+    	        text: "\u00BFDesea eliminar el usuario?",
+    	        type: "warning",
+    	        input: 'text',
+    	        inputPlaceholder: "Escribe el motivo",
+    	        showCancelButton: true,
+    	        confirmButtonColor: '#007bff',
+    	        confirmButtonText: 'Si',
+    	        cancelButtonText: 'Cancelar',
+    	        allowOutsideClick: false
+    	      }).then(function (motivo) {
+    	        if (motivo) {
+    	        	params.comentarios = motivo;
+    	        	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
+    	    		swal.showLoading();
+    	        	$q.all([
+    	        		usuarioPIService.eliminarUsuario(params)
+    	            ]).then(function(results) {
+    	            	swal.close();
+    	            	if(results[0].data.respuesta){
+    	            		swal("Correcto", "¡Usuario eliminado con éxito!", "success");
+    	            		setTimeout(function() {
+    	            			$scope.consultaUsuariosPorGeoCompPuestos();
+    	    	        	}, 1000);
+    	            	}else{
+    	            		swal("Error", results[0].data.resultDescripcion, "error");
+    	            	}
+    	            });
+    	        }else{
+    	        	swal({type: "warning", title:"Aviso", text:"¡Ingrese el motivo de la baja!", showConfirmButton: false, allowOutsideClick: false, allowEscapeKey : false});
+    	        	setTimeout(function() {
+    	        		eliminarUsuario(idUsuario);
+    	        	}, 2500);
+    	        }
+    	      }).catch(err => {
 
-	      });
+    	      });
+    	}else{
+    		swal({type: "warning", title:"Aviso", text:"¡No cuentas con el permiso de eliminación!"});
+    	}
+
 	}
     
 //    --------------------------------------------------------------------------------------------------------
@@ -1566,10 +1728,10 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 			$(labelFile).text(e.target.files[0].name);
 			
 			var nombreArchivo = "";
-	    	if($scope.confirmacionRegistro.nombre == "Sin asignar"){
-	    		nombreArchivo = e.target.files[0].name;
+	    	if($scope.informacionRegistro.numEmpleado === "" || $scope.informacionRegistro.numEmpleado === undefined){
+	    		nombreArchivo = "Foto perfil";
 	    	}else{
-	    		nombreArchivo = $scope.confirmacionRegistro.nombre;
+	    		nombreArchivo = $scope.informacionRegistro.numEmpleado;
 	    	}
 			
 			let reader = new FileReader();
@@ -1577,7 +1739,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 			reader.onload = function () {
 				let base64 = reader.result.toString().split(",");
 				let img = {
-					"bucketId": "totalplay-ffm-core-dev.appspot.com",
+					"bucketId": $scope.bucketIdImg,
 					"archivo": base64[1],
 					"nombre": nombreArchivo
 				}
@@ -1604,14 +1766,14 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	
     	var archivo = foto.toDataURL().split(",");
     	var nombreArchivo = "";
-    	if($scope.confirmacionRegistro.nombre == "Sin asignar"){
-    		nombreArchivo = "fotografiaUsuarioNuevo";
+    	if($scope.informacionRegistro.numEmpleado === "" || $scope.informacionRegistro.numEmpleado === undefined){
+    		nombreArchivo = "Foto perfil";
     	}else{
-    		nombreArchivo = $scope.confirmacionRegistro.nombre;
+    		nombreArchivo = $scope.informacionRegistro.numEmpleado;
     	}
 
 		let img = {
-				"bucketId": "totalplay-ffm-core-dev.appspot.com",
+				"bucketId": $scope.bucketIdImg,
 				"archivo": archivo[1],
 				"nombre": nombreArchivo
 			}
@@ -1653,6 +1815,24 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	        $("#buscadorDespachoRegistro").focus();
     	}, 750);
     });
+    
+    $scope.tabRevisarPermisoCrearUsuario = function() {
+    	if($scope.configPermisoAccionCreaUsuarios == false){
+    		//swal({type: "warning", title:"Aviso", text:"¡No cuentas con el permiso de registro!"});
+    	}
+	}
+    
+    $scope.tabRevisarPermisoConsultarUsuarios = function() {
+    	if($scope.configPermisoAccionConsultaUsuarios == false){
+    		//swal({type: "warning", title:"Aviso", text:"¡No cuentas con el permiso de consulta!"});
+    	}
+	}
+    
+    $scope.quitarEspaciosNombreUsuario = function(campo) {
+//    	$scope.informacionRegistro.usuario = $scope.informacionRegistro.usuario.replace(/ /g, "");
+    	var valorCampo = $("#"+campo).val().replace(/ /g, "");
+    	$("#"+campo).val(valorCampo);
+	}
     
     //-------------------------------------------------------------------    
     $scope.iniciarModuloUsuarios();

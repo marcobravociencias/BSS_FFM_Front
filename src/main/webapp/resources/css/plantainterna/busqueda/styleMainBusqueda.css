@@ -1676,7 +1676,7 @@ img.img_evidencia {
   width: 450px;
   display: none;
   height: 40px;
-  margin-bottom: 25px;
+  margin-bottom: 2em;
 }
 
 .col-btn-send {
@@ -1850,8 +1850,8 @@ span.text-activacion-warning {
 .close-enviar-subcomentario{
   width: 0em !important;
   height: 10px !important;
-  margin-left: 5em;
+  margin-left: 2em;
   position: absolute;
-  top: 61px;
+  top: 44px;
   left: 51%;
 }

@@ -60,9 +60,9 @@ img.responsive-img, video.responsive-video {
     position: relative;
     border-bottom: 1px solid #eee;
 }
-.btn, .btn-floating, .btn-large, .btn-small, .card, .card-panel, .collapsible, .dropdown-content, .sidenav, .toast, .z-depth-1, nav {
-    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
-}
+/* .btn, .btn-floating, .btn-large, .btn-small, .card, .card-panel, .collapsible, .dropdown-content, .sidenav, .toast, .z-depth-1, nav { */
+/*     box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%); */
+/* } */
 
 
 body{

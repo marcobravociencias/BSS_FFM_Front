@@ -21,5 +21,12 @@ public interface SoporteCentralizadoService {
     public ServiceResponseResult creaTicketSoporte(String params);
     
     public ServiceResponseResult consultaPropietariosTicketSoporte();
+    
+    public ServiceResponseResult consultaCuentaClienteTicketSoporte(String params);
 
+    ServiceResponseResult asignarIngenieroTicket(String params);
+
+    ServiceResponseResult consultarAccionesDinamicaDetalle();
+
+    ServiceResponseResult guardarTicketDetalle(String params);
 }

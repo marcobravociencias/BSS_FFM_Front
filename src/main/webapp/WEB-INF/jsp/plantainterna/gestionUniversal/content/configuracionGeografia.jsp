@@ -3,13 +3,13 @@
         <div class="row">
             <div class="col-4 offset-1">
                 <div class="input-group input-group-sm">
-                    <input placeholder="Buscar" type="text" autocomplete="off" class="search-filtro form-control"
+                    <input placeholder="Buscar geograf&iacute;a" type="text" autocomplete="off" class="search-filtro form-control form-control-sm"
                         id="searchGeo"><i class="fa fa-search icon-search-geo"></i>
                 </div>
             </div>
             <div class="col-4 offset-2">
                 <div class="input-group input-group-sm">
-                    <input placeholder="Buscar" type="text" autocomplete="off" class="search-filtro form-control"
+                    <input placeholder="Buscar geograf&iacute;a" type="text" autocomplete="off" class="search-filtro form-control form-control-sm"
                         id="searchGeoOriginal"><i class="fa fa-search icon-search-geo"></i>
                 </div>
             </div>

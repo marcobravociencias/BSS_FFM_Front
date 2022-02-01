@@ -63,27 +63,45 @@
                       <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Almacen</span></div>
                       <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="tecnicoConsultaMateriales.almacen || 'Sin dato'"></span>
                       </div>
-                  </div>                  
+                  </div>    
+                  <div class="container-fluid vehiculo-content">
+                      <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Total materiales</span></div>
+                      <div class="container-text-content-detalle"><span class="text-content-vehiculo total-materiales ng-binding" ng-bind="totalMaterialesModal || 'Sin dato'"></span>
+                      </div>
+                  </div>               
                 </div>
                 <div class="col-4">
                     <img class="img-sap-materiales" src="${pageContext.request.contextPath}/resources/img/logotipos/SAP.svg"  alt="" loading="lazy" />   
                     
-                    <div class="container-estatus-sap">                  
+                    <div ng-show="tecnicoConsultaMateriales.centro === 'ONLINE'" class="container-estatus-sap">                  
                        <div class="blob online-sap-materiales-icon"></div>
               
                        <span class="span-online-sap"> SAP en l&iacute;nea</span>
                     </div>
-                    <div ng-show="true == false" class="container-estatus-sap">    
+                    <div ng-show="tecnicoConsultaMateriales.centro.trim() === 'OFFLINE'" class="container-estatus-sap">    
                         <div class="blob oflline-sap-materiales-icon"></div>              
                         <span class="span-offline-sap"> SAP fuera de l&iacute;nea </span>
                     </div> 
+                    <div ng-show="tecnicoConsultaMateriales.centro.trim() === 'OFFL'" class="container-estatus-sap">    
+                      <div class="blob oflline-sap-materiales-icon"></div>              
+                      <span class="span-offline-sap"> SAP fuera de l&iacute;nea </span>
+                  </div> 
+                    <div ng-show="tecnicoConsultaMateriales.centro.trim() === 'NOCONF'" class="container-estatus-sap">    
+                      <span class="span-noconfi-sap"> Sin configuraci&oacute;n  </span>
+                    </div> 
+                    <div ng-show="tecnicoConsultaMateriales.centro.trim() === 'NONF'" class="container-estatus-sap">    
+                      <span class="span-noconfi-sap"> Sin configuraci&oacute;n  </span>
+                    </div> 
+                    <div ng-show="tecnicoConsultaMateriales.centro.trim() === 'NA'" class="container-estatus-sap">    
+                      <span class="span-na-sap"> No aplica</span>
+                  </div> 
                 </div>
               </div>
               <div class="row">                   
                   <div class="col-12">
                     <div class="nav nav-tabs text-center"  id="tabs-materiales-sap" role="tablist" aria-orientation="vertical" >
                       <a class="nav-link active" id="v-tabs-consulta-materiales-tab" data-mdb-toggle="tab" href="#v-tabs-consulta-materiales" role="tab" aria-controls="v-tabs-consulta-materiales" aria-selected="true" >Consulta Materiales</a>
-                      <a class="nav-link" id="v-tabs-consulta-traspasos-tab" data-mdb-toggle="tab" href="#v-tabs-consulta-traspasos" role="tab" aria-controls="v-tabs-consulta-traspasos" aria-selected="false" >Consulta traspasos</a>                    
+                      <!--a class="nav-link" id="v-tabs-consulta-traspasos-tab" data-mdb-toggle="tab" href="#v-tabs-consulta-traspasos" role="tab" aria-controls="v-tabs-consulta-traspasos" aria-selected="false" >Consulta traspasos</a-->                    
                     </div>
                     <div class="tab-content" id="v-tabs-tabContent">
                       <div class="tab-pane fade show active" id="v-tabs-consulta-materiales" role="tabpanel" aria-labelledby="v-tabs-consulta-materiales-tab" >

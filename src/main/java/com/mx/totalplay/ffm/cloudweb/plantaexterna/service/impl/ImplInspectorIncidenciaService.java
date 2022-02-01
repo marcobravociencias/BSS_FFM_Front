@@ -108,12 +108,14 @@ public class ImplInspectorIncidenciaService implements InspectorIncidenciaServic
 		String tokenAccess = principalDetail.getAccess_token();
 		logger.info("consultarDetalleIncidenciaInspectorPE ## "+ tokenAccess);
 		
-		String urlRequest = principalDetail.getDireccionAmbiente().concat(constInspectorIncidencia.getConsultaOTTipoOrdenesPorUsuario());
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constInspectorIncidencia.getConsultaDetalleIncidentes());
 		logger.info("URL ##"+ urlRequest);
 		
 		Map<String, String> paramsRequestGet = new HashMap<String, String>();
+		paramsRequestGet.put("idIncidencia", jsonObject.get("incidencia").getAsString());
 		
 		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest, ServiceResponseResult.class, tokenAccess);
+		logger.info("**** RESULT consultarDetalleIncidenciaInspectorPE(): \n" + gson.toJson(response));
 		
 		return response;
 	}

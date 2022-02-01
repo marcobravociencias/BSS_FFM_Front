@@ -22,6 +22,7 @@ import com.mx.totalplay.ffm.cloudweb.utilerias.utils.ConstantesGeneric;
 import com.mx.totalplay.ffm.cloudweb.utilerias.utils.UtileriaGeneral;
 
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -45,10 +46,9 @@ public class GenericController {
 	public String enrutamientoUser(ModelMap model) {	
 		logger.info("Enrutando ... " );
         LoginResult principalDetail = utileriaGeneral.obtenerObjetoPrincipal();
-        List<Permiso> permisos = principalDetail.getPermisos();
-        String redirectEnrutamiento="redirect:"+permisos.get(0).getClave();
-		logger.info("Enrutando ... "+redirectEnrutamiento );
-		
+        List<Permiso> modulos = principalDetail.getModulos();
+        String redirectEnrutamiento="redirect:"+modulos.get(0).getClave();
+		logger.info("Enrutando ... "+redirectEnrutamiento );		
 		return redirectEnrutamiento;				
 	}		
 	
@@ -72,6 +72,12 @@ public class GenericController {
 		return "utilerias/parametrosasignacion/asignacionAutomatica";
 	}
 	
+	@GetMapping("/noticiasAppFFM")
+	public String noticiasAppFFM(){
+		logger.info("ENTRA DECISION");
+		return "generic/gestionNoticias/mainGestionNoticias";
+	}
+	
 	@GetMapping("/descargaLogFile/{fileName:.+}")
 	public void downloadLoggerFile(HttpServletRequest request, HttpServletResponse response,
 								   @PathVariable("fileName")String fileName){
@@ -88,6 +94,12 @@ public class GenericController {
 			}
 
 		}
+	}
+	
+	@GetMapping("/moduloVistaConfirmacion")
+	public String vistaConfirmacion(@RequestParam Integer otconfirma) {		
+		logger.info("ENTRA DECISION");
+		return "generic/vistaConfirmacion/mainVistaConfirmacion";
 	}
 
 
