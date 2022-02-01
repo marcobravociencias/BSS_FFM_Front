@@ -283,15 +283,15 @@
                                 Imagen</label>
                         </div>
                         <div ng-if="(vehiculo.urlFotoPlaca && vehiculo.urlFotoPlaca !== 'delete')  || filePlaca"
-                            style="text-align: center; margin-top: 20px; width: 20em;">
+                            style="margin-left: 3em; margin-top: 20px; width: 20em;">
                             <img alt="Placa" src="" class="imgResumen" id="placaImagenTab"
                                 onclick="showImgResumen(this)" />
                         </div>
-                        <div ng-if="filePlaca.nombre" class="file-delete" style="text-align: center;">
+                        <div ng-if="filePlaca.nombre" class="file-delete" style="margin-left: 3em;">
                             <span class="text-img">{{filePlaca.nombre}} </span><i class="fa fa-trash"
                                 onclick="deleteFile('fotoPlaca')"></i>
                         </div>
-                        <div ng-if="vehiculo.urlFotoPlaca && vehiculo.urlFotoPlaca !== 'delete'  && !filePlaca.nombre" class="file-delete" style="text-align: center;"><span class="text-img">placa</span>
+                        <div ng-if="vehiculo.urlFotoPlaca && vehiculo.urlFotoPlaca !== 'delete'  && !filePlaca.nombre" class="file-delete" style="margin-left: 3em;"><span class="text-img">placa</span>
                             <i class="fa fa-trash" ng-click="deleteFileUrl('fotoPlaca')"></i>
                         </div>
                     </div>
@@ -304,15 +304,15 @@
                                 Imagen</label>
                         </div>
                         <div ng-if="(vehiculo.urlFotoVehiculo && vehiculo.urlFotoVehiculo !== 'delete') || fileVehiculo"
-                            style="text-align: center; margin-top: 20px; width: 20em;">
+                            style="margin-left: 3em; margin-top: 20px; width: 20em;">
                             <img alt="Vehiculo" src="" class="imgResumen" id="vehiculoImagenTab"
                                 onclick="showImgResumen(this)" />
                         </div>
-                        <div ng-if="fileVehiculo.nombre" class="file-delete" style="text-align: center;"> <span
+                        <div ng-if="fileVehiculo.nombre" class="file-delete" style="margin-left: 3em;"> <span
                                 class="text-img">{{fileVehiculo.nombre}} </span>
                             <i class="fa fa-trash" onclick="deleteFile('fotoVehiculo')"></i>
                         </div>
-                        <div ng-if="vehiculo.urlFotoVehiculo && vehiculo.urlFotoVehiculo !== 'delete' &&!fileVehiculo.nombre" class="file-delete" style="text-align: center;">
+                        <div ng-if="vehiculo.urlFotoVehiculo && vehiculo.urlFotoVehiculo !== 'delete' &&!fileVehiculo.nombre" class="file-delete" style="margin-left: 3em;">
                             <span class="text-img">vehiculo</span>
                             <i class="fa fa-trash" ng-click="deleteFileUrl('fotoVehiculo')"></i>
                         </div>
@@ -327,16 +327,16 @@
                                 Imagen</label>
                         </div>
                         <div ng-if="(vehiculo.detalle.urlFotoTarjetaCirculacion && vehiculo.detalle.urlFotoTarjetaCirculacion !== 'delete') || fileCirculacion"
-                            style="text-align: center; margin-top: 20px; width: 20em;">
+                            style="margin-left: 3em; margin-top: 20px; width: 20em;">
                             <img alt="Tarjeta Circulacion" src="" id="circulacionImagenTab"
                                 onclick="showImgResumen(this)" class="imgResumen" />
                         </div>
-                        <div ng-if="fileCirculacion.nombre" class="file-delete" style="text-align: center;">
+                        <div ng-if="fileCirculacion.nombre" class="file-delete" style="margin-left: 3em;">
                             <span class="text-img">{{fileCirculacion.nombre}} </span><i class="fa fa-trash"
                                 onclick="deleteFile('fotoTarjetaCirculaion')"></i>
                         </div>
                         <div ng-if="vehiculo.detalle.urlFotoTarjetaCirculacion && vehiculo.detalle.urlFotoTarjetaCirculacion !== 'delete' && !fileCirculacion.nombre" class="file-delete"
-                            style="text-align: center;"> <span class="text-img">tarjetaCirculacion</span>
+                            style="margin-left: 3em;"> <span class="text-img">tarjetaCirculacion</span>
                             <i class="fa fa-trash" ng-click="deleteFileUrl('fotoTarjetaCirculaion')"></i>
                         </div>
                     </div>
@@ -350,16 +350,16 @@
                                 Imagen</label>
                         </div>
                         <div ng-if="(vehiculo.detalle.urlFotoTarjetaGasolina && vehiculo.detalle.urlFotoTarjetaGasolina !== 'delete') || fileGasolina"
-                            style="text-align: center; margin-top: 20px; width: 20em;">
+                            style="margin-left: 3em; margin-top: 20px; width: 20em;">
                             <img alt="Tarjeta Gasolina" src="" id="gasolinaImagenTab" onclick="showImgResumen(this)"
                                 class="imgResumen" />
                         </div>
-                        <div ng-if="fileGasolina.nombre" class="file-delete" style="text-align: center;">
+                        <div ng-if="fileGasolina.nombre" class="file-delete" style="margin-left: 3em;">
                             <span class="text-img">{{fileGasolina.nombre}} </span><i class="fa fa-trash"
                                 onclick="deleteFile('fotoTarjetaGasolina')"></i>
                         </div>
                         <div ng-if="vehiculo.detalle.urlFotoTarjetaGasolina && vehiculo.detalle.urlFotoTarjetaGasolina !== 'delete' && !fileGasolina.nombre" class="file-delete"
-                            style="text-align: center;"> <span class="text-img">tarjetaGasolina</span>
+                            style="margin-left: 3em;"> <span class="text-img">tarjetaGasolina</span>
                             <i class="fa fa-trash" ng-click="deleteFileUrl('fotoTarjetaGasolina')"></i>
                         </div>
                     </div>
