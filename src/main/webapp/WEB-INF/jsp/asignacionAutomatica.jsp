@@ -22,9 +22,9 @@
 
 
 
-        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/reportesPI/mainReportes.css"  rel="stylesheet"/>
-        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/consultaOT/styleConsultaOT.css" rel="stylesheet">
-		<link href="${pageContext.request.contextPath}/resources/css/plantainterna/consultaOT/timeLine.css"rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/reportesPI/mainReportes.css?v=${sessionScope.versionDepl}"  rel="stylesheet"/>
+        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/consultaOT/styleConsultaOT.css?v=${sessionScope.versionDepl}" rel="stylesheet">
+		<link href="${pageContext.request.contextPath}/resources/css/plantainterna/consultaOT/timeLine.css?v=${sessionScope.versionDepl}"rel="stylesheet" />
 		
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
 		<link href="/FFMCLOUD/resources/css/plantainterna/generic/navbar.css" rel="stylesheet">
@@ -104,20 +104,20 @@
 		</div>
     </body>
   
-	<script src="${pageContext.request.contextPath}/resources/js/generic/parametrosasignacion/parametrosPrincipal.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/generic/parametrosasignacion/parametrosLib.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/generic/parametrosasignacion/parametros.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/generic/parametrosasignacion/parametrosDetalles.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/generic/parametrosasignacion/parametrosModulo.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/generic/parametrosasignacion/parametrosFiltrar.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/generic/parametrosasignacion/parametrosVersiones.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/generic/parametrosasignacion/parametrosRollback.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/generic/parametrosasignacion/parametrosGuardarCambios.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/generic/parametrosasignacion/parametrosEliminados.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/generic/parametrosasignacion/parametrosEliminar.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/generic/parametrosasignacion/parametrosActivar.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/generic/parametrosasignacion/parametrosNuevo.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/generic/parametrosasignacion/parametrosLog.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/generic/parametrosasignacion/parametrosPrincipal.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/generic/parametrosasignacion/parametrosLib.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/generic/parametrosasignacion/parametros.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/generic/parametrosasignacion/parametrosDetalles.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/generic/parametrosasignacion/parametrosModulo.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/generic/parametrosasignacion/parametrosFiltrar.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/generic/parametrosasignacion/parametrosVersiones.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/generic/parametrosasignacion/parametrosRollback.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/generic/parametrosasignacion/parametrosGuardarCambios.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/generic/parametrosasignacion/parametrosEliminados.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/generic/parametrosasignacion/parametrosEliminar.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/generic/parametrosasignacion/parametrosActivar.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/generic/parametrosasignacion/parametrosNuevo.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/generic/parametrosasignacion/parametrosLog.js?v=${sessionScope.versionDepl}"></script>
 	
 	<script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/moment.min.js"></script>
 

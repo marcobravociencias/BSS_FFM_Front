@@ -1,7 +1,7 @@
 var app = angular.module('inspectorIncidenciaApp', []);
 var incidenciaTable = undefined;
 var tableDetalleStatus = undefined;
-app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncidenciaService', function ($scope, $q, inspectorIncidenciaService) {
+app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncidenciaService', 'genericService', function ($scope, $q, inspectorIncidenciaService, genericService) {
 
     $scope.filtrosInspector = {};
     $scope.incidencias = [];
@@ -80,6 +80,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         swal.showLoading();
         $scope.filtrosInspector.fallas = arrayFallas.data.result;
         $scope.filtrosInspector.fallas.map(function (e) { e.checkedOpcion = true; return e; })
+        /*
         $scope.filtrosInspector.statusFallas = arrayStatusFallas.data.result;
         $scope.filtrosInspector.statusFallas.map(function (e) { e.checkedOpcion = true; return e; })
         $scope.filtrosInspector.coloresStatus = arrayColoresStatus.data.result[3];
@@ -95,6 +96,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
             }
             return e
         })
+        
         $('#jstree-proton-3').bind('loaded.jstree', function (e, data) {
         }).jstree({
             'plugins': ["search", "wholerow", "checkbox"],
@@ -111,10 +113,12 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                 }
             }
         });
+        
         console.log("FILTROSSS***********");
         console.log($scope.filtrosInspector);
         console.log("********************");
         swal.close();
+        */
         incidenciaTable = $('#tableIncidencia').DataTable({
             "paging": true,
             "lengthChange": false,
@@ -147,11 +151,88 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
         $q.all([
-            inspectorIncidenciaService.consultarFallasInspectorIncidencia(),
-            inspectorIncidenciaService.consultarStatusFallasInspectorIncidencia(),
-            inspectorIncidenciaService.systemColor(),
+            inspectorIncidenciaService.consultarConfiguracionDespachoDespacho({"moduloAccionesUsuario":"moduloInspectorIncidenciasPE"}),
+            inspectorIncidenciaService.consulCatalogoGeografia(),
+            genericService.consultarCatalogoEstatusDespachoPI(),
+            //inspectorIncidenciaService.systemColor(),
             // inspectorIncidenciaService.systemColor(),
         ]).then(function (results) {
+
+            let resultConf = results[0].data.result
+			if( resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves){
+                let  llavesResult=results[0].data.result.MODULO_ACCIONES_USUARIO.llaves;
+                
+                $scope.nfiltrogeografia=llavesResult.N_FILTRO_GEOGRAFIA;
+                $scope.nfiltroestatuspendiente=llavesResult.N_ESTATUS_PENDIENTES;
+                $scope.validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
+                $scope.validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
+            }
+            if (results[1].data !== undefined) {
+				if (results[1].data.respuesta) {
+					if (results[1].data.result) {
+						if (results[1].data.result.geografia) {
+							$scope.listadogeografiacopy = results[0].data.result.geografia
+							//console.log("######")
+							//console.log(results[0].data.result)
+							$scope.nfiltrogeografia = $scope.nfiltrogeografia ? $scope.nfiltrogeografia : $scope.obtenerNivelUltimoJerarquiaGeneric(results[1].data.result.geografia);
+							geografia = results[1].data.result.geografia.filter(e=>e.nivel<= parseInt($scope.nfiltrogeografia));
+							console.log(geografia);
+							geografia.map((e) => {
+								e.parent = e.padre == undefined ? "#" : e.padre;
+								e.text = e.nombre;
+								e.icon = "fa fa-globe";
+								e.state = {
+									opened: false,
+									selected: true,
+								}
+								return e
+							})
+							$('#jstree-proton-3').bind('loaded.jstree', function (e, data) {
+
+							}).jstree({
+								'plugins': ["wholerow", "checkbox", "search"],
+								'core': {
+									'data': geografia,
+									'themes': {
+										'name': 'proton',
+										'responsive': true,
+										"icons": false
+									}
+								},
+								"search": {
+									"case_sensitive": false,
+									"show_only_matches": true
+								}
+							});
+
+						} else {
+							toastr.warning('No se encontraron datos para la geografia');
+						}
+					} else {
+						toastr.warning('No se encontraron datos para la geografia');
+					}
+				} else {
+					toastr.warning(results[0].data.resultDescripcion);
+				}
+			} else {
+				toastr.error('Ha ocurrido un error en la consulta de turnos');
+			}
+            if (results[2].data !== undefined) {
+				if (results[2].data.respuesta) {
+					if (results[2].data.result) {
+						$scope.nfiltroestatuspendiente = $scope.nfiltroestatuspendiente ? $scope.nfiltroestatuspendiente : $scope.obtenerNivelUltimoJerarquiaGeneric(results[2].data.result);
+						$scope.filtrosInspector.statusFallas = $scope.realizarConversionAnidado(results[2].data.result.filter(e=>e.nivel<= parseInt($scope.nfiltroestatuspendiente)));
+					} else {
+						toastr.info('No se encontraron catalogo de estatus');
+					}
+				} else {
+					toastr.warning(results[2].data.resultDescripcion);
+				}
+			} else {
+				toastr.error('Ha ocurrido un error en la consulta de catalogo de estatus');
+			}
+            swal.close();
+            /*
             if (results[0].data !== undefined) {
                 if (results[0].data.respuesta) {
                     if (results[0].data.result) {
@@ -244,8 +325,10 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                 toastr.error('Ha ocurrido un error en la consulta de geografia')
                 $scope.banderaErrorGeografia = true;;
             }
+            */
         }).catch(err => handleError(err));
     }
+    $scope.consultarCatalogosInspectorIncidencia();
 
     $scope.seleccionTodos = function (paramFiltroParent, banderaChecked) {
         paramFiltroParent.map(function (e) {
@@ -404,7 +487,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         $scope.incidencia =  $scope.incidencias.find((e) => e.idIncidencia == idIncidencia);
         console.log($scope.incidencia);
         let params = {
-
+            incidencia: idIncidencia
         }
         inspectorIncidenciaService.consultarDetalleIncidenciaInspectorPE(params).then(function success(response) {
             swal({ text: 'Espera un momento...', allowOutsideClick: false });
@@ -487,7 +570,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
             $("#modalDetalleIncidencia").modal('show');
             $("#container-declinarIncidencia").hide();
             swal.close();
-        })
+        }).catch(err => handleError(err));
     }
 
     cargarDetalle = function (idIncidencia) {
@@ -825,7 +908,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                     row[6] = elemento.usuarioReporta ? elemento.usuarioReporta : "";
                     row[7] = elemento.fechaRegistro ? elemento.fechaRegistro : "";
                     row[8] = elemento.horaRegistro ? elemento.horaRegistro : "";
-                    row[9] = '<a class="" id="detalleIncidencia' + elemento.idIncidencia + '" onclick="consultarDetalleIncidencia (' + elemento.idIncidencia + ');">' +
+                    row[9] = '<a class="btn-inpector-incidencia" id="detalleIncidencia' + elemento.idIncidencia + '" onclick="consultarDetalleIncidencia(' + elemento.idIncidencia + ');">' +
                         '<i class="far fa-window-restore"></i>' +
                         '</a>';
                     row[10] = '<i class="fas fa-globe-americas" style="color:' + elemento.colorEstatus + '; cursor: pointer;" onclick="pintarUbicacionIncidencia(' + i + ')"></i>'
@@ -925,5 +1008,23 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
             column.visible(!column.visible());
         });
     });
+
+
+
+    // NUEVO
+    function compareGeneric(a, b) {
+		let niveluno = a.nivel;
+		let niveldos = b.nivel;
+		if (niveluno > niveldos) {
+			return -1
+		} else if (niveluno < niveldos) {
+			return 1
+		}
+		return 0
+	}
+
+    $scope.obtenerNivelUltimoJerarquiaGeneric = function (list) {
+		return list.sort(compareGeneric)[0].nivel
+	}
 
 }]);

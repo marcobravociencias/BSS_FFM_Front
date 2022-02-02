@@ -42,12 +42,12 @@
 					<b class="text-not-permiso">No tienes permiso para est&aacute; acci&oacute;n</b>
 				</div>  
 				<button ng-show="accionesUserConfigText.indexOf('accionActualizaUS') !== -1"  
-						ng-disabled="procesandoEstatusTecnico" ng-click="cambiarEstatusOperario()" type="button" class="btn btn-primary">
+						ng-disabled="procesandoEstatusTecnico" ng-click="cambiarEstatusOperario()" type="button" class="btn btn-primary btn-aceptar-modal">
                     <b ng-if="!procesandoEstatusTecnico">Cambiar estatus</b>
                     <b ng-if="procesandoEstatusTecnico">Cambiando ...</b>
                 </button>
 
-                <button type="button" class="btn cerrar-modal-btn btn-ligh" data-mdb-dismiss="modal">
+                <button type="button" class="btn btn-cerrar-modal cerrar-modal-btn btn-ligh" data-mdb-dismiss="modal">
                     Cerrar
                 </button>
 

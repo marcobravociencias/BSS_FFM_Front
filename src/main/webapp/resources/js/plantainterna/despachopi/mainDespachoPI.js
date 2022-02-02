@@ -13,6 +13,8 @@ var mapubicacionoperario;
 var mapaucotizaciondetalle;
 var mapavistageneral;
 const HEIGTH_PADDING_TABLE=270;
+const HEIGTH_FULLCALENDAR=100
+const HEIGTH_FULLCALENDAR_AFTER=145
 const MILISEGUNDOS_ALERTAS=(1000*60)*3;
 function logerror(mensaje){
     console.log('%c '+mensaje, 'background: red; color: white');
@@ -185,14 +187,17 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             todayHighlight : true
         });
         $("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
-
-
+        
+        
+        window.onresize = function(event) {
+            $('#calendar').fullCalendar('option', 'contentHeight',  $(window).height()-HEIGTH_FULLCALENDAR_AFTER );    
+        };
     });
 
     $scope.initFullCalendar = function(tecnicosParams){
         fechaActualFormat = parseInt(fechaActual.getHours())-2 + ':' + fechaActual.getMinutes() + ':00';
         fullcalendarAsignadas=$('#calendar').fullCalendar({
-            height: screen.availHeight-250,
+            height:  $(window).height()-HEIGTH_FULLCALENDAR,
             nowIndicator : true,
             defaultDate:moment(FECHA_HOY_DATE).format("YYYY/MM/DD") ,
             slotLabelFormat : 'hh:ss(:mm) a',
@@ -264,7 +269,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                     <div class="row">
                         <div class="col-8">
                             <div class="input-group input-group-sm content-seach-group  ">
-                                <input type="text" class="form-control form-control-sm buscar-input-operario" placeholder="Buscar OT" onkeyup="triggerOperarioKeyup(event);" >
+                                <input type="text" class="form-control form-control-sm buscar-input-operario" placeholder="Buscar operario" onkeyup="triggerOperarioKeyup(event);" >
                                 <span class="search-icon-operario-busq fa fa-search" id="buscar-operario"></span>
                             </div>
                         </div>
@@ -696,21 +701,19 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
        $scope.iniciarTypeAhead( arrayBusqueda )
     }
     $scope.buscarOtPendiente=function(event){
-        if (event.which === 13){  
-            $scope.buscarOtPendienteText() 
-        }   
-        if($("#buscar-ot-pendiente").val().trim() === '')
-            $scope.buscarOtPendienteText()
+        if (event.which === 13)
+            $scope.buscarOtPendienteText()         
     }
     $scope.buscarOtPendienteText=function(){
         let textbusqeuda= $("#buscar-ot-pendiente").val()
         dataTableOtsPendientes.search(textbusqeuda).draw()   
-
-        setTimeout(function(){
-            if(dataTableOtsPendientes.page.info().recordsDisplay <= 0 ){
-                $scope.consultarLocalizacionOtDespacho(textbusqeuda)
-            }
-        },300);
+        if( $("#buscar-ot-pendiente").val().trim() !== '' ) {
+            setTimeout(function(){
+                if(dataTableOtsPendientes.page.info().recordsDisplay <= 0 )
+                    $scope.consultarLocalizacionOtDespacho(textbusqeuda)
+                
+            },300);
+        }
     }
 
     $scope.iniciarTypeAhead = function(listadoSearch){
@@ -948,11 +951,32 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             mainDespachoService.consultarCatalogoEstatusDespachoPI()
         ]).then(function(results) {              
             let elementosMapa= angular.copy(results[3].data.result);
-            $scope.listadoIconosConfig=[]         
-            $scope.nfiltrogeografia=results[3].data.result.N_FILTRO_GEOGRAFIA
-            $scope.nfiltrointervenciones=results[3].data.result.N_FILTRO_INTERVENCIONES
-            $scope.nfiltroestatuspendiente=results[3].data.result.ESTATUS_PENDIENTES           
-            $scope.permisosConfigUser=results[3].data.result.MODULO_ACCIONES_USUARIO;
+            $scope.listadoIconosConfig=[]      
+            
+            let resultConf= results[3].data.result
+            if( resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves){
+                let  llavesResult=results[3].data.result.MODULO_ACCIONES_USUARIO.llaves;
+                
+                $scope.nfiltrogeografia=llavesResult.N_FILTRO_GEOGRAFIA
+                $scope.nfiltrointervenciones=llavesResult.N_FILTRO_INTERVENCIONES
+                $scope.nfiltroestatuspendiente=llavesResult.N_ESTATUS_PENDIENTES           
+                $scope.permisosConfigUser=resultConf.MODULO_ACCIONES_USUARIO;
+                $scope.validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
+                $scope.validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
+
+                GenericMapa.prototype.callPrototypeMapa( resultConf )
+
+                $scope.elementosConfigGeneral=new Map(Object.entries( resultConf ))          
+                for (const elm in resultConf ) {
+                    if(elm.toUpperCase().includes("ICONO_")){
+                        $scope.listadoIconosConfig.push({
+                            icon: elm.substring( elm.indexOf("_")+1 , elm.length ),
+                            value:elementosMapa[elm]
+                        }) 
+                    }   
+                }    
+            }
+
             $scope.estatusCambio = results[4].data.result;
            
             if($scope.permisosConfigUser!=undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length >0){
@@ -965,19 +989,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                 $scope.permisosConfigUser.permisos=[]
             }
 
-            GenericMapa.prototype.callPrototypeMapa(results[3].data.result)
-
-            $scope.elementosConfigGeneral=new Map(Object.entries(results[3].data.result))          
-            for (const elm in results[3].data.result) {
-                if(elm.toUpperCase().includes("ICONO_")){
-                    $scope.listadoIconosConfig.push({
-                        icon: elm.substring( elm.indexOf("_")+1 , elm.length ),
-                        value:elementosMapa[elm]
-                    }) 
-                }   
-
-            }
-
+     
             $scope.iniciarMapaAlertas();
 
             if (results[4].data !== undefined) {

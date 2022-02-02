@@ -1,8 +1,9 @@
 var tableAlerta;
-app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
+app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericService) {
 
     $scope.otsAlertas = [];
     $scope.vistaDespacho = true;
+    $scope.vistaAuditoriaEvidencia = false;
     $scope.alertaSeleccionada = false;
     $scope.alertaSeleccionadaObject = {};
     $scope.tipoAlertaSeleccionada = {};
@@ -10,13 +11,20 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
     let objectVistaAlerta;
 
     $scope.listaOpcionesAlerta = [];
-    
+
     $scope.listaStatusAlertaAccion = [];
     $scope.listaEstadosAlertaAccion = [];
     $scope.listaMotivosAlertaAccion = [];
     $scope.contadorCaracteresTextArea = 0;
+    $scope.listaTotal = { aceptadas: 0, rechazadas: 0 };
+    $scope.detalleEvidencia = detalleEvidencias.result.evidencias;
 
-     $scope.getDetalleAlertas = function(alerta) {
+
+    $scope.getDetalleAlertas = function (alerta) {
+
+        $scope.vistaAuditoriaEvidencia = false;
+
+
         $("#pills-mapa-tab").click();
         $scope.idAlertaSelecionada = '';
         $scope.evidenciaAlertaConsultada = false;
@@ -36,8 +44,17 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
 
         var params = {
             "idTipoAlerta": alerta.id
-        }        
-        console.log("params",params)
+        }
+        if (alerta.id == 9) {
+            $scope.listaTotal = { aceptadas: 0, rechazadas: 0 };
+            $(".radio-evidencias").prop("checked", false);
+            $(".checkbox-evidencia").prop("checked", false);
+            $(".checkbox-evidencia").removeClass("rechazada-check");
+            $scope.vistaAuditoriaEvidencia = true;
+            $scope.vistaDespacho = false;
+            $scope.applyMagnific();
+        }
+        console.log("params", params)
         mainAlertasService.getDetalleAlertas(params).then(function success(response) {
             console.log(response);
             if (response.data !== undefined) {
@@ -52,17 +69,17 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
                 swal.close();
             }
         }).catch(err => handleError(err));
-        
+
     }
 
-    $scope.mostrarDetalleAlertas = function(alertas) {
-        
+    $scope.mostrarDetalleAlertas = function (alertas) {
+
         $scope.viewTableResumen = [];
-        angular.forEach(alertas,function(value,index){
-            let alertaob=value.alerta ;
-            let ordenobj=value.orden ;
+        angular.forEach(alertas, function (value, index) {
+            let alertaob = value.alerta;
+            let ordenobj = value.orden;
             let tecnicoObj = value.tecnico;
-            let  arra=[];
+            let arra = [];
             arra[0] = alertaob.id ? alertaob.id : '';
             arra[1] = alertaob.folioSistema ? alertaob.folioSistema : '';
             arra[2] = `
@@ -117,10 +134,10 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
             `
             $scope.filtrosGeneral.turnosdisponibles;
             $scope.viewTableResumen.push(arra);
-            
+
         });
-        
-        if(tableAlerta) {
+
+        if (tableAlerta) {
             tableAlerta.destroy();
         }
 
@@ -131,10 +148,10 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
             "scrollX": true,
             "info": false,
             "autoWidth": true,
-            pageLength : 3,
+            pageLength: 3,
             "language": idioma_espanol_not_font,
             "data": $scope.viewTableResumen,
-            "sDom" : '<"top"f>rt<"bottom"lp><"bottom"r><"clear">',
+            "sDom": '<"top"f>rt<"bottom"lp><"bottom"r><"clear">',
             "columns": [
                 {
                     "title": "",
@@ -146,39 +163,39 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
                     "title": ""
                 }
             ],
-            "initComplete": function(settings, json) {
-                setTimeout(function(e){
-                    let objclic=document.getElementsByClassName('card-alertas-pendientes')[0]
-                    if(objclic!= undefined)
+            "initComplete": function (settings, json) {
+                setTimeout(function (e) {
+                    let objclic = document.getElementsByClassName('card-alertas-pendientes')[0]
+                    if (objclic != undefined)
                         document.getElementsByClassName('card-alertas-pendientes')[0].click();
                     else
                         swal.close()
-                },500)
+                }, 500)
             }
         });
     }
 
-    $scope.buscarOtAlertaKeyUpOt=function(event){
-        if (event.which === 13){  
-            $scope.buscarAlertasDespacho() 
-        }   
-        if($("#buscador-alertas-ot").val().trim() === '')
+    $scope.buscarOtAlertaKeyUpOt = function (event) {
+        if (event.which === 13) {
+            $scope.buscarAlertasDespacho()
+        }
+        if ($("#buscador-alertas-ot").val().trim() === '')
             $scope.buscarAlertasDespacho()
     }
 
 
-    $scope.buscarAlertasDespacho=function(){
-        let textbusqeuda= $("#buscador-alertas-ot").val()
-        tableAlerta.search(textbusqeuda).draw()   
+    $scope.buscarAlertasDespacho = function () {
+        let textbusqeuda = $("#buscador-alertas-ot").val()
+        tableAlerta.search(textbusqeuda).draw()
     }
     $scope.idAlertaSelecionada = '';
-    consultarAccionesAlerta = function(ot, os, latAlerta, longAlerta, latTecnico, longTecnico, idSubTipoAlerta, idIntervencion, idSubIntervencion, idTecnico, idAlerta, idFlujo) {
+    consultarAccionesAlerta = function (ot, os, latAlerta, longAlerta, latTecnico, longTecnico, idSubTipoAlerta, idIntervencion, idSubIntervencion, idTecnico, idAlerta, idFlujo) {
         if ($scope.idAlertaSelecionada !== ot) {
-        	$(".cards-lertas").css("border-left", "1px solid #dddddd");
-        	$(".cards-lertas").css("box-shadow", "0 0 0 0 #ffffff");
-        	$("#cardAlerta"+ot).css("border-left", "4px solid #31a7ee");
-        	$("#cardAlerta"+ot).css("box-shadow", "0 2px 8px 0 rgb(0 0 0 / 16%), 0 2px 8px 0 rgb(0 0 0 / 16%)");
-        	
+            $(".cards-lertas").css("border-left", "1px solid #dddddd");
+            $(".cards-lertas").css("box-shadow", "0 0 0 0 #ffffff");
+            $("#cardAlerta" + ot).css("border-left", "4px solid #31a7ee");
+            $("#cardAlerta" + ot).css("box-shadow", "0 2px 8px 0 rgb(0 0 0 / 16%), 0 2px 8px 0 rgb(0 0 0 / 16%)");
+
             $scope.idAlertaSelecionada = ot;
             $scope.evidenciaAlertaConsultada = false;
             $scope.historicoAlertaConsultada = false;
@@ -187,12 +204,12 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
             $scope.alertaSeleccionada = true;
             $scope.isDetalleAlerta = false;
             $scope.alertaSeleccionadaObject = {
-                IdOT: ot, 
-                os: os, 
-                latitudAlerta: latAlerta, 
-                longitudAlerta: longAlerta, 
-                latitudTecnico: latTecnico, 
-                longitudTecnico: longTecnico, 
+                IdOT: ot,
+                os: os,
+                latitudAlerta: latAlerta,
+                longitudAlerta: longAlerta,
+                latitudTecnico: latTecnico,
+                longitudTecnico: longTecnico,
                 idSubTipoAlerta: idSubTipoAlerta,
                 idIntervencion: idIntervencion,
                 idSubIntervencion: idSubIntervencion,
@@ -205,66 +222,66 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
             $scope.setMarkets($scope.alertaSeleccionadaObject);
 
             $("#pills-mapa-tab").click();
-            if(!swal.isVisible() ){
+            if (!swal.isVisible()) {
                 swal({ text: 'Consultando datos ...', allowOutsideClick: false });
                 swal.showLoading();
             }
-         
+
             var params = {
                 "idTipoAlerta": idSubTipoAlerta
-            }        
+            }
             mainAlertasService.consultaAccionesAlerta(params).then(function success(response) {
                 //response.data = accionesOt;
                 console.log(response);
                 if (response.data !== undefined) {
                     if (response.data.respuesta) {
-                        
-                    $scope.listaOpcionesAlerta = response.data.result.acciones;
-                    
-                    angular.forEach($scope.listaOpcionesAlerta,function(opcion,index){
-                    	opcion.checkedOpcion = false;
-            		});
-                   
-//                  --------------------------------------------------------------------------------------------------------------------
-//                  --------------------EL SIGUIENTE CÓDIGO DEBE QUITARSE UNA VEZ QUE SE CORRIJAN LOS SERVICIOS-------------------------
-                    
-//                    $scope.listaOpcionesAlerta[0].campos[3].valorDefecto = 201;
-//                    $scope.listaOpcionesAlerta[0].campos[3].valorDefecto = null;
-                    
-                    //$scope.listaOpcionesAlerta[0].campos[2].esVisible = 1;
-                    //$scope.listaOpcionesAlerta[0].campos[2].valorDefecto = null;
-//                    $scope.listaOpcionesAlerta[0].campos[2].valorDefecto = 4;
-                    
-//                    $scope.listaOpcionesAlerta[0].campos[1].valorDefecto = null;
-//                    $scope.listaOpcionesAlerta[0].campos[4].valorDefecto = null;
-                    
-//                  ------------------------------HASTA AQUÍ-------------------------------
-//                  --------------------------------------------------------------------------------------------------------------------
-                    
-                    swal.close();
+
+                        $scope.listaOpcionesAlerta = response.data.result.acciones;
+
+                        angular.forEach($scope.listaOpcionesAlerta, function (opcion, index) {
+                            opcion.checkedOpcion = false;
+                        });
+
+                        //                  --------------------------------------------------------------------------------------------------------------------
+                        //                  --------------------EL SIGUIENTE CÓDIGO DEBE QUITARSE UNA VEZ QUE SE CORRIJAN LOS SERVICIOS-------------------------
+
+                        //                    $scope.listaOpcionesAlerta[0].campos[3].valorDefecto = 201;
+                        //                    $scope.listaOpcionesAlerta[0].campos[3].valorDefecto = null;
+
+                        //$scope.listaOpcionesAlerta[0].campos[2].esVisible = 1;
+                        //$scope.listaOpcionesAlerta[0].campos[2].valorDefecto = null;
+                        //                    $scope.listaOpcionesAlerta[0].campos[2].valorDefecto = 4;
+
+                        //                    $scope.listaOpcionesAlerta[0].campos[1].valorDefecto = null;
+                        //                    $scope.listaOpcionesAlerta[0].campos[4].valorDefecto = null;
+
+                        //                  ------------------------------HASTA AQUÍ-------------------------------
+                        //                  --------------------------------------------------------------------------------------------------------------------
+
+                        swal.close();
                     } else {
                         swal.close();
                     }
-                    
+
                 } else {
                     swal.close();
                 }
             }).catch(err => handleError(err));
         }
-        
+
     }
 
     $scope.showAaccion = false;
     $scope.listaCampos = [];
     $scope.listaMotivosAlerta = [];
-    $scope.mostrarAccionAlerta = function(accion) {
-    	
-    	$("#idTituloAccionesAlertas").text("OPCIÓN " + accion.descripcion);
-    	
-    	$scope.alertaSeleccionada = false;
-    	accion.checkedOpcion = true;
-    	
-    	$('.campoFecha').datepicker({
+    $scope.mostrarAccionAlerta = function (accion) {
+
+        $("#idTituloAccionesAlertas").text("OPCIÓN " + accion.descripcion);
+
+        $scope.alertaSeleccionada = false;
+        accion.checkedOpcion = true;
+
+        $('.campoFecha').datepicker({
             format: 'dd/mm/yyyy',
             autoclose: true,
             language: 'es',
@@ -272,56 +289,56 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
             clearBtn: true
         });
         $('.campoFecha').datepicker('update', new Date());
-        
+
         $scope.idValorDefectoStatusAlertaAccion = null;
         $scope.idValorDefectoEstadoAlertaAccion = null;
         $scope.listaStatusAlertaAccion = [];
         $scope.listaEstadosAlertaAccion = [];
         $scope.listaMotivosAlertaAccion = [];
-        
-        angular.forEach(accion.campos,function(campo,index){
-        	if(campo.nombreParamentro == "idEstatus"){
-        		if(campo.valorDefecto != null && campo.valorDefecto != "" && campo.valorDefecto != "NA"){
-        			var valDefectoStatus = campo.valorDefecto;
-        			$scope.listaEstadosAlertaAccion = $scope.estatusCambio.filter(e => {return e.idPadre == valDefectoStatus});
-        			$scope.listaStatusAlertaAccion = $scope.estatusCambio.filter(e => {return e.id == valDefectoStatus});
-        		}else{
-        			$scope.listaStatusAlertaAccion = $scope.estatusCambio.filter(e => {return e.idPadre == null});
-        		}
-        	}else if(campo.nombreParamentro == "idEstado"){
-        		if(campo.valorDefecto != null && campo.valorDefecto != "" && campo.valorDefecto != "NA"){
-        			$scope.idValorDefectoEstadoAlertaAccion = campo.valorDefecto;
-        			$scope.listaMotivosAlertaAccion = $scope.estatusCambio.filter(e => {return e.idPadre == $scope.idValorDefectoEstadoAlertaAccion});
-        		}else{
-        			
-        		}
-        	}
-		});
-        
+
+        angular.forEach(accion.campos, function (campo, index) {
+            if (campo.nombreParamentro == "idEstatus") {
+                if (campo.valorDefecto != null && campo.valorDefecto != "" && campo.valorDefecto != "NA") {
+                    var valDefectoStatus = campo.valorDefecto;
+                    $scope.listaEstadosAlertaAccion = $scope.estatusCambio.filter(e => { return e.idPadre == valDefectoStatus });
+                    $scope.listaStatusAlertaAccion = $scope.estatusCambio.filter(e => { return e.id == valDefectoStatus });
+                } else {
+                    $scope.listaStatusAlertaAccion = $scope.estatusCambio.filter(e => { return e.idPadre == null });
+                }
+            } else if (campo.nombreParamentro == "idEstado") {
+                if (campo.valorDefecto != null && campo.valorDefecto != "" && campo.valorDefecto != "NA") {
+                    $scope.idValorDefectoEstadoAlertaAccion = campo.valorDefecto;
+                    $scope.listaMotivosAlertaAccion = $scope.estatusCambio.filter(e => { return e.idPadre == $scope.idValorDefectoEstadoAlertaAccion });
+                } else {
+
+                }
+            }
+        });
+
         $scope.terminarAlerta.comentario = "";
         $(".validarCampoAccionAlerta").css("border-bottom", "1px solid #d9d9d9");
         $scope.contadorCaracteresTextArea = 0;
-        $scope.accionOtSeleccionadaAlerta=angular.copy( accion )
+        $scope.accionOtSeleccionadaAlerta = angular.copy(accion)
     }
 
     $scope.showOpcion = 0;
-    $scope.mostrarOpcionAlerta = function(accion) {
+    $scope.mostrarOpcionAlerta = function (accion) {
         console.log(accion);
         switch (accion.id) {
             case "12":
                 //RESCATE
                 $scope.showOpcion = 1;
                 break;
-            case 1: 
+            case 1:
                 //REAGENDAR
                 $scope.showOpcion = accion.id;
-                $scope.listaMotivosAlerta = $scope.filtrosAlertas.catalogoEstatus.filter(e => {return e.idPadre === 201})
+                $scope.listaMotivosAlerta = $scope.filtrosAlertas.catalogoEstatus.filter(e => { return e.idPadre === 201 })
                 break;
-            case "13": 
+            case "13":
                 //CALENDARIZAR
                 $scope.showOpcion = 3;
                 break;
-            case "14": 
+            case "14":
                 //TERMINAR
                 $scope.showOpcion = 4;
                 break;
@@ -332,23 +349,23 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
 
 
     $scope.listaMotivoEstatus = [];
-    $scope.consultarMotivoAlerta = function(element) {
+    $scope.consultarMotivoAlerta = function (element) {
         console.log(element);
         $scope.listaMotivoEstatus = [];
         $scope.listaMotivoEstatus = $scope.listaCatalogoEstatusAlerta.filter(estatus => estatus.ID_Padre === element.ID);
     }
 
-    $scope.ocultarAccionAlerta = function() {
+    $scope.ocultarAccionAlerta = function () {
         $scope.showAaccion = false;
     }
 
-    $scope.cambiarEstatusIntegrador = function() {
+    $scope.cambiarEstatusIntegrador = function () {
         swal({ text: 'Guardando datos ...', allowOutsideClick: false });
-            swal.showLoading();
+        swal.showLoading();
         var params = {
             "Id_estado": $scope.estatusAlerta.estado.ID,
             "Id_motivo": $scope.estatusAlerta.motivo.ID
-        }        
+        }
         mainAlertasService.cambiarEstatusIntegrador(params).then(function success(response) {
             console.log(response);
             response.data = catalogoEstatusAlerta;
@@ -364,7 +381,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
     }
 
     $scope.evidenciaAlertaConsultada = false;
-    $scope.consultarEvidenciaAlerta = function() {
+    $scope.consultarEvidenciaAlerta = function () {
         if (!$scope.evidenciaAlertaConsultada) {
             $scope.evidenciaAlertaConsultada = true;
             swal({ text: 'Consultando datos ...', allowOutsideClick: false });
@@ -373,10 +390,10 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
                 "Id_ot": "87",
                 "Id_tipo_img": "87",
                 "Propietario": "87"
-            }        
+            }
             mainAlertasService.consultarEvidenciaAlertaPI(params).then(function success(response) {
                 console.log(response);
-                
+
                 response = imagenesAlerta;
                 console.log(response);
                 if (response.data !== undefined) {
@@ -459,103 +476,136 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
 
     }
 
-    $(document.body).on("click",".btn_categoria_img",function(){
+    $(document.body).on("click", ".btn_categoria_img", function () {
 
-		if( $(this).hasClass('btn-blue-grey') )return false;
-	
-		var id_categoria=$.trim(  $(this).attr('attr_id_cat') );
-		var texto_btn_categoria=$.trim(  $(this).text() );
-	
-		if(id_categoria===''){
-			$(".btn_categoria_img").removeClass('btn-blue-grey').addClass('btn-outline-blue-grey');
-			$("#categoria_img_0").removeClass('btn-outline-blue-grey').addClass('btn-blue-grey');
-			$(".magnific.item").show();
-			$('.imagen_content:hidden').show(400);
-			setTimeout(function() {  mostarImagenesCategoria(); }, 500);
-	
-		}else{
-			$(".btn_categoria_img").removeClass('btn-blue-grey').addClass('btn-outline-blue-grey');
-			$("#categoria_img_"+id_categoria).removeClass('btn-outline-blue-grey').addClass('btn-blue-grey');
-	
-			
-			if($(".imagen_content:visible").length > 0){
-				$(".imagen_content:visible").hide(150,"linear",function(){
-	
-					$(".magnific.item:not(.imgtipo_"+id_categoria+")").hide();
-					$(".magnific.item.imgtipo_"+id_categoria+"").show();
-	
-					 $('.content_img_'+id_categoria).show(200);
-					 //Manda function magnific popup
-					 mostarImagenesCategoria();
-				});
-			}else{
-				$(".magnific.item:not(.imgtipo_"+id_categoria+")").hide();
-				$(".magnific.item.imgtipo_"+id_categoria+"").show();
-	
-				 $('.content_img_'+id_categoria).show(200);
-				 //Manda function magnific popup
-				 mostarImagenesCategoria();
-			}
-		
-		}		
-	}); 
+        if ($(this).hasClass('btn-blue-grey')) return false;
+
+        var id_categoria = $.trim($(this).attr('attr_id_cat'));
+        var texto_btn_categoria = $.trim($(this).text());
+
+        if (id_categoria === '') {
+            $(".btn_categoria_img").removeClass('btn-blue-grey').addClass('btn-outline-blue-grey');
+            $("#categoria_img_0").removeClass('btn-outline-blue-grey').addClass('btn-blue-grey');
+            $(".magnific.item").show();
+            $('.imagen_content:hidden').show(400);
+            setTimeout(function () { mostarImagenesCategoria(); }, 500);
+
+        } else {
+            $(".btn_categoria_img").removeClass('btn-blue-grey').addClass('btn-outline-blue-grey');
+            $("#categoria_img_" + id_categoria).removeClass('btn-outline-blue-grey').addClass('btn-blue-grey');
+
+
+            if ($(".imagen_content:visible").length > 0) {
+                $(".imagen_content:visible").hide(150, "linear", function () {
+
+                    $(".magnific.item:not(.imgtipo_" + id_categoria + ")").hide();
+                    $(".magnific.item.imgtipo_" + id_categoria + "").show();
+
+                    $('.content_img_' + id_categoria).show(200);
+                    //Manda function magnific popup
+                    mostarImagenesCategoria();
+                });
+            } else {
+                $(".magnific.item:not(.imgtipo_" + id_categoria + ")").hide();
+                $(".magnific.item.imgtipo_" + id_categoria + "").show();
+
+                $('.content_img_' + id_categoria).show(200);
+                //Manda function magnific popup
+                mostarImagenesCategoria();
+            }
+
+        }
+    });
 
     mostarImagenesCategoria = function () {
 
-		var $imageLinks = $('.magnific.item:visible');
-		var items = [];
+        var $imageLinks = $('.magnific.item:visible');
+        var items = [];
 
-		$imageLinks.each(function (index, elemento) {
-			var $item = $(this);
-			var magItem = {
-				src: $item.attr('href'),
-				type: 'image'
-			};
-			magItem.title = $item.data('title');
-			items.push(magItem);
+        $imageLinks.each(function (index, elemento) {
+            var $item = $(this);
+            var magItem = {
+                src: $item.attr('href'),
+                type: 'image'
+            };
+            magItem.title = $item.data('title');
+            items.push(magItem);
 
-		});
+        });
 
-		$imageLinks.magnificPopup({
-			mainClass: 'mfp-fade',
-			items: items,
-			gallery: {
-				enabled: true,
-				tPrev: $(this).data('prev-text'),
-				tNext: $(this).data('next-text')
-			},
-			type: 'image',
-			callbacks: {
-				beforeOpen: function () {
-					var index = $imageLinks.index(this.st.el);
-					if (-1 !== index) {
-						this.goTo(index);
+        $imageLinks.magnificPopup({
+            mainClass: 'mfp-fade',
+            items: items,
+            gallery: {
+                enabled: true,
+                tPrev: $(this).data('prev-text'),
+                tNext: $(this).data('next-text')
+            },
+            type: 'image',
+            callbacks: {
+                beforeOpen: function () {
+                    var index = $imageLinks.index(this.st.el);
+                    if (-1 !== index) {
+                        this.goTo(index);
 
-					}
-					//  $('#imagenOT').modal('hide');
-				},
+                    }
+                    //  $('#imagenOT').modal('hide');
+                },
 
-				open: function () {
-					// Disabling focus enforcement by magnific
-					$.magnificPopup.instance._onFocusIn = function (e) { };
+                open: function () {
+                    // Disabling focus enforcement by magnific
+                    $.magnificPopup.instance._onFocusIn = function (e) { };
 
-				}
-			}
+                }
+            }
 
-		});
-	}
+        });
+    }
+
+
+    $scope.applyMagnific = function () {
+        var id_categoria = $.trim($(this).attr('attr_id_cat'));
+
+        if (id_categoria === '') {
+            $(".magnific.item").show();
+            $('.imagen_content:hidden').show(400);
+            setTimeout(function () { mostarImagenesCategoria(); }, 500);
+
+        } else {
+            if ($(".imagen_content:visible").length > 0) {
+                $(".imagen_content:visible").hide(150, "linear", function () {
+
+                    $(".magnific.item:not(.imgtipo_" + id_categoria + ")").hide();
+                    $(".magnific.item.imgtipo_" + id_categoria + "").show();
+
+                    $('.content_img_' + id_categoria).show(200);
+                    //Manda function magnific popup
+                    mostarImagenesCategoria();
+                });
+            } else {
+                $(".magnific.item:not(.imgtipo_" + id_categoria + ")").hide();
+                $(".magnific.item.imgtipo_" + id_categoria + "").show();
+
+                $('.content_img_' + id_categoria).show(200);
+                //Manda function magnific popup
+                mostarImagenesCategoria();
+            }
+
+        }
+
+    };
 
     limpiarImagenesEvidencia = function () {
-		$("#categorias_div .content_category").not(":first").remove();
-		$("#contenido_imagenes").empty();
+        $("#categorias_div .content_category").not(":first").remove();
+        $("#contenido_imagenes").empty();
 
-		$("#parent_imagenes").hide();
-		$("#not_info_evidencia").show();
-	}
+        $("#parent_imagenes").hide();
+        $("#not_info_evidencia").show();
+    }
 
     $scope.listaHistoricoAlerta = [];
     $scope.historicoAlertaConsultada = false;
-    $scope.consultarHistoricoAlerta = function() {
+    $scope.consultarHistoricoAlerta = function () {
         if ($scope.alertaSeleccionada) {
             if (!$scope.historicoAlertaConsultada) {
                 $scope.historicoAlertaConsultada = true;
@@ -564,7 +614,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
                 var params = {
                     //"idOt": "3010"//PENDIENTE
                     "idOt": $scope.alertaSeleccionadaObject.IdOT
-                }        
+                }
                 mainAlertasService.consultarHistoricoAlertaPI(params).then(function success(response) {
                     console.log(response);
                     if (response.data !== undefined) {
@@ -572,8 +622,8 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
                             if (response.data.result) {
                                 if (response.data.result.detalle) {
                                     $scope.listaHistoricoAlerta = response.data.result.detalle.reverse();
-                                }else{
-                                    toastr.warning( response.data.result.mensaje );                
+                                } else {
+                                    toastr.warning(response.data.result.mensaje);
                                 }
                             } else {
                                 toastr.warning('No se encontraron resultados');
@@ -588,7 +638,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
                 }).catch(err => handleError(err));
             }
         } else {
-            setTimeout(function(){
+            setTimeout(function () {
                 $("#pills-mapa-tab").click();
             }, 0500);
         }
@@ -596,21 +646,21 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
 
     $scope.listaComentariosAlerta = [];
     $scope.chatAlertaConsultada = false;
-    $scope.consultarChatAlerta = function() {
+    $scope.consultarChatAlerta = function () {
         if ($scope.alertaSeleccionada) {
-            if(!$scope.chatAlertaConsultada) {
+            if (!$scope.chatAlertaConsultada) {
                 $scope.chatAlertaConsultada = true;
                 swal({ text: 'Consultando datos ...', allowOutsideClick: false });
                 swal.showLoading();
                 var params = {
                     //"idOt": "3"//PENDIENTE
                     "idOt": $scope.alertaSeleccionadaObject.IdOT
-                }        
+                }
                 mainAlertasService.consultarComentariosAlertaPI(params).then(function success(response) {
                     console.log(response);
                     if (response.data !== undefined) {
-                        if(response.data.respuesta) {
-                        // $scope.listaComentariosAlerta = response.data.result.detalle;
+                        if (response.data.respuesta) {
+                            // $scope.listaComentariosAlerta = response.data.result.detalle;
                             if (response.data.result.detalle) {
                                 //$scope.flagComentarios = true;
                                 $scope.listaComentariosAlerta = response.data.result.detalle;
@@ -630,22 +680,22 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
                 }).catch(err => handleError(err));
             }
         } else {
-            setTimeout(function(){
+            setTimeout(function () {
                 $("#pills-mapa-tab").click();
             }, 0500);
         }
-        
+
     }
 
     $scope.comentarioAlerta = "";
-    $scope.agregarComentario = function() {
+    $scope.agregarComentario = function () {
         if ($scope.comentarioAlerta !== "") {
             var params = {
                 "comentario": $scope.comentarioAlerta,
                 //"idOrden": "3010",
                 "idOrden": $scope.alertaSeleccionadaObject.IdOT,
                 "origenSistema": "1"
-            }        
+            }
             genericService.agregarComentariosOt(params).then(function success(response) {
                 console.log(response);
                 if (response.data !== undefined) {
@@ -666,7 +716,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
                 }
             }).catch(err => handleError(err));
         } else {
-            toastr.warning( 'Ingrese un comentario.' );  
+            toastr.warning('Ingrese un comentario.');
         }
     }
 
@@ -674,7 +724,7 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
     $scope.rescateAlerta = {};
     $scope.calendarizarAlerta = {};
     $scope.terminarAlerta = {};
-    $scope.cambiarEstatusAlertaValidacion = function() {
+    $scope.cambiarEstatusAlertaValidacion = function () {
         $scope.params = {};
         let errorMensaje = '<ul>';
         let isValido = true;
@@ -718,46 +768,46 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
                     }
                 }
                 break;
-                
-                case 100:
-                    //REAGENDAMIENTO
-                    if ($scope.reagendaAlerta.fechaReagendamiento.trim() === '') {
-                        errorMensaje += '<li>Completa campo fecha.</li>'
-                        isValido = false;
+
+            case 100:
+                //REAGENDAMIENTO
+                if ($scope.reagendaAlerta.fechaReagendamiento.trim() === '') {
+                    errorMensaje += '<li>Completa campo fecha.</li>'
+                    isValido = false;
+                }
+                if (!$scope.reagendaAlerta || !$scope.reagendaAlerta.turno) {
+                    errorMensaje += '<li>Seleccione campo turno.</li>'
+                    isValido = false;
+                }
+                if (!$scope.reagendaAlerta || !$scope.reagendaAlerta.motivo) {
+                    errorMensaje += '<li>Seleccione campo motivo.</li>'
+                    isValido = false;
+                }
+                if (!$scope.reagendaAlerta.comentario || $scope.reagendaAlerta.comentario.trim() === '') {
+                    errorMensaje += '<li>Completa campo comentario.</li>'
+                    isValido = false;
+                }
+                if (isValido) {
+                    $scope.params = {
+                        tipo: 'reagendamiento',
+                        ot: $scope.alertaSeleccionadaObject.IdOT,
+                        folioSistema: $scope.alertaSeleccionadaObject.os,
+                        idFlujo: $scope.alertaSeleccionadaObject.idFlujo,//
+                        idTipoOrden: $scope.alertaSeleccionadaObject.idIntervencion,
+                        idSubTipoOrden: $scope.alertaSeleccionadaObject.idSubIntervencion,
+                        idOrigenSistema: 1,
+                        idUsuarioDespacho: -1,//este va desde el back
+                        latitud: $scope.alertaSeleccionadaObject.latitudAlerta,
+                        longitud: $scope.alertaSeleccionadaObject.longitudAlerta,
+                        comentarios: $scope.reagendaAlerta.comentario,
+                        idTurno: $scope.reagendaAlerta.turno.id,
+                        idMotivo: $scope.reagendaAlerta.motivo.id,
+                        fechaHoraAgenda: $scope.reagendaAlerta.fechaReagendamiento,
+                        idAccion: $scope.showOpcion,
+                        idAlerta: $scope.alertaSeleccionadaObject.idAlerta
                     }
-                    if (!$scope.reagendaAlerta || !$scope.reagendaAlerta.turno) {
-                        errorMensaje += '<li>Seleccione campo turno.</li>'
-                        isValido = false;
-                    }
-                    if (!$scope.reagendaAlerta || !$scope.reagendaAlerta.motivo) {
-                        errorMensaje += '<li>Seleccione campo motivo.</li>'
-                        isValido = false;
-                    }
-                    if (!$scope.reagendaAlerta.comentario || $scope.reagendaAlerta.comentario.trim() === '') {
-                        errorMensaje += '<li>Completa campo comentario.</li>'
-                        isValido = false;
-                    }
-                    if (isValido) {
-                        $scope.params = {
-                            tipo: 'reagendamiento',
-                            ot: $scope.alertaSeleccionadaObject.IdOT,
-                            folioSistema: $scope.alertaSeleccionadaObject.os,
-                            idFlujo: $scope.alertaSeleccionadaObject.idFlujo,//
-                            idTipoOrden: $scope.alertaSeleccionadaObject.idIntervencion,
-                            idSubTipoOrden: $scope.alertaSeleccionadaObject.idSubIntervencion,
-                            idOrigenSistema: 1,
-                            idUsuarioDespacho: -1,//este va desde el back
-                            latitud: $scope.alertaSeleccionadaObject.latitudAlerta,
-                            longitud: $scope.alertaSeleccionadaObject.longitudAlerta,
-                            comentarios: $scope.reagendaAlerta.comentario,
-                            idTurno: $scope.reagendaAlerta.turno.id,
-                            idMotivo: $scope.reagendaAlerta.motivo.id,
-                            fechaHoraAgenda: $scope.reagendaAlerta.fechaReagendamiento,
-                            idAccion: $scope.showOpcion,
-                            idAlerta: $scope.alertaSeleccionadaObject.idAlerta
-                        }
-                    }
-                    break;
+                }
+                break;
             default:
                 break;
         }
@@ -770,54 +820,54 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
         }
     }
 
-    $scope.cambiarEstatusAlerta = function(params) {
+    $scope.cambiarEstatusAlerta = function (params) {
 
-        genericService.cambiarEstatusAlertaGeneric(params).then(result =>{
+        genericService.cambiarEstatusAlertaGeneric(params).then(result => {
             console.log(result);
             swal.close();
-            if(result.data.respuesta){
-             
-                toastr.success( result.data.result.mensaje );
+            if (result.data.respuesta) {
+
+                toastr.success(result.data.result.mensaje);
                 $("#modalDetalleOT").modal('hide')
                 $scope.refrescarBusqueda()
-            }else{
+            } else {
                 console.log(result.data.resultDescripcion)
-                toastr.warning( result.data.resultDescripcion );
-                
+                toastr.warning(result.data.resultDescripcion);
+
             }
         }).catch(err => handleError(err));
     }
 
     var mapaAlerta;
     var markers = [];
-    $scope.iniciarMapaAlertas = function() {
+    $scope.iniciarMapaAlertas = function () {
         mapaAlerta = new google.maps.Map(document.getElementById("mapAlerta"), {
             center: { lat: -34.397, lng: 150.644 },
             zoom: 15,
         });
-        objectVistaAlerta=new GenericMapa(mapaAlerta,'mapAlerta','bottom-right');
+        objectVistaAlerta = new GenericMapa(mapaAlerta, 'mapAlerta', 'bottom-right');
         objectVistaAlerta.inicializar_data()
     }
-    
 
-    $scope.setMarkets = function(pos){
-      
+
+    $scope.setMarkets = function (pos) {
+
         let isDataMarkerTecnico = $scope.validarLatitudLongitudMap(pos.latitudTecnico, pos.longitudTecnico);
         let isDataMarkerAlerta = $scope.validarLatitudLongitudMap(pos.latitudAlerta, pos.longitudAlerta);
-       
+
         deleteMarkers();
-        
-        if(!isDataMarkerTecnico){
+
+        if (!isDataMarkerTecnico) {
             var marker = new google.maps.Marker({
-                position : {
-                    lat : parseFloat(pos.latitudTecnico),
-                    lng : parseFloat(pos.longitudTecnico)
+                position: {
+                    lat: parseFloat(pos.latitudTecnico),
+                    lng: parseFloat(pos.longitudTecnico)
                 },
-                title : "Tecnico",
-                animation : google.maps.Animation.DROP,
-                map : mapaAlerta,
+                title: "Tecnico",
+                animation: google.maps.Animation.DROP,
+                map: mapaAlerta,
                 icon: {
-                    url:"./resources/img/plantainterna/despacho/repartidor-marker.svg",
+                    url: "./resources/img/plantainterna/despacho/repartidor-marker.svg",
                     scaledSize: new google.maps.Size(37, 43),
                     origin: new google.maps.Point(0, 0),
                     anchor: new google.maps.Point(10, 20)
@@ -825,18 +875,18 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
             });
             markers.push(marker);
         }
-       
-        if(!isDataMarkerAlerta){
+
+        if (!isDataMarkerAlerta) {
             marker = new google.maps.Marker({
-                position : {
-                    lat : parseFloat(pos.latitudAlerta),
-                    lng : parseFloat(pos.longitudAlerta)
+                position: {
+                    lat: parseFloat(pos.latitudAlerta),
+                    lng: parseFloat(pos.longitudAlerta)
                 },
-                title : "OT",
-                animation : google.maps.Animation.DROP,
-                map : mapaAlerta,
+                title: "OT",
+                animation: google.maps.Animation.DROP,
+                map: mapaAlerta,
                 icon: {
-                    url:'./resources/img/plantainterna/despacho/domicilio-marker.svg',
+                    url: './resources/img/plantainterna/despacho/domicilio-marker.svg',
                     scaledSize: new google.maps.Size(37, 43),
                     origin: new google.maps.Point(0, 0),
                     anchor: new google.maps.Point(10, 20)
@@ -845,13 +895,13 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
             markers.push(marker);
         }
 
-        if(!isDataMarkerTecnico || !isDataMarkerAlerta){
-            if(!isDataMarkerAlerta){
+        if (!isDataMarkerTecnico || !isDataMarkerAlerta) {
+            if (!isDataMarkerAlerta) {
                 mapaAlerta.setCenter(new google.maps.LatLng(parseFloat(pos.latitudAlerta), parseFloat(pos.longitudAlerta)));
-            }else{
+            } else {
                 mapaAlerta.setCenter(new google.maps.LatLng(parseFloat(pos.latitudTecnico), parseFloat(pos.longitudTecnico)));
-            }            
-        }else{
+            }
+        } else {
             mapaAlerta.setCenter(new google.maps.LatLng(19.4326, -99.1332));
             mapaAlerta.setZoom(5);
         }
@@ -859,40 +909,40 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
         listadoLinesCurves.map(function (e) { e.setMap(null); return e; })
         listadoLinesCurves = [];
 
-        if(!isDataMarkerTecnico && !isDataMarkerAlerta){
+        if (!isDataMarkerTecnico && !isDataMarkerAlerta) {
             let pointA = new google.maps.LatLng(parseFloat(pos.latitudTecnico), parseFloat(pos.longitudTecnico)) // basel airport
             let pointB = new google.maps.LatLng(parseFloat(pos.latitudAlerta), parseFloat(pos.longitudAlerta))
             $scope.drawCurveExt(pointA, pointB, mapaAlerta);
         }
     }
 
-    clearMarkers = function() {
+    clearMarkers = function () {
         setMapOnAll(null);
     }
-    setMapOnAll = function(map) {
+    setMapOnAll = function (map) {
         for (var i = 0; i < markers.length; i++) {
-          markers[i].setMap(map);
+            markers[i].setMap(map);
         }
     }
-    deleteMarkers = function() {
+    deleteMarkers = function () {
         clearMarkers();
         markers = [];
     }
 
-    let groupBy = function(xs, key) {
-		return xs.reduce(function(rv, x) {
-		  (rv[x[key]] = rv[x[key]] || []).push(x);
-		  return rv;
-		}, {});
-	};
+    let groupBy = function (xs, key) {
+        return xs.reduce(function (rv, x) {
+            (rv[x[key]] = rv[x[key]] || []).push(x);
+            return rv;
+        }, {});
+    };
 
-    $scope.cerrarAlertas = function() {
-    	$("#idTituloAccionesAlertas").text("OPCIONES");
+    $scope.cerrarAlertas = function () {
+        $("#idTituloAccionesAlertas").text("OPCIONES");
         $scope.vistaDespacho = true;
         $scope.refrescarBusqueda();
     }
 
-    $scope.initTableOrdenesPendientes = function() {
+    $scope.initTableOrdenesPendientes = function () {
         console.log($scope.listaOrdenesPendientes);
         /*
         $scope.viewTable = [];
@@ -904,189 +954,237 @@ app.alertasDespachoPrincipal=function($scope,mainAlertasService,genericService){
         });
         */
 
-        if(tableAlerta) {
+        if (tableAlerta) {
             tableAlerta.destroy();
         }
 
-        $('.ot-pendiente-event').each(function(index) {	
+        $('.ot-pendiente-event').each(function (index) {
             console.log(index);
-            let otpendiente=$scope.otsAlertas[index]   
+            let otpendiente = $scope.otsAlertas[index]
             $(this).data('event', {
-                objectevent: otpendiente ,
-                stick: true 			
-            });		
-	    });	
+                objectevent: otpendiente,
+                stick: true
+            });
+        });
 
-        tableAlerta=$('#table-alertas-pi').DataTable({
+        tableAlerta = $('#table-alertas-pi').DataTable({
             info: false,
-            pageLength : 3,
+            pageLength: 3,
             language: {
-                   zeroRecords: "No se encontraron OT\u00B4s",
-                   infoEmpty: "No se encontro la OT",
-                   infoFiltered: "(OT no encontrada)",
-                   paginate: {
-                       first:      '<i class="fa fa-fast-backward"></i>',
-                       last:       '<i class="fa fa-fast-forward"></i>',
-                       next:       ' ',
-                       previous:   ' '
-                   }
-               }
+                zeroRecords: "No se encontraron OT\u00B4s",
+                infoEmpty: "No se encontro la OT",
+                infoFiltered: "(OT no encontrada)",
+                paginate: {
+                    first: '<i class="fa fa-fast-backward"></i>',
+                    last: '<i class="fa fa-fast-forward"></i>',
+                    next: ' ',
+                    previous: ' '
+                }
+            }
         });
 
 
-        $('#filterPendiente').keyup( function() {
+        $('#filterPendiente').keyup(function () {
             console.log("Gg");
             tableOrdenes.draw();
         });
 
-        
+
     }
 
-    $( document ).ready(function() {
+    $(document).ready(function () {
 
         $('#fecha-reagendamiento-alerta').datepicker({
-            format : 'dd/mm/yyyy',
-            autoclose : true,
-            language : 'es',
-            todayHighlight : true,
-            startDate :  moment(FECHA_HOY_DATE).toDate()
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            language: 'es',
+            todayHighlight: true,
+            startDate: moment(FECHA_HOY_DATE).toDate()
         });
-        $('#fecha-reagendamiento-alerta').datepicker('update',FECHA_HOY_DATE);
+        $('#fecha-reagendamiento-alerta').datepicker('update', FECHA_HOY_DATE);
 
     });
 
     $scope.isDetalleAlerta = false;
-    $scope.abirDetalle = function(){
+    $scope.abirDetalle = function () {
         if (!$scope.isDetalleAlerta) {
             $scope.objectDetalleAlerta = $scope.otsAlertas[0]
-            $scope.objectDetalleAlerta.tecnico.urlFotoPerfil ? $scope.objectDetalleAlerta.tecnico.urlFotoPerfil: './resources/img/plantainterna/despacho/tecnicootasignada.png';
+            $scope.objectDetalleAlerta.tecnico.urlFotoPerfil ? $scope.objectDetalleAlerta.tecnico.urlFotoPerfil : './resources/img/plantainterna/despacho/tecnicootasignada.png';
             $scope.inicializarMapasAlertaDetalle()
             $scope.isDetalleAlerta = true;
         }
         $scope.pintarMarkesMapDetalleAlerta();
     }
-    
-    
-    
-    
-    
-//    ---------------------------------------------------
-//    CAMBIOS REYNEL
-//    ---------------------------------------------------
-    
-    $scope.cerrarCamposAccionAlerta = function() {
-    	$("#idTituloAccionesAlertas").text("OPCIONES");
-    	angular.forEach($scope.listaOpcionesAlerta,function(opcion,index){
-        	opcion.checkedOpcion = false;
-		});
-    	$scope.alertaSeleccionada = true;
-	}
-    
-    $scope.cambioOpcionSelectAccionAlerta = function(campo, accion) {
-    	var idCampo = $("#"+campo.nombreParamentro+""+accion.id).val();
-    	if(idCampo != null){
-    		if(campo.nombreParamentro == "idEstatus"){
-        		$scope.listaEstadosAlertaAccion = $scope.estatusCambio.filter(e => {return e.idPadre == idCampo});
-        		$("#"+campo.nombreParamentro+""+accion.id).css("border", "1px solid #d9d9d9");
-        	}else if(campo.nombreParamentro == "idEstado"){
-        		$scope.listaMotivosAlertaAccion = $scope.estatusCambio.filter(e => {return e.idPadre == idCampo});
-        		$("#"+campo.nombreParamentro+""+accion.id).css("border", "1px solid #d9d9d9");
-        	}else if(campo.nombreParamentro == "idMotivo"){
-        		$("#"+campo.nombreParamentro+""+accion.id).css("border", "1px solid #d9d9d9");
-        	}else{
-        		$("#"+campo.nombreParamentro+""+accion.id).css("border", "1px solid #d9d9d9");
-        	}
-    	}
-	}
-    
-    $scope.contadorTextArea = function(etiqueta) {
-    	var con =  $("#"+etiqueta).val().length;
-    	if(con > 0){
-    		$(".comentarios").css("border", "1px solid #d9d9d9");
-    		if(con > 50){
-        		$(".etiquetaContador").css("color", "#f55756");
-        	}else{
-        		$(".etiquetaContador").css("color", "#a2a2a2");
-        	}
-    	}else{
-    		$(".comentarios").css("border-bottom", "2px solid #f55756");
-    	}
-    	
-    	$scope.contadorCaracteresTextArea = con;
-	}
-    
-    $scope.guardarAccionAlerta = function(accion) {
-    	var respuestaValidacion = $scope.validarDatosAccionAlerta(accion);
-    	if(respuestaValidacion.validacion){
-    		let params = {
-        			ot: $scope.alertaSeleccionadaObject.IdOT,
-                    folioSistema: $scope.alertaSeleccionadaObject.os,
-                    idFlujo: $scope.alertaSeleccionadaObject.idFlujo,
-                    idTipoOrden: $scope.alertaSeleccionadaObject.idIntervencion,
-                    idSubTipoOrden: $scope.alertaSeleccionadaObject.idSubIntervencion,
-                    idOrigenSistema: 1,
-                    idUsuarioDespacho: 12,
-                    latitud: $scope.alertaSeleccionadaObject.latitudAlerta,
-                    longitud: $scope.alertaSeleccionadaObject.longitudAlerta,
-                    idAccion: accion.id,
-                    idAlerta: $scope.alertaSeleccionadaObject.idAlerta,
-                    idUsuarioTecnico: $scope.alertaSeleccionadaObject.idTecnico,
-                    urlServicio: $scope.accionOtSeleccionadaAlerta.urlServicio,
-                    metodoHttp: $scope.accionOtSeleccionadaAlerta.metodoHttp
-        	};
-        	
-        	angular.forEach(accion.campos,function(campo,index){
-        		if(campo.tipoCampo == "selectpicker"){
-        			let fecha = $("#"+campo.nombreParamentro+""+accion.id).val().split('/');
-        			params[campo.nombreParamentro] = fecha[2] + '-' + fecha[1] + '-' + fecha[0];
-        		}else{
-        			params[campo.nombreParamentro] = $("#"+campo.nombreParamentro+""+accion.id).val();
-        		}
-        	});
-        	console.log(params);
-    		
-        	swal({ text: 'Cambiando estatus de la OT...', allowOutsideClick: false });
-        	swal.showLoading();
-            genericService.cambioStatusOtsGeneric(params).then(result =>{
-            	swal.close();
-        		if(result.data.respuesta){
-        			$("#idTituloAccionesAlertas").text("OPCIONES");
-        			swal("Correcto", "¡Acción realizada con éxito!", "success");
-        			$scope.cerrarAlertas();
-        			$scope.consultarConteoAlertasPI();
-        		}else{
-        			toastr.error(result.data.resultDescripcion);
-        		}
-        	}).catch(err => handleError(err));
-        	
-    	}else{
-    		toastr.warning(respuestaValidacion.mensaje);
-    	}
-    	
-	}
-    
-    $scope.validarDatosAccionAlerta = function(accion){
-    	let respuesta = {validacion:true, mensaje:""};
-    	angular.forEach(accion.campos,function(campo,index){
-    		if(campo.tieneValidacion == 1){
-    			var valorCampo = $("#"+campo.nombreParamentro+""+accion.id).val();
-    			if(valorCampo == null || valorCampo == "" || valorCampo == undefined){
-        			respuesta.validacion = false;
-        			respuesta.mensaje = respuesta.mensaje + "<br/> *"+campo.nombreEtiqueta;
-        			$("#"+campo.nombreParamentro+""+accion.id).css("border-bottom", "2px solid #f55756");
-        		}else{
-        			$("#"+campo.nombreParamentro+""+accion.id).css("border-bottom", "1px solid #d9d9d9");
-        		}
-    		}
-    	});
-    	
-    	if(!respuesta.validacion){
-			respuesta.mensaje = "VALIDA LOS SIGUIENTES CAMPOS: " + respuesta.mensaje;
-		}
-    	
-    	return respuesta;
+
+
+
+
+
+    //    ---------------------------------------------------
+    //    CAMBIOS REYNEL
+    //    ---------------------------------------------------
+
+    $scope.cerrarCamposAccionAlerta = function () {
+        $("#idTituloAccionesAlertas").text("OPCIONES");
+        angular.forEach($scope.listaOpcionesAlerta, function (opcion, index) {
+            opcion.checkedOpcion = false;
+        });
+        $scope.alertaSeleccionada = true;
     }
-    
+
+    $scope.cambioOpcionSelectAccionAlerta = function (campo, accion) {
+        var idCampo = $("#" + campo.nombreParamentro + "" + accion.id).val();
+        if (idCampo != null) {
+            if (campo.nombreParamentro == "idEstatus") {
+                $scope.listaEstadosAlertaAccion = $scope.estatusCambio.filter(e => { return e.idPadre == idCampo });
+                $("#" + campo.nombreParamentro + "" + accion.id).css("border", "1px solid #d9d9d9");
+            } else if (campo.nombreParamentro == "idEstado") {
+                $scope.listaMotivosAlertaAccion = $scope.estatusCambio.filter(e => { return e.idPadre == idCampo });
+                $("#" + campo.nombreParamentro + "" + accion.id).css("border", "1px solid #d9d9d9");
+            } else if (campo.nombreParamentro == "idMotivo") {
+                $("#" + campo.nombreParamentro + "" + accion.id).css("border", "1px solid #d9d9d9");
+            } else {
+                $("#" + campo.nombreParamentro + "" + accion.id).css("border", "1px solid #d9d9d9");
+            }
+        }
+    }
+
+    $scope.contadorTextArea = function (etiqueta) {
+        var con = $("#" + etiqueta).val().length;
+        if (con > 0) {
+            $(".comentarios").css("border", "1px solid #d9d9d9");
+            if (con > 50) {
+                $(".etiquetaContador").css("color", "#f55756");
+            } else {
+                $(".etiquetaContador").css("color", "#a2a2a2");
+            }
+        } else {
+            $(".comentarios").css("border-bottom", "2px solid #f55756");
+        }
+
+        $scope.contadorCaracteresTextArea = con;
+    }
+
+    $scope.guardarAccionAlerta = function (accion) {
+        var respuestaValidacion = $scope.validarDatosAccionAlerta(accion);
+        if (respuestaValidacion.validacion) {
+            let params = {
+                ot: $scope.alertaSeleccionadaObject.IdOT,
+                folioSistema: $scope.alertaSeleccionadaObject.os,
+                idFlujo: $scope.alertaSeleccionadaObject.idFlujo,
+                idTipoOrden: $scope.alertaSeleccionadaObject.idIntervencion,
+                idSubTipoOrden: $scope.alertaSeleccionadaObject.idSubIntervencion,
+                idOrigenSistema: 1,
+                idUsuarioDespacho: 12,
+                latitud: $scope.alertaSeleccionadaObject.latitudAlerta,
+                longitud: $scope.alertaSeleccionadaObject.longitudAlerta,
+                idAccion: accion.id,
+                idAlerta: $scope.alertaSeleccionadaObject.idAlerta,
+                idUsuarioTecnico: $scope.alertaSeleccionadaObject.idTecnico,
+                urlServicio: $scope.accionOtSeleccionadaAlerta.urlServicio,
+                metodoHttp: $scope.accionOtSeleccionadaAlerta.metodoHttp
+            };
+
+            angular.forEach(accion.campos, function (campo, index) {
+                if (campo.tipoCampo == "selectpicker") {
+                    let fecha = $("#" + campo.nombreParamentro + "" + accion.id).val().split('/');
+                    params[campo.nombreParamentro] = fecha[2] + '-' + fecha[1] + '-' + fecha[0];
+                } else {
+                    params[campo.nombreParamentro] = $("#" + campo.nombreParamentro + "" + accion.id).val();
+                }
+            });
+            console.log(params);
+
+            swal({ text: 'Cambiando estatus de la OT...', allowOutsideClick: false });
+            swal.showLoading();
+            genericService.cambioStatusOtsGeneric(params).then(result => {
+                swal.close();
+                if (result.data.respuesta) {
+                    $("#idTituloAccionesAlertas").text("OPCIONES");
+                    swal("Correcto", "¡Acción realizada con éxito!", "success");
+                    $scope.cerrarAlertas();
+                    $scope.consultarConteoAlertasPI();
+                } else {
+                    toastr.error(result.data.resultDescripcion);
+                }
+            }).catch(err => handleError(err));
+
+        } else {
+            toastr.warning(respuestaValidacion.mensaje);
+        }
+
+    }
+
+    $scope.validarDatosAccionAlerta = function (accion) {
+        let respuesta = { validacion: true, mensaje: "" };
+        angular.forEach(accion.campos, function (campo, index) {
+            if (campo.tieneValidacion == 1) {
+                var valorCampo = $("#" + campo.nombreParamentro + "" + accion.id).val();
+                if (valorCampo == null || valorCampo == "" || valorCampo == undefined) {
+                    respuesta.validacion = false;
+                    respuesta.mensaje = respuesta.mensaje + "<br/> *" + campo.nombreEtiqueta;
+                    $("#" + campo.nombreParamentro + "" + accion.id).css("border-bottom", "2px solid #f55756");
+                } else {
+                    $("#" + campo.nombreParamentro + "" + accion.id).css("border-bottom", "1px solid #d9d9d9");
+                }
+            }
+        });
+
+        if (!respuesta.validacion) {
+            respuesta.mensaje = "VALIDA LOS SIGUIENTES CAMPOS: " + respuesta.mensaje;
+        }
+
+        return respuesta;
+    }
+
+
+    $scope.seleciconarTodas = function (isSelected) {
+        if (isSelected == '1') {
+            $(".checkbox-evidencia").prop("checked", true);
+            $(".checkbox-evidencia").removeClass("rechazada-check");
+            $scope.listaTotal.aceptadas = $scope.detalleEvidencia.length;
+            $scope.listaTotal.rechazadas = 0;
+        } else {
+            $(".checkbox-evidencia").prop("checked", false);
+            $(".checkbox-evidencia").addClass("rechazada-check");
+            $scope.listaTotal.rechazadas = $scope.detalleEvidencia.length;
+            $scope.listaTotal.aceptadas = 0;
+        }
+    }
+
+    $scope.changeSelect = function (element) {
+        $(".radio-evidencias").prop("checked", false);
+        let id = element.target.id;
+        if ($("#" + id).is(":checked")) {
+            $("#" + id).removeClass("rechazada-check");
+            $scope.listaTotal.rechazadas = $scope.listaTotal.rechazadas !== 0 ? $scope.listaTotal.rechazadas - 1 : 0;
+            $scope.listaTotal.aceptadas = $scope.listaTotal.aceptadas + 1;
+        } else {
+            $("#" + id).addClass("rechazada-check");
+            $scope.listaTotal.rechazadas = $(".rechazada-check").length;
+            $scope.listaTotal.aceptadas = $scope.listaTotal.aceptadas !== 0 ? $scope.listaTotal.aceptadas - 1 : 0;
+        }
+    }
+
+    $scope.guardarEvidencia = function () {
+        let aceptadas = [];
+        let rechazadas = [];
+
+        $.each($scope.detalleEvidencia, function (i, elemento) {
+            if ($("#check_" + elemento.idEvidencia).is(":checked")) {
+                aceptadas.push(elemento.idEvidencia);
+            }
+        });
+
+        $.each($(".rechazada-check"), function (i, elemento) {
+            let id = (elemento.id).split("_")[1];
+            rechazadas.push(id);
+        });
+        console.log(aceptadas);
+        console.log(rechazadas);
+    }
+
+
 };
 
 

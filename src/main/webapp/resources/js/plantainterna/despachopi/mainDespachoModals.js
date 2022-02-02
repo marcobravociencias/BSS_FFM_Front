@@ -37,6 +37,8 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         $scope.objConfirmaDesc = {
             isConfirmadoDesconfirmado: $(instanciaThis).is(':checked'),
             idOtConfirmaDesc: idot,
+            comentarios:"",
+            procesando:false
         }
         $scope.$apply()
         $("#modalConfirmaDesconfirma").modal('show')
@@ -60,6 +62,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 
     }
     abrirModalInformacion = function (idotasignada) {
+        $scope.flagPaquete = false;
         $scope.listadoMotivosRescate = $scope.estatusCambio.filter(e => {return e.idPadre === 212})
         $scope.listadoMotivosCalendarizado = $scope.estatusCambio.filter(e => {return e.idPadre === 243})
         $scope.listadoMotivosReagenda = $scope.estatusCambio.filter(e => {return e.idPadre === 201})
@@ -158,13 +161,13 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                     if (response.data.result) {
                         if (response.data.result.ordenes && response.data.result.ordenes.length > 0) {
                             //$scope.listadoTecnicosGeneral=tecnicosAsignacion
-                            $scope.listadoArrayOtsLocalizacio = response.data.result.ordenes
+                            $scope.listadoArrayOtsLocalizacion = response.data.result.ordenes
                             $("#modalRegistrosLocalizados").modal('show')
                         } else {
                             toastr.info(response.data.result.mensaje);
                         }
                     } else {
-                        toastr.warning('No se encontraron datos');
+                        toastr.info('No se encontraron datos');
                     }
                 } else {
                     toastr.warning(response.data.resultDescripcion);
@@ -399,8 +402,8 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         console.log("function 15"+nEmpleado)
         let params =  {
             numEmpleado: nEmpleado,
-            idUsuario:tecnicoTemp.idTecnico ,  
-            idFlujo:1    
+            idUsuario:tecnicoTemp.idTecnico   
+            //idFlujo:1    
         }          
  
         if ( tableMaterialesDespacho ) 
@@ -415,8 +418,8 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
            console.log("data materiales ",response.data)           
            if( response.data.respuesta){
                 if (response.data.result) {                    
-                    params.centro=response.data.result.almacen;
-                    params.almacen=response.data.result.centro;
+                    params.centro=response.data.result.centro;
+                    params.almacen=response.data.result.almacen;
                     tecnicoTemp.centro=params.centro
                     tecnicoTemp.almacen=params.almacen
                     $scope.tecnicoConsultaMateriales=tecnicoTemp
@@ -435,28 +438,53 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
            }
         }).catch(err => handleError(err))
     }
-
+    function transformarTextCantidad(num){
+        return  ( num && num != '' && num != '0' ) ?   parseInt( num )  : "0"
+	}
+	function transformarTextPrecio(num){
+		if( ( num && num != '' && num != '0' ) ){
+			return ( Math.round( parseFloat( num ) * 100) / 100 ).toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD',
+              }); 
+		} else{
+			return parseFloat('0.00').toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD',
+              }); 
+		}
+	}
+    function isNumeric(val) {
+        return /^-?\d+$/.test(val);
+    }
     $scope.consultarMaterialesPorCentroAlmacenUser=function(params){
+        $scope.totalMaterialesModal=0
         mainDespachoService.consultaMaterialesPorAlmacenUserCentro(params).then(function success(response) {
             console.log(response)
             if (response.data.respuesta) {
                 if (response.data.result) {
                     let tempArrayResult=response.data.result.materiales
+                    
                     angular.forEach(tempArrayResult,function(elem,index){
+                        if( !isNaN( elem.precio ) ){
+                            $scope.totalMaterialesModal+=  ( Math.round( parseFloat( elem.precio  ) * 100) / 100 )
+                        }
+
                         $("#table-materiales-temp tbody").append(`
                             <tr>
                                 <td >${elem.sku} </td>
                                 <td >${elem.descripcion} </td>
                                 <td >${elem.lote} </td>
-                                <td >${elem.cantidad} </td>
+                                <td >${ transformarTextCantidad(elem.cantidad) } </td>
                                 <td >${elem.unidadMedida} </td>
-                                <td >${elem.precio} </td>
+                                <td >${ transformarTextPrecio(elem.precio) }  </td>
                                 <td >${elem.familia} </td>
                                 <td >${elem.categoria} </td>
                                 <td >${elem.grupo} </td>
                             </tr>
                         `)
                     })
+                    $scope.totalMaterialesModal= transformarTextPrecio( $scope.totalMaterialesModal )
                     $scope.inicializarTableMateriales()
                     swal.close()
                     $("#modalMaterialesOperario").modal('show')                            
@@ -464,12 +492,15 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                     swal.close()
                     mostrarMensajeWarningValidacion('No se encontro informaci&oacute;n.')
                     $scope.inicializarTableMateriales()
+                    $scope.totalMaterialesModal=transformarTextPrecio( $scope.totalMaterialesModal )
+
 
                 }
             } else {
                 swal.close()
                 mostrarMensajeErrorAlert(response.data.resultDescripcion)
                 $scope.inicializarTableMateriales()
+                $scope.totalMaterialesModal=transformarTextPrecio( $scope.totalMaterialesModal )
 
             }
          }).catch(err => handleError(err))
@@ -529,24 +560,39 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     }
 
     $scope.confirmarDesconfirmarOt = function () {
-        console.log($scope.objConfirmaDesc)
+        console.log("antes de confirma/desconfirma  ",$scope.objConfirmaDesc)
+
+        if(!$scope.objConfirmaDesc.comentarios){
+            toastr.info("Captura comentarios");
+            return false;
+        }
+
+        $scope.objConfirmaDesc.procesando=true
         swal({ text: 'Cambiando estatus de la OT ...', allowOutsideClick: false });
         swal.showLoading();
-        mainDespachoService.cambiarEstatusOperarioPI(params).then(function success(response) {
-            $scope.banderaRegresarCheckbox = true;
-            $("#modalConfirmaDesconfirma").modal('hide')
-            console.log(response);
-            swal.close()
-            toastr.success('Cambio de estatus correcto');
-            $scope.refrescarBusqueda()
+        let params = {
+            "idOrden": $scope.objConfirmaDesc.idOtConfirmaDesc,
+            "idOrigen":1,
+            "esConfirmada": $scope.objConfirmaDesc.isConfirmadoDesconfirmado ? 1 :0 ,
+            "comentarios": $scope.objConfirmaDesc.comentarios
+        }        
+        console.log("params",params)
+        mainDespachoService.confirmaDesconfirmaOtDespacho(params).then(function success(response) {
+            $scope.banderaRegresarCheckbox = true;        
             if (response.data !== undefined) {
-                if (response.data.respuesta) {
-                    if (response.data.result.result === '0') {
-                        console.log("############## catalogo")
-                        //$scope.listadoOtsPendientes=otspendientes                         
-                    }
+                if (response.data.respuesta) {                
+                    $("#modalConfirmaDesconfirma").modal('hide')
+                    console.log(response);
+                    swal.close()
+                    toastr.success('Cambio de estatus correcto');
+                    $scope.refrescarBusqueda()
+                }else{
+                    toastr.info("No se pudo cambiar el estatus de la ot");
                 }
+            }else{
+                toastr.info("No se pudo cambiar el estatus de la ot");
             }
+            $scope.objConfirmaDesc.procesando=false
         }).catch(err => handleError(err))
     }
 
@@ -1388,9 +1434,16 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     $scope.responseServicios={}
     $scope.obtenerPaquete = function(){
         if (!$scope.flagPaquete) {
+            let osOtSelected='';
+            if($scope.estatusModals=='PENDIENTE'){
+                osOtSelected=$scope.detalleOtPendienteSelected.folioOrden
+            }
+
+            if($scope.estatusModals=='ASIGNADA')
+               osOtSelected=$scope.detalleOtAsignadaSelected.folioOrden
+
             let params = {
-               folio: $scope.detalleOtPendienteSelected.folioOrden
-               //folio: 'OS-7640234'folioOrden
+               folio: osOtSelected 
             }
             swal({ text: 'Espere un momento ...', allowOutsideClick: false });
             swal.showLoading();

@@ -123,7 +123,9 @@ public class ImplDespachoPIService implements DespachoPIService {
                 urlIconos,
                 ServiceResponseResult.class,
                 tokenAcces);
-
+    
+        
+        
         String urlEstatusOrden = urlRequestBase.concat("estatusOrdenes");
 
         ServiceResponseResult responseEstatusOrden = restCaller.callGetBearerTokenRequest(
@@ -510,8 +512,36 @@ public class ImplDespachoPIService implements DespachoPIService {
         logger.info("RESULT" + gson.toJson(response));
         return response;
     }
+    
+    @Override
+    public ServiceResponseResult confirmaDesconfirmaOtDespacho(String params) {
+        logger.info("ImplDespachoPIService.class [metodo = confirmaDesconfirmaOtDespacho() ]\n" + params);
+        logger.info(" constDespachoPI.getOrdenesPendientesDespachoP()" + constDespachoPI.getConfirmarDesconfirmarOtDespacho());
+      
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        String idOrden = jsonObject.get("idOrden").getAsString();
+        
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        String tokenAcces = principalDetail.getAccess_token();
+        logger.info("consultarOperariosAsignadosDespacho ##+" + tokenAcces);
 
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constDespachoPI.getConfirmarDesconfirmarOtDespacho()).concat(idOrden);
 
+        Map<String, String> paramsRequestGet = new HashMap<String, String>();
+        paramsRequestGet.put("idOrden", idOrden);
+        paramsRequestGet.put("idOrigen", idOrden);
+        paramsRequestGet.put("esConfirmada", idOrden);
+        paramsRequestGet.put("comentarios", idOrden);
+
+        ServiceResponseResult response = restCaller.callPatchBearerTokenRequest(
+                params,
+                urlRequest,
+                ServiceResponseResult.class,
+                tokenAcces);
+
+        logger.info("RESULT" + gson.toJson(response));
+        return response;
+    }
     @Override
     public ServiceResponseResult obtenerOrdenesTrabajoPendientesDespacho(String params) {
         logger.info("ImplDespachoPIService.class [metodo = obtenerOrdenesTrabajoPendientesDespacho() ]\n" + params);
@@ -543,7 +573,7 @@ public class ImplDespachoPIService implements DespachoPIService {
 
         if (jsonObject != null) {
             String claveBusqueda = jsonObject.get("moduloAccionesUsuario").getAsString();
-            Permiso permiso = principalDetail.getPermisos()
+            Permiso permiso = principalDetail.getModulos()
                     .stream()
                     .filter(e -> claveBusqueda.equals(e.getClave()))
                     .findAny()
@@ -1032,6 +1062,8 @@ public class ImplDespachoPIService implements DespachoPIService {
         String tokenAcces = principalDetail.getAccess_token();
         String urlRequest = principalDetail.getDireccionAmbiente().concat(constDespachoPI.getConsultaCentroAlmacen());
         logger.info("### URL consultarCentroAlmacenByNumeroEmpleado(): \n" + urlRequest);
+        
+        //https://totalplay-dev.apigee.net/ffm/materiales?centro=TP01&almacen=0113&idUsuario=233
         Map<String, String> paramsRequestGet = new HashMap<>();
         paramsRequestGet.put("numeroEmpleado", jsonObject.get("numEmpleado").getAsString());
         logger.info("------paramsMap"+paramsRequestGet.toString());
@@ -1055,7 +1087,7 @@ public class ImplDespachoPIService implements DespachoPIService {
         Map<String, String> paramsRequestGet = new HashMap<>(); 
         paramsRequestGet.put("centro", jsonObject.get("centro").getAsString());
         paramsRequestGet.put("almacen", jsonObject.get("almacen").getAsString());
-        paramsRequestGet.put("idFlujo", jsonObject.get("idFlujo").getAsString());
+        //paramsRequestGet.put("idFlujo", jsonObject.get("idFlujo").getAsString());
         //paramsRequestGet.put("idUsuario", String.valueOf(principalDetail.getIdUsuario()));
         paramsRequestGet.put("idUsuario", jsonObject.get("idUsuario").getAsString() );
         

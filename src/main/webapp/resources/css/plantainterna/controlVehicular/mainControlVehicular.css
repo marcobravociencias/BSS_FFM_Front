@@ -1,47 +1,52 @@
 #jstreeconsulta .jstree-anchor {
-    font-family: 'Montserrat';
-    font-size: .8em;
+  font-family: 'Montserrat';
+  font-size: .8em;
 }
 
-.contenedorContadoresEstadosVehiculos{
-	text-align: center !important;
+.contenedorContadoresEstadosVehiculos {
+  text-align: center !important;
 }
 
-.contenedorContadoresEstadosVehiculos:hover{
-	cursor: pointer !important;
-	color: #7716fa !important;
+.contenedorContadoresEstadosVehiculos:hover {
+  cursor: pointer !important;
+  color: #7716fa !important;
 }
 
-.etiquetaContadoresEstadosVehiculos{
-	margin-bottom: 0em;
-	height: 50px;
-	font-family: 'Montserrat' !important;
-    font-size: .8em !important;
+.etiquetaContadoresEstadosVehiculos {
+  margin-bottom: 0em;
+  height: 50px;
+  font-family: 'Montserrat' !important;
+  font-size: .8em !important;
 }
 
-.etiquetaContadoresEstadosVehiculos:hover{
-	cursor: pointer !important;
+.etiquetaContadoresEstadosVehiculos:hover {
+  cursor: pointer !important;
 }
 
-.contadoresEstadosVehiculos{
-	margin-bottom: 0em;
-	margin-top: 5px;
-	font-family: 'Montserrat' !important;
-    font-size: 1.5em !important;
+.contadoresEstadosVehiculos {
+  margin-bottom: 0em;
+  margin-top: 5px;
+  font-family: 'Montserrat' !important;
+  font-size: 1.5em !important;
 }
 
 #tabContadoresVehiculos .nav-link.active {
-    color: #7716fa !important;
-    font-weight: bolder;
-    border: solid 0px #fff;
+  color: #7716fa !important;
+  font-weight: bolder;
+  border: solid 0px #fff;
+}
+
+#tabContadoresVehiculos {
+  font-size: 0.8em;
 }
 
 #tabContadoresVehiculos .nav-link:hover {
-    background-color: #ffffff !important;
-    border-color: transparent !important;
-    cursor: pointer !important;
-    font-weight: bold;
+  background-color: #ffffff !important;
+  border-color: transparent !important;
+  cursor: pointer !important;
+  font-weight: bold;
 }
+
 
 /* ------------------------------------------------------------------------------- */
 
@@ -63,25 +68,25 @@
   font-weight: bold;
 }
 
-.jstree-proton{
+.jstree-proton {
   color: #808080;
 }
 
-.jstree-proton .jstree-clicked{
+.jstree-proton .jstree-clicked {
   border-radius: 0;
 }
 
-.controlContent {
-  font-family: "Montserrat" !important;
-  font-size: 12px !important;
+#container_vehiculos {
   box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
-  padding-bottom: 1em;
+  /* padding-top: 1em; */
   background: white;
   border-radius: .5em;
-  padding-top: 1em;
   margin-top: 1em;
-  max-width: 1140px;
+  padding: 1em 0;
+  font-family: "Montserrat" !important;
 }
+
+
 .title {
   color: #834594;
   font-weight: bold;
@@ -97,21 +102,21 @@
   color: #e0dcdc;
 }
 
-.custom-select {
+#geografia-seleccionada-consulta.custom-select {
   font-size: 10px !important;
 }
 
-.nav-item:first-child {
-  margin-left: 2em;
-}
 
 #btnBuscar {
-  float: none;
-  margin-bottom: 0 !important;
-  margin-top: 4em;
+  /* float: none; */
+  /* margin-bottom: 0 !important; */
+  /* margin-top: 1.8em; */
+  position: absolute;
+  bottom: 0;
+  left: 1em;
 }
 
-.btnTotal:active, .btnTotal:focus .btnTotal:hover{
+.btnTotal:active, .btnTotal:focus .btnTotal:hover {
   background-color: white !important;
   box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
   color: #7716fa;
@@ -121,9 +126,9 @@
   background-color: #ffffff !important;
   color: #7716fa !important;
   border: solid 1px #7716fa !important;
-  padding: .5em 2.5em;
+  padding: 0.4em 1.5em;
   border-radius: 5px;
-  font-size: 0.9em;
+  font-size: 0.7em;
   position: relative;
   display: block;
   border-radius: .5em !important;
@@ -134,9 +139,10 @@
   background-color: white !important;
 }
 
-.label-vehiculo{
+.label-vehiculo {
   color: gray;
   margin-bottom: 0 !important;
+  font-size: 0.9em !important;
 }
 
 .check-vehiculo .form-check {
@@ -177,20 +183,15 @@
 }
 
 .input-filtro:focus {
-  border-color: white !important;
   -webkit-box-shadow: none;
   box-shadow: none !important;
 }
 
-.input-filtro:hover {
-  background: #e4e6f2 !important;
-  cursor: pointer;
-}
-
-.element-menu-filter:hover > .dropdown-menu {
+.element-menu-filter:hover>.dropdown-menu {
   display: block;
 }
-.element-menu-filter:hover > .dropdown-menu {
+
+.element-menu-filter:hover>.dropdown-menu {
   top: 0;
   left: 100%;
 }
@@ -229,6 +230,7 @@ label.form-check-inputfiltro {
   font-size: 0.64rem;
   border: 0px !important;
 }
+
 a.btn-floating.btn-sm.btn-primary.waves-effect.waves-light {
   /* background-color: #33b5e5!important; */
   color: #fff !important;
@@ -246,14 +248,7 @@ span.btn-floating.btn-sm.btn-default.waves-effect.waves-light {
   font-size: 0.9em;
 }
 
-span.btn-floating.btn-sm.btn-secondary.waves-effect.waves-light.acciones {
-  background-color: #58b3bf !important;
-  color: #fff !important;
-  -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
-    0 2px 10px 0 rgba(0, 0, 0, 0.12);
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-  font-size: 0.9em;
-}
+
 
 .icons-filter {
   font-size: 15px;
@@ -262,128 +257,65 @@ span.btn-floating.btn-sm.btn-secondary.waves-effect.waves-light.acciones {
   font-weight: bold;
 }
 
-.disponible {
-  color: #ABD641;
+/* CSS TABLE */
+
+#vehiculoTable tbody tr:nth-child(even) {
+  background: #f5f5f5;
 }
 
-.asignado {
-  color: #61cae6;
-}
-
-.noDisponible {
-  color: #FD7CD0;
-}
-
-thead#thead_table tr th {
-  font-size: 0.7em;
-  padding: 1.2em;
-  font-weight: bold !important;
-  border-top: #fff !important;
+#vehiculoTable>tbody>tr>td {
+  white-space: nowrap;
+  color: #39455b;
+  font-family: 'Montserrat';
+  font-size: .8em;
+  border-top: 0px solid #eceeef !important;
   text-align: center;
 }
 
-thead#thead_table{
-  border: 1px #ccc;
-  padding: 1em;
+#vehiculoTable thead th {
   position: relative;
-  background-color: #fff;
-  color: #000;
-}
-
-
-#vehiculoTable tr td {
-  font-size: 0.7em;
-  font-family: "Montserrat" !important;
+  background-color: #b1b1b1;
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+  padding: 1em;
+  border: none;
+  font-weight: normal;
   text-align: center;
-  vertical-align: middle;
 }
 
-div.dataTables_wrapper div.dataTables_length label {
-  font-weight: inherit !important;
-  color: #828080 !important;
-}
-
-.dataTables_length .form-control.form-control-sm {
-  color: #9a9999 !important;
-  border-bottom: 2px solid #e4e2e2 !important;
-  font-family: "Montserrat" !important;
-}
-
-.pagination {
-  display: block !important;
-}
-
-.pagination .paginate_button a.page-link {
-  color: #828080;
-  font-family: "Montserrat";
-  background-color: white !important;
-  box-shadow: none !important;
-}
-
-.pagination .paginate_button.active {
-  background-color: white !important;
-  border: 1px solid gray;
-  padding: 1px 1px 1px 1px;
-}
-
-#vehiculoTable.dataTable.no-footer{
-    border-bottom: transparent !important;
-    margin-top: 0 !important;
-}
-
-.table {
-  font-size: 1em;
-}
-
-
-.page-link{
+#vehiculoTable tbody tr td {
+  padding: 0.7em;
   border: none;
 }
 
-.table.dataTable {
-    border-collapse: collapse !important;
+.page-link{
+	font-size: 0.7em !important;
+    font-family: "Montserrat" !important;
 }
 
-.pagination .previous a.page-link {
-  color: white !important;
-  font-size: 0;
+.dataTables_info {
+  font-size: 0.7em;
+  font-family: "Montserrat" !important;
+  text-align: left;
+  padding-left: 0.5em;
 }
 
-.pagination .next a.page-link {
-  color: white !important;
-  font-size: 0;
+.dataTables_paginate.paging_simple_numbers{
+  float: right;
 }
 
-.pagination .previous a:after {
-  font-family: FontAwesome;
-  display: inline-block;
-  content: "\f104";
-  visibility: visible;
-  color: #828080 !important;
-  font-size: initial !important;
+.dataTables_filter{
+  font-size: 0.7em !important;
+  font-family: 'Montserrat';
 }
 
-.pagination .next a:before {
-  font-family: FontAwesome;
-  display: inline-block;
-  content: "\f105";
-  visibility: visible;
-  color: #828080 !important;
-  font-size: initial !important;
+div.dataTables_wrapper div.dataTables_filter input {
+  width: 11.3em;
+  height: 2.05em;
+  margin-right: 1em;
 }
-
-.dataTables_wrapper .dataTables_paginate .paginate_button a {
-  padding: 1px 1px 1px 1px;
-}
-
-.pagination .paginate_button > .active {
-  border: #000000 !important;
-}
-
-table.dataTable.no-footer {
-  border-bottom: transparent !important;
-  margin-top: 0 !important;
-}
+/* CSS TABLE */
 
 
 #msjInterno {
@@ -393,7 +325,7 @@ table.dataTable.no-footer {
   font-weight: bold;
 }
 
-.custom-file-label::after{
+.custom-file-label::after {
   font-family: FontAwesome;
   content: "\f093" !important;
   color: #61cae6;
@@ -404,13 +336,13 @@ table.dataTable.no-footer {
   color: grey;
 }
 
-.resumeTable{
+.resumeTable {
   width: 100%;
   font-size: 17px;
   margin: 1em 0;
 }
 
-.tableTextTitle{
+.tableTextTitle {
   text-align: left;
   color: #784085;
   font-size: 12px;
@@ -422,9 +354,9 @@ table.dataTable.no-footer {
   text-overflow: ellipsis;
 }
 
-.tableText{
+.tableText {
   text-align: left;
-  color:#7c7c7d;
+  color: #7c7c7d;
   font-size: 12px;
   width: 165px;
   vertical-align: baseline;
@@ -435,26 +367,16 @@ table.dataTable.no-footer {
 }
 
 
-#options.dropdown-menu{
+#options.dropdown-menu {
   min-width: 1em !important;
 }
 
-li{
+li {
   list-style-type: none;
 }
 
-.dataTables_wrapper .dataTables_paginate .paginate_button:hover{
-    padding: 1px;
-    background: white;
-}
-
-.dataTables_wrapper .dataTables_paginate .paginate_button{
-  padding: 1px;
-}
-
-  
 #myTabVehiculo {
-  margin-bottom: 1em;
+  padding: 0em 1em 1em 1em;
 }
 
 #myTabVehiculo .nav-item:first-child .nav-link {
@@ -469,8 +391,8 @@ li{
 }
 
 #myTabVehiculo .nav-link {
-  padding-top: .6em;
-  padding-bottom: .6em;
+  padding-top: .4em;
+  padding-bottom: .4em;
   border: solid 1px #ccc;
 }
 
@@ -479,8 +401,13 @@ li{
   border-bottom-right-radius: 1em;
 }
 
-.nav-tabs {
+#myTabVehiculo .nav-tabs {
   border-bottom: 0px solid !important;
+}
+
+
+#tabContadoresVehiculos .nav-tabs .nav-link {
+  padding: 0 !important;
 }
 
 #pills-tab-vehiculo li a.active {
@@ -499,68 +426,47 @@ li{
   border-radius: .5em;
 }
 
-.box-row{
+.box-row {
   /* margin-top: .5em; */
   border-top: 1px solid #d7d7d7;
   padding-top: .7em;
 }
 
-.container-fluid{
-  padding-left: 0;
-  padding-right:  0;
-  margin-top: 5px;
+.input-valid-error {
+  box-shadow: 0 1px 1px 0 red;
 }
 
-.fa-edit {
-  color: #7716fa !important;
-  cursor: pointer;
-  font-size: 12px;
-}
-
-.input-valid-error{
-  box-shadow:  0 1px 1px 0 red;
-}
-
-.file-delete{
+.file-delete {
   margin-top: 20px;
   margin-left: 55px;
   display: inline-flex;
 }
 
-.file-delete i{
+.file-delete i {
   color: red;
   cursor: pointer;
   margin: 0.3em;
 }
 
-.search-filtro {
-  margin-top: 1.5em;
-  align-items: stretch;
-  background: white !important;
-  border: 1px solid #d9d9d9 !important;
-  padding: .5rem 1rem !important;
-}
-
-.fs-title{
+.fs-title {
   font-size: 13px;
   color: #959595;
   font-weight: bold;
 }
 
 .search-form {
-   padding-right: 0;
-   margin-top: 2em;
-   margin-bottom: 0 !important;
+  padding-right: 0;
+  margin-bottom: 0 !important;
 }
 
-.imgResumen{
+.imgResumen {
   width: 150px;
   height: 80px;
   box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
   cursor: pointer;
 }
 
-tfoot{
+tfoot {
   display: none;
 }
 
@@ -574,9 +480,9 @@ tfoot{
 }
 
 .content-seach-group {
-    height: 1em;
-    display: inline-flex;
-    margin: 0em auto 1em;
+  height: 1em;
+  display: inline-flex;
+  margin: 0em auto 1em;
 }
 
 .buscadorGenerico {
@@ -586,12 +492,12 @@ tfoot{
   padding-left: 1em !important;
   border-radius: 1em !important;
   border: 1px solid #e2e2e2;
-  background:#fcfcfc;
+  background: #fcfcfc;
 }
 
-.buscadorGenerico::placeholder{
-  color:#a4a4a4;
-  font-size:1em;
+.buscadorGenerico::placeholder {
+  color: #a4a4a4;
+  font-size: 1em;
 }
 
 .custom-file-label {
@@ -600,17 +506,140 @@ tfoot{
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 0.85em !important;
 }
 
-.text-img{
+.text-img {
   width: 120px;
   display: inline-block;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 0.9em !important;
 }
 
-.custom-select{
+.custom-select {
   text-transform: uppercase;
 }
 
+
+.text-accion-nopermiso {
+  text-align: center;
+  font-size: 12px;
+  color: grey;
+  padding: 3em;
+  font-weight: bold;
+}
+
+.text-accion-nopermiso .icon-not-permiso {
+  color: white;
+  font-size: 1.5em;
+  padding: 0.5em;
+  border-radius: 50%;
+  background: orange;
+  width: 2em;
+  height: 2em;
+  box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
+
+}
+
+.icon-table {
+  background: #7716fa;
+  font-size: 0.9em !important;
+  cursor: pointer;
+  color: white;
+  padding: 5px;
+  border-radius: 0.2rem;
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+}
+
+.search-filtro {
+  align-items: stretch;
+  background: white !important;
+  padding: 0 0 0 1em !important;
+  background: #fcfcfc !important;
+  border-radius: 1em !important;
+
+}
+
+.icon-search {
+  font-size: 0.8em !important;
+  float: left;
+  margin-top: -1.7em;
+  float: right;
+  margin-right: 0.9em;
+  color: #888888 !important;
+}
+
+
+.columna-filtro-ind-rep::after {
+  content: "";
+  position: absolute;
+  right: 3%;
+  top: 66%;
+  width: 0;
+  height: 0;
+  border-left: 0.3em solid transparent;
+  border-right: 0.3em solid transparent;
+  border-top: 0.6em solid #939db2;
+  clear: both;
+  z-index: 2;
+  font-size: 14px;
+}
+
+.input-filtro {
+  border: 1px solid #dbdbdb !important;
+  font-weight: 400;
+  font-size: 1em;
+  color: #818181 !important;
+  transition: all 0.5s ease;
+  border-bottom: 1px solid white;
+  background: white !important;
+  border-radius: 0.5em !important;
+  margin-top: 0;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .07), 0 1px 2px 0 rgba(0, 0, 0, .05) !important;
+  /* position: absolute; */
+  border-bottom: 2px solid rgb(217, 217, 217) !important;
+}
+
+.input-filtro::placeholder {
+  font-weight: 400;
+  font-size: 1em;
+}
+
+.input-filtro:focus {
+  -webkit-box-shadow: none;
+}
+
+.input-filtro:hover {
+  cursor: pointer;
+  border-bottom: 2px solid #a4b1ff !important;
+  background: white;
+}
+
+.formulario-vehiculo .form-control.form-control-sm,.formulario-vehiculo .form-control.custom-select {
+  font-size: 0.7 !important;
+  height: 2.5em !important;
+}
+
+
+.btnModificarUsuario {
+  background-color: #7716fa !important;
+  color: #fff !important;
+  -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+  /* box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%); */
+  font-size: 0.7em;
+  text-align: center;
+}
+
+.btn-option {
+  padding: 4px 0px !important;
+  border-radius: 0.2rem !important;
+  cursor: pointer;
+}
+
+.span-consulta {
+  color: #9d9d9d;
+  font-size: .9em;
+  margin: 0;
+}

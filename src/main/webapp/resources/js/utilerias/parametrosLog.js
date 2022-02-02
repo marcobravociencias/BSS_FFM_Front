@@ -31,20 +31,22 @@ function parametrosLog (){
 		if (this.readyState == 4 && ( this.status == 200 || this.status == 202 )) {
 			var respuesta = JSON.parse( this.responseText );
 			
-			for ( x of respuesta ) {
-				var form 					= crearForm("","GET");
-				var action					= crearHiddenInput ("action","eventosDetalles");
-				var inputParametroActual	= crearHiddenInput ("idEvento",x.fale_ID,"");
-				var button					= crearButton ("Ver Detalles","Ver","btn btn-primary");
+			if ( respuesta.length>0 ){
+				for ( x of respuesta ) {
+					var form 					= crearForm("","GET");
+					var action					= crearHiddenInput ("action","eventosDetalles");
+					var inputParametroActual	= crearHiddenInput ("idEvento",x.fale_ID,"");
+					var button					= crearButton ("Ver Detalles","Ver","btn btn-primary");
+						
+					form.appendChild(action);
+					form.appendChild(inputParametroActual);
+					form.appendChild(button);
 					
-				form.appendChild(action);
-				form.appendChild(inputParametroActual);
-				form.appendChild(button);
-				
-//				var trCiclo	= crearTrForm( thArray=[x.fale_PROCESO+" V. "+x.fale_PROCESO_VERSION,x.fale_MENSAJE,form], "td" );
-				var trCiclo	= crearTrForm( thArray=[x.fale_PROCESO+" V. "+x.fale_PROCESO_VERSION,x.fale_MENSAJE], "td" );
-				
-				tbody.appendChild(trCiclo);
+	//				var trCiclo	= crearTrForm( thArray=[x.fale_PROCESO+" V. "+x.fale_PROCESO_VERSION,x.fale_MENSAJE,form], "td" );
+					var trCiclo	= crearTrForm( thArray=[x.fale_PROCESO+" V. "+x.fale_PROCESO_VERSION,x.fale_MENSAJE], "td" );
+					
+					tbody.appendChild(trCiclo);
+				}
 			}
 			
 			swal.close();

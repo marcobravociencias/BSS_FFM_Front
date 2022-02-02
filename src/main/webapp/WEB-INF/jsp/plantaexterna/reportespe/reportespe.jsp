@@ -44,7 +44,7 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jstree/jstree.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker_1.9.0.min.js"></script>
     <!-- ARCHIVOS JS -->
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
 
     
 

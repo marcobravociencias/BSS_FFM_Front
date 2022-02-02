@@ -35,11 +35,15 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <div ng-show="accionesUserConfigText.indexOf('liberaPagos') === -1" class="text-accion-nopermiso">
+                    <i class="icon-not-permiso fas fa-user-lock"></i>
+                    <b class="text-not-permiso" style="font-weight: lighter;">No tienes permiso para liberar pagos</b>
+                </div>
                 <button type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface"
                     data-mdb-dismiss="modal">
                     Cerrar
                 </button>
-                <button type="button" class="btn btn-primary ripple-surface" ng-click="liberarPago()">
+                <button type="button" ng-show="accionesUserConfigText.indexOf('liberaPagos') !== -1" class="btn btn-primary ripple-surface" ng-click="liberarPago()">
                     Liberar
                 </button>
             </div>

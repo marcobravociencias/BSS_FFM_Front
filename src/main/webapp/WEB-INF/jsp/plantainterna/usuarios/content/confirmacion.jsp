@@ -9,7 +9,7 @@
                     <div class="col-12">
                         <div class="row">
                         	<div class="col-3">
-                        		<div id="card" class="card">
+                        		<div id="cardFotoUsuarioRegistro" class="card cardFotoUsuario">
 			                        <div class="card-body">
 			                            <div class="top-title-ot">
 			                                <div class="content-top-element bars-content">
@@ -124,9 +124,9 @@
 				<div class="container">
 					<div class="row" style="text-align: center;">
 						<div class="video-wrap">
-						    <video id="video" width="300" height="280" playsinline autoplay></video>
+						    <video id="video" width="270" height="203" playsinline autoplay></video>
 						</div>
-						<canvas id="canvas" width="300" height="280" style="display: none;"></canvas>
+						<canvas id="canvas" width="594" height="420" style="display: none;"></canvas>
 					</div>
 				</div>
 			</div>
@@ -180,7 +180,7 @@
 	//Tomar foto
 	var contextRegistro = document.getElementById('canvas').getContext('2d');
 	btnTomarFoto.addEventListener("click", function() {
-		contextRegistro.drawImage(video, 0, 0, 300, 280);
+		contextRegistro.drawImage(video, 0, 0, 594, 420);
 	    var img = canvas.toDataURL();
 	    document.getElementById("imgFotoUsuario").src = "" + img;
 	    stream.getTracks()[0].stop();

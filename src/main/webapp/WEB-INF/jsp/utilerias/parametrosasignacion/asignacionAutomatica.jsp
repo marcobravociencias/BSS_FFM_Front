@@ -22,9 +22,9 @@
 
 
 
-        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/reportesPI/mainReportes.css"  rel="stylesheet"/>
-        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/consultaOT/styleConsultaOT.css" rel="stylesheet">
-		<link href="${pageContext.request.contextPath}/resources/css/plantainterna/consultaOT/timeLine.css"rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/reportesPI/mainReportes.css?v=${sessionScope.versionDepl}"  rel="stylesheet"/>
+        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/consultaOT/styleConsultaOT.css?v=${sessionScope.versionDepl}" rel="stylesheet">
+		<link href="${pageContext.request.contextPath}/resources/css/plantainterna/consultaOT/timeLine.css?v=${sessionScope.versionDepl}"rel="stylesheet" />
 		
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
 		<link href="/FFMCLOUD/resources/css/plantainterna/generic/navbar.css" rel="stylesheet">
@@ -104,20 +104,20 @@
 		</div>
     </body>
   
-	<script src="${pageContext.request.contextPath}/resources/js/utilerias/parametrosPrincipal.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/utilerias/parametrosLib.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/utilerias/parametros.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/utilerias/parametrosDetalles.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/utilerias/parametrosModulo.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/utilerias/parametrosFiltrar.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/utilerias/parametrosVersiones.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/utilerias/parametrosRollback.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/utilerias/parametrosGuardarCambios.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/utilerias/parametrosEliminados.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/utilerias/parametrosEliminar.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/utilerias/parametrosActivar.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/utilerias/parametrosNuevo.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/utilerias/parametrosLog.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/utilerias/parametrosPrincipal.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/utilerias/parametrosLib.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/utilerias/parametros.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/utilerias/parametrosDetalles.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/utilerias/parametrosModulo.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/utilerias/parametrosFiltrar.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/utilerias/parametrosVersiones.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/utilerias/parametrosRollback.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/utilerias/parametrosGuardarCambios.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/utilerias/parametrosEliminados.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/utilerias/parametrosEliminar.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/utilerias/parametrosActivar.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/utilerias/parametrosNuevo.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/utilerias/parametrosLog.js?v=${sessionScope.versionDepl}"></script>
 	
 	<script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/moment.min.js"></script>
 

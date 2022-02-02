@@ -37,9 +37,9 @@
   padding: 8px 10px;
 }
 
-a,
-a.disabled:hover,
-a:disabled:hover {
+.contenedor_disponibilidad a,
+.contenedor_disponibilidad a.disabled:hover,
+.contenedor_disponibilidad a:disabled:hover {
   color: grey !important;
 }
 .nav-pills .nav-item.show .nav-link,
@@ -156,7 +156,7 @@ div.modal-footer {
   margin-bottom: 0;
 }
 
-.btn-primary {
+.contenedor_disponibilidad .btn-primary {
   color: #fff;
   background-color: #0275d8;
   position: absolute;

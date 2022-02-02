@@ -1,4 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <!DOCTYPE html>
+
     <html lang="es" ng-app="inspectorCoberturaApp">
 
     <head>
@@ -38,7 +40,7 @@
         <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css"
             rel="stylesheet" />
         <link
-            href="${pageContext.request.contextPath}/resources/css/plantaexterna/inspectorCobertura/styleInspectorCobertura.css"
+            href="${pageContext.request.contextPath}/resources/css/plantaexterna/inspectorCobertura/styleInspectorCobertura.css?v=${sessionScope.versionDepl}"
             rel="stylesheet">
 
         <title>FFM Total play</title>
@@ -247,12 +249,12 @@
         src="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/lib/moment.es.js"></script>
     <script src="${pageContext.request.contextPath}/resources/libraries/exportExcel/index.min.js"></script>
 
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
     <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/plantaexterna/inspectorCobertura/inspectorCoberturaController.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/plantaexterna/inspectorCobertura/inspectorCoberturaController.js?v=${sessionScope.versionDepl}"></script>
     <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/plantaexterna/inspectorCobertura/inspectorCoberturaService.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/plantaexterna/inspectorCobertura/inspectorCoberturaService.js?v=${sessionScope.versionDepl}"></script>
     <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/plantaexterna/inspectorCobertura/jsonInspectorCobertura.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/plantaexterna/inspectorCobertura/jsonInspectorCobertura.js?v=${sessionScope.versionDepl}"></script>
 
     </html>

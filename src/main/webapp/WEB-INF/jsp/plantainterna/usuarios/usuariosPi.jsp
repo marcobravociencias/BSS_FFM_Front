@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
 <html ng-app="usuarioApp">
     <head>
     	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -22,8 +23,8 @@
         <link href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" rel="stylesheet" />
 		<!-- CSS INTERNAS -->
-        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/usuarios/usuariosPi.css" rel="stylesheet">
-		<link href="${pageContext.request.contextPath}/resources/css/plantainterna/skillsAdms/styleSkillsFeature.css?" rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/usuarios/usuariosPi.css?v=${sessionScope.versionDepl}" rel="stylesheet">
+		<link href="${pageContext.request.contextPath}/resources/css/plantainterna/skillsAdms/styleSkillsFeature.css?v=${sessionScope.versionDepl}" rel="stylesheet" />
 		
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.js"></script>
     	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.min.js"></script>
@@ -38,17 +39,21 @@
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="opcion-consulta-tab" data-toggle="tab" href="#opcion-consulta" role="tab"
-                                aria-controls="opcion-consulta" aria-selected="true">Consultar usuarios</a>
+                                aria-controls="opcion-consulta" aria-selected="true" ng-click="tabRevisarPermisoConsultarUsuarios()">Consultar usuarios</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="opcion-alta-tab" data-toggle="tab" href="#opcion-alta" role="tab"
-                                aria-controls="opcion-alta" aria-selected="false">Alta usuarios</a>
+                                aria-controls="opcion-alta" aria-selected="false" ng-click="tabRevisarPermisoCrearUsuario()">Alta usuarios</a>
                         </li>
                     </ul>
                     <div class="tab-content" id="v-pills-tabContent">
                         <div class="tab-pane fade show active" id="opcion-consulta" role="tabpanel" aria-labelledby="opcion-consulta-tab">
-                            <!--h3 class="text-center">Consulta Usuarios</h3-->
-                            <div class="row">
+	                    	<div ng-show="!configPermisoAccionConsultaUsuarios" class="text-accion-nopermiso">
+		                        <i class="icon-not-permiso fas fa-user-lock"></i>
+		                        <b class="text-not-permiso">No cuentas con el permiso de consulta.</b>
+		                    </div>
+                            
+                            <div ng-show="configPermisoAccionConsultaUsuarios" class="row">
                                 <div class="col-md-3 column-style-usuarios columna-filtro-usuarios">
 									<label class="span-consulta"><i class="fa fa-building"></i> Compa&ntilde;&iacute;as</label>
 				                    <div class="dropdown">
@@ -99,8 +104,8 @@
                                     </button>
                                 </div>
                             </div>
-				            <div class="row">
-								<div class="columna-principal-users col-md-12">
+				            <div ng-show="configPermisoAccionConsultaUsuarios" class="row">
+								<div class="columna-principal-users col-md-12" style="padding: 0;">
 									<div class="table-responsive">
 				                    	<table class="table" id="table-usuario-pi">
 				                        	<thead>
@@ -121,30 +126,34 @@
 							</div>
                         </div>
                         <div class="tab-pane fade" id="opcion-alta" role="tabpanel" aria-labelledby="opcion-alta-tab">
-                            <!--h3 class="text-center">Alta Usuarios</h3>
-                            <hr/-->
-                            <div class="row row-datos-confirmacion">
+
+	                    	<div ng-show="!configPermisoAccionCreaUsuarios" class="text-accion-nopermiso">
+		                        <i class="icon-not-permiso fas fa-user-lock"></i>
+		                        <b class="text-not-permiso">No cuentas con el permiso de registro.</b>
+		                    </div>
+                        
+                            <div class="row row-datos-confirmacion" ng-show="configPermisoAccionCreaUsuarios">
                                 <div class="col-12">
                                     <ul class="nav nav-pills mb-3" id="pills-tab-crearuser" role="tablist">
-                                        <li class="nav-item" role="presentation">
+                                        <li class="nav-item" role="presentation" ng-show="tabInformacion">
                                             <a class="nav-link active" id="pills-informacion-tab" data-toggle="pill" href="#pills-informacion" role="tab" aria-controls="pills-informacion" aria-selected="true">Informaci&oacute;n</a>
                                         </li>
-                                        <li class="nav-item" role="presentation">
+                                        <li class="nav-item" role="presentation" ng-show="tabIntervenciones">
                                             <a class="nav-link" id="pills-intervencion-tab" data-toggle="pill" href="#pills-intervencion" role="tab" aria-controls="pills-intervencion" aria-selected="false">Intervenciones</a>
                                         </li>
-                                        <li class="nav-item" role="presentation">
+                                        <li class="nav-item" role="presentation" ng-show="tabArbol">
                                             <a class="nav-link" id="pills-arbol-tab" data-toggle="pill" href="#pills-arbol" role="tab" aria-controls="pills-arbol" aria-selected="false">&Aacute;rbol</a>
                                         </li>
-                                        <li id="pestaniaPermisos" class="nav-item" role="presentation">
+                                        <li id="pestaniaPermisos" class="nav-item" role="presentation" ng-show="tabAccesos">
                                             <a class="nav-link" id="pills-accesos-tab" data-toggle="pill" href="#pills-accesos" ng-show="mostrarAccesos" role="tab" aria-controls="pills-accesos" aria-selected="false">Accesos</a>
                                         </li>
-                                        <li id="pestaniaTecnico" class="nav-item" role="presentation">
+                                        <li id="pestaniaTecnico" class="nav-item" role="presentation" ng-show="tabTecnicos">
                                             <a class="nav-link" id="pills-tecnico-tab" ng-click="revisionTecnicosDespachos()" data-toggle="pill" href="#pills-tecnico" ng-show="mostrarTecnicos" role="tab" aria-controls="pills-tecnico" aria-selected="false">T&eacute;cnicos</a>
                                         </li>
-                                        <li id="pestaniaDespacho" class="nav-item" role="presentation">
+                                        <li id="pestaniaDespacho" class="nav-item" role="presentation" ng-show="tabDespachos">
                                             <a class="nav-link" id="pills-despacho-tab" ng-click="revisionTecnicosDespachos()" data-toggle="pill" href="#pills-despacho" ng-show="mostrarDespacho" role="tab" aria-controls="pills-despacho" aria-selected="false">Despachos</a>
                                         </li>
-                                        <li class="nav-item" role="presentation">
+                                        <li class="nav-item" role="presentation" ng-show="tabConfirmacion">
                                             <a class="nav-link" id="pills-confirmar-tab" ng-click="cargarInfoConfirmacionRegistro()" data-toggle="pill" ng-click="mostrarConfirmacionUsuario()" href="#pills-confirmar" role="tab" aria-controls="pills-confirmar" aria-selected="false">Confirmar Usuario</a>
                                         </li>
                                     </ul>
@@ -203,13 +212,13 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/lib/moment.es.js" ></script>
     
     <!-- ARCHIVOS JS INTERNOS -->
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/usuarios/usuariosPIController.js" charset="UTF-8"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/usuarios/usuariosEditarController.js" charset="UTF-8"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/usuarios/usuarioPIService.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/usuarios/jsonResult.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/usuarios/usuariosPIController.js?v=${sessionScope.versionDepl}" charset="UTF-8"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/usuarios/usuariosEditarController.js?v=${sessionScope.versionDepl}" charset="UTF-8"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/usuarios/usuarioPIService.js?v=${sessionScope.versionDepl}"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/usuarios/jsonResult.js?v=${sessionScope.versionDepl}"></script>
     <script type="text/javascript">let contex_project = "${pageContext.request.contextPath}";</script>
-    <script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js?v=${sessionScope.versionDepl}"></script>
     
 
 </html>

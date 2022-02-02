@@ -46,7 +46,9 @@ public interface DespachoPIService {
 	public ServiceResponseResult cambiarEstatusIntegrador(String params);
 	public ServiceResponseResult setComentariosIntegrador(String params);
 	public ServiceResponseResult cambiarEstatusTecnicoPI(String params);
-
+	public ServiceResponseResult confirmaDesconfirmaOtDespacho(String params);
+	
+	
     ServiceResponseResult consultarDetalleTecnicoOt(String params);
 
     ServiceResponseResult agregarComentariosOt(String params);

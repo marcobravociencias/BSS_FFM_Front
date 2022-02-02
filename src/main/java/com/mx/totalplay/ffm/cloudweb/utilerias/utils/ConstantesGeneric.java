@@ -37,4 +37,10 @@ public class ConstantesGeneric implements Serializable{
 	
 	@Value("${guardarOrdenesUniversales}")
 	private String guardarOrdenesUniversales;
+	
+	@Value("${gestionNoticiasGeneric}")
+	private String gestionNoticiasGeneric;
+
+	@Value("${version.deploy.ffm-cloud}")
+	private String versionDeploy;
 }

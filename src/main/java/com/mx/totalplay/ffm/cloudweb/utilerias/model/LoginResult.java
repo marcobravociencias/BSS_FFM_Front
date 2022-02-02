@@ -36,12 +36,21 @@ public class LoginResult {
 	private int idUnidadNegocio;
 	private int idPropietario;
 	private int idOrigen;
-
+	private String celular;
+	private String correo;
+	private String pais;
+	
 	private long expires_in;
 	private Map<String,String> permiAccUs;
 	private boolean banderaPintarOtros;
 	private String googlAcceLla;
 	private String direccionAmbiente;
-	private List<Permiso>permisos;
 	private Map<String ,Object>configuraciones;
+	 
+	private String instancia;
+	private String version;
+	private Map<String ,Object> configuracionesGenerales;
+	private List<Permiso>modulos;
+	
+	private String creedResult;
 }

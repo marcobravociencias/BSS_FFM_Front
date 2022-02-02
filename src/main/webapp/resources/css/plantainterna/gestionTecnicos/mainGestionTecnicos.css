@@ -1,0 +1,762 @@
+#container_gestionTecnicos {
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+    /* padding-top: 1em; */
+    background: white;
+    border-radius: .5em;
+    margin-top: 1em;
+    padding: 0;
+}
+
+#container_calendarioActividades, #container_detalleMesTecnico {
+    border-left: 1px solid #d2d2d2;
+}
+
+.search-filtro {
+    float: right;
+    height: 2em;
+    border-radius: 1em !important;
+}
+
+.icon-search {
+    font-size: 0.7em !important;
+    float: left;
+    margin-top: -1.7em;
+    float: right;
+    margin-right: 0.5em;
+}
+
+.col-2.media-image.online.pr-0 {
+    padding-left: 0;
+}
+
+.responsive-img-tecnico {
+    box-shadow: 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%), 0 2px 4px -1px rgb(0 0 0 / 30%);
+    border-radius: 50%;
+    width: 2.4em;
+    height: 2.4em;
+}
+
+p.text-aux {
+    font-size: .7em;
+    font-weight: bold;
+    margin-bottom: 0;
+    cursor: pointer;
+}
+p.text-aux-active {
+    color: #7716fa;
+    font-size: .7em;
+    font-weight: bold;
+    margin-bottom: 0;
+    cursor: pointer;
+}
+
+p.text-tecnico-nombre {
+    font-size: .7em;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.valign-wrapper {
+    display: -ms-flexbox;
+    margin-bottom: .3px;
+    padding: .3rem;
+    border-right: 3px solid transparent;
+    display: flex;
+    position: relative;
+    border-bottom: 1px solid #eee;
+}
+
+p.text-adds-teccnico {
+    font-size: .7em;
+    color: #3e3e3e;
+    margin-bottom: 0;
+}
+
+.contenido_color{
+    display: inline;
+    margin-right: .2em;
+    font-size: .8em;
+}
+
+/* CALENDARIO */
+#calendar_gestionTecnicos .eventDisponibilidad .fc-event-title {
+    /* background-color: #1c74bfb3 !important;
+    border-color: #1c74bfb3 !important; */
+    font-weight: bold;
+    font-size: 10px;
+    white-space: pre-wrap !important;
+    /* box-shadow: 0px 0px 10px #808c8c; */
+    border: none;
+    top: -8px;
+}
+
+#calendar_gestionTecnicos .fc-license-message {
+    display: none;
+}
+
+.fc-event-title {
+    background: #7716fa;
+    border-radius: 50px;
+    border: 0px;
+    color: #ffffff !important;
+    font-size: 8px !important;
+    text-align: center;
+}
+
+div.fc-daygrid-event-dot {
+    display: none;
+}
+
+div.fc-event-time {
+    display: none;
+}
+
+div.actividades-contadorac-verde {
+    width: 18px;
+    height: 15px;
+    background: #08d85c;
+    border-radius: 50px;
+    color: white;
+    margin-top: 0.5em;
+    margin-left: 0.5em;
+    font-size: 0.8em;
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14),
+      0 7px 10px -5px hsla(0, 0%, 60%, 0.4);
+    text-align: center;
+    position: absolute;
+    left: 0;
+}
+
+div.actividades-contadorac-gris {
+    width: 18px;
+    height: 15px;
+    background: #b9bfbc;
+    border-radius: 50px;
+    color: white;
+    margin-top: 0.5em !important;
+    margin-left: 0.5em;
+    font-size: 0.8em;
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14),
+    0 7px 10px -5px hsla(0, 0%, 60%, 0.4);
+    text-align: center;
+    display: flex;
+    position: absolute;
+    left: 0;
+}
+
+#calendar_gestionTecnicos a,
+a.disabled:hover,
+a:disabled:hover {
+  color: grey !important;
+}
+
+#calendar_gestionTecnicos button {
+    color: gray !important;
+    background: white;
+    border: 0px !important;
+}
+  
+#calendar_gestionTecnicos button.fc-prev-button.fc-button.fc-state-default.fc-corner-left,
+#calendar_gestionTecnicos button.fc-next-button.fc-button.fc-state-default.fc-corner-right {
+    background: #7716fa !important;
+    padding: 5px 12px;
+    margin: 2px 1px 5px;
+}
+  
+.fc .fc-toolbar-title {
+    text-transform: capitalize !important;
+    color: #7716fa !important;
+    font-weight: bold;
+    font-family: "Montserrat", sans-serif;
+    font-size: 20px !important;
+}
+
+#calendar_gestionTecnicos .fc-col-header {
+    background: #f4f5fc !important;
+    text-transform: capitalize !important;
+    font-size: small;
+}
+  
+#calendar_gestionTecnicos .fc-content-skeleton td.fc-event-container {
+    text-align: -webkit-center;
+}
+
+#calendar_gestionTecnicos .fc-toolbar.fc-header-toolbar {
+    margin-bottom: .5em;
+}
+
+#calendar_gestionTecnicos td.fc-head-container.fc-widget-header {
+    border: 0px;
+}
+
+#calendar_gestionTecnicos .fc th {
+    text-align: right;
+    color: #999;
+    font-size: 1.2em;
+    font-weight: bold;
+    border: 0px;
+}
+
+#calendar_gestionTecnicos .fc td:first-child {
+    border-left: 0;
+}
+
+#calendar_gestionTecnicos .fc-license-message {
+    display: none;
+}
+/* CALENDARIO */
+
+#containerTecnico_vacio {
+    text-align: center;
+}
+
+#containerTecnico_detalle{
+    padding-left: 0;
+}
+
+#btnDetalleTecnico {
+    float: right;
+}
+
+.container-detalle-tecnico-button {
+    color: #696a6b;
+    width: 105px;
+    height: 25px;
+    margin: 0 auto;
+    cursor: pointer;
+    margin-top: 0.5em;
+    padding-top: 0.1em;
+    margin-bottom: 0.5em;
+    display: inline-block;
+    font-weight: 700;
+    font-size: 0.85em;
+    font-family: "Montserrat" !important;
+    border-bottom: 3px solid #7716fa;
+}
+
+.tecnico-content {
+    padding: 0;
+    margin-bottom: .5em;
+    /* border-bottom:1px solid #e1e1e1 */
+}
+
+span.text-title-tecnico {
+    font-weight: bold;
+    font-size: 0.7em;
+    color: #444444;
+}
+
+span.text-content-tecnico {
+    font-size: 0.7em;
+    color: #303030;
+}
+
+.btnDetalleJustificacion {
+    padding: 0.3em 0.6em !important;
+    background-color: #7716fa;
+    color: #ffff;
+}
+
+.btnDetalleJustificacion:hover {
+    padding: 0.3em 0.6em !important;
+    background-color: #7716fa;
+    color: #ffff;
+    box-shadow: 0 5px 11px 0 rgb(0 0 0 / 18%), 0 4px 15px 0 rgb(0 0 0 / 15%);
+    outline: 0;
+}
+
+.icon-back {
+    font-size: 1.3em;
+    padding-top: 0.5px;
+    color: #7716fa;
+    cursor: pointer;
+    border-radius: 25px;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+}
+
+.tecnico-content-detalle {
+    padding: 0;
+    margin-bottom: .5em;
+    display: flex;
+    /* border-bottom:1px solid #e1e1e1 */
+}
+
+.container-text-title-detalle {
+    width: 40%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.container-text-content-detalle {
+    width: 60%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.btn-justificacion {
+    font-size: .7em;
+    padding: 0.6em 2em 0.6em 2em;
+    border: 0.09rem solid #1266f1; 
+    box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
+}
+
+.span-form-tecnicos {
+    color: #9d9d9d;
+    font-size: .9em;
+    margin-bottom: 0;
+}
+
+.input-filtro-tecnico {
+    border: 1px solid #bdbdbd !important;
+    font-weight: 400;
+    font-size: 1em;
+    color: #818181 !important;
+    transition: all 0.5s ease;
+    border-bottom: 1px solid white;
+    background: white !important;
+    border-radius: 0.5em !important;
+    cursor: pointer;
+    /* box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.07), 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important; */
+}
+
+.input-filtro-tecnico::placeholder {
+    font-weight: 400;
+    font-size: 1em;
+    color: #818181 !important;
+}
+
+/* DRAG AND DROP */
+.box {
+    font-size: 1.1rem;
+    background-color: #f5f5f5;
+    position: relative;
+    padding: 80px 80px;
+    width: 350px;
+    height: 230px;
+}
+
+.box__input {
+    text-align: center !important;
+    font-family: "Montserrat" !important;
+    font-size: 0.85em;
+}
+
+.box__file {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.form_drag_drop, .form_drag_drop2 {
+    outline: 3px dashed #92c0e8;
+    outline-offset: -10px;
+    -webkit-transition: outline-offset 0.15s ease-in-out, background-color 0.15s linear;
+    transition: outline-offset 0.15s ease-in-out, background-color 0.15s linear;
+    margin: 0 auto;
+}
+/* DRAG AND DROP */
+
+/* MODAL CHAT */
+.container-mensajes-parent .chat-content-area .chat-area {
+    position: relative;
+    overflow: hidden;
+    padding: 1rem;
+}
+
+.container-mensajes-parent .chats {
+    padding: 0;
+}
+  
+.chat-area .chats .chat.chat-right .chat-body {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    -webkit-box-align: end;
+    -webkit-align-items: flex-end;
+    -ms-flex-align: end;
+    align-items: flex-end;
+}
+
+.chat-area .chats .chat .chat-body {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    -webkit-box-align: start;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+}
+
+.chat-area .chats .chat.chat-right .chat-body .chat-text {
+    flex-direction: row-reverse;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: reverse;
+    -webkit-flex-direction: row-reverse;
+    -ms-flex-direction: row-reverse;
+}
+  
+.chat-area .chats .chat .chat-body .chat-text {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    margin: 0 1rem 1rem;
+}
+  
+.chat-area .chats .chat.chat-right .chat-body .chat-text p {
+    color: #fff;
+    background-color: #2196f3;
+}
+  
+.chat-area .chats .chat .chat-body .chat-text p {
+    max-width: 400px;
+    padding: 0.5rem 1rem;
+    color: #757575;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 1px 1px 10px 0 rgb(0 0 0 / 14%);
+}
+
+.chat-area .chats .chat .chat-body .chat-text:first-child:before {
+    box-sizing: border-box;
+    width: 0;
+    height: 0;
+    margin-top: 10px;
+    content: "";
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    -webkit-transform-origin: 12px 18px;
+    -ms-transform-origin: 12px 18px;
+    transform-origin: 12px 18px;
+    border: 7px solid transparent;
+    border-bottom-color: #fff;
+    border-left-color: #fff;
+    box-shadow: -2px 3px 4px -3px rgb(0 0 0 / 40%);
+}
+.chat-area .chats .chat.chat-right .chat-body .chat-text:first-child:before {
+    box-sizing: border-box;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    -webkit-transform-origin: 3px -5px;
+    -ms-transform-origin: 3px -5px;
+    transform-origin: 3px -5px;
+    border-top-color: #2196f3 !important;
+    border-right-color: #2196f3 !important;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    box-shadow: 2px -2px 4px -3px rgb(0 0 0 / 40%);
+}
+  
+.chat-area .chats .chat.chat-right {
+    -webkit-box-pack: end;
+    -webkit-justify-content: flex-end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+}
+  
+.chat-area .chats .chat {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    margin: 0.5rem 1rem;
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+}
+  
+.img-comentarios-chat {
+    box-shadow: 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%),
+      0 2px 4px -1px rgb(0 0 0 / 30%);
+    border-radius: 50%;
+    width: 2.5em !important;
+    height: 2.5em !important;
+    vertical-align: middle;
+    text-align: center;
+    line-height: 2.5em !important;
+    color: white;
+}
+
+.img-comentarios-chat.android-mensaje {
+    background-color: #7ad119 !important;
+}
+
+.img-comentarios-chat.web-mensaje {
+    background-color: #63a6e0 !important;
+}
+
+.chat-fotter {
+    display: flex;
+}
+
+.input-mensaje-chat {
+    margin-right: 1.5rem !important;
+    padding: 0 1.5rem !important;
+    color: #9e9e9e !important;
+    border-bottom: 0 !important;
+    border-radius: 5px !important;
+    border: none !important;
+    background-color: #eceff1 !important;
+    height: 3.3em !important;
+    margin-left: 52% !important;
+}
+
+.input-mensaje-chat::placeholder {
+    font-size: 1.1em !important;
+}
+  /* MODAL CHAT */
+
+.img-comentarios-chat {
+    box-shadow: 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%),
+      0 2px 4px -1px rgb(0 0 0 / 30%);
+    border-radius: 50%;
+    width: 2.5em !important;
+    height: 2.5em !important;
+    vertical-align: middle;
+    text-align: center;
+    line-height: 2.5em !important;
+    color: white;
+}
+
+.img-comentarios-chat.android-mensaje {
+    background-color: #7ad119 !important;
+}
+
+.img-comentarios-chat.web-mensaje {
+    background-color: #63a6e0 !important;
+}
+
+.text-fecha-comentario {
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 0.7em;
+}
+
+.btn-enviar-comentario {
+    height: 41px;
+}
+
+.col-chat-fotter {
+    width: 70%;
+}
+
+.input-mensaje-chat {
+    margin-right: 1.5rem !important;
+    padding: 0 1.5rem !important;
+    color: #9e9e9e !important;
+    border-bottom: 0 !important;
+    border-radius: 5px !important;
+    border: none !important;
+    background-color: #eceff1 !important;
+    height: 3.3em !important;
+    margin-left: 52% !important;
+}
+
+.input-mensaje-chat::placeholder {
+    font-size: 1.1em !important;
+}
+
+#myTab{
+    margin-bottom:1em;
+}
+
+#myTab .nav-item:first-child .nav-link {
+    border-top-left-radius:1em;
+    border-bottom-left-radius:1em;
+
+}
+
+#myTab .nav-item:last-child .nav-link {
+    border-top-right-radius:1em;
+    border-bottom-right-radius:1em;
+}
+
+#myTab .nav-link {
+    padding-top: .4em;
+    padding-bottom: .4em;
+    /* margin-top: 20px; */
+    border: solid 1px #ccc;
+    /* border-radius: 2px; */
+    /* box-shadow: 0px 0px 10px #878ee04d; */ 
+}
+  
+#myTab .nav-link.active {
+    color: #7716fa !important;
+    font-weight: bolder;
+    background:#f9f9f9;
+}
+
+
+/* TABLES */
+.icon-table {
+    background: #58b3bf;
+    font-size: 1em !important;
+    cursor: pointer;
+    color: white !important;
+    padding: 0.3em;
+    border-radius: 0.2em;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+}
+
+.icon-table:hover {
+    background: #58b3bf;
+    font-size: 1em !important;
+    cursor: pointer;
+    color: white !important;
+    padding: 0.3em;
+    border-radius: 0.2em;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+}
+
+#tableDetalleTrabajo tbody tr:nth-child(even),
+#tableArchivosJustificacion tbody tr:nth-child(even),
+#tableJustificaciones tbody tr:nth-child(even),
+#tableOtsTrabajadas tbody tr:nth-child(even),
+#tableDiasTrabajados tbody tr:nth-child(even)
+{
+    background: #f5f5f5;
+}
+  
+#tableDetalleTrabajo>tbody>tr>td, 
+#tableArchivosJustificacion>tbody>tr>td, 
+#tableJustificaciones>tbody>tr>td, 
+#tableOtsTrabajadas>tbody>tr>td, 
+#tableDiasTrabajados>tbody>tr>td 
+{
+    /* white-space: nowrap; */
+    color: #39455b;
+    font-family: 'Montserrat';
+    font-size: .8em;
+    border-top: 0px solid #eceeef !important;
+    text-align: center;
+}
+  
+#tableDetalleTrabajo thead th, 
+#tableArchivosJustificacion thead th, 
+#tableJustificaciones thead th, 
+#tableOtsTrabajadas thead th, 
+#tableDiasTrabajados thead th 
+{
+    position: relative;
+    background-color: #b1b1b1;
+    color: #fff;
+    font-size: 0.8em;
+    /* white-space: nowrap; */
+    padding: 1em;
+    border: none;
+    font-weight: normal;
+}
+
+#tableDetalleTrabajo tbody tr td, 
+#tableArchivosJustificacion tbody tr td, 
+#tableJustificaciones tbody tr td, 
+#tableOtsTrabajadas tbody tr td, 
+#tableDiasTrabajados tbody tr td 
+{
+    padding: 1em;
+    border: none;
+}
+
+.table.dataTable {
+    border-collapse: collapse !important;
+}
+  
+.page-link{
+    font-size: 0.7em !important;
+    font-family: "Montserrat" !important;
+}
+  
+.dataTables_info {
+    font-size: 0.7em;
+    font-family: "Montserrat" !important;
+    text-align: left;
+    padding-left: 0.5em;
+}
+  
+.dataTables_paginate.paging_simple_numbers{
+    float: right;
+}
+  
+.dataTables_filter{
+    font-size: 0.7em !important;
+    font-family: 'Montserrat';
+}
+  
+div.dataTables_wrapper div.dataTables_filter input {
+    width: 11.3em;
+    height: 2.05em;
+    margin-right: 1em;
+}
+
+.btnTables {
+    background-color: #7716fa;
+    color: #fff !important;
+    -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    /* box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%); */
+    font-size: 0.7em;
+    text-align: center;
+}
+
+.btn-option {
+    padding: 4px 0px !important;
+    border-radius: 0.2rem !important;
+    cursor: pointer;
+  }
+/* TABLES */
+#calendar_gestionTecnicos
+  .fc-day-grid-event.fc-h-event.fc-event.fc-start.fc-end.diaNoTrabajado {
+  box-shadow: none !important;
+  border: 0px !important;
+  background: transparent;
+}
+.diaNoTrabajado {
+    display: none;
+  }
+div.actividades-contadorac {
+    width: 18px;
+    height: 15px;
+    background: #08d85c;
+    border-radius: 50px;
+    color: white;
+    margin-top: 0.3em;
+    margin-left: 0.5em;
+    font-size: 0.8em;
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14),
+      0 7px 10px -5px hsla(0, 0%, 60%, 0.4);
+    text-align: center;
+}
+div.actividades-contadorac-gris {
+    width: 18px;
+    height: 15px;
+    background: #b9bfbc;
+    border-radius: 50px;
+    color: white;
+    margin-top: 0.3em;
+    margin-left: 0.5em;
+    font-size: 0.8em;
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14),
+      0 7px 10px -5px hsla(0, 0%, 60%, 0.4);
+    text-align: center;
+    display: flex;
+    /* padding: 1em 1em 1em; */
+}

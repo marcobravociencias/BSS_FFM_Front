@@ -352,7 +352,7 @@ div#calendar {
   border: none !important;
   /* margin: .3em 0; */
   /* box-shadow: 0px 0px 10px #878EE04D; */
-  box-shadow: 0 0 5px 0 rgb(135 142 224 / 30%);
+  /* box-shadow: 0 0 5px 0 rgb(135 142 224 / 30%); */
   /*z-index: 2;*/
   position: relative;
   /* box-shadow: 0px 0px 10px #878EE04D; */
@@ -412,7 +412,7 @@ span#buscar-btn-otpend {
   color: #818181 !important;
   transition: all 0.5s ease;
   border-bottom: 1px solid white;
-  background: white !important;
+  background: transparent !important;
 }
 .input-filtro-despacho:hover {
   background: #e4e6f2 !important;
@@ -2337,7 +2337,7 @@ img.img-tecnico-materiales {
 .content-seach-group {
   height: 1em;
   display: inline-flex;
-  margin: 0em auto 1em;
+  /* margin: 0em auto 1em; */
 }
 
 
@@ -2499,4 +2499,29 @@ img.img-sap-materiales {
 #table-materiales-temp_filter input {
 	font-size: 0.9em !important;
 	font-family: "Montserrat" !important;	
+}
+
+.total-materiales{
+    color: #1b68c0 !important;
+    font-weight: bold;
+    font-size: 1em !important;     
+    border-bottom: 2px solid #1b68c0 !important;
+}
+
+
+
+#table-ots-terminadas th {
+    background-color: #b1b1b1;
+    color: #fff;
+    padding: 1em auto;
+    white-space: nowrap;
+    font-family: 'Montserrat', sans-serif;
+    font-size: .8em;
+}
+#table-ots-terminadas tbody tr:nth-child(even) {
+    background: #f5f5f5;
+}
+
+#table-ots-terminadas tbody tr td{
+  border:none !important;
 }

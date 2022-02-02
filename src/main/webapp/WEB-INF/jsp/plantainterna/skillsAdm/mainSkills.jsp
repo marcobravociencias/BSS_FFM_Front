@@ -30,9 +30,9 @@
 		<link href="${pageContext.request.contextPath}/resources/libraries/jstree/css/style.min.css" rel="stylesheet" />
 		<link href="${pageContext.request.contextPath}/resources/libraries/jstree/css/proton/style.css" rel="stylesheet" />
 		<link href="${pageContext.request.contextPath}/resources/libraries/sweetalert/css/sweetalert2.min.css" rel="stylesheet">
-		<link href="${pageContext.request.contextPath}/resources/css/plantainterna/despachopi/loaders.css" rel="stylesheet" />
-		<link href="${pageContext.request.contextPath}/resources/css/plantainterna/skillsAdms/styleSkills.css?" rel="stylesheet" />
-		<link href="${pageContext.request.contextPath}/resources/css/plantainterna/skillsAdms/styleSkillsFeature.css?" rel="stylesheet" />
+		<link href="${pageContext.request.contextPath}/resources/css/plantainterna/despachopi/loaders.css?v=${sessionScope.versionDepl}" rel="stylesheet" />
+		<link href="${pageContext.request.contextPath}/resources/css/plantainterna/skillsAdms/styleSkills.css?v=${sessionScope.versionDepl}" rel="stylesheet" />
+		<link href="${pageContext.request.contextPath}/resources/css/plantainterna/skillsAdms/styleSkillsFeature.css?v=${sessionScope.versionDepl}" rel="stylesheet" />
 		<link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" rel="stylesheet" />
 	</head>
 	<body id="idBody" class="body" ng-controller="skillsController" style="display: none;">
@@ -383,12 +383,12 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/alertify/alertify.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/js/mdb.min.js"></script>
 	<!-- ARCHIVOS JS -->
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/skillsAdms/skillsController.js?" charset="UTF-8"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/skillsAdms/skillsService.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/skillsAdms/jsonSkills.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/genericService.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/despachopi/mainDespachoService.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/skillsAdms/skillsController.js?v=${sessionScope.versionDepl}" charset="UTF-8"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/skillsAdms/skillsService.js?v=${sessionScope.versionDepl}"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/skillsAdms/jsonSkills.js?v=${sessionScope.versionDepl}"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/genericService.js?v=${sessionScope.versionDepl}"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/despachopi/mainDespachoService.js?v=${sessionScope.versionDepl}"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
-	<script	src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>
+	<script	src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js?v=${sessionScope.versionDepl}"></script>
 </html>

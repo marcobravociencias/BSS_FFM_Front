@@ -23,18 +23,20 @@ function parametroEliminados (){
 		if (this.readyState == 4 && ( this.status == 200 || this.status == 202 )) {
 			var respuesta = JSON.parse( this.responseText );
 			
-			for ( x of respuesta ) {
-				var form 				= crearForm("","GET");
-				
-				form.appendChild( crearHiddenInput ("action","habilitar") );
-				form.appendChild( crearHiddenInput ("idParametro",x.fapa_ID,"") );
-				form.appendChild( crearButton ("Habilitar","Editar","btn btn-primary") );
-				
-				var trCiclo	= crearTrForm( thArray=[x.fapa_FECHA_ACTUALIZACION,x.fapa_MODULO,x.fapa_NUMERO,x.fapa_COMENTARIO,x.fapa_VALOR_01,x.fapa_VALOR_02,x.fapa_VALOR_03, form], "td" );
-				
-				tbody.appendChild(trCiclo);
-				
-				
+			if ( respuesta.length>0 ){
+				for ( x of respuesta ) {
+					var form 				= crearForm("","GET");
+					
+					form.appendChild( crearHiddenInput ("action","habilitar") );
+					form.appendChild( crearHiddenInput ("idParametro",x.fapa_ID,"") );
+					form.appendChild( crearButton ("Habilitar","Editar","btn btn-primary") );
+					
+					var trCiclo	= crearTrForm( thArray=[x.fapa_FECHA_ACTUALIZACION,x.fapa_MODULO,x.fapa_NUMERO,x.fapa_COMENTARIO,x.fapa_VALOR_01,x.fapa_VALOR_02,x.fapa_VALOR_03, form], "td" );
+					
+					tbody.appendChild(trCiclo);
+					
+					
+				}
 			}
 			
 			swal.close();

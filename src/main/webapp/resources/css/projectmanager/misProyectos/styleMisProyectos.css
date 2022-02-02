@@ -1,0 +1,428 @@
+
+.content-left-grafica {
+    box-shadow: 8px 10px 10px -6px #0000004b;
+    z-index: 4;
+}
+/* PRIMER NIVEL */
+.menu-primer-nivel {
+    font-size: 14px;
+    font-family: 'Montserrat';
+    line-height: 68px!important;
+    text-align: left;
+    color: #555555;
+    padding-left: 30px;
+    cursor: pointer;
+}
+.grafica-primer-nivel {
+    padding-left: 30px; padding-right: 30px;
+    height: 68px;
+    line-height: 68px;
+    /*padding-left: 15px;*/
+}
+.is-even-primer-nivel {
+    background-color: #F9F7FD;
+}
+.is-odd-primer-nivel {
+    background-color: #FFFFFF;
+}
+.container-proyecto {
+    background-color: #D0CFDB;
+    height: 100%;
+    width:100%;
+    border-radius: 20px;
+    height: 35px;
+    padding: 0;
+    display: flex;
+}
+.avance-primer-nivel {
+    white-space:nowrap;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    display: inline-block;
+    zoom: 1;
+    vertical-align: top;
+    height: 35px;
+    line-height: 35px;
+}
+.resto-avance-primer-nivel {
+    padding: 0;
+    display: inline-block; 
+    display: inline;
+    zoom: 1;
+    vertical-align: top;
+    height: 35px;
+    width: 0;
+}
+.fecha-inicio-primer-nivel {
+    float: left;
+    z-index: 3;
+    margin-top: 0em;
+    margin-left: .5em;
+    font-size: 14px;
+    font-family: 'Montserrat';
+    color: #FFFFFF;
+    text-align: right;
+    font-weight: bold;
+    position: absolute;
+}
+.porcentaje-primer-nivel {
+    float: left;
+    z-index: 10;
+    margin-top: -3em;
+    margin-left: -1em;
+    font-weight: bold;
+    color: #546475;
+    font-size: 14px;
+    font-family: 'Montserrat';
+    text-align: center;
+}
+.fecha-fin-primer-nivel {
+    float: left;
+    z-index: 3;
+    margin-top: 0;
+    margin-left: -5.8em;
+    font-size: 14px;
+    font-family: 'Montserrat';
+    color: #555555;
+    white-space: nowrap;
+    font-weight: bold;
+    position: absolute;
+}
+.vacio-grafica-primer-nivel {
+    padding: 0;
+    height: 35px;
+    line-height: 35px;
+}
+/* SEGUNDO NIVEL */
+.menu-segundo-nivel {
+    font-size: 14px;
+    font-family: 'Montserrat';
+    line-height: 58px!important;
+    text-align: left;
+    color: #555555;
+    padding-left: 40px;
+    cursor: pointer;
+}
+.grafica-segundo-nivel {
+    height: 58px;
+    line-height: 58px;
+}
+.is-even-segundo-nivel {
+    background-color: #F2EDF2;
+}
+.is-odd-segundo-nivel {
+    background-color: #F5F5F5;
+}
+.container-punta {
+    background-color: #D0CFDB;
+    height: 100%;
+    width:100%;
+    border-radius: 20px;
+    height: 30px;
+    padding: 0;
+    display: flex;
+}
+.avance-segundo-nivel {
+    white-space:nowrap;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    display: inline-block;
+    zoom: 1;
+    vertical-align: top;
+    height: 30px;
+    line-height: 30px;
+}
+.resto-avance-segundo-nivel {
+    padding: 0;
+    display: inline-block; 
+    display: inline;
+    zoom: 1;
+    vertical-align: top;
+    height: 30px;
+    width: 0;
+}
+.fecha-inicio-segundo-nivel {
+    float: left;
+    z-index: 3;
+    margin-top: 0em;
+    margin-left: .5em;
+    font-size: 14px;
+    font-family: 'Montserrat';
+    color: #FFFFFF;
+    text-align: right;
+    font-weight: bold;
+    position: absolute;
+}
+.porcentaje-segundo-nivel {
+    float: left;
+    z-index: 10;
+    margin-top: -2.7em;
+    margin-left: -1em;
+    font-weight: bold;
+    color: #546475;
+    font-size: 14px;
+    font-family: 'Montserrat';
+    text-align: center;
+}
+.fecha-fin-segundo-nivel {
+    float: left;
+    z-index: 3;
+    margin-top: 0;
+    margin-left: -5.8em;
+    font-size: 14px;
+    font-family: 'Montserrat';
+    color: #555555;
+    white-space: nowrap;
+    font-weight: bold;
+    position: absolute;
+}
+.vacio-grafica-segundo-nivel {
+    padding: 0;
+    height: 30px;
+    line-height: 30px;
+}
+/* TERCER NIVEL */
+.menu-tercer-nivel {
+    font-size: 14px;
+    font-family: 'Montserrat';
+    line-height: 48px!important;
+    height: 48px!important;
+    text-align: left;
+    color: #555555;
+    padding-left: 50px;
+    cursor: pointer;
+}
+.grafica-tercer-nivel {
+    height: 48px;
+    line-height: 48px;
+}
+.is-even-tercer-nivel {
+    background-color: #E8E3E8;
+}
+.is-odd-tercer-nivel {
+    background-color: #EBEBEB;
+}
+.container-plan {
+    background-color: #D0CFDB;
+    height: 100%;
+    width:100%;
+    border-radius: 20px;
+    height: 25px;
+    padding: 0;
+    display: flex;
+}
+.avance-tercer-nivel {
+    white-space:nowrap;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    display: inline-block;
+    zoom: 1;
+    vertical-align: top;
+    height: 25px;
+    line-height: 25px;
+}
+.resto-avance-tercer-nivel {
+    padding: 0;
+    display: inline-block; 
+    display: inline;
+    zoom: 1;
+    vertical-align: top;
+    height: 25px;
+    width: 0;
+}
+.fecha-inicio-tercer-nivel {
+    float: left;
+    z-index: 3;
+    margin-top: 0em;
+    margin-left: .5em;
+    font-size: 14px;
+    font-family: 'Montserrat';
+    color: #FFFFFF;
+    text-align: right;
+    font-weight: bold;
+    position: absolute;
+}
+.porcentaje-tercer-nivel {
+    float: left;
+    z-index: 10;
+    margin-top: -2.3em;
+    margin-left: -1em;
+    font-weight: bold;
+    color: #546475;
+    font-size: 14px;
+    font-family: 'Montserrat';
+    text-align: center;
+}
+.fecha-fin-tercer-nivel {
+    float: left;
+    z-index: 3;
+    margin-top: 0;
+    margin-left: -5.8em;
+    font-size: 14px;
+    font-family: 'Montserrat';
+    color: #555555;
+    white-space: nowrap;
+    font-weight: bold;
+    position: absolute;
+}
+.vacio-grafica-tercer-nivel {
+    padding: 0;
+    height: 25px;
+    line-height: 25px;
+}
+/* CUARTO NIVEL */
+.menu-cuarto-nivel {
+    font-size: 14px;
+    font-family: 'Montserrat';
+    line-height: 38px!important;
+    height: 38px!important;
+    text-align: left;
+    color: #555555;
+    padding-left: 60px;
+}
+.grafica-cuarto-nivel {
+    height: 38px;
+    line-height: 38px;
+}
+.is-even-cuarto-nivel {
+    background-color: #DED9DE;
+}
+.is-odd-cuarto-nivel {
+    background-color: #E1E1E1;
+}
+.container-actividad {
+    background-color: #D0CFDB;
+    height: 100%;
+    width:100%;
+    border-radius: 20px;
+    height: 20px;
+    padding: 0;
+    display: flex;
+}
+.avance-cuarto-nivel {
+    white-space:nowrap;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    display: inline-block;
+    zoom: 1;
+    vertical-align: top;
+    height: 20px;
+    line-height: 20px;
+}
+.resto-avance-cuarto-nivel {
+    padding: 0;
+    display: inline-block; 
+    display: inline;
+    zoom: 1;
+    vertical-align: top;
+    height: 20px;
+    width: 0;
+}
+.fecha-inicio-cuarto-nivel {
+    float: left;
+    z-index: 3;
+    margin-top: 0em;
+    margin-left: .5em;
+    font-size: 14px;
+    font-family: 'Montserrat';
+    color: #FFFFFF;
+    text-align: right;
+    font-weight: bold;
+    position: absolute;
+}
+.porcentaje-cuarto-nivel {
+    float: left;
+    z-index: 10;
+    margin-top: -2em;
+    margin-left: -1em;
+    font-weight: bold;
+    color: #546475;
+    font-size: 14px;
+    font-family: 'Montserrat';
+    text-align: center;
+}
+.fecha-fin-cuarto-nivel {
+    float: left;
+    z-index: 3;
+    margin-top: 0;
+    margin-left: -5.8em;
+    font-size: 14px;
+    font-family: 'Montserrat';
+    color: #555555;
+    white-space: nowrap;
+    font-weight: bold;
+    position: absolute;
+}
+.vacio-grafica-cuarto-nivel {
+    padding: 0;
+    height: 20px;
+    line-height: 20px;
+}
+/* */
+
+.content-dia {
+    /*padding: 0;*/
+    padding-left: 0;
+    padding-right: 24px;
+
+}
+.dias {
+    margin-left: -.5em;
+}
+.fechaActualDay {
+    margin-left: -.5em;
+    border: 1px solid #707070;
+    background-color: #FFFFFF;
+    color: #707070;
+    margin-top: 0em;
+    font-size: 12px;
+    transition: opacity 0.3s;
+    width: 25px;
+}
+.vl {
+    border-left: 1px solid #707070;
+    position: absolute;
+    margin-top: -4em;
+    z-index: 1;
+    margin-left: .5em;
+}
+.vacio-grafica {
+    padding: 0;
+}
+.progress:after {
+    /* content:'\A'; */
+    background:rgb(177, 0, 0);
+    width:10%;
+}
+.style_fa_angle {
+    width: 18px;
+    height: 18px;
+    border: 1px solid #7716fa;
+    color: #7716fa;
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    border-radius: 50%;
+}
+.crop-text-col {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.text-content-plan {
+    font-size: .8em;
+    color: #828282 !important;
+    font-weight: bold;
+}
+.text-content-estatus-plan {
+    font-size: .8em;
+    color: #7e7e7e !important;
+}.header-text-actividad {
+    font-size: .9em;
+    color: #7716FA !important;
+    font-weight:bold;
+}
+.text-content-actividad {
+    font-size: .8em;
+    color: #828282 !important;
+}

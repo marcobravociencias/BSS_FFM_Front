@@ -8,7 +8,7 @@
                   </button>
             </div>
             <div class="modal-body materiales">
-              <table id="table" class="display table table-hover" cellspacing="0" width="100%">
+              <table id="table" class="display table" cellspacing="0" width="100%">
               <thead id="thead_materiales">
                   <tr>
                       <th>DESCRIPCI&Oacute;N</th>

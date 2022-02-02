@@ -49,6 +49,19 @@ public class DespachoPIController {
      * }
      **/
     
+    
+    
+    
+    
+    @PostMapping("/confirmaDesconfirmaOtDespacho")
+    public ResponseEntity<?> confirmaDesconfirmaOtDespacho(@RequestBody String params) {
+        ServiceResponseResult response = despachoService.confirmaDesconfirmaOtDespacho(params);
+        if (response.getResult() instanceof Integer) {
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+
+    }
     @PostMapping("/consultarComplementosDespacho")
     public ResponseEntity<?> consultarComplementosDespacho() {
         List<ServiceResponseResult> response = despachoService.consultarComplementosDespacho();

@@ -11,8 +11,8 @@ pageEncoding="ISO-8859-1"%>
 	<link rel="icon" type="image/png" sizes="96x96" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-96x96.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-16x16.png">
 	<link href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap.css" rel="stylesheet">
-	<link href="${pageContext.request.contextPath}/resources/css/plantainterna/disponibilidad/styleDisponibilidad.css" rel="stylesheet">
-	<link href="${pageContext.request.contextPath}/resources/css/plantainterna/disponibilidad/responsiveComponents.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/resources/css/plantainterna/disponibilidad/styleDisponibilidad.css?v=${sessionScope.versionDepl}" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/resources/css/plantainterna/disponibilidad/responsiveComponents.css?v=${sessionScope.versionDepl}" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/resources/libraries/fullcalendar/main.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/dataTables.bootstrap.min.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/dataTables.fontAwesome.css" rel="stylesheet">
@@ -157,7 +157,7 @@ pageEncoding="ISO-8859-1"%>
 	<script src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/libraries/bootstrap/js/bootstrap.min.js"></script>
  	<script src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-ui.js"></script> 
-	<script src="${pageContext.request.contextPath}/resources/libraries/popper\popper.min.js"></script>	 -
+	<script src="${pageContext.request.contextPath}/resources/libraries/popper\popper.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/moment.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/main.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/locales-all.min.js"></script>
@@ -172,11 +172,11 @@ pageEncoding="ISO-8859-1"%>
 	<script type="text/javascript"src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
 	<!-- Fin -->
 
-	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/disponibilidad/disponibilidadController.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/disponibilidad/disponibilidadService.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/disponibilidad/disponibilidadCalendar.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/disponibilidad/disponibilidadController.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/disponibilidad/disponibilidadService.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/disponibilidad/disponibilidadCalendar.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js?v=${sessionScope.versionDepl}"></script>
 	<script type="text/javascript">let contex_project = "${pageContext.request.contextPath}";</script>
-	<script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js?v=${sessionScope.versionDepl}"></script>
 </html>

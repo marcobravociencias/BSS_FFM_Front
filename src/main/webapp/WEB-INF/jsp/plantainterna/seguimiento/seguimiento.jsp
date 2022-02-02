@@ -6,19 +6,13 @@
         <meta charset="ISO-8859-1" />
         <title>FFM Total play</title>
 
-        <link rel="icon" type="image/png" sizes="192x192"
-            href="${pageContext.request.contextPath}/resources/img/iconsistema/android-icon-192x192.png">
-        <link rel="icon" type="image/png" sizes="32x32"
-            href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="96x96"
-            href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-96x96.png">
-        <link rel="icon" type="image/png" sizes="16x16"
-            href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-16x16.png">
-        <link href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap.min.css"
-            rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css"
-            rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/seguimiento/styleSeguimiento.css"
+        <link rel="icon" type="image/png" sizes="192x192" href="${pageContext.request.contextPath}/resources/img/iconsistema/android-icon-192x192.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-96x96.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-16x16.png">
+        <link href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/seguimiento/styleSeguimiento.css?v=${sessionScope.versionDepl}"
             rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/jquery.dataTables.css"
             rel="stylesheet">
@@ -115,11 +109,11 @@
         src="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/lib/moment.es.js"></script>
 
     <script
-        src="${pageContext.request.contextPath}/resources/js/plantainterna/seguimiento/seguimientoController.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/plantainterna/seguimiento/seguimientoController.js?v=${sessionScope.versionDepl}"></script>
     <script
-        src="${pageContext.request.contextPath}/resources/js/plantainterna/seguimiento/seguimientoService.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/generic/generic.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/plantainterna/seguimiento/seguimientoService.js?v=${sessionScope.versionDepl}"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js?v=${sessionScope.versionDepl}"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js?v=${sessionScope.versionDepl}"></script>
 
     </html>
