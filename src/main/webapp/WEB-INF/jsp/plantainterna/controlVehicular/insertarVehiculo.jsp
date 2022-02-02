@@ -67,7 +67,7 @@
                     </div>
                     <div class="col-3 form-group">
                         <label class="label-vehiculo">N&uacute;mero serie <span
-                                style="margin-left: 8em;">{{vehiculo.numeroSerie.length ? vehiculo.numeroSerie.length :
+                                style="margin-left: 7em;">{{vehiculo.numeroSerie.length ? vehiculo.numeroSerie.length :
                                 0}} - 17</span></label>
                         <input type="text" class="form-control form-control-sm" id="numSerie"
                             ng-model="vehiculo.numeroSerie" capitalize autocomplete="off" maxlength="17" />
@@ -252,7 +252,7 @@
                     <div class="col-3 form-group">
                         <label class="label-vehiculo">Motivo </label>
                         <span ng-if="motivos.length == 0" id="msjInterno">Seleccione Estatus</span>
-                        <select ng-if="motivos.length > 0" class="form-control form-control-sm custom-select"
+                        <select ng-if="motivos.length > 0" class="form-control form-control-sm custom-select" ng-model="vehiculo.idMotivo"
                             id="motivo">
                             <option value="" selected>-- Seleccione motivo --</option>
                             <option value="{{mot.idEstatus}}" ng-repeat="mot in motivos">{{mot.nombre}}</option>
@@ -476,21 +476,21 @@
                     </tr>
                 </table>
                 <div class="row imagenes">
-                    <div class="col-2" ng-if="vehiculo.urlFotoPlaca || filePlaca">
+                    <div class="col-2" ng-if="(vehiculo.urlFotoPlaca && vehiculo.urlFotoPlaca !== 'delete') || filePlaca">
                         <p class="tableTextTitle">* Foto placa</p>
                         <img alt="Placa" src="" class="imgResumen" id="placaImagen" onclick="showImgResumen(this)" />
                     </div>
-                    <div class="col-2" ng-if="vehiculo.urlFotoVehiculo || fileVehiculo">
+                    <div class="col-2" ng-if="(vehiculo.urlFotoVehiculo && vehiculo.urlFotoVehiculo !== 'delete') || fileVehiculo">
                         <p class="tableTextTitle">* Foto veh&iacute;culo</p>
                         <img alt="Vehiculo" src="" class="imgResumen" id="vehiculoImagen"
                             onclick="showImgResumen(this)" />
                     </div>
-                    <div class="col-2" ng-if="vehiculo.detalle.urlFotoTarjetaCirculacion  || fileCirculacion">
+                    <div class="col-2" ng-if="(vehiculo.detalle.urlFotoTarjetaCirculacion && vehiculo.detalle.urlFotoTarjetaCirculacion !== 'delete') || fileCirculacion">
                         <p class="tableTextTitle">* Foto tarjeta circulaci&oacute;n</p>
                         <img alt="Tarjeta Circulacion" src="" id="circulacionImagen" onclick="showImgResumen(this)"
                             class="imgResumen" />
                     </div>
-                    <div class="col-2" ng-if="vehiculo.detalle.urlFotoTarjetaGasolina || fileGasolina">
+                    <div class="col-2" ng-if="(vehiculo.detalle.urlFotoTarjetaGasolina && vehiculo.detalle.urlFotoTarjetaGasolina !== 'delete') || fileGasolina">
                         <p class="tableTextTitle">* Foto tarjeta gasolina</p>
                         <img alt="Tarjeta Gasolina" src="" id="gasolinaImagen" onclick="showImgResumen(this)"
                             class="imgResumen" />

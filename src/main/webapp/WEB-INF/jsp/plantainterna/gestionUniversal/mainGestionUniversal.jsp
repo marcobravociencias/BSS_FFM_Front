@@ -37,8 +37,9 @@
                 <div class="container-fluid" style="padding: 0;">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="pagoTecnico-tab" data-toggle="tab" href="#pagoTecnico"
-                                role="tab" aria-controls="pagoTecnico" aria-selected="true">Pagos T&eacute;cnicos</a>
+                            <a class="nav-link active" id="cambiaContrasena-tab" data-toggle="tab" href="#cambiaContrasena"
+                                role="tab" aria-controls="cambiaContrasena" aria-selected="false">Cambia
+                                contrase&ntilde;a</a>
                         </li>
                         <!--
                                <li class="nav-item">
@@ -52,11 +53,9 @@
                                 Geograf&iacute;a</a>
                         </li>
                         -->
-
                         <li class="nav-item">
-                            <a class="nav-link" id="cambiaContrasena-tab" data-toggle="tab" href="#cambiaContrasena"
-                                role="tab" aria-controls="cambiaContrasena" aria-selected="false">Cambia
-                                contrase&ntilde;a</a>
+                            <a class="nav-link" id="pagoTecnico-tab" data-toggle="tab" href="#pagoTecnico"
+                                role="tab" aria-controls="pagoTecnico" aria-selected="true">Pagos T&eacute;cnicos</a>
                         </li>
                     </ul>
                     <div class="tab-content">

@@ -38,7 +38,8 @@ public class LoginResult {
 	private int idOrigen;
 	private String celular;
 	private String correo;
-
+	private String pais;
+	
 	private long expires_in;
 	private Map<String,String> permiAccUs;
 	private boolean banderaPintarOtros;

@@ -190,23 +190,27 @@
                         </g>
                     </svg>
                 </div>
-                <div class="content-header">
-                    <div class="icon-wrapper icon-wrapper-alt-pais rounded-circle">
-                        <div class="icon-wrapper-bg bg-focus"></div>
-                        <c:choose>
-                            <c:when test="${fn:contains(userStore.propietario, 'MEXICO')}">
-                                <img class="img-despacho-pais language-icon flag flag-icon-background flag-icon-d"
-                                    src="${pageContext.request.contextPath}/resources/img/navbar/mexico.png"
-                                    loading="lazy" />
-                            </c:when>
-                            <c:otherwise>
-                                <img class="img-despacho-pais language-icon flag flag-icon-background flag-icon-d"
-                                    src="${pageContext.request.contextPath}/resources/img/navbar/colombia.png"
-                                    loading="lazy" />
-                            </c:otherwise>
-                        </c:choose>
+                
+                <c:if test="${userStore.pais != null}">
+                    <div class="content-header">
+                        <div class="icon-wrapper icon-wrapper-alt-pais rounded-circle">
+                            <div class="icon-wrapper-bg bg-focus"></div>
+                            <c:choose>
+                                <c:when test="${userStore.pais.toLowerCase().contains('mexico') || userStore.pais.toLowerCase().contains('mx')  }">
+                                    <img class="img-despacho-pais language-icon flag flag-icon-background flag-icon-d"
+                                        src="${pageContext.request.contextPath}/resources/img/navbar/mexico.png"
+                                        loading="lazy" />
+                                </c:when>
+                                <c:otherwise>
+                                    <img class="img-despacho-pais language-icon flag flag-icon-background flag-icon-d"
+                                        src="${pageContext.request.contextPath}/resources/img/navbar/colombia.png"
+                                        loading="lazy" />
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
                     </div>
-                </div>
+                </c:if>
+               
                 <div class="content-header content-header-border" id="user-info-login">
                     <c:if
                         test="${userStore.urlFoto != null &&  userStore.urlFoto != '' && userStore.urlFoto != 'string'}">

@@ -21,7 +21,7 @@
                     <textarea type="text" class="form-control form-control-sm" id="comentariosPassword"
                         maxlength="200"></textarea>
                 </div>
-                <div class="message-password-warning">
+                <div class="message-password-warning" ng-if="validateCreed">
                     <span><i class="fas fa-warning"></i>&nbsp;La contrase&ntilde;a debera tener m&iacute;nimo 9 caracteres alfanum&eacute;ricos, al menos un n&uacute;mero y un caracter especial (@$!%*#?&).</span>
                 </div>
             </div>

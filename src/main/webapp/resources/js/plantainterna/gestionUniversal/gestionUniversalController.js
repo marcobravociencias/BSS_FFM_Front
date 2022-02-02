@@ -213,6 +213,9 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                     $scope.nGeografiaContrasenia = llavesResult.N_FILTRO_GEOGRAFIA_CAMBIOCONTRASENIA ? Number(llavesResult.N_FILTRO_GEOGRAFIA_CAMBIOCONTRASENIA) : 4;
                     $scope.nEstatusPagosTecnicos = llavesResult.N_ESTATUS_PAGOS_TECNICOS ? llavesResult.N_ESTATUS_PAGOS_TECNICOS : null;
                     $scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO.permisos;
+                    $scope.validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
+                    $scope.validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
+
                     if ($scope.nEstatusPagosTecnicos !== null) {
                         let statusList = $scope.nEstatusPagosTecnicos.split(",");
                         $scope.listaStatus = statusList;
@@ -229,15 +232,14 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
             if (results[1].data.result && results[1].data.respuesta) {
                 if (results[1].data.result) {
                     if (results[1].data.result.geografia || results[1].data.result.geografia.length > 0) {
-                        let listGeo = [];
-                        if ($scope.nGeografiaPagos) {
-                            listGeo = results[1].data.result.geografia.filter(e => { return e.nivel <= $scope.nGeografiaPagos });
-                        } else {
-                            listGeo = results[1].data.result.geografia;
-                        }
-                        $scope.listaGeografia = listGeo;
+                        let listGeoPagos = [];
+                        let listGeoCambia = [];
+
+                        listGeoPagos = results[1].data.result.geografia.filter(e => { return e.nivel <= $scope.nGeografiaPagos });
+
+                        $scope.listaGeografia = listGeoPagos;
                         $scope.loadArbol();
-                        let geografia = listGeo;
+                        let geografia = listGeoPagos;
                         geografia.map((e) => {
                             e.parent = e.padre == null ? "#" : e.padre;
                             e.text = e.nombre;
@@ -248,8 +250,26 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                             }
                             return e
                         })
-                        $('#jstreeConsultaTecnicos').bind('loaded.jstree', function (e, data) {
 
+
+                        listGeoCambia = results[1].data.result.geografia.filter(e => { return e.nivel <= $scope.nGeografiaContrasenia });
+
+
+                        $scope.listaGeografia = listGeoCambia;
+                        let geografiaCambia = listGeoCambia;
+                        geografiaCambia.map((e) => {
+                            e.parent = e.padre == null ? "#" : e.padre;
+                            e.text = e.nombre;
+                            e.icon = "fa fa-globe";
+                            e.state = {
+                                opened: true,
+                                selected: true,
+                            }
+                            return e
+                        })
+
+
+                        $('#jstreeConsultaTecnicos').bind('loaded.jstree', function (e, data) {
                             $scope.consultarTecnicosPagos();
                         }).jstree({
                             'plugins': ["wholerow", "checkbox", "search"],
@@ -268,12 +288,11 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                         });
 
                         $('#jstreeConsultaUsuarios').bind('loaded.jstree', function (e, data) {
-
                             $scope.consultarUsuariosContrasena();
                         }).jstree({
                             'plugins': ["wholerow", "checkbox", "search"],
                             'core': {
-                                'data': geografia,
+                                'data': geografiaCambia,
                                 'themes': {
                                     'name': 'proton',
                                     'responsive': true,
@@ -532,10 +551,12 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
             return false;
         }
 
-        if ($("#newPassword").val().length <= 8 || !regex.test($("#newPassword").val()) || !numero.test($("#newPassword").val())
-            || !allow.test($("#newPassword").val()) || refuse.test($("#newPassword").val())) {
-            toastr.warning('Formato invalido');
-            return false;
+        if ($scope.validateCreed) {
+            if ($("#newPassword").val().length <= 8 || !regex.test($("#newPassword").val()) || !numero.test($("#newPassword").val())
+                || !allow.test($("#newPassword").val()) || refuse.test($("#newPassword").val())) {
+                toastr.warning('Formato invalido');
+                return false;
+            }
         }
 
         if ($("#newPassword").val() !== $("#confirmPassword").val()) {
