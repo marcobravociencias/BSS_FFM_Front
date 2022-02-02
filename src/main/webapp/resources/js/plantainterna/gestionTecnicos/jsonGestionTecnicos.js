@@ -376,3 +376,31 @@ let arrayDisponibilidadTec = {
         }
     }
 }
+let arrayDisponibilidadTec2 = {
+    data: {
+        "success": true,
+        "mensaje": "No se encontró disponibilidad",
+        "result": {
+            "result": "0",
+            "resultDescription": "Operación exitosa.",
+            "Version": "1.2",
+            "Disponibilidad": [{
+                "idJustificacion": "0",
+                "Fecha": "03/12/2021",
+                "HoraInicio": "11:29 57",
+                "HoraFin": "11:32 20",
+                "Tipo": "DIA TRABAJADO",
+                "EnTrabajo": "00:02:23",
+                "Disponible": "07:57:37"
+            }, {
+                "idJustificacion": "401",
+                "Fecha": "19/12/2021",
+                "Tipo": "DIA JUSTIFICADO"
+            }],
+            "totalOts": [{
+                "Cantidad": "1",
+                "Fecha": "03/12/2021"
+            }]
+        }
+    }
+}

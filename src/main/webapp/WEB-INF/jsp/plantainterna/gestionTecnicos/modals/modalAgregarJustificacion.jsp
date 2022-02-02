@@ -16,7 +16,7 @@
                                   <div style="text-align: center; padding-left: 0;" class="col-md-12">
                                     <form id="uploadFormAddJust" name="13" class="form-horizontal box form_drag_drop" novalidate="novalidate" enctype="multipart/form-data">
                                           <div class="box__input">
-                                            <input name="myFile" type="file" class="box__file inputFile" id="fileAddJust" />
+                                            <input name="myFile" type="file" class="box__file inputFile" id="fileAddJust" ng-model="archivoAdd"/>
                                             <label for="fileAddJust" id="etiqueta_archivo_edita_just">
                                               <strong class="text_select" style="cursor: pointer;">Selecciona un archivo</strong>
                                               <span class="box__dragndrop">o arrastra aqu&iacute;</span>
@@ -30,26 +30,26 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <label for="filtro_fecha_inicio_justificacion" class="span-form-tecnicos">Fecha inicio</label>
-                                <input readonly type="text" id="filtro_fecha_inicio_justificacion" class="datepicker input-filtro-tecnico form-control form-control-sm" />
+                                <label for="fecha_inicio_justificacion" class="span-form-tecnicos">Fecha inicio</label>
+                                <input readonly type="text" id="fecha_inicio_justificacion" class="datepicker input-filtro-tecnico form-control form-control-sm" ng-model="justificacionA.fechaInicio"/>
                             </div>
                             <div class="form-group">
-                                <label for="filtro_fecha_fin_justificacion" class="span-form-tecnicos">Fecha fin</label>
-                                <input readonly type="text" id="filtro_fecha_fin_justificacion" class="datepicker input-filtro-tecnico form-control form-control-sm" />
+                                <label for="fecha_fin_justificacion" class="span-form-tecnicos">Fecha fin</label>
+                                <input readonly type="text" id="fecha_fin_justificacion" class="datepicker input-filtro-tecnico form-control form-control-sm" ng-model="justificacionA.fechaFin"/>
                             </div>
                             <div class="form-group">
                                 <label for="motivoJustificacion" class="span-form-tecnicos">Motivo</label>
-                                <select class="form-control form-controlt form-control-sm custom-select" name="motivo" id="motivoJustificacion" ng-model="justificacionE.motivo">
+                                <select class="form-control form-controlt form-control-sm custom-select" name="motivo" id="motivoJustificacion" ng-model="justificacionA.motivo">
                                     <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
-                                    <option value="{{motivo.idMotivo}}" ng-repeat="motivo in listMotivosJustificacion">
-                                        {{motivo.Motivo}}
+                                    <option value="{{motivoA.idMotivo}}" ng-repeat="motivoA in listMotivosJustificacion">
+                                        {{motivoA.Motivo}}
                                     </option>
                                 </select>
                             </div>
                             <div class="form-row">
                                 <div class="col-12 form-group">
                                     <label class="span-form-tecnicos" for="comentarioEliminar">Comentario </label>
-                                    <textarea class="form-control inputTicket content_text form-control-sm" style="resize: none" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" rows="3" id="comentarioEditar" ng-model="justificacionE.comentario"></textarea>
+                                    <textarea class="form-control inputTicket content_text form-control-sm" style="resize: none" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" rows="3" id="comentarioAgregar" ng-model="justificacionA.comentario"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -60,7 +60,7 @@
                 <button type="button" class="btn btn-cerrar-modal" data-mdb-dismiss="modal">
                     Cerrar
                 </button>
-                <button type="button" class="btn btn-primary btn-justificacion" ng-click="">
+                <button type="button" class="btn btn-primary btn-justificacion" ng-click="agregarJustificacion()">
                     Aceptar
                 </button>
             </div>

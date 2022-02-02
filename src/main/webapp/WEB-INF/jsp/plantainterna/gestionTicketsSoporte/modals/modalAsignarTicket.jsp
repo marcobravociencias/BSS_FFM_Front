@@ -8,11 +8,6 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="col-3 offset-9 form-group">
-                    <input placeholder="Buscar" type="text" autocomplete="off" style=" height: 2em !important;"
-                        class="search-filtro form-control form-control-sm mt-0" id="searchTableIngeniero"><i
-                        class="fa fa-search icon-search" style="margin-top: -1.5em;"></i>
-                </div>
                 <div class="container-fluid" id="container_tabla_ingenieros">
                     <table id="ingenierosTable" class="display table" cellspacing="0" width="100%">
                         <thead id="thead_ingenieros_table">

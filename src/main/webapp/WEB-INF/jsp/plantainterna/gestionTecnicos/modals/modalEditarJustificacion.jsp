@@ -33,16 +33,16 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <label for="filtro_fecha_inicio_justificacion" class="span-form-tecnicos">Fecha inicio</label>
-                                <input readonly type="text" id="filtro_fecha_inicio_justificacion" class="datepicker input-filtro-tecnico form-control form-control-sm" />
+                                <label for="fecha_inicio_justificacion_update" class="span-form-tecnicos">Fecha inicio</label>
+                                <input readonly type="text" id="fecha_inicio_justificacion_update" class="datepicker input-filtro-tecnico form-control form-control-sm" />
                             </div>
                             <div class="form-group">
-                                <label for="filtro_fecha_fin_justificacion" class="span-form-tecnicos">Fecha fin</label>
-                                <input readonly type="text" id="filtro_fecha_fin_justificacion" class="datepicker input-filtro-tecnico form-control form-control-sm" />
+                                <label for="fecha_fin_justificacion_update" class="span-form-tecnicos">Fecha fin</label>
+                                <input readonly type="text" id="fecha_fin_justificacion_update" class="datepicker input-filtro-tecnico form-control form-control-sm" />
                             </div>
                             <div class="form-group">
                                 <label for="motivoJustificacion" class="span-form-tecnicos">Motivo</label>
-                                <select class="form-control form-controlt form-control-sm custom-select" name="motivo" id="motivoJustificacion" ng-model="justificacionE.motivo">
+                                <select class="form-control form-controlt form-control-sm custom-select" name="motivo" id="motivoJustificacion" ng-model="justificacionE.idMotivo">
                                     <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
                                     <option value="{{motivo.idMotivo}}" ng-repeat="motivo in listMotivosJustificacion">
                                         {{motivo.Motivo}}
@@ -98,7 +98,7 @@
                 <button type="button" class="btn btn-cerrar-modal" data-mdb-dismiss="modal">
                     Cerrar
                 </button>
-                <button type="button" class="btn btn-primary btn-justificacion" ng-click="">
+                <button type="button" class="btn btn-primary btn-justificacion" ng-click="editarJustificacion(justificacionE)">
                     Aceptar
                 </button>
             </div>
@@ -106,7 +106,7 @@
                 <button type="button" class="btn btn-cerrar-modal" data-mdb-dismiss="modal">
                     Cerrar
                 </button>
-                <button type="button" class="btn btn-primary btn-justificacion" ng-click="">
+                <button type="button" class="btn btn-primary btn-justificacion" ng-click="eliminarJustificacion()">
                     Aceptar
                 </button>
             </div>
