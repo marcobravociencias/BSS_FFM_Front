@@ -7,7 +7,7 @@
                 style="border-radius: .5em !important;">
         </div>
         <div class="col-md-1 search-form">
-            <button id="btnBuscar" type="button" class="btn btn-primary btnTotal" ng-click="getVehiculos()">
+            <button id="btnBuscar" type="button" class="btn btn-primary btnTotal" ng-click="getVehiculos(true)">
                 <i class="fa fa-search"></i>
             </button>
         </div>

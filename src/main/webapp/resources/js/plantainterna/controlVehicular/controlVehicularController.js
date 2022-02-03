@@ -165,6 +165,7 @@ app.controller('controlVehicularController',
 							$scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO.permisos;
 							validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
 							validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
+							validateCreedText = llavesResult.KEY_TEXTFORMATO_CREED_RES ? KEY_TEXTFORMATO_CREED_RES : '';
 							if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
 								$scope.permisosConfigUser.permisos.map(e => { e.banderaPermiso = true; return e; });
 								$scope.accionesUserConfigText = $scope.permisosConfigUser.permisos.map(e => { return e.clave })
@@ -197,7 +198,7 @@ app.controller('controlVehicularController',
 								$("#jstreeconsulta").jstree("destroy");
 								$scope.loadArbolBuscar();
 								setTimeout(function () {
-									$scope.getVehiculos();
+									$scope.getVehiculos(true);
 								}, 300)
 
 							} else {
@@ -292,7 +293,7 @@ app.controller('controlVehicularController',
 				})
 			}
 
-			$scope.getVehiculos = function () {
+			$scope.getVehiculos = function (isSwal) {
 
 				$(".etiquetaContadoresEstadosVehiculos").removeClass('active');
 				$("#todosVehiculos .nav-link").addClass('active');
@@ -319,8 +320,11 @@ app.controller('controlVehicularController',
 				let params = {
 					idGeografias: clustersparam
 				}
-				swal({ text: 'Espera un momento...', allowOutsideClick: false });
-				swal.showLoading();
+				if (isSwal) {
+					swal({ text: 'Espera un momento...', allowOutsideClick: false });
+					swal.showLoading();
+				}
+
 				$scope.vehiculos = [];
 				controlVehicularService.consultarVehiculos(params).then(function success(response) {
 					if (response.data.respuesta) {
@@ -383,8 +387,10 @@ app.controller('controlVehicularController',
 				if (vehiculoTable) {
 					vehiculoTable.destroy();
 				}
+				
 				let arrayRow = [];
 				$.each(list, function (i, elemento) {
+					let random = '?' + Math.random() * (10000 - 0);
 					let row = [];
 					row[0] = elemento.placa;
 					row[1] = elemento.tipo;
@@ -393,8 +399,8 @@ app.controller('controlVehicularController',
 					row[4] = elemento.anio;
 					row[5] = elemento.numeroSerie;
 					row[6] = elemento.geografia;
-					row[7] = elemento.urlFotoPlaca && elemento.urlFotoPlaca.length > 15 ? '<img style="cursor:pointer; border-radius:.5em" src="' + elemento.urlFotoPlaca + '" alt="Placa" width="50" height="30" onclick="showImg(' + "'" + elemento.urlFotoPlaca + "'" + ')"/>' : "";
-					row[8] = elemento.urlFotoVehiculo && elemento.urlFotoVehiculo.length > 15 ? '<img style="cursor:pointer; border-radius:.5em" src="' + elemento.urlFotoVehiculo + '" alt="Vehiculo" width="50"  height="30" onclick="showImg(' + "'" + elemento.urlFotoVehiculo + "'" + ')"/>' : "";
+					row[7] = elemento.urlFotoPlaca && elemento.urlFotoPlaca.length > 15 ? '<img style="cursor:pointer; border-radius:.5em" src="' + elemento.urlFotoPlaca + random +  '" alt="Placa" width="50" height="30" onclick="showImg(' + "'" + elemento.urlFotoPlaca + "'" + ')"/>' : "";
+					row[8] = elemento.urlFotoVehiculo && elemento.urlFotoVehiculo.length > 15 ? '<img style="cursor:pointer; border-radius:.5em" src="' + elemento.urlFotoVehiculo + random + '" alt="Vehiculo" width="50"  height="30" onclick="showImg(' + "'" + elemento.urlFotoVehiculo + "'" + ')"/>' : "";
 					row[9] = elemento.estatus;
 					if ($scope.accionesUserConfigText.indexOf('accionEditaVehiculos') === -1) {
 						row[10] = '<span onclick="editCar(' + "'" + elemento.idVehiculo + "'" + ')" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnModificarUsuario"><i class="fas fa-pen" aria-hidden="true"></i></span>';
@@ -421,6 +427,7 @@ app.controller('controlVehicularController',
 					"autoWidth": false,
 					"language": idioma_espanol_not_font,
 				});
+
 				swal.close();
 
 			}
@@ -621,11 +628,12 @@ app.controller('controlVehicularController',
 			}
 
 			$scope.printImgTab = function () {
-				$("#placaImagenTab").attr("src", $scope.vehiculo.urlFotoPlaca);
-				$("#vehiculoImagenTab").attr("src", $scope.vehiculo.urlFotoVehiculo);
+				let nameTemp = '?' + $scope.vehiculo.placa;
+				$("#placaImagenTab").attr("src", $scope.vehiculo.urlFotoPlaca + nameTemp);
+				$("#vehiculoImagenTab").attr("src", $scope.vehiculo.urlFotoVehiculo + nameTemp);
 				if ($scope.vehiculo.detalle) {
-					$("#circulacionImagenTab").attr("src", $scope.vehiculo.detalle.urlFotoTarjetaCirculacion);
-					$("#gasolinaImagenTab").attr("src", $scope.vehiculo.detalle.urlFotoTarjetaGasolina);
+					$("#circulacionImagenTab").attr("src", $scope.vehiculo.detalle.urlFotoTarjetaCirculacion + nameTemp);
+					$("#gasolinaImagenTab").attr("src", $scope.vehiculo.detalle.urlFotoTarjetaGasolina + nameTemp);
 				}
 				if ($scope.filePlaca) {
 					$("#placaImagenTab").attr("src", "data:image/jpeg;base64," + $scope.filePlaca.archivo);
@@ -829,7 +837,6 @@ app.controller('controlVehicularController',
 					if (response.data !== undefined) {
 						if (response.data.respuesta) {
 							if (response.data.result) {
-								swal.close();
 								$("#searchText").val("");
 								$("#jstreeconsulta").jstree("destroy");
 								$scope.isEdit = false;
@@ -845,7 +852,7 @@ app.controller('controlVehicularController',
 
 								$scope.initWizard();
 								setTimeout(function () {
-									$scope.getVehiculos();
+									$scope.getVehiculos(false);
 								}, 300)
 							} else {
 								swal.close();
@@ -868,7 +875,6 @@ app.controller('controlVehicularController',
 					if (response.data !== undefined) {
 						if (response.data.respuesta) {
 							if (response.data.result) {
-								swal.close();
 								$("#searchText").val("");
 								$("#jstreeconsulta").jstree("destroy");
 								$scope.isEdit = false;
@@ -883,7 +889,7 @@ app.controller('controlVehicularController',
 
 								$scope.initWizard();
 								setTimeout(function () {
-									$scope.getVehiculos();
+									$scope.getVehiculos(false);
 								}, 300)
 
 							} else {

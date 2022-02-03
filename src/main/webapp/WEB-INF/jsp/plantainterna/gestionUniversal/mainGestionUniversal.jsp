@@ -54,7 +54,7 @@
                         </li>
                         -->
                         <li class="nav-item">
-                            <a class="nav-link" id="pagoTecnico-tab" data-toggle="tab" href="#pagoTecnico" ng-click="consultarTecnicosPagos()"
+                            <a class="nav-link" id="pagoTecnico-tab" data-toggle="tab" href="#pagoTecnico" ng-click="validaConsultarTecnicosPagos()"
                                 role="tab" aria-controls="pagoTecnico" aria-selected="true">Pagos T&eacute;cnicos</a>
                         </li>
                     </ul>

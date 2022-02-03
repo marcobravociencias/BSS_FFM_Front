@@ -259,6 +259,7 @@ mostrarMensajeInformativo = function (mensaje) {
 
 var validateCreed;
 var validateCreedMask;
+var validateCreedText;
 
 cambiarContraseniaUserLogin = function () {
 	regex = /^(?=.*[a-z])\S{9,20}$/;

@@ -100,16 +100,16 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
         })
     });
 
-    $scope.puestoSeleccion = function() {
-    	$('#txtPuesto').val($scope.listaSeleccionSelectGral($scope.listaPuestos));
-    	$("#txtPuesto").css("border-bottom", "2px solid #d9d9d9");
-	}
+    $scope.puestoSeleccion = function () {
+        $('#txtPuesto').val($scope.listaSeleccionSelectGral($scope.listaPuestos));
+        $("#txtPuesto").css("border-bottom", "2px solid #d9d9d9");
+    }
 
     $scope.seleccionarTodos = function (paramFiltroParent) {
         paramFiltroParent.map(function (e) {
             e.checkedOpcion = true
         })
-        $('#txtPuesto').val( $scope.listaSeleccionSelectGral(paramFiltroParent));
+        $('#txtPuesto').val($scope.listaSeleccionSelectGral(paramFiltroParent));
     }
 
     $scope.deseleccionarTodos = function (paramFiltroParent) {
@@ -119,19 +119,19 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
         $('#txtPuesto').val('');
     }
 
-    $scope.listaSeleccionSelectGral = function(lista) {
-    	var texto = "";
-    	angular.forEach(lista,function(list,index){
-			if(list.checkedOpcion){
-				if(texto !== ""){
-					texto = (texto + ", " + list.descripcion);
-				}else{
-					texto = (list.descripcion);
-				}
-			}
-		});
-    	return texto;
-	}
+    $scope.listaSeleccionSelectGral = function (lista) {
+        var texto = "";
+        angular.forEach(lista, function (list, index) {
+            if (list.checkedOpcion) {
+                if (texto !== "") {
+                    texto = (texto + ", " + list.descripcion);
+                } else {
+                    texto = (list.descripcion);
+                }
+            }
+        });
+        return texto;
+    }
 
     showImage = function (id, type) {
         let url = './resources/img/plantainterna/despacho/tecnicootasignada.png';
@@ -168,9 +168,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
     }
 
     $scope.consultarTecnicosPagos = function () {
-        swal({ text: 'Espera un momento...', allowOutsideClick: false });
-        swal.showLoading();
-
+       
         //let ultimonivel = $scope.obtenerNivelUltimoJerarquia()
         let clusters = $("#jstreeConsultaTecnicos").jstree("get_selected", true)
             .filter(e => e.original.nivel == $scope.nGeografiaPagos)
@@ -184,7 +182,8 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
 
         let params = { idGeografias: clusters, idEstatusPagos: $scope.listaStatus };
         let arraRow = [];
-
+        swal({ text: 'Espera un momento...', allowOutsideClick: false });
+        swal.showLoading();
         if (pagosTecnicosTable) {
             pagosTecnicosTable.destroy();
         }
@@ -234,6 +233,12 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
         })
     }
 
+    $scope.validaConsultarTecnicosPagos = function () {
+        if (!$scope.listaTecnicosPagos.length) {
+            $scope.consultarTecnicosPagos();
+        }
+    }
+
     $scope.obtenerNivelUltimoJerarquia = function () {
         return $scope.listaGeografia.sort(compareGeneric)[0].nivel
     }
@@ -279,7 +284,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                         $scope.listaGeografia = listGeoPagos;
                         $scope.loadArbol();
                         let geografia = listGeoPagos;
-                        geografia.push({id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state:{opened: true}});
+                        geografia.push({ id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state: { opened: true } });
                         geografia.map((e) => {
                             e.parent = e.padre == null ? 0 : e.padre;
                             e.text = e.nombre;
@@ -296,7 +301,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
 
                         $scope.listaGeografia = listGeoCambia;
                         let geografiaCambia = listGeoCambia;
-                        geografiaCambia.push({id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state:{opened: true}});
+                        geografiaCambia.push({ id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state: { opened: true } });
                         geografiaCambia.map((e) => {
                             e.parent = e.padre == null ? 0 : e.padre;
                             e.text = e.nombre;
@@ -338,7 +343,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                                 textoGeografiasUser.push(geografiaUser.text);
                             });
                             $('#inputSearchGeoUsuario').val(textoGeografiasUser);
-                            $scope.consultarUsuariosContrasena();
+                            $scope.consultarUsuariosContrasena(true);
                         }).jstree({
                             'plugins': ["wholerow", "checkbox", "search"],
                             'core': {
@@ -500,7 +505,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
         }, 750);
     }
 
-    $scope.consultarUsuariosContrasena = function () {
+    $scope.consultarUsuariosContrasena = function (isSwal) {
 
         //let ultimonivel = $scope.obtenerNivelUltimoJerarquia()
         let clusters = $("#jstreeConsultaUsuarios").jstree("get_selected", true)
@@ -526,8 +531,11 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
             return false;
         }
 
-        swal({ text: 'Espera un momento...', allowOutsideClick: false });
-        swal.showLoading();
+        if(isSwal){
+            swal({ text: 'Espera un momento...', allowOutsideClick: false });
+            swal.showLoading();
+        }
+      
         let params = { idsGeografia: clusters, idTipoUsuario: puestosCopy };
         let arraRow = [];
         if (usuariosCambiaContrasena) {
@@ -597,7 +605,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
         refuse = /(?=.*[\u0020]|[\u0022]|[\u0027]|[\u0028]|[\u0029]|[\u002B]|[\u002C]|[\u002D]|[\u002E]|[\u002F]|[\u003A]|[\u003B]|[\u003C]|[\u003D]|[\u003E]|[\u007B-\u00FF])/;
 
         if ($("#newPassword").val() == '' || $("#comentariosPassword").val() == '') {
-            toastr.warning('Todos los campos son obligatorios 2');
+            toastr.warning('Todos los campos son obligatorios');
             return false;
         }
 
@@ -634,6 +642,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
             if (response.data.respuesta) {
                 $("#modalRestablecerContrasena").modal('hide');
                 toastr.success('Contrase\u00F1a restablecida correctamente');
+                $scope.consultarUsuariosContrasena(false);
             } else {
                 toastr.error(response.data.resultDescripcion);
             }
