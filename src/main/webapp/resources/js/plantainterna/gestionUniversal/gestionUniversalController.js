@@ -82,17 +82,56 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
         $("#jstreeConsultaUsuarios").jstree("search", this.value);
     })
 
+    angular.element(document).ready(function () {
+        $("#modalGeografia").on("hidden.bs.modal", function () {
+            var geografias = $('#jstreeConsultaTecnicos').jstree("get_selected", true);
+            let textoGeografias = [];
+            angular.forEach(geografias, (geografia, index) => {
+                textoGeografias.push(geografia.text);
+            });
+            $('#inputSearchGeoTecnico').val(textoGeografias);
+
+            var geografiasUser = $('#jstreeConsultaUsuarios').jstree("get_selected", true);
+            let textoGeografiasUser = [];
+            angular.forEach(geografiasUser, (geografiaUser, index) => {
+                textoGeografiasUser.push(geografiaUser.text);
+            });
+            $('#inputSearchGeoUsuario').val(textoGeografiasUser);
+        })
+    });
+
+    $scope.puestoSeleccion = function() {
+    	$('#txtPuesto').val($scope.listaSeleccionSelectGral($scope.listaPuestos));
+    	$("#txtPuesto").css("border-bottom", "2px solid #d9d9d9");
+	}
+
     $scope.seleccionarTodos = function (paramFiltroParent) {
         paramFiltroParent.map(function (e) {
             e.checkedOpcion = true
         })
+        $('#txtPuesto').val( $scope.listaSeleccionSelectGral(paramFiltroParent));
     }
 
     $scope.deseleccionarTodos = function (paramFiltroParent) {
         paramFiltroParent.map(function (e) {
             e.checkedOpcion = false
         })
+        $('#txtPuesto').val('');
     }
+
+    $scope.listaSeleccionSelectGral = function(lista) {
+    	var texto = "";
+    	angular.forEach(lista,function(list,index){
+			if(list.checkedOpcion){
+				if(texto !== ""){
+					texto = (texto + ", " + list.descripcion);
+				}else{
+					texto = (list.descripcion);
+				}
+			}
+		});
+    	return texto;
+	}
 
     showImage = function (id, type) {
         let url = './resources/img/plantainterna/despacho/tecnicootasignada.png';
@@ -134,7 +173,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
 
         //let ultimonivel = $scope.obtenerNivelUltimoJerarquia()
         let clusters = $("#jstreeConsultaTecnicos").jstree("get_selected", true)
-            .filter(e => e.original.nivel ==  $scope.nGeografiaPagos)
+            .filter(e => e.original.nivel == $scope.nGeografiaPagos)
             .map(e => parseInt(e.id));
 
         if (clusters.length == 0) {
@@ -240,8 +279,9 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                         $scope.listaGeografia = listGeoPagos;
                         $scope.loadArbol();
                         let geografia = listGeoPagos;
+                        geografia.push({id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state:{opened: true}});
                         geografia.map((e) => {
-                            e.parent = e.padre == null ? "#" : e.padre;
+                            e.parent = e.padre == null ? 0 : e.padre;
                             e.text = e.nombre;
                             e.icon = "fa fa-globe";
                             e.state = {
@@ -256,8 +296,9 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
 
                         $scope.listaGeografia = listGeoCambia;
                         let geografiaCambia = listGeoCambia;
+                        geografiaCambia.push({id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state:{opened: true}});
                         geografiaCambia.map((e) => {
-                            e.parent = e.padre == null ? "#" : e.padre;
+                            e.parent = e.padre == null ? 0 : e.padre;
                             e.text = e.nombre;
                             e.icon = "fa fa-globe";
                             e.state = {
@@ -268,7 +309,12 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                         })
 
                         $('#jstreeConsultaTecnicos').bind('loaded.jstree', function (e, data) {
-                            
+                            var geografias = $('#jstreeConsultaTecnicos').jstree("get_selected", true);
+                            let textoGeografias = [];
+                            angular.forEach(geografias, (geografia, index) => {
+                                textoGeografias.push(geografia.text);
+                            });
+                            $('#inputSearchGeoTecnico').val(textoGeografias);
                         }).jstree({
                             'plugins': ["wholerow", "checkbox", "search"],
                             'core': {
@@ -286,6 +332,12 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                         });
 
                         $('#jstreeConsultaUsuarios').bind('loaded.jstree', function (e, data) {
+                            var geografiasUser = $('#jstreeConsultaUsuarios').jstree("get_selected", true);
+                            let textoGeografiasUser = [];
+                            angular.forEach(geografiasUser, (geografiaUser, index) => {
+                                textoGeografiasUser.push(geografiaUser.text);
+                            });
+                            $('#inputSearchGeoUsuario').val(textoGeografiasUser);
                             $scope.consultarUsuariosContrasena();
                         }).jstree({
                             'plugins': ["wholerow", "checkbox", "search"],
@@ -452,7 +504,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
 
         //let ultimonivel = $scope.obtenerNivelUltimoJerarquia()
         let clusters = $("#jstreeConsultaUsuarios").jstree("get_selected", true)
-            .filter(e => e.original.nivel ==  $scope.nGeografiaContrasenia)
+            .filter(e => e.original.nivel == $scope.nGeografiaContrasenia)
             .map(e => parseInt(e.id));
 
         if (clusters.length == 0) {

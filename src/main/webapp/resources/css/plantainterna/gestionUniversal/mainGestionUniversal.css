@@ -452,8 +452,8 @@
 .columna-filtro-ind-rep::after {
     content: "";
     position: absolute;
-    right: 19px;
-    top: 35%;
+    right: 18px;
+    top: 65%;
     width: 0;
     height: 0;
     border-left: 0.3em solid transparent;
@@ -472,6 +472,7 @@
     border-bottom: 1px solid white;
     background: white !important;
     border-radius: 0.5em !important;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 7%), 0 1px 2px 0 rgb(0 0 0 / 5%) !important;
 }
 
 .input-filtro::placeholder {
@@ -550,4 +551,11 @@ label.dropdown-item.form-check-inputfiltro {
     font-size: 12px !important;
     font-family: 'Montserrat' !important;
     margin: 0.5em auto;
+}
+
+
+.span-consulta {
+    color: #9d9d9d;
+    font-size: .9em;
+    margin: 0;
 }
