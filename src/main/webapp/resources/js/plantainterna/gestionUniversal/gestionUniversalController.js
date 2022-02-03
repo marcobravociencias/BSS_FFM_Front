@@ -268,7 +268,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                         })
 
                         $('#jstreeConsultaTecnicos').bind('loaded.jstree', function (e, data) {
-                            $scope.consultarTecnicosPagos();
+                            
                         }).jstree({
                             'plugins': ["wholerow", "checkbox", "search"],
                             'core': {
