@@ -132,9 +132,9 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
 
-        let ultimonivel = $scope.obtenerNivelUltimoJerarquia()
+        //let ultimonivel = $scope.obtenerNivelUltimoJerarquia()
         let clusters = $("#jstreeConsultaTecnicos").jstree("get_selected", true)
-            .filter(e => e.original.nivel == ultimonivel)
+            .filter(e => e.original.nivel ==  $scope.nGeografiaPagos)
             .map(e => parseInt(e.id));
 
         if (clusters.length == 0) {
@@ -213,8 +213,8 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                     $scope.nGeografiaContrasenia = llavesResult.N_FILTRO_GEOGRAFIA_CAMBIOCONTRASENIA ? Number(llavesResult.N_FILTRO_GEOGRAFIA_CAMBIOCONTRASENIA) : 4;
                     $scope.nEstatusPagosTecnicos = llavesResult.N_ESTATUS_PAGOS_TECNICOS ? llavesResult.N_ESTATUS_PAGOS_TECNICOS : null;
                     $scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO.permisos;
-                    $scope.validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
-                    $scope.validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
+                    validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
+                    validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
 
                     if ($scope.nEstatusPagosTecnicos !== null) {
                         let statusList = $scope.nEstatusPagosTecnicos.split(",");
@@ -251,7 +251,6 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                             return e
                         })
 
-
                         listGeoCambia = results[1].data.result.geografia.filter(e => { return e.nivel <= $scope.nGeografiaContrasenia });
 
 
@@ -267,7 +266,6 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                             }
                             return e
                         })
-
 
                         $('#jstreeConsultaTecnicos').bind('loaded.jstree', function (e, data) {
                             $scope.consultarTecnicosPagos();
@@ -452,9 +450,9 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
 
     $scope.consultarUsuariosContrasena = function () {
 
-        let ultimonivel = $scope.obtenerNivelUltimoJerarquia()
+        //let ultimonivel = $scope.obtenerNivelUltimoJerarquia()
         let clusters = $("#jstreeConsultaUsuarios").jstree("get_selected", true)
-            .filter(e => e.original.nivel == ultimonivel)
+            .filter(e => e.original.nivel ==  $scope.nGeografiaContrasenia)
             .map(e => parseInt(e.id));
 
         if (clusters.length == 0) {
@@ -551,13 +549,21 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
             return false;
         }
 
-        if ($scope.validateCreed) {
-            if ($("#newPassword").val().length <= 8 || !regex.test($("#newPassword").val()) || !numero.test($("#newPassword").val())
-                || !allow.test($("#newPassword").val()) || refuse.test($("#newPassword").val())) {
-                toastr.warning('Formato invalido');
-                return false;
+        if (validateCreed) {
+            if (validateCreedMask && validateCreedMask !== null) {
+                if (!validateCreedMask.test($("#newPasswordUserLogin").val())) {
+                    toastr.warning('Formato invalido');
+                    return false;
+                }
+            } else {
+                if ($("#newPassword").val().length <= 8 || !regex.test($("#newPassword").val()) || !numero.test($("#newPassword").val())
+                    || !allow.test($("#newPassword").val()) || refuse.test($("#newPassword").val())) {
+                    toastr.warning('Formato invalido');
+                    return false;
+                }
             }
         }
+
 
         if ($("#newPassword").val() !== $("#confirmPassword").val()) {
             toastr.warning('Las contrase\u00F1as no coinciden');

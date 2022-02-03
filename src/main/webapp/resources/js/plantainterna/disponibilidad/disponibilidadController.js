@@ -153,7 +153,8 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                     $scope.nIntervencion = llavesResult.N_FILTRO_INTERVENCIONES ? Number( llavesResult.N_FILTRO_INTERVENCIONES ) : null;
                     $scope.nGeografia = llavesResult.N_FILTRO_GEOGRAFIA ? Number( llavesResult.N_FILTRO_GEOGRAFIA ) : null;
                     $scope.permisosDisponibilidad = resultConf.MODULO_ACCIONES_USUARIO.permisos;
-                    console.log($scope.permisosDisponibilidad)
+                    validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
+                    validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
                 }else{
                     mostrarMensajeErrorAlert("No se encontraron configuraciones del usuario")
                 } 

@@ -183,7 +183,9 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
             if( resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves){
                 let  llavesResult=results[1].data.result.MODULO_ACCIONES_USUARIO.llaves;                
                 $scope.nivelGeografia=llavesResult.N_FILTRO_GEOGRAFIA ? llavesResult.N_FILTRO_GEOGRAFIA : undefined          
-                $scope.permisosConfigUser=resultConf.MODULO_ACCIONES_USUARIO.permisos;           
+                $scope.permisosConfigUser=resultConf.MODULO_ACCIONES_USUARIO.permisos;  
+				validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
+                validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;         
             }
 
 			if(results[0].data.result.geografia.length > 0){

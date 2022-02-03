@@ -69,6 +69,7 @@
                     <th>Foto veh&iacute;culo</th>
                     <th>Estatus</th>
                     <th style="text-align: center;">Editar</th>
+                    <th style="text-align: center;">Eliminar</th>
                 </tr>
             </thead>
             <tbody>

@@ -86,6 +86,9 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
 
                     if (llavesResult.N_PUESTO_INGENIERO)
                         $scope.nPuestoIngeniero = parseInt(llavesResult.N_PUESTO_INGENIERO)
+
+                    validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
+                    validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
                 } else {
                     $scope.nIntervencion = 1;
                     $scope.nGeografia = 1;

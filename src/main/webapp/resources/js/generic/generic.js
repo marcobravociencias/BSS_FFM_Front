@@ -257,6 +257,9 @@ mostrarMensajeInformativo = function (mensaje) {
 	toastr.info(mensaje);
 }
 
+var validateCreed;
+var validateCreedMask;
+
 cambiarContraseniaUserLogin = function () {
 	regex = /^(?=.*[a-z])\S{9,20}$/;
 	numero = /(?=.*\d)/;
@@ -267,12 +270,22 @@ cambiarContraseniaUserLogin = function () {
 		toastr.warning('Todos los campos son obligatorios');
 		return false;
 	}
-
-	if ($("#newPasswordUserLogin").val().length <= 8 || !regex.test($("#newPasswordUserLogin").val()) || !numero.test($("#newPasswordUserLogin").val())
-		|| !allow.test($("#newPasswordUserLogin").val()) || refuse.test($("#newPasswordUserLogin").val())) {
-		toastr.warning('Formato invalido');
-		return false;
+	
+	if (validateCreed) {
+		if (validateCreedMask && validateCreedMask !== null) {
+			if (!validateCreedMask.test($("#newPasswordUserLogin").val())) {
+				toastr.warning('Formato invalido');
+				return false;
+			}
+		} else {
+			if ($("#newPasswordUserLogin").val().length <= 8 || !regex.test($("#newPasswordUserLogin").val()) || !numero.test($("#newPasswordUserLogin").val())
+				|| !allow.test($("#newPasswordUserLogin").val()) || refuse.test($("#newPasswordUserLogin").val())) {
+				toastr.warning('Formato invalido');
+				return false;
+			}
+		}
 	}
+
 
 	if ($("#newPasswordUserLogin").val() !== $("#confirmPasswordUserLogin").val()) {
 		toastr.warning('Las contrase\u00F1as no coinciden');
@@ -314,19 +327,18 @@ cambiarContraseniaUserLogin = function () {
 				} else {
 					toastr.error(response.responseJSON.resultDescripcion);
 				}
-
 			}
-
 		}
 	})
 
 }
 
-$("#modalCambiaContraseniaLogin").on("hidden.bs.modal", function () {
+$("#modalCambiaContraseniaLogin").on("shown.bs.modal", function () {
 	$("#actualPasswordUserLogin").val('');
 	$("#newPasswordUserLogin").val('');
 	$("#confirmPasswordUserLogin").val('');
 	$("#comentariosPasswordUserLogin").val('');
+	$("#msj-valida").css("display", validateCreed ? 'block' : 'none')
 })
 
 $('.dropdown-menu-login-info').on("click.bs.dropdown", function (e) {
@@ -337,7 +349,7 @@ inOutImg = function (size) {
 	if (size == 'out') {
 		$('#content-in-img').css('display', 'none');
 		$('#content-out-img').css('display', 'block');
-		
+
 	} else {
 		$('#content-out-img').css('display', 'none');
 		$('#content-in-img').css('display', 'block');
@@ -346,13 +358,10 @@ inOutImg = function (size) {
 }
 
 var monster = document.getElementById('monsterPlay');
-var monsterAnimation  = 0;
-
+var timer = Math.floor(Math.random() * (180000 - 6000));
+var monsterAnimation = Math.floor(Math.random() * (3 - 0));
 setInterval(() => {
 	monster.style.animation = 'none';
-	if(monsterAnimation == 3){
-		monsterAnimation  = 0;
-	}
 	setTimeout(() => {
 		switch (monsterAnimation) {
 			case 0:
@@ -370,8 +379,10 @@ setInterval(() => {
 			default:
 				break;
 		}
-		monsterAnimation = monsterAnimation + 1;
+		
 	}, 1000);
-	
-}, 180000);
+	timer = Math.floor(Math.random() * 190000) + 6000;
+	monsterAnimation = Math.floor(Math.random() * (3 - 0));
+
+}, timer);
 

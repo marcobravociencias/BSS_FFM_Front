@@ -59,9 +59,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	$scope.tabArbol_LB_N2 = "";
 	$scope.tabArbol_NV_GEOGRAFIA;
 	$scope.tabIntervenciones_NV_INTERVENCIONES;
-	$scope.bucketIdImg = "";
-	$scope.KEY_VL_CREED_RESU = "";
-	$scope.KEY_MASCARA_CREED_RESU = "";
+	$scope.bucketIdImg = ""; 
 	
 	$scope.catalogoGeografias = [];
 	$scope.geoSelect = [];
@@ -108,6 +106,8 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 				nivelUsuario= llavesResult.N_FILTRO_GEOGRAFIA;
 				$scope.filtroGeografias = llavesResult.N_FILTRO_GEOGRAFIA;
 				$scope.filtroIntervenciones = llavesResult.N_FILTRO_INTERVENCIONES;
+				validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
+                validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
 			}else{
 				toastr.info("No se encontraron configuraciones del usuario")
 			} 
