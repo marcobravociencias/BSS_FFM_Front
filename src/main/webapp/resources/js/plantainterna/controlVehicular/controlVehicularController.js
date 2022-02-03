@@ -401,11 +401,13 @@ app.controller('controlVehicularController',
 					} else {
 						row[10] = '<i class="fas fa-pen icon-table" title="No tienes permisos para editar" style="cursor: not-allowed; background: #9d9ea2 !important;"></i>';
 					}
+					/*
 					if ($scope.accionesUserConfigText.indexOf('accionEliminaVehiculos') === -1) {
 						row[11] = '<span onclick="deleteCar(' + "'" + elemento.idVehiculo + "'" + ')" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnEliminarUsuario"><i class="fas fa-trash" aria-hidden="true"></i></span>';
 					} else {
 						row[11] = '<i class="fas fa-trash icon-table" title="No tienes permisos para eliminar" style="cursor: not-allowed; background: #9d9ea2 !important;"></i>';
 					}
+					*/
 					arrayRow.push(row);
 				})
 				vehiculoTable = $('#vehiculoTable').DataTable({
@@ -747,10 +749,10 @@ app.controller('controlVehicularController',
 					"nombre": null
 				}
 
-				if (!$scope.isEdit) {
-					paramsTemp.fotoPlaca = deleteObject;
-					paramsTemp.fotoVehiculo = deleteObject;
-				}
+				paramsTemp.fotoPlaca = actualObject;
+				paramsTemp.fotoVehiculo = actualObject;
+				paramsTemp.detalle.fotoTarjetaCirculacion = actualObject;
+				paramsTemp.detalle.fotoTarjetaGasolina = actualObject;
 
 				if ($scope.filePlaca) {
 					$scope.filePlaca.nombre = pathImg + $scope.filePlaca.nombre;
@@ -824,7 +826,6 @@ app.controller('controlVehicularController',
 
 			$scope.crearVehiculo = function (paramsTemp) {
 				controlVehicularService.crearVehiculo(paramsTemp).then(function success(response) {
-					console.log(response);
 					if (response.data !== undefined) {
 						if (response.data.respuesta) {
 							if (response.data.result) {
@@ -1091,23 +1092,23 @@ app.controller('controlVehicularController',
 				$scope.getCarById(id);
 			}
 
-			deleteCar = function(id) {
-					swal({
-						title: "Se eliminar\u00E1 el veh\u00EDculo",
-						text: "\u00BFDesea eliminar el veh\u00EDculo?",
-						type: "warning",
-						showCancelButton: true,
-						confirmButtonColor: '#007bff',
-						confirmButtonText: 'Si',
-						cancelButtonText: 'No'
-					}).then(function (isConfirm) {
-						if (isConfirm) {
-							
-						}
-					}).catch(err => {
+			deleteCar = function (id) {
+				swal({
+					title: "Se eliminar\u00E1 el veh\u00EDculo",
+					text: "\u00BFDesea eliminar el veh\u00EDculo?",
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonColor: '#007bff',
+					confirmButtonText: 'Si',
+					cancelButtonText: 'No'
+				}).then(function (isConfirm) {
+					if (isConfirm) {
 
-					});
-				
+					}
+				}).catch(err => {
+
+				});
+
 			}
 
 			$scope.subirArchivo = function (e, name) {
@@ -1409,7 +1410,10 @@ app.controller('controlVehicularController',
 				if (vehiculo.idGeografia) {
 					$scope.ubicacionEditar = vehiculo.idGeografia;
 					$scope.getParentGeografia(vehiculo.idGeografia, $scope.llaveEncierroVehiculo);
-					$scope.loadEncierros($scope.padre, vehiculo.detalle.idEncierro);
+
+					if (vehiculo.detalle) {
+						$scope.loadEncierros($scope.padre, vehiculo.detalle.idEncierro ? vehiculo.detalle.idEncierro : 0);
+					}
 
 					$("#jstreeconsulta").jstree("destroy")
 					let geografia = $scope.geografiaList;
