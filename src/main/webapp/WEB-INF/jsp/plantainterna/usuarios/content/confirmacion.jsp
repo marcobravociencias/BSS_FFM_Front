@@ -14,14 +14,14 @@
 			                            <div class="top-title-ot">
 			                                <div class="content-top-element bars-content">
 			                                    <div class="row">
-						                        	<div class="col-md-9">
+						                        	<div class="col-md-3">
 						                        		<div class="custom-file">
 								                            <input type="file" class="custom-file-input" id="fileFotoUsuario" ng-model="fileFotoUsuario" ng-on-change="cargarFotoUsuarioRegistro($event)" accept="image/*" />
-								                            <label class="custom-file-label etiquetaFotoUsuario" for="fileFotoUsuario"></label>
+								                            <label class="custom-file-label etiquetaFotoUsuario" title="Subir fotograf&iacute;a" for="fileFotoUsuario"></label>
 								                        </div>
 						                        	</div>
-						                        	<div class="col-md-3">
-						                        		<button id="btnIniciarCamara" class="botonIniciarCamara" ><i class="fas fa-camera"></i></button>
+						                        	<div id="contenedorBtnIniciarCamara" class="col-md-3 offset-6">
+						                        		<button id="btnIniciarCamara" class="botonIniciarCamara" title="Tomar fotograf&iacute;a"><i class="fas fa-camera"></i></button>
 						                        	</div>		                        	
 						                        </div>
 						                        <div style="text-align: center; margin-top: 5px;">
@@ -63,7 +63,7 @@
                                     <label class="titulos-confirmacion">* Correo electr&oacute;nico: <span class="respuesta-confirmacion" ng-bind="confirmacionRegistro.correo"></span></label>
                                 </div>
                                 <div class="row" style="margin-top: 1em !important;">
-                                    <label class="titulos-confirmacion">* Contrase&nacute;a: <span class="respuesta-confirmacion" ng-bind="confirmacionRegistro.contrasena"></span></label>
+                                    <label class="titulos-confirmacion">* Contrase&ntilde;a: <span class="respuesta-confirmacion" ng-bind="confirmacionRegistro.contrasena"></span></label>
                                 </div>
                                 <div class="row" style="margin-top: 1em !important;">
                                     <label class="titulos-confirmacion">* Fecha ingreso: <span class="respuesta-confirmacion" ng-bind="confirmacionRegistro.fechaIngreso"></span></label>
@@ -86,8 +86,7 @@
 	                                    <div class="row" ng-repeat="ciudad in listaCiudadNatalRegistro | filter:buscarCiudad track by $index">
 	                                        <div class="col-12">
 	                                            <label class="respuesta-confirmacion ciudadNatal">
-	                                                <input type="radio" ng-model="informacionRegistro.ciudadNatal" ng-value="ciudad.id" ng-click="asignarCiudadNatalRegistro()">
-	                                                {{ciudad.nombre}}
+	                                                <input type="radio" class="radioOpcCiudadNatal" ng-model="informacionRegistro.ciudadNatal" ng-value="ciudad.id" ng-click="asignarCiudadNatalRegistro()">&nbsp;{{ciudad.nombre}}
 	                                            </label>
 	                                        </div>
 	                                    </div>

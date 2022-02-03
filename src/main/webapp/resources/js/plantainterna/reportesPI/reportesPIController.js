@@ -56,6 +56,8 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
                 $scope.nfiltrogeografiaSeguimientoDiario=llavesResult.N_FILTRO_GEOGRAFIA_SEGUIMIENTODIARIO;
                 $scope.nfiltrointervencionesSeguimientoDiario=llavesResult.N_FILTRO_INTERVENCIONES_SEGUIMIENTODIARIO;
                 $scope.nfiltroestatuspendienteSeguimientoDiario=undefined;
+				validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
+                validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
             }
 
 			//    console.log("entra de cualquier manera")

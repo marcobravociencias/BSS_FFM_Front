@@ -467,7 +467,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                 
             }).catch(err => handleError(err));
     	}else{
-    		swal({type: "warning", title:"Aviso", text:"¡No cuentas con el permiso de edición!"});
+    		swal({type: "warning", title:"Aviso", text:"No cuentas con el permiso de edición."});
     	}
     }
     
@@ -478,7 +478,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
             autoclose: true,
             language: 'es',
             todayHighlight: true,
-            clearBtn: true
+            clearBtn: false
         });
     }
     $scope.iniciarFechaMod();
@@ -1253,6 +1253,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
         $scope.isTecnicoMod = false;
         $scope.contadorCambioArbolGeografias = false;
         $scope.iniciarFechaMod();
+        $scope.restablecerDisenioCampos();
         $("#pills-confirmar-tab-mod").removeClass("active");
 		$("#pills-confirmar-mod").removeClass("active show");
 		$("#pills-despacho-tab-mod").removeClass("active");
@@ -1269,6 +1270,23 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 		$("#pills-informacion-mod").addClass("active show");
 		$("#modalEdicionUsuario").modal('hide');
     }
+    
+    $scope.restablecerDisenioCampos = function() {
+    	//Inputs - Tab Información
+    	$(".inputFormulario").css("border", "1px solid #bdbdbd");
+    	//Intervenciones seleccionadas - Tab Intervenciones
+    	$("#labelIntervencionesSeleccionadasMod").css("color", "rgb(70, 88, 107)");
+    	$("#contenedorIntervencionesRegistroMod").css("border", "white solid 0px");
+    	//Geografías seleccionadas - Tab Árbol
+    	$("#labelGeografiasSeleccionadasMod").css("color", "rgb(70, 88, 107)");
+		$("#contenedorGeografiasRegistroMod").css("border", "white solid 0px");
+		//Permisos seleccionados - Tab Accesos
+		$("#labelPermisosSeleccionadasMod").css("color", "rgb(70, 88, 107)");
+    	$("#contenedorPermisosRegistroMod").css("border", "white solid 0px");
+    	//Despachos seleccionados - Tab Despachos
+    	$("#labelDespachosSeleccionadosMod").css("color", "rgb(70, 88, 107)");
+		$("#contenedorDespachosMod").css("border", "white solid 0px");
+	}
     
     //FUNCIONALIDAD QUE CIERRA EL MODAL DE EDICIÓN Y LIMPIA TODOS LOS CAMPOS DE TODAS LAS PESTAÑAS DE LA MODIFICACIÓN DE USUARIO
     $scope.cerrarModalEdicionUsuario = function() {

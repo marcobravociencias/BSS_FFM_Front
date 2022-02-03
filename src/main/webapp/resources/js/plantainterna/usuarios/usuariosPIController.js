@@ -59,7 +59,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	$scope.tabArbol_LB_N2 = "";
 	$scope.tabArbol_NV_GEOGRAFIA;
 	$scope.tabIntervenciones_NV_INTERVENCIONES;
-	$scope.bucketIdImg = "";
+	$scope.bucketIdImg = ""; 
 	
 	$scope.catalogoGeografias = [];
 	$scope.geoSelect = [];
@@ -106,6 +106,8 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 				nivelUsuario= llavesResult.N_FILTRO_GEOGRAFIA;
 				$scope.filtroGeografias = llavesResult.N_FILTRO_GEOGRAFIA;
 				$scope.filtroIntervenciones = llavesResult.N_FILTRO_INTERVENCIONES;
+				validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
+                validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
 			}else{
 				toastr.info("No se encontraron configuraciones del usuario")
 			} 
@@ -280,7 +282,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	        		$scope.btnAceptarModalGeografiaConsulta();
 	    		}, 500);
 			}else{
-				swal({type: "warning", title:"Aviso", text:"¡No cuentas con ningún permiso de este módulo!"});
+				swal({type: "warning", title:"Aviso", text:"No cuentas con ningún permiso de este módulo."});
 			}
         	
         });
@@ -311,7 +313,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
             autoclose: true,
             language: 'es',
             todayHighlight: true,
-            clearBtn: true
+            clearBtn: false
         });
         $('#form-fechaIngresoRegistro').datepicker('update', new Date());
         $scope.informacionRegistro.fechaIngreso = $('#form-fechaIngresoRegistro').val();
@@ -322,7 +324,8 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
   //ABRE EL MODAL DEL ÁRBOL DE LAS GEOGRAFÍAS - VISTA CONSULTA USUARIOS
     $scope.abrirModalGeografiaConsulta = function() {
     	if($scope.listaGeografias != ""){
-    		$("#modalGeografiaConsulta").modal('show');
+    		$("#modalGeografiaConsulta").modal({ backdrop: 'static', keyboard: false });
+            $("#modalGeografiaConsulta").modal('show');
     		setTimeout(function (){
     	        $('#buscadorGeografiaConsulta').focus();
     	    }, 750);
@@ -333,6 +336,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     
     //CIERRA EL MODAL DEL ÁRBOL DE LAS GEOGRAFÍAS - VISTA CONSULTA USUARIOS
     $scope.cerrarModalGeografiaConsulta = function() {
+    	$scope.btnAceptarModalGeografiaConsulta();
     	$("#modalGeografiaConsulta").modal('hide');
 	}
     
@@ -362,8 +366,8 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     		$scope.listaIdGeografias = [];
         	let companiasSeleccionadas = [];
         	let puestosSeleccionados = [];
+        	$("#modalGeografiaConsulta").modal({ backdrop: 'static', keyboard: false });
         	var geografias = $('#arbolGeografiaConsulta').jstree("get_selected", true);
-    		
     		angular.forEach($scope.listaCompanias,function(compania,index){
     			if(compania.checkedOpcion){
     				companiasSeleccionadas.push(compania.id);
@@ -590,6 +594,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
         		$("#contenedorGeografiasRegistro").css("border", "white solid 0px");
         	}
         	$scope.informacionRegistro.ciudadNatal = "";
+        	$scope.$apply();
         });
 	}
     
@@ -1593,6 +1598,13 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	
 	//MÉTODO PARA LIMPIAR TODOS LOS CAMPOS DE TODAS LAS PESTAÑAS DEL REGISTRO DE USUARIO
 	$scope.limpiarDatosRegistro = function() {
+		$scope.tabInformacion = true;
+		$scope.tabIntervenciones = false;
+		$scope.tabArbol = false;
+		$scope.tabAccesos = false;
+		$scope.tabTecnicos = false;
+		$scope.tabDespachos = false;
+		$scope.tabConfirmacion = false;
 		$("#buscadorIntervencionRegistro").val("");
     	$("#buscadorGeografiaRegistro").val("");
     	$("#buscadorPermisosRegistro").val("");
@@ -1603,8 +1615,10 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	$scope.buscarCiudad = "";
 		$scope.informacionRegistro.intervenciones = [];
 		$scope.listaIntervencionesSeleccionadas = [];
+		$scope.intervencionSelect = [];
 		$scope.informacionRegistro.geografias = [];
 		$scope.listaGeografiasSeleccionadas = [];
+		$scope.geoSelect = [];
 		$scope.informacionRegistro.permisos = [];
 		$scope.listaPermisosSeleccionados = [];
 		$scope.informacionRegistro.tecnicos = [];
@@ -1615,8 +1629,9 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		$scope.listaIdsGeografiaCiudadNatalRegistro = [];
 		$('#arbolIntervencionRegistro').jstree("deselect_all");
 		$('#arbolIntervencionRegistro').jstree("close_all");
-    	$('#arbolGeografiaRegistro').jstree("deselect_all");
-    	$('#arbolGeografiaRegistro').jstree("close_all");
+//    	$('#arbolGeografiaRegistro').jstree("deselect_all");
+//    	$('#arbolGeografiaRegistro').jstree("close_all");
+		$('#arbolGeografiaRegistro').jstree("destroy");
     	$('#arbolPermisoRegistro').jstree("deselect_all");
     	$('#arbolPermisoRegistro').jstree("close_all");
     	$("#arbolIntervencionRegistro").jstree('open_node', 0);
@@ -1625,6 +1640,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	$("#compania_select_registro"). prop("selectedIndex",0);
     	$("#sexo_select_registro"). prop("selectedIndex",0);
     	$("#checkTotdosTecnicosRegistro").prop("checked",false);
+    	$("#imgFotoUsuario").attr("src","./resources/img/plantainterna/despacho/tecnicootasignada.png");
     	$scope.informacionRegistro.ciudadNatal = "";
     	$scope.informacionRegistro.asignacionAutomatica = 0;
 		$scope.informacionRegistro = {};
@@ -1633,6 +1649,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	    $scope.mostrarTecnicos = false;
 	    $scope.mostrarDespacho = false;
 	    $scope.isTecnico = false;
+	    $scope.fileFotoUsuario = null;
 		$scope.iniciarFechaRegistro();
 		$("#pills-confirmar-tab").removeClass("active");
 		$("#pills-confirmar").removeClass("active show");
@@ -1714,7 +1731,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 
     	      });
     	}else{
-    		swal({type: "warning", title:"Aviso", text:"¡No cuentas con el permiso de eliminación!"});
+    		swal({type: "warning", title:"Aviso", text:"No cuentas con el permiso de eliminación."});
     	}
 
 	}

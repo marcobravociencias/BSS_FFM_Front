@@ -39,8 +39,8 @@
         <div class="container-fluid" id="container_gestionTecnicos">
             <div class="content-fluid">
                 <div class="row">
-                    <div class="col-4 mb-2" id="container_busquedaTecnico">
-                        <div class="col-12" style="margin-top: 1em; margin-bottom: 1em; padding-right: 0;">
+                    <div class="col-3 mb-2" id="container_busquedaTecnico" style="padding-right: 0;">
+                        <div class="col-12" style="margin-top: 1em; margin-bottom: 1em;">
                             <div class="row">
                                 <div class="col-12">
                                     <input placeholder="Buscar" type="text" autocomplete="off" class="search-filtro form-control form-control-sm mt-0" id="searchTecnico" ng-model="search.tecnico">
@@ -52,17 +52,18 @@
                             <div id="{{tecnico.id}}" class="valign-wrapper tecnicosDiv">
                                 <div class="col-12">
                                     <div class="row">
-                                        <div class="col-1 media-image online pr-0" style="padding-left: 0;">
+                                        <div class="col-1 media-image online pr-0" style="padding-left: 0; margin-top: .5em;">
                                             <img src="./resources/img/plantainterna/despacho/tecnicootasignada.png" class="circle responsive-img-tecnico">
                                         </div>
-                                        <div id="" class="col-10" style="padding-left: 1.5em;">
+                                        <div id="" class="col-9" style="padding-left: 1.5em;">
                                             <p class="text-tecnico-nombre">{{tecnico.nombre}}</p>
                                             <p class="text-adds-teccnico">
                                                 <i style="color:#7716fa" class="fa fa-user"></i> {{tecnico.tecnico}}
-                                                <i style="color:#7716fa; margin-left: 5px;" class="fa fa-phone"></i> {{tecnico.telefono}}
+                                                <br>
+                                                <i style="color:#7716fa;" class="fa fa-phone"></i> {{tecnico.telefono}}
                                             </p>
                                         </div>
-                                        <div class="col-1 icono_check_tecnico mt-1" >
+                                        <div class="col-2 icono_check_tecnico mt-1" >
                                             <p id="tec-{{tecnico.id}}" class="text-aux" ng-click="consultarDisponibilidadTecnico(tecnico)">TEC</p>
                                             <p id="aux-{{tecnico.id}}" class="text-aux" ng-click="consultarDisponibilidadAux(tecnico)">AUX</p>
                                         </div>
@@ -71,9 +72,9 @@
                             </div>
                         </div>  
                     </div>
-                    <div class="col-8" id="container_calendarioDetalle" ng-show="!isDetalleMesTecnico">
+                    <div class="col-9" id="container_calendarioDetalle" ng-show="!isDetalleMesTecnico">
                         <div class="row">
-                            <div class="col-7" id="container_calendarioActividades" style="padding-right: 0;">
+                            <div class="col-8" id="container_calendarioActividades" style="padding-right: 0;">
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="contenido_color">
@@ -98,7 +99,7 @@
                                 </div>
                                 <div style="margin-bottom: 1em; margin-top: 1em;" id="calendar_gestionTecnicos"></div>
                             </div>
-                            <div class="col-5" id="container_detalleTecnico">
+                            <div class="col-4" id="container_detalleTecnico">
                                 <div class="col-12 text-right" ng-class="isTecnicoSelected ? 'mb-0' : 'mb-5'" >
                                     <div class="container-detalle-tecnico-button" ng-show="isTecnicoSelected">
                                         <span id="btnDetalleTecnico" ng-click="consultarDetalleMesTecnico()">Detalle T&eacute;cnico</span>
@@ -146,7 +147,7 @@
                                         <div class="container-fluid tecnico-content text-center mb-1">
                                             <button class="btn btn-sm btnDetalleJustificacion" ng-click="consultarComentariosJustificacion()"><i class="fa fa-comments"></i></button>
                                             <button class="btn btn-sm btnDetalleJustificacion" ng-click="consultarArchivosJustificacion()" style="padding: 0.3em 0.7em !important;"><i class="fa fa-file"></i></button>
-                                            <button class="btn btn-sm btnDetalleJustificacion" ng-click="openModalEditarJustificacion()"><i class="fa fa-pencil-square"></i></button>
+                                            <button class="btn btn-sm btnDetalleJustificacion" ng-click="openModalEditarJustificacion(justificacionDetalle)"><i class="fa fa-pencil-square"></i></button>
                                             <button class="btn btn-sm btnDetalleJustificacion" ng-click="openModalEliminarJustificacion()"><i class="far fa-trash-alt"></i></button>
                                         </div>
                                     </div>
@@ -159,7 +160,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-8" id="container_detalleMesTecnico" ng-show="isDetalleMesTecnico">
+                    <div class="col-9" id="container_detalleMesTecnico" ng-show="isDetalleMesTecnico">
                         <div class="row filter-content" style="margin-top: .5em;">
                             <div class="col-6" style="margin-top: .5em;">
                                 <h5 class="title-modulo" style="margin-left: 3%;">Detalle Mes {{tituloDetalle}}</h5>

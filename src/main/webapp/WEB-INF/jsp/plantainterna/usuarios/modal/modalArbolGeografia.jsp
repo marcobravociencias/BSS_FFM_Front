@@ -1,4 +1,4 @@
-<div id="modalGeografiaConsulta" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div id="modalGeografiaConsulta" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -24,8 +24,7 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface" data-mdb-dismiss="modal" ng-click="btnAceptarModalGeografiaConsulta()">ACEPTAR</button>
-				<!--button class="btn btn-primary">CONSULTAR</button-->
+				<button type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface" data-mdb-dismiss="modal" ng-click="btnAceptarModalGeografiaConsulta()">CERRAR</button>
 			</div>
 		</div>
 	</div>

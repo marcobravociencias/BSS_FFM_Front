@@ -33,10 +33,9 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         "lengthChange": false,
         "ordering": false,
         "pageLength": 10,
-        "info": false,
+        "info": true,
         "autoWidth": true,
-        "language": idioma_espanol_not_font,
-        "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+        "language": idioma_espanol_not_font
     });
 
     app.noticiasGestionTicketSoporte($scope, gestionTicketSoporteService);
@@ -87,6 +86,9 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
 
                     if (llavesResult.N_PUESTO_INGENIERO)
                         $scope.nPuestoIngeniero = parseInt(llavesResult.N_PUESTO_INGENIERO)
+
+                    validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
+                    validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
                 } else {
                     $scope.nIntervencion = 1;
                     $scope.nGeografia = 1;
@@ -157,29 +159,24 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         tecnicosCuentaTable = $('#tecnicosCuentaTable').DataTable({
             "paging": true,
             "lengthChange": false,
-            "searching": false,
             "ordering": false,
             "pageLength": 10,
-            "info": false,
+            "info": true,
             "autoWidth": true,
-            "language": idioma_espanol_not_font,
-            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
-
+            "language": idioma_espanol_not_font
+        });
+        ticketSoporteTable = $('#tableTicketSoporte').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "ordering": false,
+            "pageLength": 10,
+            "info": true,
+            "autoWidth": true,
+            "language": idioma_espanol_not_font
         });
         $scope.consultarCatalogosTicketSoporte();
     }
 
-    ticketSoporteTable = $('#tableTicketSoporte').DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "ordering": false,
-        "pageLength": 10,
-        "info": true,
-        "autoWidth": true,
-        "language": idioma_espanol_not_font,
-        "sDom": 'Rfrtlip'
-
-    });
 
     $scope.initTicketsSoporte();
 
@@ -317,12 +314,11 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                             "lengthChange": false,
                             "ordering": false,
                             "pageLength": 10,
-                            "info": false,
-                            "rowId": "id",
+                            "info": true,
+                            "scrollX": false,
                             "data": arrayRow,
-                            "autoWidth": true,
+                            "autoWidth": false,
                             "language": idioma_espanol_not_font,
-                            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
                             'fnCreatedRow': function (nRow, aData, iDataIndex) {
                                 $(nRow).attr('id', 'tecnico_' + aData[1]); // or whatever you choose to set as the id
                             },
@@ -858,11 +854,11 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             "lengthChange": false,
             "ordering": false,
             "pageLength": 10,
-            "info": false,
+            "info": true,
+            "scrollX": false,
             "data": arraRow,
-            "autoWidth": true,
+            "autoWidth": false,
             "language": idioma_espanol_not_font,
-            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
             'fnCreatedRow': function (nRow, aData, iDataIndex) {
                 $(nRow).attr('id', 'ingeniero_' + aData[1]);
             },
@@ -990,10 +986,6 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             }
         }).catch((err) => handleError(err));
     }
-
-    document.getElementById('searchTableIngeniero').addEventListener('keyup', function () {
-        ingenieroTable.search(this.value).draw();
-    })
 }]);
 
 angular.element(document).ready(function () {

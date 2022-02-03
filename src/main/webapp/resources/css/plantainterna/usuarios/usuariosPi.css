@@ -68,7 +68,8 @@
 }
 
 .iconoEliminarFoto {
-    color: #f55756
+    color: #f55756;
+    cursor: pointer;
 }
 
 .txtPieFoto {
@@ -78,15 +79,18 @@
 }
 
 .botonIniciarCamara {
+	width: 35px;
+	height: 28px;
     background-color: #ffffff;
     color: #7716fa;
     border: solid 1px #7716fa !important;
-    padding: .7em 1em;
     border-radius: 5px;
     font-size: 0.7em;
-    position: relative;
-    display: block;
     border-radius: .5em !important;
+}
+
+#contenedorBtnIniciarCamara{
+	text-align: right;
 }
 
 .etiquetaFotoUsuario::after {
@@ -108,6 +112,12 @@
     font-size: .8em;
     color: #9d9d9d;
     border: solid 1px #7716fa !important;
+    cursor: pointer;
+}
+
+#fileFotoUsuario,
+#fileFotoUsuarioMod{
+	position: initial !important;
 }
 
 #imgFotoUsuario {
@@ -329,7 +339,6 @@ label.form-check-inputfiltro {
 }
 
 .scrollModalArbolGeografias {
-    padding: 4px;
     overflow-x: auto;
     overflow-y: auto;
     text-align: justify;
@@ -378,6 +387,13 @@ label.form-check-inputfiltro {
 .inputFormulario {
     align-items: stretch;
     background: white !important;
+    padding: .5rem 1rem !important;
+    font-size: .8rem !important;
+    font-family: 'Montserrat' !important;
+}
+
+.inputSelectFormulario {
+    align-items: stretch;
     padding: .5rem 1rem !important;
     font-size: .8rem !important;
     font-family: 'Montserrat' !important;
@@ -714,6 +730,11 @@ i.jstree-icon.jstree-themeicon {
 .respuesta-confirmacion {
     color: #7c7c7d;
     font-size: 12px;
+    cursor: pointer;
+}
+
+.radioOpcCiudadNatal{
+	cursor: pointer !important;
 }
 
 .encabezado-confirmacion {

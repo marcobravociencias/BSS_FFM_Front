@@ -192,7 +192,7 @@
                 </div>
                 
                 <c:if test="${userStore.pais != null}">
-                    <div class="content-header">
+                    <div class="content-header content-header-border">
                         <div class="icon-wrapper icon-wrapper-alt-pais rounded-circle">
                             <div class="icon-wrapper-bg bg-focus"></div>
                             <c:choose>
@@ -201,9 +201,14 @@
                                         src="${pageContext.request.contextPath}/resources/img/navbar/mexico.png"
                                         loading="lazy" />
                                 </c:when>
+                                <c:when test="${userStore.pais.toLowerCase().contains('colombia') || userStore.pais.toLowerCase().contains('col')  }">
+                                    <img class="img-despacho-pais language-icon flag flag-icon-background flag-icon-d"
+                                        src="${pageContext.request.contextPath}/resources/img/navbar/mexico.png"
+                                        loading="lazy" />
+                                </c:when>
                                 <c:otherwise>
                                     <img class="img-despacho-pais language-icon flag flag-icon-background flag-icon-d"
-                                        src="${pageContext.request.contextPath}/resources/img/navbar/colombia.png"
+                                        src="${pageContext.request.contextPath}/resources/img/navbar/mexico.png"
                                         loading="lazy" />
                                 </c:otherwise>
                             </c:choose>
@@ -211,7 +216,7 @@
                     </div>
                 </c:if>
                
-                <div class="content-header content-header-border" id="user-info-login">
+                <div class="content-header" id="user-info-login">
                     <c:if
                         test="${userStore.urlFoto != null &&  userStore.urlFoto != '' && userStore.urlFoto != 'string'}">
                         <div class="icon-wrapper icon-wrapper-alt-user rounded-circle dropdown-toggle"
@@ -412,14 +417,10 @@
                                 class="btn btn-primary button-salir">
                                 Cerrar sesi&oacute;n
                             </a>
-                            <c:url value="/logout" var="logoutUrl" />
-                            <form id="logout" action="${logoutUrl}" method="S">
-                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                            </form>
                         </div>
                     </div>
                 </div>
-                <div class="content-header">
+                <div class="content-header content-header-border">
                     <h5 class="header-nombre-usuario">
                         <sec:authentication property="principal.usuarioNombre" />
                         <sec:authentication property="principal.usuarioApellidoPaterno" />
@@ -430,7 +431,7 @@
                         <sec:authentication property="principal.propietario" />
                     </h5>
                 </div>
-                <div class="content-header content-header-border">
+                <div class="content-header">
                     <a href="javascript:document.getElementById('logout').submit()"
                         class="btn btn-primary button-salir">
                         <i class="fas fa-sign-out-alt"></i>

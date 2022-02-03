@@ -15,11 +15,11 @@
 										<div class="col-md-9">
 											<div class="custom-file">
 												<input type="file" class="custom-file-input" id="fileFotoUsuarioMod" ng-model="fileFotoUsuarioMod" ng-on-change="cargarFotoUsuarioMod($event)" accept="image/*" />
-												<label class="custom-file-label etiquetaFotoUsuario" for="fileFotoUsuarioMod">Cargar fotograf&iacute;a</label>
+												<label class="custom-file-label etiquetaFotoUsuario" title="Subir fotograf&iacute;a" for="fileFotoUsuarioMod">Cargar fotograf&iacute;a</label>
 											</div>
 										</div>
 										<div class="col-md-3">
-											<button id="btnIniciarCamaraMod" class="botonIniciarCamara" ><i class="fas fa-camera"></i></button>
+											<button id="btnIniciarCamaraMod" class="botonIniciarCamara" title="Tomar fotograf&iacute;a"><i class="fas fa-camera"></i></button>
 										</div>
 									</div>
 									<div style="text-align: center; margin-top: 5px;">
@@ -77,7 +77,8 @@
 						<div class="row" ng-repeat="ciudad in listaCiudadNatalMod | filter:buscarCiudadMod track by $index" ng-if="ciudad.nombre != null">
 							<div class="col-12">
 								<label class="respuesta-confirmacion ciudadNatalMod">
-								<input type="radio" ng-model="detalleUsuario.ciudadNatal" ng-value="ciudad.id" ng-click="asignarCiudadNatalMod()">{{ciudad.nombre}}</label>
+								<input type="radio" class="radioOpcCiudadNatal" ng-model="detalleUsuario.ciudadNatal" ng-value="ciudad.id" ng-click="asignarCiudadNatalMod()">&nbsp;{{ciudad.nombre}}
+								</label>
 							</div>
 						</div>
 						<span ng-if="listaCiudadesSelecionadasMod.length < 1" class="respuesta-confirmacion ciudadNatal">Sin asignar</span>

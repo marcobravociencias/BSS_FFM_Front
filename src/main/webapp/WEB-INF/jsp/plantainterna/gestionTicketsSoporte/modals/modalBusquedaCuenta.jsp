@@ -9,13 +9,6 @@
             </div>
             <div class="modal-body">
                 <div class="container-fluid" id="container_pagos_tecnicos">
-                    <div class="row filter-content">
-                        <div class="col-2 offset-10 form-group">
-                            <input placeholder="Buscar" type="text" autocomplete="off" style=" height: 2em !important;"
-                                class="search-filtro form-control form-control-sm mt-0" id="searchTextCuenta"><i
-                                class="fa fa-search icon-search" style="margin-top: -1.6em;"></i>
-                        </div>
-                    </div>
                     <div class="content-fluid" style="margin-top: 0.7em;">
                         <table id="tecnicosCuentaTable" class="display table" cellspacing="0" width="100%">
                             <thead id="thead_tecnicosCuenta">
