@@ -47,10 +47,7 @@ app.noticiasController = function ($scope, $q, busquedaService) {
             if (response.data.respuesta) {
                 if (response.data.result) {
                     $scope.listadoNoticias = response.data.result.news;
-                    setTimeout(() => {
-                        swal.close();
-                    }, 1000);
-                    
+                   // $scope.$apply()
                 } else {
                     swal.close();
                     mostrarMensajeWarningValidacion('No se encontr&oacute; informaci&oacute;n.')
@@ -58,6 +55,7 @@ app.noticiasController = function ($scope, $q, busquedaService) {
                 setTimeout(function () {
                     $(".container-noticia-elemento").animate({ scrollTop: 100000000 }, 500);
                 }, 400)
+                swal.close();
             } else {
                 swal.close();
                 mostrarMensajeWarningValidacion(response.data.resultDescripcion)
@@ -194,7 +192,6 @@ app.noticiasController = function ($scope, $q, busquedaService) {
         swal.showLoading();
         busquedaService.crearNoticia(params).then((response) => {
             console.log(response)
-            swal.close()
             if (response.data.respuesta) {
                 if (response.data.result) {
                     if (response.data.result.result === '0') {
@@ -456,7 +453,6 @@ app.noticiasController = function ($scope, $q, busquedaService) {
         swal.showLoading();
         busquedaService.crearSubNoticia(params).then(function success(response) {
             console.log(response)
-            swal.close();
             if (response.data.respuesta) {
                 if (response.data.result) {
                     if (response.data.result.result === '0') {
