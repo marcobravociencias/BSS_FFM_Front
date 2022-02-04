@@ -125,3 +125,10 @@
         </div>
     </div>
 </div>
+<div class="row" style="margin-top: 1em; text-align: right;" ng-show="txtExpresionValPassword">
+    <div class="col-md-12">
+		<div class="message-password-warning">
+			<span><i class="fas fa-warning"></i>&nbsp; {{txtExpresionValPassword}}</span>
+		</div>
+	</div>
+</div>

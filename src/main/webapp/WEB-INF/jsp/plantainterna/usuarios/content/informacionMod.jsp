@@ -2,7 +2,7 @@
 	<div class="col-md-4">
 		<label class="span-consulta"><i class="fas fa-address-card"></i> Puesto*</label>
         <div class="input-group">
-        	<select readonly disabled class="form-control inputFormulario" id="puesto_select_modificacion" aria-describedby="basic-addon3" style="height: 34px;">
+        	<select readonly disabled class="form-control custom-select inputSelectFormulario" id="puesto_select_modificacion" aria-describedby="basic-addon3" style="height: 34px;">
         		<option disabled selected>NO HAY SELECCI&Oacute;N</option>
         		<option ng-repeat="puesto in puestoRegistrado" value="{{puesto.id}}">{{puesto.descripcion}}</option>
         	</select>
@@ -11,7 +11,7 @@
     <div class="col-md-4">
 		<label class="span-consulta"><i class="fa fa-building"></i> Compa&ntilde;&iacute;a*</label>
         <div class="input-group">
-        	<select class="form-control inputFormulario" id="compania_select_modificacion" aria-describedby="basic-addon3" style="height: 34px;">
+        	<select class="form-control custom-select inputSelectFormulario" id="compania_select_modificacion" aria-describedby="basic-addon3" style="height: 34px;">
         		<option disabled selected>NO HAY SELECCI&Oacute;N</option>
         		<option ng-repeat="compania in listaCompanias" value="{{compania.id}}">{{compania.descripcion}}</option>
         	</select>
@@ -88,7 +88,7 @@
     <div class="col-md-4">
 		<label class="span-consulta"><i class="fa fa-mars"></i> Sexo*</label>
         <div class="input-group">
-        	<select class="form-control inputFormulario" id="sexo_select_modificacion" aria-describedby="basic-addon3" style="height: 34px;">
+        	<select class="form-control custom-select inputSelectFormulario" id="sexo_select_modificacion" aria-describedby="basic-addon3" style="height: 34px;">
         		<option disabled selected>NO HAY SELECCI&Oacute;N</option>
         		<option value="MASCULINO">Masculino</option>
         		<option value="FEMENINO">Femenino</option>
