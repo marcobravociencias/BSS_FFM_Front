@@ -8,12 +8,14 @@
                     style="border-radius: .5em !important;">
             </div>
             <div class="col-md-1 search-form">
-                <button id="btnBuscar" type="button" class="btn btn-primary btnTotal" ng-click="consultarTecnicosPagos()" style="margin-top: 2.2em;">
+                <button id="btnBuscar" type="button" class="btn btn-primary btnTotal"
+                    ng-click="consultarTecnicosPagos()" style="margin-top: 2.2em;">
                     <i class="fa fa-search"></i>
                 </button>
             </div>
-            <div class="col-2 offset-7 form-group">
-                <input placeholder="Buscar" type="text" autocomplete="off" style=" height: 2em !important;"
+            <div class="col-2 offset-7 search-form">
+                <input placeholder="Buscar" type="text" autocomplete="off"
+                    style=" height: 2em !important;margin-top: 2em !important;"
                     class="search-filtro form-control form-control-sm mt-0" id="searchTextGeneral"><i
                     class="fa fa-search icon-search" style="margin-top: -1.5em;"></i>
             </div>

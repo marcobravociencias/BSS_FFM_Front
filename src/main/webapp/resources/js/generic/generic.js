@@ -271,10 +271,10 @@ cambiarContraseniaUserLogin = function () {
 		toastr.warning('Todos los campos son obligatorios');
 		return false;
 	}
-	
+
 	if (validateCreed) {
 		if (validateCreedMask && validateCreedMask !== null) {
-			if (!validateCreedMask.test($("#newPasswordUserLogin").val())) {
+			if (!validateCreedMask.test($("#newPasswordUserLogin").val()) && validateCreedText != '') {
 				toastr.warning('Formato invalido');
 				return false;
 			}
@@ -359,31 +359,28 @@ inOutImg = function (size) {
 }
 
 var monster = document.getElementById('monsterPlay');
-var timer = Math.floor(Math.random() * (180000 - 6000));
-var monsterAnimation = Math.floor(Math.random() * (3 - 0));
-setInterval(() => {
-	monster.style.animation = 'none';
-	setTimeout(() => {
-		switch (monsterAnimation) {
-			case 0:
-				monster.style.animation = 'monster-play 5s 1';
-				break;
 
-			case 1:
-				monster.style.animation = 'monster-show 10s 1';
-				break;
+function showMonster() {
+	var min = 30, max = 180;
+	var rand = Math.floor(Math.random() * (max - min + 1) + min); 
+	var monsterAnimation = Math.floor(Math.random() * (2 - 0 + 1));
+	switch (monsterAnimation) {
+		case 0:
+			monster.style.animation = 'monster-play 5s 1';
+			break;
 
-			case 2:
-				monster.style.animation = 'monster-run 5s 1';
-				break;
+		case 1:
+			monster.style.animation = 'monster-show 10s 1';
+			break;
 
-			default:
-				break;
-		}
-		
-	}, 1000);
-	timer = Math.floor(Math.random() * 190000) + 6000;
-	monsterAnimation = Math.floor(Math.random() * (3 - 0));
+		case 2:
+			monster.style.animation = 'monster-run 5s 1';
+			break;
 
-}, timer);
+		default:
+			break;
+	}
+	setTimeout(showMonster, rand * 1000);
+}
 
+showMonster()

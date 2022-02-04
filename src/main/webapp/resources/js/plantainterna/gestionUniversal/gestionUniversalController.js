@@ -259,7 +259,8 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                     $scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO.permisos;
                     validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
                     validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
-
+                    validateCreedText = llavesResult.KEY_TEXTFORMATO_CREED_RES ? KEY_TEXTFORMATO_CREED_RES : '';
+                    
                     if ($scope.nEstatusPagosTecnicos !== null) {
                         let statusList = $scope.nEstatusPagosTecnicos.split(",");
                         $scope.listaStatus = statusList;

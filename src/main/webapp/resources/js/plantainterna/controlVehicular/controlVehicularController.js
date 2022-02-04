@@ -80,7 +80,6 @@ app.controller('controlVehicularController',
 				}
 			})
 
-
 			$('#searchText').on('keyup', function () {
 				vehiculoTable.search(this.value).draw();
 			});
@@ -166,6 +165,7 @@ app.controller('controlVehicularController',
 							validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
 							validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
 							validateCreedText = llavesResult.KEY_TEXTFORMATO_CREED_RES ? KEY_TEXTFORMATO_CREED_RES : '';
+
 							if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
 								$scope.permisosConfigUser.permisos.map(e => { e.banderaPermiso = true; return e; });
 								$scope.accionesUserConfigText = $scope.permisosConfigUser.permisos.map(e => { return e.clave })
@@ -196,10 +196,14 @@ app.controller('controlVehicularController',
 								$scope.geografiaList = listGeo;
 
 								$("#jstreeconsulta").jstree("destroy");
+
 								$scope.loadArbolBuscar();
-								setTimeout(function () {
-									$scope.getVehiculos(true);
-								}, 300)
+
+								if ($scope.accionesUserConfigText.indexOf('accionConsultaVehiculos') === -1) {
+									setTimeout(function () {
+										$scope.getVehiculos(true);
+									}, 300)
+								}
 
 							} else {
 								mostrarMensajeWarningValidacion('No existen geograf\u00EDas actualmente')
@@ -387,7 +391,7 @@ app.controller('controlVehicularController',
 				if (vehiculoTable) {
 					vehiculoTable.destroy();
 				}
-				
+
 				let arrayRow = [];
 				$.each(list, function (i, elemento) {
 					let random = '?' + Math.random() * (10000 - 0);
@@ -399,7 +403,7 @@ app.controller('controlVehicularController',
 					row[4] = elemento.anio;
 					row[5] = elemento.numeroSerie;
 					row[6] = elemento.geografia;
-					row[7] = elemento.urlFotoPlaca && elemento.urlFotoPlaca.length > 15 ? '<img style="cursor:pointer; border-radius:.5em" src="' + elemento.urlFotoPlaca + random +  '" alt="Placa" width="50" height="30" onclick="showImg(' + "'" + elemento.urlFotoPlaca + "'" + ')"/>' : "";
+					row[7] = elemento.urlFotoPlaca && elemento.urlFotoPlaca.length > 15 ? '<img style="cursor:pointer; border-radius:.5em" src="' + elemento.urlFotoPlaca + random + '" alt="Placa" width="50" height="30" onclick="showImg(' + "'" + elemento.urlFotoPlaca + "'" + ')"/>' : "";
 					row[8] = elemento.urlFotoVehiculo && elemento.urlFotoVehiculo.length > 15 ? '<img style="cursor:pointer; border-radius:.5em" src="' + elemento.urlFotoVehiculo + random + '" alt="Vehiculo" width="50"  height="30" onclick="showImg(' + "'" + elemento.urlFotoVehiculo + "'" + ')"/>' : "";
 					row[9] = elemento.estatus;
 					if ($scope.accionesUserConfigText.indexOf('accionEditaVehiculos') === -1) {
