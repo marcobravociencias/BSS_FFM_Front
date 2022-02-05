@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,53 +17,143 @@ import com.mx.totalplay.ffm.cloudweb.utilerias.model.ServiceResponseResult;
 @RestController
 @RequestMapping("/req")
 public class GestionTecnicosController {
+
+	private final Logger logger = LogManager.getLogger(GestionTecnicosController.class.getName());
+	private Gson gson = new Gson();
+	private final GestionTecnicosService gestionTecnicosService;
+
+	public GestionTecnicosController(GestionTecnicosService gestionTecnicosService) {
+		this.gestionTecnicosService = gestionTecnicosService;
+	}
+
+	@GetMapping("/consultaMotivosGestionTecnicos")
+	public ResponseEntity<?> consultaMotivosGestionTecnicos() {
+		logger.info("###### GestionTecnicosController - consultaMotivosGestionTecnicos");
+		ServiceResponseResult response = gestionTecnicosService.consultaMotivosGestionTecnicos();
+		if (response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+
+	@PostMapping("/consultaTecnicosGestionTecnicos")
+	public ResponseEntity<?> consultaTecnicosGestionTecnicos(@RequestBody String params) {
+		logger.info("###### GestionTecnicosController - consultaTecnicosGestionTecnicos");
+		ServiceResponseResult response = gestionTecnicosService.consultaTecnicosGestionTecnicos(params);
+		if (response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+
+	@PostMapping("/consultaDisponibilidadTecGestionTecnicos")
+	public ResponseEntity<?> consultaDisponibilidadTecGestionTecnicos(@RequestBody String params) {
+		logger.info("###### GestionTecnicosController - consultarDisponibilidadTecGestionTecnicos");
+		ServiceResponseResult response = gestionTecnicosService.consultaDisponibilidadTecGestionTecnicos(params);
+		if (response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+
+	@PostMapping("/consultaDisponibilidadAuxGestionTecnicos")
+	public ResponseEntity<?> consultaDisponibilidadAuxGestionTecnicos(@RequestBody String params) {
+		logger.info("###### GestionTecnicosController - consultarDisponibilidadAuxGestionTecnicos");
+		ServiceResponseResult response = gestionTecnicosService.consultaDisponibilidadAuxGestionTecnicos(params);
+		if (response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+
+	@PostMapping("/consultaDetalleJustificacionGestionTec")
+	public ResponseEntity<?> consultaDetalleJustificacionGestionTec(@RequestBody String params) {
+		logger.info("###### GestionTecnicosController - consultaDetalleJustificacionGestionTec");
+		ServiceResponseResult response = gestionTecnicosService.consultaDetalleJustificacionGestionTec(params);
+		if (response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+
+	@PostMapping("/consultaDetalleMesGestionTec")
+	public ResponseEntity<?> consultaDetalleMesGestionTec(@RequestBody String params) {
+		logger.info("###### GestionTecnicosController - consultaDetalleMesGestionTec");
+		ServiceResponseResult response = gestionTecnicosService.consultaDetalleMesGestionTec(params);
+		if (response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+
+	@PostMapping("/consultaComentariosJustificacionGestionTec")
+	public ResponseEntity<?> consultaComentariosJustificacionGestionTec(@RequestBody String params) {
+		logger.info("###### GestionTecnicosController - consultaComentariosJustificacionGestionTec");
+		ServiceResponseResult response = gestionTecnicosService.consultaComentariosJustificacionGestionTec(params);
+		if (response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+
+	@PostMapping("/consultaArchivosJustificacionGestionTec")
+	public ResponseEntity<?> consultaArchivosJustificacionGestionTec(@RequestBody String params) {
+		logger.info("###### GestionTecnicosController - consultaArchivosJustificacionGestionTec");
+		ServiceResponseResult response = gestionTecnicosService.consultaArchivosJustificacionGestionTec(params);
+		if (response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+
+	@PostMapping("/agregarJustificacionGestionTec")
+	public ResponseEntity<?> agregarJustificacionGestionTec(@RequestBody String params) {
+		logger.info("###### GestionTecnicosController - agregarJustificacionGestionTec");
+		ServiceResponseResult response = gestionTecnicosService.agregarJustificacionGestionTec(params);
+		if (response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+
+	@PostMapping("/editarJustificacionGestionTec")
+	public ResponseEntity<?> editarJustificacionGestionTec(@RequestBody String params) {
+		logger.info("###### GestionTecnicosController - editarJustificacionGestionTec");
+		ServiceResponseResult response = gestionTecnicosService.editarJustificacionGestionTec(params);
+		if (response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+
+	@PostMapping("/eliminarJustificacionGestionTec")
+	public ResponseEntity<?> eliminarJustificacionGestionTec(@RequestBody String params) {
+		logger.info("###### GestionTecnicosController - eliminarJustificacionGestionTec");
+		ServiceResponseResult response = gestionTecnicosService.eliminarJustificacionGestionTec(params);
+		if (response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+
+	@PostMapping("/agregarArchivoJustificacionGestionTec")
+	public ResponseEntity<?> agregarArchivoJustificacionGestionTec(@RequestBody String params) {
+		logger.info("###### GestionTecnicosController - agregarArchivoJustificacionGestionTec");
+		ServiceResponseResult response = gestionTecnicosService.agregarArchivoJustificacionGestionTec(params);
+		if (response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
 	
-	 private final Logger logger = LogManager.getLogger(GestionTecnicosController.class.getName());
-	 private Gson gson = new Gson();
-	 private final GestionTecnicosService gestionTecnicosService;
-	 
-	 public GestionTecnicosController (GestionTecnicosService gestionTecnicosService) {
-		 this.gestionTecnicosService = gestionTecnicosService;
-	 }
-	 
-	 @GetMapping("/consultaMotivosGestionTecnicos")
-	 public ResponseEntity<?> consultaMotivosGestionTecnicos(){
-		 logger.info("###### GestionTecnicosController - consultaMotivosGestionTecnicos");
-		 ServiceResponseResult response = gestionTecnicosService.consultaMotivosGestionTecnicos();
-		 if (response.getResult() instanceof Integer){
-	            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-	        }
-	        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-	 }
-	 
-	 @GetMapping("/consultaTecnicosGestionTecnicos")
-	 public ResponseEntity<?> consultaTecnicosGestionTecnicos(@RequestBody String params){
-		 logger.info("###### GestionTecnicosController - consultaTecnicosGestionTecnicos");
-		 ServiceResponseResult response = gestionTecnicosService.consultaTecnicosGestionTecnicos(params);
-		 if (response.getResult() instanceof Integer){
-	            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-	        }
-	        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-	 }
-	 
-	 @GetMapping("/consultaDisponibilidadTecGestionTecnicos")
-	 public ResponseEntity<?> consultaDisponibilidadTecGestionTecnicos(@RequestBody String params){
-		 logger.info("###### GestionTecnicosController - consultarDisponibilidadTecGestionTecnicos");
-		 ServiceResponseResult response = gestionTecnicosService.consultaDisponibilidadTecGestionTecnicos(params);
-		 if (response.getResult() instanceof Integer){
-	            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-	        }
-	        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-	 }
-	 
-	 @GetMapping("/consultaDisponibilidadAuxGestionTecnicos")
-	 public ResponseEntity<?> consultaDisponibilidadAuxGestionTecnicos(@RequestBody String params){
-		 logger.info("###### GestionTecnicosController - consultarDisponibilidadAuxGestionTecnicos");
-		 ServiceResponseResult response = gestionTecnicosService.consultaDisponibilidadAuxGestionTecnicos(params);
-		 if (response.getResult() instanceof Integer){
-	            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-	        }
-	        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-	 }
+	@PostMapping("/eliminarArchivoJustificacionGestionTec")
+	public ResponseEntity<?> eliminarArchivoJustificacionGestionTec(@RequestBody String params) {
+		logger.info("###### GestionTecnicosController - eliminarArchivoJustificacionGestionTec");
+		ServiceResponseResult response = gestionTecnicosService.eliminarArchivoJustificacionGestionTec(params);
+		if (response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
 
 }

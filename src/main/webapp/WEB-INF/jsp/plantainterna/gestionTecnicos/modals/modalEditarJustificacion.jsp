@@ -18,14 +18,14 @@
                                 </div> 
                                   <div style="text-align: center; padding-left: 0;" class="col-md-12">
                                     <form id="uploadFormEditJust" name="13" class="form-horizontal box form_drag_drop" novalidate="novalidate" enctype="multipart/form-data">
-                                          <div class="box__input">
-                                            <input name="myFile" type="file" class="box__file inputFile" id="fileEditJust" />
-                                            <label for="fileEditJust" id="etiqueta_archivo_edita_just">
-                                              <strong class="text_select" style="cursor: pointer;">Selecciona un archivo</strong>
-                                              <span class="box__dragndrop">o arrastra aqu&iacute;</span>
-                                            </label>
-                                            <br />
-                                          </div>
+                                        <div class="box__input">
+                                        <input name="myFile" type="file" class="box__file inputFile" ng-on-change="convertFile($event, 'editar')" id="fileEditJust" />
+                                        <label for="fileEditJust" id="etiqueta_archivo_edita_just">
+                                            <strong class="text_select" style="cursor: pointer;">Selecciona un archivo</strong>
+                                            <span class="box__dragndrop">o arrastra aqu&iacute;</span>
+                                        </label>
+                                        <br />
+                                        </div>
                                         <div class="box__uploading"><i class="fas fa-cloud-upload-alt" style="display: block;"></i></div>
                                     </form>
                                   </div>
@@ -64,21 +64,21 @@
                             <div id="content_drag_drop" class="">
                                 <div class="col-md-12" style="text-align: right;padding: 0px 25px 10px 15px !important;">       
                                 </div> 
-                                  <div style="text-align: center;" class="col-md-12">
-                                    <form id="uploadFormDelJust" name="13" class="form-horizontal box form_drag_drop" novalidate="novalidate" enctype="multipart/form-data">
-                                          <div class="box__input">
-                                            <input name="myFile" type="file" class="box__file inputFile" id="fileDelJust" />
-                                            <label for="fileDelJust" id="etiqueta_archivo_edita_just">
-                                              <strong class="text_select">Selecciona un archivo</strong>
-                                              <span class="box__dragndrop">o arrastra aqu&iacute;</span>
-                                            </label>
-                                            <br />
-                                          </div>
-                                        <div class="box__uploading">
-                                            <i class="fas fa-cloud-upload-alt" style="display: block;"></i>
-                                        </div>
-                                    </form>
-                                  </div>
+                                <div style="text-align: center;" class="col-md-12">
+                                <form id="uploadFormDelJust" name="14" class="form-horizontal box form_drag_drop" novalidate="novalidate" enctype="multipart/form-data">
+                                    <div class="box__input">
+                                    <input name="fileDelJust" type="file" class="box__file inputFile" ng-on-change="convertFile($event, 'eliminar')" id="fileDelJust" />
+                                    <label for="fileDelJust" id="etiqueta_archivo_del_just">
+                                        <strong class="text_select">Selecciona un archivo</strong>
+                                        <span class="box__dragndrop">o arrastra aqu&iacute;</span>
+                                    </label>
+                                    <br />
+                                    </div>
+                                    <div class="box__uploading">
+                                        <i class="fas fa-cloud-upload-alt" style="display: block;"></i>
+                                    </div>
+                                </form>
+                                </div>
                             </div>
                         </div>
                         <div class="col-6">
@@ -106,7 +106,7 @@
                 <button type="button" class="btn btn-cerrar-modal" data-mdb-dismiss="modal">
                     Cerrar
                 </button>
-                <button type="button" class="btn btn-primary btn-justificacion" ng-click="eliminarJustificacion()">
+                <button type="button" class="btn btn-primary btn-justificacion" ng-click="eliminarJustificacion(justificacionD)">
                     Aceptar
                 </button>
             </div>

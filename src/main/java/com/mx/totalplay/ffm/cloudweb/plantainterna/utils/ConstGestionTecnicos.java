@@ -14,13 +14,4 @@ public class ConstGestionTecnicos {
 	@Value("${consultaFallasTicketSoporte}")
 	private String consultaMotivosGestionTecnicos;
 	
-	@Value("${consultaFallasTicketSoporte}")
-	private String consultaTecnicosGestionTecnicos;
-	
-	@Value("${consultaFallasTicketSoporte}")
-	private String consultaDisponibilidadTecGestionTecnicos;
-	
-	@Value("${consultaFallasTicketSoporte}")
-	private String consultaDisponibilidadAuxGestionTecnicos;
-	
 }
