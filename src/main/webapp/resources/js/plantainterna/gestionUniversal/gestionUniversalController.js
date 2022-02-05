@@ -25,10 +25,10 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
         "lengthChange": false,
         "ordering": false,
         "pageLength": 10,
-        "info": false,
-        "autoWidth": true,
-        "language": idioma_espanol_not_font,
-        "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+        "info": true,
+        "scrollX": false,
+        "autoWidth": false,
+        "language": idioma_espanol_not_font
     });
 
 
@@ -36,11 +36,11 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
         "paging": true,
         "lengthChange": false,
         "ordering": false,
-        "pageLength": 10,
-        "info": false,
-        "autoWidth": true,
-        "language": idioma_espanol_not_font,
-        "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+        "pageLength": 5,
+        "info": true,
+        "scrollX": false,
+        "autoWidth": false,
+        "language": idioma_espanol_not_font
     });
 
     usuariosCambiaContrasena = $('#cambiaContrasenaTable').DataTable({
@@ -48,10 +48,10 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
         "lengthChange": false,
         "ordering": false,
         "pageLength": 10,
-        "info": false,
-        "autoWidth": true,
-        "language": idioma_espanol_not_font,
-        "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+        "info": true,
+        "scrollX": false,
+        "autoWidth": false,
+        "language": idioma_espanol_not_font
     });
 
     $('#searchTextGeneral').on('keyup', function () {
@@ -168,7 +168,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
     }
 
     $scope.consultarTecnicosPagos = function () {
-       
+
         //let ultimonivel = $scope.obtenerNivelUltimoJerarquia()
         let clusters = $("#jstreeConsultaTecnicos").jstree("get_selected", true)
             .filter(e => e.original.nivel == $scope.nGeografiaPagos)
@@ -206,11 +206,9 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                             row[2] = elemento.usuarioFFM ? elemento.usuarioFFM : '-';
                             row[3] = nombreCompleto;
                             row[4] = elemento.ciudadOrigen ? elemento.ciudadOrigen : '-';
-                            row[5] = '<i class="fa fa-check-double icon-item" title="Liberar Pagos" onclick="consultarPagos(' + "'" + elemento.numEmpleado + "'" + ')"></i>';
+                            row[5] = '<span onclick="consultarPagos(' + "'" + elemento.numEmpleado + "'" + ')" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnCambiaContrasena" style="padding:4px 0px !important"><i class="fas fa-check-double" aria-hidden="true"></i></span>';
                             arraRow.push(row);
                         })
-
-
                     } else {
                         toastr.error(response.data.resultDescripcion);
                     }
@@ -220,14 +218,14 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
             }
             pagosTecnicosTable = $('#pagosTecnicosTable').DataTable({
                 "paging": true,
-                "lengthChange": false,
-                "ordering": false,
-                "pageLength": 10,
-                "info": false,
-                "data": arraRow,
-                "autoWidth": true,
-                "language": idioma_espanol_not_font,
-                "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+					"lengthChange": false,
+					"ordering": false,
+					"pageLength": 10,
+					"info": true,
+					"scrollX": false,
+					"data": arraRow,
+					"autoWidth": false,
+					"language": idioma_espanol_not_font,
             });
             swal.close();
         })
@@ -260,7 +258,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                     validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
                     validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
                     validateCreedText = llavesResult.KEY_TEXTFORMATO_CREED_RES ? KEY_TEXTFORMATO_CREED_RES : '';
-                    
+
                     if ($scope.nEstatusPagosTecnicos !== null) {
                         let statusList = $scope.nEstatusPagosTecnicos.split(",");
                         $scope.listaStatus = statusList;
@@ -416,12 +414,12 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                 "paging": true,
                 "lengthChange": false,
                 "ordering": false,
-                "pageLength": 10,
-                "info": false,
+                "pageLength": 5,
+                "info": true,
+                "scrollX": false,
                 "data": arraRow,
-                "autoWidth": true,
-                "language": idioma_espanol_not_font,
-                "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+                "autoWidth": false,
+                "language": idioma_espanol_not_font
             });
             $('#modalPagos').modal('show');
         } else {
@@ -532,11 +530,11 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
             return false;
         }
 
-        if(isSwal){
+        if (isSwal) {
             swal({ text: 'Espera un momento...', allowOutsideClick: false });
             swal.showLoading();
         }
-      
+
         let params = { idsGeografia: clusters, idTipoUsuario: puestosCopy };
         let arraRow = [];
         if (usuariosCambiaContrasena) {
@@ -562,8 +560,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                             row[3] = elemento.usuario ? elemento.usuario : 'Sin informaci&oacute;n';
                             row[4] = elemento.nombreCompleto ? elemento.nombreCompleto : 'Sin informaci&oacute;n';
                             row[5] = elemento.geografia ? elemento.geografia : 'Sin informaci&oacute;n';
-                            row[6] = elemento.fechaActualizacion ? elemento.fechaActualizacion : 'Sin informaci&oacute;n';
-                            row[7] = '<i class="fa fa-key icon-item" title="Cambiar contrase&ntilde;a" onclick="restablecerContrasena(' + elemento.idUsuario + ')"></i>';
+                            row[6] = '<span onclick="restablecerContrasena(' + elemento.idUsuario + ')" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnCambiaContrasena"><i class="fa fa-key" aria-hidden="true"></i></span>';
                             arraRow.push(row);
                         })
 
@@ -579,11 +576,11 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                 "lengthChange": false,
                 "ordering": false,
                 "pageLength": 10,
-                "info": false,
+                "info": true,
+                "scrollX": false,
                 "data": arraRow,
-                "autoWidth": true,
+                "autoWidth": false,
                 "language": idioma_espanol_not_font,
-                "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
             });
             swal.close();
         })

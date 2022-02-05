@@ -13,28 +13,24 @@
                     <i class="fa fa-search"></i>
                 </button>
             </div>
-            <div class="col-2 offset-7 search-form">
-                <input placeholder="Buscar" type="text" autocomplete="off"
-                    style=" height: 2em !important;margin-top: 2em !important;"
-                    class="search-filtro form-control form-control-sm mt-0" id="searchTextGeneral"><i
-                    class="fa fa-search icon-search" style="margin-top: -1.5em;"></i>
-            </div>
         </div>
     </div>
-    <div class="content-fluid" style="margin-top: 0.7em;">
-        <table id="pagosTecnicosTable" class="display table" cellspacing="0" width="100%">
-            <thead id="thead_pagos_tecnicos">
-                <tr>
-                    <th>FOTO</th>
-                    <th>#EMPLEADO</th>
-                    <th>USUARIO</th>
-                    <th>NOMBRE</th>
-                    <th>CIUDAD ORIGEN</th>
-                    <th>PAGOS</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
+    <div class="content-fluid">
+        <div class="table-responsive">
+            <table id="pagosTecnicosTable" class="display table" cellspacing="0" width="100%">
+                <thead id="thead_table">
+                    <tr>
+                        <th>FOTO</th>
+                        <th>#EMPLEADO</th>
+                        <th>USUARIO</th>
+                        <th>NOMBRE</th>
+                        <th>CIUDAD ORIGEN</th>
+                        <th>LIBERAR PAGOS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

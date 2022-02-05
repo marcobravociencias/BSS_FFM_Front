@@ -36,31 +36,26 @@
                     <i class="fa fa-search"></i>
                 </button>
             </div>
-            <div class="col-2 offset-5 search-form">
-                <input placeholder="Buscar" type="text" autocomplete="off"
-                    style=" height: 2em !important; margin-top: 2em !important;"
-                    class="search-filtro form-control form-control-sm mt-0" id="searchTextUsuario"><i
-                    class="fa fa-search icon-search" style="margin-top: -1.5em;"></i>
-            </div>
         </div>
     </div>
 
-    <div class="content-fluid" style="margin-top: 0.7em;">
-        <table id="cambiaContrasenaTable" class="display table" cellspacing="0" width="100%">
-            <thead id="thead_cambia_contrasena">
-                <tr>
-                    <th>FOTO</th>
-                    <th>#EMPLEADO</th>
-                    <th>PUESTO</th>
-                    <th>USUARIO</th>
-                    <th>NOMBRE</th>
-                    <th>UBICACI&Oacute;N</th>
-                    <th>FECHA ACTUALIZACI&Oacute;N</th>
-                    <th>ACCIONES</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
+    <div class="content-fluid">
+        <div class="table-responsive">
+            <table id="cambiaContrasenaTable" class="display table" cellspacing="0" width="100%">
+                <thead id="thead_table">
+                    <tr>
+                        <th>FOTO</th>
+                        <th>#EMPLEADO</th>
+                        <th>PUESTO</th>
+                        <th>USUARIO</th>
+                        <th>NOMBRE</th>
+                        <th>UBICACI&Oacute;N</th>
+                        <th>CAMBIAR CONTRASE&Ntilde;A</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
