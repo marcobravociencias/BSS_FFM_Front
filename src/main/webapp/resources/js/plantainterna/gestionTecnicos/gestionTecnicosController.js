@@ -719,11 +719,10 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
         } else {
             $scope.isCargaArchivos = false;
             $scope.archivosA = {};
-            if ($("#fileArch").get(0).files[0] !== undefined) {
-                $(".text_select").text("Selecciona un archivo");
-                $(".box__dragndrop").text("o arrastra aqu\u00ED");
-                $("#fileArch").val('');
-            }
+            $(".text_select").text("Selecciona un archivo");
+            $(".box__dragndrop").text("o arrastra aqu\u00ED");
+            $("#fileArch").val("");
+            $("#fileArch").prop("src", "");
         }
     }
 
@@ -850,13 +849,13 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
     });
 
     $scope.convertFile = function (e, type) {
-        console.log(e);
+        // console.log(e);
         if (e.target.files[0]) {
             let reader = new FileReader();
             reader.readAsDataURL(e.target.files[0]);
             reader.onload = function () {
                 let fileBase64 = reader.result.toString().split(",")[1];
-                console.log(fileBase64);
+                // console.log(fileBase64);
                 if (type == 'agregar') {
                     $scope.nombreFileAdd = e.target.files[0].name;
                     $scope.justificacionA.file = fileBase64;
@@ -869,8 +868,8 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
                 }
                 if (type == 'eliminar') {
                     $scope.nombreFileDel = e.target.files[0].name;
-                    $scope.justificacionD.fileD = fileBase64;
-                    console.log($scope.justificacionD.file)
+                    $scope.justificacionD.file = fileBase64;
+                    // console.log($scope.justificacionD.file)
                 }
                 if (type == 'archivos') {
                     $scope.nombreFileArch = e.target.files[0].name;
@@ -888,11 +887,10 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
         if ($scope.auxDisp.id !== undefined || $scope.tecnicoDisp.id !== undefined) {
             swal({ text: 'Espera un momento...', allowOutsideClick: false });
             swal.showLoading();
-            if ($('#fileAddJust').get(0).files[0] !== undefined) {
-                $(".text_select").text("Selecciona un archivo");
-                $(".box__dragndrop").text("o arrastra aqu\u00ED");
-                $('#fileAddJust').val('');
-            }
+            $(".text_select").text("Selecciona un archivo");
+            $(".box__dragndrop").text("o arrastra aqu\u00ED");
+            $('#fileAddJust').val("");
+            $("#fileAddJust").prop("src", "");
             $('.datepicker').datepicker({
                 format: 'dd/mm/yyyy',
                 autoclose: true,
@@ -934,7 +932,7 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
                 if (isConfirm) {
                     swal({ text: 'Espera un momento...', allowOutsideClick: false });
                     swal.showLoading();
-                    console.log($scope.justificacionA)
+                    // console.log($scope.justificacionA)
                     let paramsAdd = {};
                     gestionTecnicosService.agregarJustificacionGestionTec(paramsAdd).then(function success(response) {
                         console.log(response)
@@ -963,12 +961,10 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
         swal.showLoading();
         $scope.isEdit = true;
         $("#comentarioEditar").val('');
-        if ($("#fileEditJust").get(0).files[0] !== undefined) {
-            $(".text_select").text("Selecciona un archivo");
-            $(".box__dragndrop").text("o arrastra aqu\u00ED");
-            $("#fileEditJust").val('');
-            console.log("entro")
-        }
+        $(".text_select").text("Selecciona un archivo");
+        $(".box__dragndrop").text("o arrastra aqu\u00ED");
+        $("#fileEditJust").val("");
+        $("#fileEditJust").prop("src", "");
         $scope.justificacionE = justificacion;
         $('#fecha_inicio_justificacion_update').datepicker('update', $scope.justificacionE.InicioJustificacion);
         $('#fecha_fin_justificacion_update').datepicker('update', $scope.justificacionE.FinJustificacion);
@@ -994,7 +990,7 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
             $scope.justificacionE = eJustificacion;
             swal({ text: 'Espera un momento...', allowOutsideClick: false });
             swal.showLoading();
-            console.log($scope.justificacionE)
+            // console.log($scope.justificacionE)
             let params = {};
             gestionTecnicosService.editarJustificacionGestionTec(params).then(function success(response) {
                 console.log(response)
@@ -1024,11 +1020,10 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
         $scope.justificacionD = justificacion;
         $scope.isEdit = false;
         $("#comentarioEliminar").val('');
-        if ($("#fileDelJust").get(0).files[0] !== undefined) {
-            $(".text_select").text("Selecciona un archivo");
-            $(".box__dragndrop").text("o arrastra aqu\u00ED");
-            $("#fileDelJust").val('');
-        }
+        $(".text_select").text("Selecciona un archivo");
+        $(".box__dragndrop").text("o arrastra aqu\u00ED");
+        $("#fileDelJust").val("");
+        $("#fileDelJust").prop("src", "");
         $("#modal-editar-justificacion").modal('show');
         swal.close();
     }
@@ -1050,7 +1045,7 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
         if (isValid) {
             swal({ text: 'Espera un momento...', allowOutsideClick: false });
             swal.showLoading();
-            console.log($scope.justificacionD)
+            // console.log($scope.justificacionD)
             let params = {};
             gestionTecnicosService.eliminarJustificacionGestionTec(params).then(function success(response) {
                 console.log(response)
