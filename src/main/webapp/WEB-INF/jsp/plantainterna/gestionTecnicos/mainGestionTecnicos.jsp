@@ -148,7 +148,7 @@
                                             <button class="btn btn-sm btnDetalleJustificacion" ng-click="consultarComentariosJustificacion()"><i class="fa fa-comments"></i></button>
                                             <button class="btn btn-sm btnDetalleJustificacion" ng-click="consultarArchivosJustificacion()" style="padding: 0.3em 0.7em !important;"><i class="fa fa-file"></i></button>
                                             <button class="btn btn-sm btnDetalleJustificacion" ng-click="openModalEditarJustificacion(justificacionDetalle)"><i class="fa fa-pencil-square"></i></button>
-                                            <button class="btn btn-sm btnDetalleJustificacion" ng-click="openModalEliminarJustificacion()"><i class="far fa-trash-alt"></i></button>
+                                            <button class="btn btn-sm btnDetalleJustificacion" ng-click="openModalEliminarJustificacion(justificacionDetalle)"><i class="far fa-trash-alt"></i></button>
                                         </div>
                                     </div>
                                     <div ng-show="!isJustificacion">

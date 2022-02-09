@@ -10,7 +10,7 @@
 
 
 #myTab {
-    padding: 1em 1em 2em 1em;
+    padding: 1em;
 }
 
 #myTab .nav-item:first-child .nav-link {
@@ -43,119 +43,6 @@
     padding: 0;
 }
 
-#container_gestion_Universal tr th, #modalPagos tr th {
-    font-size: 0.7em;
-    text-align: center;
-}
-
-#container_gestion_Universal .table td, #container_gestion_Universal .table th,
-#modalPagos .table td, #modalPagos .table th {
-    border-top: 1px solid #fff;
-    vertical-align: middle;
-    white-space: nowrap;
-}
-
-#container_gestion_Universal .table thead,
-#modalPagos .table thead {
-    border-bottom: 1px solid #ccc;
-}
-
-#container_gestion_Universal .table tr td, #container_gestion_Universal .table tr td,
-#modalPagos .table tr td, #modalPagos .table tr td {
-    font-size: 0.7em;
-    font-family: "Montserrat" !important;
-    text-align: center;
-    border-top: 1px white solid;
-    border-bottom: 1px white solid;
-}
-
-#container_gestion_Universal div.dataTables_wrapper div.dataTables_length label,
-#modalPagos div.dataTables_wrapper div.dataTables_length label {
-    font-weight: inherit !important;
-    color: #828080 !important;
-}
-
-#container_gestion_Universal .dataTables_length .form-control.form-control-sm,
-#modalPagos .dataTables_length .form-control.form-control-sm {
-    color: #9a9999 !important;
-    border-bottom: 2px solid #e4e2e2 !important;
-    font-family: "Montserrat" !important;
-}
-
-#container_gestion_Universal select.form-control.form-control-sm, #container_gestion_Universal select.form-control.form-control-sm,
-#modalPagos select.form-control.form-control-sm, #modalPagos select.form-control.form-control-sm {
-    border: none;
-}
-
-#container_gestion_Universal .table.dataTable.no-footer, #container_gestion_Universa .table.dataTable.no-footer,
-#modalPagos .table.dataTable.no-footer, #modalPagos .table.dataTable.no-footer {
-    border-bottom: none;
-}
-
-#container_gestion_Universal .pagination,
-#modalPagos .pagination {
-    display: block !important;
-}
-
-#container_gestion_Universal .pagination .paginate_button a.page-link,
-#modalPagos .pagination .paginate_button a.page-link {
-    color: #828080;
-    font-family: "Montserrat";
-    background-color: white !important;
-    box-shadow: none !important;
-}
-
-#container_gestion_Universal .pagination .paginate_button.active,
-#modalPagos .pagination .paginate_button.active {
-    background-color: gray !important;
-}
-
-#container_gestion_Universal .pagination .previous a.page-link,
-#modalPagos .pagination .previous a.page-link {
-    color: white !important;
-    font-size: 0;
-}
-
-#container_gestion_Universal .pagination .next a.page-link,
-#modalPagos .pagination .next a.page-link {
-    color: white !important;
-    font-size: 0;
-}
-
-#container_gestion_Universal .pagination .previous a:after,
-#modalPagos .pagination .previous a:after {
-    font-family: FontAwesome;
-    display: inline-block;
-    content: "\f104";
-    visibility: visible;
-    color: #828080 !important;
-    font-size: initial !important;
-}
-
-#container_gestion_Universal .pagination .next a:before,
-#modalPagos .pagination .next a:before {
-    font-family: FontAwesome;
-    display: inline-block;
-    content: "\f105";
-    visibility: visible;
-    color: #828080 !important;
-    font-size: initial !important;
-}
-
-#container_gestion_Universal .dataTables_wrapper .dataTables_paginate .paginate_button, #container_gestion_Universal .dataTables_wrapper .dataTables_paginate .paginate_button a,
-#modalPagos .dataTables_wrapper .dataTables_paginate .paginate_button, #modalPagos .dataTables_wrapper .dataTables_paginate .paginate_button a {
-    padding: 0 !important;
-}
-
-#container_gestion_Universal .pagination .paginate_button>.active,
-#modalPagos .pagination .paginate_button>.active {
-    border: #000000 !important;
-}
-
-#pagosTecnicosTable img, #cambiaContrasenaTable img {
-    box-shadow: 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%), 0 2px 4px -1px rgb(0 0 0 / 30%);
-}
-
 .search-filtro {
     align-items: stretch;
     background: white !important;
@@ -174,7 +61,7 @@
     background-color: #ffffff !important;
     color: #7716fa !important;
     border: solid 1px #7716fa !important;
-    padding: 0.4em 2em;
+    padding: 0.4em 1.5em;
     border-radius: 5px;
     font-size: 0.7em;
     position: relative;
@@ -417,7 +304,7 @@
     */
 }
 
-.pagos-selected{
+.pagos-selected {
     margin: 0 !important;
 }
 
@@ -452,8 +339,8 @@
 .columna-filtro-ind-rep::after {
     content: "";
     position: absolute;
-    right: 19px;
-    top: 35%;
+    right: 5px;
+    top: 65%;
     width: 0;
     height: 0;
     border-left: 0.3em solid transparent;
@@ -461,6 +348,10 @@
     border-top: 0.6em solid #939db2;
     clear: both;
     /*z-index: 2;*/
+}
+
+.columna-filtro-ind-rep {
+    padding-right: 0;
 }
 
 .input-filtro {
@@ -472,6 +363,7 @@
     border-bottom: 1px solid white;
     background: white !important;
     border-radius: 0.5em !important;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 7%), 0 1px 2px 0 rgb(0 0 0 / 5%) !important;
 }
 
 .input-filtro::placeholder {
@@ -546,8 +438,98 @@ label.dropdown-item.form-check-inputfiltro {
     padding: 0.5em 1.5em !important
 }
 
-#modalFotoTecnico span{
+#modalFotoTecnico span {
     font-size: 12px !important;
     font-family: 'Montserrat' !important;
     margin: 0.5em auto;
+}
+
+
+.span-consulta {
+    color: #9d9d9d;
+    font-size: .9em;
+    margin: 0;
+}
+
+
+#cambiaContrasenaTable tbody tr:nth-child(even),
+#pagosTecnicosTable tbody tr:nth-child(even),
+#pagosLiberarTable tbody tr:nth-child(even) {
+    background: #f5f5f5;
+}
+
+#cambiaContrasenaTable>tbody>tr>td,
+#pagosTecnicosTable>tbody>tr>td,
+#pagosLiberarTable>tbody>tr>td {
+    white-space: nowrap;
+    color: #39455b;
+    font-family: 'Montserrat';
+    font-size: .8em;
+    border-top: 0px solid #eceeef !important;
+    text-align: center;
+}
+
+#cambiaContrasenaTable thead th,
+#pagosTecnicosTable thead th,
+#pagosLiberarTable thead th {
+    position: relative;
+    background-color: #b1b1b1;
+    color: #fff;
+    font-size: 0.8em;
+    white-space: nowrap;
+    padding: 1em;
+    border: none;
+    font-weight: normal;
+    text-align: center;
+}
+
+#cambiaContrasenaTable tbody tr td,
+#pagosTecnicosTable tbody tr td,
+#pagosLiberarTable tbody tr td {
+    padding: 0.5em;
+    border: none;
+}
+
+.page-link {
+    font-size: 0.7em !important;
+    font-family: "Montserrat" !important;
+}
+
+.dataTables_info {
+    font-size: 0.7em;
+    font-family: "Montserrat" !important;
+    text-align: left;
+    padding-left: 0.5em;
+}
+
+.dataTables_paginate.paging_simple_numbers {
+    float: right;
+}
+
+.dataTables_filter {
+    font-size: 0.7em !important;
+    font-family: 'Montserrat';
+}
+
+div.dataTables_wrapper div.dataTables_filter input {
+    width: 11.3em;
+    height: 2.05em;
+    margin-right: 1em;
+}
+
+/* CSS TABLE */
+
+.btnCambiaContrasena {
+    background-color: #7716fa !important;
+    color: #fff !important;
+    -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    /* box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%); */
+    font-size: 0.7em;
+    text-align: center;
+}
+
+.btn-option {
+    padding: 4px 10px !important;
+    border-radius: 0.2rem !important;
+    cursor: pointer;
 }

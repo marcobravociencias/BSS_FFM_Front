@@ -17,8 +17,6 @@
         <link rel="manifest" href="${pageContext.request.contextPath}/resources/img/iconsistema/manifest.json" />
         <link href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap.min.css"
             rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap-select.min.css"
-            rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/font-awesome.css"
             rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/dataTables.fontAwesome.css"
@@ -72,14 +70,14 @@
                                     <li class="nav-item"
                                         ng-if="accionesUserConfigText.indexOf('accionConsultaVehiculos') === -1">
                                         <a class="nav-link active" id="consulta-tab" data-toggle="tab" href="#consulta"
-                                            role="tab" aria-controls="consulta" onclick="resetAllSearch()"
+                                            role="tab" aria-controls="consulta" onclick="resetAll()"
                                             aria-selected="true">Consultar
                                             Veh&iacute;culos</a>
                                     </li>
                                     <li class="nav-item"
                                         ng-if="isEdit && accionesUserConfigText.indexOf('accionEditaVehiculos') === -1">
-                                        <a class="nav-link" id="modifica-tab" data-toggle="tab" href="#modifica"
-                                            role="tab" aria-controls="modifica" ng-show="isEdit"
+                                        <a class="nav-link" id="modifica-tab" data-toggle="tab" href="#alta"
+                                            role="tab" aria-controls="alta" ng-show="isEdit"
                                             aria-selected="false">Modificar
                                             Veh&iacute;culo</a>
                                     </li>
@@ -89,6 +87,12 @@
                                             ng-show="permisosConfigUser" onclick="resetAll()" role="tab"
                                             aria-controls="alta" aria-selected="false">Alta
                                             Veh&iacute;culo</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="elimina-tab" data-toggle="tab" href="#elimina"  ng-if="accionesUserConfigText.indexOf('accionActivaVehiculos') === -1"
+                                            role="tab" aria-controls="elimina" onclick="resetAll()"
+                                            aria-selected="true">Activar
+                                            Veh&iacute;culos</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content">
@@ -101,8 +105,11 @@
                                         aria-labelledby="consulta-tab">
                                         <jsp:include page="./consultarVehiculo.jsp"></jsp:include>
                                     </div>
+                                    <div class="tab-pane fade" id="elimina" role="tabpanel"  ng-if="accionesUserConfigText.indexOf('accionActivaVehiculos') === -1"
+                                        aria-labelledby="elimina-tab">
+                                        <jsp:include page="./consultarActivaVehiculo.jsp"></jsp:include>
+                                    </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>

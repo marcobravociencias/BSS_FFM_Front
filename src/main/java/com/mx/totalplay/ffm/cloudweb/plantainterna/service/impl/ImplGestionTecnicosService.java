@@ -65,7 +65,7 @@ public class ImplGestionTecnicosService implements GestionTecnicosService {
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
 		String tokenAccess = principalDetail.getAccess_token();
 		logger.info("consultaTecnicosGestionTecnicos ## " + tokenAccess);
-		String urlRequest = principalDetail.getDireccionAmbiente().concat(constGestionTecnicos.getConsultaTecnicosGestionTecnicos());
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constGestionTecnicos.getConsultaMotivosGestionTecnicos());
 		logger.info("### URL consultaTecnicosGestionTecnicos():" + urlRequest);
 		
 		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
@@ -85,7 +85,7 @@ public class ImplGestionTecnicosService implements GestionTecnicosService {
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
 		String tokenAccess = principalDetail.getAccess_token();
 		logger.info("consultaDisponibilidadTecGestionTecnicos ## " + tokenAccess);
-		String urlRequest = principalDetail.getDireccionAmbiente().concat(constGestionTecnicos.getConsultaDisponibilidadTecGestionTecnicos());
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constGestionTecnicos.getConsultaMotivosGestionTecnicos());
 		logger.info("### URL consultaDisponibilidadTecGestionTecnicos():" + urlRequest);
 		
 		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
@@ -106,7 +106,7 @@ public class ImplGestionTecnicosService implements GestionTecnicosService {
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
 		String tokenAccess = principalDetail.getAccess_token();
 		logger.info("consultaDisponibilidadAuxGestionTecnicos ## " + tokenAccess);
-		String urlRequest = principalDetail.getDireccionAmbiente().concat(constGestionTecnicos.getConsultaDisponibilidadAuxGestionTecnicos());
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constGestionTecnicos.getConsultaMotivosGestionTecnicos());
 		logger.info("### URL consultaDisponibilidadAuxGestionTecnicos():" + urlRequest);
 		
 		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
@@ -117,6 +117,186 @@ public class ImplGestionTecnicosService implements GestionTecnicosService {
 				ServiceResponseResult.class, 
 				tokenAccess);
 		logger.info("### RESULT consultaDisponibilidadAuxGestionTecnicos(): " + gson.toJson(response));
+		return response;
+	}
+
+	@Override
+	public ServiceResponseResult consultaDetalleJustificacionGestionTec(String params) {
+		logger.info("ImplSoporteGestionTecnicos.class [metodo = consultaDetalleJustificacionGestionTec() ] \n"+ gson.toJson(params));
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String tokenAccess = principalDetail.getAccess_token();
+		logger.info("consultaDetalleJustificacionGestionTec ## " + tokenAccess);
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constGestionTecnicos.getConsultaMotivosGestionTecnicos());
+		logger.info("### URL consultaDetalleJustificacionGestionTec():" + urlRequest);
+		
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		Map<String, String> paramsRequest = new HashMap<String, String>();
+		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(
+				paramsRequest, 
+				urlRequest,
+				ServiceResponseResult.class, 
+				tokenAccess);
+		logger.info("### RESULT consultaDetalleJustificacionGestionTec(): " + gson.toJson(response));
+		return response;
+	}
+
+	@Override
+	public ServiceResponseResult consultaDetalleMesGestionTec(String params) {
+		logger.info("ImplSoporteGestionTecnicos.class [metodo = consultaDetalleMesGestionTec() ] \n"+ gson.toJson(params));
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String tokenAccess = principalDetail.getAccess_token();
+		logger.info("consultaDetalleMesGestionTec ## " + tokenAccess);
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constGestionTecnicos.getConsultaMotivosGestionTecnicos());
+		logger.info("### URL consultaDetalleMesGestionTec():" + urlRequest);
+		
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		Map<String, String> paramsRequest = new HashMap<String, String>();
+		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(
+				paramsRequest, 
+				urlRequest,
+				ServiceResponseResult.class, 
+				tokenAccess);
+		logger.info("### RESULT consultaDetalleMesGestionTec(): " + gson.toJson(response));
+		return response;
+	}
+
+	@Override
+	public ServiceResponseResult consultaComentariosJustificacionGestionTec(String params) {
+		logger.info("ImplSoporteGestionTecnicos.class [metodo = consultaComentariosJustificacionGestionTec() ] \n"+ gson.toJson(params));
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String tokenAccess = principalDetail.getAccess_token();
+		logger.info("consultaComentariosJustificacionGestionTec ## " + tokenAccess);
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constGestionTecnicos.getConsultaMotivosGestionTecnicos());
+		logger.info("### URL consultaComentariosJustificacionGestionTec():" + urlRequest);
+		
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		Map<String, String> paramsRequest = new HashMap<String, String>();
+		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(
+				paramsRequest, 
+				urlRequest,
+				ServiceResponseResult.class, 
+				tokenAccess);
+		logger.info("### RESULT consultaComentariosJustificacionGestionTec(): " + gson.toJson(response));
+		return response;
+	}
+
+	@Override
+	public ServiceResponseResult consultaArchivosJustificacionGestionTec(String params) {
+		logger.info("ImplSoporteGestionTecnicos.class [metodo = consultaArchivosJustificacionGestionTec() ] \n"+ gson.toJson(params));
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String tokenAccess = principalDetail.getAccess_token();
+		logger.info("consultaArchivosJustificacionGestionTec ## " + tokenAccess);
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constGestionTecnicos.getConsultaMotivosGestionTecnicos());
+		logger.info("### URL consultaArchivosJustificacionGestionTec():" + urlRequest);
+		
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		Map<String, String> paramsRequest = new HashMap<String, String>();
+		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(
+				paramsRequest, 
+				urlRequest,
+				ServiceResponseResult.class, 
+				tokenAccess);
+		logger.info("### RESULT consultaArchivosJustificacionGestionTec(): " + gson.toJson(response));
+		return response;
+	}
+
+	@Override
+	public ServiceResponseResult agregarJustificacionGestionTec(String params) {
+		logger.info("ImplSoporteGestionTecnicos.class [metodo = agregarJustificacionGestionTec() ] \n"+ gson.toJson(params));
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String tokenAccess = principalDetail.getAccess_token();
+		logger.info("agregarJustificacionGestionTec ## " + tokenAccess);
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constGestionTecnicos.getConsultaMotivosGestionTecnicos());
+		logger.info("### URL agregarJustificacionGestionTec():" + urlRequest);
+		
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		Map<String, String> paramsRequest = new HashMap<String, String>();
+		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(
+				paramsRequest, 
+				urlRequest,
+				ServiceResponseResult.class, 
+				tokenAccess);
+		logger.info("### RESULT agregarJustificacionGestionTec(): " + gson.toJson(response));
+		return response;
+	}
+
+	@Override
+	public ServiceResponseResult editarJustificacionGestionTec(String params) {
+		logger.info("ImplSoporteGestionTecnicos.class [metodo = editarJustificacionGestionTec() ] \n"+ gson.toJson(params));
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String tokenAccess = principalDetail.getAccess_token();
+		logger.info("editarJustificacionGestionTec ## " + tokenAccess);
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constGestionTecnicos.getConsultaMotivosGestionTecnicos());
+		logger.info("### URL editarJustificacionGestionTec():" + urlRequest);
+		
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		Map<String, String> paramsRequest = new HashMap<String, String>();
+		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(
+				paramsRequest, 
+				urlRequest,
+				ServiceResponseResult.class, 
+				tokenAccess);
+		logger.info("### RESULT editarJustificacionGestionTec(): " + gson.toJson(response));
+		return response;
+	}
+
+	@Override
+	public ServiceResponseResult eliminarJustificacionGestionTec(String params) {
+		logger.info("ImplSoporteGestionTecnicos.class [metodo = eliminarJustificacionGestionTec() ] \n"+ gson.toJson(params));
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String tokenAccess = principalDetail.getAccess_token();
+		logger.info("eliminarJustificacionGestionTec ## " + tokenAccess);
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constGestionTecnicos.getConsultaMotivosGestionTecnicos());
+		logger.info("### URL eliminarJustificacionGestionTec():" + urlRequest);
+		
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		Map<String, String> paramsRequest = new HashMap<String, String>();
+		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(
+				paramsRequest, 
+				urlRequest,
+				ServiceResponseResult.class, 
+				tokenAccess);
+		logger.info("### RESULT eliminarJustificacionGestionTec(): " + gson.toJson(response));
+		return response;
+	}
+
+	@Override
+	public ServiceResponseResult agregarArchivoJustificacionGestionTec(String params) {
+		logger.info("ImplSoporteGestionTecnicos.class [metodo = agregarArchivoJustificacionGestionTec() ] \n"+ gson.toJson(params));
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String tokenAccess = principalDetail.getAccess_token();
+		logger.info("agregarArchivoJustificacionGestionTec ## " + tokenAccess);
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constGestionTecnicos.getConsultaMotivosGestionTecnicos());
+		logger.info("### URL agregarArchivoJustificacionGestionTec():" + urlRequest);
+		
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		Map<String, String> paramsRequest = new HashMap<String, String>();
+		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(
+				paramsRequest, 
+				urlRequest,
+				ServiceResponseResult.class, 
+				tokenAccess);
+		logger.info("### RESULT agregarArchivoJustificacionGestionTec(): " + gson.toJson(response));
+		return response;
+	}
+
+	@Override
+	public ServiceResponseResult eliminarArchivoJustificacionGestionTec(String params) {
+		logger.info("ImplSoporteGestionTecnicos.class [metodo = eliminarArchivoJustificacionGestionTec() ] \n"+ gson.toJson(params));
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String tokenAccess = principalDetail.getAccess_token();
+		logger.info("eliminarArchivoJustificacionGestionTec ## " + tokenAccess);
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constGestionTecnicos.getConsultaMotivosGestionTecnicos());
+		logger.info("### URL eliminarArchivoJustificacionGestionTec():" + urlRequest);
+		
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		Map<String, String> paramsRequest = new HashMap<String, String>();
+		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(
+				paramsRequest, 
+				urlRequest,
+				ServiceResponseResult.class, 
+				tokenAccess);
+		logger.info("### RESULT eliminarArchivoJustificacionGestionTec(): " + gson.toJson(response));
 		return response;
 	}
 }

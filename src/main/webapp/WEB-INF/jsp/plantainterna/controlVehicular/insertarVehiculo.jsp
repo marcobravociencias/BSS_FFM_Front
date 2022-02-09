@@ -18,7 +18,7 @@
         </li>
     </ul>
     <div class="tab-content" id="pills-tabContent">
-        <div class="tab-pane pills-pane fade show active" id="pills-general" role="tabpanel"
+        <div class="tab-pane pills-pane active show" id="pills-general" role="tabpanel"
             aria-labelledby="pills-general-tab">
             <div class="col-12">
                 <div class="form-row">

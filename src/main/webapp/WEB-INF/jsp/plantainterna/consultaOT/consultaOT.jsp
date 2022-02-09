@@ -213,8 +213,9 @@
                                     <!-- <th>USUARIO CREA</th> -->
                                     <!-- <th><i class="fa fa-wrench" id="herramienta"></i></th>
                                 <th><i class="fa fa-picture-o" id="muestra_IMG"></i></th> -->
-                                    <th style="text-align: center;">Detalle</th>
                                     <th style="text-align: center;">Evidencia</th>
+                                    <th style="text-align: center;">Detalle</th>
+                               
                                 </tr>
                             </thead>
                             <tbody>

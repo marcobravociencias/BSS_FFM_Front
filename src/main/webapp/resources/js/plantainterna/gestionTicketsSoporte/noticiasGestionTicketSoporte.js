@@ -7,14 +7,18 @@ app.noticiasGestionTicketSoporte = function ($scope, gestionTicketSoporteService
     $scope.banderaShow = false;
     $scope.tipoComentario;
     $scope.noticiaAnterior;
+    $scope.mensajeGeneral = '';
     
     $scope.consultarComentariosTicketSoporte = function(){
         let params = {
             objectId: "a153C0000008EDdQAM", 
             objectType: "OrdenServicio"
         }
-        swal({ text: 'Espera un momento...', allowOutsideClick: false });
-        swal.showLoading();
+        if (!swal.isVisible()) {
+            swal({ text: 'Espera un momento...', allowOutsideClick: false });
+            swal.showLoading();
+        }
+       
         gestionTicketSoporteService.consultarComentariosNoticiasSF(params).then((response) => {
             if (response.data.respuesta) {
                 if (response.data.result) {
@@ -37,6 +41,7 @@ app.noticiasGestionTicketSoporte = function ($scope, gestionTicketSoporteService
 
     $scope.responderComentarioTicket = function (numero) {
         $scope.showAdjuntar = true;
+       
         if ($scope.noticiaAnterior) {
             if ($scope.noticiaAnterior !== numero) {
                 $scope.banderaShow = false;
@@ -61,6 +66,7 @@ app.noticiasGestionTicketSoporte = function ($scope, gestionTicketSoporteService
             $scope.tipoResponse = 0;
             $scope.banderaShow = true;
         }
+        $('#content-subcomentario-' + numero).css('display', 'block');
         $scope.noticiaAnterior = numero;
     }
 
@@ -100,13 +106,14 @@ app.noticiasGestionTicketSoporte = function ($scope, gestionTicketSoporteService
     $scope.enviarMesajeGeneral = function () {
         // let params = new FormData();
         let params;
-        if (document.getElementById('text-general-ticket').value === '') {
-            mostrarMensajeWarning('Escribir un comentario')
+        console.log($scope.mensajeGeneral)
+        if ($scope.mensajeGeneral === '') {
+            mostrarMensajeWarningValidacion('Escribir un comentario')
             return false;
         }
         params = {
             objectId: 'a153C0000008EDdQAM',
-            text: document.getElementById('text-general-ticket').value
+            text: $scope.mensajeGeneral
         }
         if (document.querySelector('#fileComentariosTicket').files[0] !== undefined) {
             //params.append("params.documentName", document.querySelector('#fileOs').files[0].name.split('.')[0]);
@@ -121,7 +128,7 @@ app.noticiasGestionTicketSoporte = function ($scope, gestionTicketSoporteService
                 //params.append("params.document", reader.result.split(",")[1]);
                 params = {
                     objectId: 'a153C0000008EDdQAM',
-                    text: document.getElementById('text-general-ticket').value,
+                    text: $scope.mensajeGeneral,
                     documentName: document.querySelector('#fileComentariosTicket').files[0].name.split('.')[0],
                     documentExtension: document.querySelector('#fileComentariosTicket').files[0].name.split('.')[1],
                     document: reader.result.split(",")[1]
@@ -142,12 +149,11 @@ app.noticiasGestionTicketSoporte = function ($scope, gestionTicketSoporteService
         swal.showLoading();
         gestionTicketSoporteService.crearNoticia(params).then((response) => {
             console.log(response)
-            swal.close()
             if (response.data.respuesta) {
                 if (response.data.result) {
                     if (response.data.result.result === '0') {
                         $scope.resetFile();
-                        document.getElementById('text-general-ticket').value = ''
+                        $scope.mensajeGeneral = ''
                         $scope.consultarComentariosTicketSoporte();
                     } else {
                         mostrarMensajeWarningValidacion(response.data.result.resultDescripcion)
@@ -166,7 +172,7 @@ app.noticiasGestionTicketSoporte = function ($scope, gestionTicketSoporteService
         let params = {}
         if ($scope.tipoResponse === 0) {
             if (document.getElementById('texto-subcomentario-' + noticia).value === '') {
-                mostrarMensajeWarning('Escribir un comentario')
+                mostrarMensajeWarningValidacion('Escribir un comentario')
                 return false;
             }
 
@@ -237,7 +243,6 @@ app.noticiasGestionTicketSoporte = function ($scope, gestionTicketSoporteService
         swal.showLoading();
         gestionTicketSoporteService.crearSubNoticia(params).then(function success(response) {
             console.log(response)
-            swal.close();
             if (response.data.respuesta) {
                 if (response.data.result) {
                     if (response.data.result.result === '0') {

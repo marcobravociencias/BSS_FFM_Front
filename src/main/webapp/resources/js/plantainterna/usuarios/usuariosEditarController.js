@@ -1244,7 +1244,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     	$("#sexo_select_modificacion"). prop("selectedIndex",0);
     	$("#checkTotdosTecnicosMod").prop("checked",false);
     	$scope.detalleUsuario.ciudadNatal = "";
-    	$scope.detalleUsuario.idAsignacionAutomatica
+    	$scope.detalleUsuario.idAsignacionAutomatica;
     	$scope.detalleUsuario = {};
     	$scope.confirmacionModificacion = {};
     	$scope.mostrarAccesosMod = false;

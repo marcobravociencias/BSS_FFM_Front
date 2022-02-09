@@ -14,7 +14,7 @@
                             <thead id="thead_tecnicosCuenta">
                                 <tr>
                                     <th>FOTO</th>
-                                    <th>#TICKET</th>
+                                    <th>OT</th>
                                     <th>FOLIO</th>
                                     <th>#EMPLEADO</th>
                                     <th>EMPLEADO</th>

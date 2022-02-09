@@ -348,7 +348,7 @@ div.dataTables_wrapper div.dataTables_filter input {
 .user-filter {
     border-radius: 25px;
     text-align: center;
-    width: 20%;
+    /* width: 20%; */
 }
 
 .user-filter .fa-filter{

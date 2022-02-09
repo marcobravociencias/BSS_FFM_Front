@@ -72,7 +72,14 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	$scope.configPermisoAccionCreaUsuarios = false;
 	$scope.configPermisoAccionEditaUsuarios = false;
 	$scope.configPermisoAccionEliminaUsuarios = false;
-   
+	
+	//VALIDACIÓN DE CONTRASEÑAS
+	$scope.expresionesRegulares = /^(?=.*[a-z])\S{9,20}$/;
+	$scope.numeroValPass = /(?=.*\d)/;
+	$scope.permitidos = /(?=.*[\u0040]|[\u0024]|[\u0021]|[\u0025]|[\u002A]|[\u0023]|[\u003F]|[\u0026])/;
+	$scope.negados = /(?=.*[\u0020]|[\u0022]|[\u0027]|[\u0028]|[\u0029]|[\u002B]|[\u002C]|[\u002D]|[\u002E]|[\u002F]|[\u003A]|[\u003B]|[\u003C]|[\u003D]|[\u003E]|[\u007B-\u00FF])/;
+	$scope.txtExpresionValPassword = "";
+	
 	angular.element(document).ready(function () {
         $("#idBody").removeAttr("style");
         $("#moduloUsuarios").addClass('active');
@@ -108,6 +115,21 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 				$scope.filtroIntervenciones = llavesResult.N_FILTRO_INTERVENCIONES;
 				validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
                 validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
+                validateCreedText = llavesResult.KEY_TEXTFORMATO_CREED_RES ? KEY_TEXTFORMATO_CREED_RES : '';
+//                validateCreed = true;
+//                validateCreedMask = "sa";
+//                validateCreedText = "Valida todo pass"
+//                console.log(validateCreed);
+//                console.log(validateCreedMask);
+                if(validateCreed){
+                	if(validateCreedMask == null){
+                		$scope.txtExpresionValPassword = "La contraseña deberá tener mínimo 9 caracteres alfanuméricos, al menos un número y un caracter especial (@$!%*#?&).";
+                	}else{
+                		$scope.txtExpresionValPassword = validateCreedText;
+                	}
+                }else{
+                	$scope.txtExpresionValPassword = "";
+                }
 			}else{
 				toastr.info("No se encontraron configuraciones del usuario")
 			} 
@@ -1034,32 +1056,65 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 				$("#form-usuario").css("border", "1px solid #bdbdbd");
 			}
 			
+			var valCorrectaFormatoPassword = true;
 			if($scope.informacionRegistro.contrasena === "" || $scope.informacionRegistro.contrasena === undefined){
 				$("#form-pasword").css("border-bottom", "2px solid #f55756");
 				validacionInformacionGeneral = false;
 				mensaje = mensaje + "<br/> *Contraseña";
 			}else{
-				$("#form-pasword").css("border", "1px solid #bdbdbd");
+				
+				if (validateCreed) {
+					if (validateCreedMask && validateCreedMask !== null) {
+						if (!validateCreedMask.test($scope.informacionRegistro.contrasena)) {
+							$("#form-pasword").css("border-bottom", "2px solid #f55756");
+							$("#form-confir-password").css("border-bottom", "2px solid #f55756");
+							validacionInformacionGeneral = false;
+							valCorrectaFormatoPassword = false;
+							mensaje = mensaje + "<br/> *Formato de contraseñas";
+						}else{
+							$("#form-pasword").css("border", "1px solid #bdbdbd");
+							$("#form-confir-password").css("border", "1px solid #bdbdbd");
+						}
+					} else {
+						if ($scope.informacionRegistro.contrasena.length <= 8 || !$scope.expresionesRegulares.test($scope.informacionRegistro.contrasena) || 
+							!$scope.numeroValPass.test($scope.informacionRegistro.contrasena) || !$scope.permitidos.test($scope.informacionRegistro.contrasena) 
+							|| $scope.negados.test($scope.informacionRegistro.contrasena)) {
+							$("#form-pasword").css("border-bottom", "2px solid #f55756");
+							$("#form-confir-password").css("border-bottom", "2px solid #f55756");
+							validacionInformacionGeneral = false;
+							valCorrectaFormatoPassword = false;
+							mensaje = mensaje + "<br/> *Formato de contraseñas";
+						}else{
+							$("#form-pasword").css("border", "1px solid #bdbdbd");
+							$("#form-confir-password").css("border", "1px solid #bdbdbd");
+						}
+					}
+				}else{
+					$("#form-pasword").css("border", "1px solid #bdbdbd");
+				}
+				
 			}
 			
-			if($scope.informacionRegistro.confirContrasena === "" || $scope.informacionRegistro.confirContrasena === undefined){
-				$("#form-confir-password").css("border-bottom", "2px solid #f55756");
-				validacionInformacionGeneral = false;
-				mensaje = mensaje + "<br/> *Confirmación de contraseña";
-			}else{
-				var password = $("#form-pasword").val();
-		    	var confirPassword =  $("#form-confir-password").val();
-		    	if(password !== confirPassword){
-		    		$("#form-pasword").css("border-bottom", "2px solid #f55756");
-		    		$("#form-confir-password").css("border-bottom", "2px solid #f55756");
-		    		validacionInformacionGeneral = false;
-		    		mensaje = mensaje + "<br/> *Contraseña";
+			if(valCorrectaFormatoPassword){
+				if($scope.informacionRegistro.confirContrasena === "" || $scope.informacionRegistro.confirContrasena === undefined){
+					$("#form-confir-password").css("border-bottom", "2px solid #f55756");
+					validacionInformacionGeneral = false;
 					mensaje = mensaje + "<br/> *Confirmación de contraseña";
-		    		toastr.info("¡Las contraseñas no coinciden!");
-		    	}else{
-		    		$("#form-pasword").css("border", "1px solid #bdbdbd");
-		    		$("#form-confir-password").css("border", "1px solid #bdbdbd");
-		    	}
+				}else{
+					var password = $("#form-pasword").val();
+			    	var confirPassword =  $("#form-confir-password").val();
+			    	if(password !== confirPassword){
+			    		$("#form-pasword").css("border-bottom", "2px solid #f55756");
+			    		$("#form-confir-password").css("border-bottom", "2px solid #f55756");
+			    		validacionInformacionGeneral = false;
+			    		mensaje = mensaje + "<br/> *Contraseña";
+						mensaje = mensaje + "<br/> *Confirmación de contraseña";
+			    		toastr.info("¡Las contraseñas no coinciden!");
+			    	}else{
+			    		$("#form-pasword").css("border", "1px solid #bdbdbd");
+			    		$("#form-confir-password").css("border", "1px solid #bdbdbd");
+			    	}
+				}
 			}
 			
 			if($scope.informacionRegistro.nombre === "" || $scope.informacionRegistro.nombre === undefined){

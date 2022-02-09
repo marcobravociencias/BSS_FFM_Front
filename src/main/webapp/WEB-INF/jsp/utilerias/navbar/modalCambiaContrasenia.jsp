@@ -24,9 +24,7 @@
                             id="confirmPasswordUserLogin" maxlength="20" />
                     </div> 
                     <div class="message-password-warning" id="msj-valida" style="display: none;">
-                        <span><i class="fas fa-warning"></i>&nbsp;La contrase&ntilde;a debera tener m&iacute;nimo 9
-                            caracteres alfanum&eacute;ricos, al menos un n&uacute;mero y un caracter especial
-                            (@$!%*#?&).</span>
+                        <span id="creedText"></span>
                     </div>
                 </form>
             </div>

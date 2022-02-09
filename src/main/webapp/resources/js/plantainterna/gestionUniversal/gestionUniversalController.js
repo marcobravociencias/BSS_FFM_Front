@@ -25,10 +25,10 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
         "lengthChange": false,
         "ordering": false,
         "pageLength": 10,
-        "info": false,
-        "autoWidth": true,
-        "language": idioma_espanol_not_font,
-        "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+        "info": true,
+        "scrollX": false,
+        "autoWidth": false,
+        "language": idioma_espanol_not_font
     });
 
 
@@ -36,11 +36,11 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
         "paging": true,
         "lengthChange": false,
         "ordering": false,
-        "pageLength": 10,
-        "info": false,
-        "autoWidth": true,
-        "language": idioma_espanol_not_font,
-        "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+        "pageLength": 5,
+        "info": true,
+        "scrollX": false,
+        "autoWidth": false,
+        "language": idioma_espanol_not_font
     });
 
     usuariosCambiaContrasena = $('#cambiaContrasenaTable').DataTable({
@@ -48,10 +48,10 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
         "lengthChange": false,
         "ordering": false,
         "pageLength": 10,
-        "info": false,
-        "autoWidth": true,
-        "language": idioma_espanol_not_font,
-        "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+        "info": true,
+        "scrollX": false,
+        "autoWidth": false,
+        "language": idioma_espanol_not_font
     });
 
     $('#searchTextGeneral').on('keyup', function () {
@@ -82,16 +82,55 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
         $("#jstreeConsultaUsuarios").jstree("search", this.value);
     })
 
+    angular.element(document).ready(function () {
+        $("#modalGeografia").on("hidden.bs.modal", function () {
+            var geografias = $('#jstreeConsultaTecnicos').jstree("get_selected", true);
+            let textoGeografias = [];
+            angular.forEach(geografias, (geografia, index) => {
+                textoGeografias.push(geografia.text);
+            });
+            $('#inputSearchGeoTecnico').val(textoGeografias);
+
+            var geografiasUser = $('#jstreeConsultaUsuarios').jstree("get_selected", true);
+            let textoGeografiasUser = [];
+            angular.forEach(geografiasUser, (geografiaUser, index) => {
+                textoGeografiasUser.push(geografiaUser.text);
+            });
+            $('#inputSearchGeoUsuario').val(textoGeografiasUser);
+        })
+    });
+
+    $scope.puestoSeleccion = function () {
+        $('#txtPuesto').val($scope.listaSeleccionSelectGral($scope.listaPuestos));
+        $("#txtPuesto").css("border-bottom", "2px solid #d9d9d9");
+    }
+
     $scope.seleccionarTodos = function (paramFiltroParent) {
         paramFiltroParent.map(function (e) {
             e.checkedOpcion = true
         })
+        $('#txtPuesto').val($scope.listaSeleccionSelectGral(paramFiltroParent));
     }
 
     $scope.deseleccionarTodos = function (paramFiltroParent) {
         paramFiltroParent.map(function (e) {
             e.checkedOpcion = false
         })
+        $('#txtPuesto').val('');
+    }
+
+    $scope.listaSeleccionSelectGral = function (lista) {
+        var texto = "";
+        angular.forEach(lista, function (list, index) {
+            if (list.checkedOpcion) {
+                if (texto !== "") {
+                    texto = (texto + ", " + list.descripcion);
+                } else {
+                    texto = (list.descripcion);
+                }
+            }
+        });
+        return texto;
     }
 
     showImage = function (id, type) {
@@ -129,12 +168,10 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
     }
 
     $scope.consultarTecnicosPagos = function () {
-        swal({ text: 'Espera un momento...', allowOutsideClick: false });
-        swal.showLoading();
 
         //let ultimonivel = $scope.obtenerNivelUltimoJerarquia()
         let clusters = $("#jstreeConsultaTecnicos").jstree("get_selected", true)
-            .filter(e => e.original.nivel ==  $scope.nGeografiaPagos)
+            .filter(e => e.original.nivel == $scope.nGeografiaPagos)
             .map(e => parseInt(e.id));
 
         if (clusters.length == 0) {
@@ -145,7 +182,8 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
 
         let params = { idGeografias: clusters, idEstatusPagos: $scope.listaStatus };
         let arraRow = [];
-
+        swal({ text: 'Espera un momento...', allowOutsideClick: false });
+        swal.showLoading();
         if (pagosTecnicosTable) {
             pagosTecnicosTable.destroy();
         }
@@ -168,11 +206,9 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                             row[2] = elemento.usuarioFFM ? elemento.usuarioFFM : '-';
                             row[3] = nombreCompleto;
                             row[4] = elemento.ciudadOrigen ? elemento.ciudadOrigen : '-';
-                            row[5] = '<i class="fa fa-check-double icon-item" title="Liberar Pagos" onclick="consultarPagos(' + "'" + elemento.numEmpleado + "'" + ')"></i>';
+                            row[5] = '<span onclick="consultarPagos(' + "'" + elemento.numEmpleado + "'" + ')" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnCambiaContrasena" style="padding:4px 0px !important"><i class="fas fa-check-double" aria-hidden="true"></i></span>';
                             arraRow.push(row);
                         })
-
-
                     } else {
                         toastr.error(response.data.resultDescripcion);
                     }
@@ -182,17 +218,23 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
             }
             pagosTecnicosTable = $('#pagosTecnicosTable').DataTable({
                 "paging": true,
-                "lengthChange": false,
-                "ordering": false,
-                "pageLength": 10,
-                "info": false,
-                "data": arraRow,
-                "autoWidth": true,
-                "language": idioma_espanol_not_font,
-                "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+					"lengthChange": false,
+					"ordering": false,
+					"pageLength": 10,
+					"info": true,
+					"scrollX": false,
+					"data": arraRow,
+					"autoWidth": false,
+					"language": idioma_espanol_not_font,
             });
             swal.close();
         })
+    }
+
+    $scope.validaConsultarTecnicosPagos = function () {
+        if (!$scope.listaTecnicosPagos.length) {
+            $scope.consultarTecnicosPagos();
+        }
     }
 
     $scope.obtenerNivelUltimoJerarquia = function () {
@@ -215,6 +257,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                     $scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO.permisos;
                     validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
                     validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
+                    validateCreedText = llavesResult.KEY_TEXTFORMATO_CREED_RES ? KEY_TEXTFORMATO_CREED_RES : '';
 
                     if ($scope.nEstatusPagosTecnicos !== null) {
                         let statusList = $scope.nEstatusPagosTecnicos.split(",");
@@ -240,8 +283,9 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                         $scope.listaGeografia = listGeoPagos;
                         $scope.loadArbol();
                         let geografia = listGeoPagos;
+                        geografia.push({ id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state: { opened: true } });
                         geografia.map((e) => {
-                            e.parent = e.padre == null ? "#" : e.padre;
+                            e.parent = e.padre == null ? 0 : e.padre;
                             e.text = e.nombre;
                             e.icon = "fa fa-globe";
                             e.state = {
@@ -256,8 +300,9 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
 
                         $scope.listaGeografia = listGeoCambia;
                         let geografiaCambia = listGeoCambia;
+                        geografiaCambia.push({ id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state: { opened: true } });
                         geografiaCambia.map((e) => {
-                            e.parent = e.padre == null ? "#" : e.padre;
+                            e.parent = e.padre == null ? 0 : e.padre;
                             e.text = e.nombre;
                             e.icon = "fa fa-globe";
                             e.state = {
@@ -268,7 +313,12 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                         })
 
                         $('#jstreeConsultaTecnicos').bind('loaded.jstree', function (e, data) {
-                            $scope.consultarTecnicosPagos();
+                            var geografias = $('#jstreeConsultaTecnicos').jstree("get_selected", true);
+                            let textoGeografias = [];
+                            angular.forEach(geografias, (geografia, index) => {
+                                textoGeografias.push(geografia.text);
+                            });
+                            $('#inputSearchGeoTecnico').val(textoGeografias);
                         }).jstree({
                             'plugins': ["wholerow", "checkbox", "search"],
                             'core': {
@@ -286,7 +336,13 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                         });
 
                         $('#jstreeConsultaUsuarios').bind('loaded.jstree', function (e, data) {
-                            $scope.consultarUsuariosContrasena();
+                            var geografiasUser = $('#jstreeConsultaUsuarios').jstree("get_selected", true);
+                            let textoGeografiasUser = [];
+                            angular.forEach(geografiasUser, (geografiaUser, index) => {
+                                textoGeografiasUser.push(geografiaUser.text);
+                            });
+                            $('#inputSearchGeoUsuario').val(textoGeografiasUser);
+                            $scope.consultarUsuariosContrasena(true);
                         }).jstree({
                             'plugins': ["wholerow", "checkbox", "search"],
                             'core': {
@@ -358,12 +414,12 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                 "paging": true,
                 "lengthChange": false,
                 "ordering": false,
-                "pageLength": 10,
-                "info": false,
+                "pageLength": 5,
+                "info": true,
+                "scrollX": false,
                 "data": arraRow,
-                "autoWidth": true,
-                "language": idioma_espanol_not_font,
-                "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+                "autoWidth": false,
+                "language": idioma_espanol_not_font
             });
             $('#modalPagos').modal('show');
         } else {
@@ -448,11 +504,11 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
         }, 750);
     }
 
-    $scope.consultarUsuariosContrasena = function () {
+    $scope.consultarUsuariosContrasena = function (isSwal) {
 
         //let ultimonivel = $scope.obtenerNivelUltimoJerarquia()
         let clusters = $("#jstreeConsultaUsuarios").jstree("get_selected", true)
-            .filter(e => e.original.nivel ==  $scope.nGeografiaContrasenia)
+            .filter(e => e.original.nivel == $scope.nGeografiaContrasenia)
             .map(e => parseInt(e.id));
 
         if (clusters.length == 0) {
@@ -474,8 +530,11 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
             return false;
         }
 
-        swal({ text: 'Espera un momento...', allowOutsideClick: false });
-        swal.showLoading();
+        if (isSwal) {
+            swal({ text: 'Espera un momento...', allowOutsideClick: false });
+            swal.showLoading();
+        }
+
         let params = { idsGeografia: clusters, idTipoUsuario: puestosCopy };
         let arraRow = [];
         if (usuariosCambiaContrasena) {
@@ -501,8 +560,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                             row[3] = elemento.usuario ? elemento.usuario : 'Sin informaci&oacute;n';
                             row[4] = elemento.nombreCompleto ? elemento.nombreCompleto : 'Sin informaci&oacute;n';
                             row[5] = elemento.geografia ? elemento.geografia : 'Sin informaci&oacute;n';
-                            row[6] = elemento.fechaActualizacion ? elemento.fechaActualizacion : 'Sin informaci&oacute;n';
-                            row[7] = '<i class="fa fa-key icon-item" title="Cambiar contrase&ntilde;a" onclick="restablecerContrasena(' + elemento.idUsuario + ')"></i>';
+                            row[6] = '<span onclick="restablecerContrasena(' + elemento.idUsuario + ')" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnCambiaContrasena"><i class="fa fa-key" aria-hidden="true"></i></span>';
                             arraRow.push(row);
                         })
 
@@ -518,11 +576,11 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                 "lengthChange": false,
                 "ordering": false,
                 "pageLength": 10,
-                "info": false,
+                "info": true,
+                "scrollX": false,
                 "data": arraRow,
-                "autoWidth": true,
+                "autoWidth": false,
                 "language": idioma_espanol_not_font,
-                "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
             });
             swal.close();
         })
@@ -545,12 +603,12 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
         refuse = /(?=.*[\u0020]|[\u0022]|[\u0027]|[\u0028]|[\u0029]|[\u002B]|[\u002C]|[\u002D]|[\u002E]|[\u002F]|[\u003A]|[\u003B]|[\u003C]|[\u003D]|[\u003E]|[\u007B-\u00FF])/;
 
         if ($("#newPassword").val() == '' || $("#comentariosPassword").val() == '') {
-            toastr.warning('Todos los campos son obligatorios 2');
+            toastr.warning('Todos los campos son obligatorios');
             return false;
         }
 
         if (validateCreed) {
-            if (validateCreedMask && validateCreedMask !== null) {
+            if (validateCreedMask !== null && validateCreedText !== '') {
                 if (!validateCreedMask.test($("#newPasswordUserLogin").val())) {
                     toastr.warning('Formato invalido');
                     return false;
@@ -582,6 +640,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
             if (response.data.respuesta) {
                 $("#modalRestablecerContrasena").modal('hide');
                 toastr.success('Contrase\u00F1a restablecida correctamente');
+                $scope.consultarUsuariosContrasena(false);
             } else {
                 toastr.error(response.data.resultDescripcion);
             }

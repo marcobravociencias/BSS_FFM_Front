@@ -16,7 +16,7 @@
                                   <div style="text-align: center; padding-left: 0;" class="col-md-12">
                                     <form id="uploadFormAddJust" name="13" class="form-horizontal box form_drag_drop" novalidate="novalidate" enctype="multipart/form-data">
                                           <div class="box__input">
-                                            <input name="myFile" type="file" class="box__file inputFile" id="fileAddJust" ng-model="archivoAdd"/>
+                                            <input name="myFile" type="file" class="box__file inputFile" ng-on-change="convertFile($event, 'agregar')" id="fileAddJust" ng-model="archivoAdd"/>
                                             <label for="fileAddJust" id="etiqueta_archivo_edita_just">
                                               <strong class="text_select" style="cursor: pointer;">Selecciona un archivo</strong>
                                               <span class="box__dragndrop">o arrastra aqu&iacute;</span>

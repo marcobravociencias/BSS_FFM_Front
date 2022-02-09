@@ -90,7 +90,7 @@ public class ImplConsultaOTService implements ConsultaOTService {
                 ServiceResponseResult.class, tokenAcces);
         
         
-        if (response.getResult() instanceof Integer){
+        if (response.getResult() == null || response.getResult() instanceof Integer){
             dataResponse = DataTableResponse.builder()
                     .isRespuesta(false)
                     .data( dataArray )
@@ -117,8 +117,8 @@ public class ImplConsultaOTService implements ConsultaOTService {
                         dataArray[count][5] = object.get("descripcionMotivo") != null ? object.get("descripcionMotivo").getAsString().trim() : "";
                         dataArray[count][6] = object.get("descripcionEstatus") != null ? object.get("descripcionEstatus").getAsString().trim() : "";
                         dataArray[count][7] = object.get("descripcionEstado") != null ? object.get("descripcionEstado").getAsString().trim() : "";
-                        dataArray[count][8] = "<div class='tooltip-btn'> <span onclick='consultaDetalleOt("+i+")' class='btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones'><th><i class='icono_cons_bg fa fa-bars' aria-hidden='true'></i></th></span></div>";
-                        dataArray[count][9] = "<div class='tooltip-btn'> <span onclick='consultaImagenesOT(" + String.valueOf(object.get("idOrden").getAsInt()) + ", "+ String.valueOf(object.get("claveCliente")) + ")' class='btn-option btn-floating btn-evidencia btn-sm btn-secondary waves-effect waves-light'><th><i class='icono_cons_bg fa fa-picture-o' aria-hidden='true'></i></th></span></div>";
+                        dataArray[count][8] = "<div class='tooltip-btn'> <span onclick='consultaImagenesOT(" + String.valueOf(object.get("idOrden").getAsInt()) + ", "+ String.valueOf(object.get("claveCliente")) + ")' class='btn-option btn-floating btn-evidencia btn-sm btn-secondary waves-effect waves-light'><th><i class='icono_cons_bg fa fa-picture-o' aria-hidden='true'></i></th></span></div>";
+                        dataArray[count][9] = "<div class='tooltip-btn'> <span onclick='consultaDetalleOt("+i+")' class='btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones'><th><i class='icono_cons_bg fa fa-bars' aria-hidden='true'></i></th></span></div>";
 
                         count++;
 

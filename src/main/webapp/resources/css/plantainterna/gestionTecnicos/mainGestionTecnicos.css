@@ -767,3 +767,13 @@ div.actividades-contadorac-gris {
     display: flex;
     /* padding: 1em 1em 1em; */
 }
+
+.btn_subir_archivo {
+    background-color: #7716fa;
+    color: #ffff;
+}
+
+.btn_subir_archivo:hover {
+    background-color: #7716fa;
+    color: #ffff;
+}

@@ -36,14 +36,16 @@
                               <div style="text-align: center; padding-left: 0;" class="col-md-12">
                                 <form id="uploadFormEditaJust" name="13" class="form-horizontal box form_drag_drop" novalidate="novalidate" enctype="multipart/form-data">
                                       <div class="box__input">
-                                        <input name="myFile" type="file" class="box__file inputFile" id="fileArch" />
+                                        <input name="myFile" type="file" class="box__file inputFile" ng-on-change="convertFile($event, 'archivos')" id="fileArch" />
                                         <label for="fileArch" id="etiqueta_archivo_edita_just">
                                           <strong class="text_select">Selecciona un archivo</strong>
                                           <span class="box__dragndrop">o arrastra aqu&iacute;</span>
                                         </label>
                                         <br />
-                                      </div>
-                                    <div class="box__uploading"><i class="fas fa-cloud-upload-alt" style="display: block;"></i> </div>
+                                        <div class="box__uploading"><i class="fas fa-cloud-upload-alt" style="display: block;"></i> </div>
+                                        <br />
+                                        <button type="button" ng-click="agregarArchivoJustificacion()" class="btn_subir_archivo btn btn-sm btn-blue-grey">Subir Archivo</button>
+                                    </div>
                                 </form>
                               </div>
                         </div>
