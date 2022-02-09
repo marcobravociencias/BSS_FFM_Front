@@ -597,7 +597,10 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                 '</span> &nbsp;' +
                 '<span style="background-color: #58b3bf" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnTables" id="asignarIngeniero' + elemento.idTicket + '" onclick="abrirModalAsignar(' + "'" + elemento.idTicket + "'" + ')" >' +
                 '<i class="fa fa-user-circle" title="Asignar"></i>' +
-                '</span>';
+                '</span> &nbsp;' + 
+                '<span style="background-color: #58b3bf" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnTables" id="comantariosTicket' + elemento.idTicket + '" onclick="showComentarios(' + "'" + elemento.idTicket + "'" + ')" >' + 
+                '<i class="fa fa-comment" title="Comentarios"></i>' + 
+                '</span>'; ;
 
             arrayRow.push(row);
         });
@@ -679,31 +682,6 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                             $scope.ticketsSoporte = angular.copy(response.data.result.tickets);
                             $scope.buildTableTickets($scope.ticketsSoporte);
                             $.each($scope.ticketsSoporte, function (i, elemento) {
-                                let row = [];
-                                let nombreTecnico = elemento.nombreEmpleadoReporta + " " + elemento.apellidoPaEmpleadoReporta + " " + elemento.apellidoMaEmpleadoReporta;
-                                let nombreIngeniero = elemento.nombreEmpleadoIng + " " + elemento.apellidoPaEmpleadoIng + " " + elemento.apellidoMaEmpleadoIng;
-                                row[0] = elemento.idOrden !== undefined ? elemento.idOrden : 'Sin informaci&oacute;n';
-                                row[1] = elemento.idTicket == null ? 'Sin informaci&oacute;n' : elemento.idTicket !== undefined ? elemento.idTicket : 'Sin informaci&oacute;n';
-                                row[2] = elemento.os !== undefined ? elemento.os : 'Sin informaci&oacute;n';
-                                row[3] = elemento.fechaCreacion !== undefined ? elemento.fechaCreacion : 'Sin informaci&oacute;n';
-                                row[4] = elemento.descripcionFalla !== undefined ? elemento.descripcionFalla : 'Sin informaci&oacute;n';
-                                row[5] = elemento.telefono !== undefined ? elemento.telefono : 'Sin informaci&oacute;n';
-                                row[6] = nombreTecnico;
-                                row[7] = nombreIngeniero;
-                                row[8] = elemento.fechaAsignacion == null ? 'Sin informaci&oacute;n' : elemento.fechaAsignacion !== undefined ? elemento.fechaAsignacion : 'Sin informaci&oacute;n';
-                                row[9] = elemento.descripcionEstatus !== undefined ? elemento.descripcionEstatus : 'Sin informaci&oacute;n';
-                                row[10] = elemento.tiempoAtencion == null ? 'Sin informaci&oacute;n' : elemento.tiempoAtencion !== undefined ? elemento.tiempoAtencion : 'Sin informaci&oacute;n';
-                                row[11] = '<span style="background-color: #7716fa" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnTables" id="detalleIncidencia' + elemento.idTicket + '" onclick="consultaDetalleTicketSoporte(' + "'" + elemento.idTicket + "'" + ')" >' +
-                                    '<i class="fa fa-bars" title="Detalle"></i>' +
-                                    '</span> &nbsp;' +
-                                    '<span style="background-color: #58b3bf" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnTables" id="asignarIngeniero' + elemento.idTicket + '" onclick="abrirModalAsignar(' + "'" + elemento.idTicket + "'" + ')" >' +
-                                    '<i class="fa fa-user-circle" title="Asignar"></i>' +
-                                    '</span>&nbsp;' +
-                                    '<span style="background-color: #58b3bf" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnTables" id="comantariosTicket' + elemento.idTicket + '" onclick="showComentarios(' + "'" + elemento.idTicket + "'" + ')" >' +
-                                    '<i class="fa fa-comment" title="Comentarios"></i>' +
-                                    '</span>';
-
-                                arrayRow.push(row);
                                 if (elemento.descripcionEstatus === 'Abierto')
                                     $scope.contadores.abierto += 1;
 
@@ -1061,7 +1039,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         }).catch((err) => handleError(err));
     }
 
-    showComentarios = function(){
+    showComentarios = function () {
         if (!$scope.isConsultaComentarios) {
             $scope.isConsultaComentarios = true
             $scope.consultarComentariosTicketSoporte()
@@ -1070,7 +1048,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         }
     }
 
-    $scope.closeComentarios = function(){
+    $scope.closeComentarios = function () {
         $scope.isConsultaComentarios = false
     }
 }]);
