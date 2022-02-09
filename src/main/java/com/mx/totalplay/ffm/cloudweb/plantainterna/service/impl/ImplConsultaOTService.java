@@ -90,7 +90,7 @@ public class ImplConsultaOTService implements ConsultaOTService {
                 ServiceResponseResult.class, tokenAcces);
         
         
-        if (response.getResult() instanceof Integer){
+        if (response.getResult() == null || response.getResult() instanceof Integer){
             dataResponse = DataTableResponse.builder()
                     .isRespuesta(false)
                     .data( dataArray )
