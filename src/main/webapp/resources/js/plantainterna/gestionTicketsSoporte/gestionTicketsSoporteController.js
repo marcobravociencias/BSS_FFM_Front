@@ -27,6 +27,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     $scope.ticketSoporteDetalle = {};
     $scope.listIngenieros = [];
     $scope.ingenieroSelect = {};
+    $scope.isConsultaComentarios = false;
 
     let ingenieroTable = $('#ingenierosTable').DataTable({
         "paging": true,
@@ -612,6 +613,9 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                                     '</span> &nbsp;' +
                                     '<span style="background-color: #58b3bf" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnTables" id="asignarIngeniero' + elemento.idTicket + '" onclick="abrirModalAsignar(' + "'" + elemento.idTicket + "'" + ')" >' +
                                     '<i class="fa fa-user-circle" title="Asignar"></i>' +
+                                    '</span>&nbsp;' +
+                                    '<span style="background-color: #58b3bf" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnTables" id="comantariosTicket' + elemento.idTicket + '" onclick="showComentarios(' + "'" + elemento.idTicket + "'" + ')" >' +
+                                    '<i class="fa fa-comment" title="Comentarios"></i>' +
                                     '</span>';
 
                                 arrayRow.push(row);
@@ -985,6 +989,19 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                 mostrarMensajeWarningValidacion('No se pudo realizar la operaci&oacute;n')
             }
         }).catch((err) => handleError(err));
+    }
+
+    showComentarios = function(){
+        if (!$scope.isConsultaComentarios) {
+            $scope.isConsultaComentarios = true
+            $scope.consultarComentariosTicketSoporte()
+        } else {
+            $scope.isConsultaComentarios = false
+        }
+    }
+
+    $scope.closeComentarios = function(){
+        $scope.isConsultaComentarios = false
     }
 }]);
 

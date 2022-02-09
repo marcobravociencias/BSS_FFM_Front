@@ -148,7 +148,7 @@
                                 <th>H/A Asignaci&oacute;n</th>
                                 <th>Estatus</th>
                                 <th>Tiempo de atenci&oacute;n</th>
-                                <th>Opciones</th>
+                                <th style="width: 100px !important;">Opciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -285,6 +285,7 @@
     <jsp:include page="./modals/modalDetalle.jsp"></jsp:include>
     <jsp:include page="./modals/modalBusquedaCuenta.jsp"></jsp:include>
     <jsp:include page="./modals/modalAsignarTicket.jsp"></jsp:include>
+    <jsp:include page="./content/noticiasGestionTicketsSoporte.jsp"></jsp:include>
 </body>
 <!-- Scripts libraries -->
 <script src="${pageContext.request.contextPath}/resources/libraries/angularjs/js/angular.min.js"></script>
