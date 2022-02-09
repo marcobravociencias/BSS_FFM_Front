@@ -1514,7 +1514,6 @@ app.controller('controlVehicularController',
 										$("#alta-tab").removeClass("active");
 										$scope.isEdit = true;
 										$scope.$apply();
-										$("#jstreealta").jstree("destroy");
 										$scope.clearForm();
 										$scope.applyData(response.data.result.vehiculo);
 										setTimeout(function () {
