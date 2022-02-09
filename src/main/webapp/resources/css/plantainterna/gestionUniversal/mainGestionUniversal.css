@@ -10,7 +10,7 @@
 
 
 #myTab {
-    padding: 1em 1em 2em 1em;
+    padding: 1em;
 }
 
 #myTab .nav-item:first-child .nav-link {
@@ -61,7 +61,7 @@
     background-color: #ffffff !important;
     color: #7716fa !important;
     border: solid 1px #7716fa !important;
-    padding: 0.4em 2em;
+    padding: 0.4em 1.5em;
     border-radius: 5px;
     font-size: 0.7em;
     position: relative;

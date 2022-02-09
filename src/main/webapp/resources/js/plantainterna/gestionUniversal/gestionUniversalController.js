@@ -608,7 +608,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
         }
 
         if (validateCreed) {
-            if (validateCreedMask && validateCreedMask !== null) {
+            if (validateCreedMask !== null && validateCreedText !== '') {
                 if (!validateCreedMask.test($("#newPasswordUserLogin").val())) {
                     toastr.warning('Formato invalido');
                     return false;

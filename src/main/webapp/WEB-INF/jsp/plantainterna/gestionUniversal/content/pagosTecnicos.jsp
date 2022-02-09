@@ -9,7 +9,7 @@
             </div>
             <div class="col-md-1 search-form">
                 <button id="btnBuscar" type="button" class="btn btn-primary btnTotal"
-                    ng-click="consultarTecnicosPagos()" style="margin-top: 2.2em;">
+                    ng-click="consultarTecnicosPagos()" style="margin-top: 2.3em;">
                     <i class="fa fa-search"></i>
                 </button>
             </div>
@@ -20,12 +20,12 @@
             <table id="pagosTecnicosTable" class="display table" cellspacing="0" width="100%">
                 <thead id="thead_table">
                     <tr>
-                        <th>FOTO</th>
-                        <th>#EMPLEADO</th>
-                        <th>USUARIO</th>
-                        <th>NOMBRE</th>
-                        <th>CIUDAD ORIGEN</th>
-                        <th>LIBERAR PAGOS</th>
+                        <th>Foto</th>
+                        <th>N&uacute;m. empleado</th>
+                        <th>Usuario</th>
+                        <th>Nombre</th>
+                        <th>Ciudad origen</th>
+                        <th>Liberar pagos</th>
                     </tr>
                 </thead>
                 <tbody>

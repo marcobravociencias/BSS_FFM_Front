@@ -453,7 +453,7 @@ img.image-totalplayheader {
   height: 8px;
   border-width: 1px;
   top: 1px;
-  right: 1px;
+  right: 5px;
   border: 0;
 }
 
@@ -510,8 +510,8 @@ img.img-despacho-navbar.img-user-profile-navbar {
 
 #user-info-login .dropdown-menu-right {
   width: 23em;
-  margin-top: 2em;
-  margin-right: -1em;
+  margin-top: 1.5em;
+  margin-right: -4.5em;
   box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
 }
 

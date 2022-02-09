@@ -1,10 +1,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-
 <sec:authentication property="principal" var="userStore" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
-<link href="${pageContext.request.contextPath}/resources/css/plantainterna/generic/navbar.css?v=${sessionScope.versionDepl}" rel="stylesheet" />
+<link
+    href="${pageContext.request.contextPath}/resources/css/plantainterna/generic/navbar.css?v=${sessionScope.versionDepl}"
+    rel="stylesheet" />
 <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 <jsp:include page="./modalFotoDespacho.jsp"></jsp:include>
 <jsp:include page="./modalCambiaContrasenia.jsp"></jsp:include>
@@ -190,18 +191,20 @@
                         </g>
                     </svg>
                 </div>
-                
+
                 <c:if test="${userStore.pais != null}">
                     <div class="content-header content-header-border">
                         <div class="icon-wrapper icon-wrapper-alt-pais rounded-circle">
                             <div class="icon-wrapper-bg bg-focus"></div>
                             <c:choose>
-                                <c:when test="${userStore.pais.toLowerCase().contains('mexico') || userStore.pais.toLowerCase().contains('mx')  }">
+                                <c:when
+                                    test="${userStore.pais.toLowerCase().contains('mexico') || userStore.pais.toLowerCase().contains('mx')  }">
                                     <img class="img-despacho-pais language-icon flag flag-icon-background flag-icon-d"
                                         src="${pageContext.request.contextPath}/resources/img/navbar/mexico.png"
                                         loading="lazy" />
                                 </c:when>
-                                <c:when test="${userStore.pais.toLowerCase().contains('colombia') || userStore.pais.toLowerCase().contains('col')  }">
+                                <c:when
+                                    test="${userStore.pais.toLowerCase().contains('colombia') || userStore.pais.toLowerCase().contains('col')  }">
                                     <img class="img-despacho-pais language-icon flag flag-icon-background flag-icon-d"
                                         src="${pageContext.request.contextPath}/resources/img/navbar/mexico.png"
                                         loading="lazy" />
@@ -215,27 +218,43 @@
                         </div>
                     </div>
                 </c:if>
-               
+
                 <div class="content-header" id="user-info-login">
-                    <c:if
-                        test="${userStore.urlFoto != null &&  userStore.urlFoto != '' && userStore.urlFoto != 'string'}">
-                        <div class="icon-wrapper icon-wrapper-alt-user rounded-circle dropdown-toggle"
-                            id="dropdownMenuLogin" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="img-despacho-navbar img-user-profile-navbar" src="${userStore.urlFoto}"
-                                height="37" alt="" loading="lazy" />
-                            <div class="badge badge-dot badge-dot-sm badge-success"></div>
+                    <div class="row dropdown-toggle" id="dropdownMenuLogin" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false" style="cursor: pointer;">
+                        <div class="col-3" style="padding-right: 0;">
+                            <c:if
+                                test="${userStore.urlFoto != null &&  userStore.urlFoto != '' && userStore.urlFoto != 'string'}">
+                                <div class="icon-wrapper icon-wrapper-alt-user rounded-circle ">
+                                    <img class="img-despacho-navbar img-user-profile-navbar" src="${userStore.urlFoto}"
+                                        height="37" alt="" loading="lazy" />
+                                    <div class="badge badge-dot badge-dot-sm badge-success"></div>
+                                </div>
+                            </c:if>
+                            <c:if
+                                test="${userStore.urlFoto == null ||  userStore.urlFoto == '' || userStore.urlFoto == 'string'}">
+                                <div class="icon-wrapper icon-wrapper-alt-user rounded-circle back-groud-user">
+                                    <img class="img-despacho-navbar img-user-profile-navbar"
+                                        src="./resources/img/plantainterna/despacho/tecnicootasignada.png" height="37"
+                                        alt="" loading="lazy" />
+                                    <div class="badge badge-dot badge-dot-sm badge-success"></div>
+                                </div>
+                            </c:if>
                         </div>
-                    </c:if>
-                    <c:if
-                        test="${userStore.urlFoto == null ||  userStore.urlFoto == '' || userStore.urlFoto == 'string'}">
-                        <div class="icon-wrapper icon-wrapper-alt-user rounded-circle back-groud-user dropdown-toggle"
-                            id="dropdownMenuLogin" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="img-despacho-navbar img-user-profile-navbar"
-                                src="./resources/img/plantainterna/despacho/tecnicootasignada.png" height="37" alt=""
-                                loading="lazy" />
-                            <div class="badge badge-dot badge-dot-sm badge-success"></div>
+                        <div class="col-9" style="padding-right: 0; padding-top: 0.4em;">
+                            <h5 class="header-nombre-usuario">
+                                <sec:authentication property="principal.usuarioNombre" />
+                                <sec:authentication property="principal.usuarioApellidoPaterno" />
+                                -
+                                <sec:authentication property="principal.puesto" />
+                            </h5>
+                            <h5 class="header-perfil-usuario">
+                                <sec:authentication property="principal.propietario" />
+                            </h5>
                         </div>
-                    </c:if>
+                    </div>
+
+                    <!--DROPDOWN-->
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-login-info"
                         aria-labelledby="dropdownMenuLogin">
                         <div class="dropdown-menu-header">
@@ -420,18 +439,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="content-header content-header-border">
-                    <h5 class="header-nombre-usuario">
-                        <sec:authentication property="principal.usuarioNombre" />
-                        <sec:authentication property="principal.usuarioApellidoPaterno" />
-                        -
-                        <sec:authentication property="principal.puesto" />
-                    </h5>
-                    <h5 class="header-perfil-usuario">
-                        <sec:authentication property="principal.propietario" />
-                    </h5>
-                </div>
-                <div class="content-header">
+                <div class="content-header content-header-border"></div> 
+                <div class="content-header ">
                     <a href="javascript:document.getElementById('logout').submit()"
                         class="btn btn-primary button-salir">
                         <i class="fas fa-sign-out-alt"></i>

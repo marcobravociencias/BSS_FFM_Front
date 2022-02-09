@@ -273,7 +273,7 @@ cambiarContraseniaUserLogin = function () {
 	}
 
 	if (validateCreed) {
-		if (validateCreedMask && validateCreedMask !== null) {
+		if (validateCreedMask !== null && validateCreedText !== '') {
 			if (!validateCreedMask.test($("#newPasswordUserLogin").val()) && validateCreedText != '') {
 				toastr.warning('Formato invalido');
 				return false;
@@ -339,8 +339,17 @@ $("#modalCambiaContraseniaLogin").on("shown.bs.modal", function () {
 	$("#newPasswordUserLogin").val('');
 	$("#confirmPasswordUserLogin").val('');
 	$("#comentariosPasswordUserLogin").val('');
-	$("#msj-valida").css("display", validateCreed ? 'block' : 'none')
+	$("#msj-valida").css("display", validateCreed ? 'block' : 'none');
+	let textValidate = '<i class="fas fa-warning"></i>&nbsp;La contrase&ntilde;a debera tener m&iacute;nimo 9'+
+	'caracteres alfanum&eacute;ricos, al menos un n&uacute;mero y un caracter especial'+
+	'(@$!%*#?&).'
+	if(validateCreedMask !== null && validateCreedText !== ''){
+		textValidate = '<i class="fas fa-warning"></i>&nbsp;' + validateCreedText;
+	}
+	$("#creedText").text(textValidate);
 })
+
+
 
 $('.dropdown-menu-login-info').on("click.bs.dropdown", function (e) {
 	e.stopPropagation();
