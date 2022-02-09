@@ -1294,6 +1294,9 @@ app.controller('controlVehicularController',
 								}
 								params.fotoPlaca = actualObject;
 								params.fotoVehiculo = actualObject;
+								if(!params.detalle){
+									params.detalle = {};
+								}
 								params.detalle.fotoTarjetaCirculacion = actualObject;
 								params.detalle.fotoTarjetaGasolina = actualObject;
 								params.idActivo = st;
@@ -1306,6 +1309,7 @@ app.controller('controlVehicularController',
 												}else{
 													$scope.getVehiculos(false);
 												}
+
 												toastr.success('Acci&oacute;n completada');
 											} else {
 												swal.close();
