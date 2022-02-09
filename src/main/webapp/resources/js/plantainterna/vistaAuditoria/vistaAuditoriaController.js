@@ -1,6 +1,6 @@
 var app = angular.module('auditoriaTecnicoApp', []);
 
-app.controller('auditoriaTecnicoController', ['$scope', '$q', 'auditoriaTecnicoService', 'genericService', function ($scope, $q, auditoriaTecnicoService, genericService) {
+app.controller('auditoriaTecnicoController', ['$scope', '$q', 'vistaAuditoriaService', 'genericService', function ($scope, $q, vistaAuditoriaService, genericService) {
 
     let tableAuditoriaTecnico;
     let tableDetalleAuditoria;
@@ -163,38 +163,50 @@ app.controller('auditoriaTecnicoController', ['$scope', '$q', 'auditoriaTecnicoS
         swal.showLoading()
         $scope.auditoriaDetalle = $scope.listDetalleAuditoria[index];
         $scope.listPreguntas11 = [];
-        if ($scope.auditoriaDetalle) {
-            $scope.preguntasQuery1 = auditoriaDetalle.data.result.preguntasQuery1;
-            $scope.preguntasQuery2 = auditoriaDetalle.data.result.preguntaQuery2;
-            $scope.listCalificacion = auditoriaDetalle.data.result.calificacionCliente;
-            $scope.listPreguntas1 = $scope.preguntasQuery1.filter(pr => Object.keys(pr).some(a => pr[a].toString().toLowerCase().includes("vestido de poste")));
-            $scope.listPreguntas2 = $scope.preguntasQuery1.filter(pr2 => Object.keys(pr2).some(a => pr2[a].toString().toLowerCase().includes("trabajos en cierre de 2do nivel")));
-            $scope.listPreguntas3 = $scope.preguntasQuery1.filter(pr3 => Object.keys(pr3).some(a => pr3[a].toString().toLowerCase().includes("1.3")));
-            $scope.listPreguntas4 = $scope.preguntasQuery1.filter(pr4 => Object.keys(pr4).some(a => pr4[a].toString().toLowerCase().includes("ingreso de acometida")));
-            $scope.listPreguntas5 = $scope.preguntasQuery1.filter(pr5 => Object.keys(pr5).some(a => pr5[a].toString().toLowerCase().includes("roseta empresarial")));
-            $scope.listPreguntas6 = $scope.preguntasQuery1.filter(pr6 => Object.keys(pr6).some(a => pr6[a].toString().toLowerCase().includes("armado de conectores")));
-            $scope.listPreguntas7 = $scope.preguntasQuery1.filter(pr7 => Object.keys(pr7).some(a => pr7[a].toString().toLowerCase().includes("1.7")));
-            $scope.listPreguntas8 = $scope.preguntasQuery1.filter(pr8 => Object.keys(pr8).some(a => pr8[a].toString().toLowerCase().includes("1.8")));
-            $scope.listPreguntas12 = $scope.preguntasQuery1.filter(pr8 => Object.keys(pr8).some(a => pr8[a].toString().toLowerCase().includes("prestación con cliente")));
-            $scope.listPreguntas10 = $scope.preguntasQuery2.filter(pr10 => Object.keys(pr10).some(a => pr10[a].toString().toLowerCase().includes("1.12")));
-            $scope.listPreguntas11 = $scope.preguntasQuery2.filter(pr11 => Object.keys(pr11).some(a => pr11[a].toString().toLowerCase().includes("1.11")));
+        let params = {};
+        vistaAuditoriaService.consultaDetalleAuditoriaVistaAuditoria(params).then(function success(response) {
+            console.log(response);
+            if (response.data.respuesta) {
+                if (response.data.result) {
+                    if ($scope.auditoriaDetalle) {
+                        $scope.preguntasQuery1 = auditoriaDetalle.data.result.preguntasQuery1;
+                        $scope.preguntasQuery2 = auditoriaDetalle.data.result.preguntaQuery2;
+                        $scope.listCalificacion = auditoriaDetalle.data.result.calificacionCliente;
+                        $scope.listPreguntas1 = $scope.preguntasQuery1.filter(pr => Object.keys(pr).some(a => pr[a].toString().toLowerCase().includes("vestido de poste")));
+                        $scope.listPreguntas2 = $scope.preguntasQuery1.filter(pr2 => Object.keys(pr2).some(a => pr2[a].toString().toLowerCase().includes("trabajos en cierre de 2do nivel")));
+                        $scope.listPreguntas3 = $scope.preguntasQuery1.filter(pr3 => Object.keys(pr3).some(a => pr3[a].toString().toLowerCase().includes("1.3")));
+                        $scope.listPreguntas4 = $scope.preguntasQuery1.filter(pr4 => Object.keys(pr4).some(a => pr4[a].toString().toLowerCase().includes("ingreso de acometida")));
+                        $scope.listPreguntas5 = $scope.preguntasQuery1.filter(pr5 => Object.keys(pr5).some(a => pr5[a].toString().toLowerCase().includes("roseta empresarial")));
+                        $scope.listPreguntas6 = $scope.preguntasQuery1.filter(pr6 => Object.keys(pr6).some(a => pr6[a].toString().toLowerCase().includes("armado de conectores")));
+                        $scope.listPreguntas7 = $scope.preguntasQuery1.filter(pr7 => Object.keys(pr7).some(a => pr7[a].toString().toLowerCase().includes("1.7")));
+                        $scope.listPreguntas8 = $scope.preguntasQuery1.filter(pr8 => Object.keys(pr8).some(a => pr8[a].toString().toLowerCase().includes("1.8")));
+                        $scope.listPreguntas12 = $scope.preguntasQuery1.filter(pr8 => Object.keys(pr8).some(a => pr8[a].toString().toLowerCase().includes("prestación con cliente")));
+                        $scope.listPreguntas10 = $scope.preguntasQuery2.filter(pr10 => Object.keys(pr10).some(a => pr10[a].toString().toLowerCase().includes("1.12")));
+                        $scope.listPreguntas11 = $scope.preguntasQuery2.filter(pr11 => Object.keys(pr11).some(a => pr11[a].toString().toLowerCase().includes("1.11")));
 
-            $scope.insertSombraIndex($scope.listPreguntas1);
-            $scope.insertSombraIndex($scope.listPreguntas2);
-            $scope.insertSombraIndex($scope.listPreguntas3);
-            $scope.insertSombraIndex($scope.listPreguntas4);
-            $scope.insertSombraIndex($scope.listPreguntas5);
-            $scope.insertSombraIndex($scope.listPreguntas6);
-            $scope.insertSombraIndex($scope.listPreguntas7);
-            $scope.insertSombraIndex($scope.listPreguntas8);
-            $scope.insertSombraIndex($scope.listPreguntas10);
-            $scope.insertSombraIndex($scope.listPreguntas11);
-            $scope.insertSombraIndex($scope.listPreguntas12);
+                        $scope.insertSombraIndex($scope.listPreguntas1);
+                        $scope.insertSombraIndex($scope.listPreguntas2);
+                        $scope.insertSombraIndex($scope.listPreguntas3);
+                        $scope.insertSombraIndex($scope.listPreguntas4);
+                        $scope.insertSombraIndex($scope.listPreguntas5);
+                        $scope.insertSombraIndex($scope.listPreguntas6);
+                        $scope.insertSombraIndex($scope.listPreguntas7);
+                        $scope.insertSombraIndex($scope.listPreguntas8);
+                        $scope.insertSombraIndex($scope.listPreguntas10);
+                        $scope.insertSombraIndex($scope.listPreguntas11);
+                        $scope.insertSombraIndex($scope.listPreguntas12);
 
-            $scope.$apply();
-            $("#modalDetalleAuditoria").modal('toggle');
-            swal.close();
-        }
+                        $("#modalDetalleAuditoria").modal('toggle');
+                        swal.close();
+                    }
+                } else {
+                    swal.close();
+                }
+            } else {
+                swal.close();
+                mostrarMensajeWarningValidacion(response.data.resultDescripcion)
+            }
+        });
     }
 
     consultarDetalleAuditoria = function (elemento) {
@@ -203,50 +215,62 @@ app.controller('auditoriaTecnicoController', ['$scope', '$q', 'auditoriaTecnicoS
         $scope.contadores.aprobado = 0;
         $scope.contadores.desaprobado = 0;
         $scope.supervisor = $scope.listAuditoriasTecnico[elemento];
-        let arrayDetalleRow = [];
-        if (tableDetalleAuditoria) {
-            tableDetalleAuditoria.destroy();
-        }
-        $scope.listDetalleAuditoria = arrayDetalleAuditoriaTecnico.data.result;
-        $.each($scope.listDetalleAuditoria, function (i, elemento) {
-            let rowDetalle = [];
-            rowDetalle[0] = elemento.folio !== undefined ? elemento.folio : 'Sin informaci&oacute;n';
-            rowDetalle[1] = elemento.os !== undefined ? elemento.os : 'Sin informaci&oacute;n';
-            rowDetalle[2] = elemento.fecha !== undefined ? elemento.fecha : 'Sin informaci&oacute;n';
-            rowDetalle[3] = elemento.tecnico !== undefined ? elemento.tecnico : 'Sin informaci&oacute;n';
-            rowDetalle[4] = elemento.estatus == 'APROBADO' ?
-                '<span class="content-success-generic">' +
-                '<i class="icono-success-generic fas fa-check"></i>' +
-                '</span>' : '<span class="content-error-generic">' +
-                '<i class="icono-error-generic fas fa-times"></i>' +
-                '</span>';
-            rowDetalle[5] = '<a class="icon-table" id="detalleAuditoria' + elemento.folio + '" onclick="consultarModalDetalleAuditoria(' + i + ')">' +
-                '<i class="fas fa-bars" style="background-color: #58b3bf" title="Detalle"></i>' +
-                '</a>';
-            arrayDetalleRow.push(rowDetalle);
+        let params = {};
+        vistaAuditoriaService.consultaDetalleAuditoriaTecnicoVistaAuditoria(params).then(function success(response) {
+            console.log(response);
+            if (response.data.respuesta) {
+                if (response.data.result) {
+                    let arrayDetalleRow = [];
+                    if (tableDetalleAuditoria) {
+                        tableDetalleAuditoria.destroy();
+                    }
+                    $scope.listDetalleAuditoria = arrayDetalleAuditoriaTecnico.data.result;
+                    $.each($scope.listDetalleAuditoria, function (i, elemento) {
+                        let rowDetalle = [];
+                        rowDetalle[0] = elemento.folio !== undefined ? elemento.folio : 'Sin informaci&oacute;n';
+                        rowDetalle[1] = elemento.os !== undefined ? elemento.os : 'Sin informaci&oacute;n';
+                        rowDetalle[2] = elemento.fecha !== undefined ? elemento.fecha : 'Sin informaci&oacute;n';
+                        rowDetalle[3] = elemento.tecnico !== undefined ? elemento.tecnico : 'Sin informaci&oacute;n';
+                        rowDetalle[4] = elemento.estatus == 'APROBADO' ?
+                            '<span class="content-success-generic">' +
+                            '<i class="icono-success-generic fas fa-check"></i>' +
+                            '</span>' : '<span class="content-error-generic">' +
+                            '<i class="icono-error-generic fas fa-times"></i>' +
+                            '</span>';
+                        rowDetalle[5] = '<a class="icon-table" id="detalleAuditoria' + elemento.folio + '" onclick="consultarModalDetalleAuditoria(' + i + ')">' +
+                            '<i class="fas fa-bars" style="background-color: #58b3bf" title="Detalle"></i>' +
+                            '</a>';
+                        arrayDetalleRow.push(rowDetalle);
 
-            if (elemento.estatus === 'APROBADO') {
-                $scope.contadores.aprobado += 1;
-            }
+                        if (elemento.estatus === 'APROBADO') {
+                            $scope.contadores.aprobado += 1;
+                        }
 
-            if (elemento.estatus === 'DESAPROBADO') {
-                $scope.contadores.desaprobado += 1;
+                        if (elemento.estatus === 'DESAPROBADO') {
+                            $scope.contadores.desaprobado += 1;
+                        }
+                    });
+                    tableDetalleAuditoria = $('#tableDetalleAuditoria').DataTable({
+                        "paging": true,
+                        "lengthChange": false,
+                        "ordering": false,
+                        "pageLength": 10,
+                        "info": false,
+                        "data": arrayDetalleRow,
+                        "autoWidth": true,
+                        "language": idioma_espanol_not_font,
+                        "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+                    });
+                    $scope.isDetalle = true;
+                    swal.close();
+                } else {
+                    swal.close();
+                }
+            } else {
+                swal.close();
+                mostrarMensajeWarningValidacion(response.data.resultDescripcion)
             }
         });
-        tableDetalleAuditoria = $('#tableDetalleAuditoria').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "ordering": false,
-            "pageLength": 10,
-            "info": false,
-            "data": arrayDetalleRow,
-            "autoWidth": true,
-            "language": idioma_espanol_not_font,
-            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
-        });
-        $scope.isDetalle = true;
-        $scope.$apply();
-        swal.close();
     }
 
     $scope.validarFecha = function (idFechaInicio, idFechaFin) {
@@ -293,45 +317,57 @@ app.controller('auditoriaTecnicoController', ['$scope', '$q', 'auditoriaTecnicoS
 
         if (isValid) {
             let params = {
-                fechaInicio: $scope.getFechaFormato(document.getElementById('filtro_fecha_inicio_auditoria').value),
-                fechaFin: $scope.getFechaFormato(document.getElementById('filtro_fecha_fin_auditoria').value),
-                region: '',
-                ciudad: '',
-                distrito: '',
+                // fechaInicio: $scope.getFechaFormato(document.getElementById('filtro_fecha_inicio_auditoria').value),
+                // fechaFin: $scope.getFechaFormato(document.getElementById('filtro_fecha_fin_auditoria').value),
+                // region: '',
+                // ciudad: '',
+                // distrito: '',
             }
             if (!swal.isVisible()) {
                 swal({ text: 'Espera un momento...', allowOutsideClick: false });
                 swal.showLoading();
             }
-            let arrayRow = [];
-            if (tableAuditoriaTecnico) {
-                tableAuditoriaTecnico.destroy();
-            }
-            $scope.listAuditoriasTecnico = arrayListAuditoriasTecnico.data.result;
-            $.each($scope.listAuditoriasTecnico, function (i, elemento) {
-                let row = [];
-                row[0] = elemento.empleado !== undefined ? elemento.empleado : 'Sin informaci&oacute;n';
-                row[1] = elemento.supervisor !== undefined ? elemento.supervisor : 'Sin informaci&oacute;n';
-                row[2] = elemento.distrito !== undefined ? elemento.distrito : 'Sin informaci&oacute;n';
-                row[3] = elemento.region !== undefined ? elemento.region : 'Sin informaci&oacute;n';
-                row[4] = elemento.aprobacion_cuadrillas !== undefined ? elemento.aprobacion_cuadrillas : 'Sin informaci&oacute;n';
-                row[5] = '<a class="icon-table" id="detalleAuditoria' + elemento.id_supervisor + '" onclick="consultarDetalleAuditoria(' + i + ')"  >' +
-                    '<i class="fas fa-bars" style="background-color: #58b3bf" title="Detalle"></i>' +
-                    '</a>';
-                arrayRow.push(row);
+            vistaAuditoriaService.consultaAuditoriasVistaAuditoria(params).then(function success(response) {
+                console.log(response);
+                if (response.data.respuesta) {
+                    if (response.data.result) {
+                        let arrayRow = [];
+                        if (tableAuditoriaTecnico) {
+                            tableAuditoriaTecnico.destroy();
+                        }
+                        $scope.listAuditoriasTecnico = arrayListAuditoriasTecnico.data.result;
+                        $.each($scope.listAuditoriasTecnico, function (i, elemento) {
+                            let row = [];
+                            row[0] = elemento.empleado !== undefined ? elemento.empleado : 'Sin informaci&oacute;n';
+                            row[1] = elemento.supervisor !== undefined ? elemento.supervisor : 'Sin informaci&oacute;n';
+                            row[2] = elemento.distrito !== undefined ? elemento.distrito : 'Sin informaci&oacute;n';
+                            row[3] = elemento.region !== undefined ? elemento.region : 'Sin informaci&oacute;n';
+                            row[4] = elemento.aprobacion_cuadrillas !== undefined ? elemento.aprobacion_cuadrillas : 'Sin informaci&oacute;n';
+                            row[5] = '<a class="icon-table" id="detalleAuditoria' + elemento.id_supervisor + '" onclick="consultarDetalleAuditoria(' + i + ')"  >' +
+                                '<i class="fas fa-bars" style="background-color: #58b3bf" title="Detalle"></i>' +
+                                '</a>';
+                            arrayRow.push(row);
+                        });
+                        tableAuditoriaTecnico = $('#tableAuditoriaTecnico').DataTable({
+                            "paging": true,
+                            "lengthChange": false,
+                            "ordering": false,
+                            "pageLength": 10,
+                            "info": false,
+                            "data": arrayRow,
+                            "autoWidth": true,
+                            "language": idioma_espanol_not_font,
+                            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+                        });
+                        swal.close();
+                    } else {
+                        swal.close();
+                    }
+                } else {
+                    swal.close();
+                    mostrarMensajeWarningValidacion(response.data.resultDescripcion)
+                }
             });
-            tableAuditoriaTecnico = $('#tableAuditoriaTecnico').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "ordering": false,
-                "pageLength": 10,
-                "info": false,
-                "data": arrayRow,
-                "autoWidth": true,
-                "language": idioma_espanol_not_font,
-                "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
-            });
-            swal.close();
         } else {
             mostrarMensajeWarningValidacion(mensajeError);
         }

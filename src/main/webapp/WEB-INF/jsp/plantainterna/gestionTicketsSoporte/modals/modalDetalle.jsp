@@ -79,40 +79,38 @@
                     <div class="container-fluid ticket-content content-select-ticket-detalle">
                         <div class="container-text-title-detalle"><span class="text-tile-ticket">FALLA</span></div>
                         <div class="container-text-content-detalle">
-                            <select class="form-control form-control-sm custom-select inputTicket" id="categoriaTicket" name="categoriaTicket" onchange="loadCategoriaTicketSoporte()">
+                            <select class="form-control form-control-sm custom-select inputTicket" id="fallaTicketD" name="fallaTicketD" ng-change="loadCategoriaTicketSoporte('detalle')" ng-model="ticketSoporteDetalle.fallaTicketD">
                                 <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
-                                <option value="{{categoriaTicket}}" ng-repeat="categoriaTicket in listFallasTicket">
-                                    {{categoriaTicket.descripcion}}
+                                <option value="{{fallaTicketD.id}}" ng-repeat="fallaTicketD in listFallasTicketDetalle">
+                                    {{fallaTicketD.descripcion}}
                                 </option>
                             </select>
                         </div>
                     </div>
                     <div class="container-fluid ticket-content content-select-ticket-detalle">
-                        <div class="container-text-title-detalle"><span class="text-tile-ticket">CATEGORIA</span></div>
+                        <div class="container-text-title-detalle"><span class="text-tile-ticket">CATEGOR&Iacute;A</span></div>
                         <div class="container-text-content-detalle">
-                            <select class="form-control form-control-sm custom-select inputTicket" id="categoriaTicket" name="categoriaTicket">
+                            <select class="form-control form-control-sm custom-select inputTicket" id="categoriaTicketD" name="categoriaTicketD" ng-change="loadSubcategoriaTicketSoporte('detalle')" ng-model="ticketSoporteDetalle.categoriaTicketD">
                                 <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
-                                <option value="{{categoriaTicket}}" ng-repeat="categoriaTicket in listCategoriasTicket">
-                                    {{categoriaTicket.descripcion}}
+                                <option value="{{categoriaTicketD.id}}" ng-repeat="categoriaTicketD in listCategoriasTicketDetalle">
+                                    {{categoriaTicketD.descripcion}}
                                 </option>
                             </select>
                         </div>
                     </div>
                     <div class="container-fluid ticket-content">
-                        <div class="container-text-title-detalle"><span class="text-tile-ticket">SUBCATEGORIA</span></div>
+                        <div class="container-text-title-detalle"><span class="text-tile-ticket">SUBCATEGOR&Iacute;A</span></div>
                         <div class="container-text-content-detalle">
-                            <select class="form-control form-controlt form-control-sm custom-select inputTicket" id="subcategoriaTicket">
+                            <select class="form-control form-controlt form-control-sm custom-select inputTicket" id="subcategoriaTicketD" name="subcategoriaTicketD" ng-model="ticketSoporteDetalle.subcategoriaTicketD">
                                 <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
-                                <option value="{{subcategoriaTicket}}" ng-repeat="subcategoriaTicket in listSubcategoriasTicket">
-                                    {{subcategoriaTicket.descripcion}}
+                                <option value="{{subcategoriaTicketD.id}}"  ng-repeat="subcategoriaTicketD in listSubcategoriasTicketDetalle">
+                                    {{subcategoriaTicketD.descripcion}}
                                 </option>
                             </select>
                         </div>
                     </div>
                 </div>
-                <hr>
-
-                
+                <hr>            
                 <div class="content-falla">
                     <div class="container-fluid ticket-content content-select-ticket-detalle">
                         <div class="container-text-title-detalle"><span class="text-tile-ticket">ESTATUS TICKET</span></div>
