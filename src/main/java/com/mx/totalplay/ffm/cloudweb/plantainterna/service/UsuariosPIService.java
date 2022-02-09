@@ -19,15 +19,7 @@ public interface UsuariosPIService {
 	public ServiceResponseResult consultarUsuariosPorTipoUsuario(String params);
 	public ServiceResponseResult modificarUsuario(String params);
 	public ServiceResponseResult eliminarUsuario(String params);
+	public ServiceResponseResult validarUsuarioExistente(String params);
 	//FIN MAPEO
-	
-	public ServiceResponseResult consultarRegionesEstructura();
-	public ServiceResponseResult consultarClasificacionUsuario();
-	public ServiceResponseResult consultarIntervencionesPorPropietarios(String params);
-	public ServiceResponseResult consultarArbolesCiudades();
-	public ServiceResponseResult consultarOperariosPorCiudad(String params);
-	public ServiceResponseResult consultarCiudadesEstructura(String params);
-	public ServiceResponseResult consultarUsuarios(String params);
-	
 	
 }

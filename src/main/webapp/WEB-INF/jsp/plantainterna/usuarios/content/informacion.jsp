@@ -20,7 +20,7 @@
     <div class="col-md-4">
     	<label class="span-consulta"><i class="fa fa-list-alt"></i> N&uacute;mero de empleado*</label>
         <div class="">
-        	<input type="text" class="form-control inputFormulario" ng-model="informacionRegistro.numEmpleado" id="form-num-empleado" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. 15015997">
+        	<input type="text" class="form-control inputFormulario formValExisteUsuario" ng-model="informacionRegistro.numEmpleado" id="form-num-empleado" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. 15015997">
         </div>
     </div>
 </div>
@@ -28,7 +28,7 @@
     <div class="col-md-4">
 		<label class="span-consulta"><i class="fa fa-user"></i> Usuario*</label>
         <div class="">
-        	<input type="text" class="form-control inputFormulario" ng-model="informacionRegistro.usuario" id="form-usuario" ng-keyup="quitarEspaciosNombreUsuario('form-usuario')" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. PIRESIDENCIAL">
+        	<input type="text" class="form-control inputFormulario formValExisteUsuario" ng-model="informacionRegistro.usuario" id="form-usuario" ng-keyup="quitarEspaciosNombreUsuario('form-usuario')" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. PIRESIDENCIAL">
         </div>
     </div>
     <div class="col-md-4">
@@ -48,19 +48,19 @@
     <div class="col-md-4">
     	<label class="span-consulta"><i class="fas fa-user-tie"></i> Nombre(s)*</label>
         <div class="input-group">
-        	<input type="text" class="form-control inputFormulario" ng-model="informacionRegistro.nombre" id="form-nombres" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. Jos&eacute; Eduardo">
+        	<input type="text" class="form-control inputFormulario formValExisteUsuario" ng-model="informacionRegistro.nombre" id="form-nombres" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. Jos&eacute; Eduardo">
         </div>
     </div>
     <div class="col-md-4">
 		<label class="span-consulta"><i class="far fa-user"></i> Apellido paterno*</label>
         <div class="input-group">
-        	<input type="text" class="form-control inputFormulario" ng-model="informacionRegistro.apellidoPaterno" id="form-a-paterno" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. S&aacute;nchez">
+        	<input type="text" class="form-control inputFormulario formValExisteUsuario" ng-model="informacionRegistro.apellidoPaterno" id="form-a-paterno" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. S&aacute;nchez">
         </div>
     </div>
     <div class="col-md-4">
     	<label class="span-consulta"><i class="far fa-user"></i> Apellido materno*</label>
         <div class="input-group">
-        	<input type="text" class="form-control inputFormulario" ng-model="informacionRegistro.apellidoMaterno" id="form-a-materno" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. Luna">
+        	<input type="text" class="form-control inputFormulario formValExisteUsuario" ng-model="informacionRegistro.apellidoMaterno" id="form-a-materno" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. Luna">
         </div>
     </div>
 </div>
@@ -74,13 +74,13 @@
     <div class="col-md-4">
 		<label class="span-consulta"><i class="fa fa-id-card"></i> CURP*</label>
         <div class="input-group">
-        	<input type="text" class="form-control inputFormulario" ng-model="informacionRegistro.curp" id="form-curp" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. FOBR920509HMSLRY05" maxlength="18" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+        	<input type="text" class="form-control inputFormulario formValExisteUsuario" ng-model="informacionRegistro.curp" id="form-curp" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. FOBR920509HMSLRY05" maxlength="18" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
         </div>
     </div>
     <div class="col-md-4">
 		<label class="span-consulta"><i class="fa fa-id-card"></i> RFC*</label>
         <div class="input-group">
-        	<input type="text" class="form-control inputFormulario" ng-model="informacionRegistro.rfc" id="form-rfc" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. SALJ940309U54" maxlength="13" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+        	<input type="text" class="form-control inputFormulario formValExisteUsuario" ng-model="informacionRegistro.rfc" id="form-rfc" aria-describedby="basic-addon3" style="height: 34px;" placeholder="Ej. SALJ940309U54" maxlength="13" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
         </div>
     </div>
 </div>

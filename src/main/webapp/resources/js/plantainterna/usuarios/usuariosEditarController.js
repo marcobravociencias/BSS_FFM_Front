@@ -47,6 +47,9 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 	
 	$scope.geoSelectMod = [];
 	$scope.intervencionSelectMod = [];
+	
+	//VALIDACIÓN USUARIO EXISTENTE MOD
+	$scope.existeUsuarioValidacionMod = false;
 
     //MÉTODO QUE REALIZA LA CONSULTA ESPECÍFICA POR ID DE USUARIO (CLIC EN BOTÓN DE MODIFICAR EN LA TABLA DE CONSULTA), Y PREPARA LA VISTA DE MODIFICACIÓN
     consultarDetalleUsuario = function(idUsuario) {
@@ -1400,6 +1403,78 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     	setTimeout(function (){
 	        $("#buscadorDespachoMod").focus();
     	}, 750);
+    });
+    
+    $(".formValExisteUsuarioMod").change(function() {
+    	if($scope.detalleUsuario.numeroEmpleado !== undefined && $scope.detalleUsuario.numeroEmpleado !== "" &&
+    	   $scope.detalleUsuario.usuario !== undefined && $scope.detalleUsuario.usuario !== "" &&
+    	   $scope.detalleUsuario.nombre !== undefined && $scope.detalleUsuario.nombre !== "" &&
+    	   $scope.detalleUsuario.apellidoPaterno !== undefined && $scope.detalleUsuario.apellidoPaterno !== "" &&
+    	   $scope.detalleUsuario.apellidoMaterno !== undefined && $scope.detalleUsuario.apellidoMaterno !== "" &&
+    	   $scope.detalleUsuario.curp !== undefined && $scope.detalleUsuario.curp !== "" &&
+    	   $scope.detalleUsuario.rfc !== undefined && $scope.detalleUsuario.rfc !== ""){
+    		
+    		let paramsValExisteUserMod = {
+    				idUsuario: $scope.detalleUsuario.idUsuario,
+    				nombre: $scope.detalleUsuario.nombre,
+        			apellidoPaterno: $scope.detalleUsuario.apellidoPaterno,
+        			apellidoMaterno: $scope.detalleUsuario.apellidoMaterno,
+        			numeroEmpleado: $scope.detalleUsuario.numEmpleado,
+        			usuario: $scope.detalleUsuario.usuario,
+        			rfc: $scope.detalleUsuario.rfc,
+        			curp: $scope.detalleUsuario.curp
+    		}
+    		swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
+    		swal.showLoading();
+        	$q.all([
+        		usuarioPIService.validarUsuarioExistente(paramsValExisteUserMod)
+            ]).then(function(results) {
+            	swal.close();
+            	$scope.existeUsuarioValidacionMod = false;
+            	$("#form-num-empleado-mod").css("border", "1px solid #bdbdbd");
+    			$("#form-usuario-mod").css("border", "1px solid #bdbdbd");
+    			$("#form-nombres-mod").css("border", "1px solid #bdbdbd");
+    			$("#form-a-paterno-mod").css("border", "1px solid #bdbdbd");
+    			$("#form-a-materno-mod").css("border", "1px solid #bdbdbd");
+    			$("#form-curp-mod").css("border", "1px solid #bdbdbd");
+    			$("#form-rfc-mod").css("border", "1px solid #bdbdbd");
+            	if(results[0].data.respuesta){
+            		var respuesta = results[0].data.result;
+            		var mensajeRespuesta = "";
+            		
+            		if(respuesta.usuarioCompleto){
+            			$scope.existeUsuarioValidacionMod = true;
+            			$("#form-num-empleado-mod").css("border-bottom", "2px solid #f55756");
+            			$("#form-usuario-mod").css("border-bottom", "2px solid #f55756");
+            			$("#form-nombres-mod").css("border-bottom", "2px solid #f55756");
+            			$("#form-a-paterno-mod").css("border-bottom", "2px solid #f55756");
+            			$("#form-a-materno-mod").css("border-bottom", "2px solid #f55756");
+            			$("#form-curp-mod").css("border-bottom", "2px solid #f55756");
+            			$("#form-rfc-mod").css("border-bottom", "2px solid #f55756");
+            			mensajeRespuesta = mensajeRespuesta + "\n El usuario ya existe.";
+            		}else{
+            			if(respuesta.usuarioFfm){
+                			$scope.existeUsuarioValidacionMod = true;
+                			$("#form-usuario-mod").css("border-bottom", "2px solid #f55756");
+                			mensajeRespuesta = mensajeRespuesta + "\n El usuario FFM ya existe.";
+                		}
+                		if(respuesta.curp){
+                			$scope.existeUsuarioValidacionMod = true;
+                			$("#form-curp-mod").css("border-bottom", "2px solid #f55756");
+                			mensajeRespuesta = mensajeRespuesta + "\n La CURP ya existe.";
+                		}
+            		}
+            		
+            		if($scope.existeUsuarioValidacionMod){
+            			swal({type: "info", title:"Aviso", text:mensajeRespuesta});
+            		}
+            		
+            	}else{
+            		swal("Error", results[0].data.resultDescripcion, "error");
+            	}
+            });
+    		
+    	}
     });
 	
 	//LOS SIGUIENTES 2 MÉTODOS SE QUEDAN PENDIENTES POR SI EN ALGÚN MOMENTO SE DECIDE EDITAR TAMBIÉN EL PUESTO DEL USUARIO

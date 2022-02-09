@@ -100,11 +100,18 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" ng-show="!existeUsuarioValidacion">
                         <div style="text-align: right; margin: 1em 0 0 0;">
                             <input type="button" class="btn btn-primary" ng-click="guardarUsuario()" value="GUARDAR">
                         </div> 
                     </div>
+                    <div class="row" style="margin-top: 1em; text-align: right;" ng-show="existeUsuarioValidacion">
+					    <div class="col-md-12">
+							<div class="message-password-warning">
+								<span><i class="fas fa-warning"></i>&nbsp; Revise la informaci&oacute;n ingresada, existen datos duplicados.</span>
+							</div>
+						</div>
+					</div>
                 </div>
             </div>
         </div>

@@ -43,4 +43,7 @@ public class ConstUsuarioPI implements Serializable{
 	@Value("${eliminarUsuario}")
 	private String eliminarUsuario;
 	
+	@Value("${validarUsuarioExistente}")
+	private String validarUsuarioExistente;
+	
 }

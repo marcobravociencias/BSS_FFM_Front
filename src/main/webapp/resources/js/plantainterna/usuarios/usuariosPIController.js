@@ -80,6 +80,9 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	$scope.negados = /(?=.*[\u0020]|[\u0022]|[\u0027]|[\u0028]|[\u0029]|[\u002B]|[\u002C]|[\u002D]|[\u002E]|[\u002F]|[\u003A]|[\u003B]|[\u003C]|[\u003D]|[\u003E]|[\u007B-\u00FF])/;
 	$scope.txtExpresionValPassword = "";
 	
+	//VALIDACIÓN USUARIO EXISTENTE
+	$scope.existeUsuarioValidacion = false;
+	
 	angular.element(document).ready(function () {
         $("#idBody").removeAttr("style");
         $("#moduloUsuarios").addClass('active');
@@ -1905,6 +1908,78 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	var valorCampo = $("#"+campo).val().replace(/ /g, "");
     	$("#"+campo).val(valorCampo);
 	}
+    
+//    $(".formValExisteUsuario").blur(function() {
+    $(".formValExisteUsuario").change(function() {
+    	if($scope.informacionRegistro.numEmpleado !== undefined && $scope.informacionRegistro.numEmpleado !== "" &&
+    	   $scope.informacionRegistro.usuario !== undefined && $scope.informacionRegistro.usuario !== "" &&
+    	   $scope.informacionRegistro.nombre !== undefined && $scope.informacionRegistro.nombre !== "" &&
+    	   $scope.informacionRegistro.apellidoPaterno !== undefined && $scope.informacionRegistro.apellidoPaterno !== "" &&
+    	   $scope.informacionRegistro.apellidoMaterno !== undefined && $scope.informacionRegistro.apellidoMaterno !== "" &&
+    	   $scope.informacionRegistro.curp !== undefined && $scope.informacionRegistro.curp !== "" &&
+    	   $scope.informacionRegistro.rfc !== undefined && $scope.informacionRegistro.rfc !== ""){
+    		
+    		let paramsValExisteUser = {
+    				nombre: $scope.informacionRegistro.nombre,
+        			apellidoPaterno: $scope.informacionRegistro.apellidoPaterno,
+        			apellidoMaterno: $scope.informacionRegistro.apellidoMaterno,
+        			numeroEmpleado: $scope.informacionRegistro.numEmpleado,
+        			usuario: $scope.informacionRegistro.usuario,
+        			rfc: $scope.informacionRegistro.rfc,
+        			curp: $scope.informacionRegistro.curp
+    		}
+    		swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
+    		swal.showLoading();
+        	$q.all([
+        		usuarioPIService.validarUsuarioExistente(paramsValExisteUser)
+            ]).then(function(results) {
+            	swal.close();
+            	$scope.existeUsuarioValidacion = false;
+            	$("#form-num-empleado").css("border", "1px solid #bdbdbd");
+    			$("#form-usuario").css("border", "1px solid #bdbdbd");
+    			$("#form-nombres").css("border", "1px solid #bdbdbd");
+    			$("#form-a-paterno").css("border", "1px solid #bdbdbd");
+    			$("#form-a-materno").css("border", "1px solid #bdbdbd");
+    			$("#form-curp").css("border", "1px solid #bdbdbd");
+    			$("#form-rfc").css("border", "1px solid #bdbdbd");
+            	if(results[0].data.respuesta){
+            		var respuesta = results[0].data.result;
+            		var mensajeRespuesta = "";
+            		
+            		if(respuesta.usuarioCompleto){
+            			$scope.existeUsuarioValidacion = true;
+            			$("#form-num-empleado").css("border-bottom", "2px solid #f55756");
+            			$("#form-usuario").css("border-bottom", "2px solid #f55756");
+            			$("#form-nombres").css("border-bottom", "2px solid #f55756");
+            			$("#form-a-paterno").css("border-bottom", "2px solid #f55756");
+            			$("#form-a-materno").css("border-bottom", "2px solid #f55756");
+            			$("#form-curp").css("border-bottom", "2px solid #f55756");
+            			$("#form-rfc").css("border-bottom", "2px solid #f55756");
+            			mensajeRespuesta = mensajeRespuesta + "\n El usuario ya existe.";
+            		}else{
+            			if(respuesta.usuarioFfm){
+                			$scope.existeUsuarioValidacion = true;
+                			$("#form-usuario").css("border-bottom", "2px solid #f55756");
+                			mensajeRespuesta = mensajeRespuesta + "\n El usuario FFM ya existe.";
+                		}
+                		if(respuesta.curp){
+                			$scope.existeUsuarioValidacion = true;
+                			$("#form-curp").css("border-bottom", "2px solid #f55756");
+                			mensajeRespuesta = mensajeRespuesta + "\n La CURP ya existe.";
+                		}
+            		}
+            		
+            		if($scope.existeUsuarioValidacion){
+            			swal({type: "info", title:"Aviso", text:mensajeRespuesta});
+            		}
+            		
+            	}else{
+            		swal("Error", results[0].data.resultDescripcion, "error");
+            	}
+            });
+    		
+    	}
+    });
     
     //-------------------------------------------------------------------    
     $scope.iniciarModuloUsuarios();
