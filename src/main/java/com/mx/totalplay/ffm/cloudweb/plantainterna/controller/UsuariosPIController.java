@@ -142,105 +142,14 @@ public class UsuariosPIController {
         return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
 	}
 	
-	//-------------------------------------------------------------------------------------------
-	//-------------------------------------------------------------------------------------------
-	
-	@PostMapping("/consultarRegionesEstructura")
-	public ResponseEntity<?> consultarRegionesEstructura() {
-		logger.info("##### CONSULTANDO consultarRegionesEstructura  ");
-		//ServiceResponseResult response = ordenesUniversalesService.consultarCatalogoOrdenesUniversales(params);
-		ServiceResponseResult response = null;
-		
-		/*
-		if (response.getResult() instanceof Integer){
-			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-		}
-		*/
-		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-	}
-	
-	@PostMapping("/consultarCiudadesEstructura")
-	public ResponseEntity<?> consultarCiudadesEstructura() {
-		logger.info("##### CONSULTANDO consultarCiudadesEstructura  ");
-		//ServiceResponseResult response = ordenesUniversalesService.consultarCatalogoOrdenesUniversales(params);
-		ServiceResponseResult response = null;
-		
-		/*
-		if (response.getResult() instanceof Integer){
-			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-		}
-		*/
-		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-	}
-	
-	@PostMapping("/consultarArbolesCiudades")
-	public ResponseEntity<?> consultarArbolesCiudades() {
-		logger.info("##### CONSULTANDO consultarArbolesCiudades  ");
-		//ServiceResponseResult response = ordenesUniversalesService.consultarCatalogoOrdenesUniversales(params);
-		ServiceResponseResult response = null;
-		
-		/*
-		if (response.getResult() instanceof Integer){
-			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-		}
-		*/
-		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-	}
-	
-	@PostMapping("/consultarClasificacionUsuario")
-	public ResponseEntity<?> consultarClasificacionUsuario() {
-		logger.info("##### CONSULTANDO consultarClasificacionUsuario  ");
-		//ServiceResponseResult response = ordenesUniversalesService.consultarCatalogoOrdenesUniversales(params);
-		ServiceResponseResult response = null;
-		
-		/*
-		if (response.getResult() instanceof Integer){
-			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-		}
-		*/
-		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-	}
-	
-	@PostMapping("/consultarOperariosPorCiudad")
-	public ResponseEntity<?> consultarOperariosPorCiudad() {
-		logger.info("##### CONSULTANDO consultarOperariosPorCiudad  ");
-		//ServiceResponseResult response = ordenesUniversalesService.consultarCatalogoOrdenesUniversales(params);
-		ServiceResponseResult response = null;
-		
-		/*
-		if (response.getResult() instanceof Integer){
-			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-		}
-		*/
-		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-	}
-	
-	@PostMapping("/consultarIntervencionesPorPropietarios")
-	public ResponseEntity<?> consultarIntervencionesPorPropietarios() {
-		logger.info("##### CONSULTANDO consultarIntervencionesPorPropietarios  ");
-		//ServiceResponseResult response = ordenesUniversalesService.consultarCatalogoOrdenesUniversales(params);
-		ServiceResponseResult response = null;
-		
-		/*
-		if (response.getResult() instanceof Integer){
-			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-		}
-		*/
-		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-	}
-	
-	@PostMapping("/consultarUsuarios")
-	public ResponseEntity<?> consultarUsuarios() {
-		logger.info("##### CONSULTANDO consultarUsuarios  ");
-		//ServiceResponseResult response = ordenesUniversalesService.consultarCatalogoOrdenesUniversales(params);
-		ServiceResponseResult response = null;
-		
-		/*
-		if (response.getResult() instanceof Integer){
-			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-		}
-		*/
-		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	@PostMapping("/validarUsuarioExistente")
+	public ResponseEntity<?> validarUsuarioExistente(@RequestBody String params) {
+		logger.info("##### VALIDA SI USUARIO EXISTE");
+		ServiceResponseResult result = usuarioService.validarUsuarioExistente(params);
+        if (result.getResult() instanceof Integer){
+            return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
 	}
 	
 }

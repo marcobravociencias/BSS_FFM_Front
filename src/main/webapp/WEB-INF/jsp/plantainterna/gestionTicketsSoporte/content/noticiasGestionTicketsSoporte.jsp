@@ -71,7 +71,7 @@
                                             <img ng-switch-when="PDF" src="${pageContext.request.contextPath}/resources/img/iconossf/pdf.png" class="" alt="">
                                             <img ng-switch-when="POWER_POINT_X" src="${pageContext.request.contextPath}/resources/img/iconossf/powerpoint.png" class="" alt="">
                                             <img ng-switch-when="PPTX" src="${pageContext.request.contextPath}/resources/img/iconossf/powerpoint.png" class="" alt="">
-                                            <img ng-switch-default src="${pageContext.request.contextPath}/resources/img/iconossf/not-found.jpg" class="imagen-adjuntado-noticianot" alt="">
+                                            <img ng-switch-default src="${pageContext.request.contextPath}/resources/img/iconossf/not-found.jpg" class="imagen-adjuntado-noticia" alt="">
 
                                             <div class="title-file-adjuntado">
                                                 <h1 class="text-title-adjuntado" ng-bind="noticia.media.name"></h1>

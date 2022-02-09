@@ -103,6 +103,7 @@ public class ImplUsuariosPIService implements UsuariosPIService {
 //		logger.info("RESULT guardarUsuario " + gson.toJson(response));
 //		return response;
 //	}
+	
 	@Override
 	public DataTableResponse consultaUsuariosPorGeoCompPuestos(ObjConsultaUsuario params) {
 		logger.info("ImplUsuariosPIService.class [metodo = consultaUsuariosPorGeoCompPuestos() ]\n");
@@ -265,51 +266,19 @@ public class ImplUsuariosPIService implements UsuariosPIService {
 		return response;
 	}
 	
-	//-------------------------------------------------------------------------------------------
-	//-------------------------------------------------------------------------------------------
-
 	@Override
-	public ServiceResponseResult consultarRegionesEstructura() {
-		// TODO Auto-generated method stub
-		return null;
+	public ServiceResponseResult validarUsuarioExistente(String params) {
+		logger.info("ImplUsuariosPIService.class [metodo = validarUsuarioExistente() ]\n");
+		logger.info("PARAMS validarUsuarioExistente ---> " + params);
+		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		String tokenAcces=principalDetail.getAccess_token() ;
+		String url = principalDetail.getDireccionAmbiente().concat(constUsuario.getValidarUsuarioExistente());
+		ServiceResponseResult response=restCaller.callPostBearerTokenRequest(jsonObject.toString(), url, ServiceResponseResult.class, tokenAcces);
+		logger.info("URL " + url);
+		logger.info("PARAMS " + params);
+		logger.info("RESULT validarUsuarioExistente " + gson.toJson(response));
+		return response;
 	}
-
-	@Override
-	public ServiceResponseResult consultarClasificacionUsuario() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ServiceResponseResult consultarIntervencionesPorPropietarios(String params) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ServiceResponseResult consultarArbolesCiudades() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ServiceResponseResult consultarOperariosPorCiudad(String params) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ServiceResponseResult consultarCiudadesEstructura(String params) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ServiceResponseResult consultarUsuarios(String params) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	
 	
 }
