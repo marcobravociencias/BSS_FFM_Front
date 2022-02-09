@@ -134,6 +134,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                     		}
                     	});
                         
+                    	$scope.existeUsuarioValidacionMod = false;
                         var puestoSeleccionado = "";
                         $scope.puestoRegistrado = [];
                         angular.forEach($scope.listaPuestos,function(puesto,index){
