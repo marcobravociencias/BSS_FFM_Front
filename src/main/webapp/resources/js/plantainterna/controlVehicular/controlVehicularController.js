@@ -1301,7 +1301,11 @@ app.controller('controlVehicularController',
 									if (response.data !== undefined) {
 										if (response.data.respuesta) {
 											if (response.data.result) {
-												$scope.getVehiculos(false);
+												if(st == 1){
+													$scope.getVehiculosInactivos(false);
+												}else{
+													$scope.getVehiculos(false);
+												}
 												toastr.success('Acci&oacute;n completada');
 											} else {
 												swal.close();
