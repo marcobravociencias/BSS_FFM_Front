@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-2 search-form columna-filtro-ind-rep">
             <label class="span-consulta"><i class="fas fa-map-marked"></i> Geograf&iacute;a</label>
-            <input id="geografia-seleccionada-consulta" readonly placeholder="Geograf&iacute;a" type="text"
+            <input id="geografia-seleccionada-consulta" readonly placeholder="NO HAY SELECCI&Oacute;N" type="text"
                 onclick="abrirModalGeografiaBuscar()" class=" input-filtro form-control form-control-sm"
                 style="border-radius: .5em !important;">
         </div>
@@ -51,7 +51,6 @@
             </ul>
         </div>
     </div>
-
 </div>
 <div class="content-fluid">
     <div class="table-responsive">
@@ -63,12 +62,12 @@
                     <th>Marca</th>
                     <th>Modelo</th>
                     <th>A&ntilde;o</th>
-                    <th>N&uacute;m. serie</th>
                     <th>Geograf&iacute;a</th>
                     <th>Foto placa</th>
                     <th>Foto veh&iacute;culo</th>
                     <th>Estatus</th>
                     <th style="text-align: center;">Editar</th>
+                    <th style="text-align: center;">Eliminar</th>
                 </tr>
             </thead>
             <tbody>

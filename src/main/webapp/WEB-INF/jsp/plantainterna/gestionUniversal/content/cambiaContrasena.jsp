@@ -32,7 +32,7 @@
             </div>
             <div class="col-md-1 search-form">
                 <button id="btnBuscar" type="button" class="btn btn-primary btnTotal"
-                    ng-click="consultarUsuariosContrasena(true)" style="margin-top: 2.2em;">
+                    ng-click="consultarUsuariosContrasena(true)" style="margin-top: 2.3em;">
                     <i class="fa fa-search"></i>
                 </button>
             </div>
@@ -44,13 +44,13 @@
             <table id="cambiaContrasenaTable" class="display table" cellspacing="0" width="100%">
                 <thead id="thead_table">
                     <tr>
-                        <th>FOTO</th>
-                        <th>#EMPLEADO</th>
-                        <th>PUESTO</th>
-                        <th>USUARIO</th>
-                        <th>NOMBRE</th>
-                        <th>UBICACI&Oacute;N</th>
-                        <th>CAMBIAR CONTRASE&Ntilde;A</th>
+                        <th>Foto</th>
+                        <th>N&uacute;m. empleado</th>
+                        <th>Puesto</th>
+                        <th>Usuario</th>
+                        <th>Nombre</th>
+                        <th>Ubicaci&oacute;n</th>
+                        <th>Cambiar contrase&ntilde;a</th>
                     </tr>
                 </thead>
                 <tbody>
