@@ -1420,7 +1420,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     				nombre: $scope.detalleUsuario.nombre,
         			apellidoPaterno: $scope.detalleUsuario.apellidoPaterno,
         			apellidoMaterno: $scope.detalleUsuario.apellidoMaterno,
-        			numeroEmpleado: $scope.detalleUsuario.numEmpleado,
+        			numeroEmpleado: $scope.detalleUsuario.numeroEmpleado,
         			usuario: $scope.detalleUsuario.usuario,
         			rfc: $scope.detalleUsuario.rfc,
         			curp: $scope.detalleUsuario.curp
