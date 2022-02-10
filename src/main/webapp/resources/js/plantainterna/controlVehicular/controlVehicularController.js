@@ -1525,7 +1525,9 @@ app.controller('controlVehicularController',
 								}).catch(err => {
 
 								});
-							} else {
+							} else if(!response.data.result.vehiculo && response.data.result.idActivo == 0){
+								toastr.warning('El veh&iacute;culo ya existe pero se encuentra inactivo');
+							}else{
 								swal.close();
 							}
 						} else {

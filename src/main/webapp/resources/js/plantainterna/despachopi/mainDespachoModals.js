@@ -480,7 +480,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                     }          
                   
                 } else {
-                    mostrarMensajeWarningValidacion('No se encontro informaci&oacute;n.')
+                    mostrarMensajeWarningValidacion('No se encontr&oacute; informaci&oacute;n.')
                     $scope.inicializarTablePagos(arrayRow)
                     swal.close()
                 }
