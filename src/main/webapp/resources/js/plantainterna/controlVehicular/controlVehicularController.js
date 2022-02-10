@@ -1500,7 +1500,7 @@ app.controller('controlVehicularController',
 				controlVehicularService.consultaVehiculoPlaca({ "placa": $scope.vehiculo.placa }).then(function success(response) {
 					if (response.data !== undefined) {
 						if (response.data.respuesta) {
-							if (response.data.result.vehiculo) {
+							if (response.data.result && response.data.result.vehiculo) {
 								swal({
 									title: "La placa se encuentra registrada",
 									text: "\u00BFDesea modificar la placa?",
@@ -1525,7 +1525,7 @@ app.controller('controlVehicularController',
 								}).catch(err => {
 
 								});
-							} else if(!response.data.result.vehiculo && response.data.result.idActivo == 0){
+							} else if(response.data.result && response.data.result.idActivo == 0){
 								toastr.warning('El veh&iacute;culo ya existe pero se encuentra inactivo');
 							}else{
 								swal.close();
