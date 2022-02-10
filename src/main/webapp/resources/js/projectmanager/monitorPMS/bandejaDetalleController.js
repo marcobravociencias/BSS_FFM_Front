@@ -167,6 +167,7 @@ app.bandejaDetalleController = function ($scope, monitorPMSServices) {
 
 
   $scope.llenarTablaDetalleBandeja = function () {
+    $scope.isConsultaDetalle = true
     if (bandejaDetalleTable)
         bandejaDetalleTable.destroy();
 

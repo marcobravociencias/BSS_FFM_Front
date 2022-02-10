@@ -228,7 +228,7 @@ app.bandejaNuevoFolioController = function($scope,monitorPMSServices){
                 scrollX: false,
                 paging: true,
                 lengthChange: false,
-                searching: false,
+                searching: true,
                 ordering: false,
                 pageLength: 10,
                 data: $scope.listNuevoFolio,
