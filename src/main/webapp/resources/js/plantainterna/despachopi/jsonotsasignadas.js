@@ -10218,3 +10218,51 @@ var detalleEvidencias = {
     "mensajeException": null,
     "respuesta": true
 }
+
+
+var JSONArraysPagos = {
+    "pagos": [
+        {
+            "idPago": 221,
+            "idCveCliente": "0100000185",
+            "folioSistema": "OS-7640234",
+            "monto": 535,
+            "fechaRegistroPago": "25/08/21 05:58",
+            "hora": "168 dias",
+            "idEstatusPago": 2,
+            "descEstatusPago": "PENDIENTE",
+            "idOrden": 95179,
+            "fechaHoraCierreOT": "",
+            "tipoIntervencion": "INSTALACION",
+            "subTipoIntervencion": "INSTALACION HUAWEI"
+        },
+        {
+            "idPago": 279,
+            "idCveCliente": "2100703000",
+            "folioSistema": "OS-7640234",
+            "monto": 530,
+            "fechaRegistroPago": "22/09/21 10:51",
+            "hora": "140 dias",
+            "idEstatusPago": 2,
+            "descEstatusPago": "PENDIENTE",
+            "idOrden": 2134,
+            "fechaHoraCierreOT": "",
+            "tipoIntervencion": "INSTALACION",
+            "subTipoIntervencion": "INSTALACION NUEVA"
+        },
+        {
+            "idPago": 247,
+            "idCveCliente": "0100000185",
+            "folioSistema": "OS-7640234",
+            "monto": 530,
+            "fechaRegistroPago": "10/09/21 11:40",
+            "hora": "152 dias",
+            "idEstatusPago": 2,
+            "descEstatusPago": "PENDIENTE",
+            "idOrden": 95179,
+            "fechaHoraCierreOT": "",
+            "tipoIntervencion": "INSTALACION",
+            "subTipoIntervencion": "INSTALACION HUAWEI"
+        }
+    ]
+}

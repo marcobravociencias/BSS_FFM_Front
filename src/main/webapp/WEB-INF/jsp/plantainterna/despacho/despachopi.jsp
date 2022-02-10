@@ -212,6 +212,7 @@
         <jsp:include page="./modals/modalReporte.jsp"></jsp:include>
         <jsp:include page="./modals/modalDetalleOtsTecnico.jsp"></jsp:include>
         <jsp:include page="./modals/modalOtIntervenciones.jsp"></jsp:include>
+        <jsp:include page="./modals/modalPagos.jsp"></jsp:include>
        
         <!--div ng-show="vistaDespacho" class="container-fluid d-flex justify-content-center">    
             <ul class="wall content-alert-parent">

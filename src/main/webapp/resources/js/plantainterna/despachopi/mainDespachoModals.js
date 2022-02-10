@@ -1,4 +1,5 @@
 var tableMaterialesDespacho;
+var tablePagosDespacho;
 app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericService) {
     $scope.listadoIconografia = undefined
 
@@ -397,11 +398,10 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         }).catch(err => handleError(err))
     }
 
-    abrirInformacionMateriales = function (nEmpleado) {
-        let tecnicoTemp=angular.copy($scope.listadoTecnicosGeneral.find(e=>{return e.numeroEmpleado===nEmpleado}) )
-        console.log("function 15"+nEmpleado)
+    abrirInformacionMateriales = function (id) {
+        let tecnicoTemp=angular.copy($scope.listadoTecnicosGeneral.find(e=>{return e.idTecnico==id}) )
         let params =  {
-            numEmpleado: nEmpleado,
+            numEmpleado: tecnicoTemp.numeroEmpleado,
             idUsuario:tecnicoTemp.idTecnico   
             //idFlujo:1    
         }          
@@ -438,6 +438,79 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
            }
         }).catch(err => handleError(err))
     }
+
+    abrirInformacionPagos = function(id){
+        let tecnicoTemp=angular.copy($scope.listadoTecnicosGeneral.find(e=>{return e.idTecnico==id}) )
+        let params =  {
+            idUsuario:tecnicoTemp.idTecnico   
+        }          
+ 
+        if ( tablePagosDespacho ) 
+            tablePagosDespacho.destroy();
+
+        $("#table-pagos-temp tbody").empty()
+
+        swal({ text: 'Consultando datos ...', allowOutsideClick: false });
+        swal.showLoading();
+        let arrayRow = [];
+        /*
+        mainDespachoService.consultarInformacionPagos(params).then(function success(response) {
+           console.log(response)
+           if( response.data.respuesta){
+                if (response.data.result) {   
+                    swal.close()       
+                    if(response.data.result.pagos.length){
+                        $.each(response.data.result.pagos, function (i, elemento) {
+                            let row = [];
+                            row[0] = elemento.idCveCliente ? elemento.idCveCliente : '';
+                            row[1] = elemento.folioSistema ? elemento.folioSistema : '';
+                            row[2] = elemento.monto ? elemento.monto : '';
+                            row[3] = elemento.fechaRegistroPago ? elemento.fechaRegistroPago : '';
+                            row[4] = elemento.hora ? elemento.hora : '';
+                            row[5] = elemento.descEstatusPago ? elemento.descEstatusPago : '';
+                            row[6] = elemento.fechaHoraCierreOT ? elemento.fechaHoraCierreOT : '';
+                            row[7] = elemento.tipoIntervencion ? elemento.tipoIntervencion : '';
+                            row[8] = elemento.subTipoIntervencion ? elemento.subTipoIntervencion : '';
+                            arrayRow.push(row);
+                        })
+                        $scope.inicializarTablePagos(arrayRow);
+                        $("#modalMaterialesOperario").modal('show')   
+                    }else{
+                        swal({ text: 'Tiene todos sus pagos al corriente', allowOutsideClick: true, type: 'success' });
+                    }          
+                  
+                } else {
+                    mostrarMensajeWarningValidacion('No se encontro informaci&oacute;n.')
+                    $scope.inicializarTablePagos(arrayRow)
+                    swal.close()
+                }
+           }else{
+                toastr.warning("Ha ocurrido un error al consultar los pagos");
+                $scope.inicializarTablePagos(arrayRow)
+                swal.close()
+           }
+        }).catch(err => handleError(err))
+        */
+      
+        $.each(JSONArraysPagos.pagos, function (i, elemento) {
+            let row = [];
+            row[0] = elemento.idCveCliente ? elemento.idCveCliente : '';
+            row[1] = elemento.folioSistema ? elemento.folioSistema : '';
+            row[2] = elemento.monto ? elemento.monto : '';
+            row[3] = elemento.fechaRegistroPago ? elemento.fechaRegistroPago : '';
+            row[4] = elemento.hora ? elemento.hora : '';
+            row[5] = elemento.descEstatusPago ? elemento.descEstatusPago : '';
+            row[6] = elemento.fechaHoraCierreOT ? elemento.fechaHoraCierreOT : '';
+            row[7] = elemento.tipoIntervencion ? elemento.tipoIntervencion : '';
+            row[8] = elemento.subTipoIntervencion ? elemento.subTipoIntervencion : '';
+            arrayRow.push(row);
+        })
+        $scope.inicializarTablePagos(arrayRow);
+        swal.close()
+        $("#modalPagos").modal('show');
+    
+    }
+
     function transformarTextCantidad(num){
         return  ( num && num != '' && num != '0' ) ?   parseInt( num )  : "0"
 	}
@@ -516,6 +589,23 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 			"lengthChange": false,
 			"searching": true,
 			"ordering": false,
+			"pageLength": 10,
+			"columns": [null, null, null, null, null, null, null, null,null],
+            "language":idioma_espanol_not_font
+        });        
+    }
+
+    $scope.inicializarTablePagos=function(arrayRowPagos){           
+        tablePagosDespacho=$('#table-pagos-temp').DataTable({
+            "processing": false,
+			"ordering": false,
+			"serverSide": false,
+			"scrollX": false,
+			"paging": true,
+			"lengthChange": false,
+			"searching": true,
+			"ordering": false,
+            "data": arrayRowPagos,
 			"pageLength": 10,
 			"columns": [null, null, null, null, null, null, null, null,null],
             "language":idioma_espanol_not_font
