@@ -107,7 +107,7 @@
                     </div>
                     <div class="row" style="margin-top: 1em; text-align: right;" ng-show="existeUsuarioValidacion">
 					    <div class="col-md-12">
-							<div class="message-password-warning">
+							<div class="txtMensajeAlertaValidaciones">
 								<span><i class="fas fa-warning"></i>&nbsp; Revise la informaci&oacute;n ingresada, existen datos duplicados.</span>
 							</div>
 						</div>
