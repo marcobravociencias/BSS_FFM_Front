@@ -249,7 +249,7 @@ app.bandejaDetalleController = function ($scope, monitorPMSServices) {
         scrollX: false,
         paging: true,
         lengthChange: false,
-        searching: false,
+        searching: true,
         ordering: false,
         pageLength: 10,
         data: $scope.list,
@@ -257,9 +257,9 @@ app.bandejaDetalleController = function ($scope, monitorPMSServices) {
         sDom: '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
         dom: 'Bfrtip'
       });
-
-    }, 100);
-    swal.close()
+      swal.close()
+    }, 800);
+    
   }
 
   $scope.consultarDetalleList = function () {
@@ -327,6 +327,7 @@ app.bandejaDetalleController = function ($scope, monitorPMSServices) {
     console.log("searchdetallebandeja", $scope.searchdetallebandeja)
     bandejaDetalleTable.search($scope.searchdetallebandeja).draw();
   }
+
   $scope.primerPeticionDetalle = function () {
     $scope.mostrarfiltroDetalle = false;
     if (!$scope.isConsultaDetalle) {
