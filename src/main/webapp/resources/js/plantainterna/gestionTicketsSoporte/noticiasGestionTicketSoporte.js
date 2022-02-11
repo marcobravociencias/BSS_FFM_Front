@@ -66,7 +66,6 @@ app.noticiasGestionTicketSoporte = function ($scope, gestionTicketSoporteService
             $scope.tipoResponse = 0;
             $scope.banderaShow = true;
         }
-        $('#content-subcomentario-' + numero).css('display', 'block');
         $scope.noticiaAnterior = numero;
     }
 
@@ -246,6 +245,10 @@ app.noticiasGestionTicketSoporte = function ($scope, gestionTicketSoporteService
             if (response.data.respuesta) {
                 if (response.data.result) {
                     if (response.data.result.result === '0') {
+                        document.getElementById('content-subcomentario-' + params.newId).style.display = 'none';
+                        document.getElementById('button-subcommet-' + params.newId).style.display = 'none'
+                        $scope.banderaShow = false;
+                        $scope.tipoResponse = null;
                         $scope.consultarComentariosTicketSoporte();
                     } else {
                         mostrarMensajeErrorAlert(response.data.result.resultDescription)
@@ -260,6 +263,88 @@ app.noticiasGestionTicketSoporte = function ($scope, gestionTicketSoporteService
             }
 
         }).catch((err) => handleError(err));
+    }
+
+    $scope.eliminarComentario = function (noticia, tipo) {
+        swal({
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'S\u00ED',
+            cancelButtonText: "No",
+            html:
+                '<b style="font-weight: bold;">\u00BFEsta seguro de querer eliminar comentario?</b>',
+        }).then(function () {
+            let params = {};
+                if (tipo === 0) {
+                    params = {
+                        objectType: 'OrdenServicio',
+                        newId: noticia
+                    }
+                    $scope.enviarEliminarComentario(params);
+                } else {
+                    params = {
+                        objectType: 'OrdenServicio',
+                        subNewId: noticia
+                    }
+                    $scope.enviarEliminarSub(params);
+                }
+            
+
+        }).catch(swal.noop);
+    }
+
+    $scope.enviarEliminarComentario = function (params) {
+        swal({ text: 'Cargando informaci\u00f3n ...', allowOutsideClick: false });
+        swal.showLoading();
+        gestionTicketSoporteService.eliminarNoticia(params).then(function success(response) {
+            if (response.data.respuesta) {
+                if (response.data.result !== undefined) {
+                    if (response.data.result.result === "0") {
+                        $scope.consultarComentariosTicketSoporte();
+                    } else {
+                        mostrarMensajeErrorAlert(response.data.result.resultDescription)
+                        swal.close()
+                    }
+                } else {
+                    mostrarMensajeErrorAlert("Error al consultar")
+                    swal.close()
+                }
+            } else {
+                mostrarMensajeErrorAlert("Error en el servidor")
+                swal.close()
+            }
+
+        }, function error(response) {
+            console.log(response);
+        });
+    }
+
+    $scope.enviarEliminarSub = function (params) {
+        swal({ text: 'Cargando informaci\u00f3n ...', allowOutsideClick: false });
+        swal.showLoading();
+        gestionTicketSoporteService.eliminarSubNoticia(params).then(function success(response) {
+            console.log(response);
+            if (response.data.respuesta) {
+                if (response.data.result !== undefined) {
+                    if (response.data.result.result === "0") {
+                        $scope.consultarComentariosTicketSoporte();
+                    } else {
+                        mostrarMensajeErrorAlert(response.data.result.resultDescription)
+                        swal.close()
+                    }
+                } else {
+                    mostrarMensajeErrorAlert("Error al consultar")
+                    swal.close()
+                }
+            } else {
+                mostrarMensajeErrorAlert("Error en el servidor")
+                swal.close()
+            }
+
+        }, function error(response) {
+            console.log(response);
+        });
     }
 
 }

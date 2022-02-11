@@ -36,8 +36,8 @@
                                             <span class="option-mensajes" ng-click="eliminarComentario(noticia.id, 0)">Eliminar</span>
                                             <span class="text-fecha-comentario" ng-bind="noticia.createdDate"></span>
                                             <button id="button-subcommet-{{noticia.id}}" type="button" class="btn-close close-enviar-subcomentario" ng-click="responderComentarioTicket(noticia.id)" data-mdb-dismiss="modal" aria-label="Close" style="display: none;"></button>
-                                            <div id="content-subcomentario-{{noticia.id}}" class="row" style="display: none;">
-                                                <div class="col-10">
+                                            <div id="content-subcomentario-{{noticia.id}}" class="row" style="display: none; height: 60px;">
+                                                <div class="col-8">
                                                     <input id="texto-subcomentario-{{noticia.id}}" type="text" class="form-control form-control-sm form-send">
                                                 </div>
                                                 <div class="col-2 col-btn-send">
@@ -48,7 +48,7 @@
                                                         <div class="box__input">
                                                             <input name="fileSubComentarioTicket" type="file" class="box__file inputFile adjuntar-archivo-os" onchange="cambiar(this)" id="fileSubComentarioTicket-{{noticia.id}}" />
                                                             <label for="fileSubComentarioTicket-{{noticia.id}}" id="etiqueta_archivo">
-                                                            <span class="text_select_archivo_sub col-content-text-general" style="margin-left: -310px;">Adjuntar archivo</span>
+                                                            <span class="text_select_archivo_sub col-content-text-general" style="margin-left: -524px;">Adjuntar archivo</span>
                                                         </div>
                                                     </form>
                                                 </div>

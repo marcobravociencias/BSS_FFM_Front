@@ -88,10 +88,10 @@
   .close-enviar-subcomentario{
     width: 0em !important;
     height: 10px !important;
-    margin-left: 5em;
+    margin-left: 0em;
     position: absolute;
-    top: 61px;
-    left: 61%;
+    top: 3em;
+    left: 62%;
   }
 
   .container-noticias {
@@ -182,13 +182,13 @@
   }
 
   .btn-send {
-    border-radius: 2em;
+   /*  border-radius: 2em; */
     font-size: 12px;
   }
 
   .col-btn-send {
     padding-left: 0px;
-    left: 93%;
+    left: 68%;
     top: -29px;
   }
 
