@@ -140,7 +140,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 		for (var i=0; i<tecnicoSeleccionado.length; i++){
 			tecnicoSeleccionado[i].style.backgroundColor="white";
 		}
-		document.getElementById(''+idTecnico).style.backgroundColor = "#DCDEDC";
+		document.getElementById("contenedorTecnicoConsulta"+idTecnico).style.backgroundColor = "#DCDEDC";
 		$scope.tecnicoSeleccionado = nombreTecnico + " " + primerApellido + " " + segundoApellido;
 		
 		if($scope.listadoIntervenciones == ""){

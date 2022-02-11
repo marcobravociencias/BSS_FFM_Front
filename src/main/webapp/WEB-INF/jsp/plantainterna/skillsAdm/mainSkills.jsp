@@ -85,7 +85,7 @@
 								<div class="tecnicos-container">
 									<div class="scrollGeneral" id="divTecnicos" style="display: none">
 										<div ng-repeat="tecnico in tecnicosMostradas | filter:buscarTecnico track by $index" class="user-section">
-											<div id="{{tecnico.idUsuario}}" class="valign-wrapper tecnicosDiv">
+											<div id="contenedorTecnicoConsulta{{tecnico.idUsuario}}" class="valign-wrapper tecnicosDiv">
 												<div class="col-2 media-image online pr-0">
 													<img src="{{tecnico.urlFotoPerfil !=undefined && tecnico.urlFotoPerfil ? tecnico.urlFotoPerfil :'./resources/img/plantainterna/despacho/tecnicootasignada.png'}}" class="circle z-depth-2 responsive-img">
 												</div>
