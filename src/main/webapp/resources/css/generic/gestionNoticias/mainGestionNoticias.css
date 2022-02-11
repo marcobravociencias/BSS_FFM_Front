@@ -918,22 +918,7 @@ span.link-geografia {
    border-bottom-left-radius:1em;
 }
 
-#myTab .nav-item:last-child .nav-link {
-   border-top-right-radius:1em;
-   border-bottom-right-radius:1em;
-}
 
-#myTab .nav-link {
-  padding-top: .4em;
-  padding-bottom: .4em;
-  border: solid 1px #ccc;
-}
-
-#myTab .nav-link.active {
-  color: #7716fa !important;
-  font-weight: bolder;
-  background:#f9f9f9;
-}
 
 #crearnoticia{
 	margin: 1em;
@@ -1306,4 +1291,14 @@ img#full-image {
     border-top-right-radius: .25rem;
     height: 100%; width: 100%; 
     object-fit: cover;
+}
+
+#myTab .nav-item:last-child .nav-link {
+    border-top-right-radius: 1em;
+    border-bottom-right-radius: 1em;
+}
+#myTab .nav-link.active {
+    color: #7716fa !important;
+    font-weight: bolder;
+    background: #f9f9f9;
 }

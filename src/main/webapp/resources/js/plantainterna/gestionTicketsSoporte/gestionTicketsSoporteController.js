@@ -1,6 +1,7 @@
 var app = angular.module('ticketsSoporteApp', []);
 
 app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoporteService', 'genericService', function ($scope, $q, gestionTicketSoporteService, genericService) {
+    app.ticketControllerMapa( $scope, $q, gestionTicketSoporteService, genericService )
     let ticketSoporteTable;
     let tecnicosCuentaTable;
     $scope.listFallasTicket = [];
@@ -250,8 +251,6 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                 cancelButtonText: 'No'
             }).then(function (isConfirm) {
                 if (isConfirm) {
-                    swal({ text: 'Cargando datos ...', allowOutsideClick: false });
-                    swal.showLoading();
                     $scope.geografiaTecnico = {};
                     $scope.objPrincipal = $scope.catGeografiaGeneral.find(function (elem) { return elem.id == $scope.tecnicoAsignado.idGeografia });
                     $scope.objSec = angular.copy($scope.objPrincipal);
