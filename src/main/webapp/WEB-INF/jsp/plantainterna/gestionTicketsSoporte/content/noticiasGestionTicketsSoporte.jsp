@@ -37,7 +37,7 @@
                                             <span class="text-fecha-comentario" ng-bind="noticia.createdDate"></span>
                                             <button id="button-subcommet-{{noticia.id}}" type="button" class="btn-close close-enviar-subcomentario" ng-click="responderComentarioTicket(noticia.id)" data-mdb-dismiss="modal" aria-label="Close" style="display: none;"></button>
                                             <div id="content-subcomentario-{{noticia.id}}" class="row" style="display: none; height: 60px;">
-                                                <div class="col-8">
+                                                <div class="col-10">
                                                     <input id="texto-subcomentario-{{noticia.id}}" type="text" class="form-control form-control-sm form-send">
                                                 </div>
                                                 <div class="col-2 col-btn-send">
