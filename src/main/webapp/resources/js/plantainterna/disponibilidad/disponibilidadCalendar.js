@@ -32,7 +32,7 @@ app.disponibilidadCalendar = function ($scope) {
                 if ($scope.permisosDisponibilidad.filter(elemt => { return elemt.clave === 'accionEditaDisponibilidad'}).length === 1) {
                     console.log(info);
                     let eventObject = info.event;
-                    if ($scope.banderaNocturno) {
+                    if ($scope.banderaMatutino) {
                         $("#matutino_actualizar").val(eventObject._def.extendedProps.matutino);
                     }
                     if ($scope.banderaVespertino) {
