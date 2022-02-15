@@ -121,44 +121,44 @@
     <div class="col-4">
         <div class="container-fluid vehiculo-content text-info-ot-text">
             <div class="container-text-title-detalle"><span class="text-tile-vehiculo">OT</span></div>
-            <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="infoOtDetalle.idOrden || 'Sin dato'">222119</span> </div>
+            <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="tecnicoAsignado.id || 'Sin dato'">222119</span> </div>
         </div>
         <div class="container-fluid vehiculo-content">
             <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Folio</span></div>
-            <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="infoOtDetalle.idOrden || 'Sin dato'">222119</span> </div>
+            <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="tecnicoAsignado.folioSistema || 'Sin dato'">222119</span> </div>
         </div>
         <div class="container-fluid vehiculo-content">
             <div class="container-text-title-detalle"><span class="text-tile-vehiculo">T&eacute;cnico</span></div>
-            <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="infoOtDetalle.idOrden || 'Sin dato'">222119</span> </div>
+            <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="tecnicoAsignado.nombreTecnico  || 'Sin dato'">222119</span> </div>
         </div>
       
         <div class="container-fluid vehiculo-content">
             <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Tipo orden</span></div>
-            <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="infoOtDetalle.idOrden || 'Sin dato'">222119</span> </div>
+            <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="tecnicoAsignado.tipoOrden || 'Sin dato'">222119</span> </div>
         </div>
         <div class="container-fluid vehiculo-content">
             <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Tipo negocio</span></div>
-            <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="infoOtDetalle.idOrden || 'Sin dato'">222119</span> </div>
+            <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="tecnicoAsignado.unidadNegocio || 'Sin dato'">222119</span> </div>
         </div>
         <div class="container-fluid vehiculo-content">
             <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Regi&oacute;n</span></div>
-            <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="infoOtDetalle.idOrden || 'Sin dato'">222119</span> </div>
+            <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="tecnicoAsignado.region || 'Sin dato'">222119</span> </div>
         </div>
         <div class="container-fluid vehiculo-content">
             <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Ciudad</span></div>
-            <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="infoOtDetalle.idOrden || 'Sin dato'">222119</span> </div>
+            <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="tecnicoAsignado.ciudad || 'Sin dato'">222119</span> </div>
         </div>
         <div class="container-fluid vehiculo-content">
             <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Distrito</span></div>
-            <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="infoOtDetalle.idOrden || 'Sin dato'">222119</span> </div>
+            <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="tecnicoAsignado.distrito || 'Sin dato'">222119</span> </div>
         </div>
         <div class="container-fluid vehiculo-content">
             <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Zona</span></div>
-            <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="infoOtDetalle.idOrden || 'Sin dato'">222119</span> </div>
+            <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="tecnicoAsignado.zona || 'Sin dato'">222119</span> </div>
         </div>
         <div class="container-fluid vehiculo-content">
             <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Cl&uacute;ster</span></div>
-            <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="infoOtDetalle.idOrden || 'Sin dato'">222119</span> </div>
+            <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="tecnicoAsignado.cluster || 'Sin dato'">222119</span> </div>
         </div>
         <div class="row">
             <div style=" margin: 1em 0 0 0;">
