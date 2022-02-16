@@ -60,4 +60,92 @@ app.service("despachoService", function ($http) {
 		});
 	};
 
+	//NUEVOS SERVICIOS
+	this.consultarConfiguracionDespachoDespacho=function(params){
+		if(params=== undefined)
+			params={}
+		return $http({
+			method: "post",
+			url: "req/consultarConfiguracionDespachoDespacho",
+			data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
+	this.consultarCatalogosTurnosDespachoPI=function(params){
+		return $http({
+			method: "post",
+			url: "req/consultarCatalogoTurnosDespachoPI",
+			//data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
+
+	this.consultarCatalogoTipoOrdenUsuarioDespacho=function(params){
+		return $http({
+			method: "post",
+			url: "req/consultarCatalogoTipoOrdenUsuarioDespacho",
+			//data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
+	
+	this.consulCatalogoGeografiaUsuarioDespacho=function(params){
+		return $http({
+			method: "post",
+			url: "req/consulCatalogoGeografiaUsuarioDespacho",
+			//data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
+
+	this.consultarOrdenesPendientesDespacho=function(params){
+		return $http({
+			method: "post",
+			url: "req/consultarOrdenesPendientes",
+			data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
+
+	this.consultarConteoAlertasPI=function(params){
+		return $http({
+			method: "post",
+			url: "req/consultarConteoAlertasPI",
+			data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	}
+
+	this.consultarTecnicosDisponibiles=function(){
+		return $http({
+			method: "post",
+			url: "req/consultarTecnicosDisponiblesDespachoPI",
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	}
+
+	this.consultarOrdenesaAsignadasDespacho=function(params){
+		return $http({
+			method: "post",
+			url: "req/consultarOtsAsignadas",
+			data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
 });
