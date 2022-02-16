@@ -1,7 +1,7 @@
 .container-noticia-elemento {
     background: #ffff;
     position: absolute;
-    width: 50%;
+    width: 55%;
     right: 0%;
    /*  height: 100%; */
     max-height: 50em;
@@ -145,7 +145,6 @@
 
   .col-content-text-general {
     margin-left: 38px;
-    max-width: 52% !important;
     margin-top: 1em;
   }
 
@@ -382,4 +381,19 @@ a.descarga-adjuntadocomment {
 .content-archivo-comentario {
   margin-left: 3em;
   margin-top: 0.5em;
+}
+
+#container-comentarios-ticket{
+  overflow-y: scroll;
+  max-height: 33em;
+  padding: 2px 2px 2px 2px;
+}
+
+.col-icon-eliminar{
+  width: 3em;
+}
+
+.titulo-comentarios-ticket{
+  color: #7716fa !important;
+  font-weight: bold;
 }

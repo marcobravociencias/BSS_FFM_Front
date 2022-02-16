@@ -23,7 +23,8 @@
     <link href="${pageContext.request.contextPath}/resources/libraries/datePicker/css/bootstrap-datepicker3_1.9.0.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" rel="stylesheet" /> 
-    
+
+    <link href="${pageContext.request.contextPath}/resources/css/plantainterna/gestionTicketsSoporte/mainChatter.css?v=${sessionScope.versionDepl}" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/plantainterna/gestionTicketsSoporte/mainGestionTicketsSoporte.css?v=${sessionScope.versionDepl}" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/plantainterna/gestionTicketsSoporte\noticiasGentionTicket.css?v=${sessionScope.versionDepl}">
 </head>
