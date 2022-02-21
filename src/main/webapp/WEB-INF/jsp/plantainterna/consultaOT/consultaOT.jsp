@@ -208,6 +208,8 @@
                                     <!-- <th>TURNO</th> -->
                                     <th>Motivo</th>
                                     <!-- <th>OPERARIO</th> -->
+                                    <th>Tipo</th>
+                                    <th>Subtipo</th>
                                     <th>Estatus</th>
                                     <th>Estado</th>
                                     <!-- <th>USUARIO CREA</th> -->
