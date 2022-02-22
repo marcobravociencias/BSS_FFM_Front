@@ -610,48 +610,46 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		consultaOTService.consultaImagenesOt(JSON.stringify(params)).then(function success(response) {
 			if (response.data !== undefined) {
 				if (response.data.respuesta) {
-
-					if (response.data.result === null) {
-						$('#modal-imagen-ot').modal('show');
-						swal.close();
-					}
-
-					if (response.data.result.evidencias) {
-						$scope.listEvidenciaImagenes.imagenes = response.data.result.evidencias;
-						$scope.listEvidenciaImagenes.tipos = [];
-						$scope.listImagenesTipo = response.data.result.evidencias;
-						let listaTipos = [];
-
-						var count_cantidad_por_tipo = groupBy(response.data.result.evidencias, 'idCatEvidencia');
-						response.data.result.evidencias.map(function (e) {
-							let isExist = listaTipos.find((t) => e.idCatEvidencia == t.id)
-							if (!isExist) {
-								let imagenes = [];
-								if (count_cantidad_por_tipo[e.idCatEvidencia].length) {
-									imagenes = count_cantidad_por_tipo[e.idCatEvidencia]
-								}
-								listaTipos.push(
-									{
-										id: e.idCatEvidencia,
-										descripcion: e.tipoEvidencia,
-										imagenes: imagenes
+					if(response.data.result ){
+						if (response.data.result.evidencias) {
+							$scope.listEvidenciaImagenes.imagenes = response.data.result.evidencias;
+							$scope.listEvidenciaImagenes.tipos = [];
+							$scope.listImagenesTipo = response.data.result.evidencias;
+							let listaTipos = [];
+	
+							var count_cantidad_por_tipo = groupBy(response.data.result.evidencias, 'idCatEvidencia');
+							response.data.result.evidencias.map(function (e) {
+								let isExist = listaTipos.find((t) => e.idCatEvidencia == t.id)
+								if (!isExist) {
+									let imagenes = [];
+									if (count_cantidad_por_tipo[e.idCatEvidencia].length) {
+										imagenes = count_cantidad_por_tipo[e.idCatEvidencia]
 									}
-								)
-							}
-						});
-						$scope.listEvidenciaImagenes.tipos = listaTipos;
-						is_consultar_evidencia = true;
-						$('#modal-imagen-ot').modal('show');
-						setTimeout(function () {
-							$("#categoria_img_0").click();
-							$("#categoria_img_0").addClass("tipo-evidencia-selected");
-						}, 100);
+									listaTipos.push(
+										{
+											id: e.idCatEvidencia,
+											descripcion: e.tipoEvidencia,
+											imagenes: imagenes
+										}
+									)
+								}
+							});
+							$scope.listEvidenciaImagenes.tipos = listaTipos;
+							is_consultar_evidencia = true;
+							$('#modal-imagen-ot').modal('show');
+							setTimeout(function () {
+								$("#categoria_img_0").click();
+								$("#categoria_img_0").addClass("tipo-evidencia-selected");
+							}, 100);
+							swal.close();
+						} else {
+							swal.close();
+							mostrarMensajeErrorAlert(response.data.result.resultDescription)
+						}
+					}else{
 						swal.close();
-					} else {
-						swal.close();
-						mostrarMensajeErrorAlert(response.data.result.resultDescription)
-					}
-
+						mostrarMensajeInformativo("No se encontraron evidencias")
+					}			
 				} else {
 					swal.close();
 					mostrarMensajeErrorAlert(response.data.resultDescripcion);
@@ -2129,8 +2127,8 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 			swal.showLoading();
 			let params = {
-				// "idOrden": $scope.datoOt
-				"idOrden": '1991'
+				"idOrden": $scope.datoOt
+				//"idOrden": '1991'
 			};
 			consultaOTService.consultarRecoleccionOt(params).then(function success(response) {
 				console.log(response);
