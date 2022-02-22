@@ -247,11 +247,12 @@ public class ImplUsuariosPIService implements UsuariosPIService {
 		logger.info("json object params## "+ params);
 		String tokenAcces=principalDetail.getAccess_token(); 
 		String url = principalDetail.getDireccionAmbiente().concat(constUsuario.getModificarUsuario());
+		logger.info("url  " + gson.toJson(url));
 		ServiceResponseResult response= restCaller.callPatchBearerTokenRequestURL(paramsRequestGet, jsonObject.toString(), url, ServiceResponseResult.class, tokenAcces);
 		logger.info("RESULT modificarUsuario " + gson.toJson(response));
 		return response;
 	}
-	
+
 	@Override
 	public ServiceResponseResult eliminarUsuario(String params) {
 		logger.info("ImplUsuariosPIService.class [metodo = eliminarUsuario() ]\n");

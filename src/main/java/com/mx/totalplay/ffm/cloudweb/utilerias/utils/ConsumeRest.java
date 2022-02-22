@@ -62,8 +62,14 @@ public class ConsumeRest {
             HttpEntity<String> request = new HttpEntity<>(params, headers);
             responseEntity = restTemplate.postForEntity(url, request, String.class);
             Object result = gson.fromJson(responseEntity.getBody(), Object.class);
-
-            response = ServiceResponseResult.builder().isRespuesta(true).resultDescripcion("Accion completada")
+       
+            int valueEstatusCode=responseEntity.getStatusCode() == null  ? -1 : responseEntity.getStatusCode().value() ;
+            logger.info("--- RESPONSE ESTATUS ---"+valueEstatusCode);
+            
+            response = ServiceResponseResult.builder()
+            		.isRespuesta(true)
+            		.resultDescripcion("Accion completada")
+            		.codigoEstatusService(valueEstatusCode)
                     .result(result).build();
 
         } catch (Exception e) {
@@ -223,10 +229,13 @@ public class ConsumeRest {
             logger.info("--- RESPONSE ---");
             logger.info(bodyResponse);
             Object result = gson.fromJson(bodyResponse, Object.class);
+            int valueEstatusCode=responseEntity.getStatusCode() == null  ? -1 : responseEntity.getStatusCode().value() ;
+            logger.info("--- RESPONSE ESTATUS ---"+valueEstatusCode);
             response = ServiceResponseResult.builder()
                     .isRespuesta(true)
                     .resultDescripcion("Accion completada")
                     .result(result)
+                    .codigoEstatusService(valueEstatusCode)
                     .build();
         }catch (HttpClientErrorException httpErrorException){
             switch (httpErrorException.getRawStatusCode()){
@@ -279,10 +288,13 @@ public class ConsumeRest {
             logger.info("--- RESPONSE ---***");
             logger.info(bodyResponse);
             Object result = gson.fromJson(bodyResponse, Object.class);
+            int valueEstatusCode=responseEntity.getStatusCode() == null  ? -1 : responseEntity.getStatusCode().value() ;
+            logger.info("--- RESPONSE ESTATUS ---"+valueEstatusCode);
             response = ServiceResponseResult.builder()
                     .isRespuesta(true)
                     .resultDescripcion("Accion completada")
                     .result(result)
+                    .codigoEstatusService(valueEstatusCode)
                     .build();
         }catch (HttpClientErrorException httpErrorException){
             switch (httpErrorException.getRawStatusCode()){
@@ -333,10 +345,14 @@ public class ConsumeRest {
             logger.info("--- RESPONSE ---");
             logger.info(bodyResponse);
             Object result = gson.fromJson(bodyResponse, Object.class);
+            int valueEstatusCode=responseEntity.getStatusCode() == null  ? -1 : responseEntity.getStatusCode().value() ;
+            logger.info("--- RESPONSE ESTATUS ---"+valueEstatusCode);
+     
             response = ServiceResponseResult.builder()
                     .isRespuesta(true)
                     .resultDescripcion("Accion completada")
                     .result(result)
+                    .codigoEstatusService(valueEstatusCode)
                     .build();
         }catch (HttpClientErrorException httpErrorException){
             switch (httpErrorException.getRawStatusCode()){
@@ -383,11 +399,16 @@ public class ConsumeRest {
             logger.info("--- RESPONSE ---");
             logger.info(bodyResponse);
             Object result = gson.fromJson(bodyResponse, Object.class);
+            
+            int valueEstatusCode=responseEntity.getStatusCode() == null  ? -1 : responseEntity.getStatusCode().value() ;
+            logger.info("--- RESPONSE ESTATUS ---"+valueEstatusCode);
             response = ServiceResponseResult.builder()
                     .isRespuesta(true)
                     .resultDescripcion("Accion completada")
                     .result(result)
+                    .codigoEstatusService(valueEstatusCode)
                     .build();
+                                    
         } catch (HttpClientErrorException httpErrorException){
             switch (httpErrorException.getRawStatusCode()){
                 case 403:
@@ -432,11 +453,15 @@ public class ConsumeRest {
             logger.info("--- RESPONSE ---");
             logger.info(bodyResponse);
             Object result = gson.fromJson(bodyResponse, Object.class);
+            int valueEstatusCode=responseEntity.getStatusCode() == null  ? -1 : responseEntity.getStatusCode().value() ;
+            logger.info("--- RESPONSE ESTATUS ---"+valueEstatusCode);
             response = ServiceResponseResult.builder()
                     .isRespuesta(true)
                     .resultDescripcion("Accion completada")
                     .result(result)
+                    .codigoEstatusService(valueEstatusCode)
                     .build();
+            
         }catch (HttpClientErrorException httpErrorException){
             switch (httpErrorException.getRawStatusCode()){
                 case 403:
@@ -469,7 +494,6 @@ public class ConsumeRest {
             headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
             headers.set(HttpHeaders.AUTHORIZATION, "Bearer " + token);
             HttpEntity<String> request = new HttpEntity<>(paramsObject, headers);
-            logger.info("Ingresa a funcion patch: "+request);
             HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
             restTemplate.setRequestFactory(requestFactory);
 
@@ -478,15 +502,21 @@ public class ConsumeRest {
                     HttpMethod.PATCH,
                     request,
                     String.class);
+            
             logger.info("Sale de funcion patch");
             String bodyResponse = responseEntity.getBody();
             logger.info("--- RESPONSE ---");
             logger.info(bodyResponse);
             Object result = gson.fromJson(bodyResponse, Object.class);
+            
+            int valueEstatusCode=responseEntity.getStatusCode() == null  ? -1 : responseEntity.getStatusCode().value() ;
+            logger.info("--- RESPONSE ESTATUS ---"+valueEstatusCode);
+
             response = ServiceResponseResult.builder()
                     .isRespuesta(true)
                     .resultDescripcion("Accion completada")
                     .result(result)
+                    .codigoEstatusService(valueEstatusCode)
                     .build();
         }catch (HttpClientErrorException httpErrorException){
             switch (httpErrorException.getRawStatusCode()){
@@ -531,11 +561,16 @@ public class ConsumeRest {
             logger.info("--- RESPONSE ---***");
             logger.info(bodyResponse);
             Object result = gson.fromJson(bodyResponse, Object.class);
+            
+            int valueEstatusCode=responseEntity.getStatusCode() == null  ? -1 : responseEntity.getStatusCode().value() ;
+            logger.info("--- RESPONSE ESTATUS ---"+valueEstatusCode);
             response = ServiceResponseResult.builder()
                     .isRespuesta(true)
                     .resultDescripcion("Accion completada")
                     .result(result)
+                    .codigoEstatusService(valueEstatusCode)
                     .build();
+                                    
         }catch (HttpClientErrorException httpErrorException){
             switch (httpErrorException.getRawStatusCode()){
                 case 403:
@@ -595,10 +630,16 @@ public class ConsumeRest {
             logger.info("--- RESPONSE ---");
             logger.info(bodyResponse);
             Object result = gson.fromJson(bodyResponse, Object.class);
+            
+            
+            int valueEstatusCode=responseEntity.getStatusCode() == null  ? -1 : responseEntity.getStatusCode().value() ;
+            logger.info("--- RESPONSE ESTATUS ---"+valueEstatusCode);
+
             response = ServiceResponseResult.builder()
                     .isRespuesta(true)
                     .resultDescripcion("Accion completada")
                     .result(result)
+                    .codigoEstatusService(valueEstatusCode)
                     .build();
         }catch (HttpClientErrorException httpErrorException){
             switch (httpErrorException.getRawStatusCode()){

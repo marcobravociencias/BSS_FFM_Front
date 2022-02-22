@@ -1072,9 +1072,14 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 					if (result.data.respuesta) {
 						if (result.data.result !== undefined) {
 							jsonm = result.data;
-							$scope.movimientos = result.data.result.detalle;
-							is_consulta_historico = true;
-							swal.close();
+							if(result.data.result.detalle != undefined &&  result.data.result.detalle.length > 0){
+								$scope.movimientos=result.data.result.detalle//.reverse()
+								is_consulta_historico = true;
+								swal.close();
+							}else{
+								swal.close();
+								mostrarMensajeErrorAlert(response.data.result.resultDescription)
+							}						
 						} else {
 							swal.close();
 							mostrarMensajeErrorAlert(response.data.result.resultDescription)

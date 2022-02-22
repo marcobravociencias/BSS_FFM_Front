@@ -634,13 +634,11 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             console.log("Estatus: ", response.status);
             if (response.data !== undefined) {
                 if (response.data.respuesta) {
-                    if (response.data.result.mensaje === '0') {
-                        console.log("############## catalogo")
-                        //$scope.listadoOtsPendientes=otspendientes 
-                        toastr.success(response.data.result.description);
-                    } else {
-                        toastr.warning(response.data.result.description);
-                    }
+                    if( response.data.codigoEstatusService == 201 ){
+                        toastr.success(response.data.result.description);                       
+                    }else{
+                        toastr.warning("No se pudo actualizar estatus ");
+                    }                    
                 } else {
                     toastr.warning(response.data.resultDescripcionn);
                 }
