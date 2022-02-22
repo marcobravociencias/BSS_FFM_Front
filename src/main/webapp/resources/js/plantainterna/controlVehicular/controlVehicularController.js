@@ -1189,21 +1189,18 @@ app.controller('controlVehicularController',
 				if ($("#placa").val() === "" || $("#placa").val() === undefined) {
 					$("#placa").addClass("input-valid-error");
 					text += "<li>Placa</li>";
-					allRequired = false;
 				} else {
 					if (!isPlaca.test($("#placa").val())) {
 						$("#placa").addClass("input-valid-error");
 						text += "<li>Placa (alfan&uacute;merico)</li>";
-						allRequired = false;
 					} else {
 						if (!$("#tipo").val() && $("#placa").val()) {
 							text += "<li>Placa (Selecicona tipo veh&iacute;culo)</li>";
 						} else {
-							if ($("#tipo").val() == "1" && ($("#placa").val().length < 6 || $("#placa").val().length > 7)) {
+							if ($("#tipo").val() == "1" && ($("#placa").val().trim().length < 6 || $("#placa").val().trim().length > 7)) {
 								$("#placa").addClass("input-valid-error");
 								text += "<li>Placa (6 a 7 car&aacute;cteres)</li>";
-								allRequired = false;
-							} else if ($("#tipo").val() == "2" && ($("#placa").val().length < 5 || $("#placa").val().length > 6)) {
+							} else if ($("#tipo").val() == "2" && ($("#placa").val().trim().length < 5 || $("#placa").val().trim().length > 6)) {
 								$("#placa").addClass("input-valid-error");
 								text += "<li>Placa (5 a 6 car&aacute;cteres)</li>";
 							}
@@ -1214,7 +1211,6 @@ app.controller('controlVehicularController',
 				if (($("#numSerie").val() === "" || $("#numSerie").val() === undefined) || !hasLetterAndNumber.test($("#numSerie").val())) {
 					$("#numSerie").addClass("input-valid-error");
 					text += "<li>N&uacute;m. de Serie (17 car&aacute;cteres)</li>";
-					allRequired = false;
 				}
 
 				if (clustersparam.length == 0 || document.getElementById('arbol_vehiculo_consulta').placeholder == 'NO HAY SELECCI\u00D3N') {
