@@ -551,7 +551,7 @@ span#buscar-operario {
 }
 
 #img_emp {
-  border-radius: 15px 15px 0px 0px;
+  /* border-radius: 15px 15px 0px 0px; */
 }
 
 .conteo-content-ots {
@@ -2444,59 +2444,72 @@ img.img-sap-materiales {
     margin-top:.3em;
 }
 
-#table-materiales-temp thead th {
+#table-materiales-temp thead th,
+#table-pagos-temp thead th {
     position: relative;
     background-color: #b1b1b1;
     color: #fff;
     border:none;
+    font-size: .8em;
+    white-space: nowrap;
 }
 
-#table-materiales-temp tbody tr td {
+#table-materiales-temp tbody tr td,
+#table-pagos-temp tbody tr td {
     border: none;
 }
-#table-materiales-temp>tbody>tr>td {
+#table-materiales-temp>tbody>tr>td,
+#table-pagos-temp>tbody>tr>td {
     white-space: nowrap;
     color: #39455b;
     font-family: 'Montserrat', sans-serif;
     font-size: .8em;
 }
 
-#table-materiales-temp tr:nth-child(even) {
+#table-pagos-temp tr:nth-child(even),
+#table-pagos-temp tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-#table-materiales-temp_wrapper .dataTables_info {
+#table-materiales-temp_wrapper .dataTables_info,
+#table-pagos-temp_wrapper .dataTables_info {
     font-size: 0.7em;
     font-family: "Montserrat" !important;
     text-align: center;
 }
 
-#table-materiales-temp_wrapper  .page-link {
+#table-materiales-temp_wrapper  .page-link,
+#table-pagos-temp_wrapper  .page-link {
     font-size: 0.7em !important;
     font-family: "Montserrat" !important;
 }
 
-#table-materiales-temp_wrapper div.dataTables_paginate li.next a:after,#table-materiales-temp_wrapper  div.dataTables_paginate li.last a:after {
+#table-materiales-temp_wrapper div.dataTables_paginate li.next a:after,#table-materiales-temp_wrapper  div.dataTables_paginate li.last a:after,
+#table-pagos-temp_wrapper div.dataTables_paginate li.next a:after,#table-pagos-temp_wrapper  div.dataTables_paginate li.last a:after {
    display:none;
 }
 
-#table-materiales-temp_wrapper div.dataTables_paginate li.previous a:before {
+#table-materiales-temp_wrapper div.dataTables_paginate li.previous a:before, 
+#table-pagos-temp_wrapper div.dataTables_paginate li.previous a:before {
    display:none;
 }
 
-#table-materiales-temp_paginate ul.pagination {
+#table-materiales-temp_paginate ul.pagination, 
+#table-pagos-temp_paginate ul.pagination {
     position: absolute;
     right: 0;
 }
 
 
 
-#table-materiales-temp_filter {
+#table-materiales-temp_filter, 
+#table-pagos-temp_filter {
 	font-size: 0.7em !important;
     font-family: "Montserrat" !important;
 }
 
-#table-materiales-temp_filter input {
+#table-materiales-temp_filter input, 
+#table-pagos-temp_filter input {
 	font-size: 0.9em !important;
 	font-family: "Montserrat" !important;	
 }

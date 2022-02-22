@@ -151,4 +151,24 @@ app.service("gestionTicketSoporteService", function ($http) {
             transformRequest: angular.identity
         });
     }
+
+    this.eliminarNoticia = function (params) {
+        return $http({
+          method: "post",
+          url: "req/eliminarNoticiaSF",
+          data: JSON.stringify(params),
+          headers: {'Content-Type': "application/json; charset=utf-8"},
+          transformRequest: angular.identity
+        });
+    };
+
+    this.eliminarSubNoticia = function (params) {
+        return $http({
+          method: "post",
+          url: "req/eliminarSubNoticiaSF",
+          data: JSON.stringify(params),
+          headers: {'Content-Type': "application/json; charset=utf-8"},
+          transformRequest: angular.identity
+        });
+    };
 });

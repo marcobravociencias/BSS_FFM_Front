@@ -46,7 +46,6 @@ app.noticiasGestionTicketSoporte = function ($scope, gestionTicketSoporteService
             if ($scope.noticiaAnterior !== numero) {
                 $scope.banderaShow = false;
                 document.getElementById('content-subcomentario-' + $scope.noticiaAnterior).style.display = 'none';
-                document.getElementById('button-subcommet-' + $scope.noticiaAnterior).style.display = 'none'
             }
         }
         if ($scope.banderaShow) {
@@ -55,52 +54,40 @@ app.noticiasGestionTicketSoporte = function ($scope, gestionTicketSoporteService
                 $scope.tipoResponse = 0;
             } else {
                 document.getElementById('content-subcomentario-' + numero).style.display = 'none';
-                document.getElementById('button-subcommet-' + numero).style.display = 'none'
                 $scope.banderaShow = false;
                 $scope.tipoResponse = null;
             }
         } else {
             document.getElementById('content-subcomentario-' + numero).style.display = 'block';
-            document.getElementById('button-subcommet-' + numero).style.display = 'block'
             document.getElementById('texto-subcomentario-' + numero).value = '';
             $scope.tipoResponse = 0;
             $scope.banderaShow = true;
         }
-        $('#content-subcomentario-' + numero).css('display', 'block');
         $scope.noticiaAnterior = numero;
     }
 
-    $("#fileComentariosTicket").change(function () {
-        if ($('#fileComentariosTicket').get(0).files[0] === undefined) {
-            $(".text_select_archivo").text("Adjuntar archivo");
-            $scope.showEliminarFileTicket = false;
-        } else {
-            $(".text_select_archivo").text($('#fileComentariosTicket').get(0).files[0].name);
-            $scope.showEliminarFileTicket = true;
-        }
-        $scope.$apply();
-    });
-
     $scope.resetFile = function (noticia) {
-        //OS
-        $(".text_select_archivo").text("Adjuntar archivo");
-        $("#fileComentariosTicket").val("");
-        $scope.showEliminarFileTicket = false;
-
-        $(".text_select_archivo_sub").text("Adjuntar archivo");
+        $(".text_select_archivo_sub").text("");
         $("#fileSubComentarioTicket-" + noticia).val("");
+        document.getElementById('textAdjuntar' + noticia).innerHTML = ''
         $scope.showEliminarSubComTicket = false;
     }
 
     cambiar = function (evento) {
         if ($('#' + evento.id).get(0).files[0] === undefined) {
-            $(".text_select_archivo_sub").text("Adjuntar archivo");
+            $(".text_select_archivo_sub").text("");
             $scope.showEliminarSubComTicket = false;
         } else {
             $(".text_select_archivo_sub").text($('#' + evento.id).get(0).files[0].name);
             $scope.showEliminarSubComTicket = true;
         }
         $scope.$apply();
+    }
+
+    $scope.resetFileGeneral = function(){
+        $(".text_select_archivo").text("");
+        $("#fileComentariosTicket").val("");
+        $scope.showEliminarFileTicket = false;
     }
 
     $scope.enviarMesajeGeneral = function () {
@@ -152,7 +139,7 @@ app.noticiasGestionTicketSoporte = function ($scope, gestionTicketSoporteService
             if (response.data.respuesta) {
                 if (response.data.result) {
                     if (response.data.result.result === '0') {
-                        $scope.resetFile();
+                        $scope.resetFileGeneral();
                         $scope.mensajeGeneral = ''
                         $scope.consultarComentariosTicketSoporte();
                     } else {
@@ -243,23 +230,114 @@ app.noticiasGestionTicketSoporte = function ($scope, gestionTicketSoporteService
         swal.showLoading();
         gestionTicketSoporteService.crearSubNoticia(params).then(function success(response) {
             console.log(response)
+            if (response.data.result) {
+                if (response.data.result.result === '0') {
+                    document.getElementById('content-subcomentario-' + params.newId).style.display = 'none';
+                    $scope.resetFile(params.newId);
+                    $scope.banderaShow = false;
+                    $scope.tipoResponse = null;
+                    $scope.consultarComentariosTicketSoporte();
+                } else {
+                    mostrarMensajeErrorAlert(response.data.result.resultDescription)
+                    swal.close()
+                }
+            } else {
+                mostrarMensajeErrorAlert("Hubo un error, por favor de intentar mas tarde.")
+                swal.close()
+            }
+
+        }).catch((err) => handleError(err));
+    }
+
+    $scope.eliminarComentario = function (noticia, tipo) {
+        swal({
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'S\u00ED',
+            cancelButtonText: "No",
+            html:
+                '<b style="font-weight: bold;">\u00BFEsta seguro de querer eliminar comentario?</b>',
+        }).then(function () {
+            let params = {};
+                if (tipo === 0) {
+                    params = {
+                        objectType: 'OrdenServicio',
+                        newId: noticia
+                    }
+                    $scope.enviarEliminarComentario(params);
+                } else {
+                    params = {
+                        objectType: 'OrdenServicio',
+                        subNewId: noticia
+                    }
+                    $scope.enviarEliminarSub(params);
+                }
+            
+
+        }).catch(swal.noop);
+    }
+
+    $scope.enviarEliminarComentario = function (params) {
+        swal({ text: 'Cargando informaci\u00f3n ...', allowOutsideClick: false });
+        swal.showLoading();
+        gestionTicketSoporteService.eliminarNoticia(params).then(function success(response) {
             if (response.data.respuesta) {
-                if (response.data.result) {
-                    if (response.data.result.result === '0') {
+                if (response.data.result !== undefined) {
+                    if (response.data.result.result === "0") {
                         $scope.consultarComentariosTicketSoporte();
                     } else {
                         mostrarMensajeErrorAlert(response.data.result.resultDescription)
                         swal.close()
                     }
                 } else {
-                    mostrarMensajeErrorAlert("Hubo un error, por favor de intentar mas tarde.")
+                    mostrarMensajeErrorAlert("Error al consultar")
                     swal.close()
                 }
             } else {
-                mostrarMensajeErrorAlert(response.data.resultDescription)
+                mostrarMensajeErrorAlert("Error en el servidor")
+                swal.close()
             }
 
-        }).catch((err) => handleError(err));
+        }, function error(response) {
+            console.log(response);
+        });
     }
 
+    $scope.enviarEliminarSub = function (params) {
+        swal({ text: 'Cargando informaci\u00f3n ...', allowOutsideClick: false });
+        swal.showLoading();
+        gestionTicketSoporteService.eliminarSubNoticia(params).then(function success(response) {
+            console.log(response);
+            if (response.data.respuesta) {
+                if (response.data.result !== undefined) {
+                    if (response.data.result.result === "0") {
+                        $scope.consultarComentariosTicketSoporte();
+                    } else {
+                        mostrarMensajeErrorAlert(response.data.result.resultDescription)
+                        swal.close()
+                    }
+                } else {
+                    mostrarMensajeErrorAlert("Error al consultar")
+                    swal.close()
+                }
+            } else {
+                mostrarMensajeErrorAlert("Error en el servidor")
+                swal.close()
+            }
+
+        }, function error(response) {
+            console.log(response);
+        });
+    }
+
+    $scope.cambioGeneral = function(){
+        if ($('#fileComentariosTicket').get(0).files[0] === undefined) {
+            $(".text_select_archivo").text("");
+            $scope.showEliminarFileTicket = false
+        } else {
+            $(".text_select_archivo").text($('#fileComentariosTicket').get(0).files[0].name);
+            $scope.showEliminarFileTicket = true
+        }
+    }
 }

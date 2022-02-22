@@ -26,7 +26,7 @@
         <link href="${pageContext.request.contextPath}/resources/css/projectmanager/misProyectos/styleMisProyectos.css?v=${sessionScope.versionDepl}"  rel="stylesheet"/>
     </head>
 
-    <body id="idBody" ng-controller="misProyectosController">
+    <body id="idBody" ng-controller="misProyectosController" ng-click="cerrarDetallePro()">
         <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
         <div class="col-12" style="padding-left: 0px;">
             <div class="row">
@@ -72,8 +72,34 @@
                                                         <div class="col-6">
                                                             <span class="text-content-plan" ng-bind="plan.Folio_CSP"></span><span class="text-content-estatus-plan" ng-bind="' / ' + plan.statusCsp"></span>
                                                         </div>
-                                                        <div class="col-6">
+                                                        <div class="col-1">
                                                             <i class="style_fa_angle" ng-class="plan.Id_csp === idPlanSelected ? 'fa fa-angle-down' : 'fa fa-angle-right' "></i>
+                                                        </div>
+                                                        <div class="col-5">
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <div style="z-index: 10;" ng-click="mostrarAccionesPunta(plan.Id_csp )">
+                                                                        <img style="height: 16px;" src="${pageContext.request.contextPath}/resources/img/projectmanager/icon_empresarial.svg" alt="">
+                                                                        <span>Pendiente</span>
+                                                                    </div>
+                                                                    <div  ng-if="plan.Id_csp === idContSitioSelectedOptions" class="tooltip-punta-acciones" >
+                                                                        <div class="row">
+                                                                            <div class="col-md-12" style="text-align: center;">
+                                                                                <i ng-click="consultarComentarios(plan,'punta');$event.stopPropagation()" title="Consultar comentarios" class=" fa fa-commenting-o icon-actividad-acciones" style="cursor: pointer;"></i>
+                                                                                <i class="fa fa-hdd-o icon-actividad-acciones" ng-click="consultarServicios(plan)" title="Consultar servicios" style="cursor: pointer;"></i>
+                                                                                <i ng-click="direccionarArchivos(plan)" title="Mostrar archivos" class="fa fa-file-text-o  icon-actividad-acciones" style="cursor: pointer;"></i>
+                                                                                <i ng-click="abrirModalLigarContactoCSP(plan,punta)" title="Ligar contacto al sitio" class=" fa fa-user icon-actividad-acciones" style="cursor: pointer;"></i>
+                                                                                <i ng-click="consultarInformacionVendedor(plan.idVendedor, true)" ng-show="plan.idVendedor !== undefined" title="Consultar vendedor" class=" fa fa-user-circle icon-actividad-acciones" style="cursor: pointer;"></i>
+                                                                                <!--i ng-click="validarCsp()" class="fa fa-random icon-actividad-acciones" style="cursor: pointer;"></i-->
+                                                                                <a ng-if="plan.Id_OS && plan.Id_OS!==undefined" href="descargarActaAceptacion?params.idCotSitio={{plan.Id_OS}}" title="Descargar carta de aceptaci&oacute;n" class=" fa fa-cloud-download icon-actividad-acciones" style="cursor: pointer;"></a>
+                                                                                <!--i ng-click="abrirModalReabrirPlaneacion(plan)" ng-show="plan.PlaneacionCerrada === 'true'" title="Reabrir planeaci&oacute;n" class=" fa fa-folder-open icon-actividad-acciones" style="cursor: pointer;"></i-->
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div ng-if="plan.Tipo_cuadrilla.includes('Empresarial') && plan.Id_csp === idContSitioSelectedOptions" class="tooltip-punta-acciones-indic" >
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -115,17 +141,51 @@
                                                                 <div class="col-1 crop-text-col" style="padding: 0;">
                                                                     <span class="text-content-actividad" ng-bind="actividad.Porcentaje + '%'"></span>
                                                                 </div>
-                                                                <div class="col-1">
+                                                                <div class="col-1" style="padding: 0;">
 
+
+                                                                    <i class="fa fa-cog icono-herramientas" ng-click="mostrarAcciones(actividad)">
+                                                                        <div class="tooltip-actividad-acciones" ng-if="actividad.Id_actividad === idActividad">
+                                                                            <div class="row">
+                                                                                <div class="col-md-12" style="text-align: center;">
+                                                                                    <i class="fa fa-calendar-o icon-actividad-acciones" title="Agendar actividad" ng-show="actividad.Id_OT === undefined" ng-if="(( actividad.Tiene_Ot=='true' && actividad.Unidad_negocio !== '3' ) || actividad.Unidad_negocio ) && actividad.Unidad_negocio !='3'" ng-click="abrirAgendamientoActividad(actividad,punta,plan)" style="cursor: pointer;"></i>
+                                                                                    <!--i class="fa fa-hdd-o fa-lg icon-actividad-acciones" ng-if="actividad.Tiene_Ot=='true'" ng-click="consultarServicios(actividad,plan)" style="cursor: pointer;"></i-->
+                                                                                    <i class="fa fa-pencil fa-lg icon-actividad-acciones" title="Editar actividad" ng-click="abrirModalEditarActividad(plan,actividad);" style="cursor: pointer;"></i>
+                                                                                    <i class="fa fa-file-text-o fa-lg icon-actividad-acciones" title="Consultar archivos" ng-click="direccionarArchivosActividad(plan,actividad)" style="cursor: pointer;"></i>
+                                                                                    <i class="fa fa-commenting-o fa-lg icon-actividad-acciones" title="Consultar comentarios" ng-click="consultarComentarios(actividad,'actividad');" style="cursor: pointer;"></i>
+                                                                                    <i ng-click="validarCsp(actividad)" title="Cambiar estatus" ng-show="actividad.Tiene_Ot ==='true' && actividad.Porcentaje < 100" ng-if="actividad.Unidad_negocio !='3' && ( (actividad.Unidad_negocio === '2')|| (actividad.Tiene_Ot ==='true' && plan.Unidad_negocio==='2')) || actividad.Unidad_negocio !='3' && ( (actividad.Unidad_negocio === '1') || (actividad.Tiene_Ot ==='true' && plan.Unidad_negocio==='1') )" class="fa fa-random fa-lg icon-actividad-acciones" style="cursor: pointer;"></i>
+                                                                                    <i class="fa fa-trash-o fa-lg icon-actividad-acciones" title="eliminar actividad" ng-if="actividad.Se_puede_eliminar === 'true' && planSelected.PlaneacionCerrada === 'false'" ng-click="abrirModalEliminarActividad(actividad);" style="cursor: pointer;"></i>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="tooltip-actividad-acciones-indic" ng-if="actividad.Id_actividad === idActividad">
+                                                                        </div>
+                                                                    </i>
+
+                                                                    <i style="margin-left: 5px; cursor: pointer;">
+                                                                        <img ng-click="mostrarAccionesPunta(plan.Id_cot_sitio )" style="height: 16px;" src="${pageContext.request.contextPath}/resources/img/projectmanager/icon_empresarial.svg" alt="">
+                                                                        <div ng-if="actividad.Id_actividad === idActividadSelectOptions" class="tooltip-actividad-acciones-ug" >
+                                                                            <div class="row">
+                                                                                <div class="col-md-12" style="text-align: center;">
+                                                                                    <i ng-click="consultarMaterialesEmpresarial(actividad)" class="fa fa-wrench icon-actividad-acciones"      style="cursor: pointer;"></i>
+                                                                                    <i ng-click="consultarEvidenciaEmpresarial(actividad)" class="fa fa-picture-o fa-lg icon-actividad-acciones" style="cursor: pointer;"></i>
+                                                                                    <i ng-click="consultarDetalleEmpresarial(actividad)" class="fa fa-list-ul fa-lg icon-actividad-acciones" style="cursor: pointer;"></i>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div ng-if="actividad.Id_actividad === idActividadSelectOptions" class="tooltip-actividad-acciones-ug-indic" >
+                                                                        </div>
+                                                                    </i>
+                                                                    
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-12" style="height: 40px; line-height: 40px; background-color: white;">
+                                                <div class="col-12" style="height: 40px; line-height: 40px; background-color: white; padding-left: 3em;">
                                                     <span>Anadir</span>
                                                 </div>
-                                                <div class="col-12" style="height: 40px; line-height: 40px; background-color: white;">
+                                                <div class="col-12" style="height: 40px; line-height: 40px; background-color: white; padding-left: 3em;">
                                                     <span>Finalizar planeacion</span>
                                                 </div>
                                             </div>

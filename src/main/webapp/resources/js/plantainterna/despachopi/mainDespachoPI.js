@@ -462,7 +462,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                             let tableelemetn=''
                             let htmlImagenesIconos=''
                             let banderaConfirmaDesconfirma= $scope.permisosConfigUser.permisos.find(e=>{return e.clave==='accionConfirmaOT'})
-                            let banderaAsignacion= $scope.permisosConfigUser.permisos.find(e=>{return e.clave==='accionAsignaOT'})
+                            //let banderaAsignacion= $scope.permisosConfigUser.permisos.find(e=>{return e.clave==='accionAsignaOT'})
 
                             
                             angular.forEach($scope.listadoOtsPendientes,function(otpendiente,index){
@@ -488,7 +488,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                                 tableelemetn=`
                                 <tr>
                                     <td>  
-                                        <div id="idotpendiente${otpendiente.idOrden}" class="${banderaAsignacion!=undefined ? 'fc-event' : "fc-event-noasignacion"} ot-pendiente-event ${banderaAsignacion != undefined? "efecto ui-draggable ui-draggable-handle" :""} ">
+                                        <div id="idotpendiente${otpendiente.idOrden}" class="${otpendiente.ordenConfirmada ? 'fc-event' : "fc-event-noasignacion"} ot-pendiente-event ${otpendiente.ordenConfirmada ? "efecto ui-draggable ui-draggable-handle" :""} ">
                                             <div class="header-otpendeinte">
                                                 <div class="top-title-ot">
                                                     <div class="content-top-element bars-content">

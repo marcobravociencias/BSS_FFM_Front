@@ -1101,4 +1101,26 @@ public class ImplDespachoPIService implements DespachoPIService {
         logger.info("### RESULT consultaMaterialesTecnico(): " + gson.toJson(response));
         return response;
     }
+    
+    @Override
+    public ServiceResponseResult consultaPagosTecnico(String params) {
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constDespachoPI.getConsultaInformacionPagosTecnico());
+        logger.info("### URL consultaPagosTecnico(): \n" + urlRequest);
+        Map<String, String> paramsRequestGet = new HashMap<>(); 
+       
+        paramsRequestGet.put("idUsuario", jsonObject.get("idUsuario").getAsString() );
+        
+        
+        ServiceResponseResult response = restCaller.callGetBearerTokenRequest(
+                paramsRequestGet,
+                urlRequest,
+                ServiceResponseResult.class,
+                tokenAcces);
+
+        logger.info("### RESULT consultaPagosTecnico(): " + gson.toJson(response));
+        return response;
+    }
 }

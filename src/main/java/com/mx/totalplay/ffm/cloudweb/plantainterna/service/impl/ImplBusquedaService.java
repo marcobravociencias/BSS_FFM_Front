@@ -304,6 +304,7 @@ public class ImplBusquedaService implements BusquedaService {
         paramsRequest.put("objectType", jsonObject.get("objectType").getAsString());
 
         logger.info("##### OBJECT: #####" + gson.toJson(paramsRequest));
+        logger.info("##### URL: #####" + urlRequest);
         
         response = restCaller.callDeleteBearerTokenRequest(paramsRequest,urlRequest, ServiceResponseResult.class, tokenAcces);
         logger.info("##### RESULT ELIMINAR NOTICIAS: \n" + gson.toJson(response));

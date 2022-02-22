@@ -6395,7 +6395,7 @@ ResourceRow = (function(superClass) {
       var templateOperador =`
       <div class="row">
           <div class="col-2 ">
-              <img style="border:.2em solid ${resource.color}" onclick="abrirModalFoto('${fullName}','${resource.urlFotoPerfil}', ' ${resource.usuarioFFM}', '${resource.numContacto}', '${resource.centro}', '${resource.descipcionEstatusTecnico}')"  class="efecto imagen_operario_foto"  src="${(resource.urlFotoPerfil != undefined && resource.urlFotoPerfil? resource.urlFotoPerfil:'./resources/img/plantainterna/despacho/tecnicootasignada.png' )}"/>
+              <img style="border:.2em solid ${resource.color}" onclick="abrirModalFoto('${fullName}','${ resource.urlFotoPerfil ? resource.urlFotoPerfil : ''}', ' ${resource.usuarioFFM}', '${resource.numContacto}', '${resource.centro}', '${resource.descipcionEstatusTecnico}')"  class="efecto imagen_operario_foto"  src="${(resource.urlFotoPerfil != undefined && resource.urlFotoPerfil? resource.urlFotoPerfil:'./resources/img/plantainterna/despacho/tecnicootasignada.png' )}"/>
           </div>
           <div class="col-8 text-justify">
               <div class="conteo-content-ots" >
@@ -6431,7 +6431,11 @@ ResourceRow = (function(superClass) {
                       </div>     
                       <div class="icon-content-operario tooltip-icon-des">
                           <span class="tooltiptext-icon-des">Informaci\u00F3n materiales</span>
-                          <span class="icono_operario_accion  fa fa-wrench" onclick="abrirInformacionMateriales('${resource.numeroEmpleado}')"  ></span>
+                          <span class="icono_operario_accion  fa fa-wrench" onclick="abrirInformacionMateriales('${resource.idTecnico}')"  ></span>
+                      </div>  
+                      <div class="icon-content-operario tooltip-icon-des">
+                          <span class="tooltiptext-icon-des">Pagos pendientes</span>
+                          <span class="icono_operario_accion  fa fa-dollar-sign" onclick="abrirInformacionPagos('${resource.idTecnico}')"  ></span>
                       </div>    
                   </div> 
               </div>

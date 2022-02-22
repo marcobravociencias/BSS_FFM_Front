@@ -21,6 +21,9 @@
         <link
             href="${pageContext.request.contextPath}/resources/css/plantainterna/seguimientoSoporte/mainSeguimientoSoporte.css?v=${sessionScope.versionDepl}"
             rel="stylesheet">
+        <link
+            href="${pageContext.request.contextPath}/resources/css/plantainterna/seguimientoSoporte/mainChatter.css?v=${sessionScope.versionDepl}"
+            rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/jquery.dataTables.css"
             rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/dataTables.bootstrap4.min.css"
@@ -45,6 +48,79 @@
     </head>
 
     <body id="idBody" class="body" ng-controller="seguimientoSoporteController">
+
+        <div style="display: none;" class="container-chatter-ffm" >
+            <div class="content-mensaje-principal">
+                <div class="content-icons-mensaje-principal">
+                        <i class="icon-accion-principal-accion fas fa-reply"></i>
+                        <i class="icon-accion-principal-accion fas fa-times"></i>
+                        <!--div class="icon-responder-principal">
+                        </div>
+                         <div class="icon-eliminar-principal">                    </div-->
+
+                </div>
+                <div class="content-mensaje-principal-body">
+                    <div class="content-foto-imagen-user">
+                        <img class="imagen-mensaje-principal" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNLXMjRwxKb32_iBLR5ouRYFiu0DNjYNR_xg&usqp=CAU"  alt="">
+                    </div>  
+                    <div class="content-text-principal">
+                        <h4 class="mensaje-top-principal">Hector Santamaria
+                            <span class="hora-mensaje-principal"> <span class="dot-hora-mensaje-principal"></span>11/02/2022 05:21 PM</span>
+
+                        </h4>
+                        <h5 class="mensaje-bottom-principal">Contenido del mensaje ejemplo- texto</h5> 
+                    </div>
+                </div>
+                <div class="content-principal-file">
+                    <img  class="principal-file" src="https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg"  alt="">
+                    <div class="principal-text">
+                        <b class="text-nombre-archivo"> nombre archivo.doc</b>
+                        <b class="text-nombre-archivo-descarga"> descargar</b>
+                    </div>
+                </div>
+            </div>
+            <div class="content-mensaje-principal">
+                <div class="content-icons-mensaje-principal">
+                        <i class="icon-accion-principal-accion fas fa-reply"></i>
+                        <i class="icon-accion-principal-accion fas fa-times"></i>
+                        <!--div class="icon-responder-principal">
+                        </div>
+                         <div class="icon-eliminar-principal">                    </div-->
+
+                </div>
+                <div class="content-mensaje-principal-body">
+                    <div class="content-foto-imagen-user">
+                        <img class="imagen-mensaje-principal" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNLXMjRwxKb32_iBLR5ouRYFiu0DNjYNR_xg&usqp=CAU"  alt="">
+                    </div>  
+                    <div class="content-text-principal">
+                        <h4 class="mensaje-top-principal">Hector Santamaria
+                            <span class="hora-mensaje-principal"> <span class="dot-hora-mensaje-principal"></span>11/02/2022 05:21 PM</span>
+                        </h4>
+                        <h5 class="mensaje-bottom-principal">Contenido del mensaje ejemplo- texto</h5> 
+                    </div>
+                </div>
+                <div class="content-principal-file">
+                    <img  class="principal-file" src="https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg"  alt="">
+                    <div class="principal-text">
+                        <b class="text-nombre-archivo"> nombre archivo.doc</b>
+                        <b class="text-nombre-archivo-descarga"> descargar</b>
+                    </div>
+                </div>
+            </div>
+            <div class="content-mensaje-icons">
+                <textarea class="archivo-text-comentario" rows="3" >
+                    At w3schools.com you will learn how to make a website. They offer free tutorials in all web development technologies.
+                </textarea>
+                <div class="icons-buttons-agregar-comment">
+                    <i class="icono-accion-comentario icon-adjuntar fas fa-images"></i>
+                    <i class="icono-accion-comentario icon-adjuntar fas fa-paperclip"></i>
+                    <button class="btn enviar-comentario">
+                        <i class="fas fa-paper-plane" style=" margin-right: .5em;"></i>
+                        Enviar
+                    </button>
+                </div>
+            </div>
+        </div>
         <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
         <div class="container">
             <div class="container container-title-header" style="padding: 0 !important;">

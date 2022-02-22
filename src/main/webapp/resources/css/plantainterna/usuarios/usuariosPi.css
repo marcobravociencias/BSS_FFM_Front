@@ -181,6 +181,12 @@ img.responsive-img-tecnico {
 	margin-left: 0.5em;
 }
 
+.txtMensajeAlertaValidaciones {
+    padding: 0 1.5em;
+    font-size: 0.8em;
+    color: orange;
+}
+
 /* -------------------------------------------------------------------------------------------------- */
 
 .form-switch .form-check-input:after {

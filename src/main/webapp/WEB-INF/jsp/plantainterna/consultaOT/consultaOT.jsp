@@ -206,10 +206,12 @@
                                 <th>CREACION</th> -->
                                     <th>Fecha agenda</th>
                                     <!-- <th>TURNO</th> -->
-                                    <th>Motivo</th>
                                     <!-- <th>OPERARIO</th> -->
+                                    <th>Tipo</th>
+                                    <th>Subtipo</th>
                                     <th>Estatus</th>
                                     <th>Estado</th>
+                                    <th>Motivo</th>
                                     <!-- <th>USUARIO CREA</th> -->
                                     <!-- <th><i class="fa fa-wrench" id="herramienta"></i></th>
                                 <th><i class="fa fa-picture-o" id="muestra_IMG"></i></th> -->

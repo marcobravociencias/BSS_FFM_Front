@@ -74,5 +74,34 @@ app.controller('misProyectosController', ['$scope', '$q', 'misProyectosService',
         
     }
 
+    $scope.statusClose = false;
+    $scope.cerrarDetallePro = function() {
+        setTimeout(function () {
+            if ($scope.statusClose) {
+                $scope.statusClose = false;
+            } else {
+                $scope.proyectoClick = '';
+                $scope.actividadClick = '';
+                $scope.idPuntaUbicacion = '';
+                $scope.idPuntaStatus = '';
+                $scope.idActividad = '';
+                $scope.idContSitioSelectedOptions='';
+                $scope.idActividadSelectOptions='';
+                $scope.showNotificaciones = false;
+            }
+            $scope.$apply();
+        }, 0050);
+    }
+
+    $scope.mostrarAccionesPunta=function(Id_csp){
+        $scope.statusClose = true;
+        $scope.idContSitioSelectedOptions=Id_csp
+    }
+
+    $scope.mostrarAccionesActividad=function(idActividad){
+        $scope.idActividadSelectOptions=idActividad;
+        $scope.statusClose = true;
+    }
+
 
 }]);
