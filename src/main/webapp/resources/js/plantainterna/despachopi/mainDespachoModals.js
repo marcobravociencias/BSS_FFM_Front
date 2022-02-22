@@ -895,7 +895,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 
             if (response.data !== undefined) {
                 if (response.data.respuesta) {
-                    if (response.data.result.result === '0') {
+                    if (response.d(ata.result.result === '0') {
                         console.log("############## catalogo")
                         //$scope.listadoOtsPendientes=otspendientes                         
                     }
@@ -934,15 +934,17 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             url = "./resources/img/plantainterna/despacho/tecnicootasignada.png";
         }
 
-        $("#num_emp").html("<span><strong>N&Uacute;M. EMPLEADO: </strong>" + usuario + "</span>");
-        $("#tel_emp").html("<span><strong>TEL&Eacute;FONO: </strong>" + telefono + "</span>");
-        $("#full_name").html("<span><strong>" + nombre + "</strong></span>");
-        $("#centro").html("<span><strong>" + centro + "</strong></span>");
-        $("#estatus").html("<span><strong>" + estatus + "</strong></span>");
+        $("#num_emp").html("<span><strong>N&Uacute;M. EMPLEADO: </strong>" + validarUndefinedVacio( usuario ) + "</span>");
+        $("#tel_emp").html("<span><strong>TEL&Eacute;FONO: </strong>" + validarUndefinedVacio( telefono ) + "</span>");
+        $("#full_name").html("<span><strong>" + validarUndefinedVacio( nombre ) + "</strong></span>");
+        $("#centro").html("<span><strong>" +validarUndefinedVacio(  centro ) + "</strong></span>");
+        $("#estatus").html("<span><strong>" + validarUndefinedVacio( estatus ) + "</strong></span>");
         $("#img_emp").attr("src", url);
         $("#modalFotoUsuario").modal('show');
     }
-
+    validarUndefinedVacio=function(texto){
+      return  ( texto == undefined || texto == '' || texto == 'undefined' || texto == null )  ?  'Sin dato' : texto
+    }
     $scope.flagPedido = false;
     $scope.consultarPedido = function () {
         if (!$scope.flagPedido) {

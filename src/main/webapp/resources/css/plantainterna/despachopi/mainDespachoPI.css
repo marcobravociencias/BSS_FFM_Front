@@ -551,7 +551,7 @@ span#buscar-operario {
 }
 
 #img_emp {
-  border-radius: 15px 15px 0px 0px;
+  /* border-radius: 15px 15px 0px 0px; */
 }
 
 .conteo-content-ots {
