@@ -51,14 +51,14 @@
         <div class="container">
             <div class="container-title-header" style="padding: 0 !important;">
                 <div class="header-modulo">
-                    <h5 class="title-modulo">Gesti&oacute;n Veh&iacute;culos</h5>
+                    <h5 class="title-modulo">Gesti&oacute;n de Veh&iacute;culos</h5>
                 </div>
             </div>
             <div class="content-fluid" id="container_vehiculos" style="display: none;">
                 <div class="container-fluid" style="padding: 0;">
                     <div ng-show="!configPermisoAccionConsultaVehiculos && !configPermisoAccionActivaVehiculos && !configPermisoAccionCreaVehiculos" class="text-accion-nopermiso">
                         <i class="icon-not-permiso fas fa-user-lock"></i>
-                        <b class="text-not-permiso">NO TIENES PERMISOS PARA LA GESTI&Oacute;N DEL M&Oacute;DULO</b>
+                        <b class="text-not-permiso">No cuentas con el permiso de consulta.</b>
                     </div>
                     <div class="row" ng-show="configPermisoAccionConsultaVehiculos || configPermisoAccionActivaVehiculos || configPermisoAccionCreaVehiculos">
                         <div id="datos_tablas" class="col-sm-12">

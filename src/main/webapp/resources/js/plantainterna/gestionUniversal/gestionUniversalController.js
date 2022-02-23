@@ -15,6 +15,8 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
     let pagosLiberarTable;
     let usuariosCambiaContrasena;
     $scope.listaStatus = [];
+    $scope.configPermisoAccionLiberaPagos = false;
+
 
     $('.drop-down-filters').on("click.bs.dropdown", function (e) {
         e.stopPropagation();
@@ -254,7 +256,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                     $scope.nGeografiaPagos = llavesResult.N_FILTRO_GEOGRAFIA_PAGOS_TECNICOS ? Number(llavesResult.N_FILTRO_GEOGRAFIA_PAGOS_TECNICOS) : 4;
                     $scope.nGeografiaContrasenia = llavesResult.N_FILTRO_GEOGRAFIA_CAMBIOCONTRASENIA ? Number(llavesResult.N_FILTRO_GEOGRAFIA_CAMBIOCONTRASENIA) : 4;
                     $scope.nEstatusPagosTecnicos = llavesResult.N_ESTATUS_PAGOS_TECNICOS ? llavesResult.N_ESTATUS_PAGOS_TECNICOS : null;
-                    $scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO.permisos;
+                    $scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
                     validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
                     validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
                     validateCreedText = llavesResult.KEY_TEXTFORMATO_CREED_RES ? KEY_TEXTFORMATO_CREED_RES : '';
@@ -264,8 +266,8 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                         $scope.listaStatus = statusList;
                     }
                     if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
-                        $scope.permisosConfigUser.permisos.map(e => { e.banderaPermiso = true; return e; });
-                        $scope.accionesUserConfigText = $scope.permisosConfigUser.permisos.map(e => { return e.clave })
+                        $scope.configPermisoAccionLiberaPagos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "liberaPagos" })[0] != undefined);
+
                     }
 
                 }
