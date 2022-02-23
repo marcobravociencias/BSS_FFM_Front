@@ -41,7 +41,7 @@
                             <a class="nav-link active" id="opcion-consulta-tab" data-toggle="tab" href="#opcion-consulta" role="tab"
                                 aria-controls="opcion-consulta" aria-selected="true" ng-click="tabRevisarPermisoConsultarUsuarios()">Consultar usuarios</a>
                         </li>
-                        <li class="nav-item">
+                        <li ng-if="configPermisoAccionCreaUsuarios" class="nav-item">
                             <a class="nav-link" id="opcion-alta-tab" data-toggle="tab" href="#opcion-alta" role="tab"
                                 aria-controls="opcion-alta" aria-selected="false" ng-click="tabRevisarPermisoCrearUsuario()">Alta usuarios</a>
                         </li>
