@@ -1,9 +1,14 @@
 var app = angular.module('despachoApp', []);
-
-app.controller('despachoController', ['$scope', 'despachoService', '$filter', '$q', function ($scope, despachoService, $filter, $q) {
+const FECHA_HOY_DATE = new Date()
+const MILISEGUNDOS_ALERTAS = (1000 * 60) * 3;
+var mapubicacionoperario;
+var mapaucotizaciondetalle;
+var mapavistageneral;
+app.controller('despachoController', ['$scope', 'despachoService', 'mainDespachoService', 'mainAlertasService', 'genericService', '$filter', '$q', function ($scope, despachoService, mainDespachoService, mainAlertasService, genericService, $filter, $q) {
     console.log("IniciaControllador");
+
     let dataTableOtsPendientes;
-    const MILISEGUNDOS_ALERTAS = (1000 * 60) * 3;
+
     $scope.nfiltrogeografia = null;
     $scope.nfiltrointervenciones = null;
     $scope.nfiltroestatuspendiente = null;
@@ -15,11 +20,28 @@ app.controller('despachoController', ['$scope', 'despachoService', '$filter', '$
     $scope.intervencionesConteo = [];
     $scope.listadoConteoAlertasTipo = [];
     $scope.listadoTecnicosGeneral = [];
+    $scope.listadoTecnicosAsigna = [];
     $scope.isCargaTecnicosDisponibles = false;
     $scope.listadoOtsAsignadas = [];
     $scope.fechaFiltradoCalendar = '';
+    $scope.estatusCambio = [];
+    $scope.mostrarOtsAsignadas = true;
+    $scope.isSelectedOt = false;
+    $scope.isSelectedTec = false;
+    $scope.listOtsAsiganadasMore = []
+    $scope.listOtsAsiganadasMoreTemp = []
+    $scope.isCargaOtsPendientes = false;
+    $scope.isAsignadasTable = false;
+
+
+    app.filtrosDespachoPrincipal($scope, mainDespachoService)
+    app.mapasControllerDespachoPI($scope, mainDespachoService)
+    app.modalDespachoPrincipal($scope, mainDespachoService, $q, genericService)
+    app.alertasDespachoPrincipal($scope, mainAlertasService, genericService)
+    app.misProyectosDependencias($scope, mainDespachoService)
 
     angular.element(document).ready(function () {
+        $("#filters-content").css("display", "block")
         $('#filtro-fechainicio').datepicker({
             format: 'dd/mm/yyyy',
             autoclose: true,
@@ -36,19 +58,6 @@ app.controller('despachoController', ['$scope', 'despachoService', '$filter', '$
         });
         $('#filtro-fechafin').datepicker('update', new Date());
 
-        $('#calendar-next-back').datepicker({
-            format: 'dd/mm/yyyy',
-            language: 'es',
-            todayHighlight: true,
-            //startDate : FECHA_HOY_DATE,
-            //endDate : moment(FECHA_HOY_DATE).add('days', 2).toDate()
-        }).on('changeDate', function (e) {
-            let textCalendar = $('#calendar-next-back').val()
-            $scope.fechaFiltradoCalendar = textCalendar;
-            $scope.$apply()
-
-            $scope.refrescarBusqueda(true)
-        });
         $('#calendar-next-back').datepicker('update', new Date());
 
         $('#searchGeo').on('keyup', function () {
@@ -58,9 +67,97 @@ app.controller('despachoController', ['$scope', 'despachoService', '$filter', '$
         $('#buscar-ot-pendiente').on('keyup', function () {
             dataTableOtsPendientes.search(this.value).draw();
         })
-        $scope.fechaFiltradoCalendar = "03/02/2022"//moment(new Date()).format('DD/MM/YYYY');
+
+        $("#buscar-tecnico").on("keyup", function () {
+            $("#buscar-ot-asignada").val('');
+            let listTemp = [];
+            let valueTemp = this.value.toString().toLowerCase();
+            $.each($scope.listadoTecnicosGeneral, function (i, elemento) {
+                if (elemento.nombre.toLowerCase().includes(valueTemp) || elemento.apellidoPaterno.toLowerCase().includes(valueTemp) ||
+                    elemento.apellidoMaterno.toLowerCase().includes(valueTemp) || elemento.usuarioFFM.toLowerCase().includes(valueTemp)) {
+                    listTemp.push(elemento);
+                }
+            })
+            $scope.tablaAsignadasOperarios(listTemp); 
+        })
+
+        $("#buscar-ot-asignada").on("keyup", function () {
+            $("#buscar-tecnico").val('');
+            let listTemp = [];
+            let valueTemp = this.value.toString().toLowerCase();
+            console.log(valueTemp);
+            $.each($scope.listadoTecnicosGeneral, function (i, elemento) {
+                let listOtTemp = [];
+                let elementoTep = angular.copy(elemento);
+                $.each(elemento.listadoOts, function (i, elemento2) {
+                    if (elemento2.descipcionTipoOrden.toLowerCase().includes(valueTemp) || elemento2.idOrden.toString().toLowerCase().includes(valueTemp) ||
+                        elemento2.descripcionSubtipoOrden.toLowerCase().includes(valueTemp) || elemento2.descripcionGeografia.toLowerCase().includes(valueTemp)) {
+                        listOtTemp.push(elemento2);
+                    }
+                })
+                elementoTep.listadoOts = listOtTemp;
+                listTemp.push(elementoTep);
+            })
+            $scope.tablaAsignadasOperarios(listTemp);
+        })
+
+
+        $scope.fechaFiltradoCalendar = "14/01/2022"//moment(new Date()).format('DD/MM/YYYY');
+
     });
 
+    $scope.buscarTecnicoModal = function (id) {
+        let valueTemp = $('#' + id).val().toString().toLowerCase();
+        $scope.listadoTecnicosAsigna = [];
+        $.each($scope.listadoTecnicosGeneral, function (i, elemento) {
+            if (elemento.nombre.toLowerCase().includes(valueTemp) || elemento.apellidoPaterno.toLowerCase().includes(valueTemp) ||
+                elemento.apellidoMaterno.toLowerCase().includes(valueTemp) || elemento.usuarioFFM.toLowerCase().includes(valueTemp)) {
+                $scope.listadoTecnicosAsigna.push(elemento);
+            }
+        })
+    }
+
+    $scope.buscarOtModal = function () {
+        let valueTemp = $('#searchOt').val().toString().toLowerCase();
+        $scope.listOtsAsiganadasMoreTemp = [];
+        $.each($scope.listOtsAsiganadasMore, function (i, elemento) {
+            if (elemento.descipcionTipoOrden.toLowerCase().includes(valueTemp) || elemento.idOrden.toString().toLowerCase().includes(valueTemp) ||
+                elemento.descripcionSubtipoOrden.toLowerCase().includes(valueTemp) || elemento.descripcionGeografia.toLowerCase().includes(valueTemp)) {
+                $scope.listOtsAsiganadasMoreTemp.push(elemento);
+            }
+        })
+    }
+
+    $scope.refrescarBusquedaPE = function (banderaIsPendientes = false) {
+        $scope.isCargaOtsPendientes = banderaIsPendientes;
+        $scope.isAsignadasTable = false;
+        $scope.consultarTecnicosDisponibiles()
+        $scope.consultarOrdenesTrabajoAsignadasDespacho()
+        $scope.consultarOtsPendientes()
+        //  $scope.consultarConteoAlertasPI()
+    }
+
+
+
+    $scope.selectOtReasignar = function (id) {
+        $scope.isSelectedOt = true;
+        $(".content-ot-asigna").removeClass('active-asignada');
+        $(".cardot-" + id).addClass('active-asignada');
+    }
+
+    $scope.reasignarTecnicoModal = function (id) {
+        $scope.mostrarOtsAsignadas = false;
+    }
+
+    $scope.seleccionOperarioReasignar = function (id) {
+        $scope.isSelectedTec = true;
+        $(".content-ot-oper").removeClass('active-asignada');
+        $(".cardoper-" + id).addClass('active-asignada');
+    }
+
+    $scope.regrearAsignaOt = function () {
+        $scope.mostrarOtsAsignadas = true;
+    }
 
     $scope.abrirModalGeografia = function () {
         $('#searchGeo').val('');
@@ -71,15 +168,46 @@ app.controller('despachoController', ['$scope', 'despachoService', '$filter', '$
         }, 750);
     }
 
-    abrirModalReasignaOt = function (){
+    abrirModalReasignaOt = function () {
+        $('#searchTecnico').val('');
+        $scope.isSelectedTec = false;
+        $scope.listadoTecnicosAsigna = $scope.listadoTecnicosGeneral;
+        $scope.$apply();
+        $(".content-ot-oper").removeClass('active-asignada');
         $("#modal-reasigna-ot").modal('show');
     }
+
+    abrirModalAsignadasOt = function (id) {
+        $('#searchOt').val('');
+        $('#searchTecnicoOt').val('');
+        let tecnicoTemp = $scope.listadoTecnicosGeneral.find((e) => e.idTecnico == parseInt(id))
+        $scope.listOtsAsiganadasMore = tecnicoTemp.listadoOts;
+        $scope.listOtsAsiganadasMoreTemp = tecnicoTemp.listadoOts;
+        $scope.listadoTecnicosAsigna = $scope.listadoTecnicosGeneral;
+        $scope.mostrarOtsAsignadas = true;
+        $scope.isSelectedOt = false;
+        $scope.isSelectedTec = false;
+        $scope.$apply();
+        $(".ot-asignada-modal").removeClass('active-asignada');
+        $("#modalOtsAsignadas").modal('show');
+    }
+
+    $scope.reasignarTecnicoOt = function () {
+
+    }
+
+    $scope.reasignarTecnico = function () {
+
+    }
+
+
     $scope.cargarFiltrosGeneric = function () {
         $q.all([
             despachoService.consultarCatalogosTurnosDespachoPI(),
             despachoService.consultarCatalogoTipoOrdenUsuarioDespacho(),
             despachoService.consulCatalogoGeografiaUsuarioDespacho(),
             despachoService.consultarConfiguracionDespachoDespacho({ "moduloAccionesUsuario": "moduloDespacho" }),
+            mainDespachoService.consultarCatalogoEstatusDespachoPI()
         ]).then(function (results) {
             let elementosMapa = angular.copy(results[3].data.result);
             $scope.listadoIconosConfig = []
@@ -107,7 +235,7 @@ app.controller('despachoController', ['$scope', 'despachoService', '$filter', '$
                     }
                 }
             }
-
+            $scope.estatusCambio = results[4].data.result;
 
             if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
                 $scope.permisosConfigUser.permisos.map(e => { e.banderaPermiso = true; return e; });
@@ -117,6 +245,20 @@ app.controller('despachoController', ['$scope', 'despachoService', '$filter', '$
                 $scope.permisosConfigUser = {}
                 $scope.accionesUserConfigText = []
                 $scope.permisosConfigUser.permisos = []
+            }
+
+            if (results[4].data !== undefined) {
+                if (results[4].data.respuesta) {
+                    if (results[4].data.result) {
+                        $scope.filtrosGeneral.estatusdisponibles = $scope.realizarConversionAnidado(results[4].data.result)
+                    } else {
+                        toastr.info('No se encontraron catalogo de estatus');
+                    }
+                } else {
+                    toastr.warning(results[4].data.resultDescripcion);
+                }
+            } else {
+                toastr.error('Ha ocurrido un error en la consulta de tipo ordenes');
             }
 
             if (results[0].data !== undefined) {
@@ -264,7 +406,7 @@ app.controller('despachoController', ['$scope', 'despachoService', '$filter', '$
                     if (response.data.result) {
                         if (response.data.result.detalleOrdenes) {
                             $scope.listadoOtsPendientes = response.data.result.detalleOrdenes
-
+                            $scope.isCargaOtsPendientes = true;
                             //$scope.listadoOtsPendientes = ordenesPendientes.result.detalleOrdenes;
                             let indexot = 0
                             $scope.listadoOtsPendientes.map((e) => {
@@ -281,17 +423,14 @@ app.controller('despachoController', ['$scope', 'despachoService', '$filter', '$
                                 tableelemetn = `
                                  <tr>
                                      <td>  
-                                         <div id="idotpendiente${otpendiente.idOrden}" class="${otpendiente.ordenConfirmada ? 'fc-event' : "fc-event-noasignacion"} ot-pendiente-event ${otpendiente.ordenConfirmada ? "efecto ui-draggable ui-draggable-handle" : ""} ">
+                                         <div id="idotpendiente-${otpendiente.idOrden}" class="fc-event ot-pendiente-event efecto ui-draggable ui-draggable-handle">
                                              <div class="header-otpendeinte">
                                                  <div class="top-title-ot">
                                                      <div class="content-top-element bars-content">
                                                          <i onclick="abrirModalDetalleOtPendiente(${otpendiente.idOrden})" class="icono-ot-pendeinte fa fa-bars"></i>
                                                          <h5  class="title-otpendeinte" >${otpendiente.descipcionTipoOrden}</h5>
                                                      </div>
-                                                    
-                                 
                                                  </div>
-
                                                  <div class="positiontres">
                                                      <div class="content-posiciontres">
                                                          <p class="text-otpendiente-tres-title">Intervenci&oacute;n:</p>
@@ -338,7 +477,7 @@ app.controller('despachoController', ['$scope', 'despachoService', '$filter', '$
             }
 
             $scope.inicializarsTableOtsPendientes()
-
+            $scope.isCargaOtsPendientes = true;
         }).catch(err => handleError(err))
     }
 
@@ -454,7 +593,8 @@ app.controller('despachoController', ['$scope', 'despachoService', '$filter', '$
     }
 
     $scope.consultarTecnicosDisponibiles = function () {
-        $scope.listadoTecnicosGeneral = []
+        $scope.listadoTecnicosGeneral = [];
+        $scope.listadoTecnicosAsigna = [];
         $scope.isCargaTecnicosDisponibles = false;
         despachoService.consultarTecnicosDisponibiles().then(function success(response) {
             if (response.data !== undefined) {
@@ -462,7 +602,8 @@ app.controller('despachoController', ['$scope', 'despachoService', '$filter', '$
                     if (response.data.result) {
                         if (response.data.result.detalleTecnicos) {
                             $scope.isCargaTecnicosDisponibles = true;
-                            $scope.listadoTecnicosGeneral = response.data.result.detalleTecnicos
+                            $scope.listadoTecnicosGeneral = response.data.result.detalleTecnicos;
+                            $scope.listadoTecnicosAsigna = response.data.result.detalleTecnicos;
                         } else {
                             toastr.info('No se encontraron operarios disponibles');
 
@@ -527,8 +668,11 @@ app.controller('despachoController', ['$scope', 'despachoService', '$filter', '$
             $scope.validarLoadTecnicosOtsAsignadas()
         }).catch(err => handleError(err));
     }
-    $scope.tablaAsignadasOperarios = function () {
-        angular.forEach($scope.listadoTecnicosGeneral, function (tecnico, index) {
+
+    $scope.tablaAsignadasOperarios = function (listaTecnicosGen) {
+        //VALIDAR SI NO HAY TECNICOS
+        $("#table-ot-asignadas tbody").empty();
+        angular.forEach(listaTecnicosGen, function (tecnico, index) {
             let fullName = tecnico.nombre + " " + tecnico.apellidoPaterno + " " + tecnico.apellidoMaterno;
             let templateShowMore = '';
             let htmlCardsAsignadas = '';
@@ -536,14 +680,14 @@ app.controller('despachoController', ['$scope', 'despachoService', '$filter', '$
             if (tecnico.listadoOts.length > 3) {
                 let total = tecnico.listadoOts.length - 3;
                 templateShowMore = `<div class="show-more">
-                <button class="btn btn-primary btn-more-cards">${total}+</button>
+                <button class="btn btn-more-cards" onclick="abrirModalAsignadasOt(${tecnico.idTecnico})">${total}+</button>
                 </div>`;
             }
 
             if (tecnico.listadoOts.length) {
                 angular.forEach(tecnico.listadoOts, function (asignada, indexAs) {
                     var templateAsignada = `
-                    <div class="col-4 fc-event ui-draggable ui-draggable-handle evento-ot-asignada" style="border-left: 0.5em solid ${asignada.colorOverEstatus}; top: 0px;"><div class="fc-content"><div class="fc-title" style="position: relative;"> 
+                    <div class="col-4 fc-event  evento-ot-asignada" style="border-left: 0.5em solid ${asignada.colorOverEstatus}; top: 0px;"><div class="fc-content"><div class="fc-title" style="position: relative;"> 
                     <div class="container-asignada">            
                         <div class="content-text-otasignada">  
                             <div class="izquierda-icon"><i class="elemen-izquierda-asignada icon-otasginada fas fa-bars" onclick="abrirModalInformacion(221902);"></i></div>
@@ -577,7 +721,7 @@ app.controller('despachoController', ['$scope', 'despachoService', '$filter', '$
             <div class="col-4 content-card" style="width: 30%">
                 <div class="row">
                 <div class="col-2" style="text-align: center;">
-                    <img style="border:.2em solid ${tecnico.color}" onclick="abrirModalFoto('${fullName}','${tecnico.urlFotoPerfil}', ' ${tecnico.usuarioFFM}', '${tecnico.numContacto}', '${tecnico.centro}', '${tecnico.descipcionEstatusTecnico}')"  class="efecto imagen_operario_foto"  src="${(tecnico.urlFotoPerfil != undefined && tecnico.urlFotoPerfil ? tecnico.urlFotoPerfil : './resources/img/plantainterna/despacho/tecnicootasignada.png')}"/>
+                    <img style="border:.2em solid ${tecnico.color}" onclick="abrirModalFoto('${fullName}','${tecnico.urlFotoPerfil != undefined ? tecnico.urlFotoPerfil : ''}', ' ${tecnico.usuarioFFM}', '${tecnico.numContacto}', '${tecnico.centro}', '${tecnico.descipcionEstatusTecnico}')"  class="efecto imagen_operario_foto"  src="${(tecnico.urlFotoPerfil != undefined && tecnico.urlFotoPerfil ? tecnico.urlFotoPerfil : './resources/img/plantainterna/despacho/tecnicootasignada.png')}"/>
                 </div>
                 <div class="col-10 text-justify">
                     <div class="conteo-content-ots">
@@ -598,15 +742,15 @@ app.controller('despachoController', ['$scope', 'despachoService', '$filter', '$
                         <div  class="col-12 content-icons-operario ">
                             <div class="icon-content-operario tooltip-icon-des">
                                 <span class="tooltiptext-icon-des">Status operario</span>
-                                <span class="icono_operario_accion  fa fa-eye"></span>
+                                <span class="icono_operario_accion  fa fa-eye" onclick="abrirCambioEstatusTecnico('${tecnico.idTecnico}');"></span>
                             </div>                  
                             <div class="icon-content-operario tooltip-icon-des">
                                 <span class="tooltiptext-icon-des">OTS trabajadas OT</span>
-                                <span class="icono_operario_accion fa fa-info-circle" ></span>
+                                <span class="icono_operario_accion fa fa-info-circle" onclick="abrirOtsTrabajadas('${tecnico.idTecnico}');" ></span>
                             </div>
                             <div class="icon-content-operario tooltip-icon-des">
                                 <span class="tooltiptext-icon-des">Ubicaci\u00F3n operario</span>
-                                <span class="icono_operario_accion fa fa-map" ></span>
+                                <span class="icono_operario_accion fa fa-map"  onclick="abrirUbicacionOperario('${tecnico.idTecnico}');"></span>
                             </div>
                         </div> 
                     </div>
@@ -614,7 +758,7 @@ app.controller('despachoController', ['$scope', 'despachoService', '$filter', '$
                 </div>
             </div>
             <div class="col-8" style="width: 70%">
-                <div class="row col-12 content-cards" draggable="true" onDragOver="eventOver(event)" onDragEnter="eventEnter(event)" onDragLeave="eventLeave(event)" onDrop="eventDrop(event)">
+                <div class="row col-12 content-cards" droppable="true" id="content-drop-${tecnico.idTecnico}">
                     ${htmlCardsAsignadas}
                 </div>
                     ${templateShowMore}
@@ -632,13 +776,33 @@ app.controller('despachoController', ['$scope', 'despachoService', '$filter', '$
                     </td>
                 </tr>`;
 
-            $("#table-ot-asignadas tbody").append(tableelemetn2)
+            $("#table-ot-asignadas tbody").append(tableelemetn2);
+            $("#content-drop-" + tecnico.idTecnico).droppable({
+                drop: function (event, ui) {
+                    let idTecTemp = event.target.id.split('-')[2];
+                    console.log(event);
+                    let data_tecnico = listaTecnicosGen.find((e) => e.idTecnico == parseInt(idTecTemp))
+                    let otTemp = event.toElement.offsetParent.id.split('-')[1];
+                    let otInfo =  $scope.listadoOtsPendientes.find((e) => e.idOrden == parseInt(otTemp))
+                    //otInfo.fechahoraasignacion = moment(new Date()).format('DD/MM/YYYY');
+                    $scope.abrirModalAsignacion(otInfo, data_tecnico);
+                    $(this).css("border", "1.5px dashed #ddd")
+                },
+                over: function (event, ui) {
+                    $(this).css("border", "2px dashed #7716fa")
+                },
+                out: function (event, ui) {
+                    $(this).css("border", "1.5px dashed #ddd")
+                }
+
+            });
         })
     }
 
     $scope.validarLoadTecnicosOtsAsignadas = function () {
 
         if ($scope.isCargaTecnicosDisponibles && $scope.isCargaOtsAsignadas) {
+            $scope.isAsignadasTable = true;
             //Se agregan ots a los tecnicos
             $scope.listadoOtsAsignadas.map((e) => {
                 e.resourceId = e.idTecnico
@@ -652,7 +816,7 @@ app.controller('despachoController', ['$scope', 'despachoService', '$filter', '$
                 return e;
             })
             setTimeout(function () {
-                $scope.tablaAsignadasOperarios();
+                $scope.tablaAsignadasOperarios($scope.listadoTecnicosGeneral);
             }, 500)
         }
     }
@@ -662,7 +826,7 @@ app.controller('despachoController', ['$scope', 'despachoService', '$filter', '$
     }, MILISEGUNDOS_ALERTAS);
 
 
-    
+
     $scope.buildCardAsignadas = function (listaAsignadas) {
         $('.fc-event.evento-ot-asignada').each(function (index) {
             $(this).data('event', {
@@ -680,32 +844,17 @@ app.controller('despachoController', ['$scope', 'despachoService', '$filter', '$
         });
 
     }
-
-
-    eventOver = function (event) {
-        console.log(event);
-    }
-
-    eventEnter = function (event) {
-        console.log(event);
-    }
-
-    eventLeave = function (event) {
-        console.log(event);
-    }
-
-    eventDrop = function (event) {
-        console.log(event);
-    }
-
-
 }]);
 
-app.directive('doneOtsPendientes', function () {
+app.directive('doneListadoDependenciaHistorico', function () {
     return function (scope, element, attrs) {
         if (scope.$last) {
-            console.log("directive inciializando")
-            scope.$parent.initTableOrdenesPendientes()
+            //console.log("directive done listado de  actividadesss####")
+            setTimeout(function () {
+                $(".dot-dependencia").remove()
+                scope.pintarDependenciasHistorico();
+            }, 700)
+
         }
     };
 });
