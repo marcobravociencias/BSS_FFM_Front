@@ -502,7 +502,7 @@ app.controller('controlVehicularController',
 									if ($scope.configPermisoAccionActivaVehiculos) {
 										row[9] = '<span onclick="activeCar(' + "'" + elemento.idVehiculo + "'" + ')" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnActivaUsuario"><i class="fas fa-check" aria-hidden="true"></i></span>';
 									} else {
-										row[9] = '<i class="fas fa-check icon-table" title="No tienes permisos para eliminar" style="cursor: not-allowed; background: #9d9ea2 !important;"></i>';
+										row[9] = '<span  title="No tienes permisos para activar" style="cursor: no-drop; opacity: 0.3 !important;"  class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnActivaUsuario"><i class="fas fa-check" aria-hidden="true"></i></span>';
 									}
 
 									arrayRow.push(row);
@@ -561,13 +561,13 @@ app.controller('controlVehicularController',
 					if ($scope.configPermisoAccionEditaVehiculos) {
 						row[9] = '<span onclick="editCar(' + "'" + elemento.idVehiculo + "'" + ')" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnModificarUsuario"><i class="fas fa-pen" aria-hidden="true"></i></span>';
 					} else {
-						row[9] = '<span onclick="editCar(' + "'" + elemento.idVehiculo + "'" + ')" title="No tienes permisos para editar" style="cursor: not-allowed; background: #9d9ea2 !important;"  class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnModificarUsuario"><i class="fas fa-pen" aria-hidden="true"></i></span>';
+						row[9] = '<span title="No tienes permisos para editar" style="cursor: no-drop; opacity: 0.3 !important;" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnModificarUsuario"><i class="fas fa-unlock" aria-hidden="true"></i></span>';
 					}
 
 					if ($scope.configPermisoAccionEliminaVehiculos) {
 						row[10] = '<span onclick="deleteCar(' + "'" + elemento.idVehiculo + "'" + ')" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnEliminarUsuario"><i class="fas fa-trash" aria-hidden="true"></i></span>';
 					} else {
-						row[10] = '<span  title="No tienes permisos para eliminar" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnEliminarUsuario" style="cursor: not-allowed; background: #9d9ea2 !important;"><i class="fas fa-trash" aria-hidden="true"></i></span>';
+						row[10] = '<span  title="No tienes permisos para eliminar" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnEliminarUsuario" style="cursor: no-drop; opacity: 0.3 !important;"><i class="fas fa-unlock" aria-hidden="true"></i></span>';
 					}
 
 					arrayRow.push(row);
