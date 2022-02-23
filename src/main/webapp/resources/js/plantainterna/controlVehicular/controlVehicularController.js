@@ -89,8 +89,8 @@ app.controller('controlVehicularController',
 					clearBtn: false,
 					orientation: "bottom"
 				});
-
 			});
+
 
 			$('#searchGeoConsulta').on('keyup', function () {
 				$("#jstreeconsulta").jstree("search", this.value);
@@ -880,7 +880,7 @@ app.controller('controlVehicularController',
 				if ($scope.validateFormGen() && $scope.validateFormDocs()) {
 					swal({
 						title: "Se actualizar\u00E1 la informaci\u00F3n del veh\u00EDculo",
-						text: "\u00BFDesea editar la informaci\u00F3n del veh\u00EDculo?",
+						text: "\u00BFDesea guardar la informaci\u00F3n del veh\u00EDculo?",
 						type: "warning",
 						showCancelButton: true,
 						confirmButtonColor: '#007bff',
@@ -995,10 +995,18 @@ app.controller('controlVehicularController',
 							if (response.data.result) {
 								$scope.isEdit = false;
 								toastr.success('Acci&oacute;n completada');
-								setTimeout(function () {
-									$("#consulta-tab").click();
-									$scope.getVehiculos(false);
-								}, 300)
+								if ($scope.configPermisoAccionConsultaVehiculos) {
+									setTimeout(function () {
+										$("#consulta-tab").click();
+										$scope.getVehiculos(false);
+									}, 300)
+								} else {
+									setTimeout(function () {
+										$("#alta-tab").click();
+										swal.close();
+									}, 300)
+								}
+
 								$("#jstreealta").jstree("destroy");
 								$scope.clearForm();
 								$scope.initWizard();
@@ -1745,7 +1753,6 @@ app.controller('controlVehicularController',
 
 		}
 	]
-
 
 );
 

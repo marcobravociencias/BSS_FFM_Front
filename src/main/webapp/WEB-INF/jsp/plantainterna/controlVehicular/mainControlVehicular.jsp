@@ -97,7 +97,7 @@
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane fade" id="alta" role="tabpanel" aria-labelledby="alta-tab"
-                                        ng-if="configPermisoAccionCreaVehiculos || configPermisoAccionEditaVehiculos">
+                                        ng-show="configPermisoAccionCreaVehiculos || configPermisoAccionEditaVehiculos">
                                         <jsp:include page="./insertarVehiculo.jsp"></jsp:include>
                                     </div>
                                     <div class="tab-pane fade show active" id="consulta" role="tabpanel"
