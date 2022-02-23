@@ -406,6 +406,9 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             } )   
         })
         envioIntervenciones=subIntTemp;
+
+        let estatusDisponiblesCheck = [];
+        estatusDisponiblesCheck = $scope.filtrosGeneral.estatusdisponibles.filter(e=>e.checkedOpcion).map(e=>e.id)   
         /**
         let envioIntervenciones=[]
         if($scope.nfiltrointervenciones){
@@ -435,7 +438,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             "fechaFin": moment( moment($scope.fechaFinFiltro , 'DD/MM/YYYY').toDate() ).format('YYYY-MM-DD') ,
             "idSubIntervenciones": envioIntervenciones,
             "idTurnos": turnosdisponiblescopy,  
-            "idEstatus": [$scope.nfiltroestatuspendiente],
+            "idEstatus": estatusDisponiblesCheck,
             "idClusters": clustersparam
         }
     
