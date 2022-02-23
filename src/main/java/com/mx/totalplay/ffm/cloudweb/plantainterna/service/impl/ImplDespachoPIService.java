@@ -727,6 +727,7 @@ public class ImplDespachoPIService implements DespachoPIService {
         //String url="http://10.216.47.89"+constDespachoPI.getConsultarDetalleAlerta();
         String tokenAcces = principalDetail.getAccess_token();
         String url = principalDetail.getDireccionAmbiente().concat(constDespachoPI.getConsultarAccionesAlerta());
+        logger.info("url ### "+url);
         Map<String, String> paramsRequestGet = new HashMap<String, String>();
         paramsRequestGet.put("idTipoAlerta", jsonObject.get("idTipoAlerta").getAsString());
         ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, url, ServiceResponseResult.class, tokenAcces);
