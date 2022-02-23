@@ -56,11 +56,11 @@
             </div>
             <div class="content-fluid" id="container_vehiculos" style="display: none;">
                 <div class="container-fluid" style="padding: 0;">
-                    <div ng-show="!permisosConfigUser.length" class="text-accion-nopermiso">
+                    <div ng-show="!configPermisoAccionConsultaVehiculos && !configPermisoAccionActivaVehiculos && !configPermisoAccionCreaVehiculos" class="text-accion-nopermiso">
                         <i class="icon-not-permiso fas fa-user-lock"></i>
                         <b class="text-not-permiso">NO TIENES PERMISOS PARA LA GESTI&Oacute;N DEL M&Oacute;DULO</b>
                     </div>
-                    <div class="row" ng-show="permisosConfigUser.length">
+                    <div class="row" ng-show="configPermisoAccionConsultaVehiculos || configPermisoAccionActivaVehiculos || configPermisoAccionCreaVehiculos">
                         <div id="datos_tablas" class="col-sm-12">
                             <a id="btn_mostrar_nav" style="display: none; position: absolute">
                                 <i class="fa fa-bars" aria-hidden="true"></i>
@@ -68,28 +68,28 @@
                             <div class="content-fluid">
                                 <ul class="nav nav-tabs" id="myTabVehiculo" role="tablist">
                                     <li class="nav-item"
-                                        ng-if="accionesUserConfigText.indexOf('accionConsultaVehiculos') === -1">
+                                        ng-if="configPermisoAccionConsultaVehiculos">
                                         <a class="nav-link active" id="consulta-tab" data-toggle="tab" href="#consulta"
                                             role="tab" aria-controls="consulta" onclick="resetAll()"
                                             aria-selected="true">Consultar
                                             Veh&iacute;culos</a>
                                     </li>
                                     <li class="nav-item"
-                                        ng-if="isEdit && accionesUserConfigText.indexOf('accionEditaVehiculos') === -1">
+                                        ng-if="isEdit && configPermisoAccionEditaVehiculos">
                                         <a class="nav-link" id="modifica-tab" data-toggle="tab" href="#alta"
                                             role="tab" aria-controls="alta" ng-show="isEdit"
                                             aria-selected="false">Modificar
                                             Veh&iacute;culo</a>
                                     </li>
                                     <li class="nav-item"
-                                        ng-if="accionesUserConfigText.indexOf('accionCreaVehiculos') === -1">
+                                        ng-if="configPermisoAccionCreaVehiculos">
                                         <a class="nav-link" id="alta-tab" data-toggle="tab" href="#alta"
                                             ng-show="permisosConfigUser" onclick="resetAll()" role="tab"
                                             aria-controls="alta" aria-selected="false">Alta
                                             Veh&iacute;culo</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="elimina-tab" data-toggle="tab" href="#elimina"  ng-if="accionesUserConfigText.indexOf('accionActivaVehiculos') === -1"
+                                    <li class="nav-item"  ng-if="configPermisoAccionActivaVehiculos">
+                                        <a class="nav-link" id="elimina-tab" data-toggle="tab" href="#elimina"
                                             role="tab" aria-controls="elimina" onclick="resetAll()"
                                             aria-selected="true">Activar
                                             Veh&iacute;culos</a>
@@ -97,15 +97,15 @@
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane fade" id="alta" role="tabpanel" aria-labelledby="alta-tab"
-                                        ng-if="accionesUserConfigText.indexOf('accionCreaVehiculos') === -1 || accionesUserConfigText.indexOf('accionEditaVehiculos') === -1">
+                                        ng-if="configPermisoAccionCreaVehiculos || configPermisoAccionEditaVehiculos">
                                         <jsp:include page="./insertarVehiculo.jsp"></jsp:include>
                                     </div>
                                     <div class="tab-pane fade show active" id="consulta" role="tabpanel"
-                                        ng-if="accionesUserConfigText.indexOf('accionConsultaVehiculos') === -1"
+                                        ng-if="configPermisoAccionConsultaVehiculos"
                                         aria-labelledby="consulta-tab">
                                         <jsp:include page="./consultarVehiculo.jsp"></jsp:include>
                                     </div>
-                                    <div class="tab-pane fade" id="elimina" role="tabpanel"  ng-if="accionesUserConfigText.indexOf('accionActivaVehiculos') === -1"
+                                    <div class="tab-pane fade" id="elimina" role="tabpanel"  ng-if="configPermisoAccionActivaVehiculos"
                                         aria-labelledby="elimina-tab">
                                         <jsp:include page="./consultarActivaVehiculo.jsp"></jsp:include>
                                     </div>
