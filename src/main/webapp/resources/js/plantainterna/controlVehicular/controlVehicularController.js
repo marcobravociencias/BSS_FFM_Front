@@ -171,6 +171,13 @@ app.controller('controlVehicularController',
 									$("#alta-tab").click();
 								}, 300)
 							}
+
+							if (!$scope.configPermisoAccionConsultaVehiculos && !$scope.configPermisoAccionCreaVehiculos && $scope.configPermisoAccionActivaVehiculos) {
+								setTimeout(function () {
+									$("#elimina-tab").click();
+								}, 300)
+							}
+
 							$("#container_vehiculos").css("display", "block")
 						} else {
 							toastr.warning(results[0].data.resultDescripcion);
@@ -555,8 +562,8 @@ app.controller('controlVehicularController',
 					row[3] = elemento.modelo;
 					row[4] = elemento.anio;
 					row[5] = elemento.geografia;
-					row[6] = elemento.urlFotoPlaca && elemento.urlFotoPlaca.length > 15 ? '<img style="cursor:pointer; border-radius:.5em" src="' + elemento.urlFotoPlaca + random + '" alt="Placa" width="50" height="30" onclick="showImg(' + "'" + elemento.urlFotoPlaca + "'" + ')"/>' : "";
-					row[7] = elemento.urlFotoVehiculo && elemento.urlFotoVehiculo.length > 15 ? '<img style="cursor:pointer; border-radius:.5em" src="' + elemento.urlFotoVehiculo + random + '" alt="Vehiculo" width="50"  height="30" onclick="showImg(' + "'" + elemento.urlFotoVehiculo + "'" + ')"/>' : "";
+					row[6] = elemento.urlFotoPlaca ? '<img style="cursor:pointer; border-radius:.5em" src="' + elemento.urlFotoPlaca + random + '" alt="Placa" width="50" height="30" onclick="showImg(' + "'" + elemento.urlFotoPlaca + "'" + ')"/>' : "";
+					row[7] = elemento.urlFotoVehiculo ? '<img style="cursor:pointer; border-radius:.5em" src="' + elemento.urlFotoVehiculo + random + '" alt="Vehiculo" width="50"  height="30" onclick="showImg(' + "'" + elemento.urlFotoVehiculo + "'" + ')"/>' : "";
 					row[8] = elemento.estatus;
 					if ($scope.configPermisoAccionEditaVehiculos) {
 						row[9] = '<span onclick="editCar(' + "'" + elemento.idVehiculo + "'" + ')" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnModificarUsuario"><i class="fas fa-pen" aria-hidden="true"></i></span>';
