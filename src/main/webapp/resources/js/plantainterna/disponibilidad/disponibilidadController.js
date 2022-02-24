@@ -58,33 +58,38 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
         $scope.inicialCalendario();
         $scope.inicioDisponibilidad();
         editarDisponibilidad = function (matutino, vespertino, nocturno, bloqueado, fecha) {
-            if ($scope.banderaMatutino) {
-                document.getElementById('matutino_actualizar').value = matutino;
-            }
-            if ($scope.banderaVespertino) {
-                document.getElementById('vespertino_actualizar').value = vespertino;
-            }
-            
-            if ($scope.banderaNocturno) {
-                document.getElementById('nocturno_actualizar').value = nocturno;
+            if ($scope.accessEditarDisponibilidad) {
+                if ($scope.banderaMatutino) {
+                    document.getElementById('matutino_actualizar').value = matutino;
+                }
+                if ($scope.banderaVespertino) {
+                    document.getElementById('vespertino_actualizar').value = vespertino;
+                }
                 
-            }
-            document.getElementById('fecha_actualizar').value = fecha
-            let fechaSplit = fecha.split('-')
-            let fech = Number(fechaSplit[1]) - 1;
-            let fechaMes = fech.length === 1 ? '0'.concat(fech) : String(fech);
-            let fechaI = new Date(fechaSplit[0], fechaMes, fechaSplit[2])
-            $('#fecha_inicio_updateDis').datepicker("setDate", new Date(fechaI));
-            $('#fecha_fin_updateDis').datepicker("setDate", new Date(fechaI));
-            if (!bloqueado) {
-                document.getElementById('radio_activo_mod').checked = true
-                document.getElementById('radio_inactivo_mod').checked = false
+                if ($scope.banderaNocturno) {
+                    document.getElementById('nocturno_actualizar').value = nocturno;
+                    
+                }
+                document.getElementById('fecha_actualizar').value = fecha
+                let fechaSplit = fecha.split('-')
+                let fech = Number(fechaSplit[1]) - 1;
+                let fechaMes = fech.length === 1 ? '0'.concat(fech) : String(fech);
+                let fechaI = new Date(fechaSplit[0], fechaMes, fechaSplit[2])
+                $('#fecha_inicio_updateDis').datepicker("setDate", new Date(fechaI));
+                $('#fecha_fin_updateDis').datepicker("setDate", new Date(fechaI));
+                if (!bloqueado) {
+                    document.getElementById('radio_activo_mod').checked = true
+                    document.getElementById('radio_inactivo_mod').checked = false
+                } else {
+                    document.getElementById('radio_inactivo_mod').checked = true
+                    document.getElementById('radio_activo_mod').checked = false
+                }
+    
+                $("#modificar_disponibilidad_modal").modal('show');
             } else {
-                document.getElementById('radio_inactivo_mod').checked = true
-                document.getElementById('radio_activo_mod').checked = false
+                swal({type: "warning", title:"Aviso", text:"No cuentas con permiso para editar disponibilidad."});
             }
 
-            $("#modificar_disponibilidad_modal").modal('show');
         }
     });
 

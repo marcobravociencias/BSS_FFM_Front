@@ -1087,3 +1087,7 @@ font-size: 0.8em;
 .fa-instagram {
   display: none !important;
 }
+
+.cursorEfect{
+  cursor: pointer;
+}
