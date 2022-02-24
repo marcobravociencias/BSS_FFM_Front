@@ -190,6 +190,11 @@ img.responsive-img-tecnico {
     color: orange;
 }
 
+.estiloBlockIconoPermiso{
+	opacity: 0.3 !important;
+    cursor: no-drop !important;
+}
+
 /* -------------------------------------------------------------------------------------------------- */
 
 .form-switch .form-check-input:after {
