@@ -583,6 +583,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                             if (response.data.respuesta) {
                                 if (response.data.result) {
                                     swal.close();
+                                    $scope.tecnicoAsignado = {};
                                     $scope.consultarTicketsSoporte();
                                     $scope.changeView(2);
                                     $scope.cleanForm();

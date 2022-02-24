@@ -135,7 +135,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
                 }
 			}else{
 				toastr.info("No se encontraron configuraciones del usuario")
-			} 
+			}
 			
 			// *** CONFIGURACIÓN DE PERMISOS ***
 			if( resultConf != undefined && resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.permisos && resultConf.MODULO_ACCIONES_USUARIO.permisos != ""){
@@ -457,7 +457,19 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     		        "aoColumnDefs" : [ 
     		        	{"aTargets" : [6], "sClass":  "txtTablaConsultaCentrado"},
     		            {"aTargets" : [7], "sClass":  "txtTablaConsultaCentrado"}
-    		        ]
+    		        ],
+    		        "drawCallback": function( settings ) {
+    		        	if(!$scope.configPermisoAccionEditaUsuarios){
+    		        		$(".btnModificarUsuario").addClass("estiloBlockIconoPermiso");
+    		        		$(".iconoModUsuario").removeClass("fa-pen");
+    		        		$(".iconoModUsuario").addClass("fa-unlock");
+    		        	}
+    		        	if(!$scope.configPermisoAccionEliminaUsuarios){
+    		        		$(".btnEliminarUsuario").addClass("estiloBlockIconoPermiso");
+    		        		$(".iconoElimUsuario").removeClass("fa-trash-alt");
+    		        		$(".iconoElimUsuario").addClass("fa-unlock");
+    		        	}
+    		        }
     	    	});
     	    	$("#modalGeografiaConsulta").modal('hide');
     	    }else{

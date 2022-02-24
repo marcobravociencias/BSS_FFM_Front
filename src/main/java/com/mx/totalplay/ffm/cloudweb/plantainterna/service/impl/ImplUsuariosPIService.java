@@ -153,8 +153,8 @@ public class ImplUsuariosPIService implements UsuariosPIService {
                         dataArray[count][3] = object.get("tipoUsuario") != null ? object.get("tipoUsuario").getAsString().trim() : "";
                         dataArray[count][4] = object.get("ciudad") != null ? object.get("ciudad").getAsString().trim() : "";
                         dataArray[count][5] = object.get("unidadNegocio") != null ? object.get("unidadNegocio").getAsString().trim() : "";
-                        dataArray[count][6] = "<div class='tooltip-btn'> <span onclick='consultarDetalleUsuario(" + object.get("idUsuario").getAsString().trim() + ")' class='btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnModificarUsuario'><th><i class='fas fa-pen' aria-hidden='true'></i></th></span></div>";
-                        dataArray[count][7] = "<div class='tooltip-btn'> <span onclick='eliminarUsuario(" + object.get("idUsuario").getAsString().trim() + ")' class='btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnEliminarUsuario'><th><i class='fas fa-trash-alt' aria-hidden='true'></i></th></span></div>";
+                        dataArray[count][6] = "<div class='tooltip-btn'> <span onclick='consultarDetalleUsuario(" + object.get("idUsuario").getAsString().trim() + ")' class='btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnModificarUsuario'><th><i class='iconoModUsuario fas fa-pen' aria-hidden='true'></i></th></span></div>";
+                        dataArray[count][7] = "<div class='tooltip-btn'> <span onclick='eliminarUsuario(" + object.get("idUsuario").getAsString().trim() + ")' class='btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnEliminarUsuario'><th><i class='iconoElimUsuario fas fa-trash-alt' aria-hidden='true'></i></th></span></div>";
                         count++;
                     }
                     
