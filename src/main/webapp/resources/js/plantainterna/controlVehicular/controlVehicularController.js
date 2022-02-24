@@ -36,6 +36,7 @@ app.controller('controlVehicularController',
 			$scope.configPermisoAccionEditaVehiculos = false;
 			$scope.configPermisoAccionEliminaVehiculos = false;
 			$scope.configPermisoAccionActivaVehiculos = false;
+			$scope.configPermisoAccionConsultaActivaVehiculos = false;
 
 			angular.element(document).ready(function () {
 				$("#modal_cluster_arbol_vehiculo").on("hidden.bs.modal", function () {
@@ -164,6 +165,7 @@ app.controller('controlVehicularController',
 								$scope.configPermisoAccionEditaVehiculos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionEditaVehiculos" })[0] != undefined);
 								$scope.configPermisoAccionEliminaVehiculos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionEliminaVehiculos" })[0] != undefined);
 								$scope.configPermisoAccionActivaVehiculos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionActivaVehiculos" })[0] != undefined);
+								$scope.configPermisoAccionConsultaActivaVehiculos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaActivaVehiculos" })[0] != undefined);
 							}
 
 							if (!$scope.configPermisoAccionConsultaVehiculos && $scope.configPermisoAccionCreaVehiculos) {
@@ -172,7 +174,7 @@ app.controller('controlVehicularController',
 								}, 300)
 							}
 
-							if (!$scope.configPermisoAccionConsultaVehiculos && !$scope.configPermisoAccionCreaVehiculos && $scope.configPermisoAccionActivaVehiculos) {
+							if (!$scope.configPermisoAccionConsultaVehiculos && !$scope.configPermisoAccionCreaVehiculos && $scope.configPermisoAccionConsultaActivaVehiculos) {
 								setTimeout(function () {
 									$("#elimina-tab").click();
 								}, 300)
@@ -246,7 +248,7 @@ app.controller('controlVehicularController',
 									});
 								}
 
-								if ($scope.configPermisoAccionActivaVehiculos) {
+								if ($scope.configPermisoAccionConsultaActivaVehiculos) {
 									$('#jstreeconsultainactivos').bind('loaded.jstree', function (e, data) {
 										var geografias = $('#jstreeconsultainactivos').jstree("get_selected", true);
 										let textoGeografias = [];
@@ -509,7 +511,7 @@ app.controller('controlVehicularController',
 									if ($scope.configPermisoAccionActivaVehiculos) {
 										row[9] = '<span onclick="activeCar(' + "'" + elemento.idVehiculo + "'" + ')" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnActivaUsuario"><i class="fas fa-check" aria-hidden="true"></i></span>';
 									} else {
-										row[9] = '<span  title="No tienes permisos para activar" style="cursor: no-drop; opacity: 0.3 !important;"  class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnActivaUsuario"><i class="fas fa-check" aria-hidden="true"></i></span>';
+										row[9] = '<span  title="No tienes permisos para activar" style="cursor: no-drop; opacity: 0.3 !important;"  class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnActivaUsuario"><i class="fas fa-unlock" aria-hidden="true"></i></span>';
 									}
 
 									arrayRow.push(row);

@@ -683,7 +683,10 @@ label.form-check-inputfiltro {
 }
 
 .item_ciudad_resum {
-    display: -webkit-box;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-right: 0.3em;
 }
 
 #v-pills-tab .nav-link.active, .nav-pills .show>.nav-link {
