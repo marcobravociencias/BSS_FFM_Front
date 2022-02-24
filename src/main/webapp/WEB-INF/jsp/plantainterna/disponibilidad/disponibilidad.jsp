@@ -35,7 +35,7 @@ pageEncoding="ISO-8859-1"%>
 			<h1 class="h6 subtitle-modulo">En este m&oacute;dulo podr&aacute;s realizar la gesti&oacute;n de disponibilidad de tus cuadrillas</h1>
 		</div>
 	</div>
-	<div class="container container-filtros-disponibilidad" id="container_consulta_disponbilidad">
+	<div class="container container-filtros-disponibilidad" id="container_consulta_disponbilidad" ng-show="accessConsultaDisponibilidad">
 		<div class="container-fluid">
 			<div class="row md-form" id="filters-dispo">
 				<div id="container_arbol_dispo_consulta" class="col-sm-2 columna-filtro-ind"
@@ -65,23 +65,42 @@ pageEncoding="ISO-8859-1"%>
 	</div>
 	<div class="container">
 		<div class="container contenedor_disponibilidad">
-			<div class="row">
+			<div class="row" ng-show="!accessConsultaDisponibilidad">
+				<div class="text-accion-nopermiso">
+					<i class="icon-not-permiso fas fa-user-lock"></i>
+					<b class="text-not-permiso">No cuentas con el permiso de consulta.</b>
+				</div>
+			</div>
+			<div class="row" ng-show="accessConsultaDisponibilidad">
 				<div id="datos_tablas" class="col-sm-12">
 					<a id="btn_mostrar_nav" class="menuOpt" style="display:none; position: absolute;">
 						<i class="fa fa-bars" aria-hidden="true"></i>
 					</a>
 					<div class="content-fluid">
 						<div style="height: 730px" class="container-fluid" id="disponibilidad_datos_inferior">
-							<ul class="nav nav-tabs" id="myTab" role="tablist">
-								<li class="nav-item">
-									<a class="nav-link active" id="calendario-tab" data-toggle="tab" href="#home" role="tab"
-										aria-controls="home" aria-selected="true">Calendario</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-										aria-controls="profile" aria-selected="false">Tabla</a>
-								</li>
-							</ul>
+							<div class="row">
+								<div class="col-6">
+									<ul class="nav nav-tabs" id="myTab" role="tablist">
+										<li class="nav-item">
+											<a class="nav-link active" id="calendario-tab" data-toggle="tab" href="#home" role="tab"
+												aria-controls="home" aria-selected="true">Calendario</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+												aria-controls="profile" aria-selected="false">Tabla</a>
+										</li>
+									</ul>
+								</div>
+								<div class="col-6">
+									<div class="col col-mns-permiso" ng-show="!accessAgregarDisponibilidad">
+										<i class="icono-noseleccion fas fa-lock"></i> <b class="text-no-seleccion-geografia">No cuentas con permiso para agregar disponibilidad</b>
+									</div>
+									<div class="col col-mns-permiso" ng-show="!accessEditarDisponibilidad">
+										<i class="icono-noseleccion fas fa-lock"></i> <b class="text-no-seleccion-geografia">No cuentas con permiso para editar disponibilidad</b>
+									</div>							
+								</div>
+							</div>
+							
 							<div class="tab-content" id="myTabContent">
 								<div class="tab-pane fade show active" id="home" role="tabpanel"
 									aria-labelledby="calendario-tab">

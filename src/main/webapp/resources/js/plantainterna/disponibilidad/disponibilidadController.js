@@ -46,6 +46,9 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
     $scope.permisosDisponibilidad = [];
     $scope.isConsultaDisponibilidad = false
     $scope.arrayTurnosDisponibilidad = [];
+    $scope.accessConsultaDisponibilidad = true;
+    $scope.accessAgregarDisponibilidad = true;
+    $scope.accessEditarDisponibilidad = true;
     let timeTable = 1000;
 
     app.disponibilidadCalendar($scope);
@@ -149,12 +152,17 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             if (result[0].data.respuesta) {
                 let resultConf= result[0].data.result
                 if( resultConf != undefined && resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves){
+                    $scope.permisosDisponibilidad = resultConf.MODULO_ACCIONES_USUARIO.permisos;
+                    $scope.accessConsultaDisponibilidad = $scope.permisosDisponibilidad.filter(elemento => { return elemento.clave === 'accionConsultaDisponibilidad'}).length > 0 ? true : false;
+                    $scope.accessAgregarDisponibilidad = $scope.permisosDisponibilidad.filter(elemento => { return elemento.clave === 'accionAgregaDisponibilidad'}).length > 0 ? true : false; 
+                    $scope.accessEditarDisponibilidad = $scope.permisosDisponibilidad.filter(elemento => { return elemento.clave === 'accionEditaDisponibilidad'}).length > 0 ? true : false; 
                     let  llavesResult=result[0].data.result.MODULO_ACCIONES_USUARIO.llaves;                    
                     $scope.nIntervencion = llavesResult.N_FILTRO_INTERVENCIONES ? Number( llavesResult.N_FILTRO_INTERVENCIONES ) : null;
                     $scope.nGeografia = llavesResult.N_FILTRO_GEOGRAFIA ? Number( llavesResult.N_FILTRO_GEOGRAFIA ) : null;
-                    $scope.permisosDisponibilidad = resultConf.MODULO_ACCIONES_USUARIO.permisos;
+
                     validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
                     validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
+                   
                 }else{
                     mostrarMensajeErrorAlert("No se encontraron configuraciones del usuario")
                 } 
