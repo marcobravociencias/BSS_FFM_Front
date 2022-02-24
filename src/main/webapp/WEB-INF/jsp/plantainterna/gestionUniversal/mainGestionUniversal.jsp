@@ -57,7 +57,7 @@
                     <i class="icon-not-permiso fas fa-user-lock"></i>
                     <b class="text-not-permiso">No cuentas con el permiso de consulta.</b>
                 </div>
-                <div class="container-fluid" style="padding: 0;">
+                <div class="container-fluid" style="padding: 0;" ng-show="configPermisoAccionConsultaTecnicosPagos || configPermisoAccionConsultaCambiaContrasena" class="text-accion-nopermiso">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item" ng-if="configPermisoAccionConsultaCambiaContrasena">
                             <a class="nav-link active" id="cambiaContrasena-tab" data-toggle="tab"

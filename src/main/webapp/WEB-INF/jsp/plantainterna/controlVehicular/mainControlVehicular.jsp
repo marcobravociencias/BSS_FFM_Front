@@ -56,11 +56,11 @@
             </div>
             <div class="content-fluid" id="container_vehiculos" style="display: none;">
                 <div class="container-fluid" style="padding: 0;">
-                    <div ng-show="!configPermisoAccionConsultaVehiculos && !configPermisoAccionActivaVehiculos && !configPermisoAccionCreaVehiculos" class="text-accion-nopermiso">
+                    <div ng-show="!configPermisoAccionConsultaVehiculos && !configPermisoAccionConsultaActivaVehiculos && !configPermisoAccionCreaVehiculos" class="text-accion-nopermiso">
                         <i class="icon-not-permiso fas fa-user-lock"></i>
                         <b class="text-not-permiso">No cuentas con el permiso de consulta.</b>
                     </div>
-                    <div class="row" ng-show="configPermisoAccionConsultaVehiculos || configPermisoAccionActivaVehiculos || configPermisoAccionCreaVehiculos">
+                    <div class="row" ng-show="configPermisoAccionConsultaVehiculos || configPermisoAccionConsultaActivaVehiculos || configPermisoAccionCreaVehiculos">
                         <div id="datos_tablas" class="col-sm-12">
                             <a id="btn_mostrar_nav" style="display: none; position: absolute">
                                 <i class="fa fa-bars" aria-hidden="true"></i>
@@ -88,7 +88,7 @@
                                             aria-controls="alta" aria-selected="false">Alta
                                             Veh&iacute;culo</a>
                                     </li>
-                                    <li class="nav-item"  ng-if="configPermisoAccionActivaVehiculos">
+                                    <li class="nav-item"  ng-if="configPermisoAccionConsultaActivaVehiculos">
                                         <a class="nav-link" id="elimina-tab" data-toggle="tab" href="#elimina"
                                             role="tab" aria-controls="elimina" onclick="resetAll()"
                                             aria-selected="true">Activar
@@ -105,7 +105,7 @@
                                         aria-labelledby="consulta-tab">
                                         <jsp:include page="./consultarVehiculo.jsp"></jsp:include>
                                     </div>
-                                    <div class="tab-pane fade" id="elimina" role="tabpanel"  ng-if="configPermisoAccionActivaVehiculos"
+                                    <div class="tab-pane fade" id="elimina" role="tabpanel"  ng-if="configPermisoAccionConsultaActivaVehiculos"
                                         aria-labelledby="elimina-tab">
                                         <jsp:include page="./consultarActivaVehiculo.jsp"></jsp:include>
                                     </div>
