@@ -52,10 +52,14 @@
                     <h5 class="title-modulo">Gesti&oacute;n Planning</h5>
                 </div>
             </div>
-            <div class="content-fluid" id="container_gestion_Universal">
-                <div class="container-fluid" style="padding: 0;">
+            <div class="content-fluid" id="container_gestion_Universal" style="display: none;">
+                <div ng-show="!configPermisoAccionConsultaTecnicosPagos && !configPermisoAccionConsultaCambiaContrasena" class="text-accion-nopermiso">
+                    <i class="icon-not-permiso fas fa-user-lock"></i>
+                    <b class="text-not-permiso">No cuentas con el permiso de consulta.</b>
+                </div>
+                <div class="container-fluid" style="padding: 0;" ng-show="configPermisoAccionConsultaTecnicosPagos || configPermisoAccionConsultaCambiaContrasena" class="text-accion-nopermiso">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item">
+                        <li class="nav-item" ng-if="configPermisoAccionConsultaCambiaContrasena">
                             <a class="nav-link active" id="cambiaContrasena-tab" data-toggle="tab"
                                 href="#cambiaContrasena" role="tab" aria-controls="cambiaContrasena"
                                 aria-selected="false">Cambia
@@ -73,25 +77,26 @@
                                 Geograf&iacute;a</a>
                         </li>
                         -->
-                        <li class="nav-item">
+                        <li class="nav-item" ng-if="configPermisoAccionConsultaTecnicosPagos">
                             <a class="nav-link" id="pagoTecnico-tab" data-toggle="tab" href="#pagoTecnico"
                                 ng-click="validaConsultarTecnicosPagos()" role="tab" aria-controls="pagoTecnico"
                                 aria-selected="true">Pagos T&eacute;cnicos</a>
                         </li>
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane fade" id="pagoTecnico" role="tabpanel" aria-labelledby="pagoTecnico-tab">
+                        <div class="tab-pane fade" ng-if="configPermisoAccionConsultaTecnicosPagos" id="pagoTecnico" role="tabpanel" aria-labelledby="pagoTecnico-tab">
                             <jsp:include page="./content/pagosTecnicos.jsp"></jsp:include>
                         </div>
-                        <div class="tab-pane fade" id="gestionCuadrilla" role="tabpanel"
+
+                        <!--div class="tab-pane fade" id="gestionCuadrilla" role="tabpanel"
                             aria-labelledby="gestionCuadrilla-tab">
                             <jsp:include page="./content/gestionCuadrilla.jsp"></jsp:include>
                         </div>
                         <div class="tab-pane fade" id="confiGeografia" role="tabpanel"
                             aria-labelledby="confiGeografia-tab">
                             <jsp:include page="./content/configuracionGeografia.jsp"></jsp:include>
-                        </div>
-                        <div class="tab-pane fade show active" id="cambiaContrasena" role="tabpanel"
+                        </div-->
+                        <div class="tab-pane fade show active" id="cambiaContrasena" role="tabpanel"  ng-if="configPermisoAccionConsultaCambiaContrasena"
                             aria-labelledby="cambiaContrasena-tab">
                             <jsp:include page="./content/cambiaContrasena.jsp"></jsp:include>
                         </div>

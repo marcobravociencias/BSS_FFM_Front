@@ -42,7 +42,9 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
     $scope.isCargaOtsPendientes=false;
     $scope.isCargaOtsAsignadas=false;
     $scope.renderCalendario=false ;
-    
+
+    $scope.accionAsignacionOtPermiso=false
+    $scope.accionReAsignacionOtPermiso=false
     $scope.isConsultarConteoAlertas=false
     
     $scope.filtrosGeneral={}
@@ -202,10 +204,9 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             defaultDate:moment(FECHA_HOY_DATE).format("YYYY/MM/DD") ,
             slotLabelFormat : 'hh:ss(:mm) a',
             schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
-            editable: true,
+            editable: $scope.accionReAsignacionOtPermiso,
             eventDurationEditable : false,
             eventOverlap : false,
-            droppable: true,
             aspectRatio: 1.3,
             defaultView: 'timelineDay',
             minTime: "00:00:00",
@@ -406,6 +407,9 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             } )   
         })
         envioIntervenciones=subIntTemp;
+
+        let estatusDisponiblesCheck = [];
+        estatusDisponiblesCheck = $scope.filtrosGeneral.estatusdisponibles.filter(e=>e.checkedOpcion).map(e=>e.id)   
         /**
         let envioIntervenciones=[]
         if($scope.nfiltrointervenciones){
@@ -435,7 +439,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             "fechaFin": moment( moment($scope.fechaFinFiltro , 'DD/MM/YYYY').toDate() ).format('YYYY-MM-DD') ,
             "idSubIntervenciones": envioIntervenciones,
             "idTurnos": turnosdisponiblescopy,  
-            "idEstatus": [$scope.nfiltroestatuspendiente],
+            "idEstatus": estatusDisponiblesCheck,
             "idClusters": clustersparam
         }
     
@@ -461,34 +465,57 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                             })                            
                             let tableelemetn=''
                             let htmlImagenesIconos=''
-                            let banderaConfirmaDesconfirma= $scope.permisosConfigUser.permisos.find(e=>{return e.clave==='accionConfirmaOT'})
-                            //let banderaAsignacion= $scope.permisosConfigUser.permisos.find(e=>{return e.clave==='accionAsignaOT'})
-
-                            
+                            let banderaConfirmaOt= $scope.permisosConfigUser.permisos.find(e=>{return e.clave==='accionConfirmaOT'})
+                            let banderaDesconfirmaOt= $scope.permisosConfigUser.permisos.find(e=>{return e.clave==='accionDesconfirmaOT'})
+                            let htmlAsignacionPermiso='';
+                      
                             angular.forEach($scope.listadoOtsPendientes,function(otpendiente,index){
                                 htmlImagenesIconos=$scope.categoriaIconos(otpendiente)
-                                let stringCheckbox=''
-                                if(banderaConfirmaDesconfirma != undefined){
-                                    stringCheckbox=
-                                        `<div class="content-top-element confirmacion-elemn switchpendiente">
-                                            <label class="container-checkbox-cus">
-                                                <input onchange="abrirModalConfirmacionDesconfirmacion(this,${otpendiente.idOrden})" id="switch-${otpendiente.idOrden}" ${otpendiente.ordenConfirmada ? 'checked':''} type="checkbox">
-                                                <span class="checkmarkcust"></span>
-                                            </label>
-                                        </div>`
-                                }else{
-                                    stringCheckbox=
-                                    `<div  title="No tienes permiso para confirmar/desconfirmar" class="content-top-element confirmacion-elemn switchpendiente">
-                                        <label style="cursor: not-allowed" class="container-checkbox-cus">
-                                            <input style="cursor: not-allowed" disabled="disabled"  ${otpendiente.ordenConfirmada ? 'checked':''} type="checkbox">
-                                            <span style="cursor: not-allowed" class="checkmarkcust"></span>
+                               
+                                let stringCheckbox=
+                                    `<div class="content-top-element confirmacion-elemn switchpendiente">
+                                        <label class="container-checkbox-cus">
+                                            <input onchange="abrirModalConfirmacionDesconfirmacion(this,${otpendiente.idOrden})" id="switch-${otpendiente.idOrden}" ${otpendiente.ordenConfirmada ? 'checked':''} type="checkbox">
+                                            <span class="checkmarkcust"></span>
                                         </label>
                                     </div>`
+
+                                if( otpendiente.ordenConfirmada ){                                    
+                                    if(!banderaDesconfirmaOt){
+                                        stringCheckbox=`<div  title="No tienes permiso para desconfirmar" class="content-top-element confirmacion-elemn switchpendiente">
+                                            <label style="cursor: not-allowed" class="container-checkbox-cus">
+                                                <input style="cursor: not-allowed" disabled="disabled"  ${otpendiente.ordenConfirmada ? 'checked':''} type="checkbox">
+                                                <span style="cursor: not-allowed" class="checkmarkcust"></span>
+                                            </label>
+                                        </div>`
+                                    }                                    
+                                }else{
+                                    if(!banderaConfirmaOt){
+                                        stringCheckbox=
+                                        `<div  title="No tienes permiso para confirmar" class="content-top-element confirmacion-elemn switchpendiente">
+                                            <label style="cursor: not-allowed" class="container-checkbox-cus">
+                                                <input style="cursor: not-allowed" disabled="disabled"  ${otpendiente.ordenConfirmada ? 'checked':''} type="checkbox">
+                                                <span style="cursor: not-allowed" class="checkmarkcust"></span>
+                                            </label>
+                                        </div>`
+                                    }
                                 }
+
+                                            
+
+                                if( !$scope.accionAsignacionOtPermiso ){
+                                    htmlAsignacionPermiso=`  
+                                       <div style="display:none" class="content-asignacion-permiso"> 
+                                            <i class="fas fa-lock iconoAsignacionOtPermiso"></i>  No tienes permisos de asignaci\u00F3n 
+                                        </div>
+                                    `                                      
+                                }
+
                                 tableelemetn=`
-                                <tr>
+                                <tr> 
                                     <td>  
-                                        <div id="idotpendiente${otpendiente.idOrden}" class="${otpendiente.ordenConfirmada ? 'fc-event' : "fc-event-noasignacion"} ot-pendiente-event ${otpendiente.ordenConfirmada ? "efecto ui-draggable ui-draggable-handle" :""} ">
+                                        <div id="idotpendiente${otpendiente.idOrden}" class="${(otpendiente.ordenConfirmada && $scope.accionAsignacionOtPermiso)? 'fc-event' : "fc-event-noasignacion"} 
+                                                                                              ot-pendiente-event ${otpendiente.ordenConfirmada ? "efecto ui-draggable ui-draggable-handle" :""} ">
                                             <div class="header-otpendeinte">
                                                 <div class="top-title-ot">
                                                     <div class="content-top-element bars-content">
@@ -539,12 +566,15 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                                                     </div>                                             
                                                 </div>
                                             </div>
-                                            <div class="footer-otpendiente">
+                                            <div class="footer-otpendiente ${$scope.accionAsignacionOtPermiso ? "permiso-asignacion": "not-permiso-asignacion" }">
                                                 <div style=" color:${otpendiente.colorOrden}"  class="content-top-element intervencino-elemn intervencion-title"> 
                                                     ${otpendiente.descipcionTipoOrden}
                                                 </div>
-                                                <div class="content-iconos"> ${htmlImagenesIconos}</div>
+                                                <div class="content-iconos ${$scope.accionAsignacionOtPermiso? "elem-asignacion":"elem-not-asignacion" } "> ${htmlImagenesIconos}</div>   
+                                                ${ htmlAsignacionPermiso }                                       
                                             </div>
+                                          
+                                                                               
                                         </div>
                                     </td>
                                 </tr>	
@@ -981,7 +1011,9 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
            
             if($scope.permisosConfigUser!=undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length >0){
                 $scope.permisosConfigUser.permisos.map(e=>{e.banderaPermiso = true ; return e;});
-                $scope.accionesUserConfigText=$scope.permisosConfigUser.permisos.map(e=>{return e.clave})
+                $scope.accionesUserConfigText=$scope.permisosConfigUser.permisos.map(e=>{return e.clave})            
+                $scope.accionAsignacionOtPermiso= $scope.permisosConfigUser.permisos.find(e=>{return e.clave==='accionAsignaOT'})
+                $scope.accionReAsignacionOtPermiso= $scope.permisosConfigUser.permisos.find(e=>{return e.clave==='accionReasignaOT'})
 
             }else{
                 $scope.permisosConfigUser={}

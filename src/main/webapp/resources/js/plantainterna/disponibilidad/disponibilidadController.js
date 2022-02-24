@@ -46,6 +46,9 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
     $scope.permisosDisponibilidad = [];
     $scope.isConsultaDisponibilidad = false
     $scope.arrayTurnosDisponibilidad = [];
+    $scope.accessConsultaDisponibilidad = true;
+    $scope.accessAgregarDisponibilidad = true;
+    $scope.accessEditarDisponibilidad = true;
     let timeTable = 1000;
 
     app.disponibilidadCalendar($scope);
@@ -55,33 +58,38 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
         $scope.inicialCalendario();
         $scope.inicioDisponibilidad();
         editarDisponibilidad = function (matutino, vespertino, nocturno, bloqueado, fecha) {
-            if ($scope.banderaMatutino) {
-                document.getElementById('matutino_actualizar').value = matutino;
-            }
-            if ($scope.banderaVespertino) {
-                document.getElementById('vespertino_actualizar').value = vespertino;
-            }
-            
-            if ($scope.banderaNocturno) {
-                document.getElementById('nocturno_actualizar').value = nocturno;
+            if ($scope.accessEditarDisponibilidad) {
+                if ($scope.banderaMatutino) {
+                    document.getElementById('matutino_actualizar').value = matutino;
+                }
+                if ($scope.banderaVespertino) {
+                    document.getElementById('vespertino_actualizar').value = vespertino;
+                }
                 
-            }
-            document.getElementById('fecha_actualizar').value = fecha
-            let fechaSplit = fecha.split('-')
-            let fech = Number(fechaSplit[1]) - 1;
-            let fechaMes = fech.length === 1 ? '0'.concat(fech) : String(fech);
-            let fechaI = new Date(fechaSplit[0], fechaMes, fechaSplit[2])
-            $('#fecha_inicio_updateDis').datepicker("setDate", new Date(fechaI));
-            $('#fecha_fin_updateDis').datepicker("setDate", new Date(fechaI));
-            if (!bloqueado) {
-                document.getElementById('radio_activo_mod').checked = true
-                document.getElementById('radio_inactivo_mod').checked = false
+                if ($scope.banderaNocturno) {
+                    document.getElementById('nocturno_actualizar').value = nocturno;
+                    
+                }
+                document.getElementById('fecha_actualizar').value = fecha
+                let fechaSplit = fecha.split('-')
+                let fech = Number(fechaSplit[1]) - 1;
+                let fechaMes = fech.length === 1 ? '0'.concat(fech) : String(fech);
+                let fechaI = new Date(fechaSplit[0], fechaMes, fechaSplit[2])
+                $('#fecha_inicio_updateDis').datepicker("setDate", new Date(fechaI));
+                $('#fecha_fin_updateDis').datepicker("setDate", new Date(fechaI));
+                if (!bloqueado) {
+                    document.getElementById('radio_activo_mod').checked = true
+                    document.getElementById('radio_inactivo_mod').checked = false
+                } else {
+                    document.getElementById('radio_inactivo_mod').checked = true
+                    document.getElementById('radio_activo_mod').checked = false
+                }
+    
+                $("#modificar_disponibilidad_modal").modal('show');
             } else {
-                document.getElementById('radio_inactivo_mod').checked = true
-                document.getElementById('radio_activo_mod').checked = false
+                swal({type: "warning", title:"Aviso", text:"No cuentas con permiso para editar disponibilidad."});
             }
 
-            $("#modificar_disponibilidad_modal").modal('show');
         }
     });
 
@@ -149,12 +157,17 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             if (result[0].data.respuesta) {
                 let resultConf= result[0].data.result
                 if( resultConf != undefined && resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves){
+                    $scope.permisosDisponibilidad = resultConf.MODULO_ACCIONES_USUARIO.permisos;
+                    $scope.accessConsultaDisponibilidad = $scope.permisosDisponibilidad.filter(elemento => { return elemento.clave === 'accionConsultaDisponibilidad'}).length > 0 ? true : false;
+                    $scope.accessAgregarDisponibilidad = $scope.permisosDisponibilidad.filter(elemento => { return elemento.clave === 'accionAgregaDisponibilidad'}).length > 0 ? true : false; 
+                    $scope.accessEditarDisponibilidad = $scope.permisosDisponibilidad.filter(elemento => { return elemento.clave === 'accionEditaDisponibilidad'}).length > 0 ? true : false; 
                     let  llavesResult=result[0].data.result.MODULO_ACCIONES_USUARIO.llaves;                    
                     $scope.nIntervencion = llavesResult.N_FILTRO_INTERVENCIONES ? Number( llavesResult.N_FILTRO_INTERVENCIONES ) : null;
                     $scope.nGeografia = llavesResult.N_FILTRO_GEOGRAFIA ? Number( llavesResult.N_FILTRO_GEOGRAFIA ) : null;
-                    $scope.permisosDisponibilidad = resultConf.MODULO_ACCIONES_USUARIO.permisos;
+
                     validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
                     validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
+                   
                 }else{
                     mostrarMensajeErrorAlert("No se encontraron configuraciones del usuario")
                 } 

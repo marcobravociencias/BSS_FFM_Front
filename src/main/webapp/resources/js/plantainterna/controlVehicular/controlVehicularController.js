@@ -31,6 +31,12 @@ app.controller('controlVehicularController',
 			$scope.padre;
 			$scope.permisosConfigUser = [];
 			$scope.accionesUserConfigText = []
+			$scope.configPermisoAccionConsultaVehiculos = false;
+			$scope.configPermisoAccionCreaVehiculos = false;
+			$scope.configPermisoAccionEditaVehiculos = false;
+			$scope.configPermisoAccionEliminaVehiculos = false;
+			$scope.configPermisoAccionActivaVehiculos = false;
+			$scope.configPermisoAccionConsultaActivaVehiculos = false;
 
 			angular.element(document).ready(function () {
 				$("#modal_cluster_arbol_vehiculo").on("hidden.bs.modal", function () {
@@ -63,7 +69,6 @@ app.controller('controlVehicularController',
 								$scope.loadEncierros($scope.padre, 0);
 							}
 						}
-
 					}
 				})
 				$('.year').datepicker({
@@ -85,8 +90,8 @@ app.controller('controlVehicularController',
 					clearBtn: false,
 					orientation: "bottom"
 				});
-
 			});
+
 
 			$('#searchGeoConsulta').on('keyup', function () {
 				$("#jstreeconsulta").jstree("search", this.value);
@@ -150,19 +155,31 @@ app.controller('controlVehicularController',
 							$scope.nGeografia = llavesResult.N_FILTRO_GEOGRAFIA ? Number(llavesResult.N_FILTRO_GEOGRAFIA) : 4;
 							$scope.llaveEncierroVehiculo = llavesResult.N_ENCIERROS;
 							$scope.llaveArchivoPath = llavesResult.PATH_ARCHIVOS;
-							$scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO.permisos;
+							$scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
 							validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
 							validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
 							validateCreedText = llavesResult.KEY_TEXTFORMATO_CREED_RES ? KEY_TEXTFORMATO_CREED_RES : '';
 							if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
-								$scope.permisosConfigUser.permisos.map(e => { e.banderaPermiso = true; return e; });
-								$scope.accionesUserConfigText = $scope.permisosConfigUser.permisos.map(e => { return e.clave })
+								$scope.configPermisoAccionConsultaVehiculos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaVehiculos" })[0] != undefined);
+								$scope.configPermisoAccionCreaVehiculos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionCreaVehiculos" })[0] != undefined);
+								$scope.configPermisoAccionEditaVehiculos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionEditaVehiculos" })[0] != undefined);
+								$scope.configPermisoAccionEliminaVehiculos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionEliminaVehiculos" })[0] != undefined);
+								$scope.configPermisoAccionActivaVehiculos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionActivaVehiculos" })[0] != undefined);
+								$scope.configPermisoAccionConsultaActivaVehiculos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaActivaVehiculos" })[0] != undefined);
 							}
 
-							if ($scope.accionesUserConfigText.indexOf('accionConsultaVehiculos') !== -1) {
-								$("#alta").addClass("active show");
-								$("#alta-tab").addClass("active");
+							if (!$scope.configPermisoAccionConsultaVehiculos && $scope.configPermisoAccionCreaVehiculos) {
+								setTimeout(function () {
+									$("#alta-tab").click();
+								}, 300)
 							}
+
+							if (!$scope.configPermisoAccionConsultaVehiculos && !$scope.configPermisoAccionCreaVehiculos && $scope.configPermisoAccionConsultaActivaVehiculos) {
+								setTimeout(function () {
+									$("#elimina-tab").click();
+								}, 300)
+							}
+
 							$("#container_vehiculos").css("display", "block")
 						} else {
 							toastr.warning(results[0].data.resultDescripcion);
@@ -205,7 +222,7 @@ app.controller('controlVehicularController',
 									return e
 								})
 
-								if ($scope.accionesUserConfigText.indexOf('accionConsultaVehiculos') === -1) {
+								if ($scope.configPermisoAccionConsultaVehiculos) {
 									$('#jstreeconsulta').bind('loaded.jstree', function (e, data) {
 										var geografias = $('#jstreeconsulta').jstree("get_selected", true);
 										let textoGeografias = [];
@@ -231,7 +248,7 @@ app.controller('controlVehicularController',
 									});
 								}
 
-								if ($scope.accionesUserConfigText.indexOf('accionActivaVehiculos') === -1) {
+								if ($scope.configPermisoAccionConsultaActivaVehiculos) {
 									$('#jstreeconsultainactivos').bind('loaded.jstree', function (e, data) {
 										var geografias = $('#jstreeconsultainactivos').jstree("get_selected", true);
 										let textoGeografias = [];
@@ -239,7 +256,7 @@ app.controller('controlVehicularController',
 											textoGeografias.push(geografia.text);
 										});
 										$('#geografia-seleccionada-inactivos').val(textoGeografias);
-										$scope.getVehiculosInactivos(!($scope.accionesUserConfigText.indexOf('accionConsultaVehiculos') === -1));
+										$scope.getVehiculosInactivos(!$scope.configPermisoAccionConsultaVehiculos);
 									}).jstree({
 										'plugins': ["wholerow", "checkbox", "search"],
 										'core': {
@@ -491,15 +508,15 @@ app.controller('controlVehicularController',
 									row[6] = elemento.urlFotoPlaca && elemento.urlFotoPlaca.length > 15 ? '<img style="cursor:pointer; border-radius:.5em" src="' + elemento.urlFotoPlaca + random + '" alt="Placa" width="50" height="30" onclick="showImg(' + "'" + elemento.urlFotoPlaca + "'" + ')"/>' : "";
 									row[7] = elemento.urlFotoVehiculo && elemento.urlFotoVehiculo.length > 15 ? '<img style="cursor:pointer; border-radius:.5em" src="' + elemento.urlFotoVehiculo + random + '" alt="Vehiculo" width="50"  height="30" onclick="showImg(' + "'" + elemento.urlFotoVehiculo + "'" + ')"/>' : "";
 									row[8] = elemento.estatus;
-									if ($scope.accionesUserConfigText.indexOf('accionActivaVehiculos') === -1) {
+									if ($scope.configPermisoAccionActivaVehiculos) {
 										row[9] = '<span onclick="activeCar(' + "'" + elemento.idVehiculo + "'" + ')" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnActivaUsuario"><i class="fas fa-check" aria-hidden="true"></i></span>';
 									} else {
-										row[9] = '<i class="fas fa-check icon-table" title="No tienes permisos para eliminar" style="cursor: not-allowed; background: #9d9ea2 !important;"></i>';
+										row[9] = '<span  title="No tienes permisos para activar" style="cursor: no-drop; opacity: 0.3 !important;"  class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnActivaUsuario"><i class="fas fa-unlock" aria-hidden="true"></i></span>';
 									}
 
 									arrayRow.push(row);
 								})
-							} 
+							}
 						} else {
 							mostrarMensajeErrorAlert(response.data.resultDescripcion);
 						}
@@ -547,19 +564,19 @@ app.controller('controlVehicularController',
 					row[3] = elemento.modelo;
 					row[4] = elemento.anio;
 					row[5] = elemento.geografia;
-					row[6] = elemento.urlFotoPlaca && elemento.urlFotoPlaca.length > 15 ? '<img style="cursor:pointer; border-radius:.5em" src="' + elemento.urlFotoPlaca + random + '" alt="Placa" width="50" height="30" onclick="showImg(' + "'" + elemento.urlFotoPlaca + "'" + ')"/>' : "";
-					row[7] = elemento.urlFotoVehiculo && elemento.urlFotoVehiculo.length > 15 ? '<img style="cursor:pointer; border-radius:.5em" src="' + elemento.urlFotoVehiculo + random + '" alt="Vehiculo" width="50"  height="30" onclick="showImg(' + "'" + elemento.urlFotoVehiculo + "'" + ')"/>' : "";
+					row[6] = elemento.urlFotoPlaca ? '<img style="cursor:pointer; border-radius:.5em" src="' + elemento.urlFotoPlaca + random + '" alt="Placa" width="50" height="30" onclick="showImg(' + "'" + elemento.urlFotoPlaca + "'" + ')"/>' : "";
+					row[7] = elemento.urlFotoVehiculo ? '<img style="cursor:pointer; border-radius:.5em" src="' + elemento.urlFotoVehiculo + random + '" alt="Vehiculo" width="50"  height="30" onclick="showImg(' + "'" + elemento.urlFotoVehiculo + "'" + ')"/>' : "";
 					row[8] = elemento.estatus;
-					if ($scope.accionesUserConfigText.indexOf('accionEditaVehiculos') === -1) {
+					if ($scope.configPermisoAccionEditaVehiculos) {
 						row[9] = '<span onclick="editCar(' + "'" + elemento.idVehiculo + "'" + ')" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnModificarUsuario"><i class="fas fa-pen" aria-hidden="true"></i></span>';
 					} else {
-						row[9] = '<i class="fas fa-pen icon-table" title="No tienes permisos para editar" style="cursor: not-allowed; background: #9d9ea2 !important;"></i>';
+						row[9] = '<span title="No tienes permisos para editar" style="cursor: no-drop; opacity: 0.3 !important;" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnModificarUsuario"><i class="fas fa-unlock" aria-hidden="true"></i></span>';
 					}
 
-					if ($scope.accionesUserConfigText.indexOf('accionEliminaVehiculos') === -1) {
+					if ($scope.configPermisoAccionEliminaVehiculos) {
 						row[10] = '<span onclick="deleteCar(' + "'" + elemento.idVehiculo + "'" + ')" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnEliminarUsuario"><i class="fas fa-trash" aria-hidden="true"></i></span>';
 					} else {
-						row[10] = '<i class="fas fa-trash icon-table" title="No tienes permisos para eliminar" style="cursor: not-allowed; background: #9d9ea2 !important;"></i>';
+						row[10] = '<span  title="No tienes permisos para eliminar" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnEliminarUsuario" style="cursor: no-drop; opacity: 0.3 !important;"><i class="fas fa-unlock" aria-hidden="true"></i></span>';
 					}
 
 					arrayRow.push(row);
@@ -872,7 +889,7 @@ app.controller('controlVehicularController',
 				if ($scope.validateFormGen() && $scope.validateFormDocs()) {
 					swal({
 						title: "Se actualizar\u00E1 la informaci\u00F3n del veh\u00EDculo",
-						text: "\u00BFDesea editar la informaci\u00F3n del veh\u00EDculo?",
+						text: "\u00BFDesea guardar la informaci\u00F3n del veh\u00EDculo?",
 						type: "warning",
 						showCancelButton: true,
 						confirmButtonColor: '#007bff',
@@ -987,10 +1004,18 @@ app.controller('controlVehicularController',
 							if (response.data.result) {
 								$scope.isEdit = false;
 								toastr.success('Acci&oacute;n completada');
-								setTimeout(function () {
-									$("#consulta-tab").click();
-									$scope.getVehiculos(false);
-								}, 300)
+								if ($scope.configPermisoAccionConsultaVehiculos) {
+									setTimeout(function () {
+										$("#consulta-tab").click();
+										$scope.getVehiculos(false);
+									}, 300)
+								} else {
+									setTimeout(function () {
+										$("#alta-tab").click();
+										swal.close();
+									}, 300)
+								}
+
 								$("#jstreealta").jstree("destroy");
 								$scope.clearForm();
 								$scope.initWizard();
@@ -1290,7 +1315,7 @@ app.controller('controlVehicularController',
 								}
 								params.fotoPlaca = actualObject;
 								params.fotoVehiculo = actualObject;
-								if(!params.detalle){
+								if (!params.detalle) {
 									params.detalle = {};
 								}
 								params.detalle.fotoTarjetaCirculacion = actualObject;
@@ -1300,9 +1325,9 @@ app.controller('controlVehicularController',
 									if (response.data !== undefined) {
 										if (response.data.respuesta) {
 											if (response.data.result) {
-												if(st == 1){
+												if (st == 1) {
 													$scope.getVehiculosInactivos(false);
-												}else{
+												} else {
 													$scope.getVehiculos(false);
 												}
 
@@ -1497,33 +1522,38 @@ app.controller('controlVehicularController',
 					if (response.data !== undefined) {
 						if (response.data.respuesta) {
 							if (response.data.result && response.data.result.vehiculo) {
-								swal({
-									title: "La placa se encuentra registrada",
-									text: "\u00BFDesea modificar la placa?",
-									type: "warning",
-									showCancelButton: true,
-									confirmButtonColor: '#007bff',
-									confirmButtonText: 'Si',
-									cancelButtonText: 'No'
-								}).then(function (isConfirm) {
-									if (isConfirm) {
-										$("#alta-tab").removeClass("active");
-										$scope.isEdit = true;
-										$scope.$apply();
-										$scope.clearForm();
-										$scope.applyData(response.data.result.vehiculo);
-										setTimeout(function () {
-											$("#modifica-tab").click();
-											swal.close();
-										}, 300)
-										$scope.initWizard();
-									}
-								}).catch(err => {
+								if ($scope.configPermisoAccionEditaVehiculos) {
+									swal({
+										title: "La placa se encuentra registrada",
+										text: "\u00BFDesea modificar la placa?",
+										type: "warning",
+										showCancelButton: true,
+										confirmButtonColor: '#007bff',
+										confirmButtonText: 'Si',
+										cancelButtonText: 'No'
+									}).then(function (isConfirm) {
+										if (isConfirm) {
+											$("#alta-tab").removeClass("active");
+											$scope.isEdit = true;
+											$scope.$apply();
+											$scope.clearForm();
+											$scope.applyData(response.data.result.vehiculo);
+											setTimeout(function () {
+												$("#modifica-tab").click();
+												swal.close();
+											}, 300)
+											$scope.initWizard();
+										}
+									}).catch(err => {
 
-								});
-							} else if(response.data.result && response.data.result.idActivo == 0){
+									});
+								} else {
+									swal({ title: 'La placa se encuentra registrada', text: 'No tienes permisos para modificarla', type: 'warning' })
+								}
+
+							} else if (response.data.result && response.data.result.idActivo == 0) {
 								toastr.warning('El veh&iacute;culo ya existe pero se encuentra inactivo');
-							}else{
+							} else {
 								swal.close();
 							}
 						} else {
@@ -1732,7 +1762,6 @@ app.controller('controlVehicularController',
 
 		}
 	]
-
 
 );
 

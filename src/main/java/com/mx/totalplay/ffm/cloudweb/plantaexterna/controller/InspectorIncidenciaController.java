@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,10 +31,10 @@ public class InspectorIncidenciaController {
 		this.inspectorIncidenciaService = inspectorIncidenciaService;
 	}
 	
-	@PostMapping("/consultarFallasInspectorPE")
-	public ResponseEntity<?> consultarFallasInspectorPE(String params) {
+	@GetMapping("/consultarFallasInspectorPE")
+	public ResponseEntity<?> consultarFallasInspectorPE() {
 		logger.info("##### InspectorIncidenciaController - consultarFallasInspectorPE");
-		ServiceResponseResult response = inspectorIncidenciaService.consultarFallasInspectorPE(params);
+		ServiceResponseResult response = inspectorIncidenciaService.consultarFallasInspectorPE();
 		if (response.getResult() instanceof Integer){
 			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
 		}

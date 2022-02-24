@@ -4,7 +4,7 @@
     background: white;
     border-radius: .5em;
     margin-top: 1em;
-    padding: 0;
+    padding: 1em 0;
     font-family: 'Montserrat' !important;
 }
 
@@ -532,4 +532,29 @@ div.dataTables_wrapper div.dataTables_filter input {
     padding: 4px 10px !important;
     border-radius: 0.2rem !important;
     cursor: pointer;
+}
+
+.text-accion-nopermiso {
+    font-size: 12px;
+    color: grey;
+    padding: 1em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.text-accion-nopermiso .icon-not-permiso {
+    color: #9586a9;
+    font-size: 1.3em;
+    padding: 0.5em;
+    border-radius: 50%;
+    /* background: #9586a9; */
+    width: 2em;
+    height: 2em;
+    /* box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);**/
+}
+
+.text-not-permiso {
+    margin-left: 0.5em;
+    font-size: 1.5em;
+    font-weight: normal;
 }

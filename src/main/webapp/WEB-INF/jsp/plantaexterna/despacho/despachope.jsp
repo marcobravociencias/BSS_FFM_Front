@@ -68,13 +68,13 @@
 <body id="idBody" ng-controller="despachoController">
 	<jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
 	<input style="display: none;" ng-keyup="buscarTecnicoCalendar()" ng-model="buscarTecnicoInput" type="text">
-	<div class="container-fluid container-filtros-despacho">
+	<div class="container-fluid container-filtros-despacho" id="filters-content" style="display: none;">
 		<div class="row">
 			<div style="width: 1em;" ng-show="banderaErrorIntervencion">
 				<i class="icono-noseleccion fas fa-exclamation-circle me-2" style="margin-top: .8em;margin-left: -.5em;"
 					title="No se encontro el catalogo de Intervencion"></i>
 			</div>
-			<div class="col-1 columna-filtro-ind">
+			<div class="col-1 columna-filtro-ind" >
 				<div class="dropdown">
 					<input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Intervenci&oacute;n"
 						type="text" id="filtro-intervencion"
@@ -150,12 +150,12 @@
 					id="filtro-geografia" class="input-filtro-despacho form-control form-control-sm" />
 			</div>
 			<div class="col-1 ">
-				<button id="buscar-otsasignadas" type="button" ng-click="consultarOtsPendientes()"
+				<button id="buscar-otsasignadas" type="button" ng-click="refrescarBusquedaPE()"
 					class="btn btn-sm  btn-primary  waves-effect waves-light">
-					<span>Buscar</span>
-					<!--div ng-if="!isCargaOtsPendientes  || !isCargaOtsAsignadas" class="spinner-border spinner-cargando-info" role="status">
-                            <span class="visually-hidden">Loading...</span>
-                        </div-->
+					<span ng-if="isCargaOtsPendientes  && isCargaOtsAsignadas">Buscar</span>
+					<span ng-if="!isCargaOtsPendientes  || !isCargaOtsAsignadas" class="spinner-border spinner-cargando-info" role="status">
+                       
+                    </span>
 				</button>
 			</div>
 			<div class="col-3">
@@ -164,21 +164,19 @@
 					class="text-no-seleccion-geografia">Algunos cat&aacute;logos no han sido encontrados</b>
 			</div>
 			<div class="col-3">
-				<button id="refrescar-otsasignadas" type="button"
+				<button id="refrescar-otsasignadas" type="button" ng-click="refrescarBusquedaPE()"
 					class="btn btn-sm  btn-primary  waves-effect waves-light">
 					<i class="fas fa-redo"></i>
 					<!--div ng-if="!isCargaOtsPendientes  || !isCargaOtsAsignadas" class="spinner-border spinner-cargando-info" role="status">
                             <span class="visually-hidden">Loading...</span>
                         </div-->
 				</button>
-				<input ng-model="fechaFiltradoCalendar" readonly id="calendar-next-back" type="text"
-					class="form-control form-control-sm" />
 				<span ng-click="abrirModalDetalleIconografia()" class="paleta-color-despacho fas fa-palette"></span>
 				<span class="reporte-color-despacho icon-color-despacho fas fa-file-alt"></span>
 			</div>
 		</div>
 	</div>
-	<div class="container-fluid container-calendar-despacho">
+	<div class="container-fluid">
 		<div class="row">
 			<div class="col-3 col-otspendientes">
 				<div class="container-busquedaotpendientes ">
@@ -191,7 +189,15 @@
 						</div>
 					</div>
 				</div>
-				<table id="table-ot-pendientes" width="100%">
+				<div ng-show="!isCargaOtsPendientes" class="cargando-otspendientes ">
+					<div class="wrapper"> 
+						<jsp:include page="./../../plantainterna/despacho/loaders/cargandootpendientes.jsp"></jsp:include>  
+						<jsp:include page="./../../plantainterna/despacho/loaders/cargandootpendientes.jsp"></jsp:include> 
+						<jsp:include page="./../../plantainterna/despacho/loaders/cargandootpendientes.jsp"></jsp:include> 
+						<jsp:include page="./../../plantainterna/despacho/loaders/cargandootpendientes.jsp"></jsp:include> 
+					</div>                                
+				</div>
+				<table id="table-ot-pendientes" width="100%" ng-show="isCargaOtsPendientes">
 					<thead>
 						<tr>
 							<td></td>
@@ -203,17 +209,48 @@
 				</table>
 			</div>
 			<div class="col-9 col-otsasignadas">	
-				<div class="container-busquedaotpendientes ">
+				<div class="row col-12 container-busquedaotpendientes">
 					<div class="col-3">
 						<div class="input-group input-group-sm content-seach-group  search-parent-buscarot">
-							<input ng-keyup="buscarOtPendiente($event)" id="buscar-ot-pendiente" type="text"
+							<input id="buscar-tecnico" type="text"
+								class="form-control form-control-sm buscar-input-otpend"
+								placeholder="B&uacute;scar T&eacute;cnico" />
+							<!--span ng-click="buscarOtPendienteText();" class="input-group-text fa fa-search" id="buscar-btn-otpend"></span-->
+						</div>
+					</div>
+					<div class="offset-1 col-3">
+						<div class="input-group input-group-sm content-seach-group  search-parent-buscarot">
+							<input id="buscar-ot-asignada" type="text"
 								class="form-control form-control-sm buscar-input-otpend"
 								placeholder="B&uacute;scar OT" />
 							<!--span ng-click="buscarOtPendienteText();" class="input-group-text fa fa-search" id="buscar-btn-otpend"></span-->
 						</div>
 					</div>
 				</div>
-				<div class="content-asignadas">
+				<div class="row  container-fluid" ng-show="!isAsignadasTable">
+					<div class="cargando-tecnicos col-4">
+						<div class="wrapper">
+				
+							<jsp:include page="./../../plantainterna/despacho/loaders/cargandotecnicos.jsp"></jsp:include>  
+							<jsp:include page="./../../plantainterna/despacho/loaders/cargandotecnicos.jsp"></jsp:include>  
+							<jsp:include page="./../../plantainterna/despacho/loaders/cargandotecnicos.jsp"></jsp:include>  
+							<jsp:include page="./../../plantainterna/despacho/loaders/cargandotecnicos.jsp"></jsp:include> 
+							<jsp:include page="./../../plantainterna/despacho/loaders/cargandotecnicos.jsp"></jsp:include> 
+							<jsp:include page="./../../plantainterna/despacho/loaders/cargandotecnicos.jsp"></jsp:include> 
+						</div>    
+					</div>
+					<div class="content-ots-cargando col-8">
+						<div class="wrapper-asignadas">
+							<jsp:include page="./../../plantainterna/despacho/loaders/cargandootsasignadas.jsp"></jsp:include>  
+							<jsp:include page="./../../plantainterna/despacho/loaders/cargandootsasignadas.jsp"></jsp:include>  
+							<jsp:include page="./../../plantainterna/despacho/loaders/cargandootsasignadas.jsp"></jsp:include>  
+							<jsp:include page="./../../plantainterna/despacho/loaders/cargandootsasignadas.jsp"></jsp:include>  
+							<jsp:include page="./../../plantainterna/despacho/loaders/cargandootsasignadas.jsp"></jsp:include>  
+							<jsp:include page="./../../plantainterna/despacho/loaders/cargandootsasignadas.jsp"></jsp:include> 
+						</div>
+					</div>
+				</div>
+				<div class="content-asignadas" ng-show="isAsignadasTable">
 					<table id="table-ot-asignadas" width="100%">
 						<thead>
 							<tr>
@@ -242,6 +279,17 @@
 	</div>
 	<jsp:include page="./modal/modalClusterFilter.jsp"></jsp:include>
 	<jsp:include page="./modal/modalOperarioReasigna.jsp"></jsp:include>
+	<jsp:include page="./modal/modalOtsAsignadas.jsp"></jsp:include>
+	<jsp:include page="./../../plantainterna/despacho/modals/modalDetalleOt.jsp"></jsp:include>    
+	<jsp:include page="./../../plantainterna/despacho/modals/modalTecnicoEstatus.jsp"></jsp:include>    
+	<jsp:include page="./../../plantainterna/despacho/modals/modalOtsTrabajadas.jsp"></jsp:include>  
+	<jsp:include page="./../../plantainterna/despacho/modals/modalUbicacionOperario.jsp"></jsp:include>  
+	<jsp:include page="./../../plantainterna/despacho/modals/modalIconografia.jsp"></jsp:include>    
+	<jsp:include page="./../../plantainterna/despacho/modals/modalFotoUsuario.jsp"></jsp:include>   
+	<jsp:include page="./../../plantainterna/despacho/modals/modalVistaMapa.jsp"></jsp:include> 
+	<jsp:include page="./../../plantainterna/despacho/modals/modalReporte.jsp"></jsp:include>
+	<jsp:include page="./../../plantainterna/despacho/modals/modalAsignaOt.jsp"></jsp:include>    
+
 
 </body>
 
@@ -280,7 +328,6 @@
 	src="${pageContext.request.contextPath}/resources/libraries/magnific_popup/jquery.magnific-popup.min.js"></script>
 
 <script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
 
 <script
 	src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js?v=${sessionScope.versionDepl}"></script>
@@ -288,16 +335,23 @@
 	src="${pageContext.request.contextPath}/resources/js/generic/FileSaver.js?v=${sessionScope.versionDepl}"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker.es.min.js"></script>
-<script type="text/javascript"
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/despachopi/jsonotsasignadas.js?v=${sessionScope.versionDepl}"></script>
+	<script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/plantaexterna/despachope/despachoPEController.js?v=${sessionScope.versionDepl}"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/plantaexterna/despachope/despachoPEService.js?v=${sessionScope.versionDepl}"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/plantaexterna/despachope/mainFiltrosDespachoPE.js?v=${sessionScope.versionDepl}"></script>
-	<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/plantaexterna/despachope/jsonDespachoPE.js?v=${sessionScope.versionDepl}"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/generic/genericService.js?v=${sessionScope.versionDepl}"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/despachopi/mainMapas.js?v=${sessionScope.versionDepl}"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/despachopi/mainFiltrosDespacho.js?v=${sessionScope.versionDepl}"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/despachopi/mainDespachoModals.js?v=${sessionScope.versionDepl}"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/despachopi/mainDespachoService.js?v=${sessionScope.versionDepl}"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/despachopi/mainAlertasDespacho.js?v=${sessionScope.versionDepl}" charset="UTF-8"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/despachopi/mainAlertasService.js?v=${sessionScope.versionDepl}"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/genericService.js?v=${sessionScope.versionDepl}"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/despachopi/mainDependencias.js?v=${sessionScope.versionDepl}"></script>
+
+
+
 
 
 

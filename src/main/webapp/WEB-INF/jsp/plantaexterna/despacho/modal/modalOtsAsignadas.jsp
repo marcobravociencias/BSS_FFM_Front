@@ -6,114 +6,116 @@
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" style="min-height: 300px; max-height: 300px; overflow: auto;">
-                <div class="col-12" ng-show="mostrarOtsAsignadas">
+                <div class="content-asignada-modal" ng-show="mostrarOtsAsignadas">
                     <div class="row">
-                        <div class="offset-8 col-4">
+                        <div class="offset-9 col-3">
                             <div class="input-group">
-                                <input type="text" class="form-control input-search-despacho" ng-model="filtroOtAsignadaModal.idot" placeholder="Buscar OT" aria-describedby="button-addon2">
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="fa fa-search"></i></button>
-                                </div>
+                                <input type="text" class="form-control form-control-sm input-search-asignadas"
+                                    id="searchOt" placeholder="Buscar OT"><button ng-click="buscarOtModal()"
+                                    style="height: 2.25em;box-shadow: none;"
+                                    class="btn btn-sm btn-primary waves-effect waves-light ripple-surface btn-total"><i
+                                        class="fas fa-search"></i></button>
                             </div>
                         </div>
                     </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-4 ui-draggable fc-event efecto ui-draggable-handle" id="otAsignada{{ot.idot}}" ng-repeat="ot in listaOtsAsignadas | filter: filtroOtAsignadaModal">
-                            <div class="ot-asignada-event">
-                                <div class="header-otpendeinte">
-                                    <div class="row">
-                                        <div class="col-7 crop-text-col" style="padding-right: 0;">
-                                            <h5 class="title-ot-asignada" title="{{ot.nivel_uno}}"
-                                                ng-bind="ot.nivel_uno"></h5>
+                    <div class="row" style="margin-left:0.5em;">
+                        <div class="col-4 fc-event  evento-ot-asignada ot-asignada-modal content-ot-asigna cardot-{{otAsignada.idOrden}}"
+                            ng-click="selectOtReasignar(otAsignada.idOrden)"
+                            ng-repeat="otAsignada in listOtsAsiganadasMoreTemp" .
+                            style="border-left: 0.5em solid {{otAsignada.colorOverEstatus}}; top: 0px;">
+                            <div class="fc-content">
+                                <div class="fc-title" style="position: relative;">
+                                    <div class="container-asignada">
+                                        <div class="content-text-otasignada">
+                                            <h5 class="cliente-asignada">{{otAsignada.descipcionTipoOrden}}</h5>
                                         </div>
-                                        <div class="col-5" style="padding-left: 0;">
-                                            <i class="icon-ot-asignada fa fa-share" title="Reasignar" ng-click="mostrarTecnicosReasignacion(ot)"></i>
-                                            <i class="icon-ot-asignada fa fa-header"></i>
-                                            <i class="icon-ot-asignada fa fa-commenting"></i>
-                                            <i class="icon-ot-asignada fa fa-bars"></i>
+                                        <div class="content-text-otasignada">
+                                            <div class="izquierda-icon">
+                                                <i class="fas fa-map-marker-alt  icon-tipoot-operacion"></i>
+                                            </div>
+                                            <b
+                                                class="os-content-asignada">{{otAsignada.descripcionGeografia}}</b>&nbsp;&nbsp;
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <span class="text-secundario-prin">Ciudad: </span>
-                                            <span class="text-secundario-sec" ng-bind="ot.ciudad"></span>
+                                        <div class="content-text-otasignada">
+                                            <div class="izquierda-icon">
+                                                <i class="fas fa-tools  icon-tipoot-operacion"
+                                                    style="color:{{otAsignada.colorOverEstatus}}"></i>
+                                            </div>
+                                            <b class="orden-content">OT:{{otAsignada.idOrden}}</b>&nbsp;&nbsp;
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <span class="text-secundario-prin">Distrito: </span>
-                                            <span class="text-secundario-sec" ng-bind="ot.distrito"></span>
+                                        <div class="content-text-otasignada asignada-descripcion">
+                                            <b class="orden-content"
+                                                style="font-weight: bold">{{otAsignada.descripcionSubtipoOrden}}</b>&nbsp;&nbsp;
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-4 crop-text-col" style="padding-right: 0;">
-                                            <span class="text-secundario-prin">Zona: </span>
-                                            <span class="text-secundario-sec" ng-bind="ot.zona"
-                                                title="{{ot.zona}}"></span>
-                                        </div>
-                                        <div class="col-6 crop-text-col" style="padding-right: 0;">
-                                            <span class="text-secundario-prin">Cluster: </span>
-                                            <span class="text-secundario-sec" ng-bind="ot.cluster_text"></span>
-                                        </div>
-                                        <div class="col-2">
-
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="footer-ot-asignada">
-                                    <div class="content-footer">
-                                        <b class="text-secundario-prin">OT: </b>
-                                        <span class="text-secundario-sec" ng-bind="ot.idot"></span>
                                     </div>
                                 </div>
                             </div>
+                            <div class="fc-bg"></div>
                         </div>
                     </div>
                 </div>
-                <div class="col-12" ng-show="!mostrarOtsAsignadas">
+                <div class="content-operarios-modal" ng-show="!mostrarOtsAsignadas">
                     <div class="row">
-                        <div class="col-12">
-
+                        <div class="offset-9 col-3">
+                            <div class="input-group">
+                                <input type="text" class="form-control form-control-sm input-search-asignadas"
+                                    id="searchTecnicoOt" placeholder="Buscar T&eacute;cnico"><button
+                                    ng-click="buscarTecnicoModal('searchTecnicoOt')"
+                                    style="height: 2.25em;box-shadow: none;"
+                                    class="btn btn-sm btn-primary waves-effect waves-light ripple-surface btn-total"><i
+                                        class="fas fa-search"></i></button>
+                            </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-4" ng-repeat="operario in listaOperariosReasignacion">
-                            <div class="operario-asignacion">
-                                <div class="row">
-                                    <div class="col-3" >
-                                        <div class="text-center">
-                                            <img src="${pageContext.request.contextPath}/resources/img/alertas/tecnico.png" class="img-fluid z-depth-1 rounded-circle img-operario-asignacion"
-                                                alt="Responsive image">
-                                        </div>
+                    <div class="row" style="margin-left:0.5em;">
+                        <div class="col-4 fc-cell-text evento-ot-asignada ot-asignada-modal content-ot-oper cardoper-{{tecnico.idTecnico}}"
+                            ng-click="seleccionOperarioReasignar(tecnico.idTecnico)"
+                            ng-repeat="tecnico in listadoTecnicosAsigna">
+                            <div class="row">
+                                <div class="col-2">
+                                    <img style="border:.3em solid {{tecnico.color}}; width: 4em; height: 4em;margin-top:1em"
+                                        class="efecto imagen_operario_foto"
+                                        src="{{(tecnico.urlFotoPerfil != undefined && tecnico.urlFotoPerfil ? tecnico.urlFotoPerfil : './resources/img/plantainterna/despacho/tecnicootasignada.png')}}">
+                                </div>
+                                <div class="offset-1 col-8 text-justify info-modal-operario">
+                                    <div class="conteo-content-ots">
                                     </div>
-                                    <div class="col-9 content-operario">
-                                        <div class="row">
-                                            <div class="col-12 crop-text-col">
-                                                <span class="text-nombre-tecnico" title="{{operario.nombre}}" ng-bind="operario.nombre"></span>
-                                            </div>
-                                            <div class="col-12">
-                                                <i class="fa fa-user icon-primary-tecnico">&nbsp;</i><span ng-bind="operario.nempleado" class="text-num-tecnico"></span>
-                                                <i class="fa fa-phone icon-primary-tecnico">&nbsp;</i><span ng-bind="operario.telefono" class="text-num-tecnico"></span>
-                                            </div>
-                                            <!--div>
-                                                <i class="fa fa-eye con-tecnico icon-tecnico-secundary">&nbsp;</i>
-                                                <i class="fa fa-info-circle icon-tecnico-secundary">&nbsp;</i>
-                                                <i class="fa fa-map icon-tecnico-secundary">&nbsp;</i>
-                                            </div-->
-                                        </div>
+                                    <div class="row">
+                                        <h5 title="{{tecnico.nombre}} {{tecnico.apellidoPaterno}} {{tecnico.apellidoMaterno}}"
+                                            class="big-text nombre_tecnico">
+                                            {{tecnico.nombre}} {{tecnico.apellidoPaterno}} </h5>
                                     </div>
+                                    <div class="row">
+                                        <small class="numero_empleado_telefono">
+                                            <i style="color:#4991e1;" class="fa fa-user"></i>
+                                            {{tecnico.usuarioFFM}}
+                                        </small>
+                                    </div>
+                                    <div class="row">
+                                        <small class="numero_empleado_telefono">
+                                            <i style="color:#4991e1;" class="fa fa-phone"></i>
+                                            {{tecnico.numContacto}}
+                                        </small>
+                                    </div>
+
                                 </div>
                             </div>
-                            
                         </div>
                     </div>
-                    
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
+                <button type="button" ng-show="isSelectedOt && !mostrarOtsAsignadas" style="height: 2.6em;"
+                    class="btn btn-sm btn-primary ripple-surface" ng-click="regrearAsignaOt()"><i
+                        class="fas fa-angle-left" aria-hidden="true"></i> Regresar</button>
+                <button type="button" ng-show="isSelectedOt && mostrarOtsAsignadas" style="height: 2.6em;"
+                    class="btn btn-sm btn-primary ripple-surface" ng-click="reasignarTecnicoModal()"><i
+                        class="fa fa-user" aria-hidden="true"></i> Seleccionar t&eacute;cnico</button>
+                <button type="button" ng-show="isSelectedTec && !mostrarOtsAsignadas" style="height: 2.6em;"
+                    class="btn btn-sm btn-primary ripple-surface" ng-click="reasignarTecnicoOt()"><i
+                        class="fas fa-people-arrows" aria-hidden="true"></i> Reasignar</button>
+                <button type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface"
+                    data-mdb-dismiss="modal">
                     Cerrar
                 </button>
             </div>
