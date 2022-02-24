@@ -16,6 +16,10 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
     let usuariosCambiaContrasena;
     $scope.listaStatus = [];
     $scope.configPermisoAccionLiberaPagos = false;
+    $scope.configPermisoAccionConsultaCambiaContrasena = false;
+    $scope.configPermisoAccionConsultaTecnicosPagos = false;
+    $scope.configPermisoAccionCambiaContrasena = false;
+    $scope.configPermisoAccionConsultaPagos = false;
 
 
     $('.drop-down-filters').on("click.bs.dropdown", function (e) {
@@ -169,7 +173,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
         return 0
     }
 
-    $scope.consultarTecnicosPagos = function () {
+    $scope.consultarTecnicosPagos = function (isSwal) {
 
         //let ultimonivel = $scope.obtenerNivelUltimoJerarquia()
         let clusters = $("#jstreeConsultaTecnicos").jstree("get_selected", true)
@@ -184,8 +188,11 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
 
         let params = { idGeografias: clusters, idEstatusPagos: $scope.listaStatus };
         let arraRow = [];
-        swal({ text: 'Espera un momento...', allowOutsideClick: false });
-        swal.showLoading();
+        if(isSwal){
+            swal({ text: 'Espera un momento...', allowOutsideClick: false });
+            swal.showLoading();    
+        }
+       
         if (pagosTecnicosTable) {
             pagosTecnicosTable.destroy();
         }
@@ -209,6 +216,9 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                             row[3] = nombreCompleto;
                             row[4] = elemento.ciudadOrigen ? elemento.ciudadOrigen : '-';
                             row[5] = '<span onclick="consultarPagos(' + "'" + elemento.numEmpleado + "'" + ')" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnCambiaContrasena" style="padding:4px 0px !important"><i class="fas fa-check-double" aria-hidden="true"></i></span>';
+                            if (!$scope.configPermisoAccionConsultaPagos) {
+                                row[5] = '<span title="No tienes permisos para consultar" style="cursor: no-drop; opacity: 0.3 !important;padding:4px 0px !important" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnCambiaContrasena"><i class="fas fa-unlock" aria-hidden="true"></i></span>';
+                            }
                             arraRow.push(row);
                         })
                     } else {
@@ -220,14 +230,14 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
             }
             pagosTecnicosTable = $('#pagosTecnicosTable').DataTable({
                 "paging": true,
-					"lengthChange": false,
-					"ordering": false,
-					"pageLength": 10,
-					"info": true,
-					"scrollX": false,
-					"data": arraRow,
-					"autoWidth": false,
-					"language": idioma_espanol_not_font,
+                "lengthChange": false,
+                "ordering": false,
+                "pageLength": 10,
+                "info": true,
+                "scrollX": false,
+                "data": arraRow,
+                "autoWidth": false,
+                "language": idioma_espanol_not_font,
             });
             swal.close();
         })
@@ -235,7 +245,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
 
     $scope.validaConsultarTecnicosPagos = function () {
         if (!$scope.listaTecnicosPagos.length) {
-            $scope.consultarTecnicosPagos();
+            $scope.consultarTecnicosPagos(true);
         }
     }
 
@@ -265,11 +275,22 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                         let statusList = $scope.nEstatusPagosTecnicos.split(",");
                         $scope.listaStatus = statusList;
                     }
+
                     if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
                         $scope.configPermisoAccionLiberaPagos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "liberaPagos" })[0] != undefined);
-
+                        $scope.configPermisoAccionConsultaCambiaContrasena = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaCambiaContrasenaPlanning" })[0] != undefined);
+                        $scope.configPermisoAccionConsultaTecnicosPagos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaTecnicosPagosPlanning" })[0] != undefined);
+                        $scope.configPermisoAccionConsultaPagos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaPagosPlanning" })[0] != undefined);
+                        $scope.configPermisoAccionCambiaContrasena = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionCambiaContrasenaPlanning" })[0] != undefined);
                     }
 
+                    if (!$scope.configPermisoAccionConsultaCambiaContrasena && $scope.configPermisoAccionConsultaTecnicosPagos) {
+                        setTimeout(function () {
+                            $("#pagoTecnico-tab").click();
+                            $scope.consultarTecnicosPagos(true);
+                        }, 300)
+                    }
+                    $("#container_gestion_Universal").css("display", "block")
                 }
             } else {
                 mostrarMensajeErrorAlert(results[0].data.resultDescripcion)
@@ -336,30 +357,32 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                                 "show_only_matches": true
                             }
                         });
-
-                        $('#jstreeConsultaUsuarios').bind('loaded.jstree', function (e, data) {
-                            var geografiasUser = $('#jstreeConsultaUsuarios').jstree("get_selected", true);
-                            let textoGeografiasUser = [];
-                            angular.forEach(geografiasUser, (geografiaUser, index) => {
-                                textoGeografiasUser.push(geografiaUser.text);
-                            });
-                            $('#inputSearchGeoUsuario').val(textoGeografiasUser);
-                            $scope.consultarUsuariosContrasena(true);
-                        }).jstree({
-                            'plugins': ["wholerow", "checkbox", "search"],
-                            'core': {
-                                'data': geografiaCambia,
-                                'themes': {
-                                    'name': 'proton',
-                                    'responsive': true,
-                                    "icons": false
+                        if ($scope.configPermisoAccionConsultaCambiaContrasena) {
+                            $('#jstreeConsultaUsuarios').bind('loaded.jstree', function (e, data) {
+                                var geografiasUser = $('#jstreeConsultaUsuarios').jstree("get_selected", true);
+                                let textoGeografiasUser = [];
+                                angular.forEach(geografiasUser, (geografiaUser, index) => {
+                                    textoGeografiasUser.push(geografiaUser.text);
+                                });
+                                $('#inputSearchGeoUsuario').val(textoGeografiasUser);
+                                $scope.consultarUsuariosContrasena(true);
+                            }).jstree({
+                                'plugins': ["wholerow", "checkbox", "search"],
+                                'core': {
+                                    'data': geografiaCambia,
+                                    'themes': {
+                                        'name': 'proton',
+                                        'responsive': true,
+                                        "icons": false
+                                    }
+                                },
+                                "search": {
+                                    "case_sensitive": false,
+                                    "show_only_matches": true
                                 }
-                            },
-                            "search": {
-                                "case_sensitive": false,
-                                "show_only_matches": true
-                            }
-                        });
+                            });
+
+                        }
 
                     } else {
                         mostrarMensajeWarningValidacion('No existen geografias actualmente')
@@ -470,7 +493,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                     gestionUniversalService.liberarPago(params).then(function success(response) {
                         if (response.data.respuesta) {
                             $('#modalPagos').modal('hide');
-                            $scope.consultarTecnicosPagos();
+                            $scope.consultarTecnicosPagos(false);
                             toastr.success('Se han liberado los pagos correctamente');
 
                         } else {
@@ -563,6 +586,9 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                             row[4] = elemento.nombreCompleto ? elemento.nombreCompleto : 'Sin informaci&oacute;n';
                             row[5] = elemento.geografia ? elemento.geografia : 'Sin informaci&oacute;n';
                             row[6] = '<span onclick="restablecerContrasena(' + elemento.idUsuario + ')" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnCambiaContrasena"><i class="fa fa-key" aria-hidden="true"></i></span>';
+                            if (!$scope.configPermisoAccionCambiaContrasena) {
+                                row[6] = '<span title="No tienes permisos para editar" style="cursor: no-drop; opacity: 0.3 !important;" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnCambiaContrasena"><i class="fa fa-unlock" aria-hidden="true"></i></span>';
+                            }
                             arraRow.push(row);
                         })
 
