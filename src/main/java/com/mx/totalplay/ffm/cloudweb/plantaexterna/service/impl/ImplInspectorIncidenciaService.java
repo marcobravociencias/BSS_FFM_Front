@@ -41,22 +41,17 @@ public class ImplInspectorIncidenciaService implements InspectorIncidenciaServic
     }
     
 	@Override
-	public ServiceResponseResult consultarFallasInspectorPE(String params) {
-		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-		logger.info("ImplInspectorIncidencia.class [metodo = consultarFallasInspectorPE() ]\n" + jsonObject);
-		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
-		
-		String idPropietario = principalDetail.getPropietario();
-		
+	public ServiceResponseResult consultarFallasInspectorPE() {
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();	
 		String tokenAccess = principalDetail.getAccess_token();
-	    logger.info("consultarFallas ##+" + tokenAccess);
-	    String urlRequest = principalDetail.getDireccionAmbiente().concat(constInspectorIncidencia.getConsultaOTTipoOrdenesPorUsuario());
-	    logger.info("URL ##+" + urlRequest);
+	    logger.info("consultarFallasInspectorPE ## " + tokenAccess);
+	    String urlRequest = principalDetail.getDireccionAmbiente().concat(constInspectorIncidencia.getConsultaCatalogoFallasInspectorPE());
+	    logger.info("### URL consultarFallasInspectorPE(): " + urlRequest);
 	     
 	    Map<String, String> paramsRequestGet = new HashMap<String, String>();
 	
 	    ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest, ServiceResponseResult.class, tokenAccess);
-	     
+		logger.info("### RESULT consultarFallasInspectorPE(): " + gson.toJson(response));
 		return response;
 	}
 	
@@ -66,23 +61,23 @@ public class ImplInspectorIncidenciaService implements InspectorIncidenciaServic
 		logger.info("ImplInspectorIncidencia.class [metodo = consultarStatusFallasInspectorPE() ]\n" + jsonObject);
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
 		
-		String idPropietario = principalDetail.getPropietario();
-		
 		String tokenAccess = principalDetail.getAccess_token();
-	    logger.info("consultarStatusFallas ##+" + tokenAccess);
+		logger.info("consultarStatusFallasInspectorPE ## "+ tokenAccess);
 	    String urlRequest = principalDetail.getDireccionAmbiente().concat(constInspectorIncidencia.getConsultaOTTipoOrdenesPorUsuario());
-	    logger.info("URL ##+" + urlRequest);
+	    logger.info("### URL consultarStatusFallasInspectorPE(): " + urlRequest);
 	     
 	    Map<String, String> paramsRequestGet = new HashMap<String, String>();
 	
 	    ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest, ServiceResponseResult.class, tokenAccess);
-	     
+		logger.info("### RESULT consultarFallasInspectorPE(): " + gson.toJson(response));
 		return response;
 	}
 
 	@Override
 	public ServiceResponseResult consultarIncidenciasInspectorPE(String params) {
 		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		
+		logger.info(jsonObject.toString());
 		logger.info("ImplInspectorIncidencia.class [metodo = consultarIncidenciasInspectorPE() ] \n" + jsonObject);
 				
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
@@ -91,8 +86,6 @@ public class ImplInspectorIncidenciaService implements InspectorIncidenciaServic
 		
 		String urlRequest = principalDetail.getDireccionAmbiente().concat(constInspectorIncidencia.getConsultarIncidenciasInspectorPE());
 		logger.info("URL ##" + urlRequest);
-		
-		Map<String, String> paramsRequestGet = new HashMap<String, String>();
 		
 		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(jsonObject.toString(), urlRequest, ServiceResponseResult.class, tokenAccess);
 		
@@ -112,7 +105,7 @@ public class ImplInspectorIncidenciaService implements InspectorIncidenciaServic
 		logger.info("URL ##"+ urlRequest);
 		
 		Map<String, String> paramsRequestGet = new HashMap<String, String>();
-		paramsRequestGet.put("idIncidencia", jsonObject.get("incidencia").getAsString());
+		paramsRequestGet.put("idIncidencia", jsonObject.get("idIncidencia").getAsString());
 		
 		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest, ServiceResponseResult.class, tokenAccess);
 		logger.info("**** RESULT consultarDetalleIncidenciaInspectorPE(): \n" + gson.toJson(response));

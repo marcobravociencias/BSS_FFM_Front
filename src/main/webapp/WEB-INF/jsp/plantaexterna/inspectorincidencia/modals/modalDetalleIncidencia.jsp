@@ -3,8 +3,8 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalDetalleIncidencia"> Reporta: {{incidencia.numeroEmpleado}} -
-                    {{incidencia.usuarioReporta}}</h5>
+                <h5 class="modal-title" id="modalDetalleIncidencia"> Reporta: {{incidenciaDetalle.numeroEmpleado}} -
+                    {{incidenciaDetalle.usuarioReporta}}</h5>
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" style=" max-height: 300px; overflow: auto;">
@@ -15,14 +15,24 @@
                             <div class="nav flex-column nav-tabs text-center" id="v-tabs-tab-incidencia" role="tablist"
                                 aria-orientation="vertical">
                                 <li class="nav-link active" id="informacion-incidencia">Informaci&oacute;n</li>
-                                <li class="nav-link" id="detalle-status">Detalle Status</li>
+                                <li class="nav-link" id="detalle-status">Detalle Estatus</li>
                             </div>
                         </div>
                         <div class="col-10" id="containerModal">
                             <div class="container" id="containerFallas">
                                 <!-- <li class="nav-link" id="acciones">Acciones</li> -->
-                                <ul class="nav nav-tabs" id="headers_tab" role="tablist">
-                                </ul>
+                                <div id="tabsContainer" class="rowTabs">
+                                    <div id="left-arrow" class="buttonLeftArrow" style="display: none;">
+                                        <i class="fas fa-chevron-left" style="cursor: pointer" onclick="desplazarIzquierdaTabs()"></i>
+                                    </div>
+                                    <div id="containerTabsFalla" class="pl-0 pr-0 custom-slider-main">
+                                        <ul class="nav nav-tabs tabHeader" id="headers_tab" role="tablist"></ul>
+                                    </div>
+                                    <div id="right-arrow" class="buttonRightArrow" style="display: none;">
+                                        &nbsp;
+                                        <i class="fas fa-chevron-right" style="cursor: pointer" onclick="desplazarDerechaTabs()"></i>
+                                    </div>
+                                </div>
                                 <div id="content_tabs" class="tab-content"></div>
                             </div>
                             <div class="container" id="containerStatusFallas" style="display:none">
@@ -138,17 +148,17 @@
             </div>
             <div class="modal-footer">
                 <div class="pull-right">
-                    <button type="button" class="btn btn-primary" ng-show="isRecuperar"
+                    <button type="button" class="btn btn-sm btn-primary btn-detalle-incindencia" ng-show="isRecuperar"
                         ng-click="recuperarIncidencia()">Recuperar</button>
-                    <button type="button" class="btn btn-warning" ng-show="isDeclinar"
+                    <button type="button" class="btn btn-sm btn-primary btn-detalle-incindencia" ng-show="isGenerar"
+                        ng-click="generarOTIncidencia()">Generar OT</button>
+                    <button type="button" class="btn btn-sm btn-cerrar-modal" ng-show="isDeclinar"
                         ng-click="initDeclinarIncidencia()">Declinar</button>
-                    <button type="button" class="btn btn-success" ng-show="isGenerar"
-                        ng-click="generarOTIncidencia()"><i class="fa fa-paper-plane"></i>&nbsp;Generar</button>
                 </div>
-                <div class="pull-right" ng-show="isInitDeclinnar">
-                    <button type="button" class="btn cerrar-modal-btn btn-ligh"
+                <div class="pull-right" ng-show="isInitDeclinar">
+                    <button type="button" class="btn btn-sm btn-cerrar-modal"
                         ng-click="cancelarDeclinar()">Cancelar</button>
-                    <button type="button" class="btn btn-primary btn-enviar-comentario-ot ripple-surface"
+                    <button type="button" class="btn btn-sm btn-primary btn-detalle-incindencia"
                         ng-click="declinarIncidencia(motivoRechazo)">Confirmar</button>
                 </div>
             </div>
