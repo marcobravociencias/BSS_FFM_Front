@@ -206,7 +206,7 @@ app.controller('despachoController', ['$scope', 'despachoService', 'mainDespacho
         let idTec = ot[1].classList[5].split('-')[1];
         let data_tecnico = $scope.listadoTecnicosGeneral.find((e) => e.idTecnico == parseInt(idTec))
         let otInfo =  $scope.listadoOtsAsignadas.find((e) => e.idOrden == parseInt(idOt))
-        //otInfo['fechahoraasignacion'] = moment(new Date()).format("YYYY-MM-DD[T]HH:mm:ss");
+        otInfo['fechahoraasignacion'] = moment(new Date()).format("YYYY-MM-DD[T]HH:mm:ss");
         $("#modalOtsAsignadas").modal('hide');
         $scope.reAsignacionObject = {
             'otInfo': otInfo,
@@ -224,7 +224,7 @@ app.controller('despachoController', ['$scope', 'despachoService', 'mainDespacho
         let otInfo =  $scope.listadoOtsAsignadas.find((e) => e.idOrden == parseInt(idOt))
         console.log(idOt);
         console.log(otInfo);
-        //otInfo['fechahoraasignacion'] = moment(new Date()).format("YYYY-MM-DD[T]HH:mm:ss");
+        otInfo['fechahoraasignacion'] = moment(new Date()).format("YYYY-MM-DD[T]HH:mm:ss");
         $("#modal-reasigna-ot").modal('hide');
         $scope.reAsignacionObject = {
             'otInfo': otInfo,
