@@ -172,7 +172,8 @@
                         </div-->
 				</button>
 				<span ng-click="abrirModalDetalleIconografia()" class="paleta-color-despacho fas fa-palette"></span>
-				<span class="reporte-color-despacho icon-color-despacho fas fa-file-alt"></span>
+				<span onclick="abrirModalReporte()" class="reporte-color-despacho icon-color-despacho fas fa-file-alt"></span>
+				<span onclick="abrirModalVistaMapa()" class="map-color-despacho icon-color-despacho fas fa-map"></span>
 			</div>
 		</div>
 	</div>
@@ -250,8 +251,8 @@
 						</div>
 					</div>
 				</div>
-				<div class="content-asignadas" ng-show="isAsignadasTable">
-					<table id="table-ot-asignadas" width="100%">
+				<div class="content-asignadas" ng-show="isAsignadasTable" style="background-color: #dddddd17;">
+					<table id="table-ot-asignadas" width="100%" style="background-color: #fff;">
 						<thead>
 							<tr>
 								<td></td>
@@ -289,6 +290,7 @@
 	<jsp:include page="./../../plantainterna/despacho/modals/modalVistaMapa.jsp"></jsp:include> 
 	<jsp:include page="./../../plantainterna/despacho/modals/modalReporte.jsp"></jsp:include>
 	<jsp:include page="./../../plantainterna/despacho/modals/modalAsignaOt.jsp"></jsp:include>    
+	<jsp:include page="./../../plantainterna/despacho/modals/modalReasignaOt.jsp"></jsp:include>    
 
 
 </body>
@@ -327,8 +329,6 @@
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/libraries/magnific_popup/jquery.magnific-popup.min.js"></script>
 
-<script type="text/javascript"
-
 <script
 	src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js?v=${sessionScope.versionDepl}"></script>
 <script
@@ -349,11 +349,4 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/despachopi/mainAlertasService.js?v=${sessionScope.versionDepl}"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/genericService.js?v=${sessionScope.versionDepl}"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/despachopi/mainDependencias.js?v=${sessionScope.versionDepl}"></script>
-
-
-
-
-
-
-
 </html>

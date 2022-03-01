@@ -1259,6 +1259,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
 
             if(!isValid){
                 mensaje += '</ul>';
+                swal.close()
                 mostrarMensajeWarningValidacion(mensaje);
                 return false;
             }else{
