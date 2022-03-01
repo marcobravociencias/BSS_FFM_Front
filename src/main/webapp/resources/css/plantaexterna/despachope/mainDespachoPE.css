@@ -25,7 +25,7 @@ body {
 .columna-filtro-ind::after {
   content: "";
   position: absolute;
-  right: 10%;
+  right: 5%;
   top: 40%;
   width: 0;
   height: 0;

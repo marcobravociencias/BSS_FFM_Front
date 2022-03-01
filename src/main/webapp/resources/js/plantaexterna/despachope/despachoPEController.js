@@ -101,7 +101,9 @@ app.controller('despachoController', ['$scope', 'despachoService', 'mainDespacho
             })
             $scope.tablaAsignadasOperarios(listTemp);
         })
-
+        $('.drop-down-filters').on("click.bs.dropdown", function (e) {
+            e.stopPropagation();
+        });
 
         $scope.fechaFiltradoCalendar = moment(new Date()).format('DD/MM/YYYY');
 
@@ -414,7 +416,8 @@ app.controller('despachoController', ['$scope', 'despachoService', 'mainDespacho
             })
         })
         envioIntervenciones = subIntTemp;
-        console.log($scope.nfiltrogeografia);
+        let estatusDisponiblesCheck = [];
+        estatusDisponiblesCheck = $scope.filtrosGeneral.estatusdisponibles.filter(e=>e.checkedOpcion).map(e=>e.id)   
         let clustersparam = $("#jstree-proton-3").jstree("get_selected", true)
             .filter(e => e.original.nivel == 5)//$scope.nfiltrogeografia)
             .map(e => parseInt(e.id))
@@ -424,7 +427,7 @@ app.controller('despachoController', ['$scope', 'despachoService', 'mainDespacho
             "fechaFin": $scope.getFechaFormato($('#filtro-fechafin').val()),
             "idSubIntervenciones": envioIntervenciones,
             "idTurnos": turnosdisponiblescopy,
-            "idEstatus": [$scope.nfiltroestatuspendiente],
+            "idEstatus": estatusDisponiblesCheck,
             "idClusters": clustersparam
         }
 
