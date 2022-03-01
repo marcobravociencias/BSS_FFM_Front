@@ -64,11 +64,11 @@
                 <input type="text" placeholder="CUENTA" id="cuenta-reporte" ng-model="repDiario.idCuenta"
                     class="form-control input-filtro form-control-sm">
             </div>
-            <div class="col-md-1 columna-filtro-indRR borderFilterR" style="width: 130px;">
+            <div class="col-md-1 columna-filtro-indRR borderFilterR" style="width: 110px;">
                 <input readonly placeholder="GEOGRAF&Iacute;A" type="text" id="clusterO"
                     class="input-filtro form-control form-control-sm" ng-click="abrirModalGeografiaRep()" />
             </div>
-            <div class="col-md-2 columna-filtro-indR borderFilterR" style="width: 170px;">
+            <div class="col-md-1 columna-filtro-indR borderFilterR" style="width: 120px;">
                 <select class="input-filtro form-control form-control-sm" id="tipo_reporte"
                     style="border: 1px solid #dbdbdb !important; background: white !important;"
                     ng-model="repDiario.fechaSeleccionada">

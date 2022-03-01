@@ -1664,3 +1664,6 @@ div.dataTables_wrapper div.dataTables_length label {
 .content-table{
     margin-top: 0.7em;
 }
+.download-file {
+    text-align: right;
+  }
