@@ -17,7 +17,10 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     $scope.elementoPlazaComercial = {};
     $scope.estatusModals = '';
     $scope.flagPaquete = false;
-
+    $scope.verModDireccionOT = false;
+    $scope.latitudModDireccionOt;
+    $scope.longitudModDireccionOt;
+    
     $scope.listadoCatalogoAcciones = []
     $('#modalAsignacionOrdenTrabajo,#modalReAsignacionOrdenTrabajo,#modalMaterialesOperario,#modalVehiculoOperario,#odalUbicacionOperario,#modalStatusOperario,#modalOtsTrabajadas')
         .on("hidden.bs.modal", function () {
@@ -56,6 +59,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         $scope.requestModalInformacion(idotpendiente)
         $scope.detalleOtPendienteSelected=$scope.listadoOtsPendientes.find(e=>e.idOrden==idotpendiente)
         $scope.permisosModal=$scope.elementosConfigGeneral.get("MODAL_FLUJO_"+ $scope.detalleOtPendienteSelected.idFlujo ).split(",")
+//        $scope.permisosModal.push("tabCambioDireccion");
         console.log("##########permisos " + $scope.permisosModal )
         console.log($scope.detalleOtPendienteSelected)
         $scope.estatusModals = 'PENDIENTE'
@@ -1567,6 +1571,11 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         })
         $('#modalOtIntervenciones').modal('show')
     }
+    
+    $scope.regresarVistaCambioDireccion = function() {
+    	$scope.verModDireccionOT = false;
+    }
+    
 }
 /**
 

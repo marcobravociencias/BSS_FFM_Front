@@ -17,7 +17,8 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
     $scope.listaMotivosAlertaAccion = [];
     $scope.contadorCaracteresTextArea = 0;
     $scope.listaTotal = { aceptadas: 0, rechazadas: 0 };
-    $scope.detalleEvidencia = detalleEvidencias.result.evidencias;
+//    $scope.detalleEvidencia = detalleEvidencias.result.evidencias;
+    $scope.detalleEvidencia = [];
 
 
     $scope.getDetalleAlertas = function (alerta) {
@@ -45,15 +46,16 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
         var params = {
             "idTipoAlerta": alerta.id
         }
-        if (alerta.id == 9) {
-            $scope.listaTotal = { aceptadas: 0, rechazadas: 0 };
-            $(".radio-evidencias").prop("checked", false);
-            $(".checkbox-evidencia").prop("checked", false);
-            $(".checkbox-evidencia").removeClass("rechazada-check");
-            $scope.vistaAuditoriaEvidencia = true;
-            $scope.vistaDespacho = false;
-            $scope.applyMagnific();
-        }
+//        PENDIENTE ALERTA "AUDITORIA EVIDENCIAS" 
+//        if (alerta.id == 9) {
+//            $scope.listaTotal = { aceptadas: 0, rechazadas: 0 };
+//            $(".radio-evidencias").prop("checked", false);
+//            $(".checkbox-evidencia").prop("checked", false);
+//            $(".checkbox-evidencia").removeClass("rechazada-check");
+//            $scope.vistaAuditoriaEvidencia = true;
+//            $scope.vistaDespacho = false;
+//            $scope.applyMagnific();
+//        }
         console.log("params", params)
         mainAlertasService.getDetalleAlertas(params).then(function success(response) {
             console.log(response);

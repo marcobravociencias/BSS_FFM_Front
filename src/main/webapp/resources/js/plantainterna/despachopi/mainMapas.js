@@ -7,6 +7,9 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
     listadoLinesCurves = []
     $scope.markerTecnicos = [];
     $scope.markerOt = [];
+    $scope.isMapaCambioDireccionOTMod = false;
+    var mapaCambioDireccionOTMod;
+    var markerResMod;
 
     $scope.consultarUbicacionOperario = function (id) {
         let tecnicoSelect = $scope.listadoTecnicosGeneral.find(e => { return e.idTecnico.toString() === id })
@@ -819,5 +822,151 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
         }   
         return false;
     }
+    
+    $scope.verMapaCambioDireccion = function(lat, long) {
+    	mapaCambioDireccionOT = new google.maps.Map(document.getElementById("content-mapa-cambio-direccion"), {
+    		center: {
+                lat: parseFloat(lat),
+                lng: parseFloat(long)
+            },
+            mapTypeControlOptions: {
+                style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                position: google.maps.ControlPosition.BOTTOM_LEFT,
+            },
+            zoomControlOptions: {
+                position: google.maps.ControlPosition.BOTTOM_LEFT,
+            },
+            streetViewControlOptions: {
+                position: google.maps.ControlPosition.RIGHT_CENTER,
+            },
+            mapTypeControl: false,
+            zoom: 15
+        });
+    	
+    	 markerRes = new google.maps.Marker({
+    		 map: mapaCambioDireccionOT,
+    	     draggable: false,
+    	     animation: google.maps.Animation.DROP,
+    	     title:"Dirección de la OT",
+    	     position: {
+    	    	 lat:parseFloat(lat),
+    	         lng: parseFloat(long) 
+    	     }
+    	 });
+	}
+    
+    $scope.mostrarVistaModificarDireccion = function(lat, long) {
+    	$("#txtBuscadorDireccionMap").val("");
+    	$scope.verModDireccionOT = true;
+    	$scope.latitudModDireccionOt = lat;
+        $scope.longitudModDireccionOt = long;
+        
+        if (!$scope.isMapaCambioDireccionOTMod) {
+        	$scope.isMapaCambioDireccionOTMod = true;
+        	
+        	mapaCambioDireccionOTMod = new google.maps.Map(document.getElementById("content-mapa-cambio-direccion-mod"), {
+        		center: {
+                    lat: parseFloat(lat),
+                    lng: parseFloat(long)
+                },
+                mapTypeControlOptions: {
+                    style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                    position: google.maps.ControlPosition.BOTTOM_LEFT,
+                },
+                zoomControlOptions: {
+                    position: google.maps.ControlPosition.BOTTOM_LEFT,
+                },
+                streetViewControlOptions: {
+                    position: google.maps.ControlPosition.RIGHT_CENTER,
+                },
+                mapTypeControl: false,
+                zoom: 15
+        	});
+        	mostrarMarkerBusquedaDireccion();
+        }
+    	
+        if(markerResMod !== undefined && markerResMod !== null){
+        	markerResMod.setMap(null);
+        	markerResMod = null;
+		}
+        
+    	 markerResMod = new google.maps.Marker({
+    		 map: mapaCambioDireccionOTMod,
+    	     draggable: true,
+    	     animation: google.maps.Animation.DROP,
+    	     title:"Dirección de la OT",
+    	     position: {
+    	    	 lat:parseFloat(lat),
+    	         lng: parseFloat(long) 
+    	     }
+    	 });
+    	 
+    	 var ubicacionCenter = new google.maps.LatLng(lat, long);
+    	 mapaCambioDireccionOTMod.setCenter(ubicacionCenter);
+    	 mapaCambioDireccionOTMod.setZoom(15);
+    	 
+    	 google.maps.event.addListener(markerResMod, "dragend", function (event) {
+    		 $("#txtBuscadorDireccionMap").val(this.getPosition().lat() + ", " + this.getPosition().lng());
+    		 $scope.latitudModDireccionOt = this.getPosition().lat();
+    	     $scope.longitudModDireccionOt = this.getPosition().lng();
+    	     $scope.$apply();
+    	 });
+	}
+    
+    function mostrarMarkerBusquedaDireccion() {
+    	var input = document.getElementById("txtBuscadorDireccionMap");
+    	var searchBox = new google.maps.places.SearchBox(input);
+
+    	mapaCambioDireccionOTMod.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    	mapaCambioDireccionOTMod.addListener("bounds_changed", function() {
+    		searchBox.setBounds(mapaCambioDireccionOTMod.getBounds());
+    	});
+
+    	searchBox.addListener("places_changed", function() {
+    		var places = searchBox.getPlaces();
+    	    
+    	    if (places.length == 0) {
+    	    	return;
+    	    }
+    	    
+    	    markerResMod.setMap(null);
+    	    markerResMod = null;
+
+    	    var bounds = new google.maps.LatLngBounds();
+
+    	    places.forEach(function(place) {
+    	    	if (!place.geometry || !place.geometry.location) {
+    	    		console.log("Returned place contains no geometry");
+    	    		return;
+    	    	}
+
+    	    	markerResMod = new google.maps.Marker({
+    	        	map: mapaCambioDireccionOTMod,
+        	        draggable: true,
+        	        animation: google.maps.Animation.DROP,
+        	        title:"Dirección de la OT",
+    	        	position: place.geometry.location,
+    	    	});
+    	    	
+    	    	$scope.latitudModDireccionOt = place.geometry.location.lat();
+    	    	$scope.longitudModDireccionOt = place.geometry.location.lng();
+    	    	$scope.$apply();
+    	    	
+    	    	google.maps.event.addListener(markerResMod, "dragend", function (event) {
+    	    		$("#txtBuscadorDireccionMap").val(this.getPosition().lat() + ", " + this.getPosition().lng());
+    	     		$scope.latitudModDireccionOt = this.getPosition().lat();
+    	     	    $scope.longitudModDireccionOt = this.getPosition().lng();
+    	     	    $scope.$apply();
+    	    	});
+    	      
+    	    	if(place.geometry.viewport) {
+    	    		bounds.union(place.geometry.viewport);
+    	    	}else{
+    	    		bounds.extend(place.geometry.location);
+    	    	}
+    	    });
+    	    mapaCambioDireccionOTMod.fitBounds(bounds);
+    	});
+	}
 
 }

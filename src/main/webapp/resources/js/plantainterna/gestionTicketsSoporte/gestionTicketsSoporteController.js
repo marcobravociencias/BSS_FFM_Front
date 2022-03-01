@@ -256,6 +256,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                 if (isConfirm) {
                 	
                 	//---------------------------------------Código reynel
+                	$scope.agregarMarkerMapCrearTicket($scope.tecnicoAsignado.latitud, $scope.tecnicoAsignado.longitud);
                 	$scope.tecnicoAsignado.nombreTecnico = $scope.tecnicoAsignado.nombre + " " + $scope.tecnicoAsignado.apellidoPaterno + " " + $scope.tecnicoAsignado.apellidoMaterno;
                     if($scope.tecnicoAsignado.idUnidadNegocio == 1){
                     	$scope.tecnicoAsignado.unidadNegocio = "RESIDENCIAL";
