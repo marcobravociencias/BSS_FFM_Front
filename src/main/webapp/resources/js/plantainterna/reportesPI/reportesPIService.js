@@ -51,5 +51,16 @@ app.service("reportesPIService", function ($http) {
             }
 		});
 	};
+
+    this.consultaReporteDiario = function (params) {
+		return $http({
+			method: "post",
+			url: "req/consultaRepoDiarioEx",
+			data: JSON.stringify(params),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+	};
 	
 });

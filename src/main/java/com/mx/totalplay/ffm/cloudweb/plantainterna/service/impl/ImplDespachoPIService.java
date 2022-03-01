@@ -905,7 +905,7 @@ public class ImplDespachoPIService implements DespachoPIService {
         if (response.getResult() == null || response.getResult() instanceof Integer) {
             dataResponse = DataTableResponse.builder()
                     .isRespuesta(false)
-                    .data(new String[0][10])
+                    .data(new String[0][15])
                     .paginaActual(0)
                     .registrosTotales(0)
                     .recordsFiltered("0")
@@ -918,7 +918,7 @@ public class ImplDespachoPIService implements DespachoPIService {
             if (ordenesArray.size() > 0) {
                 if (jsonObjectResponse.get("registrosTotales").getAsInt() > 0) {
                     int count = 0;
-                    dataArray = new String[ordenesArray.size()][14];
+                    dataArray = new String[ordenesArray.size()][15];
                     for (int i = 0; i < ordenesArray.size(); i++) {
                         JsonObject object = (JsonObject) ordenesArray.get(i);
                         logger.info("objeto: " + object);
@@ -932,10 +932,11 @@ public class ImplDespachoPIService implements DespachoPIService {
                         dataArray[count][7] = object.get("ciudad") != null ? object.get("ciudad").getAsString().trim() : "";
                         dataArray[count][8] = object.get("estado") != null ? object.get("estado").getAsString().trim().split(" ")[0] : "";
                         dataArray[count][9] = object.get("numEmpleadoTecnico") != null ? object.get("numEmpleadoTecnico").getAsString().trim().split(" ")[0] : "";
-                        dataArray[count][10] = object.get("nombreTecnico") != null ? object.get("nombreTecnico").getAsString().trim().split(" ")[0] : "";
-                        dataArray[count][11] = object.get("fechaCreacion") != null ? object.get("fechaCreacion").getAsString().trim().split(" ")[0] : "";
-                        dataArray[count][12] = object.get("fechaPrimerAgenda") != null ? object.get("fechaPrimerAgenda").getAsString().trim().split(" ")[0] : "";
-                        dataArray[count][13] = object.get("fechaFin") != null ? object.get("fechaFin").getAsString().trim().split(" ")[0] : "";
+                        dataArray[count][10] = object.get("usuarioTecnico") != null ? object.get("usuarioTecnico").getAsString().trim().split(" ")[0] : "";
+                        dataArray[count][11] = object.get("nombreTecnico") != null ? object.get("nombreTecnico").getAsString().trim() : "";
+                        dataArray[count][12] = object.get("fechaCreacion") != null ? object.get("fechaCreacion").getAsString().trim().split(" ")[0] : "";
+                        dataArray[count][13] = object.get("fechaPrimerAgenda") != null ? object.get("fechaPrimerAgenda").getAsString().trim().split(" ")[0] : "";
+                        dataArray[count][14] = object.get("fechaFin") != null ? object.get("fechaFin").getAsString().trim().split(" ")[0] : "";
 
                         count++;
 
@@ -951,7 +952,7 @@ public class ImplDespachoPIService implements DespachoPIService {
                 } else {
                     dataResponse = DataTableResponse.builder()
                             .isRespuesta(true)
-                            .data(new String[0][10])
+                            .data(new String[0][15])
                             .paginaActual(jsonObjectResponse.get("paginaActual").getAsInt())
                             .registrosTotales(jsonObjectResponse.get("registrosTotales").getAsInt())
                             .recordsFiltered(jsonObjectResponse.get("registrosTotales").getAsInt() + "")
@@ -1019,6 +1020,7 @@ public class ImplDespachoPIService implements DespachoPIService {
                     result.addProperty("CIUDAD", object.get("ciudad") != null ? object.get("ciudad").getAsString() : "");
                     result.addProperty("ESTADO", object.get("estado") != null ? object.get("estado").getAsString() : "");
                     result.addProperty("#EMPLEADO", object.get("numEmpleadoTecnico") != null ? object.get("numEmpleadoTecnico").getAsString() : "");
+                    result.addProperty("#USUARIO", object.get("usuarioTecnico") != null ? object.get("usuarioTecnico").getAsString() : "");
                     result.addProperty("TÉCNICO", object.get("nombreTecnico") != null ? object.get("nombreTecnico").getAsString() : "");
                     result.addProperty("FECHA CREACIÓN", object.get("fechaCreacion") != null ? object.get("fechaCreacion").getAsString() : "");
                     result.addProperty("FECHA AGENDA", object.get("fechaPrimerAgenda") != null ? object.get("fechaPrimerAgenda").getAsString() : "");

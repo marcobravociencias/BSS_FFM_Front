@@ -399,7 +399,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
         }
        
         
-           
+        /*   
         let subIntTemp=[]
         angular.forEach($scope.filtrosGeneral.tipoOrdenes,(e,i)=>{
             e.children.filter( f => f.checkedOpcion ).map((k)=>{ 
@@ -407,9 +407,11 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             } )   
         })
         envioIntervenciones=subIntTemp;
+        */
+        envioIntervenciones = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.tipoOrdenes, $scope.nfiltrointervenciones);
 
         let estatusDisponiblesCheck = [];
-        estatusDisponiblesCheck = $scope.filtrosGeneral.estatusdisponibles.filter(e=>e.checkedOpcion).map(e=>e.id)   
+        estatusDisponiblesCheck =   $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.estatusdisponibles, $scope.nfiltroestatuspendiente);
         /**
         let envioIntervenciones=[]
         if($scope.nfiltrointervenciones){
@@ -1027,7 +1029,14 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             if (results[4].data !== undefined) {
                 if(results[4].data.respuesta ){
                     if(results[4].data.result ){
-                        $scope.filtrosGeneral.estatusdisponibles=$scope.realizarConversionAnidado( results[4].data.result)   
+                        console.log(results[4].data.result);
+
+                        $scope.respaldoStatusArray = [];
+                        $scope.respaldoStatusArray = angular.copy(results[4].data.result);
+                        $scope.nfiltroestatuspendiente = $scope.nfiltroestatuspendiente ? $scope.nfiltroestatuspendiente : $scope.obtenerUltimoNivelFiltros($scope.respaldoStatusArray);
+                        $scope.filtrosGeneral.estatusdisponibles = []
+                        $scope.filtrosGeneral.estatusdisponibles=$scope.conversionAnidadaRecursiva($scope.respaldoStatusArray, 1, $scope.nfiltroestatuspendiente);
+                        //$scope.filtrosGeneral.estatusdisponibles=$scope.realizarConversionAnidado( results[4].data.result)   
                     }else{                      
                         toastr.info( 'No se encontraron catalogo de estatus' );                
                     }
@@ -1056,8 +1065,11 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             if (results[1].data !== undefined) {
                 if(results[1].data.respuesta ){
                     if(results[1].data.result ){
-                        $scope.filtrosGeneral.tipoOrdenes=$scope.realizarConversionAnidado( results[1].data.result)
-                        $scope.intervencionesConteo = $scope.realizarConversionAnidado(results[1].data.result)
+                        $scope.respaldoTipoOrdenArray = [];
+                        $scope.respaldoTipoOrdenArray = angular.copy(results[1].data.result);
+                        $scope.nfiltrointervenciones = $scope.nfiltrointervenciones ? $scope.nfiltrointervenciones : $scope.obtenerUltimoNivelFiltros($scope.respaldoTipoOrdenArray);
+                        $scope.filtrosGeneral.tipoOrdenes = $scope.conversionAnidadaRecursiva($scope.respaldoTipoOrdenArray, 1, $scope.nfiltrointervenciones);
+                        $scope.intervencionesConteo = $scope.conversionAnidadaRecursiva($scope.respaldoTipoOrdenArray, 1, $scope.nfiltrointervenciones);
                     }else{                      
                         toastr.warning( 'No se encontraron  tipo ordenes' );                
                     }
@@ -1128,6 +1140,37 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
 
         }).catch(err => handleError(err));
     }
+
+    $scope.conversionAnidadaRecursiva = function(array, nivelInit, maxNivel) {
+        let arrayReturn = [];
+        angular.forEach(array.filter( e=> e.nivel === nivelInit),function(elem,index){
+            let elemento = angular.copy(elem);
+            elemento.checkedOpcion=true;
+            if (nivelInit < maxNivel) {
+                elemento.children = $scope.conversionAnidadaRecursiva(array, nivelInit+1, maxNivel).filter( e2=> e2.idPadre === elemento.id);
+                elemento.children=(elemento.children !==undefined && elemento.children.length>0) ? elemento.children:[];
+            }
+            arrayReturn.push(elemento)
+        });
+        return arrayReturn;
+    }
+
+    $scope.obtenerUltimoNivelFiltros = function(array) {
+        return Math.max.apply(Math, array.map(function(o) { return o.nivel; }));
+    }
+
+    $scope.obtenerElementosSeleccionadosFiltro = function(array, nivel) {
+        let arrayReturn = [];
+        angular.forEach(array,function(elemento,index){
+            if (elemento.nivel == nivel && elemento.checkedOpcion) {
+                arrayReturn.push(elemento.id);
+            } else {
+                arrayReturn = arrayReturn.concat($scope.obtenerElementosSeleccionadosFiltro(elemento.children, nivel));
+            }
+        });
+        return arrayReturn;
+    }
+
     $scope.realizarConversionAnidado=function(array){
         let arrayCopy=[]
         angular.forEach(array.filter( e=> e.nivel == 1),function(elemento,index){
@@ -1318,7 +1361,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                             swal.close()
                         }
                     },
-                    "columns": [null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+                    "columns": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
                     "language": idioma_espanol_not_font,
                     "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">', 
                     dom: 'Bfrtip', 
