@@ -7,8 +7,6 @@ public interface InspectorIncidenciaService {
 	
 	public ServiceResponseResult consultarFallasInspectorPE();
 	
-	public ServiceResponseResult consultarStatusFallasInspectorPE(String params);
-	
 	public ServiceResponseResult consultarIncidenciasInspectorPE(String params);
 	
 	public ServiceResponseResult consultarDetalleIncidenciaInspectorPE(String params);

@@ -54,24 +54,6 @@ public class ImplInspectorIncidenciaService implements InspectorIncidenciaServic
 		logger.info("### RESULT consultarFallasInspectorPE(): " + gson.toJson(response));
 		return response;
 	}
-	
-	@Override
-	public ServiceResponseResult consultarStatusFallasInspectorPE(String params) {
-		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-		logger.info("ImplInspectorIncidencia.class [metodo = consultarStatusFallasInspectorPE() ]\n" + jsonObject);
-		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
-		
-		String tokenAccess = principalDetail.getAccess_token();
-		logger.info("consultarStatusFallasInspectorPE ## "+ tokenAccess);
-	    String urlRequest = principalDetail.getDireccionAmbiente().concat(constInspectorIncidencia.getConsultaOTTipoOrdenesPorUsuario());
-	    logger.info("### URL consultarStatusFallasInspectorPE(): " + urlRequest);
-	     
-	    Map<String, String> paramsRequestGet = new HashMap<String, String>();
-	
-	    ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest, ServiceResponseResult.class, tokenAccess);
-		logger.info("### RESULT consultarFallasInspectorPE(): " + gson.toJson(response));
-		return response;
-	}
 
 	@Override
 	public ServiceResponseResult consultarIncidenciasInspectorPE(String params) {
@@ -123,7 +105,7 @@ public class ImplInspectorIncidenciaService implements InspectorIncidenciaServic
 		String tokenAccess = principalDetail.getAccess_token();
 		logger.info("consultarCatalogoRechazoIncidenciaInspectorPE ## "+ tokenAccess);
 		
-		String urlRequest = principalDetail.getDireccionAmbiente().concat(constInspectorIncidencia.getConsultaOTTipoOrdenesPorUsuario());
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constInspectorIncidencia.getConsultaCatalogoFallasInspectorPE());
 		logger.info("URL ##"+ urlRequest);
 		
 		Map<String, String> paramsRequestGet = new HashMap<String, String>();
@@ -141,7 +123,7 @@ public class ImplInspectorIncidenciaService implements InspectorIncidenciaServic
 		String tokenAccess = principalDetail.getAccess_token();
 		logger.info("cambiarStatusIncidenciaInspectorPE ## "+ tokenAccess);
 		
-		String urlRequest = principalDetail.getDireccionAmbiente().concat(constInspectorIncidencia.getConsultaOTTipoOrdenesPorUsuario());
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constInspectorIncidencia.getConsultaCatalogoFallasInspectorPE());
 		logger.info("URL ##"+ urlRequest);
 		
 		Map<String, String> paramsRequestGet = new HashMap<String, String>();

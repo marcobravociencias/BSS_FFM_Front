@@ -71,7 +71,6 @@
                                         <input name="myFile" type="file" class="box__file inputFile" id="file" />
                                         <label for="file" id="etiqueta_archivo">
                                             <strong class="text_select">Selecciona un archivo</strong>
-                                            <span class="box__dragndrop">o arrastra aqu&iacute;</span>
                                         </label>
                                         <br />
                                     </div>
