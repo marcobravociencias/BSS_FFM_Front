@@ -516,6 +516,10 @@ app.controller('despachoController', ['$scope', 'despachoService', 'mainDespacho
         }).catch(err => handleError(err))
     }
 
+    $scope.randomIntFromInterval=function() { // min and max included 
+        return Math.floor(Math.random() * (8 - 0 + 1) + 0)
+    }
+    
     $scope.inicializarsTableOtsPendientes = function () {
         $('.fc-event.ot-pendiente-event').each(function (index) {
             let otpendiente = $scope.listadoOtsPendientes[index]
