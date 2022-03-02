@@ -1046,6 +1046,21 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
             // Toggle the visibility
             column.visible(!column.visible());
         });
+        var $form = $('.form_drag_drop');
+            var droppedFiles = false;
+            $form.on('drag dragstart dragend dragover dragenter dragleave drop', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }).on('dragover dragenter', function () {
+                $form.addClass('is-dragover');
+            }).on('dragleave dragend drop', function () {
+                $form.removeClass('is-dragover');
+            }).on('drop', function (e) {
+                droppedFiles = e.originalEvent.dataTransfer.files;
+                $form.find('input[type="file"]').prop('files', droppedFiles);
+                $(".text_select").text(droppedFiles[0].name);
+                $(".box__dragndrop").empty()
+            });
     });
 
     // NUEVO
@@ -1064,5 +1079,14 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         return list.sort(compareGeneric)[0].nivel
     }
 
+    $("#fileArch").change(function () {
+        if ($('#fileArch').get(0).files[0] === undefined) {
+            $(".text_select").text("Selecciona un archivo");
+            $(".box__dragndrop").text("o arrastra aqu\u00ED");
+        } else {
+            $(".text_select").text($('#fileArch').get(0).files[0].name);
+            $(".box__dragndrop").empty()
+        }
+    });
 
 }]);

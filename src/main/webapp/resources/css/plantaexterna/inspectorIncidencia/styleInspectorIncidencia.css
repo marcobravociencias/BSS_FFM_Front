@@ -670,10 +670,6 @@ h4#texto_not_arboles {
     z-index: -1; 
 } 
 
-.box__uploading { 
-    display: none; 
-} 
-
 .text_select {
     color: #773f85;
     cursor: pointer;
