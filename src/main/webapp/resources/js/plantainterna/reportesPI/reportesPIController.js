@@ -1053,7 +1053,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 					}
 				},
 
-				"columns": [null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+				"columns": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
 				"language": idioma_espanol_not_font,
 				"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
 				dom: 'Bfrtip',
@@ -1081,6 +1081,54 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		}
 	}
 
+	downloadExcelReportFile = function(){ 
+        //$(".buttons-excel").click();
+        let nivelBusquedaArbol= $scope.obtenerNivelUltimoJerarquia()        
+        let clustersparam=$("#jstree-proton-3").jstree("get_selected", true)
+                                               .filter(e=>e.original.nivel== nivelBusquedaArbol)
+                                               .map(e=>parseInt(e.id))
+		
+        let statuscopy = [];
+        if($scope.filtrosGeneral.estatusdisponibles){
+            angular.forEach($scope.filtrosGeneral.estatusdisponibles,(e,i)=>{
+                statuscopy.push(e.id); 
+            })
+        }
+        
+        let intervencioncopy= [];
+        if($scope.filtrosGeneral.tipoOrdenes){
+            angular.forEach($scope.filtrosGeneral.tipoOrdenes,(e,i)=>{
+                intervencioncopy.push(e.id); 
+            })
+        }
+        let paramsR = {
+             fechaInicio: $scope.getFechaFormato($('#filtro_fecha_inicio_reporte').val()),
+             fechaFin: $scope.getFechaFormato($('#filtro_fecha_fin_reporte').val()),
+             tipoIntervencion:  intervencioncopy,
+             estatusOt: statuscopy,
+             geografias: clustersparam,
+             fechaSeleccionada:  $("#tipo_reporte").val(),
+             elementosPorPagina: $scope.resultReporteDiario,
+             pagina: 1
+        }
+        swal({ text: 'Cargando registros...', allowOutsideClick: false });
+        swal.showLoading();
+        reportesPIService.consultaReporteDiario(paramsR).then((result) =>{
+            console.log(result.data)
+            swal.close()
+            if (result.data.respuesta) {
+                const data = JSON.parse(result.data.result).ordenes
+                console.log(JSON.parse(result.data.result))
+                const fileName = 'Resporte Seguimiento Diario'
+                const exportType = 'xls'
+    
+                window.exportFromJSON({ data, fileName, exportType })
+            } else {
+                mostrarMensajeErrorAlert('Ocurrio un error al generar reporte.')
+            }
+           
+        }).catch(err => handleError(err));
+    }
 
 	$scope.iniciarReporteOrdenes();
 	//$scope.initComponents();

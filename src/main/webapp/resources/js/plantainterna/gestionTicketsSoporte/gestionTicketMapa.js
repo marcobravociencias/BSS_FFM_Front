@@ -1,3 +1,4 @@
+let markerCreacionTickets;
 app.ticketControllerMapa=function($scope){
     mapavistageneral = new google.maps.Map(document.getElementById("content-mapa-creacion-ticket"), {
         center: {
@@ -17,4 +18,24 @@ app.ticketControllerMapa=function($scope){
         mapTypeControl: false,
         zoom: 15
     });
+    
+    $scope.agregarMarkerMapCrearTicket = function(lat, long) {	
+        mapavistageneral.setCenter(new google.maps.LatLng( lat , long ));
+        mapavistageneral.setZoom(15);
+        if(markerCreacionTickets){
+            markerCreacionTickets.setMap(null)   
+            markerCreacionTickets = undefined;         
+        }
+    	markerCreacionTickets = new google.maps.Marker({
+    		map: mapavistageneral,
+    	    draggable: false,
+    	    animation: google.maps.Animation.DROP,
+    	    title:"Dirección de la OT",
+    	    position: {
+    	    	lat:parseFloat(lat),
+    	        lng: parseFloat(long) 
+    	    }
+    	});
+	}
+    
 }

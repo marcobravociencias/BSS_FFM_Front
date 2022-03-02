@@ -64,11 +64,11 @@
                 <input type="text" placeholder="CUENTA" id="cuenta-reporte" ng-model="repDiario.idCuenta"
                     class="form-control input-filtro form-control-sm">
             </div>
-            <div class="col-md-2 columna-filtro-indRR borderFilterR" style="width: 130px;">
+            <div class="col-md-1 columna-filtro-indRR borderFilterR" style="width: 110px;">
                 <input readonly placeholder="GEOGRAF&Iacute;A" type="text" id="clusterO"
                     class="input-filtro form-control form-control-sm" ng-click="abrirModalGeografiaRep()" />
             </div>
-            <div class="col-md-2 columna-filtro-indR borderFilterR" style="width: 170px;">
+            <div class="col-md-1 columna-filtro-indR borderFilterR" style="width: 120px;">
                 <select class="input-filtro form-control form-control-sm" id="tipo_reporte"
                     style="border: 1px solid #dbdbdb !important; background: white !important;"
                     ng-model="repDiario.fechaSeleccionada">
@@ -95,10 +95,14 @@
                     <i class="fa fa-search"></i>
                 </button>
             </div>
+            <div class="col-1 download-file">
+                <img alt="excel" src="${pageContext.request.contextPath}/resources/img/generic/group-10.png"
+                    style="cursor:pointer" onclick="downloadExcelReportFile()">
+            </div>
         </div>
     </div>
     <div class="content-table">
-        <div class="content-fluid">
+        <div class="content-fluid" style="overflow-x: auto;">
             <table id="reporteSeguimientoTable" class="display table" cellspacing="0" width="100%">
                 <thead id="thead_reporteSeguimiento">
                     <tr>
@@ -111,7 +115,8 @@
                         <th>MOTIVO</th>
                         <th>CIUDAD</th>
                         <th>ESTADO</th>
-                        <th>#EMPLEADO</th>
+                        <th># EMPLEADO</th>
+                        <th># USUARIO</th>
                         <th>T&Eacute;CNICO</th>
                         <th>FECHA CREACI&Oacute;N</th>
                         <th>FECHA AGENDA</th>

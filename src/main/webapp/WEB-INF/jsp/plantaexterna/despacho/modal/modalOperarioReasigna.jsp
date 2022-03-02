@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" tabindex="-1" style="z-index: 1062 !important;" aria-labelledby="exampleModalLabel"
+<div class="modal fade" tabindex="-1"  aria-labelledby="exampleModalLabel"
   aria-hidden="true" id="modal-reasigna-ot">
   <div class="modal-dialog" style="min-width: 60% !important; max-width: 60% !important;">
     <div class="modal-content">
@@ -8,6 +8,7 @@
         <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" style="min-height: 300px; max-height: 300px; overflow: auto;">
+        <input type="hidden" id="otSeleccionada" value="" />
         <div class="content-operarios-modal">
           <div class="row">
             <div class="offset-9 col-3">
@@ -18,8 +19,8 @@
             </div>
           </div>
           <div class="row" id="data-tecnico-content" style="margin-left:0.5em;">
-            <div class="col-3 fc-cell-text evento-ot-asignada ot-asignada-modal content-ot-oper cardoper-{{tecnico.idTecnico}}"
-              ng-click="seleccionOperarioReasignar(tecnico.idTecnico)" ng-repeat="tecnico in listadoTecnicosAsigna">
+            <div class="col-3 fc-cell-text evento-ot-asignada ot-asignada-modal content-ot-oper cardoper-reasigna-{{tecnico.idTecnico}}"
+              ng-click="seleccionOperarioReasignar(tecnico.idTecnico, true)" ng-repeat="tecnico in listadoTecnicosAsigna">
               <div class="row">
                 <div class="col-2">
                   <img style="border:.3em solid {{tecnico.color}}; width: 4em; height: 4em;margin-top:1em"
@@ -54,7 +55,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" ng-show="isSelectedTec" style="height: 2.6em;"
+        <button type="button" ng-disabled="!isSelectedTec" style="height: 2.6em;"
           class="btn btn-sm btn-primary ripple-surface" ng-click="reasignarTecnico()"><i class="fas fa-people-arrows"
             aria-hidden="true"></i> Reasignar</button>
         <button type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface" data-mdb-dismiss="modal">

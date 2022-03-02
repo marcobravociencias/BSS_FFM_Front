@@ -69,7 +69,7 @@
                     </div>
                     <div class="row" style="margin-left:0.5em;">
                         <div class="col-4 fc-cell-text evento-ot-asignada ot-asignada-modal content-ot-oper cardoper-{{tecnico.idTecnico}}"
-                            ng-click="seleccionOperarioReasignar(tecnico.idTecnico)"
+                            ng-click="seleccionOperarioReasignar(tecnico.idTecnico, false)"
                             ng-repeat="tecnico in listadoTecnicosAsigna">
                             <div class="row">
                                 <div class="col-2">
@@ -108,10 +108,10 @@
                 <button type="button" ng-show="isSelectedOt && !mostrarOtsAsignadas" style="height: 2.6em;"
                     class="btn btn-sm btn-primary ripple-surface" ng-click="regrearAsignaOt()"><i
                         class="fas fa-angle-left" aria-hidden="true"></i> Regresar</button>
-                <button type="button" ng-show="isSelectedOt && mostrarOtsAsignadas" style="height: 2.6em;"
+                <button type="button" ng-show="mostrarOtsAsignadas" style="height: 2.6em;" ng-disabled="!isSelectedOt"
                     class="btn btn-sm btn-primary ripple-surface" ng-click="reasignarTecnicoModal()"><i
                         class="fa fa-user" aria-hidden="true"></i> Seleccionar t&eacute;cnico</button>
-                <button type="button" ng-show="isSelectedTec && !mostrarOtsAsignadas" style="height: 2.6em;"
+                <button type="button" ng-show="!mostrarOtsAsignadas" style="height: 2.6em;" ng-disabled="!isSelectedTec"
                     class="btn btn-sm btn-primary ripple-surface" ng-click="reasignarTecnicoOt()"><i
                         class="fas fa-people-arrows" aria-hidden="true"></i> Reasignar</button>
                 <button type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface"

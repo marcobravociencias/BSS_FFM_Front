@@ -4,6 +4,7 @@ const MILISEGUNDOS_ALERTAS = (1000 * 60) * 3;
 var mapubicacionoperario;
 var mapaucotizaciondetalle;
 var mapavistageneral;
+var tableReporte;
 app.controller('despachoController', ['$scope', 'despachoService', 'mainDespachoService', 'mainAlertasService', 'genericService', '$filter', '$q', function ($scope, despachoService, mainDespachoService, mainAlertasService, genericService, $filter, $q) {
     console.log("IniciaControllador");
 
@@ -100,9 +101,11 @@ app.controller('despachoController', ['$scope', 'despachoService', 'mainDespacho
             })
             $scope.tablaAsignadasOperarios(listTemp);
         })
+        $('.drop-down-filters').on("click.bs.dropdown", function (e) {
+            e.stopPropagation();
+        });
 
-
-        $scope.fechaFiltradoCalendar = "14/01/2022"//moment(new Date()).format('DD/MM/YYYY');
+        $scope.fechaFiltradoCalendar = moment(new Date()).format('DD/MM/YYYY');
 
     });
 
@@ -137,8 +140,6 @@ app.controller('despachoController', ['$scope', 'despachoService', 'mainDespacho
         //  $scope.consultarConteoAlertasPI()
     }
 
-
-
     $scope.selectOtReasignar = function (id) {
         $scope.isSelectedOt = true;
         $(".content-ot-asigna").removeClass('active-asignada');
@@ -149,10 +150,15 @@ app.controller('despachoController', ['$scope', 'despachoService', 'mainDespacho
         $scope.mostrarOtsAsignadas = false;
     }
 
-    $scope.seleccionOperarioReasignar = function (id) {
+    $scope.seleccionOperarioReasignar = function (id, reasignaOt) {
         $scope.isSelectedTec = true;
         $(".content-ot-oper").removeClass('active-asignada');
-        $(".cardoper-" + id).addClass('active-asignada');
+        if(reasignaOt){
+            $(".cardoper-reasigna-" + id).addClass('active-asignada');
+        }else{
+            $(".cardoper-" + id).addClass('active-asignada');
+        }
+      
     }
 
     $scope.regrearAsignaOt = function () {
@@ -168,12 +174,14 @@ app.controller('despachoController', ['$scope', 'despachoService', 'mainDespacho
         }, 750);
     }
 
-    abrirModalReasignaOt = function () {
+    abrirModalReasignaOt = function (idOt) {
+        $("#otSeleccionada").val(idOt);
         $('#searchTecnico').val('');
         $scope.isSelectedTec = false;
         $scope.listadoTecnicosAsigna = $scope.listadoTecnicosGeneral;
         $scope.$apply();
         $(".content-ot-oper").removeClass('active-asignada');
+        $(".content-ot-asigna").removeClass('active-asignada');
         $("#modal-reasigna-ot").modal('show');
     }
 
@@ -193,11 +201,38 @@ app.controller('despachoController', ['$scope', 'despachoService', 'mainDespacho
     }
 
     $scope.reasignarTecnicoOt = function () {
-
+        let ot = document.getElementsByClassName("active-asignada");
+        let idOt = ot[0].classList[5].split('-')[1];
+        let idTec = ot[1].classList[5].split('-')[1];
+        let data_tecnico = $scope.listadoTecnicosGeneral.find((e) => e.idTecnico == parseInt(idTec))
+        let otInfo =  $scope.listadoOtsAsignadas.find((e) => e.idOrden == parseInt(idOt))
+        otInfo['fechahoraasignacion'] = moment(new Date()).format("YYYY-MM-DD[T]HH:mm:ss");
+        $("#modalOtsAsignadas").modal('hide');
+        $scope.reAsignacionObject = {
+            'otInfo': otInfo,
+            'tecnicoInfo': data_tecnico,
+            'comentario': ''
+        }
+        $("#modalReAsignacionOrdenTrabajo").modal('show')
     }
 
     $scope.reasignarTecnico = function () {
-
+        let ot = document.getElementsByClassName("active-asignada");
+        let idTec = ot[0].classList[5].split('-')[2];
+        let idOt = $("#otSeleccionada").val();
+        let data_tecnico = $scope.listadoTecnicosGeneral.find((e) => e.idTecnico == parseInt(idTec))
+        let otInfo =  $scope.listadoOtsAsignadas.find((e) => e.idOrden == parseInt(idOt))
+        console.log(idOt);
+        console.log(otInfo);
+        otInfo['fechahoraasignacion'] = moment(new Date()).format("YYYY-MM-DD[T]HH:mm:ss");
+        $("#modal-reasigna-ot").modal('hide');
+        $scope.reAsignacionObject = {
+            'otInfo': otInfo,
+            'tecnicoInfo': data_tecnico,
+            'comentario': ''
+        }
+        $("#modalReAsignacionOrdenTrabajo").modal('show')
+        
     }
 
 
@@ -381,7 +416,8 @@ app.controller('despachoController', ['$scope', 'despachoService', 'mainDespacho
             })
         })
         envioIntervenciones = subIntTemp;
-        console.log($scope.nfiltrogeografia);
+        let estatusDisponiblesCheck = [];
+        estatusDisponiblesCheck = $scope.filtrosGeneral.estatusdisponibles.filter(e=>e.checkedOpcion).map(e=>e.id)   
         let clustersparam = $("#jstree-proton-3").jstree("get_selected", true)
             .filter(e => e.original.nivel == 5)//$scope.nfiltrogeografia)
             .map(e => parseInt(e.id))
@@ -391,7 +427,7 @@ app.controller('despachoController', ['$scope', 'despachoService', 'mainDespacho
             "fechaFin": $scope.getFechaFormato($('#filtro-fechafin').val()),
             "idSubIntervenciones": envioIntervenciones,
             "idTurnos": turnosdisponiblescopy,
-            "idEstatus": [$scope.nfiltroestatuspendiente],
+            "idEstatus": estatusDisponiblesCheck,
             "idClusters": clustersparam
         }
 
@@ -692,7 +728,7 @@ app.controller('despachoController', ['$scope', 'despachoService', 'mainDespacho
                         <div class="content-text-otasignada">  
                             <div class="izquierda-icon"><i class="elemen-izquierda-asignada icon-otasginada fas fa-bars" onclick="abrirModalInformacion(221902);"></i></div>
                             <h5 class="cliente-asignada">${asignada.descipcionTipoOrden}</h5>
-                            <div class="izquierda-icon" style="float: right;" onclick="abrirModalReasignaOt()"><i class="elemen-izquierda-asignada icon-otasginada fas fa-exchange-alt" style="background: #fff; border: none"></i></div>
+                            <div class="izquierda-icon" title="Reasignar" style="float: right;" onclick="abrirModalReasignaOt(${asignada.idOrden})"><i class="elemen-izquierda-asignada icon-otasginada fas fa-exchange-alt" style="background: #fff; border: none"></i></div>
                         </div>
                         <div class="content-text-otasignada">      
                             <div class="izquierda-icon">
@@ -766,7 +802,7 @@ app.controller('despachoController', ['$scope', 'despachoService', 'mainDespacho
             var tableelemetn2 = `
                 <tr>
                     <td>  
-                        <div class="efecto content-tecnico-asignacion" id="resource">
+                        <div class="efecto content-tecnico-asignacion" id="resource" style="#fff">
                             <div class="col-12">
                                 <div class="row">
                                 ${templateOperador}
@@ -784,7 +820,7 @@ app.controller('despachoController', ['$scope', 'despachoService', 'mainDespacho
                     let data_tecnico = listaTecnicosGen.find((e) => e.idTecnico == parseInt(idTecTemp))
                     let otTemp = event.toElement.offsetParent.id.split('-')[1];
                     let otInfo =  $scope.listadoOtsPendientes.find((e) => e.idOrden == parseInt(otTemp))
-                    //otInfo.fechahoraasignacion = moment(new Date()).format('DD/MM/YYYY');
+                    otInfo['fechahoraasignacion'] = moment(new Date()).format("YYYY-MM-DD[T]HH:mm:ss");
                     $scope.abrirModalAsignacion(otInfo, data_tecnico);
                     $(this).css("border", "1.5px dashed #ddd")
                 },
@@ -843,6 +879,233 @@ app.controller('despachoController', ['$scope', 'despachoService', 'mainDespacho
             });
         });
 
+    }
+
+    $scope.getFechaFormato = function (fecha) {
+		let fechaPrueba = fecha.split('/');
+		return fechaPrueba[2] + '-' + fechaPrueba[1] + '-' + fechaPrueba[0];
+	}
+
+    validarFecha = function(idFechaInicio, idFechaFin) {
+		var inicio = document.getElementById(idFechaInicio).value.split('/');
+		var fin = document.getElementById(idFechaFin).value.split('/');
+      
+		var date_inicio = inicio[2] + '-' + inicio[1] + '-' + inicio[0];
+		var date_fin = fin[2] + '-' + fin[1] + '-' + fin[0];
+		if (date_inicio <= date_fin) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+    function compareGeneric(a,b){
+        let niveluno=a.nivel;
+        let niveldos=b.nivel;
+        if(niveluno>niveldos){ 
+            return -1
+        }else if( niveluno < niveldos){
+            return 1
+        } 
+        return 0
+    }
+    $scope.obtenerNivelUltimoJerarquia=function(){
+        return $scope.listadogeografiacopy.sort(compareGeneric)[0].nivel
+    }
+
+    consultarReporteDiario = function(){
+        let mensaje = '<ul>';
+        let isValid = true;
+        let numerosOnly = /^[0-9]*$/i;
+        $scope.resultReporteDiario = {};
+
+        let statuscopy = [];
+        if($scope.filtrosGeneral.estatusdisponibles){
+            angular.forEach($scope.filtrosGeneral.estatusdisponibles,(e,i)=>{
+                statuscopy.push(e.id); 
+            })
+        }
+        
+        let intervencioncopy= [];
+        if($scope.filtrosGeneral.tipoOrdenes){
+            angular.forEach($scope.filtrosGeneral.tipoOrdenes,(e,i)=>{
+                intervencioncopy.push(e.id); 
+            })
+        }
+        
+        let paramsTemp = {};
+        
+        
+
+        if(!statuscopy.length){
+            mensaje += '<li>Introducir Estatus</li>';
+            isValid = false;
+        }
+    
+        if(!intervencioncopy.length){
+            mensaje += '<li>Introducir Intervenci\u00F3n</li>';
+            isValid = false;
+        }
+
+        if(!numerosOnly.test($("#idot-reporte").val())){
+            mensaje += '<li>El campo OT debe ser n&uacute;merico</li>';
+            isValid = false;
+        }
+
+        if($("#tipo_reporte").val() == "" || $("#tipo_reporte").val() == undefined){
+            mensaje += '<li>Selecciona Tipo fecha</li>';
+            isValid = false;
+        } else {
+            $scope.repDiario.fechaSeleccionada = $("#tipo_reporte").val()
+        }
+
+
+        swal({ text: 'Cargando registros...', allowOutsideClick: false });
+        swal.showLoading();
+
+        setTimeout(function(){
+            
+            if(!validarFecha('filtro_fecha_inicio_reporte','filtro_fecha_fin_reporte')){
+                mensaje += '<li>La fecha final debe ser mayor que la fecha inicio</li>';
+                isValid = false;
+            }
+            let nivelBusquedaArbol= $scope.obtenerNivelUltimoJerarquia()        
+            let clustersparam=$("#jstree-proton-3").jstree("get_selected", true)
+                                                   .filter(e=>e.original.nivel== nivelBusquedaArbol)
+                                                   .map(e=>parseInt(e.id))
+            if(clustersparam.length === 0){
+                mensaje += '<li>Introducir Geograf&iacute;a</li>';
+                isValid = false;
+            }
+
+            if(!isValid){
+                mensaje += '</ul>';
+                swal.close()
+                mostrarMensajeWarningValidacion(mensaje);
+                return false;
+            }else{
+                paramsTemp.fechaInicio = $scope.getFechaFormato($scope.repDiario.fechaInicio);
+                paramsTemp.fechaFin =  $scope.getFechaFormato($scope.repDiario.fechaFin);
+                paramsTemp.tipoIntervencion =  intervencioncopy;
+                paramsTemp.estatusOt = statuscopy;
+                paramsTemp.fechaSeleccionada =  $scope.repDiario.fechaSeleccionada;
+                paramsTemp.elementosPorPagina = 10;
+                paramsTemp.pagina = 1;
+                paramsTemp.geografias = clustersparam;
+    
+                if($scope.repDiario.idOrden && $scope.repDiario.idOrden != ""){
+                    paramsTemp.idOrden =  $scope.repDiario.idOrden;
+                }
+    
+                if($scope.repDiario.folio && $scope.repDiario.folio != ""){
+                    paramsTemp.folio =  $scope.repDiario.folio;
+                }
+    
+                if($scope.repDiario.idCuenta && $scope.repDiario.idCuenta != ""){
+                    paramsTemp.idCuenta =  $scope.repDiario.idCuenta;
+                }
+    
+                if(tableReporte){                              
+                    tableReporte.destroy() 
+                }   
+                tableReporte = $('#table-reporte').DataTable({
+                    "processing": false,
+                    "ordering": false,
+                    "serverSide": true,
+                    "scrollX": false,
+                    "paging": true,
+                    "lengthChange": false,
+                    "searching": false,
+                    "ordering": false,
+                    "pageLength": 10,
+                    "info": false,
+                    "ajax": {
+                        "url": "req/consultarReporteDiario",
+                        "type": "POST",
+                        "data": paramsTemp,
+                        "beforeSend": function () {
+                            if(!swal.isVisible() ){
+                                
+                            }
+                        },
+                        "dataSrc": function (json) {
+                            $scope.resultReporteDiario = json.registrosTotales
+                            return json.data;
+                        },
+                        "error":function(xhr, error, thrown){
+                            handleError(xhr)
+                        }, 
+                        "complete": function () {
+                            swal.close()
+                        }
+                    },
+                    "columns": [null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+                    "language": idioma_espanol_not_font,
+                    "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">', 
+                    dom: 'Bfrtip', 
+                    buttons:  
+                    [{ 
+                        extend: 'excelHtml5', 
+                        title: 'Reporte Seguimiento Diario', 
+                        text: 'Exportar Excel' 
+                    }] 
+                });
+            }
+            
+        },1000);
+      
+    }
+    
+
+    downloadExcelReportFile = function(){ 
+        //$(".buttons-excel").click();
+        let nivelBusquedaArbol= $scope.obtenerNivelUltimoJerarquia()        
+        let clustersparam=$("#jstree-proton-3").jstree("get_selected", true)
+                                               .filter(e=>e.original.nivel== nivelBusquedaArbol)
+                                               .map(e=>parseInt(e.id))
+
+        let statuscopy = [];
+        if($scope.filtrosGeneral.estatusdisponibles){
+            angular.forEach($scope.filtrosGeneral.estatusdisponibles,(e,i)=>{
+                statuscopy.push(e.id); 
+            })
+        }
+        
+        let intervencioncopy= [];
+        if($scope.filtrosGeneral.tipoOrdenes){
+            angular.forEach($scope.filtrosGeneral.tipoOrdenes,(e,i)=>{
+                intervencioncopy.push(e.id); 
+            })
+        }
+        console.log($scope.resultReporteDiario)
+        console.log($scope.getFechaFormato($('#filtro_fecha_inicio_reporte').val()))
+        let paramsR = {
+             fechaInicio: $scope.getFechaFormato($('#filtro_fecha_inicio_reporte').val()),
+             fechaFin: $scope.getFechaFormato($('#filtro_fecha_fin_reporte').val()),
+             tipoIntervencion:  intervencioncopy,
+             estatusOt: statuscopy,
+             geografias: clustersparam,
+             fechaSeleccionada:  $("#tipo_reporte").val(),
+             elementosPorPagina: $scope.resultReporteDiario,
+             pagina: 1
+        }
+        swal({ text: 'Cargando registros...', allowOutsideClick: false });
+        swal.showLoading();
+        mainDespachoService.consultaReporteDiario(paramsR).then((result) =>{
+            console.log(result.data)
+            swal.close()
+            if (result.data.respuesta) {
+                const data = JSON.parse(result.data.result).ordenes
+                console.log(JSON.parse(result.data.result))
+                const fileName = 'Resporte Seguimiento Diario'
+                const exportType = 'xls'
+    
+                window.exportFromJSON({ data, fileName, exportType })
+            } else {
+                mostrarMensajeErrorAlert('Ocurrio un error al generar reporte.')
+            }
+           
+        }).catch(err => handleError(err));
     }
 }]);
 

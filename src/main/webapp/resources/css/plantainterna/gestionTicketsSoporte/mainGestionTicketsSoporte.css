@@ -72,12 +72,16 @@
     box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
     color: #7716fa;
 }
+.btnTicket:hover,.btnTicket:active,.btnTicket:focus {
+    background-color:white;
+    color: #7716fa;
+}
 
 .btnTicket {
     background-color: #ffffff;
     color: #7716fa;
     border: solid 1px #7716fa !important;
-    padding: .5em 1.5em;
+    padding: .4em 1.5em;
     border-radius: 5px;
     font-size: 0.7em;
     position: relative;
@@ -544,6 +548,11 @@ thead#thead_tecnicosCuenta {
     font-size: .9em;
     margin-bottom: 0;
 }
+#txtGeografiasConsulta .label-filter{
+    color: #9d9d9d;
+    font-size: .9em;
+    margin-bottom: 0;
+}
 #filtros_config .label-filter i{
     font-size: .9em;
     margin-right: .5em;;
@@ -616,7 +625,7 @@ span.text-content-vehiculo {
   text-overflow: ellipsis;
 }
 .text-info-ot-text {
-    margin-top: 1em;
+    margin-top: .8em;
 }
 .form-gruponoserie{
     padding-right: .3em;

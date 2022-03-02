@@ -8,6 +8,12 @@
         <label for="filtro_fecha_fin_ticket" class="label-filter"><i class="fa fa-calendar"></i>Fecha final</label>
         <input readonly type="text" id="filtro_fecha_fin_ticket" class="datepicker input-filtro-ticket form-control form-control-sm" />
     </div>
+    <div class="col-2 columna filtro-ind">
+        <label class="label-filter"><i class="fas fa-map-marked"></i> Geograf&iacute;a</label>
+        <input id="txtGeografiasConsulta" type="text" class="input-filtro-status form-control form-control-sm"
+            ng-click="abrirModalGeografiaConsulta()" 
+            placeholder="NO HAY SELECCI&Oacute;N" readonly autocomplete="off">
+    </div>
     <div class="col-1">
         <button id="btn_buscar" type="button" class="btn btn-sm btn-primary waves-effect waves-light btnTicket" ng-click="consultarTicketsSoporte()">
             <i class="fa fa-search"></i>

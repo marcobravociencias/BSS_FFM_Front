@@ -67,7 +67,7 @@ public class ImplAutentificacionService  implements AutentificacionService{
 				
 				if (ordenamiento != null) {
 					 	
-					ordenamiento=ordenamiento.replaceAll("moduloDespachoPE", "moduloDespacho");
+					//ordenamiento=ordenamiento.replaceAll("moduloDespachoPE", "moduloDespacho");
 
 					responseLog.setModulos( retornarListOrdenamiento(responseLog.getModulos(),ordenamiento));		
 					
@@ -97,8 +97,9 @@ public class ImplAutentificacionService  implements AutentificacionService{
 		permisos=permisos.stream().map(e->{ e.setOrdenConfig(-1); return e ;}) .collect(Collectors.toList());	
 		int index=0;
 		for(Permiso e:permisos) {
+			/*
 			if(e.getClave()!= null && e.getClave().trim().equals("moduloDespachoPE")) 
-				e.setClave("moduloDespacho");
+				e.setClave("moduloDespacho");*/
 			
 				
 			e.setOrdenConfig(-1);

@@ -171,4 +171,14 @@ app.service("gestionTicketSoporteService", function ($http) {
           transformRequest: angular.identity
         });
     };
+    this.consulCatalogoGeografiaUsuarioDespacho=function(params){
+		return $http({
+			method: "post",
+			url: "req/consulCatalogoGeografiaUsuarioDespacho",
+			//data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
 });
