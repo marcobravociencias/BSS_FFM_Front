@@ -824,6 +824,7 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
     }
     
     $scope.verMapaCambioDireccion = function(lat, long) {
+    	$scope.verModDireccionOT = false;
     	mapaCambioDireccionOT = new google.maps.Map(document.getElementById("content-mapa-cambio-direccion"), {
     		center: {
                 lat: parseFloat(lat),

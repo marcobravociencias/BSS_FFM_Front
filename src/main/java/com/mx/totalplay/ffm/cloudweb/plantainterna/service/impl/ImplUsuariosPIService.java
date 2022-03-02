@@ -145,16 +145,14 @@ public class ImplUsuariosPIService implements UsuariosPIService {
                     dataArray = new String[usuariosArray.size()][11];
                     for (int i = 0; i < usuariosArray.size(); i++) {
                         JsonObject object = (JsonObject) usuariosArray.get(i);
-                        logger.info("objeto: " + object);
-                        //dataArray[count][0] = object.get("numeroEmpleado") != 0 ? String.valueOf(object.get("numeroEmpleado").getAsString()) : "";
                         dataArray[count][0] = object.get("numeroEmpleado") != null ? object.get("numeroEmpleado").getAsString().trim() : "";
                         dataArray[count][1] = object.get("usuario") != null ? object.get("usuario").getAsString().trim() : "";
                         dataArray[count][2] = object.get("nombre") != null ? object.get("nombre").getAsString().trim() : "";
                         dataArray[count][3] = object.get("tipoUsuario") != null ? object.get("tipoUsuario").getAsString().trim() : "";
                         dataArray[count][4] = object.get("ciudad") != null ? object.get("ciudad").getAsString().trim() : "";
                         dataArray[count][5] = object.get("unidadNegocio") != null ? object.get("unidadNegocio").getAsString().trim() : "";
-                        dataArray[count][6] = "<div class='tooltip-btn'> <span onclick='consultarDetalleUsuario(" + object.get("idUsuario").getAsString().trim() + ")' class='btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnModificarUsuario'><th><i class='iconoModUsuario fas fa-pen' aria-hidden='true'></i></th></span></div>";
-                        dataArray[count][7] = "<div class='tooltip-btn'> <span onclick='eliminarUsuario(" + object.get("idUsuario").getAsString().trim() + ")' class='btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnEliminarUsuario'><th><i class='iconoElimUsuario fas fa-trash-alt' aria-hidden='true'></i></th></span></div>";
+                        dataArray[count][6] = "<div class='tooltip-btn'> <span id='btnModUsuario"+object.get("idUsuario").getAsInt()+"' onclick='consultarDetalleUsuario(" + object.get("idUsuario").getAsString().trim() + ")' class='btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnModificarUsuario'><th><i id='iconoBtnModUsuario"+object.get("idUsuario").getAsInt()+"' class='iconoModUsuario fas fa-pen' aria-hidden='true'></i></th></span></div>";
+                        dataArray[count][7] = "<div class='tooltip-btn'> <span id='btnElimUsuario"+object.get("idUsuario").getAsInt()+"' onclick='eliminarUsuario(" + object.get("idUsuario").getAsString().trim() + ")' class='btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnEliminarUsuario'><th><i id='iconoBtnElimUsuario"+object.get("idUsuario").getAsInt()+"' class='iconoElimUsuario fas fa-trash-alt' aria-hidden='true'></i></th></span></div>";
                         count++;
                     }
                     
@@ -178,8 +176,6 @@ public class ImplUsuariosPIService implements UsuariosPIService {
                 }
             }
         }
-		
-		logger.info("*** Objeto Response: " + gson.toJson(dataResponse));
 		return dataResponse;
 	}
 	
