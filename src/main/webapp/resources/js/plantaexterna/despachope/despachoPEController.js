@@ -333,13 +333,12 @@ app.controller('despachoController', ['$scope', 'despachoService', 'mainDespacho
                             $scope.listadogeografiacopy = results[2].data.result.geografia
                             geografia = results[2].data.result.geografia
 
-                            //necesario para agregar el y arbol 
                             geografia.map((e) => {
                                 e.parent = e.padre == undefined ? "#" : e.padre;
                                 e.text = e.nombre;
                                 e.icon = "fa fa-globe";
 
-                                e.state = { //Este objeto tu no lo necesitas karen! e.state
+                                e.state = {
                                     opened: true,
                                     selected: true,
                                 }
@@ -913,6 +912,7 @@ app.controller('despachoController', ['$scope', 'despachoService', 'mainDespacho
         return $scope.listadogeografiacopy.sort(compareGeneric)[0].nivel
     }
 
+  
     consultarReporteDiario = function(){
         let mensaje = '<ul>';
         let isValid = true;
@@ -959,16 +959,15 @@ app.controller('despachoController', ['$scope', 'despachoService', 'mainDespacho
             $scope.repDiario.fechaSeleccionada = $("#tipo_reporte").val()
         }
 
+        if(!validarFecha('filtro_fecha_inicio_reporte','filtro_fecha_fin_reporte')){
+            mensaje += '<li>La fecha final debe ser mayor que la fecha inicio</li>';
+            isValid = false;
+        }
 
         swal({ text: 'Cargando registros...', allowOutsideClick: false });
         swal.showLoading();
 
         setTimeout(function(){
-            
-            if(!validarFecha('filtro_fecha_inicio_reporte','filtro_fecha_fin_reporte')){
-                mensaje += '<li>La fecha final debe ser mayor que la fecha inicio</li>';
-                isValid = false;
-            }
             let nivelBusquedaArbol= $scope.obtenerNivelUltimoJerarquia()        
             let clustersparam=$("#jstree-proton-3").jstree("get_selected", true)
                                                    .filter(e=>e.original.nivel== nivelBusquedaArbol)
@@ -1039,7 +1038,7 @@ app.controller('despachoController', ['$scope', 'despachoService', 'mainDespacho
                             swal.close()
                         }
                     },
-                    "columns": [null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+                    "columns": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
                     "language": idioma_espanol_not_font,
                     "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">', 
                     dom: 'Bfrtip', 
