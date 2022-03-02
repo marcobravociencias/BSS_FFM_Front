@@ -83,16 +83,12 @@ public class ImplInspectorCoberturaService implements InspectorCoberturaService 
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
 				
 		String tokenAccess = principalDetail.getAccess_token();
-	    logger.info("consultarIncidencias ##+" + tokenAccess);
+	    logger.info("consultarIncidenciasCoberturaPE ##+" + tokenAccess);
+	    
 	    String urlRequest = principalDetail.getDireccionAmbiente().concat(constInspectorCobertura.getConsultaIncidenciasInspectorCoberturaPE());
-	    logger.info("URL ##+" + urlRequest);
-	     
-	    Map<String, String> paramsRequestGet = new HashMap<String, String>();
-		paramsRequestGet.put("idsFallas",  jsonObject.get("idFalla").getAsString());
-		paramsRequestGet.put("fechaInicio",  jsonObject.get("fechaInicio").getAsString());
-		paramsRequestGet.put("fechaFin", jsonObject.get("fechaFin").getAsString() );
-
-	    ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest, ServiceResponseResult.class, tokenAccess);
+	    logger.info("URL ##+" + urlRequest);	     
+	  
+	    ServiceResponseResult response = restCaller.callPostBearerTokenRequest(jsonObject.toString(), urlRequest, ServiceResponseResult.class, tokenAccess);
 	    logger.info("RESULT" + gson.toJson(response));
 		return response;
 	}

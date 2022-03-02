@@ -288,7 +288,7 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/despachopi/jsonotsasignadas.js?v=${sessionScope.versionDepl}"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/despachopi/mainDespachoPI.js?v=${sessionScope.versionDepl}"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/despachopi/mainMapas.js?v=${sessionScope.versionDepl}"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/despachopi/mainMapas.js?v=${sessionScope.versionDepl}" charset="UTF-8"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/despachopi/mainFiltrosDespacho.js?v=${sessionScope.versionDepl}"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/despachopi/mainDespachoModals.js?v=${sessionScope.versionDepl}"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/despachopi/mainDespachoService.js?v=${sessionScope.versionDepl}"></script>

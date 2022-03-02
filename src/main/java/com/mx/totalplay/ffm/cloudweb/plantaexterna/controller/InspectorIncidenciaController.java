@@ -41,17 +41,7 @@ public class InspectorIncidenciaController {
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 		
 	}
-	
-	@PostMapping("/consultarStatusFallasInspectorPE")
-	public ResponseEntity<?> consultarStatusFallasInspectorPE(String params) {
-		logger.info("###### InspectorIncidenciaController - consultarStatusFallasInspectorPE");
-		ServiceResponseResult response = inspectorIncidenciaService.consultarStatusFallasInspectorPE(params);
-		if(response.getResult() instanceof Integer) {
-			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-		}
-		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-	}
-	
+		
 	@PostMapping("/consultarIncidenciasInspectorPE")
 	public ResponseEntity<?> consultarIncidenciasInspectorPE(@RequestBody String params) {
 		logger.info("###### InspectorIncidenciaController - consultarIncidenciasInspectorPE");

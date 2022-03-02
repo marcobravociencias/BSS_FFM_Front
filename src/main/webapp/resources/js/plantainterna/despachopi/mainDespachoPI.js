@@ -205,6 +205,7 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             slotLabelFormat : 'hh:ss(:mm) a',
             schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
             editable: $scope.accionReAsignacionOtPermiso,
+            droppable: true,
             eventDurationEditable : false,
             eventOverlap : false,
             aspectRatio: 1.3,
@@ -516,8 +517,8 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                                 tableelemetn=`
                                 <tr> 
                                     <td>  
-                                        <div id="idotpendiente${otpendiente.idOrden}" class="${(otpendiente.ordenConfirmada && $scope.accionAsignacionOtPermiso)? 'fc-event' : "fc-event-noasignacion"} 
-                                                                                              ot-pendiente-event ${otpendiente.ordenConfirmada ? "efecto ui-draggable ui-draggable-handle" :""} ">
+                                        <div id="idotpendiente${otpendiente.idOrden}" 
+                                                class="${(otpendiente.ordenConfirmada && $scope.accionAsignacionOtPermiso)?  'fc-event' : "fc-event-noasignacion"}  ot-pendiente-event ${otpendiente.ordenConfirmada ? "efecto ui-draggable ui-draggable-handle" :""} ">
                                             <div class="header-otpendeinte">
                                                 <div class="top-title-ot">
                                                     <div class="content-top-element bars-content">
@@ -1014,7 +1015,10 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
             if($scope.permisosConfigUser!=undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length >0){
                 $scope.permisosConfigUser.permisos.map(e=>{e.banderaPermiso = true ; return e;});
                 $scope.accionesUserConfigText=$scope.permisosConfigUser.permisos.map(e=>{return e.clave})            
-                $scope.accionAsignacionOtPermiso= $scope.permisosConfigUser.permisos.find(e=>{return e.clave==='accionAsignaOT'})
+                $scope.accionAsignacionOtPermiso= $scope.permisosConfigUser.permisos.find(e=>{return e.clave==='accionAsignaOT'}) 
+                if($scope.accionAsignacionOtPermiso!= undefined  ){
+                    $scope.accionAsignacionOtPermiso=$scope.accionAsignacionOtPermiso.banderaPermiso
+                }
                 $scope.accionReAsignacionOtPermiso= $scope.permisosConfigUser.permisos.find(e=>{return e.clave==='accionReasignaOT'})
 
             }else{

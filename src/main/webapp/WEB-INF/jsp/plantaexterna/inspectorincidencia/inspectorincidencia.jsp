@@ -50,7 +50,7 @@
                     <input readonly placeholder="Fecha Final" type="text" id="filtro_fecha_fin_inspectorincidencia" class="datepicker input-filtro-inspectorincidencia form-control form-control-sm" style="width: 100px;" />
                 </div>
                 <div class="col-2 column-style-inspectorincidencia columna-filtro-ind">
-                    <i class="icono-noseleccion fas fa-exclamation-circle me-2" title="No se encontraron catalogo de fallas" ng-show="banderaErrorEstatus"></i>
+                    <i class="icono-noseleccion fas fa-exclamation-circle me-2" title="No se encontraron cat&aacute;logo de fallas" ng-show="banderaErrorFallas"></i>
                     <label for="filtro-fallas" class="label-filter">Falla</label>
                     <div class="dropdown">
                         <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..." type="text" id="filtro-fallas" class="input-filtro-inspectorincidencia form-control form-control-sm" />
@@ -78,7 +78,7 @@
                     </div>
                 </div>
                 <div class="col-2 column-style-inspectorincidencia columna-filtro-ind">
-                    <i class="icono-noseleccion fas fa-exclamation-circle me-2" title="No se encontraron catalogo de estatus" ng-show="banderaErrorEstatus"></i>
+                    <i class="icono-noseleccion fas fa-exclamation-circle me-2" title="No se encontraron cat&aacute;logo de estatus" ng-show="banderaErrorEstatus"></i>
                     <label for="filtro-estatus-substatus" class="label-filter">Estatus</label>
                     <div class="dropdown">
                         <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..." type="text" id="filtro-estatus-substatus" class="input-filtro-inspectorincidencia form-control form-control-sm" />
@@ -103,7 +103,7 @@
                     <input readonly placeholder="Seleccione..." type="text" id="cluster" class="input-filtro-inspectorincidencia form-control form-control-sm">
                 </div>
                 <div class="col-1 div-btn-busqueda">
-                    <button id="btn_consultar_incidencias" type="button" class="btn btn-sm btn-primary waves-effect waves-light" ng-click="consultarIndicencias()">
+                    <button id="btn_consultar_incidencias" type="button" class="btn btn-sm btn-primary waves-effect waves-light" ng-click="consultarIncidenciasInspector()">
                         <i class="fa fa-search"></i>
                     </button>
                 </div>

@@ -116,6 +116,20 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 				nivelUsuario= llavesResult.N_FILTRO_GEOGRAFIA;
 				$scope.filtroGeografias = llavesResult.N_FILTRO_GEOGRAFIA;
 				$scope.filtroIntervenciones = llavesResult.N_FILTRO_INTERVENCIONES;
+				
+				//llavesResult.VL_AUTO_MODIFICACION = true;
+				//llavesResult.VL_AUTO_ELIMINACION = true;
+				if(llavesResult.VL_AUTO_MODIFICACION != undefined && llavesResult.VL_AUTO_MODIFICACION){
+					$scope.validacionAutoModUsuario = llavesResult.VL_AUTO_MODIFICACION;
+	    		}else{
+	    			$scope.validacionAutoModUsuario = false;
+	    		}
+				if(llavesResult.VL_AUTO_ELIMINACION != undefined && llavesResult.VL_AUTO_ELIMINACION){
+					$scope.validacionAutoElimUsuario = llavesResult.VL_AUTO_ELIMINACION;
+	    		}else{
+	    			$scope.validacionAutoElimUsuario = false;
+	    		}
+				
 				validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
                 validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
                 validateCreedText = llavesResult.KEY_TEXTFORMATO_CREED_RES ? KEY_TEXTFORMATO_CREED_RES : '';
@@ -459,6 +473,17 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     		            {"aTargets" : [7], "sClass":  "txtTablaConsultaCentrado"}
     		        ],
     		        "drawCallback": function( settings ) {
+    		        	var idUsuarioSesion = $("#idUsuarioSesion").val();
+    		        	if($scope.validacionAutoModUsuario){
+        		        	$("#btnModUsuario"+idUsuarioSesion).addClass("estiloBlockIconoPermiso");
+        		        	$("#iconoBtnModUsuario"+idUsuarioSesion).removeClass("fa-pen");
+        		        	$("#iconoBtnModUsuario"+idUsuarioSesion).addClass("fa-unlock");
+    		        	}
+    		        	if($scope.validacionAutoElimUsuario){
+        		        	$("#btnElimUsuario"+idUsuarioSesion).addClass("estiloBlockIconoPermiso");
+        		        	$("#iconoBtnElimUsuario"+idUsuarioSesion).removeClass("fa-trash-alt");
+        		        	$("#iconoBtnElimUsuario"+idUsuarioSesion).addClass("fa-unlock");
+    		        	}
     		        	if(!$scope.configPermisoAccionEditaUsuarios){
     		        		$(".btnModificarUsuario").addClass("estiloBlockIconoPermiso");
     		        		$(".iconoModUsuario").removeClass("fa-pen");
@@ -1754,52 +1779,67 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	
 	//MÉTODO PARA ELIMINAR USUARIOS (BAJA LÓGICA)
     eliminarUsuario = function(idUsuario) {
-    	
     	if($scope.configPermisoAccionEliminaUsuarios){
-    		let params = {
-        			idUsuarioQueModifica: idUsuario,
-        			estatus: 0,
-        			comentarios: "Se desactiva al Usuario"
-    		};
-        	
-        	swal({
-    	        title: "Se dará de baja al usuario",
-    	        text: "\u00BFDesea eliminar el usuario?",
-    	        type: "warning",
-    	        input: 'text',
-    	        inputPlaceholder: "Escribe el motivo",
-    	        showCancelButton: true,
-    	        confirmButtonColor: '#007bff',
-    	        confirmButtonText: 'Si',
-    	        cancelButtonText: 'Cancelar',
-    	        allowOutsideClick: false
-    	      }).then(function (motivo) {
-    	        if (motivo) {
-    	        	params.comentarios = motivo;
-    	        	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
-    	    		swal.showLoading();
-    	        	$q.all([
-    	        		usuarioPIService.eliminarUsuario(params)
-    	            ]).then(function(results) {
-    	            	swal.close();
-    	            	if(results[0].data.respuesta){
-    	            		swal("Correcto", "¡Usuario eliminado con éxito!", "success");
-    	            		setTimeout(function() {
-    	            			$scope.consultaUsuariosPorGeoCompPuestos();
-    	    	        	}, 1000);
-    	            	}else{
-    	            		swal("Error", results[0].data.resultDescripcion, "error");
-    	            	}
-    	            });
-    	        }else{
-    	        	swal({type: "warning", title:"Aviso", text:"¡Ingrese el motivo de la baja!", showConfirmButton: false, allowOutsideClick: false, allowEscapeKey : false});
-    	        	setTimeout(function() {
-    	        		eliminarUsuario(idUsuario);
-    	        	}, 2500);
-    	        }
-    	      }).catch(err => {
+    		
+    		var valPermitirAutoElimUsuario = true;
+    		if($scope.validacionAutoElimUsuario == false){
+    			valPermitirAutoElimUsuario = true;
+    		}else{
+    			if($("#idUsuarioSesion").val() == idUsuario){
+    				valPermitirAutoElimUsuario = false;
+    			}else{
+    				valPermitirAutoElimUsuario = true;
+    			}
+    		}
+    		
+    		if(valPermitirAutoElimUsuario){
+    			let params = {
+            			idUsuarioQueModifica: idUsuario,
+            			estatus: 0,
+            			comentarios: "Se desactiva al Usuario"
+        		};
+            	
+            	swal({
+        	        title: "Se dará de baja al usuario",
+        	        text: "\u00BFDesea eliminar el usuario?",
+        	        type: "warning",
+        	        input: 'text',
+        	        inputPlaceholder: "Escribe el motivo",
+        	        showCancelButton: true,
+        	        confirmButtonColor: '#007bff',
+        	        confirmButtonText: 'Si',
+        	        cancelButtonText: 'Cancelar',
+        	        allowOutsideClick: false
+        	      }).then(function (motivo) {
+        	        if (motivo) {
+        	        	params.comentarios = motivo;
+        	        	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
+        	    		swal.showLoading();
+        	        	$q.all([
+        	        		usuarioPIService.eliminarUsuario(params)
+        	            ]).then(function(results) {
+        	            	swal.close();
+        	            	if(results[0].data.respuesta){
+        	            		swal("Correcto", "¡Usuario eliminado con éxito!", "success");
+        	            		setTimeout(function() {
+        	            			$scope.consultaUsuariosPorGeoCompPuestos();
+        	    	        	}, 1000);
+        	            	}else{
+        	            		swal("Error", results[0].data.resultDescripcion, "error");
+        	            	}
+        	            });
+        	        }else{
+        	        	swal({type: "warning", title:"Aviso", text:"¡Ingrese el motivo de la baja!", showConfirmButton: false, allowOutsideClick: false, allowEscapeKey : false});
+        	        	setTimeout(function() {
+        	        		eliminarUsuario(idUsuario);
+        	        	}, 2500);
+        	        }
+        	      }).catch(err => {
 
-    	      });
+        	      });
+    		}else{
+    			//swal({type: "info", title:"Aviso", text:"No cuentas con el permiso de auto eliminación."});
+    		}
     	}else{
     		swal({type: "warning", title:"Aviso", text:"No cuentas con el permiso de eliminación."});
     	}

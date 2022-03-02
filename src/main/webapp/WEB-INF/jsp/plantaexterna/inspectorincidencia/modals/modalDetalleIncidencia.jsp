@@ -65,18 +65,17 @@
                             <div class="col-md-12" style="text-align: right; padding: 0px 25px 10px 15px !important;">
                             </div>
                             <div style="text-align: center;" class="col-md-12">
-                                <form id="uploadForm" name="13" class="form-horizontal box form_drag_drop"
-                                    novalidate="novalidate" enctype="multipart/form-data">
+                                <form id="uploadFormEditaJust" name="13" class="form-horizontal box form_drag_drop" novalidate="novalidate" enctype="multipart/form-data">
                                     <div class="box__input">
-                                        <input name="myFile" type="file" class="box__file inputFile" id="file" />
-                                        <label for="file" id="etiqueta_archivo">
-                                            <strong class="text_select">Selecciona un archivo</strong>
-                                            <span class="box__dragndrop">o arrastra aqu&iacute;</span>
-                                        </label>
-                                        <br />
-                                    </div>
-                                    <div class="box__uploading">Uploading&hellip;</div>
-                                </form>
+                                      <input name="myFile" type="file" class="box__file inputFile" id="fileArch" />
+                                      <label for="fileArch" id="etiqueta_archivo_declina_inc">
+                                        <strong class="text_select">Selecciona un archivo</strong>
+                                        <span class="box__dragndrop">o arrastra aqu&iacute;</span>
+                                      </label>
+                                      <br />
+                                      <div class="box__uploading"><i class="fas fa-cloud-upload-alt" style="display: block;"></i> </div>
+                                  </div>
+                              </form>
                             </div>
                         </div>
                         <!-- <div class="col-7" style="display: none;width:96%;" id="content_results">

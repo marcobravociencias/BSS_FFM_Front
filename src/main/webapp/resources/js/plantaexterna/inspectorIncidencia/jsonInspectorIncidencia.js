@@ -5826,6 +5826,351 @@ let detalleIncidencia = {
                             "TipoImg": "65"
                         }]
                     }
+                }, {
+                    "IdIncidente": "153651",
+                    "IdFallaIncidente": "233049",
+                    "IdUnidadNegocio": "3",
+                    "UnidadNegocio": "PLANTA EXTERNA",
+                    "IdOT": "80863",
+                    "IdCatFalla": "1",
+                    "CatFalla": "CIERRE",
+                    "IdCatFallaDetalle": "7",
+                    "CatFallaDetalle": "DISTANCIA FUERA DE NORMA",
+                    "Comentarios": "Distancia fuera de norma",
+                    "Img": {
+                        "Detalleimagenes": [{
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }, {
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }, {
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }]
+                    }
+                }, {
+                    "IdIncidente": "153651",
+                    "IdFallaIncidente": "233049",
+                    "IdUnidadNegocio": "3",
+                    "UnidadNegocio": "PLANTA EXTERNA",
+                    "IdOT": "80863",
+                    "IdCatFalla": "1",
+                    "CatFalla": "CIERRE",
+                    "IdCatFallaDetalle": "7",
+                    "CatFallaDetalle": "DISTANCIA FUERA DE NORMA",
+                    "Comentarios": "Distancia fuera de norma",
+                    "Img": {
+                        "Detalleimagenes": [{
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }, {
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }, {
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }]
+                    }
+                }, {
+                    "IdIncidente": "153651",
+                    "IdFallaIncidente": "233049",
+                    "IdUnidadNegocio": "3",
+                    "UnidadNegocio": "PLANTA EXTERNA",
+                    "IdOT": "80863",
+                    "IdCatFalla": "1",
+                    "CatFalla": "CIERRE",
+                    "IdCatFallaDetalle": "7",
+                    "CatFallaDetalle": "DISTANCIA FUERA DE NORMA",
+                    "Comentarios": "Distancia fuera de norma",
+                    "Img": {
+                        "Detalleimagenes": [{
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }, {
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }, {
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }]
+                    }
+                }, {
+                    "IdIncidente": "153651",
+                    "IdFallaIncidente": "233049",
+                    "IdUnidadNegocio": "3",
+                    "UnidadNegocio": "PLANTA EXTERNA",
+                    "IdOT": "80863",
+                    "IdCatFalla": "1",
+                    "CatFalla": "CIERRE",
+                    "IdCatFallaDetalle": "7",
+                    "CatFallaDetalle": "DISTANCIA FUERA DE NORMA",
+                    "Comentarios": "Distancia fuera de norma",
+                    "Img": {
+                        "Detalleimagenes": [{
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }, {
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }, {
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }]
+                    }
+                }, {
+                    "IdIncidente": "153651",
+                    "IdFallaIncidente": "233049",
+                    "IdUnidadNegocio": "3",
+                    "UnidadNegocio": "PLANTA EXTERNA",
+                    "IdOT": "80863",
+                    "IdCatFalla": "1",
+                    "CatFalla": "CIERRE",
+                    "IdCatFallaDetalle": "7",
+                    "CatFallaDetalle": "DISTANCIA FUERA DE NORMA",
+                    "Comentarios": "Distancia fuera de norma",
+                    "Img": {
+                        "Detalleimagenes": [{
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }, {
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }, {
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }]
+                    }
+                }, {
+                    "IdIncidente": "153651",
+                    "IdFallaIncidente": "233049",
+                    "IdUnidadNegocio": "3",
+                    "UnidadNegocio": "PLANTA EXTERNA",
+                    "IdOT": "80863",
+                    "IdCatFalla": "1",
+                    "CatFalla": "CIERRE",
+                    "IdCatFallaDetalle": "7",
+                    "CatFallaDetalle": "DISTANCIA FUERA DE NORMA",
+                    "Comentarios": "Distancia fuera de norma",
+                    "Img": {
+                        "Detalleimagenes": [{
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }, {
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }, {
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }]
+                    }
+                }, {
+                    "IdIncidente": "153651",
+                    "IdFallaIncidente": "233049",
+                    "IdUnidadNegocio": "3",
+                    "UnidadNegocio": "PLANTA EXTERNA",
+                    "IdOT": "80863",
+                    "IdCatFalla": "1",
+                    "CatFalla": "CIERRE",
+                    "IdCatFallaDetalle": "7",
+                    "CatFallaDetalle": "DISTANCIA FUERA DE NORMA",
+                    "Comentarios": "Distancia fuera de norma",
+                    "Img": {
+                        "Detalleimagenes": [{
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }, {
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }, {
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }]
+                    }
+                }, {
+                    "IdIncidente": "153651",
+                    "IdFallaIncidente": "233049",
+                    "IdUnidadNegocio": "3",
+                    "UnidadNegocio": "PLANTA EXTERNA",
+                    "IdOT": "80863",
+                    "IdCatFalla": "1",
+                    "CatFalla": "CIERRE",
+                    "IdCatFallaDetalle": "7",
+                    "CatFallaDetalle": "DISTANCIA FUERA DE NORMA",
+                    "Comentarios": "Distancia fuera de norma",
+                    "Img": {
+                        "Detalleimagenes": [{
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }, {
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }, {
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }]
+                    }
+                }, {
+                    "IdIncidente": "153651",
+                    "IdFallaIncidente": "233049",
+                    "IdUnidadNegocio": "3",
+                    "UnidadNegocio": "PLANTA EXTERNA",
+                    "IdOT": "80863",
+                    "IdCatFalla": "1",
+                    "CatFalla": "CIERRE",
+                    "IdCatFallaDetalle": "7",
+                    "CatFallaDetalle": "DISTANCIA FUERA DE NORMA",
+                    "Comentarios": "Distancia fuera de norma",
+                    "Img": {
+                        "Detalleimagenes": [{
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }, {
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }, {
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }]
+                    }
+                }, {
+                    "IdIncidente": "153651",
+                    "IdFallaIncidente": "233049",
+                    "IdUnidadNegocio": "3",
+                    "UnidadNegocio": "PLANTA EXTERNA",
+                    "IdOT": "80863",
+                    "IdCatFalla": "1",
+                    "CatFalla": "CIERRE",
+                    "IdCatFallaDetalle": "7",
+                    "CatFallaDetalle": "DISTANCIA FUERA DE NORMA",
+                    "Comentarios": "Distancia fuera de norma",
+                    "Img": {
+                        "Detalleimagenes": [{
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }, {
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }, {
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }]
+                    }
+                }, {
+                    "IdIncidente": "153651",
+                    "IdFallaIncidente": "233049",
+                    "IdUnidadNegocio": "3",
+                    "UnidadNegocio": "PLANTA EXTERNA",
+                    "IdOT": "80863",
+                    "IdCatFalla": "1",
+                    "CatFalla": "CIERRE",
+                    "IdCatFallaDetalle": "7",
+                    "CatFallaDetalle": "DISTANCIA FUERA DE NORMA",
+                    "Comentarios": "Distancia fuera de norma",
+                    "Img": {
+                        "Detalleimagenes": [{
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }, {
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }, {
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }]
+                    }
+                }, {
+                    "IdIncidente": "153651",
+                    "IdFallaIncidente": "233049",
+                    "IdUnidadNegocio": "3",
+                    "UnidadNegocio": "PLANTA EXTERNA",
+                    "IdOT": "80863",
+                    "IdCatFalla": "1",
+                    "CatFalla": "CIERRE",
+                    "IdCatFallaDetalle": "7",
+                    "CatFallaDetalle": "DISTANCIA FUERA DE NORMA",
+                    "Comentarios": "Distancia fuera de norma",
+                    "Img": {
+                        "Detalleimagenes": [{
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }, {
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }, {
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }]
+                    }
+                }, {
+                    "IdIncidente": "153651",
+                    "IdFallaIncidente": "233049",
+                    "IdUnidadNegocio": "3",
+                    "UnidadNegocio": "PLANTA EXTERNA",
+                    "IdOT": "80863",
+                    "IdCatFalla": "1",
+                    "CatFalla": "CIERRE",
+                    "IdCatFallaDetalle": "7",
+                    "CatFallaDetalle": "DISTANCIA FUERA DE NORMA",
+                    "Comentarios": "Distancia fuera de norma",
+                    "Img": {
+                        "Detalleimagenes": [{
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }, {
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }, {
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }]
+                    }
+                }, {
+                    "IdIncidente": "153651",
+                    "IdFallaIncidente": "233049",
+                    "IdUnidadNegocio": "3",
+                    "UnidadNegocio": "PLANTA EXTERNA",
+                    "IdOT": "80863",
+                    "IdCatFalla": "1",
+                    "CatFalla": "CIERRE",
+                    "IdCatFallaDetalle": "7",
+                    "CatFallaDetalle": "DISTANCIA FUERA DE NORMA",
+                    "Comentarios": "Distancia fuera de norma",
+                    "Img": {
+                        "Detalleimagenes": [{
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }, {
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }, {
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }]
+                    }
+                }, {
+                    "IdIncidente": "153651",
+                    "IdFallaIncidente": "233049",
+                    "IdUnidadNegocio": "3",
+                    "UnidadNegocio": "PLANTA EXTERNA",
+                    "IdOT": "80863",
+                    "IdCatFalla": "1",
+                    "CatFalla": "CIERRE",
+                    "IdCatFallaDetalle": "7",
+                    "CatFallaDetalle": "DISTANCIA FUERA DE NORMA",
+                    "Comentarios": "Distancia fuera de norma",
+                    "Img": {
+                        "Detalleimagenes": [{
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }, {
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }, {
+                            "URLImg": "",
+                            "TipoImg": "65"
+                        }]
+                    }
                 }],
                 "DetalleStatus": [{
                     "NombreArchivo": "BITACORA.docx",

@@ -89,7 +89,7 @@
 <!-- fin -->
 
 <script src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionTicketsSoporte/gestionTicketsSoporteController.js?v=${sessionScope.versionDepl}"></script>
-<script src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionTicketsSoporte/gestionTicketMapa.js?v=${sessionScope.versionDepl}"></script>
+<script src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionTicketsSoporte/gestionTicketMapa.js?v=${sessionScope.versionDepl}" charset="UTF-8"></script>
 <script src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionTicketsSoporte/gestionTicketsSoporteService.js?v=${sessionScope.versionDepl}"></script>
 <script src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionTicketsSoporte/jsonGestionTicketsSoporte.js?v=${sessionScope.versionDepl}"></script>
 <script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js?v=${sessionScope.versionDepl}"></script>

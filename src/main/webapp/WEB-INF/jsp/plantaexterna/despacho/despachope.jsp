@@ -375,4 +375,5 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/despachopi/mainAlertasService.js?v=${sessionScope.versionDepl}"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/genericService.js?v=${sessionScope.versionDepl}"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/despachopi/mainDependencias.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/libraries/exportExcel/index.min.js"></script>
 </html>

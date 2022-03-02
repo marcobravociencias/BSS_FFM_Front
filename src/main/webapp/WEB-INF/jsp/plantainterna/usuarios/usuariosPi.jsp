@@ -1,4 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:authentication property="principal" var="userStore" />
 <!DOCTYPE html>
 <html ng-app="usuarioApp">
     <head>
@@ -104,6 +106,7 @@
                                     </button>
                                 </div>
                             </div>
+                            <input id="idUsuarioSesion" type="hidden" value="${userStore.idUsuario}" >
 				            <div ng-show="configPermisoAccionConsultaUsuarios" class="row">
 								<div class="columna-principal-users col-md-12" style="padding: 0;">
 									<div class="table-responsive">

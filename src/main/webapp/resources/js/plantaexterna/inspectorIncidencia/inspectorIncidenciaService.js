@@ -7,14 +7,7 @@ app.service("inspectorIncidenciaService", function ($http) {
             transformRequest: angular.identity
         });
     };
-    this.consultarStatusFallasInspectorPE = function () {
-        return $http({
-            method: "get",
-            url: "req/consultarStatusFallasInspectorPE",
-            headers: { 'Content-Type': "application/json; charset=utf-8" },
-            transformRequest: angular.identity
-        });
-    };
+
     this.systemColor = function () {
         return $http({
             method: "get",
@@ -23,6 +16,7 @@ app.service("inspectorIncidenciaService", function ($http) {
             transformRequest: angular.identity
         });
     };
+
     this.consultarIncidenciasInspectorPE = function (params) {
         return $http({
             method: "post",
@@ -32,6 +26,7 @@ app.service("inspectorIncidenciaService", function ($http) {
             transformRequest: angular.identity
         })
     }
+
     this.consultarDetalleIncidenciaInspectorPE = function (params) {
         return $http({
             method: "post",
@@ -41,6 +36,7 @@ app.service("inspectorIncidenciaService", function ($http) {
             transformRequest: angular.identity
         })
     }
+
     this.consultarCatalogoRechazoIncidenciaInspectorPE = function (params) {
         return $http({
             method: "post",
@@ -50,6 +46,7 @@ app.service("inspectorIncidenciaService", function ($http) {
             transformRequest: angular.identity
         })
     }
+
     this.cambiarStatusIncidenciaInspectorPE = function (params) {
         return $http({
             method: "post",
@@ -60,24 +57,25 @@ app.service("inspectorIncidenciaService", function ($http) {
         })
     }
 
-
-    this.consultarConfiguracionDespachoDespacho=function(params){
-		if(params=== undefined)
-			params={}
-		return $http({
-			method: "post",
-			url: "req/consultarConfiguracionDespachoDespacho",
-			data:JSON.stringify(params),
-            headers : {
-                'Content-Type' : 'application/json'
+    this.consultarConfiguracionDespachoDespacho = function (params) {
+        if (params === undefined)
+            params = {}
+        return $http({
+            method: "post",
+            url: "req/consultarConfiguracionDespachoDespacho",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
             }
-		});
-	};
+        });
+    };
+    
     this.consulCatalogoGeografia = function () {
         return $http({
             method: "post",
             url: "req/consulCatalogoGeografiaUsuarioDespacho",
-            headers: { 'Content-Type': "application/json; charset=utf-8" }
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
+            transformRequest: angular.identity
         });
     };
 });
