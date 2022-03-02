@@ -62,7 +62,7 @@
             </div>
         </div>  
     </div>
-
+    <jsp:include page="./modals/modalGeografiaConsulta.jsp"></jsp:include>
     <jsp:include page="./modals/modalBusquedaTecnico.jsp"></jsp:include>
     <jsp:include page="./modals/modalDetalle.jsp"></jsp:include>
     <jsp:include page="./modals/modalBusquedaCuenta.jsp"></jsp:include>

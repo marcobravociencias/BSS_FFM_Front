@@ -987,14 +987,14 @@ label.label-filter {
 }
 
 .icono-noseleccion {
-  color: #ff9f3b;
+  color: #b9b9b9;
   display: inline-block;
-  font-size: 0.9em;
+  font-size: 0.7em;
 }
 
 .text-no-seleccion-geografia {
   color: #959595;
-  font-size: 0.9em;
+  font-size: 0.7em;
 }
 
 .col-mns-permiso{

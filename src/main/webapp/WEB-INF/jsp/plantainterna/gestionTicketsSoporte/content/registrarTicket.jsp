@@ -3,14 +3,14 @@
         <div class="form-row form-row-creacion">
             <div class="col-4 form-group">
                 <label for="cuentaTicket" class="span-form-tickets">Cuenta *</label>
-                <input type="text" class="form-control form-controlt  inputTicket" aria-describedby="basic-addon3" id="cuentaTicket" ng-model="ticketSoporteR.cuenta" />
+                <input ng-blur="consultarCuentaCliente()" type="text" class="form-control form-controlt  inputTicket" aria-describedby="basic-addon3" id="cuentaTicket" ng-model="ticketSoporteR.cuenta" />
             </div>        
             <div class="col-4 form-group">
                 <label for="telefonoTicket" class="span-form-tickets">Tel&eacute;fono </label>
-                <input type="text" class="form-control form-controlt  inputTicket" id="telefonoTicket" ng-model="ticketSoporteR.telefonoTecnico" maxlength="10" />
+                <input type="text" class="form-control form-controlt  inputTicket" id="telefonoTicket" ng-model="ticketSoporteR.telefonoTecnico" onkeypress="return event.charCode >= 48 && event.charCode <= 57"  maxlength="10" />
             </div>
             <div class="col-4 form-group">
-                <label for="tecnologiaTicket" class="span-form-tickets">Tecnolog&iacute;a *</label>
+                <label for="tecnologiaTicket" class="span-form-tickets">Tecnolog&iacute;a gestor*</label>
                 <!-- <input readonly style="cursor: default;" class="form-control form-controlt " name="tecnologiaTicket" id="tecnologiaTicket" ng-model="ticketSoporteR.tecnologia"/> -->
                 <select class="form-control form-controlt  custom-select" name="tecnologiaTicket" id="tecnologiaTicket" ng-model="ticketSoporteR.tecnologia">
                     <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
@@ -126,6 +126,14 @@
         <div class="container-fluid vehiculo-content">
             <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Folio</span></div>
             <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="tecnicoAsignado.folioSistema || 'Sin dato'">222119</span> </div>
+        </div>
+        <div class="container-fluid vehiculo-content">
+            <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Num. empleado</span></div>
+            <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="tecnicoAsignado.numEmpleado  || 'Sin dato'">222119</span> </div>
+        </div>
+        <div class="container-fluid vehiculo-content">
+            <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Num. usuario</span></div>
+            <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="tecnicoAsignado.usuarioFFM  || 'Sin dato'">222119</span> </div>
         </div>
         <div class="container-fluid vehiculo-content">
             <div class="container-text-title-detalle"><span class="text-tile-vehiculo">T&eacute;cnico</span></div>

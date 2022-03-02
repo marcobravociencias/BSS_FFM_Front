@@ -17,7 +17,8 @@
                                     <th>OT</th>
                                     <th>FOLIO</th>
                                     <th>#EMPLEADO</th>
-                                    <th>EMPLEADO</th>
+                                    <th>#USUARIO</th>
+                                    <th>NOMBRE</th>
                                     <th>TEL&Eacute;FONO</th>
                                     <th>ASIGNAR</th>
                                 </tr>
