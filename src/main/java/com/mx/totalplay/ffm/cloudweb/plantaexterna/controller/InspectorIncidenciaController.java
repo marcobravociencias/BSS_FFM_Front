@@ -81,5 +81,15 @@ public class InspectorIncidenciaController {
 		}
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
+	
+	@PostMapping("/generarOTIncidenciaInspectorPE")
+	public ResponseEntity<?> generarOTIncidenciaInspectorPE(@RequestBody String params){
+		logger.info("###### InspectorIncidenciaController - generarOTIncidenciaInspectorPE");
+		ServiceResponseResult response = inspectorIncidenciaService.generarOTIncidenciaInspectorPE(params);
+		if(response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
 
 }

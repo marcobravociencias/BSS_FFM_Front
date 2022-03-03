@@ -56,10 +56,10 @@ app.service("inspectorIncidenciaService", function ($http) {
             transformRequest: angular.identity
         })
     }
-
+    
     this.consultarConfiguracionDespachoDespacho = function (params) {
         if (params === undefined)
-            params = {}
+        params = {}
         return $http({
             method: "post",
             url: "req/consultarConfiguracionDespachoDespacho",
@@ -78,4 +78,14 @@ app.service("inspectorIncidenciaService", function ($http) {
             transformRequest: angular.identity
         });
     };
+
+    this.generarOTIncidenciaInspectorPE = function (params) {
+        return $http({
+            method: "post",
+            url: "req/generarOTIncidenciaInspectorPE",
+            data: JSON.stringify(params),
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
+            transformRequest: angular.identity
+        })
+    }
 });
