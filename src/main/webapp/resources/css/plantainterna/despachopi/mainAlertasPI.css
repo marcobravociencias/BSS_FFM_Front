@@ -674,3 +674,22 @@ div#contenido_imagenes {
     border: 0.09rem solid #0c56d0;
     box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
 }
+
+.contenedor-not-permiso-atender-alertas {
+	height: 50vh;
+  	display: flex;
+  	align-items: center;
+  	justify-content: center;
+}
+
+.icon-not-permiso-atender-alertas {
+    color: #9586a9;
+    padding: 0.5em;
+    border-radius: 50%;
+}
+
+.text-not-permiso-atender-alertas {
+	margin-left: 0.5em;
+	font-size: 1em;
+	font-weight: normal;
+}

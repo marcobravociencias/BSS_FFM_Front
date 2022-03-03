@@ -374,74 +374,103 @@
                     </div>
                 </div>
                 <div class="card-body card-body-alerta-principal">
-                    <div class="row" ng-show="alertaSeleccionadaPENDIENTE">
-                        <div class="col-12">
-                            <div class="card card-alertas-seleccion">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-12 text-center">
-                                            <h4>Selecciona una OT</h4>
-                                            <span><i class="fa fa-quote-left"></i> Para poder visualizar las opciones que tiene cada una de ellas.</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                
+                
+                
+                
+                	<div ng-show="!permisoAtenderAlertas">
+                		<div class="row contenedor-not-permiso-atender-alertas">
+	                    	<div class="col-md-12">
+								<div class="row">
+									<div class="col-12 text-center">
+										<i class="icon-not-permiso-atender-alertas fas fa-user-lock fa-2x"></i>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-12 text-center">
+										<b class="text-not-permiso-atender-alertas">No cuentas con el permiso de atender alertas.</b>
+									</div>
+								</div>
+	                        </div>
+	                    </div>
+                	</div>
+                	
+                    <div ng-show="permisoAtenderAlertas">
+	                    <div class="row" ng-show="alertaSeleccionadaPENDIENTE">
+	                        <div class="col-12">
+	                            <div class="card card-alertas-seleccion">
+	                                <div class="card-body">
+	                                    <div class="row">
+	                                        <div class="col-12 text-center">
+	                                            <h4>Selecciona una OT</h4>
+	                                            <span><i class="fa fa-quote-left"></i> Para poder visualizar las opciones que tiene cada una de ellas.</span>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    
+	                    <div class="row" ng-show="alertaSeleccionada">
+	                        <div class="col-12">
+	                            <div class="row">
+	                                <div class="col-6 text-center">
+	                                    <span class="text-primary-alerta">OT: </span><span class="text-secundary-alerta" ng-bind="alertaSeleccionadaObject.IdOT"></span>
+	                                </div>
+	                                <div class="col-6 text-center">
+	                                    <span class="text-primary-alerta">OS: </span><span class="text-secundary-alerta" ng-bind="alertaSeleccionadaObject.os"></span>
+	                                </div>
+	                            </div>
+	                        </div>
+	                        <div class="col-12" style="margin-top: 1em;" ng-repeat="opcion in listaOpcionesAlerta">
+	                            <button type="button" class="btn btn-outline- btn-opciones-alerta" style="color: {{opcion.hexaColor}}; border: 3px solid {{opcion.hexaColor}};" ng-click="mostrarAccionAlerta(opcion)" ng-bind="opcion.descripcion"></button>
+	                        </div>
+	                    </div>
+	
+	                    <div class="row" ng-repeat="opcion in listaOpcionesAlerta" ng-show="opcion.checkedOpcion">
+	                        <div class="col-12">
+	                            <div class="row">
+	                                <div class="col-12" ng-repeat="campo in opcion.campos" ng-switch on="campo.tipoCampo">
+	                                    
+	                                    <div class="form-group contenedorCamposOpcion" ng-switch-when="select">
+											<!-- <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o"></i> -->
+	                                        <label class="etiquetaFormOpcion" for="fecha-reagendamiento-alerta" ng-if="campo.esVisible == '1'">{{campo.nombreEtiqueta}}</label>
+	                                        <select id="{{campo.nombreParamentro+''+opcion.id}}" class="form-control form-control-sm txtFormOpcion {{campo.esVisible == '0' ? 'desabilitarCampoOpcionAlerta' : ''}} {{campo.nombreParamentro}} validarCampoAccionAlerta" ng-switch on="campo.nombreParamentro" ng-click="cambioOpcionSelectAccionAlerta(campo, opcion)">
+	                                        	<option ng-if="campo.valorDefecto == 'NA'" disabled selected>NO HAY SELECCI&Oacute;N</option>
+	                                        	<option ng-switch-when="idTurno" ng-repeat="turno in filtrosGeneral.turnosdisponibles" value="{{turno.id}}">{{turno.nombre}}</option>
+	                                        	<option ng-switch-when="idEstatus" ng-repeat="status in listaStatusAlertaAccion" value="{{status.id}}">{{status.nombre}}</option>
+	                                        	<option ng-switch-when="idEstado" ng-repeat="estado in listaEstadosAlertaAccion" value="{{estado.id}}">{{estado.nombre}}</option>
+	                                        	<option ng-switch-when="idMotivo" ng-repeat="motivo in listaMotivosAlertaAccion" value="{{motivo.id}}">{{motivo.nombre}}</option>
+	                                        </select>
+	                                    </div>
+	                                    
+	                                    <div class="form-group contenedorCamposOpcion" ng-switch-when="selectpicker">
+											<!-- <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o"></i> -->
+	                                        <label class="etiquetaFormOpcion" for="fecha-reagendamiento-alerta">{{campo.nombreEtiqueta}}</label>
+	                                       	<input id="{{campo.nombreParamentro+''+opcion.id}}" type="text" readonly placeholder="Selecciona fecha" class="datepicker campoFecha form-control form-control-sm {{campo.nombreParamentro}} validarCampoAccionAlerta" ng-model="terminarAlerta.fecha" />                               
+	                                    </div>
+	                                    <div class="form-group contenedorCamposOpcion" ng-switch-when="textarea">
+											<!-- <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o"></i> -->
+	                                        <label class="etiquetaFormOpcion" for="fecha-reagendamiento-alerta">{{campo.nombreEtiqueta}}</label>
+	                                        <textarea class="form-control form-control-sm txtFormOpcion {{campo.nombreParamentro}} validarCampoAccionAlerta" style=" resize: none" ng-model="terminarAlerta.comentario" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" id="{{campo.nombreParamentro+''+opcion.id}}" rows="3" ng-keyup="contadorTextArea(campo.nombreParamentro+''+opcion.id)"></textarea>                             
+	                                    	<label style="float: right;" class="etiquetaFormOpcion etiquetaContador">{{contadorCaracteresTextArea}} - 50</label>
+	                                    </div>
+	                                    
+	                                </div>
+	                                
+	                                <div class="col-12">
+	                                    <button class="btn btn-primary btnAccionCamposOpcion" style="width: 100%" ng-click="guardarAccionAlerta(opcion)">{{opcion.descripcion}}</button>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
                     </div>
-                    <div class="row" ng-show="alertaSeleccionada">
-                        <div class="col-12">
-                            <div class="row">
-                                <div class="col-6 text-center">
-                                    <span class="text-primary-alerta">OT: </span><span class="text-secundary-alerta" ng-bind="alertaSeleccionadaObject.IdOT"></span>
-                                </div>
-                                <div class="col-6 text-center">
-                                    <span class="text-primary-alerta">OS: </span><span class="text-secundary-alerta" ng-bind="alertaSeleccionadaObject.os"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12" style="margin-top: 1em;" ng-repeat="opcion in listaOpcionesAlerta">
-                            <button type="button" class="btn btn-outline- btn-opciones-alerta" style="color: {{opcion.hexaColor}}; border: 3px solid {{opcion.hexaColor}};" ng-click="mostrarAccionAlerta(opcion)" ng-bind="opcion.descripcion"></button>
-                        </div>
-                 
-                    </div>
-
-                    <div class="row" ng-repeat="opcion in listaOpcionesAlerta" ng-show="opcion.checkedOpcion">
-                        <div class="col-12">
-                            <div class="row">
-                                <div class="col-12" ng-repeat="campo in opcion.campos" ng-switch on="campo.tipoCampo">
-                                    
-                                    <div class="form-group contenedorCamposOpcion" ng-switch-when="select">
-										<!-- <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o"></i> -->
-                                        <label class="etiquetaFormOpcion" for="fecha-reagendamiento-alerta" ng-if="campo.esVisible == '1'">{{campo.nombreEtiqueta}}</label>
-                                        <select id="{{campo.nombreParamentro+''+opcion.id}}" class="form-control form-control-sm txtFormOpcion {{campo.esVisible == '0' ? 'desabilitarCampoOpcionAlerta' : ''}} {{campo.nombreParamentro}} validarCampoAccionAlerta" ng-switch on="campo.nombreParamentro" ng-click="cambioOpcionSelectAccionAlerta(campo, opcion)">
-                                        	<option ng-if="campo.valorDefecto == 'NA'" disabled selected>NO HAY SELECCI&Oacute;N</option>
-                                        	<option ng-switch-when="idTurno" ng-repeat="turno in filtrosGeneral.turnosdisponibles" value="{{turno.id}}">{{turno.nombre}}</option>
-                                        	<option ng-switch-when="idEstatus" ng-repeat="status in listaStatusAlertaAccion" value="{{status.id}}">{{status.nombre}}</option>
-                                        	<option ng-switch-when="idEstado" ng-repeat="estado in listaEstadosAlertaAccion" value="{{estado.id}}">{{estado.nombre}}</option>
-                                        	<option ng-switch-when="idMotivo" ng-repeat="motivo in listaMotivosAlertaAccion" value="{{motivo.id}}">{{motivo.nombre}}</option>
-                                        </select>
-                                    </div>
-                                    
-                                    <div class="form-group contenedorCamposOpcion" ng-switch-when="selectpicker">
-										<!-- <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o"></i> -->
-                                        <label class="etiquetaFormOpcion" for="fecha-reagendamiento-alerta">{{campo.nombreEtiqueta}}</label>
-                                       	<input id="{{campo.nombreParamentro+''+opcion.id}}" type="text" readonly placeholder="Selecciona fecha" class="datepicker campoFecha form-control form-control-sm {{campo.nombreParamentro}} validarCampoAccionAlerta" ng-model="terminarAlerta.fecha" />                               
-                                    </div>
-                                    <div class="form-group contenedorCamposOpcion" ng-switch-when="textarea">
-										<!-- <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" class="fa fa-user-circle-o"></i> -->
-                                        <label class="etiquetaFormOpcion" for="fecha-reagendamiento-alerta">{{campo.nombreEtiqueta}}</label>
-                                        <textarea class="form-control form-control-sm txtFormOpcion {{campo.nombreParamentro}} validarCampoAccionAlerta" style=" resize: none" ng-model="terminarAlerta.comentario" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" id="{{campo.nombreParamentro+''+opcion.id}}" rows="3" ng-keyup="contadorTextArea(campo.nombreParamentro+''+opcion.id)"></textarea>                             
-                                    	<label style="float: right;" class="etiquetaFormOpcion etiquetaContador">{{contadorCaracteresTextArea}} - 50</label>
-                                    </div>
-                                    
-                                </div>
-                                
-                                <div class="col-12">
-                                    <button class="btn btn-primary btnAccionCamposOpcion" style="width: 100%" ng-click="guardarAccionAlerta(opcion)">{{opcion.descripcion}}</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
+                    
+                    
+                    
+                    
+                    
                 </div>
             </div>
         </div>
