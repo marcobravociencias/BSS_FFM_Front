@@ -1,24 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>        
 <button ng-click="cerrarDetalleTicket()" id="cerrar-gestion-ticket" type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close">
 </button>
-<ul class="nav nav-tabs left-menu small-menu flex-column" id="opciones-menu" role="tablist" style="margin-left: 0; height: 100%;">
-    <li class="nav-item">
-        <a class="opcion-menu active" id="seguimientoDiario-tab" data-toggle="tab" href="#seguimientoDiario" role="tab" aria-controls="seguimientoDiario"
-            aria-selected="false"><i class="icon-menu-left fas fa-calendar-check"></i>&nbsp;<span
-                class="titulo-menu">Detalle del ticket</span></a>
-    </li>
-    <li class="nav-item">
-        <a class="opcion-menu" id="ordenes-tab" data-toggle="tab" href="#ordenes" role="tab"  aria-controls="ordenes" aria-selected="false"><i
-                class="icon-menu-left fas fa-clipboard-list"></i>&nbsp;<span
-                class="titulo-menu">Asignar a ingeniero</span></a>
-    </li>
-    <li class="nav-item">
-        <a class="opcion-menu" id="despacho-tab" data-toggle="tab" href="#despacho" role="tab"aria-controls="despacho" aria-selected="false"><i
-                class="icon-menu-left fas fa-user-tie"></i>&nbsp;<span class="titulo-menu">Reporte
-                Gesti&oacute;n de evidencia</span></a>
-    </li>
 
-</ul>
 <div class="right-content tab-content">
     <ul class="nav nav-tabs" id="tabs-tickets" role="tablist">
         <li class="nav-item">
