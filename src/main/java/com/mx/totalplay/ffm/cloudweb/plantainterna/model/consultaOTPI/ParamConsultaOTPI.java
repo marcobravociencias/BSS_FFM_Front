@@ -38,6 +38,7 @@ public class ParamConsultaOTPI {
 	private List<Integer> idEstatus;
 	private List<Integer> idClusters;
 	private List<Integer> tipoIntervencion;
+	private List<Integer> geografias;
 	private List<Integer> estatusOt;
 	private String fechaInicio;
 	private String fechaFin;

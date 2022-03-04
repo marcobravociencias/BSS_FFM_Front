@@ -67,7 +67,7 @@
                             <div style="text-align: center;" class="col-md-12">
                                 <form id="uploadFormEditaJust" name="13" class="form-horizontal box form_drag_drop" novalidate="novalidate" enctype="multipart/form-data">
                                     <div class="box__input">
-                                      <input name="myFile" type="file" class="box__file inputFile" id="fileArch" />
+                                      <input name="myFile" type="file" class="box__file inputFile" id="fileArch" ng-on-change="convertFile($event)"  />
                                       <label for="fileArch" id="etiqueta_archivo_declina_inc">
                                         <strong class="text_select">Selecciona un archivo</strong>
                                         <span class="box__dragndrop">o arrastra aqu&iacute;</span>

@@ -22,6 +22,8 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
 
 
     $scope.getDetalleAlertas = function (alerta) {
+    	
+    	$scope.permisoAtenderAlertas = $scope.permisosConfigUser.permisos.find(e=>{return e.clave==='accionAtiendeAL'});
 
         $scope.vistaAuditoriaEvidencia = false;
 

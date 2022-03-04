@@ -1,6 +1,15 @@
 <div class="row md-form" id="filtros_config">
-    <div class="col-2 columna-filtro-ind">
-        
+    <div class="col-2 columna-filtro-ind">  
+        <label for="filtro_fecha_inicio_ticket" class="label-filter"><i class="fa fa-calendar"></i>Tipo de fecha</label>
+        <select class="input-filtro form-control form-control-sm input-filtro-ticket" id="tipo_reporte"   ng-model="tipoFechaConsulta">
+            <option value="" >Todos</option>
+            <option value="creacion" selected>Creaci&oacute;n</option>
+            <option value="cierre">Cierre</option>
+            <option value="asignacion">Asignacion</option>
+
+        </select>
+    </div>
+    <div class="col-2 columna-filtro-ind">  
         <label for="filtro_fecha_inicio_ticket" class="label-filter"><i class="fa fa-calendar"></i> Fecha inicial</label>
         <input readonly type="text" id="filtro_fecha_inicio_ticket" class="datepicker input-filtro-ticket form-control form-control-sm" />
     </div>
@@ -78,7 +87,7 @@
                         <th>H/A Asignaci&oacute;n</th>
                         <th>Estatus</th>
                         <th>Tiempo de atenci&oacute;n</th>
-                        <th style="width: 100px !important;">Opciones</th>
+                        <th style="width: 100px !important;">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>

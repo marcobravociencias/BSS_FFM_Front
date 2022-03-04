@@ -1471,9 +1471,12 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         //$scope.repDiario.fechaSeleccionada = 'fechaCreacion'
        
         if($scope.filtrosGeneral.tipoOrdenes){
-            $scope.seleccionarTodos($scope.filtrosGeneral.tipoOrdenes);
+            $scope.seleccionarTodosRecursivo($scope.filtrosGeneral.tipoOrdenes);
         }
 
+        if($scope.filtrosGeneral.estatusdisponibles){
+            $scope.seleccionarTodosRecursivo($scope.filtrosGeneral.estatusdisponibles);
+        }
         $("#jstree-proton-3").jstree("destroy");
         $scope.$apply();
         $scope.resetArbol();
@@ -1493,11 +1496,11 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     $('#modalReporte').on("hidden.bs.modal", function () {
 
         if($scope.filtrosGeneral.tipoOrdenes){
-            $scope.seleccionarTodos($scope.filtrosGeneral.tipoOrdenes);
+            $scope.seleccionarTodosRecursivo($scope.filtrosGeneral.tipoOrdenes);
         }
 
         if($scope.filtrosGeneral.estatusdisponibles){
-            $scope.seleccionarTodos($scope.filtrosGeneral.estatusdisponibles);
+            $scope.seleccionarTodosRecursivo($scope.filtrosGeneral.estatusdisponibles);
         }
 
         $("#jstree-proton-3").jstree("destroy");

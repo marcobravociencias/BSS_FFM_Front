@@ -133,4 +133,21 @@ public class ImplInspectorIncidenciaService implements InspectorIncidenciaServic
 		return response;
 	}
 
+	@Override
+	public ServiceResponseResult generarOTIncidenciaInspectorPE(String params) {
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		logger.info("ImplInspectorIncidencia.class [metodo = generarOTIncidencia() ] \n" + jsonObject);
+		
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String tokenAccess = principalDetail.getAccess_token();
+		logger.info("generarOTIncidencia  ## "+tokenAccess);
+		
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constInspectorIncidencia.getGenerarOTIncidenciaInspectorPE());
+		logger.info("URL ##" + urlRequest);
+		
+		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(jsonObject.toString(), urlRequest, ServiceResponseResult.class, tokenAccess);
+		
+		return response;
+	}
+
 }

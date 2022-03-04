@@ -633,3 +633,68 @@ span.text-content-vehiculo {
 .form-gruponoserienuevo{
     padding-left: .3em;
 }
+
+#cerrar-gestion-ticket{
+    position:absolute;
+    right: 0;
+    margin-right: .5em;
+    z-index: 1em;
+    margin-top: .5em;
+    z-index: 2;
+}
+.content-detalle-ticket{
+    /* padding:0em 1.5em 1em 1.5em !important; */
+    position: relative;
+    padding: 0;
+}
+.title-bloque-detalle{
+    margin-bottom:0;
+    font-size:1em;
+    font-weight:bold;
+    color:#8032f9;
+    border-bottom:1px solid #dbdbdb;
+    margin-bottom:.5em;
+}
+.content-falla.content-tipo-folio {
+    margin-bottom: 1em;
+}
+.opciones-checkbox-dictamen{
+    margin-bottom:.2em;
+}
+
+
+.btn-editar-cambios ,#asignar-ticket-ingenierobtn{
+    font-size: .7em;
+    background: #0c56d0;
+    color: white;
+    font-weight: bold;
+    box-shadow: none;
+    padding: .6em 2em .6em 2em;
+    border: .09rem solid #0c56d0;
+    box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
+    margin-left: 1em;
+    float:right;
+    margin-top:1em;
+    margin-bottom: 1em;
+}
+.cerrar-cancelar-btn {
+    font-size: .7em;
+    background: white;
+    color: #0c56d0;
+    font-weight: bold;
+    box-shadow: none;
+    padding: .6em 2em .6em 2em;
+    border: .09rem solid #0c56d0;
+    box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
+    float:right;
+    margin-top:1em;
+}
+#tableTicketSoporte thead tr{
+    text-align:center;
+}
+
+#ingenierosTable_wrapper .col-12,#ingenierosTable_wrapper .col-sm-12{
+    padding: 0 !important;
+    padding-left: .5em !important;
+}
+

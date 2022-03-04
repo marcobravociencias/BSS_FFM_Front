@@ -1246,24 +1246,12 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
         let numerosOnly = /^[0-9]*$/i;
         $scope.resultReporteDiario = {};
 
-        let statuscopy = [];
-        if($scope.filtrosGeneral.estatusdisponibles){
-            angular.forEach($scope.filtrosGeneral.estatusdisponibles,(e,i)=>{
-                statuscopy.push(e.id); 
-            })
-        }
-        
-        let intervencioncopy= [];
-        if($scope.filtrosGeneral.tipoOrdenes){
-            angular.forEach($scope.filtrosGeneral.tipoOrdenes,(e,i)=>{
-                intervencioncopy.push(e.id); 
-            })
-        }
+        let statuscopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.estatusdisponibles, $scope.nfiltroestatuspendiente);
+
+        let intervencioncopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.tipoOrdenes, $scope.nfiltrointervenciones);
         
         let paramsTemp = {};
         
-        
-
         if(!statuscopy.length){
             mensaje += '<li>Introducir Estatus</li>';
             isValid = false;
@@ -1390,19 +1378,9 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
                                                .filter(e=>e.original.nivel== nivelBusquedaArbol)
                                                .map(e=>parseInt(e.id))
 
-        let statuscopy = [];
-        if($scope.filtrosGeneral.estatusdisponibles){
-            angular.forEach($scope.filtrosGeneral.estatusdisponibles,(e,i)=>{
-                statuscopy.push(e.id); 
-            })
-        }
+        let statuscopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.estatusdisponibles, $scope.nfiltroestatuspendiente);
+        let intervencioncopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.tipoOrdenes, $scope.nfiltrointervenciones);
         
-        let intervencioncopy= [];
-        if($scope.filtrosGeneral.tipoOrdenes){
-            angular.forEach($scope.filtrosGeneral.tipoOrdenes,(e,i)=>{
-                intervencioncopy.push(e.id); 
-            })
-        }
         console.log($scope.resultReporteDiario)
         console.log($scope.getFechaFormato($('#filtro_fecha_inicio_reporte').val()))
         let paramsR = {

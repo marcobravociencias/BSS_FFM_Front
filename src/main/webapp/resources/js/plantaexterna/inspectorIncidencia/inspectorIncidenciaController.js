@@ -24,6 +24,8 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
     $scope.banderaErrorEstatus = false;
     $scope.banderaErrorFallas = false;
     $scope.nfiltrogeografia = "";
+    $scope.incidenciaDeclinar = {};
+    $scope.nombreFileDeclinaInc = '';
 
     $('.drop-down-filters').on("click.bs.dropdown", function (e) {
         e.stopPropagation();
@@ -358,7 +360,6 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                 '	</div>' +
                 '</div>';
         });
-        console.log($scope.incidenciaDetalle);
         if ($scope.incidenciaDetalle.idEstatus == '5' || $scope.incidenciaDetalle.idEstatus == '2') {
             if ($scope.fallasIncidenciaDetalle.length > 5) {
                 $('#tabsContainer').removeClass('row');
@@ -687,7 +688,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
     }
 
     $scope.declinarIncidencia = function (motivoRechazo) {
-        $scope.motivoDeclinar = motivoRechazo;
+        $scope.incidenciaDeclinar.motivoDeclinar = motivoRechazo;
         let mensajeError = "";
         let isValid = true;
 
@@ -718,28 +719,23 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                 cancelButtonText: "Cancelar",
                 confirmButtonText: 'Confirmar',
             }).then(function () {
-                var myFile = document.querySelector('#file').files[0];
-                var reader = new FileReader();
-                reader.readAsDataURL(myFile);
-                reader.onload = function () {
-                    swal({ text: 'Espera un momento...', allowOutsideClick: false });
-                    swal.showLoading();
-                    let params = {
-                        // idIncidencia: $scope.incidencia.idIncidencia,
-                        // status: '2',
-                        // idDespacho: '',
-                        // idComentario: $scope.motivoDeclinar.comentario,
-                        // nombreArchivo: document.querySelector('#file').files[0].name,
-                        // urlArchivo: reader.result,
-                        // idMotivo: $scope.motivoDeclinar.motivo,
-                        // propietario: ''
-                    }
-                    inspectorIncidenciaService.cambiarStatusIncidenciaInspectorPE(params).then(function success(respnose) {
-                        $('#modalDetalleIncidencia').modal('toggle');
-                        swal.close();
-                        mostrarMensajeExitoAlert("Incidencia declinada con exito");
-                    })
-                };
+                swal({ text: 'Espera un momento...', allowOutsideClick: false });
+                swal.showLoading();
+                let params = {
+                    // idIncidencia: $scope.incidencia.idIncidencia,
+                    // status: '2',
+                    // idDespacho: '',
+                    // idComentario: $scope.motivoDeclinar.comentario,
+                    // nombreArchivo: document.querySelector('#file').files[0].name,
+                    // urlArchivo: reader.result,
+                    // idMotivo: $scope.motivoDeclinar.motivo,
+                    // propietario: ''
+                }
+                inspectorIncidenciaService.cambiarStatusIncidenciaInspectorPE(params).then(function success(respnose) {
+                    $('#modalDetalleIncidencia').modal('toggle');
+                    swal.close();
+                    mostrarMensajeExitoAlert("Incidencia declinada con exito");
+                })
             });
         } else {
             mostrarMensajeWarningValidacion(mensajeError);
@@ -800,31 +796,56 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
             if (comentarioGenerar == '') {
                 mostrarMensajeWarningValidacion('<li>Para generar la incidencia como OT debe de ingresar un comentario</li>');
             } else {
+                console.log($scope.incidenciaDetalle);
                 swal({ text: 'Espera un momento...', allowOutsideClick: false });
                 swal.showLoading();
                 let params = {
-                    // idIncidencias: $scope.incidencia.idIncidencia,
-                    // idComentario: comentarioGenerar,
-                    // status: '4',
-                    // IdDespacho: '',
-                    // Propietario: '',
+                    "idIncidencia": $scope.incidenciaDetalle.idIncidencia,
+                    "idGeografia": $scope.incidenciaDetalle.idGeografia,
+                    "idOrigenSistema": 1,
+                    "idTipoFalla": $scope.incidenciaDetalle.idTipoIncidencia,
+                    "idSubtipoFalla": "",
+                    "latitud": $scope.incidenciaDetalle.latitud,
+                    "longitud": $scope.incidenciaDetalle.longitud,
+                    "comentarios": comentarioGenerar,
+                    "informacionAdicional": [{}]
                 }
-                inspectorIncidenciaService.cambiarStatusIncidenciaInspectorPE(params).then(function success(response) {
+                inspectorIncidenciaService.generarOTIncidenciaInspectorPE(params).then(function success(response) {
                     console.log(response);
                     if (response.data) {
                         if (response.data.respuesta) {
                             if (response.data.result) {
                                 $('#modalDetalleIncidencia').modal('toggle');
                                 swal.close();
-                                mostrarMensajeExitoAlert("Incidencia recuperada con &eacute;xito");
+                                mostrarMensajeExitoAlert("OT generada con &eacute;xito");
                             }
                         }
+                    } else {
+                        mostrarMensajeWarningValidacion("");
                     }
                 });
             }
         }).catch(err => {
             mostrarMensajeWarningValidacion('Operaci&oacute;n cancelada');
         });
+    }
+
+    $scope.convertFile = function (e, type) {
+        // console.log(e);
+        if (e.target.files[0]) {
+            let reader = new FileReader();
+            reader.readAsDataURL(e.target.files[0]);
+            reader.onload = function () {
+                let fileBase64 = reader.result.toString().split(",")[1];
+                // console.log(fileBase64);
+                $scope.nombreFileDeclinaInc = e.target.files[0].name;
+                $scope.incidenciaDeclinar.file = fileBase64;
+                // console.log($scope.archivosA.file)
+            };
+            reader.onerror = function (error) {
+                console.log('Error: ', error);
+            };
+        }
     }
 
     $scope.getFechaFormato = function (fecha) {
@@ -1047,20 +1068,20 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
             column.visible(!column.visible());
         });
         var $form = $('.form_drag_drop');
-            var droppedFiles = false;
-            $form.on('drag dragstart dragend dragover dragenter dragleave drop', function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-            }).on('dragover dragenter', function () {
-                $form.addClass('is-dragover');
-            }).on('dragleave dragend drop', function () {
-                $form.removeClass('is-dragover');
-            }).on('drop', function (e) {
-                droppedFiles = e.originalEvent.dataTransfer.files;
-                $form.find('input[type="file"]').prop('files', droppedFiles);
-                $(".text_select").text(droppedFiles[0].name);
-                $(".box__dragndrop").empty()
-            });
+        var droppedFiles = false;
+        $form.on('drag dragstart dragend dragover dragenter dragleave drop', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }).on('dragover dragenter', function () {
+            $form.addClass('is-dragover');
+        }).on('dragleave dragend drop', function () {
+            $form.removeClass('is-dragover');
+        }).on('drop', function (e) {
+            droppedFiles = e.originalEvent.dataTransfer.files;
+            $form.find('input[type="file"]').prop('files', droppedFiles);
+            $(".text_select").text(droppedFiles[0].name);
+            $(".box__dragndrop").empty()
+        });
     });
 
     // NUEVO
