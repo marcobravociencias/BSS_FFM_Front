@@ -132,21 +132,15 @@ public class ImplSoporteCentralizadoService implements SoporteCentralizadoServic
 
 	@Override
 	public ServiceResponseResult consultaTicketsSoporte(String params) {
-		logger.info("ImplSoporteCentralizadoService.class [metodo = consultaTicketsSoporte() ] \n"+ gson.toJson(params));
+		logger.info("ImplSoporteCentralizadoService.class [metodo = consultaTicketsSoporte() ] \n"+params);
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();		
 		String tokenAcces = principalDetail.getAccess_token();
         logger.info("consultaTicketsSoporte ## " + tokenAcces);
         String urlRequest = principalDetail.getDireccionAmbiente().concat(constSoporteCentralizado.getConsultaTicketsSoporte());
-        logger.info("URL ##+" + urlRequest);
+        logger.info("URL ##+" + urlRequest);             
         
-        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-        Map<String, String> paramsRequest = new HashMap<>(); 
-        paramsRequest.put("fechaInicio", jsonObject.get("fechaInicio").getAsString());
-        paramsRequest.put("fechaFin", jsonObject.get("fechaFin").getAsString());
-        paramsRequest.put("tipoFecha", jsonObject.get("tipoFecha").getAsString());
-        
-        ServiceResponseResult response = restCaller.callGetBearerTokenRequest(
-        		paramsRequest, urlRequest,
+        ServiceResponseResult response = restCaller.callPostBearerTokenRequest(
+        		params, urlRequest,
                 ServiceResponseResult.class, tokenAcces);
         
         logger.info("response#### "+gson.toJson(response));

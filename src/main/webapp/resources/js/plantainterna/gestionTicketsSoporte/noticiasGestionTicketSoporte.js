@@ -11,7 +11,7 @@ app.noticiasGestionTicketSoporte = function ($scope, gestionTicketSoporteService
     
     $scope.consultarComentariosTicketSoporte = function(){
         let params = {
-            objectId: "a153C0000008EDdQAM", 
+            objectId: "a153C000000870NQAQ",
             objectType: "OrdenServicio"
         }
         if (!swal.isVisible()) {
@@ -28,12 +28,15 @@ app.noticiasGestionTicketSoporte = function ($scope, gestionTicketSoporteService
                     swal.close();
                     mostrarMensajeWarningValidacion('No se encontr&oacute; informaci&oacute;n.')
                 }
+                $scope.isConsultaComentarios = true
+
                 // setTimeout(function () {
                 //     $(".container-noticia-elemento").animate({ scrollTop: 1000000 }, 500);
                 // }, 400)
                 // $(".container-noticia-elemento").show(500);
             } else {
                 swal.close();
+                $scope.isConsultaComentarios = true
                 mostrarMensajeWarningValidacion(response.data.resultDescripcion)
             }
         }).catch((err) => handleError(err));

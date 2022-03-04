@@ -168,7 +168,7 @@
             <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Cl&uacute;ster</span></div>
             <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="tecnicoAsignado.cluster || 'Sin dato'">222119</span> </div>
         </div>
-        <div class="row">
+        <div class="row content-botones-creacion">
             <div style=" margin: 1em 0 0 0;">
                 <button type="button" class="btn btn-sm  btn-primary" style="background-color: #A39F9F;" ng-click="limpiarFormularioTicket()">LIMPIAR</button>
                 <input type="button" class="btn btn-sm   btn-primary" ng-click="registrarTicketSoporte(ticket)" value="GUARDAR">

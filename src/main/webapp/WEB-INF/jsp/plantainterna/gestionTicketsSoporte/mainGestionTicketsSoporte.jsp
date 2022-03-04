@@ -31,43 +31,47 @@
 
 <body id="idBody" class="body" ng-controller="ticketsSoporteController" style="display: none;">
     <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
-    <div class="container container-title-header" style="padding: 0 !important;"> 
+    <!--div class="container container-title-header" style="padding: 0 !important;"> 
         <div class="header-modulo"> 
             <h5 class="title-modulo">Gesti&oacute;n de Tickets</h5> 
             <h1 class="h6 subtitle-modulo">En este m&oacute;dulo podr&aacute;s realizar la gesti&oacute;n de Tickets 
                 de Soporte Centralizado</h1> 
         </div> 
-    </div> 
+    </div--> 
+
     <div class="container" id="container_gestion_tickets">
-        <div class="row">
+        <div ng-show="contentprincipal" class="row row-content-principal">
             <div class="col-md-12">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" id="opcion-creatickets-tab" data-toggle="tab" href="#opcion-creatickets" role="tab"
+                        <a class="nav-link " id="opcion-creatickets-tab" data-toggle="tab" href="#opcion-creatickets" role="tab"
                             aria-controls="opcion-creatickets" aria-selected="true" >Creaci&oacute;n de tickets</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="opcion-consultatickets-tab" data-toggle="tab" href="#opcion-consultatickets" role="tab"
-                            aria-controls="opcion-consultatickets" aria-selected="false">Consutar tickets</a>
+                        <a class="nav-link active" id="opcion-consultatickets-tab" data-toggle="tab" href="#opcion-consultatickets" role="tab"
+                            aria-controls="opcion-consultatickets" aria-selected="false">Consultar tickets</a>
                     </li>
                 </ul>
                 <div class="tab-content" id="v-pills-tabContent">
-                    <div class="tab-pane fade show active" id="opcion-creatickets" role="tabpanel" aria-labelledby="opcion-creatickets-tab">
+                    <div class="tab-pane fade " id="opcion-creatickets" role="tabpanel" aria-labelledby="opcion-creatickets-tab">
                         <jsp:include page="./content/registrarTicket.jsp"></jsp:include>
                     </div>
-                    <div class="tab-pane fade" id="opcion-consultatickets" role="tabpanel" aria-labelledby="opcion-consultatickets-tab">
+                    <div class="tab-pane fade show active" id="opcion-consultatickets" role="tabpanel" aria-labelledby="opcion-consultatickets-tab">
                         <jsp:include page="./content/consultaTickets.jsp"></jsp:include>
                     </div>
                 </div>
             </div>
         </div>  
+        <div ng-show="contentdetalleticket" class="row row-content-detalle">
+            <div class="col-md-12 content-detalle-ticket">
+                <jsp:include page="./content/opcionesTicket.jsp"></jsp:include>
+            </div>
+        </div>
     </div>
     <jsp:include page="./modals/modalGeografiaConsulta.jsp"></jsp:include>
     <jsp:include page="./modals/modalBusquedaTecnico.jsp"></jsp:include>
-    <jsp:include page="./modals/modalDetalle.jsp"></jsp:include>
+
     <jsp:include page="./modals/modalBusquedaCuenta.jsp"></jsp:include>
-    <jsp:include page="./modals/modalAsignarTicket.jsp"></jsp:include>
-    <jsp:include page="./content/noticiasGestionTicketsSoporte.jsp"></jsp:include>
 </body>
 <!-- Scripts libraries -->
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=${googlkeyattrvar['gkeactok']}&libraries=geometry,places"></script>
