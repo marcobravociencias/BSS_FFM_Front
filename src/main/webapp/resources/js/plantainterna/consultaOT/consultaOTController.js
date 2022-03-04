@@ -89,14 +89,17 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		$scope.elementosRegistro = 0;
 
 		//nivel estatus
+		/*
 		let tempNivelEstatus;
 		if($scope.nivelEstatusPendientes){
 			tempNivelEstatus=$scope.nivelEstatusPendientes
 		}else{
 			tempNivelEstatus=$scope.obtenerUltimoNivelEstatus()
 		}
-
+		*/
 		let estatusOrdenes = []
+		estatusOrdenes = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.estatusdisponibles, $scope.nivelEstatusPendientes);
+		/*
 		angular.forEach($scope.filtrosGeneral.estatusdisponibles , (e, i) => {
 			e.children.map((k) => { 
 				if( k.checkedOpcion && tempNivelEstatus== k.nivel)
@@ -112,16 +115,21 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			if( e.checkedOpcion && tempNivelEstatus== e.nivel)
 				estatusOrdenes.push(e.id)				
 		})
+		*/
 
 
 		//nivel intervencion
+		/*
 		let tempNivelInterven;
 		if($scope.nivelIntervenciones){
 			tempNivelInterven=$scope.nivelIntervenciones
 		}else{
 			tempNivelInterven=$scope.obtenerUltimoNivelIntervencion()
 		}
+		*/
 		let subIntTemp = []
+		subIntTemp = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.tipoOrdenes, $scope.nivelIntervenciones);
+		/*
 		angular.forEach($scope.filtrosGeneral.tipoOrdenes, (e, i) => {
 			e.children.map((k) => { 
 				if( k.checkedOpcion && tempNivelInterven== k.nivel)
@@ -137,6 +145,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			if( e.checkedOpcion && tempNivelInterven== e.nivel)
 				subIntTemp.push(e.id)				
 		})
+		*/
 
 		//nivel geografia
 		let ultimonivel;
@@ -356,11 +365,11 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			if (results[0].data !== undefined) {
 				if (results[0].data.respuesta) {
 					if (results[0].data.result) {
-						$scope.filtrosGeneral.tipoOrdenes = $scope.realizarConversionAnidado(results[0].data.result)
-						
-						if(!$scope.nivelIntervenciones)
-							$scope.nivelIntervenciones=$scope.obtenerUltimoNivelIntervencion()
-
+						//$scope.filtrosGeneral.tipoOrdenes = $scope.realizarConversionAnidado(results[0].data.result)
+						$scope.respaldoTipoOrdenArray = [];
+                        $scope.respaldoTipoOrdenArray = angular.copy(results[0].data.result);
+						$scope.nivelIntervenciones = $scope.nivelIntervenciones ? $scope.nivelIntervenciones : $scope.obtenerUltimoNivelFiltros($scope.respaldoTipoOrdenArray);
+						$scope.filtrosGeneral.tipoOrdenes = $scope.conversionAnidadaRecursiva($scope.respaldoTipoOrdenArray, 1, $scope.nivelIntervenciones);
 					} else {
 						toastr.warning('No se encontraron  tipo ordenes');
 						$scope.banderaErrorIntervencion = true;
@@ -376,10 +385,11 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			if (results[2].data !== undefined) {
 				if (results[2].data.respuesta) {
 					if (results[2].data.result) {
-						$scope.filtrosGeneral.estatusdisponibles = $scope.realizarConversionAnidado(results[2].data.result)
-						
-						if(!$scope.nivelEstatusPendientes) 
-							$scope.nivelEstatusPendientes=$scope.obtenerUltimoNivelEstatus()
+						//$scope.filtrosGeneral.estatusdisponibles = $scope.realizarConversionAnidado(results[2].data.result)
+						$scope.respaldoStatusArray = [];
+                        $scope.respaldoStatusArray = angular.copy(results[2].data.result);
+                        $scope.nivelEstatusPendientes = $scope.nivelEstatusPendientes ? $scope.nivelEstatusPendientes : $scope.obtenerUltimoNivelFiltros($scope.respaldoStatusArray);
+                        $scope.filtrosGeneral.estatusdisponibles=$scope.conversionAnidadaRecursiva($scope.respaldoStatusArray, 1, $scope.nivelEstatusPendientes);
 					} else {
 						toastr.info('No se encontraron catalogo de estatus');
 						$scope.banderaErrorEstatus = true;
@@ -457,6 +467,36 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 
 		}).catch(err => handleError(err));
 	}
+
+	$scope.conversionAnidadaRecursiva = function(array, nivelInit, maxNivel) {
+        let arrayReturn = [];
+        angular.forEach(array.filter( e=> e.nivel === nivelInit),function(elem,index){
+            let elemento = angular.copy(elem);
+            elemento.checkedOpcion=true;
+            if (nivelInit < maxNivel) {
+                elemento.children = $scope.conversionAnidadaRecursiva(array, nivelInit+1, maxNivel).filter( e2=> e2.idPadre === elemento.id);
+                elemento.children=(elemento.children !==undefined && elemento.children.length>0) ? elemento.children:[];
+            }
+            arrayReturn.push(elemento)
+        });
+        return arrayReturn;
+    }
+
+    $scope.obtenerUltimoNivelFiltros = function(array) {
+        return Math.max.apply(Math, array.map(function(o) { return o.nivel; }));
+    }
+
+    $scope.obtenerElementosSeleccionadosFiltro = function(array, nivel) {
+        let arrayReturn = [];
+        angular.forEach(array,function(elemento,index){
+            if (elemento.nivel == nivel && elemento.checkedOpcion) {
+                arrayReturn.push(elemento.id);
+            } else {
+                arrayReturn = arrayReturn.concat($scope.obtenerElementosSeleccionadosFiltro(elemento.children, nivel));
+            }
+        });
+        return arrayReturn;
+    }
 
 	$scope.realizarConversionAnidado = function (array) {
 		let arrayCopy = []
@@ -1636,11 +1676,54 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		}
 	}
 
+	$scope.seleccionarTodosRecursivo = function(array) {
+        array.map(function(e){
+            e.checkedOpcion = true;
+            if (e.children !== undefined && e.children.length > 0) {
+                $scope.seleccionarTodosRecursivo(e.children);
+            }
+        });
+    }
+
+	$scope.deseleccionarTodosRecursivo = function(array) {
+        array.map(function(e){
+            e.checkedOpcion = false;
+            if (e.children !== undefined && e.children.length > 0) {
+                $scope.deseleccionarTodosRecursivo(e.children);
+            }
+        });
+    }
+
+	$scope.setCheckFiltroGenericV2 = function(filtro, principalArray) {
+        if (filtro.children !== undefined && filtro.children.length > 0) {
+            if (filtro.checkedOpcion) {
+                $scope.deseleccionarTodosRecursivo(filtro.children);
+            } else {
+                $scope.seleccionarTodosRecursivo(filtro.children);
+            }
+        }
+        filtro.checkedOpcion = !filtro.checkedOpcion;
+        $scope.checkPadre(filtro.idPadre, principalArray, principalArray);
+    }
+
+    $scope.checkPadre = function(idPadre, array, principalArray) {
+        array.map(function(e){
+            if (e.id === idPadre) {
+                e.checkedOpcion = e.children.length === e.children.filter(function(e){return e.checkedOpcion}).length;
+                $scope.checkPadre(e.idPadre, principalArray, principalArray);
+            } else {
+                if (e.children !== undefined && e.children.length > 0) {
+                    $scope.checkPadre(idPadre, e.children, principalArray);
+                }
+            }
+        });
+    }
+
 	$scope.descargarReporteConsultaOt = function () {
 		let isValido = true;
 		let errorMensaje = '';
 		let isValFecha = true;
-
+		/*
 		let tempNivelEstatus;
 		if($scope.nivelEstatusPendientes){
 			tempNivelEstatus=$scope.nivelEstatusPendientes
@@ -1664,9 +1747,13 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			if( e.checkedOpcion && tempNivelEstatus== e.nivel)
 				estatusOrdenes.push(e.id)				
 		})
+		*/
+		let estatusOrdenes = []
+		estatusOrdenes = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.estatusdisponibles, $scope.nivelEstatusPendientes);
 
 
 		//nivel intervencion
+		/*
 		let tempNivelInterven;
 		if($scope.nivelIntervenciones){
 			tempNivelInterven=$scope.nivelIntervenciones
@@ -1689,6 +1776,9 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			if( e.checkedOpcion && tempNivelInterven== e.nivel)
 				subIntTemp.push(e.id)				
 		})
+		*/
+		let subIntTemp = []
+		subIntTemp = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.tipoOrdenes, $scope.nivelIntervenciones);
 
 		//nivel geografia
 		let ultimonivel;
