@@ -72,23 +72,24 @@ app.noticiasGestionTicketSoporte = function ($scope, gestionTicketSoporteService
     $scope.resetFile = function (noticia) {
         $(".text_select_archivo_sub").text("");
         $("#fileSubComentarioTicket-" + noticia).val("");
-        document.getElementById('textAdjuntar' + noticia).innerHTML = ''
+        document.getElementById('spnNombreAdSubComentario-' + noticia).innerHTML = ''
         $scope.showEliminarSubComTicket = false;
     }
 
     cambiar = function (evento) {
+        let noticia = evento.id.split('-')[1]
         if ($('#' + evento.id).get(0).files[0] === undefined) {
-            $(".text_select_archivo_sub").text("");
+            document.getElementById('spnNombreAdSubComentario-' + noticia).innerHTML = ''
             $scope.showEliminarSubComTicket = false;
         } else {
-            $(".text_select_archivo_sub").text($('#' + evento.id).get(0).files[0].name);
+            document.getElementById('spnNombreAdSubComentario-' + noticia).innerHTML = $('#' + evento.id).get(0).files[0].name
             $scope.showEliminarSubComTicket = true;
         }
         $scope.$apply();
     }
 
     $scope.resetFileGeneral = function(){
-        $(".text_select_archivo").text("");
+        document.getElementById('spnNombreArchivo').innerHTML = ''
         $("#fileComentariosTicket").val("");
         $scope.showEliminarFileTicket = false;
     }
@@ -102,7 +103,7 @@ app.noticiasGestionTicketSoporte = function ($scope, gestionTicketSoporteService
             return false;
         }
         params = {
-            objectId: 'a153C0000008EDdQAM',
+            objectId: 'a153C000000870NQAQ',
             text: $scope.mensajeGeneral
         }
         if (document.querySelector('#fileComentariosTicket').files[0] !== undefined) {
@@ -117,7 +118,7 @@ app.noticiasGestionTicketSoporte = function ($scope, gestionTicketSoporteService
             reader.onload = function () {
                 //params.append("params.document", reader.result.split(",")[1]);
                 params = {
-                    objectId: 'a153C0000008EDdQAM',
+                    objectId: 'a153C000000870NQAQ',
                     text: $scope.mensajeGeneral,
                     documentName: document.querySelector('#fileComentariosTicket').files[0].name.split('.')[0],
                     documentExtension: document.querySelector('#fileComentariosTicket').files[0].name.split('.')[1],
@@ -336,10 +337,10 @@ app.noticiasGestionTicketSoporte = function ($scope, gestionTicketSoporteService
 
     $scope.cambioGeneral = function(){
         if ($('#fileComentariosTicket').get(0).files[0] === undefined) {
-            $(".text_select_archivo").text("");
+            document.getElementById('spnNombreArchivo').innerHTML = ''
             $scope.showEliminarFileTicket = false
         } else {
-            $(".text_select_archivo").text($('#fileComentariosTicket').get(0).files[0].name);
+            document.getElementById('spnNombreArchivo').innerHTML = $('#fileComentariosTicket').get(0).files[0].name
             $scope.showEliminarFileTicket = true
         }
     }
