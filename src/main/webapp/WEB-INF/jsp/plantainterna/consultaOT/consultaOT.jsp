@@ -66,51 +66,24 @@
                                 class="input-filtro-consultaOT form-control form-control-sm" />
                             <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-estatus-substatus">
                                 <li style="text-align: center;">
-                                    <button ng-click="seleccionTodosEstatus(filtrosGeneral.estatusdisponibles,true)"
+                                    <button ng-click="seleccionarTodosRecursivo(filtrosGeneral.estatusdisponibles)"
                                         id="todo_filtro" type="button"
                                         class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
-                                    <button ng-click="seleccionTodosEstatus(filtrosGeneral.estatusdisponibles,false)"
+                                    <button ng-click="deseleccionarTodosRecursivo(filtrosGeneral.estatusdisponibles)"
                                         id="ninguno_filtro" type="button"
                                         class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
                                 </li>
                                 <li class="elemento_menu dropdown-divider"></li>
-                                <li ng-repeat="filtroE in filtrosGeneral.estatusdisponibles "
+                                <li ng-repeat="filtro in filtrosGeneral.estatusdisponibles "
                                     class="element-menu-filter" class="element-menu-filter">
                                     <label class="dropdown-item form-check-inputfiltro">
-                                        <input ng-click=checkFiltroEstatus(filtroE) id="filtrotext-{{filtroE.id}}"
-                                            class="form-check-input" type="checkbox" ng-model="filtroE.checkedOpcion"
-                                            ng-checked="filtroE.checkedOpcion" />
-                                        <span for="filtrotext-{{filtroE.id}}" class="dropdown-item item-text-filtro"
-                                            href="#" ng-bind="filtroE.nombre"></span>
+                                        <input ng-click=setCheckFiltroGenericV2(filtro,filtrosGeneral.estatusdisponibles) id="filtrotext-{{filtro.id}}"
+                                            class="form-check-input" type="checkbox" ng-model="filtro.checkedOpcion"
+                                            ng-checked="filtro.checkedOpcion" />
+                                        <span for="filtrotext-{{filtro.id}}" class="dropdown-item item-text-filtro"
+                                            href="#" ng-bind="filtro.nombre"></span>
                                     </label>
-                                    <ul class="dropdown-menu">
-                                        <li ng-repeat="subfiltroE in filtroE.children" class="element-menu-filter">
-                                            <label class="dropdown-item form-check-inputfiltro">
-                                                <input ng-click=checkFiltroEstatus(subfiltroE)
-                                                    id="subfiltrotext-{{subfiltroE.id}}" class="form-check-input"
-                                                    type="checkbox" ng-model="subfiltroE.checkedOpcion"
-                                                    ng-checked="subfiltroE.checkedOpcion" />
-                                                <span for="subfiltrotext-{{subfiltroE.id}}"
-                                                    class="dropdown-item item-text-filtro" href="#"
-                                                    ng-bind="subfiltroE.nombre"></span>
-                                            </label>
-                                            <ul class="dropdown-menu">
-                                                <li ng-repeat="subfiltroJ in subfiltroE.children"
-                                                    class="element-menu-filter">
-                                                    <label class="dropdown-item form-check-inputfiltro">
-                                                        <input ng-click=checkFiltroEstatus(subfiltroJ)
-                                                            id="subfiltrotext-{{subfiltroJ.id}}"
-                                                            class="form-check-input" type="checkbox"
-                                                            ng-model="subfiltroJ.checkedOpcion"
-                                                            ng-checked="subfiltroJ.checkedOpcion" />
-                                                        <span for="subfiltrotext-{{subfiltroJ.id}}"
-                                                            class="dropdown-item item-text-filtro" href="#"
-                                                            ng-bind="subfiltroJ.nombre"></span>
-                                                    </label>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
+                                    <ul ng-if="filtro.children !== undefined &&  filtro.children.length > 0" ng-include="'filtroEstatus.html'" class="dropdown-menu"></ul>
                                 </li>
                             </ul>
                         </div>
@@ -126,10 +99,10 @@
                                 class="input-filtro-consultaOT form-control form-control-sm" />
                             <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-intervencion">
                                 <li style="text-align: center;">
-                                    <button ng-click="seleccionarTodos(filtrosGeneral.tipoOrdenes)" id="todo_filtro"
+                                    <button ng-click="seleccionarTodosRecursivo(filtrosGeneral.tipoOrdenes)" id="todo_filtro"
                                         type="button"
                                         class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
-                                    <button ng-click="deseleccionarTodos(filtrosGeneral.tipoOrdenes)"
+                                    <button ng-click="deseleccionarTodosRecursivo(filtrosGeneral.tipoOrdenes)"
                                         id="ninguno_filtro" type="button"
                                         class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
                                 </li>
@@ -137,25 +110,13 @@
                                 <li ng-repeat="filtro in filtrosGeneral.tipoOrdenes " class="element-menu-filter"
                                     class="element-menu-filter">
                                     <label class="dropdown-item form-check-inputfiltro">
-                                        <input ng-click=setCheckFiltroGeneric(filtro) id="filtrotext-{{filtro.id}}"
+                                        <input ng-click=setCheckFiltroGenericV2(filtro,filtrosGeneral.tipoOrdenes) id="filtrotext-{{filtro.id}}"
                                             class="form-check-input" type="checkbox" ng-model="filtro.checkedOpcion"
                                             ng-checked="filtro.checkedOpcion" />
                                         <span for="filtrotext-{{filtro.id}}" class="dropdown-item item-text-filtro"
                                             href="#" ng-bind="filtro.nombre"></span>
                                     </label>
-                                    <ul class="dropdown-menu">
-                                        <li ng-repeat="subfiltro in filtro.children" class="element-menu-filter">
-                                            <label class="dropdown-item form-check-inputfiltro">
-                                                <input ng-click=setCheckSubFiltroGeneric(subfiltro,filtro)
-                                                    id="subfiltrotext-{{subfiltro.id}}" class="form-check-input"
-                                                    type="checkbox" ng-model="subfiltro.checkedOpcion"
-                                                    ng-checked="subfiltro.checkedOpcion" />
-                                                <span for="subfiltrotext-{{subfiltro.id}}"
-                                                    class="dropdown-item item-text-filtro" href="#"
-                                                    ng-bind="subfiltro.nombre"></span>
-                                            </label>
-                                        </li>
-                                    </ul>
+                                    <ul ng-if="filtro.children !== undefined &&  filtro.children.length > 0" ng-include="'filtroIntervencion.html'" class="dropdown-menu"></ul>
                                 </li>
                             </ul>
                         </div>
@@ -234,6 +195,7 @@
         <jsp:include page="modals/modalMaterialOt.jsp"></jsp:include>
         <jsp:include page="modals/modalDetalleOt.jsp"></jsp:include>
     </body>
+    <jsp:include page="../../generic/filtros/filtros.jsp"></jsp:include>
     <!-- Scripts libraries -->
     <script src="${pageContext.request.contextPath}/resources/libraries/angularjs/js/angular.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/moment.min.js"></script>
