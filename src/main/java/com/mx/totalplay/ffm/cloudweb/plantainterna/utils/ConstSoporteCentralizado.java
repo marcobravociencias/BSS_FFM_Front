@@ -44,4 +44,7 @@ public class ConstSoporteCentralizado {
 
     @Value("${guardarTicketDetalle}")
     private String guardarTicketDetalle;
+    
+    @Value("${consultarDetalleTicketGestion}")
+    private String consultarDetalleTicketGestion;
 }

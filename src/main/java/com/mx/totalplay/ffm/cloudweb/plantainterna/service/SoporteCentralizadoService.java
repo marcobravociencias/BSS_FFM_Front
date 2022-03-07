@@ -29,4 +29,6 @@ public interface SoporteCentralizadoService {
     ServiceResponseResult consultarAccionesDinamicaDetalle();
 
     ServiceResponseResult guardarTicketDetalle(String params);
+    
+    public ServiceResponseResult consultarDetalleTicketGestion(String params) ;
 }

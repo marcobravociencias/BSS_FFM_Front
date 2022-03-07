@@ -181,4 +181,17 @@ app.service("gestionTicketSoporteService", function ($http) {
             }
 		});
 	};
+    this.consultarDetalleTicketGestion=function(params){
+		return $http({
+			method: "post",
+			url: "req/consultarDetalleTicketGestion",
+			data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
+
+
+    
 });

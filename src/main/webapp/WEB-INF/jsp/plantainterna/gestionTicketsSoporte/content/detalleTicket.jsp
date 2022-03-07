@@ -8,7 +8,7 @@
                     <div class="container-text-title-detalle"><span class="text-tile-ticket">FALLA</span></div>
                     <div class="container-text-content-detalle">
                         <select class="form-control form-control-sm custom-select inputTicket" id="fallaTicketD" name="fallaTicketD" ng-change="loadCategoriaTicketSoporte('detalle')" ng-model="ticketSoporteDetalle.fallaTicketD">
-                            <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
+                            <option value="" disabled >NO HAY SELECCI&Oacute;N</option>
                             <option value="{{fallaTicketD.id}}" ng-repeat="fallaTicketD in listFallasTicketDetalle">
                                 {{fallaTicketD.descripcion}}
                             </option>
@@ -47,65 +47,68 @@
                         <input class="form-check-input" type="checkbox">
                     </div>
                 </div>
-                <div class="container-fluid ticket-content opciones-checkbox-dictamen" ng-repeat="item in accionesDinamicasDetalle">
+                <div class="container-fluid ticket-content opciones-checkbox-dictamen" ng-repeat="item in accionesDinamicasDetalle track by $index">
                     <div class="container-text-title-detalle titulo-acciones-dinamicas"><span class="text-tile-ticket">{{item.descripcion.toUpperCase()}}</span></div>
-                    <div class="container-text-content-detalle form-check form-switch">
-                        <input class="form-check-input" type="checkbox">
+                    <div class="container-text-content-detalle form-check form-switch">                        
+                        <input ng-if="$index != 1" class="form-check-input" ng-model="item"  type="checkbox">
+                        <input ng-if="$index == 1" ng-change="mostrarFormularioNuevoEquipo()" ng-model="item" class="form-check-input" type="checkbox">
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-6">
             <div class="content-principal">
+                <!--pre>{{editTicket|json}}</pre-->
                 <p class="title title-bloque-detalle">Datos principales - Soporte</p>
                 <div class="container-fluid vehiculo-content text-info-ot-text">
                     <div class="container-text-title-detalle"><span class="text-tile-vehiculo">OT</span></div>
-                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="tecnicoAsignado.id || 'Sin dato'">222119</span> </div>
+                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="editTicket.idOrden || 'Sin dato'">222119</span> </div>
                 </div>
                 <div class="container-fluid vehiculo-content">
                     <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Folio</span></div>
-                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="tecnicoAsignado.folioSistema || 'Sin dato'">222119</span> </div>
+                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="editTicket.idTicket || 'Sin dato'">222119</span> </div>
                 </div>
                 <div class="container-fluid vehiculo-content">
                     <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Num. empleado</span></div>
-                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="tecnicoAsignado.numEmpleado  || 'Sin dato'">222119</span> </div>
+                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="editTicket.numEmpleadoIng  || 'Sin dato'">222119</span> </div>
                 </div>
                 <div class="container-fluid vehiculo-content">
                     <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Num. usuario</span></div>
-                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="tecnicoAsignado.usuarioFFM  || 'Sin dato'">222119</span> </div>
+                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="editTicket.usuarioIng  || 'Sin dato'">222119</span> </div>
                 </div>
                 <div class="container-fluid vehiculo-content">
                     <div class="container-text-title-detalle"><span class="text-tile-vehiculo">T&eacute;cnico</span></div>
-                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="tecnicoAsignado.nombreTecnico  || 'Sin dato'">222119</span> </div>
+                    <div class="container-text-content-detalle"> <span class="text-content-vehiculo ng-binding" 
+                        ng-bind="editTicket.nombreEmpleadoIng+' '+editTicket.apellidoPaEmpleadoIng+' '+editTicket.apellidoMaEmpleadoIng   || 'Sin dato'">222119</span> </div>
                 </div>
               
                 <div class="container-fluid vehiculo-content">
                     <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Tipo orden</span></div>
-                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="tecnicoAsignado.tipoOrden || 'Sin dato'">222119</span> </div>
+                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="editTicket.tipoOrden || 'Sin dato'">222119</span> </div>
                 </div>
                 <div class="container-fluid vehiculo-content">
                     <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Tipo negocio</span></div>
-                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="tecnicoAsignado.unidadNegocio || 'Sin dato'">222119</span> </div>
+                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="editTicket.unidadNegocio || 'Sin dato'">222119</span> </div>
                 </div>
                 <div class="container-fluid vehiculo-content">
                     <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Regi&oacute;n</span></div>
-                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="tecnicoAsignado.region || 'Sin dato'">222119</span> </div>
+                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="editTicket.region || 'Sin dato'">222119</span> </div>
                 </div>
                 <div class="container-fluid vehiculo-content">
                     <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Ciudad</span></div>
-                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="tecnicoAsignado.ciudad || 'Sin dato'">222119</span> </div>
+                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="editTicket.ciudad || 'Sin dato'">222119</span> </div>
                 </div>
                 <div class="container-fluid vehiculo-content">
                     <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Distrito</span></div>
-                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="tecnicoAsignado.distrito || 'Sin dato'">222119</span> </div>
+                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="editTicket.distrito || 'Sin dato'">222119</span> </div>
                 </div>
                 <div class="container-fluid vehiculo-content">
                     <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Zona</span></div>
-                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="tecnicoAsignado.zona || 'Sin dato'">222119</span> </div>
+                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="editTicket.zona || 'Sin dato'">222119</span> </div>
                 </div>
                 <div class="container-fluid vehiculo-content">
                     <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Cl&uacute;ster</span></div>
-                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="tecnicoAsignado.cluster || 'Sin dato'">222119</span> </div>
+                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="editTicket.cluster || 'Sin dato'">222119</span> </div>
                 </div>
            
             </div>
@@ -114,7 +117,66 @@
     <hr>
     <div class="row">
         <div class="col-6">
+            <form ng-show="agregarNuevoEquipoContent">
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label class="label-nuevo-equipo" for="selectTipoEquipoAdd">Tipo</label>
+                        <select ng-class="{'error-captura-input': !tipoEquipoCambio  && isEvaluarNuevoEquipo}" ng-model="tipoEquipoCambio" class="input-filtro form-control form-control-sm " id="selectTipoEquipoAdd" >
+                            <option value="">Seleccione ...</option>
+                            <option value="stb">STB</option>
+                            <option value="ont">ONT</option>                
+                        </select>
+                      </div>
+                  <div class="form-group col-md-2">
+                    <label class="label-nuevo-equipo" for="noSerieAnteriorEquipo">No. Serie</label>
+                    <input ng-class="{'error-captura-input': !viejoEquipo.noSerie && isEvaluarNuevoEquipo}" ng-model="viejoEquipo.noSerie" type="text" class="form-control form-control-sm" id="noSerieAnteriorEquipo" placeholder="">
+                  </div>                  
+                  <div class="form-group col-md-2">
+                    <label class="label-nuevo-equipo" for="noMacViejoEquipo">MAC</label>
+                    <input ng-class="{'error-captura-input': !viejoEquipo.mac && isEvaluarNuevoEquipo}" ng-model="viejoEquipo.mac" type="text" class="form-control form-control-sm" id="noMacViejoEquipo" placeholder="">
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label class="label-nuevo-equipo" for="noSerieNuevoEquipo">No. Serie</label>
+                    <input ng-class="{'error-captura-input': !nuevoEquipo.noSerie && isEvaluarNuevoEquipo}" ng-model="nuevoEquipo.noSerie" type="text" class="form-control form-control-sm" id="noSerieNuevoEquipo" placeholder="">
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label class="label-nuevo-equipo" for="noMacNuevoEquipo">MAC</label>
+                    <input ng-class="{'error-captura-input': !nuevoEquipo.mac && isEvaluarNuevoEquipo}" ng-model="nuevoEquipo.mac" type="text" class="form-control form-control-sm" id="noMacNuevoEquipo" placeholder="">
+                  </div>
+                  <div class="form-group col-md-2">
+                    <button ng-click="agregarRegistroCambioEquipo()" id="agregarnuevoEquivo" type="button" class="btn btn-sm btn-primary btn-lg btn-floating">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                  </div>                 
+                </div>           
+            </form>
+            <table ng-show="agregarNuevoEquipoContent" id="table-cambio-equipo" class="table table-sm">
+                <thead>
+                  <tr>
+                    <th scope="col">Tipo </th>
+                    <th scope="col">No. serie</th>
+                    <th scope="col">MAC</th>
+                    <th scope="col">No serie</th>
+                    <th scope="col">MAC</th>
+                    <th scope="col"></th>
 
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="itemRegistro in listadoNuevoViejosEquipo track by $index">
+                    <td ng-bind="itemRegistro.tipoEquipoCambio" ></td>
+                    <td ng-bind="itemRegistro.viejo.noSerie" ></td>
+                    <td ng-bind="itemRegistro.viejo.mac" ></td>
+                    <td ng-bind="itemRegistro.nuevo.noSerie" ></td>
+                    <td ng-bind="itemRegistro.nuevo.mac" ></td>
+                    <td  >
+                        <button ng-click="eliminarRegistro($index)"  type="button" class="eliminar-registro-cambioequipo btn btn-sm btn-primary ">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
         </div>
         <div class="col-6">
             <div class="content-falla">
@@ -158,15 +220,16 @@
                         <textarea class="form-control" ng-model="ticketSoporteDetalle.comentarios"></textarea>
                     </div>
                 </div>
+                <button type="button" class="btn btn-primary btn-editar-cambios ripple-surface">
+                    <b >Guardar cambios </b>        
+                </button>
+                <button ng-click="cerrarDetalleTicket()" type="button" class="btn cerrar-cancelar-btn  btn-ligh" data-mdb-dismiss="modal">
+                    Cancelar
+                </button>
             </div>
         </div>
     </div>       
  
 
-    <button type="button" class="btn btn-primary btn-editar-cambios ripple-surface">
-        <b >Guardar cambios </b>        
-    </button>
-    <button ng-click="cerrarDetalleTicket()" type="button" class="btn cerrar-cancelar-btn  btn-ligh" data-mdb-dismiss="modal">
-        Cancelar
-    </button>
+
 </div>
