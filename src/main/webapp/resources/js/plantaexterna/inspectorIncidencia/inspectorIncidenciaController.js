@@ -5,7 +5,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
 
     $scope.filtrosInspector = {};
     $scope.incidencias = [];
-
+    $scope.listCatEstatus = [];
     $scope.latIncidencia = "";
     $scope.longIncidencia = "";
     $scope.detalleIncidencia = {};
@@ -26,6 +26,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
     $scope.nfiltrogeografia = "";
     $scope.incidenciaDeclinar = {};
     $scope.nombreFileDeclinaInc = '';
+    $scope.llaveEstatusGeneraOT = [];
 
     $('.drop-down-filters').on("click.bs.dropdown", function (e) {
         e.stopPropagation();
@@ -64,7 +65,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         });
     }
 
-    document.getElementById('cluster').addEventListener('click', function () {
+    document.getElementById('txtGeografiasConsulta').addEventListener('click', function () {
         $('#modalCluster').modal('show');
         setTimeout(function () {
             $('#buscadorGeografiaConsultaIncidencias').focus();
@@ -90,6 +91,69 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
             zoom: 15,
             disableDoubleClickZoom: true
         });
+    }
+
+
+    $scope.listaSeleccionSelectGral = function (lista) {
+        var texto = "";
+        angular.forEach(lista, function (list, index) {
+            if (list.checkedOpcion) {
+                if (texto !== "") {
+                    texto = (texto + ", " + list.descripcion);
+                } else {
+                    texto = (list.descripcion);
+                }
+            }
+        });
+        return texto;
+    }
+
+    $scope.listaSeleccionSelectFalla = function (lista) {
+        var texto = "";
+        angular.forEach(lista, function (list, index) {
+            if (list.children) {
+                angular.forEach(list.children, function (children, index) {
+                    if (children.checkedOpcion) {
+                        if (texto !== "") {
+                            texto = (texto + ", " + children.descripcion);
+                        } else {
+                            texto = (children.descripcion);
+                        }
+                    }
+                });
+            } else {
+                if (list.checkedOpcion) {
+                    if (texto !== "") {
+                        texto = (texto + ", " + list.descripcion);
+                    } else {
+                        texto = (list.descripcion);
+                    }
+                }
+            }
+        });
+        return texto;
+    }
+
+    $scope.estatusSeleccion = function () {
+        $('#txtEstatus').val($scope.listaSeleccionSelectGral($scope.listCatEstatus));
+        $("#txtEstatus").css("border-bottom", "2px solid #d9d9d9");
+    }
+
+    $scope.fallaSeleccion = function () {
+        $('#txtFalla').val($scope.listaSeleccionSelectFalla($scope.filtrosInspector.fallas));
+        $("#txtFalla").css("border-bottom", "2px solid #d9d9d9");
+    }
+
+    $scope.btnAceptarGeografiaConsulta = function () {
+        var geografias = $('#jstree-proton-3').jstree("get_selected", true);
+        let textoGeografias = [];
+        angular.forEach(geografias, (geografia, index) => {
+            textoGeografias.push(geografia.text);
+        });
+        $('#txtGeografiasConsulta').val(textoGeografias);
+        if (textoGeografias.length > 0) {
+            $("#txtGeografiasConsulta").css("border-bottom", "2px solid #d9d9d9");
+        }
     }
 
     $scope.realizarConversionAnidado = function (array) {
@@ -122,10 +186,12 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
     $scope.seleccionTodos = function (paramFiltroParent, banderaChecked) {
         paramFiltroParent.map(function (e) {
             e.checkedOpcion = banderaChecked;
-            e.children.map(function (j) {
-                j.checkedOpcion = banderaChecked;
-                return j;
-            })
+            if (e.children) {
+                e.children.map(function (j) {
+                    j.checkedOpcion = banderaChecked;
+                    return j;
+                })
+            }
         })
     }
 
@@ -134,11 +200,9 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         swal.showLoading();
         $q.all([
             inspectorIncidenciaService.consultarConfiguracionDespachoDespacho({ "moduloAccionesUsuario": "moduloInspectorIncidenciasPE" }),
-            inspectorIncidenciaService.consulCatalogoGeografia(),
-            genericService.consultarCatalogoEstatusDespachoPI(),
-            inspectorIncidenciaService.consultarFallasInspectorPE()
-            //inspectorIncidenciaService.systemColor(),
-            // inspectorIncidenciaService.systemColor(),
+            inspectorIncidenciaService.consultaCatalogoEstatusInspectorPE(),
+            inspectorIncidenciaService.consultarFallasInspectorPE(),
+            inspectorIncidenciaService.consulCatalogoGeografia()
         ]).then(function (results) {
             swal.close();
             console.log(results);
@@ -147,18 +211,62 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                 let llavesResult = results[0].data.result.MODULO_ACCIONES_USUARIO.llaves;
 
                 $scope.nfiltrogeografia = llavesResult.N_FILTRO_GEOGRAFIA;
-                $scope.nfiltroestatuspendiente = llavesResult.N_ESTATUS_PENDIENTES;
+                $scope.nfiltroestatusfalla = llavesResult.N_FILTRO_ESTATUS_FALLA;
                 $scope.nfiltrofallas = llavesResult.N_FILTRO_FALLA;
                 validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
                 validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
+                $scope.llaveEstatusGeneraOT = llavesResult.KEY_ESTATUS_GENERAR_OT ? llavesResult.KEY_ESTATUS_GENERAR_OT.split(",") : [];//[1]
             }
             if (results[1].data !== undefined) {
                 if (results[1].data.respuesta) {
                     if (results[1].data.result) {
-                        if (results[1].data.result.geografia) {
-                            $scope.listadogeografiacopy = results[0].data.result.geografia
-                            $scope.nfiltrogeografia = $scope.nfiltrogeografia ? $scope.nfiltrogeografia : $scope.obtenerNivelUltimoJerarquiaGeneric(results[1].data.result.geografia);
-                            geografia = results[1].data.result.geografia.filter(e => e.nivel <= parseInt($scope.nfiltrogeografia));
+                        $scope.listCatEstatus = angular.copy(results[1].data.result.estatusIncidente);
+                        $scope.listCatEstatus.map(function (e) { e.checkedOpcion = true; return e; })
+                        console.log($scope.listCatEstatus);
+                        swal.close();
+                    } else {
+                        mostrarMensajeWarningValidacion("<li>No se encontraron datos para el Estatus</i>");
+                        $scope.banderaErrorEstatus = true;
+                        swal.close();
+                    }
+                } else {
+                    mostrarMensajeWarningValidacion('<li>' + results[1].data.resultDescripcion + '</i>');
+                    $scope.banderaErrorEstatus = true;
+                    swal.close();
+                }
+            } else {
+                mostrarMensajeWarningValidacion("<li>Ha ocurrido un error en la consulta de cat&aacute;logo de Estatus</i>");
+                $scope.banderaErrorEstatus = true;
+                swal.close();
+            }
+            if (results[2].data !== undefined) {
+                if (results[2].data.respuesta) {
+                    if (results[2].data.result) {
+                        $scope.nfiltrofallas = $scope.nfiltrofallas ? $scope.nfiltrofallas : $scope.obtenerNivelUltimoJerarquiaGeneric(results[2].data.result.incidentes);
+                        $scope.filtrosInspector.fallas = $scope.realizarConversionAnidado(results[2].data.result.incidentes.filter(e => e.nivel <= parseInt($scope.nfiltrofallas)));
+                        swal.close();
+                    } else {
+                        mostrarMensajeWarningValidacion("<li>No se encontraron datos para el Cat&aacute;alogo de Fallas</i>");
+                        $scope.banderaErrorFallas = true;
+                        swal.close();
+                    }
+                } else {
+                    mostrarMensajeWarningValidacion('<li>' + results[2].data.resultDescripcion + '</i>');
+                    $scope.banderaErrorFallas = true;
+                    swal.close();
+                }
+            } else {
+                mostrarMensajeWarningValidacion("<li>No se encontraron datos para el Cat&aacute;logo de Fallas</i>");
+                $scope.banderaErrorFallas = true;
+                swal.close();
+            }
+            if (results[3].data !== undefined) {
+                if (results[3].data.respuesta) {
+                    if (results[3].data.result) {
+                        if (results[3].data.result.geografia) {
+                            $scope.listadogeografiacopy = results[3].data.result.geografia
+                            $scope.nfiltrogeografia = $scope.nfiltrogeografia ? $scope.nfiltrogeografia : $scope.obtenerNivelUltimoJerarquiaGeneric(results[3].data.result.geografia);
+                            geografia = results[3].data.result.geografia.filter(e => e.nivel <= parseInt($scope.nfiltrogeografia));
                             geografia.map((e) => {
                                 e.parent = e.padre == undefined ? "#" : e.padre;
                                 e.text = e.nombre;
@@ -170,6 +278,8 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                                 return e
                             })
                             $('#jstree-proton-3').bind('loaded.jstree', function (e, data) {
+                                $scope.btnAceptarGeografiaConsulta();
+                                $scope.consultarIncidenciasInspector();
                             }).jstree({
                                 'plugins': ["wholerow", "checkbox", "search"],
                                 'core': {
@@ -185,6 +295,10 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                                     "show_only_matches": true
                                 }
                             });
+                            setTimeout(function () {
+                                $scope.estatusSeleccion();
+                                $scope.fallaSeleccion();
+                            }, 500);
                         } else {
                             mostrarMensajeWarningValidacion('<li>No se encontraron datos para la geograf&iacute;a</li>Va');
                             $scope.banderaErrorGeografia = true;
@@ -196,7 +310,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                         swal.close();
                     }
                 } else {
-                    mostrarMensajeWarningValidacion('<li>' + results[1].data.resultDescripcion + '</li>');
+                    mostrarMensajeWarningValidacion('<li>' + results[3].data.resultDescripcion + '</li>');
                     $scope.banderaErrorGeografia = true;
                     swal.close();
                 }
@@ -205,50 +319,51 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                 $scope.banderaErrorGeografia = true;
                 swal.close();
             }
-            if (results[2].data !== undefined) {
-                if (results[2].data.respuesta) {
-                    if (results[2].data.result) {
-                        $scope.nfiltroestatuspendiente = $scope.nfiltroestatuspendiente ? $scope.nfiltroestatuspendiente : $scope.obtenerNivelUltimoJerarquiaGeneric(results[2].data.result);
-                        $scope.filtrosInspector.statusFallas = $scope.realizarConversionAnidado(results[2].data.result.filter(e => e.nivel <= parseInt($scope.nfiltroestatuspendiente)));
-                        swal.close();
-                    } else {
-                        mostrarMensajeWarningValidacion("<li>No se encontraron datos para el Estatus</i>");
-                        $scope.banderaErrorEstatus = true;
-                        swal.close();
+        });
+    }
+
+    mostarImagenesCarousel = function () {
+        var $imageLinks = $('.imagen-carousel-falla');
+        var items = [];
+        $imageLinks.each(function (index, elemento) {
+            var $item = $(this);
+            var magItem = {
+                src: $item.attr('src'),
+                type: 'image'
+            };
+            magItem.title = $item.data('title');
+            items.push(magItem);
+        });
+        $.magnificPopup.open({
+            mainClass: 'mfp-fade',
+            items: items,
+            gallery: {
+                enabled: true,
+                tPrev: $(this).data('prev-text'),
+                tNext: $(this).data('next-text')
+            },
+            type: 'image',
+            callbacks: {
+                beforeOpen: function () {
+                    var index = $imageLinks.index(this.st.el);
+                    if (-1 !== index) {
+                        this.goTo(index);
                     }
-                } else {
-                    mostrarMensajeWarningValidacion('<li>' + results[2].data.resultDescripcion + '</i>');
-                    $scope.banderaErrorEstatus = true;
-                    swal.close();
+                },
+                open: function () {
+                    // Disabling focus enforcement by magnific
+                    $.magnificPopup.instance._onFocusIn = function (e) { };
                 }
-            } else {
-                mostrarMensajeWarningValidacion("<li>Ha ocurrido un error en la consulta de cat&aacute;logo de Estatus</i>");
-                $scope.banderaErrorEstatus = true;
-                swal.close();
-            }
-            if (results[3].data !== undefined) {
-                if (results[3].data.respuesta) {
-                    if (results[3].data.result) {
-                        $scope.nfiltrofallas = $scope.nfiltrofallas ? $scope.nfiltrofallas : $scope.obtenerNivelUltimoJerarquiaGeneric(results[3].data.result.incidentes);
-                        $scope.filtrosInspector.fallas = $scope.realizarConversionAnidado(results[3].data.result.incidentes.filter(e => e.nivel <= parseInt($scope.nfiltrofallas)));
-                        swal.close();
-                    } else {
-                        mostrarMensajeWarningValidacion("<li>No se encontraron datos para el Cat&aacute;alogo de Fallas</i>");
-                        $scope.banderaErrorFallas = true;
-                        swal.close();
-                    }
-                } else {
-                    mostrarMensajeWarningValidacion('<li>' + results[3].data.resultDescripcion + '</i>');
-                    $scope.banderaErrorFallas = true;
-                    swal.close();
-                }
-            } else {
-                mostrarMensajeWarningValidacion("<li>No se encontraron datos para el Estatus</i>");
-                $scope.banderaErrorFallas = true;
-                swal.close();
             }
         });
     }
+
+    $(document.body).on("click", ".carousel-item", function () {
+        $(".item-carousel").show();
+        $('.carousel-inner:hidden').show(400);
+        mostarImagenesCarousel();
+        // setTimeout(function () { mostarImagenesCarousel(); }, 500);
+    });
 
     retornarFormatoSliders = function (falla, contador) {
         var imgs_blocks = "";
@@ -259,12 +374,12 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
             if (evidencia.url === "") {
                 imgs_blocks += '' +
                     '      <div class="carousel-item ' + ((index === 0) ? 'active' : '') + ' ">' +
-                    '        <img class="d-block img-fluid" style="width:100%; min-width: 100%; height: 100% !important;" src="' + context_project + '/img/generic/not_found.png" alt="First slide">' +
+                    '        <img class="d-block img-fluid imagen-carousel-falla" style="width:100%; min-width: 100%; height: 100% !important;" src="' + contex_project + '/resources/img/generic/not_found.png" alt="First slide">' +
                     '      </div>';
             } else {
                 imgs_blocks += '' +
                     '      <div class="carousel-item ' + ((index === 0) ? 'active' : '') + '">' +
-                    '        <img class="d-block img-fluid" style="width:100%; min-width: 100%; height: 100% !important;" class="d-block w-100" src="' + evidencia.url + '"" alt="First slide">' +
+                    '        <img class="d-block img-fluid imagen-carousel-falla w-100" style="width:100%; min-width: 100%; height: 100% !important;" src="' + evidencia.url + '"" alt="First slide">' +
                     '      </div>';
             }
         });
@@ -291,11 +406,11 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
     printIncidencia = function (falla, latitud, longitud) {
         return '<div class="container-fluid incidencia-content">' +
             '   <div class="container-text-title-detalle"><span class="text-title-incidencia">Unidad Negocio</span></div>' +
-            '   <div class="container-text-content-detalle"><span class="text-content-incidencia">' + (falla.IdUnidadNegocio == null ? 'Sin informaci&oacute;n' : falla.IdUnidadNegocio !== undefined ? falla.IdUnidadNegocio : 'Sin informaci&oacute;n') + '</span> </div>' +
+            '   <div class="container-text-content-detalle"><span class="text-content-incidencia">' + (falla.idUnidadNegocio == null ? 'Sin informaci&oacute;n' : falla.idUnidadNegocio !== undefined ? falla.idUnidadNegocio : 'Sin informaci&oacute;n') + '</span> </div>' +
             '</div>' +
             '<div class="container-fluid incidencia-content">' +
             '   <div class="container-text-title-detalle"><span class="text-title-incidencia">ID OT</span></div>' +
-            '   <div class="container-text-content-detalle"><span class="text-content-incidencia">' + (falla.IdOT == null ? 'Sin OT' : falla.IdOT !== undefined ? falla.IdOT : 'Sin OT') + '</span> </div>' +
+            '   <div class="container-text-content-detalle"><span class="text-content-incidencia">' + (falla.idOt == 0 ? 'Sin OT' : falla.idOt == null ? 'Sin OT' : falla.idOt !== undefined ? falla.idOt : 'Sin OT') + '</span> </div>' +
             '</div>' +
             '<div class="container-fluid incidencia-content">' +
             '   <div class="container-text-title-detalle"><span class="text-title-incidencia">Latitud</span></div>' +
@@ -393,7 +508,8 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         if ($scope.fallasIncidenciaDetalle) {
             $scope.isNavTab = false;
         } else {
-            $scope.isNavTab = true;
+            $scope.isNavTab = false;
+            // $scope.isNavTab = true;
             let arraRow = [];
 
             console.log($scope.fallasIncidenciaDetalle);
@@ -429,6 +545,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         $scope.incidenciaDetalle = $scope.incidencias.find((e) => e.idIncidencia == idIncidencia);
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
+
         let params = {
             "idIncidencia": idIncidencia
         }
@@ -442,12 +559,21 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                             $scope.fallasIncidenciaDetalle = angular.copy(response.data.result.detalleIncidentes);
                             $scope.inicializarDetalleIncidencia($scope.incidenciaDetalle.latitud, $scope.incidenciaDetalle.longitud);
 
-                            console.log($scope.incidenciaDetalle);
+                            $scope.isBtnGenerarOT = $scope.llaveEstatusGeneraOT.find(function (elem) { return elem === $scope.incidenciaDetalle.idEstatus });
+                            console.log($scope.llaveEstatusGeneraOT);
+                            console.log($scope.isBtnGenerarOT);
+                            if ($scope.isBtnGenerarOT !== undefined) {
+                                $scope.isGenerar = true;
+                            } else if ($scope.incidenciaDetalle.idEstatus == '1' || $scope.incidenciaDetalle.idEstatus == '4') {
+                                $scope.isGenerar = true;
+                            } else {
+                                $scope.isGenerar = false;
+                            }
+
                             // NUEVA
                             if ($scope.incidenciaDetalle.idEstatus == '1') {
                                 $scope.isNavTab = false;
                                 $scope.isRecuperar = false;
-                                $scope.isGenerar = true;
                                 $scope.isDeclinar = true;
                                 $("#containerModal").removeClass('col-10');
                                 $("#containerModal").addClass('col-12');
@@ -462,9 +588,9 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
 
                             // DECLINADA
                             if ($scope.incidenciaDetalle.idEstatus == '2') {
-                                $scope.isNavTab = true;
+                                // $scope.isNavTab = true;
+                                $scope.isNavTab = false;
                                 $scope.isRecuperar = true;
-                                $scope.isGenerar = false;
                                 $scope.isDeclinar = false;
                                 $("#containerModal").removeClass('col-12');
                                 $("#containerModal").addClass('col-10');
@@ -481,7 +607,6 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                             if ($scope.incidenciaDetalle.idEstatus == '3') {
                                 $scope.isNavTab = false;
                                 $scope.isRecuperar = false;
-                                $scope.isGenerar = false;
                                 $scope.isDeclinar = false;
                                 $("#containerModal").removeClass('col-10');
                                 $("#containerModal").addClass('col-12');
@@ -498,7 +623,6 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                             if ($scope.incidenciaDetalle.idEstatus == '4') {
                                 $scope.isNavTab = false;
                                 $scope.isRecuperar = false;
-                                $scope.isGenerar = true;
                                 $scope.isDeclinar = true;
                                 $("#containerModal").removeClass('col-10');
                                 $("#containerModal").addClass('col-12');
@@ -512,17 +636,17 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
 
                             // ATENDIDA
                             if ($scope.incidenciaDetalle.idEstatus == '5') {
-                                $scope.isNavTab = true;
+                                // $scope.isNavTab = true;
+                                $scope.isNavTab = false;
                                 $scope.isRecuperar = true;
-                                $scope.isGenerar = false;
                                 $scope.isDeclinar = false;
                                 $("#containerModal").removeClass('col-12');
                                 $("#containerModal").addClass('col-10');
                                 $("#containerModal").css('margin-left', '0');
                                 $("#container-detalleIncidencia").show();
                                 $("#container-declinarIncidencia").hide();
-                                $("#informacion-incidencia").addClass('active')
-                                $("#detalle-status").removeClass('active')
+                                $("#informacion-incidencia").addClass('active');
+                                $("#detalle-status").removeClass('active');
                                 $("#containerFallas").css('margin-left', '1em');
                                 $("#containerFallas").show()
                             }
@@ -549,6 +673,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
     }
 
     pintarUbicacionIncidencia = function (indexI) {
+        $scope.mostrarOcultarMapa("pintarUbicacion")
         let isUbicacion = false;
         let index = 0;
         $scope.incidenciaSeleccionada = $scope.incidencias[indexI];
@@ -796,32 +921,40 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
             if (comentarioGenerar == '') {
                 mostrarMensajeWarningValidacion('<li>Para generar la incidencia como OT debe de ingresar un comentario</li>');
             } else {
-                console.log($scope.incidenciaDetalle);
                 swal({ text: 'Espera un momento...', allowOutsideClick: false });
                 swal.showLoading();
                 let params = {
-                    "idIncidencia": $scope.incidenciaDetalle.idIncidencia,
-                    "idGeografia": $scope.incidenciaDetalle.idGeografia,
+                    "idIncidencia": Number($scope.incidenciaDetalle.idIncidencia),
+                    "idGeografia": Number($scope.incidenciaDetalle.idGeografia),
                     "idOrigenSistema": 1,
-                    "idTipoFalla": $scope.incidenciaDetalle.idTipoIncidencia,
-                    "idSubtipoFalla": "",
-                    "latitud": $scope.incidenciaDetalle.latitud,
-                    "longitud": $scope.incidenciaDetalle.longitud,
+                    "idTipoFalla": Number($scope.incidenciaDetalle.idTipoIncidencia),
+                    "idSubtipoFalla": Number($scope.incidenciaDetalle.idSubtipoIncidencia),
+                    "latitud": Number($scope.incidenciaDetalle.latitud),
+                    "longitud": Number($scope.incidenciaDetalle.longitud),
                     "comentarios": comentarioGenerar,
                     "informacionAdicional": [{}]
                 }
+                console.log(params);
                 inspectorIncidenciaService.generarOTIncidenciaInspectorPE(params).then(function success(response) {
                     console.log(response);
                     if (response.data) {
                         if (response.data.respuesta) {
                             if (response.data.result) {
                                 $('#modalDetalleIncidencia').modal('toggle');
+                                $scope.consultarIncidenciasInspector();
                                 swal.close();
                                 mostrarMensajeExitoAlert("OT generada con &eacute;xito");
+                            } else {
+                                mostrarMensajeWarningValidacion(response.data.resultDescripcion);
+                                swal.close();
                             }
+                        } else {
+                            mostrarMensajeWarningValidacion(response.data.resultDescripcion);
+                            swal.close();
                         }
                     } else {
-                        mostrarMensajeWarningValidacion("");
+                        mostrarMensajeWarningValidacion(response.data.resultDescripcion);
+                        swal.close();
                     }
                 });
             }
@@ -840,7 +973,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                 // console.log(fileBase64);
                 $scope.nombreFileDeclinaInc = e.target.files[0].name;
                 $scope.incidenciaDeclinar.file = fileBase64;
-                // console.log($scope.archivosA.file)
+                // console.log($scope.incidenciaDeclinar.file)
             };
             reader.onerror = function (error) {
                 console.log('Error: ', error);
@@ -871,7 +1004,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
             isValid = false;
         }
 
-        let fallasSelected = [30,]
+        let fallasSelected = []
         let nivelFalla = $scope.nfiltrofallas;
         angular.forEach($scope.filtrosInspector.fallas, (e, i) => {
             e.children.map((k) => {
@@ -891,9 +1024,9 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
 
         let statusSelected = [];
         let isSelectedOneStatus = false;
-        $.each($scope.filtrosInspector.statusFallas, function (i, elemento) {
+        $.each($scope.listCatEstatus, function (i, elemento) {
             if (elemento.checkedOpcion) {
-                statusSelected.push(elemento.id);
+                statusSelected.push(Number(elemento.id));
                 isSelectedOneStatus = true;
                 return;
             }
@@ -910,12 +1043,11 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
             let params = {
                 "idEstatus": statusSelected,
                 "idSubTipoFallas": fallasSelected,
-                // "idGeografias": clustersSelected,
-                "idGeografias": [1023, 2011],
+                "idGeografias": clustersSelected,
                 "fechaInicio": $scope.getFechaFormato(document.getElementById('filtro_fecha_inicio_inspectorincidencia').value),
                 "fechaFin": $scope.getFechaFormato(document.getElementById('filtro_fecha_fin_inspectorincidencia').value)
             };
-            console.log(params)
+            // console.log(params)
             inspectorIncidenciaService.consultarIncidenciasInspectorPE(params).then(function success(response) {
                 console.log(response);
                 if (response.data) {
@@ -966,25 +1098,25 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                                     });
                                     $scope.$apply();
                                 })
-                                $scope.mostrarOcultarMapa(true);
+                                $scope.mostrarOcultarMapa("consultaGeneral");
                                 swal.close();
                             } else {
-                                $scope.mostrarOcultarMapa(true);
+                                $scope.mostrarOcultarMapa("consultaGeneral");
                                 mostrarMensajeInformativo("No se encontraron Incidencias");
                                 swal.close();
                             }
                         } else {
-                            $scope.mostrarOcultarMapa(true);
+                            $scope.mostrarOcultarMapa("consultaGeneral");
                             mostrarMensajeErrorAlert(response.data.resultDescripcion);
                             swal.close();
                         }
                     } else {
-                        $scope.mostrarOcultarMapa(true);
+                        $scope.mostrarOcultarMapa("consultaGeneral");
                         mostrarMensajeInformativo("No se encontraron Incidencias");
                         swal.close();
                     }
                 } else {
-                    $scope.mostrarOcultarMapa(true);
+                    $scope.mostrarOcultarMapa("consultaGeneral");
                     mostrarMensajeErrorAlert(response.data.resultDescripcion);
                     swal.close();
                 }
@@ -997,8 +1129,8 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
     $scope.widthTable = 95;
     $scope.widthMap = 5;
     $scope.mostrarMapa = false;
-    $scope.mostrarOcultarMapa = function (flagConsulta) {
-        if (flagConsulta) {
+    $scope.mostrarOcultarMapa = function (accion) {
+        if (accion == 'consultaGeneral') {
             if ($scope.mostrarMapa) {
                 incidenciaTable.column(3).visible(false);
                 incidenciaTable.column(4).visible(false);
@@ -1010,7 +1142,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                 incidenciaTable.column(5).visible(true);
                 $("#tableIncidencia_info").css('white-space', 'normal');
             }
-        } else {
+        } else if (accion == 'mostrarMapa') {
             if ($scope.mostrarMapa) {
                 $scope.mostrarMapa = false;
                 $scope.mostrarMapa2 = false;
@@ -1029,6 +1161,14 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                 $scope.widthTable = 45;
                 $scope.widthMap = 55;
             }
+        } else if (accion == 'pintarUbicacion') {
+            incidenciaTable.column(3).visible(false);
+            incidenciaTable.column(4).visible(false);
+            incidenciaTable.column(5).visible(false);
+            $("#tableIncidencia_info").css('white-space', 'normal');
+            $scope.mostrarMapa = true;
+            $scope.widthTable = 45;
+            $scope.widthMap = 55;
         }
     }
 
@@ -1109,5 +1249,4 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
             $(".box__dragndrop").empty()
         }
     });
-
 }]);
