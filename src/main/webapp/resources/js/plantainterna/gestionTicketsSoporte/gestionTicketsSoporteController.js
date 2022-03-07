@@ -53,6 +53,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     $scope.cerrarDetalleTicket=function(){
         $scope.limpiarContentDetalleTicket();
         $scope.contentprincipal=true;
+        $scope.isConsultaComentarios = false
         $("#opcion-detalleticket-tab").click()
 
       /**  swal({

@@ -10,6 +10,7 @@ app.noticiasGestionTicketSoporte = function ($scope, gestionTicketSoporteService
     $scope.mensajeGeneral = '';
     
     $scope.consultarComentariosTicketSoporte = function(){
+        $scope.resetFileGeneral()
         let params = {
             objectId: "a153C000000870NQAQ",
             objectType: "OrdenServicio"
