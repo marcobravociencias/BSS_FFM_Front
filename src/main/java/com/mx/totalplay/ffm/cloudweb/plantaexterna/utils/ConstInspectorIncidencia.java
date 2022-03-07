@@ -16,6 +16,9 @@ public class ConstInspectorIncidencia  implements Serializable{
 	@Value("${consultaCatalogoFallasInspectorPE}")
 	private String consultaCatalogoFallasInspectorPE;
 	
+	@Value("${consultaCatalogoEstatusInspectorPE}")
+	private String consultaCatalogoEstatusInspectorPE;
+	
 	@Value("${consultarIncidenciasInspectorPE}")
 	private String consultarIncidenciasInspectorPE;
 

@@ -150,4 +150,21 @@ public class ImplInspectorIncidenciaService implements InspectorIncidenciaServic
 		return response;
 	}
 
+	@Override
+	public ServiceResponseResult consultaCatalogoEstatusInspectorPE() {
+		logger.info("ImplInspectorIncidencia.class [metodo = consultaCatalogoEstatusInspectorPE() ] \n");
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String tokenAccess = principalDetail.getAccess_token();
+		logger.info("consultaCatalogoEstatusInspectorPE ## "+ tokenAccess);
+		
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constInspectorIncidencia.getConsultaCatalogoEstatusInspectorPE());
+		logger.info("URL ##"+ urlRequest);
+		
+		Map<String, String> paramsRequestGet = new HashMap<String, String>();
+		
+		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest, ServiceResponseResult.class, tokenAccess);
+		
+		return response;
+	}
+
 }

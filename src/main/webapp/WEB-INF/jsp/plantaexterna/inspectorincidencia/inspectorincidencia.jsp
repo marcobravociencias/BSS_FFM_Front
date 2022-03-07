@@ -25,6 +25,7 @@
     <link href="${pageContext.request.contextPath}/resources/libraries/datePicker/css/bootstrap-datepicker3_1.9.0.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" rel="stylesheet" /> 
+    <link href="${pageContext.request.contextPath}/resources/libraries/magnific_popup/magnific-popup.css" rel="stylesheet">
     <!-- Libraries -->
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/plantaexterna/inspectorIncidencia/styleInspectorIncidencia.css?v=${sessionScope.versionDepl}">
@@ -53,7 +54,7 @@
                     <i class="icono-noseleccion fas fa-exclamation-circle me-2" title="No se encontraron cat&aacute;logo de fallas" ng-show="banderaErrorFallas"></i>
                     <label for="filtro-fallas" class="label-filter">Falla</label>
                     <div class="dropdown">
-                        <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..." type="text" id="filtro-fallas" class="input-filtro-inspectorincidencia form-control form-control-sm" />
+                        <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..." type="text" id="txtFalla" class="input-filtro-inspectorincidencia form-control form-control-sm" />
                         <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-fallas">
                             <li style="text-align: center;">
                                 <button ng-click="seleccionTodos(filtrosInspector.fallas, true)" id="todo_filtro" type="button" class="btn btn-indigo btn-sm waves-effect waves-light">Todos</button>
@@ -62,7 +63,7 @@
                             <li class="elemento_menu dropdown-divider"></li>
                             <li ng-repeat="filtroFalla in filtrosInspector.fallas" class="element-menu-filter">
                                 <label class="dropdown-item form-check-inputfiltro">
-                                    <input ng-click=setCheckFiltroGeneric(filtroFalla) id="filtrotext-{{filtroFalla.id}}" class="form-check-input" type="checkbox" ng-model="filtroFalla.checkedOpcion" ng-checked="filtroFalla.checkedOpcion" />
+                                    <input ng-change="fallaSeleccion()" ng-click=setCheckFiltroGeneric(filtroFalla) id="filtrotext-{{filtroFalla.id}}" class="form-check-input" type="checkbox" ng-model="filtroFalla.checkedOpcion" ng-checked="filtroFalla.checkedOpcion" />
                                     <span for="filtrotext-{{filtroFalla.id}}" class="dropdown-item item-text-filtro" ng-bind="filtroFalla.descripcion"></span>
                                 </label>
                                 <ul class="dropdown-menu">
@@ -81,17 +82,17 @@
                     <i class="icono-noseleccion fas fa-exclamation-circle me-2" title="No se encontraron cat&aacute;logo de estatus" ng-show="banderaErrorEstatus"></i>
                     <label for="filtro-estatus-substatus" class="label-filter">Estatus</label>
                     <div class="dropdown">
-                        <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..." type="text" id="filtro-estatus-substatus" class="input-filtro-inspectorincidencia form-control form-control-sm" />
+                        <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..." type="text"  id="txtEstatus" class="input-filtro-inspectorincidencia form-control form-control-sm" />
                         <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-estatus-substatus">
                             <li style="text-align: center;">
-                                <button ng-click="seleccionTodos(filtrosInspector.statusFallas,true)" id="todo_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
-                                <button ng-click="seleccionTodos(filtrosInspector.statusFallas,false)" id="ninguno_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
+                                <button ng-click="seleccionTodos(listCatEstatus,true)" id="todo_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
+                                <button ng-click="seleccionTodos(listCatEstatus,false)" id="ninguno_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
                             </li>
                             <li class="elemento_menu dropdown-divider"></li>
-                            <li ng-repeat="filtroS in filtrosInspector.statusFallas" class="element-menu-filter">
+                            <li ng-repeat="filtroS in listCatEstatus" class="element-menu-filter">
                                 <label class="dropdown-item form-check-inputfiltro">
-                                    <input id="filtrotext-{{filtroS.id}}" class="form-check-input" type="checkbox" ng-model="filtroS.checkedOpcion" ng-checked="filtroS.checkedOpcion" />
-                                    <span for="filtrotext-{{filtroS.id}}" class="dropdown-item item-text-filtro" ng-bind="filtroS.nombre"></span>
+                                    <input ng-change="estatusSeleccion()" id="filtrotext-{{filtroS.id}}" class="form-check-input" type="checkbox" ng-model="filtroS.checkedOpcion" ng-checked="filtroS.checkedOpcion" />
+                                    <span for="filtrotext-{{filtroS.id}}" class="dropdown-item item-text-filtro" ng-bind="filtroS.descripcion"></span>
                                 </label>
                             </li>
                         </ul>
@@ -100,7 +101,7 @@
                 <div class="col-2 column-style-inspectorincidencia columna-filtro-ind">
                     <i class="icono-noseleccion fas fa-exclamation-circle me-2" title="No se encontraron catalogo de Geografia" ng-show="banderaErrorGeografia"></i>
                     <label for="cluster" class="label-filter">Geograf&iacute;a</label>
-                    <input readonly placeholder="Seleccione..." type="text" id="cluster" class="input-filtro-inspectorincidencia form-control form-control-sm">
+                    <input readonly placeholder="Seleccione..." type="text" id="txtGeografiasConsulta" class="input-filtro-inspectorincidencia form-control form-control-sm">
                 </div>
                 <div class="col-1 div-btn-busqueda">
                     <button id="btn_consultar_incidencias" type="button" class="btn btn-sm btn-primary waves-effect waves-light" ng-click="consultarIncidenciasInspector()">
@@ -134,15 +135,15 @@
                 <div class="col-rigth-contenedor" style="width: {{widthMap}}%; padding-left: 0;">
                     <div class="row">
                         <div class="text-right" class="col-12">
-                            <a class="opcion-menu active" style="position: absolute; margin-left: -2.4em; z-index: 10;" id="seguimientoDiario-tab" data-toggle="tab" href="#seguimientoDiario" role="tab" aria-controls="seguimientoDiario" aria-selected="false" ng-click="mostrarOcultarMapa(false)">
+                            <a class="opcion-menu active" style="position: absolute; margin-left: -2.4em; z-index: 10;" id="seguimientoDiario-tab" data-toggle="tab" href="#seguimientoDiario" role="tab" aria-controls="seguimientoDiario" aria-selected="false" ng-click="mostrarOcultarMapa('mostrarMapa')">
                                 <i class="icon-menu-left fas fa-map"></i>
                             </a>
                         </div>
                     </div>
                     <div class="row">
                         <div style="padding-left: 1.5em; height: 2.5em; line-height: 2.5em;" class="col-12" ng-class="mostrarMapa ? 'visualizar-visible' : 'visualizar-disable'">
-                            <div class="contenido_color" ng-show="mostrarMapa" ng-repeat="color in filtrosInspector.coloresStatus">
-                                <i class="fa-sm fa fa-circle" style="{{'color:'+ color.id}}" aria-hidden="true"></i>
+                            <div class="contenido_color" ng-show="mostrarMapa" ng-repeat="color in listCatEstatus">
+                                <i class="fa-xs fa fa-circle" style="{{'color:'+ color.hexaColor}}" aria-hidden="true"></i>
                                 <small ng-bind="color.descripcion"></small>
                             </div>
                         </div>
@@ -196,9 +197,10 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/selectPicker/js/i18n/defaults-es_ES.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jstree/jstree.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/libraries/sweetalert/js/sweetalert2.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker_1.9.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker.es.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/magnific_popup/jquery.magnific-popup.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
 
 <!-- ARCHIVOS JS -->
 <script src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>

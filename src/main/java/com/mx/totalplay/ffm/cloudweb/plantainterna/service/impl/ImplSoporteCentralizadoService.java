@@ -250,6 +250,8 @@ public class ImplSoporteCentralizadoService implements SoporteCentralizadoServic
 
 	@Override
 	public ServiceResponseResult guardarTicketDetalle(String params) {
+		logger.info("### URL guardarTicketDetalle(): \n" + params);
+
 		JsonObject jsonObject = new Gson().fromJson(params, JsonObject.class);
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
 		String tokenAcces = principalDetail.getAccess_token();
