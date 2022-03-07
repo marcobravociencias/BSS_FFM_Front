@@ -49,6 +49,7 @@ app.noticiasGestionTicketSoporte = function ($scope, gestionTicketSoporteService
             if ($scope.noticiaAnterior !== numero) {
                 $scope.banderaShow = false;
                 document.getElementById('content-subcomentario-' + $scope.noticiaAnterior).style.display = 'none';
+                $scope.resetFile($scope.noticiaAnterior)
             }
         }
         if ($scope.banderaShow) {
@@ -67,6 +68,7 @@ app.noticiasGestionTicketSoporte = function ($scope, gestionTicketSoporteService
             $scope.banderaShow = true;
         }
         $scope.noticiaAnterior = numero;
+        $scope.resetFileGeneral();
     }
 
     $scope.resetFile = function (noticia) {

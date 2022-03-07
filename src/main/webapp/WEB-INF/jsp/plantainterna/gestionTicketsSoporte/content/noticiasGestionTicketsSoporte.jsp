@@ -27,7 +27,7 @@
     </div>
     <div class="row">
         <div class="col-12 col-input-adjunto">
-            <span id="spnNombreArchivo"></span>
+            <span id="spnNombreArchivo" class="spn-titulo-adjunto"></span>
             <i class="fas fa-trash-alt icon-eliminar-adjunto" ng-show="showEliminarFileTicket" ng-click="resetFileGeneral()"></i>
         </div>
     </div>
@@ -68,7 +68,7 @@
                                         </button>
                                     </div>
                                     <div class="col-2 adjuntar-archivo-subcomentario">
-                                        <span id="spnNombreAdSubComentario-{{noticia.id}}"></span>
+                                        <span id="spnNombreAdSubComentario-{{noticia.id}}" class="spn-titulo-adjunto"></span>
                                         <i class="fas fa-trash-alt icon-eliminar-adjunto" ng-show="showEliminarSubComTicket" ng-click="resetFile(noticia.id)"></i>
                                     </div>
                                 </div>

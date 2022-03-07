@@ -114,3 +114,8 @@
 .col-input-text-subcomentarios{
     width: 90%;
 }
+
+.spn-titulo-adjunto{
+    padding-right: 1em;
+    font-weight: 900;
+}
