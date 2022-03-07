@@ -100,12 +100,7 @@
                     <div class="col-6 form-group form-gruponoserie">
                         <label for="noSerieTicket" class="span-form-tickets">No. de serie * </label>
                         <input type="text" class="form-control form-controlt  inputTicket" id="noSerieTicket" ng-model="ticketSoporteR.noSerieOld" />
-                    </div>
-                    <div class="col-6 form-group form-gruponoserienuevo">
-                        <label for="noSerieNuevoEquipo" class="span-form-tickets">No. de serie-Nuevo equipo </label>
-                        <input type="text" class="form-control form-controlt " id="noSerieNuevoEquipo" ng-model="ticketSoporteR.noSerieNew" />
-                    </div>   
-                
+                    </div>                                
                     <div class="col-12 form-group">
                         <label class="span-form-tickets" for="descripcionProblemaTicket">Descripci&oacute;n del Problema * </label>
                         <textarea class="form-control inputTicket content_text " rows="3" id="descripcionProblemaTicket" ng-model="ticketSoporteR.descripcionProblema"></textarea>

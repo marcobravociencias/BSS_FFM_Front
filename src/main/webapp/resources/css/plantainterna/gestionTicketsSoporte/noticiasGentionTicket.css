@@ -514,3 +514,50 @@ a.descarga-adjuntadocomment {
     border-top-right-radius: 1em;
     border-bottom-right-radius: 1em;
 }
+
+
+#agregarnuevoEquivo{
+    position:absolute;
+    bottom:0;
+    background-color: #0c56d0;
+    box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
+}
+.label-nuevo-equipo{
+    margin-bottom:0 !important;
+    font-size:.8em;
+}
+
+#table-cambio-equipo thead th {
+    position: relative;
+    background-color: #b1b1b1;
+    color: #fff;
+    font-size: 0.8em;
+    padding: .5em .5em;
+    border: none;
+    font-weight: normal;
+}
+#table-cambio-equipo tbody td {
+    position: relative;
+    font-size: 0.8em;
+    padding: .5em .5em;
+    border: none;
+    font-weight: normal;
+    font-size: .8em;
+}
+.eliminar-registro-cambioequipo{
+  background:#f55756;
+  font-size:.7em;
+  padding: .3em 1em;
+}
+#table-cambio-equipo tbody tr:nth-child(odd) {
+    background: #f5f5f5;
+}
+
+.error-captura-input {
+    padding-right: calc(1.5em + 0.75rem);
+    border-bottom: 2px solid #f55756;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23dc3545' viewBox='0 0 12 12'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+}
