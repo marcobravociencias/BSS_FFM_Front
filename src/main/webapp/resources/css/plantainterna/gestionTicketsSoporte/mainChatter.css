@@ -19,6 +19,7 @@
     /* background:#dddddd; */
     display: flex;
     padding: .5em;
+    padding-bottom: 0;
 }
 
 .icono-adjuntar-archivo{

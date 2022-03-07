@@ -1026,6 +1026,21 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                     $scope.contentdetalleticket=true;                                           
                     $scope.editTicket=$scope.ticketsSoporte.find(e=>e.idTicket==ticket)
 
+                    $scope.ticketSoporteDetalle.fallaTicketD = $scope.editTicket.idFalla+''
+                    $scope.listCategoriasTicketDetalle = [];
+                    $scope.catalogoFallasTicketSoporte.map(function (c) {
+                        if (c.idPadre == $scope.editTicket.idFalla+'') {
+                            $scope.listCategoriasTicketDetalle.push(c);
+                        }
+                    });
+                    $scope.ticketSoporteDetalle.categoriaTicketD=$scope.editTicket.idCategoria+''
+                    $scope.listSubcategoriasTicketDetalle = [];
+                    $scope.catalogoFallasTicketSoporte.map(function (s) {
+                        if (s.idPadre == $scope.editTicket.idCategoria+'') {
+                            $scope.listSubcategoriasTicketDetalle.push(s);
+                        }
+                    });
+                    $scope.ticketSoporteDetalle.subcategoriaTicketD=$scope.editTicket.idSubCategoria+''
                 } else {
                     mostrarMensajeInformativo("No se encontr&oacute; informaci&oacute;n del ticket");
                 }
@@ -1263,25 +1278,67 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     $scope.motivosSelectDetalle = function () {
         $scope.motivoEscalamientoDetalle = $scope.escalamientoListDetalle.filter(elemento => { return elemento.nivel === 2 && elemento.idPadre === $scope.ticketSoporteDetalle.estado.id })
     }
-
+    $scope.validacionTicketDetalle=false;
     $scope.guardarTicketDetalle = function () {
+        $scope.validacionTicketDetalle=false;
+
+        let stringErrores=''
+        let isErrorDetalle=false
+        if( !$scope.ticketSoporteDetalle.estatus ){
+            isErrorDetalle=true
+            stringErrores='<li>Captura estatus del ticket</li>'        
+        }
+
+        if( $scope.ticketSoporteDetalle.estatus ){
+            if( !$scope.ticketSoporteDetalle.estado ){
+                isErrorDetalle=true
+                stringErrores='<li>Captura estado del ticket</li>'  
+            }              
+        }
+        if( !$scope.editTicket.comentariosReporte  ){
+            isErrorDetalle=true
+            stringErrores='<li>Captura comentarios del ticket</li>'        
+        }
+
+        if( isErrorDetalle ){
+            mostrarMensajeWarningValidacion( stringErrores )
+            $scope.validacionTicketDetalle=true;
+            return false
+        }
+
         let params;
         if ($scope.ticketSoporteDetalle.estatus) {
-            if ($scope.ticketSoporteDetalle.estatus === 'escalacion') {
+
+            let tipoDetalle=''
+            switch( $scope.ticketSoporteDetalle.estatus ){
+                case '1':
+                    tipoDetalle='escalacion'
+                    break;
+                case '2':
+                    tipoDetalle='cancela'
+                    break;
+                case '3':
+                    tipoDetalle='completa'
+                    break;
+                case '4':
+                    tipoDetalle='reasigna'
+                    break;
+            }        
+            if ( tipoDetalle === 'escalacion') {
                 params = {
                     idTicket: Number($scope.ticketDetalle),
-                    comentarios: $scope.ticketSoporteDetalle.comentarios,
+                    comentarios: $scope.editTicket.comentariosReporte,
                     idPropietario: $scope.ticketSoporteDetalle.estado.id,
                     idPropietarioSf: $scope.ticketSoporteDetalle.estado.idSalesforce,
                     idMotivoPropietario: $scope.ticketSoporteDetalle.motivo.id,
                     idMotivoSf: $scope.ticketSoporteDetalle.motivo.idSalesforce,
-                    tipo: $scope.ticketSoporteDetalle.estatus
+                    tipo: tipoDetalle
                 }
             } else {
                 params = {
                     idTicket: Number($scope.ticketDetalle),
-                    comentarios: $scope.ticketSoporteDetalle.comentarios,
-                    tipo: $scope.ticketSoporteDetalle.estatus
+                    comentarios: $scope.editTicket.comentariosReporte,
+                    tipo: tipoDetalle
                 }
             }
         }

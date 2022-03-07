@@ -183,32 +183,32 @@
                 <div class="container-fluid ticket-content content-select-ticket-detalle">
                     <div class="container-text-title-detalle"><span class="text-tile-ticket">ESTATUS TICKET</span></div>
                     <div class="container-text-content-detalle">
-                        <select class="form-control form-controlt form-control-sm custom-select" name="estatusTicketDetalle" id="estatusTicketDetalle" ng-model="ticketSoporteDetalle.estatus">
+                        <select ng-class="{'error-captura-input': !ticketSoporteDetalle.estatus && validacionTicketDetalle}" class="form-control form-controlt form-control-sm custom-select" name="estatusTicketDetalle" id="estatusTicketDetalle" ng-model="ticketSoporteDetalle.estatus">
                             <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
-                            <option value="escalacion" selected>ESCALAR</option>
-                            <option value="cancela" selected>CANCELAR</option>
-                            <option value="completa" selected>COMPLETADA</option>
-                            <option value="reasigna" selected>REASIGNAR</option>
+                            <option value="1" selected>ESCALAR</option>
+                            <option value="2" selected>CANCELAR</option>
+                            <option value="3" selected>COMPLETADA</option>
+                            <option value="4" selected>REASIGNAR</option>
                         </select>
                     </div>
                 </div>
-                <div class="container-fluid ticket-content content-select-ticket-detalle" ng-show="ticketSoporteDetalle.estatus === 'escalacion'">
+                <div class="container-fluid ticket-content content-select-ticket-detalle" ng-show="ticketSoporteDetalle.estatus === '1'">
                     <div class="container-text-title-detalle"><span class="text-tile-ticket">ESTADO</span></div>
                     <div class="container-text-content-detalle">
-                        <select class="form-control form-controlt form-control-sm custom-select" name="estatusTicketDetalle" id="estatusTicketDetalle" ng-model="ticketSoporteDetalle.estado" ng-change="motivosSelectDetalle()">
+                        <select  ng-class="{'error-captura-input': !ticketSoporteDetalle.estado && validacionTicketDetalle}" class="form-control form-controlt form-control-sm custom-select" name="estatusTicketDetalle" id="estatusTicketDetalle" ng-model="ticketSoporteDetalle.estado" ng-change="motivosSelectDetalle()">
                             <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
-                            <option ng-value="item" ng-repeat="item in estadoEscalamientoDetalle">
+                            <option ng-value="item.id" ng-repeat="item in estadoEscalamientoDetalle">
                                 {{item.descripcion}}
                             </option>
                         </select>
                     </div>
                 </div>
-                <div class="container-fluid ticket-content content-select-ticket-detalle" ng-show="ticketSoporteDetalle.estatus === 'escalacion'">
+                <div class="container-fluid ticket-content content-select-ticket-detalle" ng-show="ticketSoporteDetalle.estatus === '1'">
                     <div class="container-text-title-detalle"><span class="text-tile-ticket">MOTIVO</span></div>
                     <div class="container-text-content-detalle">
-                        <select class="form-control form-controlt form-control-sm custom-select" name="estatusTicketDetalle" id="estatusTicketDetalle" ng-model="ticketSoporteDetalle.motivo">
+                        <select ng-class="{'error-captura-input': !ticketSoporteDetalle.motivo && validacionTicketDetalle}" class="form-control form-controlt form-control-sm custom-select" name="estatusTicketDetalle" id="estatusTicketDetalle" ng-model="ticketSoporteDetalle.motivo">
                             <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
-                            <option ng-value="item" ng-repeat="item in motivoEscalamientoDetalle">
+                            <option ng-value="item.id" ng-repeat="item in motivoEscalamientoDetalle">
                                 {{item.descripcion}}
                             </option>
                         </select>
@@ -217,10 +217,10 @@
                 <div class="container-fluid ticket-content">
                     <div class="container-text-title-detalle"><span class="text-tile-ticket">COMENTARIOS</span></div>
                     <div class="container-text-content-detalle">
-                        <textarea class="form-control" ng-model="ticketSoporteDetalle.comentarios"></textarea>
+                        <textarea ng-class="{'error-captura-input': !editTicket.comentariosReporte && validacionTicketDetalle}" ng-model="editTicket.comentariosReporte" class="form-control" ></textarea>
                     </div>
                 </div>
-                <button type="button" class="btn btn-primary btn-editar-cambios ripple-surface">
+                <button ng-click="guardarTicketDetalle()" type="button" class="btn btn-primary btn-editar-cambios ripple-surface">
                     <b >Guardar cambios </b>        
                 </button>
                 <button ng-click="cerrarDetalleTicket()" type="button" class="btn cerrar-cancelar-btn  btn-ligh" data-mdb-dismiss="modal">
