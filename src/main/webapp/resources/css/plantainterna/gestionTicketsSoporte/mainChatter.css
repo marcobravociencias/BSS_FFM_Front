@@ -33,7 +33,7 @@
     font-weight: bold;
     border-color: #d5d5d5;
     line-height: 1.5em !important;
-    padding-bottom: 0.3em;
+    padding-bottom: 0.32em !important;
 }
 .btn-send-mensaje{
     text-align: center;
@@ -112,10 +112,15 @@
 }
 
 .col-input-text-subcomentarios{
-    width: 90%;
+    width: 90% !important;
 }
 
 .spn-titulo-adjunto{
     padding-right: 1em;
     font-weight: 900;
+}
+
+.container-text-subcomentarios{
+    width: 39em !important;
+    height: 3.5em;
 }

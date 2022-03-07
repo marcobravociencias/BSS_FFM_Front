@@ -52,7 +52,7 @@
                                 <span class="option-mensajes" ng-click="eliminarComentario(noticia.id, 0)">Eliminar</span>
                                 <span class="text-fecha-comentario" ng-bind="noticia.createdDate"></span>
                                 <button id="button-subcommet-{{noticia.id}}" type="button" class="btn-close close-enviar-subcomentario" ng-click="responderComentario(noticia.id)" aria-label="Close" style="display: none;"></button>
-                                <div id="content-subcomentario-{{noticia.id}}" class="row" style="display: none;">
+                                <div id="content-subcomentario-{{noticia.id}}" class="row container-text-subcomentarios" style="display: none;">
                                     <div class="col-8 col-input-text-subcomentarios" style="width: 90%;">
                                         <div class="input-group ">
                                             <input type="text" id="texto-subcomentario-{{noticia.id}}" class="form-control form-send-general text-subcomentario-ticket" placeholder="Escribe aqu&iacute; tu mensaje" aria-label="Recipient's username"aria-describedby="basic-addon2" ng-model="mensajeGeneral"/>
@@ -62,8 +62,8 @@
                                             <div class="badge badge-dot badge-dot-sm status-adjunto badge-success" ng-show="showEliminarSubComTicket"></div>
                                         </div>
                                     </div>
-                                    <div class="col-2" style="top: -32px; left: 34em;">
-                                        <button class="btn-send-mensaje" ng-click="enviarComentario(noticia.id)">
+                                    <div class="col-2" style="top: -34px; left: 34em;">
+                                        <button class="btn-send-mensaje" ng-click="enviarComentario(noticia.id)" style="height: 2.2em;">
                                             <i class="fas fa-paper-plane"></i>
                                         </button>
                                     </div>
