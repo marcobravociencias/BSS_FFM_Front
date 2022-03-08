@@ -447,12 +447,9 @@ app.controller('despachoController', ['$scope', 'despachoService', 'mainDespacho
                             $scope.listadoOtsPendientes.map((e) => {
                                 indexot++
                                 e.colorOrden = e.colorOrden != undefined && e.colorOrden ? e.colorOrden : arrayColors[$scope.randomIntFromInterval()]
-                                //  e.isConfirmado=indexot%2==0 ? true : false
                                 return e
                             })
                             let tableelemetn = ''
-                            let banderaConfirmaDesconfirma = $scope.permisosConfigUser.permisos.find(e => { return e.clave === 'accionConfirmaOT' })
-                            //let banderaAsignacion= $scope.permisosConfigUser.permisos.find(e=>{return e.clave==='accionAsignaOT'})
 
                             angular.forEach($scope.listadoOtsPendientes, function (otpendiente, index) {
                                 tableelemetn = `
@@ -519,7 +516,7 @@ app.controller('despachoController', ['$scope', 'despachoService', 'mainDespacho
     $scope.randomIntFromInterval=function() { // min and max included 
         return Math.floor(Math.random() * (8 - 0 + 1) + 0)
     }
-    
+
     $scope.inicializarsTableOtsPendientes = function () {
         $('.fc-event.ot-pendiente-event').each(function (index) {
             let otpendiente = $scope.listadoOtsPendientes[index]

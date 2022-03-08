@@ -1,27 +1,39 @@
 <div class="modal fade" tabindex="-1" aria-hidden="true" id="modalCluster">
-    <div class="modal-dialog">
-      <div class="modal-content">
+  <div class="modal-dialog">
+    <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Geograf&iacute;a</h5>
-        <button
-        type="button"
-        class="btn-close"
-        data-mdb-dismiss="modal"
-        aria-label="Close"
-        ></button>
+        <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" style=" max-height: 300px; overflow: auto;">
-        <div class="input-group input-group-sm content-seach-group">
-          <input id="searchGeo" type="text" autocomplete="off" class="form-control buscadorGenerico" placeholder="Buscar geograf&iacute;a">
+        <div class="input-group input-group-sm content-seach-group" id="seach-jstree-seguimiento"
+          ng-show="tipoReporte == 'seguimiento'">
+          <input id="searchGeo-seguimiento" type="text" autocomplete="off" class="form-control buscadorGenerico"
+            placeholder="Buscar geograf&iacute;a">
           <span class="fa fa-search iconoBusqueda"></span>
         </div>
-        <div id="jstree-proton-3" class="proton-demo"></div>
+        <div class="input-group input-group-sm content-seach-group" id="seach-jstree-cierre"
+          ng-show="tipoReporte == 'cierre'">
+          <input id="searchGeo-cierre" type="text" autocomplete="off" class="form-control buscadorGenerico"
+            placeholder="Buscar geograf&iacute;a">
+          <span class="fa fa-search iconoBusqueda"></span>
+        </div>
+        <div class="input-group input-group-sm content-seach-group" id="seach-jstree-asignadas"
+        ng-show="tipoReporte == 'asignadas'">
+        <input id="searchGeo-asignadas" type="text" autocomplete="off" class="form-control buscadorGenerico"
+          placeholder="Buscar geograf&iacute;a">
+        <span class="fa fa-search iconoBusqueda"></span>
+      </div>
+        <div id="jstree-proton-seguimiento" class="proton-demo proton-reportes" ng-show="tipoReporte == 'seguimiento'">
+        </div>
+        <div id="jstree-proton-cierre" class="proton-demo proton-reportes" ng-show="tipoReporte == 'cierre'"></div>
+        <div id="jstree-proton-asignadas" class="proton-demo proton-reportes" ng-show="tipoReporte == 'asignadas'"></div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-cerrar-modal btn-secondary" data-mdb-dismiss="modal">
-        Cerrar
+          Cerrar
         </button>
       </div>
-      </div>
     </div>
-    </div>
+  </div>
+</div>
