@@ -62,15 +62,15 @@
                 </div>
             </div>
             <div class="col-md-1 borderFilterR" id="borderAlign">
-                <input type="text" placeholder="OT" id="idot-reporte" ng-model="repDiario.idOrden" ng-change="repDiario.folio = ''" ng-keypress="repDiario.idCuenta = ''"
+                <input type="text" placeholder="OT" id="idot-reporte" autocomplete="off" ng-model="repDiario.idOrden" ng-change="repDiario.folio = ''" ng-keypress="repDiario.idCuenta = ''"
                     class="form-control input-filtro form-control-sm">
             </div>
             <div class="col-md-1 borderFilterR">
-                <input type="text" placeholder="OS" id="idos-reporte" ng-model="repDiario.folio"  ng-change="repDiario.idOrden = ''" ng-keypress="repDiario.idCuenta = ''"
+                <input type="text" placeholder="OS" id="idos-reporte"  autocomplete="off" ng-model="repDiario.folio"  ng-change="repDiario.idOrden = ''" ng-keypress="repDiario.idCuenta = ''"
                     class="form-control input-filtro form-control-sm">
             </div>
             <div class="col-md-1 borderFilterR">
-                <input type="text" placeholder="CUENTA" id="cuenta-reporte" ng-model="repDiario.idCuenta" ng-change="repDiario.idOrden = ''" ng-keypress="repDiario.folio = ''"
+                <input type="text" placeholder="CUENTA" id="cuenta-reporte" autocomplete="off" ng-model="repDiario.idCuenta" ng-change="repDiario.idOrden = ''" ng-keypress="repDiario.folio = ''"
                     class="form-control input-filtro form-control-sm"> 
             </div>
             <div class="col-md-1 columna-filtro-indRR borderFilterR" style="width: 110px;">

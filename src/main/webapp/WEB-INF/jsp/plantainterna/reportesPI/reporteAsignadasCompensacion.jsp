@@ -60,15 +60,15 @@
                 </div>
             </div>
             <div class="col-md-1 borderFilterR" id="borderAlign">
-                <input type="text" placeholder="OT" id="idot-reporte-asignadas" ng-model="repAsignadas.idOrden" ng-change="repAsignadas.folio = ''" ng-keypress="repAsignadas.idCuenta = ''"
+                <input type="text" placeholder="OT" id="idot-reporte-asignadas" autocomplete="off" ng-model="repAsignadas.idOrden" ng-change="repAsignadas.folio = ''" ng-keypress="repAsignadas.idCuenta = ''"
                     class="form-control input-filtro form-control-sm">
             </div>
             <div class="col-md-1 borderFilterR">
-                <input type="text" placeholder="OS" id="idos-reporte-asignadas" ng-model="repAsignadas.folio" ng-change="repAsignadas.idOrden = ''" ng-keypress="repAsignadas.idCuenta = ''"
+                <input type="text" placeholder="OS" id="idos-reporte-asignadas" autocomplete="off" ng-model="repAsignadas.folio" ng-change="repAsignadas.idOrden = ''" ng-keypress="repAsignadas.idCuenta = ''"
                     class="form-control input-filtro form-control-sm">
             </div>
             <div class="col-md-1 borderFilterR"> 
-                <input type="text" placeholder="CUENTA" id="cuenta-reporte-asignadas" ng-model="repAsignadas.idCuenta" ng-change="repAsignadas.folio = ''" ng-keypress="repAsignadas.idOrden = ''"
+                <input type="text" placeholder="CUENTA" id="cuenta-reporte-asignadas" autocomplete="off" ng-model="repAsignadas.idCuenta" ng-change="repAsignadas.folio = ''" ng-keypress="repAsignadas.idOrden = ''"
                     class="form-control input-filtro form-control-sm">
             </div>
             <div class="col-md-1 columna-filtro-indRR borderFilterR" style="width: 110px;">

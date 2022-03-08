@@ -289,7 +289,9 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 
 								//$scope.cargaArbol('asignadas', geografia);
 							}
-
+							if(firstNav === ''){
+								$scope.permisosConfigUser.permisos = [];
+							}
 							if ($scope.permisosConfigUser.permisos.length > 0) {
 								setTimeout(function () {
 									$('#' + firstNav).click();
@@ -305,6 +307,8 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 									$scope.iniciarReporteOrdenes()
 								}, 300)
 							}
+
+
 
 						} else {
 							toastr.warning('No se encontraron datos para la geografia');
