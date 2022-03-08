@@ -10,6 +10,7 @@ app.controller('seguimientoSoporteController', ['$scope', 'seguimientoSoporteSer
     $scope.infoUsuario = {};
     $scope.catalogoEstatusUsuarios = [];
     $scope.catalogoTicket = [];
+    $scope.verCambioEstatusUsuario = true;
 
 
     $('.datepicker').datepicker({

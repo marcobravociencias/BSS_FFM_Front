@@ -100,7 +100,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
 
     $scope.eliminarRegistro=function(index){
         swal({
-            title: "\u00BFSeguro que desea salir del detalle?",
+            title: "\u00BFSeguro que desea eliminar el registro?",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: '#007bff',
@@ -260,7 +260,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             console.log( results[4].data  )
             if (results[4].data !== undefined) {
                 if (results[4].data.respuesta) {
-                   
+                    $scope.listadoGeografiaSoporte=results[4].data.result.geografia
                     let listGeografias = [];
                     if($scope.nGeografiaConsultaTickets != undefined){
                         results[4].data.result.geografia.forEach(elemento =>{
@@ -1041,6 +1041,18 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                         }
                     });
                     $scope.ticketSoporteDetalle.subcategoriaTicketD=$scope.editTicket.idSubCategoria+''
+                    
+                    let clusterInd=$scope.listadoGeografiaSoporte.find(e=>e.id==$scope.editTicket.idCluster )
+                    let zonaInd=$scope.listadoGeografiaSoporte.find(e=>e.id==parseInt( clusterInd.padre ) )
+                    let distritoInd=$scope.listadoGeografiaSoporte.find(e=>e.id==parseInt( zonaInd.padre ) )
+                    let ciudadInd=$scope.listadoGeografiaSoporte.find(e=>e.id==parseInt( distritoInd.padre ) )
+                    let regionInd=$scope.listadoGeografiaSoporte.find(e=>e.id==parseInt( ciudadInd.padre ) )
+
+                    $scope.editTicket.clusterText =  clusterInd.nombre   
+                    $scope.editTicket.zonaText=zonaInd.nombre  
+                    $scope.editTicket.distritoText=distritoInd.nombre  
+                    $scope.editTicket.ciudadText=ciudadInd.nombre  
+                    $scope.editTicket.regionText=regionInd.nombre  
                 } else {
                     mostrarMensajeInformativo("No se encontr&oacute; informaci&oacute;n del ticket");
                 }
@@ -1276,7 +1288,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
 
     $scope.motivoEscalamientoDetalle = []
     $scope.motivosSelectDetalle = function () {
-        $scope.motivoEscalamientoDetalle = $scope.escalamientoListDetalle.filter(elemento => { return elemento.nivel === 2 && elemento.idPadre === $scope.ticketSoporteDetalle.estado.id })
+        $scope.motivoEscalamientoDetalle = $scope.escalamientoListDetalle.filter(elemento => { return elemento.nivel === 2 && elemento.idPadre === $scope.ticketSoporteDetalle.estado })
     }
     $scope.validacionTicketDetalle=false;
     $scope.guardarTicketDetalle = function () {
@@ -1289,10 +1301,14 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             stringErrores='<li>Captura estatus del ticket</li>'        
         }
 
-        if( $scope.ticketSoporteDetalle.estatus ){
+        if( $scope.ticketSoporteDetalle.estatus && $scope.ticketSoporteDetalle.estatus =='1'){
             if( !$scope.ticketSoporteDetalle.estado ){
                 isErrorDetalle=true
                 stringErrores='<li>Captura estado del ticket</li>'  
+            }      
+            if( !$scope.ticketSoporteDetalle.motivo ){
+                isErrorDetalle=true
+                stringErrores='<li>Captura motivo del ticket</li>'  
             }              
         }
         if( !$scope.editTicket.comentariosReporte  ){

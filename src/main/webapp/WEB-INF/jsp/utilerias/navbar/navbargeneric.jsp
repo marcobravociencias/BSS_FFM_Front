@@ -221,7 +221,7 @@
 
                 <div class="content-header" id="user-info-login">
                     <div class="row dropdown-toggle" id="dropdownMenuLogin" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false" style="cursor: pointer;">
+                        aria-expanded="false" style="cursor: pointer;" onclick="cargarEstatusUs()">
                         <div class="col-3" style="padding-right: 0;">
                             <c:if
                                 test="${userStore.urlFoto != null &&  userStore.urlFoto != '' && userStore.urlFoto != 'string'}">
@@ -423,6 +423,39 @@
                                 </div>
                             </div>
                         </div>
+                        
+<!--                         <div class="dropdown-menu-opciones"> -->
+<!--                         	<div class="col-8" style="padding-left: 0.7em;"> -->
+<!-- 		                        <li class="nav-item dropdown form-control form-control-sm input-cambio-estatus-usuario" id="opcCambioEstatus"> -->
+<!-- 		                            <a class="nav-link dropdown-toggle" href="#" id="" role="button" -->
+<!-- 		                                data-mdb-toggle="dropdown" aria-expanded="false"> -->
+<!-- 		                                <i class="fas fa-circle" style="color: #0cd040;"></i> -->
+<!-- 		                                Activo -->
+<!-- 		                            </a> -->
+<!-- 		                            Dropdown menu -->
+<!-- 		                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown"> -->
+<!-- 		                                <li id="listaEstatusUsuarios"> -->
+<!-- 		                                </li> -->
+<!-- 		                            </ul> -->
+<!-- 		                        </li> -->
+<!-- 		                    </div> -->
+<!--                         </div> -->
+                        
+                        <div class="col-md-12 contenedor-lista-estados-usuarios" ng-if="verCambioEstatusUsuario">
+		                    <div class="dropdown">
+		                    	<li class="nav-item dropdown form-control form-control-sm input-cambio-estatus-usuario" id="opcCambioEstatus">
+			                        <a class="nav-link dropdown-toggle" href="#" id="" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+			                        	<i class="fas fa-circle" style="color: #0cd040;"></i>
+	 		                                Activo
+			                        </a>
+									<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+										<li id="listaEstatusUsuarios">
+			                            </li>
+									</ul>
+								</li>
+		                    </div>
+		                </div> 
+                        
                         <div class="dropdown-menu-opciones">
                             <ul class="nav flex-column">
                                 <li class="nav-item" data-mdb-toggle="modal"

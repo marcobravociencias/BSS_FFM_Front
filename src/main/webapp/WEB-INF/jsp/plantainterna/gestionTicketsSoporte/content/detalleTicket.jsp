@@ -84,7 +84,7 @@
               
                 <div class="container-fluid vehiculo-content">
                     <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Tipo orden</span></div>
-                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="editTicket.tipoOrden || 'Sin dato'">222119</span> </div>
+                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="editTicket.tipoOrdenText || 'Sin dato'">222119</span> </div>
                 </div>
                 <div class="container-fluid vehiculo-content">
                     <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Tipo negocio</span></div>
@@ -92,25 +92,25 @@
                 </div>
                 <div class="container-fluid vehiculo-content">
                     <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Regi&oacute;n</span></div>
-                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="editTicket.region || 'Sin dato'">222119</span> </div>
+                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="editTicket.regionText || 'Sin dato'">222119</span> </div>
                 </div>
                 <div class="container-fluid vehiculo-content">
                     <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Ciudad</span></div>
-                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="editTicket.ciudad || 'Sin dato'">222119</span> </div>
+                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="editTicket.ciudadText || 'Sin dato'">222119</span> </div>
                 </div>
                 <div class="container-fluid vehiculo-content">
                     <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Distrito</span></div>
-                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="editTicket.distrito || 'Sin dato'">222119</span> </div>
+                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="editTicket.distritoText || 'Sin dato'">222119</span> </div>
                 </div>
                 <div class="container-fluid vehiculo-content">
                     <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Zona</span></div>
-                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="editTicket.zona || 'Sin dato'">222119</span> </div>
+                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="editTicket.zonaText || 'Sin dato'">222119</span> </div>
                 </div>
                 <div class="container-fluid vehiculo-content">
                     <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Cl&uacute;ster</span></div>
-                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="editTicket.cluster || 'Sin dato'">222119</span> </div>
+                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="editTicket.clusterText || 'Sin dato'">222119</span> </div>
                 </div>
-           
+                
             </div>
         </div>
     </div>    
@@ -169,12 +169,15 @@
                     <td ng-bind="itemRegistro.viejo.mac" ></td>
                     <td ng-bind="itemRegistro.nuevo.noSerie" ></td>
                     <td ng-bind="itemRegistro.nuevo.mac" ></td>
-                    <td  >
+                    <td>
                         <button ng-click="eliminarRegistro($index)"  type="button" class="eliminar-registro-cambioequipo btn btn-sm btn-primary ">
                             <i class="fas fa-times"></i>
                         </button>
                     </td>
                   </tr>
+                  <tr ng-show="listadoNuevoViejosEquipo.length <= 0">
+                      <td class="col-listadoregistros" colspan="6">Sin registros</td>
+                  </tr>                   
                 </tbody>
               </table>
         </div>
