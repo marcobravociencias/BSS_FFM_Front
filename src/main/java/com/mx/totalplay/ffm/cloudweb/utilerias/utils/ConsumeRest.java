@@ -224,7 +224,6 @@ public class ConsumeRest {
             		HttpMethod.PATCH, 
             		request, 
             		String.class);
-            logger.info("Sale de funcion patch");
             String bodyResponse = responseEntity.getBody();
             logger.info("--- RESPONSE ---");
             logger.info(bodyResponse);
