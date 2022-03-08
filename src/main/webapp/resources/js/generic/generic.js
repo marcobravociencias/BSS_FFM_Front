@@ -392,4 +392,47 @@ function showMonster() {
 	setTimeout(showMonster, rand * 1000);
 }
 
-showMonster()
+showMonster();
+
+cargarEstatusUs = function () {
+	let catalogoEstatusUsuarios = {
+		    "success": true,
+		    "mensaje": "Se consultaron los datos",
+		    "result": {
+		        "catalogoEstatusUsuarios": [
+		            {
+		                "id": "5",
+		                "descripcion": "Activo",
+		                "color":"#0cd040"
+		            },
+		            {
+		                "id": "6",
+		                "descripcion": "Comida",
+		                "color":"#ffb62c"
+		            },
+		            {
+		                "id": "7",
+		                "descripcion": "Supervision",
+		                "color":"#458cff"
+		            },
+		            {
+		                "id": "8",
+		                "descripcion": "Ausente",
+		                "color":"#848484"
+		            }
+		        ],
+		        "infoHorasUser": {
+		            "horaEntrada": "2021-11-26 11:42:57",
+		            "ultimoEstatus": "Activo-#0cd040"
+		        }
+		    }
+		};
+	
+	$(".elementosListaEstatus").remove();
+	
+	$.each( catalogoEstatusUsuarios.result.catalogoEstatusUsuarios, function( index, value ) {
+		var etiquetaA = "<a class='dropdown-item elementosListaEstatus' ng-click=''><i class='fas fa-circle' style='color: "+value.color+" ;'></i> "+value.descripcion+"</a>";
+		$( "#listaEstatusUsuarios" ).append(etiquetaA);
+	});
+
+}
