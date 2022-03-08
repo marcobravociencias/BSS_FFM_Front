@@ -54,10 +54,10 @@
                                 <button id="button-subcommet-{{noticia.id}}" type="button" class="btn-close close-enviar-subcomentario" ng-click="responderComentario(noticia.id)" aria-label="Close" style="display: none;"></button>
                                 <div id="content-subcomentario-{{noticia.id}}" class="row container-text-subcomentarios" style="display: none;">
                                     <div class="col-8 col-input-text-subcomentarios" style="width: 90%;">
-                                        <div class="input-group ">
+                                        <div class="input-group input-group-subcomentarios">
                                             <input type="text" id="texto-subcomentario-{{noticia.id}}" class="form-control form-send-general text-subcomentario-ticket" placeholder="Escribe aqu&iacute; tu mensaje" aria-label="Recipient's username"aria-describedby="basic-addon2" ng-model="mensajeGeneral"/>
                                             <input type="file" class="box__file inputFile" id="fileSubComentarioTicket-{{noticia.id}}" onchange="cambiar(this)"/>
-                                            <label for="fileSubComentarioTicket-{{noticia.id}}" class="lbl-adjuntar-ticket"><i class="input-group-text icono-adjuntar-archivo fas fa-paperclip" id="basic-addon2"></i></label>
+                                            <label for="fileSubComentarioTicket-{{noticia.id}}" class="lbl-adjuntar-ticket"><i class="input-group-text icon-adjuntar-subcomentarios fas fa-paperclip" id="basic-addon2"></i></label>
                                             <div class="badge badge-dot badge-dot-sm status-adjunto badge-warning" ng-show="!showEliminarSubComTicket"></div>
                                             <div class="badge badge-dot badge-dot-sm status-adjunto badge-success" ng-show="showEliminarSubComTicket"></div>
                                         </div>

@@ -1256,7 +1256,7 @@ a.descarga-adjuntadocomment {
 .file-adjuntado {
   border-radius: .2em;
   border: 1px solid #dfdfdf;
-  padding: .5em 1em .5em .4em;
+  padding: 0em 1em .5em .4em;
   margin-top: .5em;
   margin-left: .5em;
   width: 100%;

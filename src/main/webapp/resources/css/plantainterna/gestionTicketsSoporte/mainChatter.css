@@ -66,7 +66,7 @@
 
 .text-subcomentario-ticket{
     border-right: none;
-    height: 1.8em;
+    height: 1.87em !important;
     border-top-left-radius: 2em;
     border-bottom-left-radius: 2em;
     margin-left: 1em;
@@ -85,6 +85,7 @@
 
 .lbl-adjuntar-ticket{
     margin-bottom: 0px;
+    height: 2em !important;
 }
 
 .status-adjunto{
@@ -94,7 +95,7 @@
 
 .col-input-adjunto{
     padding-left: 39px;
-    width: 846px;
+    width: 63%;
     text-align: right;
     font-size: 0.8em;
     color: #9244fb;
@@ -106,7 +107,7 @@
 
 .adjuntar-archivo-subcomentario{
     width: 90%;
-    top: -30px;
+    top: -35px;
     text-align: right;
     color: #9244fb;
     font-size: 0.8em;
@@ -124,4 +125,23 @@
 .container-text-subcomentarios{
     width: 39em !important;
     height: 3.5em;
+}
+
+.input-group-subcomentarios > .form-control{
+    min-height: 0 !important;
+}
+
+.icon-adjuntar-subcomentarios{
+    background:white;
+    /* border:none; */
+    border-top-right-radius: 2em;
+    border-bottom-right-radius: 2em;
+    /* line-height: 2em !important; */
+    color: #adadad;
+    /* line-height: 1.8em; */
+    cursor: pointer;
+    font-weight: bold;
+    border-color: #d5d5d5;
+    line-height: 1.5em !important;
+    padding-bottom: 0em !important;
 }
