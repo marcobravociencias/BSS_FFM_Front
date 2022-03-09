@@ -30,17 +30,24 @@
         <jsp:include page="./modals/modal-geografia-consulta.jsp"></jsp:include>
         <jsp:include page="./modals/modal-geografia-edita.jsp"></jsp:include>
 
-        <div id="container-noticias-pi" class="main-container container">
-
-            <ul class="wall" id="" role="">
-                <li ng-click="abrirModalCrearNoticia()"> 
+        <div id="container-noticias-pi" class="main-container container" ng-class="{'main-container-full': configPermisoAccionCreaNoticia && !configPermisoAccionConsultaNoticias, 'main-container-message' : !configPermisoAccionConsultaNoticias && !configPermisoAccionCreaNoticia}">
+            <div class="text-accion-nopermiso" style="display: none;"  ng-if="!configPermisoAccionConsultaNoticias && !configPermisoAccionCreaNoticia" >
+                <i class="icon-not-permiso fas fa-user-lock"></i>
+                <b class="text-not-permiso">No cuentas con el permiso de consulta.</b>
+            </div>
+            <ul class="wall" id="" role="" ng-if="configPermisoAccionCreaNoticia && configPermisoAccionConsultaNoticias">
+                <li ng-click="abrirModalCrearNoticia()" > 
                      <i class="fas fa-plus iconoCrearNoticia"></i>
                      <div class="text-crear-noticia-hide">
                          <b class="text-icono-crear-noticia">Crear noticia</b>
                      </div>
                 </li> 
             </ul>
-            <div class="tab-content" id="myTabContent">
+            <div class="text-accion-nopermiso" ng-if="!configPermisoAccionCreaNoticia && configPermisoAccionConsultaNoticias" style="text-align: left;">
+                <i class="icon-not-permiso fas fa-user-lock" ></i>
+                <b class="text-not-permiso" style="font-size: 1em;">No cuentas con el permiso de crear noticia.</b>
+            </div>
+            <div class="tab-content" id="myTabContent" ng-if="configPermisoAccionConsultaNoticias">
                 <div class="tab-pane show active" id="consultanoticias" role="tabpanel" aria-labelledby="consultanoticias-tab">
                     <jsp:include page="./consultaNoticias.jsp"></jsp:include>
                 </div>

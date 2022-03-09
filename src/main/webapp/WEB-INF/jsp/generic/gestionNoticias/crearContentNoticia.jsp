@@ -1,6 +1,6 @@
-<div ng-show="crearNoticiaContent" class="content-edicion-noticia">                    
+<div ng-show="crearNoticiaContent" class="content-edicion-noticia" ng-class="{'content-edicion-noticia-full': configPermisoAccionCreaNoticia && !configPermisoAccionConsultaNoticias}">                    
     <div class="content-edicionnoticia">
-        <button ng-click="crearNoticiaContent=false" type="button" class="btn-close cerrar-crear-noticia" ></button>
+        <button ng-click="crearNoticiaContent=false" type="button" class="btn-close cerrar-crear-noticia" ng-show="(configPermisoAccionEditaNoticia && configPermisoAccionConsultaNoticias) || (configPermisoAccionCreaNoticia && configPermisoAccionConsultaNoticias)"></button>
 		<div class="row">
 		    <div class="container-visualiza-noticia col-md-6">
 		        <div class="container-celular-visualizador">
