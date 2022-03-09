@@ -693,8 +693,16 @@ h5.title-imgen-vehiculo {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .container-text-title-detalle {
   width: 30%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.container-text-title-detalle-pe {
+  width: 50%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

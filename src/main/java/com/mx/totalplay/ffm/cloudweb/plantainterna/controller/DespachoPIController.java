@@ -494,6 +494,16 @@ public class DespachoPIController {
         }
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
+    
+    @PostMapping("/consultaDetalleOtPe")
+    public ResponseEntity<?> consultaDetalleOtPe(@RequestBody String params) {
+        LOGGER.info("##### CONSULTANDO DETALLE OT PLANTA EXTERNA");
+        ServiceResponseResult response = despachoService.consultaDetalleOtPe(params);
+        if (response.getResult() instanceof Integer) {
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
 }
 
 

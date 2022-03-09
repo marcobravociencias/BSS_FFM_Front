@@ -43,6 +43,18 @@
                                     class="nav-link" id="v-tabs-consulta-cambio-direccion-tab" data-mdb-toggle="tab"
                                     href="#v-tabs-consulta-cambio-direccion" ng-click="verMapaCambioDireccion(infoOtDetalle.direccion.latitud, infoOtDetalle.direccion.longitud)" role="tab"
                                     aria-controls="v-tabs-consulta-cambio-direccion-tab" aria-selected="false">Cambio direcci&oacute;n</a>
+                                    
+								<a ng-show="tabDetalleCorteMasivo" class="nav-link" id="v-tabs-consulta-detalle-corte-masivo-tab" data-mdb-toggle="tab" 
+									href="#v-tabs-consulta-detalle-corte-masivo" role="tab" aria-controls="v-tabs-consulta-detalle-corte-masivo-tab" 
+									aria-selected="false">Detalle corte masivo</a>
+								<a ng-show=tabDetalleDetencion class="nav-link" id="v-tabs-consulta-detalle-detencion-tab" data-mdb-toggle="tab" 
+									href="#v-tabs-consulta-detalle-detencion" role="tab" aria-controls="v-tabs-consulta-detalle-detencion-tab" 
+									aria-selected="false">Detalle detenci&oacute;n</a>
+								<a ng-show="tabDetalleInspeccion" class="nav-link" id="v-tabs-consulta-detalle-inspeccion-tab" data-mdb-toggle="tab" 
+									href="#v-tabs-consulta-detalle-inspeccion" role="tab" aria-controls="v-tabs-consulta-detalle-inspeccion-tab" 
+									aria-selected="false">Detalle inspector</a>
+								
+								
                             </div>
                         </div>
                         <div class="col-10">
@@ -1595,6 +1607,261 @@
                                     	</div>
                                     </div>
                                 </div>
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                <div ng-show="tabDetalleCorteMasivo" class="tab-pane fade" id="v-tabs-consulta-detalle-corte-masivo" role="tabpanel" 
+                                	aria-labelledby="v-tabs-consulta-detalle-corte-masivo-tab">
+                                	
+                                	<div class="row">
+										<div class="col-md-12">
+											<h5>Informaci&oacute;n general OT</h5>
+										</div>
+									</div>
+                                	<div class="row">
+                                		<div class="col-md-6">
+                                			<div class="row">
+		                                        <div class="col-md-12">
+		                                            <div class="container-fluid vehiculo-content">
+		                                                <div class="container-text-title-detalle-pe">
+		                                                	<span class="text-tile-vehiculo">OT</span>
+		                                                </div>
+		                                                <div class="container-text-content-detalle">
+		                                                	<span class="text-content-vehiculo" title="{{infoOtDetalle.idOrden}}" ng-bind="infoOtDetalle.claveCliente || 'Sin dato'"></span>
+		                                                </div>
+		                                            </div>
+		                                    	</div>
+		                                    </div>
+		                                    <div class="row">
+		                                        <div class="col-md-12">
+		                                            <div class="container-fluid vehiculo-content">
+		                                                <div class="container-text-title-detalle-pe">
+		                                                	<span class="text-tile-vehiculo">Tipo orden</span>
+		                                                </div>
+		                                                <div class="container-text-content-detalle">
+		                                                	<span class="text-content-vehiculo" title="{{infoOtDetalle.idOrden}}" ng-bind="infoOtDetalle.claveCliente || 'Sin dato'"></span>
+		                                                </div>
+		                                            </div>
+		                                    	</div>
+		                                    </div>
+		                                    <div class="row">
+		                                        <div class="col-md-12">
+		                                            <div class="container-fluid vehiculo-content">
+		                                                <div class="container-text-title-detalle-pe">
+		                                                	<span class="text-tile-vehiculo">Subtipo orden</span>
+		                                                </div>
+		                                                <div class="container-text-content-detalle">
+		                                                	<span class="text-content-vehiculo" title="{{infoOtDetalle.idOrden}}" ng-bind="infoOtDetalle.claveCliente || 'Sin dato'"></span>
+		                                                </div>
+		                                            </div>
+		                                    	</div>
+		                                    </div>
+		                                    <div class="row">
+		                                        <div class="col-md-12">
+		                                            <div class="container-fluid vehiculo-content">
+		                                                <div class="container-text-title-detalle-pe">
+		                                                	<span class="text-tile-vehiculo">Estado</span>
+		                                                </div>
+		                                                <div class="container-text-content-detalle">
+		                                                	<span class="text-content-vehiculo" title="{{infoOtDetalle.idOrden}}" ng-bind="infoOtDetalle.claveCliente || 'Sin dato'"></span>
+		                                                </div>
+		                                            </div>
+		                                    	</div>
+		                                    </div>
+		                                    <div class="row">
+		                                        <div class="col-md-12">
+		                                            <div class="container-fluid vehiculo-content">
+		                                                <div class="container-text-title-detalle-pe">
+		                                                	<span class="text-tile-vehiculo">Estatus</span>
+		                                                </div>
+		                                                <div class="container-text-content-detalle">
+		                                                	<span class="text-content-vehiculo" title="{{infoOtDetalle.idOrden}}" ng-bind="infoOtDetalle.claveCliente || 'Sin dato'"></span>
+		                                                </div>
+		                                            </div>
+		                                    	</div>
+		                                    </div>
+                                		</div>
+                                		<div class="col-md-6">
+                                			<div class="row">
+		                                        <div class="col-md-12">
+		                                            <div class="container-fluid vehiculo-content">
+		                                                <div class="container-text-title-detalle-pe">
+		                                                	<span class="text-tile-vehiculo">Fecha agendamiento</span>
+		                                                </div>
+		                                                <div class="container-text-content-detalle">
+		                                                	<span class="text-content-vehiculo" title="{{infoOtDetalle.idOrden}}" ng-bind="infoOtDetalle.claveCliente || 'Sin dato'"></span>
+		                                                </div>
+		                                            </div>
+		                                    	</div>
+		                                    </div>
+                                			<div class="row">
+		                                        <div class="col-md-12">
+		                                            <div class="container-fluid vehiculo-content">
+		                                                <div class="container-text-title-detalle-pe">
+		                                                	<span class="text-tile-vehiculo">Nivel uno</span>
+		                                                </div>
+		                                                <div class="container-text-content-detalle">
+		                                                	<span class="text-content-vehiculo" title="{{infoOtDetalle.idOrden}}" ng-bind="infoOtDetalle.claveCliente || 'Sin dato'"></span>
+		                                                </div>
+		                                            </div>
+		                                    	</div>
+		                                    </div>
+		                                    <div class="row">
+		                                        <div class="col-md-12">
+		                                            <div class="container-fluid vehiculo-content">
+		                                                <div class="container-text-title-detalle-pe">
+		                                                	<span class="text-tile-vehiculo">Nivel dos</span>
+		                                                </div>
+		                                                <div class="container-text-content-detalle">
+		                                                	<span class="text-content-vehiculo" title="{{infoOtDetalle.idOrden}}" ng-bind="infoOtDetalle.claveCliente || 'Sin dato'"></span>
+		                                                </div>
+		                                            </div>
+		                                    	</div>
+		                                    </div>
+		                                    <div class="row">
+		                                        <div class="col-md-12">
+		                                            <div class="container-fluid vehiculo-content">
+		                                                <div class="container-text-title-detalle-pe">
+		                                                	<span class="text-tile-vehiculo">Nivel urgencia</span>
+		                                                </div>
+		                                                <div class="container-text-content-detalle">
+		                                                	<span class="text-content-vehiculo" title="{{infoOtDetalle.idOrden}}" ng-bind="infoOtDetalle.claveCliente || 'Sin dato'"></span>
+		                                                </div>
+		                                            </div>
+		                                    	</div>
+		                                    </div>
+		                                    <div class="row">
+		                                        <div class="col-md-12">
+		                                            <div class="container-fluid vehiculo-content">
+		                                                <div class="container-text-title-detalle-pe">
+		                                                	<span class="text-tile-vehiculo">Localizaci&oacute;n</span>
+		                                                </div>
+		                                                <div class="container-text-content-detalle">
+		                                                	<span class="text-content-vehiculo" title="{{infoOtDetalle.idOrden}}" ng-bind="infoOtDetalle.claveCliente || 'Sin dato'"></span>
+		                                                </div>
+		                                            </div>
+		                                    	</div>
+		                                    </div>
+                                		</div>
+                                	</div>
+                                	
+                                	<hr />
+                                	
+                                	<div class="row">
+										<div class="col-md-12">
+											<h5>Informaci&oacute;n detalle corte masivo</h5>
+										</div>
+									</div>
+                                	<div class="row">
+                                		<div class="col-md-6">
+                                			<div class="row">
+		                                        <div class="col-md-12">
+		                                            <div class="container-fluid vehiculo-content">
+		                                                <div class="container-text-title-detalle-pe">
+		                                                	<span class="text-tile-vehiculo">Clientes residencial</span>
+		                                                </div>
+		                                                <div class="container-text-content-detalle">
+		                                                	<span class="text-content-vehiculo" title="{{infoOtDetalle.idOrden}}" ng-bind="infoOtDetalle.claveCliente || 'Sin dato'"></span>
+		                                                </div>
+		                                            </div>
+		                                    	</div>
+		                                    </div>
+		                                    <div class="row">
+		                                        <div class="col-md-12">
+		                                            <div class="container-fluid vehiculo-content">
+		                                                <div class="container-text-title-detalle-pe">
+		                                                	<span class="text-tile-vehiculo">Clientes TFE</span>
+		                                                </div>
+		                                                <div class="container-text-content-detalle">
+		                                                	<span class="text-content-vehiculo" title="{{infoOtDetalle.idOrden}}" ng-bind="infoOtDetalle.claveCliente || 'Sin dato'"></span>
+		                                                </div>
+		                                            </div>
+		                                    	</div>
+		                                    </div>
+		                                    <div class="row">
+		                                        <div class="col-md-12">
+		                                            <div class="container-fluid vehiculo-content">
+		                                                <div class="container-text-title-detalle-pe">
+		                                                	<span class="text-tile-vehiculo">Clientes empresarial</span>
+		                                                </div>
+		                                                <div class="container-text-content-detalle">
+		                                                	<span class="text-content-vehiculo" title="{{infoOtDetalle.idOrden}}" ng-bind="infoOtDetalle.claveCliente || 'Sin dato'"></span>
+		                                                </div>
+		                                            </div>
+		                                    	</div>
+		                                    </div>
+		                                    <div class="row">
+		                                        <div class="col-md-12">
+		                                            <div class="container-fluid vehiculo-content">
+		                                                <div class="container-text-title-detalle-pe">
+		                                                	<span class="text-tile-vehiculo">Total clientes afectados</span>
+		                                                </div>
+		                                                <div class="container-text-content-detalle">
+		                                                	<span class="text-content-vehiculo" title="{{infoOtDetalle.idOrden}}" ng-bind="infoOtDetalle.claveCliente || 'Sin dato'"></span>
+		                                                </div>
+		                                            </div>
+		                                    	</div>
+		                                    </div>
+                                		</div>
+                                		<div class="col-md-6">
+		                                    <div class="row">
+		                                        <div class="col-md-12">
+		                                            <div class="container-fluid vehiculo-content">
+		                                                <div class="container-text-title-detalle-pe">
+		                                                	<span class="text-tile-vehiculo">Asunto</span>
+		                                                </div>
+		                                                <div class="container-text-content-detalle">
+		                                                	<span class="text-content-vehiculo" title="{{infoOtDetalle.idOrden}}" ng-bind="infoOtDetalle.claveCliente || 'Sin dato'"></span>
+		                                                </div>
+		                                            </div>
+		                                    	</div>
+		                                    </div>
+		                                    <div class="row">
+		                                        <div class="col-md-12">
+		                                            <div class="container-fluid vehiculo-content">
+		                                                <div class="container-text-title-detalle-pe">
+		                                                	<span class="text-tile-vehiculo">Descripi&oacute;n</span>
+		                                                </div>
+		                                                <div class="container-text-content-detalle">
+		                                                	<span class="text-content-vehiculo" title="{{infoOtDetalle.idOrden}}" ng-bind="infoOtDetalle.claveCliente || 'Sin dato'"></span>
+		                                                </div>
+		                                            </div>
+		                                    	</div>
+		                                    </div>
+		                                </div>
+                                		</div>
+                                	</div>
+                                	
+                                    
+                                    
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
                             </div>
                         </div>
                     </div>
