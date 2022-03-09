@@ -78,7 +78,7 @@ app.service("inspectorIncidenciaService", function ($http) {
             transformRequest: angular.identity
         });
     };
-
+    
     this.generarOTIncidenciaInspectorPE = function (params) {
         return $http({
             method: "post",
@@ -88,4 +88,13 @@ app.service("inspectorIncidenciaService", function ($http) {
             transformRequest: angular.identity
         })
     }
+
+    this.consultaCatalogoEstatusInspectorPE = function () {
+        return $http({
+            method: "get",
+            url: "req/consultaCatalogoEstatusInspectorPE",
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
+            transformRequest: angular.identity
+        });
+    };
 });

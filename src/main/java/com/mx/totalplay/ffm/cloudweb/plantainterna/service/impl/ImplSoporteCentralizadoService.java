@@ -78,6 +78,24 @@ public class ImplSoporteCentralizadoService implements SoporteCentralizadoServic
         return response;
     }
 
+    
+    
+    
+    @Override
+    public ServiceResponseResult consultarDetalleTicketGestion(String params) {
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constSoporteCentralizado.getConsultarDetalleTicketGestion());
+        logger.info("### URL connsultarDetalleTicketGestion(): \n" + urlRequest);
+		
+		Map<String, String> paramsRequestGet = new HashMap<String, String>();
+		paramsRequestGet.put("claveCliente", "0100000185");
+		
+		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest, ServiceResponseResult.class, tokenAcces);
+        
+        logger.info("### RESULT consultaDetalleSoporte(): " + response);
+        return response;
+    }
     @Override
     public ServiceResponseResult consultaDetalleSoporte(String params) {
         JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
@@ -232,6 +250,8 @@ public class ImplSoporteCentralizadoService implements SoporteCentralizadoServic
 
 	@Override
 	public ServiceResponseResult guardarTicketDetalle(String params) {
+		logger.info("### URL guardarTicketDetalle(): \n" + params);
+
 		JsonObject jsonObject = new Gson().fromJson(params, JsonObject.class);
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
 		String tokenAcces = principalDetail.getAccess_token();

@@ -19,6 +19,7 @@
     /* background:#dddddd; */
     display: flex;
     padding: .5em;
+    padding-bottom: 0;
 }
 
 .icono-adjuntar-archivo{
@@ -33,10 +34,11 @@
     font-weight: bold;
     border-color: #d5d5d5;
     line-height: 1.5em !important;
+    padding-bottom: 0.32em !important;
 }
 .btn-send-mensaje{
     text-align: center;
-    color:#b1b1b1y;
+    color: #b1b1b1;
     margin-left: 1em;
     border-radius: 50%;
     background: #9fa6ad !important;
@@ -50,14 +52,96 @@
 .btn-send-mensaje i{    
     font-size:.8em;
 }
-#text-general-os::placeholder{
+#text-general::placeholder{
     font-size:.8em;
 }
-#text-general-os{
+#text-general{
     border-right: none;
     height: 1.8em;
     border-top-left-radius: 2em;
     border-bottom-left-radius: 2em;
     margin-left: 1em;
     border-color: #d5d5d5;
+}
+
+.text-subcomentario-ticket{
+    border-right: none;
+    height: 1.87em !important;
+    border-top-left-radius: 2em;
+    border-bottom-left-radius: 2em;
+    margin-left: 1em;
+    border-color: #d5d5d5;
+}
+
+.text-subcomentario-ticket::placeholder{
+    font-size:.8em;
+}
+
+.img-adjunto-subcomentarios,
+.imagen-adjuntado-comentarios{
+    width: 2em;
+    height: 2em;
+}
+
+.lbl-adjuntar-ticket{
+    margin-bottom: 0px;
+    height: 2em !important;
+}
+
+.status-adjunto{
+    top: 3px !important;
+    z-index: 1;
+}
+
+.col-input-adjunto{
+    padding-left: 39px;
+    width: 63%;
+    text-align: right;
+    font-size: 0.8em;
+    color: #9244fb;
+}
+
+.icon-eliminar-adjunto{
+    cursor: pointer;
+}
+
+.adjuntar-archivo-subcomentario{
+    width: 90%;
+    top: -35px;
+    text-align: right;
+    color: #9244fb;
+    font-size: 0.8em;
+}
+
+.col-input-text-subcomentarios{
+    width: 90% !important;
+}
+
+.spn-titulo-adjunto{
+    padding-right: 1em;
+    font-weight: 900;
+}
+
+.container-text-subcomentarios{
+    width: 39em !important;
+    height: 3.5em;
+}
+
+.input-group-subcomentarios > .form-control{
+    min-height: 0 !important;
+}
+
+.icon-adjuntar-subcomentarios{
+    background:white;
+    /* border:none; */
+    border-top-right-radius: 2em;
+    border-bottom-right-radius: 2em;
+    /* line-height: 2em !important; */
+    color: #adadad;
+    /* line-height: 1.8em; */
+    cursor: pointer;
+    font-weight: bold;
+    border-color: #d5d5d5;
+    line-height: 1.5em !important;
+    padding-bottom: 0em !important;
 }

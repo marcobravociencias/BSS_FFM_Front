@@ -676,6 +676,7 @@ span.text-content-vehiculo {
     float:right;
     margin-top:1em;
     margin-bottom: 1em;
+    margin-right: 1em;
 }
 .cerrar-cancelar-btn {
     font-size: .7em;
@@ -694,7 +695,7 @@ span.text-content-vehiculo {
 }
 
 #ingenierosTable_wrapper .col-12,#ingenierosTable_wrapper .col-sm-12{
-    padding: 0 !important;
-    padding-left: .5em !important;
+    /* padding: 0 !important; */
+    /* padding-left: .5em !important; */
 }
 

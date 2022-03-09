@@ -1,5 +1,4 @@
 /* FILTROS INSPECTOR INCIDENCIA */
-
 #jstree-proton-3 .jstree-anchor {
     font-family: 'Montserrat';
     font-size: .8em;
@@ -96,6 +95,7 @@ label.label-filter {
     background: white !important;
     border-radius: .5em !important;
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.07),0 1px 2px 0 rgba(0,0,0,.05)!important;
+    padding-right: 1.5em;
 }
 
 .input-filtro-inspectorincidencia::placeholder {
@@ -219,14 +219,14 @@ tfoot {
 
 .contenido_color{
     display: inline;
-    margin-right: 1em;
+    margin-right: 0.5em;
 }
 .contenido_color i{
     /* margin-right: .5em; */
 }
 .contenido_color > small{
     color:#4e5f71;
-    font-size: .7em;
+    font-size: .6em;
 }
 #colores_estados {
     margin-bottom: 10px !important;
@@ -328,6 +328,37 @@ div.dataTables_wrapper div.dataTables_filter input {
 /* TABLES */
 
 /* MODAL DETALLE INCIDENCIA */
+
+.mfp-title {
+    text-align: center !important;
+}
+
+.mfp-container {
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    padding: 0 8px;
+    box-sizing: border-box;
+    background-color: rgba(0, 0, 0, 0.8) !important;
+}
+
+body.modal-open.mfp-zoom-out-cur {
+    z-index: 22222222222223333333333333333 !important;
+}
+.mfp-wrap {
+    z-index: 1222222222222222222222222222 !important;
+}
+
+.imagen-carousel-falla {
+    width: 100%;
+    height: 50em;
+    max-height: 14em;
+    object-fit: cover;
+    cursor: pointer;
+}
 
 .rowTabs {
     margin: 0 !important; 
@@ -886,4 +917,35 @@ h4#texto_not_arboles {
 
 .btn-inpector-incidencia{
     cursor: pointer;
+}
+
+.text-accion-nopermiso {
+    font-size: 12px;
+    color: grey;
+    padding: 1em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.text-accion-nopermiso .icon-not-permiso {
+    color: #9586a9;
+    font-size: 1.3em;
+    padding: 0.5em;
+    border-radius: 50%;
+    /* background: #9586a9; */
+    width: 2em;
+    height: 2em;
+    /* box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);**/
+}
+
+.text-not-permiso {
+	margin-left: 0.5em;
+	font-size: 1.5em;
+	font-weight: normal;
+}
+
+.text-not-permiso-modal {
+	margin-left: 0.5em;
+	font-size: 1.3em;
+	font-weight: normal;
 }

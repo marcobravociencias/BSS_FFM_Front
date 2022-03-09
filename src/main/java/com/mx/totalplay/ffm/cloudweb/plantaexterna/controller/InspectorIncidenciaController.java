@@ -91,5 +91,15 @@ public class InspectorIncidenciaController {
 		}
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
+	
+	@GetMapping("/consultaCatalogoEstatusInspectorPE")
+	public ResponseEntity<?> consultaCatalogoEstatusInspectorPE(){
+		logger.info("###### InspectorIncidenciaController - consultaCatalogoEstatusInspectorPE");
+		ServiceResponseResult response = inspectorIncidenciaService.consultaCatalogoEstatusInspectorPE();
+		if(response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
 
 }

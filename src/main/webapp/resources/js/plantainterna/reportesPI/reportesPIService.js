@@ -62,5 +62,27 @@ app.service("reportesPIService", function ($http) {
 			}
 		})
 	};
+
+    this.consultaReporteCierreDiario = function(params){
+        return $http({
+			method: "post",
+			url: "req/consultaRepoCierreDiarioEx",
+			data: JSON.stringify(params),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+    }
+
+    this.consultaReporteAsignadas = function(params){
+        return $http({
+			method: "post",
+			url: "req/consultaRepoAsignadasEx",
+			data: JSON.stringify(params),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+    }
 	
 });

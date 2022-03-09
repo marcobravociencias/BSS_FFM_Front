@@ -46,5 +46,13 @@ public class ConstReportePI implements Serializable{
   
   @Value("${consultarBandejaFFM}")
   private String consultarBandejaFFM;
+  
+  @Value("${consultaReporteSeguimientoDiario}")
+  private String consultarReporteDiario;
  
+  @Value("${consultaCierreDiario}")
+  private String consultarCierreDiario;
+  
+  @Value("${consultaAsignadasCompensacion}")
+  private String consultarAsignadasCompensacion;
 }

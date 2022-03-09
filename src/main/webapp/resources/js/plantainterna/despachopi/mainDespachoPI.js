@@ -1381,8 +1381,6 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
         let statuscopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.estatusdisponibles, $scope.nfiltroestatuspendiente);
         let intervencioncopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.tipoOrdenes, $scope.nfiltrointervenciones);
         
-        console.log($scope.resultReporteDiario)
-        console.log($scope.getFechaFormato($('#filtro_fecha_inicio_reporte').val()))
         let paramsR = {
              fechaInicio: $scope.getFechaFormato($('#filtro_fecha_inicio_reporte').val()),
              fechaFin: $scope.getFechaFormato($('#filtro_fecha_fin_reporte').val()),
@@ -1393,6 +1391,19 @@ app.controller('despachoController', ['$scope', '$q','mainDespachoService', 'mai
              elementosPorPagina: $scope.resultReporteDiario,
              pagina: 1
         }
+
+        if($scope.repDiario.idOrden && $scope.repDiario.idOrden != ""){
+            paramsR.idOrden =  $scope.repDiario.idOrden;
+        }
+
+        if($scope.repDiario.folio && $scope.repDiario.folio != ""){
+            paramsR.folio =  $scope.repDiario.folio;
+        }
+
+        if($scope.repDiario.idCuenta && $scope.repDiario.idCuenta != ""){
+            paramsR.idCuenta =  $scope.repDiario.idCuenta;
+        }
+
         swal({ text: 'Cargando registros...', allowOutsideClick: false });
         swal.showLoading();
         mainDespachoService.consultaReporteDiario(paramsR).then((result) =>{

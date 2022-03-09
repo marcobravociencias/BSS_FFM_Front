@@ -3,43 +3,165 @@ var app = angular.module('reportesPIApp', []);
 app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'genericService', function ($scope, $q, reportesPIService, genericService) {
 	app.filtroReportes($scope, reportesPIService)
 	$scope.all_cluster = [];
+	$scope.listaGeografia = [];
 	let reporteOrdenesTabla;
 	let reporteTecnicoTabla;
 	let reporteDespachoTabla;
 	let reporteAuxiliarTabla;
 	let reporteInspectorTabla;
 	let reporteSeguimientoTable;
+	let reporteCierreTable;
+	let reporteAsignadasTable;
 	$scope.filtrosGeneral = {};
 	$scope.repDiario = {};
+	$scope.repCierreDiario = {};
+	$scope.repAsignadas = {};
+	$scope.filtroEstatusInt = {};
+	$scope.listaGeografiaReporte = {};
 
+	$scope.tipoReporte = '';
+
+	//Permisos y llaves
 	$scope.nfiltrogeografiaSeguimientoDiario = "";
 	$scope.nfiltrointervencionesSeguimientoDiario = "";
 	$scope.nfiltroestatuspendienteSeguimientoDiario = "";
+	$scope.permisosConfigUser = [];
+	$scope.configPermisoAccionConsultaReporteSeguimiento = false;
+	$scope.configPermisoAccionConsultaReporteCierre = false;
+	$scope.configPermisoAccionConsultaReporteAsignadas = false;
 
-	$(document).ready(function () {
-		$("#tipo_reporte").val('fechaCreacion');
-		setTimeout(function () {
-			$scope.repDiario.fechaSeleccionada = "fechaCreacion";
-			$scope.consultarReporteDiario();
-		}, 1500);
+	//Total rows en tabla para excel
+	$scope.resultReporteDiario = null;
+	$scope.resultReporteCierre = null;
+	$scope.resultReporteAsignadas = null;
 
-	});
 
-	$('#searchGeo').on('keyup', function () {
-		$("#jstree-proton-3").jstree("search", this.value);
+	angular.element(document).ready(function () {
+		$('#searchGeo-seguimiento').on('keyup', function () {
+			$("#jstree-proton-seguimiento").jstree("search", this.value);
+		})
+
+		$('#searchGeo-cierre').on('keyup', function () {
+			$("#jstree-proton-cierre").jstree("search", this.value);
+		})
+
+		$('#searchGeo-asignadas').on('keyup', function () {
+			$("#jstree-proton-asignadas").jstree("search", this.value);
+		})
+
 	})
 
-	$('.drop-down-filters').on("click.bs.dropdown", function (e) {
-		e.stopPropagation();
-	});
 
-	$scope.abrirModalGeografiaRep = function () {
-		$('#searchGeo').val('');
-		$("#jstree-proton-3").jstree("search", '');
-		$("#modalCluster").modal('show')
-		setTimeout(function (){
-	        $("#searchGeo").focus();
+
+	$scope.abrirModalGeografiaRep = function (type) {
+		$("#jstree-proton-" + type).jstree("search", '');
+		$("#searchGeo-" + type).val('');
+		$("#modalCluster").modal('show');
+		setTimeout(function () {
+			$("#searchGeo-" + type).focus();
 		}, 750);
+	}
+
+	$scope.cambiaReporte = function (type, save, tab) {
+		let geografiaReporte = [];
+		if (save) {
+			$scope.guardarArbol($scope.tipoReporte);
+		}
+
+		//Temporal
+		$(".tab-pane").removeClass("active show");
+		$("#"+tab).addClass("active show");
+
+		switch (type) {
+			case 'seguimiento':
+				geografiaReporte = angular.copy($scope.listaGeografiaReporte.seguimiento);
+
+				break;
+			case 'cierre':
+				geografiaReporte = angular.copy($scope.listaGeografiaReporte.cierre);
+
+				break;
+			case 'asignadas':
+				geografiaReporte = angular.copy($scope.listaGeografiaReporte.asignadas);
+
+				break;
+		}
+
+		let isJsTree = $('#jstree-proton-' + $scope.tipoReporte).jstree('is_loaded')[0] ? true : false;
+		if (!isJsTree) {
+			$('#jstree-proton-' + $scope.tipoReporte).jstree('destroy');
+		}
+		$scope.tipoReporte = type;
+		$('#jstree-proton-' + type).bind('loaded.jstree', function (e, data) {
+			switch (type) {
+				case 'seguimiento':
+					if ($scope.resultReporteDiario == null) {
+						$scope.consultarReporteDiario();
+					}
+					break;
+				case 'cierre':
+					if ($scope.resultReporteCierre == null) {
+						$scope.consultarCierreDiario();
+					}
+					break;
+				case 'asignadas':
+					if ($scope.resultReporteAsignadas == null) {
+						$scope.consultarReporteAsignadasCompensacion();
+					}
+					break;
+			}
+
+		}).jstree({
+			'plugins': ["wholerow", "checkbox", "search"],
+			'core': {
+				'data': geografiaReporte,
+				'themes': {
+					'name': 'proton',
+					'responsive': true,
+					"icons": false
+				}
+			},
+			"search": {
+				"case_sensitive": false,
+				"show_only_matches": true
+			}
+		});
+	}
+
+	$scope.guardarArbol = function (type) {
+		let arbolActual = $("#jstree-proton-" + type).jstree("get_selected", true)
+			.map(e => parseInt(e.id));
+
+		switch (type) {
+			case 'seguimiento':
+				$scope.listaGeografiaReporte.seguimiento.map((e) => {
+					e.state = {
+						opened: true,
+						selected: arbolActual.find((t) => t == parseInt(e.id)) > 0 ? true : false,
+					}
+					return e
+				});
+				break;
+			case 'cierre':
+				$scope.listaGeografiaReporte.cierre.map((e) => {
+					e.state = {
+						opened: true,
+						selected: arbolActual.find((t) => t == parseInt(e.id)) > 0 ? true : false,
+					}
+					return e
+				});
+				break;
+			case 'asignadas':
+				$scope.listaGeografiaReporte.asignadas.map((e) => {
+					e.state = {
+						opened: true,
+						selected: arbolActual.find((t) => t == parseInt(e.id)) > 0 ? true : false,
+					}
+					return e
+				});
+				break;
+		}
+
 	}
 
 	$scope.consultarCatalagosPI = function () {
@@ -47,26 +169,33 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 			genericService.consulCatalogoGeografia(),
 			genericService.consultarCatalogoIntervenciones(),
 			genericService.consultarCatalogoEstatusDespachoPI(),
-			reportesPIService.consultarConfiguracionDespachoDespacho({"moduloAccionesUsuario":"moduloReportesPI"})
+			reportesPIService.consultarConfiguracionDespachoDespacho({ "moduloAccionesUsuario": "moduloReportesPI" })
 		]).then(function (results) {
 			let resultConf = results[3].data.result
-			if( resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves){
-                let  llavesResult=results[3].data.result.MODULO_ACCIONES_USUARIO.llaves;
-                
-                $scope.nfiltrogeografiaSeguimientoDiario=llavesResult.N_FILTRO_GEOGRAFIA_SEGUIMIENTODIARIO;
-                $scope.nfiltrointervencionesSeguimientoDiario=llavesResult.N_FILTRO_INTERVENCIONES_SEGUIMIENTODIARIO;
-                $scope.nfiltroestatuspendienteSeguimientoDiario=undefined;
+			if (resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
+				let llavesResult = results[3].data.result.MODULO_ACCIONES_USUARIO.llaves;
+
+				$scope.nfiltrogeografiaSeguimientoDiario = llavesResult.N_FILTRO_GEOGRAFIA_SEGUIMIENTODIARIO;
+				$scope.nfiltrointervencionesSeguimientoDiario = llavesResult.N_FILTRO_INTERVENCIONES_SEGUIMIENTODIARIO;
+				$scope.nfiltroestatuspendienteSeguimientoDiario = llavesResult.N_ESTATUS_PENDIENTES_SEGUIMIENTODIARIO;
+				$scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
+
 				validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
-                validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
-            }
+				validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
+
+				if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
+					$scope.configPermisoAccionConsultaReporteSeguimiento = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaSeguimientoDiario" })[0] != undefined);
+					$scope.configPermisoAccionConsultaReporteCierre = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaCierreDiario" })[0] != undefined);
+					$scope.configPermisoAccionConsultaReporteAsignadas = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaAsignadasCompensacion" })[0] != undefined);
+				}
+			}
 
 			//    console.log("entra de cualquier manera")
 			if (results[1].data !== undefined) {
 				if (results[1].data.respuesta) {
 					if (results[1].data.result) {
 						$scope.nfiltrointervencionesSeguimientoDiario = $scope.nfiltrointervencionesSeguimientoDiario ? $scope.nfiltrointervencionesSeguimientoDiario : $scope.obtenerNivelUltimoJerarquiaGeneric(results[1].data.result);
-						$scope.filtrosGeneral.tipoOrdenes = $scope.realizarConversionAnidado(results[1].data.result.filter(e=>e.nivel<= parseInt($scope.nfiltrointervencionesSeguimientoDiario)));
-
+						$scope.filtrosGeneral.tipoOrdenes = $scope.conversionAnidadaRecursiva(results[1].data.result, 1, $scope.nfiltrointervencionesSeguimientoDiario);
 					} else {
 						toastr.warning('No se encontraron  tipo ordenes');
 					}
@@ -80,7 +209,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 				if (results[2].data.respuesta) {
 					if (results[2].data.result) {
 						$scope.nfiltroestatuspendienteSeguimientoDiario = $scope.nfiltroestatuspendienteSeguimientoDiario ? $scope.nfiltroestatuspendienteSeguimientoDiario : $scope.obtenerNivelUltimoJerarquiaGeneric(results[2].data.result);
-						$scope.filtrosGeneral.estatusdisponibles = $scope.realizarConversionAnidado(results[2].data.result.filter(e=>e.nivel<= parseInt($scope.nfiltroestatuspendienteSeguimientoDiario)));
+						$scope.filtrosGeneral.estatusdisponibles = $scope.conversionAnidadaRecursiva(results[2].data.result, 1, $scope.nfiltroestatuspendienteSeguimientoDiario);
 					} else {
 						toastr.info('No se encontraron catalogo de estatus');
 					}
@@ -95,10 +224,11 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 					if (results[0].data.result) {
 						if (results[0].data.result.geografia) {
 							$scope.listadogeografiacopy = results[0].data.result.geografia
-							//console.log("######")
-							//console.log(results[0].data.result)
+							let firstNav = '';
 							$scope.nfiltrogeografiaSeguimientoDiario = $scope.nfiltrogeografiaSeguimientoDiario ? $scope.nfiltrogeografiaSeguimientoDiario : $scope.obtenerNivelUltimoJerarquia();
-							geografia = results[0].data.result.geografia.filter(e=>e.nivel<= parseInt($scope.nfiltrogeografiaSeguimientoDiario));
+							$scope.listaGeografia = results[0].data.result.geografia.filter(e => e.nivel <= parseInt($scope.nfiltrogeografiaSeguimientoDiario));
+
+							let geografia = angular.copy($scope.listaGeografia);
 							geografia.map((e) => {
 								e.parent = e.padre == undefined ? "#" : e.padre;
 								e.text = e.nombre;
@@ -109,23 +239,76 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 								}
 								return e
 							})
-							$('#jstree-proton-3').bind('loaded.jstree', function (e, data) {
 
-							}).jstree({
-								'plugins': ["wholerow", "checkbox", "search"],
-								'core': {
-									'data': geografia,
-									'themes': {
-										'name': 'proton',
-										'responsive': true,
-										"icons": false
-									}
-								},
-								"search": {
-									"case_sensitive": false,
-									"show_only_matches": true
+
+							if ($scope.configPermisoAccionConsultaReporteSeguimiento) {
+								if (firstNav === '') {
+									firstNav = 'seguimientoDiario-tab';
+									$scope.tipoReporte = 'seguimiento';
 								}
-							});
+								setTimeout(function () {
+									$("#tipo_reporte").val('fechaCreacion');
+								}, 300)
+
+								$scope.filtroEstatusInt.reporteSeguimiento = {
+									estatusdisponibles: angular.copy($scope.filtrosGeneral.estatusdisponibles),
+									tipoOrdenes: angular.copy($scope.filtrosGeneral.tipoOrdenes)
+								}
+								$scope.listaGeografiaReporte.seguimiento = angular.copy(geografia);
+							}
+
+							if ($scope.configPermisoAccionConsultaReporteCierre) {
+								if (firstNav === '') {
+									firstNav = 'cierreDiario-tab';
+									$scope.tipoReporte = 'cierre';
+								}
+								setTimeout(function () {
+									$("#tipo_reporte_cierre").val('fechaCreacion');
+								}, 300)
+								$scope.filtroEstatusInt.reporteCierre = {
+									estatusdisponibles: angular.copy($scope.filtrosGeneral.estatusdisponibles),
+									tipoOrdenes: angular.copy($scope.filtrosGeneral.tipoOrdenes)
+								}
+								$scope.listaGeografiaReporte.cierre = angular.copy(geografia);
+								//$scope.cargaArbol('cierre', geografia);
+							}
+
+							if ($scope.configPermisoAccionConsultaReporteAsignadas) {
+								if (firstNav === '') {
+									firstNav = 'asignadasCompensacion-tab';
+									$scope.tipoReporte = 'asignadas';
+								}
+								setTimeout(function () {
+									$("#tipo_reporte_asignadas").val('fechaCreacion');
+								}, 300)
+								$scope.filtroEstatusInt.reporteAsignadas = {
+									estatusdisponibles: angular.copy($scope.filtrosGeneral.estatusdisponibles),
+									tipoOrdenes: angular.copy($scope.filtrosGeneral.tipoOrdenes)
+								}
+								$scope.listaGeografiaReporte.asignadas = angular.copy(geografia);
+
+								//$scope.cargaArbol('asignadas', geografia);
+							}
+							if(firstNav === ''){
+								$scope.permisosConfigUser.permisos = [];
+							}
+							if ($scope.permisosConfigUser.permisos.length > 0) {
+								setTimeout(function () {
+									$('#' + firstNav).click();
+									$('.datepicker').datepicker({
+										format: 'dd/mm/yyyy',
+										autoclose: true,
+										language: 'es',
+										todayHighlight: true,
+										clearBtn: false
+									});
+									$('.datepicker').datepicker('update', new Date());
+									$scope.cambiaReporte($scope.tipoReporte, false, firstNav.split('-'[0]));
+									$scope.iniciarReporteOrdenes()
+								}, 300)
+							}
+
+
 
 						} else {
 							toastr.warning('No se encontraron datos para la geografia');
@@ -143,16 +326,23 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		}).catch(err => handleError(err));
 	}
 
-	$scope.realizarConversionAnidado = function (array) {
-		let arrayCopy = [];
-		angular.forEach(array.filter(e => e.nivel == 1), function (elemento, index) {
+
+	$scope.cargaArbol = function (type, geografia) {
+
+	}
+
+	$scope.conversionAnidadaRecursiva = function (array, nivelInit, maxNivel) {
+		let arrayReturn = [];
+		angular.forEach(array.filter(e => e.nivel === nivelInit), function (elem, index) {
+			let elemento = angular.copy(elem);
 			elemento.checkedOpcion = true;
-			elemento.children = array.filter(e => e.nivel == 2 && e.idPadre == elemento.id)
-			elemento.children = (elemento.children !== undefined && elemento.children.length > 0) ? elemento.children : []
-			elemento.children.map(e => { e.checkedOpcion = true; return e; })
-			arrayCopy.push(elemento)
-		})
-		return arrayCopy;
+			if (nivelInit < maxNivel) {
+				elemento.children = $scope.conversionAnidadaRecursiva(array, nivelInit + 1, maxNivel).filter(e2 => e2.idPadre === elemento.id);
+				elemento.children = (elemento.children !== undefined && elemento.children.length > 0) ? elemento.children : [];
+			}
+			arrayReturn.push(elemento)
+		});
+		return arrayReturn;
 	}
 
 	$scope.setCheckFiltroGeneric = function (filtroParent) {
@@ -212,72 +402,8 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 	}
 
 	$scope.iniciarReporteOrdenes = function () {
-		$('.datepicker').datepicker({
-			format: 'dd/mm/yyyy',
-			autoclose: true,
-			language: 'es',
-			todayHighlight: true,
-			clearBtn: false
-		});
-		$('.datepicker').datepicker('update', new Date());
-
-
-		reporteOrdenesTabla = $('#reporteOrdenesTable').DataTable({
-			"paging": true,
-			"lengthChange": false,
-			"searching": false,
-			"ordering": false,
-			"pageLength": 10,
-			"info": false,
-			"autoWidth": true,
-			"language": idioma_espanol_not_font,
-			"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
-
-		});
-		reporteTecnicoTabla = $('#reporteTecnicoTable').DataTable({
-			"paging": true,
-			"lengthChange": false,
-			"searching": false,
-			"ordering": false,
-			"pageLength": 10,
-			"info": false,
-			"autoWidth": true,
-			"language": idioma_espanol_not_font,
-			"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
-
-		});
-		reporteDespachoTabla = $('#reporteDespachoTable').DataTable({
-			"paging": true,
-			"lengthChange": false,
-			"searching": false,
-			"ordering": false,
-			"pageLength": 10,
-			"info": false,
-			"autoWidth": true,
-			"language": idioma_espanol_not_font,
-			"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
-		});
-		reporteAuxiliarTabla = $('#reporteAuxiliarTable').DataTable({
-			"paging": true,
-			"lengthChange": false,
-			"searching": false,
-			"ordering": false,
-			"pageLength": 10,
-			"info": false,
-			"autoWidth": true,
-			"language": idioma_espanol_not_font,
-			"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
-		});
-		reporteInspectorTabla = $('#reporteInspectorTable').DataTable({
-			"paging": true,
-			"lengthChange": false,
-			"searching": false,
-			"ordering": false,
-			"pageLength": 10,
-			"info": false,
-			"autoWidth": true,
-			"language": idioma_espanol_not_font,
-			"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+		$('.drop-down-filters').on("click.bs.dropdown", function (e) {
+			e.stopPropagation();
 		});
 
 		reporteSeguimientoTable = $('#reporteSeguimientoTable').DataTable({
@@ -291,637 +417,30 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 			"language": idioma_espanol_not_font,
 			"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
 		});
-		$scope.consultarCatalagosPI();
 
-
-	}
-
-
-	$scope.consultarReporteOrdenes = function () {
-		let isValido = true;
-		let errorMensaje = '';
-		let isValFecha = true;
-
-		let subIntTemp = []
-		angular.forEach($scope.filtrosGeneral.tipoOrdenes, (e, i) => {
-			e.children.filter(f => f.checkedOpcion).map((k) => { subIntTemp.push(k.id); return k; })
-		})
-
-		let ultimonivel = $scope.obtenerNivelUltimoJerarquia()
-		let clusters = $("#jstree-proton-3").jstree("get_selected", true)
-			.filter(e => e.original.nivel == ultimonivel)
-			.map(e => parseInt(e.id))
-		let selectedElms = $('#jstree').jstree("get_selected", true);
-		console.log(selectedElms)
-		let estatusOrdenes = []
-		angular.forEach($scope.filtrosGeneral.estatusdisponibles, (e, i) => {
-			estatusOrdenes.push(e.id);
-		})
-
-		$.each(selectedElms, function () {
-			clusters.push(this.id);
+		reporteCierreTable = $('#reporteCierreTable').DataTable({
+			"paging": true,
+			"lengthChange": false,
+			"searching": false,
+			"ordering": false,
+			"pageLength": 10,
+			"info": false,
+			"autoWidth": true,
+			"language": idioma_espanol_not_font,
+			"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
 		});
-		if (clusters.length == 0) {
-			clusters = $scope.all_cluster;
-		}
 
-		if ($.trim(document.getElementById('idotO').value) !== '') {
-			if (!($.isNumeric($.trim(document.getElementById('idot').value)))) {
-				errorMensaje += '<li>Introduce un n&uacute;mero correcto de OT.</li>';
-				isValido = false;
-			}
-		}
-
-		if ($.trim(document.getElementById('cuentaO').value) !== '') {
-			if (!($.isNumeric($.trim(document.getElementById('cuenta').value)))) {
-				errorMensaje += '<li>Introduce un n&uacute;mero correcto de cuenta.</li>';
-				isValido = false;
-			}
-		}
-
-		if (estatusOrdenes.length === 0) {
-			errorMensaje += '<li>Seleccione estatus.</li>';
-			isValido = false
-		}
-
-		if (subIntTemp.length === 0) {
-			errorMensaje += '<li>Seleccione intervenci&oacute;n.</li>';
-			isValido = false
-		}
-
-		if (clusters.length === 0) {
-			errorMensaje += '<li>Seleccione geograf&iacute;a.</li>';
-			isValido = false
-		}
-
-		if (document.getElementById('filtro_fecha_inicio_consultaOtO').value == '') {
-			errorMensaje += '<li>Introduce Fecha Inicial</li>';
-			isValFecha = false;
-			isValido = false
-		}
-
-		if (document.getElementById('filtro_fecha_fin_consultaOtO').value == '') {
-			errorMensaje += '<li>Introduce Fecha Final</li>';
-			isValFecha = false;
-			isValido = false
-		}
-
-		if (isValFecha) {
-			if (!validarFecha('filtro_fecha_inicio_consultaOtO', 'filtro_fecha_fin_consultaOtO')) {
-				$('.datepicker').datepicker('update', new Date());
-				errorMensaje += '<li>La fecha inicial no tiene que ser mayor a la final.</li>';
-				isValido = false
-			}
-		}
-
-		if (isValido) {
-			if (reporteOrdenesTabla) {
-				reporteOrdenesTabla.destroy();
-			}
-			let params = {
-				idOrden: $.trim(document.getElementById('idotO').value),
-				folioSistema: $.trim(document.getElementById('idosO').value),
-				claveCliente: $.trim(document.getElementById('cuentaO').value),
-				idSubTipoOrdenes: subIntTemp,
-				idEstatus: estatusOrdenes,
-				idClusters: clusters,
-				fechaInicio: $scope.getFechaFormato(document.getElementById('filtro_fecha_inicio_consultaOtO').value),
-				fechaFin: $scope.getFechaFormato(document.getElementById('filtro_fecha_fin_consultaOtO').value),
-				elementosPorPagina: 10
-			}
-
-			console.log(reporteOrdenesTabla.page.info())
-
-			console.log(params);
-
-			reporteOrdenesTabla = $('#reporteOrdenesTable').DataTable({
-				"processing": false,
-				"ordering": false,
-				"serverSide": true,
-				"scrollX": false,
-				"paging": true,
-				"lengthChange": false,
-				"searching": false,
-				"ordering": false,
-				"pageLength": 10,
-				"ajax": {
-					"url": "req/consultaReporteOrdenes",
-					"type": "POST",
-					"data": params,
-					"beforeSend": function () {
-						if (!swal.isVisible()) {
-							swal({ text: 'Cargando registros...', allowOutsideClick: false });
-							swal.showLoading();
-						}
-
-					},
-					"dataSrc": function (json) {
-						return json.data;
-					},
-					"error": function (xhr, error, thrown) {
-						handleError(xhr)
-					},
-					"complete": function () {
-						swal.close()
-					}
-				},
-				"columns": [null, null, null, null, null, null, null, null],
-				"language": idioma_espanol_not_font
-			});
-
-		} else {
-			mostrarMensajeWarningValidacion(errorMensaje);
-		}
-
-	}
-
-	$scope.consultarReporteTecnico = function () {
-		let isValido = true;
-		let errorMensaje = '';
-		let isValFecha = true;
-
-		let subIntTemp = []
-		angular.forEach($scope.filtrosGeneral.tipoOrdenes, (e, i) => {
-			e.children.filter(f => f.checkedOpcion).map((k) => { subIntTemp.push(k.id); return k; })
-		})
-
-		let ultimonivel = $scope.obtenerNivelUltimoJerarquia()
-		let clusters = $("#jstree-proton-3").jstree("get_selected", true)
-			.filter(e => e.original.nivel == ultimonivel)
-			.map(e => parseInt(e.id))
-		let selectedElms = $('#jstree').jstree("get_selected", true);
-		console.log(selectedElms)
-		let estatusOrdenes = []
-		angular.forEach($scope.filtrosGeneral.estatusdisponibles, (e, i) => {
-			estatusOrdenes.push(e.id);
-		})
-
-		$.each(selectedElms, function () {
-			clusters.push(this.id);
+		reporteAsignadasTable = $('#reporteAsignadasTable').DataTable({
+			"paging": true,
+			"lengthChange": false,
+			"searching": false,
+			"ordering": false,
+			"pageLength": 10,
+			"info": false,
+			"autoWidth": true,
+			"language": idioma_espanol_not_font,
+			"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
 		});
-		if (clusters.length == 0) {
-			clusters = $scope.all_cluster;
-		}
-
-
-
-
-
-
-
-		if (subIntTemp.length === 0) {
-			errorMensaje += '<li>Seleccione intervenci&oacute;n.</li>';
-			isValido = false
-		}
-
-		if (clusters.length === 0) {
-			errorMensaje += '<li>Seleccione geograf&iacute;a.</li>';
-			isValido = false
-		}
-
-		if (document.getElementById('filtro_fecha_inicio_consultaOtT').value == '') {
-			errorMensaje += '<li>Introduce Fecha Inicial</li>';
-			isValFecha = false;
-			isValido = false
-		}
-
-		if (document.getElementById('filtro_fecha_fin_consultaOtT').value == '') {
-			errorMensaje += '<li>Introduce Fecha Final</li>';
-			isValFecha = false;
-			isValido = false
-		}
-
-		if (isValFecha) {
-			if (!validarFecha('filtro_fecha_inicio_consultaOtT', 'filtro_fecha_fin_consultaOtT')) {
-				$('.datepicker').datepicker('update', new Date());
-				errorMensaje += '<li>La fecha inicial no tiene que ser mayor a la final.</li>';
-				isValido = false
-			}
-		}
-
-		if (isValido) {
-			if (reporteTecnicoTabla) {
-				reporteTecnicoTabla.destroy();
-			}
-			let params = {
-				idOrden: $.trim(document.getElementById('numEmp').value),
-				folioSistema: $.trim(document.getElementById('jInm').value),
-				claveCliente: '',
-				idSubTipoOrdenes: subIntTemp,
-				idEstatus: estatusOrdenes,
-				idClusters: clusters,
-				fechaInicio: $scope.getFechaFormato(document.getElementById('filtro_fecha_inicio_consultaOtT').value),
-				fechaFin: $scope.getFechaFormato(document.getElementById('filtro_fecha_fin_consultaOtT').value),
-				elementosPorPagina: 10
-			}
-
-			console.log(reporteTecnicoTabla.page.info())
-
-			console.log(params);
-
-			reporteTecnicoTabla = $('#reporteTecnicoTable').DataTable({
-				"processing": false,
-				"ordering": false,
-				"serverSide": true,
-				"scrollX": false,
-				"paging": true,
-				"lengthChange": false,
-				"searching": false,
-				"ordering": false,
-				"pageLength": 10,
-				"ajax": {
-					"url": "req/consultaReporteTecnico",
-					"type": "POST",
-					"data": params,
-					"beforeSend": function () {
-						if (!swal.isVisible()) {
-							swal({ text: 'Cargando registros...', allowOutsideClick: false });
-							swal.showLoading();
-						}
-
-					},
-					"dataSrc": function (json) {
-						return json.data;
-					},
-					"error": function (xhr, error, thrown) {
-						handleError(xhr)
-					},
-					"complete": function () {
-						swal.close()
-					}
-				},
-				"columns": [null, null, null, null, null, null, null, null],
-				"language": idioma_espanol_not_font
-			});
-
-		} else {
-			mostrarMensajeWarningValidacion(errorMensaje);
-		}
-
-	}
-
-	$scope.consultarReporteCoord = function () {
-		let isValido = true;
-		let errorMensaje = '';
-		let isValFecha = true;
-
-		let subIntTemp = []
-		angular.forEach($scope.filtrosGeneral.tipoOrdenes, (e, i) => {
-			e.children.filter(f => f.checkedOpcion).map((k) => { subIntTemp.push(k.id); return k; })
-		})
-
-		let ultimonivel = $scope.obtenerNivelUltimoJerarquia()
-		let clusters = $("#jstree-proton-3").jstree("get_selected", true)
-			.filter(e => e.original.nivel == ultimonivel)
-			.map(e => parseInt(e.id))
-		let selectedElms = $('#jstree').jstree("get_selected", true);
-		console.log(selectedElms)
-		let estatusOrdenes = []
-		angular.forEach($scope.filtrosGeneral.estatusdisponibles, (e, i) => {
-			estatusOrdenes.push(e.id);
-		})
-
-		$.each(selectedElms, function () {
-			clusters.push(this.id);
-		});
-		if (clusters.length == 0) {
-			clusters = $scope.all_cluster;
-		}
-
-
-
-
-
-
-
-		if (subIntTemp.length === 0) {
-			errorMensaje += '<li>Seleccione intervenci&oacute;n.</li>';
-			isValido = false
-		}
-
-		if (clusters.length === 0) {
-			errorMensaje += '<li>Seleccione geograf&iacute;a.</li>';
-			isValido = false
-		}
-
-		if (document.getElementById('filtro_fecha_inicio_consultaOtD').value == '') {
-			errorMensaje += '<li>Introduce Fecha Inicial</li>';
-			isValFecha = false;
-			isValido = false
-		}
-
-		if (document.getElementById('filtro_fecha_fin_consultaOtD').value == '') {
-			errorMensaje += '<li>Introduce Fecha Final</li>';
-			isValFecha = false;
-			isValido = false
-		}
-
-		if (isValFecha) {
-			if (!validarFecha('filtro_fecha_inicio_consultaOtD', 'filtro_fecha_fin_consultaOtD')) {
-				$('.datepicker').datepicker('update', new Date());
-				errorMensaje += '<li>La fecha inicial no tiene que ser mayor a la final.</li>';
-				isValido = false
-			}
-		}
-
-		if (isValido) {
-			if (reporteDespachoTabla) {
-				reporteDespachoTabla.destroy();
-			}
-			let params = {
-				idOrden: $.trim(document.getElementById('numEmpD').value),
-				folioSistema: $.trim(document.getElementById('nCoord').value),
-				claveCliente: '',
-				idSubTipoOrdenes: subIntTemp,
-				idEstatus: estatusOrdenes,
-				idClusters: clusters,
-				fechaInicio: $scope.getFechaFormato(document.getElementById('filtro_fecha_inicio_consultaOtD').value),
-				fechaFin: $scope.getFechaFormato(document.getElementById('filtro_fecha_fin_consultaOtD').value),
-				elementosPorPagina: 10
-			}
-
-			console.log(reporteDespachoTabla.page.info())
-
-			console.log(params);
-
-			reporteDespachoTabla = $('#reporteDespachoTable').DataTable({
-				"processing": false,
-				"ordering": false,
-				"serverSide": true,
-				"scrollX": false,
-				"paging": true,
-				"lengthChange": false,
-				"searching": false,
-				"ordering": false,
-				"pageLength": 10,
-				"ajax": {
-					"url": "req/consultaReporteDespacho",
-					"type": "POST",
-					"data": params,
-					"beforeSend": function () {
-						if (!swal.isVisible()) {
-							swal({ text: 'Cargando registros...', allowOutsideClick: false });
-							swal.showLoading();
-						}
-
-					},
-					"dataSrc": function (json) {
-						return json.data;
-					},
-					"error": function (xhr, error, thrown) {
-						handleError(xhr)
-					},
-					"complete": function () {
-						swal.close()
-					}
-				},
-				"columns": [null, null, null, null, null, null, null, null],
-				"language": idioma_espanol_not_font
-			});
-
-		} else {
-			mostrarMensajeWarningValidacion(errorMensaje);
-		}
-
-	}
-
-	$scope.consultarReporteAux = function () {
-		let isValido = true;
-		let errorMensaje = '';
-		let isValFecha = true;
-
-		let subIntTemp = []
-		angular.forEach($scope.filtrosGeneral.tipoOrdenes, (e, i) => {
-			e.children.filter(f => f.checkedOpcion).map((k) => { subIntTemp.push(k.id); return k; })
-		})
-
-		let ultimonivel = $scope.obtenerNivelUltimoJerarquia()
-		let clusters = $("#jstree-proton-3").jstree("get_selected", true)
-			.filter(e => e.original.nivel == ultimonivel)
-			.map(e => parseInt(e.id))
-		let selectedElms = $('#jstree').jstree("get_selected", true);
-		console.log(selectedElms)
-		let estatusOrdenes = []
-		angular.forEach($scope.filtrosGeneral.estatusdisponibles, (e, i) => {
-			estatusOrdenes.push(e.id);
-		})
-
-		$.each(selectedElms, function () {
-			clusters.push(this.id);
-		});
-		if (clusters.length == 0) {
-			clusters = $scope.all_cluster;
-		}
-
-
-		if (subIntTemp.length === 0) {
-			errorMensaje += '<li>Seleccione intervenci&oacute;n.</li>';
-			isValido = false
-		}
-
-		if (clusters.length === 0) {
-			errorMensaje += '<li>Seleccione geograf&iacute;a.</li>';
-			isValido = false
-		}
-
-		if (document.getElementById('filtro_fecha_inicio_consultaOtA').value == '') {
-			errorMensaje += '<li>Introduce Fecha Inicial</li>';
-			isValFecha = false;
-			isValido = false
-		}
-
-		if (document.getElementById('filtro_fecha_fin_consultaOtA').value == '') {
-			errorMensaje += '<li>Introduce Fecha Final</li>';
-			isValFecha = false;
-			isValido = false
-		}
-
-		if (isValFecha) {
-			if (!validarFecha('filtro_fecha_inicio_consultaOtA', 'filtro_fecha_fin_consultaOtA')) {
-				$('.datepicker').datepicker('update', new Date());
-				errorMensaje += '<li>La fecha inicial no tiene que ser mayor a la final.</li>';
-				isValido = false
-			}
-		}
-
-		if (isValido) {
-			if (reporteAuxiliarTabla) {
-				reporteAuxiliarTabla.destroy();
-			}
-			let params = {
-				idOrden: $.trim(document.getElementById('idoA').value),
-				folioSistema: $.trim(document.getElementById('numEmpA').value),
-				claveCliente: '',
-				idSubTipoOrdenes: subIntTemp,
-				idEstatus: estatusOrdenes,
-				idClusters: clusters,
-				fechaInicio: $scope.getFechaFormato(document.getElementById('filtro_fecha_inicio_consultaOtA').value),
-				fechaFin: $scope.getFechaFormato(document.getElementById('filtro_fecha_fin_consultaOtA').value),
-				elementosPorPagina: 10
-			}
-
-			console.log(reporteAuxiliarTabla.page.info())
-
-			console.log(params);
-
-			reporteAuxiliarTabla = $('#reporteAuxiliarTable').DataTable({
-				"processing": false,
-				"ordering": false,
-				"serverSide": true,
-				"scrollX": false,
-				"paging": true,
-				"lengthChange": false,
-				"searching": false,
-				"ordering": false,
-				"pageLength": 10,
-				"ajax": {
-					"url": "req/consultaReporteAuxiliar",
-					"type": "POST",
-					"data": params,
-					"beforeSend": function () {
-						if (!swal.isVisible()) {
-							swal({ text: 'Cargando registros...', allowOutsideClick: false });
-							swal.showLoading();
-						}
-
-					},
-					"dataSrc": function (json) {
-						return json.data;
-					},
-					"error": function (xhr, error, thrown) {
-						handleError(xhr)
-					},
-					"complete": function () {
-						swal.close()
-					}
-				},
-				"columns": [null, null, null, null, null, null, null, null],
-				"language": idioma_espanol_not_font
-			});
-
-		} else {
-			mostrarMensajeWarningValidacion(errorMensaje);
-		}
-
-	}
-
-	$scope.consultarReporteInspector = function () {
-		let isValido = true;
-		let errorMensaje = '';
-		let isValFecha = true;
-
-		let subIntTemp = []
-		angular.forEach($scope.filtrosGeneral.tipoOrdenes, (e, i) => {
-			e.children.filter(f => f.checkedOpcion).map((k) => { subIntTemp.push(k.id); return k; })
-		})
-
-		let ultimonivel = $scope.obtenerNivelUltimoJerarquia()
-		let clusters = $("#jstree-proton-3").jstree("get_selected", true)
-			.filter(e => e.original.nivel == ultimonivel)
-			.map(e => parseInt(e.id))
-		let selectedElms = $('#jstree').jstree("get_selected", true);
-		console.log(selectedElms)
-		let estatusOrdenes = []
-		angular.forEach($scope.filtrosGeneral.estatusdisponibles, (e, i) => {
-			estatusOrdenes.push(e.id);
-		})
-
-		$.each(selectedElms, function () {
-			clusters.push(this.id);
-		});
-		if (clusters.length == 0) {
-			clusters = $scope.all_cluster;
-		}
-
-
-		if (subIntTemp.length === 0) {
-			errorMensaje += '<li>Seleccione intervenci&oacute;n.</li>';
-			isValido = false
-		}
-
-		if (clusters.length === 0) {
-			errorMensaje += '<li>Seleccione geograf&iacute;a.</li>';
-			isValido = false
-		}
-
-		if (document.getElementById('filtro_fecha_inicio_inspector').value == '') {
-			errorMensaje += '<li>Introduce Fecha Inicial</li>';
-			isValFecha = false;
-			isValido = false
-		}
-
-		if (document.getElementById('filtro_fecha_fin_inspector').value == '') {
-			errorMensaje += '<li>Introduce Fecha Final</li>';
-			isValFecha = false;
-			isValido = false
-		}
-
-		if (isValFecha) {
-			if (!validarFecha('filtro_fecha_inicio_inspector', 'filtro_fecha_fin_inspector')) {
-				$('.datepicker').datepicker('update', new Date());
-				errorMensaje += '<li>La fecha inicial no tiene que ser mayor a la final.</li>';
-				isValido = false
-			}
-		}
-
-		if (isValido) {
-			if (reporteInspectorTabla) {
-				reporteInspectorTabla.destroy();
-			}
-			let params = {
-				idOrden: $.trim(document.getElementById('otI').value),
-				folioSistema: $.trim(document.getElementById('nEmpI').value),
-				claveCliente: '',
-				idSubTipoOrdenes: subIntTemp,
-				idEstatus: estatusOrdenes,
-				idClusters: clusters,
-				fechaInicio: $scope.getFechaFormato(document.getElementById('filtro_fecha_inicio_inspector').value),
-				fechaFin: $scope.getFechaFormato(document.getElementById('filtro_fecha_fin_inspector').value),
-				elementosPorPagina: 10
-			}
-
-			console.log(reporteInspectorTabla.page.info())
-
-			console.log(params);
-
-			reporteInspectorTabla = $('#reporteInspectorTable').DataTable({
-				"processing": false,
-				"ordering": false,
-				"serverSide": true,
-				"scrollX": false,
-				"paging": true,
-				"lengthChange": false,
-				"searching": false,
-				"ordering": false,
-				"pageLength": 10,
-				"ajax": {
-					"url": "req/consultarReporteInspector",
-					"type": "POST",
-					"data": params,
-					"beforeSend": function () {
-						if (!swal.isVisible()) {
-							swal({ text: 'Cargando registros...', allowOutsideClick: false });
-							swal.showLoading();
-						}
-
-					},
-					"dataSrc": function (json) {
-						return json.data;
-					},
-					"error": function (xhr, error, thrown) {
-						handleError(xhr)
-					},
-					"complete": function () {
-						swal.close()
-					}
-				},
-				"columns": [null, null, null, null, null, null],
-				"language": idioma_espanol_not_font
-			});
-
-		} else {
-			mostrarMensajeWarningValidacion(errorMensaje);
-		}
 
 	}
 
@@ -929,38 +448,20 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		let mensaje = '<ul>';
 		let isValid = true;
 		let numerosOnly = /^[0-9]*$/i;
-		$scope.resultReporteDiario = {};
+		$scope.resultReporteDiario = 0;
 
-		let ultimonivel = $scope.obtenerNivelUltimoJerarquia()
-		let clusters = $("#jstree-proton-3").jstree("get_selected", true)
-			.filter(e => e.original.nivel == ultimonivel)
-			.map(e => parseInt(e.id))
-		let selectedElms = $('#jstree').jstree("get_selected", true);
-		$.each(selectedElms, function () {
-			clusters.push(this.id);
-		});
+		let clusters = $("#jstree-proton-seguimiento").jstree("get_selected", true)
+			.filter(e => e.original.nivel == $scope.nfiltrogeografiaSeguimientoDiario)
+			.map(e => parseInt(e.id));
 
 		if (clusters.length === 0) {
 			mensaje += '<li>Seleccione geograf&iacute;a.</li>';
 			isValid = false
 		}
-		let statuscopy = [];
-		if ($scope.filtrosGeneral.estatusdisponibles) {
-			angular.forEach($scope.filtrosGeneral.estatusdisponibles, (e, i) => {
-				if (e.checkedOpcion) {
-					statuscopy.push(e.id);
-				}
-			})
-		}
 
-		let intervencioncopy = [];
-		if ($scope.filtrosGeneral.tipoOrdenes) {
-			angular.forEach($scope.filtrosGeneral.tipoOrdenes, (e, i) => {
-				if (e.checkedOpcion) {
-					intervencioncopy.push(e.id);
-				}
-			})
-		}
+		let statuscopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteSeguimiento.estatusdisponibles, $scope.nfiltroestatuspendienteSeguimientoDiario);
+
+		let intervencioncopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteSeguimiento.tipoOrdenes, $scope.nfiltrointervencionesSeguimientoDiario);
 
 		let paramsTemp = {};
 
@@ -1031,7 +532,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 				"pageLength": 10,
 				"info": false,
 				"ajax": {
-					"url": "req/consultarReporteDiario",
+					"url": "req/consultarReporteSeguimientoDiario",
 					"type": "POST",
 					"data": paramsTemp,
 					"beforeSend": function () {
@@ -1056,13 +557,8 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 				"columns": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
 				"language": idioma_espanol_not_font,
 				"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
-				dom: 'Bfrtip',
-				buttons:
-					[{
-						extend: 'excelHtml5',
-						title: 'Reporte Seguimiento Diario',
-						text: 'Exportar Excel'
-					}],
+				dom: 'Bfrtip'
+
 			});
 
 			if (!reporteSeguimientoTable) {
@@ -1081,56 +577,434 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		}
 	}
 
-	downloadExcelReportFile = function(){ 
-        //$(".buttons-excel").click();
-        let nivelBusquedaArbol= $scope.obtenerNivelUltimoJerarquia()        
-        let clustersparam=$("#jstree-proton-3").jstree("get_selected", true)
-                                               .filter(e=>e.original.nivel== nivelBusquedaArbol)
-                                               .map(e=>parseInt(e.id))
-		
-        let statuscopy = [];
-        if($scope.filtrosGeneral.estatusdisponibles){
-            angular.forEach($scope.filtrosGeneral.estatusdisponibles,(e,i)=>{
-                statuscopy.push(e.id); 
-            })
-        }
-        
-        let intervencioncopy= [];
-        if($scope.filtrosGeneral.tipoOrdenes){
-            angular.forEach($scope.filtrosGeneral.tipoOrdenes,(e,i)=>{
-                intervencioncopy.push(e.id); 
-            })
-        }
-        let paramsR = {
-             fechaInicio: $scope.getFechaFormato($('#filtro_fecha_inicio_reporte').val()),
-             fechaFin: $scope.getFechaFormato($('#filtro_fecha_fin_reporte').val()),
-             tipoIntervencion:  intervencioncopy,
-             estatusOt: statuscopy,
-             geografias: clustersparam,
-             fechaSeleccionada:  $("#tipo_reporte").val(),
-             elementosPorPagina: $scope.resultReporteDiario,
-             pagina: 1
-        }
-        swal({ text: 'Cargando registros...', allowOutsideClick: false });
-        swal.showLoading();
-        reportesPIService.consultaReporteDiario(paramsR).then((result) =>{
-            console.log(result.data)
-            swal.close()
-            if (result.data.respuesta) {
-                const data = JSON.parse(result.data.result).ordenes
-                console.log(JSON.parse(result.data.result))
-                const fileName = 'Resporte Seguimiento Diario'
-                const exportType = 'xls'
-    
-                window.exportFromJSON({ data, fileName, exportType })
-            } else {
-                mostrarMensajeErrorAlert('Ocurrio un error al generar reporte.')
-            }
-           
-        }).catch(err => handleError(err));
-    }
+	downloadExcelReportFile = function () {
+		let clustersparam = $("#jstree-proton-seguimiento").jstree("get_selected", true)
+			.filter(e => e.original.nivel == $scope.nfiltrogeografiaSeguimientoDiario)
+			.map(e => parseInt(e.id))
 
-	$scope.iniciarReporteOrdenes();
+		let statuscopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteSeguimiento.estatusdisponibles, $scope.nfiltroestatuspendienteSeguimientoDiario);
+		let intervencioncopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteSeguimiento.tipoOrdenes, $scope.nfiltrointervencionesSeguimientoDiario);
+
+		let paramsR = {
+			fechaInicio: $scope.getFechaFormato($('#filtro_fecha_inicio_reporte').val()),
+			fechaFin: $scope.getFechaFormato($('#filtro_fecha_fin_reporte').val()),
+			tipoIntervencion: intervencioncopy,
+			estatusOt: statuscopy,
+			geografias: clustersparam,
+			fechaSeleccionada: $("#tipo_reporte").val(),
+			elementosPorPagina: $scope.resultReporteDiario,
+			pagina: 1
+		}
+
+		if ($scope.repDiario.idOrden && $scope.repDiario.idOrden != "") {
+			paramsR.idOrden = $scope.repDiario.idOrden;
+		}
+
+		if ($scope.repDiario.folio && $scope.repDiario.folio != "") {
+			paramsR.folio = $scope.repDiario.folio;
+		}
+
+		if ($scope.repDiario.idCuenta && $scope.repDiario.idCuenta != "") {
+			paramsR.idCuenta = $scope.repDiario.idCuenta;
+		}
+
+		swal({ text: 'Cargando registros...', allowOutsideClick: false });
+		swal.showLoading();
+
+		reportesPIService.consultaReporteDiario(paramsR).then((result) => {
+			swal.close()
+			if (result.data.respuesta) {
+				const data = JSON.parse(result.data.result).ordenes
+				const fileName = 'Resporte Seguimiento Diario'
+				const exportType = 'xls'
+
+				window.exportFromJSON({ data, fileName, exportType })
+			} else {
+				mostrarMensajeErrorAlert('Ocurrio un error al generar reporte.')
+			}
+
+		}).catch(err => handleError(err));
+	}
+
+	$scope.consultarCierreDiario = function () {
+		let mensaje = '<ul>';
+		let isValid = true;
+		let numerosOnly = /^[0-9]*$/i;
+		$scope.resultReporteCierre = 0;
+
+		let clusters = $("#jstree-proton-cierre").jstree("get_selected", true)
+			.filter(e => e.original.nivel == $scope.nfiltrogeografiaSeguimientoDiario)
+			.map(e => parseInt(e.id));
+
+		if (clusters.length === 0) {
+			mensaje += '<li>Seleccione geograf&iacute;a.</li>';
+			isValid = false
+		}
+
+		let statuscopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteCierre.estatusdisponibles, $scope.nfiltroestatuspendienteSeguimientoDiario);
+
+		let intervencioncopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteCierre.tipoOrdenes, $scope.nfiltrointervencionesSeguimientoDiario);
+
+		let paramsTemp = {};
+
+		if (!statuscopy.length) {
+			mensaje += '<li>Introducir Estatus</li>';
+			isValid = false;
+		}
+
+		if (!intervencioncopy.length) {
+			mensaje += '<li>Introducir Intervenci\u00F3n</li>';
+			isValid = false;
+		}
+
+		if (!numerosOnly.test($("#idot-reporte-cierre").val())) {
+			mensaje += '<li>El campo OT debe ser n&uacute;merico</li>';
+			isValid = false;
+		}
+
+		if ($("#tipo_reporte_cierre").val() == "" || $("#tipo_reporte_cierre").val() == undefined) {
+			mensaje += '<li>Selecciona Tipo fecha</li>';
+			isValid = false;
+		} else {
+			$scope.repCierreDiario.fechaSeleccionada = $("#tipo_reporte_cierre").val()
+		}
+
+		if (!validarFecha('filtro_fecha_inicio_reporte_cierre', 'filtro_fecha_fin_reporte_cierre')) {
+			mensaje += '<li>La fecha final debe ser mayor que la fecha inicio</li>';
+			isValid = false;
+		}
+
+		if (!isValid) {
+			mensaje += '</ul>';
+			mostrarMensajeWarningValidacion(mensaje);
+			return false;
+		} else {
+			paramsTemp.fechaInicio = $scope.getFechaFormato($("#filtro_fecha_inicio_reporte_cierre").val());
+			paramsTemp.fechaFin = $scope.getFechaFormato($("#filtro_fecha_fin_reporte_cierre").val());
+			paramsTemp.tipoIntervencion = intervencioncopy;
+			paramsTemp.estatusOt = statuscopy;
+			paramsTemp.fechaSeleccionada = $scope.repCierreDiario.fechaSeleccionada;
+			paramsTemp.elementosPorPagina = 10;
+			paramsTemp.pagina = 1;
+			paramsTemp.geografias = clusters;
+			if ($scope.repCierreDiario.idOrden && $scope.repCierreDiario.idOrden != "") {
+				paramsTemp.idOrden = $scope.repCierreDiario.idOrden;
+			}
+
+			if ($scope.repCierreDiario.folio && $scope.repCierreDiario.folio != "") {
+				paramsTemp.folio = $scope.repCierreDiario.folio;
+			}
+
+			if ($scope.repCierreDiario.idCuenta && $scope.repCierreDiario.idCuenta != "") {
+				paramsTemp.idCuenta = $scope.repCierreDiario.idCuenta;
+			}
+
+			if (reporteCierreTable) {
+				reporteCierreTable.destroy()
+			}
+			reporteCierreTable = $('#reporteCierreTable').DataTable({
+				"processing": false,
+				"ordering": false,
+				"serverSide": true,
+				"scrollX": false,
+				"paging": true,
+				"lengthChange": false,
+				"searching": false,
+				"ordering": false,
+				"pageLength": 10,
+				"info": false,
+				"ajax": {
+					"url": "req/consultarReporteCierreDiario",
+					"type": "POST",
+					"data": paramsTemp,
+					"beforeSend": function () {
+						if (!swal.isVisible()) {
+							swal({ text: 'Cargando registros...', allowOutsideClick: false });
+							swal.showLoading();
+						}
+
+					},
+					"dataSrc": function (json) {
+						$scope.resultReporteCierre = json.registrosTotales;
+						return json.data;
+					},
+					"error": function (xhr, error, thrown) {
+						handleError(xhr)
+					},
+					"complete": function () {
+						swal.close()
+					}
+				},
+
+				"columns": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+				"language": idioma_espanol_not_font,
+				"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+				dom: 'Bfrtip',
+				buttons:
+					[{
+						extend: 'excelHtml5',
+						title: 'Reporte Cierre Diario',
+						text: 'Exportar Excel'
+					}],
+			});
+
+			if (!reporteCierreTable) {
+				reporteCierreTable = $('#reporteCierreTable').DataTable({
+					"paging": true,
+					"lengthChange": false,
+					"searching": false,
+					"ordering": false,
+					"pageLength": 10,
+					"info": false,
+					"autoWidth": true,
+					"language": idioma_espanol_not_font,
+					"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+				});
+			}
+		}
+	}
+
+	downloadExcelReportCierreFile = function () {
+		let clustersparam = $("#jstree-proton-cierre").jstree("get_selected", true)
+			.filter(e => e.original.nivel == $scope.nfiltrogeografiaSeguimientoDiario)
+			.map(e => parseInt(e.id))
+
+		let statuscopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteSeguimiento.estatusdisponibles, $scope.nfiltroestatuspendienteSeguimientoDiario);
+		let intervencioncopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteSeguimiento.tipoOrdenes, $scope.nfiltrointervencionesSeguimientoDiario);
+
+		let paramsR = {
+			fechaInicio: $scope.getFechaFormato($('#filtro_fecha_inicio_reporte_cierre').val()),
+			fechaFin: $scope.getFechaFormato($('#filtro_fecha_fin_reporte_cierre').val()),
+			tipoIntervencion: intervencioncopy,
+			estatusOt: statuscopy,
+			geografias: clustersparam,
+			fechaSeleccionada: $("#tipo_reporte_cierre").val(),
+			elementosPorPagina: $scope.resultReporteCierre,
+			pagina: 1
+		}
+
+		if ($scope.repCierreDiario.idOrden && $scope.repCierreDiario.idOrden != "") {
+			paramsR.idOrden = $scope.repCierreDiario.idOrden;
+		}
+
+		if ($scope.repCierreDiario.folio && $scope.repCierreDiario.folio != "") {
+			paramsR.folio = $scope.repCierreDiario.folio;
+		}
+
+		if ($scope.repCierreDiario.idCuenta && $scope.repCierreDiario.idCuenta != "") {
+			paramsR.idCuenta = $scope.repCierreDiario.idCuenta;
+		}
+
+
+		swal({ text: 'Cargando registros...', allowOutsideClick: false });
+		swal.showLoading();
+
+		reportesPIService.consultaReporteCierreDiario(paramsR).then((result) => {
+			swal.close()
+			if (result.data.respuesta) {
+				const data = JSON.parse(result.data.result).ordenes
+				const fileName = 'Resporte Cierre Diario'
+				const exportType = 'xls'
+
+				window.exportFromJSON({ data, fileName, exportType })
+			} else {
+				mostrarMensajeErrorAlert('Ocurrio un error al generar reporte.')
+			}
+
+		}).catch(err => handleError(err));
+	}
+
+
+	$scope.consultarReporteAsignadasCompensacion = function () {
+		let mensaje = '<ul>';
+		let isValid = true;
+		let numerosOnly = /^[0-9]*$/i;
+		$scope.resultReporteAsignadas = 0;
+
+		let clusters = $("#jstree-proton-asignadas").jstree("get_selected", true)
+			.filter(e => e.original.nivel == $scope.nfiltrogeografiaSeguimientoDiario)
+			.map(e => parseInt(e.id));
+
+		if (clusters.length === 0) {
+			mensaje += '<li>Seleccione geograf&iacute;a.</li>';
+			isValid = false
+		}
+
+		let statuscopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteAsignadas.estatusdisponibles, $scope.nfiltroestatuspendienteSeguimientoDiario);
+
+		let intervencioncopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteAsignadas.tipoOrdenes, $scope.nfiltrointervencionesSeguimientoDiario);
+
+		let paramsTemp = {};
+
+		if (!statuscopy.length) {
+			mensaje += '<li>Introducir Estatus</li>';
+			isValid = false;
+		}
+
+		if (!intervencioncopy.length) {
+			mensaje += '<li>Introducir Intervenci\u00F3n</li>';
+			isValid = false;
+		}
+
+		if (!numerosOnly.test($("#idot-reporte-asignadas").val())) {
+			mensaje += '<li>El campo OT debe ser n&uacute;merico</li>';
+			isValid = false;
+		}
+
+		if ($("#tipo_reporte_asignadas").val() == "" || $("#tipo_reporte_asignadas").val() == undefined) {
+			mensaje += '<li>Selecciona Tipo fecha</li>';
+			isValid = false;
+		} else {
+			$scope.repCierreDiario.fechaSeleccionada = $("#tipo_reporte_asignadas").val()
+		}
+
+		if (!validarFecha('filtro_fecha_inicio_reporte_asignadas', 'filtro_fecha_fin_reporte_asignadas')) {
+			mensaje += '<li>La fecha final debe ser mayor que la fecha inicio</li>';
+			isValid = false;
+		}
+
+		if (!isValid) {
+			mensaje += '</ul>';
+			mostrarMensajeWarningValidacion(mensaje);
+			return false;
+		} else {
+			paramsTemp.fechaInicio = $scope.getFechaFormato($("#filtro_fecha_inicio_reporte_asignadas").val());
+			paramsTemp.fechaFin = $scope.getFechaFormato($("#filtro_fecha_fin_reporte_asignadas").val());
+			paramsTemp.tipoIntervencion = intervencioncopy;
+			paramsTemp.estatusOt = statuscopy;
+			paramsTemp.fechaSeleccionada = $("#tipo_reporte_asignadas").val();
+			paramsTemp.elementosPorPagina = 10;
+			paramsTemp.pagina = 1;
+			paramsTemp.geografias = clusters;
+			if ($scope.repAsignadas.idOrden && $scope.repAsignadas.idOrden != "") {
+				paramsTemp.idOrden = $scope.repAsignadas.idOrden;
+			}
+
+			if ($scope.repAsignadas.folio && $scope.repAsignadas.folio != "") {
+				paramsTemp.folio = $scope.repAsignadas.folio;
+			}
+
+			if ($scope.repAsignadas.idCuenta && $scope.repAsignadas.idCuenta != "") {
+				paramsTemp.idCuenta = $scope.repAsignadas.idCuenta;
+			}
+
+			if (reporteAsignadasTable) {
+				reporteAsignadasTable.destroy()
+			}
+			reporteAsignadasTable = $('#reporteAsignadasTable').DataTable({
+				"processing": false,
+				"ordering": false,
+				"serverSide": true,
+				"scrollX": false,
+				"paging": true,
+				"lengthChange": false,
+				"searching": false,
+				"ordering": false,
+				"pageLength": 10,
+				"info": false,
+				"ajax": {
+					"url": "req/consultarReporteAsignadasCompensacion",
+					"type": "POST",
+					"data": paramsTemp,
+					"beforeSend": function () {
+						if (!swal.isVisible()) {
+							swal({ text: 'Cargando registros...', allowOutsideClick: false });
+							swal.showLoading();
+						}
+
+					},
+					"dataSrc": function (json) {
+						$scope.resultReporteAsignadas = json.registrosTotales;
+						return json.data;
+					},
+					"error": function (xhr, error, thrown) {
+						handleError(xhr)
+					},
+					"complete": function () {
+						swal.close()
+					}
+				},
+
+				"columns": [null, null, null, null, null, null, null, null, null, null, null, null],
+				"language": idioma_espanol_not_font,
+				"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+				dom: 'Bfrtip',
+				buttons:
+					[{
+						extend: 'excelHtml5',
+						title: 'Reporte Cierre Diario',
+						text: 'Exportar Excel'
+					}],
+			});
+
+			if (!reporteAsignadasTable) {
+				reporteAsignadasTable = $('#reporteAsignadasTable').DataTable({
+					"paging": true,
+					"lengthChange": false,
+					"searching": false,
+					"ordering": false,
+					"pageLength": 10,
+					"info": false,
+					"autoWidth": true,
+					"language": idioma_espanol_not_font,
+					"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+				});
+			}
+		}
+	}
+
+	downloadExcelReportAsignadasFile = function () {
+		let clustersparam = $("#jstree-proton-asignadas").jstree("get_selected", true)
+			.filter(e => e.original.nivel == $scope.nfiltrogeografiaSeguimientoDiario)
+			.map(e => parseInt(e.id))
+
+		let statuscopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteAsignadas.estatusdisponibles, $scope.nfiltroestatuspendienteSeguimientoDiario);
+		let intervencioncopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteAsignadas.tipoOrdenes, $scope.nfiltrointervencionesSeguimientoDiario);
+
+		let paramsR = {
+			fechaInicio: $scope.getFechaFormato($('#filtro_fecha_inicio_reporte_asignadas').val()),
+			fechaFin: $scope.getFechaFormato($('#filtro_fecha_fin_reporte_asignadas').val()),
+			tipoIntervencion: intervencioncopy,
+			estatusOt: statuscopy,
+			geografias: clustersparam,
+			fechaSeleccionada: $("#tipo_reporte_asignadas").val(),
+			elementosPorPagina: $scope.resultReporteAsignadas,
+			pagina: 1
+		}
+
+		if ($scope.repAsignadas.idOrden && $scope.repAsignadas.idOrden != "") {
+			paramsR.idOrden = $scope.repAsignadas.idOrden;
+		}
+
+		if ($scope.repAsignadas.folio && $scope.repAsignadas.folio != "") {
+			paramsR.folio = $scope.repAsignadas.folio;
+		}
+
+		if ($scope.repAsignadas.idCuenta && $scope.repAsignadas.idCuenta != "") {
+			paramsR.idCuenta = $scope.repAsignadas.idCuenta;
+		}
+
+
+		swal({ text: 'Cargando registros...', allowOutsideClick: false });
+		swal.showLoading();
+
+		reportesPIService.consultaReporteAsignadas(paramsR).then((result) => {
+			swal.close()
+			if (result.data.respuesta) {
+				const data = JSON.parse(result.data.result).ordenes
+				const fileName = 'Resporte Asignadas Compensacion'
+				const exportType = 'xls'
+
+				window.exportFromJSON({ data, fileName, exportType })
+			} else {
+				mostrarMensajeErrorAlert('Ocurrio un error al generar reporte.')
+			}
+
+		}).catch(err => handleError(err));
+	}
+
+	$scope.consultarCatalagosPI();
+
 	//$scope.initComponents();
 	$("#li-reporte-navbar").addClass('active')
 

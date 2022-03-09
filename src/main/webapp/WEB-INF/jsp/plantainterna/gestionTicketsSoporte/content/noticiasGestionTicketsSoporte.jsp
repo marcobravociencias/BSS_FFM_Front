@@ -9,18 +9,27 @@
                  </div>
             </form-->
             <div class="input-group ">
-                <input type="text" id="text-general-os" class="form-control form-send-general" placeholder="Escribe aqu&iacute; tu mensaje" aria-label="Recipient's username"aria-describedby="basic-addon2" />
-                <span class="input-group-text icono-adjuntar-archivo fas fa-paperclip" id="basic-addon2"></span>
+                <input type="text" id="text-general" class="form-control form-send-general" placeholder="Escribe aqu&iacute; tu mensaje" aria-label="Recipient's username"aria-describedby="basic-addon2" ng-model="mensajeGeneral"/>
+                <input name="myFile" type="file" ng-on-change="cambioGeneral()" class="box__file inputFile" id="fileComentariosTicket">
+                <label for="fileComentariosTicket" class="lbl-adjuntar-ticket"><i class="input-group-text icono-adjuntar-archivo fas fa-paperclip" id="basic-addon2"></i></label>
+                <div class="badge badge-dot badge-dot-sm status-adjunto badge-warning" ng-show="!showEliminarFileTicket"></div>
+                <div class="badge badge-dot badge-dot-sm status-adjunto badge-success" ng-show="showEliminarFileTicket"></div>
             </div>
-            <button class="btn-send-mensaje " >
-                <i ng-click="enviarMesajeGeneral()" class=" fas fa-paper-plane"></i>
+            <button class="btn-send-mensaje " ng-click="enviarMesajeGeneral()">
+                <i class="fas fa-paper-plane"></i>
             </button>
-            <span class="eliminar_archivo" ng-show="showEliminarOs" ng-click="resetFile()">Eliminar</span>
+            
         </div> 
         <div class="col-4 content-button-regrescar-comentarios">
-            <img id="btnRefresNoticias" style="cursor: pointer;" alt="Refresh" ng-click="objectoConsulta()"  
+            <img id="btnRefresNoticias" style="cursor: pointer;" alt="Refresh" ng-click="consultarComentariosTicketSoporte()"  
                 src="${pageContext.request.contextPath}/resources/img/generic/actualizar_icon.svg">
         </div>       
+    </div>
+    <div class="row">
+        <div class="col-12 col-input-adjunto">
+            <span id="spnNombreArchivo" class="spn-titulo-adjunto"></span>
+            <i class="fas fa-trash-alt icon-eliminar-adjunto" ng-show="showEliminarFileTicket" ng-click="resetFileGeneral()"></i>
+        </div>
     </div>
  
     <div class="divider-noticias" style=" width: 100%;height: 1px; background: gainsboro;"></div>
@@ -38,30 +47,33 @@
                                 <div class="row">
                                     <h1 class="subtitelheader-detalle" ng-bind="noticia.text"></h1>
                                 </div>
-                                <span class="option-mensajes" ng-click="responderComentario(noticia.id)">Responder</span>
+                                <span class="option-mensajes" ng-click="responderComentarioTicket(noticia.id)">Responder</span>
                                 <!-- <span class="option-mensajes" ng-click="editarComentario(noticia.id, noticia.text, 0)">Editar</span> -->
                                 <span class="option-mensajes" ng-click="eliminarComentario(noticia.id, 0)">Eliminar</span>
                                 <span class="text-fecha-comentario" ng-bind="noticia.createdDate"></span>
                                 <button id="button-subcommet-{{noticia.id}}" type="button" class="btn-close close-enviar-subcomentario" ng-click="responderComentario(noticia.id)" aria-label="Close" style="display: none;"></button>
-                                <div id="content-text-e-{{noticia.id}}" class="row content-text-send" style="display: none;">
-                                    <div class="col-10">
-                                        <input id="texto-comentario-os-{{noticia.id}}" type="text" class="form-control form-control-sm form-send">
-                                    </div>
-                                    <div class="col-2 col-btn-send">
-                                        <button class="btn btn-sm btn-primary btn-send" ng-click="enviarComentario(noticia.id)">Enviar</i></button>
-                                    </div>
-                                        <div class="col-12 col-adjuntar-archivo" ng-show="showAdjuntar">
-                                            <form id="uploadFormSubcomentario-{{noticia.id}}" name="16" class="form-horizontal box form_drag_drop" novalidate="novalidate" enctype="multipart/form-data">
-                                                <div class="box__input">
-                                                    <input name="myFileSubOs" type="file" class="box__file inputFile adjuntar-archivo-os" onchange="cambiar(this)" id="fileSubComentarioOs-{{noticia.id}}"/>	
-                                                    <label for="fileSubComentarioOs-{{noticia.id}}" id="etiqueta_archivo">
-                                                        <span class="text_select_archivo_sub col-content-text-general">Adjuntar archivo</span>
-                                                 </div>
-                                            </form>
+                                <div id="content-subcomentario-{{noticia.id}}" class="row container-text-subcomentarios" style="display: none;">
+                                    <div class="col-8 col-input-text-subcomentarios" style="width: 90%;">
+                                        <div class="input-group input-group-subcomentarios">
+                                            <input type="text" id="texto-subcomentario-{{noticia.id}}" class="form-control form-send-general text-subcomentario-ticket" placeholder="Escribe aqu&iacute; tu mensaje" aria-label="Recipient's username"aria-describedby="basic-addon2" ng-model="mensajeGeneral"/>
+                                            <input type="file" class="box__file inputFile" id="fileSubComentarioTicket-{{noticia.id}}" onchange="cambiar(this)"/>
+                                            <label for="fileSubComentarioTicket-{{noticia.id}}" class="lbl-adjuntar-ticket"><i class="input-group-text icon-adjuntar-subcomentarios fas fa-paperclip" id="basic-addon2"></i></label>
+                                            <div class="badge badge-dot badge-dot-sm status-adjunto badge-warning" ng-show="!showEliminarSubComTicket"></div>
+                                            <div class="badge badge-dot badge-dot-sm status-adjunto badge-success" ng-show="showEliminarSubComTicket"></div>
                                         </div>
-                                        <div class="col-12 col-adjuntar-arch" ng-show="showAdjuntar">
-                                            <span class="eliminar_archivo_sub" ng-show="showEliminarSubOs" ng-click="resetFile(noticia.id)">Eliminar</span>
-                                        </div>
+                                    </div>
+                                    <div class="col-2" style="top: -34px; left: 34em;">
+                                        <button class="btn-send-mensaje" ng-click="enviarComentario(noticia.id)" style="height: 2.2em;">
+                                            <i class="fas fa-paper-plane"></i>
+                                        </button>
+                                    </div>
+                                    <div class="col-2 adjuntar-archivo-subcomentario">
+                                        <span id="spnNombreAdSubComentario-{{noticia.id}}" class="spn-titulo-adjunto"></span>
+                                        <i class="fas fa-trash-alt icon-eliminar-adjunto" ng-show="showEliminarSubComTicket" ng-click="resetFile(noticia.id)"></i>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                   
                                 </div>
                             </div>
                         </div>
@@ -71,14 +83,14 @@
                     <div class="col-12 col-adjunto-principal">
                         <div class="row">
                             <div class="file-adjuntado"  ng-switch="noticia.media.type">
-                                <img ng-switch-when="JPG"  src="${pageContext.request.contextPath}/resources/img/iconossf/imageico.jpg" class="imagen-adjuntado-noticia" alt="">
-                                <img ng-switch-when="JPEG" src="${pageContext.request.contextPath}/resources/img/iconossf/imageico.jpg" class="imagen-adjuntado-noticia" alt="">
-                                <img ng-switch-when="PNG"  src="${pageContext.request.contextPath}/resources/img/iconossf/imageico.jpg" class="imagen-adjuntado-noticia" alt="">
-                                <img ng-switch-when="GIF"  src="${pageContext.request.contextPath}/resources/img/iconossf/imageico.jpg" class="imagen-adjuntado-noticia" alt="">
-                                <img ng-switch-when="PDF"  src="${pageContext.request.contextPath}/resources/img/iconossf/pdf.png" class="" alt="">                                
-                                <img ng-switch-when="POWER_POINT_X" src="${pageContext.request.contextPath}/resources/img/iconossf/powerpoint.png" class="" alt="">
-                                <img ng-switch-when="PPTX" src="${pageContext.request.contextPath}/resources/img/iconossf/powerpoint.png" class="" alt="">
-                                <img ng-switch-default src="${pageContext.request.contextPath}/resources/img/iconossf/not-found.jpg" class="imagen-adjuntado-noticianot" alt="">
+                                <img ng-switch-when="JPG"  src="${pageContext.request.contextPath}/resources/img/iconossf/imageico.jpg" class="imagen-adjuntado-comentarios" alt="">
+                                <img ng-switch-when="JPEG" src="${pageContext.request.contextPath}/resources/img/iconossf/imageico.jpg" class="imagen-adjuntado-comentarios" alt="">
+                                <img ng-switch-when="PNG"  src="${pageContext.request.contextPath}/resources/img/iconossf/imageico.jpg" class="imagen-adjuntado-comentarios" alt="">
+                                <img ng-switch-when="GIF"  src="${pageContext.request.contextPath}/resources/img/iconossf/imageico.jpg" class="imagen-adjuntado-comentarios" alt="">
+                                <img ng-switch-when="PDF"  src="${pageContext.request.contextPath}/resources/img/iconossf/pdf.png" class="imagen-adjuntado-comentarios" alt="">                                
+                                <img ng-switch-when="POWER_POINT_X" src="${pageContext.request.contextPath}/resources/img/iconossf/powerpoint.png" class="imagen-adjuntado-comentarios" alt="">
+                                <img ng-switch-when="PPTX" src="${pageContext.request.contextPath}/resources/img/iconossf/powerpoint.png" class="imagen-adjuntado-comentarios" alt="">
+                                <img ng-switch-default src="${pageContext.request.contextPath}/resources/img/iconossf/not-found.jpg" class="imagen-adjuntado-comentarios" alt="">
 
                                 <div class="title-file-adjuntado">
                                     <h1 class="text-title-adjuntado" ng-bind="noticia.media.name" ></h1>
@@ -116,15 +128,15 @@
                     <div class="col-10 offset-1" ng-if="comentario.media">
                     <div class="content-archivo-comentario">
                         <div class="imagen-adjuntado-comment" ng-switch="comentario.media.type">
-                            <img ng-switch-when="JPG"  src="${pageContext.request.contextPath}/resources/img/iconossf/imageico.jpg" class="imagen-comment-owner" alt="">
-                            <img ng-switch-when="JPEG" src="${pageContext.request.contextPath}/resources/img/iconossf/imageico.jpg" class="imagen-comment-owner" alt="">
-                            <img ng-switch-when="PNG"  src="${pageContext.request.contextPath}/resources/img/iconossf/imageico.jpg" class="imagen-comment-owner" alt="">
-                            <img ng-switch-when="GIF"  src="${pageContext.request.contextPath}/resources/img/iconossf/imageico.jpg" class="imagen-comment-owner" alt="">
-                            <img ng-switch-when="PDF"  src="${pageContext.request.contextPath}/resources/img/iconossf/pdf.png" class="" alt="">
-                            <img ng-switch-when="PPTX" src="${pageContext.request.contextPath}/resources/img/iconossf/powerpoint.png" class="" alt="">
-                            <img ng-switch-when="POWER_POINT_X" src="${pageContext.request.contextPath}/resources/img/iconossf/powerpoint.png" class="" alt="">
+                            <img ng-switch-when="JPG"  src="${pageContext.request.contextPath}/resources/img/iconossf/imageico.jpg" class="img-adjunto-subcomentarios" alt="">
+                            <img ng-switch-when="JPEG" src="${pageContext.request.contextPath}/resources/img/iconossf/imageico.jpg" class="img-adjunto-subcomentarios" alt="">
+                            <img ng-switch-when="PNG"  src="${pageContext.request.contextPath}/resources/img/iconossf/imageico.jpg" class="img-adjunto-subcomentarios" alt="">
+                            <img ng-switch-when="GIF"  src="${pageContext.request.contextPath}/resources/img/iconossf/imageico.jpg" class="img-adjunto-subcomentarios" alt="">
+                            <img ng-switch-when="PDF"  src="${pageContext.request.contextPath}/resources/img/iconossf/pdf.png" class="img-adjunto-subcomentarios" alt="">
+                            <img ng-switch-when="PPTX" src="${pageContext.request.contextPath}/resources/img/iconossf/powerpoint.png" class="img-adjunto-subcomentarios" alt="">
+                            <img ng-switch-when="POWER_POINT_X" src="${pageContext.request.contextPath}/resources/img/iconossf/powerpoint.png" class="img-adjunto-subcomentarios" alt="">
 
-                            <img ng-switch-default src="${pageContext.request.contextPath}/resources/img/iconossf/not-found.jpg" class="imagen-comment-owner" alt="">
+                            <img ng-switch-default src="${pageContext.request.contextPath}/resources/img/iconossf/not-found.jpg" class="img-adjunto-subcomentarios" alt="">
 
                             <div class="comment-adjuntado-text">
                                 <h1 class="text-title-comment-top" ng-bind="comentario.media.name"></h1>

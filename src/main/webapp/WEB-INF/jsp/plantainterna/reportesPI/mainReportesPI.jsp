@@ -30,78 +30,52 @@
     <body id="idBody" ng-controller="reportesController" style="display: none;">
 
         <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
-        <div class="container" id="container_reportes">
+       <div ng-show="permisosConfigUser.permisos.length === 0" class="container container-message">
+        <div  class="text-accion-nopermiso">
+            <i class="icon-not-permiso fas fa-user-lock"></i>
+            <b class="text-not-permiso">No cuentas con el permiso de consulta.</b>
+        </div>
+       </div>
+        <div class="container" id="container_reportes" ng-show="permisosConfigUser.permisos.length > 0">
             <div class="row">
                 <div class="col-md-12">
                     <ul class="nav nav-tabs left-menu small-menu flex-column" id="opciones-menu" role="tablist"
                         style="margin-left: 0; height: 100%;">
-                        <li class="nav-item">
-                            <a class="opcion-menu active" id="seguimientoDiario-tab" data-toggle="tab"
-                                href="#seguimientoDiario" role="tab" aria-controls="seguimientoDiario"
+                        <li class="nav-item" ng-click="cambiaReporte('seguimiento', true,'seguimientoDiario')" ng-if="configPermisoAccionConsultaReporteSeguimiento">
+                            <a class="opcion-menu" id="seguimientoDiario-tab" data-toggle="tab" 
+                                href="seguimientoDiario" role="tab" aria-controls="seguimientoDiario"
                                 aria-selected="false"><i class="icon-menu-left fas fa-calendar-check"></i>&nbsp;<span
-                                    class="titulo-menu">Reporte Seguimiento Diario</span></a>
+                                    class="titulo-menu">Seguimiento Diario</span></a>
                         </li>
-                        <li class="nav-item">
-                            <a class="opcion-menu" id="ordenes-tab" data-toggle="tab" href="#ordenes" role="tab"
-                                aria-controls="ordenes" aria-selected="false"><i
-                                    class="icon-menu-left fas fa-clipboard-list"></i>&nbsp;<span
-                                    class="titulo-menu">Reporte Ordenes de Trabajo PI</span></a>
+                        <li class="nav-item" ng-click="cambiaReporte('cierre',true,'cierreDiario')" ng-if="configPermisoAccionConsultaReporteCierre">
+                            <a class="opcion-menu" id="cierreDiario-tab" data-toggle="tab"
+                                href="cierreDiario" role="tab" aria-controls="cierreDiario"
+                                aria-selected="false"><i class="icon-menu-left fas fa-calendar-week"></i>&nbsp;<span
+                                    class="titulo-menu">Cierre Diario</span></a>
                         </li>
-                        <li class="nav-item">
-                            <a class="opcion-menu" id="despacho-tab" data-toggle="tab" href="#despacho" role="tab"
-                                aria-controls="despacho" aria-selected="false"><i
-                                    class="icon-menu-left fas fa-user-tie"></i>&nbsp;<span class="titulo-menu">Reporte
-                                    Coordinador</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="opcion-menu" id="auxiliar-tab" data-toggle="tab" href="#auxiliar" role="tab"
-                                aria-controls="auxiliar" aria-selected="false"><i
-                                    class="icon-menu-left fas fa-briefcase"></i>&nbsp;<span class="titulo-menu"
-                                    style="margin-left: 0.6em;">Reporte T&eacute;cnico Auxiliar</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="opcion-menu" id="inspector-tab" data-toggle="tab" href="#inspector" role="tab"
-                                aria-controls="inspector" aria-selected="false"><i
-                                    class="icon-menu-left fas fa-search-location"></i>&nbsp;<span
-                                    class="titulo-menu">Reporte Inspector</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="opcion-menu" id="tecnico-tab" data-toggle="tab" href="#tecnico" role="tab"
-                                aria-controls="tecnico" aria-selected="false"><i
-                                    class="icon-menu-left fas fa-user-alt"></i>&nbsp;<span class="titulo-menu">Reporte
-
-                                    por Tecnico</span></a>
+                        <li class="nav-item" ng-click="cambiaReporte('asignadas',true,'asignadasCompensacion')" ng-if="configPermisoAccionConsultaReporteAsignadas">
+                            <a class="opcion-menu" id="asignadasCompensacion-tab" data-toggle="tab"
+                                href="asignadasCompensacion" role="tab" aria-controls="asignadasCompensacion"
+                                aria-selected="false"><i class="icon-menu-left fas fa-file-alt"></i>&nbsp;<span
+                                    class="titulo-menu">Asignadas Compensaci&oacute;n</span></a>
                         </li>
                     </ul>
                     <div class="right-content tab-content">
                         <div class="row tab-content">
-                            <div class="tab-pane fade show active" id="seguimientoDiario" role="tabpanel"
+                            <div class="tab-pane fade" id="seguimientoDiario" role="tabpanel" ng-if="configPermisoAccionConsultaReporteSeguimiento"
                                 aria-labelledby="seguimientoDiario-tab">
                                 <h5 id="texto_header_reportes" class="text-center">Reporte Seguimiento
                                     Diario</h5>
                                 <jsp:include page="./reporteSeguimientoDiario.jsp"></jsp:include>
                             </div>
-                            <div class="tab-pane fade" id="ordenes" role="tabpanel" aria-labelledby="ordenes-tab">
-                                <h5 id="texto_header_reportes" class="text-center">Reporte Ordenes de Trabajo Planta
-                                    Interna</h5>
-                                <jsp:include page="./reporteOrdenes.jsp"></jsp:include>
+                            <div class="tab-pane fade" id="cierreDiario" role="tabpanel" aria-labelledby="cierreDiario-tab" ng-if="configPermisoAccionConsultaReporteCierre">
+                                <h5 id="texto_header_reportes" class="text-center">Reporte Cierre Diario</h5>
+                                <jsp:include page="./reporteCierreDiario.jsp"></jsp:include>
                             </div>
-                            <div class="tab-pane fade" id="despacho" role="tabpanel" aria-labelledby="despacho-tab">
-                                <h5 id="texto_header_reportes" class="text-center">Reporte Coordinador</h5>
-                                <jsp:include page="./reporteDespacho.jsp"></jsp:include>
-                            </div>
-                            <div class="tab-pane fade" id="auxiliar" role="tabpanel" aria-labelledby="auxiliar-tab">
-                                <h5 id="texto_header_reportes" class="text-center">Reporte T&eacute;cnico Auxiliar</h5>
-                                <jsp:include page="./reporteAuxiliar.jsp"></jsp:include>
-                            </div>
-                            <div class="tab-pane fade" id="inspector" role="tabpanel" aria-labelledby="inspector-tab">
-                                <h5 id="texto_header_reportes" class="text-center">Reporte Inspector</h5>
-                                <jsp:include page="./reporteInspector.jsp"></jsp:include>
-                            </div>
-                            <div class="tab-pane fade" id="tecnico" role="tabpanel" aria-labelledby="tecnico-tab">
-                                <h5 id="texto_header_reportes" class="text-center">Reporte por T&eacute;cnico</h5>
-                                <jsp:include page="./reporteTecnico.jsp"></jsp:include>
-                            </div>
+                            <div class="tab-pane fade" id="asignadasCompensacion" role="tabpanel" aria-labelledby="asignadasCompensacion-tab" ng-if="configPermisoAccionConsultaReporteAsignadas">
+                                <h5 id="texto_header_reportes" class="text-center">Reporte Asignadas Compensaci&oacute;n</h5>
+                                <jsp:include page="./reporteAsignadasCompensacion.jsp"></jsp:include>
+                            </div>                        
                         </div>
                     </div>
                 </div>
@@ -109,6 +83,8 @@
         </div>
         <jsp:include page="./modals/modalCluster.jsp"></jsp:include>
     </body>
+    <jsp:include page="./filtroReporte.jsp"></jsp:include>
+
     <!-- LIBRERIAS -->
     <script src="${pageContext.request.contextPath}/resources/libraries/angularjs/js/angular.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.min.js"></script>

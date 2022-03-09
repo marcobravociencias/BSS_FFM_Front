@@ -1,19 +1,22 @@
-<div class="modal fade bd-example-modal-lg" aria-labelledby="modalDetalleIncidencia" aria-hidden="true"
-    id="modalDetalleIncidencia">
+<div class="modal fade bd-example-modal-lg" aria-labelledby="modalDetalleIncidencia" aria-hidden="true" id="modalDetalleIncidencia"> 
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalDetalleIncidencia"> Reporta: {{incidenciaDetalle.numeroEmpleado}} -
-                    {{incidenciaDetalle.usuarioReporta}}</h5>
+                <h5 class="modal-title">
+                    Reporta: {{incidenciaDetalle.numeroEmpleado}} - {{incidenciaDetalle.usuarioReporta}}
+                </h5>
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" style=" max-height: 300px; overflow: auto;">
+                <!-- <div ng-click="cerrarImgDetalle()" id="image-viewer">
+                    <span  class=" close">&times;</span>
+                    <img class="modal-content-viewer" id="full-image">
+                </div> -->
                 <div id="container-detalleIncidencia" class="container">
                     <div class="" id="acciones"></div>
                     <div class="row" style="padding: 0;">
                         <div style="padding-left: 0;" class="col-2" ng-show="isNavTab">
-                            <div class="nav flex-column nav-tabs text-center" id="v-tabs-tab-incidencia" role="tablist"
-                                aria-orientation="vertical">
+                            <div class="nav flex-column nav-tabs text-center" id="v-tabs-tab-incidencia" role="tablist" aria-orientation="vertical">
                                 <li class="nav-link active" id="informacion-incidencia">Informaci&oacute;n</li>
                                 <li class="nav-link" id="detalle-status">Detalle Estatus</li>
                             </div>
@@ -38,8 +41,7 @@
                             <div class="container" id="containerStatusFallas" style="display:none">
                                 <div class="row">
                                     <div id="content_table_detalle_status" class="">
-                                        <table id="tableDetalleStatus" class="display table" cellspacing="0"
-                                            width="100%">
+                                        <table id="tableDetalleStatus" class="display table" cellspacing="0" width="100%">
                                             <thead>
                                                 <tr>
                                                     <th>#EMPLEADO</th>
@@ -73,7 +75,9 @@
                                         <span class="box__dragndrop">o arrastra aqu&iacute;</span>
                                       </label>
                                       <br />
-                                      <div class="box__uploading"><i class="fas fa-cloud-upload-alt" style="display: block;"></i> </div>
+                                      <div class="box__uploading">
+                                          <i class="fas fa-cloud-upload-alt" style="display: block;"></i> 
+                                        </div>
                                   </div>
                               </form>
                             </div>
@@ -123,10 +127,7 @@
                                     <p class="title_consulta">Motivo:</p>
                                 </label>
                                 <br>
-                                <select id="select-motivo-rechazar"
-                                    class="browser-default custom-select select_consulta" data-actions-box="true"
-                                    ng-model="motivoRechazo.motivo"
-                                    ng-options="motivo.idMotivo as motivo.motivo for motivo in listadoCatalogoRechazo">
+                                <select id="select-motivo-rechazar" class="browser-default custom-select select_consulta" data-actions-box="true"  ng-model="motivoRechazo.motivo" ng-options="motivo.idMotivo as motivo.motivo for motivo in listadoCatalogoRechazo">
                                     <option value="">Seleccione...</option>
                                 </select>
                             </div>
@@ -136,9 +137,7 @@
                                         <p class="title_consulta">Comentario:</p>
                                     </label>
                                     <br />
-                                    <textarea placeholder="Se sugiere un m&aacute;ximo de 50 caracteres."
-                                        class="form-control comentario_modal" rows="3" id="comentariosRechazoPI"
-                                        ng-model="motivoRechazo.comentario"></textarea>
+                                    <textarea placeholder="Se sugiere un m&aacute;ximo de 50 caracteres." class="form-control comentario_modal" rows="3" id="comentariosRechazoPI" ng-model="motivoRechazo.comentario"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -146,19 +145,20 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <div class="row mr-auto" ng-show="!isPermisoGenerarOTInspector">
+                    <div class="text-accion-nopermiso">
+                        <i class="icon-not-permiso fas fa-user-lock"></i>
+                        <b class="text-not-permiso-modal">No cuentas con el permiso para Generar OT.</b>
+                    </div>
+                </div>
                 <div class="pull-right">
-                    <button type="button" class="btn btn-sm btn-primary btn-detalle-incindencia" ng-show="isRecuperar"
-                        ng-click="recuperarIncidencia()">Recuperar</button>
-                    <button type="button" class="btn btn-sm btn-primary btn-detalle-incindencia" ng-show="isGenerar"
-                        ng-click="generarOTIncidencia()">Generar OT</button>
-                    <button type="button" class="btn btn-sm btn-cerrar-modal" ng-show="isDeclinar"
-                        ng-click="initDeclinarIncidencia()">Declinar</button>
+                    <!-- <button type="button" class="btn btn-sm btn-primary btn-detalle-incindencia" ng-show="isRecuperar" ng-click="recuperarIncidencia()">Recuperar</button> -->
+                    <button type="button" class="btn btn-sm btn-primary btn-detalle-incindencia" ng-show="isGenerar" ng-click="generarOTIncidencia()">Generar OT</button>
+                    <!-- <button type="button" class="btn btn-sm btn-cerrar-modal" ng-show="isDeclinar" ng-click="initDeclinarIncidencia()">Declinar</button> -->
                 </div>
                 <div class="pull-right" ng-show="isInitDeclinar">
-                    <button type="button" class="btn btn-sm btn-cerrar-modal"
-                        ng-click="cancelarDeclinar()">Cancelar</button>
-                    <button type="button" class="btn btn-sm btn-primary btn-detalle-incindencia"
-                        ng-click="declinarIncidencia(motivoRechazo)">Confirmar</button>
+                    <button type="button" class="btn btn-sm btn-cerrar-modal" ng-click="cancelarDeclinar()">Cancelar</button>
+                    <button type="button" class="btn btn-sm btn-primary btn-detalle-incindencia" ng-click="declinarIncidencia(motivoRechazo)">Confirmar</button>
                 </div>
             </div>
         </div>

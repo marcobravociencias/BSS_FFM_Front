@@ -8,14 +8,23 @@ public interface ReportePIService {
   
   
  
-  public DataTableResponse consultaReporteOrdenes(ParamConsultaOTPI paramsOT);
+  public DataTableResponse consultaReporteOrdenes(ParamConsultaOTPI params);
   
-  public DataTableResponse consultaReporteTecnico(ParamConsultaOTPI paramsOT);
+  public DataTableResponse consultaReporteTecnico(ParamConsultaOTPI params);
   
-  public DataTableResponse consultaReporteDespacho(ParamConsultaOTPI paramsOT);
+  public DataTableResponse consultaReporteDespacho(ParamConsultaOTPI params);
   
-  public DataTableResponse consultaReporteAuxiliar(ParamConsultaOTPI paramsOT);
+  public DataTableResponse consultaReporteAuxiliar(ParamConsultaOTPI params);
   
-  public DataTableResponse consultaReporteInspector(ParamConsultaOTPI paramsOT);
- 
+  public DataTableResponse consultaReporteInspector(ParamConsultaOTPI params);
+  
+  public DataTableResponse consultarReporteDiario(ParamConsultaOTPI params);
+  
+  public DataTableResponse consultarReporteCierreDiario(ParamConsultaOTPI params);
+  
+  public ServiceResponseResult consultarReporteCierreDiarioEx(String params);
+  
+  public DataTableResponse consultarReporteAsignadasCompensacion(ParamConsultaOTPI params);
+  
+  public ServiceResponseResult consultarReporteAsignadasEx(String params);
 }
