@@ -1,5 +1,4 @@
 /* FILTROS INSPECTOR INCIDENCIA */
-
 #jstree-proton-3 .jstree-anchor {
     font-family: 'Montserrat';
     font-size: .8em;
@@ -918,4 +917,35 @@ h4#texto_not_arboles {
 
 .btn-inpector-incidencia{
     cursor: pointer;
+}
+
+.text-accion-nopermiso {
+    font-size: 12px;
+    color: grey;
+    padding: 1em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.text-accion-nopermiso .icon-not-permiso {
+    color: #9586a9;
+    font-size: 1.3em;
+    padding: 0.5em;
+    border-radius: 50%;
+    /* background: #9586a9; */
+    width: 2em;
+    height: 2em;
+    /* box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);**/
+}
+
+.text-not-permiso {
+	margin-left: 0.5em;
+	font-size: 1.5em;
+	font-weight: normal;
+}
+
+.text-not-permiso-modal {
+	margin-left: 0.5em;
+	font-size: 1.3em;
+	font-weight: normal;
 }

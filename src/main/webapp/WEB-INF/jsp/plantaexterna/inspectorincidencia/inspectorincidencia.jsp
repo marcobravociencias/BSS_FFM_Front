@@ -41,7 +41,7 @@
             </div>
         </div>
         <div class="content-fluid">
-            <div class="row md-form" id="filtros_config">
+            <div class="row md-form" id="filtros_config" ng-show="isPermisoConsultaIncidencias">
                 <div class="col-2 columna-filtro-ind" style="width: 110px; padding-right: 0px !important;">
                     <label for="filtro_fecha_inicio_inspectorincidencia" class="label-filter">Fecha inicial</label>
                     <input readonly type="text" id="filtro_fecha_inicio_inspectorincidencia" class="datepicker input-filtro-inspectorincidencia form-control form-control-sm" style="width: 100px;" />
@@ -113,8 +113,14 @@
     </div>
     <div class="container-fluid contenedor-inspectorIncidencia">
         <div class="content-fluid">
-            <div class="row">
-                <div class="col-left-contenedor" style="margin-top: 1em; width: {{widthTable}}%;">
+            <div class="row" ng-show="!isPermisoConsultaIncidencias">
+				<div class="text-accion-nopermiso">
+					<i class="icon-not-permiso fas fa-user-lock"></i>
+					<b class="text-not-permiso">No cuentas con el permiso de consulta.</b>
+				</div>
+			</div>
+            <div class="row" ng-show="isPermisoConsultaIncidencias">
+                <div class="col-left-contenedor" style="padding-right: 0; margin-top: 1em; width: {{widthTable}}%;">
                     <table id="tableIncidencia" class="display table table-hover cellspacing="0" width="100%">
                         <thead id="thead_incidencia">
                             <tr>

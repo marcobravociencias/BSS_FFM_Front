@@ -1,4 +1,4 @@
-<div class="modal fade bd-example-modal-lg" tabindex="0" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modalDetalleIncidencia">
+<div class="modal fade bd-example-modal-lg" aria-labelledby="modalDetalleIncidencia" aria-hidden="true" id="modalDetalleIncidencia"> 
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -145,6 +145,12 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <div class="row mr-auto" ng-show="!isPermisoGenerarOTInspector">
+                    <div class="text-accion-nopermiso">
+                        <i class="icon-not-permiso fas fa-user-lock"></i>
+                        <b class="text-not-permiso-modal">No cuentas con el permiso para Generar OT.</b>
+                    </div>
+                </div>
                 <div class="pull-right">
                     <!-- <button type="button" class="btn btn-sm btn-primary btn-detalle-incindencia" ng-show="isRecuperar" ng-click="recuperarIncidencia()">Recuperar</button> -->
                     <button type="button" class="btn btn-sm btn-primary btn-detalle-incindencia" ng-show="isGenerar" ng-click="generarOTIncidencia()">Generar OT</button>
