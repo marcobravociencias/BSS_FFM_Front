@@ -7,7 +7,8 @@
                 <div class="container-fluid ticket-content content-select-ticket-detalle content-select-">
                     <div class="container-text-title-detalle"><span class="text-tile-ticket">FALLA</span></div>
                     <div class="container-text-content-detalle">
-                        <select class="form-control form-control-sm custom-select inputTicket" id="fallaTicketD" name="fallaTicketD" ng-change="loadCategoriaTicketSoporte('detalle')" ng-model="ticketSoporteDetalle.fallaTicketD">
+                        <select ng-class="{'error-captura-input': !ticketSoporteDetalle.fallaTicketD && validacionTicketDetalle}" 
+                             class="form-control form-control-sm custom-select inputTicket" id="fallaTicketD" name="fallaTicketD" ng-change="loadCategoriaTicketSoporte('detalle')" ng-model="ticketSoporteDetalle.fallaTicketD">
                             <option value="" disabled >NO HAY SELECCI&Oacute;N</option>
                             <option value="{{fallaTicketD.id}}" ng-repeat="fallaTicketD in listFallasTicketDetalle">
                                 {{fallaTicketD.descripcion}}
@@ -18,7 +19,8 @@
                 <div class="container-fluid ticket-content content-select-ticket-detalle content-select-">
                     <div class="container-text-title-detalle"><span class="text-tile-ticket">CATEGOR&Iacute;A</span></div>
                     <div class="container-text-content-detalle">
-                        <select class="form-control form-control-sm custom-select inputTicket" id="categoriaTicketD" name="categoriaTicketD" ng-change="loadSubcategoriaTicketSoporte('detalle')" ng-model="ticketSoporteDetalle.categoriaTicketD">
+                        <select  ng-class="{'error-captura-input': !ticketSoporteDetalle.categoriaTicketD && validacionTicketDetalle}" 
+                            class="form-control form-control-sm custom-select inputTicket" id="categoriaTicketD" name="categoriaTicketD" ng-change="loadSubcategoriaTicketSoporte('detalle')" ng-model="ticketSoporteDetalle.categoriaTicketD">
                             <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
                             <option value="{{categoriaTicketD.id}}" ng-repeat="categoriaTicketD in listCategoriasTicketDetalle">
                                 {{categoriaTicketD.descripcion}}
@@ -29,7 +31,8 @@
                 <div class="container-fluid ticket-content content-select-">
                     <div class="container-text-title-detalle"><span class="text-tile-ticket">SUBCATEGOR&Iacute;A</span></div>
                     <div class="container-text-content-detalle">
-                        <select class="form-control form-controlt form-control-sm custom-select inputTicket" id="subcategoriaTicketD" name="subcategoriaTicketD" ng-model="ticketSoporteDetalle.subcategoriaTicketD">
+                        <select ng-class="{'error-captura-input': !ticketSoporteDetalle.subcategoriaTicketD && validacionTicketDetalle}" 
+                            class="form-control form-controlt form-control-sm custom-select inputTicket" id="subcategoriaTicketD" name="subcategoriaTicketD" ng-model="ticketSoporteDetalle.subcategoriaTicketD">
                             <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
                             <option value="{{subcategoriaTicketD.id}}"  ng-repeat="subcategoriaTicketD in listSubcategoriasTicketDetalle">
                                 {{subcategoriaTicketD.descripcion}}
@@ -74,7 +77,7 @@
                 </div>
                 <div class="container-fluid vehiculo-content">
                     <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Num. usuario</span></div>
-                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="editTicket.usuarioIng  || 'Sin dato'">222119</span> </div>
+                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="editTicket.usuarioFfmInge  || 'Sin dato'">222119</span> </div>
                 </div>
                 <div class="container-fluid vehiculo-content">
                     <div class="container-text-title-detalle"><span class="text-tile-vehiculo">T&eacute;cnico</span></div>
@@ -84,11 +87,11 @@
               
                 <div class="container-fluid vehiculo-content">
                     <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Tipo orden</span></div>
-                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="editTicket.tipoOrdenText || 'Sin dato'">222119</span> </div>
+                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="editTicket.descripcionOrden || 'Sin dato'">222119</span> </div>
                 </div>
                 <div class="container-fluid vehiculo-content">
                     <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Tipo negocio</span></div>
-                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="editTicket.unidadNegocio || 'Sin dato'">222119</span> </div>
+                    <div class="container-text-content-detalle"><span class="text-content-vehiculo ng-binding" ng-bind="editTicket.nombreUnidadNegocio || 'Sin dato'">222119</span> </div>
                 </div>
                 <div class="container-fluid vehiculo-content">
                     <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Regi&oacute;n</span></div>

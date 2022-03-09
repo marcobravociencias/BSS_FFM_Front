@@ -1048,7 +1048,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                     let ciudadInd=$scope.listadoGeografiaSoporte.find(e=>e.id==parseInt( distritoInd.padre ) )
                     let regionInd=$scope.listadoGeografiaSoporte.find(e=>e.id==parseInt( ciudadInd.padre ) )
 
-                    $scope.editTicket.clusterText =  clusterInd.nombre   
+                    $scope.editTicket.clusterText=clusterInd.nombre   
                     $scope.editTicket.zonaText=zonaInd.nombre  
                     $scope.editTicket.distritoText=distritoInd.nombre  
                     $scope.editTicket.ciudadText=ciudadInd.nombre  
@@ -1296,26 +1296,41 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
 
         let stringErrores=''
         let isErrorDetalle=false
+    
+        if( !$scope.ticketSoporteDetalle.fallaTicketD ){
+            isErrorDetalle=true
+            stringErrores+='<li>Captura falla</li>'   
+        }
+
+        if( !$scope.ticketSoporteDetalle.categoriaTicketD ){
+            isErrorDetalle=true
+            stringErrores+='<li>Captura categor&iacute;a</li>'   
+        }
+
+        if( !$scope.ticketSoporteDetalle.subcategoriaTicketD ){
+            isErrorDetalle=true
+            stringErrores+='<li>Captura subcategor&iacute;a</li>'   
+        }
         if( !$scope.ticketSoporteDetalle.estatus ){
             isErrorDetalle=true
-            stringErrores='<li>Captura estatus del ticket</li>'        
+            stringErrores+='<li>Captura estatus del ticket</li>'        
         }
 
         if( $scope.ticketSoporteDetalle.estatus && $scope.ticketSoporteDetalle.estatus =='1'){
             if( !$scope.ticketSoporteDetalle.estado ){
                 isErrorDetalle=true
-                stringErrores='<li>Captura estado del ticket</li>'  
+                stringErrores+='<li>Captura estado del ticket</li>'  
             }      
             if( !$scope.ticketSoporteDetalle.motivo ){
                 isErrorDetalle=true
-                stringErrores='<li>Captura motivo del ticket</li>'  
+                stringErrores+='<li>Captura motivo del ticket</li>'  
             }              
         }
         if( !$scope.editTicket.comentariosReporte  ){
             isErrorDetalle=true
-            stringErrores='<li>Captura comentarios del ticket</li>'        
+            stringErrores+='<li>Captura comentarios del ticket</li>'        
         }
-
+        
         if( isErrorDetalle ){
             mostrarMensajeWarningValidacion( stringErrores )
             $scope.validacionTicketDetalle=true;
