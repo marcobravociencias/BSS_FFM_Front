@@ -190,7 +190,6 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 				$scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
 				validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
 				validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
-
 			}
 
 			if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
@@ -490,7 +489,8 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 				if (result.data !== undefined) {
 					if (result.data.respuesta) {
 						toastr.success(result.data.result.description);
-						$scope.limpiarFormularioCrearNotica()
+						$scope.limpiarFormularioCrearNotica();
+						$scope.consultarNoticias();
 					} else {
 						toastr.warning(result.data.resultDescripcion)
 					}

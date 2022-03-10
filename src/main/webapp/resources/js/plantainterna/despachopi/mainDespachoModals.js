@@ -21,6 +21,10 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     $scope.latitudModDireccionOt;
     $scope.longitudModDireccionOt;
     
+    $scope.tabDetalleCorteMasivo = false;
+    $scope.tabDetalleDetencion = false;
+    $scope.tabDetalleInspeccion = false;
+    
     $scope.listadoCatalogoAcciones = []
     $('#modalAsignacionOrdenTrabajo,#modalReAsignacionOrdenTrabajo,#modalMaterialesOperario,#modalVehiculoOperario,#odalUbicacionOperario,#modalStatusOperario,#modalOtsTrabajadas')
         .on("hidden.bs.modal", function () {
@@ -103,10 +107,26 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         let params = {
             "idOt": idparams
         }
+        
+        let paramsDetalleOtPe = {
+                "idOT": 1234567,
+                "idFlujo": 12
+            };
+        
+        let paramsDetalleOtPe2 = {
+                "idOT": 222120,
+                "idFlujo": 10
+            };
+        
+        let paramsDetalleOtPe3 = {
+                "idOT": 493709,
+                "idFlujo": 11
+            };
 
         $q.all([
             mainDespachoService.consultarDetalleOtDespacho(params),
-            mainDespachoService.consultarDetalleTecnicoOt(params)
+            mainDespachoService.consultarDetalleTecnicoOt(params),
+            mainDespachoService.consultaDetalleOtPe(paramsDetalleOtPe)
         ]).then(function (results) {
             swal.close()
             if (results[0].data !== undefined) {
@@ -145,6 +165,35 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             } else {
                 toastr.error('Ha ocurrido un error en la consulta de los datos');
             }
+            
+            if (results[2].data !== undefined) {
+                if (results[2].data.respuesta) {
+                    if (results[2].data.result) {
+                        if (results[2].data.result.orden) {
+                        	let resDetalleOtPE = results[2].data.result.orden;
+                        	if(resDetalleOtPE.detalleCorteMasivo !== undefined){
+                        		$scope.tabDetalleCorteMasivo = true;
+                        	}else if(resDetalleOtPE.detalleDetencion !== undefined){
+                        		$scope.tabDetalleDetencion = true;
+                        	}else if(resDetalleOtPE.detalleInspeccion !== undefined){
+                        	    $scope.tabDetalleInspeccion = true;
+                        	}
+                        	console.log("CorteMasivo " + $scope.tabDetalleCorteMasivo);
+                        	console.log("Detencion " + $scope.tabDetalleDetencion);
+                        	console.log("Inspeccion " + $scope.tabDetalleInspeccion);
+                        } else {
+                            toastr.info(results[2].data.result.mensaje);
+                        }
+                    }else {
+                        toastr.warning('No se encontraron datos en el detalle de la OT');
+                    }
+                }else{
+                	toastr.warning(results[2].data.resultDescripcion);
+                }
+            }else {
+                toastr.error('Ha ocurrido un error en la consulta del detalle de la OT');
+            }
+            
         }).catch(err => handleError(err));
 
     }
