@@ -75,7 +75,6 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         }, 750);
     });
 
-
     $scope.initMapa = function () {
         mapInspector = new google.maps.Map(document.getElementById('mapaInspectorIncidencia'), {
             center: {
@@ -415,7 +414,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
     printIncidencia = function (falla, latitud, longitud) {
         return '<div class="container-fluid incidencia-content">' +
             '   <div class="container-text-title-detalle"><span class="text-title-incidencia">Unidad Negocio</span></div>' +
-            '   <div class="container-text-content-detalle"><span class="text-content-incidencia">' + (falla.idUnidadNegocio == null ? 'Sin informaci&oacute;n' : falla.idUnidadNegocio !== undefined ? falla.idUnidadNegocio : 'Sin informaci&oacute;n') + '</span> </div>' +
+            '   <div class="container-text-content-detalle"><span class="text-content-incidencia">' + (falla.desUnidadNegocio == '' ? 'Sin informaci&oacute;n' : falla.desUnidadNegocio == null ? 'Sin informaci&oacute;n' : falla.desUnidadNegocio !== undefined ? falla.desUnidadNegocio : 'Sin informaci&oacute;n') + '</span> </div>' +
             '</div>' +
             '<div class="container-fluid incidencia-content">' +
             '   <div class="container-text-title-detalle"><span class="text-title-incidencia">ID OT</span></div>' +
@@ -664,7 +663,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                             $("#container-declinarIncidencia").hide();
                             swal.close();
                         } else {
-                            mostrarMensajeWarningValidacion(response.data.result.description);
+                            mostrarMensajeInformativo("No se encontr&oacute; Detalle de la Incidencia");
                             swal.close();
                         }
                     } else {
@@ -915,7 +914,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
     $scope.generarOTIncidencia = function () {
         $('.swal2-container.swal2-shown ').css('background-color', '#fff');
         swal({
-            title: " Generar\u00E1s la incidencia " + $scope.incidenciaDetalle.idIncidencia + " como OT",
+            title: "\u00BFDeseas generar la Orden de Trabajo?",
             showCancelButton: true,
             type: 'warning',
             text: "Comentarios:",
