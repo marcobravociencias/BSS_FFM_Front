@@ -4,11 +4,6 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 	app.filtroReportes($scope, reportesPIService)
 	$scope.all_cluster = [];
 	$scope.listaGeografia = [];
-	let reporteOrdenesTabla;
-	let reporteTecnicoTabla;
-	let reporteDespachoTabla;
-	let reporteAuxiliarTabla;
-	let reporteInspectorTabla;
 	let reporteSeguimientoTable;
 	let reporteCierreTable;
 	let reporteAsignadasTable;
@@ -70,7 +65,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 
 		//Temporal
 		$(".tab-pane").removeClass("active show");
-		$("#"+tab).addClass("active show");
+		$("#" + tab).addClass("active show");
 
 		switch (type) {
 			case 'seguimiento':
@@ -184,9 +179,9 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 				validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
 
 				if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
-					$scope.configPermisoAccionConsultaReporteSeguimiento = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaSeguimientoDiario" })[0] != undefined);
-					$scope.configPermisoAccionConsultaReporteCierre = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaCierreDiario" })[0] != undefined);
-					$scope.configPermisoAccionConsultaReporteAsignadas = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaAsignadasCompensacion" })[0] != undefined);
+					$scope.configPermisoAccionConsultaReporteSeguimiento = true//($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaSeguimientoDiario" })[0] != undefined);
+					$scope.configPermisoAccionConsultaReporteCierre = true//($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaCierreDiario" })[0] != undefined);
+					$scope.configPermisoAccionConsultaReporteAsignadas = true//($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaAsignadasCompensacion" })[0] != undefined);
 				}
 			}
 
@@ -289,7 +284,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 
 								//$scope.cargaArbol('asignadas', geografia);
 							}
-							if(firstNav === ''){
+							if (firstNav === '') {
 								$scope.permisosConfigUser.permisos = [];
 							}
 							if ($scope.permisosConfigUser.permisos.length > 0) {
@@ -578,52 +573,95 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 	}
 
 	downloadExcelReportFile = function () {
-		let clustersparam = $("#jstree-proton-seguimiento").jstree("get_selected", true)
+		let mensaje = '<ul>';
+		let isValid = true;
+		let numerosOnly = /^[0-9]*$/i;
+
+		let clusters = $("#jstree-proton-seguimiento").jstree("get_selected", true)
 			.filter(e => e.original.nivel == $scope.nfiltrogeografiaSeguimientoDiario)
-			.map(e => parseInt(e.id))
+			.map(e => parseInt(e.id));
+
+		if (clusters.length === 0) {
+			mensaje += '<li>Seleccione geograf&iacute;a.</li>';
+			isValid = false
+		}
 
 		let statuscopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteSeguimiento.estatusdisponibles, $scope.nfiltroestatuspendienteSeguimientoDiario);
+
 		let intervencioncopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteSeguimiento.tipoOrdenes, $scope.nfiltrointervencionesSeguimientoDiario);
 
-		let paramsR = {
-			fechaInicio: $scope.getFechaFormato($('#filtro_fecha_inicio_reporte').val()),
-			fechaFin: $scope.getFechaFormato($('#filtro_fecha_fin_reporte').val()),
-			tipoIntervencion: intervencioncopy,
-			estatusOt: statuscopy,
-			geografias: clustersparam,
-			fechaSeleccionada: $("#tipo_reporte").val(),
-			elementosPorPagina: $scope.resultReporteDiario,
-			pagina: 1
+		if (!statuscopy.length) {
+			mensaje += '<li>Introducir Estatus</li>';
+			isValid = false;
 		}
 
-		if ($scope.repDiario.idOrden && $scope.repDiario.idOrden != "") {
-			paramsR.idOrden = $scope.repDiario.idOrden;
+		if (!intervencioncopy.length) {
+			mensaje += '<li>Introducir Intervenci\u00F3n</li>';
+			isValid = false;
 		}
 
-		if ($scope.repDiario.folio && $scope.repDiario.folio != "") {
-			paramsR.folio = $scope.repDiario.folio;
+		if (!numerosOnly.test($("#idot-reporte").val())) {
+			mensaje += '<li>El campo OT debe ser n&uacute;merico</li>';
+			isValid = false;
 		}
 
-		if ($scope.repDiario.idCuenta && $scope.repDiario.idCuenta != "") {
-			paramsR.idCuenta = $scope.repDiario.idCuenta;
+		if ($("#tipo_reporte").val() == "" || $("#tipo_reporte").val() == undefined) {
+			mensaje += '<li>Selecciona Tipo fecha</li>';
+			isValid = false;
+		} else {
+			$scope.repDiario.fechaSeleccionada = $("#tipo_reporte").val()
 		}
 
-		swal({ text: 'Cargando registros...', allowOutsideClick: false });
-		swal.showLoading();
+		if (!validarFecha('filtro_fecha_inicio_reporte', 'filtro_fecha_fin_reporte')) {
+			mensaje += '<li>La fecha final debe ser mayor que la fecha inicio</li>';
+			isValid = false;
+		}
 
-		reportesPIService.consultaReporteDiario(paramsR).then((result) => {
-			swal.close()
-			if (result.data.respuesta) {
-				const data = JSON.parse(result.data.result).ordenes
-				const fileName = 'Resporte Seguimiento Diario'
-				const exportType = 'xls'
-
-				window.exportFromJSON({ data, fileName, exportType })
-			} else {
-				mostrarMensajeErrorAlert('Ocurrio un error al generar reporte.')
+		if (!isValid) {
+			mensaje += '</ul>';
+			mostrarMensajeWarningValidacion(mensaje);
+			return false;
+		} else {
+			let paramsR = {
+				fechaInicio: $scope.getFechaFormato($('#filtro_fecha_inicio_reporte').val()),
+				fechaFin: $scope.getFechaFormato($('#filtro_fecha_fin_reporte').val()),
+				tipoIntervencion: intervencioncopy,
+				estatusOt: statuscopy,
+				geografias: clustersparam,
+				fechaSeleccionada: $("#tipo_reporte").val(),
+				elementosPorPagina: $scope.resultReporteDiario,
+				pagina: 1
 			}
 
-		}).catch(err => handleError(err));
+			if ($scope.repDiario.idOrden && $scope.repDiario.idOrden != "") {
+				paramsR.idOrden = $scope.repDiario.idOrden;
+			}
+
+			if ($scope.repDiario.folio && $scope.repDiario.folio != "") {
+				paramsR.folio = $scope.repDiario.folio;
+			}
+
+			if ($scope.repDiario.idCuenta && $scope.repDiario.idCuenta != "") {
+				paramsR.idCuenta = $scope.repDiario.idCuenta;
+			}
+
+			swal({ text: 'Cargando registros...', allowOutsideClick: false });
+			swal.showLoading();
+
+			reportesPIService.consultaReporteDiario(paramsR).then((result) => {
+				swal.close()
+				if (result.data.respuesta) {
+					const data = JSON.parse(result.data.result).ordenes
+					const fileName = 'Resporte Seguimiento Diario'
+					const exportType = 'xls'
+
+					window.exportFromJSON({ data, fileName, exportType })
+				} else {
+					mostrarMensajeErrorAlert('Ocurrio un error al generar reporte.')
+				}
+
+			}).catch(err => handleError(err));
+		}
 	}
 
 	$scope.consultarCierreDiario = function () {
@@ -765,53 +803,97 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 	}
 
 	downloadExcelReportCierreFile = function () {
-		let clustersparam = $("#jstree-proton-cierre").jstree("get_selected", true)
+		let mensaje = '<ul>';
+		let isValid = true;
+		let numerosOnly = /^[0-9]*$/i;
+
+		let clusters = $("#jstree-proton-cierre").jstree("get_selected", true)
 			.filter(e => e.original.nivel == $scope.nfiltrogeografiaSeguimientoDiario)
-			.map(e => parseInt(e.id))
+			.map(e => parseInt(e.id));
 
-		let statuscopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteSeguimiento.estatusdisponibles, $scope.nfiltroestatuspendienteSeguimientoDiario);
-		let intervencioncopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteSeguimiento.tipoOrdenes, $scope.nfiltrointervencionesSeguimientoDiario);
-
-		let paramsR = {
-			fechaInicio: $scope.getFechaFormato($('#filtro_fecha_inicio_reporte_cierre').val()),
-			fechaFin: $scope.getFechaFormato($('#filtro_fecha_fin_reporte_cierre').val()),
-			tipoIntervencion: intervencioncopy,
-			estatusOt: statuscopy,
-			geografias: clustersparam,
-			fechaSeleccionada: $("#tipo_reporte_cierre").val(),
-			elementosPorPagina: $scope.resultReporteCierre,
-			pagina: 1
+		if (clusters.length === 0) {
+			mensaje += '<li>Seleccione geograf&iacute;a.</li>';
+			isValid = false
 		}
 
-		if ($scope.repCierreDiario.idOrden && $scope.repCierreDiario.idOrden != "") {
-			paramsR.idOrden = $scope.repCierreDiario.idOrden;
+		let statuscopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteCierre.estatusdisponibles, $scope.nfiltroestatuspendienteSeguimientoDiario);
+
+		let intervencioncopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteCierre.tipoOrdenes, $scope.nfiltrointervencionesSeguimientoDiario);
+
+		if (!statuscopy.length) {
+			mensaje += '<li>Introducir Estatus</li>';
+			isValid = false;
 		}
 
-		if ($scope.repCierreDiario.folio && $scope.repCierreDiario.folio != "") {
-			paramsR.folio = $scope.repCierreDiario.folio;
+		if (!intervencioncopy.length) {
+			mensaje += '<li>Introducir Intervenci\u00F3n</li>';
+			isValid = false;
 		}
 
-		if ($scope.repCierreDiario.idCuenta && $scope.repCierreDiario.idCuenta != "") {
-			paramsR.idCuenta = $scope.repCierreDiario.idCuenta;
+		if (!numerosOnly.test($("#idot-reporte-cierre").val())) {
+			mensaje += '<li>El campo OT debe ser n&uacute;merico</li>';
+			isValid = false;
 		}
 
+		if ($("#tipo_reporte_cierre").val() == "" || $("#tipo_reporte_cierre").val() == undefined) {
+			mensaje += '<li>Selecciona Tipo fecha</li>';
+			isValid = false;
+		} else {
+			$scope.repCierreDiario.fechaSeleccionada = $("#tipo_reporte_cierre").val()
+		}
 
-		swal({ text: 'Cargando registros...', allowOutsideClick: false });
-		swal.showLoading();
+		if (!validarFecha('filtro_fecha_inicio_reporte_cierre', 'filtro_fecha_fin_reporte_cierre')) {
+			mensaje += '<li>La fecha final debe ser mayor que la fecha inicio</li>';
+			isValid = false;
+		}
 
-		reportesPIService.consultaReporteCierreDiario(paramsR).then((result) => {
-			swal.close()
-			if (result.data.respuesta) {
-				const data = JSON.parse(result.data.result).ordenes
-				const fileName = 'Resporte Cierre Diario'
-				const exportType = 'xls'
+		if (!isValid) {
+			mensaje += '</ul>';
+			mostrarMensajeWarningValidacion(mensaje);
+			return false;
+		} else {
 
-				window.exportFromJSON({ data, fileName, exportType })
-			} else {
-				mostrarMensajeErrorAlert('Ocurrio un error al generar reporte.')
+			let paramsR = {
+				fechaInicio: $scope.getFechaFormato($('#filtro_fecha_inicio_reporte_cierre').val()),
+				fechaFin: $scope.getFechaFormato($('#filtro_fecha_fin_reporte_cierre').val()),
+				tipoIntervencion: intervencioncopy,
+				estatusOt: statuscopy,
+				geografias: clustersparam,
+				fechaSeleccionada: $("#tipo_reporte_cierre").val(),
+				elementosPorPagina: $scope.resultReporteCierre,
+				pagina: 1
 			}
 
-		}).catch(err => handleError(err));
+			if ($scope.repCierreDiario.idOrden && $scope.repCierreDiario.idOrden != "") {
+				paramsR.idOrden = $scope.repCierreDiario.idOrden;
+			}
+
+			if ($scope.repCierreDiario.folio && $scope.repCierreDiario.folio != "") {
+				paramsR.folio = $scope.repCierreDiario.folio;
+			}
+
+			if ($scope.repCierreDiario.idCuenta && $scope.repCierreDiario.idCuenta != "") {
+				paramsR.idCuenta = $scope.repCierreDiario.idCuenta;
+			}
+
+
+			swal({ text: 'Cargando registros...', allowOutsideClick: false });
+			swal.showLoading();
+
+			reportesPIService.consultaReporteCierreDiario(paramsR).then((result) => {
+				swal.close()
+				if (result.data.respuesta) {
+					const data = JSON.parse(result.data.result).ordenes
+					const fileName = 'Resporte Cierre Diario'
+					const exportType = 'xls'
+
+					window.exportFromJSON({ data, fileName, exportType })
+				} else {
+					mostrarMensajeErrorAlert('Ocurrio un error al generar reporte.')
+				}
+
+			}).catch(err => handleError(err));
+		}
 	}
 
 
@@ -954,53 +1036,97 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 	}
 
 	downloadExcelReportAsignadasFile = function () {
-		let clustersparam = $("#jstree-proton-asignadas").jstree("get_selected", true)
+		let mensaje = '<ul>';
+		let isValid = true;
+		let numerosOnly = /^[0-9]*$/i;
+
+		let clusters = $("#jstree-proton-asignadas").jstree("get_selected", true)
 			.filter(e => e.original.nivel == $scope.nfiltrogeografiaSeguimientoDiario)
-			.map(e => parseInt(e.id))
+			.map(e => parseInt(e.id));
+
+		if (clusters.length === 0) {
+			mensaje += '<li>Seleccione geograf&iacute;a.</li>';
+			isValid = false
+		}
 
 		let statuscopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteAsignadas.estatusdisponibles, $scope.nfiltroestatuspendienteSeguimientoDiario);
+
 		let intervencioncopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteAsignadas.tipoOrdenes, $scope.nfiltrointervencionesSeguimientoDiario);
 
-		let paramsR = {
-			fechaInicio: $scope.getFechaFormato($('#filtro_fecha_inicio_reporte_asignadas').val()),
-			fechaFin: $scope.getFechaFormato($('#filtro_fecha_fin_reporte_asignadas').val()),
-			tipoIntervencion: intervencioncopy,
-			estatusOt: statuscopy,
-			geografias: clustersparam,
-			fechaSeleccionada: $("#tipo_reporte_asignadas").val(),
-			elementosPorPagina: $scope.resultReporteAsignadas,
-			pagina: 1
+		if (!statuscopy.length) {
+			mensaje += '<li>Introducir Estatus</li>';
+			isValid = false;
 		}
 
-		if ($scope.repAsignadas.idOrden && $scope.repAsignadas.idOrden != "") {
-			paramsR.idOrden = $scope.repAsignadas.idOrden;
+		if (!intervencioncopy.length) {
+			mensaje += '<li>Introducir Intervenci\u00F3n</li>';
+			isValid = false;
 		}
 
-		if ($scope.repAsignadas.folio && $scope.repAsignadas.folio != "") {
-			paramsR.folio = $scope.repAsignadas.folio;
+		if (!numerosOnly.test($("#idot-reporte-asignadas").val())) {
+			mensaje += '<li>El campo OT debe ser n&uacute;merico</li>';
+			isValid = false;
 		}
 
-		if ($scope.repAsignadas.idCuenta && $scope.repAsignadas.idCuenta != "") {
-			paramsR.idCuenta = $scope.repAsignadas.idCuenta;
+		if ($("#tipo_reporte_asignadas").val() == "" || $("#tipo_reporte_asignadas").val() == undefined) {
+			mensaje += '<li>Selecciona Tipo fecha</li>';
+			isValid = false;
+		} else {
+			$scope.repCierreDiario.fechaSeleccionada = $("#tipo_reporte_asignadas").val()
 		}
 
+		if (!validarFecha('filtro_fecha_inicio_reporte_asignadas', 'filtro_fecha_fin_reporte_asignadas')) {
+			mensaje += '<li>La fecha final debe ser mayor que la fecha inicio</li>';
+			isValid = false;
+		}
 
-		swal({ text: 'Cargando registros...', allowOutsideClick: false });
-		swal.showLoading();
+		if (!isValid) {
+			mensaje += '</ul>';
+			mostrarMensajeWarningValidacion(mensaje);
+			return false;
+		} else {
 
-		reportesPIService.consultaReporteAsignadas(paramsR).then((result) => {
-			swal.close()
-			if (result.data.respuesta) {
-				const data = JSON.parse(result.data.result).ordenes
-				const fileName = 'Resporte Asignadas Compensacion'
-				const exportType = 'xls'
-
-				window.exportFromJSON({ data, fileName, exportType })
-			} else {
-				mostrarMensajeErrorAlert('Ocurrio un error al generar reporte.')
+			let paramsR = {
+				fechaInicio: $scope.getFechaFormato($('#filtro_fecha_inicio_reporte_asignadas').val()),
+				fechaFin: $scope.getFechaFormato($('#filtro_fecha_fin_reporte_asignadas').val()),
+				tipoIntervencion: intervencioncopy,
+				estatusOt: statuscopy,
+				geografias: clustersparam,
+				fechaSeleccionada: $("#tipo_reporte_asignadas").val(),
+				elementosPorPagina: $scope.resultReporteAsignadas,
+				pagina: 1
 			}
 
-		}).catch(err => handleError(err));
+			if ($scope.repAsignadas.idOrden && $scope.repAsignadas.idOrden != "") {
+				paramsR.idOrden = $scope.repAsignadas.idOrden;
+			}
+
+			if ($scope.repAsignadas.folio && $scope.repAsignadas.folio != "") {
+				paramsR.folio = $scope.repAsignadas.folio;
+			}
+
+			if ($scope.repAsignadas.idCuenta && $scope.repAsignadas.idCuenta != "") {
+				paramsR.idCuenta = $scope.repAsignadas.idCuenta;
+			}
+
+
+			swal({ text: 'Cargando registros...', allowOutsideClick: false });
+			swal.showLoading();
+
+			reportesPIService.consultaReporteAsignadas(paramsR).then((result) => {
+				swal.close()
+				if (result.data.respuesta) {
+					const data = JSON.parse(result.data.result).ordenes
+					const fileName = 'Resporte Asignadas Compensacion'
+					const exportType = 'xls'
+
+					window.exportFromJSON({ data, fileName, exportType })
+				} else {
+					mostrarMensajeErrorAlert('Ocurrio un error al generar reporte.')
+				}
+
+			}).catch(err => handleError(err));
+		}
 	}
 
 	$scope.consultarCatalagosPI();
