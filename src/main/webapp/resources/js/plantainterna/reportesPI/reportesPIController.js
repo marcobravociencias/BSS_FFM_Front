@@ -445,11 +445,11 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		let numerosOnly = /^[0-9]*$/i;
 		$scope.resultReporteDiario = 0;
 
-		let clusters = $("#jstree-proton-seguimiento").jstree("get_selected", true)
+		let clustersparam = $("#jstree-proton-seguimiento").jstree("get_selected", true)
 			.filter(e => e.original.nivel == $scope.nfiltrogeografiaSeguimientoDiario)
 			.map(e => parseInt(e.id));
 
-		if (clusters.length === 0) {
+		if (clustersparam.length === 0) {
 			mensaje += '<li>Seleccione geograf&iacute;a.</li>';
 			isValid = false
 		}
@@ -499,7 +499,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 			paramsTemp.fechaSeleccionada = $scope.repDiario.fechaSeleccionada;
 			paramsTemp.elementosPorPagina = 10;
 			paramsTemp.pagina = 1;
-			paramsTemp.geografias = clusters;
+			paramsTemp.geografias = clustersparam;
 			if ($scope.repDiario.idOrden && $scope.repDiario.idOrden != "") {
 				paramsTemp.idOrden = $scope.repDiario.idOrden;
 			}
@@ -577,11 +577,11 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		let isValid = true;
 		let numerosOnly = /^[0-9]*$/i;
 
-		let clusters = $("#jstree-proton-seguimiento").jstree("get_selected", true)
+		let clustersparam = $("#jstree-proton-seguimiento").jstree("get_selected", true)
 			.filter(e => e.original.nivel == $scope.nfiltrogeografiaSeguimientoDiario)
 			.map(e => parseInt(e.id));
 
-		if (clusters.length === 0) {
+		if (clustersparam.length === 0) {
 			mensaje += '<li>Seleccione geograf&iacute;a.</li>';
 			isValid = false
 		}
@@ -670,11 +670,11 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		let numerosOnly = /^[0-9]*$/i;
 		$scope.resultReporteCierre = 0;
 
-		let clusters = $("#jstree-proton-cierre").jstree("get_selected", true)
+		let clustersparam = $("#jstree-proton-cierre").jstree("get_selected", true)
 			.filter(e => e.original.nivel == $scope.nfiltrogeografiaSeguimientoDiario)
 			.map(e => parseInt(e.id));
 
-		if (clusters.length === 0) {
+		if (clustersparam.length === 0) {
 			mensaje += '<li>Seleccione geograf&iacute;a.</li>';
 			isValid = false
 		}
@@ -724,7 +724,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 			paramsTemp.fechaSeleccionada = $scope.repCierreDiario.fechaSeleccionada;
 			paramsTemp.elementosPorPagina = 10;
 			paramsTemp.pagina = 1;
-			paramsTemp.geografias = clusters;
+			paramsTemp.geografias = clustersparam;
 			if ($scope.repCierreDiario.idOrden && $scope.repCierreDiario.idOrden != "") {
 				paramsTemp.idOrden = $scope.repCierreDiario.idOrden;
 			}
@@ -807,11 +807,11 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		let isValid = true;
 		let numerosOnly = /^[0-9]*$/i;
 
-		let clusters = $("#jstree-proton-cierre").jstree("get_selected", true)
+		let clustersparam = $("#jstree-proton-cierre").jstree("get_selected", true)
 			.filter(e => e.original.nivel == $scope.nfiltrogeografiaSeguimientoDiario)
 			.map(e => parseInt(e.id));
 
-		if (clusters.length === 0) {
+		if (clustersparam.length === 0) {
 			mensaje += '<li>Seleccione geograf&iacute;a.</li>';
 			isValid = false
 		}
@@ -903,11 +903,11 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		let numerosOnly = /^[0-9]*$/i;
 		$scope.resultReporteAsignadas = 0;
 
-		let clusters = $("#jstree-proton-asignadas").jstree("get_selected", true)
+		let clustersparam = $("#jstree-proton-asignadas").jstree("get_selected", true)
 			.filter(e => e.original.nivel == $scope.nfiltrogeografiaSeguimientoDiario)
 			.map(e => parseInt(e.id));
 
-		if (clusters.length === 0) {
+		if (clustersparam.length === 0) {
 			mensaje += '<li>Seleccione geograf&iacute;a.</li>';
 			isValid = false
 		}
@@ -957,7 +957,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 			paramsTemp.fechaSeleccionada = $("#tipo_reporte_asignadas").val();
 			paramsTemp.elementosPorPagina = 10;
 			paramsTemp.pagina = 1;
-			paramsTemp.geografias = clusters;
+			paramsTemp.geografias = clustersparam;
 			if ($scope.repAsignadas.idOrden && $scope.repAsignadas.idOrden != "") {
 				paramsTemp.idOrden = $scope.repAsignadas.idOrden;
 			}
@@ -1040,11 +1040,11 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		let isValid = true;
 		let numerosOnly = /^[0-9]*$/i;
 
-		let clusters = $("#jstree-proton-asignadas").jstree("get_selected", true)
+		let clustersparam = $("#jstree-proton-asignadas").jstree("get_selected", true)
 			.filter(e => e.original.nivel == $scope.nfiltrogeografiaSeguimientoDiario)
 			.map(e => parseInt(e.id));
 
-		if (clusters.length === 0) {
+		if (clustersparam.length === 0) {
 			mensaje += '<li>Seleccione geograf&iacute;a.</li>';
 			isValid = false
 		}
