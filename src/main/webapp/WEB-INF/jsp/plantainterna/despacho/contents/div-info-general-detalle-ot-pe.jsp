@@ -51,12 +51,12 @@
 			<div class="col-md-12">
 				<div class="container-fluid vehiculo-content">
 					<div class="container-text-title-detalle-pe">
-						<span class="text-tile-vehiculo">Estado</span>
+						<span class="text-tile-vehiculo">Estatus</span>
 					</div>
 					<div class="container-text-content-detalle">
 						<span class="text-content-vehiculo"
-							title="{{infoDetalleOtPe.estado.nombre}}"
-							ng-bind="infoDetalleOtPe.estado.nombre || 'Sin dato'"></span>
+							title="{{infoDetalleOtPe.estatus.nombre}}"
+							ng-bind="infoDetalleOtPe.estatus.nombre || 'Sin dato'"></span>
 					</div>
 				</div>
 			</div>
@@ -65,12 +65,12 @@
 			<div class="col-md-12">
 				<div class="container-fluid vehiculo-content">
 					<div class="container-text-title-detalle-pe">
-						<span class="text-tile-vehiculo">Estatus</span>
+						<span class="text-tile-vehiculo">Estado</span>
 					</div>
 					<div class="container-text-content-detalle">
 						<span class="text-content-vehiculo"
-							title="{{infoDetalleOtPe.estatus.nombre}}"
-							ng-bind="infoDetalleOtPe.estatus.nombre || 'Sin dato'"></span>
+							title="{{infoDetalleOtPe.estado.nombre}}"
+							ng-bind="infoDetalleOtPe.estado.nombre || 'Sin dato'"></span>
 					</div>
 				</div>
 			</div>
