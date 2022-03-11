@@ -83,11 +83,6 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	//VALIDACIÓN USUARIO EXISTENTE
 	$scope.existeUsuarioValidacion = false;
 	
-	angular.element(document).ready(function () {
-        $("#idBody").removeAttr("style");
-        $("#moduloUsuarios").addClass('active');
-        $("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
-    });
 	
     $('.drop-down-filters').on("click.bs.dropdown", function (e) {
         e.stopPropagation();
@@ -129,7 +124,8 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	    		}else{
 	    			$scope.validacionAutoElimUsuario = false;
 	    		}
-				
+				$("#idBody").removeAttr("style");
+
 				validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
                 validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
                 validateCreedText = llavesResult.KEY_TEXTFORMATO_CREED_RES ? KEY_TEXTFORMATO_CREED_RES : '';
@@ -2037,4 +2033,8 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     $scope.iniciarModuloUsuarios();
     
     // *** FIN CAMBIOS REYNEL *** 
+	angular.element(document).ready(function () {
+        $("#moduloUsuarios").addClass('active');
+        $("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
+    });
 }]);

@@ -584,9 +584,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 	$scope.cargarFiltrosGeneric=function(){
 		let params ={
 				moduloAccionesUsuario: 'moduloSkills'
-	    };
-		swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
-		swal.showLoading();
+	    };		
         $q.all([
             skillsService.consulCatalogoGeografiaGeneralDespacho(),
             genericService.consultarConfiguracionDespachoDespacho(params),

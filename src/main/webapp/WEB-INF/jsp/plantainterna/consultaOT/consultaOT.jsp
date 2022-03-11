@@ -36,7 +36,14 @@
                         ordenes de trabajo</h1>
                 </div>
             </div>
-            <div class="content-fluid container-filtros-consultaot contenedor-consultaOT">
+            <div class="content-fluid contenedor-consultaOT"  ng-show="!configPermisoAccionConsultaOrdenes" >
+                <div class="text-accion-nopermiso">
+                    <i class="icon-not-permiso fas fa-user-lock"></i>
+                    <b class="text-not-permiso">No cuentas con el permiso de consulta.</b>
+                </div>
+            </div>
+            
+            <div class="content-fluid container-filtros-consultaot contenedor-consultaOT" ng-show="configPermisoAccionConsultaOrdenes">
                 <div class="row col-12" id="filtros_config">
                     <div class="col-2 column-style-consulta">
                         <label for="idot" class="label-filter">OT</label>
@@ -125,7 +132,7 @@
                         <i class="icono-noseleccion fas fa-exclamation-circle me-2"
                             title="No se encontraron catalogo de Geografia" ng-show="banderaErrorGeografia"></i><label
                             for="cluster" class="label-filter">Geograf&iacute;a</label>
-                        <input readonly placeholder="Seleccione..." type="text" id="cluster"
+                        <input readonly placeholder="Seleccione..." type="text" id="cluster" ng-click="abrirModalCluster()"
                             class="input-filtro-consultaOT form-control form-control-sm">
                     </div>
                     <div class="col-2 columna-filtro-ind" style="width: 110px; padding-right: 0px !important;">
@@ -146,7 +153,7 @@
                             <i class="fa fa-search"></i>
                         </button>
                     </div>
-                    <div id="" class="col-1 column-style-consulta"
+                    <div id="" class="col-1 column-style-consulta" ng-if="configPermisoAccionDescargaReporteOrdenes"
                         style="margin-top: 23px; width: 20px !important;">
                         <img alt="excel" src="./resources/img/generic/group-10.png" style="cursor:pointer"
                             ng-click="descargarReporteConsultaOt()">

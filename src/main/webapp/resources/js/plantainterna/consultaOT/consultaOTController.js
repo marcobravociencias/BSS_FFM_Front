@@ -43,6 +43,9 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	$scope.listImagenesTipo = [];
 	$scope.tecnicoConsultaRecoleccion = {};
 	$scope.equiposTecnicoRecoleccion = [];
+	$scope.permisosConfigUser = [];
+	$scope.configPermisoAccionConsultaOrdenes = false;
+	$scope.configPermisoAccionDescargaReporteOrdenes = false;
 	$scope.tecnicoConsultaMateriales = {
 		almacen: "",
 		apellidoMaterno: "Calder",
@@ -79,9 +82,9 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 
 	});
 
-	$scope.nivelGeografia='';
-	$scope.nivelIntervenciones='';
-	$scope.nivelEstatusPendientes='';
+	$scope.nivelGeografia = '';
+	$scope.nivelIntervenciones = '';
+	$scope.nivelEstatusPendientes = '';
 	$scope.consultaOT = function () {
 		let isValido = true;
 		let errorMensaje = '';
@@ -110,7 +113,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 						estatusOrdenes.push(l.id)	
 					return l
 				})
-			 	return k; 
+				  return k; 
 			})
 			if( e.checkedOpcion && tempNivelEstatus== e.nivel)
 				estatusOrdenes.push(e.id)				
@@ -140,7 +143,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 						subIntTemp.push(l.id)	
 					return l
 				})
-			 	return k; 
+				  return k; 
 			})
 			if( e.checkedOpcion && tempNivelInterven== e.nivel)
 				subIntTemp.push(e.id)				
@@ -149,11 +152,11 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 
 		//nivel geografia
 		let ultimonivel;
-        if ($scope.nivelGeografia) {
-            ultimonivel = $scope.nivelGeografia
-        } else {
-            ultimonivel = $scope.obtenerNivelUltimoJerarquia();
-        }		
+		if ($scope.nivelGeografia) {
+			ultimonivel = $scope.nivelGeografia
+		} else {
+			ultimonivel = $scope.obtenerNivelUltimoJerarquia();
+		}
 		let clusters = $("#jstree-proton-3").jstree("get_selected", true)
 			.filter(e => e.original.nivel == ultimonivel)
 			.map(e => parseInt(e.id))
@@ -294,30 +297,28 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	$scope.banderaErrorIntervencion = false;
 	$scope.banderaErrorGeografia = false;
 
-	function compareGeneric(a,b){
-        let niveluno=a.nivel;
-        let niveldos=b.nivel;
-        if(niveluno>niveldos){ 
-            return -1
-        }else if( niveluno < niveldos){
-            return 1
-        } 
-        return 0
-    }
+	function compareGeneric(a, b) {
+		let niveluno = a.nivel;
+		let niveldos = b.nivel;
+		if (niveluno > niveldos) {
+			return -1
+		} else if (niveluno < niveldos) {
+			return 1
+		}
+		return 0
+	}
 
-    $scope.obtenerNivelUltimoJerarquia=function(){
-        return $scope.listadogeografiacopy.sort(compareGeneric)[0].nivel
-    }
+	$scope.obtenerNivelUltimoJerarquia = function () {
+		return $scope.listadogeografiacopy.sort(compareGeneric)[0].nivel
+	}
 	$scope.obtenerUltimoNivelIntervencion = function () {
-        return $scope.nivelIntervenciones.sort(compareGeneric)[0].nivel
-    }
+		return $scope.nivelIntervenciones.sort(compareGeneric)[0].nivel
+	}
 	$scope.obtenerUltimoNivelEstatus = function () {
-        return $scope.nivelEstatusPendientes.sort(compareGeneric)[0].nivel
-    }
+		return $scope.nivelEstatusPendientes.sort(compareGeneric)[0].nivel
+	}
 
 	$scope.consultarCatalagosPI = function () {
-		swal({ text: 'Espera un momento...', allowOutsideClick: false });
-		swal.showLoading();
 		$q.all([
 			genericService.consultarCatalogoIntervenciones(),
 			genericService.consulCatalogoGeografia(),
@@ -329,23 +330,29 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				if (results[3].data.respuesta) {
 					if (results[3].data.result) {
 						$scope.elementosConfigGeneral = new Map(Object.entries(results[3].data.result))
-									
-						let resultConf= results[3].data.result
-						if( resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves){
-							let  llavesResult=results[3].data.result.MODULO_ACCIONES_USUARIO.llaves;							      						
-							if(llavesResult.N_FILTRO_GEOGRAFIA)
-								$scope.nivelGeografia=parseInt(llavesResult.N_FILTRO_GEOGRAFIA)
-							
-							if(llavesResult.N_FILTRO_INTERVENCIONES )
-								$scope.nivelIntervenciones=parseInt(llavesResult.N_FILTRO_INTERVENCIONES)
-							
-							if(llavesResult.N_ESTATUS_PENDIENTES )
-								$scope.nivelEstatusPendientes=parseInt(llavesResult.N_ESTATUS_PENDIENTES)						
 
-							$scope.permisosConfigUser=resultConf.MODULO_ACCIONES_USUARIO.permisos;
+						let resultConf = results[3].data.result
+						if (resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
+							let llavesResult = results[3].data.result.MODULO_ACCIONES_USUARIO.llaves;
+							if (llavesResult.N_FILTRO_GEOGRAFIA)
+								$scope.nivelGeografia = parseInt(llavesResult.N_FILTRO_GEOGRAFIA)
+
+							if (llavesResult.N_FILTRO_INTERVENCIONES)
+								$scope.nivelIntervenciones = parseInt(llavesResult.N_FILTRO_INTERVENCIONES)
+
+							if (llavesResult.N_ESTATUS_PENDIENTES)
+								$scope.nivelEstatusPendientes = parseInt(llavesResult.N_ESTATUS_PENDIENTES)
+
+							$scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
+							
+							if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
+								$scope.configPermisoAccionConsultaOrdenes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaOT" })[0] != undefined);
+								$scope.configPermisoAccionDescargaReporteOrdenes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaReporteOT" })[0] != undefined);
+							}
+							$("#idBody").removeAttr("style");
 							validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
 							validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
-						}					
+						}
 					} else {
 						swal.close();
 						toastr.warning('No se encontraron datos para la geografia');
@@ -367,7 +374,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 					if (results[0].data.result) {
 						//$scope.filtrosGeneral.tipoOrdenes = $scope.realizarConversionAnidado(results[0].data.result)
 						$scope.respaldoTipoOrdenArray = [];
-                        $scope.respaldoTipoOrdenArray = angular.copy(results[0].data.result);
+						$scope.respaldoTipoOrdenArray = angular.copy(results[0].data.result);
 						$scope.nivelIntervenciones = $scope.nivelIntervenciones ? $scope.nivelIntervenciones : $scope.obtenerUltimoNivelFiltros($scope.respaldoTipoOrdenArray);
 						$scope.filtrosGeneral.tipoOrdenes = $scope.conversionAnidadaRecursiva($scope.respaldoTipoOrdenArray, 1, $scope.nivelIntervenciones);
 					} else {
@@ -387,9 +394,9 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 					if (results[2].data.result) {
 						//$scope.filtrosGeneral.estatusdisponibles = $scope.realizarConversionAnidado(results[2].data.result)
 						$scope.respaldoStatusArray = [];
-                        $scope.respaldoStatusArray = angular.copy(results[2].data.result);
-                        $scope.nivelEstatusPendientes = $scope.nivelEstatusPendientes ? $scope.nivelEstatusPendientes : $scope.obtenerUltimoNivelFiltros($scope.respaldoStatusArray);
-                        $scope.filtrosGeneral.estatusdisponibles=$scope.conversionAnidadaRecursiva($scope.respaldoStatusArray, 1, $scope.nivelEstatusPendientes);
+						$scope.respaldoStatusArray = angular.copy(results[2].data.result);
+						$scope.nivelEstatusPendientes = $scope.nivelEstatusPendientes ? $scope.nivelEstatusPendientes : $scope.obtenerUltimoNivelFiltros($scope.respaldoStatusArray);
+						$scope.filtrosGeneral.estatusdisponibles = $scope.conversionAnidadaRecursiva($scope.respaldoStatusArray, 1, $scope.nivelEstatusPendientes);
 					} else {
 						toastr.info('No se encontraron catalogo de estatus');
 						$scope.banderaErrorEstatus = true;
@@ -411,35 +418,38 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 						if (results[1].data.result.geografia) {
 							$scope.listadogeografiacopy = results[1].data.result.geografia
 							geografia = results[1].data.result.geografia
-							if( !$scope.nivelGeografia )
-								$scope.nivelGeografia=$scope.obtenerNivelUltimoJerarquia()
+							if (!$scope.nivelGeografia)
+								$scope.nivelGeografia = $scope.obtenerNivelUltimoJerarquia()
 
-							geografia=geografia.filter((e)=>e.nivel <= $scope.nivelGeografia )
+							geografia = geografia.filter((e) => e.nivel <= $scope.nivelGeografia)
 							geografia.map((e) => {
-                                e.parent = e.padre == undefined ? "#" : e.padre;
-                                e.text = e.nombre;   
-								e.state= { 
-                                    selected: true,
-                                }                             
-                                return e
-                            })																															
-							$('#jstree-proton-3').bind('loaded.jstree', function (e, data) {
-								$scope.consultaOT()
-							}).jstree({
-								'plugins': ["wholerow", "checkbox", 'search'],
-								'search': {
-									"case_sensitive": false,
-									"show_only_matches": true
-								},
-								'core': {
-									'data': geografia,
-									'themes': {
-										'name': 'proton',
-										'responsive': true,
-										'icons':false
-									}
+								e.parent = e.padre == undefined ? "#" : e.padre;
+								e.text = e.nombre;
+								e.state = {
+									selected: true,
 								}
-							});
+								return e
+							})
+							if ($scope.configPermisoAccionConsultaOrdenes) {
+								$('#jstree-proton-3').bind('loaded.jstree', function (e, data) {
+									$scope.consultaOT()
+								}).jstree({
+									'plugins': ["wholerow", "checkbox", 'search'],
+									'search': {
+										"case_sensitive": false,
+										"show_only_matches": true
+									},
+									'core': {
+										'data': geografia,
+										'themes': {
+											'name': 'proton',
+											'responsive': true,
+											'icons': false
+										}
+									}
+								});
+							}
+
 						} else {
 							swal.close();
 							toastr.warning('No se encontraron datos para la geografia');
@@ -461,42 +471,42 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				$scope.banderaErrorGeografia = true;;
 			}
 
-		
+
 
 
 
 		}).catch(err => handleError(err));
 	}
 
-	$scope.conversionAnidadaRecursiva = function(array, nivelInit, maxNivel) {
-        let arrayReturn = [];
-        angular.forEach(array.filter( e=> e.nivel === nivelInit),function(elem,index){
-            let elemento = angular.copy(elem);
-            elemento.checkedOpcion=true;
-            if (nivelInit < maxNivel) {
-                elemento.children = $scope.conversionAnidadaRecursiva(array, nivelInit+1, maxNivel).filter( e2=> e2.idPadre === elemento.id);
-                elemento.children=(elemento.children !==undefined && elemento.children.length>0) ? elemento.children:[];
-            }
-            arrayReturn.push(elemento)
-        });
-        return arrayReturn;
-    }
+	$scope.conversionAnidadaRecursiva = function (array, nivelInit, maxNivel) {
+		let arrayReturn = [];
+		angular.forEach(array.filter(e => e.nivel === nivelInit), function (elem, index) {
+			let elemento = angular.copy(elem);
+			elemento.checkedOpcion = true;
+			if (nivelInit < maxNivel) {
+				elemento.children = $scope.conversionAnidadaRecursiva(array, nivelInit + 1, maxNivel).filter(e2 => e2.idPadre === elemento.id);
+				elemento.children = (elemento.children !== undefined && elemento.children.length > 0) ? elemento.children : [];
+			}
+			arrayReturn.push(elemento)
+		});
+		return arrayReturn;
+	}
 
-    $scope.obtenerUltimoNivelFiltros = function(array) {
-        return Math.max.apply(Math, array.map(function(o) { return o.nivel; }));
-    }
+	$scope.obtenerUltimoNivelFiltros = function (array) {
+		return Math.max.apply(Math, array.map(function (o) { return o.nivel; }));
+	}
 
-    $scope.obtenerElementosSeleccionadosFiltro = function(array, nivel) {
-        let arrayReturn = [];
-        angular.forEach(array,function(elemento,index){
-            if (elemento.nivel == nivel && elemento.checkedOpcion) {
-                arrayReturn.push(elemento.id);
-            } else {
-                arrayReturn = arrayReturn.concat($scope.obtenerElementosSeleccionadosFiltro(elemento.children, nivel));
-            }
-        });
-        return arrayReturn;
-    }
+	$scope.obtenerElementosSeleccionadosFiltro = function (array, nivel) {
+		let arrayReturn = [];
+		angular.forEach(array, function (elemento, index) {
+			if (elemento.nivel == nivel && elemento.checkedOpcion) {
+				arrayReturn.push(elemento.id);
+			} else {
+				arrayReturn = arrayReturn.concat($scope.obtenerElementosSeleccionadosFiltro(elemento.children, nivel));
+			}
+		});
+		return arrayReturn;
+	}
 
 	$scope.realizarConversionAnidado = function (array) {
 		let arrayCopy = []
@@ -630,12 +640,13 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	$scope.iniciarConsultaOt();
 
 
-	document.getElementById('cluster').addEventListener('click', function () {
+
+	$scope.abrirModalCluster = function(){
 		$('#modalCluster').modal('show');
 		setTimeout(function () {
 			$("#searchGeografia").focus();
 		}, 750);
-	});
+	}
 
 
 	consultaImagenesOT = function (ot, cuenta) {
@@ -650,13 +661,13 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		consultaOTService.consultaImagenesOt(JSON.stringify(params)).then(function success(response) {
 			if (response.data !== undefined) {
 				if (response.data.respuesta) {
-					if(response.data.result ){
+					if (response.data.result) {
 						if (response.data.result.evidencias) {
 							$scope.listEvidenciaImagenes.imagenes = response.data.result.evidencias;
 							$scope.listEvidenciaImagenes.tipos = [];
 							$scope.listImagenesTipo = response.data.result.evidencias;
 							let listaTipos = [];
-	
+
 							var count_cantidad_por_tipo = groupBy(response.data.result.evidencias, 'idCatEvidencia');
 							response.data.result.evidencias.map(function (e) {
 								let isExist = listaTipos.find((t) => e.idCatEvidencia == t.id)
@@ -686,10 +697,10 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 							swal.close();
 							mostrarMensajeErrorAlert(response.data.result.resultDescription)
 						}
-					}else{
+					} else {
 						swal.close();
 						mostrarMensajeInformativo("No se encontraron evidencias")
-					}			
+					}
 				} else {
 					swal.close();
 					mostrarMensajeErrorAlert(response.data.resultDescripcion);
@@ -958,17 +969,17 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			}).catch(err => handleError(err));
 		}
 	}
-	function transformarTextPrecio(num){
-		if( ( num && num != '' && num != '0' ) ){
-			return ( Math.round( parseFloat( num ) * 100) / 100 ).toLocaleString('en-US', {
-                style: 'currency',
-                currency: 'USD',
-              }); 
-		} else{
+	function transformarTextPrecio(num) {
+		if ((num && num != '' && num != '0')) {
+			return (Math.round(parseFloat(num) * 100) / 100).toLocaleString('en-US', {
+				style: 'currency',
+				currency: 'USD',
+			});
+		} else {
 			return parseFloat('0.00').toLocaleString('en-US', {
-                style: 'currency',
-                currency: 'USD',
-              }); 
+				style: 'currency',
+				currency: 'USD',
+			});
 		}
 	}
 	$scope.inicializarTableMaterialesOt = function () {
@@ -1112,14 +1123,14 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 					if (result.data.respuesta) {
 						if (result.data.result !== undefined) {
 							jsonm = result.data;
-							if(result.data.result.detalle != undefined &&  result.data.result.detalle.length > 0){
-								$scope.movimientos=result.data.result.detalle//.reverse()
+							if (result.data.result.detalle != undefined && result.data.result.detalle.length > 0) {
+								$scope.movimientos = result.data.result.detalle//.reverse()
 								is_consulta_historico = true;
 								swal.close();
-							}else{
+							} else {
 								swal.close();
 								mostrarMensajeErrorAlert(response.data.result.resultDescription)
-							}						
+							}
 						} else {
 							swal.close();
 							mostrarMensajeErrorAlert(response.data.result.resultDescription)
@@ -1676,48 +1687,48 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		}
 	}
 
-	$scope.seleccionarTodosRecursivo = function(array) {
-        array.map(function(e){
-            e.checkedOpcion = true;
-            if (e.children !== undefined && e.children.length > 0) {
-                $scope.seleccionarTodosRecursivo(e.children);
-            }
-        });
-    }
+	$scope.seleccionarTodosRecursivo = function (array) {
+		array.map(function (e) {
+			e.checkedOpcion = true;
+			if (e.children !== undefined && e.children.length > 0) {
+				$scope.seleccionarTodosRecursivo(e.children);
+			}
+		});
+	}
 
-	$scope.deseleccionarTodosRecursivo = function(array) {
-        array.map(function(e){
-            e.checkedOpcion = false;
-            if (e.children !== undefined && e.children.length > 0) {
-                $scope.deseleccionarTodosRecursivo(e.children);
-            }
-        });
-    }
+	$scope.deseleccionarTodosRecursivo = function (array) {
+		array.map(function (e) {
+			e.checkedOpcion = false;
+			if (e.children !== undefined && e.children.length > 0) {
+				$scope.deseleccionarTodosRecursivo(e.children);
+			}
+		});
+	}
 
-	$scope.setCheckFiltroGenericV2 = function(filtro, principalArray) {
-        if (filtro.children !== undefined && filtro.children.length > 0) {
-            if (filtro.checkedOpcion) {
-                $scope.deseleccionarTodosRecursivo(filtro.children);
-            } else {
-                $scope.seleccionarTodosRecursivo(filtro.children);
-            }
-        }
-        filtro.checkedOpcion = !filtro.checkedOpcion;
-        $scope.checkPadre(filtro.idPadre, principalArray, principalArray);
-    }
+	$scope.setCheckFiltroGenericV2 = function (filtro, principalArray) {
+		if (filtro.children !== undefined && filtro.children.length > 0) {
+			if (filtro.checkedOpcion) {
+				$scope.deseleccionarTodosRecursivo(filtro.children);
+			} else {
+				$scope.seleccionarTodosRecursivo(filtro.children);
+			}
+		}
+		filtro.checkedOpcion = !filtro.checkedOpcion;
+		$scope.checkPadre(filtro.idPadre, principalArray, principalArray);
+	}
 
-    $scope.checkPadre = function(idPadre, array, principalArray) {
-        array.map(function(e){
-            if (e.id === idPadre) {
-                e.checkedOpcion = e.children.length === e.children.filter(function(e){return e.checkedOpcion}).length;
-                $scope.checkPadre(e.idPadre, principalArray, principalArray);
-            } else {
-                if (e.children !== undefined && e.children.length > 0) {
-                    $scope.checkPadre(idPadre, e.children, principalArray);
-                }
-            }
-        });
-    }
+	$scope.checkPadre = function (idPadre, array, principalArray) {
+		array.map(function (e) {
+			if (e.id === idPadre) {
+				e.checkedOpcion = e.children.length === e.children.filter(function (e) { return e.checkedOpcion }).length;
+				$scope.checkPadre(e.idPadre, principalArray, principalArray);
+			} else {
+				if (e.children !== undefined && e.children.length > 0) {
+					$scope.checkPadre(idPadre, e.children, principalArray);
+				}
+			}
+		});
+	}
 
 	$scope.descargarReporteConsultaOt = function () {
 		let isValido = true;
@@ -1742,7 +1753,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 						estatusOrdenes.push(l.id)	
 					return l
 				})
-			 	return k; 
+				  return k; 
 			})
 			if( e.checkedOpcion && tempNivelEstatus== e.nivel)
 				estatusOrdenes.push(e.id)				
@@ -1771,7 +1782,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 						subIntTemp.push(l.id)	
 					return l
 				})
-			 	return k; 
+				  return k; 
 			})
 			if( e.checkedOpcion && tempNivelInterven== e.nivel)
 				subIntTemp.push(e.id)				
@@ -1782,11 +1793,11 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 
 		//nivel geografia
 		let ultimonivel;
-        if ($scope.nivelGeografia) {
-            ultimonivel = $scope.nivelGeografia
-        } else {
-            ultimonivel = $scope.obtenerNivelUltimoJerarquia();
-        }		
+		if ($scope.nivelGeografia) {
+			ultimonivel = $scope.nivelGeografia
+		} else {
+			ultimonivel = $scope.obtenerNivelUltimoJerarquia();
+		}
 		let clusters = $("#jstree-proton-3").jstree("get_selected", true)
 			.filter(e => e.original.nivel == ultimonivel)
 			.map(e => parseInt(e.id))
@@ -2030,11 +2041,6 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		}
 	}
 
-	angular.element(document).ready(function () {
-		$("#idBody").removeAttr("style");
-	});
-
-
 	$scope.camposFiltro = {};
 
 	$scope.limpiarCamposFiltro = function (opcion) {
@@ -2243,14 +2249,14 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 								row[1] = elemento.descripcion !== undefined ? elemento.descripcion : 'Sin informaci&oacute;n';
 								row[2] = elemento.centro !== undefined ? elemento.centro : 'Sin informaci&oacute;n';
 								row[3] = elemento.almacen !== undefined ? elemento.almacen : 'Sin informaci&oacute;n';
-								row[4] = elemento.recuperado == 1 ? 
-								'<span class="content-success-generic">' +
-								'<i class="icono-success-generic fas fa-check"></i>' +                                       
-								'</span>' : '';
-								row[5] = elemento.adicional  == 1 ? 
-								'<span class="content-success-generic">' +
-								'<i class="icono-success-generic fas fa-check"></i>' +                                       
-								'</span>' : '';
+								row[4] = elemento.recuperado == 1 ?
+									'<span class="content-success-generic">' +
+									'<i class="icono-success-generic fas fa-check"></i>' +
+									'</span>' : '';
+								row[5] = elemento.adicional == 1 ?
+									'<span class="content-success-generic">' +
+									'<i class="icono-success-generic fas fa-check"></i>' +
+									'</span>' : '';
 								row[6] = elemento.fechaRegistro !== undefined ? elemento.fechaRegistro : 'Sin informaci&oacute;n';
 								arrayRow.push(row);
 							});

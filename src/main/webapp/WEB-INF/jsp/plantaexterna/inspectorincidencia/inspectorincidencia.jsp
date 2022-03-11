@@ -113,7 +113,7 @@
     </div>
     <div class="container-fluid contenedor-inspectorIncidencia">
         <div class="content-fluid">
-            <div class="row" ng-show="!isPermisoConsultaIncidencias">
+            <div class="row" ng-show="!isPermisoConsultaIncidencias" style="padding: 1em  0;">
 				<div class="text-accion-nopermiso">
 					<i class="icon-not-permiso fas fa-user-lock"></i>
 					<b class="text-not-permiso">No cuentas con el permiso de consulta.</b>

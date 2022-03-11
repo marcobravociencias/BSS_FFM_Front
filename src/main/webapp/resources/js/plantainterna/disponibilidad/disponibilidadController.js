@@ -54,8 +54,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
     app.disponibilidadCalendar($scope);
 
     $(document).ready(function () {
-        $("#idBody").removeAttr("style");
-        $scope.inicialCalendario();
+
         $scope.inicioDisponibilidad();
         editarDisponibilidad = function (matutino, vespertino, nocturno, bloqueado, fecha) {
             if ($scope.accessEditarDisponibilidad) {
@@ -164,7 +163,10 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                     let  llavesResult=result[0].data.result.MODULO_ACCIONES_USUARIO.llaves;                    
                     $scope.nIntervencion = llavesResult.N_FILTRO_INTERVENCIONES ? Number( llavesResult.N_FILTRO_INTERVENCIONES ) : null;
                     $scope.nGeografia = llavesResult.N_FILTRO_GEOGRAFIA ? Number( llavesResult.N_FILTRO_GEOGRAFIA ) : null;
-
+                    $("#idBody").removeAttr("style");
+                    if($scope.accessConsultaDisponibilidad){
+                        $scope.inicialCalendario();
+                    }
                     validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
                     validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
                    

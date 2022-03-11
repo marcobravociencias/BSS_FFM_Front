@@ -198,8 +198,6 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
     }
 
     $scope.consultarCatalogosInspectorIncidencia = function () {
-        swal({ text: 'Espera un momento...', allowOutsideClick: false });
-        swal.showLoading();
         $q.all([
             inspectorIncidenciaService.consultarConfiguracionDespachoDespacho({ "moduloAccionesUsuario": "moduloInspectorIncidenciasPE" }),
             inspectorIncidenciaService.consultaCatalogoEstatusInspectorPE(),
@@ -217,7 +215,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                 validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
                 validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
                 $scope.llaveEstatusGeneraOT = llavesResult.KEY_ESTATUS_GENERAR_OT ? llavesResult.KEY_ESTATUS_GENERAR_OT.split(",") : [];//[1]
-
+                $("#idBody").removeAttr("style");
             }
             if (resultConf != undefined && resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.permisos && resultConf.MODULO_ACCIONES_USUARIO.permisos != "") {
                 $scope.permisosUsuario = resultConf.MODULO_ACCIONES_USUARIO.permisos;
@@ -231,42 +229,34 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                     if (results[1].data.result) {
                         $scope.listCatEstatus = angular.copy(results[1].data.result.estatusIncidente);
                         $scope.listCatEstatus.map(function (e) { e.checkedOpcion = true; return e; })
-                        swal.close();
                     } else {
                         mostrarMensajeWarningValidacion("<li>No se encontraron datos para el Estatus</i>");
                         $scope.banderaErrorEstatus = true;
-                        swal.close();
                     }
                 } else {
                     mostrarMensajeWarningValidacion('<li>' + results[1].data.resultDescripcion + '</i>');
                     $scope.banderaErrorEstatus = true;
-                    swal.close();
                 }
             } else {
                 mostrarMensajeWarningValidacion("<li>Ha ocurrido un error en la consulta de cat&aacute;logo de Estatus</i>");
                 $scope.banderaErrorEstatus = true;
-                swal.close();
             }
             if (results[2].data !== undefined) {
                 if (results[2].data.respuesta) {
                     if (results[2].data.result) {
                         $scope.nfiltrofallas = $scope.nfiltrofallas ? $scope.nfiltrofallas : $scope.obtenerNivelUltimoJerarquiaGeneric(results[2].data.result.incidentes);
                         $scope.filtrosInspector.fallas = $scope.realizarConversionAnidado(results[2].data.result.incidentes.filter(e => e.nivel <= parseInt($scope.nfiltrofallas)));
-                        swal.close();
                     } else {
                         mostrarMensajeWarningValidacion("<li>No se encontraron datos para el Cat&aacute;alogo de Fallas</i>");
                         $scope.banderaErrorFallas = true;
-                        swal.close();
                     }
                 } else {
                     mostrarMensajeWarningValidacion('<li>' + results[2].data.resultDescripcion + '</i>');
                     $scope.banderaErrorFallas = true;
-                    swal.close();
                 }
             } else {
                 mostrarMensajeWarningValidacion("<li>No se encontraron datos para el Cat&aacute;logo de Fallas</i>");
                 $scope.banderaErrorFallas = true;
-                swal.close();
             }
             if (results[3].data !== undefined) {
                 if (results[3].data.respuesta) {
@@ -310,22 +300,18 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                         } else {
                             mostrarMensajeWarningValidacion('<li>No se encontraron datos para la geograf&iacute;a</li>Va');
                             $scope.banderaErrorGeografia = true;
-                            swal.close();
                         }
                     } else {
                         mostrarMensajeWarningValidacion('<li>No se encontraron datos para la geograf&iacute;a</li>');
                         $scope.banderaErrorGeografia = true;
-                        swal.close();
                     }
                 } else {
                     mostrarMensajeWarningValidacion('<li>' + results[3].data.resultDescripcion + '</li>');
                     $scope.banderaErrorGeografia = true;
-                    swal.close();
                 }
             } else {
                 mostrarMensajeWarningValidacion('<li>Ha ocurrido un error en la consulta de geograf&iacute;a</li>');
                 $scope.banderaErrorGeografia = true;
-                swal.close();
             }
         });
     }
@@ -1210,7 +1196,6 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
     }
 
     angular.element(document).ready(function () {
-        $("#idBody").removeAttr("style");
         $("#moduloInspectorIncidenciasPE").addClass('active');
         $scope.consultarCatalogosInspectorIncidencia();
         $scope.initMapa();
