@@ -101,7 +101,7 @@
                     <i class="fa fa-search"></i>
                 </button>
             </div>
-            <div class="col-1 download-file">
+            <div class="col-1 download-file" ng-if="configPermisoAccionDescargaReporteCierre">
                 <img alt="excel" src="${pageContext.request.contextPath}/resources/img/generic/group-10.png"
                     style="cursor:pointer" onclick="downloadExcelReportCierreFile()">
             </div>
@@ -114,19 +114,19 @@
                     <tr>
                         <th>OT</th>
                         <th>OS</th>
-                        <th>TIPO</th>
-                        <th>SUBTIPO</th>
-                        <th>ESTATUS</th>
-                        <th>ESTADO</th>
-                        <th>MOTIVO</th>
-                        <th>CIUDAD</th>
-                        <th>ESTADO</th>
-                        <th># EMPLEADO</th>
-                        <th># USUARIO</th>
-                        <th>T&Eacute;CNICO</th>
-                        <th>FECHA CREACI&Oacute;N</th>
-                        <th>FECHA AGENDA</th>
-                        <th>FECHA FIN</th>
+                        <th>Tipo</th>
+                        <th>Subtipo</th>
+                        <th>Estatus</th>
+                        <th>Estado</th>
+                        <th>Motivo</th>
+                        <th>Ciudad</th>
+                        <th>Estado</th>
+                        <th>#Empleado</th>
+                        <th>#Usuario</th>
+                        <th>T&eacute;cnico</th>
+                        <th>Fecha creaci&oacute;n</th>
+                        <th>Fecha agenda</th>
+                        <th>Fecha fin</th>
 
                     </tr>
                 </thead>

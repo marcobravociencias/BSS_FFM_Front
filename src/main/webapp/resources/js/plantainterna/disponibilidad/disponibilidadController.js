@@ -139,8 +139,6 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
     $scope.banderaErrorGeneral = false;
 
     $scope.consultarCatalogos = function () {
-        swal({ text: 'Espera un momento...', allowOutsideClick: false });
-        swal.showLoading();
         $scope.arrayTurnosDisponibilidad = []
         let params = {
             moduloAccionesUsuario: 'moduloDisponibilidad'
@@ -151,8 +149,6 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             genericService.consulCatalogoGeografia(),
             genericService.consultarCatalogosTurnos()
         ]).then(result => {
-            swal.close();
-            console.log(result);
             if (result[0].data.respuesta) {
                 let resultConf= result[0].data.result
                 if( resultConf != undefined && resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves){

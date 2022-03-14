@@ -11,19 +11,29 @@
         <link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="96x96" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-96x96.png">
         <link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-16x16.png">
-        <link href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/jquery.dataTables.css" rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/libraries/jstree/default/style.min.css" rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/libraries/jstree/themes/proton/style.css" rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/libraries/sweetalert/css/sweetalert2.min.css" rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/libraries/datePicker/css/bootstrap-datepicker3_1.9.0.min.css" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
-        <link href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css" rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/libraries/magnific_popup/magnific-popup.css" rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" rel="stylesheet" />
-        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/reportesPI/mainReportes.css?v=${sessionScope.versionDepl}" rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap.min.css"
+            rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/font-awesome.css"
+            rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/dataTables.fontAwesome.css"
+            rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/dataTables.bootstrap.min.css"
+            rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/libraries/selectPicker/css/bootstrap-select.min.css"
+            rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/libraries/jstree/default/style.min.css"
+            rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/libraries/sweetalert/css/sweetalert2.min.css"
+            rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/libraries/jstree/themes/proton/style.css"
+            rel="stylesheet">
+        <link
+            href="${pageContext.request.contextPath}/resources/libraries/datePicker/css/bootstrap-datepicker3_1.9.0.min.css"
+            rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css"
+            rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css"
+            rel="stylesheet" />
         <link href="${pageContext.request.contextPath}/resources/css/plantainterna/reportesPI/mainReportes.css?v=${sessionScope.versionDepl}" rel="stylesheet" />
     </head>
 
@@ -62,17 +72,17 @@
                     </ul>
                     <div class="right-content tab-content">
                         <div class="row tab-content">
-                            <div class="tab-pane fade" id="seguimientoDiario" role="tabpanel" ng-if="configPermisoAccionConsultaReporteSeguimiento"
+                            <div class="tab-pane fade" id="seguimientoDiario" role="tabpanel" ng-show="configPermisoAccionConsultaReporteSeguimiento"
                                 aria-labelledby="seguimientoDiario-tab">
                                 <h5 id="texto_header_reportes" class="text-center">Reporte Seguimiento
                                     Diario</h5>
                                 <jsp:include page="./reporteSeguimientoDiario.jsp"></jsp:include>
                             </div>
-                            <div class="tab-pane fade" id="cierreDiario" role="tabpanel" aria-labelledby="cierreDiario-tab" ng-if="configPermisoAccionConsultaReporteCierre">
+                            <div class="tab-pane fade" id="cierreDiario" role="tabpanel" aria-labelledby="cierreDiario-tab" ng-show="configPermisoAccionConsultaReporteCierre">
                                 <h5 id="texto_header_reportes" class="text-center">Reporte Cierre Diario</h5>
                                 <jsp:include page="./reporteCierreDiario.jsp"></jsp:include>
                             </div>
-                            <div class="tab-pane fade" id="asignadasCompensacion" role="tabpanel" aria-labelledby="asignadasCompensacion-tab" ng-if="configPermisoAccionConsultaReporteAsignadas">
+                            <div class="tab-pane fade" id="asignadasCompensacion" role="tabpanel" aria-labelledby="asignadasCompensacion-tab" ng-show="configPermisoAccionConsultaReporteAsignadas">
                                 <h5 id="texto_header_reportes" class="text-center">Reporte Asignadas Compensaci&oacute;n</h5>
                                 <jsp:include page="./reporteAsignadasCompensacion.jsp"></jsp:include>
                             </div>                        

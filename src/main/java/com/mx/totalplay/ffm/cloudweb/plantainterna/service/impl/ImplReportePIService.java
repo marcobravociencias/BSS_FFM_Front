@@ -569,25 +569,25 @@ public class ImplReportePIService implements ReportePIService {
 						dataArray[count][7] = object.get("ciudad") != null ? object.get("ciudad").getAsString().trim()
 								: "";
 						dataArray[count][8] = object.get("estado") != null
-								? object.get("estado").getAsString().trim().split(" ")[0]
+								? object.get("estado").getAsString().trim()
 								: "";
 						dataArray[count][9] = object.get("numEmpleadoTecnico") != null
-								? object.get("numEmpleadoTecnico").getAsString().trim().split(" ")[0]
+								? object.get("numEmpleadoTecnico").getAsString().trim()
 								: "";
 						dataArray[count][10] = object.get("usuarioTecnico") != null
-								? object.get("usuarioTecnico").getAsString().trim().split(" ")[0]
+								? object.get("usuarioTecnico").getAsString().trim()
 								: "";
 						dataArray[count][11] = object.get("nombreTecnico") != null
 								? object.get("nombreTecnico").getAsString().trim()
 								: "";
 						dataArray[count][12] = object.get("fechaCreacion") != null
-								? object.get("fechaCreacion").getAsString().trim().split(" ")[0]
+								? object.get("fechaCreacion").getAsString().trim()
 								: "";
 						dataArray[count][13] = object.get("fechaPrimerAgenda") != null
-								? object.get("fechaPrimerAgenda").getAsString().trim().split(" ")[0]
+								? object.get("fechaPrimerAgenda").getAsString().trim()
 								: "";
 						dataArray[count][14] = object.get("fechaFin") != null
-								? object.get("fechaFin").getAsString().trim().split(" ")[0]
+								? object.get("fechaFin").getAsString().trim()
 								: "";
 
 						count++;
@@ -667,25 +667,25 @@ public class ImplReportePIService implements ReportePIService {
 						dataArray[count][7] = object.get("ciudad") != null ? object.get("ciudad").getAsString().trim()
 								: "";
 						dataArray[count][8] = object.get("geo1") != null
-								? object.get("geo1").getAsString().trim().split(" ")[0]
+								? object.get("geo1").getAsString().trim()
 								: "";
 						dataArray[count][9] = object.get("numEmpleadoInstalador") != null
-								? object.get("numEmpleadoInstalador").getAsString().trim().split(" ")[0]
+								? object.get("numEmpleadoInstalador").getAsString().trim()
 								: "";
 						dataArray[count][10] = object.get("usrInstalador") != null
-								? object.get("usrInstalador").getAsString().trim().split(" ")[0]
+								? object.get("usrInstalador").getAsString().trim()
 								: "";
 						dataArray[count][11] = object.get("instalador") != null
 								? object.get("instalador").getAsString().trim()
 								: "";
 						dataArray[count][12] = object.get("fechaCreacion") != null
-								? object.get("fechaCreacion").getAsString().trim().split(" ")[0]
+								? object.get("fechaCreacion").getAsString().trim()
 								: "";
 						dataArray[count][13] = object.get("fechaAgendamiento") != null
-								? object.get("fechaAgendamiento").getAsString().trim().split(" ")[0]
+								? object.get("fechaAgendamiento").getAsString().trim()
 								: "";
 						dataArray[count][14] = object.get("fechaCierre") != null
-								? object.get("fechaCierre").getAsString().trim().split(" ")[0]
+								? object.get("fechaCierre").getAsString().trim()
 								: "";
 
 						count++;
@@ -826,22 +826,22 @@ public class ImplReportePIService implements ReportePIService {
 						dataArray[count][5] = object.get("geo1") != null ? object.get("geo1").getAsString().trim() : "";
 						
 						dataArray[count][6] = object.get("numEmpleadoInstalador") != null
-								? object.get("numEmpleadoInstalador").getAsString().trim().split(" ")[0]
+								? object.get("numEmpleadoInstalador").getAsString().trim()
 								: "";
 						dataArray[count][7] = object.get("usrInstalador") != null
-								? object.get("usrInstalador").getAsString().trim().split(" ")[0]
+								? object.get("usrInstalador").getAsString().trim()
 								: "";
 						dataArray[count][8] = object.get("instalador") != null
 								? object.get("instalador").getAsString().trim()
 								: "";
 						dataArray[count][9] = object.get("fechaCreacion") != null
-								? object.get("fechaCreacion").getAsString().trim().split(" ")[0]
+								? object.get("fechaCreacion").getAsString().trim()
 								: "";
 						dataArray[count][10] = object.get("fechaAgendamiento") != null
-								? object.get("fechaAgendamiento").getAsString().trim().split(" ")[0]
+								? object.get("fechaAgendamiento").getAsString().trim()
 								: "";
 						dataArray[count][11] = object.get("fechaCierre") != null
-								? object.get("fechaCierre").getAsString().trim().split(" ")[0]
+								? object.get("fechaCierre").getAsString().trim()
 								: "";
 
 						count++;

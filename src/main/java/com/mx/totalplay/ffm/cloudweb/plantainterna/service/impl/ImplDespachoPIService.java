@@ -930,13 +930,13 @@ public class ImplDespachoPIService implements DespachoPIService {
                         dataArray[count][5] = object.get("estadoOrden") != null ? object.get("estadoOrden").getAsString().trim() : "";
                         dataArray[count][6] = object.get("motivoOrden") != null ? object.get("motivoOrden").getAsString().trim() : "";
                         dataArray[count][7] = object.get("ciudad") != null ? object.get("ciudad").getAsString().trim() : "";
-                        dataArray[count][8] = object.get("estado") != null ? object.get("estado").getAsString().trim().split(" ")[0] : "";
-                        dataArray[count][9] = object.get("numEmpleadoTecnico") != null ? object.get("numEmpleadoTecnico").getAsString().trim().split(" ")[0] : "";
-                        dataArray[count][10] = object.get("usuarioTecnico") != null ? object.get("usuarioTecnico").getAsString().trim().split(" ")[0] : "";
+                        dataArray[count][8] = object.get("estado") != null ? object.get("estado").getAsString().trim() : "";
+                        dataArray[count][9] = object.get("numEmpleadoTecnico") != null ? object.get("numEmpleadoTecnico").getAsString().trim() : "";
+                        dataArray[count][10] = object.get("usuarioTecnico") != null ? object.get("usuarioTecnico").getAsString().trim() : "";
                         dataArray[count][11] = object.get("nombreTecnico") != null ? object.get("nombreTecnico").getAsString().trim() : "";
-                        dataArray[count][12] = object.get("fechaCreacion") != null ? object.get("fechaCreacion").getAsString().trim().split(" ")[0] : "";
-                        dataArray[count][13] = object.get("fechaPrimerAgenda") != null ? object.get("fechaPrimerAgenda").getAsString().trim().split(" ")[0] : "";
-                        dataArray[count][14] = object.get("fechaFin") != null ? object.get("fechaFin").getAsString().trim().split(" ")[0] : "";
+                        dataArray[count][12] = object.get("fechaCreacion") != null ? object.get("fechaCreacion").getAsString().trim() : "";
+                        dataArray[count][13] = object.get("fechaPrimerAgenda") != null ? object.get("fechaPrimerAgenda").getAsString().trim() : "";
+                        dataArray[count][14] = object.get("fechaFin") != null ? object.get("fechaFin").getAsString().trim() : "";
 
                         count++;
 
