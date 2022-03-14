@@ -552,43 +552,40 @@ public class ImplReportePIService implements ReportePIService {
 						logger.info("objeto: " + object);
 						dataArray[count][0] = object.get("ot").getAsInt() != 0
 								? String.valueOf(object.get("ot").getAsInt())
-								: "";
-						dataArray[count][1] = object.get("os") != null ? object.get("os").getAsString().trim() : "";
-						dataArray[count][2] = object.get("tipo") != null ? object.get("tipo").getAsString().trim() : "";
-						dataArray[count][3] = object.get("subTipo") != null ? object.get("subTipo").getAsString().trim()
-								: "";
-						dataArray[count][4] = object.get("estatusOrden") != null
+								: "Sin datos";
+						dataArray[count][1] = object.get("os") != null &&  object.get("os").getAsString() != "" ? object.get("os").getAsString().trim() : "Sin datos";
+						dataArray[count][2] = object.get("tipo") != null && object.get("tipo").getAsString() != "" ? object.get("tipo").getAsString().trim() : "Sin datos";
+						dataArray[count][3] = object.get("subTipo") != null && object.get("subTipo").getAsString() != "" ? object.get("subTipo").getAsString().trim()
+								: "Sin datos";
+						dataArray[count][4] = object.get("estatusOrden") != null && object.get("estatusOrden").getAsString() != ""
 								? object.get("estatusOrden").getAsString().trim()
-								: "";
-						dataArray[count][5] = object.get("estadoOrden") != null
+								: "Sin datos";
+						dataArray[count][5] = object.get("estadoOrden") != null && object.get("estadoOrden").getAsString() != ""
 								? object.get("estadoOrden").getAsString().trim()
-								: "";
-						dataArray[count][6] = object.get("motivoOrden") != null
+								: "Sin datos";
+						dataArray[count][6] = object.get("motivoOrden") != null && object.get("motivoOrden").getAsString() != ""
 								? object.get("motivoOrden").getAsString().trim()
-								: "";
-						dataArray[count][7] = object.get("ciudad") != null ? object.get("ciudad").getAsString().trim()
-								: "";
-						dataArray[count][8] = object.get("estado") != null
+								: "Sin datos";
+						dataArray[count][7] = object.get("ciudad") != null && object.get("ciudad").getAsString() != "" ? object.get("ciudad").getAsString().trim()
+								: "Sin datos";
+						dataArray[count][8] = object.get("estado") != null && object.get("estado").getAsString() != ""
 								? object.get("estado").getAsString().trim()
-								: "";
-						dataArray[count][9] = object.get("numEmpleadoTecnico") != null
+								: "Sin datos";
+						dataArray[count][9] = object.get("numEmpleadoTecnico") != null && object.get("numEmpleadoTecnico").getAsString() != ""
 								? object.get("numEmpleadoTecnico").getAsString().trim()
-								: "";
-						dataArray[count][10] = object.get("usuarioTecnico") != null
+								: "Sin datos";
+						dataArray[count][10] = object.get("usuarioTecnico") != null && object.get("usuarioTecnico").getAsString() != ""
 								? object.get("usuarioTecnico").getAsString().trim()
-								: "";
-						dataArray[count][11] = object.get("nombreTecnico") != null
+								: "Sin datos";
+						dataArray[count][11] = object.get("nombreTecnico") != null && object.get("nombreTecnico").getAsString() != ""
 								? object.get("nombreTecnico").getAsString().trim()
 								: "";
-						dataArray[count][12] = object.get("fechaCreacion") != null
-								? object.get("fechaCreacion").getAsString().trim()
-								: "";
-						dataArray[count][13] = object.get("fechaPrimerAgenda") != null
-								? object.get("fechaPrimerAgenda").getAsString().trim()
-								: "";
-						dataArray[count][14] = object.get("fechaFin") != null
+						dataArray[count][12] = object.get("fechaUltimaAgenda") != null && object.get("fechaUltimaAgenda").getAsString() != ""
+								? object.get("fechaUltimaAgenda").getAsString().trim()
+								: "Sin datos";
+						dataArray[count][13] = object.get("fechaFin") != null && object.get("fechaFin").getAsString() != ""
 								? object.get("fechaFin").getAsString().trim()
-								: "";
+								: "Sin datos";
 
 						count++;
 
@@ -650,43 +647,43 @@ public class ImplReportePIService implements ReportePIService {
 						logger.info("objeto: " + object);
 						dataArray[count][0] = object.get("ot").getAsInt() != 0
 								? String.valueOf(object.get("ot").getAsInt())
-								: "";
-						dataArray[count][1] = object.get("os") != null ? object.get("os").getAsString().trim() : "";
-						dataArray[count][2] = object.get("intervencion") != null
+								: "Sin datos";
+						dataArray[count][1] = object.get("os") != null &&  object.get("os").getAsString() != ""  ? object.get("os").getAsString().trim() : "Sin datos";
+						dataArray[count][2] = object.get("intervencion") != null &&  object.get("intervencion").getAsString() != ""
 								? object.get("intervencion").getAsString().trim()
-								: "";
-						dataArray[count][3] = object.get("subIntervencion") != null
+								: "Sin datos";
+						dataArray[count][3] = object.get("subIntervencion") != null && object.get("subIntervencion").getAsString() != ""
 								? object.get("subIntervencion").getAsString().trim()
-								: "";
-						dataArray[count][4] = object.get("estatus") != null ? object.get("estatus").getAsString().trim()
-								: "";
-						dataArray[count][5] = object.get("estado") != null ? object.get("estado").getAsString().trim()
-								: "";
-						dataArray[count][6] = object.get("causa") != null ? object.get("causa").getAsString().trim()
-								: "";
-						dataArray[count][7] = object.get("ciudad") != null ? object.get("ciudad").getAsString().trim()
-								: "";
-						dataArray[count][8] = object.get("geo1") != null
+								: "Sin datos";
+						dataArray[count][4] = object.get("estatus") != null && object.get("estatus").getAsString() != "" ? object.get("estatus").getAsString().trim()
+								: "Sin datos";
+						dataArray[count][5] = object.get("estado") != null && object.get("estado").getAsString() != "" ? object.get("estado").getAsString().trim()
+								: "Sin datos";
+						dataArray[count][6] = object.get("causa") != null && object.get("causa").getAsString() != "" ? object.get("causa").getAsString().trim()
+								: "Sin datos";
+						dataArray[count][7] = object.get("ciudad") != null &&  object.get("ciudad").getAsString() != "" ? object.get("ciudad").getAsString().trim()
+								: "Sin datos";
+						dataArray[count][8] = object.get("geo1") != null && object.get("geo1").getAsString() != ""
 								? object.get("geo1").getAsString().trim()
-								: "";
-						dataArray[count][9] = object.get("numEmpleadoInstalador") != null
+								: "Sin datos";
+						dataArray[count][9] = object.get("numEmpleadoInstalador") != null && object.get("numEmpleadoInstalador").getAsString() != ""
 								? object.get("numEmpleadoInstalador").getAsString().trim()
-								: "";
-						dataArray[count][10] = object.get("usrInstalador") != null
+								: "Sin datos";
+						dataArray[count][10] = object.get("usrInstalador") != null && object.get("usrInstalador").getAsString() != ""
 								? object.get("usrInstalador").getAsString().trim()
-								: "";
-						dataArray[count][11] = object.get("instalador") != null
+								: "Sin datos";
+						dataArray[count][11] = object.get("instalador") != null && object.get("instalador").getAsString() != ""
 								? object.get("instalador").getAsString().trim()
-								: "";
-						dataArray[count][12] = object.get("fechaCreacion") != null
+								: "Sin datos";
+						dataArray[count][12] = object.get("fechaCreacion") != null && object.get("fechaCreacion").getAsString() != ""
 								? object.get("fechaCreacion").getAsString().trim()
-								: "";
-						dataArray[count][13] = object.get("fechaAgendamiento") != null
+								: "Sin datos";
+						dataArray[count][13] = object.get("fechaAgendamiento") != null && object.get("fechaAgendamiento").getAsString() != ""
 								? object.get("fechaAgendamiento").getAsString().trim()
-								: "";
-						dataArray[count][14] = object.get("fechaCierre") != null
+								: "Sin datos";
+						dataArray[count][14] = object.get("fechaCierre") != null && object.get("fechaCierre").getAsString() != ""
 								? object.get("fechaCierre").getAsString().trim()
-								: "";
+								: "Sin datos";
 
 						count++;
 
@@ -735,34 +732,34 @@ public class ImplReportePIService implements ReportePIService {
 					JsonObject result = new JsonObject();
 					logger.info("objeto: " + object);
 					result.add("OT", object.get("ot"));
-					result.addProperty("OS", object.get("os") != null ? object.get("os").getAsString() : "");
-					result.addProperty("TIPO", object.get("intervencion") != null ? object.get("intervencion").getAsString() : "");
+					result.addProperty("OS", object.get("os") != null && object.get("os").getAsString() != "" ? object.get("os").getAsString() : "Sin datos");
+					result.addProperty("TIPO", object.get("intervencion") != null && object.get("intervencion").getAsString() != "" ? object.get("intervencion").getAsString() : "Sin datos");
 					result.addProperty("SUBTIPO",
-							object.get("subIntervencion") != null ? object.get("subIntervencion").getAsString() : "");
+							object.get("subIntervencion") != null && object.get("subIntervencion").getAsString() != "" ? object.get("subIntervencion").getAsString() : "Sin datos");
 					result.addProperty("ESTATUS",
-							object.get("estatus") != null ? object.get("estatus").getAsString() : "");
+							object.get("estatus") != null && object.get("estatus").getAsString() != "" ? object.get("estatus").getAsString() : "Sin datos");
 					result.addProperty("MOTIVO",
-							object.get("falla") != null ? object.get("falla").getAsString() : "");
+							object.get("falla") != null && object.get("falla").getAsString() != "" ? object.get("falla").getAsString() : "Sin datos");
 					result.addProperty("ESTADO",
-							object.get("estado") != null ? object.get("estado").getAsString() : "");
+							object.get("estado") != null && object.get("estado").getAsString() != "" ? object.get("estado").getAsString() : "Sin datos");
 					result.addProperty("CIUDAD",
-							object.get("ciudad") != null ? object.get("ciudad").getAsString() : "");
+							object.get("ciudad") != null && object.get("ciudad").getAsString() != "" ? object.get("ciudad").getAsString() : "Sin datos");
 					result.addProperty("ESTADO",
-							object.get("geo3") != null ? object.get("geo3").getAsString() : "");
+							object.get("geo3") != null && object.get("geo3").getAsString() != ""  ? object.get("geo3").getAsString() : "Sin datos");
 					result.addProperty("#EMPLEADO",
-							object.get("numEmpleadoInstalador") != null ? object.get("numEmpleadoInstalador").getAsString()
-									: "");
+							object.get("numEmpleadoInstalador") != null && object.get("numEmpleadoInstalador").getAsString() != "" ? object.get("numEmpleadoInstalador").getAsString()
+									: "Sin datos");
 					result.addProperty("#USUARIO",
-							object.get("usrInstalador") != null ? object.get("usrInstalador").getAsString() : "");
+							object.get("usrInstalador") != null && object.get("usrInstalador").getAsString() != "" ? object.get("usrInstalador").getAsString() : "Sin datos");
 					result.addProperty("TÉCNICO",
-							object.get("instalador") != null ? object.get("instalador").getAsString() : "");
+							object.get("instalador") != null && object.get("instalador").getAsString() != "" ? object.get("instalador").getAsString() : "Sin datos");
 					result.addProperty("FECHA CREACIÓN",
-							object.get("fechaCreacion") != null ? object.get("fechaCreacion").getAsString() : "");
+							object.get("fechaCreacion") != null && object.get("fechaCreacion").getAsString() != "" ? object.get("fechaCreacion").getAsString() : "Sin datos");
 					result.addProperty("FECHA AGENDA",
-							object.get("fechaAgendamiento") != null ? object.get("fechaAgendamiento").getAsString()
-									: "");
+							object.get("fechaAgendamiento") != null && object.get("fechaAgendamiento").getAsString() != "" ? object.get("fechaAgendamiento").getAsString()
+									: "Sin datos");
 					result.addProperty("FECHA FIN",
-							object.get("fechaCierre") != null ? object.get("fechaCierre").getAsString() : "");
+							object.get("fechaCierre") != null && object.get("fechaCierre").getAsString() != "" ? object.get("fechaCierre").getAsString() : "Sin datos");
 
 					ordenesReporte.add(result);
 				}
@@ -812,37 +809,37 @@ public class ImplReportePIService implements ReportePIService {
 						logger.info("objeto: " + object);
 						dataArray[count][0] = object.get("ot").getAsInt() != 0
 								? String.valueOf(object.get("ot").getAsInt())
-								: "";
-						dataArray[count][1] = object.get("os") != null ? object.get("os").getAsString().trim() : "";
-						dataArray[count][2] = object.get("tipoOrden") != null
+								: "Sin datos";
+						dataArray[count][1] = object.get("os") != null && object.get("os").getAsString() != "" ? object.get("os").getAsString().trim() : "Sin datos";
+						dataArray[count][2] = object.get("tipoOrden") != null && object.get("tipoOrden").getAsString() != ""
 								? object.get("tipoOrden").getAsString().trim()
-								: "";
-						dataArray[count][3] = object.get("subTipoOrden") != null
+								: "Sin datos";
+						dataArray[count][3] = object.get("subTipoOrden") != null && object.get("subTipoOrden").getAsString() != ""
 								? object.get("subTipoOrden").getAsString().trim()
-								: "";
-						dataArray[count][4] = object.get("proveedor") != null
+								: "Sin datos";
+						dataArray[count][4] = object.get("proveedor") != null && object.get("proveedor").getAsString() != ""
 								? object.get("proveedor").getAsString().trim()
-								: "";
-						dataArray[count][5] = object.get("geo1") != null ? object.get("geo1").getAsString().trim() : "";
+								: "Sin datos";
+						dataArray[count][5] = object.get("geo1") != null && object.get("geo1").getAsString() != "" ? object.get("geo1").getAsString().trim() : "Sin datos";
 						
-						dataArray[count][6] = object.get("numEmpleadoInstalador") != null
+						dataArray[count][6] = object.get("numEmpleadoInstalador") != null && object.get("numEmpleadoInstalador").getAsString() != ""
 								? object.get("numEmpleadoInstalador").getAsString().trim()
-								: "";
-						dataArray[count][7] = object.get("usrInstalador") != null
+								: "Sin datos";
+						dataArray[count][7] = object.get("usrInstalador") != null && object.get("usrInstalador").getAsString() != ""
 								? object.get("usrInstalador").getAsString().trim()
-								: "";
-						dataArray[count][8] = object.get("instalador") != null
+								: "Sin datos";
+						dataArray[count][8] = object.get("instalador") != null && object.get("instalador").getAsString() != ""
 								? object.get("instalador").getAsString().trim()
-								: "";
-						dataArray[count][9] = object.get("fechaCreacion") != null
+								: "Sin datos";
+						dataArray[count][9] = object.get("fechaCreacion") != null && object.get("fechaCreacion").getAsString() != ""
 								? object.get("fechaCreacion").getAsString().trim()
-								: "";
-						dataArray[count][10] = object.get("fechaAgendamiento") != null
+								: "Sin datos";
+						dataArray[count][10] = object.get("fechaAgendamiento") != null && object.get("fechaAgendamiento").getAsString() != ""
 								? object.get("fechaAgendamiento").getAsString().trim()
-								: "";
-						dataArray[count][11] = object.get("fechaCierre") != null
+								: "Sin datos";
+						dataArray[count][11] = object.get("fechaCierre") != null && object.get("fechaCierre").getAsString() != ""
 								? object.get("fechaCierre").getAsString().trim()
-								: "";
+								: "Sin datos";
 
 						count++;
 
@@ -891,32 +888,32 @@ public class ImplReportePIService implements ReportePIService {
 					JsonObject result = new JsonObject();
 					logger.info("objeto: " + object);
 					result.add("OT", object.get("ot"));
-					result.addProperty("OS", object.get("os") != null ? object.get("os").getAsString() : "");
-					result.addProperty("TIPO", object.get("tipoOrden") != null ? object.get("tipoOrden").getAsString() : "");
+					result.addProperty("OS", object.get("os") != null && object.get("os").getAsString() != "" ? object.get("os").getAsString() : "Sin datos");
+					result.addProperty("TIPO", object.get("tipoOrden") != null && object.get("tipoOrden").getAsString() != "" ? object.get("tipoOrden").getAsString() : "Sin datos");
 					result.addProperty("SUBTIPO",
-							object.get("subTipoOrden") != null ? object.get("subTipoOrden").getAsString() : "");
+							object.get("subTipoOrden") != null && object.get("subTipoOrden").getAsString() != "" ? object.get("subTipoOrden").getAsString() : "Sin datos");
 					result.addProperty("CUENTA",
-							object.get("cuenta") != null ? object.get("cuenta").getAsString() : "");
+							object.get("cuenta") != null && object.get("cuenta").getAsString() != "" ? object.get("cuenta").getAsString() : "Sin datos");
 					result.addProperty("PROVEEDOR",
-							object.get("proveedor") != null ? object.get("proveedor").getAsString() : "");
+							object.get("proveedor") != null && object.get("proveedor").getAsString() != "" ? object.get("proveedor").getAsString() : "Sin datos");
 					result.addProperty("CIUDAD",
-							object.get("geo1") != null ? object.get("geo1").getAsString() : "");
+							object.get("geo1") != null && object.get("geo1").getAsString() != "" ? object.get("geo1").getAsString() : "Sin datos");
 					result.addProperty("DESPACHO",
-							object.get("nombreDespacho") != null ? object.get("nombreDespacho").getAsString() : "");
+							object.get("nombreDespacho") != null && object.get("nombreDespacho").getAsString() != "" ? object.get("nombreDespacho").getAsString() : "Sin datos");
 					result.addProperty("#EMPLEADO",
-							object.get("numEmpleadoInstalador") != null ? object.get("numEmpleadoInstalador").getAsString()
-									: "");
+							object.get("numEmpleadoInstalador") != null && object.get("numEmpleadoInstalador").getAsString() != "" ? object.get("numEmpleadoInstalador").getAsString()
+									: "Sin datos");
 					result.addProperty("#USUARIO",
-							object.get("usrInstalador") != null ? object.get("usrInstalador").getAsString() : "");
+							object.get("usrInstalador") != null && object.get("usrInstalador").getAsString() != "" ? object.get("usrInstalador").getAsString() : "Sin datos");
 					result.addProperty("INSTALADOR",
-							object.get("instalador") != null ? object.get("instalador").getAsString() : "");
+							object.get("instalador") != null && object.get("instalador").getAsString() != "" ? object.get("instalador").getAsString() : "Sin datos");
 					result.addProperty("FECHA CREACIÓN",
-							object.get("fechaCreacion") != null ? object.get("fechaCreacion").getAsString() : "");
+							object.get("fechaCreacion") != null && object.get("fechaCreacion").getAsString() != "" ? object.get("fechaCreacion").getAsString() : "Sin datos");
 					result.addProperty("FECHA AGENDA",
-							object.get("fechaAgendamiento") != null ? object.get("fechaAgendamiento").getAsString()
-									: "");
+							object.get("fechaAgendamiento") != null && object.get("fechaAgendamiento").getAsString() != "" ? object.get("fechaAgendamiento").getAsString()
+									: "Sin datos");
 					result.addProperty("FECHA FIN",
-							object.get("fechaCierre") != null ? object.get("fechaCierre").getAsString() : "");
+							object.get("fechaCierre") != null && object.get("fechaCierre").getAsString() != "" ? object.get("fechaCierre").getAsString() : "Sin datos");
 
 					ordenesReporte.add(result);
 				}

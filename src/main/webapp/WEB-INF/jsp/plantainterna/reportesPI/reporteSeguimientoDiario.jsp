@@ -111,7 +111,7 @@
         </div>
     </div>
     <div class="content-table">
-        <div class="content-fluid">
+        <div class="content-fluid" style="overflow-x: auto;">
             <table id="reporteSeguimientoTable" class="display table" cellspacing="0" width="100%">
                 <thead id="thead_reporteSeguimiento">
                     <tr>
@@ -127,7 +127,6 @@
                         <th>#Empleado</th>
                         <th>#Usuario</th>
                         <th>T&eacute;cnico</th>
-                        <th>Fecha creaci&oacute;n</th>
                         <th>Fecha agenda</th>
                         <th>Fecha fin</th>
 

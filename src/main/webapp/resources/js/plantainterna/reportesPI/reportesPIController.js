@@ -69,15 +69,24 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		switch (type) {
 			case 'seguimiento':
 				geografiaReporte = angular.copy($scope.listaGeografiaReporte.seguimiento);
-
+				if ($scope.resultReporteDiario == null && geografiaReporte) {
+					swal({ text: 'Cargando registros...', allowOutsideClick: false });
+					swal.showLoading();
+				}
 				break;
 			case 'cierre':
 				geografiaReporte = angular.copy($scope.listaGeografiaReporte.cierre);
-
+				if ($scope.resultReporteCierre == null && geografiaReporte) {
+					swal({ text: 'Cargando registros...', allowOutsideClick: false });
+					swal.showLoading();
+				}
 				break;
 			case 'asignadas':
 				geografiaReporte = angular.copy($scope.listaGeografiaReporte.asignadas);
-
+				if ($scope.resultReporteAsignadas == null && geografiaReporte) {
+					swal({ text: 'Cargando registros...', allowOutsideClick: false });
+					swal.showLoading();
+				}
 				break;
 		}
 
@@ -574,7 +583,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 					}
 				},
 
-				"columns": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+				"columns": [null, null, null, null, null, null, null, null, null, null, null, null, null, null],
 				"language": idioma_espanol_not_font,
 				"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
 				dom: 'Bfrtip'

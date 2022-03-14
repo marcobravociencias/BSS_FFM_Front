@@ -139,7 +139,6 @@
                                         <th># EMPLEADO</th>
                                         <th># USUARIO</th>
                                         <th>T&Eacute;CNICO</th>
-                                        <th>FECHA CREACI&Oacute;N</th>
                                         <th>FECHA AGENDA</th>
                                         <th>FECHA FIN</th>
                                     </tr>
