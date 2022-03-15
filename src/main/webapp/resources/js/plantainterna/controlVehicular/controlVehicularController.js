@@ -21,7 +21,6 @@ app.controller('controlVehicularController',
 			$scope.countNoDisponibles = 0;
 			$scope.countBajas = 0;
 			$scope.countTodos = 0;
-			$scope.banderaErrorGeografia = false;
 			$scope.geografiaList = [];
 			$scope.nGeografia = "";
 			$scope.filePlaca;

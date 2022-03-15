@@ -558,3 +558,8 @@ div.dataTables_wrapper div.dataTables_filter input {
     font-size: 1.5em;
     font-weight: normal;
 }
+
+i.icono-noseleccion {
+    color: #ff9f3b;
+    display: inline-block;
+  }

@@ -2,7 +2,7 @@
     <div class="col-12">
         <div class="row">
             <div class="col-2 form-group columna-filtro-ind-rep">
-                <label class="span-consulta"><i class="fas fa-address-card"></i> Puesto</label>
+                <label class="span-consulta"><i class="fas fa-address-card"></i> Puesto <i ng-if="!listaPuestos.length" class="icono-noseleccion fas fa-exclamation-circle ml-2" title="No se encontr&oacute;o el catalogo de puestos"></i></label>
                 <div class="dropdown">
                     <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="SELECCIONE..."
                         type="text" id="txtPuesto" class="input-filtro form-control form-control-sm" />
@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div class="col-md-2 form-group columna-filtro-ind-rep">
-                <label class="span-consulta"><i class="fas fa-map-marked"></i> Geograf&iacute;a</label>
+                <label class="span-consulta"><i class="fas fa-map-marked"></i> Geograf&iacute;a <i ng-if="!listaGeografia.length" class="icono-noseleccion fas fa-exclamation-circle ml-2" title="No se encontr&oacute;o el catalogo de geograf&iacute;a"></i></label>
                 <input readonly placeholder="NO HAY SELECCI&Oacute;N" type="text"
                     ng-click="abrirModalGeografiaBuscarUsuario()" id="inputSearchGeoUsuario"
                     class="input-filtro form-control form-control-sm" style="border-radius: .5em !important;">

@@ -671,3 +671,8 @@ tfoot {
   font-size: .9em;
   margin: 0;
 }
+
+i.icono-noseleccion {
+  color: #ff9f3b;
+  display: inline-block;
+}
