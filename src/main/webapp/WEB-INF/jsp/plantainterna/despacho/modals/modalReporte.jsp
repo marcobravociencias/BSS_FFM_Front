@@ -129,15 +129,16 @@
                                     <tr>
                                         <th>OT</th>
                                         <th>OS</th>
+                                        <th>CUENTA</th>
                                         <th>TIPO</th>
                                         <th>SUBTIPO</th>
                                         <th>ESTATUS</th>
                                         <th>ESTADO</th>
                                         <th>MOTIVO</th>
                                         <th>CIUDAD</th>
-                                        <th>ESTADO</th>
-                                        <th># EMPLEADO</th>
-                                        <th># USUARIO</th>
+                                        <th>GEOGRAF&iacute;A</th>
+                                        <th>#EMPLEADO</th>
+                                        <th>#USUARIO</th>
                                         <th>T&Eacute;CNICO</th>
                                         <th>FECHA AGENDA</th>
                                         <th>FECHA FIN</th>

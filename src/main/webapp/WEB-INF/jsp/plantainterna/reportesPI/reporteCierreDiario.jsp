@@ -107,24 +107,26 @@
             </div>
         </div>
     </div>
-    <div class="content-table">
-        <div class="content-fluid" style="overflow-x: auto;">
+    <div class="content-fluid">
+        <div class="table-responsive">
             <table id="reporteCierreTable" class="display table" cellspacing="0" width="100%">
                 <thead id="thead_reporteCierre">
                     <tr>
                         <th>OT</th>
                         <th>OS</th>
+                        <th>Cuenta</th>
                         <th>Tipo</th>
                         <th>Subtipo</th>
                         <th>Estatus</th>
                         <th>Estado</th>
                         <th>Motivo</th>
                         <th>Ciudad</th>
-                        <th>Estado</th>
+                        <th>Geograf&iacute;a</th>
                         <th>#Empleado</th>
                         <th>#Usuario</th>
                         <th>T&eacute;cnico</th>
                         <th>Fecha creaci&oacute;n</th>
+                        <th>Fecha inicio</th>
                         <th>Fecha agenda</th>
                         <th>Fecha fin</th>
 

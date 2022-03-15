@@ -439,7 +439,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 			"searching": false,
 			"ordering": false,
 			"pageLength": 10,
-			"info": false,
+			"info": true,
 			"autoWidth": true,
 			"language": idioma_espanol_not_font,
 			"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
@@ -451,7 +451,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 			"searching": false,
 			"ordering": false,
 			"pageLength": 10,
-			"info": false,
+			"info": true,
 			"autoWidth": true,
 			"language": idioma_espanol_not_font,
 			"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
@@ -463,7 +463,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 			"searching": false,
 			"ordering": false,
 			"pageLength": 10,
-			"info": false,
+			"info": true,
 			"autoWidth": true,
 			"language": idioma_espanol_not_font,
 			"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
@@ -559,7 +559,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 				"searching": false,
 				"ordering": false,
 				"pageLength": 10,
-				"info": false,
+				"info": true,
 				"ajax": {
 					"url": "req/consultarReporteSeguimientoDiario",
 					"type": "POST",
@@ -583,11 +583,9 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 					}
 				},
 
-				"columns": [null, null, null, null, null, null, null, null, null, null, null, null, null, null],
-				"language": idioma_espanol_not_font,
-				"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
-				dom: 'Bfrtip'
-
+				"columns": [null, null, null, null,null, null, null, null, null, null, null, null, null, null, null],
+				"language": idioma_espanol_not_font
+				
 			});
 
 			if (!reporteSeguimientoTable) {
@@ -597,10 +595,9 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 					"searching": false,
 					"ordering": false,
 					"pageLength": 10,
-					"info": false,
+					"info": true,
 					"autoWidth": true,
 					"language": idioma_espanol_not_font,
-					"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
 				});
 			}
 		}
@@ -784,7 +781,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 				"searching": false,
 				"ordering": false,
 				"pageLength": 10,
-				"info": false,
+				"info": true,
 				"ajax": {
 					"url": "req/consultarReporteCierreDiario",
 					"type": "POST",
@@ -808,16 +805,9 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 					}
 				},
 
-				"columns": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
-				"language": idioma_espanol_not_font,
-				"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
-				dom: 'Bfrtip',
-				buttons:
-					[{
-						extend: 'excelHtml5',
-						title: 'Reporte Cierre Diario',
-						text: 'Exportar Excel'
-					}],
+				"columns": [null, null, null, null, null,null,null, null, null, null, null, null, null, null, null, null, null],
+				"language": idioma_espanol_not_font
+				
 			});
 
 			if (!reporteCierreTable) {
@@ -827,10 +817,9 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 					"searching": false,
 					"ordering": false,
 					"pageLength": 10,
-					"info": false,
+					"info": true,
 					"autoWidth": true,
-					"language": idioma_espanol_not_font,
-					"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+					"language": idioma_espanol_not_font
 				});
 			}
 		}
@@ -1017,7 +1006,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 				"searching": false,
 				"ordering": false,
 				"pageLength": 10,
-				"info": false,
+				"info": true,
 				"ajax": {
 					"url": "req/consultarReporteAsignadasCompensacion",
 					"type": "POST",
@@ -1041,16 +1030,9 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 					}
 				},
 
-				"columns": [null, null, null, null, null, null, null, null, null, null, null, null],
-				"language": idioma_espanol_not_font,
-				"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
-				dom: 'Bfrtip',
-				buttons:
-					[{
-						extend: 'excelHtml5',
-						title: 'Reporte Cierre Diario',
-						text: 'Exportar Excel'
-					}],
+				"columns": [null, null, null, null, null,null,null, null, null, null, null, null, null, null],
+				"language": idioma_espanol_not_font
+				
 			});
 
 			if (!reporteAsignadasTable) {
@@ -1060,10 +1042,9 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 					"searching": false,
 					"ordering": false,
 					"pageLength": 10,
-					"info": false,
+					"info": true,
 					"autoWidth": true,
-					"language": idioma_espanol_not_font,
-					"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+					"language": idioma_espanol_not_font
 				});
 			}
 		}

@@ -108,17 +108,19 @@
             </div>
         </div>
     </div>
-    <div class="content-table">
-        <div class="content-fluid" style="overflow-x: auto;">
+    <div class="content-fluid">
+        <div class="table-responsive">
             <table id="reporteAsignadasTable" class="display table" cellspacing="0" width="100%">
                 <thead id="thead_asignadas">
                     <tr>
                         <th>OT</th>
                         <th>OS</th>
+                        <th>Cuenta</th>
                         <th>Tipo</th>
                         <th>Subtipo</th>
                         <th>Proveedor</th>
-                        <th>Ciudad</th>
+                        <th>Geograf&iacute;a</th>
+                        <th>Geograf&iacute;a</th>
                         <th>#Empleado</th>
                         <th>#Usuario</th>
                         <th>Instalador</th>
