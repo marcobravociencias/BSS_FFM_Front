@@ -75,7 +75,6 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         }, 750);
     });
 
-
     $scope.initMapa = function () {
         mapInspector = new google.maps.Map(document.getElementById('mapaInspectorIncidencia'), {
             center: {
@@ -199,8 +198,6 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
     }
 
     $scope.consultarCatalogosInspectorIncidencia = function () {
-        swal({ text: 'Espera un momento...', allowOutsideClick: false });
-        swal.showLoading();
         $q.all([
             inspectorIncidenciaService.consultarConfiguracionDespachoDespacho({ "moduloAccionesUsuario": "moduloInspectorIncidenciasPE" }),
             inspectorIncidenciaService.consultaCatalogoEstatusInspectorPE(),
@@ -218,13 +215,13 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                 validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
                 validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
                 $scope.llaveEstatusGeneraOT = llavesResult.KEY_ESTATUS_GENERAR_OT ? llavesResult.KEY_ESTATUS_GENERAR_OT.split(",") : [];//[1]
-
+                $("#idBody").removeAttr("style");
             }
             if (resultConf != undefined && resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.permisos && resultConf.MODULO_ACCIONES_USUARIO.permisos != "") {
                 $scope.permisosUsuario = resultConf.MODULO_ACCIONES_USUARIO.permisos;
                 console.log($scope.permisosUsuario);
                 $scope.isPermisoConsultaIncidencias = ($scope.permisosUsuario.filter(e => { return e.clave == "consultarIncidenciasPEAccion" })[0] != undefined);
-                $scope.isPermisoGenerarOTInspector = ($scope.permisosUsuario.filter(e => { return e.clave == "generarOTInspectorPEAccion" })[0] != undefined);
+                $scope.isPermisoGenerarOTInspector = true;//($scope.permisosUsuario.filter(e => { return e.clave == "generarOTInspectorPEAccion" })[0] != undefined);
             }
 
             if (results[1].data !== undefined) {
@@ -232,42 +229,34 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                     if (results[1].data.result) {
                         $scope.listCatEstatus = angular.copy(results[1].data.result.estatusIncidente);
                         $scope.listCatEstatus.map(function (e) { e.checkedOpcion = true; return e; })
-                        swal.close();
                     } else {
                         mostrarMensajeWarningValidacion("<li>No se encontraron datos para el Estatus</i>");
                         $scope.banderaErrorEstatus = true;
-                        swal.close();
                     }
                 } else {
                     mostrarMensajeWarningValidacion('<li>' + results[1].data.resultDescripcion + '</i>');
                     $scope.banderaErrorEstatus = true;
-                    swal.close();
                 }
             } else {
                 mostrarMensajeWarningValidacion("<li>Ha ocurrido un error en la consulta de cat&aacute;logo de Estatus</i>");
                 $scope.banderaErrorEstatus = true;
-                swal.close();
             }
             if (results[2].data !== undefined) {
                 if (results[2].data.respuesta) {
                     if (results[2].data.result) {
                         $scope.nfiltrofallas = $scope.nfiltrofallas ? $scope.nfiltrofallas : $scope.obtenerNivelUltimoJerarquiaGeneric(results[2].data.result.incidentes);
                         $scope.filtrosInspector.fallas = $scope.realizarConversionAnidado(results[2].data.result.incidentes.filter(e => e.nivel <= parseInt($scope.nfiltrofallas)));
-                        swal.close();
                     } else {
                         mostrarMensajeWarningValidacion("<li>No se encontraron datos para el Cat&aacute;alogo de Fallas</i>");
                         $scope.banderaErrorFallas = true;
-                        swal.close();
                     }
                 } else {
                     mostrarMensajeWarningValidacion('<li>' + results[2].data.resultDescripcion + '</i>');
                     $scope.banderaErrorFallas = true;
-                    swal.close();
                 }
             } else {
                 mostrarMensajeWarningValidacion("<li>No se encontraron datos para el Cat&aacute;logo de Fallas</i>");
                 $scope.banderaErrorFallas = true;
-                swal.close();
             }
             if (results[3].data !== undefined) {
                 if (results[3].data.respuesta) {
@@ -311,22 +300,18 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                         } else {
                             mostrarMensajeWarningValidacion('<li>No se encontraron datos para la geograf&iacute;a</li>Va');
                             $scope.banderaErrorGeografia = true;
-                            swal.close();
                         }
                     } else {
                         mostrarMensajeWarningValidacion('<li>No se encontraron datos para la geograf&iacute;a</li>');
                         $scope.banderaErrorGeografia = true;
-                        swal.close();
                     }
                 } else {
                     mostrarMensajeWarningValidacion('<li>' + results[3].data.resultDescripcion + '</li>');
                     $scope.banderaErrorGeografia = true;
-                    swal.close();
                 }
             } else {
                 mostrarMensajeWarningValidacion('<li>Ha ocurrido un error en la consulta de geograf&iacute;a</li>');
                 $scope.banderaErrorGeografia = true;
-                swal.close();
             }
         });
     }
@@ -415,7 +400,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
     printIncidencia = function (falla, latitud, longitud) {
         return '<div class="container-fluid incidencia-content">' +
             '   <div class="container-text-title-detalle"><span class="text-title-incidencia">Unidad Negocio</span></div>' +
-            '   <div class="container-text-content-detalle"><span class="text-content-incidencia">' + (falla.idUnidadNegocio == null ? 'Sin informaci&oacute;n' : falla.idUnidadNegocio !== undefined ? falla.idUnidadNegocio : 'Sin informaci&oacute;n') + '</span> </div>' +
+            '   <div class="container-text-content-detalle"><span class="text-content-incidencia">' + (falla.desUnidadNegocio == '' ? 'Sin informaci&oacute;n' : falla.desUnidadNegocio == null ? 'Sin informaci&oacute;n' : falla.desUnidadNegocio !== undefined ? falla.desUnidadNegocio : 'Sin informaci&oacute;n') + '</span> </div>' +
             '</div>' +
             '<div class="container-fluid incidencia-content">' +
             '   <div class="container-text-title-detalle"><span class="text-title-incidencia">ID OT</span></div>' +
@@ -564,7 +549,28 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                 if (response.data.respuesta) {
                     if (response.data.result) {
                         if (response.data.result.detalleIncidentes.length) {
+                            let idtemp=1;
                             $scope.fallasIncidenciaDetalle = angular.copy(response.data.result.detalleIncidentes);
+                            $scope.fallasIncidenciaDetalle.push(angular.copy(response.data.result.detalleIncidentes)[0])
+                            $scope.fallasIncidenciaDetalle.push(angular.copy(response.data.result.detalleIncidentes)[0])
+
+                            $scope.fallasIncidenciaDetalle.push(angular.copy(response.data.result.detalleIncidentes)[0])
+                            $scope.fallasIncidenciaDetalle.push(angular.copy(response.data.result.detalleIncidentes)[0])
+                            $scope.fallasIncidenciaDetalle.push(angular.copy(response.data.result.detalleIncidentes)[0])
+                            $scope.fallasIncidenciaDetalle.push(angular.copy(response.data.result.detalleIncidentes)[0])
+                            $scope.fallasIncidenciaDetalle.push(angular.copy(response.data.result.detalleIncidentes)[0])
+                            $scope.fallasIncidenciaDetalle.push(angular.copy(response.data.result.detalleIncidentes)[0])
+                            $scope.fallasIncidenciaDetalle.push(angular.copy(response.data.result.detalleIncidentes)[0])
+                            $scope.fallasIncidenciaDetalle.push(angular.copy(response.data.result.detalleIncidentes)[0])
+                            $scope.fallasIncidenciaDetalle.push(angular.copy(response.data.result.detalleIncidentes)[0])
+                            $scope.fallasIncidenciaDetalle.push(angular.copy(response.data.result.detalleIncidentes)[0])
+
+                            $scope.fallasIncidenciaDetalle= $scope.fallasIncidenciaDetalle.map(e=>{
+                                idtemp++;
+                                e.idFalla=idtemp+''
+                                return e;
+                            })
+  
                             $scope.inicializarDetalleIncidencia($scope.incidenciaDetalle.latitud, $scope.incidenciaDetalle.longitud);
 
                             $scope.isBtnGenerarOT = $scope.llaveEstatusGeneraOT.find(function (elem) { return elem === $scope.incidenciaDetalle.idEstatus });
@@ -664,7 +670,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                             $("#container-declinarIncidencia").hide();
                             swal.close();
                         } else {
-                            mostrarMensajeWarningValidacion(response.data.result.description);
+                            mostrarMensajeInformativo("No se encontr&oacute; Detalle de la Incidencia");
                             swal.close();
                         }
                     } else {
@@ -915,7 +921,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
     $scope.generarOTIncidencia = function () {
         $('.swal2-container.swal2-shown ').css('background-color', '#fff');
         swal({
-            title: " Generar\u00E1s la incidencia " + $scope.incidenciaDetalle.idIncidencia + " como OT",
+            title: "\u00BFDeseas generar la Orden de Trabajo?",
             showCancelButton: true,
             type: 'warning',
             text: "Comentarios:",
@@ -1211,7 +1217,6 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
     }
 
     angular.element(document).ready(function () {
-        $("#idBody").removeAttr("style");
         $("#moduloInspectorIncidenciasPE").addClass('active');
         $scope.consultarCatalogosInspectorIncidencia();
         $scope.initMapa();

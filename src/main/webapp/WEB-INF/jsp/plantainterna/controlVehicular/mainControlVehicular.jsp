@@ -101,11 +101,11 @@
                                         <jsp:include page="./insertarVehiculo.jsp"></jsp:include>
                                     </div>
                                     <div class="tab-pane fade show active" id="consulta" role="tabpanel"
-                                        ng-if="configPermisoAccionConsultaVehiculos"
+                                        ng-show="configPermisoAccionConsultaVehiculos"
                                         aria-labelledby="consulta-tab">
                                         <jsp:include page="./consultarVehiculo.jsp"></jsp:include>
                                     </div>
-                                    <div class="tab-pane fade" id="elimina" role="tabpanel"  ng-if="configPermisoAccionConsultaActivaVehiculos"
+                                    <div class="tab-pane fade" id="elimina" role="tabpanel"  ng-show="configPermisoAccionConsultaActivaVehiculos"
                                         aria-labelledby="elimina-tab">
                                         <jsp:include page="./consultarActivaVehiculo.jsp"></jsp:include>
                                     </div>

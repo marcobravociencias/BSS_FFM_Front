@@ -1,6 +1,6 @@
 <div class="col-12">
     <div class="row">
-        <div class="col-md-2 search-form columna-filtro-ind-rep">
+        <div class="col-md-2 search-form form-group columna-filtro-ind-rep">
             <label class="span-consulta"><i class="fas fa-map-marked"></i> Geograf&iacute;a</label>
             <input id="geografia-seleccionada-consulta" readonly placeholder="NO HAY SELECCI&Oacute;N" type="text"
                 onclick="abrirModalGeografiaBuscar()" class=" input-filtro form-control form-control-sm"

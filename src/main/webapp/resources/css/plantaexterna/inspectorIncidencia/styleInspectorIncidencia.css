@@ -361,11 +361,11 @@ body.modal-open.mfp-zoom-out-cur {
 }
 
 .rowTabs {
-    margin: 0 !important; 
-    padding-left: 0.1em !important; 
-    display: flex !important; 
+    margin: 0 !important;
+    padding-left: 0.1em !important;
+    display: flex !important;
     flex-wrap: nowrap !important;
-    overflow-x: hidden !important; 
+    overflow-x: hidden !important;
 }
 
 .buttonLeftArrow {

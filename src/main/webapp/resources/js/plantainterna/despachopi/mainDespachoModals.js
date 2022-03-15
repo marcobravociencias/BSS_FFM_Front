@@ -23,7 +23,8 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     
     $scope.tabDetalleCorteMasivo = false;
     $scope.tabDetalleDetencion = false;
-    $scope.tabDetalleInspeccion = false;
+    $scope.tabDetalleInspector = false;
+    $scope.infoDetalleOtPe = {};
     
     $scope.listadoCatalogoAcciones = []
     $('#modalAsignacionOrdenTrabajo,#modalReAsignacionOrdenTrabajo,#modalMaterialesOperario,#modalVehiculoOperario,#odalUbicacionOperario,#modalStatusOperario,#modalOtsTrabajadas')
@@ -113,15 +114,15 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 "idFlujo": 12
             };
         
-        let paramsDetalleOtPe2 = {
-                "idOT": 222120,
-                "idFlujo": 10
-            };
-        
-        let paramsDetalleOtPe3 = {
-                "idOT": 493709,
-                "idFlujo": 11
-            };
+//        let paramsDetalleOtPe2 = {
+//                "idOT": 222120,
+//                "idFlujo": 10
+//            };
+//        
+//        let paramsDetalleOtPe3 = {
+//                "idOT": 493709,
+//                "idFlujo": 11
+//            };
 
         $q.all([
             mainDespachoService.consultarDetalleOtDespacho(params),
@@ -170,17 +171,29 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 if (results[2].data.respuesta) {
                     if (results[2].data.result) {
                         if (results[2].data.result.orden) {
-                        	let resDetalleOtPE = results[2].data.result.orden;
-                        	if(resDetalleOtPE.detalleCorteMasivo !== undefined){
+                        	
+                        	$scope.infoDetalleOtPe = results[2].data.result.orden;
+                        	
+                        	$scope.infoDetalleOtPe.tipoOrden = $scope.respaldoTipoOrdenArray.find(e=>{return e.id===$scope.infoDetalleOtPe.idTipoOrden});
+                        	$scope.infoDetalleOtPe.subTipoOrden = $scope.respaldoTipoOrdenArray.find(e=>{return e.id===$scope.infoDetalleOtPe.idSubTipoOrden});
+                        	$scope.infoDetalleOtPe.estado = $scope.respaldoStatusArray.find(e=>{return e.id===$scope.infoDetalleOtPe.idEstado});
+                        	$scope.infoDetalleOtPe.estatus = $scope.respaldoStatusArray.find(e=>{return e.id===$scope.infoDetalleOtPe.idEstatus});
+//                        	console.log( $scope.respaldoTipoOrdenArray.find(e=>{return e.id===65}) ) ;
+//                        	console.log( "Tipo orden --> ", $scope.infoDetalleOtPe.tipoOrden );
+//                        	console.log( "Subtipo --> ", $scope.infoDetalleOtPe.subTipoOrden );
+//                        	console.log( "Estado --> ", $scope.infoDetalleOtPe.estado );
+//                        	console.log( "Estatus --> ", $scope.infoDetalleOtPe.estatus );
+                        	
+                        	if($scope.infoDetalleOtPe.detalleCorteMasivo !== undefined){
                         		$scope.tabDetalleCorteMasivo = true;
-                        	}else if(resDetalleOtPE.detalleDetencion !== undefined){
+                        	}else if($scope.infoDetalleOtPe.detalleDetencion !== undefined){
                         		$scope.tabDetalleDetencion = true;
-                        	}else if(resDetalleOtPE.detalleInspeccion !== undefined){
-                        	    $scope.tabDetalleInspeccion = true;
+                        	}else if($scope.infoDetalleOtPe.detalleInspeccion !== undefined){
+                        	    $scope.tabDetalleInspector = true;
                         	}
                         	console.log("CorteMasivo " + $scope.tabDetalleCorteMasivo);
                         	console.log("Detencion " + $scope.tabDetalleDetencion);
-                        	console.log("Inspeccion " + $scope.tabDetalleInspeccion);
+                        	console.log("Inspector " + $scope.tabDetalleInspector);
                         } else {
                             toastr.info(results[2].data.result.mensaje);
                         }

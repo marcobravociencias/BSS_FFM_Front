@@ -84,7 +84,7 @@
                         </li>
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane fade" ng-if="configPermisoAccionConsultaTecnicosPagos" id="pagoTecnico" role="tabpanel" aria-labelledby="pagoTecnico-tab">
+                        <div class="tab-pane fade" ng-show="configPermisoAccionConsultaTecnicosPagos" id="pagoTecnico" role="tabpanel" aria-labelledby="pagoTecnico-tab">
                             <jsp:include page="./content/pagosTecnicos.jsp"></jsp:include>
                         </div>
 
@@ -96,7 +96,7 @@
                             aria-labelledby="confiGeografia-tab">
                             <jsp:include page="./content/configuracionGeografia.jsp"></jsp:include>
                         </div-->
-                        <div class="tab-pane fade show active" id="cambiaContrasena" role="tabpanel"  ng-if="configPermisoAccionConsultaCambiaContrasena"
+                        <div class="tab-pane fade show active" id="cambiaContrasena" role="tabpanel"  ng-show="configPermisoAccionConsultaCambiaContrasena"
                             aria-labelledby="cambiaContrasena-tab">
                             <jsp:include page="./content/cambiaContrasena.jsp"></jsp:include>
                         </div>

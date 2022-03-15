@@ -54,8 +54,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
     app.disponibilidadCalendar($scope);
 
     $(document).ready(function () {
-        $("#idBody").removeAttr("style");
-        $scope.inicialCalendario();
+
         $scope.inicioDisponibilidad();
         editarDisponibilidad = function (matutino, vespertino, nocturno, bloqueado, fecha) {
             if ($scope.accessEditarDisponibilidad) {
@@ -140,8 +139,6 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
     $scope.banderaErrorGeneral = false;
 
     $scope.consultarCatalogos = function () {
-        swal({ text: 'Espera un momento...', allowOutsideClick: false });
-        swal.showLoading();
         $scope.arrayTurnosDisponibilidad = []
         let params = {
             moduloAccionesUsuario: 'moduloDisponibilidad'
@@ -152,8 +149,6 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             genericService.consulCatalogoGeografia(),
             genericService.consultarCatalogosTurnos()
         ]).then(result => {
-            swal.close();
-            console.log(result);
             if (result[0].data.respuesta) {
                 let resultConf= result[0].data.result
                 if( resultConf != undefined && resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves){
@@ -164,7 +159,10 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                     let  llavesResult=result[0].data.result.MODULO_ACCIONES_USUARIO.llaves;                    
                     $scope.nIntervencion = llavesResult.N_FILTRO_INTERVENCIONES ? Number( llavesResult.N_FILTRO_INTERVENCIONES ) : null;
                     $scope.nGeografia = llavesResult.N_FILTRO_GEOGRAFIA ? Number( llavesResult.N_FILTRO_GEOGRAFIA ) : null;
-
+                    $("#idBody").removeAttr("style");
+                    if($scope.accessConsultaDisponibilidad){
+                        $scope.inicialCalendario();
+                    }
                     validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
                     validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
                    

@@ -104,32 +104,32 @@
                     <i class="fa fa-search"></i>
                 </button>
             </div>
-            <div class="col-1 download-file">
+            <div class="col-1 download-file" ng-if="configPermisoAccionDescargaReporteSeguimiento">
                 <img alt="excel" src="${pageContext.request.contextPath}/resources/img/generic/group-10.png"
                     style="cursor:pointer" onclick="downloadExcelReportFile()">
             </div>
         </div>
     </div>
-    <div class="content-table">
-        <div class="content-fluid" style="overflow-x: auto;">
+    <div class="content-fluid">
+        <div class="table-responsive">
             <table id="reporteSeguimientoTable" class="display table" cellspacing="0" width="100%">
                 <thead id="thead_reporteSeguimiento">
                     <tr>
                         <th>OT</th>
                         <th>OS</th>
-                        <th>TIPO</th>
-                        <th>SUBTIPO</th>
-                        <th>ESTATUS</th>
-                        <th>ESTADO</th>
-                        <th>MOTIVO</th>
-                        <th>CIUDAD</th>
-                        <th>ESTADO</th>
-                        <th># EMPLEADO</th>
-                        <th># USUARIO</th>
-                        <th>T&Eacute;CNICO</th>
-                        <th>FECHA CREACI&Oacute;N</th>
-                        <th>FECHA AGENDA</th>
-                        <th>FECHA FIN</th>
+                        <th>Cuenta</th>
+                        <th>Tipo</th>
+                        <th>Subtipo</th>
+                        <th>Estatus</th>
+                        <th>Estado</th>
+                        <th>Motivo</th>
+                        <th>Ciudad</th>
+                        <th>Geograf&iacute;a</th>
+                        <th>#Empleado</th>
+                        <th>#Usuario</th>
+                        <th>T&eacute;cnico</th>
+                        <th>Fecha agenda</th>
+                        <th>Fecha fin</th>
 
                     </tr>
                 </thead>
