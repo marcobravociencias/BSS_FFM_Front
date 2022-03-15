@@ -65,13 +65,12 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
         ]).then(function(results) { 
             console.log(results);
 			let resultConf= results[0].data.result
-			if( resultConf != undefined && resultConf.MODULO_ACCIONES_USUARIO
-                && Array.isArray(resultConf.MODULO_ACCIONES_USUARIO.llaves) && resultConf.MODULO_ACCIONES_USUARIO.llaves.length ){
+			if( resultConf != undefined && resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves  ){
                 let  llavesResult=resultConf.MODULO_ACCIONES_USUARIO.llaves;
 
                 console.log("  ----     ################# ------")
                 console.log( llavesResult )
-                let tempArrayInt=esults[3].data.result.nTipoOrdenes;
+                let tempArrayInt=results[3].data.result.tiposOrden;
                 let tempArrayGeog=results[2].data.result.geografia;
 
                 $scope.nGeografia = (llavesResult.N_FILTRO_GEOGRAFIA) ? Number( llavesResult.N_FILTRO_GEOGRAFIA) :  $scope.obtenerUltimoNivelFiltros(tempArrayGeog);
@@ -298,10 +297,12 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
         let selectedElms = $('#jstree-tipoordenes').jstree("get_selected", true)[0].original;             
         let isElementIgual=false;
         while(!isElementIgual) {
-            selectedElms=$scope.listadoTipoOrdenes.find((e)=>e.id===selectedElms.parent)
 
-            if(selectedElms.nivel==$scope.nTipoOrdenesConfig)
-               isElementIgual=true;
+            if(selectedElms.nivel==$scope.nTipoOrdenesConfig){
+                isElementIgual=true;
+            }else{
+                selectedElms=$scope.listadoTipoOrdenes.find((e)=>e.id===selectedElms.parent)    
+            }
         }       
     
         $scope.params.subtipoIntervencion =  selectedElms.id       
