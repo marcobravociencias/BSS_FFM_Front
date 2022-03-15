@@ -15,8 +15,9 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
     $scope.infoBasica = {};
     
     $scope.informacionCliente = {};
-    $scope.nGeografia = "";
-    $scope.nTipoOrdenes = "";
+    $scope.nGeografia;
+    $scope.nTipoOrdenes;
+    $scope.nTipoOrdenes;
     $scope.dateSelectedCalendarEvent;
     $scope.dateTodayCalendar=new Date(   moment(new Date()).format('MM-DD-YYYY') ) ;
     
@@ -53,8 +54,8 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
         let params ={
-            //moduloAccionesUsuario: 'moduloOrdenesUniversales'
-            moduloAccionesUsuario: 'moduloDisponibilidad'
+            moduloAccionesUsuario: 'moduloOrdenesUniversales'
+            //moduloAccionesUsuario: 'moduloDisponibilidad'
         }  
         $q.all([
             genericService.consultarConfiguracionDespachoDespacho(params),
@@ -63,15 +64,27 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
             ordenesUniversalesService.consultarCatalogosOrdenesUniversales()
         ]).then(function(results) { 
             console.log(results);
+			let resultConf= results[0].data.result
+			if( resultConf != undefined && resultConf.MODULO_ACCIONES_USUARIO
+                && Array.isArray(resultConf.MODULO_ACCIONES_USUARIO.llaves) && resultConf.MODULO_ACCIONES_USUARIO.llaves.length ){
+                let  llavesResult=resultConf.MODULO_ACCIONES_USUARIO.llaves;
 
-            // ****************** CONFIGURACIÓN
-            if (results[0].data.respuesta) {
-                if (results[0].data.result) {           
-                    $scope.nGeografia = results[0].data.result.N_FILTRO_GEOGRAFIA ? Number(results[0].data.result.N_FILTRO_GEOGRAFIA) : null;
-                    $scope.nTipoOrdenes =2//results[0].data.result.N_FILTRO_INTERVENCIONES ? Number(results[0].data.result.N_FILTRO_INTERVENCIONES) : null;
-                    $scope.nTipoOrdenesConfig=results[0].data.result.N_FILTRO_INTERVENCIONES ? Number(results[0].data.result.N_FILTRO_INTERVENCIONES) : null;
-                }
+                console.log("  ----     ################# ------")
+                console.log( llavesResult )
+                let tempArrayInt=esults[3].data.result.nTipoOrdenes;
+                let tempArrayGeog=results[2].data.result.geografia;
+
+                $scope.nGeografia = (llavesResult.N_FILTRO_GEOGRAFIA) ? Number( llavesResult.N_FILTRO_GEOGRAFIA) :  $scope.obtenerUltimoNivelFiltros(tempArrayGeog);
+                $scope.nTipoOrdenes = ( llavesResult.N_FILTRO_INTERVENCIONES ) ? Number( llavesResult.N_FILTRO_INTERVENCIONES ) : $scope.obtenerUltimoNivelFiltros(tempArrayInt);                                
+                $scope.nTipoOrdenesConfig=( llavesResult.N_FILTRO_INTERVENCIONES ) ? Number( llavesResult.N_FILTRO_INTERVENCIONES ) : $scope.obtenerUltimoNivelFiltros(tempArrayInt);
+            }else{
+                $scope.nGeografia=$scope.obtenerUltimoNivelFiltros(results[2].data.result.geografia)
+                $scope.nTipoOrdenes=$scope.obtenerUltimoNivelFiltros(results[3].data.result.tiposOrden)
+                $scope.nTipoOrdenesConfig= $scope.nTipoOrdenes
             }
+            
+      
+
             GenericMapa.prototype.callPrototypeMapa(results[0].data.result)
 
             $scope.initializeMap();
@@ -647,7 +660,9 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
     $scope.validarCampoNA=function(campo){
         return campo ? campo :'No aplica';
     }
-
+    $scope.obtenerUltimoNivelFiltros = function(array) {
+        return Math.max.apply(Math, array.map(function(o) { return o.nivel; }));
+    }
     
     $scope.guardarOrdenUniversalRegistro=function(){        
         

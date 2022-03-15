@@ -221,7 +221,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                 $scope.permisosUsuario = resultConf.MODULO_ACCIONES_USUARIO.permisos;
                 console.log($scope.permisosUsuario);
                 $scope.isPermisoConsultaIncidencias = ($scope.permisosUsuario.filter(e => { return e.clave == "consultarIncidenciasPEAccion" })[0] != undefined);
-                $scope.isPermisoGenerarOTInspector = ($scope.permisosUsuario.filter(e => { return e.clave == "generarOTInspectorPEAccion" })[0] != undefined);
+                $scope.isPermisoGenerarOTInspector = true;//($scope.permisosUsuario.filter(e => { return e.clave == "generarOTInspectorPEAccion" })[0] != undefined);
             }
 
             if (results[1].data !== undefined) {
@@ -549,7 +549,28 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                 if (response.data.respuesta) {
                     if (response.data.result) {
                         if (response.data.result.detalleIncidentes.length) {
+                            let idtemp=1;
                             $scope.fallasIncidenciaDetalle = angular.copy(response.data.result.detalleIncidentes);
+                            $scope.fallasIncidenciaDetalle.push(angular.copy(response.data.result.detalleIncidentes)[0])
+                            $scope.fallasIncidenciaDetalle.push(angular.copy(response.data.result.detalleIncidentes)[0])
+
+                            $scope.fallasIncidenciaDetalle.push(angular.copy(response.data.result.detalleIncidentes)[0])
+                            $scope.fallasIncidenciaDetalle.push(angular.copy(response.data.result.detalleIncidentes)[0])
+                            $scope.fallasIncidenciaDetalle.push(angular.copy(response.data.result.detalleIncidentes)[0])
+                            $scope.fallasIncidenciaDetalle.push(angular.copy(response.data.result.detalleIncidentes)[0])
+                            $scope.fallasIncidenciaDetalle.push(angular.copy(response.data.result.detalleIncidentes)[0])
+                            $scope.fallasIncidenciaDetalle.push(angular.copy(response.data.result.detalleIncidentes)[0])
+                            $scope.fallasIncidenciaDetalle.push(angular.copy(response.data.result.detalleIncidentes)[0])
+                            $scope.fallasIncidenciaDetalle.push(angular.copy(response.data.result.detalleIncidentes)[0])
+                            $scope.fallasIncidenciaDetalle.push(angular.copy(response.data.result.detalleIncidentes)[0])
+                            $scope.fallasIncidenciaDetalle.push(angular.copy(response.data.result.detalleIncidentes)[0])
+
+                            $scope.fallasIncidenciaDetalle= $scope.fallasIncidenciaDetalle.map(e=>{
+                                idtemp++;
+                                e.idFalla=idtemp+''
+                                return e;
+                            })
+  
                             $scope.inicializarDetalleIncidencia($scope.incidenciaDetalle.latitud, $scope.incidenciaDetalle.longitud);
 
                             $scope.isBtnGenerarOT = $scope.llaveEstatusGeneraOT.find(function (elem) { return elem === $scope.incidenciaDetalle.idEstatus });
