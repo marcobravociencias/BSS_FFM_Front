@@ -28,7 +28,7 @@
                             maxlength="8" ng-model="vehiculo.placa" capitalize autocomplete="off" />
                     </div>
                     <div class="col-3 form-group">
-                        <label class="label-vehiculo">Tipo veh&iacute;culo </label>
+                        <label class="label-vehiculo">Tipo veh&iacute;culo <i ng-if="!data.tipoVehiculos.length" class="icono-noseleccion fas fa-exclamation-circle ml-2" title="No se encontr&oacute;o el catalogo de tipo veh&iacute;culo"></i></label>
                         <select class="form-control form-control-sm custom-select" name="tipo" id="tipo"
                             ng-change="loadMarca()" ng-model="vehiculo.idTipo">
                             <option value="" selected>NO HAY SELECCI&Oacute;N</option>
@@ -82,7 +82,7 @@
                         </select>
                     </div>
                     <div class="col-3 form-group">
-                        <label class="label-vehiculo">Color </label>
+                        <label class="label-vehiculo">Color <i ng-if="!data.tipoVehiculos.length" class="icono-noseleccion fas fa-exclamation-circle ml-2" title="No se encontr&oacute;o el catalogo de colores"></i></label>
                         <select class="form-control form-control-sm custom-select" id="color"
                             ng-model="vehiculo.idColor">
                             <option value="" selected>NO HAY SELECCI&Oacute;N</option>
@@ -93,11 +93,7 @@
                 </div>
                 <div class="form-row">
                     <div class="col-3 form-group">
-                        <div style="width: 1em;float: left;" ng-show="banderaErrorGeografia">
-                            <i class="icono-noseleccion fas fa-exclamation-circle me-2" style="margin-left: -.2em;"
-                                title="No se encontro el catalogo de Geografia"></i>
-                        </div>
-                        <label class="label-vehiculo">Geograf&iacute;a </label>
+                        <label class="label-vehiculo">Geograf&iacute;a <i ng-if="!geografiaList.length" class="icono-noseleccion fas fa-exclamation-circle ml-2" title="No se encontr&oacute;o el catalogo de geograf&iacute;a"></i></label>
                         <input ng-click="abrirModalGeografia()" readonly type="text" id="arbol_vehiculo_consulta"
                             class="form-control form-control-sm" placeholder="NO HAY SELECCI&Oacute;N" />
                     </div>
@@ -123,7 +119,7 @@
             <div class="col-12">
                 <div class="form-row">
                     <div class="col-3 form-group">
-                        <label class="label-vehiculo">Aseguradora </label>
+                        <label class="label-vehiculo">Aseguradora <i ng-if="!data.seguros.length" class="icono-noseleccion fas fa-exclamation-circle ml-2" title="No se encontr&oacute;o el catalogo de tipo veh&iacute;culo"></i></label>
                         <select class="form-control form-control-sm custom-select" id="aseguradora"
                             ng-model="vehiculo.detalle.idAseguradora">
                             <option value="" selected>NO HAY SELECCI&Oacute;N</option>

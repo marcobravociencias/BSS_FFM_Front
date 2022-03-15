@@ -2,7 +2,7 @@
     <div class="col-12">
         <div class="row">
             <div class="col-md-2 search-form form-group columna-filtro-ind-rep">
-                <label class="span-consulta"><i class="fas fa-map-marked"></i> Geograf&iacute;a</label>
+                <label class="span-consulta"><i class="fas fa-map-marked"></i> Geograf&iacute;a<i ng-if="!listaGeografia.length" class="icono-noseleccion fas fa-exclamation-circle ml-2" title="No se encontr&oacute;o el catalogo de geograf&iacute;a"></i></label>
                 <input readonly placeholder="NO HAY SELECCI&Oacute;N" type="text" ng-click="abrirModalGeografiaBuscar()"
                     id="inputSearchGeoTecnico" class=" input-filtro form-control form-control-sm"
                     style="border-radius: .5em !important;">

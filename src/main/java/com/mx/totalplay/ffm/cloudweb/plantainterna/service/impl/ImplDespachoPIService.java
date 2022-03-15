@@ -1019,7 +1019,7 @@ public class ImplDespachoPIService implements DespachoPIService {
                     result.addProperty("ESTADO", object.get("estadoOrden") != null && object.get("estadoOrden").getAsString() != "" ? object.get("estadoOrden").getAsString() : "");
                     result.addProperty("MOTIVO", object.get("motivoOrden") != null && object.get("motivoOrden").getAsString() != "" ? object.get("motivoOrden").getAsString() : "");
                     result.addProperty("CIUDAD", object.get("ciudad") != null && object.get("ciudad").getAsString() != "" ? object.get("ciudad").getAsString() : "");
-                    result.addProperty("GEOGRAFÍA", object.get("estado") != null && object.get("estado").getAsString() != "" ? object.get("estado").getAsString() : "");
+                    result.addProperty("GEOGRAFÍA", object.get("geo1") != null && object.get("geo1").getAsString() != "" ? object.get("geo1").getAsString() : "");
                     result.addProperty("#EMPLEADO", object.get("numEmpleadoTecnico") != null && object.get("numEmpleadoTecnico").getAsString() != "" ? object.get("numEmpleadoTecnico").getAsString() : "");
                     result.addProperty("#USUARIO", object.get("usuarioTecnico") != null && object.get("usuarioTecnico").getAsString() != "" ? object.get("usuarioTecnico").getAsString() : "");
                     result.addProperty("TÉCNICO", object.get("nombreTecnico") != null && object.get("nombreTecnico").getAsString() != "" ? object.get("nombreTecnico").getAsString() : "");

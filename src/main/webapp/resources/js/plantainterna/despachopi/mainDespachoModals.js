@@ -25,7 +25,10 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     $scope.tabDetalleDetencion = false;
     $scope.tabDetalleInspector = false;
     $scope.infoDetalleOtPe = {};
-    
+    $scope.permisoDescargaSeguimientoDiario = false;
+
+
+
     $scope.listadoCatalogoAcciones = []
     $('#modalAsignacionOrdenTrabajo,#modalReAsignacionOrdenTrabajo,#modalMaterialesOperario,#modalVehiculoOperario,#odalUbicacionOperario,#modalStatusOperario,#modalOtsTrabajadas')
         .on("hidden.bs.modal", function () {

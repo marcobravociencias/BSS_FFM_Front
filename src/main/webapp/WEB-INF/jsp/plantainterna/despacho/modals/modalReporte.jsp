@@ -10,7 +10,7 @@
                 <div class="col-12">
                     <div class="row">
                         <div class="col-2  columna-filtro-ind-rep input-box" style="width: 100px !important;">
-                            <label for="filtro-estatus-substatus" class="label-filter"></label>
+                            <label for="filtro-estatus-substatus" class="label-filter"><i ng-if="filtrosGeneral && !filtrosGeneral.estatusdisponibles.length" class="icono-noseleccion fas fa-exclamation-circle ml-2" title="No se encontr&oacute;o el catalogo de estatus"></i></label>
                             <div class="dropdown">
                                 <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Estatus"
                                     type="text" id="filtro-estatus-reporte"
@@ -32,7 +32,7 @@
                             </div>
                         </div>
                         <div class="col-2  columna-filtro-ind-rep input-box" style="width: 120px !important;">
-                            <label for="filtro-intervencion" class="label-filter"></label>
+                            <label for="filtro-intervencion" class="label-filter"><i ng-if="banderaErrorIntervencion" class="icono-noseleccion fas fa-exclamation-circle ml-2" title="No se encontr&oacute;o el catalogo de intervenci&oacute;n"></i></label>
                             <div class="dropdown">
                                 <input readonly data-mdb-toggle="dropdown" aria-expanded="false"
                                     placeholder="Intervenci&oacute;n" type="text" id="filtro-intervencion-reporte"
@@ -80,7 +80,7 @@
                                 class="form-control input-filtro-reporte form-control-sm">
                         </div>
                         <div class="col-1 input-box">
-                            <label for="cuenta" class="label-filter">Geograf&iacute;a</label>
+                            <label for="cuenta" class="label-filter">Geograf&iacute;a<i ng-if="banderaErrorGeografia" class="icono-noseleccion fas fa-exclamation-circle ml-2" title="No se encontr&oacute;o el catalogo de geograf&iacute;a"></i></label>
                             <input ng-click="abrirModalGeografia()" readonly placeholder="Geograf&iacute;a" type="text"
                                 id="filtro-geografia" class="form-control input-filtro-reporte form-control-sm" />
                         </div>
@@ -116,7 +116,7 @@
                                 <i class="fa fa-search"></i>
                             </button>
                         </div>
-                        <div class="col-1 download-file">
+                        <div class="col-1 download-file" ng-if="permisoDescargaSeguimientoDiario">
                             <img alt="excel" src="${pageContext.request.contextPath}/resources/img/generic/group-10.png"
                                 style="cursor:pointer" onclick="downloadExcelReportFile()">
                         </div>
