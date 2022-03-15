@@ -1630,32 +1630,24 @@
 								
 								<div ng-show="tabDetalleDetencion" class="tab-pane fade" id="v-tabs-consulta-detalle-detencion" role="tabpanel" 
                                 	aria-labelledby="v-tabs-consulta-detalle-detencion-tab">
-                                	
                                 	<jsp:include page="./../contents/div-info-general-detalle-ot-pe.jsp"></jsp:include>
-                                	
                                 	<hr />
-                                	
                                 	<div class="row">
 										<div class="col-md-12">
 											<h5>Informaci&oacute;n detalle detenci&oacute;n</h5>
 										</div>
 									</div>
-                                	
 								</div>
 								
 								<div ng-show="tabDetalleInspector" class="tab-pane fade" id="v-tabs-consulta-detalle-inspector" role="tabpanel" 
                                 	aria-labelledby="v-tabs-consulta-detalle-inspector-tab">
-                                	
                                 	<jsp:include page="./../contents/div-info-general-detalle-ot-pe.jsp"></jsp:include>
-                                	
                                 	<hr />
-                                	
                                 	<div class="row">
 										<div class="col-md-12">
 											<h5>Informaci&oacute;n detalle inspector</h5>
 										</div>
 									</div>
-                                	
 								</div>
                                 	
                                 	
