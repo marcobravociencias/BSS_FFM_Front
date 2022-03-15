@@ -289,7 +289,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
     }
 
     $scope.consultarDisponibilidad = function(distrito) {
-        swal({ text: 'Espera un momento...', allowOutsideClick: false });
+        swal({ text: 'Espera un momento ...', allowOutsideClick: false });
         swal.showLoading();
         $scope.params = {};
         $scope.params.geografia2  = distrito;
@@ -297,7 +297,6 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
         let selectedElms = $('#jstree-tipoordenes').jstree("get_selected", true)[0].original;             
         let isElementIgual=false;
         while(!isElementIgual) {
-
             if(selectedElms.nivel==$scope.nTipoOrdenesConfig){
                 isElementIgual=true;
             }else{
@@ -698,7 +697,6 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                 
         let indexLimit=$scope.nGeografia ;
         for( let i=indexLimit ; i>=0 ; i--){       
-            console.log("###here")     
             //cuando el nivel es 2 
             if( i == 2 ){
                 objectCiudadSelected =$scope.listaArbolCiudades.find( function(ele){ return ele.id==idTempActual; } )
