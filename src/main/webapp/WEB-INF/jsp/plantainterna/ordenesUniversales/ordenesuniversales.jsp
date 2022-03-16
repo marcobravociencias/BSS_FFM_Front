@@ -100,6 +100,8 @@ pageEncoding="ISO-8859-1"%>
 
 	<jsp:include page="./modals/modalArbol.jsp"></jsp:include>
 	<jsp:include page="./modals/modalTipoOrdenes.jsp"></jsp:include>
+	<jsp:include page="./modals/modalPaquete.jsp"></jsp:include>
+	<jsp:include page="./modals/modalCanalVenta.jsp"></jsp:include>
 	<div class="row">
 		<div class="col-2">
 				

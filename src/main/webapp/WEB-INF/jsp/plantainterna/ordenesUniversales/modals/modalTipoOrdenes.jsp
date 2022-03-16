@@ -7,14 +7,14 @@
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" >
-                <div class="col-md-12 mb-2">
+                <div class="col-md-12 mb-1" style="padding: 0;">
                     <div class="input-group input-group-sm content-seach-group ">
                         <input id="searhTipoOrdeneslnput" type="text" class="form-control buscadorGenerico" placeholder="Buscar " ng-keyup="busquedaTipoOrdenesFiltro()"> 
                         <span class="fa fa-search iconoBusqueda"></span>
                     </div>
                 </div>
-                <div class="col-md-12" style=" max-height: 300px; overflow: auto;">
-                    <div id="jstree-tipoordenes" class="proton-demo"></div>
+                <div style=" max-height: 300px; overflow: auto;">
+                    <div id="jstree-tipoordenes" class="proton-demo jstreeconsulta"></div>
                 </div>
             </div>
             <div class="modal-footer">

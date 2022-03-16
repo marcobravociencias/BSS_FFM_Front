@@ -910,11 +910,6 @@ div.modal-footer {
     padding: .3em .5em;
 }
 
-::-webkit-scrollbar-thumb {
-    background: #834594;
-    border: 71px none #ffffff;
-    border-radius: 31px;
-}
 
 div#modal_cluster {
     font-family: "adobe-clean", sans-serif !important;
