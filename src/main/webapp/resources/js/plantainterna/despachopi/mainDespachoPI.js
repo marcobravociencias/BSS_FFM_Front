@@ -463,7 +463,6 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                                 $scope.listadoOtsPendientes.map((e) => {
                                     indexot++
                                     e.colorOrden = e.colorOrden != undefined && e.colorOrden ? e.colorOrden : arrayColors[$scope.randomIntFromInterval()]
-                                    //  e.isConfirmado=indexot%2==0 ? true : false
                                     return e
                                 })
                                 let tableelemetn = ''

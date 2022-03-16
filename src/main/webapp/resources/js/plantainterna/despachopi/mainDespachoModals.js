@@ -844,8 +844,9 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             'tecnicoInfo': data_tecnico,
             'comentario': ''
         }
-        $("#modalReAsignacionOrdenTrabajo").modal('show')
         $scope.$digest()
+        $("#modalReAsignacionOrdenTrabajo").modal('show')
+
     }
     $scope.abrirModalAsignacion = function (otinfo, data_tecnico) {
         $scope.asignacionObject = {
@@ -853,8 +854,8 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             'tecnicoInfo': data_tecnico,
             'comentario': ''
         }
-        $('#modalAsignacionOrdenTrabajo').modal('show');
         $scope.$digest()
+        $('#modalAsignacionOrdenTrabajo').modal('show');
     }
     $scope.asignarOrdenTrabajo = function () {
         if (!$scope.asignacionObject.comentario) {
