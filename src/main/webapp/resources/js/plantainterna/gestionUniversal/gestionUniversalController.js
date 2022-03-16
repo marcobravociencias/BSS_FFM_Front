@@ -512,6 +512,8 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
 
     $scope.abrirModalGeografiaBuscar = function () {
         $scope.isTecnicos = true;
+        $("#searchGeoConsulta").val("");
+        $("#jstreeConsultaTecnicos").jstree("search", '');
         $("#modalGeografia").modal('show');
         setTimeout(function () {
             $("#searchGeoConsulta").focus();
@@ -523,6 +525,8 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
 
     $scope.abrirModalGeografiaBuscarUsuario = function () {
         $scope.isTecnicos = false;
+        $("#searchGeoConsultaUsuarios").val("");
+        $("#jstreeConsultaUsuarios").jstree("search", '');
         $("#modalGeografia").modal('show');
         setTimeout(function () {
             $("#searchGeoConsultaUsuarios").focus();
