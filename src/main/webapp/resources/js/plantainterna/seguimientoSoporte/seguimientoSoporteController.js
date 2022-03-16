@@ -1,6 +1,6 @@
 var app = angular.module('seguimientoSoporteApp', []);
 
-app.controller('seguimientoSoporteController', ['$scope', 'seguimientoSoporteService', '$filter', function ($scope, seguimientoSoporteService, $filter) {
+app.controller('seguimientoSoporteController', ['$scope','$q', 'seguimientoSoporteService', '$filter', function ($scope, $q, seguimientoSoporteService, $filter) {
     const FECHA_HOY_DATE = new Date();
     let seguimientoTable;
     let ticketTable;
@@ -11,6 +11,49 @@ app.controller('seguimientoSoporteController', ['$scope', 'seguimientoSoporteSer
     $scope.catalogoEstatusUsuarios = [];
     $scope.catalogoTicket = [];
     $scope.verCambioEstatusUsuario = true;
+
+    $scope.consultarCatalogos = function() {
+		$q.all([
+			seguimientoSoporteService.consultarConfiguracionDespachoDespacho({ "moduloAccionesUsuario": "moduloSeguimiento" })
+		]).then(function(results) {
+			if (results[0].data !== undefined) {
+				if (results[0].data.respuesta) {
+					if (results[0].data.result) {
+						$scope.elementosConfigGeneral = new Map(Object.entries(results[0].data.result))
+						let resultConf = results[0].data.result
+						if (resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
+							let llavesResult = results[0].data.result.MODULO_ACCIONES_USUARIO.llaves;
+							if (llavesResult.N_FILTRO_GEOGRAFIA)
+								$scope.nivelGeografia = parseInt(llavesResult.N_FILTRO_GEOGRAFIA)
+
+							if (llavesResult.N_ESTATUS_PENDIENTES)
+								$scope.nivelEstatus = parseInt(llavesResult.N_ESTATUS_PENDIENTES)
+
+							$scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
+							
+							if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
+								$scope.configPermisoAccionConsultaOrdenes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaOT" })[0] != undefined);
+								$scope.configPermisoAccionDescargaReporteOrdenes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaReporteOT" })[0] != undefined);
+							}
+							$("#idBody").removeAttr("style");
+							validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
+							validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
+						}
+					} else {
+						swal.close();
+						toastr.warning('No se encontraron datos para la configuracion');
+					}
+				} else {
+					swal.close();
+					toastr.warning(results[3].data.resultDescripcion);
+				}
+			} else {
+				swal.close();
+				toastr.error('Ha ocurrido un error en la consulta de configuracion');
+			}
+		}).catch(err => handleError(err));
+	}
+	$scope.consultarCatalogos();
 
 
     $('.datepicker').datepicker({
