@@ -113,7 +113,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
     $scope.listaSeleccionSelectFalla = function (lista) {
         var texto = "";
         angular.forEach(lista, function (list, index) {
-            if (list.children) {
+            if (list.children.length) {
                 angular.forEach(list.children, function (children, index) {
                     if (children.checkedOpcion) {
                         if (texto !== "") {
@@ -221,7 +221,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                 $scope.permisosUsuario = resultConf.MODULO_ACCIONES_USUARIO.permisos;
                 console.log($scope.permisosUsuario);
                 $scope.isPermisoConsultaIncidencias = ($scope.permisosUsuario.filter(e => { return e.clave == "consultarIncidenciasPEAccion" })[0] != undefined);
-                $scope.isPermisoGenerarOTInspector = true;//($scope.permisosUsuario.filter(e => { return e.clave == "generarOTInspectorPEAccion" })[0] != undefined);
+                $scope.isPermisoGenerarOTInspector = ($scope.permisosUsuario.filter(e => { return e.clave == "generarOTInspectorPEAccion" })[0] != undefined);
             }
 
             if (results[1].data !== undefined) {
@@ -471,27 +471,27 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         });
         if ($scope.incidenciaDetalle.idEstatus == '5' || $scope.incidenciaDetalle.idEstatus == '2') {
             if ($scope.fallasIncidenciaDetalle.length > 5) {
-                $('#tabsContainer').removeClass('row');
-                $("#tabs-falla").css('width', '85%');
+                $('#containerTabsFalla').removeClass('row');
+                $("#containerTabsFalla").css('width', '70%');
                 $("#left-arrow").show();
                 $("#right-arrow").show();
             } else {
-                $('#tabsContainer').addClass('row');
+                $('#containerTabsFalla').addClass('row');
                 $("#left-arrow").hide();
                 $("#right-arrow").hide();
-                $("#tabs-falla").css('width', '100%');
+                $("#containerTabsFalla").css('width', '100%');
             }
         } else {
             if ($scope.fallasIncidenciaDetalle.length > 9) {
-                $('#tabsContainer').removeClass('row');
-                $("#tabs-falla").css('width', '85%');
+                $('#containerTabsFalla').removeClass('row');
+                $("#containerTabsFalla").css('width', '90%');
                 $("#left-arrow").show();
                 $("#right-arrow").show();
             } else {
-                $('#tabsContainer').addClass('row');
+                $('#containerTabsFalla').addClass('row');
                 $("#left-arrow").hide();
                 $("#right-arrow").hide();
-                $("#tabs-falla").css('width', '100%');
+                $("#containerTabsFalla").css('width', '100%');
             }
         }
 
@@ -531,6 +531,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                 "language": idioma_espanol_not_font
             });
         }
+        swal.close();
     }
 
     consultarDetalleIncidencia = function (idIncidencia) {
@@ -549,28 +550,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                 if (response.data.respuesta) {
                     if (response.data.result) {
                         if (response.data.result.detalleIncidentes.length) {
-                            let idtemp=1;
                             $scope.fallasIncidenciaDetalle = angular.copy(response.data.result.detalleIncidentes);
-                            $scope.fallasIncidenciaDetalle.push(angular.copy(response.data.result.detalleIncidentes)[0])
-                            $scope.fallasIncidenciaDetalle.push(angular.copy(response.data.result.detalleIncidentes)[0])
-
-                            $scope.fallasIncidenciaDetalle.push(angular.copy(response.data.result.detalleIncidentes)[0])
-                            $scope.fallasIncidenciaDetalle.push(angular.copy(response.data.result.detalleIncidentes)[0])
-                            $scope.fallasIncidenciaDetalle.push(angular.copy(response.data.result.detalleIncidentes)[0])
-                            $scope.fallasIncidenciaDetalle.push(angular.copy(response.data.result.detalleIncidentes)[0])
-                            $scope.fallasIncidenciaDetalle.push(angular.copy(response.data.result.detalleIncidentes)[0])
-                            $scope.fallasIncidenciaDetalle.push(angular.copy(response.data.result.detalleIncidentes)[0])
-                            $scope.fallasIncidenciaDetalle.push(angular.copy(response.data.result.detalleIncidentes)[0])
-                            $scope.fallasIncidenciaDetalle.push(angular.copy(response.data.result.detalleIncidentes)[0])
-                            $scope.fallasIncidenciaDetalle.push(angular.copy(response.data.result.detalleIncidentes)[0])
-                            $scope.fallasIncidenciaDetalle.push(angular.copy(response.data.result.detalleIncidentes)[0])
-
-                            $scope.fallasIncidenciaDetalle= $scope.fallasIncidenciaDetalle.map(e=>{
-                                idtemp++;
-                                e.idFalla=idtemp+''
-                                return e;
-                            })
-  
                             $scope.inicializarDetalleIncidencia($scope.incidenciaDetalle.latitud, $scope.incidenciaDetalle.longitud);
 
                             $scope.isBtnGenerarOT = $scope.llaveEstatusGeneraOT.find(function (elem) { return elem === $scope.incidenciaDetalle.idEstatus });
@@ -668,7 +648,6 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                             }
                             $("#modalDetalleIncidencia").modal('show');
                             $("#container-declinarIncidencia").hide();
-                            swal.close();
                         } else {
                             mostrarMensajeInformativo("No se encontr&oacute; Detalle de la Incidencia");
                             swal.close();
