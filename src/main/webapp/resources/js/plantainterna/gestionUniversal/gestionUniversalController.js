@@ -175,7 +175,6 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
 
     $scope.consultarTecnicosPagos = function (isSwal) {
 
-        //let ultimonivel = $scope.obtenerNivelUltimoJerarquia()
         let clusters = $("#jstreeConsultaTecnicos").jstree("get_selected", true)
             .filter(e => e.original.nivel == $scope.nGeografiaPagos)
             .map(e => parseInt(e.id));
@@ -188,46 +187,53 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
 
         let params = { idGeografias: clusters, idEstatusPagos: $scope.listaStatus };
         let arraRow = [];
-        if(isSwal){
+        if (isSwal) {
             swal({ text: 'Espera un momento...', allowOutsideClick: false });
-            swal.showLoading();    
+            swal.showLoading();
         }
-       
+
         if (pagosTecnicosTable) {
             pagosTecnicosTable.destroy();
         }
         gestionUniversalService.consultarPagosLiberar(params).then(function success(response) {
-            if (response.data.result) {
+            if (response.data !== undefined) {
                 if (response.data.respuesta) {
-                    if (response.data.result.usuarios) {
-                        $scope.listaTecnicosPagos = response.data.result.usuarios;
-                        $.each(response.data.result.usuarios, function (i, elemento) {
-                            let row = [];
-                            let imgDefault = './resources/img/plantainterna/despacho/tecnicootasignada.png';
-                            let url = imgDefault;
-                            if (elemento.urlFoto) {
-                                url = elemento.urlFoto;
-                            }
-                            let nombreCompleto = elemento.nombre + ' ' + elemento.apellidoPaterno + ' ' + elemento.apellidoMaterno;
+                    if (response.data.result) {
+                        if (response.data.result.usuarios) {
+                            $scope.listaTecnicosPagos = response.data.result.usuarios;
+                            $.each(response.data.result.usuarios, function (i, elemento) {
+                                let row = [];
+                                let imgDefault = './resources/img/plantainterna/despacho/tecnicootasignada.png';
+                                let url = imgDefault;
+                                if (elemento.urlFoto) {
+                                    url = elemento.urlFoto;
+                                }
+                                let nombreCompleto = elemento.nombre + ' ' + elemento.apellidoPaterno + ' ' + elemento.apellidoMaterno;
 
-                            row[0] = '<img style="cursor:pointer;border-radius: 25px" src="' + url + '" alt="Foto" width="30" height="30" onclick="showImage(' + "'" + elemento.numEmpleado + "', 'tecnico'" + ')"/>';
-                            row[1] = elemento.numEmpleado ? elemento.numEmpleado : '-';
-                            row[2] = elemento.usuarioFFM ? elemento.usuarioFFM : '-';
-                            row[3] = nombreCompleto;
-                            row[4] = elemento.ciudadOrigen ? elemento.ciudadOrigen : '-';
-                            row[5] = '<span onclick="consultarPagos(' + "'" + elemento.numEmpleado + "'" + ')" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnCambiaContrasena" style="padding:4px 0px !important"><i class="fas fa-check-double" aria-hidden="true"></i></span>';
-                            if (!$scope.configPermisoAccionConsultaPagos) {
-                                row[5] = '<span title="No tienes permisos para consultar" style="cursor: no-drop; opacity: 0.3 !important;padding:4px 0px !important" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnCambiaContrasena"><i class="fas fa-unlock" aria-hidden="true"></i></span>';
-                            }
-                            arraRow.push(row);
-                        })
+                                row[0] = '<img style="cursor:pointer;border-radius: 25px" src="' + url + '" alt="Foto" width="30" height="30" onclick="showImage(' + "'" + elemento.numEmpleado + "', 'tecnico'" + ')"/>';
+                                row[1] = elemento.numEmpleado ? elemento.numEmpleado : '-';
+                                row[2] = elemento.usuarioFFM ? elemento.usuarioFFM : '-';
+                                row[3] = nombreCompleto;
+                                row[4] = elemento.ciudadOrigen ? elemento.ciudadOrigen : '-';
+                                row[5] = '<span onclick="consultarPagos(' + "'" + elemento.numEmpleado + "'" + ')" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnCambiaContrasena" style="padding:4px 0px !important"><i class="fas fa-check-double" aria-hidden="true"></i></span>';
+                                if (!$scope.configPermisoAccionConsultaPagos) {
+                                    row[5] = '<span title="No tienes permisos para consultar" style="cursor: no-drop; opacity: 0.3 !important;padding:4px 0px !important" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnCambiaContrasena"><i class="fas fa-unlock" aria-hidden="true"></i></span>';
+                                }
+                                arraRow.push(row);
+                            })
+                        } else {
+                            toastr.error(response.data.resultDescripcion);
+                        }
                     } else {
-                        toastr.error(response.data.resultDescripcion);
+                        toastr.warning('No se encontraron t\u00E9cnicos');
                     }
                 } else {
-                    toastr.error(response.data.resultDescripcion);
+                    toastr.warning(response.data.resultDescripcion);
                 }
+            } else {
+                toastr.error('Ha ocurrido un error al consultar los t\u00E9cnicos');
             }
+
             pagosTecnicosTable = $('#pagosTecnicosTable').DataTable({
                 "paging": true,
                 "lengthChange": false,
@@ -249,8 +255,8 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
         }
     }
 
-    $scope.obtenerNivelUltimoJerarquia = function () {
-        return $scope.listaGeografia.sort(compareGeneric)[0].nivel
+    $scope.obtenerNivelUltimoJerarquiaGeneric = function (list) {
+        return list.sort(compareGeneric)[0].nivel
     }
 
     $scope.getInformacionGeneral = function () {
@@ -259,117 +265,108 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
             gestionUniversalService.consultarTecnicosGeografia(),
             gestionUniversalService.consultaPuestos()
         ]).then(function (results) {
-            if (results[0].data.result && results[0].data.respuesta) {
-                let resultConf = results[0].data.result
-                if (resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
-                    let llavesResult = results[0].data.result.MODULO_ACCIONES_USUARIO.llaves;
-                    $scope.nGeografiaPagos = llavesResult.N_FILTRO_GEOGRAFIA_PAGOS_TECNICOS ? Number(llavesResult.N_FILTRO_GEOGRAFIA_PAGOS_TECNICOS) : 4;
-                    $scope.nGeografiaContrasenia = llavesResult.N_FILTRO_GEOGRAFIA_CAMBIOCONTRASENIA ? Number(llavesResult.N_FILTRO_GEOGRAFIA_CAMBIOCONTRASENIA) : 4;
-                    $scope.nEstatusPagosTecnicos = llavesResult.N_ESTATUS_PAGOS_TECNICOS ? llavesResult.N_ESTATUS_PAGOS_TECNICOS : null;
-                    $scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
-                    validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
-                    validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
-                    validateCreedText = llavesResult.KEY_TEXTFORMATO_CREED_RES ? KEY_TEXTFORMATO_CREED_RES : '';
+            if (results[1].data !== undefined) {
+                if (results[1].data.respuesta) {
+                    if (results[1].data.result) {
+                        let resultConf = results[0].data.result
+                        if (resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
+                            let llavesResult = results[0].data.result.MODULO_ACCIONES_USUARIO.llaves;
+                            $scope.nGeografiaPagos = llavesResult.N_FILTRO_GEOGRAFIA_PAGOS_TECNICOS;
+                            $scope.nGeografiaContrasenia = llavesResult.N_FILTRO_GEOGRAFIA_CAMBIOCONTRASENIA;
+                            $scope.nEstatusPagosTecnicos = llavesResult.N_ESTATUS_PAGOS_TECNICOS ? llavesResult.N_ESTATUS_PAGOS_TECNICOS : null;
+                            $scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
+                            validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
+                            validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
+                            validateCreedText = llavesResult.KEY_TEXTFORMATO_CREED_RES ? KEY_TEXTFORMATO_CREED_RES : '';
 
-                    if ($scope.nEstatusPagosTecnicos !== null) {
-                        let statusList = $scope.nEstatusPagosTecnicos.split(",");
-                        $scope.listaStatus = statusList;
-                    }
+                            if ($scope.nEstatusPagosTecnicos !== null) {
+                                let statusList = $scope.nEstatusPagosTecnicos.split(",");
+                                $scope.listaStatus = statusList;
+                            }
 
-                    if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
-                        $scope.configPermisoAccionLiberaPagos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "liberaPagos" })[0] != undefined);
-                        $scope.configPermisoAccionConsultaCambiaContrasena = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaCambiaContrasenaPlanning" })[0] != undefined);
-                        $scope.configPermisoAccionConsultaTecnicosPagos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaTecnicosPagosPlanning" })[0] != undefined);
-                        $scope.configPermisoAccionConsultaPagos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaPagosPlanning" })[0] != undefined);
-                        $scope.configPermisoAccionCambiaContrasena = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionCambiaContrasenaPlanning" })[0] != undefined);
-                    }
+                            if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
+                                $scope.configPermisoAccionLiberaPagos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "liberaPagos" })[0] != undefined);
+                                $scope.configPermisoAccionConsultaCambiaContrasena =($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaCambiaContrasenaPlanning" })[0] != undefined);
+                                $scope.configPermisoAccionConsultaTecnicosPagos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaTecnicosPagosPlanning" })[0] != undefined);
+                                $scope.configPermisoAccionConsultaPagos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaPagosPlanning" })[0] != undefined);
+                                $scope.configPermisoAccionCambiaContrasena = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionCambiaContrasenaPlanning" })[0] != undefined);
+                            }
 
-                    if (!$scope.configPermisoAccionConsultaCambiaContrasena && $scope.configPermisoAccionConsultaTecnicosPagos) {
-                        setTimeout(function () {
-                            $("#pagoTecnico-tab").click();
-                            $scope.consultarTecnicosPagos(true);
-                        }, 300)
+                            if (!$scope.configPermisoAccionConsultaCambiaContrasena && $scope.configPermisoAccionConsultaTecnicosPagos) {
+                                setTimeout(function () {
+                                    $("#pagoTecnico-tab").click();
+                                    $scope.consultarTecnicosPagos(true);
+                                }, 300)
+                            }
+
+                        }
+
+                    } else {
+                        toastr.warning('No se encontraron datos para la configuraci\u00F3n');
                     }
-                    $("#container_gestion_Universal").css("display", "block")
+                } else {
+                    toastr.warning(results[1].data.resultDescripcion);
                 }
             } else {
-                mostrarMensajeErrorAlert(results[0].data.resultDescripcion)
+                toastr.error('Ha ocurrido un error en la consulta de configuraci\u00F3n');
             }
-            if (results[1].data.result && results[1].data.respuesta) {
-                if (results[1].data.result) {
-                    if (results[1].data.result.geografia || results[1].data.result.geografia.length > 0) {
-                        let listGeoPagos = [];
-                        let listGeoCambia = [];
 
-                        listGeoPagos = results[1].data.result.geografia.filter(e => { return e.nivel <= $scope.nGeografiaPagos });
+            $("#container_gestion_Universal").css("display", "block")
 
-                        $scope.listaGeografia = listGeoPagos;
-                        $scope.loadArbol();
-                        let geografia = listGeoPagos;
-                        geografia.push({ id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state: { opened: true } });
-                        geografia.map((e) => {
-                            e.parent = e.padre == null ? 0 : e.padre;
-                            e.text = e.nombre;
-                            e.icon = "fa fa-globe";
-                            e.state = {
-                                opened: true,
-                                selected: true,
-                            }
-                            return e
-                        })
+            if (results[1].data !== undefined) {
+                if (results[1].data.respuesta) {
+                    if (results[1].data.result) {
+                        if (results[1].data.result.geografia || results[1].data.result.geografia.length > 0) {
+                            let listGeoPagos = [];
+                            let listGeoCambia = [];
 
-                        listGeoCambia = results[1].data.result.geografia.filter(e => { return e.nivel <= $scope.nGeografiaContrasenia });
+                            $scope.nGeografiaPagos = $scope.nGeografiaPagos ? $scope.nGeografiaPagos : $scope.obtenerNivelUltimoJerarquiaGeneric(results[1].data.result.geografia);
+                            $scope.nGeografiaContrasenia = $scope.nGeografiaContrasenia ? $scope.nGeografiaContrasenia : $scope.obtenerNivelUltimoJerarquiaGeneric(results[1].data.result.geografia);
 
+                            listGeoPagos = results[1].data.result.geografia.filter(e => { return e.nivel <= $scope.nGeografiaPagos });
 
-                        $scope.listaGeografia = listGeoCambia;
-                        let geografiaCambia = listGeoCambia;
-                        geografiaCambia.push({ id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state: { opened: true } });
-                        geografiaCambia.map((e) => {
-                            e.parent = e.padre == null ? 0 : e.padre;
-                            e.text = e.nombre;
-                            e.icon = "fa fa-globe";
-                            e.state = {
-                                opened: true,
-                                selected: true,
-                            }
-                            return e
-                        })
-
-                        $('#jstreeConsultaTecnicos').bind('loaded.jstree', function (e, data) {
-                            var geografias = $('#jstreeConsultaTecnicos').jstree("get_selected", true);
-                            let textoGeografias = [];
-                            angular.forEach(geografias, (geografia, index) => {
-                                textoGeografias.push(geografia.text);
-                            });
-                            $('#inputSearchGeoTecnico').val(textoGeografias);
-                        }).jstree({
-                            'plugins': ["wholerow", "checkbox", "search"],
-                            'core': {
-                                'data': geografia,
-                                'themes': {
-                                    'name': 'proton',
-                                    'responsive': true,
-                                    "icons": false
+                            $scope.listaGeografia = listGeoPagos;
+                            //$scope.loadArbol();
+                            let geografia = listGeoPagos;
+                            geografia.push({ id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state: { opened: true } });
+                            geografia.map((e) => {
+                                e.parent = e.padre == null ? 0 : e.padre;
+                                e.text = e.nombre;
+                                e.icon = "fa fa-globe";
+                                e.state = {
+                                    opened: true,
+                                    selected: true,
                                 }
-                            },
-                            "search": {
-                                "case_sensitive": false,
-                                "show_only_matches": true
-                            }
-                        });
-                        if ($scope.configPermisoAccionConsultaCambiaContrasena) {
-                            $('#jstreeConsultaUsuarios').bind('loaded.jstree', function (e, data) {
-                                var geografiasUser = $('#jstreeConsultaUsuarios').jstree("get_selected", true);
-                                let textoGeografiasUser = [];
-                                angular.forEach(geografiasUser, (geografiaUser, index) => {
-                                    textoGeografiasUser.push(geografiaUser.text);
+                                return e
+                            })
+
+                            listGeoCambia = results[1].data.result.geografia.filter(e => { return e.nivel <= $scope.nGeografiaContrasenia });
+
+
+                            $scope.listaGeografia = listGeoCambia;
+                            let geografiaCambia = listGeoCambia;
+                            geografiaCambia.push({ id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state: { opened: true } });
+                            geografiaCambia.map((e) => {
+                                e.parent = e.padre == null ? 0 : e.padre;
+                                e.text = e.nombre;
+                                e.icon = "fa fa-globe";
+                                e.state = {
+                                    opened: true,
+                                    selected: true,
+                                }
+                                return e
+                            })
+                            $('#jstreeConsultaTecnicos').bind('loaded.jstree', function (e, data) {
+                                var geografias = $('#jstreeConsultaTecnicos').jstree("get_selected", true);
+                                let textoGeografias = [];
+                                angular.forEach(geografias, (geografia, index) => {
+                                    textoGeografias.push(geografia.text);
                                 });
-                                $('#inputSearchGeoUsuario').val(textoGeografiasUser);
-                                $scope.consultarUsuariosContrasena(true);
+                                $('#inputSearchGeoTecnico').val(textoGeografias);
                             }).jstree({
                                 'plugins': ["wholerow", "checkbox", "search"],
                                 'core': {
-                                    'data': geografiaCambia,
+                                    'data': geografia,
                                     'themes': {
                                         'name': 'proton',
                                         'responsive': true,
@@ -381,24 +378,61 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                                     "show_only_matches": true
                                 }
                             });
+                            if ($scope.configPermisoAccionConsultaCambiaContrasena) {
+                                $('#jstreeConsultaUsuarios').bind('loaded.jstree', function (e, data) {
+                                    var geografiasUser = $('#jstreeConsultaUsuarios').jstree("get_selected", true);
+                                    let textoGeografiasUser = [];
+                                    angular.forEach(geografiasUser, (geografiaUser, index) => {
+                                        textoGeografiasUser.push(geografiaUser.text);
+                                    });
+                                    $('#inputSearchGeoUsuario').val(textoGeografiasUser);
+                                    $scope.consultarUsuariosContrasena(true);
+                                }).jstree({
+                                    'plugins': ["wholerow", "checkbox", "search"],
+                                    'core': {
+                                        'data': geografiaCambia,
+                                        'themes': {
+                                            'name': 'proton',
+                                            'responsive': true,
+                                            "icons": false
+                                        }
+                                    },
+                                    "search": {
+                                        "case_sensitive": false,
+                                        "show_only_matches": true
+                                    }
+                                });
 
+                            }
+
+                        } else {
+                            mostrarMensajeWarningValidacion('No existen geograf\u00EDas actualmente')
                         }
-
                     } else {
-                        mostrarMensajeWarningValidacion('No existen geografias actualmente')
+                        toastr.warning('No se encontraron datos para la geograf\u00EDa');
                     }
                 } else {
-                    mostrarMensajeErrorAlert(results[1].data.result.mensaje)
+                    toastr.warning(results[0].data.resultDescripcion);
                 }
             } else {
-                mostrarMensajeErrorAlert(results[1].data.resultDescripcion)
+                toastr.error('Ha ocurrido un error en la consulta de la geograf\u00EDa');
             }
-            if (results[2].data.result && results[2].data.respuesta) {
-                $scope.listaPuestos = results[2].data.result.puestos;
-                $scope.seleccionarTodos($scope.listaPuestos);
+
+            if (results[1].data !== undefined) {
+                if (results[1].data.respuesta) {
+                    if (results[1].data.result) {
+                        $scope.listaPuestos = results[2].data.result.puestos;
+                        $scope.seleccionarTodos($scope.listaPuestos);
+                    } else {
+                        toastr.warning('No se encontraron puestos');
+                    }
+                } else {
+                    toastr.warning(results[0].data.resultDescripcion);
+                }
             } else {
-                mostrarMensajeErrorAlert(results[2].data.resultDescripcion)
+                toastr.error('Ha ocurrido un error en la consulta de puestos');
             }
+
         }).catch(err => handleError(err));
     }
 
@@ -491,15 +525,23 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                         comentarios: comentario
                     }
                     gestionUniversalService.liberarPago(params).then(function success(response) {
-                        if (response.data.respuesta) {
-                            $('#modalPagos').modal('hide');
-                            $scope.consultarTecnicosPagos(false);
-                            toastr.success('Se han liberado los pagos correctamente');
-
-                        } else {
-                            toastr.error(response.data.resultDescripcion);
-                        }
                         swal.close();
+                        if (response.data !== undefined) {
+                            if (response.data.respuesta) {
+                                if (response.data.result) {
+                                    $('#modalPagos').modal('hide');
+                                    $scope.consultarTecnicosPagos(false);
+                                    toastr.success('Se han liberado los pagos correctamente');
+
+                                } else {
+                                    toastr.warning('No se liberaron los pagos');
+                                }
+                            } else {
+                                toastr.warning(response.data.resultDescripcion);
+                            }
+                        } else {
+                            toastr.error('Ha ocurrido un error al liberar el pago');
+                        }
                     })
                 }
             }).catch(err => {
@@ -535,7 +577,6 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
 
     $scope.consultarUsuariosContrasena = function (isSwal) {
 
-        //let ultimonivel = $scope.obtenerNivelUltimoJerarquia()
         let clusters = $("#jstreeConsultaUsuarios").jstree("get_selected", true)
             .filter(e => e.original.nivel == $scope.nGeografiaContrasenia)
             .map(e => parseInt(e.id));
@@ -570,39 +611,46 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
             usuariosCambiaContrasena.destroy();
         }
         gestionUniversalService.consultarUsuariosPorPuesto(params).then(function success(response) {
-            if (response.data.result) {
+            if (response.data !== undefined) {
                 if (response.data.respuesta) {
-                    if (response.data.result && response.data.result.usuarios) {
-                        $scope.listaUsuarios = response.data.result.usuarios;
+                    if (response.data.result) {
+                        if (response.data.result.usuarios) {
+                            $scope.listaUsuarios = response.data.result.usuarios;
 
-                        let imgDefault = './resources/img/plantainterna/despacho/tecnicootasignada.png';
+                            let imgDefault = './resources/img/plantainterna/despacho/tecnicootasignada.png';
 
-                        $.each(response.data.result.usuarios, function (i, elemento) {
-                            let row = [];
-                            let url = imgDefault;
-                            if (elemento.urlFoto) {
-                                url = elemento.urlFoto;
-                            }
-                            row[0] = '<img style="cursor:pointer;border-radius: 25px" src="' + url + '" alt="Foto" width="30" height="30" onclick="showImage(' + "'" + elemento.noEmpleado + "', 'usuario'" + ')"/>';
-                            row[1] = elemento.noEmpleado ? elemento.noEmpleado : 'Sin informaci&oacute;n';
-                            row[2] = elemento.puesto ? elemento.puesto : 'Sin informaci&oacute;n';
-                            row[3] = elemento.usuario ? elemento.usuario : 'Sin informaci&oacute;n';
-                            row[4] = elemento.nombreCompleto ? elemento.nombreCompleto : 'Sin informaci&oacute;n';
-                            row[5] = elemento.geografia ? elemento.geografia : 'Sin informaci&oacute;n';
-                            row[6] = '<span onclick="restablecerContrasena(' + elemento.idUsuario + ')" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnCambiaContrasena"><i class="fa fa-key" aria-hidden="true"></i></span>';
-                            if (!$scope.configPermisoAccionCambiaContrasena) {
-                                row[6] = '<span title="No tienes permisos para editar" style="cursor: no-drop; opacity: 0.3 !important;" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnCambiaContrasena"><i class="fa fa-unlock" aria-hidden="true"></i></span>';
-                            }
-                            arraRow.push(row);
-                        })
+                            $.each(response.data.result.usuarios, function (i, elemento) {
+                                let row = [];
+                                let url = imgDefault;
+                                if (elemento.urlFoto) {
+                                    url = elemento.urlFoto;
+                                }
+                                row[0] = '<img style="cursor:pointer;border-radius: 25px" src="' + url + '" alt="Foto" width="30" height="30" onclick="showImage(' + "'" + elemento.noEmpleado + "', 'usuario'" + ')"/>';
+                                row[1] = elemento.noEmpleado ? elemento.noEmpleado : 'Sin informaci&oacute;n';
+                                row[2] = elemento.puesto ? elemento.puesto : 'Sin informaci&oacute;n';
+                                row[3] = elemento.usuario ? elemento.usuario : 'Sin informaci&oacute;n';
+                                row[4] = elemento.nombreCompleto ? elemento.nombreCompleto : 'Sin informaci&oacute;n';
+                                row[5] = elemento.geografia ? elemento.geografia : 'Sin informaci&oacute;n';
+                                row[6] = '<span onclick="restablecerContrasena(' + elemento.idUsuario + ')" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnCambiaContrasena"><i class="fa fa-key" aria-hidden="true"></i></span>';
+                                if (!$scope.configPermisoAccionCambiaContrasena) {
+                                    row[6] = '<span title="No tienes permisos para editar" style="cursor: no-drop; opacity: 0.3 !important;" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnCambiaContrasena"><i class="fa fa-unlock" aria-hidden="true"></i></span>';
+                                }
+                                arraRow.push(row);
+                            })
 
+                        } else {
+                            toastr.error(response.data.resultDescripcion);
+                        }
                     } else {
-                        toastr.error(response.data.resultDescripcion);
+                        toastr.warning('No se encontraron usuarios');
                     }
                 } else {
-                    toastr.error(response.data.resultDescripcion);
+                    toastr.warning(response.data.resultDescripcion);
                 }
+            } else {
+                toastr.error('Ha ocurrido un error al consultar los usuarios');
             }
+
             usuariosCambiaContrasena = $('#cambiaContrasenaTable').DataTable({
                 "paging": true,
                 "lengthChange": false,
@@ -669,12 +717,20 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
         swal.showLoading();
         gestionUniversalService.restaurarContrasena(params).then(function success(response) {
             swal.close();
-            if (response.data.respuesta) {
-                $("#modalRestablecerContrasena").modal('hide');
-                toastr.success('Contrase\u00F1a restablecida correctamente');
-                $scope.consultarUsuariosContrasena(false);
+            if (response.data !== undefined) {
+                if (response.data.respuesta) {
+                    if (response.data.result) {
+                        $("#modalRestablecerContrasena").modal('hide');
+                        toastr.success('Contrase\u00F1a restablecida correctamente');
+                        $scope.consultarUsuariosContrasena(false);
+                    } else {
+                        toastr.warning('No se restablecio la contrase\u00F1a');
+                    }
+                } else {
+                    toastr.warning(response.data.resultDescripcion);
+                }
             } else {
-                toastr.error(response.data.resultDescripcion);
+                toastr.error('Ha ocurrido un error al restablecer la contrase\u00F1a');
             }
         })
 
