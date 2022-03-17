@@ -265,9 +265,9 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
             gestionUniversalService.consultarTecnicosGeografia(),
             gestionUniversalService.consultaPuestos()
         ]).then(function (results) {
-            if (results[1].data !== undefined) {
-                if (results[1].data.respuesta) {
-                    if (results[1].data.result) {
+            if (results[0].data !== undefined) {
+                if (results[0].data.respuesta) {
+                    if (results[0].data.result) {
                         let resultConf = results[0].data.result
                         if (resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
                             let llavesResult = results[0].data.result.MODULO_ACCIONES_USUARIO.llaves;
@@ -305,7 +305,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                         toastr.warning('No se encontraron datos para la configuraci\u00F3n');
                     }
                 } else {
-                    toastr.warning(results[1].data.resultDescripcion);
+                    toastr.warning(results[0].data.resultDescripcion);
                 }
             } else {
                 toastr.error('Ha ocurrido un error en la consulta de configuraci\u00F3n');
@@ -412,22 +412,22 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                         toastr.warning('No se encontraron datos para la geograf\u00EDa');
                     }
                 } else {
-                    toastr.warning(results[0].data.resultDescripcion);
+                    toastr.warning(results[1].data.resultDescripcion);
                 }
             } else {
                 toastr.error('Ha ocurrido un error en la consulta de la geograf\u00EDa');
             }
 
-            if (results[1].data !== undefined) {
-                if (results[1].data.respuesta) {
-                    if (results[1].data.result) {
+            if (results[2].data !== undefined) {
+                if (results[2].data.respuesta) {
+                    if (results[2].data.result) {
                         $scope.listaPuestos = results[2].data.result.puestos;
                         $scope.seleccionarTodos($scope.listaPuestos);
                     } else {
                         toastr.warning('No se encontraron puestos');
                     }
                 } else {
-                    toastr.warning(results[0].data.resultDescripcion);
+                    toastr.warning(results[2].data.resultDescripcion);
                 }
             } else {
                 toastr.error('Ha ocurrido un error en la consulta de puestos');
