@@ -9,8 +9,21 @@ app.service("coordInstalacionesPIService", function ($http) {
                 'Content-Type' : 'application/json'
             }
         }); 
-
     }
+
+    this.consultarConfiguracionDespachoDespacho=function(params){
+		if(params=== undefined)
+			params={}
+		return $http({
+			method: "post",
+			url: "req/consultarConfiguracionDespachoDespacho",
+			data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
+
     this.consultaOtBusqGral=function (params){
         return $http({ 
             method: "post", 
@@ -20,7 +33,6 @@ app.service("coordInstalacionesPIService", function ($http) {
                 'Content-Type' : 'application/json'
             }
         }); 
-
     }
 
     this.consultarCatalogoEstatusDespachoPI = function() {

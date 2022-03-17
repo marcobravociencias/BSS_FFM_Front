@@ -105,7 +105,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                     } else {
                         $scope.resultArbol = results[2].data.result.geografia;
                     }
-                    
+
                     angular.forEach($scope.resultArbol, function (element, index) {
                         $scope.consultaArbol = true;
                         $scope.listaArbolCiudades.push(
@@ -756,15 +756,18 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
 
         $("#modal-arbol-paquete").on("hidden.bs.modal", function () {
             let paquete = $('#jstree-paquete').jstree("get_selected", true);
-            $scope.infoBasica.paquete = paquete[0].text;
-            $scope.$apply();
+            if (paquete.length) {
+                $scope.infoBasica.paquete = paquete[0].text;
+                $scope.$apply();
+            }
         });
 
         $("#modal-canal-ventas").on("hidden.bs.modal", function () {
             let venta = $('#jstree-canal-ventas').jstree("get_selected", true);
-            $scope.infoBasica.canalVenta = venta[0].text;
-            $scope.$apply();
-            
+            if (venta.length) {
+                $scope.infoBasica.canalVenta = venta[0].text;
+                $scope.$apply();
+            }
         });
 
         $('#horaestimada-form').timepicker({
@@ -838,7 +841,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
         let paquete = $('#jstree-paquete').jstree("get_selected", true);
         let venta = $('#jstree-canal-ventas').jstree("get_selected", true);
 
- 
+
         let jsonEnvio = {
             "nombreOrden": nombreOrden,   //Ejemplo: Instalación
             "tipoOrden": tipoOrdenId,            //id tipo orden
@@ -895,7 +898,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
             "informacionAdicional": [
                 {
                     "nombre": "paquete",
-                    "valor":paquete[0].id
+                    "valor": paquete[0].id
                 },
                 {
                     "nombre": "canalVenta",

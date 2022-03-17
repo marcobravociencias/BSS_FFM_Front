@@ -1,5 +1,18 @@
 app.service("seguimientoSoporteService", function ($http) {
 
+    this.consultarConfiguracionDespachoDespacho=function(params){
+		if(params=== undefined)
+			params={}
+		return $http({
+			method: "post",
+			url: "req/consultarConfiguracionDespachoDespacho",
+			data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
+
     this.consultaSeguimientoGeneral = function (params) {
         return $http({
             method: "post",

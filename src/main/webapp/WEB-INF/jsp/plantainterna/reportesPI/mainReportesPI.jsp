@@ -46,13 +46,13 @@
     <body id="idBody" ng-controller="reportesController" style="display: none;">
 
         <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
-        <div ng-show="permisosConfigUser.permisos.length === 0" class="container container-message">
+        <div ng-show="!permisosConfigUser || permisosConfigUser.permisos.length === 0" class="container container-message">
             <div class="text-accion-nopermiso">
                 <i class="icon-not-permiso fas fa-user-lock"></i>
                 <b class="text-not-permiso">No cuentas con el permiso de consulta.</b>
             </div>
         </div>
-        <div class="container" id="container_reportes" ng-show="permisosConfigUser.permisos.length > 0">
+        <div class="container" id="container_reportes" ng-show="permisosConfigUser || permisosConfigUser.permisos.length > 0">
             <div class="row">
                 <div class="col-md-12">
                     <ul class="nav nav-tabs left-menu small-menu flex-column" id="opciones-menu" role="tablist"

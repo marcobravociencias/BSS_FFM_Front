@@ -22,7 +22,8 @@ app.controller('controlVehicularController',
 			$scope.countBajas = 0;
 			$scope.countTodos = 0;
 			$scope.geografiaList = [];
-			$scope.nGeografia = "";
+			$scope.nGeografia;
+			$scope.llaveEncierroVehiculo;
 			$scope.filePlaca;
 			$scope.fileVehiculo;
 			$scope.fileCirculacion;
@@ -151,7 +152,7 @@ app.controller('controlVehicularController',
 					if (results[0].data && results[0].data.respuesta) {
 						if (resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
 							let llavesResult = results[0].data.result.MODULO_ACCIONES_USUARIO.llaves;
-							$scope.nGeografia = llavesResult.N_FILTRO_GEOGRAFIA ? Number(llavesResult.N_FILTRO_GEOGRAFIA) : 4;
+							$scope.nGeografia = llavesResult.N_FILTRO_GEOGRAFIA;
 							$scope.llaveEncierroVehiculo = llavesResult.N_ENCIERROS;
 							$scope.llaveArchivoPath = llavesResult.PATH_ARCHIVOS;
 							$scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
@@ -191,6 +192,9 @@ app.controller('controlVehicularController',
 						if (results[1].data.result) {
 							if (results[1].data.result.geografia || results[1].data.result.geografia.length > 0) {
 								let listGeo = [];
+
+								$scope.nGeografia = $scope.nGeografia ? $scope.nGeografia : $scope.obtenerNivelUltimoJerarquiaGeneric(results[1].data.result.geografia);
+								$scope.llaveEncierroVehiculo = $scope.llaveEncierroVehiculo ? $scope.llaveEncierroVehiculo : $scope.obtenerNivelUltimoJerarquiaGeneric(results[1].data.result.geografia);
 
 								listGeo = results[1].data.result.geografia.filter(e => { return e.nivel <= $scope.nGeografia });
 
@@ -617,9 +621,10 @@ app.controller('controlVehicularController',
 				$("#img_vehiculo").attr("src", element.src);
 			}
 
-			$scope.obtenerNivelUltimoJerarquia = function () {
-				return $scope.geografiaList.sort(compareGeneric)[0].nivel
+			$scope.obtenerNivelUltimoJerarquiaGeneric = function (list) {
+				return list.sort(compareGeneric)[0].nivel
 			}
+
 			$scope.getConfiguration();
 			$scope.getData();
 

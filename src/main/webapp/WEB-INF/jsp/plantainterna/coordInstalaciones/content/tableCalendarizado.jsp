@@ -19,23 +19,16 @@
             type="text" id="intervencion_calendarizado" class="input-filtro-coordInst form-control form-control-sm" />
             <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-intervencion">      
                 <li style="text-align: center;">
-                    <button ng-click="seleccionarTodos(listaEstatusCalendarizada)" id="todo_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
-                    <button ng-click="deseleccionarTodos(listaEstatusCalendarizada)" id="ninguno_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
+                    <button ng-click="seleccionarTodosRecursivo(filtrosGeneral.estatusCalendarizada)" id="todo_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
+                    <button ng-click="deseleccionarTodosRecursivo(filtrosGeneral.estatusCalendarizada)" id="ninguno_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
                 </li>     
                 <li class="elemento_menu dropdown-divider"></li>
-                <li ng-repeat="filtro in listaEstatusCalendarizada" class="element-menu-filter"  class="element-menu-filter">
+                <li ng-repeat="filtro in filtrosGeneral.estatusCalendarizada" class="element-menu-filter"  class="element-menu-filter">
                     <label  class="dropdown-item form-check-inputfiltro">
-                        <input id="filtrotext-{{filtro.id}}" class="form-check-input" type="checkbox" ng-click="clickEstatus(filtro)" ng-model="filtro.check" ng-true-value="true" ng-false-value="false"/>
+                        <input id="filtrotext-{{filtro.id}}" class="form-check-input" type="checkbox" ng-click="setCheckFiltroGenericV2(filtro,filtrosGeneral.estatusCalendarizada)" ng-model="filtro.checkedOpcion" ng-true-value="true" ng-false-value="false"/>
                         <span  for="filtrotext-{{filtro.id}}" class="dropdown-item item-text-filtro" href="#" ng-bind="filtro.nombre"></span>
                     </label>
-                    <ul class="dropdown-menu">                     
-                        <li ng-repeat="subfiltro in filtro.estados" class="element-menu-filter">
-                            <label class="dropdown-item form-check-inputfiltro">
-                                <input ng-click="clickEstado(filtro, subfiltro)" id="subfiltrotext-{{subfiltro.id}}" class="form-check-input" type="checkbox" ng-model="subfiltro.check" ng-true-value="true" ng-false-value="false"/>
-                                <span for="subfiltrotext-{{subfiltro.id}}" class="dropdown-item item-text-filtro" href="#" ng-bind="subfiltro.nombre"></span>
-                            </label>
-                        </li>
-                    </ul>
+                    <ul ng-if="filtro.children !== undefined &&  filtro.children.length > 0" ng-include="'filtroEstatusCalendarizada.html'" class="dropdown-menu"></ul>
                 </li>
             </ul>
          </div>

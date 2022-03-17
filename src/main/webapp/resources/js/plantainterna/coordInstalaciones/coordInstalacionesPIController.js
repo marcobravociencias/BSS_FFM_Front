@@ -37,16 +37,73 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 		$q.all([
 			coordInstalacionesPIService.consultarCatalogoEstatusDespachoPI(),
 			coordInstalacionesPIService.consulCatalogoGeografiaUsuarioDespacho(),
-			coordInstalacionesPIService.consultarCatalogoTurnosDespachoPI()
-		]).then(function(results) {  
+			coordInstalacionesPIService.consultarCatalogoTurnosDespachoPI(),
+			coordInstalacionesPIService.consultarConfiguracionDespachoDespacho({ "moduloAccionesUsuario": "moduloCoordInst" })
+		]).then(function(results) {
+			if (results[3].data !== undefined) {
+				if (results[3].data.respuesta) {
+					if (results[3].data.result) {
+						$scope.elementosConfigGeneral = new Map(Object.entries(results[3].data.result))
+						let resultConf = results[3].data.result
+						if (resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
+							let llavesResult = results[3].data.result.MODULO_ACCIONES_USUARIO.llaves;
+							if (llavesResult.N_FILTRO_GEOGRAFIA)
+								$scope.nivelGeografia = parseInt(llavesResult.N_FILTRO_GEOGRAFIA)
+
+							if (llavesResult.N_ESTATUS_PENDIENTES)
+								$scope.nivelEstatus = parseInt(llavesResult.N_ESTATUS_PENDIENTES)
+
+							$scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
+							
+							if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
+								$scope.configPermisoAccionConsultaOrdenes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaOT" })[0] != undefined);
+								$scope.configPermisoAccionDescargaReporteOrdenes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaReporteOT" })[0] != undefined);
+							}
+							$("#idBody").removeAttr("style");
+							validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
+							validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
+						}
+					} else {
+						swal.close();
+						toastr.warning('No se encontraron datos para la configuracion');
+					}
+				} else {
+					swal.close();
+					toastr.warning(results[3].data.resultDescripcion);
+				}
+			} else {
+				swal.close();
+				toastr.error('Ha ocurrido un error en la consulta de configuracion');
+			}
 			if (results[0].data !== undefined) {
 				if (results[0].data.respuesta) {
 					if (results[0].data.result) {
+						$scope.filtrosGeneral = {};
+						$scope.respaldoFiltroCatalogo = [];
+						$scope.respaldoFiltroCatalogo = angular.copy(results[0].data.result);
+						//$scope.nivelEstatusGeneral = 2;
+						$scope.nivelEstatusGeneral = $scope.nivelEstatusGeneral ? $scope.nivelEstatusGeneral : $scope.obtenerUltimoNivelFiltros($scope.respaldoFiltroCatalogo);
+						$scope.filtrosCatalogo = $scope.conversionAnidadaRecursiva($scope.respaldoFiltroCatalogo, 1, $scope.nivelEstatusGeneral);
+
+						$scope.filtrosGeneral.estatusPendiente = $scope.filtrosCatalogo.filter(e => {return e.id === 1});
+						$scope.filtrosGeneral.estatusAsignada = $scope.filtrosCatalogo.filter(e => {return e.id === 2});
+						$scope.filtrosGeneral.estatusDetenida = $scope.filtrosCatalogo.filter(e => {return e.id === 3});
+						$scope.filtrosGeneral.estatusTerminada = $scope.filtrosCatalogo.filter(e => {return e.id === 4});
+						$scope.filtrosGeneral.estatusCancelada = $scope.filtrosCatalogo.filter(e => {return e.id === 5});
+						$scope.filtrosGeneral.estatusCalendarizada = $scope.filtrosCatalogo.filter(e => {return e.id === 6});
+						$scope.filtrosGeneral.estatusGestoria = $scope.filtrosCatalogo.filter(e => {return e.id === 7});
+
+						$scope.listadoMotivosReagenda = $scope.respaldoFiltroCatalogo.filter(e => {return e.idPadre === 201})
+						$scope.listadoMotivosCalendarizado = $scope.respaldoFiltroCatalogo.filter(e => {return e.idPadre === 243})
+						$scope.listadoEstadoGestoria = $scope.respaldoFiltroCatalogo.filter(e => {return e.idPadre === 7});
+						$scope.listadoMotivosGestaria = $scope.respaldoFiltroCatalogo.filter(e => {return e.idPadre === 249})
+						/*
 						$scope.filtrosCatalogo = results[0].data.result;
 						$scope.filtrosCatalogo.map((e)=>{
 							e.check = true;
 						})
 						$scope.mostrarFiltros();
+						*/
 					} else {
 						toastr.warning('No se encontraron resultados');
 					}
@@ -117,22 +174,88 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 	}
 	$scope.consultarCatalogos();
 
+	$scope.conversionAnidadaRecursiva = function (array, nivelInit, maxNivel) {
+		let arrayReturn = [];
+		angular.forEach(array.filter(e => e.nivel === nivelInit), function (elem, index) {
+			let elemento = angular.copy(elem);
+			elemento.checkedOpcion = true;
+			if (nivelInit < maxNivel) {
+				elemento.children = $scope.conversionAnidadaRecursiva(array, nivelInit + 1, maxNivel).filter(e2 => e2.idPadre === elemento.id);
+				elemento.children = (elemento.children !== undefined && elemento.children.length > 0) ? elemento.children : [];
+			}
+			arrayReturn.push(elemento)
+		});
+		return arrayReturn;
+	}
+
+	$scope.obtenerUltimoNivelFiltros = function (array) {
+		return Math.max.apply(Math, array.map(function (o) { return o.nivel; }));
+	}
+
+	$scope.obtenerElementosSeleccionadosFiltro = function (array, nivel) {
+		let arrayReturn = [];
+		angular.forEach(array, function (elemento, index) {
+			if (elemento.nivel == nivel && elemento.checkedOpcion) {
+				arrayReturn.push(elemento.id);
+			} else {
+				arrayReturn = arrayReturn.concat($scope.obtenerElementosSeleccionadosFiltro(elemento.children, nivel));
+			}
+		});
+		return arrayReturn;
+	}
+
+	$scope.seleccionarTodosRecursivo = function (array) {
+		array.map(function (e) {
+			e.checkedOpcion = true;
+			if (e.children !== undefined && e.children.length > 0) {
+				$scope.seleccionarTodosRecursivo(e.children);
+			}
+		});
+	}
+
+	$scope.deseleccionarTodosRecursivo = function (array) {
+		array.map(function (e) {
+			e.checkedOpcion = false;
+			if (e.children !== undefined && e.children.length > 0) {
+				$scope.deseleccionarTodosRecursivo(e.children);
+			}
+		});
+	}
+
+	$scope.setCheckFiltroGenericV2 = function (filtro, principalArray) {
+		if (filtro.children !== undefined && filtro.children.length > 0) {
+			if (filtro.checkedOpcion) {
+				$scope.deseleccionarTodosRecursivo(filtro.children);
+			} else {
+				$scope.seleccionarTodosRecursivo(filtro.children);
+			}
+		}
+		filtro.checkedOpcion = !filtro.checkedOpcion;
+		$scope.checkPadre(filtro.idPadre, principalArray, principalArray);
+	}
+
+	$scope.checkPadre = function (idPadre, array, principalArray) {
+		array.map(function (e) {
+			if (e.id === idPadre) {
+				e.checkedOpcion = e.children.length === e.children.filter(function (e) { return e.checkedOpcion }).length;
+				$scope.checkPadre(e.idPadre, principalArray, principalArray);
+			} else {
+				if (e.children !== undefined && e.children.length > 0) {
+					$scope.checkPadre(idPadre, e.children, principalArray);
+				}
+			}
+		});
+	}
+
 	$scope.resultPendientes = [];
 	$scope.consultarPendientes = function() {
 		$scope.estatusSelect = [];
 		$scope.estadoSelect = [];
 		$scope.geografiaSelect = [];
 		$scope.resultPendientes = [];
-		$scope.listaEstatusPendiente.map((e)=>{
-			if (e.check) {
-				$scope.estatusSelect.push(e.id);
-				e.estados.map((es)=>{
-					if (es.check) {
-						$scope.estadoSelect.push(es.id);
-					}
-				});
-			}
-		});
+		$scope.estatusSelect = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.estatusPendiente, $scope.nivelEstatusGeneral-1);
+		$scope.estadoSelect = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.estatusPendiente, $scope.nivelEstatusGeneral);
+
 		$scope.geografiaSelect = $("#jstree-pendiente").jstree("get_selected", true).filter(e=>e.original.nivel === $scope.nivelArbol).map(e=>parseInt(e.id))
 		let params = {
 			idOrdenTrabajo: !$scope.objetoPendiente.ot || $scope.objetoPendiente.ot === "" ? undefined : $scope.objetoPendiente.ot,
@@ -213,16 +336,9 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 		$scope.estatusSelect = [];
 		$scope.estadoSelect = [];
 		$scope.geografiaSelect = [];
-		$scope.listaEstatusAsignada.map((e)=>{
-			if (e.check) {
-				$scope.estatusSelect.push(e.id);
-				e.estados.map((es)=>{
-					if (es.check) {
-						$scope.estadoSelect.push(es.id);
-					}
-				});
-			}
-		});
+		$scope.estatusSelect = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.estatusAsignada, $scope.nivelEstatusGeneral-1);
+		$scope.estadoSelect = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.estatusAsignada, $scope.nivelEstatusGeneral);
+
 		$scope.geografiaSelect = $("#jstree-asignado").jstree("get_selected", true).filter(e=>e.original.nivel === $scope.nivelArbol).map(e=>parseInt(e.id))
 		let params = {
 			idOrdenTrabajo: !$scope.objetoAsignada.ot || $scope.objetoAsignada.ot === "" ? undefined : $scope.objetoAsignada.ot,
@@ -300,16 +416,9 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 		$scope.estatusSelect = [];
 		$scope.estadoSelect = [];
 		$scope.geografiaSelect = [];
-		$scope.listaEstatusDetenida.map((e)=>{
-			if (e.check) {
-				$scope.estatusSelect.push(e.id);
-				e.estados.map((es)=>{
-					if (es.check) {
-						$scope.estadoSelect.push(es.id);
-					}
-				});
-			}
-		});
+		$scope.estatusSelect = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.estatusDetenida, $scope.nivelEstatusGeneral-1);
+		$scope.estadoSelect = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.estatusDetenida, $scope.nivelEstatusGeneral);
+
 		$scope.geografiaSelect = $("#jstree-detenido").jstree("get_selected", true).filter(e=>e.original.nivel === $scope.nivelArbol).map(e=>parseInt(e.id))
 		let params = {
 			idOrdenTrabajo: !$scope.objetoDetenida.ot || $scope.objetoDetenida.ot === "" ? undefined : $scope.objetoDetenida.ot,
@@ -388,16 +497,9 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 		$scope.estatusSelect = [];
 		$scope.estadoSelect = [];
 		$scope.geografiaSelect = [];
-		$scope.listaEstatusTerminada.map((e)=>{
-			if (e.check) {
-				$scope.estatusSelect.push(e.id);
-				e.estados.map((es)=>{
-					if (es.check) {
-						$scope.estadoSelect.push(es.id);
-					}
-				});
-			}
-		});
+		$scope.estatusSelect = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.estatusTerminada, $scope.nivelEstatusGeneral-1);
+		$scope.estadoSelect = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.estatusTerminada, $scope.nivelEstatusGeneral);
+
 		$scope.geografiaSelect = $("#jstree-terminada").jstree("get_selected", true).filter(e=>e.original.nivel === $scope.nivelArbol).map(e=>parseInt(e.id))
 		let params = {
 			idOrdenTrabajo: !$scope.objetoTerminadas.ot || $scope.objetoTerminadas.ot === "" ? undefined : $scope.objetoTerminadas.ot,
@@ -475,16 +577,9 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 		$scope.estatusSelect = [];
 		$scope.estadoSelect = [];
 		$scope.geografiaSelect = [];
-		$scope.listaEstatusCancelada.map((e)=>{
-			if (e.check) {
-				$scope.estatusSelect.push(e.id);
-				e.estados.map((es)=>{
-					if (es.check) {
-						$scope.estadoSelect.push(es.id);
-					}
-				});
-			}
-		});
+		$scope.estatusSelect = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.estatusCancelada, $scope.nivelEstatusGeneral-1);
+		$scope.estadoSelect = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.estatusCancelada, $scope.nivelEstatusGeneral);
+
 		$scope.geografiaSelect = $("#jstree-cancelada").jstree("get_selected", true).filter(e=>e.original.nivel === $scope.nivelArbol).map(e=>parseInt(e.id))
 		let params = {
 			idOrdenTrabajo: !$scope.objetoCancelada.ot || $scope.objetoCancelada.ot === "" ? undefined : $scope.objetoCancelada.ot,
@@ -564,16 +659,9 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 		$scope.estadoSelect = [];
 		$scope.geografiaSelect = [];
 		$scope.resultCalendarizada = [];
-		$scope.listaEstatusCalendarizada.map((e)=>{
-			if (e.check) {
-				$scope.estatusSelect.push(e.id);
-				e.estados.map((es)=>{
-					if (es.check) {
-						$scope.estadoSelect.push(es.id);
-					}
-				});
-			}
-		});
+		$scope.estatusSelect = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.estatusCalendarizada, $scope.nivelEstatusGeneral-1);
+		$scope.estadoSelect = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.estatusCalendarizada, $scope.nivelEstatusGeneral);
+
 		$scope.geografiaSelect = $("#jstree-calendarizar").jstree("get_selected", true).filter(e=>e.original.nivel === $scope.nivelArbol).map(e=>parseInt(e.id))
 		let params = {
 			idOrdenTrabajo: !$scope.objetoCalendarizada.ot || $scope.objetoCalendarizada.ot === "" ? undefined : $scope.objetoCalendarizada.ot,
@@ -657,16 +745,9 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 		$scope.estadoSelect = [];
 		$scope.geografiaSelect = [];
 		$scope.resultGestoria = [];
-		$scope.listaEstatusGestoria.map((e)=>{
-			if (e.check) {
-				$scope.estatusSelect.push(e.id);
-				e.estados.map((es)=>{
-					if (es.check) {
-						$scope.estadoSelect.push(es.id);
-					}
-				});
-			}
-		});
+		$scope.estatusSelect = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.estatusGestoria, $scope.nivelEstatusGeneral-1);
+		$scope.estadoSelect = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.estatusGestoria, $scope.nivelEstatusGeneral);
+
 		$scope.geografiaSelect = $("#jstree-gestoria").jstree("get_selected", true).filter(e=>e.original.nivel === $scope.nivelArbol).map(e=>parseInt(e.id))
 		let params = {
 			idOrdenTrabajo: !$scope.objetoGestoria.ot || $scope.objetoGestoria.ot === "" ? undefined : $scope.objetoGestoria.ot,

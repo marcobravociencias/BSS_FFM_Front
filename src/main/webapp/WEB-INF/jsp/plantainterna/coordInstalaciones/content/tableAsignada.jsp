@@ -13,29 +13,22 @@
         
     </div>
     <div class="column-style-consulta columna-filtro-ind" style="width: 11%;">
-        <label for="intervencion_asignada" class="label-filter">Estatus</label>
+        <label for="estatus_asignada" class="label-filter">Estatus</label>
         <div class="dropdown">
             <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..." 
-            type="text" id="intervencion_asignada" class="input-filtro-coordInst form-control form-control-sm" />
-            <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-intervencion">      
+            type="text" id="estatus_asignada" class="input-filtro-coordInst form-control form-control-sm" />
+            <ul class="dropdown-menu drop-down-filters" aria-labelledby="estatus_asignada">      
                 <li style="text-align: center;">
-                    <button ng-click="seleccionarTodos(listaEstatusAsignada)" id="todo_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
-                    <button ng-click="deseleccionarTodos(listaEstatusAsignada)" id="ninguno_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
+                    <button ng-click="seleccionarTodosRecursivo(filtrosGeneral.estatusAsignada)" id="todo_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
+                    <button ng-click="deseleccionarTodosRecursivo(filtrosGeneral.estatusAsignada)" id="ninguno_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
                 </li>     
                 <li class="elemento_menu dropdown-divider"></li>
-                <li ng-repeat="filtro in listaEstatusAsignada" class="element-menu-filter"  class="element-menu-filter">
+                <li ng-repeat="filtro in filtrosGeneral.estatusAsignada" class="element-menu-filter"  class="element-menu-filter">
                     <label  class="dropdown-item form-check-inputfiltro">
-                        <input id="filtrotext-{{filtro.id}}" class="form-check-input" type="checkbox" ng-click="clickEstatus(filtro)" ng-model="filtro.check" ng-true-value="true" ng-false-value="false"/>
+                        <input id="filtrotext-{{filtro.id}}" class="form-check-input" type="checkbox" ng-click="setCheckFiltroGenericV2(filtro,filtrosGeneral.estatusAsignada)" ng-model="filtro.checkedOpcion" ng-true-value="true" ng-false-value="false"/>
                         <span  for="filtrotext-{{filtro.id}}" class="dropdown-item item-text-filtro" href="#" ng-bind="filtro.nombre"></span>
                     </label>
-                    <ul class="dropdown-menu">                     
-                        <li ng-repeat="subfiltro in filtro.estados" class="element-menu-filter">
-                            <label class="dropdown-item form-check-inputfiltro">
-                                <input ng-click="clickEstado(filtro, subfiltro)" id="subfiltrotext-{{subfiltro.id}}" class="form-check-input" type="checkbox" ng-model="subfiltro.check" ng-true-value="true" ng-false-value="false"/>
-                                <span for="subfiltrotext-{{subfiltro.id}}" class="dropdown-item item-text-filtro" href="#" ng-bind="subfiltro.nombre"></span>
-                            </label>
-                        </li>
-                    </ul>
+                    <ul ng-if="filtro.children !== undefined &&  filtro.children.length > 0" ng-include="'filtroEstatusAsignada.html'" class="dropdown-menu"></ul>
                 </li>
             </ul>
          </div>

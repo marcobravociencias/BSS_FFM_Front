@@ -177,6 +177,7 @@
         <jsp:include page="./modals/modalGeografiaPendiente.jsp"></jsp:include>
         <jsp:include page="./modals/modalGeografiaTerminada.jsp"></jsp:include>
     </body>
+    <jsp:include page="./content/filtros.jsp"></jsp:include>
     <script src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.min.js"></script>    
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=${googlkeyattrvar['gkeactok']}&libraries=geometry,places"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/jquery-ui.min.js" ></script>
