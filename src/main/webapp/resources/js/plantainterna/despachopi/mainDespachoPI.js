@@ -517,7 +517,7 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                                 <tr> 
                                     <td>  
                                         <div id="idotpendiente${otpendiente.idOrden}" 
-                                                class="${(otpendiente.ordenConfirmada && $scope.accionAsignacionOtPermiso) ? 'fc-event' : "fc-event-noasignacion"}  ot-pendiente-event ${otpendiente.ordenConfirmada ? "efecto ui-draggable ui-draggable-handle" : ""} ">
+                                               tag-id-ot="${otpendiente.idOrden}"  class="${(otpendiente.ordenConfirmada && $scope.accionAsignacionOtPermiso) ? 'fc-event' : "fc-event-noasignacion"}  ot-pendiente-event ${otpendiente.ordenConfirmada ? "efecto ui-draggable ui-draggable-handle" : ""} ">
                                             <div class="header-otpendeinte">
                                                 <div class="top-title-ot">
                                                     <div class="content-top-element bars-content">
@@ -665,7 +665,8 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
         }
         $scope.inicializarsTableOtsPendientes = function () {
             $('.fc-event.ot-pendiente-event').each(function (index) {
-                let otpendiente = $scope.listadoOtsPendientes[index]
+                let idOt=parseInt($(this).attr('tag-id-ot'));
+                let otpendiente = $scope.listadoOtsPendientes.find(e=>e.idOrden==idOt)
                 $(this).data('event', {
                     objectevent: otpendiente,
                     stick: true

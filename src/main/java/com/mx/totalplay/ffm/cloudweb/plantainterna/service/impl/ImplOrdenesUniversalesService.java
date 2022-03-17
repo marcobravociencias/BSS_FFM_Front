@@ -64,6 +64,43 @@ public class ImplOrdenesUniversalesService implements OrdenesUniversalesService 
         logger.info("RESULT" + gson.toJson(response));        
 		return response;
 	}
+	
 
+	@Override
+	public ServiceResponseResult consultarPerfilesGeneralServ() {		
+        logger.info("ImplOrdenesUniversalesService.class [metodo = consultarPerfilesGeneralServ() ]\n");
+        LoginResult principalDetail = utileriaGeneral.obtenerObjetoPrincipal();
+        int idUsuario=principalDetail.getIdUsuario();
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constOrdenesUniversales.getConsultarPerfilesGeneral());
+        logger.info("##### "+urlRequest);
+        Map<String, String> paramsRequestGet = new HashMap<String, String>();        
+        paramsRequestGet.put("idUsuario",idUsuario+"");
+        ServiceResponseResult response = consumeRest.callGetBearerTokenRequest(
+                paramsRequestGet,
+                urlRequest,
+                ServiceResponseResult.class,
+                tokenAcces);
+        logger.info("RESULT" + gson.toJson(response));        
+		return response;
+	}
+	@Override
+	public ServiceResponseResult consultarPerfilesPorUsuarioServ() {		
+        logger.info("ImplOrdenesUniversalesService.class [metodo = consultarPerfilesPorUsuarioServ() ]\n");
+        LoginResult principalDetail = utileriaGeneral.obtenerObjetoPrincipal();
+        int idUsuario=principalDetail.getIdUsuario();
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constOrdenesUniversales.getConsultarPerfilesPorUsuario());
+        logger.info("##### "+urlRequest);
+        Map<String, String> paramsRequestGet = new HashMap<String, String>();        
+        paramsRequestGet.put("idUsuario",idUsuario+"");
+        ServiceResponseResult response = consumeRest.callGetBearerTokenRequest(
+                paramsRequestGet,
+                urlRequest,
+                ServiceResponseResult.class,
+                tokenAcces);
+        logger.info("RESULT" + gson.toJson(response));        
+		return response;
+	}
 
 }

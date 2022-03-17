@@ -184,8 +184,8 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             if (results[0].data.respuesta) {
                 $scope.elementosConfigGeneral = new Map(Object.entries(results[0].data.result))
                 let resultConf = results[0].data.result
-                if (resultConf.MODULO_GESTION_TICKETS && resultConf.MODULO_GESTION_TICKETS.llaves) {
-                    let llavesResult = results[0].data.result.MODULO_GESTION_TICKETS.llaves;
+                if (resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
+                    let llavesResult = results[0].data.result.MODULO_ACCIONES_USUARIO.llaves;
                     if (llavesResult.N_FILTRO_GEOGRAFIA_GESTION_TICKETS)
                         $scope.nGeografia = parseInt(llavesResult.N_FILTRO_GEOGRAFIA_GESTION_TICKETS)
 
