@@ -158,6 +158,79 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         }
     }
 
+    $scope.conversionAnidadaRecursiva = function (array, nivelInit, maxNivel) {
+		let arrayReturn = [];
+		angular.forEach(array.filter(e => e.nivel === nivelInit), function (elem, index) {
+			let elemento = angular.copy(elem);
+			elemento.checkedOpcion = true;
+			if (nivelInit < maxNivel) {
+				elemento.children = $scope.conversionAnidadaRecursiva(array, nivelInit + 1, maxNivel).filter(e2 => Number(e2.idPadre) === Number(elemento.id));
+				elemento.children = (elemento.children !== undefined && elemento.children.length > 0) ? elemento.children : [];
+			}
+			arrayReturn.push(elemento)
+		});
+		return arrayReturn;
+	}
+
+	$scope.obtenerUltimoNivelFiltros = function (array) {
+		return Math.max.apply(Math, array.map(function (o) { return o.nivel; }));
+	}
+
+	$scope.obtenerElementosSeleccionadosFiltro = function (array, nivel) {
+		let arrayReturn = [];
+		angular.forEach(array, function (elemento, index) {
+			if (elemento.nivel == nivel && elemento.checkedOpcion) {
+				arrayReturn.push(elemento.id);
+			} else {
+				arrayReturn = arrayReturn.concat($scope.obtenerElementosSeleccionadosFiltro(elemento.children, nivel));
+			}
+		});
+		return arrayReturn;
+	}
+
+    $scope.seleccionarTodosRecursivo = function(array) {
+        array.map(function(e){
+            e.checkedOpcion = true;
+            if (e.children !== undefined && e.children.length > 0) {
+                $scope.seleccionarTodosRecursivo(e.children);
+            }
+        });
+    }
+ 
+    $scope.deseleccionarTodosRecursivo = function(array) {
+        array.map(function(e){
+            e.checkedOpcion = false;
+            if (e.children !== undefined && e.children.length > 0) {
+                $scope.deseleccionarTodosRecursivo(e.children);
+            }
+        });
+    }
+ 
+    $scope.setCheckFiltroGenericV2 = function(filtro, principalArray) {
+        if (filtro.children !== undefined && filtro.children.length > 0) {
+            if (filtro.checkedOpcion) {
+                $scope.deseleccionarTodosRecursivo(filtro.children);
+            } else {
+                $scope.seleccionarTodosRecursivo(filtro.children);
+            }
+        }
+        filtro.checkedOpcion = !filtro.checkedOpcion;
+        $scope.checkPadre(filtro.idPadre, principalArray, principalArray);
+    }
+
+    $scope.checkPadre = function(idPadre, array, principalArray) {
+        array.map(function(e){
+            if (Number(e.id) === Number(idPadre)) {
+                e.checkedOpcion = e.children.length === e.children.filter(function(e){return e.checkedOpcion}).length;
+                $scope.checkPadre(e.idPadre, principalArray, principalArray);
+            } else {
+                if (e.children !== undefined && e.children.length > 0) {
+                    $scope.checkPadre(idPadre, e.children, principalArray);
+                }
+            }
+        });
+    }
+
     $scope.realizarConversionAnidado = function (array) {
         let arrayCopy = [];
         angular.forEach(array.filter(e => e.nivel == 1), function (elemento, index) {
@@ -244,8 +317,12 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
             if (results[2].data !== undefined) {
                 if (results[2].data.respuesta) {
                     if (results[2].data.result) {
-                        $scope.nfiltrofallas = $scope.nfiltrofallas ? $scope.nfiltrofallas : $scope.obtenerNivelUltimoJerarquiaGeneric(results[2].data.result.incidentes);
-                        $scope.filtrosInspector.fallas = $scope.realizarConversionAnidado(results[2].data.result.incidentes.filter(e => e.nivel <= parseInt($scope.nfiltrofallas)));
+                        $scope.respaldoFallaArray = [];
+						$scope.respaldoFallaArray = angular.copy(results[2].data.result.incidentes);
+                        $scope.nfiltrofallas = $scope.nfiltrofallas ? $scope.nfiltrofallas : $scope.obtenerUltimoNivelFiltros($scope.respaldoFallaArray);
+                        //$scope.nfiltrofallas = $scope.nfiltrofallas ? $scope.nfiltrofallas : $scope.obtenerNivelUltimoJerarquiaGeneric(results[2].data.result.incidentes);
+                        //$scope.filtrosInspector.fallas = $scope.realizarConversionAnidado(results[2].data.result.incidentes.filter(e => e.nivel <= parseInt($scope.nfiltrofallas)));
+                        $scope.filtrosInspector.fallas = $scope.conversionAnidadaRecursiva($scope.respaldoFallaArray, 1, $scope.nfiltrofallas);
                     } else {
                         mostrarMensajeWarningValidacion("<li>No se encontraron datos para el Cat&aacute;alogo de Fallas</i>");
                         $scope.banderaErrorFallas = true;
@@ -999,6 +1076,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                 isValid = false;
             }
 
+            /*
             let fallasSelected = []
             let nivelFalla = $scope.nfiltrofallas;
             angular.forEach($scope.filtrosInspector.fallas, (e, i) => {
@@ -1011,6 +1089,10 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                     fallasSelected.push(Number(e.id));
                 }
             });
+            */
+            let fallasSelected = []
+            fallasSelected = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosInspector.fallas, $scope.nfiltrofallas);
+ 
 
             if (fallasSelected.length === 0) {
                 mensajeError += '<li>Selecciona al menos una falla</li>';

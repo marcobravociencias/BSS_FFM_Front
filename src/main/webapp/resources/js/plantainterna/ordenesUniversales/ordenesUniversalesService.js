@@ -64,8 +64,15 @@ app.service("ordenesUniversalesService", function ($http) {
             transformRequest: angular.identity
         });
     };
+    this.consultarPerfilesPorUsuario = function () {
+        return $http({
+            method: "post",
+            url: "req/consultarPerfilesPorUsuario",
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
+        });
+    };
     
-
     
 
 });

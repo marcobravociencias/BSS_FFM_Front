@@ -7,4 +7,7 @@ public interface OrdenesUniversalesService {
 	public ServiceResponseResult consultarCuentaAsignadaGenerica(String params);
 	public ServiceResponseResult consultarCatalogosOrdenesUniversales();
 	
+	public ServiceResponseResult consultarPerfilesGeneralServ();
+	public ServiceResponseResult consultarPerfilesPorUsuarioServ();
+
 }

@@ -20,13 +20,13 @@
     </div>
     <div class="col-6 contenido-cuenta">
         <strong class="color_titulos_resumen">CANAL DE VENTAS:</strong>
-        <label class="resumen-detalle-agenda" ng-bind="infoBasica.canalVenta.canalVenta ? infoBasica.canalVenta.canalVenta : 'Sin informaci&oacute;n'"></label>
+        <label class="resumen-detalle-agenda" ng-bind="infoBasica.canalVenta ? infoBasica.canalVenta : 'Sin informaci&oacute;n'"></label>
     </div>
 </div>
 <div class="row" style="text-align: left;">
     <div class="col-6 contenido-cuenta">
         <strong class="color_titulos_resumen">PAQUETE:</strong>
-        <label class="resumen-detalle-agenda" ng-bind="infoBasica.paquete.Nombre_comercial__c ? infoBasica.paquete.Nombre_comercial__c : 'Sin informaci&oacute;n'"></label>
+        <label class="resumen-detalle-agenda" ng-bind="infoBasica.paquete ? infoBasica.paquete : 'Sin informaci&oacute;n'"></label>
     </div>
     <div class="col-6 contenido-cuenta">
         

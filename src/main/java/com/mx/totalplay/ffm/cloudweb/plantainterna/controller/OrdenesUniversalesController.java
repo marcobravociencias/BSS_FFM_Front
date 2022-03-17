@@ -50,4 +50,25 @@ public class OrdenesUniversalesController {
 	        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 	
+	
+	@PostMapping("/consultarPerfilesPorUsuario")
+	public ResponseEntity<?> consultarPerfilesPorUsuarioContr() {
+		    logger.info("##### CONSULTANDO CATALOGO PERFILES USUARIO");
+	        ServiceResponseResult response = ordenesUniversalesService.consultarPerfilesPorUsuarioServ();
+	        if (response.getResult() instanceof Integer) {
+	            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+	        }
+	        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	
+	@PostMapping("/consultarPerfilesGeneral")
+	public ResponseEntity<?> consultarPerfilesGeneralContr() {
+		    logger.info("##### CONSULTANDO CATALOGO PERFILES GENERAL");
+	        ServiceResponseResult response = ordenesUniversalesService.consultarPerfilesGeneralServ();
+	        if (response.getResult() instanceof Integer) {
+	            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+	        }
+	        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	
 }

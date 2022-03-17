@@ -12,4 +12,9 @@ public class ConstOrdenesUniversales {
 	 @Value("${consultarCatalogoOrdenesUniversales}")
 	 private String consultarCatalogoOrdenesUniversales;
 
+	 @Value("${consultarPerfilesGeneral}")
+	 private String consultarPerfilesGeneral;
+	 
+	 @Value("${consultarPerfilesPorUsuario}")
+	 private String consultarPerfilesPorUsuario;
 }

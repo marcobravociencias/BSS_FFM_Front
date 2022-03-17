@@ -57,23 +57,16 @@
                         <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..." type="text" id="txtFalla" class="input-filtro-inspectorincidencia form-control form-control-sm" />
                         <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-fallas">
                             <li style="text-align: center;">
-                                <button ng-click="seleccionTodos(filtrosInspector.fallas, true)" id="todo_filtro" type="button" class="btn btn-indigo btn-sm waves-effect waves-light">Todos</button>
-                                <button ng-click="seleccionTodos(filtrosInspector.fallas, false)" id="ninguno_filtro" type="button" class="btn btn-indigo btn-sm waves-effect waves-light">Ninguno</button>
+                                <button ng-click="seleccionarTodosRecursivo(filtrosInspector.fallas)" id="todo_filtro" type="button" class="btn btn-indigo btn-sm waves-effect waves-light">Todos</button>
+                                <button ng-click="deseleccionarTodosRecursivo(filtrosInspector.fallas)" id="ninguno_filtro" type="button" class="btn btn-indigo btn-sm waves-effect waves-light">Ninguno</button>
                             </li>
                             <li class="elemento_menu dropdown-divider"></li>
-                            <li ng-repeat="filtroFalla in filtrosInspector.fallas" class="element-menu-filter">
+                            <li ng-repeat="filtro in filtrosInspector.fallas" class="element-menu-filter">
                                 <label class="dropdown-item form-check-inputfiltro">
-                                    <input ng-change="fallaSeleccion()" ng-click=setCheckFiltroGeneric(filtroFalla) id="filtrotext-{{filtroFalla.id}}" class="form-check-input" type="checkbox" ng-model="filtroFalla.checkedOpcion" ng-checked="filtroFalla.checkedOpcion" />
-                                    <span for="filtrotext-{{filtroFalla.id}}" class="dropdown-item item-text-filtro" ng-bind="filtroFalla.descripcion"></span>
+                                    <input ng-click=setCheckFiltroGenericV2(filtro,filtrosInspector.fallas) id="filtrotext-{{filtro.id}}" class="form-check-input" type="checkbox" ng-model="filtro.checkedOpcion" ng-checked="filtro.checkedOpcion" />
+                                    <span for="filtrotext-{{filtro.id}}" class="dropdown-item item-text-filtro" ng-bind="filtro.descripcion"></span>
                                 </label>
-                                <ul class="dropdown-menu">
-                                    <li ng-repeat="subfiltro in filtroFalla.children" class="element-menu-filter">
-                                        <label class="dropdown-item form-check-inputfiltro">
-                                            <input ng-click=setCheckSubFiltroGeneric(subfiltro,filtroFalla) id="subfiltrotext-{{subfiltro.id}}" class="form-check-input" type="checkbox" ng-model="subfiltro.checkedOpcion" ng-checked="subfiltro.checkedOpcion" />
-                                            <span for="subfiltrotext-{{subfiltro.id}}" class="dropdown-item item-text-filtro" href="#" ng-bind="subfiltro.descripcion"></span>
-                                        </label>
-                                    </li>
-                                </ul>
+                                <ul ng-if="filtro.children !== undefined &&  filtro.children.length > 0" ng-include="'filtroFalla.html'" class="dropdown-menu"></ul>
                             </li>
                         </ul>
                     </div>
@@ -188,7 +181,7 @@
     <jsp:include page="modals/modalDetalleIncidencia.jsp"></jsp:include>
 
 </body>
-
+<jsp:include page="../../generic/filtros/filtros.jsp"></jsp:include>
 <!-- LIBRERIAS -->
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=${googlkeyattrvar['gkeactok']}&libraries=geometry,places"></script>
 <script src="${pageContext.request.contextPath}/resources/libraries/angularjs/js/angular.min.js"></script>

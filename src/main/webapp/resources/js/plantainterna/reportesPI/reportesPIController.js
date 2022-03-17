@@ -20,7 +20,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 	$scope.nfiltrogeografiaSeguimientoDiario = "";
 	$scope.nfiltrointervencionesSeguimientoDiario = "";
 	$scope.nfiltroestatuspendienteSeguimientoDiario = "";
-	$scope.permisosConfigUser = [];
+	$scope.permisosConfigUser;
 	$scope.configPermisoAccionConsultaReporteSeguimiento = false;
 	$scope.configPermisoAccionDescargaReporteSeguimiento = false;
 	$scope.configPermisoAccionConsultaReporteCierre = false;
@@ -184,61 +184,74 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 			reportesPIService.consultarConfiguracionDespachoDespacho({ "moduloAccionesUsuario": "moduloReportesPI" })
 		]).then(function (results) {
 			let resultConf = results[3].data.result
-			if (resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
-				let llavesResult = results[3].data.result.MODULO_ACCIONES_USUARIO.llaves;
+			if (results[1].data !== undefined) {
+				if (results[1].data.respuesta) {
+					if (results[1].data.result) {
+						if (resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
+							let llavesResult = results[3].data.result.MODULO_ACCIONES_USUARIO.llaves;
 
-				$scope.nfiltrogeografiaSeguimientoDiario = llavesResult.N_FILTRO_GEOGRAFIA_SEGUIMIENTODIARIO;
-				$scope.nfiltrointervencionesSeguimientoDiario = llavesResult.N_FILTRO_INTERVENCIONES_SEGUIMIENTODIARIO;
-				$scope.nfiltroestatuspendienteSeguimientoDiario = llavesResult.N_ESTATUS_PENDIENTES_SEGUIMIENTODIARIO;
-				$scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
+							$scope.nfiltrogeografiaSeguimientoDiario = llavesResult.N_FILTRO_GEOGRAFIA_SEGUIMIENTODIARIO;
+							$scope.nfiltrointervencionesSeguimientoDiario = llavesResult.N_FILTRO_INTERVENCIONES_SEGUIMIENTODIARIO;
+							$scope.nfiltroestatuspendienteSeguimientoDiario = llavesResult.N_ESTATUS_PENDIENTES_SEGUIMIENTODIARIO;
+							$scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
 
-				validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
-				validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
+							validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
+							validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
 
-				if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
-					$scope.configPermisoAccionConsultaReporteSeguimiento = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaSeguimientoDiario" })[0] != undefined);
-					$scope.configPermisoAccionDescargaReporteSeguimiento = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaSeguimientoDiario" })[0] != undefined);
-					$scope.configPermisoAccionConsultaReporteCierre = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaCierreDiario" })[0] != undefined);
-					$scope.configPermisoAccionDescargaReporteCierre = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaCierreDiario" })[0] != undefined);
-					$scope.configPermisoAccionConsultaReporteAsignadas = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaAsignadasCompensacion" })[0] != undefined);
-					$scope.configPermisoAccionDescargaReporteAsignadas = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaAsignadasCompensacion" })[0] != undefined);
-				}
+							if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
+								$scope.configPermisoAccionConsultaReporteSeguimiento = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaSeguimientoDiario" })[0] != undefined);
+								$scope.configPermisoAccionDescargaReporteSeguimiento = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaSeguimientoDiario" })[0] != undefined);
+								$scope.configPermisoAccionConsultaReporteCierre = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaCierreDiario" })[0] != undefined);
+								$scope.configPermisoAccionDescargaReporteCierre = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaCierreDiario" })[0] != undefined);
+								$scope.configPermisoAccionConsultaReporteAsignadas = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaAsignadasCompensacion" })[0] != undefined);
+								$scope.configPermisoAccionDescargaReporteAsignadas = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaAsignadasCompensacion" })[0] != undefined);
+							}
 
-				let firstNav = '';
+							let firstNav = '';
 
-				if ($scope.configPermisoAccionConsultaReporteSeguimiento) {
-					if (firstNav === '') {
-						firstNav = 'seguimientoDiario-tab';
-						$scope.tipoReporte = 'seguimiento';
+							if ($scope.configPermisoAccionConsultaReporteSeguimiento) {
+								if (firstNav === '') {
+									firstNav = 'seguimientoDiario-tab';
+									$scope.tipoReporte = 'seguimiento';
+								}
+							}
+
+							if ($scope.configPermisoAccionConsultaReporteCierre) {
+								if (firstNav === '') {
+									firstNav = 'cierreDiario-tab';
+									$scope.tipoReporte = 'cierre';
+								}
+							}
+
+							if ($scope.configPermisoAccionConsultaReporteAsignadas) {
+								if (firstNav === '') {
+									firstNav = 'asignadasCompensacion-tab';
+									$scope.tipoReporte = 'asignadas';
+								}
+							}
+
+							if (firstNav === '') {
+								$scope.permisosConfigUser.permisos = [];
+							}
+							if ($scope.permisosConfigUser.permisos.length > 0) {
+								setTimeout(function () {
+									$('#' + firstNav).click();
+									$scope.cambiaReporte($scope.tipoReporte, false, firstNav.split('-'[0]));
+								}, 300)
+							}
+						}
+					} else {
+						toastr.warning('No se encontraron datos para la configuraci\u00F3n');
 					}
+				} else {
+					toastr.warning(results[1].data.resultDescripcion);
 				}
-
-				if ($scope.configPermisoAccionConsultaReporteCierre) {
-					if (firstNav === '') {
-						firstNav = 'cierreDiario-tab';
-						$scope.tipoReporte = 'cierre';
-					}
-				}
-
-				if ($scope.configPermisoAccionConsultaReporteAsignadas) {
-					if (firstNav === '') {
-						firstNav = 'asignadasCompensacion-tab';
-						$scope.tipoReporte = 'asignadas';
-					}
-				}
-
-				if (firstNav === '') {
-					$scope.permisosConfigUser.permisos = [];
-				}
-				if ($scope.permisosConfigUser.permisos.length > 0) {
-					setTimeout(function () {
-						$('#' + firstNav).click();
-						$scope.cambiaReporte($scope.tipoReporte, false, firstNav.split('-'[0]));
-					}, 300)
-				}
+			} else {
+				toastr.error('No se encontraron datos para la configuraci\u00F3n');
 			}
 
-			//    console.log("entra de cualquier manera")
+			$("#idBody").removeAttr("style");
+
 			if (results[1].data !== undefined) {
 				if (results[1].data.respuesta) {
 					if (results[1].data.result) {
@@ -253,6 +266,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 			} else {
 				toastr.error('Ha ocurrido un error en la consulta de tipo ordenes');
 			}
+
 			if (results[2].data !== undefined) {
 				if (results[2].data.respuesta) {
 					if (results[2].data.result) {
@@ -337,11 +351,6 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 			}
 
 		}).catch(err => handleError(err));
-	}
-
-
-	$scope.cargaArbol = function (type, geografia) {
-
 	}
 
 	$scope.conversionAnidadaRecursiva = function (array, nivelInit, maxNivel) {
@@ -583,9 +592,9 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 					}
 				},
 
-				"columns": [null, null, null, null,null, null, null, null, null, null, null, null, null, null, null],
+				"columns": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
 				"language": idioma_espanol_not_font
-				
+
 			});
 
 			if (!reporteSeguimientoTable) {
@@ -805,9 +814,9 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 					}
 				},
 
-				"columns": [null, null, null, null, null,null,null, null, null, null, null, null, null, null, null, null, null],
+				"columns": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
 				"language": idioma_espanol_not_font
-				
+
 			});
 
 			if (!reporteCierreTable) {
@@ -1030,9 +1039,9 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 					}
 				},
 
-				"columns": [null, null, null, null, null,null,null, null, null, null, null, null, null, null],
+				"columns": [null, null, null, null, null, null, null, null, null, null, null, null, null, null],
 				"language": idioma_espanol_not_font
-				
+
 			});
 
 			if (!reporteAsignadasTable) {
@@ -1150,7 +1159,6 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 	$("#li-reporte-navbar").addClass('active')
 
 	angular.element(document).ready(function () {
-		$("#idBody").removeAttr("style");
 		$("#moduloReportesPI").addClass('active')
 		$("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
 	});
