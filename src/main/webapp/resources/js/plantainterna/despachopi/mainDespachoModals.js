@@ -88,8 +88,6 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         console.log($scope.permisosModal )
         console.log($scope.detalleOtAsignadaSelected)
         $scope.estatusModals = 'ASIGNADA'
-        
-
     }
 
     $scope.idOtSelect = "";
@@ -116,14 +114,14 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 "idOT": 1234567,
                 "idFlujo": 12
             };
-        
+//        
 //        let paramsDetalleOtPe2 = {
 //                "idOT": 222120,
 //                "idFlujo": 10
 //            };
 //        
 //        let paramsDetalleOtPe3 = {
-//                "idOT": 493709,
+//                "idOT": 481649,
 //                "idFlujo": 11
 //            };
 
@@ -131,6 +129,8 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             mainDespachoService.consultarDetalleOtDespacho(params),
             mainDespachoService.consultarDetalleTecnicoOt(params),
             mainDespachoService.consultaDetalleOtPe(paramsDetalleOtPe)
+//            mainDespachoService.consultaDetalleOtPe(paramsDetalleOtPe2)
+//            mainDespachoService.consultaDetalleOtPe(paramsDetalleOtPe3)
         ]).then(function (results) {
             swal.close()
             if (results[0].data !== undefined) {
@@ -138,7 +138,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                     if (results[0].data.result) {
                         if (results[0].data.result.orden) {
                             $scope.infoOtDetalle = results[0].data.result.orden
-
+                            $("#modalDetalleOT").modal({ backdrop: 'static', keyboard: false });
                             $("#modalDetalleOT").modal('show')
                             setTimeout(function(){ 
                                 document.getElementsByClassName('permiso-accion-modal')[0].click();
@@ -181,11 +181,6 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                         	$scope.infoDetalleOtPe.subTipoOrden = $scope.respaldoTipoOrdenArray.find(e=>{return e.id===$scope.infoDetalleOtPe.idSubTipoOrden});
                         	$scope.infoDetalleOtPe.estado = $scope.respaldoStatusArray.find(e=>{return e.id===$scope.infoDetalleOtPe.idEstado});
                         	$scope.infoDetalleOtPe.estatus = $scope.respaldoStatusArray.find(e=>{return e.id===$scope.infoDetalleOtPe.idEstatus});
-//                        	console.log( $scope.respaldoTipoOrdenArray.find(e=>{return e.id===65}) ) ;
-//                        	console.log( "Tipo orden --> ", $scope.infoDetalleOtPe.tipoOrden );
-//                        	console.log( "Subtipo --> ", $scope.infoDetalleOtPe.subTipoOrden );
-//                        	console.log( "Estado --> ", $scope.infoDetalleOtPe.estado );
-//                        	console.log( "Estatus --> ", $scope.infoDetalleOtPe.estatus );
                         	
                         	if($scope.infoDetalleOtPe.detalleCorteMasivo !== undefined){
                         		$scope.tabDetalleCorteMasivo = true;
@@ -194,9 +189,92 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                         	}else if($scope.infoDetalleOtPe.detalleInspeccion !== undefined){
                         	    $scope.tabDetalleInspector = true;
                         	}
-                        	console.log("CorteMasivo " + $scope.tabDetalleCorteMasivo);
-                        	console.log("Detencion " + $scope.tabDetalleDetencion);
-                        	console.log("Inspector " + $scope.tabDetalleInspector);
+                        	
+//############################################ALTERAR ARREGLO PARA MAS FALLAS #####################################################################
+                        	
+//                        	--------------------------------INSPECTOR--------------------------------
+//                        	--------------------------------INSPECTOR--------------------------------
+//                        	$scope.infoDetalleOtPe.detalleInspeccion.fallas[0].imagenes[0].url = "https://firebasestorage.googleapis.com/v0/b/totalplay-ffm-core-dev.appspot.com/o/usuarios%2Fmex%2F15015902%2FfotoPerfil.jpg?alt=media&token=uuidv4()";
+//                        	$scope.infoDetalleOtPe.detalleInspeccion.fallas[0].imagenes[1].url = "https://cdn.cienradios.com/wp-content/uploads/sites/2/2019/12/trabajador-escalera-640x415.gif";
+//                        	var fallaExtra2 = angular.copy($scope.infoDetalleOtPe.detalleInspeccion.fallas[0]);
+//                        	$scope.infoDetalleOtPe.detalleInspeccion.fallas[0].imagenes.push({nombre:"F3", url: "https://i.ytimg.com/vi/GgQ9YRx9r-o/maxresdefault.jpg"});
+//                        	$scope.infoDetalleOtPe.detalleInspeccion.fallas[0].imagenes.push({nombre:"F4", url: "https://pbs.twimg.com/media/EpDvjEZW8AIHqRv.jpg"});
+//                        	$scope.infoDetalleOtPe.detalleInspeccion.fallas[0].imagenes.push({nombre:"F5", url: "https://cimacnoticias.com.mx/wp-content/uploads/2020/04/FOTOJOS1OK.jpg"});
+//                        	
+//                        	fallaExtra2.idDetallefalla = 200;
+//                        	fallaExtra2.descripcionDetalleFalla = "Falla duplicada";
+//                        	
+//                        	var fallaExtra3 = angular.copy($scope.infoDetalleOtPe.detalleInspeccion.fallas[0]);
+//                        	fallaExtra3.idDetallefalla = 300;
+//                        	fallaExtra3.descripcionDetalleFalla = "Falla triplicada";
+//                        	fallaExtra3.imagenes.splice(3);
+//                        	
+//                        	var fallaExtra4 = angular.copy($scope.infoDetalleOtPe.detalleInspeccion.fallas[0]);
+//                        	fallaExtra4.idDetallefalla = 400;
+//                        	fallaExtra4.descripcionDetalleFalla = "Falla cuadruple";
+//                        	fallaExtra4.imagenes.splice(4);
+//                        	
+//                        	console.log( "Fallas -> ", $scope.infoDetalleOtPe.detalleInspeccion.fallas );
+//                        	$scope.infoDetalleOtPe.detalleInspeccion.fallas.push(fallaExtra2);
+//                        	$scope.infoDetalleOtPe.detalleInspeccion.fallas.push(fallaExtra3);
+//                        	$scope.infoDetalleOtPe.detalleInspeccion.fallas.push(fallaExtra4);
+//                        	--------------------------------INSPECTOR--------------------------------
+//                        	--------------------------------INSPECTOR--------------------------------
+                        	
+//                        	--------------------------------DETENCION--------------------------------
+//                        	--------------------------------DETENCION--------------------------------
+//                        	$scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter = [];
+//                        	$scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter.push({"candado": "candado 1","estatus": "2","evidencias": [{"nombre": "nombre", "url": "https://cadenanoticias.com/assets/article/00122895/20211002_lVEOusxIi7.jpeg"},{"nombre": "nombre", "url": "https://ru83nc4.files.wordpress.com/2016/07/falla-en-la-red.jpg"},{"nombre": "nombre", "url": "https://queplan.mx/sites/default/files/inline-images/modems-totalplay.jpg"}],"idGsa": "IDGSA1","numeroCuenta": "numeroCuenta","puertoAsiganado": "1","puertosOcupados": "1","puertosTotales": "1","qr": "qr"},{"candado": "candado 2","estatus": "2","evidencias": [{"nombre": "nombre", "url": "https://pbs.twimg.com/media/EtqcHubVEAAiA5u.jpg"}],"idGsa": "IDGSA2","numeroCuenta": "numeroCuenta 2","puertoAsiganado": "2","puertosOcupados": "2","puertosTotales": "2","qr": "qr"},{"candado": "candado3","estatus": "2","evidencias": [{"nombre": "nombre", "url": "https://pbs.twimg.com/media/Ej_3pquXcAE5pgu.jpg"},{"nombre": "nombre", "url": "https://static.promodescuentos.com/pepperpdimages/threads/content/pU63G/501850.jpg"},{"nombre": "nombre", "url": "https://muralchiapas.com/images/fotonoticias/cable.jpg"},{"nombre": "nombre", "url": "https://3.bp.blogspot.com/-nJnnmzBgZAU/XN5FKZ3sEBI/AAAAAAAADIw/QST65Nh1YHgjoVKtPHv1kW1MVIDYUELcACLcBGAs/s1600/WhatsApp%2BImage%2B2019-05-17%2Bat%2B12.21.23%2BAM.jpeg"},{"nombre": "nombre", "url": "https://1.bp.blogspot.com/-LQYkZeZGoN8/XN5FKf-hdSI/AAAAAAAADIo/M2jbbaoNvu8kdEwyWsej-rqZgH9GxiM0gCLcBGAs/s1600/WhatsApp%2BImage%2B2019-05-17%2Bat%2B12.21.42%2BAM.jpeg"}],"idGsa": "IDGSA3","numeroCuenta": "numeroCuenta","puertoAsiganado": "3","puertosOcupados": "3","puertosTotales": "3","qr": "qr"},{"candado": "candado4","estatus": "2","evidencias": [{"nombre": "nombre", "url": "https://i.blogs.es/3871d1/velocidad-internet-telephono/450_1000.jpg"},{"nombre": "nombre", "url": "https://precoinprevencion.com/wp-content/uploads/2017/03/IMG_0055.jpg"}],"idGsa": "IDGSA4","numeroCuenta": "numeroCuenta","puertoAsiganado": "4","puertosOcupados": "4","puertosTotales": "4","qr": "qr"});
+//                        	$scope.infoDetalleOtPe.detalleDetencion.push({"claveCliente": "TEST","detalleSplitter": [{"candado": "candado 5","estatus": "2","evidencias": [{"nombre": "nombre", "url": "https://i.eldiario.com.ec/fotos-manabi-ecuador/2017/06/20170628040049_retiran-postes-sin-uso-y-daa-ados.jpg"},{"nombre": "nombre", "url": "https://www.elsoldeirapuato.com.mx/policiaca/v5nynp-camion-derriba-postes-1.jpg/ALTERNATES/LANDSCAPE_768/Cami%C3%B3n-derriba-postes%20%20(1).jpg"},{"nombre": "nombre", "url": "https://images.freeimages.com/images/large-previews/a89/telephone-pole-2-1416522.jpg"},{"nombre": "nombre", "url": "https://previews.123rf.com/images/angelofoto/angelofoto1208/angelofoto120800018/14871321-viejo-poste-de-tel%C3%A9fono-de-madera-contra-un-gradiente-de-cielo-azul.jpg"},{"nombre": "nombre", "url": "https://c8.alamy.com/compes/2ddbh61/no-hay-pelicula-no-hay-video-no-hay-television-no-hay-documental-los-postes-de-telefono-danados-por-el-huracan-katrina-se-lluran-precariamente-sobre-la-calle-principal-de-la-place-louisiana-el-lunes-29-de-agosto-de-2005-foto-de-khampha-bouaphanh-fort-worth-star-telegram-krt-abacapress-com-2ddbh61.jpg"},{"nombre": "nombre", "url": "https://www.eloccidental.com.mx/policiaca/5zencz-poste-c5-danado.jpg/ALTERNATES/LANDSCAPE_1140/Poste%20C5%20da%C3%B1ado.jpg"}],"idGsa": "IDGSA5","numeroCuenta": "numeroCuenta 5","puertoAsiganado": "5","puertosOcupados": "5","puertosTotales": "5","qr": "qr"},{"candado": "candado 6","estatus": "2","evidencias": [{"nombre": "nombre", "url": "https://img.gruporeforma.com/imagenes/960x640/5/416/4415795.jpg"},{"nombre": "nombre", "url": ""},{"nombre": "nombre", "url": "https://img.gruporeforma.com/imagenes/960x640/5/416/44157955555555555555555.jpg"},{"nombre": "nombre", "url": "https://i.ytimg.com/vi/GgQ9YRx9r-o/maxresdefault.jpg"},{"nombre": "nombre", "url": "https://img.gruporeforma.com/imagenes/960x640/5/416/44157955555555555555555.jpg"}],"idGsa": "IDGSA6","numeroCuenta": "numeroCuenta 6","puertoAsiganado": "6","puertosOcupados": "6","puertosTotales": "6","qr": "qr"}],"fallaReportada": "Reparacion Poste","fechaReporte": "2022-03-018 13:34","folioSistema": "Folio Sis 002-86060","idOrden": 86060,"nombreEmpleadoReporta": "Reynel Flores Brito","subFallaReportada": "Reparación y Etiquetado","unidadNegocio": "Residencial"});
+                        	
+                        	
+//                        	$scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter[0].evidencias[0].url = "https://cadenanoticias.com/assets/article/00122895/20211002_lVEOusxIi7.jpeg";
+//                        	$scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter[0].evidencias[1].url = "https://ru83nc4.files.wordpress.com/2016/07/falla-en-la-red.jpg";
+//                        	$scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter[0].evidencias[2].url = "https://queplan.mx/sites/default/files/inline-images/modems-totalplay.jpg";
+//                        	
+//                        	var detalle2 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[0]);
+//                        	detalle2.idOrden = 200;
+//                        	detalle2.detalleSplitter[0].idGsa = "IdGsa200";
+//                        	$scope.infoDetalleOtPe.detalleDetencion.push(detalle2);
+//                        	
+//                        	var detalle3 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[0]);
+//                        	detalle3.idOrden = 300;
+//                        	detalle3.detalleSplitter[0].idGsa = "IdGsa300";
+//                        	$scope.infoDetalleOtPe.detalleDetencion.push(detalle3);
+//                        	
+//                        	var spliter2 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter[0]);
+//                        	spliter2.idGsa = "idSplitterGSA_v2"
+//                        	$scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter.push(spliter2);
+//                        	
+//                        	var spliter3 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter[0]);
+//                        	spliter3.idGsa = "idSplitterGSA_v3"
+//                        	$scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter.push(spliter3);
+//                        	
+//                        	var spliter2_2 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter[0]);
+//                        	spliter2_2.idGsa = "IdGsa200_v2"
+//                        	$scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter.push(spliter2_2);
+//                        	
+//                        	var spliter2_3 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter[0]);
+//                        	spliter2_3.idGsa = "IdGsa200_v3"
+//                        	$scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter.push(spliter2_3);
+//                        	
+//                        	var spliter2_4 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter[0]);
+//                        	spliter2_4.idGsa = "IdGsa200_v4"
+//                        	$scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter.push(spliter2_4);
+//                        	
+//                        	var spliter2_5 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter[0]);
+//                        	spliter2_5.idGsa = "IdGsa200_v5"
+//                        	$scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter.push(spliter2_5);
+                        	
+//                        	$scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter[0].evidencias[0].url = "https://cadenanoticias.com/assets/article/00122895/20211002_lVEOusxIi7.jpeg";
+//                        	$scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter[0].evidencias[1].url = "https://ru83nc4.files.wordpress.com/2016/07/falla-en-la-red.jpg";
+//                        	$scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter[0].evidencias[2].url = "https://queplan.mx/sites/default/files/inline-images/modems-totalplay.jpg";
+                        	
+//                        	console.log("DETENCION---> ", $scope.infoDetalleOtPe.detalleDetencion);
+//                        	--------------------------------DETENCION--------------------------------
+//                        	--------------------------------DETENCION--------------------------------
+//############################################ALTERAR ARREGLO PARA MAS FALLAS #####################################################################
+
                         } else {
                             toastr.info(results[2].data.result.mensaje);
                         }
@@ -1644,6 +1722,29 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     $scope.regresarVistaCambioDireccion = function() {
     	$scope.verModDireccionOT = false;
     }
+    
+    $scope.cambiarIndicadorBtnImg = function(falla,img) {
+    	$(".btnImgPorFalla"+falla).removeClass("btnControlImgsSinOpacidad");
+		$(".btnImgPorFalla"+falla).addClass("btnControlImgsOpacidad");
+		$("#btnIndicadorIndividual"+falla+img).addClass("btnControlImgsSinOpacidad");
+	}
+    
+    $scope.cambiarPagTablaSpliters = function(falla, splitter, index) {
+    	$(".filasTablaSpliters"+falla).addClass("ocultarFilaTablaSplitersFallaDetalleDetencion");
+    	$("#filaTablaSplitersFallaDetalleDetencion"+falla+splitter).removeClass("ocultarFilaTablaSplitersFallaDetalleDetencion");
+    	$(".btnPaginadorTablaSpliters"+falla).removeClass("btnPaginadorTablaSplitersActive");
+    	$(".btnPaginadorTablaSpliters"+falla).addClass("btnPaginadorTablaSplitersNoActive");
+    	$("#btnPaginadorTablaSpliters"+falla+splitter+index).removeClass("btnPaginadorTablaSplitersNoActive");
+    	$("#btnPaginadorTablaSpliters"+falla+splitter+index).addClass("btnPaginadorTablaSplitersActive");
+	}
+    
+    $scope.cerrarModalDetalleOtPe = function() {
+    	$("#modalDetalleOT").modal("hide");
+    	
+    	$scope.tabDetalleCorteMasivo = false;
+        $scope.tabDetalleDetencion = false;
+        $scope.tabDetalleInspector = false;
+	}
     
 }
 /**

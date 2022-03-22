@@ -2642,6 +2642,10 @@ i.fas.fa-lock.iconoAsignacionOtPermiso {
     z-index: 1051 !important; 
 }
 
+.ocultarTelefonoOtPendiente{
+	visibility: hidden;
+}
+
 .fullSizeCard {
   max-width: 298px;
 }

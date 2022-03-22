@@ -561,7 +561,7 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                                                         <span class="content-ciudadotpend">${otpendiente.direccion}</span>
                                                     </div>                                             
                                                 </div>
-                                                <div class="info-content-otpendeinte">
+                                                <div class="info-content-otpendeinte ${otpendiente.telefono ? '' : 'ocultarTelefonoOtPendiente'}">
                                                     <div class="line-content-infootpend">
                                                         <i class="fas fa-phone telefono-icon-pendiente"></i>
                                                         <span class="telefono-text-otpendiente" >${otpendiente.telefono}</span>
