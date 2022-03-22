@@ -2641,3 +2641,13 @@ i.fas.fa-lock.iconoAsignacionOtPermiso {
 .pac-container { 
     z-index: 1051 !important; 
 }
+
+.fullSizeCard {
+  max-width: 300px;
+}
+
+@media screen and (min-width: 1366px){
+  .fullSizeCard {
+    max-width: 458px;
+  }
+}

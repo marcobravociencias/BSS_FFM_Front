@@ -517,7 +517,7 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                                 <tr> 
                                     <td>  
                                         <div id="idotpendiente${otpendiente.idOrden}" 
-                                               tag-id-ot="${otpendiente.idOrden}"  class="${(otpendiente.ordenConfirmada && $scope.accionAsignacionOtPermiso) ? 'fc-event' : "fc-event-noasignacion"}  ot-pendiente-event ${otpendiente.ordenConfirmada ? "efecto ui-draggable ui-draggable-handle" : ""} ">
+                                               tag-id-ot="${otpendiente.idOrden}"  class="fullSizeCard ${(otpendiente.ordenConfirmada && $scope.accionAsignacionOtPermiso) ? 'fc-event' : "fc-event-noasignacion"}  ot-pendiente-event ${otpendiente.ordenConfirmada ? "efecto ui-draggable ui-draggable-handle" : ""} ">
                                             <div class="header-otpendeinte">
                                                 <div class="top-title-ot">
                                                     <div class="content-top-element bars-content">
