@@ -555,3 +555,19 @@ a.ui-corner-all {
 .jstree-proton .jstree-wholerow-hovered .jstree-anchor.jstree-hovered{
     color: #fff !important;
 }
+
+.jstree-disabled{
+  cursor: not-allowed;
+}
+
+.jstree-themeicon{
+  display: none;
+}
+
+.fa-instagram {
+  display: none !important;
+}
+
+.cursorEfect{
+  cursor: pointer;
+}

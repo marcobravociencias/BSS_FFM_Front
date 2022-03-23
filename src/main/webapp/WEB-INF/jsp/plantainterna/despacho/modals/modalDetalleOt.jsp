@@ -5,8 +5,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Detalle de la orden {{}} </h5>
-                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close">
-                </button>
+                <a class="btnCerrarModalDetalleOrdenOt" href="#" ng-click="cerrarModalDetalleOtPe()"></a>
             </div>
             <div class="modal-body">
                 <div class="container">
@@ -14,6 +13,22 @@
                         <div style="padding-left: 0;" class="col-2">
                             <div class="nav flex-column nav-tabs text-center" id="v-tabs-tab-detalle-ot" role="tablist"
                                 aria-orientation="vertical">
+                                
+                                <a ng-show="tabDetalleCorteMasivo" class="nav-link" id="v-tabs-consulta-detalle-corte-masivo-tab" data-mdb-toggle="tab" 
+									href="#v-tabs-consulta-detalle-corte-masivo" role="tab" aria-controls="v-tabs-consulta-detalle-corte-masivo-tab" 
+									aria-selected="false">Detalle corte masivo</a>
+									
+								<a ng-show=tabDetalleDetencion class="nav-link" id="v-tabs-consulta-info-gral-ot-detalle-detencion-tab" data-mdb-toggle="tab" 
+									href="#v-tabs-consulta-info-gral-ot-detalle-detencion" role="tab" aria-controls="v-tabs-consulta-info-gral-ot-detalle-detencion-tab" 
+									aria-selected="false">Informaci&oacute;n OT</a>
+								<a ng-show=tabDetalleDetencion class="nav-link" id="v-tabs-consulta-detalle-detencion-tab" data-mdb-toggle="tab" 
+									href="#v-tabs-consulta-detalle-detencion" role="tab" aria-controls="v-tabs-consulta-detalle-detencion-tab" 
+									aria-selected="false">Detalle detenci&oacute;n</a>
+									
+								<a ng-show="tabDetalleInspector" class="nav-link" id="v-tabs-consulta-detalle-inspector-tab" data-mdb-toggle="tab" 
+									href="#v-tabs-consulta-detalle-inspector" role="tab" aria-controls="v-tabs-consulta-detalle-inspector-tab" 
+									aria-selected="false">Detalle inspector</a>
+                                
                                 <a class="nav-link active" id="v-tabs-consulta-detalleot-tab" data-mdb-toggle="tab"
                                     href="#v-tabs-consulta-detalleot" role="tab"
                                     aria-controls="v-tabs-consulta-detalleot-tab"
@@ -43,18 +58,6 @@
                                     class="nav-link" id="v-tabs-consulta-cambio-direccion-tab" data-mdb-toggle="tab"
                                     href="#v-tabs-consulta-cambio-direccion" ng-click="verMapaCambioDireccion(infoOtDetalle.direccion.latitud, infoOtDetalle.direccion.longitud)" role="tab"
                                     aria-controls="v-tabs-consulta-cambio-direccion-tab" aria-selected="false">Cambio direcci&oacute;n</a>
-                                    
-								<a ng-show="tabDetalleCorteMasivo" class="nav-link" id="v-tabs-consulta-detalle-corte-masivo-tab" data-mdb-toggle="tab" 
-									href="#v-tabs-consulta-detalle-corte-masivo" role="tab" aria-controls="v-tabs-consulta-detalle-corte-masivo-tab" 
-									aria-selected="false">Detalle corte masivo</a>
-								<a ng-show=tabDetalleDetencion class="nav-link" id="v-tabs-consulta-detalle-detencion-tab" data-mdb-toggle="tab" 
-									href="#v-tabs-consulta-detalle-detencion" role="tab" aria-controls="v-tabs-consulta-detalle-detencion-tab" 
-									aria-selected="false">Detalle detenci&oacute;n</a>
-								<a ng-show="tabDetalleInspector" class="nav-link" id="v-tabs-consulta-detalle-inspector-tab" data-mdb-toggle="tab" 
-									href="#v-tabs-consulta-detalle-inspector" role="tab" aria-controls="v-tabs-consulta-detalle-inspector-tab" 
-									aria-selected="false">Detalle inspector</a>
-								
-								
                             </div>
                         </div>
                         <div class="col-10">
@@ -1445,182 +1448,8 @@
                                 <div ng-show="permisosModal.indexOf('tabCambioDireccion') !== -1"
                                     class="tab-pane fade" id="v-tabs-consulta-cambio-direccion" role="tabpanel"
                                     aria-labelledby="v-tabs-consulta-cambio-direccion-tab">
-                                    <div class="row" ng-show="!verModDireccionOT">
-                                        <div class="col-md-6">
-                                            <div class="container-fluid vehiculo-content">
-                                                <div class="container-text-title-detalle">
-                                                	<span class="text-tile-vehiculo">Nombre cuenta</span>
-                                                </div>
-                                                <div class="container-text-content-detalle">
-                                                	<span class="text-content-vehiculo" title="{{infoOtDetalle.idOrden}}" ng-bind="infoOtDetalle.claveCliente || 'Sin dato'"></span>
-                                                </div>
-                                            </div>
-                                            <div class="container-fluid vehiculo-content">
-                                                <div class="container-text-title-detalle">
-                                                	<span class="text-tile-vehiculo">N&uacute;mero exterior</span>
-                                                </div>
-                                                <div class="container-text-content-detalle">
-                                                	<span class="text-content-vehiculo" title="{{infoOtDetalle.idOrden}}" ng-bind="infoOtDetalle.direccion.numeroExterior || 'Sin dato'"></span>
-                                                </div>
-                                            </div>
-                                            <div class="container-fluid vehiculo-content">
-                                                <div class="container-text-title-detalle">
-                                                	<span class="text-tile-vehiculo">Entre calles</span>
-                                                </div>
-                                                <div class="container-text-content-detalle">
-                                                	<span class="text-content-vehiculo" title="{{infoOtDetalle.idOrden}}" ng-bind="infoOtDetalle.direccion.entreCalles || 'Sin dato'"></span>
-                                                </div>
-                                            </div>
-                                            <div class="container-fluid vehiculo-content">
-                                                <div class="container-text-title-detalle">
-                                                	<span class="text-tile-vehiculo">Colonia</span>
-                                                </div>
-                                                <div class="container-text-content-detalle">
-                                                	<span class="text-content-vehiculo" title="{{infoOtDetalle.idOrden}}" ng-bind="infoOtDetalle.direccion.colonia || 'Sin dato'"></span>
-                                                </div>
-                                            </div>
-                                            <div class="container-fluid vehiculo-content">
-                                                <div class="container-text-title-detalle">
-                                                	<span class="text-tile-vehiculo">Municipio</span>
-                                                </div>
-                                                <div class="container-text-content-detalle">
-                                                	<span class="text-content-vehiculo" title="{{infoOtDetalle.idOrden}}" ng-bind="infoOtDetalle.direccion.municipio || 'Sin dato'"></span>
-                                                </div>
-                                            </div>
-                                            <div class="container-fluid vehiculo-content">
-                                                <div class="container-text-title-detalle">
-                                                	<span class="text-tile-vehiculo">C&oacute;digo postal</span>
-                                                </div>
-                                                <div class="container-text-content-detalle">
-                                                	<span class="text-content-vehiculo" title="{{infoOtDetalle.idOrden}}" ng-bind="infoOtDetalle.direccion.codigoPostal || 'Sin dato'"></span>
-                                                </div>
-                                            </div>
-                                            <div class="container-fluid vehiculo-content">
-                                                <div class="container-text-title-detalle">
-                                                	<span class="text-tile-vehiculo">Longitud</span>
-                                                </div>
-                                                <div class="container-text-content-detalle">
-                                                	<span class="text-content-vehiculo" title="{{infoOtDetalle.idOrden}}" ng-bind="infoOtDetalle.direccion.longitud || 'Sin dato'"></span>
-                                                </div>
-                                            </div>
-                                    	</div>
-                                    	<div class="col-md-6">
-                                    		<div class="container-fluid vehiculo-content">
-                                                <div class="container-text-title-detalle">
-                                                	<span class="text-tile-vehiculo">Calle</span>
-                                                </div>
-                                                <div class="container-text-content-detalle">
-                                                	<span class="text-content-vehiculo" title="{{infoOtDetalle.idOrden}}" ng-bind="infoOtDetalle.direccion.calle || 'Sin dato'"></span>
-                                                </div>
-                                            </div>
-                                            <div class="container-fluid vehiculo-content">
-                                                <div class="container-text-title-detalle">
-                                                	<span class="text-tile-vehiculo">N&uacute;mero interior</span>
-                                                </div>
-                                                <div class="container-text-content-detalle">
-                                                	<span class="text-content-vehiculo" title="{{infoOtDetalle.idOrden}}" ng-bind="infoOtDetalle.direccion.numeroInterior || 'Sin dato'"></span>
-                                                </div>
-                                            </div>
-                                            <div class="container-fluid vehiculo-content">
-                                                <div class="container-text-title-detalle">
-                                                	<span class="text-tile-vehiculo">Referencia</span>
-                                                </div>
-                                                <div class="container-text-content-detalle">
-                                                	<span class="text-content-vehiculo" title="{{infoOtDetalle.idOrden}}" ng-bind="infoOtDetalle.direccion.referencias || 'Sin dato'"></span>
-                                                </div>
-                                            </div>
-                                            <div class="container-fluid vehiculo-content">
-                                                <div class="container-text-title-detalle">
-                                                	<span class="text-tile-vehiculo">Ciudad</span>
-                                                </div>
-                                                <div class="container-text-content-detalle">
-                                                	<span class="text-content-vehiculo" title="{{infoOtDetalle.idOrden}}" ng-bind="infoOtDetalle.direccion.ciudad || 'Sin dato'"></span>
-                                                </div>
-                                            </div>
-                                            <div class="container-fluid vehiculo-content">
-                                                <div class="container-text-title-detalle">
-                                                	<span class="text-tile-vehiculo">Estado</span>
-                                                </div>
-                                                <div class="container-text-content-detalle">
-                                                	<span class="text-content-vehiculo" title="{{infoOtDetalle.idOrden}}" ng-bind="infoOtDetalle.direccion.estado || 'Sin dato'"></span>
-                                                </div>
-                                            </div>
-                                            <div class="container-fluid vehiculo-content">
-                                                <div class="container-text-title-detalle">
-                                                	<span class="text-tile-vehiculo">Latitud</span>
-                                                </div>
-                                                <div class="container-text-content-detalle">
-                                                	<span class="text-content-vehiculo" title="{{infoOtDetalle.idOrden}}" ng-bind="infoOtDetalle.direccion.latitud || 'Sin dato'"></span>
-                                                </div>
-                                            </div>
-                                            <div class="container-fluid vehiculo-content">
-                                                <div class="container-text-title-detalle">
-                                                	<span class="text-tile-vehiculo"></span>
-                                                </div>
-                                                <div class="container-text-content-detalle">
-                                                	<button id="btnEditarDireccionOT" class="btn btn-sm btn-primary" ng-click="mostrarVistaModificarDireccion(infoOtDetalle.direccion.latitud, infoOtDetalle.direccion.longitud)">Editar</button>
-                                                </div>
-                                            </div>
-                                    	</div>
-                                    </div>
-                                    <div class="row" ng-show="!verModDireccionOT">
-                                    	<div class="col-md-12">
-                                    		<div id="content-mapa-cambio-direccion"></div>
-                                    	</div>
-                                    </div>
-                                    <div class="row" ng-show="verModDireccionOT">
-                                    	<div class="col-md-8">
-                                    		<input id="txtBuscadorDireccionMap" class="controls" type="text" placeholder="B&uacute;scar lugar en mapa" style="position: absolute !important; left: 0px !important; top: 0px !important;" />
-                                    	</div>
-                                    	<div class="col-md-8">
-                                    		<div id="content-mapa-cambio-direccion-mod"></div>
-                                    	</div>
-                                    	<div class="col-md-4">
-                                    		<div class="row">
-                                    			<div class="col-md-12">
-                                    				<label class="etiquetaCambioDireccion">Latitud</label>
-											        <div class="input-group">
-											        	<label class="txtCambioDireccion">{{latitudModDireccionOt}}</label>
-											        </div>
-                                    			</div>
-                                    			<div class="col-md-12">
-                                    				<label class="etiquetaCambioDireccion">Latitud</label>
-											        <div class="input-group">
-											        	<label class="txtCambioDireccion">{{longitudModDireccionOt}}</label>
-											        </div>
-                                    			</div>
-                                    			<div class="col-md-12">
-                                    				<label class="etiquetaCambioDireccion">C&oacute;digo postal</label>
-											        <div class="input-group">
-											        	<input type="text" class="form-control txtCambioDireccion" ng-model="infoOtDetalle.direccion.codigoPostal" id="">
-											        </div>
-                                    			</div>
-                                    		</div>
-                                    		<div class="row" style="margin-top: 1em;">
-                                    			<div class="col-md-2 offset-6">
-	                                                <button id="btnRegresarVistaCambioDireccion" class="btn btn-sm btn-primary" ng-click="regresarVistaCambioDireccion()"><i class="fas fa-arrow-left"></i></button>
-                                    			</div>
-                                    			<div class="col-md-2 offset-1">
-	                                                <button id="btnCambioDireccionOTMod" class="btn btn-sm btn-primary" ng-click=""><i class="fas fa-save"></i></button>
-                                    			</div>
-                                    		</div>
-                                    	</div>
-                                    </div>
+                                    <jsp:include page="./../contents/div-cambio-direccion-ot.jsp"></jsp:include>
                                 </div>
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
                                 <div ng-show="tabDetalleCorteMasivo" class="tab-pane fade" id="v-tabs-consulta-detalle-corte-masivo" role="tabpanel" 
                                 	aria-labelledby="v-tabs-consulta-detalle-corte-masivo-tab">
                                 	<jsp:include page="./../contents/div-info-general-detalle-ot-pe.jsp"></jsp:include>
@@ -1628,48 +1457,21 @@
                                 	<jsp:include page="./../contents/div-info-detalle-corte-masivo-ot-pe.jsp"></jsp:include>
 								</div>
 								
-								<div ng-show="tabDetalleDetencion" class="tab-pane fade" id="v-tabs-consulta-detalle-detencion" role="tabpanel" 
-                                	aria-labelledby="v-tabs-consulta-detalle-detencion-tab">
+								<div ng-if="tabDetalleDetencion" class="tab-pane fade" id="v-tabs-consulta-info-gral-ot-detalle-detencion" role="tabpanel" 
+                                	aria-labelledby="v-tabs-consulta-info-gral-ot-detalle-detencion-tab">
                                 	<jsp:include page="./../contents/div-info-general-detalle-ot-pe.jsp"></jsp:include>
-                                	<hr />
-                                	<div class="row">
-										<div class="col-md-12">
-											<h5>Informaci&oacute;n detalle detenci&oacute;n</h5>
-										</div>
-									</div>
+								</div>
+								<div ng-if="tabDetalleDetencion" class="tab-pane fade" id="v-tabs-consulta-detalle-detencion" role="tabpanel" 
+                                	aria-labelledby="v-tabs-consulta-detalle-detencion-tab">
+                                	<jsp:include page="./../contents/div-info-detalle-detencion-ot-pe.jsp"></jsp:include>
 								</div>
 								
 								<div ng-show="tabDetalleInspector" class="tab-pane fade" id="v-tabs-consulta-detalle-inspector" role="tabpanel" 
                                 	aria-labelledby="v-tabs-consulta-detalle-inspector-tab">
                                 	<jsp:include page="./../contents/div-info-general-detalle-ot-pe.jsp"></jsp:include>
                                 	<hr />
-                                	<div class="row">
-										<div class="col-md-12">
-											<h5>Informaci&oacute;n detalle inspector</h5>
-										</div>
-									</div>
+                                	<jsp:include page="./../contents/div-info-detalle-inspector-ot-pe.jsp"></jsp:include>
 								</div>
-                                	
-                                	
-                                    
-                                    
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
                             </div>
                         </div>
                     </div>

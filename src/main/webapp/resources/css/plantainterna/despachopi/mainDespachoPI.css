@@ -2641,3 +2641,17 @@ i.fas.fa-lock.iconoAsignacionOtPermiso {
 .pac-container { 
     z-index: 1051 !important; 
 }
+
+.ocultarTelefonoOtPendiente{
+	visibility: hidden;
+}
+
+.fullSizeCard {
+  max-width: 298px;
+}
+
+@media screen and (min-width: 1366px){
+  .fullSizeCard {
+    max-width: 458px;
+  }
+}

@@ -184,9 +184,9 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 			reportesPIService.consultarConfiguracionDespachoDespacho({ "moduloAccionesUsuario": "moduloReportesPI" })
 		]).then(function (results) {
 			let resultConf = results[3].data.result
-			if (results[1].data !== undefined) {
-				if (results[1].data.respuesta) {
-					if (results[1].data.result) {
+			if (results[3].data !== undefined) {
+				if (results[3].data.respuesta) {
+					if (results[3].data.result) {
 						if (resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
 							let llavesResult = results[3].data.result.MODULO_ACCIONES_USUARIO.llaves;
 
@@ -241,10 +241,10 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 							}
 						}
 					} else {
-						toastr.warning('No se encontraron datos para la configuraci\u00F3n');
+						toastr.info('No se encontraron datos para la configuraci\u00F3n');
 					}
 				} else {
-					toastr.warning(results[1].data.resultDescripcion);
+					toastr.warning(results[3].data.resultDescripcion);
 				}
 			} else {
 				toastr.error('No se encontraron datos para la configuraci\u00F3n');
@@ -258,7 +258,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 						$scope.nfiltrointervencionesSeguimientoDiario = $scope.nfiltrointervencionesSeguimientoDiario ? $scope.nfiltrointervencionesSeguimientoDiario : $scope.obtenerNivelUltimoJerarquiaGeneric(results[1].data.result);
 						$scope.filtrosGeneral.tipoOrdenes = $scope.conversionAnidadaRecursiva(results[1].data.result, 1, $scope.nfiltrointervencionesSeguimientoDiario);
 					} else {
-						toastr.warning('No se encontraron  tipo ordenes');
+						toastr.info('No se encontraron  tipo ordenes');
 					}
 				} else {
 					toastr.warning(results[1].data.resultDescripcion);
@@ -338,16 +338,16 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 							}
 
 						} else {
-							toastr.warning('No se encontraron datos para la geografia');
+							toastr.info('No se encontraron datos para la geograf\u00EDa');
 						}
 					} else {
-						toastr.warning('No se encontraron datos para la geografia');
+						toastr.info('No se encontraron datos para la geograf\u00EDa');
 					}
 				} else {
 					toastr.warning(results[0].data.resultDescripcion);
 				}
 			} else {
-				toastr.error('Ha ocurrido un error en la consulta de la geografia');
+				toastr.error('Ha ocurrido un error en la consulta de la geograf\u00EDa');
 			}
 
 		}).catch(err => handleError(err));

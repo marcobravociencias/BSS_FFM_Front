@@ -64,7 +64,8 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
 
         $scope.infoOtDetalle = {}
         $scope.listadoIconosConfig = []
-
+        
+        $scope.nfiltroestatusDisponbiles = ''
         $scope.nfiltrogeografia = ''
         $scope.nfiltrointervenciones = ''
         $scope.estatusCambio = [];
@@ -517,7 +518,7 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                                 <tr> 
                                     <td>  
                                         <div id="idotpendiente${otpendiente.idOrden}" 
-                                               tag-id-ot="${otpendiente.idOrden}"  class="${(otpendiente.ordenConfirmada && $scope.accionAsignacionOtPermiso) ? 'fc-event' : "fc-event-noasignacion"}  ot-pendiente-event ${otpendiente.ordenConfirmada ? "efecto ui-draggable ui-draggable-handle" : ""} ">
+                                               tag-id-ot="${otpendiente.idOrden}"  class="fullSizeCard ${(otpendiente.ordenConfirmada && $scope.accionAsignacionOtPermiso) ? 'fc-event' : "fc-event-noasignacion"}  ot-pendiente-event ${otpendiente.ordenConfirmada ? "efecto ui-draggable ui-draggable-handle" : ""} ">
                                             <div class="header-otpendeinte">
                                                 <div class="top-title-ot">
                                                     <div class="content-top-element bars-content">
@@ -561,7 +562,7 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                                                         <span class="content-ciudadotpend">${otpendiente.direccion}</span>
                                                     </div>                                             
                                                 </div>
-                                                <div class="info-content-otpendeinte">
+                                                <div class="info-content-otpendeinte ${otpendiente.telefono ? '' : 'ocultarTelefonoOtPendiente'}">
                                                     <div class="line-content-infootpend">
                                                         <i class="fas fa-phone telefono-icon-pendiente"></i>
                                                         <span class="telefono-text-otpendiente" >${otpendiente.telefono}</span>
@@ -994,6 +995,7 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                     $scope.nfiltrointervenciones = llavesResult.N_FILTRO_INTERVENCIONES
                     $scope.nfiltroestatuspendiente = llavesResult.N_ESTATUS_PENDIENTES
                     $scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
+                    $scope.nfiltroestatusDisponbiles = llavesResult.N_ESTATUS_ARR_ENVIO
                     validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
                     validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
 
@@ -1043,6 +1045,17 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                             $scope.filtrosGeneral.estatusdisponibles = []
                             $scope.filtrosGeneral.estatusdisponibles = $scope.conversionAnidadaRecursiva($scope.respaldoStatusArray, 1, $scope.nfiltroestatuspendiente);
                             //$scope.filtrosGeneral.estatusdisponibles=$scope.realizarConversionAnidado( results[4].data.result)   
+                            //Valida estatus con estatus
+                            if( $scope.nfiltroestatusDisponbiles != undefined  &&  $scope.nfiltroestatusDisponbiles ){
+                                let tempSlice=$scope.nfiltroestatusDisponbiles.split(",").map(e=>parseInt(e));
+                                let tempArray=[]
+                                angular.forEach( tempSlice , function(  elm , index ){
+                                    let elemEstatus=angular.copy( $scope.filtrosGeneral.estatusdisponibles.find( e => e.id == elm ) )
+                                    if( !elemEstatus != undefined )
+                                        tempArray.push(  elemEstatus )
+                                });
+                                $scope.filtrosGeneral.estatusdisponibles = tempArray
+                            }   
                         } else {
                             toastr.info('No se encontraron catalogo de estatus');
                         }

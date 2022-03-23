@@ -61,7 +61,7 @@ app.controller('controlVehicularController',
 						let selectedElms = $('#jstreealta').jstree("get_selected", true);
 						if (selectedElms.length) {
 							document.getElementById('arbol_vehiculo_consulta').placeholder = selectedElms[0].text;
-							if (selectedElms[0].original.nivel !== $scope.nGeografia) {
+							if (Number(selectedElms[0].original.nivel) !== Number($scope.nGeografia)) {
 								toastr.warning('Selecciona una geograf\u00EDa v&aacute;lida');
 							} else {
 								$scope.vehiculoText.geografiaText = selectedElms[0].text;
@@ -149,146 +149,158 @@ app.controller('controlVehicularController',
 					controlVehicularService.consulCatalogoGeografiaUsuarioVehiculo()
 				]).then(function (results) {
 					let resultConf = results[0].data.result
-					if (results[0].data && results[0].data.respuesta) {
-						if (resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
-							let llavesResult = results[0].data.result.MODULO_ACCIONES_USUARIO.llaves;
-							$scope.nGeografia = llavesResult.N_FILTRO_GEOGRAFIA;
-							$scope.llaveEncierroVehiculo = llavesResult.N_ENCIERROS;
-							$scope.llaveArchivoPath = llavesResult.PATH_ARCHIVOS;
-							$scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
-							validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
-							validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
-							validateCreedText = llavesResult.KEY_TEXTFORMATO_CREED_RES ? KEY_TEXTFORMATO_CREED_RES : '';
-							if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
-								$scope.configPermisoAccionConsultaVehiculos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaVehiculos" })[0] != undefined);
-								$scope.configPermisoAccionCreaVehiculos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionCreaVehiculos" })[0] != undefined);
-								$scope.configPermisoAccionEditaVehiculos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionEditaVehiculos" })[0] != undefined);
-								$scope.configPermisoAccionEliminaVehiculos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionEliminaVehiculos" })[0] != undefined);
-								$scope.configPermisoAccionActivaVehiculos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionActivaVehiculos" })[0] != undefined);
-								$scope.configPermisoAccionConsultaActivaVehiculos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaActivaVehiculos" })[0] != undefined);
-							}
+					if (results[0].data !== undefined) {
+						if (results[0].data.respuesta) {
+							if (results[0].data.result) {
+								if (resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
+									let llavesResult = results[0].data.result.MODULO_ACCIONES_USUARIO.llaves;
+									$scope.nGeografia = llavesResult.N_FILTRO_GEOGRAFIA;
+									$scope.llaveEncierroVehiculo = llavesResult.N_ENCIERROS;
+									$scope.llaveArchivoPath = llavesResult.PATH_ARCHIVOS;
+									$scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
+									validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
+									validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
+									validateCreedText = llavesResult.KEY_TEXTFORMATO_CREED_RES ? KEY_TEXTFORMATO_CREED_RES : '';
+									if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
+										$scope.configPermisoAccionConsultaVehiculos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaVehiculos" })[0] != undefined);
+										$scope.configPermisoAccionCreaVehiculos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionCreaVehiculos" })[0] != undefined);
+										$scope.configPermisoAccionEditaVehiculos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionEditaVehiculos" })[0] != undefined);
+										$scope.configPermisoAccionEliminaVehiculos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionEliminaVehiculos" })[0] != undefined);
+										$scope.configPermisoAccionActivaVehiculos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionActivaVehiculos" })[0] != undefined);
+										$scope.configPermisoAccionConsultaActivaVehiculos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaActivaVehiculos" })[0] != undefined);
+									}
 
-							if (!$scope.configPermisoAccionConsultaVehiculos && $scope.configPermisoAccionCreaVehiculos) {
-								setTimeout(function () {
-									$("#alta-tab").click();
-								}, 300)
-							}
+									if (!$scope.configPermisoAccionConsultaVehiculos && $scope.configPermisoAccionCreaVehiculos) {
+										setTimeout(function () {
+											$("#alta-tab").click();
+										}, 300)
+									}
 
-							if (!$scope.configPermisoAccionConsultaVehiculos && !$scope.configPermisoAccionCreaVehiculos && $scope.configPermisoAccionConsultaActivaVehiculos) {
-								setTimeout(function () {
-									$("#elimina-tab").click();
-								}, 300)
-							}
+									if (!$scope.configPermisoAccionConsultaVehiculos && !$scope.configPermisoAccionCreaVehiculos && $scope.configPermisoAccionConsultaActivaVehiculos) {
+										setTimeout(function () {
+											$("#elimina-tab").click();
+										}, 300)
+									}
 
-							$("#container_vehiculos").css("display", "block")
+									$("#container_vehiculos").css("display", "block")
+								} else {
+									toastr.warning('No se encontraron datos para la configuraci\u00F3n');
+								}
+							} else {
+								toastr.info('No se encontraron datos para la configuraci\u00F3n');
+							}
 						} else {
 							toastr.warning(results[0].data.resultDescripcion);
 						}
 					} else {
-						toastr.warning(results[0].data.resultDescripcion);
+						toastr.error('No se encontraron datos para la configuraci\u00F3n');
 					}
 
-					if (results[1].data.respuesta) {
-						if (results[1].data.result) {
-							if (results[1].data.result.geografia || results[1].data.result.geografia.length > 0) {
-								let listGeo = [];
+					if (results[1].data !== undefined) {
+						if (results[1].data.respuesta) {
+							if (results[1].data.result) {
+								if (results[1].data.result.geografia.length > 0) {
+									let listGeo = [];
 
-								$scope.nGeografia = $scope.nGeografia ? $scope.nGeografia : $scope.obtenerNivelUltimoJerarquiaGeneric(results[1].data.result.geografia);
-								$scope.llaveEncierroVehiculo = $scope.llaveEncierroVehiculo ? $scope.llaveEncierroVehiculo : $scope.obtenerNivelUltimoJerarquiaGeneric(results[1].data.result.geografia);
+									$scope.nGeografia = $scope.nGeografia ? $scope.nGeografia : $scope.obtenerNivelUltimoJerarquiaGeneric(results[1].data.result.geografia);
+									$scope.llaveEncierroVehiculo = $scope.llaveEncierroVehiculo ? $scope.llaveEncierroVehiculo : $scope.obtenerNivelUltimoJerarquiaGeneric(results[1].data.result.geografia);
 
-								listGeo = results[1].data.result.geografia.filter(e => { return e.nivel <= $scope.nGeografia });
+									listGeo = results[1].data.result.geografia.filter(e => { return e.nivel <= $scope.nGeografia });
 
-								$scope.geografiaList = listGeo;
-								let geografia = angular.copy($scope.geografiaList);
-								geografia.push({ id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state: { opened: true } });
-								geografia.map((e) => {
-									e.parent = e.padre == null ? 0 : e.padre;
-									e.text = e.nombre;
-									e.icon = "fa fa-globe";
-									e.state = {
-										opened: true,
-										selected: true,
-									}
-									return e
-								})
-
-								let geografiaAlta = angular.copy($scope.geografiaList);
-								geografiaAlta.push({ id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state: { opened: true } });
-								geografiaAlta.map((e) => {
-									e.parent = e.padre == null ? 0 : e.padre;
-									e.text = e.nombre;
-									e.icon = "fa fa-globe";
-									e.state = {
-										opened: false,
-										selected: false,
-									}
-									return e
-								})
-
-								if ($scope.configPermisoAccionConsultaVehiculos) {
-									$('#jstreeconsulta').bind('loaded.jstree', function (e, data) {
-										var geografias = $('#jstreeconsulta').jstree("get_selected", true);
-										let textoGeografias = [];
-										angular.forEach(geografias, (geografia, index) => {
-											textoGeografias.push(geografia.text);
-										});
-										$('#geografia-seleccionada-consulta').val(textoGeografias);
-										$scope.getVehiculos(true);
-									}).jstree({
-										'plugins': ["wholerow", "checkbox", "search"],
-										'core': {
-											'data': geografia,
-											'themes': {
-												'name': 'proton',
-												'responsive': true,
-												"icons": false
-											}
-										},
-										"search": {
-											"case_sensitive": false,
-											"show_only_matches": true
+									$scope.geografiaList = listGeo;
+									let geografia = angular.copy($scope.geografiaList);
+									geografia.push({ id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state: { opened: true } });
+									geografia.map((e) => {
+										e.parent = e.padre == null ? 0 : e.padre;
+										e.text = e.nombre;
+										e.icon = "fa fa-globe";
+										e.state = {
+											opened: true,
+											selected: true,
 										}
-									});
-								}
+										return e
+									})
 
-								if ($scope.configPermisoAccionConsultaActivaVehiculos) {
-									$('#jstreeconsultainactivos').bind('loaded.jstree', function (e, data) {
-										var geografias = $('#jstreeconsultainactivos').jstree("get_selected", true);
-										let textoGeografias = [];
-										angular.forEach(geografias, (geografia, index) => {
-											textoGeografias.push(geografia.text);
-										});
-										$('#geografia-seleccionada-inactivos').val(textoGeografias);
-										$scope.getVehiculosInactivos(!$scope.configPermisoAccionConsultaVehiculos);
-									}).jstree({
-										'plugins': ["wholerow", "checkbox", "search"],
-										'core': {
-											'data': geografia,
-											'themes': {
-												'name': 'proton',
-												'responsive': true,
-												"icons": false
-											}
-										},
-										"search": {
-											"case_sensitive": false,
-											"show_only_matches": true
+									let geografiaAlta = angular.copy($scope.geografiaList);
+									geografiaAlta.push({ id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state: { opened: true } });
+									geografiaAlta.map((e) => {
+										e.parent = e.padre == null ? 0 : e.padre;
+										e.text = e.nombre;
+										e.icon = "fa fa-globe";
+										e.state = {
+											opened: false,
+											selected: false,
 										}
-									});
+										return e
+									})
+
+									if ($scope.configPermisoAccionConsultaVehiculos) {
+										$('#jstreeconsulta').bind('loaded.jstree', function (e, data) {
+											var geografias = $('#jstreeconsulta').jstree("get_selected", true);
+											let textoGeografias = [];
+											angular.forEach(geografias, (geografia, index) => {
+												textoGeografias.push(geografia.text);
+											});
+											$('#geografia-seleccionada-consulta').val(textoGeografias);
+											$scope.getVehiculos(true);
+										}).jstree({
+											'plugins': ["wholerow", "checkbox", "search"],
+											'core': {
+												'data': geografia,
+												'themes': {
+													'name': 'proton',
+													'responsive': true,
+													"icons": false
+												}
+											},
+											"search": {
+												"case_sensitive": false,
+												"show_only_matches": true
+											}
+										});
+									}
+
+									if ($scope.configPermisoAccionConsultaActivaVehiculos) {
+										$('#jstreeconsultainactivos').bind('loaded.jstree', function (e, data) {
+											var geografias = $('#jstreeconsultainactivos').jstree("get_selected", true);
+											let textoGeografias = [];
+											angular.forEach(geografias, (geografia, index) => {
+												textoGeografias.push(geografia.text);
+											});
+											$('#geografia-seleccionada-inactivos').val(textoGeografias);
+											$scope.getVehiculosInactivos(!$scope.configPermisoAccionConsultaVehiculos);
+										}).jstree({
+											'plugins': ["wholerow", "checkbox", "search"],
+											'core': {
+												'data': geografia,
+												'themes': {
+													'name': 'proton',
+													'responsive': true,
+													"icons": false
+												}
+											},
+											"search": {
+												"case_sensitive": false,
+												"show_only_matches": true
+											}
+										});
+									}
+
+
+									$scope.loadArbolRegistro(geografiaAlta);
+
+
+								} else {
+									toastr.info('No se encontraron datos para la geograf\u00EDa')
 								}
-
-
-								$scope.loadArbolRegistro(geografiaAlta);
-
-
 							} else {
-								mostrarMensajeWarningValidacion('No existen geograf\u00EDas actualmente')
+								toastr.info('No se encontraron datos para la geograf\u00EDa');
 							}
 						} else {
-							mostrarMensajeErrorAlert(results[1].data.result.mensaje)
+							toastr.warning(results[1].data.resultDescripcion);
 						}
 					} else {
-						mostrarMensajeErrorAlert(results[1].data.resultDescripcion)
+						toastr.error('Ha ocurrido un error en la consulta de la geograf\u00EDa');
 					}
 				}).catch(err => handleError(err));
 			}
@@ -319,39 +331,86 @@ app.controller('controlVehicularController',
 					controlVehicularService.consultarSegurosControlVehicular(),
 					controlVehicularService.consultarEstatusControlVehicular(),
 				]).then(function (results) {
-
-					if (results[0].data.respuesta && results[0].data.result.restulList.length > 0) {
-						$scope.data.tipoVehiculos = results[0].data.result.restulList;
-					} else {
-						toastr.warning(results[0].data.resultDescripcion);
-					}
-
-					if (results[1].data.respuesta && results[1].data.result.restulList.length > 0) {
-						$scope.data.colores = results[1].data.result.restulList;
-					} else {
-						toastr.warning(results[1].data.resultDescripcion);
-					}
-
-					if (results[2].data.respuesta && results[2].data.result.restulList.length > 0) {
-						$scope.data.seguros = results[2].data.result.restulList;
-					} else {
-						toastr.warning(results[2].data.resultDescripcion);
-					}
-
-					if (results[3].data.respuesta && results[3].data.result.restulList.length > 0) {
-						let estatus = [];
-						let motivos = [];
-						results[3].data.result.restulList.map(function (e) {
-							if (e.padre == null) {
-								estatus.push(e);
+					if (results[0].data !== undefined) {
+						if (results[0].data.respuesta) {
+							if (results[0].data.result) {
+								if (results[0].data.result.restulList.length > 0) {
+									$scope.data.tipoVehiculos = results[0].data.result.restulList;
+								} else {
+									toastr.info('No se encontr\u00F3 catalogo de tipo veh\u00EDculo');
+								}
 							} else {
-								motivos.push(e);
+								toastr.info('No se encontr\u00F3 catalogo de tipo veh\u00EDculo');
 							}
-						})
-						$scope.data.estatus = estatus;
-						$scope.data.motivos = motivos;
+						} else {
+							toastr.warning(results[0].data.resultDescripcion);
+						}
 					} else {
-						toastr.warning(results[3].data.resultDescripcion);
+						toastr.error('Ha ocurrido un error en la consulta de catalogo de tipo veh\u00EDculo');
+					}
+
+					if (results[1].data !== undefined) {
+						if (results[1].data.respuesta) {
+							if (results[1].data.result) {
+								if (results[1].data.result.restulList.length > 0) {
+									$scope.data.colores = results[1].data.result.restulList;
+								} else {
+									toastr.info('No se encontr\u00F3 catalogo de colores');
+								}
+							} else {
+								toastr.info('No se encontr\u00F3 catalogo de colores');
+							}
+						} else {
+							toastr.warning(results[1].data.resultDescripcion);
+						}
+					} else {
+						toastr.error('Ha ocurrido un error en la consulta de catalogo de colores');
+					}
+
+					if (results[2].data !== undefined) {
+						if (results[2].data.respuesta) {
+							if (results[2].data.result) {
+								if (results[2].data.result.restulList.length > 0) {
+									$scope.data.seguros = results[2].data.result.restulList;
+								} else {
+									toastr.info('No se encontr\u00F3 catalogo de seguros');
+								}
+							} else {
+								toastr.info('No se encontr\u00F3 catalogo de seguros');
+							}
+						} else {
+							toastr.warning(results[2].data.resultDescripcion);
+						}
+					} else {
+						toastr.error('Ha ocurrido un error en la consulta de catalogo de seguros');
+					}
+
+					if (results[3].data !== undefined) {
+						if (results[3].data.respuesta) {
+							if (results[3].data.result) {
+								if (results[3].data.result.restulList.length > 0) {
+									let estatus = [];
+									let motivos = [];
+									results[3].data.result.restulList.map(function (e) {
+										if (e.padre == null) {
+											estatus.push(e);
+										} else {
+											motivos.push(e);
+										}
+									})
+									$scope.data.estatus = estatus;
+									$scope.data.motivos = motivos;
+								} else {
+									toastr.info('No se encontr\u00F3 catalogo de estatus');
+								}
+							} else {
+								toastr.info('No se encontr\u00F3 catalogo de estatus');
+							}
+						} else {
+							toastr.warning(results[3].data.resultDescripcion);
+						}
+					} else {
+						toastr.error('Ha ocurrido un error en la consulta de catalogo de estatus');
 					}
 				}).catch(err => handleError(err));
 			}
@@ -365,29 +424,33 @@ app.controller('controlVehicularController',
 				swal.showLoading();
 				$scope.data.encierros = [];
 				controlVehicularService.consultarEncierros({ "idGeografia": geografia }).then(function success(response) {
-					if (response.data.respuesta) {
-						if (response.data.result) {
-							swal.close();
-							if (response.data.result.encierros.length) {
-								$scope.data.encierros = response.data.result.encierros;
+					swal.close();
+					if (response.data !== undefined) {
+						if (response.data.respuesta) {
+							if (response.data.result) {
+								if (response.data.result.encierros.length) {
+									$scope.data.encierros = response.data.result.encierros;
 
-								if ($scope.isEdit && encierro != 0) {
-									$scope.data.encierros.map(function (e) {
-										if (e.id == encierro) {
-											$scope.vehiculo.detalle.idEncierro = encierro.toString();
-										}
+									if ($scope.isEdit && encierro != 0) {
+										$scope.data.encierros.map(function (e) {
+											if (e.id == encierro) {
+												$scope.vehiculo.detalle.idEncierro = encierro.toString();
+											}
 
-									})
+										})
+									}
+
+								}else{
+									toastr.info('No se encontraron encierros');
 								}
-
+							} else {
+								toastr.info('No se encontraron encierros');
 							}
 						} else {
-							swal.close();
-							mostrarMensajeErrorAlert(response.data.resultDescripcion);
+							toastr.warning(response.data.resultDescripcion);
 						}
 					} else {
-						swal.close();
-						mostrarMensajeErrorAlert(response.data.resultDescripcion);
+						toastr.error('Ha ocurrido un error en la consulta de encierros');
 					}
 				})
 			}
@@ -423,46 +486,52 @@ app.controller('controlVehicularController',
 
 				$scope.vehiculos = [];
 				controlVehicularService.consultarVehiculos(params).then(function success(response) {
-					if (response.data.respuesta) {
-						if (response.data.result) {
-							if (response.data.result.vehiculo.length) {
-								$scope.vehiculos = angular.copy(response.data.result.vehiculo);
 
-								angular.forEach($scope.vehiculos, function (vehiculo, index) {
-									var estadoVehiculo = vehiculo.estatus.toLowerCase();
-									if (estadoVehiculo == "asignado") {
-										$scope.countAsignados = $scope.countAsignados + 1;
-									}
+					if (response.data !== undefined) {
+						if (response.data.respuesta) {
+							if (response.data.result) {
+								if (response.data.result.vehiculo.length) {
+									$scope.vehiculos = angular.copy(response.data.result.vehiculo);
 
-									if (estadoVehiculo == "baja") {
-										$scope.countBajas = $scope.countBajas + 1;
-									}
+									angular.forEach($scope.vehiculos, function (vehiculo, index) {
+										var estadoVehiculo = vehiculo.estatus.toLowerCase();
+										if (estadoVehiculo == "asignado") {
+											$scope.countAsignados = $scope.countAsignados + 1;
+										}
 
-									if (estadoVehiculo == "no disponible") {
-										$scope.countNoDisponibles = $scope.countNoDisponibles + 1;
-									}
+										if (estadoVehiculo == "baja") {
+											$scope.countBajas = $scope.countBajas + 1;
+										}
 
-									if (estadoVehiculo == "disponible") {
-										$scope.countDisponibles = $scope.countDisponibles + 1;
-									}
-									$scope.countTodos = $scope.countTodos + 1;
-								});
+										if (estadoVehiculo == "no disponible") {
+											$scope.countNoDisponibles = $scope.countNoDisponibles + 1;
+										}
 
-								$scope.buildTableVehiculos($scope.vehiculos);
+										if (estadoVehiculo == "disponible") {
+											$scope.countDisponibles = $scope.countDisponibles + 1;
+										}
+										$scope.countTodos = $scope.countTodos + 1;
+									});
+
+									$scope.buildTableVehiculos($scope.vehiculos);
+								} else {
+									toastr.info('No se encontraron veh\u00EDculos');
+									$scope.buildTableVehiculos($scope.vehiculos);
+									swal.close();
+								}
 							} else {
 								$scope.buildTableVehiculos($scope.vehiculos);
+								toastr.info('No se encontraron veh\u00EDculos');
 								swal.close();
 							}
-
 						} else {
 							$scope.buildTableVehiculos($scope.vehiculos);
-							mostrarMensajeErrorAlert(response.data.resultDescripcion);
+							toastr.warning(response.data.resultDescripcion);
 							swal.close();
 						}
-
 					} else {
 						$scope.buildTableVehiculos($scope.vehiculos);
-						mostrarMensajeErrorAlert(response.data.resultDescripcion);
+						toastr.error('Ha ocurrido un error en la consulta de veh\u00EDculos');
 						swal.close();
 					}
 				})
@@ -496,37 +565,43 @@ app.controller('controlVehicularController',
 
 				controlVehicularService.consultarVehiculos(params).then(function success(response) {
 					swal.close();
-					if (response.data.respuesta) {
-						if (response.data.result) {
-							if (response.data.result.vehiculo.length) {
-								$.each(response.data.result.vehiculo, function (i, elemento) {
-									let random = '?' + Math.floor(Math.random() * (10000 - 0));
-									let row = [];
-									row[0] = elemento.placa;
-									row[1] = elemento.tipo;
-									row[2] = elemento.marca;
-									row[3] = elemento.modelo;
-									row[4] = elemento.anio;
-									row[5] = elemento.geografia;
-									row[6] = elemento.urlFotoPlaca && elemento.urlFotoPlaca.length > 15 ? '<img style="cursor:pointer; border-radius:.5em" src="' + elemento.urlFotoPlaca + random + '" alt="Placa" width="50" height="30" onclick="showImg(' + "'" + elemento.urlFotoPlaca + "'" + ')"/>' : "";
-									row[7] = elemento.urlFotoVehiculo && elemento.urlFotoVehiculo.length > 15 ? '<img style="cursor:pointer; border-radius:.5em" src="' + elemento.urlFotoVehiculo + random + '" alt="Vehiculo" width="50"  height="30" onclick="showImg(' + "'" + elemento.urlFotoVehiculo + "'" + ')"/>' : "";
-									row[8] = elemento.estatus;
-									if ($scope.configPermisoAccionActivaVehiculos) {
-										row[9] = '<span onclick="activeCar(' + "'" + elemento.idVehiculo + "'" + ')" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnActivaUsuario"><i class="fas fa-check" aria-hidden="true"></i></span>';
-									} else {
-										row[9] = '<span  title="No tienes permisos para activar" style="cursor: no-drop; opacity: 0.3 !important;"  class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnActivaUsuario"><i class="fas fa-unlock" aria-hidden="true"></i></span>';
-									}
+					if (response.data !== undefined) {
+						if (response.data.respuesta) {
+							if (response.data.result) {
+								if (response.data.result.vehiculo.length) {
+									$.each(response.data.result.vehiculo, function (i, elemento) {
+										let random = '?' + Math.floor(Math.random() * (10000 - 0));
+										let row = [];
+										row[0] = elemento.placa;
+										row[1] = elemento.tipo;
+										row[2] = elemento.marca;
+										row[3] = elemento.modelo;
+										row[4] = elemento.anio;
+										row[5] = elemento.geografia;
+										row[6] = elemento.urlFotoPlaca && elemento.urlFotoPlaca.length > 15 ? '<img style="cursor:pointer; border-radius:.5em" src="' + elemento.urlFotoPlaca + random + '" alt="Placa" width="50" height="30" onclick="showImg(' + "'" + elemento.urlFotoPlaca + "'" + ')"/>' : "";
+										row[7] = elemento.urlFotoVehiculo && elemento.urlFotoVehiculo.length > 15 ? '<img style="cursor:pointer; border-radius:.5em" src="' + elemento.urlFotoVehiculo + random + '" alt="Vehiculo" width="50"  height="30" onclick="showImg(' + "'" + elemento.urlFotoVehiculo + "'" + ')"/>' : "";
+										row[8] = elemento.estatus;
+										if ($scope.configPermisoAccionActivaVehiculos) {
+											row[9] = '<span onclick="activeCar(' + "'" + elemento.idVehiculo + "'" + ')" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnActivaUsuario"><i class="fas fa-check" aria-hidden="true"></i></span>';
+										} else {
+											row[9] = '<span  title="No tienes permisos para activar" style="cursor: no-drop; opacity: 0.3 !important;"  class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnActivaUsuario"><i class="fas fa-unlock" aria-hidden="true"></i></span>';
+										}
 
-									arrayRow.push(row);
-								})
+										arrayRow.push(row);
+									})
+								} else {
+									toastr.info('No se encontraron veh\u00EDculos inactivos');
+								}
+							} else {
+								toastr.info('No se encontraron veh\u00EDculos inactivos');
 							}
 						} else {
-							mostrarMensajeErrorAlert(response.data.resultDescripcion);
+							toastr.warning(response.data.resultDescripcion);
 						}
-
 					} else {
-						mostrarMensajeErrorAlert(response.data.resultDescripcion);
+						toastr.error('Ha ocurrido un error en la consulta de veh\u00EDculos inactivos');
 					}
+
 					vehiculoActivaTable = $('#vehiculoActivaTable').DataTable({
 						"paging": true,
 						"lengthChange": false,

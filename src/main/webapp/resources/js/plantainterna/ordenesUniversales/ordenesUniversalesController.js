@@ -56,6 +56,29 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
     $scope.busquedaCanalVentas = function () {
         $("#jstree-canal-ventas").jstree("search", $('#searhArbolCanalVentas').val());
     }
+
+    $scope.consultarPerfilesPorUsuario=function(){     
+        swal({ text: 'Espera un momento...', allowOutsideClick: false });
+        swal.showLoading();
+        $scope.params = {};
+        ordenesUniversalesService.consultarPerfilesPorUsuario().then(function success(response) {
+            console.log(response.data)
+            if (response.data.success) {
+                if (response.data.result) {
+                    
+                    swal.close();
+                } else {
+                    mostrarMensajeErrorAlert(response.data.result.mensaje)
+                    swal.close();
+                }
+            } else {
+                mostrarMensajeErrorAlert(response.data.resultDescripcion)
+                swal.close();
+            }
+        }).catch(err => handleError(err));
+    }
+    $scope.consultarPerfilesPorUsuario()
+
     $scope.consultarCatalogoOrdenesUniversales = function () {
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
@@ -65,9 +88,10 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
         }
         $q.all([
             genericService.consultarConfiguracionDespachoDespacho(params),
-            genericService.consultarCatalogoIntervenciones(),
             genericService.consulCatalogoGeografia(),
-            ordenesUniversalesService.consultarCatalogosOrdenesUniversales()
+            ordenesUniversalesService.consultarCatalogosOrdenesUniversales(),
+            ordenesUniversalesService.consultarPerfilesPorUsuario()
+
         ]).then(function (results) {
             console.log(results);
             let resultConf = results[0].data.result
@@ -76,15 +100,15 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
 
                 console.log("  ----     ################# ------")
                 console.log(llavesResult)
-                let tempArrayInt = results[3].data.result.tiposOrden;
-                let tempArrayGeog = results[2].data.result.geografia;
+                let tempArrayInt = results[2].data.result.tiposOrden;
+                let tempArrayGeog = results[1].data.result.geografia;
 
                 $scope.nGeografia = (llavesResult.N_FILTRO_GEOGRAFIA) ? Number(llavesResult.N_FILTRO_GEOGRAFIA) : $scope.obtenerUltimoNivelFiltros(tempArrayGeog);
                 $scope.nTipoOrdenes = (llavesResult.N_FILTRO_INTERVENCIONES) ? Number(llavesResult.N_FILTRO_INTERVENCIONES) : $scope.obtenerUltimoNivelFiltros(tempArrayInt);
                 $scope.nTipoOrdenesConfig = (llavesResult.N_FILTRO_INTERVENCIONES) ? Number(llavesResult.N_FILTRO_INTERVENCIONES) : $scope.obtenerUltimoNivelFiltros(tempArrayInt);
             } else {
-                $scope.nGeografia = $scope.obtenerUltimoNivelFiltros(results[2].data.result.geografia)
-                $scope.nTipoOrdenes = $scope.obtenerUltimoNivelFiltros(results[3].data.result.tiposOrden)
+                $scope.nGeografia = $scope.obtenerUltimoNivelFiltros(results[1].data.result.geografia)
+                $scope.nTipoOrdenes = $scope.obtenerUltimoNivelFiltros(results[2].data.result.tiposOrden)
                 $scope.nTipoOrdenesConfig = $scope.nTipoOrdenes
             }
 
@@ -97,46 +121,50 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
 
 
             // ****************** ARBOL
-            if (results[2].data.respuesta) {
-                if (results[2].data.result) {
+            if (results[1].data.respuesta) {
+                if (results[1].data.result) {
                     $scope.listaArbolCiudades = [];
                     if ($scope.nGeografia) {
-                        $scope.resultArbol = results[2].data.result.geografia.filter(e => { return e.nivel <= $scope.nGeografia });
+                        $scope.resultArbol = results[1].data.result.geografia//.filter(e => { return e.nivel <= $scope.nGeografia });
                     } else {
-                        $scope.resultArbol = results[2].data.result.geografia;
+                        $scope.resultArbol = results[1].data.result.geografia;
                     }
 
                     angular.forEach($scope.resultArbol, function (element, index) {
-                        $scope.consultaArbol = true;
-                        $scope.listaArbolCiudades.push(
-                            {
-                                id: element.id,
-                                text: element.nombre,
-                                parent: element.padre == undefined ? "#" : element.padre,
-                                icon: 'fa fa-globe',
-                                nivel: element.nivel,
-                                state: {
-                                    opened: false
-                                }
+                        $scope.consultaArbol = true;                                                                
+                        let elementGeog={
+                            id: element.id,
+                            text: element.nombre,
+                            parent: element.padre == undefined ? "#" : element.padre,
+                            nivel: element.nivel,
+                            state: { opened: false }
+                        }
+                        if (element.nivel > $scope.nGeografia) {
+                            elementGeog.icon = 'fa fa-ban'
+                            elementGeog.state = {
+                                disabled: true
                             }
-                        );
+                        } else{
+                            elementGeog.icon = 'fa fa-instagram'
+                        }
+
+                        $scope.listaArbolCiudades.push( elementGeog );
                     });
+                
                     $('#jstree-distrito').bind('loaded.jstree', function (e, data) {
-                        swal.close()
                     }).jstree({
-                        plugins: ["wholerow", 'search'],
-                        core: {
-                            data: $scope.listaArbolCiudades,
-                            themes: {
-                                name: 'proton',
-                                responsive: true,
-                                "icons": false
-                            },
-                            animation: 100
-                        },
-                        "search": {
+                        'plugins': ["wholerow", 'search'],
+                        'search': {
                             "case_sensitive": false,
                             "show_only_matches": true
+                        },
+                        'core': {
+                            'data': $scope.listaArbolCiudades,
+                            'themes': {
+                                'name': 'proton',
+                                'responsive': true,
+                                "icons": true
+                            }
                         }
                     });
                     swal.close();
@@ -149,49 +177,16 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                 swal.close();
             }
 
-            if (results[3].data.respuesta) {
-                if (results[3].data.result) {
-                    if (results[3].data.result.result == '0') {
-                        $scope.listadoCanalVentas = results[3].data.result.canalVentas
-                        $scope.listadoPaquete = results[3].data.result.paquetes
-
-                        //Carga arbol tipo orden
-                        angular.forEach(results[3].data.result.tiposOrden, function (element, index) {
-                            $scope.listadoTipoOrdenes.push(
-                                {
-                                    id: element.idOrden,
-                                    text: element.nombre,
-                                    parent: element.idPadre == undefined ? "#" : element.idPadre,
-                                    icon: 'fa fa-globe',
-                                    nivel: parseInt(element.nivel),
-                                    state: {
-                                        opened: false
-                                    }
-                                }
-                            );
-                        });
-                        $('#jstree-tipoordenes').bind('loaded.jstree', function (e, data) {
-                            swal.close()
-                        }).jstree({
-                            plugins: ["wholerow", 'search'],
-                            core: {
-                                data: $scope.listadoTipoOrdenes,
-                                themes: {
-                                    name: 'proton',
-                                    responsive: true,
-                                    "icons": false
-                                },
-                                animation: 100
-                            },
-                            "search": {
-                                "case_sensitive": false,
-                                "show_only_matches": true
-                            }
-                        });
+            if (results[2].data.respuesta) {
+                if (results[2].data.result) {
+                    if (results[2].data.result.result == '0') {
+                        $scope.listadoCanalVentas = results[2].data.result.canalVentas
+                        $scope.listadoPaquete = results[2].data.result.paquetes
+                    
 
                         //Carga arbol paquete
 
-                        let paquetes = results[3].data.result.paquetes;
+                        let paquetes = results[2].data.result.paquetes;
                         paquetes.map((e) => {
                             e.id = e.Id;
                             e.parent = e.padre == undefined ? "#" : e.padre;
@@ -224,7 +219,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                         });
 
                         //Canal de ventas
-                        let canalVentas = results[3].data.result.canalVentas;
+                        let canalVentas = results[2].data.result.canalVentas;
                         canalVentas.map((e) => {
                             e.id = e.idCanalVenta;
                             e.parent = e.padre == undefined ? "#" : e.padre;
@@ -265,6 +260,67 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
             } else {
                 mostrarMensajeErrorAlert(response.data.resultDescripcion)
                 swal.close();
+            }
+
+            if(  Array.isArray( results[3].data.result.perfiles ) &&  results[3].data.result.perfiles.length   ){
+                        
+                $scope.listadoTipoOrdenesPerfiles=[]
+                angular.forEach(results[3].data.result.perfiles, function (perfil, index) {                            
+                    let idPerfil="perfil"+(perfil.id)
+                    $scope.listadoTipoOrdenesPerfiles.push( {
+                        id: idPerfil,
+                        text: perfil.descripcion,
+                        parent: "#",
+                        icon: 'fa fa-globe',
+                        nivel: 0,
+                        state: {
+                            opened: false
+                        }
+                    });
+            
+                    angular.forEach(perfil.intervenciones, function (interv, indexInt) {
+                        $scope.listadoTipoOrdenesPerfiles.push( {
+                            id: interv.id,
+                            text: interv.descripcion,
+                            parent: interv.idPadre == undefined ? idPerfil : interv.idPadre,
+                            icon: 'fa fa-globe',
+                            nivel: parseInt(interv.nivel),
+                            state: {
+                                opened: false
+                            }
+                        });
+                    });
+             
+                });                
+                $scope.listadoTipoOrdenesPerfiles.push( {
+                    id:120,
+                    text: "ADDON HARDCODEADO ",
+                    parent:16,
+                    icon: 'fa fa-globe',
+                    nivel: 2,
+                    state: {
+                        opened: false
+                    }
+                });
+
+                $('#jstree-tipoordenes').bind('loaded.jstree', function (e, data) {
+                    swal.close()
+                }).jstree({
+                    plugins: ["wholerow", 'search'],
+                    core: {
+                        data:  $scope.listadoTipoOrdenesPerfiles,
+                        themes: {
+                            name: 'proton',
+                            responsive: true,
+                            "icons": false
+                        },
+                        animation: 100
+                    },
+                    "search": {
+                        "case_sensitive": false,
+                        "show_only_matches": true
+                    }
+                });
             }
 
         }).catch(err => handleError(err));

@@ -40,9 +40,10 @@
         <link href="${pageContext.request.contextPath}/resources/libraries/jstree/css/proton/style.css" rel="stylesheet" />
         <link href="${pageContext.request.contextPath}/resources/libraries/magnific_popup/magnific-popup.css" rel="stylesheet">
 
-        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/despachopi/loaders.css?v=${sessionScope.versionDepl}"  rel="stylesheet"/>
-        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/despachopi/mainAlertasPI.css?v=${sessionScope.versionDepl}"  rel="stylesheet"/>
-        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/despachopi/mainDespachoPI.css?v=${sessionScope.versionDepl}"  rel="stylesheet"/>
+        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/despachopi/loaders.css?v=${sessionScope.versionDepl}" rel="stylesheet"/>
+        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/despachopi/mainAlertasPI.css?v=${sessionScope.versionDepl}" rel="stylesheet"/>
+        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/despachopi/mainDespachoPI.css?v=${sessionScope.versionDepl}" rel="stylesheet"/>
+        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/despachopi/mainModalInfoDetalleOtPe.css?v=${sessionScope.versionDepl}" rel="stylesheet"/>
 
     </head>
     <body id="idBody" ng-controller="despachoController" style="display: none;">        
