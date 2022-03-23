@@ -31,7 +31,6 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 	$scope.nombreBandeja = "";
 
 	$scope.nivelArbol = 0;
-	$scope.tipoBandeja = 1;
 
 	$scope.consultarCatalogos = function() {
 		$q.all([
@@ -1151,10 +1150,6 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 			"columns": [null, null, null, null, null, null, null, null, null, null, null, null],
 			"language": idioma_espanol_not_font
 		});
-	}
-
-	$scope.cambioTitulo = function(opcion) {
-		$scope.tipoBandeja = opcion;
 	}
 
 	$scope.mostrarFiltros = function() {

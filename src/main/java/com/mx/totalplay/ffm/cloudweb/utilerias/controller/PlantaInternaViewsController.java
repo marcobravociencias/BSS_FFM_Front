@@ -124,5 +124,10 @@ public class PlantaInternaViewsController {
 	public String gestionTecnicos() {		
 		return "plantainterna/gestionTecnicos/mainGestionTecnicos";
 	}
+	
+	@GetMapping("/moduloBandejasSalesforce")
+	public String bandejasSalesforce() {		
+		return "plantainterna/bandejasSalesforce/mainBandejasSalesforce";
+	}
 }
 
