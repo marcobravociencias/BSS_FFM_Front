@@ -1,8 +1,8 @@
 let objectMapaResumen;
 let objectMapaUbiacion;
+var map;
 
 app.mapController = function ($scope, ordenesUniversalesService) {
-    var map;
     var marker;
 
     var mapResumen;
@@ -33,6 +33,9 @@ app.mapController = function ($scope, ordenesUniversalesService) {
         objectMapaUbiacion.inicializar_data()
         
 
+        map.setZoom(7);      // This will trigger a zoom_changed on the map
+        map.setCenter(new google.maps.LatLng(19.33517924674462, -99.19857880597777));
+
         mapResumen = new google.maps.Map(document.getElementById('mapa-resumen'), {
             center : {
                 lat : parseFloat( 0 ),
@@ -50,7 +53,8 @@ app.mapController = function ($scope, ordenesUniversalesService) {
             zoom : 10,
         });
       
-
+        mapResumen.setZoom(7);      // This will trigger a zoom_changed on the map
+        mapResumen.setCenter(new google.maps.LatLng(19.33517924674462, -99.19857880597777));
 
         $scope.inicializarMarkers()
         
@@ -144,11 +148,13 @@ app.mapController = function ($scope, ordenesUniversalesService) {
                 $scope.$apply()
                 
                 marker.setPosition(new google.maps.LatLng(  $scope.latitudSelectedMap ,   $scope.longitudSelectedMap  ));
+                map.setZoom(17); 
                 map.setCenter(new google.maps.LatLng(   $scope.latitudSelectedMap ,  $scope.longitudSelectedMap  ));            
-
+                
                 markerRes.setPosition(new google.maps.LatLng(  $scope.latitudSelectedMap ,   $scope.longitudSelectedMap  ));
                 mapResumen.setCenter(new google.maps.LatLng(   $scope.latitudSelectedMap ,  $scope.longitudSelectedMap  ));            
-                                                       
+                mapResumen.setZoom(17); 
+                                
                 if (place.geometry.viewport) {
                     bounds.union(place.geometry.viewport);
                 } else {

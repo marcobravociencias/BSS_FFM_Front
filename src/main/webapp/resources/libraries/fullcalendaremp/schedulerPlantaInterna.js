@@ -6395,7 +6395,7 @@ ResourceRow = (function(superClass) {
       var templateOperador =`
       <div class="row">
           <div class="col-2 ">
-              <img style="border:.2em solid ${resource.color}" onclick="abrirModalFoto('${fullName}','${ resource.urlFotoPerfil ? resource.urlFotoPerfil : ''}', ' ${resource.usuarioFFM}', '${resource.numContacto}', '${resource.centro}', '${resource.descipcionEstatusTecnico}')"  class="efecto imagen_operario_foto"  src="${(resource.urlFotoPerfil != undefined && resource.urlFotoPerfil? resource.urlFotoPerfil:'./resources/img/plantainterna/despacho/tecnicootasignada.png' )}"/>
+              <img style="border:.2em solid ${resource.color}" onclick="abrirModalFoto('${fullName}','${ resource.urlFotoPerfil ? resource.urlFotoPerfil : ''}', ' ${resource.usuarioFFM}', '${resource.numContacto}', '${resource.color}', '${resource.descipcionEstatusTecnico}')"  class="efecto imagen_operario_foto"  src="${(resource.urlFotoPerfil != undefined && resource.urlFotoPerfil? resource.urlFotoPerfil:'./resources/img/plantainterna/despacho/tecnicootasignada.png' )}"/>
           </div>
           <div class="col-8 text-justify">
               <div class="conteo-content-ots" >

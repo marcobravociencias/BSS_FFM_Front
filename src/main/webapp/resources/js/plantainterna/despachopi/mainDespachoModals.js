@@ -1075,16 +1075,19 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         }).catch(err => handleError(err))
     }
 
-    abrirModalFoto = function (nombre, url, usuario, telefono, centro, estatus) {
+    abrirModalFoto = function (nombre, url, usuario, telefono, color, estatus) {
         if (url == undefined || url == "") {
             url = "./resources/img/plantainterna/despacho/tecnicootasignada.png";
         }
-
+    
         $("#num_emp").html("<span><strong>N&Uacute;M. EMPLEADO: </strong>" + validarUndefinedVacio( usuario ) + "</span>");
         $("#tel_emp").html("<span><strong>TEL&Eacute;FONO: </strong>" + validarUndefinedVacio( telefono ) + "</span>");
         $("#full_name").html("<span><strong>" + validarUndefinedVacio( nombre ) + "</strong></span>");
-        $("#centro").html("<span><strong>" +validarUndefinedVacio(  centro ) + "</strong></span>");
-        $("#estatus").html("<span><strong>" + validarUndefinedVacio( estatus ) + "</strong></span>");
+        $("#centro").html(`
+            <span style="background-color:${color};font-size:.6em;" class="color-badge-paleta color-tecnico-estatus-modal badge badge-pill ">&nbsp;</span>
+            <span><strong> ${ validarUndefinedVacio( estatus ) } </strong></span>`
+        );
+        $("#estatus").html("");
         $("#img_emp").attr("src", url);
         $("#modalFotoUsuario").modal('show');
     }
