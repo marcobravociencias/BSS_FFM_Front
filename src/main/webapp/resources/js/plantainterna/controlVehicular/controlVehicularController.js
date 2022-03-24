@@ -182,7 +182,6 @@ app.controller('controlVehicularController',
 										}, 300)
 									}
 
-									$("#container_vehiculos").css("display", "block")
 								} else {
 									toastr.warning('No se encontraron datos para la configuraci\u00F3n');
 								}
@@ -195,6 +194,7 @@ app.controller('controlVehicularController',
 					} else {
 						toastr.error('No se encontraron datos para la configuraci\u00F3n');
 					}
+					$("#container_vehiculos").css("display", "block")
 
 					if (results[1].data !== undefined) {
 						if (results[1].data.respuesta) {
@@ -515,7 +515,6 @@ app.controller('controlVehicularController',
 
 									$scope.buildTableVehiculos($scope.vehiculos);
 								} else {
-									toastr.info('No se encontraron veh\u00EDculos');
 									$scope.buildTableVehiculos($scope.vehiculos);
 									swal.close();
 								}
@@ -589,9 +588,7 @@ app.controller('controlVehicularController',
 
 										arrayRow.push(row);
 									})
-								} else {
-									toastr.info('No se encontraron veh\u00EDculos inactivos');
-								}
+								} 
 							} else {
 								toastr.info('No se encontraron veh\u00EDculos inactivos');
 							}
