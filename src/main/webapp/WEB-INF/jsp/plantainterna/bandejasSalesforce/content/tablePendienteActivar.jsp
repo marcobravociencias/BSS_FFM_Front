@@ -32,7 +32,7 @@
                     <th>OS</th>
                     <th>Estatus</th>
                     <th>Fecha Creaci&oacute;n</th>
-                    <th>Acciones</th>
+                    <!-- <th>Acciones</th> -->
                 </tr>
             </thead>
             <tbody>

@@ -380,12 +380,9 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
             swal.showLoading();
             let paramsfecha = $scope.getFechaFormato(document.getElementById('fecha_pendientes_agendar').value);
             let params = {
-                // "geografias": clustersSelected,
-                // "fechaInicio": paramsfecha.fechaInicio,
-                // "fechaFin": paramsfecha.fechaFin
-                "geografias": ["CIUDAD DE MEXICO"],
-                "fechaInicio": "2019-01-01",
-                "fechaFin": "2021-01-01"
+                "geografias": clustersSelected,
+                "fechaInicio": paramsfecha.fechaInicio,
+                "fechaFin": paramsfecha.fechaFin
             }
             // console.log(params);
             swal.close();
@@ -465,8 +462,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
             swal({ text: 'Espera un momento...', allowOutsideClick: false });
             swal.showLoading();
             let params = {
-                // "geografias": clustersSelected,
-                "geografias": ["CIUDAD DE MEXICO"]
+                "geografias": clustersSelected,
             }
             // console.log(params);
             bandejasSalesforceService.consultarRescataventasBandejasSF(params).then(function success(response) {
@@ -492,7 +488,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                                     rowRes[7] = elemento.ordenServicio.nombreOrdenServicio == null ? 'Sin informaci&oacute;n' : elemento.ordenServicio.nombreOrdenServicio !== undefined ? elemento.ordenServicio.nombreOrdenServicio : 'Sin informaci&oacute;n';
                                     rowRes[8] = elemento.estatusOs == null ? 'Sin informaci&oacute;n' : elemento.estatusOs !== undefined ? elemento.estatusOs : 'Sin informaci&oacute;n';
                                     rowRes[9] = elemento.fechaCreacion == null ? 'Sin informaci&oacute;n' : elemento.fechaCreacion !== undefined ? elemento.fechaCreacion : 'Sin informaci&oacute;n';
-                                    rowRes[10] = "";
+                                    // rowRes[10] = "";
                                     arrayResRow.push(rowRes);
                                 });
                                 rescataventasTable = $('#tableRescataventas').DataTable({
@@ -547,12 +543,9 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
 
             let paramsFecha = $scope.getFechaFormato(document.getElementById('fecha_pendiente_activar').value);
             let params = {
-                // 'geografias': clustersSelected,
-                // 'fechaInicio': paramsFecha.fechaInicio,
-                // 'fechaFin': paramsFecha.fechaFin
-                'geografias': ["CIUDAD DE MEXICO"],
-                'fechaInicio': '2019-01-01',
-                'fechaFin': '2021-01-01'
+                'geografias': clustersSelected,
+                'fechaInicio': paramsFecha.fechaInicio,
+                'fechaFin': paramsFecha.fechaFin
             };
             // console.log(params);
             bandejasSalesforceService.consultarPendientesActivarBandejasSF(params).then(function success(response) {
@@ -579,7 +572,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                                     row[8] = elemento.ordenServicio.nombreOrdenServicio == null ? 'Sin informaci&oacute;n' : elemento.ordenServicio.nombreOrdenServicio !== undefined ? elemento.ordenServicio.nombreOrdenServicio : 'Sin informaci&oacute;n';
                                     row[9] = elemento.estatusOs == null ? 'Sin informaci&oacute;n' : elemento.estatusOs !== undefined ? elemento.estatusOs : 'Sin informaci&oacute;n';
                                     row[10] = elemento.fechaCreacion == null ? 'Sin informaci&oacute;n' : elemento.fechaCreacion !== undefined ? elemento.fechaCreacion : 'Sin informaci&oacute;n';
-                                    row[11] = "";
+                                    // row[11] = "";
                                     arrayRow.push(row);
                                 });
                                 pendientesActivarTable = $('#tablePendienteActivar').DataTable({
