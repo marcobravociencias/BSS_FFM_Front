@@ -407,6 +407,7 @@ a.fc-col-header-cell-cushion {
     -ms-box-shadow: 0 3px 15px 0 rgba(0, 0, 0, .19);
     -moz-box-shadow: 0 3px 15px 0 rgba(0, 0, 0, .19);
     -webkit-box-shadow: 0 3px 15px 0 rgb(0 0 0 / 19%);
+    cursor: pointer;
 }
 
 
@@ -502,7 +503,7 @@ a.ui-corner-all {
 
 .icon-validate-form {
     position: absolute;
-    right: 2%;
+    right: 0;
     width: fit-content;
     color: #ff6868;
     top: 50%;
@@ -515,6 +516,14 @@ a.ui-corner-all {
     width: fit-content;
     color: #ff6868;
     top: 50%;
+    display: none !important;
+}
+.icon-validate-form-rigth-aplica  {
+    position: absolute;
+    right: 5%;
+    width: fit-content;
+    color: #ff6868;
+    top: 60%;
     display: none !important;
 }
 
@@ -570,4 +579,29 @@ a.ui-corner-all {
 
 .cursorEfect{
   cursor: pointer;
+}
+
+.columna-noaplica-dispnobilidad{
+    padding:0;
+    display: inline-block;
+}
+
+.columna-noaplica-dispnobilidad {
+    padding: 0;
+    display: inline-block;
+    text-align: left;
+}
+.columna-noaplica-dispnobilidad:first-child{
+   padding-right:.5em;
+}
+.columna-noaplica-dispnobilidad .input-filtro-disponibilidad{
+    background:red;
+    display: block;
+    width: 100%;
+}
+
+.content-disponbilidad-disabled{
+    height: 650px !important;
+    opacity: 0.4;
+    cursor: not-allowed;
 }

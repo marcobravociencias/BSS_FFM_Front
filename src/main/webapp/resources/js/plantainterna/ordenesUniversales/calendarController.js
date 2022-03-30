@@ -14,7 +14,7 @@ app.calendarController = function ($scope, ordenesUniversalesService) {
             locale: 'es',
             displayEventTime: true,
             selectable: true,
-            editable: true,
+            editable: false,
             eventDurationEditable: false,
             events: arregloDisponibilidad,
             headerToolbar: {
@@ -41,7 +41,6 @@ app.calendarController = function ($scope, ordenesUniversalesService) {
                     $scope.calendarDisp.render()
                 },1000) 
             }
-
         });
 
         $scope.calendarDisp.render();

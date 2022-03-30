@@ -26,6 +26,9 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
 
     $scope.isValForm = false
 
+    $scope.verAplicaDisponbilidad=true;
+    $scope.errorSeleccionIntGeografia=true;
+    const FECHA_HOY_DATE=new Date();
     $scope.guardarOrdenUniversal = function () {
         if ($.trim($scope.infoBasica.folio) !== '') {
             if (!$scope.validarFolio())
@@ -57,27 +60,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
         $("#jstree-canal-ventas").jstree("search", $('#searhArbolCanalVentas').val());
     }
 
-    $scope.consultarPerfilesPorUsuario=function(){     
-        swal({ text: 'Espera un momento...', allowOutsideClick: false });
-        swal.showLoading();
-        $scope.params = {};
-        ordenesUniversalesService.consultarPerfilesPorUsuario().then(function success(response) {
-            console.log(response.data)
-            if (response.data.success) {
-                if (response.data.result) {
-                    
-                    swal.close();
-                } else {
-                    mostrarMensajeErrorAlert(response.data.result.mensaje)
-                    swal.close();
-                }
-            } else {
-                mostrarMensajeErrorAlert(response.data.resultDescripcion)
-                swal.close();
-            }
-        }).catch(err => handleError(err));
-    }
-    $scope.consultarPerfilesPorUsuario()
+ 
 
     $scope.consultarCatalogoOrdenesUniversales = function () {
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
@@ -263,7 +246,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
             }
 
             if(  Array.isArray( results[3].data.result.perfiles ) &&  results[3].data.result.perfiles.length   ){
-                        
+                //results[3].data.result.perfiles.splice(1,1)
                 $scope.listadoTipoOrdenesPerfiles=[]
                 angular.forEach(results[3].data.result.perfiles, function (perfil, index) {                            
                     let idPerfil="perfil"+(perfil.id)
@@ -284,6 +267,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                             text: interv.descripcion,
                             parent: interv.idPadre == undefined ? idPerfil : interv.idPadre,
                             icon: 'fa fa-globe',
+                            aplicaDisponibilidad: interv.id == 211 ? 0 : interv.aplicaDisponibilidad ,
                             nivel: parseInt(interv.nivel),
                             state: {
                                 opened: false
@@ -291,13 +275,15 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                         });
                     });
              
-                });                
+                });   
+                /** */             
                 $scope.listadoTipoOrdenesPerfiles.push( {
                     id:120,
                     text: "ADDON HARDCODEADO ",
                     parent:16,
                     icon: 'fa fa-globe',
                     nivel: 2,
+                    aplicaDisponibilidad: 1,
                     state: {
                         opened: false
                     }
@@ -495,6 +481,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
     }
 
     $scope.validarModalesTipoIntervencionesGeografia = function (tipomodal) {
+
         let isSeleccionadoIgual = false
         //Valida geografia
         let isErrorGeograf = true;
@@ -553,14 +540,23 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
             $scope.infoBasica.tipoordentext = ''
             $scope.infoBasica.subtipoordentext = ''
         }
-        $scope.$apply()
         if (!isSeleccionadoIgual) {
             if (!isErrorTipoOrden && !isErrorGeograf) {
+                $scope.errorSeleccionIntGeografia=false
                 $scope.calendarDisp.removeAllEvents()
-                $scope.infoBasica.turno = ''
-                $scope.consultarDisponibilidad(elementonivel)
+                $scope.infoBasica.turno = ''                
+                if( selected_tipo_orden.aplicaDisponibilidad == 1 ){
+                    $scope.verAplicaDisponbilidad=true;
+                    $scope.consultarDisponibilidad(elementonivel)
+                }else{
+                    $scope.verAplicaDisponbilidad=false;
+                }
+            }else{
+                $scope.muestraDisponibilidadCalendar([]);
+                $scope.errorSeleccionIntGeografia=true
             }
         }
+        $scope.$apply()
     }
 
     $scope.validarPrimerPaso = function () {
@@ -595,7 +591,6 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
 
 
 
-
         if (elementonivel === '-1') {
             isErrorValidate = true
             textError += 'Selecciona un elemento valido de la geografia</br>';
@@ -604,9 +599,27 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
             isErrorValidate = true
             textError += 'Selecciona una hora estimada</br>';
         }
-        if ($scope.infoBasica.turno == undefined || !$scope.infoBasica.turno) {
+     
+        if( $scope.errorSeleccionIntGeografia ){
             isErrorValidate = true
-            textError += 'Selecciona un turno del calendario</br>';
+            textError += 'Selecciona un turno </br>';
+            textError += 'Selecciona d&iacute;a agendamiento </br>';
+        }else{
+            if(  $scope.verAplicaDisponbilidad ){
+                if ($scope.infoBasica.turno == undefined || !$scope.infoBasica.turno) {
+                    isErrorValidate = true
+                    textError += 'Selecciona un turno del calendario</br>';
+                }
+            }else{
+                if ($scope.infoBasica.idTurnoSeleccionAplica == undefined || !$scope.infoBasica.idTurnoSeleccionAplica) {
+                    isErrorValidate = true
+                    textError += 'Selecciona un turno </br>';
+                }
+                if ($scope.infoBasica.fechaTurnoTextAplica == undefined || !$scope.infoBasica.fechaTurnoTextAplica) {
+                    isErrorValidate = true
+                    textError += 'Selecciona un d&acute;a de agendamiento</br>';
+                }
+            }
         }
 
         if (isErrorValidate) {
@@ -801,7 +814,6 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
 
 
     angular.element(document).ready(function () {
-        $("#idBody").removeAttr("style");
         $("#modal-filtro-arbol").on("hidden.bs.modal", function () {
             $scope.validarModalesTipoIntervencionesGeografia('arbol');
         });
@@ -839,6 +851,23 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
         $("#moduloOrdenesUniversales").addClass("active");
         $("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
 
+        $('#dia-form-turno').datepicker({
+            format: 'yyyy/mm/dd',
+            autoclose: true,
+            language: 'es',
+            todayHighlight: true,
+            startDate: moment(FECHA_HOY_DATE).toDate()
+        }).on('changeDate', function (e) {
+            let textCalendar = $('#dia-form-turno').val()
+            $scope.infoBasica.fechaTurnoTextAplica = textCalendar;
+            $scope.$apply()
+        });
+        $('#dia-form-turno').datepicker('update', FECHA_HOY_DATE).trigger('change');
+
+        let textCalendar = $('#dia-form-turno').val()
+        $scope.infoBasica.fechaTurnoTextAplica = textCalendar;
+
+        $("#idBody").removeAttr("style");
     });
 
     $scope.validarCampoNA = function (campo) {
@@ -896,8 +925,16 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
 
         let paquete = $('#jstree-paquete').jstree("get_selected", true);
         let venta = $('#jstree-canal-ventas').jstree("get_selected", true);
+     
+        let envioFechaAgenda  =angular.copy( $scope.infoBasica.fechaTurnoText )
+        let envioidTurno  =angular.copy( $scope.infoBasica.idTurnoSeleccion )
 
-
+        
+        if( !$scope.verAplicaDisponbilidad  ){
+            console.log("no  aplica dispo")
+            envioFechaAgenda = angular.copy($scope.infoBasica.fechaTurnoTextAplica)
+            envioidTurno     = angular.copy(parseInt($scope.infoBasica.idTurnoSeleccionAplica))            
+        }
         let jsonEnvio = {
             "nombreOrden": nombreOrden,   //Ejemplo: Instalación
             "tipoOrden": tipoOrdenId,            //id tipo orden
@@ -928,8 +965,8 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                 }]
             },
             "agendamiento": {
-                "fechaAgenda": $scope.infoBasica.fechaTurnoText, //formato "2021-07-09"
-                "idTurno": $scope.infoBasica.idTurnoSeleccion,
+                "fechaAgenda": envioFechaAgenda, //formato "2021-07-09"
+                "idTurno": envioidTurno,
                 "hora": $scope.infoBasica.horaEstimada,  // Formato "19:46" 
                 "comentarios": $scope.informacionCliente.comentario,
                 "origen": 1,
@@ -983,6 +1020,13 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                         $scope.limpiarMarkers()
                         $("#horaestimada-form").val('')
                         $scope.calendarDisp.removeAllEvents()
+                        $scope.verAplicaDisponbilidad=true;
+                        $scope.errorSeleccionIntGeografia=true;
+                      
+                        $('#dia-form-turno').datepicker('update', FECHA_HOY_DATE).trigger('change');
+                        let textCalendar = $('#dia-form-turno').val()
+                        $scope.infoBasica.fechaTurnoTextAplica = textCalendar;
+
                     } else {
                         $scope.isGuardadoCreacion = false
                     }

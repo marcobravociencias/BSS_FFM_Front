@@ -37,13 +37,23 @@
 <div class="row" style="text-align: left;">
     <div class="col-6 contenido-cuenta">
         <strong class="color_titulos_resumen">TURNO:</strong>
-        <label class="resumen-detalle-agenda"  ng-bind="infoBasica.turnotext ? infoBasica.turnotext : 'Sin informaci&oacute;n'" id="turno-resumen"></label>
+        <label ng-show="verAplicaDisponbilidad" class="resumen-detalle-agenda"  
+            ng-bind="infoBasica.turnotext ? infoBasica.turnotext : 'Sin informaci&oacute;n'" id="turno-resumen"></label>
+        <label ng-show="!verAplicaDisponbilidad" class="resumen-detalle-agenda"  
+            ng-bind="infoBasica.idTurnoSeleccionAplica == 1 ? 'MATUTINO' : infoBasica.idTurnoSeleccionAplica == 2 ? 'VESPERTINO' : 'Sin informaci&oacute;n'" id="turno-resumen-aplica"></label>
+
     </div>
     <div class="col-6 contenido-cuenta">
         <strong class="color_titulos_resumen">FECHA:</strong>
-        <label class="resumen-detalle-agenda"  ng-bind="infoBasica.fechaTurnoText ? infoBasica.fechaTurnoText : 'Sin informaci&oacute;n'" id="fecha-resumen"></label>
+        <label ng-show="verAplicaDisponbilidad" class="resumen-detalle-agenda"  
+            ng-bind="infoBasica.fechaTurnoText ? infoBasica.fechaTurnoText : 'Sin informaci&oacute;n'" id="fecha-resumen"></label>
+       
+        <label ng-show="!verAplicaDisponbilidad" class="resumen-detalle-agenda"  
+            ng-bind="infoBasica.fechaTurnoTextAplica ? infoBasica.fechaTurnoTextAplica : 'Sin informaci&oacute;n'" id="fecha-resumen-aplica"></label>
+
     </div>
 </div>
+
 
 
 
