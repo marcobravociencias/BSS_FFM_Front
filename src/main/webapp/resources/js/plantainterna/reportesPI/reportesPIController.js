@@ -544,15 +544,15 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 			paramsTemp.pagina = 1;
 			paramsTemp.geografias = clustersparam;
 			if ($scope.repDiario.idOrden && $scope.repDiario.idOrden != "") {
-				paramsTemp.idOrden = $scope.repDiario.idOrden;
+				paramsTemp.idOrden = $.trim($scope.repDiario.idOrden);
 			}
 
 			if ($scope.repDiario.folio && $scope.repDiario.folio != "") {
-				paramsTemp.folio = $scope.repDiario.folio;
+				paramsTemp.folio = $.trim($scope.repDiario.folio);
 			}
 
 			if ($scope.repDiario.idCuenta && $scope.repDiario.idCuenta != "") {
-				paramsTemp.idCuenta = $scope.repDiario.idCuenta;
+				paramsTemp.idCuenta = $.trim($scope.repDiario.idCuenta);
 			}
 
 			if (reporteSeguimientoTable) {
@@ -674,15 +674,15 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 			}
 
 			if ($scope.repDiario.idOrden && $scope.repDiario.idOrden != "") {
-				paramsR.idOrden = $scope.repDiario.idOrden;
+				paramsR.idOrden = $.trim($scope.repDiario.idOrden);
 			}
 
 			if ($scope.repDiario.folio && $scope.repDiario.folio != "") {
-				paramsR.folio = $scope.repDiario.folio;
+				paramsR.folio = $.trim($scope.repDiario.folio);
 			}
 
 			if ($scope.repDiario.idCuenta && $scope.repDiario.idCuenta != "") {
-				paramsR.idCuenta = $scope.repDiario.idCuenta;
+				paramsR.idCuenta = $.trim($scope.repDiario.idCuenta);
 			}
 
 			swal({ text: 'Cargando registros...', allowOutsideClick: false });
@@ -766,15 +766,15 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 			paramsTemp.pagina = 1;
 			paramsTemp.geografias = clustersparam;
 			if ($scope.repCierreDiario.idOrden && $scope.repCierreDiario.idOrden != "") {
-				paramsTemp.idOrden = $scope.repCierreDiario.idOrden;
+				paramsTemp.idOrden = $.trim($scope.repCierreDiario.idOrden);
 			}
 
 			if ($scope.repCierreDiario.folio && $scope.repCierreDiario.folio != "") {
-				paramsTemp.folio = $scope.repCierreDiario.folio;
+				paramsTemp.folio = $.trim($scope.repCierreDiario.folio);
 			}
 
 			if ($scope.repCierreDiario.idCuenta && $scope.repCierreDiario.idCuenta != "") {
-				paramsTemp.idCuenta = $scope.repCierreDiario.idCuenta;
+				paramsTemp.idCuenta = $.trim($scope.repCierreDiario.idCuenta);
 			}
 
 			if (reporteCierreTable) {
@@ -897,15 +897,15 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 			}
 
 			if ($scope.repCierreDiario.idOrden && $scope.repCierreDiario.idOrden != "") {
-				paramsR.idOrden = $scope.repCierreDiario.idOrden;
+				paramsR.idOrden = $.trim($scope.repCierreDiario.idOrden);
 			}
 
 			if ($scope.repCierreDiario.folio && $scope.repCierreDiario.folio != "") {
-				paramsR.folio = $scope.repCierreDiario.folio;
+				paramsR.folio = $.trim($scope.repCierreDiario.folio);
 			}
 
 			if ($scope.repCierreDiario.idCuenta && $scope.repCierreDiario.idCuenta != "") {
-				paramsR.idCuenta = $scope.repCierreDiario.idCuenta;
+				paramsR.idCuenta = $.trim($scope.repCierreDiario.idCuenta);
 			}
 
 
@@ -991,15 +991,15 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 			paramsTemp.pagina = 1;
 			paramsTemp.geografias = clustersparam;
 			if ($scope.repAsignadas.idOrden && $scope.repAsignadas.idOrden != "") {
-				paramsTemp.idOrden = $scope.repAsignadas.idOrden;
+				paramsTemp.idOrden = $.trim($scope.repAsignadas.idOrden);
 			}
 
 			if ($scope.repAsignadas.folio && $scope.repAsignadas.folio != "") {
-				paramsTemp.folio = $scope.repAsignadas.folio;
+				paramsTemp.folio = $.trim($scope.repAsignadas.folio);
 			}
 
 			if ($scope.repAsignadas.idCuenta && $scope.repAsignadas.idCuenta != "") {
-				paramsTemp.idCuenta = $scope.repAsignadas.idCuenta;
+				paramsTemp.idCuenta = $.trim($scope.repAsignadas.idCuenta);
 			}
 
 			if (reporteAsignadasTable) {
@@ -1122,15 +1122,15 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 			}
 
 			if ($scope.repAsignadas.idOrden && $scope.repAsignadas.idOrden != "") {
-				paramsR.idOrden = $scope.repAsignadas.idOrden;
+				paramsR.idOrden = $.trim($scope.repAsignadas.idOrden);
 			}
 
 			if ($scope.repAsignadas.folio && $scope.repAsignadas.folio != "") {
-				paramsR.folio = $scope.repAsignadas.folio;
+				paramsR.folio = $.trim($scope.repAsignadas.folio);
 			}
 
 			if ($scope.repAsignadas.idCuenta && $scope.repAsignadas.idCuenta != "") {
-				paramsR.idCuenta = $scope.repAsignadas.idCuenta;
+				paramsR.idCuenta = $.trim($scope.repAsignadas.idCuenta);
 			}
 
 

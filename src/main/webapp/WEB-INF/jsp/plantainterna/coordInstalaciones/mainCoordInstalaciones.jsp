@@ -44,7 +44,62 @@
             <div class="row row-parent-bandejas">
               
                 <div class="col-md-12 col-parent-bandejas">
-                    <div class="row">
+                    <div class="col-12 text-center">
+                        <span class="span-titulo-bandeja" ng-bind="nombreBandeja"></span>
+                    </div>
+                    <div class="col-12">
+                        <div class="row">
+                            <div id="opciones-menu" class="left-menu small-menu" style="margin-left: -.9em; height: 100%;">
+                                <div class="col-md-12 opcion-menu" ng-click="cambiarVista(1);">
+                                    <i ng-class="{'active-iconmenu':vistaCoordinacion==1}" class="icon-menu-left fa fa-clock"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==1}" class="titulo-menu">Pendiente</span>
+                                </div>
+                                <div class="col-md-12 opcion-menu" ng-click="cambiarVista(2);">
+                                    <i ng-class="{'active-iconmenu':vistaCoordinacion==2}" class="icon-menu-left fa fa-pencil-square"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==2}" class="titulo-menu">Asignada</span>
+                                </div>
+                                <div class="col-md-12 opcion-menu" ng-click="cambiarVista(3);">
+                                    <i ng-class="{'active-iconmenu':vistaCoordinacion==3}" class="icon-menu-left fa fa-stop-circle"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==3}" class="titulo-menu">Detenida</span>
+                                </div>
+                                <div class="col-md-12 opcion-menu" ng-click="cambiarVista(4);">
+                                    <i ng-class="{'active-iconmenu':vistaCoordinacion==4}" class="icon-menu-left fa fa-check"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==4}" class="titulo-menu">Terminada</span>
+                                </div>
+                                <div class="col-md-12 opcion-menu" ng-click="cambiarVista(5);">
+                                    <i ng-class="{'active-iconmenu':vistaCoordinacion==5}" class="icon-menu-left fa fa-times"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==5}" class="titulo-menu">Cancelada</span>
+                                </div>
+                                <div class="col-md-12 opcion-menu" ng-click="cambiarVista(6);">
+                                    <i ng-class="{'active-iconmenu':vistaCoordinacion==6}" class="icon-menu-left fa fa-calendar"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==6}" class="titulo-menu">Calendarizada</span>
+                                </div>
+                                <div class="col-md-12 opcion-menu" ng-click="cambiarVista(7);">
+                                    <i ng-class="{'active-iconmenu':vistaCoordinacion==7}" class="icon-menu-left fa fa-handshake"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==7}" class="titulo-menu">Gestoria</span>
+                                </div>
+                            </div>
+                            <div class="right-content">
+                                <div class="row">
+                                    <div id="vistaPendiente" class="col-12" ng-show="vistaCoordinacion === 1">
+                                        <jsp:include page="./content/tablePendiente.jsp"></jsp:include>
+                                    </div>
+                                    <div id="vistaAsignada" class="col-12" ng-show="vistaCoordinacion === 2">
+                                        <jsp:include page="./content/tableAsignada.jsp"></jsp:include>
+                                    </div>
+                                    <div id="vistaDetenida" class="col-12" ng-show="vistaCoordinacion === 3">
+                                        <jsp:include page="./content/tableDetenida.jsp"></jsp:include>
+                                    </div>
+                                    <div id="vistaTerminada" class="col-12" ng-show="vistaCoordinacion === 4">
+                                        <jsp:include page="./content/tableTerminada.jsp"></jsp:include>
+                                    </div>
+                                    <div id="vistaCancelada" class="col-12" ng-show="vistaCoordinacion === 5">
+                                        <jsp:include page="./content/tableCancelada.jsp"></jsp:include>
+                                    </div>
+                                    <div id="vistaCalendarizada" class="col-12" ng-show="vistaCoordinacion === 6">
+                                        <jsp:include page="./content/tableCalendarizado.jsp"></jsp:include>
+                                    </div>
+                                    <div id="vistaGestoria" class="col-12" ng-show="vistaCoordinacion === 7">
+                                        <jsp:include page="./content/tableGestoria.jsp"></jsp:include>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--div class="row">
                         <div class="col-12" style="position: absolute; z-index: 1;">
                             <div class="col-12">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -64,9 +119,8 @@
                             <span class="span-titulo-bandeja" ng-show="tipoBandeja === 1" ng-bind="nombreBandeja"></span>
                             <span class="span-titulo-bandeja" ng-show="tipoBandeja === 2" ng-bind="nombreBandejaSf"></span>
                         </div>
-                    </div>
-                    <br>
-                    <div class="tab-content" id="v-pills-tabContent">
+                    </div-->
+                    <!--div class="tab-content" id="v-pills-tabContent">
                         <div class="tab-pane fade show active" id="opcion-ffm" role="tabpanel" aria-labelledby="opcion-ffm-tab">
                             <div class="col-12">
                                 <div class="row">
@@ -153,7 +207,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div-->
                 </div>
             </div>  
         </div>
