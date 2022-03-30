@@ -35,6 +35,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 	$scope.tabAccesosMod = false;
 	$scope.tabTecnicosMod = false;
 	$scope.tabDespachosMod = false;
+	$scope.tabPerfilesMod = false;
 	$scope.tabConfirmacionMod = false;
 	
 	$scope.tabInformacionVW_ASIG_AUTOMATICA_mod = true;
@@ -54,6 +55,9 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     //MÉTODO QUE REALIZA LA CONSULTA ESPECÍFICA POR ID DE USUARIO (CLIC EN BOTÓN DE MODIFICAR EN LA TABLA DE CONSULTA), Y PREPARA LA VISTA DE MODIFICACIÓN
     consultarDetalleUsuario = function(idUsuario) {
     	if($scope.configPermisoAccionEditaUsuarios){
+    		
+    		$scope.listaPerfilesArbolMod = [];
+            $scope.listaMostrarPerfilesSeleccionadosMod = [];
     		
     		var valPermitirAutoModUsuario = true;
     		if($scope.validacionAutoModUsuario == false){
@@ -105,6 +109,9 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                                 		break;
                                 	case "tabDespachos":
                                 		$scope.tabDespachosMod = true;
+                                		break;
+                                	case "tabPerfiles":
+                                		$scope.tabPerfilesMod = true;
                                 		break;
                                 	case "tabConfirmacion":
                                 		$scope.tabConfirmacionMod = true;
@@ -255,7 +262,144 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                         			$scope.detalleUsuario.intervencionesId.push(intervencion.id);
                         			existePadreMod = false;
                         		}
+                        	}); 
+                            
+                         // ********** PREPARA LOS DATOS DE LA PESTAÑA DE PERFILES
+                            
+                            $scope.listaPerfilesArbolMod = [];
+                        	$scope.listaPerfilesArbolMod.push({tipo: "na", idTipo: "na", id: "perfiles", text: "PERFILES", parent: "#", icon: 'fa fa-globe', nivel: 0, state:{opened: true}});
+                        	
+                        	$scope.respaldoListaPerfilesMod = angular.copy($scope.listaPerfilesMod);
+                        	
+                        	angular.forEach($scope.respaldoListaPerfilesMod,function(perfil,indexPerfil){
+                        		$scope.listaPerfilesArbolMod.push({tipo: "perfil", idTipo: perfil.id, id: perfil.id, text: perfil.descripcion, parent: "perfiles", icon: 'fa fa-globe', nivel: 0});
+                        		angular.forEach(perfil.intervenciones,function(intervencion,indexIntervencion){
+                        			
+                        			angular.forEach($scope.detalleUsuario.idPerfilesOu,(intervencionPerfil,index) => {
+                                        if(intervencion.id === intervencionPerfil.idTipoOrden && intervencion.nivel == 2) {
+                                        	intervencion.state = {selected: true, opened: true}
+                                        }
+                                    });
+                        			
+                        			var idPadrePerfil = "";
+                            		if (intervencion.nivel == 1) {
+                            			idPadrePerfil = perfil.id;
+                            		}else{
+                            			idPadrePerfil = (intervencion.idPadre + "_" + (indexPerfil+1));
+                            		}
+                            		$scope.listaPerfilesArbolMod.push({
+                            			tipo: "intervencion",
+                        				idTipo: intervencion.id,
+                        				id: intervencion.id + "_" + (indexPerfil+1),
+                                        text: intervencion.descripcion,
+                                        parent: idPadrePerfil,
+                                        icon: 'fa fa-globe',
+                                        nivel: parseInt(intervencion.nivel),
+                                        perfil: perfil.id,
+                                        state: intervencion.state
+                        			});
+                            	});
                         	});
+                            
+                            $("#arbolIntervencionPerfilMod").jstree('destroy');
+                            $('#arbolIntervencionPerfilMod').bind('loaded.jstree', function(e, data) {
+                                //$(this).jstree("open_all");
+                            }).jstree({
+                                'plugins': ['search', 'checkbox'],
+                                'search': {
+        							"case_sensitive": false,
+        							"show_only_matches": true
+        						},
+                                'core': {
+                                    'data': $scope.listaPerfilesArbolMod,
+                                    'themes': {
+                                        'name': 'proton',
+                                        'responsive': true,
+                                        "icons":false        
+                                    }
+                                }
+                            });
+                            
+                            setTimeout(function() {
+                            	var intervencionesPerfilesTreeMod = $('#arbolIntervencionPerfilMod').jstree("get_selected", true);
+                            	var listaPerfilesPadresMod = [];
+                            	
+                            	$('#arbolPerfilesSeleccionadosMod').jstree("destroy");
+                            	if(intervencionesPerfilesTreeMod.length > 0){
+                            		
+                            		intervencionesPerfilesTreeMod.forEach(intervencion =>{
+                                		if(intervencion.original.nivel == 2){
+                                			intervencion.parents.forEach(padre =>{
+                                    			var existePadre = listaPerfilesPadresMod.find((e) => e.id == padre);
+                                    			if(existePadre == undefined){
+                                    				var padrePerfil = $scope.listaPerfilesArbolMod.find((e) => e.id == padre);
+                                    				if(padrePerfil != undefined){
+                                    					listaPerfilesPadresMod.push(padrePerfil);
+                                    				}
+                                    			}
+                                        	});
+                                		}
+                                	});
+                                	
+                                	listaPerfilesPadresMod.forEach(padre =>{
+                                		var existePadre = intervencionesPerfilesTreeMod.find((e) => e.id == padre.id);
+                                		if(existePadre == undefined){
+                                			intervencionesPerfilesTreeMod.push(padre);
+                                		}
+                                	});
+                                	
+                                	$scope.listaMostrarPerfilesSeleccionadosMod = [];
+                                	angular.forEach(intervencionesPerfilesTreeMod,function(intervencion,index){
+                                		if(intervencion.original == undefined){
+                                    		$scope.listaMostrarPerfilesSeleccionadosMod.push({
+                                    			tipo: intervencion.tipo,
+                                    			idTipo: intervencion.idTipo,
+                                    			id: intervencion.id,
+                                                text: intervencion.text,
+                                                parent: intervencion.parent,
+                                                icon: 'fa fa-globe',
+                                                nivel: intervencion.nivel,
+                                                perfil: intervencion.perfil
+                                    		});
+                                		}else{
+                                			$scope.listaMostrarPerfilesSeleccionadosMod.push({
+                                    			tipo: intervencion.original.tipo,
+                                    			idTipo: intervencion.original.idTipo,
+                                    			id: intervencion.original.id,
+                                                text: intervencion.original.text,
+                                                parent: intervencion.original.parent,
+                                                icon: 'fa fa-globe',
+                                                nivel: intervencion.original.nivel,
+                                                perfil: intervencion.original.perfil
+                                    		});
+                                		}
+                                	});
+                                	
+                                	$scope.listaMostrarPerfilesSeleccionadosMod.find((e) => e.id == "perfiles").text = "PERFILES SELECCIONADOS";
+                            		
+                            		$('#arbolPerfilesSeleccionadosMod').bind('loaded.jstree', function(e, data) {
+                              			$(this).jstree("open_all");
+                              			$(this).jstree('select_all');
+                              			$(this).jstree().disable_node($(this).jstree().get_selected());
+                                    }).jstree({
+                                    	'plugins': ['search', 'checkbox', 'wholerow'],
+                                    	'search': {
+                              				"case_sensitive": false,
+                              				"show_only_matches": true
+                              			},
+                              			'core': {
+                              				'data': $scope.listaMostrarPerfilesSeleccionadosMod,
+                                            'themes': {
+                                                'name': 'proton',
+                                                'responsive': true,
+                                                "icons":false        
+                                            }
+                                        }
+                              		});
+                            		console.log($scope.listaMostrarPerfilesSeleccionadosMod);
+                            		$scope.$apply();
+                            	}
+		    	        	}, 1000);
 
                             // ********** PREPARA LOS DATOS DE LA PESTAÑA DE ÁRBOL (GEOGRAFÍAS)
                             var plugins = [];
@@ -555,6 +699,89 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
         $scope.$apply();
     });
 
+  //MÉTODO QUE ASIGNA LOS PERFILES SELECCIONADOS A LA LISTA PARA MOSTRAR Y MODIFICAR - PESTAÑA PERFILES MODIFICAR USUARIO
+    $("#arbolIntervencionPerfilMod").click(function() {
+    	var intervencionesPerfilesTreeMod = $('#arbolIntervencionPerfilMod').jstree("get_selected", true);
+    	var listaPerfilesPadresMod = [];
+    	
+    	$('#arbolPerfilesSeleccionadosMod').jstree("destroy");
+    	if(intervencionesPerfilesTreeMod.length > 0){
+    		
+    		intervencionesPerfilesTreeMod.forEach(intervencion =>{
+        		if(intervencion.original.nivel == 2){
+        			intervencion.parents.forEach(padre =>{
+            			var existePadre = listaPerfilesPadresMod.find((e) => e.id == padre);
+            			if(existePadre == undefined){
+            				var padrePerfil = $scope.listaPerfilesArbolMod.find((e) => e.id == padre);
+            				if(padrePerfil != undefined){
+            					listaPerfilesPadresMod.push(padrePerfil);
+            				}
+            			}
+                	});
+        		}
+        	});
+        	
+        	listaPerfilesPadresMod.forEach(padre =>{
+        		var existePadre = intervencionesPerfilesTreeMod.find((e) => e.id == padre.id);
+        		if(existePadre == undefined){
+        			intervencionesPerfilesTreeMod.push(padre);
+        		}
+        	});
+        	
+        	$scope.listaMostrarPerfilesSeleccionadosMod = [];
+        	angular.forEach(intervencionesPerfilesTreeMod,function(intervencion,index){
+        		if(intervencion.original == undefined){
+            		$scope.listaMostrarPerfilesSeleccionadosMod.push({
+            			tipo: intervencion.tipo,
+            			idTipo: intervencion.idTipo,
+            			id: intervencion.id,
+                        text: intervencion.text,
+                        parent: intervencion.parent,
+                        icon: 'fa fa-globe',
+                        nivel: intervencion.nivel,
+                        perfil: intervencion.perfil
+            		});
+        		}else{
+        			$scope.listaMostrarPerfilesSeleccionadosMod.push({
+            			tipo: intervencion.original.tipo,
+            			idTipo: intervencion.original.idTipo,
+            			id: intervencion.original.id,
+                        text: intervencion.original.text,
+                        parent: intervencion.original.parent,
+                        icon: 'fa fa-globe',
+                        nivel: intervencion.original.nivel,
+                        perfil: intervencion.original.perfil
+            		});
+        		}
+        	});
+        	
+        	$scope.listaMostrarPerfilesSeleccionadosMod.find((e) => e.id == "perfiles").text = "PERFILES SELECCIONADOS";
+    		
+    		$('#arbolPerfilesSeleccionadosMod').bind('loaded.jstree', function(e, data) {
+      			$(this).jstree("open_all");
+      			$(this).jstree('select_all');
+      			$(this).jstree().disable_node($(this).jstree().get_selected());
+            }).jstree({
+            	'plugins': ['search', 'checkbox', 'wholerow'],
+            	'search': {
+      				"case_sensitive": false,
+      				"show_only_matches": true
+      			},
+      			'core': {
+      				'data': $scope.listaMostrarPerfilesSeleccionadosMod,
+                    'themes': {
+                        'name': 'proton',
+                        'responsive': true,
+                        "icons":false        
+                    }
+                }
+      		});
+    	}
+    	$("#labelIntervencionesPerfilesSeleccionadosMod").css("color", "rgb(70, 88, 107)");
+		$("#contenedorIntervencionesPerfilesMod").css("border", "white solid 0px");
+        $scope.$apply();
+    });
+    
     //MÉTODO QUE ASIGNA EL/LOS PERMISO(S) SELECCIONADO(S) A LA LISTA PARA MOSTRAR Y MODIFICAR - PESTAÑA ACCESOS MODIFICAR USUARIO
     $("#arbolPermisoMod").click(function() {
     	$scope.listaAccesosSelecionadosMod = [];
@@ -836,6 +1063,19 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 			});
 		}
 		
+		var jsonPerfilesIntervencionesMod = [];
+    	angular.forEach($scope.listaMostrarPerfilesSeleccionadosMod,function(perfiles,index){
+    		if(perfiles.nivel == 1 ||  perfiles.nivel == 2){
+    			jsonPerfilesIntervencionesMod.push(perfiles.idTipo);
+    		}
+    	});
+    	
+    	jsonPerfilesIntervencionesMod = jsonPerfilesIntervencionesMod.filter(function(ele , pos){
+    	    return jsonPerfilesIntervencionesMod.indexOf(ele) == pos;
+    	});
+    	
+    	console.log(jsonPerfilesIntervencionesMod);
+		
 		var respuestaValidacionCamposMod = $scope.validarInformacionModificacion();
 		
 		if(respuestaValidacionCamposMod){
@@ -870,6 +1110,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 							fechaAlta: fechaSeleccionadaMod[2] + '-' + fechaSeleccionadaMod[1] + '-' + fechaSeleccionadaMod[0],
 							geografias: $scope.detalleUsuario.geografiasId,
 							intervenciones: $scope.detalleUsuario.intervencionesId,
+							perfilesOu: jsonPerfilesIntervencionesMod,
 							permisos: $scope.isTecnicoMod == true ? [] : $scope.detalleUsuario.permisosId,
 							idAsignacionAutomatica: $scope.detalleUsuario.idAsignacionAutomatica
 					}
@@ -929,6 +1170,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     	var validacionAccesos = true;
     	var validacionTecnicos = true;
     	var validacionDespachos = true;
+    	var validacionPerfiles = true;
     	var mensaje = "VALIDA LOS SIGUIENTES CAMPOS: ";
     	
     	
@@ -1155,6 +1397,18 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
         		}
         	}
 		}
+		
+		if($scope.tabPerfilesMod){
+			if($('#arbolIntervencionPerfilMod').jstree("get_selected", true).length < 1){
+				validacionPerfiles = false;
+				mensaje = mensaje + "<br/> *Perfil(es)";
+				$("#labelIntervencionesPerfilesSeleccionadosMod").css("color", "#f55756");
+				$("#contenedorIntervencionesPerfilesMod").css("border", "#f55756 solid 1px");
+			}else{
+				$("#labelIntervencionesPerfilesSeleccionadosMod").css("color", "rgb(70, 88, 107)");
+				$("#contenedorIntervencionesPerfilesMod").css("border", "white solid 0px");
+			}
+		}
     	
     	//PESTAÑA CONFIRMAR USUARIO
     	if($scope.tabConfirmacionMod){
@@ -1207,6 +1461,12 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 			$("#pills-tabContent-mod .tab-pane").removeClass('active show');
 			$("#pills-despacho-tab-mod").addClass("active");
 			$("#pills-despacho-mod").addClass("active show");
+		}else if(validacionPerfiles == false){
+			validacion = false;
+			$("#pills-tab-mod li a").removeClass('active');
+			$("#pills-tabContent-mod .tab-pane").removeClass('active show');
+			$("#pills-perfiles-tab-mod").addClass("active");
+			$("#pills-perfiles-mod").addClass("active show");
 		}else{
 			//...
 		}
@@ -1224,6 +1484,16 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     	$("#arbolIntervencionMod").jstree("search", $('#buscadorIntervencionMod').val());
 	}
     
+  //MÉTODO PARA BUSCAR PERFILES DE ACUERDO AL TEXTO INGRESADO EN EL INPUT DE BÚSQUEDA - PESTAÑA PERFILES MODIFICACIÓN USUARIO
+    $scope.busquedaIntervencionPerfilMod = function() {
+    	$("#arbolIntervencionPerfilMod").jstree("search", $('#buscadorIntervencionPerfilMod').val());
+	}
+    
+  //MÉTODO PARA BUSCAR PERFILES SELECCIONADOS DE ACUERDO AL TEXTO INGRESADO EN EL INPUT DE BÚSQUEDA - PESTAÑA PERFILES MODIFICACIÓN USUARIO
+    $scope.busquedaPerfileSeleccionadoMod = function() {
+    	$("#arbolPerfilesSeleccionadosMod").jstree("search", $('#buscadorPerfileSeleccionadoMod').val());
+	}
+    
     //MÉTODO PARA BUSCAR GEOGRAFÍAS DE ACUERDO AL TEXTO INGRESADO EN EL INPUT DE BÚSQUEDA - PESTAÑA ÁRBOL MODIFICACIÓN USUARIO
     $scope.busquedaGeografiaMod = function() {
     	$("#arbolGeografiaMod").jstree("search", $('#buscadorGeografiaMod').val());
@@ -1239,6 +1509,8 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     	$("#buscadorIntervencionMod").val("");
     	$("#buscadorGeografiaMod").val("");
     	$("#buscadorPermisosMod").val("");
+    	$scope.listaPerfilesArbolMod = [];
+        $scope.listaMostrarPerfilesSeleccionadosMod = [];
     	$scope.buscarTecnicoMod = "";
     	$scope.buscarTecnicoSeleccionadoMod = "";
     	$scope.buscarDespachoMod = "";
@@ -1257,6 +1529,8 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 	    $scope.listaCiudadNatalMod = [];
 	    $scope.listaIdsGeografiaCiudadNatalMod = [];
 		$('#arbolIntervencionMod').jstree("destroy");
+		$('#arbolIntervencionPerfilMod').jstree("destroy");
+		$('#arbolPerfilesSeleccionadosMod').jstree("destroy");
 		$('#arbolGeografiaMod').jstree("destroy");
 		$('#arbolPermisoMod').jstree("destroy");
 		$("#puesto_select_modificacion"). prop("selectedIndex",0);
@@ -1276,6 +1550,8 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
         $scope.restablecerDisenioCampos();
         $("#pills-confirmar-tab-mod").removeClass("active");
 		$("#pills-confirmar-mod").removeClass("active show");
+		$("#pills-perfiles-tab-mod").removeClass("active");
+		$("#pills-perfiles-mod").removeClass("active show");
 		$("#pills-despacho-tab-mod").removeClass("active");
 		$("#pills-despacho-mod").removeClass("active show");
 		$("#pills-tecnico-tab-mod").removeClass("active");
