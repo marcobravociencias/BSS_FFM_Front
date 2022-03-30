@@ -22,5 +22,13 @@ private static final long serialVersionUID = 1L;
 	
 	@Value("${consultaGeneralTraspasos}")
 	private String consultaGeneralTraspasos;
-
+	
+	@Value("${actualizarFactibilidadTraspaso}")
+	private String actualizarFactibilidadTraspaso;
+	
+	@Value("${consultarFactibilidadTraspasoRes}")
+	private String consultarFactibilidadTraspasoRes;
+	
+	@Value("${consultarFactibilidadTraspasoEmp}")
+	private String consultarFactibilidadTraspasoEmp;
 }
