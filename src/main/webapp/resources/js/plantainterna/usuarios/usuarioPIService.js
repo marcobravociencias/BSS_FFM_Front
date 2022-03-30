@@ -130,5 +130,14 @@ app.service("usuarioPIService", function ($http) {
             }
         });
     };
+    
+    this.consultaPerfiles = function() {
+        return $http({
+            method: "post",
+            url: "req/consultarPerfilesGeneral",
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+			transformRequest: angular.identity
+        });
+    };
 
 });

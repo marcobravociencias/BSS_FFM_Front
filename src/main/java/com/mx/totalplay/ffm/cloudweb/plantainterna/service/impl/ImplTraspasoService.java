@@ -452,4 +452,78 @@ public class ImplTraspasoService implements TraspasoService {
 		return response;
 	}
 
+	@Override
+	public ServiceResponseResult actualizarFactibilidad(String params) {
+		 logger.info("ImplTraspasoService.class [metodo = actualizarFactibilidad() ]\n" + params);
+	        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+
+	        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+	        String idTraspaso = jsonObject.get("idTraspaso").getAsString();
+
+	        String tokenAcces = principalDetail.getAccess_token();
+	        String urlRequest = principalDetail.getDireccionAmbiente().concat(constTraspaso.getActualizarFactibilidadTraspaso());
+	        logger.info("URL ##+" + urlRequest);
+
+	        Map<String, String> paramsRequestGet = new HashMap<String, String>();
+	        paramsRequestGet.put("idTraspaso", idTraspaso);
+			
+	        ServiceResponseResult response = restCaller.callPatchBearerTokenRequestURL(paramsRequestGet, 
+				gson.toJson(jsonObject), urlRequest, ServiceResponseResult.class, tokenAcces);
+	        return response;
+	}
+
+	@Override
+	public ServiceResponseResult consultarFactibilidadRes(String params) {
+		logger.info("ImplTraspasoService.class [metodo = consultarFactibilidadRes() ]\n" + params);
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		String lat = jsonObject.get("latitud").getAsString();
+		String lon = jsonObject.get("longitud").getAsString();
+
+		String tokenAcces = principalDetail.getAccess_token();
+		logger.info("consultarFactibilidadRes ##+" + tokenAcces);
+		String urlRequest = principalDetail.getDireccionAmbiente()
+				.concat(constTraspaso.getConsultarFactibilidadTraspasoRes());
+		logger.info("URL ##+" + urlRequest);
+
+		Map<String, String> paramsRequestGet = new HashMap<String, String>();
+		paramsRequestGet.put("latitud", lat);
+		paramsRequestGet.put("longitud", lon);
+		
+		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
+				ServiceResponseResult.class, tokenAcces);
+		return response;
+	}
+	
+	@Override
+	public ServiceResponseResult consultarFactibilidadEmp(String params) {
+		logger.info("ImplTraspasoService.class [metodo = consultarFactibilidadEmp() ]\n" + params);
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		String lat = jsonObject.get("latitud").getAsString();
+		String lon = jsonObject.get("longitud").getAsString();
+
+		String tokenAcces = principalDetail.getAccess_token();
+		logger.info("consultarFactibilidadEmp ##+" + tokenAcces);
+		String urlRequest = principalDetail.getDireccionAmbiente()
+				.concat(constTraspaso.getConsultarFactibilidadTraspasoEmp());
+		logger.info("URL ##+" + urlRequest);
+
+		Map<String, String> paramsRequestGet = new HashMap<String, String>();
+		paramsRequestGet.put("latitud", lat);
+		paramsRequestGet.put("longitud", lon);
+		
+		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
+				ServiceResponseResult.class, tokenAcces);
+		return response;
+	}
+
+	@Override
+	public ServiceResponseResult agendarTraspasoOt(String params) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

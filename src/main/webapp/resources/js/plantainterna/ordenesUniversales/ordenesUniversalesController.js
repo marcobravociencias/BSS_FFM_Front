@@ -245,56 +245,48 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                 swal.close();
             }
 
+            
+
             if(  Array.isArray( results[3].data.result.perfiles ) &&  results[3].data.result.perfiles.length   ){
-                //results[3].data.result.perfiles.splice(1,1)
                 $scope.listadoTipoOrdenesPerfiles=[]
-                angular.forEach(results[3].data.result.perfiles, function (perfil, index) {                            
-                    let idPerfil="perfil"+(perfil.id)
-                    $scope.listadoTipoOrdenesPerfiles.push( {
-                        id: idPerfil,
-                        text: perfil.descripcion,
-                        parent: "#",
+                if(  results[3].data.result.perfiles!=undefined && results[3].data.result.perfiles.length > 0  ){
+                    let mapaIntervenciones = {}
+                    angular.forEach( results[3].data.result.perfiles ,function( perfil, index ){                   
+                        angular.forEach( perfil.intervenciones , function ( interv, indexInt ) {
+                            mapaIntervenciones[ interv.id ] = interv ;
+                        })
+                    })
+                    console.log("mapa intervencionesmapaIntervenciones ", mapaIntervenciones );                    
+                    for (const key in mapaIntervenciones) { 
+                        $scope.listadoTipoOrdenesPerfiles.push(mapaIntervenciones[key]);
+                    }
+                    console.log("array listadoTipoOrdenesPerfiles ", $scope.listadoTipoOrdenesPerfiles );                    
+                }
+                
+                let arbolIntervenciones=[];
+                angular.forEach( $scope.listadoTipoOrdenesPerfiles, function (interv, index) {                                                 
+                    arbolIntervenciones.push( {
+                        id: interv.id,
+                        text: interv.descripcion,
+                        parent: interv.idPadre == undefined ? '#' : interv.idPadre,
                         icon: 'fa fa-globe',
-                        nivel: 0,
+                        aplicaDisponibilidad: interv.aplicaDisponibilidad ,
+                        nivel: parseInt(interv.nivel),
                         state: {
                             opened: false
                         }
-                    });
-            
-                    angular.forEach(perfil.intervenciones, function (interv, indexInt) {
-                        $scope.listadoTipoOrdenesPerfiles.push( {
-                            id: interv.id,
-                            text: interv.descripcion,
-                            parent: interv.idPadre == undefined ? idPerfil : interv.idPadre,
-                            icon: 'fa fa-globe',
-                            aplicaDisponibilidad: interv.id == 211 ? 0 : interv.aplicaDisponibilidad ,
-                            nivel: parseInt(interv.nivel),
-                            state: {
-                                opened: false
-                            }
-                        });
-                    });
-             
+                    });            
                 });   
-                /** */             
-                $scope.listadoTipoOrdenesPerfiles.push( {
-                    id:120,
-                    text: "ADDON HARDCODEADO ",
-                    parent:16,
-                    icon: 'fa fa-globe',
-                    nivel: 2,
-                    aplicaDisponibilidad: 1,
-                    state: {
-                        opened: false
-                    }
-                });
+               
+    
+             
 
                 $('#jstree-tipoordenes').bind('loaded.jstree', function (e, data) {
                     swal.close()
                 }).jstree({
                     plugins: ["wholerow", 'search'],
                     core: {
-                        data:  $scope.listadoTipoOrdenesPerfiles,
+                        data: arbolIntervenciones,
                         themes: {
                             name: 'proton',
                             responsive: true,

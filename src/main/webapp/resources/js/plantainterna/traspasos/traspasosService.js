@@ -73,5 +73,53 @@ app.service("traspasosService", function($http){
         });
     };
 
-    
+    this.actualizarFactibilidad = function (params) {
+        return $http({
+            method: "post",
+            url: "req/actualizarFactibilidadTraspasos",
+            data:JSON.stringify(params),
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
+        });
+    };
+
+    this.consultaFactibilidadResidencial = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultaFactibilidadResidencial",
+            data:JSON.stringify(params),
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
+        });
+    };
+
+    this.consultaFactibilidadEmpresarial = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultaFactibilidadEmpresarial",
+            data:JSON.stringify(params),
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
+        });
+    };
+
+    this.getDisponibilidadServicioRest = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarDisponibilidad",
+            data:JSON.stringify(params),
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
+        });
+    };
+
+    this.agendarTraspasosOt = function (params) {
+        return $http({
+            method: "post",
+            url: "req/agendarTraspasoOt",
+            data:JSON.stringify(params),
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
+        });
+    };
 })

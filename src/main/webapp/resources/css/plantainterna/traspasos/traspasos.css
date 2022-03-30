@@ -124,6 +124,20 @@
     z-index: 2;
     font-size: 14px;
 }
+.columna-filtro-ind-form::after {
+    content: "";
+    position: absolute;
+    top: 62%;
+    width: 0;
+    right: 10%;
+    height: 0;
+    border-left: 0.3em solid transparent;
+    border-right: 0.3em solid transparent;
+    border-top: 0.6em solid #939db2;
+    clear: both;
+    z-index: 2;
+    font-size: 14px;
+}
 
 label.label-filter {
     margin-bottom: 0;

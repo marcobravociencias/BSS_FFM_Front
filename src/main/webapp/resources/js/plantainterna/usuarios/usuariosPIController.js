@@ -50,6 +50,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	$scope.tabAccesos = false;
 	$scope.tabTecnicos = false;
 	$scope.tabDespachos = false;
+	$scope.tabPerfiles = false;
 	$scope.tabConfirmacion = false;
 	
 	$scope.tabInformacionVW_ASIG_AUTOMATICA = true;
@@ -100,7 +101,8 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     		usuarioPIService.consultaPuestos(),
     		usuarioPIService.consultaPermisos(),
     		usuarioPIService.consultaGeografias(),
-    		usuarioPIService.consultaIntervenciones()
+    		usuarioPIService.consultaIntervenciones(),
+    		usuarioPIService.consultaPerfiles()
         ]).then(function(results) {
         	// *** CONFIGURACIÓN DESPACHO ***
         	var nivelUsuario; 				
@@ -309,6 +311,23 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	            }else{
 	            	toastr.error('Error interno en el servidor.');
 	            }
+	            
+	         // *** PERFILES ***
+	            if (results[6].data !== undefined) {
+	            	if(results[6].data.respuesta){
+	            		if(results[6].data.result !== null){
+							$scope.listaPerfiles = results[6].data.result.perfiles;
+							$scope.listaPerfilesMod = angular.copy(results[6].data.result.perfiles);
+	            		}else{
+	                    	toastr.info('¡Actualmente no existen intervenciones!');
+	                    }
+	            	}else{
+	            		toastr.info('¡Actualmente no existen intervenciones!');
+	            	}
+	            }else{
+	            	toastr.error('Error interno en el servidor.');
+	            }
+	            
 	        	//swal.close();
 	        	setTimeout(function () {
 	        		$scope.consultaUsuariosPorGeoCompPuestos();
@@ -383,6 +402,16 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     //MÉTODO PARA BUSCAR INTERVENCIONES DE ACUERDO AL TEXTO INGRESADO EN EL INPUT DE BÚSQUEDA - PESTAÑA INTERVENCIONES REGISTRO USUARIO
     $scope.busquedaIntervencionRegistro = function() {
     	$("#arbolIntervencionRegistro").jstree("search", $('#buscadorIntervencionRegistro').val());
+	}
+    
+    //MÉTODO PARA BUSCAR PERFILES DE ACUERDO AL TEXTO INGRESADO EN EL INPUT DE BÚSQUEDA - PESTAÑA PERFILES REGISTRO USUARIO
+    $scope.busquedaIntervencionPerfilRegistro = function() {
+    	$("#arbolIntervencionPerfilRegistro").jstree("search", $('#buscadorIntervencionPerfilRegistro').val());
+	}
+    
+    //MÉTODO PARA BUSCAR PERFILES SELECCIONADOS DE ACUERDO AL TEXTO INGRESADO EN EL INPUT DE BÚSQUEDA - PESTAÑA PERFILES REGISTRO USUARIO
+    $scope.busquedaPerfileSeleccionadoRegistro = function() {
+    	$("#arbolPerfilesSeleccionadosRegistro").jstree("search", $('#buscadorPerfileSeleccionadoRegistro').val());
 	}
     
     //MÉTODO PARA BUSCAR GEOGRAFÍAS DE ACUERDO AL TEXTO INGRESADO EN EL INPUT DE BÚSQUEDA - PESTAÑA ÁRBOL REGISTRO USUARIO
@@ -676,15 +705,20 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	$('#arbolGeografiaRegistro').jstree("destroy");
     	$('#arbolIntervencionRegistro').jstree("destroy");
     	$('#arbolIntervencionRegistro').jstree("deselect_all");
+    	$('#arbolIntervencionPerfilRegistro').jstree("destroy");
+    	$('#arbolIntervencionPerfilRegistro').jstree("deselect_all");
     	$('#arbolGeografiaRegistro').jstree("deselect_all");
     	$('#arbolPermisoRegistro').jstree("deselect_all");
     	$("#arbolIntervencionRegistro").jstree('close_all');
+    	$("#arbolIntervencionPerfilRegistro").jstree('close_all');
     	$("#arbolGeografiaRegistro").jstree('close_all');
     	$("#arbolPermisoRegistro").jstree('close_all');
     	$("#buscadorIntervencionRegistro").val("");
+    	$("#buscadorIntervencionPerfilRegistro").val("");
     	$("#buscadorGeografiaRegistro").val("");
     	$("#buscadorPermisosRegistro").val("");
     	$("#arbolIntervencionRegistro").jstree('open_node', 0);
+    	$("#arbolIntervencionPerfilRegistro").jstree('open_node', 0);
     	$("#arbolPermisoRegistro").jstree('open_node', 0);
     	$scope.listaIntervencionesSeleccionadas = [];
     	$scope.listaGeografiasSeleccionadas = [];
@@ -722,6 +756,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	$scope.tabAccesos = false;
     	$scope.tabTecnicos = false;
     	$scope.tabDespachos = false;
+    	$scope.tabPerfiles = false;
     	$scope.tabConfirmacion = false;
     	
     	var tabsPuestoSeleccionadoRegistro = $scope.listaPuestos.filter(e => {return e.id == $(this).val()})[0];
@@ -744,6 +779,9 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
             		break;
             	case "tabDespachos":
             		$scope.tabDespachos = true;
+            		break;
+            	case "tabPerfiles":
+            		$scope.tabPerfiles = true;
             		break;
             	case "tabConfirmacion":
             		$scope.tabConfirmacion = true;
@@ -789,6 +827,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	$scope.$apply();
     	$scope.cargarArbolIntervenciones();
     	$scope.mostrarArbolGeografiaRegistro();
+    	$scope.cargarArbolIntervencionesPerfiles();
     });
     
     $scope.cargarArbolIntervenciones = function() {
@@ -807,7 +846,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
                 e.icon= "fa fa-globe";
                 return e
             })       
-            //$scope.listaIntervencionesRespaldo = angular.copy(intervencionesLista);
+            
             $('#arbolIntervencionRegistro').bind('loaded.jstree', function(e, data) {
 				//$(this).jstree("open_all");
             }).jstree({
@@ -828,6 +867,52 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		}else{
 			toastr.info('¡Actualmente no existen intervenciones!');
 		}
+	}
+    
+    $scope.cargarArbolIntervencionesPerfiles = function() {
+
+    	$scope.listaPerfilesArbolRegistro = [];
+    	$scope.listaPerfilesArbolRegistro.push({tipo: "na", idTipo: "na", id: "perfiles", text: "PERFILES", parent: "#", icon: 'fa fa-globe', nivel: 0, state:{opened: true}});
+
+    	angular.forEach($scope.listaPerfiles,function(perfil,indexPerfil){
+    		$scope.listaPerfilesArbolRegistro.push({tipo: "perfil", idTipo: perfil.id, id: perfil.id, text: perfil.descripcion, parent: "perfiles", icon: 'fa fa-globe', nivel: 0});
+    		angular.forEach(perfil.intervenciones,function(intervencion,indexIntervencion){
+    			var idPadrePerfil = "";
+        		if (intervencion.nivel == 1) {
+        			idPadrePerfil = perfil.id;
+        		}else{
+        			idPadrePerfil = (intervencion.idPadre + "_" + (indexPerfil+1));
+        		}
+        		$scope.listaPerfilesArbolRegistro.push({
+        			tipo: "intervencion",
+    				idTipo: intervencion.id,
+    				id: intervencion.id + "_" + (indexPerfil+1),
+                    text: intervencion.descripcion,
+                    parent: idPadrePerfil,
+                    icon: 'fa fa-globe',
+                    nivel: parseInt(intervencion.nivel),
+                    perfil: perfil.id
+    			});
+        	});
+    	});
+        
+        $('#arbolIntervencionPerfilRegistro').bind('loaded.jstree', function(e, data) {
+  			//$(this).jstree("open_all");
+        }).jstree({
+        	'plugins': ['search', 'checkbox', 'wholerow'],
+        	'search': {
+  				"case_sensitive": false,
+  				"show_only_matches": true
+  			},
+  			'core': {
+  				'data': $scope.listaPerfilesArbolRegistro,
+                'themes': {
+                    'name': 'proton',
+                    'responsive': true,
+                    "icons":false        
+                }
+            }
+  		});
 	}
     
     //MÉTODO QUE ASIGNA LA/LAS INTERVENCIÓN(ES) SELECCIONADA(S) A LA LISTA DE 'listaIntervencionesSeleccionadas' PARA MOSTRAR - PESTAÑA INTERVENCIONES REGISTRO USUARIO
@@ -874,6 +959,92 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		$("#contenedorIntervencionesRegistro").css("border", "white solid 0px");
     	$scope.$apply();
     });    
+    
+  //MÉTODO QUE ASIGNA LOS PERFILES SELECCIONADOS A LA LISTA DE 'intervencionPerfilSelect' PARA MOSTRAR - PESTAÑA PERFILES REGISTRO USUARIO
+    $("#arbolIntervencionPerfilRegistro").click(function() {
+    	$scope.informacionRegistro.perfiles = [];
+    	$scope.intervencionPerfilSelect = [];
+    	var intervencionesPerfilesTree = $('#arbolIntervencionPerfilRegistro').jstree("get_selected", true);
+    	var listaPerfilesPadres = [];
+    	
+    	$('#arbolPerfilesSeleccionadosRegistro').jstree("destroy");
+    	if(intervencionesPerfilesTree.length > 0){
+    		
+    		intervencionesPerfilesTree.forEach(intervencion =>{
+        		if(intervencion.original.nivel == 2){
+        			intervencion.parents.forEach(padre =>{
+            			var existePadre = listaPerfilesPadres.find((e) => e.id == padre);
+            			if(existePadre == undefined){
+            				var padrePerfil = $scope.listaPerfilesArbolRegistro.find((e) => e.id == padre);
+            				if(padrePerfil != undefined){
+            					listaPerfilesPadres.push(padrePerfil);
+            				}
+            			}
+                	});
+        		}
+        	});
+        	
+        	listaPerfilesPadres.forEach(padre =>{
+        		var existePadre = intervencionesPerfilesTree.find((e) => e.id == padre.id);
+        		if(existePadre == undefined){
+        			intervencionesPerfilesTree.push(padre);
+        		}
+        	});
+        	
+        	$scope.listaMostrarPerfilesSeleccionados = [];
+        	angular.forEach(intervencionesPerfilesTree,function(intervencion,index){
+        		if(intervencion.original == undefined){
+            		$scope.listaMostrarPerfilesSeleccionados.push({
+            			tipo: intervencion.tipo,
+            			idTipo: intervencion.idTipo,
+            			id: intervencion.id,
+                        text: intervencion.text,
+                        parent: intervencion.parent,
+                        icon: 'fa fa-globe',
+                        nivel: intervencion.nivel,
+                        perfil: intervencion.perfil
+            		});
+        		}else{
+        			$scope.listaMostrarPerfilesSeleccionados.push({
+            			tipo: intervencion.original.tipo,
+            			idTipo: intervencion.original.idTipo,
+            			id: intervencion.original.id,
+                        text: intervencion.original.text,
+                        parent: intervencion.original.parent,
+                        icon: 'fa fa-globe',
+                        nivel: intervencion.original.nivel,
+                        perfil: intervencion.original.perfil
+            		});
+        		}
+        	});
+        	
+        	$scope.listaMostrarPerfilesSeleccionados.find((e) => e.id == "perfiles").text = "PERFILES SELECCIONADOS";
+    		
+    		$('#arbolPerfilesSeleccionadosRegistro').bind('loaded.jstree', function(e, data) {
+      			$(this).jstree("open_all");
+      			$(this).jstree('select_all');
+      			$(this).jstree().disable_node($(this).jstree().get_selected());
+            }).jstree({
+            	'plugins': ['search', 'checkbox', 'wholerow'],
+            	'search': {
+      				"case_sensitive": false,
+      				"show_only_matches": true
+      			},
+      			'core': {
+      				'data': $scope.listaMostrarPerfilesSeleccionados,
+                    'themes': {
+                        'name': 'proton',
+                        'responsive': true,
+                        "icons":false        
+                    }
+                }
+      		});
+    	}
+
+    	$("#labelIntervencionesPerfilesSeleccionados").css("color", "rgb(70, 88, 107)");
+		$("#contenedorIntervencionesPerfilesRegistro").css("border", "white solid 0px");
+    	$scope.$apply();
+    });  
     
     //MÉTODO QUE ASIGNA EL/LOS PERMISO(S) SELECCIONADO(S) A LA LISTA DE 'listaPermisosSeleccionados' PARA MOSTRAR - PESTAÑA ACCESOS REGISTRO USUARIO
     $("#arbolPermisoRegistro").click(function() {
@@ -934,6 +1105,17 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 			}
 		});
     	
+    	var jsonPerfilesIntervenciones = [];
+    	angular.forEach($scope.listaMostrarPerfilesSeleccionados,function(perfiles,index){
+    		if(perfiles.nivel == 1 ||  perfiles.nivel == 2){
+    			jsonPerfilesIntervenciones.push(perfiles.idTipo);
+    		}
+    	});
+    	
+    	jsonPerfilesIntervenciones = jsonPerfilesIntervenciones.filter(function(ele , pos){
+    	    return jsonPerfilesIntervenciones.indexOf(ele) == pos;
+    	});
+    	
     	let paramsRegistro = {
     			nombre: $scope.informacionRegistro.nombre,
     			apellidoPaterno: $scope.informacionRegistro.apellidoPaterno,
@@ -956,9 +1138,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     			fechaAlta: fechaSeleccionada[2] + '-' + fechaSeleccionada[1] + '-' + fechaSeleccionada[0],
     			geografias: $scope.informacionRegistro.geografias,
     			intervenciones: $scope.informacionRegistro.intervenciones,
-    			//DADO QUE EN EL SERVICIO SU VALIDACIÓN ES QUE VAYA UN CAMPO U OTRO (idOperarios O idDespachos), SE COMENTAN LAS SIGUIENTES 2 LÍNEAS
-//    			idOperarios: $scope.isTecnico == true ? [] : $scope.informacionRegistro.tecnicos,
-//    			idDespachos: $scope.isTecnico == true ? $scope.informacionRegistro.despachos : [],
+    			perfilesOu: jsonPerfilesIntervenciones,
     			permisos: $scope.isTecnico == true ? [] : $scope.informacionRegistro.permisos,
     			idAsignacionAutomatica: $scope.tabInformacionVW_ASIG_AUTOMATICA == true ? $scope.informacionRegistro.asignacionAutomatica : 0
     	};
@@ -1055,6 +1235,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	var validacionAccesos = true;
     	var validacionTecnicos = true;
     	var validacionDespachos = true;
+    	var validacionPerfiles = true;
     	var mensaje = "VALIDA LOS SIGUIENTES CAMPOS: ";
     	
     	
@@ -1335,6 +1516,19 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
         		}
         	}
 		}
+		
+		//PESTAÑA PERFILES
+		if($scope.tabPerfiles){
+			if($('#arbolIntervencionPerfilRegistro').jstree("get_selected", true).length < 1){
+				validacionPerfiles = false;
+				mensaje = mensaje + "<br/> *Perfil(es)";
+				$("#labelIntervencionesPerfilesSeleccionados").css("color", "#f55756");
+				$("#contenedorIntervencionesPerfilesRegistro").css("border", "#f55756 solid 1px");
+			}else{
+				$("#labelIntervencionesPerfilesSeleccionados").css("color", "rgb(70, 88, 107)");
+				$("#contenedorIntervencionesPerfilesRegistro").css("border", "white solid 0px");
+			}
+		}
     	
     	//PESTAÑA CONFIRMAR USUARIO
     	if($scope.tabConfirmacion){
@@ -1387,6 +1581,12 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 			$("#pills-confirmar").removeClass("active show");
 			$("#pills-despacho-tab").addClass("active");
 			$("#pills-despacho").addClass("active show");
+		}else if(validacionPerfiles == false){
+			validacion = false;
+			$("#pills-confirmar-tab").removeClass("active");
+			$("#pills-confirmar").removeClass("active show");
+			$("#pills-perfiles-tab").addClass("active");
+			$("#pills-perfiles").addClass("active show");
 		}else{
 			//...
 		}
@@ -1695,8 +1895,10 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		$scope.tabAccesos = false;
 		$scope.tabTecnicos = false;
 		$scope.tabDespachos = false;
+		$scope.tabPerfiles = false;
 		$scope.tabConfirmacion = false;
 		$("#buscadorIntervencionRegistro").val("");
+		$("#buscadorIntervencionPerfilRegistro").val("");
     	$("#buscadorGeografiaRegistro").val("");
     	$("#buscadorPermisosRegistro").val("");
     	$scope.buscarTecnico = "";
@@ -1720,12 +1922,13 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		$scope.listaIdsGeografiaCiudadNatalRegistro = [];
 		$('#arbolIntervencionRegistro').jstree("deselect_all");
 		$('#arbolIntervencionRegistro').jstree("close_all");
-//    	$('#arbolGeografiaRegistro').jstree("deselect_all");
-//    	$('#arbolGeografiaRegistro').jstree("close_all");
+		$('#arbolIntervencionPerfilRegistro').jstree("deselect_all");
+		$('#arbolIntervencionPerfilRegistro').jstree("close_all");
 		$('#arbolGeografiaRegistro').jstree("destroy");
     	$('#arbolPermisoRegistro').jstree("deselect_all");
     	$('#arbolPermisoRegistro').jstree("close_all");
     	$("#arbolIntervencionRegistro").jstree('open_node', 0);
+    	$("#arbolIntervencionPerfilRegistro").jstree('open_node', 0);
     	$("#arbolPermisoRegistro").jstree('open_node', 0);
     	$("#puesto_select_registro"). prop("selectedIndex",0);
     	$("#compania_select_registro"). prop("selectedIndex",0);
@@ -1912,6 +2115,12 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     $("#pills-intervencion-tab").click(function() {
     	setTimeout(function (){
 	        $("#buscadorIntervencionRegistro").focus();
+	    }, 750);
+    });
+    
+    $("#pills-perfiles-tab").click(function() {
+    	setTimeout(function (){
+	        $("#buscadorIntervencionPerfilRegistro").focus();
 	    }, 750);
     });
     

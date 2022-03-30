@@ -114,21 +114,21 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 "idOT": 1234567,
                 "idFlujo": 12
             };
-//        
-//        let paramsDetalleOtPe2 = {
-//                "idOT": 222120,
-//                "idFlujo": 10
-//            };
-//        
-//        let paramsDetalleOtPe3 = {
-//                "idOT": 481649,
-//                "idFlujo": 11
-//            };
+        
+        let paramsDetalleOtPe2 = {
+                "idOT": 222120,
+                "idFlujo": 10
+            };
+        
+        let paramsDetalleOtPe3 = {
+                "idOT": 481649,
+                "idFlujo": 11
+            };
 
         $q.all([
             mainDespachoService.consultarDetalleOtDespacho(params),
             mainDespachoService.consultarDetalleTecnicoOt(params),
-            mainDespachoService.consultaDetalleOtPe(paramsDetalleOtPe)
+//            mainDespachoService.consultaDetalleOtPe(paramsDetalleOtPe)
 //            mainDespachoService.consultaDetalleOtPe(paramsDetalleOtPe2)
 //            mainDespachoService.consultaDetalleOtPe(paramsDetalleOtPe3)
         ]).then(function (results) {
