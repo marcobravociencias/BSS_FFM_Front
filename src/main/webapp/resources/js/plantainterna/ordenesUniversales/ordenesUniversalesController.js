@@ -28,7 +28,44 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
 
     $scope.verAplicaDisponbilidad=true;
     $scope.errorSeleccionIntGeografia=true;
+
+    $scope.isErrorCamposBasicos=true
     const FECHA_HOY_DATE=new Date();
+
+    $scope.validarCamposBasicos=function(){
+        let isErrorValidate=false;
+        if( !$scope.infoBasica.tiposubtipoordentext ){
+            isErrorValidate=true
+        }
+        if( !$scope.infoBasica.distrito ){
+            isErrorValidate=true
+        }
+        if( !$scope.infoBasica.paquete ){
+            isErrorValidate=true
+        }
+        if( !$scope.infoBasica.canalVenta ){
+            isErrorValidate=true
+        }
+        if( !$scope.infoBasica.horaEstimada ){
+            isErrorValidate=true
+        }
+
+        if( $scope.verAplicaDisponbilidad ){
+            if(!$scope.infoBasica.turno ){
+                isErrorValidate=true
+            }
+        }else{
+            if( !$scope.infoBasica.idTurnoSeleccionAplica ){
+                isErrorValidate=true
+            }
+            if( !$scope.infoBasica.fechaTurnoTextAplica ){
+                isErrorValidate=true
+            }
+        }
+
+        $scope.isErrorCamposBasicos=isErrorValidate
+        $scope.$apply()
+    }
     $scope.guardarOrdenUniversal = function () {
         if ($.trim($scope.infoBasica.folio) !== '') {
             if (!$scope.validarFolio())
@@ -277,9 +314,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                         }
                     });            
                 });   
-               
-    
-             
+              
 
                 $('#jstree-tipoordenes').bind('loaded.jstree', function (e, data) {
                     swal.close()
@@ -549,6 +584,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
             }
         }
         $scope.$apply()
+        $scope.validarCamposBasicos()
     }
 
     $scope.validarPrimerPaso = function () {
@@ -804,8 +840,16 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
         return isErrorValidate
     }
 
+    $scope.dirigirSegundaSeccion=function(){
+        if( !$scope.isErrorCamposBasicos )
+            $("#wizzard-2").click()
+    }
+   
 
     angular.element(document).ready(function () {
+        $("#turnoAplicaDisp").change(function(){
+            $scope.validarCamposBasicos()
+        })
         $("#modal-filtro-arbol").on("hidden.bs.modal", function () {
             $scope.validarModalesTipoIntervencionesGeografia('arbol');
         });
@@ -820,6 +864,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                 $scope.infoBasica.paquete = paquete[0].text;
                 $scope.$apply();
             }
+            $scope.validarCamposBasicos()
         });
 
         $("#modal-canal-ventas").on("hidden.bs.modal", function () {
@@ -828,6 +873,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                 $scope.infoBasica.canalVenta = venta[0].text;
                 $scope.$apply();
             }
+            $scope.validarCamposBasicos()
         });
 
         $('#horaestimada-form').timepicker({
@@ -838,6 +884,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                 $scope.infoBasica.horaEstimada = (horas.padStart(2, '0')) + ':' + (minutos.padStart(2, '0'));
                 $scope.$apply()
                 console.log($scope.infoBasica.horaEstimada)
+                $scope.validarCamposBasicos()
             }
         })
         $("#moduloOrdenesUniversales").addClass("active");

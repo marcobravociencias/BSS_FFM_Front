@@ -33,7 +33,8 @@ app.calendarController = function ($scope, ordenesUniversalesService) {
                 $scope.infoBasica.idTurnoSeleccion=eventObject._def.extendedProps.idTipoTurno            
                 $scope.dateSelectedCalendarEvent=info.event.start
 
-                $scope.$apply()                           
+                $scope.$apply()  
+                $scope.validarCamposBasicos()                         
             },
             selectable: true,
             datesSet :function(){
