@@ -222,7 +222,7 @@ span.refresh-cuenta.refresh-btn.fa.fa-search {
 }
 
 .resumen-detalle-agenda {
-    font-size: .8em;
+    font-size: .7em;
     color: #7a7a7a;
     margin: 0;
     font-family: 'Montserrat' !important;
@@ -276,7 +276,7 @@ span.refresh-cuenta.refresh-btn.fa.fa-search {
     text-overflow: ellipsis;
     width: 80%;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
-    border-radius: 8px !important;
+    border-radius: 3px !important;
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -498,32 +498,28 @@ a.ui-corner-all {
 }
 
 .div-contenedor-info-factibilidad {
+    position: absolute;
+    z-index: 9;
+    text-align: center;
+    border: none;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%) !important;
+    background-color: white;
     margin: 0.5em;
+    min-width: 250px;
     border-radius: 0;
-    box-shadow: none !important;
-}
+  }
 
 .icon-informacion-fac {
-    opacity: 0.7;
-    font-size: 1.5em;
+    opacity: 0.5;
+    font-size: 1.6em;
     float: left;
     margin-right: 0.5em;
 }
 
-#info-factibilidad .fa-minus:before{
-    content: "\f106" !important;
-}
-
-#info-factibilidad .fa-plus:before{
-    content: "\f107" !important;
-}
-
-#info-factibilidad .icono-ocultar-mostrar-map {
-    top: 0.8em;
-}
-
-#info-factibilidad .title-tipoot-map-filtros{
-    font-weight: lighter;
+.icon-content-info {
+    float: right;
+    cursor: pointer;
+    padding: 0.2em;
 }
 
 .content-actualizar .boton-factibilidad {
@@ -541,4 +537,8 @@ a.ui-corner-all {
     text-align: center;
     padding: 0 1em 0.5em 1em;
 
+}
+
+.cuenta-second{
+    font-weight: lighter;
 }

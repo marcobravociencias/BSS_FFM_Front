@@ -69,9 +69,9 @@ app.mapController = function ($scope, traspasosService) {
             markerRes.setPosition(new google.maps.LatLng($scope.latitudSelectedMapTemp, $scope.longitudSelectedMapTemp));
             mapResumen.setCenter(new google.maps.LatLng($scope.latitudSelectedMapTemp, $scope.longitudSelectedMapTemp));
             $("#search-input-place").val(this.getPosition().lat() + ', ' + this.getPosition().lng());
-            setTimeout(() => {
+           
                 $scope.consultarFactibilidad(true, $scope.latitudSelectedMapTemp, $scope.longitudSelectedMapTemp)
-            }, 800);
+           
         });
         google.maps.event.addListener(map, 'dblclick', function (e) {
             marker.setMap(map)
@@ -85,9 +85,7 @@ app.mapController = function ($scope, traspasosService) {
             $scope.longitudSelectedMapTemp = marker.getPosition().lng();
             $scope.$apply()
             $("#search-input-place").val($scope.latitudSelectedMapTemp + ', ' + $scope.longitudSelectedMapTemp);
-            setTimeout(() => {
                 $scope.consultarFactibilidad(true, $scope.latitudSelectedMapTemp, $scope.longitudSelectedMapTemp)
-            }, 800);
         });
         geocoder = new google.maps.Geocoder;
         $scope.addSearchInput()
@@ -161,7 +159,7 @@ app.mapController = function ($scope, traspasosService) {
                 mapResumen.setZoom(17);
                 setTimeout(() => {
                     $scope.consultarFactibilidad(true, $scope.latitudSelectedMapTemp, $scope.longitudSelectedMapTemp)
-                }, 800);
+                }, 200);
 
                 if (place.geometry.viewport) {
                     bounds.union(place.geometry.viewport);
@@ -172,8 +170,6 @@ app.mapController = function ($scope, traspasosService) {
             map.fitBounds(bounds);
 
         });
-
-     
     }
     $scope.abrirOpcionUbicacion = function () {
         let isErrorValidate = $scope.validarLatitudLongitudMap()
@@ -182,6 +178,9 @@ app.mapController = function ($scope, traspasosService) {
             map.setCenter(pt);
             map.setZoom(17);
             marker.setPosition(new google.maps.LatLng($scope.latitudSelectedMap, $scope.longitudSelectedMap));
+            markerRes.setPosition(new google.maps.LatLng($scope.latitudSelectedMap, $scope.longitudSelectedMap));
+            mapResumen.setCenter(pt);
+            mapResumen.setZoom(17);
         }
     }
 
