@@ -145,11 +145,30 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
     }
 
     $scope.consultarTecnicos = function () {
+    	
+    	let paramsServicio1 = {"geografias": ["1", "2", "3"],"idTipoUsuario": ["1", "2"]};
+    	let paramsServicio2 = {"tecnicos": [125471, 2, 3]};
+    	let paramsServicio3 = {"idDespacho": 125612};
+    	let paramsServicio4 = {"idTecnico": 2,"fechaInicio": "09-11-2021","fechaFin":"18-03-2022"};
+    	let paramsServicio5 = {"idAuxiliar": 13,"fechaInicio": "09-11-2021","fechaFin":"18-03-2022"};
+    	let paramsServicio6 = {"idTecnico": 2};
+    	let paramsServicio7 = {"idTecnico": 2,"fechaInicio": "18-03-2022","fechaFin":"22-03-2022"};
+    	let paramsServicio8 = {"idAuxiliar": 13,"fechaInicio": "18-03-2022","fechaFin":"22-03-2022"};
+    	
         swal({ text: 'Cargando datos ...', allowOutsideClick: false });
         swal.showLoading();
-        let params = {}; //se envian clusters
-        gestionTecnicosService.consultaTecnicosGestionTecnicos(params).then(function success(response) {
-            console.log(response)
+        
+        $q.all([
+        	gestionTecnicosService.consultaTecnicosGestionTecnicos(paramsServicio1),
+        	gestionTecnicosService.consultaAuxiliaresGestionTecnicos(paramsServicio2),
+        	gestionTecnicosService.consultaTecnicosPorDespacho(paramsServicio3),
+        	gestionTecnicosService.consultaOrdenesTecnicoPorFecha(paramsServicio4),
+        	gestionTecnicosService.consultaOrdenesAuxiliarPorFecha(paramsServicio5),
+        	gestionTecnicosService.consultaDisponibilidadTecnico(paramsServicio6),
+        	gestionTecnicosService.consultaDiasTrabajadosTecnicoPorFecha(paramsServicio7),
+        	gestionTecnicosService.consultaDiasTrabajadosAuxiliarPorFecha(paramsServicio8)
+        ]).then(function (results) {
+        	
             if (response.data.respuesta) {
                 if (response.data.result) {
                     $scope.listTecnicos = arrayListTecnicos.data.result;
@@ -162,6 +181,7 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
                 swal.close();
                 mostrarMensajeWarningValidacion(response.data.resultDescripcion)
             }
+            
         });
     }
 
