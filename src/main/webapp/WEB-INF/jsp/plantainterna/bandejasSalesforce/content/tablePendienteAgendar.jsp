@@ -17,17 +17,17 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-12 table-responsive" style="margin-top: 1em;">
+    <div class="col-12 table-responsive" style="margin-top: 1em; padding: 0;">
         <table id="tablePendientesAgendar" class="display table table-hover " cellspacing="0" width="100%">
             <thead id="thead_pendientesAgendar">
                 <tr>
                     <th>CSP</th>
                     <th>CS</th>
                     <th>Cotizaci&oacute;n</th>
-                    <th>Cuenta</th>
+                    <th>Cliente</th>
                     <th>Paquete</th>
                     <th>Cuadrilla</th>
-                    <th>Distrito</th>
+                    <th>Geograf&iacute;a</th>
                     <th>OS</th>
                     <th>Estatus OS</th>
                     <th>Fecha Creaci&oacute;n</th>

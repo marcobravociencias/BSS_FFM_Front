@@ -20,6 +20,15 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
     let treeActivar;
     let treeRescataventas;
     $scope.banderaErrorGeografia = false;
+    $scope.isAgendamiento = false;
+    $scope.elementoCSP = {};
+    $scope.contactoSelected = {};
+    $scope.isContactoSelected = false;
+    $scope.listContactosAgendamiento = [];
+    $scope.infoFactibilidad = {};
+
+    app.agendamientoCalendar($scope, bandejasSalesforceService);
+    app.agendamientoMap($scope, bandejasSalesforceService);
 
     $('.drop-down-filters').on("click.bs.dropdown", function (e) {
         e.stopPropagation();
@@ -129,7 +138,6 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                     $scope.btnAceptarGeografiaConsulta('pendientesAgendar');
                     $scope.consultarPendientesAgendarBandejas();
                     $scope.$apply();
-                    swal.close();
                 }).jstree({
                     'plugins': ["wholerow", "checkbox", "search"],
                     'core': {
@@ -159,7 +167,6 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                     $scope.btnAceptarGeografiaConsulta('rescataventas');
                     $scope.consultarRescataventasBandejas();
                     $scope.$apply();
-                    swal.close();
                 }).jstree({
                     'plugins': ["wholerow", "checkbox", "search"],
                     'core': {
@@ -189,7 +196,6 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                     $scope.btnAceptarGeografiaConsulta('pendientesActivar');
                     $scope.consultarPendientesActivarBandejas();
                     $scope.$apply();
-                    swal.close();
                 }).jstree({
                     'plugins': ["wholerow", "checkbox", "search"],
                     'core': {
@@ -282,6 +288,9 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                 validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
             }
 
+            GenericMapa.prototype.callPrototypeMapa(results[0].data.result);
+            $scope.initMapaAgendamiento();
+
             if (results[1].data !== undefined) {
                 if (results[1].data.respuesta) {
                     if (results[1].data.result) {
@@ -355,6 +364,313 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         });
     }
 
+    $('#contactoAgendamiento').change(function () {
+        var valueContact = $(this).val();
+        if (valueContact == 'NUEVO') {
+            $("#modalNuevoContacto").modal('show');
+        } else {
+            $scope.isContactoSelected = true;
+            $scope.contactoSelected = $scope.listContactosAgendamiento.find(function (elem) { return elem.id === Number($("#contactoAgendamiento").val()) });
+            $scope.$apply();
+        }
+    });
+
+    $scope.limpiarFormularioNuevoContacto = function () {
+        $("#nombreContacto").removeClass("invalid-inputContacto");
+        $("#aPaternoContacto").removeClass("invalid-inputContacto");
+        $("#aMaternoContacto").removeClass("invalid-inputContacto");
+        $("#generoContacto").removeClass("invalid-inputContacto");
+        $("#emailContacto").removeClass("invalid-inputContacto");
+        $("#telefonoFijoContacto").removeClass("invalid-inputContacto");
+        $("#celularContacto").removeClass("invalid-inputContacto");
+        $("#nombreContacto").val('');
+        $("#aPaternoContacto").val('');
+        $("#aMaternoContacto").val('');
+        $("#generoContacto").val('');
+        $("#emailContacto").val('');
+        $("#telefonoFijoContacto").val('');
+        $("#celularContacto").val('');
+        $("#extensionContacto").val('');
+        $scope.$apply();
+    }
+
+    $('#modalNuevoContacto').on('hidden.bs.modal', function () {
+        $('#contactoAgendamiento').val('');
+        $scope.limpiarFormularioNuevoContacto();
+    });
+
+    $(".inputContacto").keyup(function () {
+        var input = $(this).attr("id");
+        if ($(this).val() === "" || $(this).val() === undefined) {
+            $("#" + input).addClass("invalid-inputContacto");
+        } else {
+            $("#" + input).removeClass("invalid-inputContacto");
+        }
+    });
+
+    $("#generoContacto").change(function () {
+        $("#generoContacto").removeClass("invalid-inputContacto");
+    });
+
+    $scope.agregarContactoAgendamiento = function (contactoAg) {
+        let isValid = true;
+        let mensajeError = '';
+
+        if ($("#nombreContacto").val() == undefined || $("#nombreContacto").val() == '') {
+            $("#nombreContacto").addClass("invalid-inputContacto");
+            mensajeError += "<li>Debe ingresar un Nombre de Contacto</li>";
+            isValid = false;
+        } else {
+            $("#nombreContacto").removeClass("invalid-inputContacto");
+        }
+
+        if ($("#aPaternoContacto").val() == undefined || $("#aPaternoContacto").val() == '') {
+            $("#aPaternoContacto").addClass("invalid-inputContacto");
+            mensajeError += "<li>Debe ingresar el Apellido Paterno del Contacto</li>";
+            isValid = false;
+        } else {
+            $("#aPaternoContacto").removeClass("invalid-inputContacto");
+        }
+
+        if ($("#aMaternoContacto").val() == undefined || $("#aMaternoContacto").val() == '') {
+            $("#aMaternoContacto").addClass("invalid-inputContacto");
+            mensajeError += "<li>Debe ingresar el Apellido Materno del Contacto</li>";
+            isValid = false;
+        } else {
+            $("#aMaternoContacto").removeClass("invalid-inputContacto");
+        }
+
+        if ($("#emailContacto").val() == undefined || $("#emailContacto").val() == '') {
+            $("#emailContacto").addClass("invalid-inputContacto");
+            mensajeError += "<li>Debe ingresar el Correo Electr&oacute;nico del Contacto</li>";
+            isValid = false;
+        } else {
+            if ($("#emailContacto").val().indexOf('@', 0) == -1 || $("#emailContacto").val().indexOf('.', 0) == -1) {
+                $("#emailContacto").addClass("invalid-inputContacto");
+                mensajeError += "<li>Valida el formato del correo electr&oacute;nico</li>";
+                isValid = false;
+            } else {
+                $("#emailContacto").removeClass("invalid-inputContacto");
+            }
+        }
+
+        if ($("#generoContacto").val() == undefined || $("#generoContacto").val() == '') {
+            $("#generoContacto").addClass("invalid-inputContacto");
+            mensajeError += "<li>Debe seleccionar un G&eacute;nero</li>";
+            isValid = false;
+        } else {
+            $("#generoContacto").removeClass("invalid-inputContacto");
+        }
+
+        if ($("#telefonoFijoContacto").val() == undefined || $("#telefonoFijoContacto").val() == '') {
+            $("#telefonoFijoContacto").addClass("invalid-inputContacto");
+            mensajeError += "<li>Debe ingresar un N&uacute;mero de Tel&eacute;fono Fijo</li>";
+            isValid = false;
+        } else {
+            if ($("#telefonoFijoContacto").val().length < 10) {
+                $("#telefonoFijoContacto").addClass("invalid-inputContacto");
+                mensajeError += "<li>Debe ingresar un N&uacute;mero de Tel&eacute;fono v&aacute;lido</li>";
+                isValid = false;
+            } else {
+                $("#telefonoFijoContacto").removeClass("invalid-inputContacto");
+            }
+        }
+
+        if ($("#celularContacto").val() == undefined || $("#celularContacto").val() == '') {
+            $("#celularContacto").addClass("invalid-inputContacto");
+            mensajeError += "<li>Debe ingresar un N&uacute;mero de Tel&eacute;fono Celular</li>";
+            isValid = false;
+        } else {
+            if ($("#celularContacto").val().length < 10) {
+                $("#celularContacto").addClass("invalid-inputContacto");
+                mensajeError += "<li>Debe ingresar un N&uacute;mero de Celular v&aacute;lido</li>";
+                isValid = false;
+            } else {
+                $("#celularContacto").removeClass("invalid-inputContacto");
+            }
+        }
+
+        if (isValid) {
+            contactoAg.id = 1;
+            $scope.listContactosAgendamiento.push(contactoAg);
+            $("#modalNuevoContacto").modal('hide');
+        } else {
+            mostrarMensajeWarningValidacion(mensajeError);
+        }
+    }
+
+    $("#contactoAgendamiento").change(function () {
+        if ($("#contactoAgendamiento").val() !== 'NUEVO') {
+            $scope.isContactoSelected = true;
+            $scope.contactoSelected = $scope.listContactosAgendamiento.find(function (elem) { return elem.id === Number($("#contactoAgendamiento").val()) });
+            $scope.$apply();
+        }
+    });
+
+    $scope.clearFormAgendamiento = function () {
+        $("#opcion-calendarioAgendamiento-tab").trigger("click");
+        $("#contactoAgendamiento").val('');
+        $("#entreCallesAgendamiento").val('');
+        $("#referenciasAgendamiento").val('');
+        $("#comentariosAgendamiento").val('');
+        $scope.$apply();
+    }
+
+    $scope.consultarFactibilidadAgendamiento = function (unidadNegocio, latitud, longitud) {
+        let params = {
+            latitud: latitud,
+            longitud: longitud
+        }
+        swal({ text: 'Espere...', allowOutsideClick: false });
+        swal.showLoading();
+        if (unidadNegocio == 'empresarial') {
+            bandejasSalesforceService.consultaFactibilidadEmpresarialAgendamiento(params).then(function success(response) {
+                console.log(response);
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        if (response.data.result) {
+                            let data = {
+                                factibilidad: response.data.result.factibilidad,
+                                region: response.data.result.regionEnlace,
+                                ciudad: response.data.result.ciudadEnlace,
+                                distrito: response.data.result.distritoEnlace,
+                                cluster: response.data.result.clusterTotalplay
+                            }
+                            $scope.infoFactibilidad = data;
+                            if (Number(response.data.result.factibilidad) === 0) {
+                                mostrarMensajeWarningValidacion('Sin factibilidad en esta ubicaci&oacute;n');
+                            }
+                            swal.close();
+                        } else {
+                            mostrarMensajeWarningValidacion('No se encontr&oacute; factibilidad');
+                            swal.close();
+                        }
+                    } else {
+                        mostrarMensajeWarningValidacion(response.data.resultDescripcion);
+                        swal.close();
+                    }
+                } else {
+                    mostrarMensajeErrorAlert('Ha ocurrido un error al consultar la factibilidad');
+                    swal.close();
+                }
+            });
+        } else if (unidadNegocio == 'residencial') {
+            bandejasSalesforceService.consultaFactibilidadResidencialAgendamiento(params).then(function success(response) {
+                console.log(response);
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        if (response.data.result) {
+                            let resultFactibilidad = {
+                                factibilidad: response.data.result.factibilidad,
+                                region: response.data.result.regionTotalplay,
+                                ciudad: response.data.result.ciudadTotalplay,
+                                distrito: response.data.result.distritoTotalplay,
+                                cluster: response.data.result.clusterTotalplay,
+                                latitud: latitud,
+                                longitud: longitud
+                            }
+                            $scope.infoFactibilidad = resultFactibilidad;
+                            if (Number(response.data.result.factibilidad) === 0) {
+                                mostrarMensajeWarningValidacion('Sin factibilidad en esta ubicaci&oacute;n');
+                            }
+                            swal.close();
+                        } else {
+                            mostrarMensajeWarningValidacion('No se encontr&oacute; factibilidad');
+                            swal.close();
+                        }
+                    } else {
+                        mostrarMensajeWarningValidacion(response.data.resultDescripcion);
+                        swal.close();
+                    }
+                } else {
+                    mostrarMensajeErrorAlert('Ha ocurrido un error al consultar la factibilidad');
+                    swal.close();
+                }
+            });
+        }
+    }
+
+    visualizarAgendamiento = function (index) {
+        $scope.isAgendamiento = true;
+        $scope.isContactoSelected = false;
+        $scope.isFactibilidad = false;
+        $scope.isFechaSelected = false;
+        $scope.listContactosAgendamiento = [];
+        $scope.infoFactibilidad = {};
+        $scope.elementoCSP = {};
+        $scope.elementoCSP = $scope.listPendientesAgendar[index];;
+        $scope.elementoCSP.latitud = '19.346519036181018';
+        $scope.elementoCSP.longitud = '-99.2159671376953';
+        $scope.$apply();
+        $scope.clearFormAgendamiento();
+        $scope.consultarDisponibilidadBandejas();
+        $scope.consultarFactibilidadAgendamiento('residencial', $scope.elementoCSP.latitud, $scope.elementoCSP.longitud);
+        $scope.clearMarkersAgendamiento();
+        $scope.setMarkerAgendamiento();
+    }
+
+    $scope.agendarCSPBandejas = function () {
+        let isValid = true;
+        let mensajeError = '';
+
+        if ($("#comentariosAgendamiento").val() == undefined || $("#comentariosAgendamiento").val() == '') {
+            mensajeError += "<li>Debe ingresar un comentario para Agendar</li>";
+            isValid = false;
+        }
+
+        if ($scope.elementoCSP.turnoAgendamiento == undefined || $scope.elementoCSP.turnoAgendamiento == '') {
+            mensajeError += "<li>Debe seleccionar un turno del Calendario</li>";
+            isValid = false;
+        }
+
+        if (!$scope.isContactoSelected) {
+            mensajeError += "<li>Debe seleccionar un contacto</li>";
+            isValid = false;
+        }
+
+        if (isValid) {
+            swal({
+                title: "\u00BFEst\u00E1s seguro de enviar la informaci\u00F3n?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#007bff',
+                confirmButtonText: 'Si',
+                cancelButtonText: 'No',
+                html:
+                    '<b style="color: #ff5200;font-weight: bold;">Valida los datos porfavor:</b>' +
+                    '<div style="text-align: left;" class="info_ot_detail">' +
+                    '	<div class="col-md-10 offset-md-2">' +
+                    '		<b class="title_span_detalle"> Regi&oacute;n:</b> &nbsp; &nbsp;' +
+                    '		<span class="ciudad-detalle-cuenta">' + $scope.elementoCSP.region + '</span>' +
+                    '	</div>' +
+                    '	<div class="col-md-10 offset-md-2">' +
+                    '		<b class="title_span_detalle"> Ciudad:</b> &nbsp; &nbsp;' +
+                    '		<span class="ciudad-detalle-cuenta">' + $scope.elementoCSP.ciudad + ' </span>' +
+                    '	</div>' +
+                    '	<div class="col-md-10 offset-md-2">' +
+                    '		<b class="title_span_detalle"> Distrito:</b> &nbsp; &nbsp;' +
+                    '		<span class="ciudad-detalle-cuenta">' + $scope.elementoCSP.distrito + ' </span>' +
+                    '	</div>' +
+                    '	<div class="col-md-10 offset-md-2">' +
+                    '		<b class="title_span_detalle"> Cl&uacute;ster:</b> &nbsp; &nbsp;' +
+                    '		<span class="ciudad-detalle-cuenta">' + $scope.elementoCSP.cluster + ' </span>' +
+                    '	</div>' +
+                    '</div>',
+            }).then(function (isConfirm) {
+                if (isConfirm) {
+                    $scope.isAgendamiento = false;
+                    mostrarMensajeExitoAlert("CSP Agendado correctamente");
+                    $scope.cambiarVistaSF(1);
+                    $scope.elementoCSP = {};
+                    $scope.$apply();
+                }
+            }).catch(err => {
+            });
+        } else {
+            mostrarMensajeWarningValidacion(mensajeError);
+        }
+    }
+
     $scope.getFechaFormato = function (fecha) {
         let fechaPrueba = fecha.split('/');
         var startDate = moment([fechaPrueba[2], fechaPrueba[1] - 1]);
@@ -380,12 +696,12 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
             swal.showLoading();
             let paramsfecha = $scope.getFechaFormato(document.getElementById('fecha_pendientes_agendar').value);
             let params = {
-                "geografias": clustersSelected,
-                "fechaInicio": paramsfecha.fechaInicio,
-                "fechaFin": paramsfecha.fechaFin
+                // "geografias": clustersSelected,
+                // "fechaInicio": paramsfecha.fechaInicio,
+                // "fechaFin": paramsfecha.fechaFin
+                "geografias": ["CIUDAD DE MEXICO"], "fechaFin": "2021-01-01", "fechaInicio": "2019-01-01"
             }
             // console.log(params);
-            swal.close();
             bandejasSalesforceService.consultarPendientesAgendarBandejasSF(params).then(function success(response) {
                 console.log(response);
                 if (response.data) {
@@ -399,17 +715,22 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                                 $scope.listPendientesAgendar = angular.copy(response.data.result.resultado);
                                 $.each($scope.listPendientesAgendar, function (i, elemento) {
                                     let rowAg = [];
-                                    rowAg[0] = elemento.name == null ? 'Sin informaci&oacute;n' : elemento.name !== undefined ? elemento.name : 'Sin informaci&oacute;n';
-                                    rowAg[1] = elemento.cotSitio.nombreCotSitio == null ? 'Sin informaci&oacute;n' : elemento.cotSitio.nombreCotSitio !== undefined ? elemento.cotSitio.nombreCotSitio : 'Sin informaci&oacute;n';
-                                    rowAg[2] = elemento.cotizacion.cotizacion == null ? 'Sin informaci&oacute;n' : elemento.cotizacion.cotizacion !== undefined ? elemento.cotizacion.cotizacion : 'Sin informaci&oacute;n';
-                                    rowAg[3] = elemento.cuentaFacturaSf.nombreCuentaFactura == null ? 'Sin informaci&oacute;n' : elemento.cuentaFacturaSf.nombreCuentaFactura !== undefined ? elemento.cuentaFacturaSf.nombreCuentaFactura : 'Sin informaci&oacute;n';
-                                    rowAg[4] = elemento.dpPlan.nameDpPlan == null ? 'Sin informaci&oacute;n' : elemento.dpPlan.nameDpPlan !== undefined ? elemento.dpPlan.nameDpPlan : 'Sin informaci&oacute;n';
-                                    rowAg[5] = elemento.cuadrillaFfm == null ? 'Sin informaci&oacute;n' : elemento.cuadrillaFfm !== undefined ? elemento.cuadrillaFfm : 'Sin informaci&oacute;n';
-                                    rowAg[6] = elemento.cluster == null ? 'Sin informaci&oacute;n' : elemento.cluster !== undefined ? elemento.cluster : 'Sin informaci&oacute;n';
-                                    rowAg[7] = elemento.ordenServicio == null ? 'Sin informaci&oacute;n' : elemento.ordenServicio !== undefined ? elemento.ordenServicio : 'Sin informaci&oacute;n';
-                                    rowAg[8] = elemento.estatusOs == null ? 'Sin informaci&oacute;n' : elemento.estatusOs !== undefined ? elemento.estatusOs : 'Sin informaci&oacute;n';
-                                    rowAg[9] = elemento.fechaCreacion == null ? 'Sin informaci&oacute;n' : elemento.fechaCreacion !== undefined ? elemento.fechaCreacion : 'Sin informaci&oacute;n';
-                                    rowAg[10] = "";
+                                    let istop500 = (elemento.top500) ? '<i class="fas fa-star" style="color:#fcba5d;"></i>&nbsp;' : '<i class="fas fa-star" style="color: #b1b1b1;"></i>&nbsp;';
+                                    rowAg[0] = istop500 + (elemento.name !== null && elemento.name !== undefined ? elemento.name : 'Sin informaci&oacute;n');
+                                    rowAg[1] = elemento.cotSitio.nombreCotSitio !== null && elemento.cotSitio.nombreCotSitio !== undefined ? elemento.cotSitio.nombreCotSitio : 'Sin informaci&oacute;n';
+                                    rowAg[2] = elemento.cotizacion.cotizacion !== null && elemento.cotizacion.cotizacion !== undefined ? elemento.cotizacion.cotizacion : 'Sin informaci&oacute;n';
+                                    rowAg[3] = elemento.cuentaFacturaSf.nombreCuentaFactura !== null && elemento.cuentaFacturaSf.nombreCuentaFactura !== undefined ? elemento.cuentaFacturaSf.nombreCuentaFactura : 'Sin informaci&oacute;n';
+                                    rowAg[4] = elemento.dpPlan.nameDpPlan !== null && elemento.dpPlan.nameDpPlan !== undefined ? elemento.dpPlan.nameDpPlan : 'Sin informaci&oacute;n';
+                                    rowAg[5] = elemento.cuadrillaFfm !== null && elemento.cuadrillaFfm !== undefined ? elemento.cuadrillaFfm : 'Sin informaci&oacute;n';
+                                    rowAg[6] = elemento.cluster !== null && elemento.cluster !== undefined ? elemento.cluster : 'Sin informaci&oacute;n';
+                                    rowAg[7] = elemento.ordenServicio !== null && elemento.ordenServicio !== undefined ? elemento.ordenServicio : 'Sin informaci&oacute;n';
+                                    rowAg[8] = elemento.estatusOs !== null && elemento.estatusOs !== undefined ? elemento.estatusOs : 'Sin informaci&oacute;n';
+                                    rowAg[9] = elemento.fechaCreacion !== null && elemento.fechaCreacion !== undefined ? elemento.fechaCreacion : 'Sin informaci&oacute;n';
+                                    rowAg[10] = '<div class="text-center">' +
+                                        '   <span title="Agendar" style="background-color: #7716fa !important; cursor: pointer; border: 1px solid #7716fa;" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnTables" onclick="visualizarAgendamiento(' + i + ')">' +
+                                        '       <i class="fa fa-calendar-alt"></i>' +
+                                        '   </span>' +
+                                        '</div>';
                                     arrayAgendarRow.push(rowAg);
                                 });
                                 pendientesAgendarTable = $('#tablePendientesAgendar').DataTable({
@@ -428,11 +749,11 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                                 swal.close();
                             }
                         } else {
-                            mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                            mostrarMensajeInformativo("No se encontraron Pendientes de Agendar");
                             swal.close();
                         }
                     } else {
-                        mostrarMensajeInformativo("No se encontraron Pendientes de Agendar");
+                        mostrarMensajeErrorAlert(response.data.resultDescripcion);
                         swal.close();
                     }
                 } else {
@@ -478,16 +799,16 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                                 $scope.listRescataventas = angular.copy(response.data.result.resultado);
                                 $.each($scope.listRescataventas, function (i, elemento) {
                                     let rowRes = [];
-                                    rowRes[0] = elemento.nombreCsp == null ? 'Sin informaci&oacute;n' : elemento.nombreCsp !== undefined ? elemento.nombreCsp : 'Sin informaci&oacute;n';
-                                    rowRes[1] = elemento.cotSitio.nombreCotSitio == null ? 'Sin informaci&oacute;n' : elemento.cotSitio.nombreCotSitio !== undefined ? elemento.cotSitio.nombreCotSitio : 'Sin informaci&oacute;n';
-                                    rowRes[2] = elemento.cotizacion.cotizacion == null ? 'Sin informaci&oacute;n' : elemento.cotizacion.cotizacion !== undefined ? elemento.cotizacion.cotizacion : 'Sin informaci&oacute;n';
-                                    rowRes[3] = elemento.cuentaFacturaSf.nombreCuentaFactura == null ? 'Sin informaci&oacute;n' : elemento.cuentaFacturaSf.nombreCuentaFactura !== undefined ? elemento.cuentaFacturaSf.nombreCuentaFactura : 'Sin informaci&oacute;n';
-                                    rowRes[4] = elemento.dpPlan.nameDpPlan == null ? 'Sin informaci&oacute;n' : elemento.dpPlan.nameDpPlan !== undefined ? elemento.dpPlan.nameDpPlan : 'Sin informaci&oacute;n';
-                                    rowRes[5] = elemento.plaza == null ? 'Sin informaci&oacute;n' : elemento.plaza !== undefined ? elemento.plaza : 'Sin informaci&oacute;n';
-                                    rowRes[6] = elemento.cluster == null ? 'Sin informaci&oacute;n' : elemento.cluster !== undefined ? elemento.cluster : 'Sin informaci&oacute;n';
-                                    rowRes[7] = elemento.ordenServicio.nombreOrdenServicio == null ? 'Sin informaci&oacute;n' : elemento.ordenServicio.nombreOrdenServicio !== undefined ? elemento.ordenServicio.nombreOrdenServicio : 'Sin informaci&oacute;n';
-                                    rowRes[8] = elemento.estatusOs == null ? 'Sin informaci&oacute;n' : elemento.estatusOs !== undefined ? elemento.estatusOs : 'Sin informaci&oacute;n';
-                                    rowRes[9] = elemento.fechaCreacion == null ? 'Sin informaci&oacute;n' : elemento.fechaCreacion !== undefined ? elemento.fechaCreacion : 'Sin informaci&oacute;n';
+                                    rowRes[0] = elemento.nombreCsp !== null && elemento.nombreCsp !== undefined ? elemento.nombreCsp : 'Sin informaci&oacute;n';
+                                    rowRes[1] = elemento.cotSitio.nombreCotSitio !== null && elemento.cotSitio.nombreCotSitio !== undefined ? elemento.cotSitio.nombreCotSitio : 'Sin informaci&oacute;n';
+                                    rowRes[2] = elemento.cotizacion.cotizacion !== null && elemento.cotizacion.cotizacion !== undefined ? elemento.cotizacion.cotizacion : 'Sin informaci&oacute;n';
+                                    rowRes[3] = elemento.cuentaFacturaSf.nombreCuentaFactura  !== null && elemento.cuentaFacturaSf.nombreCuentaFactura !== undefined ? elemento.cuentaFacturaSf.nombreCuentaFactura : 'Sin informaci&oacute;n';
+                                    rowRes[4] = elemento.dpPlan.nameDpPlan !== null && elemento.dpPlan.nameDpPlan !== undefined ? elemento.dpPlan.nameDpPlan : 'Sin informaci&oacute;n'
+                                    rowRes[5] = elemento.plaza !== null && elemento.plaza !== undefined ? elemento.plaza : 'Sin informaci&oacute;n';
+                                    rowRes[6] = elemento.cluster !== null && elemento.cluster !== undefined ? elemento.cluster : 'Sin informaci&oacute;n';
+                                    rowRes[7] = elemento.ordenServicio.nombreOrdenServicio !== null && elemento.ordenServicio.nombreOrdenServicio !== undefined ? elemento.ordenServicio.nombreOrdenServicio : 'Sin informaci&oacute;n';
+                                    rowRes[8] = elemento.estatusOs !== null && elemento.estatusOs !== undefined ? elemento.estatusOs : 'Sin informaci&oacute;n';
+                                    rowRes[9] = elemento.fechaCreacion !== null && elemento.fechaCreacion !== undefined ? elemento.fechaCreacion : 'Sin informaci&oacute;n';
                                     // rowRes[10] = "";
                                     arrayResRow.push(rowRes);
                                 });
@@ -507,11 +828,11 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                                 swal.close();
                             }
                         } else {
-                            mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                            mostrarMensajeInformativo("No se encontraron Rescataventas");
                             swal.close();
                         }
                     } else {
-                        mostrarMensajeInformativo("No se encontraron Rescataventas");
+                        mostrarMensajeErrorAlert(response.data.resultDescripcion);
                         swal.close();
                     }
                 } else {
@@ -561,17 +882,17 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                                 $scope.listPendientesActivar = angular.copy(response.data.result.resultado);
                                 $.each($scope.listPendientesActivar, function (i, elemento) {
                                     let row = [];
-                                    row[0] = elemento.nombreCsp == null ? 'Sin informaci&oacute;n' : elemento.nombreCsp !== undefined ? elemento.nombreCsp : 'Sin informaci&oacute;n';
-                                    row[1] = elemento.cotSitio.nombreCotSitio == null ? 'Sin informaci&oacute;n' : elemento.cotSitio.nombreCotSitio !== undefined ? elemento.cotSitio.nombreCotSitio : 'Sin informaci&oacute;n';
-                                    row[2] = elemento.cotizacion.cotizacion == null ? 'Sin informaci&oacute;n' : elemento.cotizacion.cotizacion !== undefined ? elemento.cotizacion.cotizacion : 'Sin informaci&oacute;n';
-                                    row[3] = elemento.cuentaFacturaSf.nombreCuentaFactura == null ? 'Sin informaci&oacute;n' : elemento.cuentaFacturaSf.nombreCuentaFactura !== undefined ? elemento.cuentaFacturaSf.nombreCuentaFactura : 'Sin informaci&oacute;n';
-                                    row[4] = elemento.cuentaFacturaNumero == null ? 'Sin informaci&oacute;n' : elemento.cuentaFacturaNumero !== undefined ? elemento.cuentaFacturaNumero : 'Sin informaci&oacute;n';
-                                    row[5] = elemento.dpPlan.nameDpPlan == null ? 'Sin informaci&oacute;n' : elemento.dpPlan.nameDpPlan !== undefined ? elemento.dpPlan.nameDpPlan : 'Sin informaci&oacute;n';
-                                    row[6] = elemento.plaza == null ? 'Sin informaci&oacute;n' : elemento.plaza !== undefined ? elemento.plaza : 'Sin informaci&oacute;n';
-                                    row[7] = elemento.cluster == null ? 'Sin informaci&oacute;n' : elemento.cluster !== undefined ? elemento.cluster : 'Sin informaci&oacute;n';
-                                    row[8] = elemento.ordenServicio.nombreOrdenServicio == null ? 'Sin informaci&oacute;n' : elemento.ordenServicio.nombreOrdenServicio !== undefined ? elemento.ordenServicio.nombreOrdenServicio : 'Sin informaci&oacute;n';
-                                    row[9] = elemento.estatusOs == null ? 'Sin informaci&oacute;n' : elemento.estatusOs !== undefined ? elemento.estatusOs : 'Sin informaci&oacute;n';
-                                    row[10] = elemento.fechaCreacion == null ? 'Sin informaci&oacute;n' : elemento.fechaCreacion !== undefined ? elemento.fechaCreacion : 'Sin informaci&oacute;n';
+                                    row[0] = elemento.nombreCsp !== null && elemento.nombreCsp !== undefined ? elemento.nombreCsp : 'Sin informaci&oacute;n';
+                                    row[1] = elemento.cotSitio.nombreCotSitio !== null && elemento.cotSitio.nombreCotSitio !== undefined ? elemento.cotSitio.nombreCotSitio : 'Sin informaci&oacute;n';
+                                    row[2] = elemento.cotizacion.cotizacion !== null && elemento.cotizacion.cotizacion !== undefined ? elemento.cotizacion.cotizacion : 'Sin informaci&oacute;n';
+                                    row[3] = elemento.cuentaFacturaSf.nombreCuentaFactura !== null && elemento.cuentaFacturaSf.nombreCuentaFactura !== undefined ? elemento.cuentaFacturaSf.nombreCuentaFactura : 'Sin informaci&oacute;n';
+                                    row[4] = elemento.cuentaFacturaNumero !== null && elemento.cuentaFacturaNumero !== undefined ? elemento.cuentaFacturaNumero : 'Sin informaci&oacute;n';
+                                    row[5] = elemento.dpPlan.nameDpPlan !== null && elemento.dpPlan.nameDpPlan  !== undefined ? elemento.dpPlan.nameDpPlan  : 'Sin informaci&oacute;n';
+                                    row[6] = elemento.plaza !== null && elemento.plaza !== undefined ? elemento.plaza : 'Sin informaci&oacute;n';
+                                    row[7] = elemento.cluster !== null && elemento.cluster !== undefined ? elemento.cluster : 'Sin informaci&oacute;n';
+                                    row[8] = elemento.ordenServicio.nombreOrdenServicio !== null && elemento.ordenServicio.nombreOrdenServicio !== undefined ? elemento.ordenServicio.nombreOrdenServicio : 'Sin informaci&oacute;n';
+                                    row[9] = elemento.estatusOs !== null && elemento.estatusOs !== undefined ? elemento.estatusOs : 'Sin informaci&oacute;n';
+                                    row[10] = elemento.fechaCreacion !== null && elemento.fechaCreacion !== undefined ? elemento.fechaCreacion : 'Sin informaci&oacute;n';
                                     // row[11] = "";
                                     arrayRow.push(row);
                                 });
@@ -591,11 +912,11 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                                 swal.close();
                             }
                         } else {
-                            mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                            mostrarMensajeInformativo("No se encontraron Pendientes a Activar");
                             swal.close();
                         }
                     } else {
-                        mostrarMensajeInformativo("No se encontraron Pendientes a Activar");
+                        mostrarMensajeErrorAlert(response.data.resultDescripcion);
                         swal.close();
                     }
                 } else {
