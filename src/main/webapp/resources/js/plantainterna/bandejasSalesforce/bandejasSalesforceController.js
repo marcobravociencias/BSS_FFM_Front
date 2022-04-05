@@ -696,10 +696,10 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
             swal.showLoading();
             let paramsfecha = $scope.getFechaFormato(document.getElementById('fecha_pendientes_agendar').value);
             let params = {
-                // "geografias": clustersSelected,
-                // "fechaInicio": paramsfecha.fechaInicio,
-                // "fechaFin": paramsfecha.fechaFin
-                "geografias": ["CIUDAD DE MEXICO"], "fechaFin": "2021-01-01", "fechaInicio": "2019-01-01"
+                "geografias": clustersSelected,
+                "fechaInicio": paramsfecha.fechaInicio,
+                "fechaFin": paramsfecha.fechaFin
+                // "geografias": ["CIUDAD DE MEXICO"], "fechaFin": "2021-01-01", "fechaInicio": "2019-01-01"
             }
             // console.log(params);
             bandejasSalesforceService.consultarPendientesAgendarBandejasSF(params).then(function success(response) {
