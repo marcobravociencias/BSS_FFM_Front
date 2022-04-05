@@ -73,16 +73,6 @@ app.service("traspasosService", function($http){
         });
     };
 
-    this.actualizarFactibilidad = function (params) {
-        return $http({
-            method: "post",
-            url: "req/actualizarFactibilidadTraspasos",
-            data:JSON.stringify(params),
-            headers: {'Content-Type': "application/json; charset=utf-8"},
-            transformRequest: angular.identity
-        });
-    };
-
     this.consultaFactibilidadResidencial = function (params) {
         return $http({
             method: "post",
@@ -106,7 +96,7 @@ app.service("traspasosService", function($http){
     this.getDisponibilidadServicioRest = function (params) {
         return $http({
             method: "post",
-            url: "req/consultarDisponibilidad",
+            url: "req/consultaCrmDisponibilidad",
             data:JSON.stringify(params),
             headers: {'Content-Type': "application/json; charset=utf-8"},
             transformRequest: angular.identity
@@ -118,6 +108,15 @@ app.service("traspasosService", function($http){
             method: "post",
             url: "req/agendarTraspasoOt",
             data:JSON.stringify(params),
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
+        });
+    };
+
+    this.consultarMotivosTraspasos = function () {
+        return $http({
+            method: "post",
+            url: "req/consultarMotivosTraspasos",
             headers: {'Content-Type': "application/json; charset=utf-8"},
             transformRequest: angular.identity
         });

@@ -452,25 +452,6 @@ public class ImplTraspasoService implements TraspasoService {
 		return response;
 	}
 
-	@Override
-	public ServiceResponseResult actualizarFactibilidad(String params) {
-		 logger.info("ImplTraspasoService.class [metodo = actualizarFactibilidad() ]\n" + params);
-	        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
-
-	        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-	        String idTraspaso = jsonObject.get("idTraspaso").getAsString();
-
-	        String tokenAcces = principalDetail.getAccess_token();
-	        String urlRequest = principalDetail.getDireccionAmbiente().concat(constTraspaso.getActualizarFactibilidadTraspaso());
-	        logger.info("URL ##+" + urlRequest);
-
-	        Map<String, String> paramsRequestGet = new HashMap<String, String>();
-	        paramsRequestGet.put("idTraspaso", idTraspaso);
-			
-	        ServiceResponseResult response = restCaller.callPatchBearerTokenRequestURL(paramsRequestGet, 
-				gson.toJson(jsonObject), urlRequest, ServiceResponseResult.class, tokenAcces);
-	        return response;
-	}
 
 	@Override
 	public ServiceResponseResult consultarFactibilidadRes(String params) {
@@ -524,6 +505,47 @@ public class ImplTraspasoService implements TraspasoService {
 	public ServiceResponseResult agendarTraspasoOt(String params) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public ServiceResponseResult consultarMotivos() {
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String tokenAcces = principalDetail.getAccess_token();
+		String urlRequest = principalDetail.getDireccionAmbiente()
+				.concat(constTraspaso.getConsultarMotivos());
+		logger.info("### URL consultarMotivos(): \n" + urlRequest);
+		Map<String, String> paramsRequestGet = new HashMap<>();
+
+		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
+				ServiceResponseResult.class, tokenAcces);
+
+		logger.info("### RESULT consultarMotivos(): " + gson.toJson(response));
+		return response;	}
+
+	@Override
+	public ServiceResponseResult consultarCrmDisponibilidad(String params) {
+		logger.info("ImplDisponibilidadService.class [metodo = consultarCrmDisponibilidad() ]\n" + params);
+
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        String tokenAcces = principalDetail.getAccess_token();
+        logger.info("consultarCrmDisponibilidad ##+" + tokenAcces);
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constTraspaso.getCrmDisponibilidad()+ 
+        		"?unidadNegocio=" + jsonObject.get("unidadNegocio").getAsString() + 
+        		"&propietario=" + jsonObject.get("propietario").getAsString()+
+        		"&subtipoIntervencion=" + jsonObject.get("subtipoIntervencion").getAsString()+
+        		"&geografia1=" + jsonObject.get("geografia1").getAsString()+
+        		"&geografia2=" + jsonObject.get("geografia2").getAsString());
+        
+        logger.info("***URL: "+ urlRequest);
+        Map<String, String> paramsRequestGet = new HashMap<String, String>();
+       
+        
+        ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
+				ServiceResponseResult.class, tokenAcces);
+        logger.info("RESULT" + gson.toJson(response));
+        return response;
 	}
 
 }

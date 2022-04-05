@@ -26,10 +26,10 @@ app.calendarController = function ($scope) {
                 console.log(info);
                 let eventObject = info.event;
 
-                $scope.infoBasica.turno = eventObject._def.extendedProps.tipo + " / " + eventObject.startStr
-                $scope.infoBasica.turnotext=eventObject._def.extendedProps.tipo
-                $scope.infoBasica.fechaTurnoText=eventObject.startStr
-                $scope.infoBasica.idTurnoSeleccion=eventObject._def.extendedProps.idTipoTurno            
+                $scope.informacionClienteDetalle.turno = eventObject._def.extendedProps.tipo + " / " + eventObject.startStr
+                $scope.informacionClienteDetalle.turnotext=eventObject._def.extendedProps.tipo
+                $scope.informacionClienteDetalle.fechaTurnoText=eventObject.startStr
+                $scope.informacionClienteDetalle.idTurnoSeleccion=eventObject._def.extendedProps.idTipoTurno            
                 $scope.dateSelectedCalendarEvent=info.event.start
 
                 $scope.$apply()                           

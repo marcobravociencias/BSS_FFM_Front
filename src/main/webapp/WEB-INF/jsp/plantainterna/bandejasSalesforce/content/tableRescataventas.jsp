@@ -13,7 +13,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-12 table-responsive" style="margin-top: 1em;">
+    <div class="col-12 table-responsive" style="margin-top: 1em; padding: 0;">
         <table id="tableRescataventas" class="display table table-hover" cellspacing="0" width="100%">
             <thead id="thead_rescataventas">
                 <tr>

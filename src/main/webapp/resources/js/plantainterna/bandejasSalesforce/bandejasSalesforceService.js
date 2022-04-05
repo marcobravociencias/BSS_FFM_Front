@@ -52,4 +52,34 @@ app.service("bandejasSalesforceService", function ($http) {
         })
     }
 
+    this.consultaFactibilidadResidencialAgendamiento = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultaFactibilidadResidencial",
+            data: JSON.stringify(params),
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
+            transformRequest: angular.identity
+        });
+    };
+
+    this.consultaFactibilidadEmpresarialAgendamiento = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultaFactibilidadEmpresarial",
+            data: JSON.stringify(params),
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
+            transformRequest: angular.identity
+        });
+    };
+
+    this.consultaDisponibilidadAgendamiento = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarDisponibilidad",
+            data: JSON.stringify(params),
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
+            transformRequest: angular.identity
+        });
+    };
+
 });
