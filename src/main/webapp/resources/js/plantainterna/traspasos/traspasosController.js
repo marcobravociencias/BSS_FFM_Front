@@ -34,6 +34,10 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 		e.stopPropagation();
 	});
 
+	$('.drop-down-filters').on("change.bs.dropdown", function (e) {
+		$scope.setTextFiltro();
+	});
+
 	$('#searchGeografia').on('keyup', function () {
 		$("#jstree-proton-3").jstree("search", this.value);
 	})
@@ -105,7 +109,6 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 		});
 		return arrayReturn;
 	}
-
 	$scope.obtenerUltimoNivelFiltros = function (array) {
 		return Math.max.apply(Math, array.map(function (o) { return o.nivel; }));
 	}
@@ -484,6 +487,8 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 						let tipoOrdenesTemp = $scope.conversionAnidadaRecursiva(respaldoTipoOrdenArray, 1, $scope.nivelIntervenciones);
 						$scope.filtrosGeneral.tipoOrdenes = angular.copy(tipoOrdenesTemp);
 						$scope.filtrosGeneral.tipoOrdenesTraspaso = angular.copy(tipoOrdenesTemp);
+						$('#filtro-intervencion').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.tipoOrdenes));
+						$('#filtro-intervencion-tr').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.tipoOrdenesTraspaso));
 					} else {
 						toastr.warning('No se encontraron  tipo ordenes');
 					}
@@ -500,9 +505,12 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 						let respaldoStatusArray = [];
 						respaldoStatusArray = angular.copy(results[2].data.result);
 						$scope.nivelEstatusPendientes = $scope.nivelEstatusPendientes ? $scope.nivelEstatusPendientes : $scope.obtenerUltimoNivelFiltros(respaldoStatusArray);
-						let estatusDisponiblesTemp = $scope.conversionAnidadaRecursiva(respaldoStatusArray, 1, $scope.nivelEstatusPendientes);
+						let estatusDisponiblesTemp = $scope.conversionAnidadaRecursiva(results[2].data.result, 1, $scope.nivelEstatusPendientes);
 						$scope.filtrosGeneral.estatusdisponibles = angular.copy(estatusDisponiblesTemp);
 						$scope.filtrosGeneral.estatusdisponiblesTraspaso = angular.copy(estatusDisponiblesTemp);
+						$('#filtro-estatus-substatus').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.estatusdisponibles));
+						$('#filtro-estatus-substatus-tr').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.estatusdisponiblesTraspaso));
+
 					} else {
 						toastr.info('No se encontraron catalogo de estatus');
 					}
@@ -518,9 +526,7 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 						if (results[1].data.result.geografia) {
 							$scope.listadogeografiacopy = results[1].data.result.geografia
 							geografia = results[1].data.result.geografia
-							if (!$scope.nivelGeografia)
-								$scope.nivelGeografia = $scope.obtenerNivelUltimoJerarquia()
-
+							$scope.nivelGeografia = $scope.nivelGeografia ? $scope.nivelGeografia : $scope.obtenerUltimoNivelFiltros(results[1].data.result.geografia);
 							geografia = geografia.filter((e) => e.nivel <= $scope.nivelGeografia)
 							geografia.map((e) => {
 								e.parent = e.padre == undefined ? "#" : e.padre;
@@ -534,6 +540,12 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 
 							if ($scope.configPermisoAccionConsultaOts) {
 								$('#jstree-proton-3').bind('loaded.jstree', function (e, data) {
+									var geografiasOt = $('#jstree-proton-3').jstree("get_selected", true);
+									let textoGeografias = [];
+									angular.forEach(geografiasOt, (geografia, index) => {
+										textoGeografias.push(geografia.text);
+									});
+									$('#cluster').val(textoGeografias);
 									$scope.consultaOtsTraspasos()
 								}).jstree({
 									'plugins': ["wholerow", "checkbox", 'search'],
@@ -554,6 +566,12 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 
 							if ($scope.configPermisoAccionConsultaTraspasos) {
 								$('#jstree-proton-tr').bind('loaded.jstree', function (e, data) {
+									var geografiasTas = $('#jstree-proton-tr').jstree("get_selected", true);
+									let textoGeografias = [];
+									angular.forEach(geografiasTas, (geografia, index) => {
+										textoGeografias.push(geografia.text);
+									});
+									$('#clusterTr').val(textoGeografias);
 									$scope.consultaTraspasos()
 								}).jstree({
 									'plugins': ["wholerow", "checkbox", 'search'],
@@ -589,7 +607,6 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 				if (results[4].data.respuesta) {
 					if (results[4].data.result) {
 						$scope.listMotivos = results[4].data.result.motivosTransferencia;
-						console.log($scope.listMotivos)
 					} else {
 						mostrarMensajeWarningValidacion('No se encontr&oacute; motivos');
 					}
@@ -603,6 +620,24 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 			$scope.initializeMap();
 
 		}).catch(err => handleError(err));
+	}
+
+	$scope.listaSeleccionSelectGral = function (lista) {
+		var texto = "";
+		angular.forEach(lista, function (elem, index) {
+			if (elem.checkedOpcion) {
+				if (texto !== "") {
+					texto = (texto + ", " + elem.nombre.toUpperCase());
+				} else {
+					texto = (elem.nombre.toUpperCase());
+				}
+			}
+		});
+		return texto;
+	}
+
+	$scope.recursiveGetText = function(lista){
+		
 	}
 
 	$scope.iniciarTraspasos = function () {
@@ -855,7 +890,6 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 				if (response.data.respuesta) {
 					if (response.data.result.orden) {
 						$scope.infoOtDetalle = response.data.result.orden;
-						console.log($scope.infoOtDetalle);
 						is_consulta_info_ot = true;
 						$scope.permisosModal = $scope.elementosConfigGeneral.get("MODAL_CO_FLUJO_" + ordenObject.idFlujo).split(",")
 						$('#modal-detalle-ot').modal('show');
@@ -918,7 +952,6 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 
 
 			genericService.consultarHistoricoDespachoOT(params).then(function (result) {
-				console.log(result);
 				if (result.data !== undefined) {
 					if (result.data.respuesta) {
 						if (result.data.result !== undefined) {
@@ -999,7 +1032,6 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 
 			genericService.agregarComentariosOt(params).then(function success(response) {
 				swal.close();
-				console.log(response);
 				if (response.data !== undefined) {
 					if (response.data.respuesta) {
 						console.log("############## Comentario agregado")
@@ -1023,30 +1055,45 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 		}
 	}
 	//Filtros
-	$scope.seleccionarTodosRecursivo = function (array) {
+
+	
+	$scope.setTextFiltro = function(){
+		$('#filtro-intervencion').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.tipoOrdenes));
+		$('#filtro-intervencion-tr').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.tipoOrdenesTraspaso));
+		$('#filtro-estatus-substatus').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.estatusdisponibles));
+		$('#filtro-estatus-substatus-tr').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.estatusdisponiblesTraspaso));
+	}
+
+	$scope.seleccionarTodosRecursivo = function (array, isBtn) {
 		array.map(function (e) {
 			e.checkedOpcion = true;
 			if (e.children !== undefined && e.children.length > 0) {
 				$scope.seleccionarTodosRecursivo(e.children);
 			}
 		});
+		if(!isBtn){
+			$scope.setTextFiltro();
+		}
 	}
 
-	$scope.deseleccionarTodosRecursivo = function (array) {
+	$scope.deseleccionarTodosRecursivo = function (array, isBtn) {
 		array.map(function (e) {
 			e.checkedOpcion = false;
 			if (e.children !== undefined && e.children.length > 0) {
 				$scope.deseleccionarTodosRecursivo(e.children);
 			}
 		});
+		if(!isBtn){
+			$scope.setTextFiltro();
+		}
 	}
 
 	$scope.setCheckFiltroGenericV2 = function (filtro, principalArray) {
 		if (filtro.children !== undefined && filtro.children.length > 0) {
 			if (filtro.checkedOpcion) {
-				$scope.deseleccionarTodosRecursivo(filtro.children);
+				$scope.deseleccionarTodosRecursivo(filtro.children, true);
 			} else {
-				$scope.seleccionarTodosRecursivo(filtro.children);
+				$scope.seleccionarTodosRecursivo(filtro.children, true);
 			}
 		}
 		filtro.checkedOpcion = !filtro.checkedOpcion;
@@ -1524,12 +1571,13 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 		swal.showLoading();
 		let data = $scope.listMotivos.find((e) => Number(e.id) == Number($scope.informacionClienteDetalle.motivo))
 
+
 		let params = {
 			unidadNegocio: data.idUnidadNegocioNuevo,
 			propietario: data.idPropietarioNuevo,
 			subtipoIntervencion: data.idSubtipoOT,
-			geografia1: $scope.informacionClienteDetalle.factibilidad.distrito,
-			geografia2: $scope.informacionClienteDetalle.factibilidad.cluster
+			geografia1: data.idUnidadNegocioNuevo === '1' ? $scope.informacionClienteDetalle.factibilidad.distrito : $scope.informacionClienteDetalle.factibilidad.ciudad,
+			geografia2: data.idUnidadNegocioNuevo === '1' ? $scope.informacionClienteDetalle.factibilidad.cluster : $scope.informacionClienteDetalle.factibilidad.distrito
 		}
 
 		traspasosService.getDisponibilidadServicioRest(params).then(function success(response) {
@@ -1605,7 +1653,25 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 				}
 			}
 		}
+
+		$("#modalCluster").on("hidden.bs.modal", function () {
+			var geografias = $('#jstree-proton-3').jstree("get_selected", true);
+			let textoGeografias = [];
+			angular.forEach(geografias, (geografia, index) => {
+				textoGeografias.push(geografia.text);
+			});
+			$('#cluster').val(textoGeografias);
+
+			var geografiasTr = $('#jstree-proton-tr').jstree("get_selected", true);
+			let textoGeografiasTr = [];
+			angular.forEach(geografiasTr, (geografia, index) => {
+				textoGeografiasTr.push(geografia.text);
+			});
+			$('#clusterTr').val(textoGeografiasTr);
+		})
+
 		$("#moduloTraspasos").addClass('active');
 		$("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
+
 	});
 }])
