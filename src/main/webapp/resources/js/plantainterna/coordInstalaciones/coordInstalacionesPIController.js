@@ -43,6 +43,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 				if (results[3].data.respuesta) {
 					if (results[3].data.result) {
 						$scope.elementosConfigGeneral = new Map(Object.entries(results[3].data.result))
+						//Configuracion
 						let resultConf = results[3].data.result
 						if (resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
 							let llavesResult = results[3].data.result.MODULO_ACCIONES_USUARIO.llaves;
