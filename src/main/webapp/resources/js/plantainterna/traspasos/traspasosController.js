@@ -421,7 +421,7 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 			genericService.consultarCatalogoIntervenciones(),
 			genericService.consulCatalogoGeografia(),
 			genericService.consultarCatalogoEstatusDespachoPI(),
-			traspasosService.consultarConfiguracionDespachoDespacho({ "moduloAccionesUsuario": "moduloConsultaOt" }),
+			traspasosService.consultarConfiguracionDespachoDespacho({ "moduloAccionesUsuario": "moduloTraspasos" }),
 			traspasosService.consultarMotivosTraspasos()
 		]).then(function (results) {
 			if (results[3].data !== undefined) {
