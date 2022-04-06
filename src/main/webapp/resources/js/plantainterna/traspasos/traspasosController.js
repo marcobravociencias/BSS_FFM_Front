@@ -444,11 +444,11 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 							$scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
 
 							if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
-								$scope.configPermisoAccionConsultaOts = true//($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaOTs" })[0] != undefined);
-								$scope.configPermisoAccionDescargaOtsRep = true//($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaOTsReporte" })[0] != undefined);
-								$scope.configPermisoAccionTraspaso = true//($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionTraspaso" })[0] != undefined);
-								$scope.configPermisoAccionConsultaTraspasos = true//($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaTraspasos" })[0] != undefined);
-								$scope.configPermisoAccionDescargaTraspasosRep = true//($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaTraspasosReporte" })[0] != undefined);
+								$scope.configPermisoAccionConsultaOts = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaOTs" })[0] != undefined);
+								$scope.configPermisoAccionDescargaOtsRep = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaOTsReporte" })[0] != undefined);
+								$scope.configPermisoAccionTraspaso = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionTraspaso" })[0] != undefined);
+								$scope.configPermisoAccionConsultaTraspasos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaTraspasos" })[0] != undefined);
+								$scope.configPermisoAccionDescargaTraspasosRep = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaTraspasosReporte" })[0] != undefined);
 							}
 							validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
 							validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
