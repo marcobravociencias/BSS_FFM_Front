@@ -47,10 +47,10 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 						if (resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
 							let llavesResult = results[3].data.result.MODULO_ACCIONES_USUARIO.llaves;
 							if (llavesResult.N_FILTRO_GEOGRAFIA)
-								$scope.nivelGeografia = parseInt(llavesResult.N_FILTRO_GEOGRAFIA)
+								$scope.nivelArbol = parseInt(llavesResult.N_FILTRO_GEOGRAFIA)
 
 							if (llavesResult.N_ESTATUS_PENDIENTES)
-								$scope.nivelEstatus = parseInt(llavesResult.N_ESTATUS_PENDIENTES)
+								$scope.nivelEstatusGeneral = parseInt(llavesResult.N_ESTATUS_PENDIENTES)
 
 							$scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
 							
