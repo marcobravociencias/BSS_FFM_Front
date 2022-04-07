@@ -312,14 +312,13 @@ public class ImplTraspasoService implements TraspasoService {
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
 		String tokenAcces = principalDetail.getAccess_token();
 		logger.info("consultarReporteOts ##+" + tokenAcces);
-		String urlRequest = principalDetail.getDireccionAmbiente().concat(constTraspaso.getConsultaGeneralTraspasosOt());
+		String urlRequest = principalDetail.getDireccionAmbiente()
+				.concat(constTraspaso.getConsultaGeneralTraspasosOt());
 		logger.info("URL ##+" + urlRequest);
 
 		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(params, urlRequest,
 				ServiceResponseResult.class, tokenAcces);
-		if (response.getResult() instanceof Integer) {
-			response = ServiceResponseResult.builder().isRespuesta(false).result(response.getResult()).build();
-		} else {
+		if(response.getResult() != null) {
 			JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
 			JsonArray ordenesArray = jsonObjectResponse.getAsJsonArray("ordenes");
 			JsonArray ordenesReporte = new JsonArray();
@@ -345,8 +344,7 @@ public class ImplTraspasoService implements TraspasoService {
 								object.get("fechaAgenda") != null ? object.get("fechaAgenda").getAsString().trim()
 										: "Sin dato");
 						result.addProperty("TIPO",
-								object.get("descTipo") != null ? object.get("descTipo").getAsString().trim()
-										: "Sin dato");
+								object.get("descTipo") != null ? object.get("descTipo").getAsString().trim() : "Sin dato");
 						result.addProperty("SUBTIPO",
 								object.get("descSubTipo") != null ? object.get("descSubTipo").getAsString().trim()
 										: "Sin dato");
@@ -373,7 +371,7 @@ public class ImplTraspasoService implements TraspasoService {
 				response = ServiceResponseResult.builder().isRespuesta(true).result(null).build();
 			}
 		}
-
+		
 		logger.info("*** Objeto Response: " + gson.toJson(response));
 
 		return response;
@@ -390,9 +388,8 @@ public class ImplTraspasoService implements TraspasoService {
 
 		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(params, urlRequest,
 				ServiceResponseResult.class, tokenAcces);
-		if (response.getResult() instanceof Integer) {
-			response = ServiceResponseResult.builder().isRespuesta(false).result(response.getResult()).build();
-		} else {
+		if (response.getResult() != null) {
+			
 			JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
 			JsonArray ordenesArray = jsonObjectResponse.getAsJsonArray("ordenes");
 			JsonArray ordenesReporte = new JsonArray();
@@ -451,7 +448,6 @@ public class ImplTraspasoService implements TraspasoService {
 
 		return response;
 	}
-
 
 	@Override
 	public ServiceResponseResult consultarFactibilidadRes(String params) {
@@ -471,12 +467,12 @@ public class ImplTraspasoService implements TraspasoService {
 		Map<String, String> paramsRequestGet = new HashMap<String, String>();
 		paramsRequestGet.put("latitud", lat);
 		paramsRequestGet.put("longitud", lon);
-		
+
 		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
 				ServiceResponseResult.class, tokenAcces);
 		return response;
 	}
-	
+
 	@Override
 	public ServiceResponseResult consultarFactibilidadEmp(String params) {
 		logger.info("ImplTraspasoService.class [metodo = consultarFactibilidadEmp() ]\n" + params);
@@ -495,7 +491,7 @@ public class ImplTraspasoService implements TraspasoService {
 		Map<String, String> paramsRequestGet = new HashMap<String, String>();
 		paramsRequestGet.put("latitud", lat);
 		paramsRequestGet.put("longitud", lon);
-		
+
 		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
 				ServiceResponseResult.class, tokenAcces);
 		return response;
@@ -511,8 +507,7 @@ public class ImplTraspasoService implements TraspasoService {
 	public ServiceResponseResult consultarMotivos() {
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
 		String tokenAcces = principalDetail.getAccess_token();
-		String urlRequest = principalDetail.getDireccionAmbiente()
-				.concat(constTraspaso.getConsultarMotivos());
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constTraspaso.getConsultarMotivos());
 		logger.info("### URL consultarMotivos(): \n" + urlRequest);
 		Map<String, String> paramsRequestGet = new HashMap<>();
 
@@ -520,32 +515,33 @@ public class ImplTraspasoService implements TraspasoService {
 				ServiceResponseResult.class, tokenAcces);
 
 		logger.info("### RESULT consultarMotivos(): " + gson.toJson(response));
-		return response;	}
+		return response;
+	}
 
 	@Override
 	public ServiceResponseResult consultarCrmDisponibilidad(String params) {
 		logger.info("ImplDisponibilidadService.class [metodo = consultarCrmDisponibilidad() ]\n" + params);
 
-        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
 
-        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
-        String tokenAcces = principalDetail.getAccess_token();
-        logger.info("consultarCrmDisponibilidad ##+" + tokenAcces);
-        String urlRequest = principalDetail.getDireccionAmbiente().concat(constTraspaso.getCrmDisponibilidad()+ 
-        		"?unidadNegocio=" + jsonObject.get("unidadNegocio").getAsString() + 
-        		"&propietario=" + jsonObject.get("propietario").getAsString()+
-        		"&subtipoIntervencion=" + jsonObject.get("subtipoIntervencion").getAsString()+
-        		"&geografia1=" + jsonObject.get("geografia1").getAsString()+
-        		"&geografia2=" + jsonObject.get("geografia2").getAsString());
-        
-        logger.info("***URL: "+ urlRequest);
-        Map<String, String> paramsRequestGet = new HashMap<String, String>();
-       
-        
-        ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String tokenAcces = principalDetail.getAccess_token();
+		logger.info("consultarCrmDisponibilidad ##+" + tokenAcces);
+		String urlRequest = principalDetail.getDireccionAmbiente()
+				.concat(constTraspaso.getCrmDisponibilidad() + "?unidadNegocio="
+						+ jsonObject.get("unidadNegocio").getAsString() + "&propietario="
+						+ jsonObject.get("propietario").getAsString() + "&subtipoIntervencion="
+						+ jsonObject.get("subtipoIntervencion").getAsString() + "&geografia1="
+						+ jsonObject.get("geografia1").getAsString() + "&geografia2="
+						+ jsonObject.get("geografia2").getAsString());
+
+		logger.info("***URL: " + urlRequest);
+		Map<String, String> paramsRequestGet = new HashMap<String, String>();
+
+		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
 				ServiceResponseResult.class, tokenAcces);
-        logger.info("RESULT" + gson.toJson(response));
-        return response;
+		logger.info("RESULT" + gson.toJson(response));
+		return response;
 	}
 
 }
