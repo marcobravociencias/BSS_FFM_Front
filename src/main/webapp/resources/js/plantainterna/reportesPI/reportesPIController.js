@@ -811,7 +811,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		$scope.resultReporteCierre = 0;
 
 		let clustersparam = $("#jstree-proton-cierre").jstree("get_selected", true)
-			.filter(e => e.original.nivel == $scope.nfiltrogeografiaSeguimientoDiario)
+			.filter(e => e.original.nivel == $scope.nfiltrogeografiaCierre)
 			.map(e => parseInt(e.id));
 
 		if (clustersparam.length === 0) {
@@ -941,7 +941,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		let numerosOnly = /^[0-9]*$/i;
 
 		let clustersparam = $("#jstree-proton-cierre").jstree("get_selected", true)
-			.filter(e => e.original.nivel == $scope.nfiltrogeografiaSeguimientoDiario)
+			.filter(e => e.original.nivel == $scope.nfiltrogeografiaAsignadas)
 			.map(e => parseInt(e.id));
 
 		if (clustersparam.length === 0) {
