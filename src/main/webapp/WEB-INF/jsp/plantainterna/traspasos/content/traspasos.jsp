@@ -16,11 +16,11 @@
     </div>
     <div class="col-1 columna-traspaso columna-filtro-ind">
         <i class="icono-noseleccion fas fa-exclamation-circle me-2" title="No se encontraron catalogo de estatus"
-            ng-show="!filtrosGeneral.estatusdisponiblesTraspaso.length"></i><label for="filtro-estatus-substatus" class="label-filter">Estatus</label>
+            ng-show="!filtrosGeneral.estatusdisponiblesTraspaso.length"></i><label for="filtro-estatus-substatus-tr" class="label-filter">Estatus</label>
         <div class="dropdown">
             <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..." type="text"
-                id="filtro-estatus-substatus" class="input-filtro-traspasos form-control form-control-sm" />
-            <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-estatus-substatus">
+                id="filtro-estatus-substatus-tr" class="input-filtro-traspasos form-control form-control-sm" />
+            <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-estatus-substatus-tr">
                 <li style="text-align: center;">
                     <button ng-click="seleccionarTodosRecursivo(filtrosGeneral.estatusdisponiblesTraspaso)" id="todo_filtro"
                         type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
@@ -46,12 +46,12 @@
     </div>
     <div class="col-2 columna-traspaso columna-filtro-ind">
         <i class="icono-noseleccion fas fa-exclamation-circle me-2" title="No se encontraron catalogo de intervenciones"
-            ng-show="!filtrosGeneral.tipoOrdenesTraspaso.length"></i><label for="filtro-intervencion"
+            ng-show="!filtrosGeneral.tipoOrdenesTraspaso.length"></i><label for="filtro-intervencion-tr"
             class="label-filter">Intervenci&oacute;n</label>
         <div class="dropdown">
             <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..." type="text"
-                id="filtro-intervencion" class="input-filtro-traspasos form-control form-control-sm" />
-            <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-intervencion">
+                id="filtro-intervencion-tr" class="input-filtro-traspasos form-control form-control-sm" />
+            <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-intervencion-tr">
                 <li style="text-align: center;">
                     <button ng-click="seleccionarTodosRecursivo(filtrosGeneral.tipoOrdenesTraspaso)" id="todo_filtro"
                         type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
@@ -77,7 +77,7 @@
     <div class="col-2 columna-traspaso columna-filtro-ind">
         <i class="icono-noseleccion fas fa-exclamation-circle me-2" title="No se encontraron catalogo de Geografia"
             ng-show="!listadogeografiacopy.length"></i><label for="cluster" class="label-filter">Geograf&iacute;a</label>
-        <input readonly placeholder="Seleccione..." type="text" id="cluster" ng-click="abrirModalClusterTraspaso()"
+        <input readonly placeholder="Seleccione..." type="text" id="clusterTr" ng-click="abrirModalClusterTraspaso()"
             class="input-filtro-traspasos form-control form-control-sm">
     </div>
     <div class="col-1 columna-traspaso columna-filtro-ind">

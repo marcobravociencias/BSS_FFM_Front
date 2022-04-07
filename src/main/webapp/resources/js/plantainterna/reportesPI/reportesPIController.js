@@ -531,6 +531,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		}
 
 		if (!isValid) {
+			swal.close()
 			mensaje += '</ul>';
 			mostrarMensajeWarningValidacion(mensaje);
 			return false;
@@ -658,6 +659,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		}
 
 		if (!isValid) {
+			swal.close();
 			mensaje += '</ul>';
 			mostrarMensajeWarningValidacion(mensaje);
 			return false;
@@ -753,6 +755,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		}
 
 		if (!isValid) {
+			swal.close();
 			mensaje += '</ul>';
 			mostrarMensajeWarningValidacion(mensaje);
 			return false;
@@ -880,6 +883,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		}
 
 		if (!isValid) {
+			swal.close();
 			mensaje += '</ul>';
 			mostrarMensajeWarningValidacion(mensaje);
 			return false;
@@ -978,6 +982,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		}
 
 		if (!isValid) {
+			swal.close();
 			mensaje += '</ul>';
 			mostrarMensajeWarningValidacion(mensaje);
 			return false;
@@ -1105,6 +1110,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		}
 
 		if (!isValid) {
+			swal.close();
 			mensaje += '</ul>';
 			mostrarMensajeWarningValidacion(mensaje);
 			return false;

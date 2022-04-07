@@ -93,7 +93,7 @@ public class ImplOrdenesUniversalesService implements OrdenesUniversalesService 
         String urlRequest = principalDetail.getDireccionAmbiente().concat(constOrdenesUniversales.getConsultarPerfilesPorUsuario());
         logger.info("##### "+urlRequest);
         Map<String, String> paramsRequestGet = new HashMap<String, String>();        
-        paramsRequestGet.put("idUsuario","1");
+        paramsRequestGet.put("idUsuario",idUsuario+"");
         ServiceResponseResult response = consumeRest.callGetBearerTokenRequest(
                 paramsRequestGet,
                 urlRequest,

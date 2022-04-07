@@ -133,15 +133,15 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
     }
 
     $scope.consultarMotivosJustificacion = function () {
-        gestionTecnicosService.consultaMotivosGestionTecnicos().then(function success(response) {
-            console.log(response)
-            if (response.data.respuesta) {
-                if (response.data.result) {
-                    $scope.listMotivosJustificacion = arrayCatMotivoJustificacion.data.result.MotivosJustificacion;
-                    console.log($scope.listMotivosJustificacion);
-                }
-            }
-        })
+//        gestionTecnicosService.consultaMotivosGestionTecnicos().then(function success(response) {
+//            console.log(response)
+//            if (response.data.respuesta) {
+//                if (response.data.result) {
+//                    $scope.listMotivosJustificacion = arrayCatMotivoJustificacion.data.result.MotivosJustificacion;
+//                    console.log($scope.listMotivosJustificacion);
+//                }
+//            }
+//        })
     }
 
     $scope.consultarTecnicos = function () {
@@ -168,19 +168,19 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
         	gestionTecnicosService.consultaDiasTrabajadosTecnicoPorFecha(paramsServicio7),
         	gestionTecnicosService.consultaDiasTrabajadosAuxiliarPorFecha(paramsServicio8)
         ]).then(function (results) {
-        	
-            if (response.data.respuesta) {
-                if (response.data.result) {
-                    $scope.listTecnicos = arrayListTecnicos.data.result;
+        	console.log(results[0].data.result.tecnicos);
+//            if (results) {
+//                if (response.data.result) {
+                    $scope.listTecnicos = results[0].data.result.tecnicos;
                     swal.close();
-                } else {
-                    swal.close();
-                    mostrarMensajeWarningValidacion("No se encontraron T&eacute;cnicos")
-                }
-            } else {
-                swal.close();
-                mostrarMensajeWarningValidacion(response.data.resultDescripcion)
-            }
+//                } else {
+//                    swal.close();
+//                    mostrarMensajeWarningValidacion("No se encontraron T&eacute;cnicos")
+//                }
+//            } else {
+//                swal.close();
+//                mostrarMensajeWarningValidacion(response.data.resultDescripcion)
+//            }
             
         });
     }

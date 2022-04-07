@@ -120,7 +120,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
 
                 console.log("  ----     ################# ------")
                 console.log(llavesResult)
-                let tempArrayInt = results[2].data.result.tiposOrden;
+                let tempArrayInt = (results[2].data.result) ? results[2].data.result.tiposOrden : [];
                 let tempArrayGeog = results[1].data.result.geografia;
 
                 $scope.nGeografia = (llavesResult.N_FILTRO_GEOGRAFIA) ? Number(llavesResult.N_FILTRO_GEOGRAFIA) : $scope.obtenerUltimoNivelFiltros(tempArrayGeog);
@@ -274,15 +274,13 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                     }
                     swal.close();
                 } else {
-                    mostrarMensajeErrorAlert(response.data.result.mensaje)
+                    mostrarMensajeErrorAlert("Error interno en el servidor.")
                     swal.close();
                 }
             } else {
                 mostrarMensajeErrorAlert(response.data.resultDescripcion)
                 swal.close();
             }
-
-            
 
             if(  Array.isArray( results[3].data.result.perfiles ) &&  results[3].data.result.perfiles.length   ){
                 $scope.listadoTipoOrdenesPerfiles=[]
