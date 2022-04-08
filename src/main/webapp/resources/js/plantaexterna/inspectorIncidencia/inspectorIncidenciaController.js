@@ -1138,12 +1138,12 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                                     $scope.incidencias = response.data.result.detalleIncidencias;
                                     $.each($scope.incidencias, function (i, elemento) {
                                         let row = [];
-                                        row[0] = elemento.idIncidencia ? elemento.idIncidencia : "";
-                                        row[1] = elemento.nombreGeografia ? elemento.nombreGeografia : "";
-                                        row[2] = elemento.desTipoIncidencia ? elemento.desTipoIncidencia : "";
-                                        row[3] = elemento.descEstatus ? elemento.descEstatus : "";
-                                        row[4] = elemento.numeroEmpleado ? elemento.numeroEmpleado : "";
-                                        row[5] = elemento.usuarioReporta ? elemento.usuarioReporta : "";
+                                        row[0] = elemento.idIncidencia && elemento.idIncidencia !== '' ? elemento.idIncidencia : 'Sin informaci&oacute;n';
+                                        row[1] = elemento.nombreGeografia && elemento.nombreGeografia !== '' ? elemento.nombreGeografia : 'Sin informaci&oacute;n';
+                                        row[2] = elemento.desTipoIncidencia && elemento.desTipoIncidencia !== '' ? elemento.desTipoIncidencia : 'Sin informaci&oacute;n';
+                                        row[3] = elemento.descEstatus && elemento.descEstatus !== '' ? elemento.descEstatus : 'Sin informaci&oacute;n';
+                                        row[4] = elemento.numeroEmpleado && elemento.numeroEmpleado !== '' ? elemento.numeroEmpleado : 'Sin informaci&oacute;n';
+                                        row[5] = elemento.usuarioReporta && elemento.usuarioReporta !== '' ? elemento.usuarioReporta : 'Sin informaci&oacute;n';
                                         row[6] = (elemento.fechaRegistro ? elemento.fechaRegistro : "") + " " + (elemento.horaRegistro ? elemento.horaRegistro : "");
                                         row[7] = '<div class="col-12 text-center">' +
                                             '<div class="row">' +
@@ -1305,6 +1305,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
             $(".text_select").text(droppedFiles[0].name);
             $(".box__dragndrop").empty()
         });
+        $("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
     });
 
     // NUEVO

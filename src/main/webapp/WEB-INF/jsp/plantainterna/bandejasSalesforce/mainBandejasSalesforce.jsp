@@ -37,20 +37,26 @@
     <br>
     <div class="container" id="container_bandejas_salesforce">
         <div class="content-fluid" ng-show="!isAgendamiento">
-            <div class="row">
+            <div class="row" ng-show="!isPermisoConsultaPendientesAgendar && !isPermisoConsultaRescataventas && !isPermisoConsultaPendientesActivar" style="padding: 1em  0;">
+                <div class="text-accion-nopermiso">
+                    <i class="icon-not-permiso fas fa-user-lock"></i>
+                    <b class="text-not-permiso">No cuentas con el permiso de consulta.</b>
+                </div>
+            </div>
+            <div class="row" ng-show="isPermisoConsultaPendientesAgendar || isPermisoConsultaRescataventas || isPermisoConsultaPendientesActivar">
                 <div class="col-12">
                     <div id="opciones-menu-sf" class="left-menu small-menu small-sf" style="margin-left: 0; height: 100%;">
-                        <div class="opcion-menu" ng-click="cambiarVistaSF(1);">
+                        <div class="opcion-menu" ng-click="cambiarVistaSF(1);" ng-if="isPermisoConsultaPendientesAgendar">
                             <i ng-class="{'active-iconmenu':vistaSf==1}" class="icon-menu-left fa fa-clock"></i>
                             &nbsp;&nbsp;
                             <span ng-class="{'active-text-menu':vistaSf==1}" class="titulo-menu">Pendiente de agendar</span>
                         </div>
-                        <div class="opcion-menu" ng-click="cambiarVistaSF(2);">
+                        <div class="opcion-menu" ng-click="cambiarVistaSF(2);" ng-if="isPermisoConsultaRescataventas">
                             <i ng-class="{'active-iconmenu':vistaSf==2}" class="icon-menu-left fa fa-pencil-square"></i>
                             &nbsp;&nbsp;
                             <span ng-class="{'active-text-menu':vistaSf==2}" class="titulo-menu">Rescataventas</span>
                         </div>
-                        <div class="opcion-menu" ng-click="cambiarVistaSF(3);">
+                        <div class="opcion-menu" ng-click="cambiarVistaSF(3);" ng-if="isPermisoConsultaPendientesActivar">
                             <i ng-class="{'active-iconmenu':vistaSf==3}" class="icon-menu-left fa fa-stop-circle"></i>
                             &nbsp;&nbsp;
                             <span ng-class="{'active-text-menu':vistaSf==3}" class="titulo-menu">Pendiente de activar</span>
@@ -62,13 +68,13 @@
                                 <span class="span-titulo-bandeja" ng-bind="nombreBandejaSf"></span>
                             </div>
                             <div class="row" style="padding-right: 0;">
-                                <div id="vistaPendiente" class="col-12" ng-show="vistaSf === 1">
+                                <div id="vistaPendiente" class="col-12" ng-show="vistaSf === 1 && isPermisoConsultaPendientesAgendar">
                                     <jsp:include page="./content/tablePendienteAgendar.jsp"></jsp:include>
                                 </div>
-                                <div id="vistaAsignada" class="col-12" ng-show="vistaSf === 2">
+                                <div id="vistaAsignada" class="col-12" ng-show="vistaSf === 2 && isPermisoConsultaRescataventas">
                                     <jsp:include page="./content/tableRescataventas.jsp"></jsp:include>
                                 </div>
-                                <div id="vistaDetenida" class="col-12" ng-show="vistaSf === 3">
+                                <div id="vistaDetenida" class="col-12" ng-show="vistaSf === 3 && isPermisoConsultaPendientesActivar">
                                     <jsp:include page="./content/tablePendienteActivar.jsp"></jsp:include>
                                 </div>
                             </div>

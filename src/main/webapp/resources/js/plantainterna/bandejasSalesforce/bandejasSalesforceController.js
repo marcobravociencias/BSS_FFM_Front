@@ -26,6 +26,10 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
     $scope.isContactoSelected = false;
     $scope.listContactosAgendamiento = [];
     $scope.infoFactibilidad = {};
+    $scope.isPermisoConsultaPendientesAgendar = true;
+    $scope.isPermisoConsultaRescataventas = false;
+    $scope.isPermisoConsultaPendientesActivar = false;
+    $scope.isPermisoAgendamiento = false;
 
     app.agendamientoCalendar($scope, bandejasSalesforceService);
     app.agendamientoMap($scope, bandejasSalesforceService);
@@ -77,16 +81,16 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         });
     }
 
-    $scope.busquedaGeografiaConsultaAgendar = function () {
-        $("#geografiaPendientesAgendar").jstree("search", $('#buscadorGeografiaPendienteAgendar').val());
-    }
-
-    $scope.busquedaGeografiaConsultaRescataventas = function () {
-        $("#geografiaRescataventas").jstree("search", $('#buscadorGeografiaRescataventas').val());
-    }
-
-    $scope.busquedaGeografiaConsultaActivar = function () {
-        $("#geografiaPendientesActivar").jstree("search", $('#buscadorGeografiaPendienteActivar').val());
+    $scope.busquedaGeografiaConsulta = function (type) {
+        if (type == 'pendienteAgendar') {
+            $("#geografiaPendientesAgendar").jstree("search", $('#buscadorGeografiaPendienteAgendar').val());
+        }
+        if (type == 'rescataventas') {
+            $("#geografiaRescataventas").jstree("search", $('#buscadorGeografiaRescataventas').val());
+        }
+        if (type == 'pendienteActivar') {
+            $("#geografiaPendientesActivar").jstree("search", $('#buscadorGeografiaPendienteActivar').val());
+        }
     }
 
     $scope.btnAceptarGeografiaConsulta = function (type) {
@@ -127,90 +131,96 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
 
     $scope.cambiarVistaSF = function (opcion) {
         if (opcion === 1) {
-            $scope.nombreBandejaSf = "PENDIENTES DE AGENDAR";
-            $scope.isPendienteAgendar = true;
-            $scope.isRescataventas = false;
-            $scope.isPendienteActivar = false;
-            if (!treeAgendar) {
-                swal({ text: 'Espera un momento...', allowOutsideClick: false });
-                swal.showLoading();
-                treeAgendar = $('#geografiaPendientesAgendar').bind('loaded.jstree', function (e, data) {
-                    $scope.btnAceptarGeografiaConsulta('pendientesAgendar');
-                    $scope.consultarPendientesAgendarBandejas();
-                    $scope.$apply();
-                }).jstree({
-                    'plugins': ["wholerow", "checkbox", "search"],
-                    'core': {
-                        'data': $scope.geografiasPendienteAgendar,
-                        'themes': {
-                            'name': 'proton',
-                            'responsive': true,
-                            "icons": false
+            if ($scope.isPermisoConsultaPendientesAgendar) {
+                $scope.nombreBandejaSf = "PENDIENTES DE AGENDAR";
+                $scope.isPendienteAgendar = true;
+                $scope.isRescataventas = false;
+                $scope.isPendienteActivar = false;
+                if (!treeAgendar) {
+                    swal({ text: 'Espera un momento...', allowOutsideClick: false });
+                    swal.showLoading();
+                    treeAgendar = $('#geografiaPendientesAgendar').bind('loaded.jstree', function (e, data) {
+                        $scope.btnAceptarGeografiaConsulta('pendientesAgendar');
+                        $scope.consultarPendientesAgendarBandejas();
+                        $scope.$apply();
+                    }).jstree({
+                        'plugins': ["wholerow", "checkbox", "search"],
+                        'core': {
+                            'data': $scope.geografiasPendienteAgendar,
+                            'themes': {
+                                'name': 'proton',
+                                'responsive': true,
+                                "icons": false
+                            }
+                        },
+                        "search": {
+                            "case_sensitive": false,
+                            "show_only_matches": true
                         }
-                    },
-                    "search": {
-                        "case_sensitive": false,
-                        "show_only_matches": true
-                    }
-                });
+                    });
+                }
             }
         }
         if (opcion === 2) {
-            $scope.nombreBandejaSf = "RESCATAVENTAS";
-            $scope.isRescataventas = true;
-            $scope.isPendienteActivar = false;
-            $scope.isPendienteAgendar = false;
-            if (!treeRescataventas) {
-                swal({ text: 'Espera un momento...', allowOutsideClick: false });
-                swal.showLoading();
-                treeRescataventas = $('#geografiaRescataventas').bind('loaded.jstree', function (e, data) {
-                    $scope.btnAceptarGeografiaConsulta('rescataventas');
-                    $scope.consultarRescataventasBandejas();
-                    $scope.$apply();
-                }).jstree({
-                    'plugins': ["wholerow", "checkbox", "search"],
-                    'core': {
-                        'data': $scope.geografiasRescataventas,
-                        'themes': {
-                            'name': 'proton',
-                            'responsive': true,
-                            "icons": false
+            if ($scope.isPermisoConsultaRescataventas) {
+                $scope.nombreBandejaSf = "RESCATAVENTAS";
+                $scope.isRescataventas = true;
+                $scope.isPendienteActivar = false;
+                $scope.isPendienteAgendar = false;
+                if (!treeRescataventas) {
+                    swal({ text: 'Espera un momento...', allowOutsideClick: false });
+                    swal.showLoading();
+                    treeRescataventas = $('#geografiaRescataventas').bind('loaded.jstree', function (e, data) {
+                        $scope.btnAceptarGeografiaConsulta('rescataventas');
+                        $scope.consultarRescataventasBandejas();
+                        $scope.$apply();
+                    }).jstree({
+                        'plugins': ["wholerow", "checkbox", "search"],
+                        'core': {
+                            'data': $scope.geografiasRescataventas,
+                            'themes': {
+                                'name': 'proton',
+                                'responsive': true,
+                                "icons": false
+                            }
+                        },
+                        "search": {
+                            "case_sensitive": false,
+                            "show_only_matches": true
                         }
-                    },
-                    "search": {
-                        "case_sensitive": false,
-                        "show_only_matches": true
-                    }
-                });
+                    });
+                }
             }
         }
         if (opcion === 3) {
-            $scope.nombreBandejaSf = "PENDIENTES DE ACTIVAR";
-            $scope.isPendienteActivar = true;
-            $scope.isPendienteAgendar = false;
-            $scope.isRescataventas = false;
-            if (!treeActivar) {
-                swal({ text: 'Espera un momento...', allowOutsideClick: false });
-                swal.showLoading();
-                treeActivar = $('#geografiaPendientesActivar').bind('loaded.jstree', function (e, data) {
-                    $scope.btnAceptarGeografiaConsulta('pendientesActivar');
-                    $scope.consultarPendientesActivarBandejas();
-                    $scope.$apply();
-                }).jstree({
-                    'plugins': ["wholerow", "checkbox", "search"],
-                    'core': {
-                        'data': $scope.geografiasPendienteActivar,
-                        'themes': {
-                            'name': 'proton',
-                            'responsive': true,
-                            "icons": false
+            if ($scope.isPermisoConsultaPendientesActivar) {
+                $scope.nombreBandejaSf = "PENDIENTES DE ACTIVAR";
+                $scope.isPendienteActivar = true;
+                $scope.isPendienteAgendar = false;
+                $scope.isRescataventas = false;
+                if (!treeActivar) {
+                    swal({ text: 'Espera un momento...', allowOutsideClick: false });
+                    swal.showLoading();
+                    treeActivar = $('#geografiaPendientesActivar').bind('loaded.jstree', function (e, data) {
+                        $scope.btnAceptarGeografiaConsulta('pendientesActivar');
+                        $scope.consultarPendientesActivarBandejas();
+                        $scope.$apply();
+                    }).jstree({
+                        'plugins': ["wholerow", "checkbox", "search"],
+                        'core': {
+                            'data': $scope.geografiasPendienteActivar,
+                            'themes': {
+                                'name': 'proton',
+                                'responsive': true,
+                                "icons": false
+                            }
+                        },
+                        "search": {
+                            "case_sensitive": false,
+                            "show_only_matches": true
                         }
-                    },
-                    "search": {
-                        "case_sensitive": false,
-                        "show_only_matches": true
-                    }
-                });
+                    });
+                }
             }
         }
         $scope.vistaSf = opcion;
@@ -275,17 +285,35 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
             if (resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
                 let llavesResult = results[0].data.result.MODULO_ACCIONES_USUARIO.llaves;
 
-                if (llavesResult.N_FILTRO_GEOGRAFIA) {
-                    $scope.nfiltrogeografiaPendienteActivar = llavesResult.N_FILTRO_GEOGRAFIA;
-                    $scope.nfiltrogeografiaRescataVentas = llavesResult.N_FILTRO_GEOGRAFIA;
-                    $scope.nfiltrogeografiaPendienteAgendar = llavesResult.N_FILTRO_GEOGRAFIA;
-                } else {
+                if (llavesResult.N_FILTRO_GEOGRAFIA_PENDIENTES_ACTIVAR) {
                     $scope.nfiltrogeografiaPendienteActivar = llavesResult.N_FILTRO_GEOGRAFIA_PENDIENTES_ACTIVAR;
-                    $scope.nfiltrogeografiaRescataVentas = llavesResult.N_FILTRO_GEOGRAFIA_RESCATAVENTAS;
-                    $scope.nfiltrogeografiaPendienteAgendar = llavesResult.N_FILTRO_GEOGRAFIA_PENDIENTES_AGENDAR;
+                } else if (llavesResult.N_FILTRO_GEOGRAFIA) {
+                    $scope.nfiltrogeografiaPendienteActivar = llavesResult.N_FILTRO_GEOGRAFIA;
                 }
+
+                if (llavesResult.N_FILTRO_GEOGRAFIA_RESCATAVENTAS) {
+                    $scope.nfiltrogeografiaRescataVentas = llavesResult.N_FILTRO_GEOGRAFIA_PENDIENTES_ACTIVAR;
+                } else if (llavesResult.N_FILTRO_GEOGRAFIA) {
+                    $scope.nfiltrogeografiaRescataVentas = llavesResult.N_FILTRO_GEOGRAFIA;
+                }
+
+                if (llavesResult.N_FILTRO_GEOGRAFIA_PENDIENTES_AGENDAR) {
+                    $scope.nfiltrogeografiaPendienteAgendar = llavesResult.N_FILTRO_GEOGRAFIA_PENDIENTES_ACTIVAR;
+                } else if (llavesResult.N_FILTRO_GEOGRAFIA) {
+                    $scope.nfiltrogeografiaPendienteAgendar = llavesResult.N_FILTRO_GEOGRAFIA;
+                }
+
                 validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
                 validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
+            }
+
+            if (resultConf != undefined && resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.permisos && resultConf.MODULO_ACCIONES_USUARIO.permisos != "") {
+                $scope.permisosUsuario = resultConf.MODULO_ACCIONES_USUARIO.permisos;
+                console.log($scope.permisosUsuario);
+                // $scope.isPermisoConsultaPendientesAgendar = ($scope.permisosUsuario.filter(e => { return e.clave == "accionConsultarPendientesAgendar" })[0] != undefined);
+                // $scope.isPermisoConsultaRescataventas = ($scope.permisosUsuario.filter(e => { return e.clave == "accionConsultarRescataventas" })[0] != undefined);
+                // $scope.isPermisoConsultaPendientesActivar = ($scope.permisosUsuario.filter(e => { return e.clave == "accionConsultarPendientesActivar" })[0] != undefined);
+                $scope.isPermisoAgendamiento = ($scope.permisosUsuario.filter(e => { return e.clave == "accionAgendamiento" })[0] != undefined);
             }
 
             GenericMapa.prototype.callPrototypeMapa(results[0].data.result);
@@ -338,7 +366,14 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                                 return e
                             })
 
-                            $scope.cambiarVistaSF(1);
+                            if ($scope.isPermisoConsultaPendientesAgendar) {
+                                $scope.cambiarVistaSF(1);
+                            } else if ($scope.isPermisoConsultaRescataventas) {
+                                $scope.cambiarVistaSF(2);
+                            } else if ($scope.isPermisoConsultaPendientesActivar) {
+                                $scope.cambiarVistaSF(3);
+                            }
+
                             $("#idBody").removeAttr("style");
                             swal.close();
                         } else {
@@ -713,26 +748,29 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                                     pendientesAgendarTable.destroy();
                                 }
                                 $scope.listPendientesAgendar = angular.copy(response.data.result.resultado);
+                                console.log($scope.listPendientesAgendar);
                                 $.each($scope.listPendientesAgendar, function (i, elemento) {
                                     let rowAg = [];
                                     let istop500 = (elemento.top500) ? '<i class="fas fa-star" style="color:#fcba5d;"></i>&nbsp;' : '<i class="fas fa-star" style="color: #b1b1b1;"></i>&nbsp;';
-                                    rowAg[0] = istop500 + (elemento.name !== null && elemento.name !== undefined ? elemento.name : 'Sin informaci&oacute;n');
-                                    rowAg[1] = elemento.cotSitio.nombreCotSitio !== null && elemento.cotSitio.nombreCotSitio !== undefined ? elemento.cotSitio.nombreCotSitio : 'Sin informaci&oacute;n';
-                                    rowAg[2] = elemento.cotizacion.cotizacion !== null && elemento.cotizacion.cotizacion !== undefined ? elemento.cotizacion.cotizacion : 'Sin informaci&oacute;n';
-                                    rowAg[3] = elemento.cuentaFacturaSf.nombreCuentaFactura !== null && elemento.cuentaFacturaSf.nombreCuentaFactura !== undefined ? elemento.cuentaFacturaSf.nombreCuentaFactura : 'Sin informaci&oacute;n';
-                                    rowAg[4] = elemento.dpPlan.nameDpPlan !== null && elemento.dpPlan.nameDpPlan !== undefined ? elemento.dpPlan.nameDpPlan : 'Sin informaci&oacute;n';
-                                    rowAg[5] = elemento.cuadrillaFfm !== null && elemento.cuadrillaFfm !== undefined ? elemento.cuadrillaFfm : 'Sin informaci&oacute;n';
-                                    rowAg[6] = elemento.cluster !== null && elemento.cluster !== undefined ? elemento.cluster : 'Sin informaci&oacute;n';
-                                    rowAg[7] = elemento.ordenServicio !== null && elemento.ordenServicio !== undefined ? elemento.ordenServicio : 'Sin informaci&oacute;n';
-                                    rowAg[8] = elemento.estatusOs !== null && elemento.estatusOs !== undefined ? elemento.estatusOs : 'Sin informaci&oacute;n';
-                                    rowAg[9] = elemento.fechaCreacion !== null && elemento.fechaCreacion !== undefined ? elemento.fechaCreacion : 'Sin informaci&oacute;n';
-                                    rowAg[10] = '<div class="text-center">' +
-                                        '   <span title="Agendar" style="background-color: #7716fa !important; cursor: pointer; border: 1px solid #7716fa;" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnTables" onclick="visualizarAgendamiento(' + i + ')">' +
-                                        '       <i class="fa fa-calendar-alt"></i>' +
+                                    rowAg[0] = istop500 + (elemento.name && elemento.name !== '' ? elemento.name : 'Sin informaci&oacute;n');
+                                    rowAg[1] = elemento.cotSitio && elemento.cotSitio.nombreCotSitio && elemento.cotSitio.nombreCotSitio !== '' ? elemento.cotSitio.nombreCotSitio : 'Sin informaci&oacute;n';
+                                    rowAg[2] = elemento.cotizacion && elemento.cotizacion.cotizacion && elemento.cotizacion.cotizacion !== '' ? elemento.cotizacion.cotizacion : 'Sin informaci&oacute;n';
+                                    rowAg[3] = elemento.cuentaFacturaSf && elemento.cuentaFacturaSf.nombreCuentaFactura && elemento.cuentaFacturaSf.nombreCuentaFactura !== '' ? elemento.cuentaFacturaSf.nombreCuentaFactura : 'Sin informaci&oacute;n';
+                                    rowAg[4] = elemento.dpPlan && elemento.dpPlan.nameDpPlan && elemento.dpPlan.nameDpPlan !== '' ? elemento.dpPlan.nameDpPlan : 'Sin informaci&oacute;n';
+                                    rowAg[5] = elemento.cuadrillaFfm && elemento.cuadrillaFfm !== '' ? elemento.cuadrillaFfm : 'Sin informaci&oacute;n';
+                                    rowAg[6] = elemento.cluster && elemento.cluster !== '' ? elemento.cluster : 'Sin informaci&oacute;n';
+                                    rowAg[7] = elemento.ordenServicio && elemento.ordenServicio !== '' ? elemento.ordenServicio : 'Sin informaci&oacute;n';
+                                    rowAg[8] = elemento.estatusOs && elemento.estatusOs !== '' ? elemento.estatusOs : 'Sin informaci&oacute;n';
+                                    rowAg[9] = elemento.fechaCreacion && elemento.fechaCreacion !== '' ? elemento.fechaCreacion : 'Sin informaci&oacute;n';
+                                    rowAg[10] =
+                                        '<div class="text-center">' +
+                                        '   <span title="Agendar" id="btnAgendamiento' + elemento.name + '" class="btnAgendamiento btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnTables" onclick="visualizarAgendamiento(' + i + ')">' +
+                                        '       <i class="fa fa-calendar-alt .iconAgendamiento"></i>' +
                                         '   </span>' +
                                         '</div>';
                                     arrayAgendarRow.push(rowAg);
                                 });
+
                                 pendientesAgendarTable = $('#tablePendientesAgendar').DataTable({
                                     "paging": true,
                                     "lengthChange": false,
@@ -743,6 +781,9 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                                     "autoWidth": true,
                                     "language": idioma_espanol_not_font,
                                 });
+                                if (!$scope.isPermisoAgendamiento) {
+                                    $(".btnAgendamiento").addClass("estiloBlockIconoPermiso");
+                                }
                                 swal.close();
                             } else {
                                 mostrarMensajeInformativo("No se encontraron Pendientes de Agendar");
@@ -799,16 +840,16 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                                 $scope.listRescataventas = angular.copy(response.data.result.resultado);
                                 $.each($scope.listRescataventas, function (i, elemento) {
                                     let rowRes = [];
-                                    rowRes[0] = elemento.nombreCsp !== null && elemento.nombreCsp !== undefined ? elemento.nombreCsp : 'Sin informaci&oacute;n';
-                                    rowRes[1] = elemento.cotSitio.nombreCotSitio !== null && elemento.cotSitio.nombreCotSitio !== undefined ? elemento.cotSitio.nombreCotSitio : 'Sin informaci&oacute;n';
-                                    rowRes[2] = elemento.cotizacion.cotizacion !== null && elemento.cotizacion.cotizacion !== undefined ? elemento.cotizacion.cotizacion : 'Sin informaci&oacute;n';
-                                    rowRes[3] = elemento.cuentaFacturaSf.nombreCuentaFactura  !== null && elemento.cuentaFacturaSf.nombreCuentaFactura !== undefined ? elemento.cuentaFacturaSf.nombreCuentaFactura : 'Sin informaci&oacute;n';
-                                    rowRes[4] = elemento.dpPlan.nameDpPlan !== null && elemento.dpPlan.nameDpPlan !== undefined ? elemento.dpPlan.nameDpPlan : 'Sin informaci&oacute;n'
-                                    rowRes[5] = elemento.plaza !== null && elemento.plaza !== undefined ? elemento.plaza : 'Sin informaci&oacute;n';
-                                    rowRes[6] = elemento.cluster !== null && elemento.cluster !== undefined ? elemento.cluster : 'Sin informaci&oacute;n';
-                                    rowRes[7] = elemento.ordenServicio.nombreOrdenServicio !== null && elemento.ordenServicio.nombreOrdenServicio !== undefined ? elemento.ordenServicio.nombreOrdenServicio : 'Sin informaci&oacute;n';
-                                    rowRes[8] = elemento.estatusOs !== null && elemento.estatusOs !== undefined ? elemento.estatusOs : 'Sin informaci&oacute;n';
-                                    rowRes[9] = elemento.fechaCreacion !== null && elemento.fechaCreacion !== undefined ? elemento.fechaCreacion : 'Sin informaci&oacute;n';
+                                    rowRes[0] = elemento.nombreCsp && elemento.nombreCsp !== '' ? elemento.nombreCsp : 'Sin informaci&oacute;n';
+                                    rowRes[1] = elemento.cotSitio && elemento.cotSitio.nombreCotSitio && elemento.cotSitio.nombreCotSitio !== '' ? elemento.cotSitio.nombreCotSitio : 'Sin informaci&oacute;n';
+                                    rowRes[2] = elemento.cotizacion && elemento.cotizacion.cotizacion && elemento.cotizacion.cotizacion !== '' ? elemento.cotizacion.cotizacion : 'Sin informaci&oacute;n';
+                                    rowRes[3] = elemento.cuentaFacturaSf && elemento.cuentaFacturaSf.nombreCuentaFactura && elemento.cuentaFacturaSf.nombreCuentaFactura !== '' ? elemento.cuentaFacturaSf.nombreCuentaFactura : 'Sin informaci&oacute;n';
+                                    rowRes[4] = elemento.dpPlan && elemento.dpPlan.nameDpPlan && elemento.dpPlan.nameDpPlan !== '' ? elemento.dpPlan.nameDpPlan : 'Sin informaci&oacute;n'
+                                    rowRes[5] = elemento.plaza && elemento.plaza !== '' ? elemento.plaza : 'Sin informaci&oacute;n';
+                                    rowRes[6] = elemento.cluster && elemento.cluster !== '' ? elemento.cluster : 'Sin informaci&oacute;n';
+                                    rowRes[7] = elemento.ordenServicio && elemento.ordenServicio.nombreOrdenServicio && elemento.ordenServicio.nombreOrdenServicio !== '' ? elemento.ordenServicio.nombreOrdenServicio : 'Sin informaci&oacute;n';
+                                    rowRes[8] = elemento.estatusOs && elemento.estatusOs !== '' ? elemento.estatusOs : 'Sin informaci&oacute;n';
+                                    rowRes[9] = elemento.fechaCreacion && elemento.fechaCreacion !== '' ? elemento.fechaCreacion : 'Sin informaci&oacute;n';
                                     // rowRes[10] = "";
                                     arrayResRow.push(rowRes);
                                 });
@@ -882,17 +923,17 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                                 $scope.listPendientesActivar = angular.copy(response.data.result.resultado);
                                 $.each($scope.listPendientesActivar, function (i, elemento) {
                                     let row = [];
-                                    row[0] = elemento.nombreCsp !== null && elemento.nombreCsp !== undefined ? elemento.nombreCsp : 'Sin informaci&oacute;n';
-                                    row[1] = elemento.cotSitio.nombreCotSitio !== null && elemento.cotSitio.nombreCotSitio !== undefined ? elemento.cotSitio.nombreCotSitio : 'Sin informaci&oacute;n';
-                                    row[2] = elemento.cotizacion.cotizacion !== null && elemento.cotizacion.cotizacion !== undefined ? elemento.cotizacion.cotizacion : 'Sin informaci&oacute;n';
-                                    row[3] = elemento.cuentaFacturaSf.nombreCuentaFactura !== null && elemento.cuentaFacturaSf.nombreCuentaFactura !== undefined ? elemento.cuentaFacturaSf.nombreCuentaFactura : 'Sin informaci&oacute;n';
-                                    row[4] = elemento.cuentaFacturaNumero !== null && elemento.cuentaFacturaNumero !== undefined ? elemento.cuentaFacturaNumero : 'Sin informaci&oacute;n';
-                                    row[5] = elemento.dpPlan.nameDpPlan !== null && elemento.dpPlan.nameDpPlan  !== undefined ? elemento.dpPlan.nameDpPlan  : 'Sin informaci&oacute;n';
-                                    row[6] = elemento.plaza !== null && elemento.plaza !== undefined ? elemento.plaza : 'Sin informaci&oacute;n';
-                                    row[7] = elemento.cluster !== null && elemento.cluster !== undefined ? elemento.cluster : 'Sin informaci&oacute;n';
-                                    row[8] = elemento.ordenServicio.nombreOrdenServicio !== null && elemento.ordenServicio.nombreOrdenServicio !== undefined ? elemento.ordenServicio.nombreOrdenServicio : 'Sin informaci&oacute;n';
-                                    row[9] = elemento.estatusOs !== null && elemento.estatusOs !== undefined ? elemento.estatusOs : 'Sin informaci&oacute;n';
-                                    row[10] = elemento.fechaCreacion !== null && elemento.fechaCreacion !== undefined ? elemento.fechaCreacion : 'Sin informaci&oacute;n';
+                                    row[0] = elemento.nombreCsp && elemento.nombreCsp !== '' ? elemento.nombreCsp : 'Sin informaci&oacute;n';
+                                    row[1] = elemento.cotSitio && elemento.cotSitio.nombreCotSitio && elemento.cotSitio.nombreCotSitio !== '' ? elemento.cotSitio.nombreCotSitio : 'Sin informaci&oacute;n';
+                                    row[2] = elemento.cotizacion && elemento.cotizacion.cotizacion && elemento.cotizacion.cotizacion !== '' ? elemento.cotizacion.cotizacion : 'Sin informaci&oacute;n';
+                                    row[3] = elemento.cuentaFacturaSf && elemento.cuentaFacturaSf.nombreCuentaFactura && elemento.cuentaFacturaSf.nombreCuentaFactura !== '' ? elemento.cuentaFacturaSf.nombreCuentaFactura : 'Sin informaci&oacute;n';
+                                    row[4] = elemento.cuentaFacturaNumero && elemento.cuentaFacturaNumero !== '' ? elemento.cuentaFacturaNumero : 'Sin informaci&oacute;n';
+                                    row[5] = elemento.dpPlan && elemento.dpPlan.nameDpPlan && elemento.dpPlan.nameDpPlan !== '' ? elemento.dpPlan.nameDpPlan : 'Sin informaci&oacute;n';
+                                    row[6] = elemento.plaza && elemento.plaza !== '' ? elemento.plaza : 'Sin informaci&oacute;n';
+                                    row[7] = elemento.cluster && elemento.cluster !== '' ? elemento.cluster : 'Sin informaci&oacute;n';
+                                    row[8] = elemento.ordenServicio && elemento.ordenServicio.nombreOrdenServicio && elemento.ordenServicio.nombreOrdenServicio !== '' ? elemento.ordenServicio.nombreOrdenServicio : 'Sin informaci&oacute;n';
+                                    row[9] = elemento.estatusOs && elemento.estatusOs !== '' ? elemento.estatusOs : 'Sin informaci&oacute;n';
+                                    row[10] = elemento.fechaCreacion && elemento.fechaCreacion !== '' ? elemento.fechaCreacion : 'Sin informaci&oacute;n';
                                     // row[11] = "";
                                     arrayRow.push(row);
                                 });
