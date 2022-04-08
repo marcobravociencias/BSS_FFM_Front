@@ -487,8 +487,9 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 						let tipoOrdenesTemp = $scope.conversionAnidadaRecursiva(respaldoTipoOrdenArray, 1, $scope.nivelIntervenciones);
 						$scope.filtrosGeneral.tipoOrdenes = angular.copy(tipoOrdenesTemp);
 						$scope.filtrosGeneral.tipoOrdenesTraspaso = angular.copy(tipoOrdenesTemp);
-						$('#filtro-intervencion').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.tipoOrdenes));
-						$('#filtro-intervencion-tr').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.tipoOrdenesTraspaso));
+						$('#filtro-intervencion').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.tipoOrdenes, $scope.nivelIntervenciones));
+						$('#filtro-intervencion-tr').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.tipoOrdenesTraspaso, $scope.nivelIntervenciones
+							));
 					} else {
 						toastr.warning('No se encontraron  tipo ordenes');
 					}
@@ -508,8 +509,8 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 						let estatusDisponiblesTemp = $scope.conversionAnidadaRecursiva(results[2].data.result, 1, $scope.nivelEstatusPendientes);
 						$scope.filtrosGeneral.estatusdisponibles = angular.copy(estatusDisponiblesTemp);
 						$scope.filtrosGeneral.estatusdisponiblesTraspaso = angular.copy(estatusDisponiblesTemp);
-						$('#filtro-estatus-substatus').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.estatusdisponibles));
-						$('#filtro-estatus-substatus-tr').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.estatusdisponiblesTraspaso));
+						$('#filtro-estatus-substatus').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.estatusdisponibles, $scope.nivelEstatusPendientes));
+						$('#filtro-estatus-substatus-tr').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.estatusdisponiblesTraspaso,$scope.nivelEstatusPendientes ));
 
 					} else {
 						toastr.info('No se encontraron catalogo de estatus');
@@ -622,21 +623,20 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 		}).catch(err => handleError(err));
 	}
 
-	$scope.listaSeleccionSelectGral = function (lista) {
-		var texto = "";
-		angular.forEach(lista, function (elem, index) {
-			if (elem.checkedOpcion) {
-				if (texto !== "") {
-					texto = (texto + ", " + elem.nombre.toUpperCase());
-				} else {
-					texto = (elem.nombre.toUpperCase());
+
+	$scope.listaSeleccionSelectGral = function (array, nivel) {
+		let arrayReturn = "";
+		angular.forEach(array, function (elemento, index) {
+			if (elemento.nivel == nivel && elemento.checkedOpcion) {
+				if(arrayReturn !== ""){
+					arrayReturn += ',';
 				}
+				arrayReturn += elemento.nombre.toUpperCase();
+			} else {
+				arrayReturn = arrayReturn.concat($scope.listaSeleccionSelectGral(elemento.children, nivel));
 			}
 		});
-		return texto;
-	}
-
-	$scope.recursiveGetText = function(lista){
+		return arrayReturn;
 		
 	}
 
@@ -1058,10 +1058,10 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 
 	
 	$scope.setTextFiltro = function(){
-		$('#filtro-intervencion').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.tipoOrdenes));
-		$('#filtro-intervencion-tr').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.tipoOrdenesTraspaso));
-		$('#filtro-estatus-substatus').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.estatusdisponibles));
-		$('#filtro-estatus-substatus-tr').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.estatusdisponiblesTraspaso));
+		$('#filtro-intervencion').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.tipoOrdenes, $scope.nivelIntervenciones));
+		$('#filtro-intervencion-tr').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.tipoOrdenesTraspaso, $scope.nivelIntervenciones));
+		$('#filtro-estatus-substatus').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.estatusdisponibles, $scope.nivelEstatusPendientes));
+		$('#filtro-estatus-substatus-tr').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.estatusdisponiblesTraspaso, $scope.nivelEstatusPendientes));
 	}
 
 	$scope.seleccionarTodosRecursivo = function (array, isBtn) {

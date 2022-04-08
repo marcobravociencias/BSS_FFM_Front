@@ -8,21 +8,21 @@
             <div class="modal-body" style=" max-height: 300px; overflow: auto;">
                 <div ng-show="isPendienteAgendar">
                     <div class="input-group input-group-sm content-seach-group">
-                        <input id="buscadorGeografiaPendienteAgendar" type="text" autocomplete="off" class="form-control buscadorGenerico" ng-keyup="busquedaGeografiaConsultaAgendar()" placeholder="Buscar geograf&iacute;a">
+                        <input id="buscadorGeografiaPendienteAgendar" type="text" autocomplete="off" class="form-control buscadorGenerico" ng-keyup="busquedaGeografiaConsulta('pendienteAgendar')" placeholder="Buscar geograf&iacute;a">
                         <span class="fa fa-search iconoBusqueda"></span>
                     </div>
                     <div id="geografiaPendientesAgendar" class="proton-demo"></div>
                 </div>
                 <div ng-show="isRescataventas">
                     <div class="input-group input-group-sm content-seach-group">
-                        <input id="buscadorGeografiaRescataventas" type="text" autocomplete="off" class="form-control buscadorGenerico" ng-keyup="busquedaGeografiaConsultaRescataventas()" placeholder="Buscar geograf&iacute;a">
+                        <input id="buscadorGeografiaRescataventas" type="text" autocomplete="off" class="form-control buscadorGenerico" ng-keyup="busquedaGeografiaConsulta('rescataventas')" placeholder="Buscar geograf&iacute;a">
                         <span class="fa fa-search iconoBusqueda"></span>
                     </div>
                     <div id="geografiaRescataventas" class="proton-demo"></div>
                 </div>
                 <div ng-show="isPendienteActivar">
                     <div class="input-group input-group-sm content-seach-group">
-                        <input id="buscadorGeografiaPendienteActivar" type="text" autocomplete="off" class="form-control buscadorGenerico" ng-keyup="busquedaGeografiaConsultaActivar()" placeholder="Buscar geograf&iacute;a">
+                        <input id="buscadorGeografiaPendienteActivar" type="text" autocomplete="off" class="form-control buscadorGenerico" ng-keyup="busquedaGeografiaConsultaActivar('pendienteActivar')" placeholder="Buscar geograf&iacute;a">
                         <span class="fa fa-search iconoBusqueda"></span>
                     </div>
                     <div id="geografiaPendientesActivar" class="proton-demo"></div>

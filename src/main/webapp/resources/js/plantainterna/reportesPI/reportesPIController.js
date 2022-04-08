@@ -20,6 +20,15 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 	$scope.nfiltrogeografiaSeguimientoDiario = "";
 	$scope.nfiltrointervencionesSeguimientoDiario = "";
 	$scope.nfiltroestatuspendienteSeguimientoDiario = "";
+
+	$scope.nfiltrogeografiaCierre = "";
+	$scope.nfiltrointervencionesCierre = "";
+	$scope.nfiltroestatuspendienteCierre = "";
+
+	$scope.nfiltrogeografiaAsignadas = "";
+	$scope.nfiltrointervencionesAsignadas = "";
+	$scope.nfiltroestatuspendienteAsignadas = "";
+
 	$scope.permisosConfigUser;
 	$scope.configPermisoAccionConsultaReporteSeguimiento = false;
 	$scope.configPermisoAccionDescargaReporteSeguimiento = false;
@@ -33,6 +42,32 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 	$scope.resultReporteCierre = null;
 	$scope.resultReporteAsignadas = null;
 
+	$scope.getTextGeografia = function (idJsTree, idInput) {
+		var geografias = $('#' + idJsTree).jstree("get_selected", true);
+		let textoGeografias = [];
+		angular.forEach(geografias, (geografia, index) => {
+			textoGeografias.push(geografia.text);
+		});
+		$('#' + idInput).val(textoGeografias);
+	}
+
+	
+	$scope.setTextFiltro = function () {
+		if ($scope.tipoReporte === 'seguimiento') {
+			$('#filtro-estatus-reporte').val($scope.listaSeleccionSelectGral($scope.filtroEstatusInt.reporteSeguimiento.estatusdisponibles, $scope.nfiltroestatuspendienteSeguimientoDiario));
+			$('#filtro-intervencionO').val($scope.listaSeleccionSelectGral($scope.filtroEstatusInt.reporteSeguimiento.tipoOrdenes, $scope.nfiltrointervencionesSeguimientoDiario))
+		}
+
+		if ($scope.tipoReporte === 'cierre') {
+			$('#filtro-estatus-reporte-cierre').val($scope.listaSeleccionSelectGral($scope.filtroEstatusInt.reporteCierre.estatusdisponibles, $scope.nfiltroestatuspendienteCierre))
+			$('#filtro-intervencion-cierre').val($scope.listaSeleccionSelectGral($scope.filtroEstatusInt.reporteCierre.tipoOrdenes, $scope.nfiltrointervencionesCierre))
+		}
+
+		if ($scope.tipoReporte === 'asignadas') {
+			$('#filtro-estatus-reporte-asignadas').val($scope.listaSeleccionSelectGral($scope.filtroEstatusInt.reporteAsignadas.estatusdisponibles, $scope.nfiltroestatuspendienteAsignadas));
+			$('#filtro-intervencion-reporte-asignadas').val($scope.listaSeleccionSelectGral($scope.filtroEstatusInt.reporteAsignadas.tipoOrdenes, $scope.nfiltrointervencionesAsignadas));
+		}
+	}
 
 	angular.element(document).ready(function () {
 		$('#searchGeo-seguimiento').on('keyup', function () {
@@ -46,9 +81,24 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		$('#searchGeo-asignadas').on('keyup', function () {
 			$("#jstree-proton-asignadas").jstree("search", this.value);
 		})
+		$("#modalCluster").on("hidden.bs.modal", function () {
+			if ($scope.tipoReporte === 'seguimiento') {
+				$scope.getTextGeografia('jstree-proton-seguimiento', 'clusterO');
+			}
+
+			if ($scope.tipoReporte === 'cierre') {
+				$scope.getTextGeografia('jstree-proton-cierre', 'cluster-cierre');
+			}
+
+			if ($scope.tipoReporte === 'asignadas') {
+				$scope.getTextGeografia('jstree-proton-asignadas', 'cluster-asignadas');
+			}
+		})
+		$('.drop-down-filters').on("change.bs.dropdown", function (e) {
+			$scope.setTextFiltro();
+		});
 
 	})
-
 
 
 	$scope.abrirModalGeografiaRep = function (type) {
@@ -104,16 +154,19 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 			$('#jstree-proton-' + type).bind('loaded.jstree', function (e, data) {
 				switch (type) {
 					case 'seguimiento':
+						$scope.getTextGeografia('jstree-proton-seguimiento', 'clusterO');
 						if ($scope.resultReporteDiario == null) {
 							$scope.consultarReporteDiario();
 						}
 						break;
 					case 'cierre':
+						$scope.getTextGeografia('jstree-proton-cierre', 'cluster-cierre');
 						if ($scope.resultReporteCierre == null) {
 							$scope.consultarCierreDiario();
 						}
 						break;
 					case 'asignadas':
+						$scope.getTextGeografia('jstree-proton-asignadas', 'cluster-asignadas');
 						if ($scope.resultReporteAsignadas == null) {
 							$scope.consultarReporteAsignadasCompensacion();
 						}
@@ -175,6 +228,40 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 
 	}
 
+	$scope.listaSeleccionSelectGral = function (array, nivel) {
+		let arrayReturn = "";
+		angular.forEach(array, function (elemento, index) {
+			if (elemento.nivel == nivel && elemento.checkedOpcion) {
+				if (arrayReturn !== "") {
+					arrayReturn += ',';
+				}
+				arrayReturn += elemento.nombre.toUpperCase();
+			} else {
+				arrayReturn = arrayReturn.concat($scope.listaSeleccionSelectGral(elemento.children, nivel));
+			}
+		});
+		return arrayReturn;
+
+	}
+
+	$scope.ordenarGeografia = function (lista, filtro) {
+
+		let listaGeografiaTemp = lista.filter(e => e.nivel <= parseInt(filtro));
+
+		let geografia = angular.copy(listaGeografiaTemp);
+		geografia.map((e) => {
+			e.parent = e.padre == undefined ? "#" : e.padre;
+			e.text = e.nombre;
+			e.icon = "fa fa-globe";
+			e.state = {
+				opened: false,
+				selected: true,
+			}
+			return e
+		})
+
+		return geografia
+	}
 
 	$scope.consultarCatalagosPI = function () {
 		$q.all([
@@ -187,12 +274,22 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 			if (results[3].data !== undefined) {
 				if (results[3].data.respuesta) {
 					if (results[3].data.result) {
+						
 						if (resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
 							let llavesResult = results[3].data.result.MODULO_ACCIONES_USUARIO.llaves;
 
-							$scope.nfiltrogeografiaSeguimientoDiario = llavesResult.N_FILTRO_GEOGRAFIA_SEGUIMIENTODIARIO;
-							$scope.nfiltrointervencionesSeguimientoDiario = llavesResult.N_FILTRO_INTERVENCIONES_SEGUIMIENTODIARIO;
-							$scope.nfiltroestatuspendienteSeguimientoDiario = llavesResult.N_ESTATUS_PENDIENTES_SEGUIMIENTODIARIO;
+							$scope.nfiltrogeografiaSeguimientoDiario = llavesResult.N_FILTRO_GEOGRAFIA_SEGUIMIENTODIARIO ? llavesResult.N_FILTRO_GEOGRAFIA_SEGUIMIENTODIARIO : llavesResult.N_FILTRO_GEOGRAFIA;
+							$scope.nfiltrointervencionesSeguimientoDiario = llavesResult.N_FILTRO_INTERVENCIONES_SEGUIMIENTODIARIO ? llavesResult.N_FILTRO_INTERVENCIONES_SEGUIMIENTODIARIO : llavesResult.N_FILTRO_INTERVENCIONES;
+							$scope.nfiltroestatuspendienteSeguimientoDiario = llavesResult.N_ESTATUS_PENDIENTES_SEGUIMIENTODIARIO ? llavesResult.N_ESTATUS_PENDIENTES_SEGUIMIENTODIARIO : llavesResult.N_ESTATUS_PENDIENTES;
+
+							$scope.nfiltrogeografiaCierre = llavesResult.N_FILTRO_GEOGRAFIA_CIERREDIARIO ? llavesResult.N_FILTRO_GEOGRAFIA_CIERREDIARIO : llavesResult.N_FILTRO_GEOGRAFIA;
+							$scope.nfiltrointervencionesCierre = llavesResult.N_FILTRO_INTERVENCIONES_CIERREDIARIO ? llavesResult.N_FILTRO_INTERVENCIONES_CIERREDIARIO : llavesResult.N_FILTRO_INTERVENCIONES;
+							$scope.nfiltroestatuspendienteCierre = llavesResult.N_ESTATUS_PENDIENTES_CIERREDIARIO ? llavesResult.N_ESTATUS_PENDIENTES_CIERREDIARIO : llavesResult.N_ESTATUS_PENDIENTES;
+
+							$scope.nfiltrogeografiaAsignadas = llavesResult.N_FILTRO_GEOGRAFIA_ASIGNADAS ? llavesResult.N_FILTRO_GEOGRAFIA_ASIGNADAS : llavesResult.N_FILTRO_GEOGRAFIA;
+							$scope.nfiltrointervencionesAsignadas = llavesResult.N_FILTRO_INTERVENCIONES_ASIGNADAS ? llavesResult.N_FILTRO_INTERVENCIONES_ASIGNADAS : llavesResult.N_FILTRO_INTERVENCIONES;
+							$scope.nfiltroestatuspendienteAsignadas = llavesResult.N_ESTATUS_PENDIENTES_ASIGNADAS ? llavesResult.N_ESTATUS_PENDIENTES_ASIGNADAS : llavesResult.N_ESTATUS_PENDIENTES;
+
 							$scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
 
 							validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
@@ -256,7 +353,8 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 				if (results[1].data.respuesta) {
 					if (results[1].data.result) {
 						$scope.nfiltrointervencionesSeguimientoDiario = $scope.nfiltrointervencionesSeguimientoDiario ? $scope.nfiltrointervencionesSeguimientoDiario : $scope.obtenerNivelUltimoJerarquiaGeneric(results[1].data.result);
-						$scope.filtrosGeneral.tipoOrdenes = $scope.conversionAnidadaRecursiva(results[1].data.result, 1, $scope.nfiltrointervencionesSeguimientoDiario);
+						$scope.nfiltrointervencionesCierre = $scope.nfiltrointervencionesCierre ? $scope.nfiltrointervencionesCierre : $scope.obtenerNivelUltimoJerarquiaGeneric(results[1].data.result);
+						$scope.nfiltrointervencionesAsignadas = $scope.nfiltrointervencionesAsignadas ? $scope.nfiltrointervencionesAsignadas : $scope.obtenerNivelUltimoJerarquiaGeneric(results[1].data.result);
 					} else {
 						toastr.info('No se encontraron  tipo ordenes');
 					}
@@ -271,26 +369,36 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 				if (results[2].data.respuesta) {
 					if (results[2].data.result) {
 						$scope.nfiltroestatuspendienteSeguimientoDiario = $scope.nfiltroestatuspendienteSeguimientoDiario ? $scope.nfiltroestatuspendienteSeguimientoDiario : $scope.obtenerNivelUltimoJerarquiaGeneric(results[2].data.result);
-						$scope.filtrosGeneral.estatusdisponibles = $scope.conversionAnidadaRecursiva(results[2].data.result, 1, $scope.nfiltroestatuspendienteSeguimientoDiario);
+						$scope.nfiltroestatuspendienteCierre = $scope.nfiltroestatuspendienteCierre ? $scope.nfiltroestatuspendienteCierre : $scope.obtenerNivelUltimoJerarquiaGeneric(results[2].data.result);
+						$scope.nfiltroestatuspendienteAsignadas = $scope.nfiltroestatuspendienteAsignadas ? $scope.nfiltroestatuspendienteAsignadas : $scope.obtenerNivelUltimoJerarquiaGeneric(results[2].data.result);
+
 						if ($scope.configPermisoAccionConsultaReporteSeguimiento) {
 							$scope.filtroEstatusInt.reporteSeguimiento = {
-								estatusdisponibles: angular.copy($scope.filtrosGeneral.estatusdisponibles),
-								tipoOrdenes: angular.copy($scope.filtrosGeneral.tipoOrdenes)
+								estatusdisponibles: $scope.conversionAnidadaRecursiva(results[2].data.result, 1, $scope.nfiltroestatuspendienteSeguimientoDiario),
+								tipoOrdenes: $scope.conversionAnidadaRecursiva(results[1].data.result, 1, $scope.nfiltrointervencionesSeguimientoDiario)
+
 							}
+							$('#filtro-estatus-reporte').val($scope.listaSeleccionSelectGral($scope.filtroEstatusInt.reporteSeguimiento.estatusdisponibles, $scope.nfiltroestatuspendienteSeguimientoDiario));
+							$('#filtro-intervencionO').val($scope.listaSeleccionSelectGral($scope.filtroEstatusInt.reporteSeguimiento.tipoOrdenes, $scope.nfiltrointervencionesSeguimientoDiario))
 						}
 
 						if ($scope.configPermisoAccionConsultaReporteCierre) {
 							$scope.filtroEstatusInt.reporteCierre = {
-								estatusdisponibles: angular.copy($scope.filtrosGeneral.estatusdisponibles),
-								tipoOrdenes: angular.copy($scope.filtrosGeneral.tipoOrdenes)
+								estatusdisponibles: $scope.conversionAnidadaRecursiva(results[2].data.result, 1, $scope.nfiltroestatuspendienteCierre),
+								tipoOrdenes: $scope.conversionAnidadaRecursiva(results[1].data.result, 1, $scope.nfiltrointervencionesCierre)
 							}
+							$('#filtro-estatus-reporte-cierre').val($scope.listaSeleccionSelectGral($scope.filtroEstatusInt.reporteCierre.estatusdisponibles, $scope.nfiltroestatuspendienteCierre))
+							$('#filtro-intervencion-cierre').val($scope.listaSeleccionSelectGral($scope.filtroEstatusInt.reporteCierre.tipoOrdenes, $scope.nfiltrointervencionesCierre))
 						}
 
 						if ($scope.configPermisoAccionConsultaReporteAsignadas) {
 							$scope.filtroEstatusInt.reporteAsignadas = {
-								estatusdisponibles: angular.copy($scope.filtrosGeneral.estatusdisponibles),
-								tipoOrdenes: angular.copy($scope.filtrosGeneral.tipoOrdenes)
+								estatusdisponibles: $scope.conversionAnidadaRecursiva(results[2].data.result, 1, $scope.nfiltroestatuspendienteAsignadas),
+								tipoOrdenes: $scope.conversionAnidadaRecursiva(results[1].data.result, 1, $scope.nfiltrointervencionesAsignadas)
 							}
+							$('#filtro-estatus-reporte-asignadas').val($scope.listaSeleccionSelectGral($scope.filtroEstatusInt.reporteAsignadas.estatusdisponibles, $scope.nfiltroestatuspendienteAsignadas));
+							$('#filtro-intervencion-reporte-asignadas').val($scope.listaSeleccionSelectGral($scope.filtroEstatusInt.reporteAsignadas.tipoOrdenes, $scope.nfiltrointervencionesAsignadas));
+
 						}
 					} else {
 						toastr.info('No se encontraron catalogo de estatus');
@@ -305,35 +413,25 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 				if (results[0].data.respuesta) {
 					if (results[0].data.result) {
 						if (results[0].data.result.geografia) {
+
 							$scope.listadogeografiacopy = results[0].data.result.geografia
 							$scope.nfiltrogeografiaSeguimientoDiario = $scope.nfiltrogeografiaSeguimientoDiario ? $scope.nfiltrogeografiaSeguimientoDiario : $scope.obtenerNivelUltimoJerarquia();
-							$scope.listaGeografia = results[0].data.result.geografia.filter(e => e.nivel <= parseInt($scope.nfiltrogeografiaSeguimientoDiario));
-
-							let geografia = angular.copy($scope.listaGeografia);
-							geografia.map((e) => {
-								e.parent = e.padre == undefined ? "#" : e.padre;
-								e.text = e.nombre;
-								e.icon = "fa fa-globe";
-								e.state = {
-									opened: false,
-									selected: true,
-								}
-								return e
-							})
+							$scope.nfiltrogeografiaCierre = $scope.nfiltrogeografiaCierre ? $scope.nfiltrogeografiaCierre : $scope.obtenerNivelUltimoJerarquia();
+							$scope.nfiltrogeografiaAsignadas = $scope.nfiltrogeografiaAsignadas ? $scope.nfiltrogeografiaAsignadas : $scope.obtenerNivelUltimoJerarquia();
 
 
 							if ($scope.configPermisoAccionConsultaReporteSeguimiento) {
-
+								let geografia = $scope.ordenarGeografia(results[0].data.result.geografia, $scope.nfiltrogeografiaSeguimientoDiario);
 								$scope.listaGeografiaReporte.seguimiento = angular.copy(geografia);
 							}
 
 							if ($scope.configPermisoAccionConsultaReporteCierre) {
-
+								let geografia = $scope.ordenarGeografia(results[0].data.result.geografia, $scope.nfiltrogeografiaCierre);
 								$scope.listaGeografiaReporte.cierre = angular.copy(geografia);
 							}
 
 							if ($scope.configPermisoAccionConsultaReporteAsignadas) {
-
+								let geografia = $scope.ordenarGeografia(results[0].data.result.geografia, $scope.nfiltrogeografiaAsignadas);
 								$scope.listaGeografiaReporte.asignadas = angular.copy(geografia);
 							}
 
@@ -713,7 +811,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		$scope.resultReporteCierre = 0;
 
 		let clustersparam = $("#jstree-proton-cierre").jstree("get_selected", true)
-			.filter(e => e.original.nivel == $scope.nfiltrogeografiaSeguimientoDiario)
+			.filter(e => e.original.nivel == $scope.nfiltrogeografiaCierre)
 			.map(e => parseInt(e.id));
 
 		if (clustersparam.length === 0) {
@@ -721,9 +819,9 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 			isValid = false
 		}
 
-		let statuscopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteCierre.estatusdisponibles, $scope.nfiltroestatuspendienteSeguimientoDiario);
+		let statuscopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteCierre.estatusdisponibles, $scope.nfiltroestatuspendienteCierre);
 
-		let intervencioncopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteCierre.tipoOrdenes, $scope.nfiltrointervencionesSeguimientoDiario);
+		let intervencioncopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteCierre.tipoOrdenes, $scope.nfiltrointervencionesCierre);
 
 		let paramsTemp = {};
 
@@ -843,7 +941,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		let numerosOnly = /^[0-9]*$/i;
 
 		let clustersparam = $("#jstree-proton-cierre").jstree("get_selected", true)
-			.filter(e => e.original.nivel == $scope.nfiltrogeografiaSeguimientoDiario)
+			.filter(e => e.original.nivel == $scope.nfiltrogeografiaAsignadas)
 			.map(e => parseInt(e.id));
 
 		if (clustersparam.length === 0) {
@@ -851,9 +949,9 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 			isValid = false
 		}
 
-		let statuscopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteCierre.estatusdisponibles, $scope.nfiltroestatuspendienteSeguimientoDiario);
+		let statuscopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteCierre.estatusdisponibles, $scope.nfiltroestatuspendienteCierre);
 
-		let intervencioncopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteCierre.tipoOrdenes, $scope.nfiltrointervencionesSeguimientoDiario);
+		let intervencioncopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteCierre.tipoOrdenes, $scope.nfiltrointervencionesCierre);
 
 		if (!statuscopy.length) {
 			mensaje += '<li>Introducir Estatus</li>';
@@ -948,9 +1046,9 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 			isValid = false
 		}
 
-		let statuscopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteAsignadas.estatusdisponibles, $scope.nfiltroestatuspendienteSeguimientoDiario);
+		let statuscopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteAsignadas.estatusdisponibles, $scope.nfiltroestatuspendienteAsignadas);
 
-		let intervencioncopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteAsignadas.tipoOrdenes, $scope.nfiltrointervencionesSeguimientoDiario);
+		let intervencioncopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteAsignadas.tipoOrdenes, $scope.nfiltrointervencionesAsignadas);
 
 		let paramsTemp = {};
 
@@ -1078,9 +1176,9 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 			isValid = false
 		}
 
-		let statuscopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteAsignadas.estatusdisponibles, $scope.nfiltroestatuspendienteSeguimientoDiario);
+		let statuscopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteAsignadas.estatusdisponibles, $scope.nfiltroestatuspendienteAsignadas);
 
-		let intervencioncopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteAsignadas.tipoOrdenes, $scope.nfiltrointervencionesSeguimientoDiario);
+		let intervencioncopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteAsignadas.tipoOrdenes, $scope.nfiltrointervencionesAsignadas);
 
 		if (!statuscopy.length) {
 			mensaje += '<li>Introducir Estatus</li>';
