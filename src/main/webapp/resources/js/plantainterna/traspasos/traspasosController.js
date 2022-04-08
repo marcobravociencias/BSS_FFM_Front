@@ -15,6 +15,7 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 	$scope.nivelIntervenciones;
 	$scope.nivelGeografia;
 	$scope.nivelEstatusPendientes;
+	$scope.nivelEstatusTraspasoFiltro = "";
 	$scope.filtrosGeneral = {};
 	$scope.camposFiltro = {};
 	$scope.listEvidenciaImagenes = {};
@@ -419,6 +420,24 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 		}
 	}
 
+	$scope.filtraEstatus = function (listaStatus) {
+		let newList = listaStatus;
+		let tempList = [];
+
+		if ($scope.nivelEstatusTraspasoFiltro !== "") {
+			let statusList = $scope.nivelEstatusTraspasoFiltro.split(",");
+			angular.forEach(statusList, (idx, index) => {
+				let status = newList.find((t) => Number(t.id) == Number(idx))
+				if (status) {
+					tempList.push(status);
+				}
+			});
+			newList = tempList;
+		}
+		
+		return newList;
+	}
+
 	$scope.consultarCatalagosPI = function () {
 		$q.all([
 			genericService.consultarCatalogoIntervenciones(),
@@ -443,6 +462,9 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 
 							if (llavesResult.N_ESTATUS_PENDIENTES)
 								$scope.nivelEstatusPendientes = parseInt(llavesResult.N_ESTATUS_PENDIENTES)
+
+							if (llavesResult.N_ESTATUS_TRASPASO_FILTRO)
+								$scope.nivelEstatusTraspasoFiltro = parseInt(llavesResult.N_ESTATUS_TRASPASO_FILTRO)
 
 							$scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
 
@@ -488,8 +510,7 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 						$scope.filtrosGeneral.tipoOrdenes = angular.copy(tipoOrdenesTemp);
 						$scope.filtrosGeneral.tipoOrdenesTraspaso = angular.copy(tipoOrdenesTemp);
 						$('#filtro-intervencion').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.tipoOrdenes, $scope.nivelIntervenciones));
-						$('#filtro-intervencion-tr').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.tipoOrdenesTraspaso, $scope.nivelIntervenciones
-							));
+						$('#filtro-intervencion-tr').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.tipoOrdenesTraspaso, $scope.nivelIntervenciones));
 					} else {
 						toastr.warning('No se encontraron  tipo ordenes');
 					}
@@ -507,10 +528,11 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 						respaldoStatusArray = angular.copy(results[2].data.result);
 						$scope.nivelEstatusPendientes = $scope.nivelEstatusPendientes ? $scope.nivelEstatusPendientes : $scope.obtenerUltimoNivelFiltros(respaldoStatusArray);
 						let estatusDisponiblesTemp = $scope.conversionAnidadaRecursiva(results[2].data.result, 1, $scope.nivelEstatusPendientes);
+						estatusDisponiblesTemp = $scope.filtraEstatus(estatusDisponiblesTemp);
 						$scope.filtrosGeneral.estatusdisponibles = angular.copy(estatusDisponiblesTemp);
 						$scope.filtrosGeneral.estatusdisponiblesTraspaso = angular.copy(estatusDisponiblesTemp);
 						$('#filtro-estatus-substatus').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.estatusdisponibles, $scope.nivelEstatusPendientes));
-						$('#filtro-estatus-substatus-tr').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.estatusdisponiblesTraspaso,$scope.nivelEstatusPendientes ));
+						$('#filtro-estatus-substatus-tr').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.estatusdisponiblesTraspaso, $scope.nivelEstatusPendientes));
 
 					} else {
 						toastr.info('No se encontraron catalogo de estatus');
@@ -628,7 +650,7 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 		let arrayReturn = "";
 		angular.forEach(array, function (elemento, index) {
 			if (elemento.nivel == nivel && elemento.checkedOpcion) {
-				if(arrayReturn !== ""){
+				if (arrayReturn !== "") {
 					arrayReturn += ',';
 				}
 				arrayReturn += elemento.nombre.toUpperCase();
@@ -637,7 +659,7 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 			}
 		});
 		return arrayReturn;
-		
+
 	}
 
 	$scope.iniciarTraspasos = function () {
@@ -1056,8 +1078,8 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 	}
 	//Filtros
 
-	
-	$scope.setTextFiltro = function(){
+
+	$scope.setTextFiltro = function () {
 		$('#filtro-intervencion').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.tipoOrdenes, $scope.nivelIntervenciones));
 		$('#filtro-intervencion-tr').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.tipoOrdenesTraspaso, $scope.nivelIntervenciones));
 		$('#filtro-estatus-substatus').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.estatusdisponibles, $scope.nivelEstatusPendientes));
@@ -1071,7 +1093,7 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 				$scope.seleccionarTodosRecursivo(e.children);
 			}
 		});
-		if(!isBtn){
+		if (!isBtn) {
 			$scope.setTextFiltro();
 		}
 	}
@@ -1083,7 +1105,7 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 				$scope.deseleccionarTodosRecursivo(e.children);
 			}
 		});
-		if(!isBtn){
+		if (!isBtn) {
 			$scope.setTextFiltro();
 		}
 	}
