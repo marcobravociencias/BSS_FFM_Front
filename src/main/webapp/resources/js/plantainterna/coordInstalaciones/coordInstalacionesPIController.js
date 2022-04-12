@@ -1,13 +1,13 @@
 var app = angular.module('coordInstalacionesPIApp', []);
 var tableTerminada = undefined;
 var geografia;
-var geografiaPendiente;
-var geografiaAsignada;
-var geografiaDetenida;
-var geografiaTerminada;
-var geografiaCancelada;
-var geografiaCalendarizada;
-var geografiaGestoria;
+var geografiaPendiente = [];
+var geografiaAsignada = [];
+var geografiaDetenida = [];
+var geografiaTerminada = [];
+var geografiaCancelada = [];
+var geografiaCalendarizada = [];
+var geografiaGestoria = [];
 app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIService' ,'genericService', function($scope, $q, coordInstalacionesPIService, genericService) {
 
 	app.coordInstalacionesSF($scope,coordInstalacionesPIService,$q,genericService)
@@ -47,7 +47,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 						let resultConf = results[3].data.result
 						if (resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
 							let llavesResult = results[3].data.result.MODULO_ACCIONES_USUARIO.llaves;
-							llavesResult.N_ESTATUS_PENDIENTES = "2";
+
 							$scope.nivelArbolPendiente = llavesResult.N_FILTRO_GEOGRAFIA_PENDIENTE ? parseInt(llavesResult.N_FILTRO_GEOGRAFIA_PENDIENTE) : parseInt(llavesResult.N_FILTRO_GEOGRAFIA);
 							$scope.nivelArbolAsignada = llavesResult.N_FILTRO_GEOGRAFIA_ASIGNADA ? parseInt(llavesResult.N_FILTRO_GEOGRAFIA_ASIGNADA) : parseInt(llavesResult.N_FILTRO_GEOGRAFIA);
 							$scope.nivelArbolDetenida = llavesResult.N_FILTRO_GEOGRAFIA_DETENIDA ? parseInt(llavesResult.N_FILTRO_GEOGRAFIA_DETENIDA) : parseInt(llavesResult.N_FILTRO_GEOGRAFIA);
@@ -71,7 +71,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 								$scope.nivelEstatusGeneral = parseInt(llavesResult.N_ESTATUS_PENDIENTES)
 							
 							$scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
-							$scope.nivelEstatusGeneral = 2//QUITAR
+							
 							if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
 								$scope.configPermisoAccionConsultaOrdenes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaOT" })[0] != undefined);
 								$scope.configPermisoAccionDescargaReporteOrdenes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaReporteOT" })[0] != undefined);
@@ -148,7 +148,18 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
                     if(results[1].data.result ){
                         if(results[1].data.result.geografia){
                             //$scope.listadogeografiacopy=results[1].data.result.geografia
+							
                             geografia = angular.copy(results[1].data.result.geografia)
+
+							$scope.nivelArbolPendiente = $scope.nivelArbolPendiente ? $scope.nivelArbolPendiente : $scope.obtenerUltimoNivelFiltros(geografia);
+							$scope.nivelArbolAsignada = $scope.nivelArbolAsignada ? $scope.nivelArbolAsignada : $scope.obtenerUltimoNivelFiltros(geografia);
+							$scope.nivelArbolDetenida = $scope.nivelArbolDetenida ? $scope.nivelArbolDetenida : $scope.obtenerUltimoNivelFiltros(geografia);
+							$scope.nivelArbolTerminada = $scope.nivelArbolTerminada ? $scope.nivelArbolTerminada : $scope.obtenerUltimoNivelFiltros(geografia);
+							$scope.nivelArbolCancelada = $scope.nivelArbolCancelada ? $scope.nivelArbolCancelada : $scope.obtenerUltimoNivelFiltros(geografia);
+							$scope.nivelArbolCalendarizada = $scope.nivelArbolCalendarizada ? $scope.nivelArbolCalendarizada : $scope.obtenerUltimoNivelFiltros(geografia);
+							$scope.nivelArbolGestoria = $scope.nivelArbolGestoria ? $scope.nivelArbolGestoria : $scope.obtenerUltimoNivelFiltros(geografia);
+
+							/*
                             geografiaPendiente = angular.copy(results[1].data.result.geografia)
                             geografiaAsignada = angular.copy(results[1].data.result.geografia)
                             geografiaDetenida = angular.copy(results[1].data.result.geografia)
@@ -156,47 +167,134 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
                             geografiaCancelada = angular.copy(results[1].data.result.geografia)
                             geografiaCalendarizada = angular.copy(results[1].data.result.geografia)
                             geografiaGestoria = angular.copy(results[1].data.result.geografia)
+							*/
 							
                             //necesario para agregar el y arbol 
                             geografia.map((e)=>{
-								if (e.nivel > $scope.nivelArbol) {
-									$scope.nivelArbol = e.nivel;
+								if (e.nivel <= $scope.nivelArbolPendiente) {
+									let elemento = {};
+									elemento.id = e.id;
+									elemento.nivel = e.nivel;
+									elemento.parent=e.padre ==undefined ? "#" : e.padre;
+									elemento.text= e.nombre;
+									elemento.icon= "fa fa-globe";
+									elemento.state= { //Este objeto tu no lo necesitas karen! e.state
+										opened: false,
+										selected: true
+									}
+									geografiaPendiente.push(elemento);
 								}
-                                e.parent=e.padre ==undefined ? "#" : e.padre;
-                                e.text= e.nombre;
-                                e.icon= "fa fa-globe";
-                               
-                                e.state= { //Este objeto tu no lo necesitas karen! e.state
-                                    opened: false,
-                                    selected: true
-                                }
-                                return e
+
+								if (e.nivel <= $scope.nivelArbolAsignada) {
+									let elemento = {};
+									elemento.id = e.id;
+									elemento.nivel = e.nivel;
+									elemento.parent=e.padre ==undefined ? "#" : e.padre;
+									elemento.text= e.nombre;
+									elemento.icon= "fa fa-globe";
+									elemento.state= { //Este objeto tu no lo necesitas karen! e.state
+										opened: false,
+										selected: true
+									}
+									geografiaAsignada.push(elemento);
+								}
+
+								if (e.nivel <= $scope.nivelArbolDetenida) {
+									let elemento = {};
+									elemento.id = e.id;
+									elemento.nivel = e.nivel;
+									elemento.parent=e.padre ==undefined ? "#" : e.padre;
+									elemento.text= e.nombre;
+									elemento.icon= "fa fa-globe";
+									elemento.state= { //Este objeto tu no lo necesitas karen! e.state
+										opened: false,
+										selected: true
+									}
+									geografiaDetenida.push(elemento);
+								}
+
+								if (e.nivel <= $scope.nivelArbolTerminada) {
+									let elemento = {};
+									elemento.id = e.id;
+									elemento.nivel = e.nivel;
+									elemento.parent=e.padre ==undefined ? "#" : e.padre;
+									elemento.text= e.nombre;
+									elemento.icon= "fa fa-globe";
+									elemento.state= { //Este objeto tu no lo necesitas karen! e.state
+										opened: false,
+										selected: true
+									}
+									geografiaTerminada.push(elemento);
+								}
+
+								if (e.nivel <= $scope.nivelArbolCancelada) {
+									let elemento = {};
+									elemento.id = e.id;
+									elemento.nivel = e.nivel;
+									elemento.parent=e.padre ==undefined ? "#" : e.padre;
+									elemento.text= e.nombre;
+									elemento.icon= "fa fa-globe";
+									elemento.state= { //Este objeto tu no lo necesitas karen! e.state
+										opened: false,
+										selected: true
+									}
+									geografiaCancelada.push(elemento);
+								}
+
+								if (e.nivel <= $scope.nivelArbolCalendarizada) {
+									let elemento = {};
+									elemento.id = e.id;
+									elemento.nivel = e.nivel;
+									elemento.parent=e.padre ==undefined ? "#" : e.padre;
+									elemento.text= e.nombre;
+									elemento.icon= "fa fa-globe";
+									elemento.state= { //Este objeto tu no lo necesitas karen! e.state
+										opened: false,
+										selected: true
+									}
+									geografiaCalendarizada.push(elemento);
+								}
+
+								if (e.nivel <= $scope.nivelArbolGestoria) {
+									let elemento = {};
+									elemento.id = e.id;
+									elemento.nivel = e.nivel;
+									elemento.parent=e.padre ==undefined ? "#" : e.padre;
+									elemento.text= e.nombre;
+									elemento.icon= "fa fa-globe";
+									elemento.state= { //Este objeto tu no lo necesitas karen! e.state
+										opened: false,
+										selected: true
+									}
+									geografiaGestoria.push(elemento);
+								}
+                                
                             });
 
+							/*
+
 							geografiaPendiente.map((e)=>{
-								if (e.nivel > $scope.nivelArbolPendiente) {
-									$scope.nivelArbolPendiente = e.nivel;
+								if (e.nivel <= $scope.nivelArbolPendiente) {
+									e.parent=e.padre ==undefined ? "#" : e.padre;
+									e.text= e.nombre;
+									e.icon= "fa fa-globe";
+									e.state= {opened: false, selected: true}
+									return e
 								}
-                                e.parent=e.padre ==undefined ? "#" : e.padre;
-                                e.text= e.nombre;
-                                e.icon= "fa fa-globe";
-                                e.state= {opened: false, selected: true}
-                                return e
                             });
 
 							geografiaAsignada.map((e)=>{
-								if (e.nivel > $scope.nivelArbolAsignada) {
-									$scope.nivelArbolAsignada = e.nivel;
+								if (e.nivel <= $scope.nivelArbolAsignada) {
+									e.parent=e.padre ==undefined ? "#" : e.padre;
+									e.text= e.nombre;
+									e.icon= "fa fa-globe";
+									e.state= {opened: false, selected: true}
+									return e
 								}
-                                e.parent=e.padre ==undefined ? "#" : e.padre;
-                                e.text= e.nombre;
-                                e.icon= "fa fa-globe";
-                                e.state= {opened: false, selected: true}
-                                return e
                             });
 
 							geografiaDetenida.map((e)=>{
-								if (e.nivel > $scope.nivelArbolDetenida) {
+								if (e.nivel <= $scope.nivelArbolDetenida) {
 									$scope.nivelArbolDetenida = e.nivel;
 								}
                                 e.parent=e.padre ==undefined ? "#" : e.padre;
@@ -207,7 +305,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
                             });
 
 							geografiaTerminada.map((e)=>{
-								if (e.nivel > $scope.nivelArbolTerminada) {
+								if (e.nivel <= $scope.nivelArbolTerminada) {
 									$scope.nivelArbolTerminada = e.nivel;
 								}
                                 e.parent=e.padre ==undefined ? "#" : e.padre;
@@ -218,7 +316,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
                             });
 
 							geografiaCancelada.map((e)=>{
-								if (e.nivel > $scope.nivelArbolCancelada) {
+								if (e.nivel <= $scope.nivelArbolCancelada) {
 									$scope.nivelArbolCancelada = e.nivel;
 								}
                                 e.parent=e.padre ==undefined ? "#" : e.padre;
@@ -229,7 +327,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
                             });
 
 							geografiaCalendarizada.map((e)=>{
-								if (e.nivel > $scope.nivelArbolCalendarizada) {
+								if (e.nivel <= $scope.nivelArbolCalendarizada) {
 									$scope.nivelArbolCalendarizada = e.nivel;
 								}
                                 e.parent=e.padre ==undefined ? "#" : e.padre;
@@ -240,7 +338,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
                             });
 
 							geografiaGestoria.map((e)=>{
-								if (e.nivel > $scope.nivelArbolGestoria) {
+								if (e.nivel <= $scope.nivelArbolGestoria) {
 									$scope.nivelArbolGestoria = e.nivel;
 								}
                                 e.parent=e.padre ==undefined ? "#" : e.padre;
@@ -249,6 +347,8 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
                                 e.state= {opened: false, selected: true}
                                 return e
                             });
+
+							*/
 
 
 							/*
@@ -342,7 +442,6 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 
 	$scope.pintarNombreEstatus = function(array, input) {
 		let textoEstatus = $scope.mostrarNombresEstatus(array);
-		console.log(textoEstatus);
 		$(input).val(textoEstatus);
 		if(textoEstatus.length > 0){
 			$(input).css("border-bottom", "2px solid #d9d9d9");
