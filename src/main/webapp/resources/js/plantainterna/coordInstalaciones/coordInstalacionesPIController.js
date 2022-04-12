@@ -2000,50 +2000,47 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 
 	$scope.detalleOtSeleccionada = {};
 	consultaDetalleOt = function(index) {
-		if ($scope.vistaCoordinacion === 1 || $scope.vistaCoordinacion === 6 || $scope.vistaCoordinacion === 7) {
-			$scope.elementCalendarizado = {};
-			$scope.elementReagendaOT = {};
-			$scope.elementoPlazaComercial = {};
-			$scope.detalleOtSeleccionada = {};
-			$scope.$apply();
-			$scope.objetoSelecionado = {};
-			$scope.objetoSelecionado = $scope.resultPendientes[index];
-			$scope.permisosModal=$scope.elementosConfigGeneral.get("MODAL_FLUJO_"+ $scope.objetoSelecionado.idFlujo ).split(",");
-			$scope.requestModalInformacion($scope.objetoSelecionado.idOrden);
-			/*
-			switch ($scope.vistaCoordinacion) {
-				case 1:
-					$scope.objetoSelecionado = $scope.resultPendientes[index];
-					break;
-				case 6:
-					$scope.objetoSelecionado = $scope.resultCalendarizada[index];
-					break;
-				case 7:
-					$scope.objetoSelecionado = $scope.resultGestoria[index];
-					break;
-				default:
-					break;
-			}
-			*/
-
-			console.log($scope.objetoSelecionado);
-			$scope.detalleOtSeleccionada.idOrden = $scope.objetoSelecionado.idOrden;
-			$scope.detalleOtSeleccionada.folioOrden = $scope.objetoSelecionado.folioSistema;
-			$scope.detalleOtSeleccionada.idFlujo = $scope.objetoSelecionado.idFlujo;
-			$scope.detalleOtSeleccionada.idtipoOrden = $scope.objetoSelecionado.idTipoOrden;
-			$scope.detalleOtSeleccionada.idSubtipoOrden = $scope.objetoSelecionado.idSubTipoOrden;
-			$scope.detalleOtSeleccionada.latitud = $scope.objetoSelecionado.latitud;
-			$scope.detalleOtSeleccionada.longitud = $scope.objetoSelecionado.longitud;
-			$("#modalDetalleOt").modal("show");
-			$('#fecha-reagendamiento').datepicker('update',new Date());
-			$('#fecha-calendarizado').datepicker('update',   moment(new Date()).add('days', 8).toDate() );
-			if ($scope.vistaCoordinacion !== 1) {
-				document.getElementById('opcion-reagendar').click()
-			} else {
-				document.getElementById('opcion-plaza').click()
-			}
+	
+		$scope.elementCalendarizado = {};
+		$scope.elementReagendaOT = {};
+		$scope.elementoPlazaComercial = {};
+		$scope.detalleOtSeleccionada = {};
+		$scope.$apply();
+		$scope.objetoSelecionado = {};
+		$scope.objetoSelecionado = $scope.resultPendientes[index];
+		$scope.permisosModal=$scope.elementosConfigGeneral.get("MODAL_FLUJO_"+ $scope.objetoSelecionado.idFlujo ).split(",");
+		$scope.requestModalInformacion($scope.objetoSelecionado.idOrden);
+		/*
+		switch ($scope.vistaCoordinacion) {
+			case 1:
+				$scope.objetoSelecionado = $scope.resultPendientes[index];
+				break;
+			case 6:
+				$scope.objetoSelecionado = $scope.resultCalendarizada[index];
+				break;
+			case 7:
+				$scope.objetoSelecionado = $scope.resultGestoria[index];
+				break;
+			default:
+				break;
 		}
-		//$scope.vistaCoordinacion = 
+		*/
+		$scope.detalleOtSeleccionada.idOrden = $scope.objetoSelecionado.idOrden;
+		$scope.detalleOtSeleccionada.folioOrden = $scope.objetoSelecionado.folioSistema;
+		$scope.detalleOtSeleccionada.idFlujo = $scope.objetoSelecionado.idFlujo;
+		$scope.detalleOtSeleccionada.idtipoOrden = $scope.objetoSelecionado.idTipoOrden;
+		$scope.detalleOtSeleccionada.idSubtipoOrden = $scope.objetoSelecionado.idSubTipoOrden;
+		$scope.detalleOtSeleccionada.latitud = $scope.objetoSelecionado.latitud;
+		$scope.detalleOtSeleccionada.longitud = $scope.objetoSelecionado.longitud;
+		$("#modalDetalleOt").modal("show");
+		$('#fecha-reagendamiento').datepicker('update',new Date());
+		$('#fecha-calendarizado').datepicker('update',   moment(new Date()).add('days', 8).toDate() );
+		if ($scope.vistaCoordinacion !== 1) {
+			document.getElementById('opcion-reagendar').click()
+		} else {
+			document.getElementById('opcion-plaza').click()
+		}
+		
 	}
 
 	$scope.idOtSelect = "";
