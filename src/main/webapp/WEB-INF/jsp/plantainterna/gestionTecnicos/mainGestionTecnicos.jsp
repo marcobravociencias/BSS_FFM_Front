@@ -40,37 +40,88 @@
             <div class="content-fluid">
                 <div class="row">
                     <div class="col-3 mb-2" id="container_busquedaTecnico" style="padding-right: 0;">
-                        <div class="col-12" style="margin-top: 1em; margin-bottom: 1em;">
-                            <div class="row">
-                                <div class="col-12">
-                                    <input placeholder="Buscar" type="text" autocomplete="off" class="search-filtro form-control form-control-sm mt-0" id="searchTecnico" ng-model="search.tecnico">
-                                    <i class="fa fa-search icon-search"></i>
-                                </div>
-                            </div>
+                    	
+                    	<ul class="nav nav-tabs" id="myTab" role="tablist">
+	                        <li class="nav-item">
+	                            <a class="nav-link active" id="consulta-tecnicos-tab" data-toggle="tab" href="#consulta-tecnicos" role="tab"
+	                                aria-controls="opcion-consulta" aria-selected="true" ng-click="tabRevisarPermisoConsultarUsuarios()">T&eacute;cnicos</a>
+	                        </li>
+	                        <li class="nav-item">
+	                            <a class="nav-link" id="consulta-auxiliares-tab" data-toggle="tab" href="#consulta-auxiliares" role="tab"
+	                                aria-controls="opcion-alta" aria-selected="false" ng-click="tabRevisarPermisoCrearUsuario()">Auxiliares</a>
+	                        </li>
+	                    </ul>
+	                    
+	                    <div class="tab-content" id="v-pills-tabContent">
+                        	<div class="tab-pane fade show active" id="consulta-tecnicos" role="tabpanel" aria-labelledby="consulta-tecnicos-tab">
+                        		<div class="col-12" style="margin-top: 1em; margin-bottom: 1em;">
+		                            <div class="row">
+		                                <div class="col-12">
+		                                    <input placeholder="Buscar" type="text" autocomplete="off" class="search-filtro form-control form-control-sm mt-0" id="searchTecnico" ng-model="search.tecnico">
+		                                    <i class="fa fa-search icon-search"></i>
+		                                </div>
+		                            </div>
+		                        </div>
+		                        <div style="margin-left: 2%; padding: 3px;" ng-repeat="tecnico in listTecnicos | filter:search">
+		                            <div id="{{tecnico.id}}" class="valign-wrapper tecnicosDiv">
+		                                <div class="col-12">
+		                                    <div class="row">
+		                                        <div class="col-1 media-image online pr-0" style="padding-left: 0; margin-top: .5em;">
+		                                            <img src="./resources/img/plantainterna/despacho/tecnicootasignada.png" class="circle responsive-img-tecnico">
+		                                        </div>
+		                                        <div id="" class="col-9" style="padding-left: 1.5em;">
+		                                            <p class="text-tecnico-nombre">{{tecnico.nombre}}</p>
+		                                            <p class="text-adds-teccnico">
+		                                                <i style="color:#7716fa" class="fa fa-user"></i> {{tecnico.tecnico}}
+		                                                <br>
+		                                                <i style="color:#7716fa;" class="fa fa-phone"></i> {{tecnico.telefono}}
+		                                            </p>
+		                                        </div>
+		                                        <div class="col-2 icono_check_tecnico mt-1" >
+		                                            <p id="tec-{{tecnico.id}}" class="text-aux" ng-click="consultarDisponibilidadTecnico(tecnico)">TEC</p>
+<!-- 		                                            <p id="aux-{{tecnico.id}}" class="text-aux" ng-click="consultarDisponibilidadAux(tecnico)">AUX</p> -->
+		                                        </div>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                        </div> 
+                        	</div>
+                        	<div class="tab-pane fade" id="consulta-auxiliares" role="tabpanel" aria-labelledby="consulta-auxiliares-tab">
+                        		<div class="col-12" style="margin-top: 1em; margin-bottom: 1em;">
+		                            <div class="row">
+		                                <div class="col-12">
+		                                    <input placeholder="Buscar" type="text" autocomplete="off" class="search-filtro form-control form-control-sm mt-0" id="searchTecnico" ng-model="search.tecnico">
+		                                    <i class="fa fa-search icon-search"></i>
+		                                </div>
+		                            </div>
+		                        </div>
+		                        <div style="margin-left: 2%; padding: 3px;" ng-repeat="tecnico in listTecnicos | filter:search">
+		                            <div id="{{tecnico.id}}" class="valign-wrapper tecnicosDiv">
+		                                <div class="col-12">
+		                                    <div class="row">
+		                                        <div class="col-1 media-image online pr-0" style="padding-left: 0; margin-top: .5em;">
+		                                            <img src="./resources/img/plantainterna/despacho/tecnicootasignada.png" class="circle responsive-img-tecnico">
+		                                        </div>
+		                                        <div id="" class="col-9" style="padding-left: 1.5em;">
+		                                            <p class="text-tecnico-nombre">{{tecnico.nombre}}</p>
+		                                            <p class="text-adds-teccnico">
+		                                                <i style="color:#7716fa" class="fa fa-user"></i> {{tecnico.tecnico}}
+		                                                <br>
+		                                                <i style="color:#7716fa;" class="fa fa-phone"></i> {{tecnico.telefono}}
+		                                            </p>
+		                                        </div>
+		                                        <div class="col-2 icono_check_tecnico mt-1" >
+<!-- 		                                            <p id="tec-{{tecnico.id}}" class="text-aux" ng-click="consultarDisponibilidadTecnico(tecnico)">TEC</p> -->
+		                                            <p id="aux-{{tecnico.id}}" class="text-aux" ng-click="consultarDisponibilidadAux(tecnico)">AUX</p>
+		                                        </div>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                        </div> 
+                        	</div>
                         </div>
-                        <div style="margin-left: 2%; padding: 3px;" ng-repeat="tecnico in listTecnicos | filter:search">
-                            <div id="{{tecnico.id}}" class="valign-wrapper tecnicosDiv">
-                                <div class="col-12">
-                                    <div class="row">
-                                        <div class="col-1 media-image online pr-0" style="padding-left: 0; margin-top: .5em;">
-                                            <img src="./resources/img/plantainterna/despacho/tecnicootasignada.png" class="circle responsive-img-tecnico">
-                                        </div>
-                                        <div id="" class="col-9" style="padding-left: 1.5em;">
-                                            <p class="text-tecnico-nombre">{{tecnico.nombre}}</p>
-                                            <p class="text-adds-teccnico">
-                                                <i style="color:#7716fa" class="fa fa-user"></i> {{tecnico.tecnico}}
-                                                <br>
-                                                <i style="color:#7716fa;" class="fa fa-phone"></i> {{tecnico.telefono}}
-                                            </p>
-                                        </div>
-                                        <div class="col-2 icono_check_tecnico mt-1" >
-                                            <p id="tec-{{tecnico.id}}" class="text-aux" ng-click="consultarDisponibilidadTecnico(tecnico)">TEC</p>
-                                            <p id="aux-{{tecnico.id}}" class="text-aux" ng-click="consultarDisponibilidadAux(tecnico)">AUX</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>  
+                        	                    	
+                         
                     </div>
                     <div class="col-9" id="container_calendarioDetalle" ng-show="!isDetalleMesTecnico">
                         <div class="row">
