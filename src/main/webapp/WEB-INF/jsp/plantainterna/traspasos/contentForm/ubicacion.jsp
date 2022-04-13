@@ -10,44 +10,34 @@
 			<div class="col-4">
 				<strong class="color_titulos">REGI&Oacute;N:</strong>
 				<label class="resumen-detalle-agenda" id="latitud-label"
-					ng-bind="informacionClienteDetalle.factibilidad.region ? informacionClienteDetalle.factibilidad.region : 'Sin informaci&oacute;n'">Sin
-					direcci&oacute;n
-					capturada</label>
+					ng-bind="informacionClienteDetalle.factibilidad.region ? informacionClienteDetalle.factibilidad.region : 'Sin informaci&oacute;n'"></label>
 			</div>
 			<div class="col-4">
 				<strong class="color_titulos">DISTRITO:</strong>
 				<label class="resumen-detalle-agenda" id="latitud-label"
-					ng-bind="informacionClienteDetalle.factibilidad.distrito ? informacionClienteDetalle.factibilidad.distrito : 'Sin informaci&oacute;n'">Sin
-					direcci&oacute;n
-					capturada</label>
+					ng-bind="informacionClienteDetalle.factibilidad.distrito ? informacionClienteDetalle.factibilidad.distrito : 'Sin informaci&oacute;n'"></label>
 			</div>
 			<div class="col-4">
 				<strong class="color_titulos">LATITUD:</strong>
 				<label class="resumen-detalle-agenda" id="latitud-label"
-					ng-bind="latitudSelectedMap ? latitudSelectedMap : 'Sin informaci&oacute;n'">Sin direcci&oacute;n
-					capturada</label>
+					ng-bind="latitudSelectedMap ? latitudSelectedMap : 'Sin informaci&oacute;n'"></label>
 			</div>
 		</div>
 		<div class="row contenido-cuenta">
 			<div class="col-4">
 				<strong class="color_titulos">CIUDAD:</strong>
 				<label class="resumen-detalle-agenda" id="longitud-label"
-					ng-bind="informacionClienteDetalle.factibilidad.ciudad ? informacionClienteDetalle.factibilidad.ciudad : 'Sin informaci&oacute;n'">Sin
-					direcci&oacute;n
-					capturada</label>
+					ng-bind="informacionClienteDetalle.factibilidad.ciudad ? informacionClienteDetalle.factibilidad.ciudad : 'Sin informaci&oacute;n'"></label>
 			</div>
 			<div class="col-4">
 				<strong class="color_titulos">CLUSTER:</strong>
 				<label class="resumen-detalle-agenda" id="longitud-label"
-					ng-bind="informacionClienteDetalle.factibilidad.cluster ? informacionClienteDetalle.factibilidad.cluster : 'Sin informaci&oacute;n'">Sin
-					direcci&oacute;n
-					capturada</label>
+					ng-bind="informacionClienteDetalle.factibilidad.cluster ? informacionClienteDetalle.factibilidad.cluster : 'Sin informaci&oacute;n'"></label>
 			</div>
 			<div class="col-4">
 				<strong class="color_titulos">LONGITUD:</strong>
 				<label class="resumen-detalle-agenda" id="longitud-label"
-					ng-bind="longitudSelectedMap ? longitudSelectedMap : 'Sin informaci&oacute;n'">Sin direcci&oacute;n
-					capturada</label>
+					ng-bind="longitudSelectedMap ? longitudSelectedMap : 'Sin informaci&oacute;n'">s</label>
 			</div>
 
 		</div>
@@ -71,7 +61,7 @@
 			style="font-size: 16px;">
 		<div id="mapa-ubicacion" style="width: 100%; height: 400px;"></div>
 		<div class="content-info-mapa" id="info-factibilidad" style="display: none;">
-			<div style="bottom:0; left:0 ;" class="card div-contenedor-info-factibilidad">
+			<div style="bottom:0; left:0.5em;" class="card div-contenedor-info-factibilidad">
 				<div class="card-header" style="border-bottom: none; text-align: left;font-weight: lighter;">
 					<span class="title-tipoot-map-filtros" ng-if="infoFactibilidad.factibilidad !== '0'">
 						<i class="far fa-check-circle icon-informacion-fac" style="color: green;"></i>
@@ -83,9 +73,9 @@
 					</span>
 					<span class="fa fa-angle-down icon-content-info"></span>
 				</div>
-				<div class="card-body" style="padding: 0; display: block;" ng-if="infoFactibilidad.factibilidad !== '0'"
+				<div class="card-body" style="padding: 0; display: block;" 
 					id="content-info-body">
-					<div style="text-align: left;" class="info_ot_detail  ">
+					<div style="text-align: left;" class="info_ot_detail" ng-if="infoFactibilidad.factibilidad !== '0'">
 						<div class="col-md-12">
 							<b class="title_span_detalle"> Regi&oacute;n:</b>
 							<span class="ciudad-detalle-cuenta" ng-bind="infoFactibilidad.region ? infoFactibilidad.region : 'Sin informaci&oacute;n'"> </span>
@@ -111,9 +101,7 @@
 						</div>
 
 					</div>
-				</div>
-				<div class="card-body" style="padding: 0;" ng-if="infoFactibilidad.factibilidad === '0'">
-					<div style="text-align: center;font-size: 0.9em;" class="info_ot_detail">
+					<div style="text-align: center;font-size: 0.9em;" class="info_ot_detail" ng-if="infoFactibilidad.factibilidad === '0'">
 						<span>No se
 							encontr&oacute; factibilidad</br>Selecciona otra ubicaci&oacute;n</span>
 					</div>

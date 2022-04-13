@@ -449,43 +449,20 @@ public class ImplTraspasoService implements TraspasoService {
 		return response;
 	}
 
+
 	@Override
-	public ServiceResponseResult consultarFactibilidadRes(String params) {
-		logger.info("ImplTraspasoService.class [metodo = consultarFactibilidadRes() ]\n" + params);
+	public ServiceResponseResult consultarFactibilidad(String params) {
+		logger.info("ImplTraspasoService.class [metodo = consultarFactibilidadp() ]\n" + params);
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
 
 		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
 		String lat = jsonObject.get("latitud").getAsString();
 		String lon = jsonObject.get("longitud").getAsString();
+		String factibilidad = jsonObject.get("factibilidad").getAsString();
 
 		String tokenAcces = principalDetail.getAccess_token();
-		logger.info("consultarFactibilidadRes ##+" + tokenAcces);
-		String urlRequest = principalDetail.getDireccionAmbiente()
-				.concat(constTraspaso.getConsultarFactibilidadTraspasoRes());
-		logger.info("URL ##+" + urlRequest);
-
-		Map<String, String> paramsRequestGet = new HashMap<String, String>();
-		paramsRequestGet.put("latitud", lat);
-		paramsRequestGet.put("longitud", lon);
-
-		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
-				ServiceResponseResult.class, tokenAcces);
-		return response;
-	}
-
-	@Override
-	public ServiceResponseResult consultarFactibilidadEmp(String params) {
-		logger.info("ImplTraspasoService.class [metodo = consultarFactibilidadEmp() ]\n" + params);
-		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
-
-		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-		String lat = jsonObject.get("latitud").getAsString();
-		String lon = jsonObject.get("longitud").getAsString();
-
-		String tokenAcces = principalDetail.getAccess_token();
-		logger.info("consultarFactibilidadEmp ##+" + tokenAcces);
-		String urlRequest = principalDetail.getDireccionAmbiente()
-				.concat(constTraspaso.getConsultarFactibilidadTraspasoEmp());
+		logger.info("consultarFactibilidad ##+" + tokenAcces);
+		String urlRequest = factibilidad + "?latitud=" + lat + "&longitud=" + lon;
 		logger.info("URL ##+" + urlRequest);
 
 		Map<String, String> paramsRequestGet = new HashMap<String, String>();
@@ -499,8 +476,22 @@ public class ImplTraspasoService implements TraspasoService {
 
 	@Override
 	public ServiceResponseResult agendarTraspasoOt(String params) {
-		// TODO Auto-generated method stub
-		return null;
+        logger.info("ImplDisponibilidadService.class [metodo = agendarTraspasoOt() ]\n" + params);
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constTraspaso.getAgendarTraspasoOt());
+        logger.info("URL ##" + urlRequest);
+
+        Map<String, String> paramsRequestGet = new HashMap<String, String>();
+
+        ServiceResponseResult response = restCaller.callPostBearerTokenRequest(jsonObject.toString(),
+				urlRequest,
+				ServiceResponseResult.class,
+				tokenAcces);
+        logger.info(response);
+        return response;
 	}
 
 	@Override

@@ -1,7 +1,6 @@
 app.calendarController = function ($scope) {
 
     let arregloDisponibilidad = [];
-    let calHeight = 600;
     let calendar_disponibilidad;
     $scope.calendarDisp;
 
@@ -9,7 +8,7 @@ app.calendarController = function ($scope) {
     $scope.inicialCalendario = function () {
         calendar_disponibilidad = document.getElementById('calendar_disponibilidad');
         $scope.calendarDisp = new FullCalendar.Calendar(calendar_disponibilidad, {
-            height: 650,
+            height: 600,
             locale: 'es',
             displayEventTime: true,
             selectable: true,
@@ -42,21 +41,17 @@ app.calendarController = function ($scope) {
             }
 
         });
-
         $scope.calendarDisp.render();
     }
 
-    $scope.muestraDisponibilidadCalendar = function (response) {
-        console.log("inicia");
+    $scope.muestraDisponibilidadCalendar = function (response) {        
         if ($scope.calendarDisp) 
             $scope.calendarDisp.destroy();
         
         arregloDisponibilidad = [];
         let eventoDisponibilibidadTurno={};
-        let arrayDisponibilidad = (response.dias !== undefined && response.dias !== null) ? response.dias !== undefined ? response.dias : [] : [];
-        console.log(arrayDisponibilidad);
+        let arrayDisponibilidad = response && (response.dias !== undefined && response.dias !== null) ? response.dias !== undefined ? response.dias : [] : [];
         $.each(arrayDisponibilidad, function(index, disponibInd){
-            
             $.each(disponibInd.turnos,function(indexj,eventInd){               
                 if (eventInd.cantidad !== 0) {
                     eventoDisponibilibidadTurno ={
