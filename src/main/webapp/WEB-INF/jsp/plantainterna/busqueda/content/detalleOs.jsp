@@ -1,3 +1,8 @@
+<div class="row">
+    <div ng-show="isAbiertoOSNoticias">
+        <jsp:include page="noticiasGeneralesOs.jsp"></jsp:include>
+    </div>
+</div>
 <div  ng-show="showOs" class="header-back-title col-4">
     <div  ng-click="regresarConsulta()" class="container-regresar-button text-center">
         <span class="regresar-elemento fa fa-undo"></span>
@@ -27,9 +32,6 @@
 </div>
 
 <div ng-show="showOs" class="col-12 ">
-    <div ng-show="isAbiertoOSNoticias">
-        <jsp:include page="noticiasGeneralesOs.jsp"></jsp:include>
-    </div>
     <div class="card-header style_card_header_detallepro separador-according">
         <div class="row">
             <div class="col-md-12 colTitulo">

@@ -269,12 +269,14 @@ app.controller('busquedaController', ['$scope', '$q', 'busquedaService', 'generi
         $scope.showTicket = false;
         $scope.showDetalleActivar = false;
         $scope.showSearch = true
+        $scope.isAbiertoOSNoticias = false
         $scope.historial = [];
     }
 
     $scope.regresarConsulta = function () {
         $scope.consultarValidacionCuentaAsync = true
         $scope.isConsultaPrimeraVezNoticias = false;
+        $scope.isAbiertoOSNoticias = false
         $scope.cerrarDetalles();
         $scope.historial.splice(-1, 1);
         if ($scope.historial.length !== 0) {

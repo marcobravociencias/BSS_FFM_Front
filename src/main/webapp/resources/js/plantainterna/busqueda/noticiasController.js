@@ -23,6 +23,8 @@ app.noticiasController = function ($scope, $q, busquedaService) {
 
     $scope.objectoConsulta = function () {
         $scope.listadoNoticias = [];
+        $scope.mensajeGeneral = '';
+        $scope.resetFileGeneral();
         if (!swal.isVisible()) {
             swal({ text: 'Cargando informaci\u00f3n ...', allowOutsideClick: false });
             swal.showLoading();
@@ -436,6 +438,10 @@ app.noticiasController = function ($scope, $q, busquedaService) {
             if (response.data.respuesta) {
                 if (response.data.result) {
                     if (response.data.result.result === '0') {
+                        $scope.resetFile(params.newId);
+                        document.getElementById('texto-subcomentario-os-' + params.newId).value = ''
+                        document.getElementById('texto-subcomentario-op-' + params.newId).value = ''
+                        document.getElementById('texto-subcomentario-ticket-' + params.newId).value = ''
                         $scope.objectoConsulta();
                     } else {
                         mostrarMensajeErrorAlert(response.data.result.resultDescription)
@@ -695,5 +701,15 @@ app.noticiasController = function ($scope, $q, busquedaService) {
             $scope.showEliminarSubCom = true;
         }
         $scope.$apply();
+    }
+
+    $scope.resetFile = function (noticia) {
+        $("#fileSubComentarioOs-" + noticia).val("");
+        $("#fileSubComentariotOp-" + noticia).val("");
+        $("#fileSubComentarioTicket-" + noticia).val("");
+        document.getElementById('spnNombreAdSubComentarioOs-' + noticia).innerHTML = ''
+        document.getElementById('spnNombreAdSubComentarioOp-' + noticia).innerHTML = ''
+        document.getElementById('spnNombreAdSubComentarioTicket-' + noticia).innerHTML = ''
+        $scope.showEliminarSubCom = false;
     }
 }

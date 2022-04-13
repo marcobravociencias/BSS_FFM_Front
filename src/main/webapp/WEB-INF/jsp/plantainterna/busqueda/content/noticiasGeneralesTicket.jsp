@@ -55,8 +55,8 @@
                                              <input type="text" id="texto-subcomentario-ticket-{{noticia.id}}" class="form-control form-send-general text-subcomentario-ticket" placeholder="Escribe aqu&iacute; tu mensaje" aria-label="Recipient's username"aria-describedby="basic-addon2"/>
                                              <input type="file" class="box__file inputFile" id="fileSubComentarioTicket-{{noticia.id}}" onchange="cambiar(this)"/>
                                              <label for="fileSubComentarioTicket-{{noticia.id}}" class="lbl-adjuntar-ticket"><i class="input-group-text icon-adjuntar-subcomentarios fas fa-paperclip" id="basic-addon2"></i></label>
-                                             <div class="badge badge-dot badge-dot-sm status-adjunto badge-warning" ng-show="!showEliminarSubComTicket"></div>
-                                             <div class="badge badge-dot badge-dot-sm status-adjunto badge-success" ng-show="showEliminarSubComTicket"></div>
+                                             <div class="badge badge-dot badge-dot-sm status-adjunto badge-warning" ng-show="!showEliminarSubCom"></div>
+                                             <div class="badge badge-dot badge-dot-sm status-adjunto badge-success" ng-show="showEliminarSubCom"></div>
                                          </div>
                                      </div>
                                      <div class="col-2" style="top: -34px; left: 34em;">
@@ -66,7 +66,7 @@
                                      </div>
                                      <div class="col-2 adjuntar-archivo-subcomentario">
                                          <span id="spnNombreAdSubComentarioTicket-{{noticia.id}}" class="spn-titulo-adjunto"></span>
-                                         <i class="fas fa-trash-alt icon-eliminar-adjunto" ng-show="showEliminarSubComTicket" ng-click="resetFile(noticia.id)"></i>
+                                         <i class="fas fa-trash-alt icon-eliminar-adjunto" ng-show="showEliminarSubCom" ng-click="resetFile(noticia.id)"></i>
                                      </div>
                                  </div>
                                  <div class="row">
