@@ -17,4 +17,10 @@ public class ConstOrdenesUniversales {
 	 
 	 @Value("${consultarPerfilesPorUsuario}")
 	 private String consultarPerfilesPorUsuario;
+
+	@Value("${consultarPaquetesOrdenesUniversales}")
+	private String consultarPaquetesOrdenesUniversales;
+
+	@Value("${consultarCanalVentaOredenesUniversales}")
+	private String consultarCanalVentaOredenesUniversales;
 }

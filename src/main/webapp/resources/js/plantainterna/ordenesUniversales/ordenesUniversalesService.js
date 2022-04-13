@@ -73,6 +73,22 @@ app.service("ordenesUniversalesService", function ($http) {
         });
     };
     
-    
+    this.consultarCatalogoPaquete = function () {
+        return $http({
+            method: "post",
+            url: "req/consultaPaqueteOrdenesUniversales",
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
+        });
+    };
+
+    this.consultarCatalogoCanalVentas = function () {
+        return $http({
+            method: "post",
+            url: "req/consultaCanalVentas",
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
+        });
+    };
 
 });
