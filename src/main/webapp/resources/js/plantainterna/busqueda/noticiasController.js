@@ -6,6 +6,11 @@ app.noticiasController = function ($scope, $q, busquedaService) {
     $scope.banderaShow = false;
     $scope.tipoComentario;
     $scope.noticiaAnterior;
+    $scope.mensajeGeneral = '';
+    $scope.showEliminarFileGeneral = false;
+    $scope.showEliminarSubCom = false;
+    $scope.isAbiertoOSNoticias = false
+    $scope.tituloNombreArchivoGeneral = ''
 
     $scope.abrirVentanaNoticias = function () {
         if (!$scope.isAbiertoOSNoticias && !$scope.isConsultaPrimeraVezNoticias) {
@@ -47,7 +52,6 @@ app.noticiasController = function ($scope, $q, busquedaService) {
             if (response.data.respuesta) {
                 if (response.data.result) {
                     $scope.listadoNoticias = response.data.result.news;
-                   // $scope.$apply()
                 } else {
                     swal.close();
                     mostrarMensajeWarningValidacion('No se encontr&oacute; informaci&oacute;n.')
@@ -64,36 +68,31 @@ app.noticiasController = function ($scope, $q, busquedaService) {
     }
 
     $scope.enviarMesajeGeneral = function () {
-        // let params = new FormData();
         let params;
         if ($scope.elemento.keyObject === 'OS') {
-            if (document.getElementById('text-general-os').value === '') {
-                mostrarMensajeWarning('Escribir un comentario')
+            if ($scope.mensajeGeneral=== '') {
+                mostrarMensajeWarningValidacion('Escribir un comentario')
                 return false;
             }
-            /* params.append("params.objectId", $scope.elemento.detalle.id);
-            params.append("params.text", document.getElementById('text-general-os').value);
-            params.append("params.autorId", $scope.autorIdSalect); */
+
             params = {
                 objectId: $scope.elemento.detalle.id,
-                text: document.getElementById('text-general-os').value
+                text: $scope.mensajeGeneral
             }
-            if (document.querySelector('#fileOs').files[0] !== undefined) {
-                //params.append("params.documentName", document.querySelector('#fileOs').files[0].name.split('.')[0]);
-                //params.append("params.documentExtension", document.querySelector('#fileOs').files[0].name.split('.')[1]);
+            if (document.querySelector('#fileComentarioGeneral').files[0] !== undefined) {
 
 
-                var myFile = document.querySelector('#fileOs').files[0];
+                var myFile = document.querySelector('#fileComentarioGeneral').files[0];
                 var reader = new FileReader();
                 reader.readAsDataURL(myFile);
                 console.log(reader)
                 reader.onload = function () {
-                    //params.append("params.document", reader.result.split(",")[1]);
+
                     params = {
                         objectId: $scope.elemento.detalle.id,
-                        text: document.getElementById('text-general-os').value,
-                        documentName: document.querySelector('#fileOs').files[0].name.split('.')[0],
-                        documentExtension: document.querySelector('#fileOs').files[0].name.split('.')[1],
+                        text: $scope.mensajeGeneral,
+                        documentName: document.querySelector('#fileComentarioGeneral').files[0].name.split('.')[0],
+                        documentExtension: document.querySelector('#fileComentarioGeneral').files[0].name.split('.')[1],
                         document: reader.result.split(",")[1]
                     }
                     $scope.guardarMensaje(params);
@@ -106,33 +105,29 @@ app.noticiasController = function ($scope, $q, busquedaService) {
             }
 
         } else if ($scope.elemento.keyObject === 'OP') {
-            if (document.getElementById('text-general-oportunidad').value === '') {
-                mostrarMensajeWarning('Escribir un comentario')
+            if ($scope.mensajeGeneral === '') {
+                mostrarMensajeWarningValidacion('Escribir un comentario')
                 return false;
             }
-            //params.append("params.objectId", $scope.idObject);
-            //params.append("params.text", document.getElementById('text-general-oportunidad').value);
-            //params.append("params.autorId", $scope.autorIdSalect);
+
             params = {
                 objectId: $scope.elemento.detalle.id,
-                text: document.getElementById('text-general-oportunidad').value
+                text: $scope.mensajeGeneral
             }
-            if (document.querySelector('#fileOportunidad').files[0]) {
-                //params.append("params.documentName", document.querySelector('#fileOportunidad').files[0].name.split('.')[0]);
-                //params.append("params.documentExtension", document.querySelector('#fileOportunidad').files[0].name.split('.')[1]);
+            if (document.querySelector('#fileComentarioGeneral').files[0]) {
 
 
-                var myFile = document.querySelector('#fileOportunidad').files[0];
+                var myFile = document.querySelector('#fileComentarioGeneral').files[0];
                 var reader = new FileReader();
                 reader.readAsDataURL(myFile);
                 console.log(reader)
                 reader.onload = function () {
-                    //params.append("params.document", reader.result.split(",")[1]);
+
                     params = {
                         objectId: $scope.elemento.detalle.id,
-                        text: document.getElementById('text-general-oportunidad').value,
-                        documentName: document.querySelector('#fileOportunidad').files[0].name.split('.')[0],
-                        documentExtension: document.querySelector('#fileOportunidad').files[0].name.split('.')[1],
+                        text: $scope.mensajeGeneral,
+                        documentName: document.querySelector('#fileComentarioGeneral').files[0].name.split('.')[0],
+                        documentExtension: document.querySelector('#fileComentarioGeneral').files[0].name.split('.')[1],
                         document: reader.result.split(",")[1]
                     }
                     $scope.guardarMensaje(params);
@@ -145,34 +140,29 @@ app.noticiasController = function ($scope, $q, busquedaService) {
             }
 
         } else {
-            if (document.getElementById('text-general-ticket').value === '') {
-                mostrarMensajeWarning('Escribir un comentario')
+            if ($scope.mensajeGeneral === '') {
+                mostrarMensajeWarningValidacion('Escribir un comentario')
                 return false;
             }
 
-            //params.append("params.objectId", $scope.idObject);
-            //params.append("params.text", document.getElementById('text-general-ticket').value);
-            //params.append("params.autorId", $scope.autorIdSalect);
             params = {
                 objectId: $scope.elemento.detalle.id,
-                text: document.getElementById('text-general-ticket').value
+                text: $scope.mensajeGeneral
             }
-            if (document.querySelector('#fileTicket').files[0] !== undefined) {
-                //params.append("params.documentName", document.querySelector('#fileTicket').files[0].name.split('.')[0]);
-                //params.append("params.documentExtension", document.querySelector('#fileTicket').files[0].name.split('.')[1]);
+            if (document.querySelector('#fileComentarioGeneral').files[0] !== undefined) {
 
 
-                var myFile = document.querySelector('#fileTicket').files[0];
+                var myFile = document.querySelector('#fileComentarioGeneral').files[0];
                 var reader = new FileReader();
                 reader.readAsDataURL(myFile);
                 console.log(reader)
                 reader.onload = function () {
-                    //params.append("params.document", reader.result.split(",")[1]);
+
                     params = {
                         objectId: $scope.elemento.detalle.id,
-                        text: document.getElementById('text-general-ticket').value,
-                        documentName: document.querySelector('#fileTicket').files[0].name.split('.')[0],
-                        documentExtension: document.querySelector('#fileTicket').files[0].name.split('.')[1],
+                        text: $scope.mensajeGeneral,
+                        documentName: document.querySelector('#fileComentarioGeneral').files[0].name.split('.')[0],
+                        documentExtension: document.querySelector('#fileComentarioGeneral').files[0].name.split('.')[1],
                         document: reader.result.split(",")[1]
                     }
                     $scope.guardarMensaje(params);
@@ -195,14 +185,8 @@ app.noticiasController = function ($scope, $q, busquedaService) {
             if (response.data.respuesta) {
                 if (response.data.result) {
                     if (response.data.result.result === '0') {
-                        $scope.resetFile();
-                        if ($scope.elemento.keyObject === 'OS') {
-                            document.getElementById('text-general-os').value = ''
-                        } else if ($scope.elemento.keyObject === 'OP') {
-                            document.getElementById('text-general-oportunidad').value = ''
-                        } else {
-                            document.getElementById('text-general-ticket').value = ''
-                        }
+                        $scope.resetFileGeneral();
+                        $scope.mensajeGeneral = '';
                         $scope.objectoConsulta();
                     } else {
                         mostrarMensajeWarningValidacion(response.data.result.resultDescripcion)
@@ -220,65 +204,58 @@ app.noticiasController = function ($scope, $q, busquedaService) {
 
     $scope.responderComentario = function (numero) {
         $scope.showAdjuntar = true;
+       
         if ($scope.noticiaAnterior) {
             if ($scope.noticiaAnterior !== numero) {
                 $scope.banderaShow = false;
-                document.getElementById('content-text-enviar-' + $scope.noticiaAnterior).style.display = 'none';
-                document.getElementById('content-text-e-' + $scope.noticiaAnterior).style.display = 'none';
-                document.getElementById('content-text-' + $scope.noticiaAnterior).style.display = 'none';
-                document.getElementById('button-subcommet-' + $scope.noticiaAnterior).style.display = 'none'
+                document.getElementById('content-subcomentario-os-' + $scope.noticiaAnterior).style.display = 'none';
+                document.getElementById('content-subcomentario-op-' + $scope.noticiaAnterior).style.display = 'none';
+                document.getElementById('content-subcomentario-ticket-' + $scope.noticiaAnterior).style.display = 'none';
+                $scope.resetFile($scope.noticiaAnterior)
             }
         }
         if ($scope.banderaShow) {
             if ($scope.tipoResponse !== 0) {
-                document.getElementById('texto-comentario-op-' + numero).value = '';
-                document.getElementById('texto-comentario-' + numero).value = '';
-                document.getElementById('texto-comentario-os-' + numero).value = '';
+                document.getElementById('texto-subcomentario-os-' + numero).value = '';
+                document.getElementById('texto-subcomentario-op-' + numero).value = '';
+                document.getElementById('texto-subcomentario-ticket-' + numero).value = '';
                 $scope.tipoResponse = 0;
             } else {
-                document.getElementById('content-text-enviar-' + numero).style.display = 'none';
-                document.getElementById('content-text-e-' + numero).style.display = 'none';
-                document.getElementById('content-text-' + numero).style.display = 'none';
-                document.getElementById('button-subcommet-' + numero).style.display = 'none'
-                document.getElementById('button-subcommet-ticket-' + numero).style.display = 'none'
+                document.getElementById('content-subcomentario-os-' + numero).style.display = 'none';
+                document.getElementById('content-subcomentario-op-' + numero).style.display = 'none';
+                document.getElementById('content-subcomentario-ticket-' + numero).style.display = 'none';
                 $scope.banderaShow = false;
                 $scope.tipoResponse = null;
             }
         } else {
-            document.getElementById('content-text-enviar-' + numero).style.display = 'block';
-            document.getElementById('content-text-e-' + numero).style.display = 'block';
-            document.getElementById('content-text-' + numero).style.display = 'block';
-            document.getElementById('button-subcommet-' + numero).style.display = 'block'
-            document.getElementById('button-subcommet-ticket-' + numero).style.display = 'block'
-            document.getElementById('texto-comentario-op-' + numero).value = '';
-            document.getElementById('texto-comentario-' + numero).value = '';
-            document.getElementById('texto-comentario-os-' + numero).value = '';
+            document.getElementById('content-subcomentario-os-' + numero).style.display = 'block';
+            document.getElementById('content-subcomentario-op-' + numero).style.display = 'block';
+            document.getElementById('content-subcomentario-ticket-' + numero).style.display = 'block';
+            document.getElementById('texto-subcomentario-os-' + numero).value = '';
+            document.getElementById('texto-subcomentario-op-' + numero).value = '';
+            document.getElementById('texto-subcomentario-ticket-' + numero).value = '';
             $scope.tipoResponse = 0;
             $scope.banderaShow = true;
         }
         $scope.noticiaAnterior = numero;
+        $scope.resetFileGeneral();
     }
 
     $scope.enviarComentario = function (noticia) {
         let params = {}
         if ($scope.elemento.keyObject === 'OS') {
             if ($scope.tipoResponse === 0) {
-                if (document.getElementById('texto-comentario-os-' + noticia).value === '') {
+                if (document.getElementById('texto-subcomentario-os-' + noticia).value === '') {
                     mostrarMensajeWarning('Escribir un comentario')
                     return false;
                 }
 
                 params = {
                     newId: noticia,
-                    text: document.getElementById('texto-comentario-os-' + noticia).value
+                    text: document.getElementById('texto-subcomentario-os-' + noticia).value
                 }
-                //params.append("params.newId", noticia);
-                //params.append("params.text", document.getElementById('texto-comentario-os-' + noticia).value);
-                //params.append("params.autorId", $scope.autorIdSalect);
-                if (document.querySelector('#fileSubComentarioOs-' + noticia).files[0] !== undefined) {
-                    //params.append("params.documentName", document.querySelector('#fileSubComentarioOs-' + noticia).files[0].name.split('.')[0]);
-                    //params.append("params.documentExtension", document.querySelector('#fileSubComentarioOs-' + noticia).files[0].name.split('.')[1]);
 
+                if (document.querySelector('#fileSubComentarioOs-' + noticia).files[0] !== undefined) {
 
                     var myFile = document.querySelector('#fileSubComentarioOs-' + noticia).files[0];
                     var reader = new FileReader();
@@ -287,12 +264,12 @@ app.noticiasController = function ($scope, $q, busquedaService) {
                     reader.onload = function () {
                         params = {
                             newId: noticia,
-                            text: document.getElementById('texto-comentario-os-' + noticia).value,
+                            text: document.getElementById('texto-subcomentario-os-' + noticia).value,
                             documentName: document.querySelector('#fileSubComentarioOs-' + noticia).files[0].name.split('.')[0],
                             documentExtension: document.querySelector('#fileSubComentarioOs-' + noticia).files[0].name.split('.')[1],
                             document: reader.result.split(",")[1]
                         }
-                        //params.append("params.document", reader.result.split(",")[1]);
+                       
                         $scope.crearSubComnetario(params);
                     };
                     reader.onerror = function (error) {
@@ -329,24 +306,32 @@ app.noticiasController = function ($scope, $q, busquedaService) {
             }
         } else if ($scope.elemento.keyObject === 'OP') {
             if ($scope.tipoResponse === 0) {
-                if (document.getElementById('texto-comentario-op-' + noticia).value === '') {
+                if (document.getElementById('texto-subcomentario-op-' + noticia).value === '') {
                     mostrarMensajeWarning('Escribir un comentario')
                     return false;
                 }
-                params.append("params.newId", noticia);
-                params.append("params.text", document.getElementById('texto-comentario-op-' + noticia).value);
-                //params.append("params.autorId", $scope.autorIdSalect);
+
+                params = {
+                    newId: noticia,
+                    text: document.getElementById('texto-subcomentario-op-' + noticia).value
+                }
+
                 if (document.querySelector('#fileSubComentarioOp-' + noticia).files[0] !== undefined) {
-                    params.append("params.documentName", document.querySelector('#fileSubComentarioOp-' + noticia).files[0].name.split('.')[0]);
-                    params.append("params.documentExtension", document.querySelector('#fileSubComentarioOp-' + noticia).files[0].name.split('.')[1]);
 
 
-                    var myFile = document.querySelector('#fileSubComentarioOp-' + noticia).files[0];
+                    var myFile = document.querySelector('#fileSubComentariotOp-' + noticia).files[0];
                     var reader = new FileReader();
                     console.log(myFile)
                     reader.readAsDataURL(myFile);
                     reader.onload = function () {
-                        params.append("params.document", reader.result.split(",")[1]);
+
+                        params = {
+                            newId: noticia,
+                            text: document.getElementById('texto-subcomentario-op-' + noticia).value,
+                            documentName: document.querySelector('#fileSubComentariotOp-' + noticia).files[0].name.split('.')[0],
+                            documentExtension: document.querySelector('#fileSubComentariotOp-' + noticia).files[0].name.split('.')[1],
+                            document: reader.result.split(",")[1]
+                        }
                         $scope.crearSubComnetario(params);
                     };
                     reader.onerror = function (error) {
@@ -362,7 +347,7 @@ app.noticiasController = function ($scope, $q, busquedaService) {
                         mostrarMensajeWarning('Escribir un comentario')
                         return false;
                     }
-                    let params = {
+                    params = {
                         newId: noticia,
                         text: document.getElementById('texto-comentario-op-' + noticia).value
                     }
@@ -382,24 +367,19 @@ app.noticiasController = function ($scope, $q, busquedaService) {
             }
         } else {
             if ($scope.tipoResponse === 0) {
-                if (document.getElementById('texto-comentario-' + noticia).value === '') {
+                if (document.getElementById('texto-subcomentario-ticket-' + noticia).value === '') {
                     mostrarMensajeWarning('Escribir un comentario')
                     return false;
                 }
 
                 params = {
                     newId: noticia,
-                    text:  document.getElementById('texto-comentario-' + noticia).value
+                    text:  document.getElementById('texto-subcomentario-ticket-' + noticia).value
                 }
-                //params.append("params.newId", noticia);
-                //params.append("params.text", document.getElementById('texto-comentario-' + noticia).value);
-                //params.append("params.autorId", $scope.autorIdSalect);
-                if (document.querySelector('#fileSubComentarioTick-' + noticia).files[0] !== undefined) {
-                   // params.append("params.documentName", document.querySelector('#fileSubComentarioTick-' + noticia).files[0].name.split('.')[0]);
-                    //params.append("params.documentExtension", document.querySelector('#fileSubComentarioTick-' + noticia).files[0].name.split('.')[1]);
 
-
-                    var myFile = document.querySelector('#fileSubComentarioTick-' + noticia).files[0];
+                if (document.querySelector('#fileSubComentarioTicket-' + noticia).files[0] !== undefined) {
+                  
+                    var myFile = document.querySelector('#fileSubComentarioTicket-' + noticia).files[0];
                     var reader = new FileReader();
                     console.log(myFile)
                     reader.readAsDataURL(myFile);
@@ -407,9 +387,9 @@ app.noticiasController = function ($scope, $q, busquedaService) {
                        // params.append("params.document", reader.result.split(",")[1]);
                         params = {
                             newId: noticia,
-                            text: document.getElementById('texto-comentario-' + noticia).value,
-                            documentName: document.querySelector('#fileSubComentarioTick-' + noticia).files[0].name.split('.')[0],
-                            documentExtension: document.querySelector('#fileSubComentarioTick-' + noticia).files[0].name.split('.')[1],
+                            text: document.getElementById('texto-subcomentario-ticket-' + noticia).value,
+                            documentName: document.querySelector('#fileSubComentarioTicket-' + noticia).files[0].name.split('.')[0],
+                            documentExtension: document.querySelector('#fileSubComentarioTicket-' + noticia).files[0].name.split('.')[1],
                             document: reader.result.split(",")[1]
                         }
                         $scope.crearSubComnetario(params);
@@ -678,5 +658,42 @@ app.noticiasController = function ($scope, $q, busquedaService) {
            
         }
  
+    }
+
+    $scope.cerrarNoticiasGeneral = function(){
+        $scope.isAbiertoOSNoticias = false
+        $scope.mensajeGeneral = ''
+    }
+
+    $scope.cambioGeneral = function(){
+        if ($('#fileComentarioGeneral').get(0).files[0] === undefined) {
+            $scope.tituloNombreArchivoGeneral = ''
+            $scope.showEliminarFileGeneral= false
+        } else {
+            $scope.tituloNombreArchivoGeneral = $('#fileComentarioGeneral').get(0).files[0].name
+            $scope.showEliminarFileGeneral = true
+        }
+    }
+
+    $scope.resetFileGeneral = function(){
+        $scope.tituloNombreArchivoGeneral = ''
+        $("#fileComentarioGeneral").val("");
+        $scope.showEliminarFileGeneral = false;
+    }
+
+    cambiar = function (evento) {
+        let noticia = evento.id.split('-')[1]
+        if ($('#' + evento.id).get(0).files[0] === undefined) {
+            document.getElementById('spnNombreAdSubComentarioOs-' + noticia).innerHTML = ''
+            document.getElementById('spnNombreAdSubComentarioOp-' + noticia).innerHTML = ''
+            document.getElementById('spnNombreAdSubComentarioTicket-' + noticia).innerHTML = ''
+            $scope.showEliminarSubCom = false;
+        } else {
+            document.getElementById('spnNombreAdSubComentarioOs-' + noticia).innerHTML = $('#' + evento.id).get(0).files[0].name
+            document.getElementById('spnNombreAdSubComentarioOp-' + noticia).innerHTML = $('#' + evento.id).get(0).files[0].name
+            document.getElementById('spnNombreAdSubComentarioTicket-' + noticia).innerHTML = $('#' + evento.id).get(0).files[0].name
+            $scope.showEliminarSubCom = true;
+        }
+        $scope.$apply();
     }
 }

@@ -12,6 +12,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-16x16.png">
     <link href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/plantainterna/busqueda/styleMainBusqueda.css?v=${sessionScope.versionDepl}" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/plantainterna/busqueda/mainNoticiaBusqueda.css?v=${sessionScope.versionDepl}" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/jquery.dataTables.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
@@ -23,6 +24,7 @@
     <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" rel="stylesheet" />
     <link href="${pageContext.request.contextPath}/resources/libraries/sweetalert/css/sweetalert2.min.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/resources/libraries/alertify/css/alertify.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/plantainterna/busqueda/mainNoticiaBusqueda.css?v=${sessionScope.versionDepl}" rel="stylesheet">
 </head>
 
 <body id="idBody" ng-controller="busquedaController" class="body" style="display: none;">
