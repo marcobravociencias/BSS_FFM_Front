@@ -14,7 +14,7 @@ app.calendarController = function ($scope, ordenesUniversalesService) {
             locale: 'es',
             displayEventTime: true,
             selectable: true,
-            editable: true,
+            editable: false,
             eventDurationEditable: false,
             events: arregloDisponibilidad,
             headerToolbar: {
@@ -33,7 +33,8 @@ app.calendarController = function ($scope, ordenesUniversalesService) {
                 $scope.infoBasica.idTurnoSeleccion=eventObject._def.extendedProps.idTipoTurno            
                 $scope.dateSelectedCalendarEvent=info.event.start
 
-                $scope.$apply()                           
+                $scope.$apply()  
+                $scope.validarCamposBasicos()                         
             },
             selectable: true,
             datesSet :function(){
@@ -41,7 +42,6 @@ app.calendarController = function ($scope, ordenesUniversalesService) {
                     $scope.calendarDisp.render()
                 },1000) 
             }
-
         });
 
         $scope.calendarDisp.render();

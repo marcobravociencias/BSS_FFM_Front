@@ -1,30 +1,42 @@
 var app = angular.module('traspasosApp', []);
 app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'genericService', function ($scope, $q, traspasosService, genericService) {
+	app.calendarController($scope);
+	app.mapController($scope, traspasosService);
+
 	var otsTable;
 	var traspasosTable;
 	let is_consulta_info_ot = false;
 	let is_consulta_comentarios = false;
 	let is_consulta_historico = false;
-
+	$scope.informacionClienteDetalle = {};
 	$scope.tipoArbol = '';
 	$scope.permisosConfigUser = [];
 	$scope.elementosConfigGeneral;
 	$scope.nivelIntervenciones;
 	$scope.nivelGeografia;
 	$scope.nivelEstatusPendientes;
+	$scope.nivelEstatusTraspasoFiltro = "";
 	$scope.filtrosGeneral = {};
 	$scope.camposFiltro = {};
 	$scope.listEvidenciaImagenes = {};
+	$scope.listMotivos = [];
+	$scope.infoFactibilidad = {};
 	$scope.listImagenesTipo = [];
+	$scope.isTraspaso = false;
 
 	$scope.configPermisoAccionConsultaOts = false;
 	$scope.configPermisoAccionDescargaOtsRep = false;
 	$scope.configPermisoAccionTraspaso = false;
 	$scope.configPermisoAccionConsultaTraspasos = false;
 	$scope.configPermisoAccionDescargaTraspasosRep = false;
+	$scope.isFactibilidad = false;
 
 	$('.drop-down-filters').on("click.bs.dropdown", function (e) {
 		e.stopPropagation();
+	});
+
+	$('.drop-down-filters').on("change.bs.dropdown", function (e) {
+		$scope.setTextFiltro();
 	});
 
 	$('#searchGeografia').on('keyup', function () {
@@ -33,6 +45,16 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 
 	$('#searchGeografiaTraspaso').on('keyup', function () {
 		$("#jstree-proton-tr").jstree("search", this.value);
+	})
+
+	$('#horaestimada-form').timepicker({
+		format: 'hh:mm:ss a',
+		change: function (dateInput) {
+			let minutos = dateInput.getMinutes() + ""
+			let horas = dateInput.getHours() + ""
+			$scope.informacionClienteDetalle.horaEstimada = (horas.padStart(2, '0')) + ':' + (minutos.padStart(2, '0'));
+			$scope.$apply()
+		}
 	})
 
 	$scope.abrirModalCluster = function () {
@@ -55,6 +77,18 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 		}, 750);
 	}
 
+	$(".icon-content-info").on("click", function () {
+		if ($(".icon-content-info").hasClass("fa-angle-down")) {
+			$(".icon-content-info").removeClass("fa-angle-down");
+			$(".icon-content-info").addClass("fa-angle-up");
+			$("#content-info-body").css("display", "none");
+		} else {
+			$(".icon-content-info").removeClass("fa-angle-up");
+			$(".icon-content-info").addClass("fa-angle-down");
+			$("#content-info-body").css("display", "block");
+		}
+	})
+
 	$('#modal-detalle-ot').on('hidden.bs.modal', function () {
 		is_consulta_info_ot = false;
 		is_consulta_comentarios = false;
@@ -76,7 +110,6 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 		});
 		return arrayReturn;
 	}
-
 	$scope.obtenerUltimoNivelFiltros = function (array) {
 		return Math.max.apply(Math, array.map(function (o) { return o.nivel; }));
 	}
@@ -239,8 +272,8 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 				},
 				"columns": [null, null, null, null, null, null, null, null, null, null, null, null, null],
 				"language": idioma_espanol_not_font,
-				"drawCallback": function( settings ) {
-					if(!$scope.configPermisoAccionTraspaso){
+				"drawCallback": function (settings) {
+					if (!$scope.configPermisoAccionTraspaso) {
 						$(".btn-traspaso").addClass("estiloBlockIconoPermiso");
 						$(".btn-traspaso i").removeClass("fa-exchange-alt");
 						$(".btn-traspaso i").addClass("fa-unlock");
@@ -387,12 +420,31 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 		}
 	}
 
+	$scope.filtraEstatus = function (listaStatus) {
+		let newList = listaStatus;
+		let tempList = [];
+
+		if ($scope.nivelEstatusTraspasoFiltro !== "") {
+			let statusList = $scope.nivelEstatusTraspasoFiltro.split(",");
+			angular.forEach(statusList, (idx, index) => {
+				let status = newList.find((t) => Number(t.id) == Number(idx))
+				if (status) {
+					tempList.push(status);
+				}
+			});
+			newList = tempList;
+		}
+		
+		return newList;
+	}
+
 	$scope.consultarCatalagosPI = function () {
 		$q.all([
 			genericService.consultarCatalogoIntervenciones(),
 			genericService.consulCatalogoGeografia(),
 			genericService.consultarCatalogoEstatusDespachoPI(),
-			traspasosService.consultarConfiguracionDespachoDespacho({ "moduloAccionesUsuario": "moduloConsultaOt" }),
+			traspasosService.consultarConfiguracionDespachoDespacho({ "moduloAccionesUsuario": "moduloTraspasos" }),
+			traspasosService.consultarMotivosTraspasos()
 		]).then(function (results) {
 			if (results[3].data !== undefined) {
 				if (results[3].data.respuesta) {
@@ -410,6 +462,9 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 
 							if (llavesResult.N_ESTATUS_PENDIENTES)
 								$scope.nivelEstatusPendientes = parseInt(llavesResult.N_ESTATUS_PENDIENTES)
+
+							if (llavesResult.N_ESTATUS_TRASPASO_FILTRO)
+								$scope.nivelEstatusTraspasoFiltro = parseInt(llavesResult.N_ESTATUS_TRASPASO_FILTRO)
 
 							$scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
 
@@ -443,6 +498,8 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 			}
 			$("#idBody").removeAttr("style");
 
+
+
 			if (results[0].data !== undefined) {
 				if (results[0].data.respuesta) {
 					if (results[0].data.result) {
@@ -452,6 +509,8 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 						let tipoOrdenesTemp = $scope.conversionAnidadaRecursiva(respaldoTipoOrdenArray, 1, $scope.nivelIntervenciones);
 						$scope.filtrosGeneral.tipoOrdenes = angular.copy(tipoOrdenesTemp);
 						$scope.filtrosGeneral.tipoOrdenesTraspaso = angular.copy(tipoOrdenesTemp);
+						$('#filtro-intervencion').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.tipoOrdenes, $scope.nivelIntervenciones));
+						$('#filtro-intervencion-tr').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.tipoOrdenesTraspaso, $scope.nivelIntervenciones));
 					} else {
 						toastr.warning('No se encontraron  tipo ordenes');
 					}
@@ -468,9 +527,13 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 						let respaldoStatusArray = [];
 						respaldoStatusArray = angular.copy(results[2].data.result);
 						$scope.nivelEstatusPendientes = $scope.nivelEstatusPendientes ? $scope.nivelEstatusPendientes : $scope.obtenerUltimoNivelFiltros(respaldoStatusArray);
-						let estatusDisponiblesTemp = $scope.conversionAnidadaRecursiva(respaldoStatusArray, 1, $scope.nivelEstatusPendientes);
+						let estatusDisponiblesTemp = $scope.conversionAnidadaRecursiva(results[2].data.result, 1, $scope.nivelEstatusPendientes);
+						estatusDisponiblesTemp = $scope.filtraEstatus(estatusDisponiblesTemp);
 						$scope.filtrosGeneral.estatusdisponibles = angular.copy(estatusDisponiblesTemp);
 						$scope.filtrosGeneral.estatusdisponiblesTraspaso = angular.copy(estatusDisponiblesTemp);
+						$('#filtro-estatus-substatus').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.estatusdisponibles, $scope.nivelEstatusPendientes));
+						$('#filtro-estatus-substatus-tr').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.estatusdisponiblesTraspaso, $scope.nivelEstatusPendientes));
+
 					} else {
 						toastr.info('No se encontraron catalogo de estatus');
 					}
@@ -486,9 +549,7 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 						if (results[1].data.result.geografia) {
 							$scope.listadogeografiacopy = results[1].data.result.geografia
 							geografia = results[1].data.result.geografia
-							if (!$scope.nivelGeografia)
-								$scope.nivelGeografia = $scope.obtenerNivelUltimoJerarquia()
-
+							$scope.nivelGeografia = $scope.nivelGeografia ? $scope.nivelGeografia : $scope.obtenerUltimoNivelFiltros(results[1].data.result.geografia);
 							geografia = geografia.filter((e) => e.nivel <= $scope.nivelGeografia)
 							geografia.map((e) => {
 								e.parent = e.padre == undefined ? "#" : e.padre;
@@ -502,6 +563,12 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 
 							if ($scope.configPermisoAccionConsultaOts) {
 								$('#jstree-proton-3').bind('loaded.jstree', function (e, data) {
+									var geografiasOt = $('#jstree-proton-3').jstree("get_selected", true);
+									let textoGeografias = [];
+									angular.forEach(geografiasOt, (geografia, index) => {
+										textoGeografias.push(geografia.text);
+									});
+									$('#cluster').val(textoGeografias);
 									$scope.consultaOtsTraspasos()
 								}).jstree({
 									'plugins': ["wholerow", "checkbox", 'search'],
@@ -522,6 +589,12 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 
 							if ($scope.configPermisoAccionConsultaTraspasos) {
 								$('#jstree-proton-tr').bind('loaded.jstree', function (e, data) {
+									var geografiasTas = $('#jstree-proton-tr').jstree("get_selected", true);
+									let textoGeografias = [];
+									angular.forEach(geografiasTas, (geografia, index) => {
+										textoGeografias.push(geografia.text);
+									});
+									$('#clusterTr').val(textoGeografias);
 									$scope.consultaTraspasos()
 								}).jstree({
 									'plugins': ["wholerow", "checkbox", 'search'],
@@ -541,26 +614,56 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 							}
 
 						} else {
-							toastr.warning('No se encontraron datos para la configuraci\u00F3n');
+							toastr.warning('No se encontraron datos para la geograf\u00EDa');
 						}
 					} else {
-						toastr.warning('No se encontraron datos para la configuraci\u00F3n');
+						toastr.warning('No se encontraron datos para la geograf\u00EDa');
 					}
 				} else {
 					toastr.warning(results[1].data.resultDescripcion);
 				}
 			} else {
-				toastr.error('Ha ocurrido un error en la consulta de configuraci\u00F3n');
+				toastr.error('Ha ocurrido un error en la consulta de geograf\u00EDa');
 			}
 
-
-
-
+			if (results[4].data !== undefined) {
+				if (results[4].data.respuesta) {
+					if (results[4].data.result) {
+						$scope.listMotivos = results[4].data.result.motivosTransferencia;
+					} else {
+						mostrarMensajeWarningValidacion('No se encontr&oacute; motivos');
+					}
+				} else {
+					mostrarMensajeWarningValidacion(results[4].data.resultDescripcion);
+				}
+			} else {
+				mostrarMensajeErrorAlert('Ha ocurrido un error al consultar los motivos');
+			}
+			GenericMapa.prototype.callPrototypeMapa(results[3].data.result)
+			$scope.initializeMap();
 
 		}).catch(err => handleError(err));
 	}
 
+
+	$scope.listaSeleccionSelectGral = function (array, nivel) {
+		let arrayReturn = "";
+		angular.forEach(array, function (elemento, index) {
+			if (elemento.nivel == nivel && elemento.checkedOpcion) {
+				if (arrayReturn !== "") {
+					arrayReturn += ',';
+				}
+				arrayReturn += elemento.nombre.toUpperCase();
+			} else {
+				arrayReturn = arrayReturn.concat($scope.listaSeleccionSelectGral(elemento.children, nivel));
+			}
+		});
+		return arrayReturn;
+
+	}
+
 	$scope.iniciarTraspasos = function () {
+
 		$('.datepicker').datepicker({
 			format: 'dd/mm/yyyy',
 			autoclose: true,
@@ -775,8 +878,27 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 		$scope.consultaDetalleOtGeneric(otConsultaTempTras);
 	}
 
-	consultaTraspaso = function(index){
-		//let otConsultaTemp = $scope.listadoConsultaOtsDisponibles[index];
+	$scope.limpiarFactibilidad = function () {
+		$scope.isFactibilidad = false;
+		$("#search-input-place").val("");
+		$scope.informacionClienteDetalle.idTurnoSeleccion = null;
+		$scope.informacionClienteDetalle.turno = "";
+		$("#horaestimada-form").val(undefined);
+		if ($scope.informacionClienteDetalle.factibilidad) {
+			$scope.informacionClienteDetalle.factibilidad = null;
+		}
+	}
+
+
+	consultaTraspaso = function (index) {
+		$scope.informacionClienteDetalle = {};
+		$scope.infoFactibilidad = {};
+		$("#info-factibilidad").css("display", "none");
+		$("#search-input-place").val('');
+		$scope.isFactibilidad = false;
+		let traspasoTemp = $scope.listadoConsultaOtsDisponibles[index];
+		$("#wizzard-1").click();
+		$scope.consultaDetalleTraspasoGen(traspasoTemp);
 	}
 
 	$scope.consultaDetalleOtGeneric = function (ordenObject) {
@@ -790,7 +912,6 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 				if (response.data.respuesta) {
 					if (response.data.result.orden) {
 						$scope.infoOtDetalle = response.data.result.orden;
-						console.log(	$scope.infoOtDetalle );
 						is_consulta_info_ot = true;
 						$scope.permisosModal = $scope.elementosConfigGeneral.get("MODAL_CO_FLUJO_" + ordenObject.idFlujo).split(",")
 						$('#modal-detalle-ot').modal('show');
@@ -810,6 +931,39 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 		}).catch(err => handleError(err));
 	}
 
+	$scope.consultaDetalleTraspasoGen = function (ordenObject) {
+		let params = {
+			id_ot: ordenObject.idOrden
+		}
+		swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
+		swal.showLoading();
+		traspasosService.consultaInfoDetalleTraspaso(JSON.stringify(params)).then(function success(response) {
+			if (response.data !== undefined) {
+				if (response.data.respuesta) {
+					if (response.data.result.orden) {
+						$scope.informacionClienteDetalle = response.data.result.orden;
+						$scope.latitudSelectedMap = response.data.result.orden.latitud;
+						$scope.longitudSelectedMap = response.data.result.orden.longitud;
+						$scope.abrirOpcionUbicacion();
+						//$("#search-input-place").val($scope.latitudSelectedMap + ',' +$scope.longitudSelectedMap);
+						$scope.isTraspaso = true;
+						swal.close();
+					} else {
+						swal.close();
+						mostrarMensajeErrorAlert(response.data.result.mensaje)
+					}
+				} else {
+					swal.close();
+					mostrarMensajeErrorAlert(response.data.resultDescripcion);
+				}
+			} else {
+				swal.close();
+				mostrarMensajeErrorAlert("Error del servidor");
+			}
+		}).catch(err => handleError(err));
+	}
+
+
 	$scope.consultaHistoricoOt = function () {
 		if (!is_consulta_historico) {
 			let params = {
@@ -820,7 +974,6 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 
 
 			genericService.consultarHistoricoDespachoOT(params).then(function (result) {
-				console.log(result);
 				if (result.data !== undefined) {
 					if (result.data.respuesta) {
 						if (result.data.result !== undefined) {
@@ -901,7 +1054,6 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 
 			genericService.agregarComentariosOt(params).then(function success(response) {
 				swal.close();
-				console.log(response);
 				if (response.data !== undefined) {
 					if (response.data.respuesta) {
 						console.log("############## Comentario agregado")
@@ -925,30 +1077,45 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 		}
 	}
 	//Filtros
-	$scope.seleccionarTodosRecursivo = function (array) {
+
+
+	$scope.setTextFiltro = function () {
+		$('#filtro-intervencion').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.tipoOrdenes, $scope.nivelIntervenciones));
+		$('#filtro-intervencion-tr').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.tipoOrdenesTraspaso, $scope.nivelIntervenciones));
+		$('#filtro-estatus-substatus').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.estatusdisponibles, $scope.nivelEstatusPendientes));
+		$('#filtro-estatus-substatus-tr').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.estatusdisponiblesTraspaso, $scope.nivelEstatusPendientes));
+	}
+
+	$scope.seleccionarTodosRecursivo = function (array, isBtn) {
 		array.map(function (e) {
 			e.checkedOpcion = true;
 			if (e.children !== undefined && e.children.length > 0) {
 				$scope.seleccionarTodosRecursivo(e.children);
 			}
 		});
+		if (!isBtn) {
+			$scope.setTextFiltro();
+		}
 	}
 
-	$scope.deseleccionarTodosRecursivo = function (array) {
+	$scope.deseleccionarTodosRecursivo = function (array, isBtn) {
 		array.map(function (e) {
 			e.checkedOpcion = false;
 			if (e.children !== undefined && e.children.length > 0) {
 				$scope.deseleccionarTodosRecursivo(e.children);
 			}
 		});
+		if (!isBtn) {
+			$scope.setTextFiltro();
+		}
 	}
 
 	$scope.setCheckFiltroGenericV2 = function (filtro, principalArray) {
 		if (filtro.children !== undefined && filtro.children.length > 0) {
 			if (filtro.checkedOpcion) {
-				$scope.deseleccionarTodosRecursivo(filtro.children);
+				$scope.deseleccionarTodosRecursivo(filtro.children, true);
 			} else {
-				$scope.seleccionarTodosRecursivo(filtro.children);
+				$scope.seleccionarTodosRecursivo(filtro.children, true);
 			}
 		}
 		filtro.checkedOpcion = !filtro.checkedOpcion;
@@ -1006,7 +1173,7 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 		}
 	}
 
-	$scope.descargarReporteOts = function(){
+	$scope.descargarReporteOts = function () {
 		let isValido = true;
 		let errorMensaje = '';
 		let isValFecha = true;
@@ -1112,7 +1279,7 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 		}
 	}
 
-	$scope.descargarReporteTraspasos = function(){
+	$scope.descargarReporteTraspasos = function () {
 		let isValido = true;
 		let errorMensaje = '';
 		let isValFecha = true;
@@ -1184,7 +1351,7 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 
 
 		if (isValido) {
-		
+
 			let params = {
 				idOrden: $.trim(document.getElementById('idot-tr').value),
 				folioSistema: $.trim(document.getElementById('idos-tr').value),
@@ -1195,7 +1362,7 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 				fechaInicio: $scope.getFechaFormato(document.getElementById('filtro_fecha_inicio_traspaso').value),
 				fechaFin: $scope.getFechaFormato(document.getElementById('filtro_fecha_fin_traspaso').value),
 				elementosPorPagina: $scope.elementosRegistroTraspaso,
-				pagina:1
+				pagina: 1
 			}
 			swal({ text: 'Cargando registros...', allowOutsideClick: false });
 			swal.showLoading();
@@ -1213,19 +1380,320 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 				}
 
 			}).catch(err => handleError(err));
-			
+
 		} else {
 			mostrarMensajeWarningValidacion(errorMensaje);
 		}
 	}
 
-	$scope.cambiaTab = function(type){
+	$scope.cambiaTab = function (type) {
 		$(".menu-pane").removeClass("active show");
 		$("#" + type).addClass("active show");
 	}
 
+	$scope.agendarOt = function () {
+		let params = {
+			folio: $scope.informacionClienteDetalle.folioSistema,
+			motivo: $scope.informacionClienteDetalle.motivo,
+			referencias: $scope.informacionClienteDetalle.referencias,
+			comentario: $scope.informacionClienteDetalle.comentario,
+			latitud: $scope.informacionClienteDetalle.latitud,
+			longitud: $scope.informacionClienteDetalle.longitud,
+			horaEstimada: $("#horaestimada-form").val(),
+			turno: $scope.informacionClienteDetalle.turnotext,
+			fecha: $scope.informacionClienteDetalle.fechaTurnoText
+		}
+		console.log(params);
+		/*
+		traspasosService.agendarTraspasosOt(params).then(function success(response) {
+			swal.close();
+			if (response.data !== undefined) {
+				if (response.data.respuesta) {
+					if (response.data.result) {
+						toastr.success("Traspaso de orden exitoso");
+					} else {
+						mostrarMensajeWarningValidacion('No se traspas&oacute; la orden');
+					}
+				} else {
+					mostrarMensajeWarningValidacion(response.data.resultDescripcion);
+				}
+			} else {
+				mostrarMensajeErrorAlert('Ha ocurrido un error al traspasar la orden');
+			}
+
+		}).catch(err => handleError(err));
+		*/
+	}
+
+
+	//WIZARD
+
+	$scope.validarLatitudLongitudMap = function () {
+		let isErrorValidate = false;
+		if (!$scope.latitudSelectedMap || !$scope.longitudSelectedMap) {
+			isErrorValidate = true
+		} else {
+			if (!$scope.isLatitude($scope.latitudSelectedMap) || !$scope.isLongitude($scope.longitudSelectedMap)) {
+				isErrorValidate = true
+			} else if ($scope.validateLatitudLongitudCaracteres($scope.longitudSelectedMap) || $scope.validateLatitudLongitudCaracteres($scope.longitudSelectedMap)) {
+				isErrorValidate = true
+			} else if (isNaN($scope.latitudSelectedMap) || isNaN($scope.longitudSelectedMap)) {
+				isErrorValidate = true
+			}
+		}
+		return isErrorValidate
+	}
+
+	$scope.actualizaFactibilidadActual = function () {
+
+		if ($scope.latitudSelectedMapTemp !== undefined && !$scope.longitudSelectedMapTemp !== undefined) {
+			$scope.actualizarFactibilidad();
+		} else {
+			$scope.actualizarFactibilidad();
+		}
+	}
+
+	$scope.consultarFactibilidad = function (isActualiza, latitud, longitud) {
+		let params = {
+			latitud: latitud,
+			longitud: longitud
+		}
+
+		let unidadNegocio = $scope.listMotivos.find((e) => Number(e.id) == Number($scope.informacionClienteDetalle.motivo))
+		$scope.informacionClienteDetalle.subtipoOrdenes = unidadNegocio.nombreTipo + '/' + unidadNegocio.nombreSubtipo;
+		$scope.informacionClienteDetalle.subtipoText = unidadNegocio.nombreSubtipo;
+		$scope.informacionClienteDetalle.tipoText = unidadNegocio.nombreTipo;
+
+		swal({ text: 'Espere...', allowOutsideClick: false });
+		swal.showLoading();
+		if (Number(unidadNegocio.idUnidadNegocioNuevo) === 2) {
+			traspasosService.consultaFactibilidadEmpresarial(params).then(function success(response) {
+				swal.close();
+				$("#info-factibilidad").css("display", "block");
+				$("#content-info-actual").css("display", "block");
+				if (response.data !== undefined) {
+					if (response.data.respuesta) {
+						if (response.data.result) {
+							let data = {
+								factibilidad: response.data.result.factibilidad,
+								region: response.data.result.regionEnlace,
+								ciudad: response.data.result.ciudadEnlace,
+								distrito: response.data.result.distritoEnlace,
+								cluster: response.data.result.clusterTotalplay
+							}
+							$scope.infoFactibilidad = data;
+							if (!$scope.informacionClienteDetalle.factibilidad) {
+								$scope.informacionClienteDetalle.factibilidad = data
+							}
+
+							if (isActualiza) {
+								if (Number(response.data.result.factibilidad) === 0) {
+									mostrarMensajeWarningValidacion('Sin factibilidad en esta ubicaci&oacute;n');
+								}
+							}
+						} else {
+							mostrarMensajeWarningValidacion('No se encontr&oacute; factibilidad');
+						}
+					} else {
+						mostrarMensajeWarningValidacion(response.data.resultDescripcion);
+					}
+				} else {
+					mostrarMensajeErrorAlert('Ha ocurrido un error al consultar la factibilidad');
+				}
+			});
+
+		} else {
+			traspasosService.consultaFactibilidadResidencial(params).then(function success(response) {
+				swal.close();
+				$("#info-factibilidad").css("display", "block");
+				$("#content-info-actual").css("display", "block");
+				if (response.data !== undefined) {
+					if (response.data.respuesta) {
+						if (response.data.result) {
+							let data = {
+								factibilidad: response.data.result.factibilidad,
+								region: response.data.result.regionTotalplay,
+								ciudad: response.data.result.ciudadTotalplay,
+								distrito: response.data.result.distritoTotalplay,
+								cluster: response.data.result.clusterTotalplay
+							}
+							$scope.infoFactibilidad = data;
+							if (!$scope.informacionClienteDetalle.factibilidad) {
+								$scope.informacionClienteDetalle.factibilidad = data
+							}
+
+
+							if (isActualiza) {
+								if (Number(response.data.result.factibilidad) === 0) {
+									mostrarMensajeWarningValidacion('Sin factibilidad en esta ubicaci&oacute;n');
+								}
+							}
+						} else {
+							mostrarMensajeWarningValidacion('No se encontr&oacute; factibilidad');
+						}
+					} else {
+						mostrarMensajeWarningValidacion(response.data.resultDescripcion);
+					}
+				} else {
+					mostrarMensajeErrorAlert('Ha ocurrido un error al consultar la factibilidad');
+				}
+			});
+
+		}
+
+	}
+
+
+	$scope.actualizarFactibilidad = function (info) {
+
+		swal({
+			title: "\u00BFDesea actualizar la factibilidad?",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: '#007bff',
+			confirmButtonText: 'Si',
+			cancelButtonText: 'No',
+			html:
+				'<div style="text-align: left;" class="info_ot_detail  ">' +
+				'	<div class="col-md-10 offset-md-2">' +
+				'		<b class="title_span_detalle"> Regi&oacute;n:</b> &nbsp; &nbsp;' +
+				'		<span class="ciudad-detalle-cuenta">' + $scope.infoFactibilidad.region + '</span>' +
+				'	</div>' +
+				'	<div class="col-md-10 offset-md-2">' +
+				'		<b class="title_span_detalle"> Ciudad:</b> &nbsp; &nbsp;' +
+				'		<span class="ciudad-detalle-cuenta">' + $scope.infoFactibilidad.ciudad + ' </span>' +
+				'	</div>' +
+				'	<div class="col-md-10 offset-md-2">' +
+				'		<b class="title_span_detalle"> Distrito:</b> &nbsp; &nbsp;' +
+				'		<span class="ciudad-detalle-cuenta">' + $scope.infoFactibilidad.distrito + ' </span>' +
+				'	</div>' +
+				'	<div class="col-md-10 offset-md-2">' +
+				'		<b class="title_span_detalle"> Cl&uacute;ster:</b> &nbsp; &nbsp;' +
+				'		<span class="ciudad-detalle-cuenta">' + $scope.infoFactibilidad.cluster + ' </span>' +
+				'	</div>' +
+				'</div>',
+		}).then(function (isConfirm) {
+			if (isConfirm) {
+				$scope.isFactibilidad = true;
+				toastr.success("Ubicaci&oacute;n actualizada");
+				$scope.latitudSelectedMap = $scope.latitudSelectedMapTemp ? $scope.latitudSelectedMapTemp : $scope.latitudSelectedMap;
+				$scope.longitudSelectedMap = $scope.longitudSelectedMapTemp ? $scope.longitudSelectedMapTemp : $scope.longitudSelectedMap;
+				$scope.informacionClienteDetalle.geografiaDetalle = $scope.infoFactibilidad.ciudad + '/' + $scope.infoFactibilidad.distrito;
+				$scope.informacionClienteDetalle.factibilidad = $scope.infoFactibilidad;
+				$scope.$apply();
+			}
+		}).catch(err => {
+
+		});
+
+	}
+
+	$scope.consultarDisponibilidad = function () {
+		swal({ text: 'Espera un momento ...', allowOutsideClick: false });
+		swal.showLoading();
+		let data = $scope.listMotivos.find((e) => Number(e.id) == Number($scope.informacionClienteDetalle.motivo))
+
+
+		let params = {
+			unidadNegocio: data.idUnidadNegocioNuevo,
+			propietario: data.idPropietarioNuevo,
+			subtipoIntervencion: data.idSubtipoOT,
+			geografia1: data.idUnidadNegocioNuevo === '1' ? $scope.informacionClienteDetalle.factibilidad.distrito : $scope.informacionClienteDetalle.factibilidad.ciudad,
+			geografia2: data.idUnidadNegocioNuevo === '1' ? $scope.informacionClienteDetalle.factibilidad.cluster : $scope.informacionClienteDetalle.factibilidad.distrito
+		}
+
+		traspasosService.getDisponibilidadServicioRest(params).then(function success(response) {
+			swal.close();
+			if (response.data !== undefined) {
+				if (response.data.respuesta) {
+					if (response.data.result) {
+						$scope.muestraDisponibilidadCalendar(response.data.result);
+					} else {
+						$scope.muestraDisponibilidadCalendar([]);
+						mostrarMensajeWarningValidacion('No se encontr&oacute; disponibilidad');
+					}
+				} else {
+					mostrarMensajeWarningValidacion(response.data.resultDescripcion);
+				}
+			} else {
+				mostrarMensajeErrorAlert('Ha ocurrido un error al consultar la disponibilidad');
+			}
+
+		}).catch(err => handleError(err));
+	}
+
 	angular.element(document).ready(function () {
+		$scope.elementTab = 1;
+		$("#wizzard-1").addClass("current");
+
+		$scope.mostrarTab = function (element) {
+			let textMessage = "";
+
+			if (element === 2) {
+				if (!$scope.informacionClienteDetalle.motivo) {
+					textMessage += "<li>Selecciona un motivo</li>";
+				}
+				if (!$scope.informacionClienteDetalle.comentario) {
+					textMessage += "<li>Ingresa comentario</li>";
+				}
+			}
+
+			if (element === 3 || element === 4) {
+				if (!$scope.informacionClienteDetalle.motivo) {
+					textMessage += "<li>Selecciona un motivo</li>";
+				}
+				if (!$scope.informacionClienteDetalle.comentario) {
+					textMessage += "<li>Ingresa comentario</li>";
+				}
+				if (!$scope.isFactibilidad && element !== 2) {
+					textMessage += "<li>Actualiza factibilidad</li>";
+				}
+			}
+
+			if (element === 4) {
+				if (!$scope.informacionClienteDetalle.idTurnoSeleccion || $("#horaestimada-form").val() === undefined || $("#horaestimada-form").val() === "") {
+					textMessage += "<li>Selecciona disponibilidad</li>";
+				}
+			}
+
+			if (textMessage !== "") {
+				mostrarMensajeWarningValidacion(textMessage);
+				return false;
+			} else {
+				$scope.elementTab = element;
+				$("#wizzard-1").removeClass("current");
+				$("#wizzard-2").removeClass("current");
+				$("#wizzard-3").removeClass("current");
+				$("#wizzard-4").removeClass("current");
+
+				$("#wizzard-" + element).addClass("current");
+				if (element === 3) {
+					$scope.consultarDisponibilidad();
+				}
+				if (element === 2 && (!$scope.infoFactibilidad.factibilidad || $scope.informacionClienteDetalle.factibilidad === null)) {
+					$scope.consultarFactibilidad(false, $scope.latitudSelectedMap, $scope.longitudSelectedMap);
+				}
+			}
+		}
+
+		$("#modalCluster").on("hidden.bs.modal", function () {
+			var geografias = $('#jstree-proton-3').jstree("get_selected", true);
+			let textoGeografias = [];
+			angular.forEach(geografias, (geografia, index) => {
+				textoGeografias.push(geografia.text);
+			});
+			$('#cluster').val(textoGeografias);
+
+			var geografiasTr = $('#jstree-proton-tr').jstree("get_selected", true);
+			let textoGeografiasTr = [];
+			angular.forEach(geografiasTr, (geografia, index) => {
+				textoGeografiasTr.push(geografia.text);
+			});
+			$('#clusterTr').val(textoGeografiasTr);
+		})
+
 		$("#moduloTraspasos").addClass('active');
 		$("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
+
 	});
 }])

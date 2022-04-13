@@ -11,10 +11,9 @@
         <link rel="icon" type="image/png" sizes="96x96"     href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-96x96.png">
         <link rel="icon" type="image/png" sizes="16x16"     href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-16x16.png">
         <link rel="manifest" href="${pageContext.request.contextPath}/resources/img/iconsistema/manifest.json">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet"/>
         <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
-        <link href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/typeahead/css/typeaheadjs.css" rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/coordInstalaciones/styleCoordInstalaciones.css?v=${sessionScope.versionDepl}"  rel="stylesheet"/>
         <link href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap.css" rel="stylesheet"/>
         <link href="${pageContext.request.contextPath}/resources/libraries/datePicker/css/bootstrap-datepicker3_1.9.0.min.css" rel="stylesheet"/>
         <link href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css" rel="stylesheet">
@@ -24,7 +23,7 @@
         <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css"  rel="stylesheet" />     
         <link href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/dataTables.fontAwesome.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/dataTables.bootstrap.min.css" rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/jquery.dataTables.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
         
         <link href="${pageContext.request.contextPath}/resources/libraries/sweetalert/css/sweetalert2.min.css" rel="stylesheet">
 
@@ -41,63 +40,64 @@
         
         <br>
         <div class="container" id="container_coordinar_instalaciones">
-            <div class="row row-parent-bandejas">
-              
-                <div class="col-md-12 col-parent-bandejas">
-                    <div class="col-12 text-center">
+            <div class="content-fluid">
+                <div class="row">
+                    <!--div class="col-12 text-center">
                         <span class="span-titulo-bandeja" ng-bind="nombreBandeja"></span>
-                    </div>
+                    </div-->
                     <div class="col-12">
-                        <div class="row">
-                            <div id="opciones-menu" class="left-menu small-menu" style="margin-left: -.9em; height: 100%;">
-                                <div class="col-md-12 opcion-menu" ng-click="cambiarVista(1);">
-                                    <i ng-class="{'active-iconmenu':vistaCoordinacion==1}" class="icon-menu-left fa fa-clock"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==1}" class="titulo-menu">Pendiente</span>
-                                </div>
-                                <div class="col-md-12 opcion-menu" ng-click="cambiarVista(2);">
-                                    <i ng-class="{'active-iconmenu':vistaCoordinacion==2}" class="icon-menu-left fa fa-pencil-square"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==2}" class="titulo-menu">Asignada</span>
-                                </div>
-                                <div class="col-md-12 opcion-menu" ng-click="cambiarVista(3);">
-                                    <i ng-class="{'active-iconmenu':vistaCoordinacion==3}" class="icon-menu-left fa fa-stop-circle"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==3}" class="titulo-menu">Detenida</span>
-                                </div>
-                                <div class="col-md-12 opcion-menu" ng-click="cambiarVista(4);">
-                                    <i ng-class="{'active-iconmenu':vistaCoordinacion==4}" class="icon-menu-left fa fa-check"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==4}" class="titulo-menu">Terminada</span>
-                                </div>
-                                <div class="col-md-12 opcion-menu" ng-click="cambiarVista(5);">
-                                    <i ng-class="{'active-iconmenu':vistaCoordinacion==5}" class="icon-menu-left fa fa-times"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==5}" class="titulo-menu">Cancelada</span>
-                                </div>
-                                <div class="col-md-12 opcion-menu" ng-click="cambiarVista(6);">
-                                    <i ng-class="{'active-iconmenu':vistaCoordinacion==6}" class="icon-menu-left fa fa-calendar"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==6}" class="titulo-menu">Calendarizada</span>
-                                </div>
-                                <div class="col-md-12 opcion-menu" ng-click="cambiarVista(7);">
-                                    <i ng-class="{'active-iconmenu':vistaCoordinacion==7}" class="icon-menu-left fa fa-handshake"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==7}" class="titulo-menu">Gestoria</span>
-                                </div>
+                        <div id="opciones-menu" class="left-menu small-menu small-sf" style="margin-left: 0em; height: 100%;">
+                            <div class="opcion-menu" ng-click="cambiarVista(1);">
+                                <i ng-class="{'active-iconmenu':vistaCoordinacion==1}" class="icon-menu-left fa fa-clock"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==1}" class="titulo-menu">Pendiente</span>
                             </div>
-                            <div class="right-content">
-                                <div class="row">
-                                    <div id="vistaPendiente" class="col-12" ng-show="vistaCoordinacion === 1">
-                                        <jsp:include page="./content/tablePendiente.jsp"></jsp:include>
-                                    </div>
-                                    <div id="vistaAsignada" class="col-12" ng-show="vistaCoordinacion === 2">
-                                        <jsp:include page="./content/tableAsignada.jsp"></jsp:include>
-                                    </div>
-                                    <div id="vistaDetenida" class="col-12" ng-show="vistaCoordinacion === 3">
-                                        <jsp:include page="./content/tableDetenida.jsp"></jsp:include>
-                                    </div>
-                                    <div id="vistaTerminada" class="col-12" ng-show="vistaCoordinacion === 4">
-                                        <jsp:include page="./content/tableTerminada.jsp"></jsp:include>
-                                    </div>
-                                    <div id="vistaCancelada" class="col-12" ng-show="vistaCoordinacion === 5">
-                                        <jsp:include page="./content/tableCancelada.jsp"></jsp:include>
-                                    </div>
-                                    <div id="vistaCalendarizada" class="col-12" ng-show="vistaCoordinacion === 6">
-                                        <jsp:include page="./content/tableCalendarizado.jsp"></jsp:include>
-                                    </div>
-                                    <div id="vistaGestoria" class="col-12" ng-show="vistaCoordinacion === 7">
-                                        <jsp:include page="./content/tableGestoria.jsp"></jsp:include>
-                                    </div>
+                            <div class="opcion-menu" ng-click="cambiarVista(2);">
+                                <i ng-class="{'active-iconmenu':vistaCoordinacion==2}" class="icon-menu-left fa fa-pencil-square"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==2}" class="titulo-menu">Asignada</span>
+                            </div>
+                            <div class="opcion-menu" ng-click="cambiarVista(3);">
+                                <i ng-class="{'active-iconmenu':vistaCoordinacion==3}" class="icon-menu-left fa fa-stop-circle"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==3}" class="titulo-menu">Detenida</span>
+                            </div>
+                            <div class="opcion-menu" ng-click="cambiarVista(4);">
+                                <i ng-class="{'active-iconmenu':vistaCoordinacion==4}" class="icon-menu-left fa fa-check"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==4}" class="titulo-menu">Terminada</span>
+                            </div>
+                            <div class="opcion-menu" ng-click="cambiarVista(5);">
+                                <i ng-class="{'active-iconmenu':vistaCoordinacion==5}" class="icon-menu-left fa fa-times"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==5}" class="titulo-menu">Cancelada</span>
+                            </div>
+                            <div class="opcion-menu" ng-click="cambiarVista(6);">
+                                <i ng-class="{'active-iconmenu':vistaCoordinacion==6}" class="icon-menu-left fa fa-calendar"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==6}" class="titulo-menu">Calendarizada</span>
+                            </div>
+                            <div class="opcion-menu" ng-click="cambiarVista(7);">
+                                <i ng-class="{'active-iconmenu':vistaCoordinacion==7}" class="icon-menu-left fa fa-handshake"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==7}" class="titulo-menu">Gestoria</span>
+                            </div>
+                        </div>
+                        <div class="right-content">
+                            <div class="col-12 text-center">
+                                <span class="span-titulo-bandeja" ng-bind="nombreBandeja"></span>
+                            </div>
+                            <div class="row">
+                                <div id="vistaPendiente" class="col-12" ng-show="vistaCoordinacion === 1">
+                                    <jsp:include page="./content/tablePendiente.jsp"></jsp:include>
+                                </div>
+                                <div id="vistaAsignada" class="col-12" ng-show="vistaCoordinacion === 2">
+                                    <jsp:include page="./content/tableAsignada.jsp"></jsp:include>
+                                </div>
+                                <div id="vistaDetenida" class="col-12" ng-show="vistaCoordinacion === 3">
+                                    <jsp:include page="./content/tableDetenida.jsp"></jsp:include>
+                                </div>
+                                <div id="vistaTerminada" class="col-12" ng-show="vistaCoordinacion === 4">
+                                    <jsp:include page="./content/tableTerminada.jsp"></jsp:include>
+                                </div>
+                                <div id="vistaCancelada" class="col-12" ng-show="vistaCoordinacion === 5">
+                                    <jsp:include page="./content/tableCancelada.jsp"></jsp:include>
+                                </div>
+                                <div id="vistaCalendarizada" class="col-12" ng-show="vistaCoordinacion === 6">
+                                    <jsp:include page="./content/tableCalendarizado.jsp"></jsp:include>
+                                </div>
+                                <div id="vistaGestoria" class="col-12" ng-show="vistaCoordinacion === 7">
+                                    <jsp:include page="./content/tableGestoria.jsp"></jsp:include>
                                 </div>
                             </div>
                         </div>
+                        
                     </div>
                     <!--div class="row">
                         <div class="col-12" style="position: absolute; z-index: 1;">
@@ -242,6 +242,7 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/angularjs/js/angular.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker_1.9.0.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/jquery.dataTables.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/dataTables.bootstrap4.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/sweetalert/js/sweetalert2.min.js"></script>   
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>

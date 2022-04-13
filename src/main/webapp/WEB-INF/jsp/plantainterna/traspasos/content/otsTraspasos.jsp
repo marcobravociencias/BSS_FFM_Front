@@ -39,7 +39,7 @@
                             ng-bind="filtro.nombre"></span>
                     </label>
                     <ul ng-if="filtro.children !== undefined &&  filtro.children.length > 0"
-                        ng-include="'filtroEstatuOts.html'" class="dropdown-menu"></ul>
+                        ng-include="'filtroEstatusOts.html'" class="dropdown-menu"></ul>
                 </li>
             </ul>
         </div>

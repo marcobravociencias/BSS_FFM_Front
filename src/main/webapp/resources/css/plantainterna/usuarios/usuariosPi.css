@@ -1,7 +1,11 @@
 #arbolGeografiaRegistro.jstree-checkbox-selection .jstree-wholerow-clicked,
 #arbolGeografiaMod.jstree-checkbox-selection .jstree-wholerow-clicked,
 #arbolIntervencionRegistro .jstree-wholerow-clicked,
+#arbolIntervencionPerfilRegistro .jstree-wholerow-clicked,
+#arbolPerfilesSeleccionadosRegistro .jstree-wholerow-clicked,
 #arbolIntervencionMod .jstree-wholerow-clicked,
+#arbolIntervencionPerfilMod .jstree-wholerow-clicked,
+#arbolPerfilesSeleccionadosMod .jstree-wholerow-clicked,
 #arbolPermisoRegistro .jstree-wholerow-clicked,
 #arbolPermisoMod .jstree-wholerow-clicked,
 #arbolGeografiaConsulta .jstree-wholerow-clicked {
@@ -11,7 +15,11 @@
 #arbolGeografiaRegistro.jstree-checkbox-selection .jstree-clicked,
 #arbolGeografiaMod.jstree-checkbox-selection .jstree-clicked,
 #arbolIntervencionRegistro .jstree-clicked,
+#arbolIntervencionPerfilRegistro .jstree-clicked,
+#arbolPerfilesSeleccionadosRegistro .jstree-clicked,
 #arbolIntervencionMod .jstree-clicked,
+#arbolIntervencionPerfilMod .jstree-clicked,
+#arbolPerfilesSeleccionadosMod .jstree-clicked,
 #arbolPermisoRegistro .jstree-clicked,
 #arbolPermisoMod .jstree-clicked,
 #arbolGeografiaConsulta .jstree-clicked {
@@ -32,6 +40,18 @@
     font-weight: bold !important;
 }
 
+#arbolIntervencionPerfilRegistro .jstree-search {
+    font-style: italic !important;
+    color: #8b0000 !important;
+    font-weight: bold !important;
+}
+
+#arbolPerfilesSeleccionadosRegistro .jstree-search {
+    font-style: italic !important;
+    color: #8b0000 !important;
+    font-weight: bold !important;
+}
+
 #arbolGeografiaRegistro .jstree-search {
     font-style: italic !important;
     color: #8b0000 !important;
@@ -45,6 +65,18 @@
 }
 
 #arbolIntervencionMod .jstree-search {
+    font-style: italic !important;
+    color: #8b0000 !important;
+    font-weight: bold !important;
+}
+
+#arbolIntervencionPerfilMod .jstree-search {
+    font-style: italic !important;
+    color: #8b0000 !important;
+    font-weight: bold !important;
+}
+
+#arbolPerfilesSeleccionadosMod .jstree-search {
     font-style: italic !important;
     color: #8b0000 !important;
     font-weight: bold !important;
@@ -1051,4 +1083,16 @@ span.btnEliminarUsuario {
     padding: 4px 0px !important;
     border-radius: 0.2rem !important;
     cursor: pointer;
+}
+
+.tabPrimerOpcionRegistro{
+	margin-left: 0.7em;
+}
+
+.tabOpcionesRegistro{
+	margin-left: 0.5em;
+}
+
+.linkOpcionesRegistro{
+	margin: 0em !important;
 }

@@ -124,6 +124,20 @@
     z-index: 2;
     font-size: 14px;
 }
+.columna-filtro-ind-form::after {
+    content: "";
+    position: absolute;
+    top: 62%;
+    width: 0;
+    right: 6%;
+    height: 0;
+    border-left: 0.3em solid transparent;
+    border-right: 0.3em solid transparent;
+    border-top: 0.6em solid #939db2;
+    clear: both;
+    z-index: 2;
+    font-size: 14px;
+}
 
 label.label-filter {
     margin-bottom: 0;
@@ -155,14 +169,7 @@ label.label-filter {
     width: 120px;
 }
 
-.element-menu-filter:hover .dropdown-menu {
-    display: block;
-}
 
-.element-menu-filter:hover .dropdown-menu {
-    top: 0;
-    left: 100%;
-}
 
 #todo_filtro,
 #ninguno_filtro {
@@ -172,25 +179,55 @@ label.label-filter {
     padding: 0;
 }
 
-label.form-check-inputfiltro {
-    display: flex;
+
+ul.dropdown-menu {
+    box-shadow: 0 1px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    -webkit-box-shadow: 0 1px 5px 0 rgb(0 0 0 / 16%);
+    /* z-index: 200 !important; */
 }
 
-.element-menu-filter {
-    position: relative;
-}
-
-.dropdown-item.item-text-filtro.ng-binding {
-    display: contents;
+.element-menu-filter:hover>.dropdown-menu {
+    top: 0;
+    left: 100%;
 }
 
 .form-check-input {
     margin-right: 0.5em;
 }
 
-.dropdown-item {
-    padding: 0.25rem 1.5rem !important;
+.dropdown-item.item-text-filtro {
+    display: contents;
 }
+
+label.form-check-inputfiltro {
+    display: flex;
+}
+
+.form-check-input {
+    margin: 0;
+    display: inline-block;
+    margin-right: 0.5em;
+}
+
+.element-menu-filter {
+    position: relative;
+    cursor: pointer !important;
+}
+
+.element-menu-filter:hover>.dropdown-menu {
+    display: block;
+}
+
+.element-menu-filter:hover>.dropdown-menu {
+    top: 0;
+    left: 100%;
+}
+
+label.dropdown-item.form-check-inputfiltro {
+    margin-bottom: 0;
+    cursor: pointer !important;
+}
+
 
 /* CSS TABLE */
 

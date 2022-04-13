@@ -65,6 +65,50 @@ app.service("coordInstalacionesPIService", function ($http) {
             }
 		});
     }
+
+    this.consultarDetalleTecnicoOt=function(params){
+		return $http({
+			method: "post",
+			url: "req/consultarDetalleTecnicoOt",
+			data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
+
+    this.consultarDetalleOtDespacho=function(params){
+		return $http({
+			method: "post",
+			url: "req/consultarDetalleDespachoOT",
+			data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
+
+    this.consultarHistoricoDespachoOT=function(params){
+		return $http({
+			method: "post",
+			data:JSON.stringify(params),
+			url: "req/consultarHistoricoDespachoOT",
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	}
+
+    this.consultarComentariosDespachoOT=function(params){
+		return $http({
+			method: "post",
+			url: "req/consultarComentariosDespachoOT",
+			data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	}
     
     
 });

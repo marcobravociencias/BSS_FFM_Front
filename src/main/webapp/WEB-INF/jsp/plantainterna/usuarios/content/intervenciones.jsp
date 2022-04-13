@@ -18,10 +18,10 @@
         <div class="col-md-12">
         	<div class="row">
             	<div class="col-md-6">
-                	<span class="text-head-table-arbol"><li class="fa fa-cubes"></li>&nbsp;Intervenci&oacute;n:</span>
+                	<span class="text-head-table-arbol"><li class="fa fa-tag"></li>&nbsp;Intervenci&oacute;n:</span>
 				</div>
                 <div class="col-md-6">
-                	<span class="text-head-table-arbol"><li class="fas fa-lock"></li>&nbsp;Subintervenci&oacute;n:</span>
+                	<span class="text-head-table-arbol"><li class="fa fa-tags"></li>&nbsp;Subintervenci&oacute;n:</span>
 				</div>
 			</div>
             <div id="contenedorIntervencionesRegistro" class="scrollGeneralArbol">
