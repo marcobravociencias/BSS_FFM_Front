@@ -63,7 +63,7 @@
 			                            </div>
 			                        </div>
 			                        <div style="margin-left: 2%; padding: 3px;" ng-repeat="tecnico in listTecnicos | filter:searchTecnico">
-			                            <div id="{{tecnico.id}}" class="valign-wrapper tecnicosDiv">
+			                            <div id="{{tecnico.idTecnico}}" class="valign-wrapper tecnicosDiv">
 			                                <div class="col-12">
 			                                    <div class="row">
 			                                        <div class="col-1 media-image online pr-0" style="padding-left: 0; margin-top: .5em;">
@@ -78,8 +78,8 @@
 			                                            </p>
 			                                        </div>
 			                                        <div class="col-2 icono_check_tecnico mt-1" >
-			                                            <p id="tec-{{tecnico.id}}" class="text-aux" ng-click="consultarDisponibilidadTecnico(tecnico)">TEC</p>
-	<!-- 		                                            <p id="aux-{{tecnico.id}}" class="text-aux" ng-click="consultarDisponibilidadAux(tecnico)">AUX</p> -->
+			                                            <p id="tec-{{tecnico.idTecnico}}" class="text-aux" ng-click="consultarDisponibilidadTecnico(tecnico)">TEC</p>
+	<!-- 		                                            <p id="aux-{{tecnico.idTecnico}}" class="text-aux" ng-click="consultarDisponibilidadAux(tecnico)">AUX</p> -->
 			                                        </div>
 			                                    </div>
 			                                </div>
@@ -96,7 +96,7 @@
 			                            </div>
 			                        </div>
 			                        <div style="margin-left: 2%; padding: 3px;" ng-repeat="tecnico in listAuxiliares | filter:searchAuxiliar">
-			                            <div id="{{tecnico.id}}" class="valign-wrapper tecnicosDiv">
+			                            <div id="{{tecnico.idTecnico}}" class="valign-wrapper tecnicosDiv">
 			                                <div class="col-12">
 			                                    <div class="row">
 			                                        <div class="col-1 media-image online pr-0" style="padding-left: 0; margin-top: .5em;">
@@ -111,8 +111,8 @@
 			                                            </p>
 			                                        </div>
 			                                        <div class="col-2 icono_check_tecnico mt-1" >
-	<!-- 		                                            <p id="tec-{{tecnico.id}}" class="text-aux" ng-click="consultarDisponibilidadTecnico(tecnico)">TEC</p> -->
-			                                            <p id="aux-{{tecnico.id}}" class="text-aux" ng-click="consultarDisponibilidadTecnico(tecnico)">AUX</p>
+	<!-- 		                                            <p id="tec-{{tecnico.idTecnico}}" class="text-aux" ng-click="consultarDisponibilidadTecnico(tecnico)">TEC</p> -->
+			                                            <p id="aux-{{tecnico.idTecnico}}" class="text-aux" ng-click="consultarDisponibilidadTecnico(tecnico)">AUX</p>
 			                                        </div>
 			                                    </div>
 			                                </div>

@@ -158,9 +158,10 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
         	let paramsServicio3 = {"idDespacho": 17};
         	let paramsServicio4 = {"idTecnico": 2,"fechaInicio": "09-11-2021","fechaFin":"18-03-2022"};
         	let paramsServicio5 = {"idAuxiliar": 13,"fechaInicio": "09-11-2021","fechaFin":"18-03-2022"};
-        	let paramsServicio6 = {"idTecnico": 2};
+        	let paramsServicio6 = {"idTecnico": 2, "fechaInicio": "01-03-2022","fechaFin":"30-03-2022"};
         	let paramsServicio7 = {"idTecnico": 2,"fechaInicio": "18-03-2022","fechaFin":"22-03-2022"};
         	let paramsServicio8 = {"idAuxiliar": 13,"fechaInicio": "18-03-2022","fechaFin":"22-03-2022"};
+        	let paramsServicio9 = {"idUsuario": 13,"fechaInicio": "2020-03-01","fechaFin":"2022-03-15"};
         	
             swal({ text: 'Cargando datos ...', allowOutsideClick: false });
             swal.showLoading();
@@ -173,7 +174,8 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
             	gestionTecnicosService.consultaOrdenesAuxiliarPorFecha(paramsServicio5),
             	gestionTecnicosService.consultaDisponibilidadTecnico(paramsServicio6),
             	gestionTecnicosService.consultaDiasTrabajadosTecnicoPorFecha(paramsServicio7),
-            	gestionTecnicosService.consultaDiasTrabajadosAuxiliarPorFecha(paramsServicio8)
+            	gestionTecnicosService.consultaDiasTrabajadosAuxiliarPorFecha(paramsServicio8),
+            	gestionTecnicosService.consultaJustificacionesTecnico(paramsServicio9)
             ]).then(function (results) {
             	console.log(results[0].data.result.tecnicos);
 //                if (results) {
@@ -474,20 +476,20 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
 
         if (tecnico !== undefined) {
             $scope.tecnicoDisp = {};
-            console.log(tecnico);
-//            $.each($scope.listTecnicos, function (i, elemento) {
-//                document.getElementById('' + elemento.id).style.backgroundColor = "white";
-//                document.getElementById('tec-' + elemento.id).style.color = "grey";
-//                document.getElementById('aux-' + elemento.id).style.color = "grey";
-//            });
+            console.log("TEC TEC -> ",tecnico);
+            $.each($scope.listTecnicos, function (i, elemento) {
+                $("#"+elemento.idTecnico).css("background-color", "white");
+                $("#tec-"+elemento.idTecnico).css("color", "grey");
+                $("#aux-"+elemento.idTecnico).css("color", "grey");
+            });
             const fechaActual = document.getElementsByClassName('fc-toolbar-title')[0].innerText;
             const fechaArray = fechaActual.split(" ");
             const mes = $scope.getMes(fechaArray[0].toUpperCase());
             $scope.tecnicoDisp = tecnico;
             $scope.idTecnico = tecnico.id;
-            $("#" + $scope.tecnicoDisp.id).css("background-color", "#DCDEDC");
-            $("#tec-" + $scope.tecnicoDisp.id).css("color", "#7716fa");
-            let paramsTc = {"idTecnico": 2};
+            $("#" + $scope.tecnicoDisp.idTecnico).css("background-color", "#DCDEDC");
+            $("#tec-" + $scope.tecnicoDisp.idTecnico).css("color", "#7716fa");
+            let paramsTc = {"idTecnico": 2, "fechaInicio": "01/03-2022","fechaFin":"30-03-2022"};
             $scope.changeView();
             gestionTecnicosService.consultaDisponibilidadTecnico(paramsTc).then(function success(response) {
                 console.log(response)
@@ -546,8 +548,8 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
 //                const fechaArrayTec = fechaActualTec.split(" ");
 //                const mesTec = $scope.getMes(fechaArrayTec[0].toUpperCase());
 //                $scope.$apply();
-//                $("#" + $scope.tecnicoDisp.id).css("background-color", "#DCDEDC");
-//                $("#tec-" + $scope.tecnicoDisp.id).css("color", "#7716fa");
+//                $("#" + $scope.tecnicoDisp.idTecnico).css("background-color", "#DCDEDC");
+//                $("#tec-" + $scope.tecnicoDisp.idTecnico).css("color", "#7716fa");
 //                $scope.changeView();
 //                let paramsTc = {};
 //                gestionTecnicosService.consultaDisponibilidadTecGestionTecnicos(paramsTc).then(function success(response) {
@@ -955,7 +957,8 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
     }
 
     $scope.openModalAgregarJustificacion = function () {
-        if ($scope.auxDisp.id !== undefined || $scope.tecnicoDisp.id !== undefined) {
+    	console.log("ID TEC-> ",$scope.tecnicoDisp);
+        if ($scope.auxDisp.id !== undefined || $scope.tecnicoDisp.idTecnico !== undefined) {
             swal({ text: 'Espera un momento...', allowOutsideClick: false });
             swal.showLoading();
             $(".text_select").text("Selecciona un archivo");

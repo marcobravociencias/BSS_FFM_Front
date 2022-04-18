@@ -36,4 +36,7 @@ public class ConstGestionTecnicos implements Serializable{
 	@Value("${consultaDiasTrabajadosAuxiliarPorFecha}")
 	private String consultaDiasTrabajadosAuxiliarPorFecha;
 	
+	@Value("${consultaJustificacionesTecnico}")
+	private String consultaJustificacionesTecnico;
+	
 }
