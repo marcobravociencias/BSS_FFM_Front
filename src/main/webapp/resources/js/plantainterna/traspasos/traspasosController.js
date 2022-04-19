@@ -412,7 +412,7 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 						swal.close()
 					}
 				},
-				"columns": [null, null, null, null, null, null, null, null, null, null, null, null],
+				"columns": [null, null, null, null, null, null, null, null, null, null, null, null, null],
 				"language": idioma_espanol_not_font
 			});
 

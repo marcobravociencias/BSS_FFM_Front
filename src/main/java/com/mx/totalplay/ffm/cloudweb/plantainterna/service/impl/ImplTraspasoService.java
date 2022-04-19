@@ -200,7 +200,7 @@ public class ImplTraspasoService implements TraspasoService {
 	public DataTableResponse consultaTraspasos(ParamConsultaOTPI paramsOT) {
 		logger.info("ImplTraspasoService.class [metodo consultaTraspasos() ]\n" + gson.toJson(paramsOT));
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
-		String[][] dataArray = new String[0][12];
+		String[][] dataArray = new String[0][13];
 		DataTableResponse dataResponse = DataTableResponse.builder().isRespuesta(false).data(dataArray).paginaActual(0)
 				.registrosTotales(0).recordsFiltered("0").recordsTotal("0").draw(paramsOT.getDraw() + "").result(null)
 				.build();
@@ -213,8 +213,7 @@ public class ImplTraspasoService implements TraspasoService {
 
 		String tokenAcces = principalDetail.getAccess_token();
 		logger.info("consultaTraspasos ##+" + tokenAcces);
-		String urlRequest = principalDetail.getDireccionAmbiente()
-				.concat(constTraspaso.getConsultaGeneralTraspasosOt());
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constTraspaso.getConsultaGeneralTraspasos());
 		logger.info("URL ##+" + urlRequest);
 
 		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(gson.toJson(paramsOT), urlRequest,
@@ -230,7 +229,7 @@ public class ImplTraspasoService implements TraspasoService {
 			if (ordenesArray.size() > 0) {
 				if (jsonObjectResponse.get("registrosTotales").getAsInt() > 0) {
 					int count = 0;
-					dataArray = new String[ordenesArray.size()][12];
+					dataArray = new String[ordenesArray.size()][13];
 					int idOrden = 0;
 					for (int i = 0; i < ordenesArray.size(); i++) {
 						JsonObject object = (JsonObject) ordenesArray.get(i);
@@ -274,12 +273,15 @@ public class ImplTraspasoService implements TraspasoService {
 								&& object.get("descripcionMotivo").getAsString().trim() != "")
 										? object.get("descripcionMotivo").getAsString().trim()
 										: "Sin dato";
-
-						dataArray[count][10] = "<div class='tooltip-btn'> <span onclick='consultaImagenesOTsTraspasos("
+						dataArray[count][10] = (object.get("motivoTransferencia") != null
+								&& object.get("motivoTransferencia").getAsString().trim() != "")
+										? object.get("motivoTransferencia").getAsString().trim()
+										: "Sin dato";
+						dataArray[count][11] = "<div class='tooltip-btn'> <span onclick='consultaImagenesOTsTraspasos("
 								+ String.valueOf(object.get("idOrden").getAsInt()) + ", "
 								+ String.valueOf(object.get("claveCliente"))
 								+ ")' class='btn-option btn-floating btn-evidencia btn-sm btn-secondary waves-effect waves-light'><th><i class='icono_cons_bg fa fa-picture-o' aria-hidden='true'></i></th></span></div>";
-						dataArray[count][11] = "<div class='tooltip-btn'> <span onclick='consultaDetalleTraspasos(" + i
+						dataArray[count][12] = "<div class='tooltip-btn'> <span onclick='consultaDetalleTraspasos(" + i
 								+ ")' class='btn-floating btn-option btn-sm btn-detalle btn-secondary waves-effect waves-light acciones'><th><i class='icono_cons_bg fa fa-bars' aria-hidden='true'></i></th></span></div>";
 						count++;
 
@@ -318,78 +320,7 @@ public class ImplTraspasoService implements TraspasoService {
 
 		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(params, urlRequest,
 				ServiceResponseResult.class, tokenAcces);
-		if(response.getResult() != null) {
-			JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
-			JsonArray ordenesArray = jsonObjectResponse.getAsJsonArray("ordenes");
-			JsonArray ordenesReporte = new JsonArray();
-			JsonObject ordenesR = new JsonObject();
-			if (ordenesArray.size() > 0) {
-				if (jsonObjectResponse.get("registrosTotales").getAsInt() > 0) {
-					for (int i = 0; i < ordenesArray.size(); i++) {
-						JsonObject object = (JsonObject) ordenesArray.get(i);
-						JsonObject result = new JsonObject();
-						logger.info("objeto: " + object);
-						result.addProperty("OT",
-								object.get("idOrden").getAsInt() != 0 ? String.valueOf(object.get("idOrden").getAsInt())
-										: "Sin dato");
-						result.addProperty("CLIENTE",
-								object.get("nombreCliente") != null ? object.get("nombreCliente").getAsString().trim()
-										: "Sin dato");
-						result.addProperty("CUENTA",
-								object.get("claveCliente") != null ? object.get("claveCliente").getAsString().trim()
-										: "Sin dato");
-						result.addProperty("CIUDAD",
-								object.get("ciudad") != null ? object.get("ciudad").getAsString().trim() : "Sin dato");
-						result.addProperty("FECHA AGENDA",
-								object.get("fechaAgenda") != null ? object.get("fechaAgenda").getAsString().trim()
-										: "Sin dato");
-						result.addProperty("TIPO",
-								object.get("descTipo") != null ? object.get("descTipo").getAsString().trim() : "Sin dato");
-						result.addProperty("SUBTIPO",
-								object.get("descSubTipo") != null ? object.get("descSubTipo").getAsString().trim()
-										: "Sin dato");
-						result.addProperty("MOTIVO",
-								object.get("descripcionMotivo") != null
-										? object.get("descripcionMotivo").getAsString().trim()
-										: "Sin dato");
-						result.addProperty("ESTATUS",
-								object.get("descripcionEstatus") != null
-										? object.get("descripcionEstatus").getAsString().trim()
-										: "Sin dato");
-						result.addProperty("ESTADO",
-								object.get("descripcionEstado") != null
-										? object.get("descripcionEstado").getAsString().trim()
-										: "Sin dato");
-						ordenesReporte.add(result);
-					}
-					ordenesR.add("ordenes", ordenesReporte);
-					response = ServiceResponseResult.builder().isRespuesta(true).result(gson.toJson(ordenesR)).build();
-				} else {
-					response = ServiceResponseResult.builder().isRespuesta(true).result(null).build();
-				}
-			} else {
-				response = ServiceResponseResult.builder().isRespuesta(true).result(null).build();
-			}
-		}
-		
-		logger.info("*** Objeto Response: " + gson.toJson(response));
-
-		return response;
-	}
-
-	@Override
-	public ServiceResponseResult consultarReporteTraspasos(String params) {
-		logger.info("ImplTraspasoService.class [metodo consultarReporteTraspasos() ]\n" + params);
-		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
-		String tokenAcces = principalDetail.getAccess_token();
-		logger.info("consultarReporteTraspasos ##+" + tokenAcces);
-		String urlRequest = principalDetail.getDireccionAmbiente().concat(constTraspaso.getConsultaGeneralTraspasos());
-		logger.info("URL ##+" + urlRequest);
-
-		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(params, urlRequest,
-				ServiceResponseResult.class, tokenAcces);
 		if (response.getResult() != null) {
-			
 			JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
 			JsonArray ordenesArray = jsonObjectResponse.getAsJsonArray("ordenes");
 			JsonArray ordenesReporte = new JsonArray();
@@ -449,6 +380,81 @@ public class ImplTraspasoService implements TraspasoService {
 		return response;
 	}
 
+	@Override
+	public ServiceResponseResult consultarReporteTraspasos(String params) {
+		logger.info("ImplTraspasoService.class [metodo consultarReporteTraspasos() ]\n" + params);
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String tokenAcces = principalDetail.getAccess_token();
+		logger.info("consultarReporteTraspasos ##+" + tokenAcces);
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constTraspaso.getConsultaGeneralTraspasos());
+		logger.info("URL ##+" + urlRequest);
+
+		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(params, urlRequest,
+				ServiceResponseResult.class, tokenAcces);
+		if (response.getResult() != null) {
+
+			JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
+			JsonArray ordenesArray = jsonObjectResponse.getAsJsonArray("ordenes");
+			JsonArray ordenesReporte = new JsonArray();
+			JsonObject ordenesR = new JsonObject();
+			if (ordenesArray.size() > 0) {
+				if (jsonObjectResponse.get("registrosTotales").getAsInt() > 0) {
+					for (int i = 0; i < ordenesArray.size(); i++) {
+						JsonObject object = (JsonObject) ordenesArray.get(i);
+						JsonObject result = new JsonObject();
+						logger.info("objeto: " + object);
+						result.addProperty("OT",
+								object.get("idOrden").getAsInt() != 0 ? String.valueOf(object.get("idOrden").getAsInt())
+										: "Sin dato");
+						result.addProperty("CLIENTE",
+								object.get("nombreCliente") != null ? object.get("nombreCliente").getAsString().trim()
+										: "Sin dato");
+						result.addProperty("CUENTA",
+								object.get("claveCliente") != null ? object.get("claveCliente").getAsString().trim()
+										: "Sin dato");
+						result.addProperty("CIUDAD",
+								object.get("ciudad") != null ? object.get("ciudad").getAsString().trim() : "Sin dato");
+						result.addProperty("FECHA AGENDA",
+								object.get("fechaAgenda") != null ? object.get("fechaAgenda").getAsString().trim()
+										: "Sin dato");
+						result.addProperty("TIPO",
+								object.get("descTipo") != null ? object.get("descTipo").getAsString().trim()
+										: "Sin dato");
+						result.addProperty("SUBTIPO",
+								object.get("descSubTipo") != null ? object.get("descSubTipo").getAsString().trim()
+										: "Sin dato");
+						result.addProperty("MOTIVO",
+								object.get("descripcionMotivo") != null
+										? object.get("descripcionMotivo").getAsString().trim()
+										: "Sin dato");
+						result.addProperty("MOTIVO TRANSFERENCIA",
+								object.get("motivoTransferencia") != null
+										? object.get("motivoTransferencia").getAsString().trim()
+										: "Sin dato");
+						result.addProperty("ESTATUS",
+								object.get("descripcionEstatus") != null
+										? object.get("descripcionEstatus").getAsString().trim()
+										: "Sin dato");
+						result.addProperty("ESTADO",
+								object.get("descripcionEstado") != null
+										? object.get("descripcionEstado").getAsString().trim()
+										: "Sin dato");
+						ordenesReporte.add(result);
+					}
+					ordenesR.add("ordenes", ordenesReporte);
+					response = ServiceResponseResult.builder().isRespuesta(true).result(gson.toJson(ordenesR)).build();
+				} else {
+					response = ServiceResponseResult.builder().isRespuesta(true).result(null).build();
+				}
+			} else {
+				response = ServiceResponseResult.builder().isRespuesta(true).result(null).build();
+			}
+		}
+
+		logger.info("*** Objeto Response: " + gson.toJson(response));
+
+		return response;
+	}
 
 	@Override
 	public ServiceResponseResult consultarFactibilidad(String params) {
@@ -476,22 +482,20 @@ public class ImplTraspasoService implements TraspasoService {
 
 	@Override
 	public ServiceResponseResult agendarTraspasoOt(String params) {
-        logger.info("ImplDisponibilidadService.class [metodo = agendarTraspasoOt() ]\n" + params);
-        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		logger.info("ImplDisponibilidadService.class [metodo = agendarTraspasoOt() ]\n" + params);
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
 
-        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-        String tokenAcces = principalDetail.getAccess_token();
-        String urlRequest = principalDetail.getDireccionAmbiente().concat(constTraspaso.getAgendarTraspasoOt());
-        logger.info("URL ##" + urlRequest);
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		String tokenAcces = principalDetail.getAccess_token();
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constTraspaso.getAgendarTraspasoOt());
+		logger.info("URL ##" + urlRequest);
 
-        Map<String, String> paramsRequestGet = new HashMap<String, String>();
+		Map<String, String> paramsRequestGet = new HashMap<String, String>();
 
-        ServiceResponseResult response = restCaller.callPostBearerTokenRequest(jsonObject.toString(),
-				urlRequest,
-				ServiceResponseResult.class,
-				tokenAcces);
-        logger.info(response);
-        return response;
+		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(jsonObject.toString(), urlRequest,
+				ServiceResponseResult.class, tokenAcces);
+		logger.info(response);
+		return response;
 	}
 
 	@Override
