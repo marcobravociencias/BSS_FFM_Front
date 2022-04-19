@@ -62,7 +62,7 @@ app.mapController = function ($scope, traspasosService) {
         google.maps.event.addListener(marker, 'dragend', function (event) {
             marker.setMap(map)
             markerRes.setMap(mapResumen);
-
+            $("#info-factibilidad").css("display", "none");
             $scope.latitudSelectedMapTemp = this.getPosition().lat();
             $scope.longitudSelectedMapTemp = this.getPosition().lng();
             $scope.$apply()
@@ -76,7 +76,7 @@ app.mapController = function ($scope, traspasosService) {
         google.maps.event.addListener(map, 'dblclick', function (e) {
             marker.setMap(map)
             markerRes.setMap(mapResumen);
-
+            $("#info-factibilidad").css("display", "none");
             let positionDoubleclick = e.latLng;
             marker.setPosition(positionDoubleclick);
             markerRes.setPosition(positionDoubleclick);
@@ -148,6 +148,7 @@ app.mapController = function ($scope, traspasosService) {
                 }
                 $scope.latitudSelectedMapTemp = place.geometry.location.lat();
                 $scope.longitudSelectedMapTemp = place.geometry.location.lng();
+                $("#info-factibilidad").css("display", "none");
                 $scope.$apply()
 
                 marker.setPosition(new google.maps.LatLng($scope.latitudSelectedMapTemp, $scope.longitudSelectedMapTemp));
