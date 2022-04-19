@@ -803,13 +803,21 @@
         white-space: nowrap;
     }
 
-    #table-reporte thead th,
-    #table-ots-trabajadas-tecnico thead th {
+    #table-reporte thead th {
         position: relative;
         background-color: #b1b1b1;
         color: #fff;
         border: none;
         font-size: .65em;
+        /* white-space: nowrap; */
+    }
+
+    #table-reporte thead th{
+        position: relative;
+        background-color: #b1b1b1;
+        color: #fff;
+        border: none;
+        font-size: .5em;
         /* white-space: nowrap; */
     }
 
