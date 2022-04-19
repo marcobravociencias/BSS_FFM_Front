@@ -272,7 +272,7 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                     <div class="row">
                         <div class="col-8">
                             <div class="input-group input-group-sm content-seach-group  ">
-                                <input type="text" class="form-control form-control-sm buscar-input-operario" placeholder="Buscar operario" onkeyup="triggerOperarioKeyup(event);" >
+                                <input type="text" class="form-control form-control-sm buscar-input-operario input_buscarOperario" placeholder="Buscar operario" onkeyup="triggerOperarioKeyup(event);" >
                                 <span class="search-icon-operario-busq fa fa-search" id="buscar-operario"></span>
                             </div>
                         </div>
@@ -685,9 +685,17 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                 });
             });
 
+            let window_height = $(window).height();
+    		let elementsPagina;
+    		if(window_height <= 670) {
+    			elementsPagina = 3;
+    		} else {
+                elementsPagina = 4;
+            }
+
             dataTableOtsPendientes = $('#table-ot-pendientes').DataTable({
                 info: false,
-                pageLength: 4,
+                pageLength: elementsPagina,
                 language: {
                     zeroRecords: "No se encontraron OT\u00B4s",
                     infoEmpty: "No se encontro la OT",

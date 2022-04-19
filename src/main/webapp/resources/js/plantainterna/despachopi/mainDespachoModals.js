@@ -503,11 +503,10 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 "searching": false,
                 "ordering": false,
                 "pageLength": 10,
-                "info": false,
+                "info": true,
                 "autoWidth": true,
-                "data":arrayOts, 
+                "data": arrayOts, 
                 "language": idioma_espanol_not_font,
-                "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
                 dom: 'Bfrtip', 
             });
             $('#modalOtTrabajadasTecnico').modal('show')

@@ -114,7 +114,7 @@
 			</div>
             <div class="row" ng-show="isPermisoConsultaIncidencias">
                 <div class="col-left-contenedor" style="padding-right: 0; margin-top: 1em; width: {{widthTable}}%;">
-                    <table id="tableIncidencia" class="display table table-hover cellspacing="0" width="100%">
+                    <table id="tableIncidencia" class="display table table-hover" cellspacing="0" width="100%">
                         <thead id="thead_incidencia">
                             <tr>
                                 <th>ID</th>

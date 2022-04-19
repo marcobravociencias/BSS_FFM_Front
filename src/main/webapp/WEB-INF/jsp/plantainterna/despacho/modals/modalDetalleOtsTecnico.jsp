@@ -3,15 +3,14 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">T&eacute;cnico: <label id="nombreTecnico"></label></h5>
+                <h5 class="modal-title modal-title-despacho-pi">T&eacute;cnico: <label id="nombreTecnico"></label></h5>
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="col-12">
                     <div class="row">
                         <div class="contenedor-table">
-                            <table class="table table-hover" cellspacing="0" id="table-ots-trabajadas-tecnico"
-                                style="width: 100% !important;">
+                            <table class="display table table-hover" cellspacing="0" id="table-ots-trabajadas-tecnico" width="100%">
                                 <thead id="head_table">
                                     <tr>
                                         <th>OT</th> 
@@ -28,11 +27,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
                                 </tbody>
                             </table>
                         </div>
-
                     </div>
                 </div>
             </div>
