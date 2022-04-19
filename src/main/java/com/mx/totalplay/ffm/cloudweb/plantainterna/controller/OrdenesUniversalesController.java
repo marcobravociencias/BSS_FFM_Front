@@ -70,5 +70,24 @@ public class OrdenesUniversalesController {
 	        }
 	        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
-	
+
+	@PostMapping("/consultaPaqueteOrdenesUniversales")
+	public ResponseEntity<?> consultaPaqueteOrdenesUniversales() {
+		logger.info("##### CONSULTANDO CATALOGO DE PAQUETES ");
+		ServiceResponseResult response = ordenesUniversalesService.consultaPaqueteOrdenesUniversales();
+		if (response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+
+	@PostMapping("/consultaCanalVentas")
+	public ResponseEntity<?> consultaCanalVentas() {
+		logger.info("##### CONSULTANDO CATALOGO DE CANAL DE VENTA ");
+		ServiceResponseResult response = ordenesUniversalesService.consultaCanalVentas();
+		if (response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
 }

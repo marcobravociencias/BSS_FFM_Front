@@ -60,6 +60,8 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	$scope.tabArbol_LB_N2 = "";
 	$scope.tabArbol_NV_GEOGRAFIA;
 	$scope.tabIntervenciones_NV_INTERVENCIONES;
+	$scope.tabTecnicosVL_MULTISELECCION = true;
+	$scope.tabDespachosVL_MULTISELECCION = true;
 	$scope.bucketIdImg = ""; 
 	
 	$scope.catalogoGeografias = [];
@@ -796,6 +798,9 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	$scope.tabArbol_LB_N2 = "";
     	$scope.tabIntervenciones_NV_INTERVENCIONES = null;
     	$scope.tabArbol_NV_GEOGRAFIA = null;
+    	$scope.tabTecnicosVL_MULTISELECCION = true;
+    	$scope.tabDespachosVL_MULTISELECCION = true;
+    	
     	angular.forEach(tabsPuestoSeleccionadoRegistro.configuraciones,function(conf,index){
     		if(conf.llave == "tabInformacionVW_ASIG_AUTOMATICA"){
     			if(conf.valor == "false"){
@@ -821,7 +826,12 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     			$scope.tabArbol_NV_GEOGRAFIA = conf.valor;
     		}else if(conf.llave == "tabIntervenciones_NV_INTERVENCIONES"){
     			$scope.tabIntervenciones_NV_INTERVENCIONES = conf.valor;
+    		}else if(conf.llave == "tabTecnicosVL_MULTISELECCION"){
+    			$scope.tabTecnicosVL_MULTISELECCION = conf.valor;
+    		}else if(conf.llave == "tabDespachosVL_MULTISELECCION"){
+    			$scope.tabDespachosVL_MULTISELECCION = conf.valor;
     		}
+    		
     	});
     	
     	$scope.$apply();
@@ -1721,14 +1731,24 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	}
 	
 	//SELECCIONA O DESELECCIONA EL DESPACHO ELEGIDO - PESTAÑA DESPACHOS REGISTRO USUARIO
-	$scope.seleccionarDespachoRegistro = function(desoachoSeleccionado) {
-		if(desoachoSeleccionado.checkedOpcion){
-			desoachoSeleccionado.checkedOpcion = false;
+	$scope.seleccionarDespachoRegistro = function(despachoSeleccionado) {
+		
+		var totalDesSeleccionados = $scope.listaDespachos.filter(des => des.checkedOpcion == true).length;
+		if(!$scope.tabDespachosVL_MULTISELECCION && totalDesSeleccionados >0){
+			if(despachoSeleccionado.checkedOpcion == false){
+				toastr.info('¡Solo se permite asignar 1 despacho!');
+			}
+			despachoSeleccionado.checkedOpcion = false;
 		}else{
-			desoachoSeleccionado.checkedOpcion = true;
-			$("#labelDespachosSeleccionados").css("color", "rgb(70, 88, 107)");
-			$("#contenedorDespachosRegistro").css("border", "white solid 0px");
+			if(despachoSeleccionado.checkedOpcion){
+				despachoSeleccionado.checkedOpcion = false;
+			}else{
+				despachoSeleccionado.checkedOpcion = true;
+				$("#labelDespachosSeleccionados").css("color", "rgb(70, 88, 107)");
+				$("#contenedorDespachosRegistro").css("border", "white solid 0px");
+			}
 		}
+
 		//Verifica si todos los 'checkedOpcion' son true para activar el check de seleccionar todos
 		var check = true;
 		angular.forEach($scope.listaDespachos,function(despacho,index){
@@ -1745,28 +1765,43 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	
 	//SELECCIONA O DESELECCIONA TODOS LOS DESPACHOS - PESTAÑA DESPACHOS REGISTRO USUARIO
 	$scope.seleccionarTodosDespachosRegistro = function() {
-		var check;
-		if($("#checkTotdosDespachoRegistro").prop('checked')){
-			check = true;
-			$("#labelDespachosSeleccionados").css("color", "rgb(70, 88, 107)");
-			$("#contenedorDespachosRegistro").css("border", "white solid 0px");
+		if($scope.tabDespachosVL_MULTISELECCION){
+			var check;
+			if($("#checkTotdosDespachoRegistro").prop('checked')){
+				check = true;
+				$("#labelDespachosSeleccionados").css("color", "rgb(70, 88, 107)");
+				$("#contenedorDespachosRegistro").css("border", "white solid 0px");
+			}else{
+				check = false;
+			}
+			angular.forEach($scope.listaDespachos,function(despacho,index){
+				despacho.checkedOpcion = check;
+			});
 		}else{
-			check = false;
+			$("#checkTotdosDespachoRegistro").prop('checked',false);
+			toastr.info('¡Solo se permite asignar 1 despacho!');
 		}
-		angular.forEach($scope.listaDespachos,function(despacho,index){
-			despacho.checkedOpcion = check;
-		});
 	}
 	
 	//SELECCIONA O DESELECCIONA EL TÉCNICO ELEGIDO - PESTAÑA TÉCNICOS REGISTRO USUARIO
 	$scope.seleccionarTecnicoRegistro = function(tecnicoSeleccionado) {
-		if(tecnicoSeleccionado.checkedOpcion){
+		
+		var totalTecSeleccionados = $scope.listaTecnicos.filter(tec => tec.checkedOpcion == true).length;
+		if(!$scope.tabTecnicosVL_MULTISELECCION && totalTecSeleccionados >0){
+			if(tecnicoSeleccionado.checkedOpcion == false){
+				toastr.info('¡Solo se permite asignar 1 técnico!');
+			}
 			tecnicoSeleccionado.checkedOpcion = false;
 		}else{
-			tecnicoSeleccionado.checkedOpcion = true;
-			$("#labelTecnicosSeleccionadas").css("color", "rgb(70, 88, 107)");
-			$("#contenedorTecnicosRegistro").css("border", "white solid 0px");
+			if(tecnicoSeleccionado.checkedOpcion){
+				tecnicoSeleccionado.checkedOpcion = false;
+			}else{
+				tecnicoSeleccionado.checkedOpcion = true;
+				$("#labelTecnicosSeleccionadas").css("color", "rgb(70, 88, 107)");
+				$("#contenedorTecnicosRegistro").css("border", "white solid 0px");
+			}
 		}
+		
 		//Verifica si todos los 'checkedOpcion' son true para activar el check de seleccionar todos
 		var check = true;
 		angular.forEach($scope.listaTecnicos,function(tecnico,index){
@@ -1783,17 +1818,22 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	
 	//SELECCIONA O DESELECCIONA TODOS LOS TÉCNICOS - PESTAÑA TÉCNICOS REGISTRO USUARIO
 	$scope.seleccionarTodosTecnicosRegistro = function() {
-		var check;
-		if($("#checkTotdosTecnicosRegistro").prop('checked')){
-			check = true;
-			$("#labelTecnicosSeleccionadas").css("color", "rgb(70, 88, 107)");
-			$("#contenedorTecnicosRegistro").css("border", "white solid 0px");
+		if($scope.tabTecnicosVL_MULTISELECCION){
+			var check;
+			if($("#checkTotdosTecnicosRegistro").prop('checked')){
+				check = true;
+				$("#labelTecnicosSeleccionadas").css("color", "rgb(70, 88, 107)");
+				$("#contenedorTecnicosRegistro").css("border", "white solid 0px");
+			}else{
+				check = false;
+			}
+			angular.forEach($scope.listaTecnicos,function(tecnico,index){
+				tecnico.checkedOpcion = check;
+			});
 		}else{
-			check = false;
+			$("#checkTotdosTecnicosRegistro").prop('checked',false);
+			toastr.info('¡Solo se permite asignar 1 técnico!');
 		}
-		angular.forEach($scope.listaTecnicos,function(tecnico,index){
-			tecnico.checkedOpcion = check;
-		});
 	}
 	
 	//MÉTODO PARA CONSULTAR LOS DESPACHOS A ASIGNAR AL TÉCNICO QUE SE REGISTRARÁ - PESTAÑA DESPACHOS REGISTRO USUARIO

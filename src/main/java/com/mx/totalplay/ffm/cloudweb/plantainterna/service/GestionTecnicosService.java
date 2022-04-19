@@ -12,6 +12,7 @@ public interface GestionTecnicosService {
 	public ServiceResponseResult consultaDisponibilidadTecnico(String params);
 	public ServiceResponseResult consultaDiasTrabajadosTecnicoPorFecha(String params);
 	public ServiceResponseResult consultaDiasTrabajadosAuxiliarPorFecha(String params);
+	public ServiceResponseResult consultaJustificacionesTecnico(String params);
 	
 //	public ServiceResponseResult consultaMotivosGestionTecnicos();
 //	

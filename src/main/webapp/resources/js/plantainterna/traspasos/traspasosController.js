@@ -15,6 +15,8 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 	$scope.nivelIntervenciones;
 	$scope.nivelGeografia;
 	$scope.nivelEstatusPendientes;
+	$scope.nivelEstatusTraspasoFiltro = "";
+	$scope.nivelIntervencionTraspasoFiltro = "";
 	$scope.filtrosGeneral = {};
 	$scope.camposFiltro = {};
 	$scope.listEvidenciaImagenes = {};
@@ -410,13 +412,47 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 						swal.close()
 					}
 				},
-				"columns": [null, null, null, null, null, null, null, null, null, null, null, null],
+				"columns": [null, null, null, null, null, null, null, null, null, null, null, null, null],
 				"language": idioma_espanol_not_font
 			});
 
 		} else {
 			mostrarMensajeWarningValidacion(errorMensaje);
 		}
+	}
+
+	$scope.filtraEstatus = function (listaStatus) {
+		let newList = listaStatus;
+		let tempList = [];
+
+		if ($scope.nivelEstatusTraspasoFiltro !== "") {
+			let statusList = $scope.nivelEstatusTraspasoFiltro.split(",");
+			angular.forEach(statusList, (idx, index) => {
+				let status = newList.find((t) => Number(t.id) == Number(idx))
+				if (status) {
+					tempList.push(status);
+				}
+			});
+			newList = tempList;
+		}
+		return newList;
+	}
+
+	$scope.filtraIntervencion = function (listaIntervencion) {
+		let newList = listaIntervencion;
+		let tempList = [];
+
+		if ($scope.nivelIntervencionTraspasoFiltro !== "") {
+			let interList = $scope.nivelIntervencionTraspasoFiltro.split(",");
+			angular.forEach(interList, (idx, index) => {
+				let status = newList.find((t) => Number(t.id) == Number(idx))
+				if (status) {
+					tempList.push(status);
+				}
+			});
+			newList = tempList;
+		}
+		return newList;
 	}
 
 	$scope.consultarCatalagosPI = function () {
@@ -443,6 +479,12 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 
 							if (llavesResult.N_ESTATUS_PENDIENTES)
 								$scope.nivelEstatusPendientes = parseInt(llavesResult.N_ESTATUS_PENDIENTES)
+
+							if (llavesResult.N_ESTATUS_TRASPASO_FILTRO)
+								$scope.nivelEstatusTraspasoFiltro = parseInt(llavesResult.N_ESTATUS_TRASPASO_FILTRO)
+							
+							if (llavesResult.N_ESTATUS_TRASPASO_FILTRO)
+								$scope.nivelIntervencionTraspasoFiltro = parseInt(llavesResult.N_INTERVENCION_TRASPASO_FILTRO)
 
 							$scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
 
@@ -476,8 +518,6 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 			}
 			$("#idBody").removeAttr("style");
 
-
-
 			if (results[0].data !== undefined) {
 				if (results[0].data.respuesta) {
 					if (results[0].data.result) {
@@ -486,10 +526,10 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 						$scope.nivelIntervenciones = $scope.nivelIntervenciones ? $scope.nivelIntervenciones : $scope.obtenerUltimoNivelFiltros(respaldoTipoOrdenArray);
 						let tipoOrdenesTemp = $scope.conversionAnidadaRecursiva(respaldoTipoOrdenArray, 1, $scope.nivelIntervenciones);
 						$scope.filtrosGeneral.tipoOrdenes = angular.copy(tipoOrdenesTemp);
-						$scope.filtrosGeneral.tipoOrdenesTraspaso = angular.copy(tipoOrdenesTemp);
+						$scope.filtrosGeneral.tipoOrdenesTraspaso = $scope.filtraIntervencion(angular.copy(tipoOrdenesTemp));
+
+						$('#filtro-intervencion-tr').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.tipoOrdenesTraspaso, $scope.nivelIntervenciones));
 						$('#filtro-intervencion').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.tipoOrdenes, $scope.nivelIntervenciones));
-						$('#filtro-intervencion-tr').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.tipoOrdenesTraspaso, $scope.nivelIntervenciones
-							));
 					} else {
 						toastr.warning('No se encontraron  tipo ordenes');
 					}
@@ -508,9 +548,9 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 						$scope.nivelEstatusPendientes = $scope.nivelEstatusPendientes ? $scope.nivelEstatusPendientes : $scope.obtenerUltimoNivelFiltros(respaldoStatusArray);
 						let estatusDisponiblesTemp = $scope.conversionAnidadaRecursiva(results[2].data.result, 1, $scope.nivelEstatusPendientes);
 						$scope.filtrosGeneral.estatusdisponibles = angular.copy(estatusDisponiblesTemp);
-						$scope.filtrosGeneral.estatusdisponiblesTraspaso = angular.copy(estatusDisponiblesTemp);
+						$scope.filtrosGeneral.estatusdisponiblesTraspaso = $scope.filtraEstatus(angular.copy(estatusDisponiblesTemp));
 						$('#filtro-estatus-substatus').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.estatusdisponibles, $scope.nivelEstatusPendientes));
-						$('#filtro-estatus-substatus-tr').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.estatusdisponiblesTraspaso,$scope.nivelEstatusPendientes ));
+						$('#filtro-estatus-substatus-tr').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.estatusdisponiblesTraspaso, $scope.nivelEstatusPendientes));
 
 					} else {
 						toastr.info('No se encontraron catalogo de estatus');
@@ -617,6 +657,8 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 			} else {
 				mostrarMensajeErrorAlert('Ha ocurrido un error al consultar los motivos');
 			}
+
+			
 			GenericMapa.prototype.callPrototypeMapa(results[3].data.result)
 			$scope.initializeMap();
 
@@ -628,7 +670,7 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 		let arrayReturn = "";
 		angular.forEach(array, function (elemento, index) {
 			if (elemento.nivel == nivel && elemento.checkedOpcion) {
-				if(arrayReturn !== ""){
+				if (arrayReturn !== "") {
 					arrayReturn += ',';
 				}
 				arrayReturn += elemento.nombre.toUpperCase();
@@ -637,7 +679,7 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 			}
 		});
 		return arrayReturn;
-		
+
 	}
 
 	$scope.iniciarTraspasos = function () {
@@ -1034,7 +1076,6 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 				swal.close();
 				if (response.data !== undefined) {
 					if (response.data.respuesta) {
-						console.log("############## Comentario agregado")
 						$scope.comentarioConsultaOT = '';
 						document.getElementById('comentarioConsultaOt').value = '';
 						is_consulta_comentarios = false;
@@ -1056,8 +1097,8 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 	}
 	//Filtros
 
-	
-	$scope.setTextFiltro = function(){
+
+	$scope.setTextFiltro = function () {
 		$('#filtro-intervencion').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.tipoOrdenes, $scope.nivelIntervenciones));
 		$('#filtro-intervencion-tr').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.tipoOrdenesTraspaso, $scope.nivelIntervenciones));
 		$('#filtro-estatus-substatus').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.estatusdisponibles, $scope.nivelEstatusPendientes));
@@ -1071,7 +1112,7 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 				$scope.seleccionarTodosRecursivo(e.children);
 			}
 		});
-		if(!isBtn){
+		if (!isBtn) {
 			$scope.setTextFiltro();
 		}
 	}
@@ -1083,7 +1124,7 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 				$scope.deseleccionarTodosRecursivo(e.children);
 			}
 		});
-		if(!isBtn){
+		if (!isBtn) {
 			$scope.setTextFiltro();
 		}
 	}
@@ -1370,25 +1411,40 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 	}
 
 	$scope.agendarOt = function () {
+		let data = $scope.listMotivos.find((e) => Number(e.id) == Number($scope.informacionClienteDetalle.motivo))
+
 		let params = {
-			folio: $scope.informacionClienteDetalle.folioSistema,
-			motivo: $scope.informacionClienteDetalle.motivo,
-			referencias: $scope.informacionClienteDetalle.referencias,
-			comentario: $scope.informacionClienteDetalle.comentario,
-			latitud: $scope.informacionClienteDetalle.latitud,
-			longitud: $scope.informacionClienteDetalle.longitud,
-			horaEstimada: $("#horaestimada-form").val(),
-			turno: $scope.informacionClienteDetalle.turnotext,
-			fecha: $scope.informacionClienteDetalle.fechaTurnoText
+			idunidadNegocio: data.idUnidadNegocioNuevo,
+			idPropietario: data.idPropietarioNuevo,
+			geografia1: data.idUnidadNegocioNuevo === '1' ? $scope.informacionClienteDetalle.factibilidad.distrito : $scope.informacionClienteDetalle.factibilidad.ciudad,
+			geografia2: data.idUnidadNegocioNuevo === '1' ? $scope.informacionClienteDetalle.factibilidad.cluster : $scope.informacionClienteDetalle.factibilidad.distrito,
+			idOrden: $scope.informacionClienteDetalle.idOrden,
+			idMotivoTransferencia: data.id,
+			agendamiento: {
+				fechaAgenda: $scope.informacionClienteDetalle.fechaTurnoText,
+				idTurno: $scope.informacionClienteDetalle.idTurnoSeleccion,
+				hora: $("#horaestimada-form").val().split(' ')[0],
+				origen: "1",
+				comentarios: $scope.informacionClienteDetalle.comentario
+			},
+			direccion: {
+				latitud: $scope.informacionClienteDetalle.latitud,
+				longitud: $scope.informacionClienteDetalle.longitud
+			}
 		}
-		console.log(params);
-		/*
+		swal({ text: 'Espere...', allowOutsideClick: false });
+		swal.showLoading();
 		traspasosService.agendarTraspasosOt(params).then(function success(response) {
 			swal.close();
 			if (response.data !== undefined) {
 				if (response.data.respuesta) {
 					if (response.data.result) {
-						toastr.success("Traspaso de orden exitoso");
+						$scope.isTraspaso = false;
+						if(response.data.result.description){
+							toastr.success('Traspaso de orden exitoso: "' + response.data.result.description + '"');
+						}else{
+							toastr.success('Traspaso de orden exitoso');
+						}
 					} else {
 						mostrarMensajeWarningValidacion('No se traspas&oacute; la orden');
 					}
@@ -1400,7 +1456,7 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 			}
 
 		}).catch(err => handleError(err));
-		*/
+
 	}
 
 
@@ -1423,106 +1479,75 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 	}
 
 	$scope.actualizaFactibilidadActual = function () {
-
-		if ($scope.latitudSelectedMapTemp !== undefined && !$scope.longitudSelectedMapTemp !== undefined) {
-			$scope.actualizarFactibilidad();
-		} else {
-			$scope.actualizarFactibilidad();
-		}
+		$scope.actualizarFactibilidad();
 	}
 
 	$scope.consultarFactibilidad = function (isActualiza, latitud, longitud) {
+		let unidadNegocio = $scope.listMotivos.find((e) => Number(e.id) == Number($scope.informacionClienteDetalle.motivo))
 		let params = {
 			latitud: latitud,
-			longitud: longitud
+			longitud: longitud,
+			factibilidad: unidadNegocio.factibilidad,
 		}
+		$scope.infoFactibilidad.factibilidad = '0';
 
-		let unidadNegocio = $scope.listMotivos.find((e) => Number(e.id) == Number($scope.informacionClienteDetalle.motivo))
 		$scope.informacionClienteDetalle.subtipoOrdenes = unidadNegocio.nombreTipo + '/' + unidadNegocio.nombreSubtipo;
 		$scope.informacionClienteDetalle.subtipoText = unidadNegocio.nombreSubtipo;
 		$scope.informacionClienteDetalle.tipoText = unidadNegocio.nombreTipo;
 
 		swal({ text: 'Espere...', allowOutsideClick: false });
 		swal.showLoading();
-		if (Number(unidadNegocio.idUnidadNegocioNuevo) === 2) {
-			traspasosService.consultaFactibilidadEmpresarial(params).then(function success(response) {
-				swal.close();
-				$("#info-factibilidad").css("display", "block");
-				$("#content-info-actual").css("display", "block");
-				if (response.data !== undefined) {
-					if (response.data.respuesta) {
-						if (response.data.result) {
-							let data = {
+		traspasosService.consultaFactibilidad(params).then(function success(response) {
+			swal.close();
+			$("#info-factibilidad").css("display", "block");
+			$("#content-info-actual").css("display", "block");
+			if (response.data !== undefined) {
+				if (response.data.respuesta) {
+					if (response.data.result) {
+						let data = {};
+						if (Number(unidadNegocio.idUnidadNegocioNuevo) == 2) {
+							data = {
 								factibilidad: response.data.result.factibilidad,
 								region: response.data.result.regionEnlace,
 								ciudad: response.data.result.ciudadEnlace,
 								distrito: response.data.result.distritoEnlace,
 								cluster: response.data.result.clusterTotalplay
 							}
-							$scope.infoFactibilidad = data;
-							if (!$scope.informacionClienteDetalle.factibilidad) {
-								$scope.informacionClienteDetalle.factibilidad = data
-							}
-
-							if (isActualiza) {
-								if (Number(response.data.result.factibilidad) === 0) {
-									mostrarMensajeWarningValidacion('Sin factibilidad en esta ubicaci&oacute;n');
-								}
-							}
 						} else {
-							mostrarMensajeWarningValidacion('No se encontr&oacute; factibilidad');
-						}
-					} else {
-						mostrarMensajeWarningValidacion(response.data.resultDescripcion);
-					}
-				} else {
-					mostrarMensajeErrorAlert('Ha ocurrido un error al consultar la factibilidad');
-				}
-			});
-
-		} else {
-			traspasosService.consultaFactibilidadResidencial(params).then(function success(response) {
-				swal.close();
-				$("#info-factibilidad").css("display", "block");
-				$("#content-info-actual").css("display", "block");
-				if (response.data !== undefined) {
-					if (response.data.respuesta) {
-						if (response.data.result) {
-							let data = {
+							data = {
 								factibilidad: response.data.result.factibilidad,
 								region: response.data.result.regionTotalplay,
 								ciudad: response.data.result.ciudadTotalplay,
 								distrito: response.data.result.distritoTotalplay,
 								cluster: response.data.result.clusterTotalplay
 							}
-							$scope.infoFactibilidad = data;
-							if (!$scope.informacionClienteDetalle.factibilidad) {
-								$scope.informacionClienteDetalle.factibilidad = data
-							}
+						}
 
+						$scope.infoFactibilidad = data;
+						if (!$scope.informacionClienteDetalle.factibilidad) {
+							$scope.informacionClienteDetalle.factibilidad = data
+						}
 
-							if (isActualiza) {
-								if (Number(response.data.result.factibilidad) === 0) {
-									mostrarMensajeWarningValidacion('Sin factibilidad en esta ubicaci&oacute;n');
-								}
+						if (isActualiza) {
+							if (Number(response.data.result.factibilidad) === 0) {
+								mostrarMensajeWarningValidacion('Sin factibilidad en esta ubicaci&oacute;n');
 							}
-						} else {
-							mostrarMensajeWarningValidacion('No se encontr&oacute; factibilidad');
 						}
 					} else {
-						mostrarMensajeWarningValidacion(response.data.resultDescripcion);
+						mostrarMensajeWarningValidacion('No se encontr&oacute; factibilidad');
 					}
 				} else {
-					mostrarMensajeErrorAlert('Ha ocurrido un error al consultar la factibilidad');
+					mostrarMensajeWarningValidacion(response.data.resultDescripcion);
 				}
-			});
-
-		}
+			} else {
+				mostrarMensajeErrorAlert('Ha ocurrido un error al consultar la factibilidad');
+			}
+		});
 
 	}
 
 
-	$scope.actualizarFactibilidad = function (info) {
+	$scope.actualizarFactibilidad = function () {
 
 		swal({
 			title: "\u00BFDesea actualizar la factibilidad?",
@@ -1587,13 +1612,15 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 					if (response.data.result) {
 						$scope.muestraDisponibilidadCalendar(response.data.result);
 					} else {
-						$scope.muestraDisponibilidadCalendar([]);
+						$scope.muestraDisponibilidadCalendar();
 						mostrarMensajeWarningValidacion('No se encontr&oacute; disponibilidad');
 					}
 				} else {
+					$scope.muestraDisponibilidadCalendar();
 					mostrarMensajeWarningValidacion(response.data.resultDescripcion);
 				}
 			} else {
+				$scope.muestraDisponibilidadCalendar();
 				mostrarMensajeErrorAlert('Ha ocurrido un error al consultar la disponibilidad');
 			}
 

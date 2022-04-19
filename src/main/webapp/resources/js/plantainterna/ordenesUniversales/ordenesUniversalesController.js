@@ -16,6 +16,8 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
 
     $scope.informacionCliente = {};
     $scope.nGeografia;
+    $scope.nGeografia1;
+    $scope.nGeografia2;
     $scope.nTipoOrdenes;
     $scope.nTipoOrdenes;
     $scope.dateSelectedCalendarEvent;
@@ -109,8 +111,11 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
         $q.all([
             genericService.consultarConfiguracionDespachoDespacho(params),
             genericService.consulCatalogoGeografia(),
-            ordenesUniversalesService.consultarCatalogosOrdenesUniversales(),
-            ordenesUniversalesService.consultarPerfilesPorUsuario()
+            //ordenesUniversalesService.consultarCatalogosOrdenesUniversales(),
+            ordenesUniversalesService.consultarPerfilesPorUsuario(),
+            ordenesUniversalesService.consultarCatalogoCanalVentas(),
+            ordenesUniversalesService.consultarCatalogoPaquete()
+           
 
         ]).then(function (results) {
             console.log(results);
@@ -126,6 +131,8 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                 $scope.nGeografia = (llavesResult.N_FILTRO_GEOGRAFIA) ? Number(llavesResult.N_FILTRO_GEOGRAFIA) : $scope.obtenerUltimoNivelFiltros(tempArrayGeog);
                 $scope.nTipoOrdenes = (llavesResult.N_FILTRO_INTERVENCIONES) ? Number(llavesResult.N_FILTRO_INTERVENCIONES) : $scope.obtenerUltimoNivelFiltros(tempArrayInt);
                 $scope.nTipoOrdenesConfig = (llavesResult.N_FILTRO_INTERVENCIONES) ? Number(llavesResult.N_FILTRO_INTERVENCIONES) : $scope.obtenerUltimoNivelFiltros(tempArrayInt);
+                $scope.nGeografia1 = (llavesResult.N_FILTRO_GEOGRAFIA_UNO) ? Number(llavesResult.N_FILTRO_GEOGRAFIA_UNO) : 0;
+                $scope.nGeografia1 = (llavesResult.N_FILTRO_GEOGRAFIA_DOS) ? Number(llavesResult.N_FILTRO_GEOGRAFIA_DOS) : 0;
             } else {
                 $scope.nGeografia = $scope.obtenerUltimoNivelFiltros(results[1].data.result.geografia)
                 $scope.nTipoOrdenes = $scope.obtenerUltimoNivelFiltros(results[2].data.result.tiposOrden)
@@ -197,7 +204,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                 swal.close();
             }
 
-            if (results[2].data.respuesta) {
+           /* if (results[2].data.respuesta) {
                 if (results[2].data.result) {
                     if (results[2].data.result.result == '0') {
                         $scope.listadoCanalVentas = results[2].data.result.canalVentas
@@ -280,13 +287,13 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
             } else {
                 mostrarMensajeErrorAlert(response.data.resultDescripcion)
                 swal.close();
-            }
+            }*/
 
-            if(  Array.isArray( results[3].data.result.perfiles ) &&  results[3].data.result.perfiles.length   ){
+            if(  Array.isArray( results[2].data.result.perfiles ) &&  results[2].data.result.perfiles.length   ){
                 $scope.listadoTipoOrdenesPerfiles=[]
-                if(  results[3].data.result.perfiles!=undefined && results[3].data.result.perfiles.length > 0  ){
+                if(  results[2].data.result.perfiles!=undefined && results[2].data.result.perfiles.length > 0  ){
                     let mapaIntervenciones = {}
-                    angular.forEach( results[3].data.result.perfiles ,function( perfil, index ){                   
+                    angular.forEach( results[2].data.result.perfiles ,function( perfil, index ){                   
                         angular.forEach( perfil.intervenciones , function ( interv, indexInt ) {
                             mapaIntervenciones[ interv.id ] = interv ;
                         })
@@ -332,6 +339,112 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                         "show_only_matches": true
                     }
                 });
+            }
+
+            if (results[3].data.respuesta) {
+                if (results[3].data.result) {
+                    if (results[3].data.result.canalVentas) {
+                        $scope.listadoCanalVentas = results[3].data.result.canalVentas
+
+                        //Canal de ventas
+                        let canalVentas = results[3].data.result.canalVentas;
+                        canalVentas.map((e) => {
+                            e.id = e.idCanalVenta;
+                            e.parent = e.padre == undefined ? "#" : e.padre;
+                            e.text = e.canalVenta;
+                            e.icon = "fa fa-check-circle";
+                            e.state = {
+                                opened: false,
+                                selected: false,
+                            }
+                            return e
+                        })
+
+                        $('#jstree-canal-ventas').bind('loaded.jstree', function (e, data) {
+                            swal.close()
+                        }).jstree({
+                            plugins: ["wholerow", 'search'],
+                            core: {
+                                data: canalVentas,
+                                themes: {
+                                    name: 'proton',
+                                    responsive: true,
+                                    "icons": true
+                                },
+                                animation: 100
+                            },
+                            "search": {
+                                "case_sensitive": false,
+                                "show_only_matches": true
+                            }
+                        });
+                    } else {
+                        mostrarMensajeWarningValidacion(results[3].data.result.mensaje)
+                        swal.close();
+                    }
+                   
+                    swal.close();
+                } else {
+                    mostrarMensajeErrorAlert("Error interno en el servidor.")
+                    swal.close();
+                }
+            } else {
+                mostrarMensajeErrorAlert(response.data.resultDescripcion)
+                swal.close();
+            }
+
+            if (results[4].data.respuesta) {
+                if (results[4].data.result) {
+                    if (results[4].data.result.paquetes) {
+                        $scope.listadoPaquete = results[4].data.result.paquetes
+                    
+
+                        //Carga arbol paquete
+
+                        let paquetes = results[4].data.result.paquetes;
+                        paquetes.map((e) => {
+                            e.id = e.id;
+                            e.parent = e.padre == undefined ? "#" : e.padre;
+                            e.text = e.nombreComercial;
+                            e.icon = "fa fa-check-circle";
+                            e.state = {
+                                opened: false,
+                                selected: false,
+                            }
+                            return e
+                        })
+
+                        $('#jstree-paquete').bind('loaded.jstree', function (e, data) {
+                            swal.close()
+                        }).jstree({
+                            plugins: ["wholerow", 'search'],
+                            core: {
+                                data: paquetes,
+                                themes: {
+                                    name: 'proton',
+                                    responsive: true,
+                                    "icons": true
+                                },
+                                animation: 100
+                            },
+                            "search": {
+                                "case_sensitive": false,
+                                "show_only_matches": true
+                            }
+                        });
+                    } else {
+                        mostrarMensajeWarningValidacion(results[4].data.result.mensaje)
+                        swal.close();
+                    }
+                   
+                    swal.close();
+                } else {
+                    mostrarMensajeErrorAlert("Error interno en el servidor.")
+                    swal.close();
+                }
+            } else {
+                mostrarMensajeErrorAlert(response.data.resultDescripcion)
+                swal.close();
             }
 
         }).catch(err => handleError(err));

@@ -10,4 +10,7 @@ public interface OrdenesUniversalesService {
 	public ServiceResponseResult consultarPerfilesGeneralServ();
 	public ServiceResponseResult consultarPerfilesPorUsuarioServ();
 
+	ServiceResponseResult consultaPaqueteOrdenesUniversales();
+
+	ServiceResponseResult consultaCanalVentas();
 }

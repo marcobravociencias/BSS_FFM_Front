@@ -116,6 +116,7 @@
                     <th>Estatus</th>
                     <th>Estado</th>
                     <th>Motivo</th>
+                    <th>Motivo transferencia</th>
                     <th style="text-align: center;">Evidencia</th>
                     <th style="text-align: center;">Detalle</th>
                 </tr>

@@ -18,14 +18,13 @@ public interface TraspasoService {
 	public ServiceResponseResult consultarReporteOts(String params);
 	
 	public ServiceResponseResult consultarReporteTraspasos(String params);
-		
-	public ServiceResponseResult consultarFactibilidadRes(String params);
-	
-	public ServiceResponseResult consultarFactibilidadEmp(String params);
+			
+	public ServiceResponseResult consultarFactibilidad(String params);
 	
 	public ServiceResponseResult agendarTraspasoOt(String params);
 	
 	public ServiceResponseResult consultarMotivos();
 	
 	public ServiceResponseResult consultarCrmDisponibilidad(String params);
+	
 }

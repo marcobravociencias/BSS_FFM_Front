@@ -15,17 +15,17 @@
     <div class="column-style-consulta columna-filtro-ind" style="width: 11%;">
         <label for="estatus_asignada" class="label-filter">Estatus</label>
         <div class="dropdown">
-            <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..." 
+            <input id="estatusAsignada" readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..." 
             type="text" id="estatus_asignada" class="input-filtro-coordInst form-control form-control-sm" />
             <ul class="dropdown-menu drop-down-filters" aria-labelledby="estatus_asignada">      
                 <li style="text-align: center;">
-                    <button ng-click="seleccionarTodosRecursivo(filtrosGeneral.estatusAsignada)" id="todo_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
-                    <button ng-click="deseleccionarTodosRecursivo(filtrosGeneral.estatusAsignada)" id="ninguno_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
+                    <button ng-click="seleccionarTodosRecursivo(filtrosGeneral.estatusAsignada);pintarNombreEstatus(filtrosGeneral.estatusAsignada,'#estatusAsignada');" id="todo_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
+                    <button ng-click="deseleccionarTodosRecursivo(filtrosGeneral.estatusAsignada);pintarNombreEstatus(filtrosGeneral.estatusAsignada,'#estatusAsignada');" id="ninguno_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
                 </li>     
                 <li class="elemento_menu dropdown-divider"></li>
                 <li ng-repeat="filtro in filtrosGeneral.estatusAsignada" class="element-menu-filter"  class="element-menu-filter">
                     <label  class="dropdown-item form-check-inputfiltro">
-                        <input id="filtrotext-{{filtro.id}}" class="form-check-input" type="checkbox" ng-click="setCheckFiltroGenericV2(filtro,filtrosGeneral.estatusAsignada)" ng-model="filtro.checkedOpcion" ng-true-value="true" ng-false-value="false"/>
+                        <input id="filtrotext-{{filtro.id}}" class="form-check-input" type="checkbox" ng-click="setCheckFiltroGenericV2(filtro,filtrosGeneral.estatusAsignada);pintarNombreEstatus(filtrosGeneral.estatusAsignada,'#estatusAsignada');" ng-model="filtro.checkedOpcion" ng-true-value="true" ng-false-value="false"/>
                         <span  for="filtrotext-{{filtro.id}}" class="dropdown-item item-text-filtro" href="#" ng-bind="filtro.nombre"></span>
                     </label>
                     <ul ng-if="filtro.children !== undefined &&  filtro.children.length > 0" ng-include="'filtroEstatusAsignada.html'" class="dropdown-menu"></ul>
@@ -35,7 +35,7 @@
     </div>
     <div class="column-style-consulta" id="fechaFin" style="width: 11%;">
         <label for="inputPlaceholderEx" class="label-filter">Geografia</label>
-        <input style="text-align: left;" readonly placeholder="Geografia" ng-click="mostrarArbol(2)" type="text" class="input-filtro-coordInst form-control form-control-sm">
+        <input id="txtGeografiaAsignada" style="text-align: left;" readonly placeholder="Geografia" ng-click="mostrarArbol(2)" type="text" class="input-filtro-coordInst form-control form-control-sm">
     </div>
     <div class="column-style-consulta" style="width: 11%;">
         <label for="ot_asignadao" class="label-filter">OT</label>
@@ -59,8 +59,8 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-12 table-responsive" style="margin-top: 1em;">
-        <table id="tableAsignada" class="display table table-hover " cellspacing="0" width="100%">
+    <div class="col-12 table-responsive" style="margin-top: 1em; padding: 0;">
+        <table id="tableAsignada" class="table">
             <thead id="thead_asignada">
                 <tr>
                     <th>OT</th>
@@ -72,13 +72,9 @@
                     <th>Estado</th>
                     <th>Motivo</th>
                     <th>Actualizar Reg</th>
-                    <th>Tipo orden</th>
-                    <th>Subtipo orden</th>
-                    <th><i class="fa fa-bars" id="modalDetalleOT"></i></th>
+                    <th style="text-align: center;">Acciones</th>
                 </tr>
             </thead>
-            <tbody>
-            </tbody>
         </table>
     </div>
 </div>

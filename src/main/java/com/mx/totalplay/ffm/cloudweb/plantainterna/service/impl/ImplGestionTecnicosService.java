@@ -131,6 +131,8 @@ public class ImplGestionTecnicosService implements GestionTecnicosService {
 		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
 		Map<String, String> paramsRequestGet = new HashMap<String, String>();
 		paramsRequestGet.put("idTecnico", jsonObject.get("idTecnico").getAsString());
+		paramsRequestGet.put("fechaInicio", jsonObject.get("fechaInicio").getAsString());
+		paramsRequestGet.put("fechaFin", jsonObject.get("fechaFin").getAsString());
 		logger.info("json object params## "+ params);
 		String tokenAcces=principalDetail.getAccess_token(); 
 		String url = principalDetail.getDireccionAmbiente().concat(constGestionTecnicos.getConsultaDisponibilidadTecnico());
@@ -180,6 +182,23 @@ public class ImplGestionTecnicosService implements GestionTecnicosService {
         logger.info("RESULT busqueda "+gson.toJson(response));
         return response;
     }
+	
+	@Override
+	public ServiceResponseResult consultaJustificacionesTecnico(String params) {
+		logger.info("ImplGestionTecnicosService.class [metodo = consultaJustificacionesTecnico() ]\n");
+		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		Map<String, String> paramsRequestGet = new HashMap<String, String>();
+		paramsRequestGet.put("idUsuario", jsonObject.get("idUsuario").getAsString());
+		paramsRequestGet.put("fechaInicio", jsonObject.get("fechaInicio").getAsString());
+		paramsRequestGet.put("fechaFin", jsonObject.get("fechaFin").getAsString());
+		logger.info("json object params## "+ params);
+		String tokenAcces=principalDetail.getAccess_token(); 
+		String url = principalDetail.getDireccionAmbiente().concat(constGestionTecnicos.getConsultaJustificacionesTecnico());
+		ServiceResponseResult response= restCaller.callGetBearerTokenRequest(paramsRequestGet, url, ServiceResponseResult.class, tokenAcces);
+		logger.info("RESULT busqueda "+gson.toJson(response));
+		return response;
+	}
 
 //	@Override
 //	public ServiceResponseResult consultaMotivosGestionTecnicos() {

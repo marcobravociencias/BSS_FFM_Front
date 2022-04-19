@@ -1049,7 +1049,7 @@ public class ImplCoordInstalacionesService implements CoordInstalacionesService{
         			if (jsonObjectResponse.get("registrosTotales").getAsInt() > 0) {
         				//TABLA
         				int count = 0;
-                        dataArray = new String[ordenesArray.size()][12];
+                        dataArray = new String[ordenesArray.size()][10];
                         for (int i = 0; i < ordenesArray.size(); i++) {
                         	JsonObject object = (JsonObject) ordenesArray.get(i);
                         	dataArray[count][0] = object.get("idOrden").getAsInt() != 0 ? String.valueOf(object.get("idOrden").getAsInt()) : "";
@@ -1061,10 +1061,10 @@ public class ImplCoordInstalacionesService implements CoordInstalacionesService{
                         	dataArray[count][6] = object.get("estado") != null ? object.get("estado").getAsString().trim() : "";
                         	dataArray[count][7] = object.get("motivo") != null ? object.get("motivo").getAsString().trim() : "";
                         	dataArray[count][8] = object.get("usuarioActualiza") != null ? object.get("usuarioActualiza").getAsString().trim() : "";
-                        	dataArray[count][9] = object.get("tipoOrden") != null ? object.get("tipoOrden").getAsString().trim() : "";
-                        	dataArray[count][10] = object.get("subTipoOrden") != null ? object.get("subTipoOrden").getAsString().trim() : "";
-                        	dataArray[count][11] = "<div class=''> <span onclick='consultaDetalleOt(" + String.valueOf(i) + 
-                        			")' class='btn-floating btn-option btn-sm acciones'><th><i class='icono_cons_bg fa fa-bars' aria-hidden='true'></i></th></span></div>";
+                        	//dataArray[count][9] = object.get("tipoOrden") != null ? object.get("tipoOrden").getAsString().trim() : "";
+                        	//dataArray[count][10] = object.get("subTipoOrden") != null ? object.get("subTipoOrden").getAsString().trim() : "";
+                        	dataArray[count][9] = "<div class='tooltip-btn'> <span onclick='consultaDetalleOt(" + String.valueOf(i) + 
+                        			")' class='btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones'><th><i class='icono_cons_bg fa fa-bars' aria-hidden='true'></i></th></span></div>";
                         	count++;
                         }
                         dataResponse = DataTableResponse.builder()
@@ -1079,7 +1079,7 @@ public class ImplCoordInstalacionesService implements CoordInstalacionesService{
         			} else {
         				dataResponse = DataTableResponse.builder()
                                 .isRespuesta(true)
-                                .data(new String[0][12])
+                                .data(new String[0][10])
                                 .paginaActual(jsonObjectResponse.get("paginaActual").getAsInt())
                                 .registrosTotales(jsonObjectResponse.get("registrosTotales").getAsInt())
                                 .recordsFiltered(jsonObjectResponse.get("registrosTotales").getAsInt() + "")

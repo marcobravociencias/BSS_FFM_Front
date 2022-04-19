@@ -91,21 +91,12 @@ public class TraspasoController {
 		return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
 	}
 	
+
 	
-	@PostMapping("/consultaFactibilidadResidencial")
-	public ResponseEntity<?> consultaFactibilidadTraspasos(@RequestBody String params) {
-		logger.info("*** TraspasoController.class *** Metodo consultaFactibilidadResidencial *** Objecto: " + params);
-		result = traspasoService.consultarFactibilidadRes(params);
-		if (result.getResult() instanceof Integer){
-			return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
-		}
-		return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
-	}
-	
-	@PostMapping("/consultaFactibilidadEmpresarial")
-	public ResponseEntity<?> consultaFactibilidadEmpresarial(@RequestBody String params) {
-		logger.info("*** TraspasoController.class *** Metodo consultaFactibilidadEmpresarial *** Objecto: " + params);
-		result = traspasoService.consultarFactibilidadEmp(params);
+	@PostMapping("/consultaFactibilidad")
+	public ResponseEntity<?> consultaFactibilidad(@RequestBody String params) {
+		logger.info("*** TraspasoController.class *** Metodo consultaFactibilidad *** Objecto: " + params);
+		result = traspasoService.consultarFactibilidad(params);
 		if (result.getResult() instanceof Integer){
 			return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
 		}
@@ -141,4 +132,5 @@ public class TraspasoController {
 		}
 		return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
 	}
+	
 }

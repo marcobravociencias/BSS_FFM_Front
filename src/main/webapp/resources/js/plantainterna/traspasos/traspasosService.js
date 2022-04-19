@@ -1,24 +1,24 @@
-app.service("traspasosService", function($http){
+app.service("traspasosService", function ($http) {
 
-    this.consultarConfiguracionDespachoDespacho=function(params){
-		if(params=== undefined)
-			params={}
-		return $http({
-			method: "post",
-			url: "req/consultarConfiguracionDespachoDespacho",
-			data:JSON.stringify(params),
-            headers : {
-                'Content-Type' : 'application/json'
+    this.consultarConfiguracionDespachoDespacho = function (params) {
+        if (params === undefined)
+            params = {}
+        return $http({
+            method: "post",
+            url: "req/consultarConfiguracionDespachoDespacho",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
             }
-		});
-	};
+        });
+    };
 
     this.consultaInfoDetalleTraspaso = function (params) {
         return $http({
             method: "post",
             url: "req/consultaInformacionDetalleTraspaso",
             data: params,
-            headers: {'Content-Type': "application/json; charset=utf-8"},
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
             transformRequest: angular.identity
         });
     };
@@ -28,7 +28,7 @@ app.service("traspasosService", function($http){
             method: "post",
             url: "req/consultaEvidenciaTraspaso",
             data: params,
-            headers: {'Content-Type': "application/json; charset=utf-8"},
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
             transformRequest: angular.identity
         });
     };
@@ -38,7 +38,7 @@ app.service("traspasosService", function($http){
             method: "post",
             url: "req/getComentariosIntegrador",
             data: params,
-            headers: {'Content-Type': "application/json; charset=utf-8"},
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
             transformRequest: angular.identity
         });
     };
@@ -48,7 +48,7 @@ app.service("traspasosService", function($http){
             method: "post",
             url: "req/historico",
             data: params,
-            headers: {'Content-Type': "application/json; charset=utf-8"},
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
             transformRequest: angular.identity
         });
     };
@@ -57,8 +57,8 @@ app.service("traspasosService", function($http){
         return $http({
             method: "post",
             url: "req/consultaReporteTraspasos",
-            data:JSON.stringify(params),
-            headers: {'Content-Type': "application/json; charset=utf-8"},
+            data: JSON.stringify(params),
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
             transformRequest: angular.identity
         });
     };
@@ -68,27 +68,17 @@ app.service("traspasosService", function($http){
             method: "post",
             url: "req/consultaReporteOts",
             data: JSON.stringify(params),
-            headers: {'Content-Type': "application/json; charset=utf-8"},
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
             transformRequest: angular.identity
         });
     };
 
-    this.consultaFactibilidadResidencial = function (params) {
+    this.consultaFactibilidad = function (params) {
         return $http({
             method: "post",
-            url: "req/consultaFactibilidadResidencial",
-            data:JSON.stringify(params),
-            headers: {'Content-Type': "application/json; charset=utf-8"},
-            transformRequest: angular.identity
-        });
-    };
-
-    this.consultaFactibilidadEmpresarial = function (params) {
-        return $http({
-            method: "post",
-            url: "req/consultaFactibilidadEmpresarial",
-            data:JSON.stringify(params),
-            headers: {'Content-Type': "application/json; charset=utf-8"},
+            url: "req/consultaFactibilidad",
+            data: JSON.stringify(params),
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
             transformRequest: angular.identity
         });
     };
@@ -97,8 +87,8 @@ app.service("traspasosService", function($http){
         return $http({
             method: "post",
             url: "req/consultaCrmDisponibilidad",
-            data:JSON.stringify(params),
-            headers: {'Content-Type': "application/json; charset=utf-8"},
+            data: JSON.stringify(params),
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
             transformRequest: angular.identity
         });
     };
@@ -107,8 +97,8 @@ app.service("traspasosService", function($http){
         return $http({
             method: "post",
             url: "req/agendarTraspasoOt",
-            data:JSON.stringify(params),
-            headers: {'Content-Type': "application/json; charset=utf-8"},
+            data: JSON.stringify(params),
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
             transformRequest: angular.identity
         });
     };
@@ -117,8 +107,9 @@ app.service("traspasosService", function($http){
         return $http({
             method: "post",
             url: "req/consultarMotivosTraspasos",
-            headers: {'Content-Type': "application/json; charset=utf-8"},
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
             transformRequest: angular.identity
         });
     };
+
 })

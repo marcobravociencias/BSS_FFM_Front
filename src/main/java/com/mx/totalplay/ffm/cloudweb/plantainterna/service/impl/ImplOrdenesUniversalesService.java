@@ -103,4 +103,38 @@ public class ImplOrdenesUniversalesService implements OrdenesUniversalesService 
 		return response;
 	}
 
+	@Override
+	public ServiceResponseResult consultaPaqueteOrdenesUniversales() {
+		logger.info("ImplOrdenesUniversalesService.class [metodo = consultaPaqueteOrdenesUniversales() ]\n");
+		LoginResult principalDetail = utileriaGeneral.obtenerObjetoPrincipal();
+		String tokenAcces = principalDetail.getAccess_token();
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constOrdenesUniversales.getConsultarPaquetesOrdenesUniversales());
+		logger.info("##### "+urlRequest);
+		Map<String, String> paramsRequestGet = new HashMap<String, String>();
+		ServiceResponseResult response = consumeRest.callGetBearerTokenRequest(
+				paramsRequestGet,
+				urlRequest,
+				ServiceResponseResult.class,
+				tokenAcces);
+		logger.info("metodo: consultaPaqueteOrdenesUniversales() RESULT: " + gson.toJson(response));
+		return response;
+	}
+
+	@Override
+	public ServiceResponseResult consultaCanalVentas() {
+		logger.info("ImplOrdenesUniversalesService.class [metodo = consultaCanalVentas() ]\n");
+		LoginResult principalDetail = utileriaGeneral.obtenerObjetoPrincipal();
+		String tokenAcces = principalDetail.getAccess_token();
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constOrdenesUniversales.getConsultarCanalVentaOredenesUniversales());
+		logger.info("##### "+urlRequest);
+		Map<String, String> paramsRequestGet = new HashMap<String, String>();
+		ServiceResponseResult response = consumeRest.callGetBearerTokenRequest(
+				paramsRequestGet,
+				urlRequest,
+				ServiceResponseResult.class,
+				tokenAcces);
+		logger.info("metodo: consultaCanalVentas() RESULT: " + gson.toJson(response));
+		return response;
+	}
+
 }

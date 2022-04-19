@@ -45,6 +45,8 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 	$scope.tabArbol_LB_N2_mod = "";
 	$scope.tabArbol_NV_GEOGRAFIA_mod;
 	$scope.tabIntervenciones_NV_INTERVENCIONES_mod;
+	$scope.tabTecnicosVL_MULTISELECCION_mod = true;
+	$scope.tabDespachosVL_MULTISELECCION_mod = true;
 	
 	$scope.geoSelectMod = [];
 	$scope.intervencionSelectMod = [];
@@ -125,6 +127,8 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                         	$scope.tabArbol_LB_N1_mod = "";
                         	$scope.tabArbol_LB_N2_mod = "";
                             $scope.tabIntervenciones_NV_INTERVENCIONES_mod = null;
+                            $scope.tabTecnicosVL_MULTISELECCION_mod = true;
+                        	$scope.tabDespachosVL_MULTISELECCION_mod = true;
                         	$scope.tabArbol_NV_GEOGRAFIA_mod = null;
                         	angular.forEach($scope.configuracionPuestoRegistradoMod.configuraciones,function(conf,index){
                         		if(conf.llave == "tabInformacionVW_ASIG_AUTOMATICA"){
@@ -151,6 +155,10 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                         			$scope.tabArbol_NV_GEOGRAFIA_mod = conf.valor;
                         		}else if(conf.llave == "tabIntervenciones_NV_INTERVENCIONES"){
                         			$scope.tabIntervenciones_NV_INTERVENCIONES_mod = conf.valor;
+                        		}else if(conf.llave == "tabTecnicosVL_MULTISELECCION"){
+                        			$scope.tabTecnicosVL_MULTISELECCION_mod = conf.valor;
+                        		}else if(conf.llave == "tabDespachosVL_MULTISELECCION"){
+                        			$scope.tabDespachosVL_MULTISELECCION_mod = conf.valor;
                         		}
                         	});
                             
@@ -852,12 +860,20 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 	
 	//SELECCIONA O DESELECCIONA EL TÉCNICO ELEGIDO - PESTAÑA TÉCNICOS MODIFICACUÓN USUARIO
 	$scope.seleccionarTecnicoMod = function(tecnicoSeleccionado) {
-		if(tecnicoSeleccionado.checkedOpcion){
+		var totalTecSeleccionadosMod = $scope.listaTecnicosMod.filter(tec => tec.checkedOpcion == true).length;
+		if(!$scope.tabTecnicosVL_MULTISELECCION_mod && totalTecSeleccionadosMod >0){
+			if(tecnicoSeleccionado.checkedOpcion == false){
+				toastr.info('¡Solo se permite asignar 1 técnico!');
+			}
 			tecnicoSeleccionado.checkedOpcion = false;
 		}else{
-			tecnicoSeleccionado.checkedOpcion = true;
-			$("#labelTecnicosSeleccionadosMod").css("color", "rgb(70, 88, 107)");
-			$("#contenedorTecnicosMod").css("border", "white solid 0px");
+			if(tecnicoSeleccionado.checkedOpcion){
+				tecnicoSeleccionado.checkedOpcion = false;
+			}else{
+				tecnicoSeleccionado.checkedOpcion = true;
+				$("#labelTecnicosSeleccionadosMod").css("color", "rgb(70, 88, 107)");
+				$("#contenedorTecnicosMod").css("border", "white solid 0px");
+			}
 		}
 		//Verifica si todos los 'checkedOpcion' son true para activar el check de seleccionar todos
 		var check = true;
@@ -875,42 +891,60 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 	
 	//SELECCIONA O DESELECCIONA TODOS LOS TÉCNICOS - PESTAÑA TÉCNICOS MODIFICACIÓN USUARIO
 	$scope.seleccionarTodosTecnicosMod = function() {
-		var check;
-		if($("#checkTotdosTecnicosMod").prop('checked')){
-			check = true;
-			$("#labelTecnicosSeleccionadosMod").css("color", "rgb(70, 88, 107)");
-			$("#contenedorTecnicosMod").css("border", "white solid 0px");
+		if($scope.tabTecnicosVL_MULTISELECCION_mod){
+			var check;
+			if($("#checkTotdosTecnicosMod").prop('checked')){
+				check = true;
+				$("#labelTecnicosSeleccionadosMod").css("color", "rgb(70, 88, 107)");
+				$("#contenedorTecnicosMod").css("border", "white solid 0px");
+			}else{
+				check = false;
+			}
+			angular.forEach($scope.listaTecnicosMod,function(tecnico,index){
+				tecnico.checkedOpcion = check;
+			});
 		}else{
-			check = false;
+			$("#checkTotdosTecnicosMod").prop('checked',false);
+			toastr.info('¡Solo se permite asignar 1 técnico!');
 		}
-		angular.forEach($scope.listaTecnicosMod,function(tecnico,index){
-			tecnico.checkedOpcion = check;
-		});
 	}
 	
 	//SELECCIONA O DESELECCIONA TODOS LOS DESPACHOS - PESTAÑA DESPACHOS MODIFICACIÓN USUARIO
 	$scope.seleccionarTodosDespachosMod = function() {
-		var check;
-		if($("#checkTotdosDespachoMod").prop('checked')){
-			check = true;
-			$("#labelDespachosSeleccionadosMod").css("color", "rgb(70, 88, 107)");
-			$("#contenedorDespachosMod").css("border", "white solid 0px");
+		if($scope.tabDespachosVL_MULTISELECCION_mod){
+			var check;
+			if($("#checkTotdosDespachoMod").prop('checked')){
+				check = true;
+				$("#labelDespachosSeleccionadosMod").css("color", "rgb(70, 88, 107)");
+				$("#contenedorDespachosMod").css("border", "white solid 0px");
+			}else{
+				check = false;
+			}
+			angular.forEach($scope.listaDespachosMod,function(despacho,index){
+				despacho.checkedOpcion = check;
+			});
 		}else{
-			check = false;
+			$("#checkTotdosDespachoMod").prop('checked',false);
+			toastr.info('¡Solo se permite asignar 1 despacho!');
 		}
-		angular.forEach($scope.listaDespachosMod,function(despacho,index){
-			despacho.checkedOpcion = check;
-		});
 	}
 	
 	//SELECCIONA O DESELECCIONA EL DESPACHO ELEGIDO - PESTAÑA DESPACHOS MODIFICACIÓN USUARIO
-	$scope.seleccionarDespachoMod = function(desoachoSeleccionado) {
-		if(desoachoSeleccionado.checkedOpcion){
-			desoachoSeleccionado.checkedOpcion = false;
+	$scope.seleccionarDespachoMod = function(despachoSeleccionado) {
+		var totalDesSeleccionadosMod = $scope.listaDespachosMod.filter(des => des.checkedOpcion == true).length;
+		if(!$scope.tabDespachosVL_MULTISELECCION_mod && totalDesSeleccionadosMod >0){
+			if(despachoSeleccionado.checkedOpcion == false){
+				toastr.info('¡Solo se permite asignar 1 despacho!');
+			}
+			despachoSeleccionado.checkedOpcion = false;
 		}else{
-			desoachoSeleccionado.checkedOpcion = true;
-			$("#labelDespachosSeleccionadosMod").css("color", "rgb(70, 88, 107)");
-			$("#contenedorDespachosMod").css("border", "white solid 0px");
+			if(despachoSeleccionado.checkedOpcion){
+				despachoSeleccionado.checkedOpcion = false;
+			}else{
+				despachoSeleccionado.checkedOpcion = true;
+				$("#labelDespachosSeleccionadosMod").css("color", "rgb(70, 88, 107)");
+				$("#contenedorDespachosMod").css("border", "white solid 0px");
+			}
 		}
 		//Verifica si todos los 'checkedOpcion' son true para activar el check de seleccionar todos
 		var check = true;
