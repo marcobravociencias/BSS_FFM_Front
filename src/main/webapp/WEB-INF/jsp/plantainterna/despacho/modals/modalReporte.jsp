@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Reporte seguimiento diario</h5>
+                <h5 class="modal-title modal-title-despacho-pi">Reporte seguimiento diario</h5>
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -124,7 +124,7 @@
                     </div>
                     <div class="row">
                         <div class="col-12 contenedor-table">
-                            <table class="table table-hover" cellspacing="0" id="table-reporte">
+                            <table class="display table table-hover" cellspacing="0" width="100%" id="table-reporte">
                                 <thead id="head_table">
                                     <tr>
                                         <th>OT</th>

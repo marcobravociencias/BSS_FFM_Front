@@ -1,0 +1,859 @@
+.timeline-day-detalleOT {
+    font-size: 15px !important;
+    color: grey;
+}
+
+.timeline-day-alertasDespacho {
+    font-size: 15px !important;
+    color: grey;
+}
+
+.timeline-month-alertasDespacho {
+    font-size: 12px !important;
+}
+
+.input-comentario-alerta {
+    height: 41px !important;
+}
+
+@media screen and (max-width: 1300px) {
+    .fullSizeCard {
+        max-width: 298px;
+        font-size: 0.7em;
+    }
+
+    .intervencino-elemn {
+        display: inline-block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-weight: bold;
+        font-size: 0.8em;
+        /* position: absolute; */
+        left: 0;
+        /* margin-left: 1em; */
+        width: 23%;
+        text-align: initial;
+    }
+
+    .evento-ot-asignada {
+        border-radius: 0.2em;
+        background-color: #fff;
+        /* padding-top: 1em !important; */
+        /* padding-bottom: 1em !important; */
+        /* margin-top: 3px !important; */
+        border: 1px solid #dddddd;
+        border-bottom-right-radius: 0.5em;
+        border-top-right-radius: 0.5em;
+        font-size: .6em;
+        box-shadow: 0 0 5px 0 rgb(135 142 224 / 30%);
+    }
+
+    .nombre_tecnico {
+        font-size: 0.7em !important;
+        padding-left: 0;
+        margin-bottom: 0;
+        font-weight: bold;
+        color: black;
+    }
+
+    .numero_empleado_telefono {
+        font-size: 0.6em;
+        padding-left: 0;
+        color: #aeaeae;
+        font-weight: bold;
+    }
+
+    .icono_operario_accion,
+    .icono_materiales_accion {
+        color: #9ca4b3;
+        margin-right: 0.5em !important;
+        cursor: pointer;
+    }
+
+    .imagen_operario_foto {
+        width: 2.3em;
+        height: 2.3em;
+        cursor: pointer;
+        border-radius: 50%;
+        /* margin-bottom: 0.2em !important; */
+        -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+        box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+    }
+
+    .fc-cell-text {
+        margin-bottom: 0.5em;
+    }
+
+    .content-tecnico-asignacion {
+        padding-top: 0.4em !important;
+        background: white;
+        position: relative;
+    }
+
+    .container-busquedaotpendientes {
+        height: 1.4rem;
+        border-bottom: 1px solid #ddd;
+        background: #e4e6f2;
+        padding-left: 0.3em;
+    }
+
+    .input_buscarOperario {
+        font-size: .8em !important;
+        height: 1.5em !important;
+    }
+
+    .fc-timeline .fc-head .fc-cell-content {
+        background: #e4e6f2;
+        font-size: 0.8em;
+        font-weight: 200;
+        text-align: center;
+    }
+
+    .cliente-asignada {
+        margin-bottom: 0;
+        font-weight: bold;
+        font-size: 1em;
+        color: black;
+        display: inline;
+    }
+
+    .checkmarkcust {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 1rem;
+        width: 1rem;
+        background-color: #ffffff;
+        border: 2px solid #9d9ea2;
+        border-radius: 0.1em;
+    }
+
+    /* EVENTOS CALENDARIO */
+    .fc-no-overlap .fc-timeline-event {
+        padding: 3px 0;
+        margin-bottom: 0;
+    }
+
+    /* EVENTOS CALENDARIO */
+
+    /* FILTROS */
+    .input-filtro-despacho {
+        border: none;
+        font-weight: 400;
+        font-size: .7em !important;
+        color: #818181 !important;
+        transition: all 0.5s ease;
+        border-bottom: 1px solid white;
+        background: transparent !important;
+    }
+
+    .columna-filtro-ind::after {
+        content: "";
+        position: absolute;
+        right: 5%;
+        top: 40%;
+        width: 0;
+        height: 0;
+        border-left: 0.25em solid transparent;
+        border-right: 0.25em solid transparent;
+        border-top: 0.4em solid #939db2;
+        clear: both;
+        /* z-index: 2; */
+    }
+
+    #buscar-otsasignadas {
+        margin-top: 1.3em;
+    }
+
+    #buscar-otsasignadas {
+        background-color: #ffffff;
+        color: #7716fa;
+        border: solid 1px #7716fa;
+        padding: 0.3em 2em;
+        border-radius: 5px;
+        font-size: 0.5em;
+    }
+
+    .icon-color-despacho {
+        color: #7c7c7c;
+        display: inline;
+        float: right;
+        margin-right: 1em;
+        margin-top: 0.7em;
+        cursor: pointer;
+        transition: all 0.5s ease;
+        font-size: .8em;
+        text-shadow: -4px 1px 10px rgb(14 51 33 / 28%);
+    }
+
+    .paleta-color-despacho {
+        color: #7c7c7c;
+        display: inline;
+        float: right;
+        margin-right: 1em;
+        margin-top: 0.7em;
+        cursor: pointer;
+        transition: all 0.5s ease;
+        font-size: .8em;
+        text-shadow: -4px 1px 10px rgb(14 51 33 / 28%);
+    }
+
+    #calendar-next-back {
+        display: inline;
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+        /* border-radius: 0.5em; */
+        padding: 0.3em 0.1em 0.3em 0.5em;
+        width: 7em;
+        border-radius: 5px;
+        float: right;
+        color: #818181 !important;
+        font-weight: bold;
+        background: white;
+        font-size: .6em !important;
+    }
+
+    #refrescar-otsasignadas {
+        background-color: white;
+        color: #7716fa;
+        border: solid 1px #7716fa;
+        padding: 0.3em 1em;
+        border-radius: 5px;
+        font-size: 0.6em;
+        margin-top: 0.7em;
+        float: right;
+        margin-right: 1em;
+        margin-top: 0.7em;
+        margin-left: 1em;
+    }
+
+    .container-checkbox-cus .checkmarkcust:after {
+        left: 0.25rem;
+        top: 0;
+        width: 0.3rem;
+        height: 0.65rem;
+        border: solid #68a3f2;
+        border-width: 0 0.2rem 0.2rem 0;
+        -webkit-transform: rotate(40deg);
+        -ms-transform: rotate(40deg);
+        transform: rotate(40deg);
+    }
+
+    h5.header-nombre-usuario {
+        font-size: .6em;
+        margin-bottom: 0;
+        opacity: .8;
+        font-weight: bold;
+        color: #495057;
+    }
+
+    .btn-primary.button-salir {
+        padding-left: 0.4em;
+        padding-right: 0.4em;
+        box-shadow: none;
+        font-size: .6em;
+        font-weight: bold;
+        background: white;
+        color: #8032f9;
+        border: 1px solid #c3c3c3;
+        transition: all .3s ease-in;
+    }
+
+    img.img-despacho-navbar.img-user-profile-navbar {
+        width: 2.1em;
+        height: 2.1em;
+    }
+
+    .buscar-input-otpend {
+        height: 1.7em !important;
+        min-height: 1.7em !important;
+        padding: 0 !important;
+        padding-left: 1em !important;
+        border-bottom-left-radius: 1em !important;
+        border-top-left-radius: 1em !important;
+        border-bottom-right-radius: 1em;
+        border-top-right-radius: 1em;
+        border: 1px solid #e2e2e2;
+        border-right: none;
+        font-size: .6em !important;
+    }
+
+    .icon_buscarOT {
+        font-size: .8em;
+    }
+
+    /* FILTROS */
+
+    /* ALERTAS */
+    .text-tipo-alerta-hide {
+        display: none;
+        font-size: .8em;
+    }
+
+    ul.wall li {
+        margin-left: 3em !important;
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        margin: 0 0.8em 0.8em 0;
+        color: #909090;
+        cursor: pointer;
+        height: 1.8em;
+        width: 2.2em;
+        border-radius: 20px;
+        -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+        box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+        margin-top: 0.3em;
+        background: #fdfdfe;
+        text-overflow: ellipsis;
+        -webkit-transition: all 0.5s ease;
+        transition: all 0.5s ease;
+    }
+
+    .icon-alerta-ind {
+        position: absolute;
+        left: 30%;
+        font-size: .85em;
+    }
+
+    ul.wall li .badge-alerta {
+        position: relative;
+        padding: 0.1em 0.4em;
+        right: 1em;
+        top: -9px;
+        z-index: 15;
+        font-size: 0.6em;
+    }
+
+    .text-alertas {
+        font-size: .8em;
+    }
+
+    .input-comentario-alerta {
+        height: 41px;
+        font-size: .8em;
+    }
+
+    /* ALERTAS */
+
+
+    /* MODAL DETALLE OT */
+
+    span.text-tile-vehiculo {
+        font-weight: bold;
+        font-size: 0.65em !important;
+        color: #303030;
+    }
+
+    span.text-content-vehiculo {
+        /* font-weight: bold; */
+        font-size: 0.65em !important;
+        color: #303030;
+    }
+
+    .container-text-title-detalle {
+        width: 30%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .container-text-content-detalle {
+        width: 70%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    #v-tabs-tab-detalle-ot .nav-link.active {
+        border-top-right-radius: 2rem;
+        border-bottom-right-radius: 2rem;
+        background-color: #2196f3;
+        /* box-shadow: 0 0 8px 0 #2196f3; */
+        border-bottom: 0;
+        color: white !important;
+        box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+        z-index: 1;
+        font-size: .65em;
+    }
+
+    #v-tabs-tab-detalle-ot .nav-link {
+        border-top-right-radius: 2rem;
+        border-bottom-right-radius: 2rem;
+        font-size: .6em;
+    }
+
+    .modal-title-detalleOT {
+        font-size: 1em;
+    }
+
+    .timeline-day-detalleOT {
+        font-size: .8em !important;
+        color: grey;
+    }
+
+    .circle-statushistorico-histo {
+        font-size: 0.7em;
+        line-height: 2em !important;
+        text-align: center;
+        color: #fff;
+        background-color: #999;
+        width: 2em;
+        height: 2em;
+        vertical-align: middle;
+        border-radius: 50%;
+        box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+    }
+
+    .titlehistorico {
+        font-weight: bold;
+        font-size: 0.65em;
+        color: #818181;
+    }
+
+    span.content-titlehistorico.ng-binding {
+        font-size: 0.65em;
+        font-weight: bold;
+        color: #303030;
+    }
+
+    .footer-card-historico-alerta {
+        position: absolute;
+        right: 0.5em;
+        bottom: 1.8em;
+        font-size: 0.7em;
+        font-weight: bold;
+        /* margin-bottom: 0; */
+        /* color: red; */
+    }
+
+    .circle-statushistorico {
+        font-size: 0.6em;
+        line-height: 2em !important;
+        text-align: center;
+        color: #fff;
+        background-color: #999;
+        width: 2em;
+        height: 2em;
+        vertical-align: middle;
+        border-radius: 50%;
+        /* box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%); */
+    }
+
+    /* CHAT */
+    .chat-area .chats .chat.chat-right .chat-body .chat-text p {
+        color: #fff;
+        background-color: #2196f3;
+        font-size: .8em;
+    }
+
+    .img-comentarios-chat {
+        box-shadow: 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%), 0 2px 4px -1px rgb(0 0 0 / 30%);
+        border-radius: 50%;
+        width: 2em !important;
+        height: 2em !important;
+        vertical-align: middle;
+        text-align: center;
+        line-height: 2em !important;
+        color: white;
+        font-size: .9em;
+    }
+
+    .text-fecha-comentario {
+        padding-left: 15px;
+        padding-right: 15px;
+        font-size: 0.6em;
+    }
+
+    .input-mensaje-chat {
+        margin-right: 1.5rem;
+        padding: 0 1.5rem;
+        color: #9e9e9e;
+        border-bottom: 0;
+        border-radius: 5px;
+        border: none;
+        background-color: #eceff1;
+        height: 2.5em;
+        margin-left: 52%;
+        font-size: .7em !important;
+    }
+
+    .btn-enviar-comentario-ot {
+        height: 2.3em;
+        /* font-size: 1em !important; */
+        /* color: #2196f3; */
+        font-size: .7em !important;
+        color: #ffffff !important;
+        /* text-align: center; */
+        padding-top: 0.5em;
+    }
+
+    .chat-area .chats .chat .chat-body .chat-text p {
+        max-width: 400px;
+        padding: 0.5rem 1rem;
+        color: #757575;
+        border-radius: 5px;
+        background-color: #fff;
+        box-shadow: 1px 1px 10px 0 rgb(0 0 0 / 14%);
+        font-size: .8em;
+    }
+
+    /* CHAT */
+
+    /* ACCIONES */
+    .nav-tabs .nav-link {
+        border: solid transparent;
+        border-width: 0 0 2px;
+        border-radius: 0;
+        text-transform: uppercase;
+        line-height: 1;
+        font-weight: 500;
+        font-size: .7em;
+        color: rgba(0, 0, 0, .6);
+        padding: 17px 29px 16px;
+    }
+
+    .label-acciones {
+        font-size: .9em;
+    }
+
+    .input-acciones {
+        font-size: .8em;
+    }
+
+    .btn-modalAcciones {
+        font-size: .6em;
+    }
+
+    /* RESCATE */
+
+    .btn-rescate {
+        font-size: .6em;
+    }
+
+    /* RESCATE */
+
+    /* REAGENDAR */
+
+    #fecha-calendarizado,
+    #fecha-reagendamiento {
+        background-color: #ffffff;
+        font-size: .8em;
+    }
+
+    /* REAGENDAR */
+    /* ACCIONES */
+
+    /* PAQUETE */
+    .titlemodalproductos {
+        font-size: 1em;
+    }
+
+    .btn_detalle_servicio {
+        padding: 0.1em 1em;
+        background: #2196f3;
+        font-size: 1em;
+    }
+
+    .detalle-productos-table tbody tr td {
+        padding: 0;
+        font-size: 0.65em;
+        padding: 0.3em;
+        color: #303030;
+    }
+
+    .thead_table_servicios,
+    .thead_table_productos,
+    .thead_table_promociones {
+        font-size: .8em;
+    }
+
+    .detalle-productos-table tfoot {
+        padding: 0;
+        font-weight: bold;
+        font-size: 0.7em;
+        padding: 0.3em;
+        color: #303030;
+    }
+
+    .text-noSeleccion {
+        font-size: .9em;
+    }
+
+    /* PAQUETE */
+
+    /* MODAL DETALLE OT */
+
+    /* MODAL ESTATUS TECNICO */
+    .modal-title-despacho-pi {
+        font-size: 1em;
+    }
+
+    .label-nombreTecnico-estatus {
+        font-size: .85em;
+    }
+
+    .select-status-tecnico {
+        font-size: .7em;
+    }
+
+    .modal-footer .btn-aceptar-modal {
+        font-size: .6em !important;
+        background: #0c56d0;
+        color: white;
+        font-weight: bold;
+        box-shadow: none;
+        padding: 0.6em 2em 0.6em 2em;
+        border: 0.09rem solid #0c56d0;
+        box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
+        margin-left: 1em;
+    }
+
+    .modal-footer .btn-cerrar-modal {
+        font-size: .6em !important;
+        background: white;
+        color: #0c56d0;
+        font-weight: bold;
+        box-shadow: none;
+        padding: 0.6em 2em 0.6em 2em;
+        border: 0.09rem solid #0c56d0;
+        box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
+    }
+
+    /* MODAL ESTATUS TECNICO */
+
+    /* MODAL MATERIALES OPERARIO */
+    img.img-tecnico-materiales {
+        /* cursor: pointer; */
+        border-radius: 50%;
+        -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+        box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+        max-height: 10em;
+        height: 10em;
+        width: 10em;
+        min-width: 10em;
+        object-fit: cover;
+    }
+
+    img.img-sap-materiales {
+        height: 7em;
+    }
+
+    #tabs-materiales-sap {
+        margin-bottom: 0.5em;
+        font-size: .9em;
+    }
+
+    /* MODAL MATERIALES OPERARIO */
+
+    /* MODAL VISTA MAPA */
+    .title-tecnicos {
+        background-color: #f7f7f9;
+        padding: 10px;
+        font-size: .8em;
+    }
+
+    .search-tecnico {
+        border: 1px solid #e4e2e2;
+        border-radius: 0px;
+        font-size: .65em !important;
+    }
+
+    .imagen_operario_foto_mapa {
+        width: 2.8em;
+        height: 2.8em;
+        border-radius: 50%;
+        margin-top: 0.15em !important;
+        -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+        box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+    }
+
+    /* MODAL VISTA MAPA */
+
+    /* VISTA OT PENDIENTES */
+    .text-otpendiente-tres-title {
+        display: inline;
+        font-family: 'Montserrat' !important;
+        font-size: .6em !important;
+        font-weight: bold;
+        color: black;
+    }
+
+    .text-otpendiente-tres {
+        font-family: 'Montserrat' !important;
+        display: inline;
+        font-size: 0.65em;
+        color: #a2a2a2;
+    }
+
+    .btn-opciones-alerta {
+        width: 100%;
+        font-size: .65em;
+    }
+
+    .btnBuscadorOTAlerta {
+        font-family: 'Montserrat' !important;
+        font-size: .6em !important;
+        padding: 0.19em 0.5em;
+        float: right;
+    }
+
+    #buscador-alertas-ot {
+        font-size: .8em !important;
+    }
+
+    /* VISTA OT PENDIENTES */
+
+    /* ALERTA */
+
+    .options-alertas {
+        text-align: center;
+        height: 1em;
+        width: 10em;
+        line-height: 1em;
+        /* padding: 0; */
+        padding: 10px 10px 20px 10px !important;
+        font-size: .6em !important;
+    }
+
+    .titulo-alerta-modal {
+        font-weight: bold;
+        font-size: .7em;
+    }
+
+    .text-primary-alerta {
+        font-weight: bold;
+        font-size: .65em;
+        color: #303030;
+    }
+
+    .btnAccionCamposOpcion {
+        font-family: 'Montserrat' !important;
+        font-size: .65em !important;
+        margin-top: 0.5rem;
+        padding: 0.5em 1em;
+        float: right;
+    }
+
+    .timeline-day-alertasDespacho {
+        font-size: .8em !important;
+        color: grey;
+    }
+
+    .btn-AgregarComentario {
+        height: 35px !important;
+    }
+
+    /* ALERTA */
+
+    /* REPORTE SEGUIMIENTO DIARIO */
+    .label-filter {
+        font-size: 0.7em;
+        margin: 0 !important;
+    }
+
+    .input-filtro-reporte {
+        border: 1px solid #dbdbdb !important;
+        font-weight: 400;
+        font-size: .7em !important;
+        color: #818181 !important;
+        transition: all 0.5s ease;
+        border-bottom: 1px solid white;
+        background: white !important;
+        border-radius: 0.5em !important;
+        box-shadow: 0 1px 3px 0 rgb(0 0 0 / 7%), 0 1px 2px 0 rgb(0 0 0 / 5%) !important;
+    }
+
+    .columna-filtro-ind-rep::after {
+        content: "";
+        position: absolute;
+        right: 17px;
+        top: 65%;
+        width: 0;
+        height: 0;
+        border-left: 0.25em solid transparent;
+        border-right: 0.25em solid transparent;
+        border-top: 0.45em solid #939db2;
+        clear: both;
+        /* z-index: 2; */
+    }
+
+    #buscarReporte {
+        background-color: #ffffff;
+        color: #7716fa;
+        border: solid 1px #7716fa;
+        padding: 0.3em 2em;
+        border-radius: 5px;
+        font-size: 0.65em;
+        margin-top: 2.5em;
+    }
+
+    /* REPORTE SEGUIMIENTO DIARIO */
+
+    /* TABLES */
+
+    #table-materiales-temp thead th,
+    #table-pagos-temp thead th {
+        position: relative;
+        background-color: #b1b1b1;
+        color: #fff;
+        border: none;
+        font-size: .65em;
+        white-space: nowrap;
+    }
+
+    #table-reporte thead th,
+    #table-ots-trabajadas-tecnico thead th {
+        position: relative;
+        background-color: #b1b1b1;
+        color: #fff;
+        border: none;
+        font-size: .65em;
+        /* white-space: nowrap; */
+    }
+
+    #table-reporte>tbody>tr>td,
+    #table-ots-trabajadas-tecnico>tbody>tr>td {
+        /* white-space: nowrap; */
+        color: #39455b;
+        font-family: 'Montserrat', sans-serif;
+        font-size: .65em;
+    }
+
+    #table-materiales-temp>tbody>tr>td,
+    #table-pagos-temp>tbody>tr>td {
+        white-space: nowrap;
+        color: #39455b;
+        font-family: 'Montserrat', sans-serif;
+        font-size: .65em;
+    }
+
+    #table-reporte_wrapper .dataTables_info,
+    #table-ots-trabajadas-tecnico_wrapper .dataTables_info,
+    #table-materiales-temp_wrapper .dataTables_info,
+    #table-pagos-temp_wrapper .dataTables_info {
+        font-size: 0.6em;
+        font-family: "Montserrat" !important;
+        text-align: center;
+    }
+
+    #table-reporte_wrapper .page-link,
+    #table-alertas-pi_wrapper .page-link,
+    #table-ots-trabajadas-tecnico_wrapper .page-link,
+    #table-materiales-temp_wrapper .page-link,
+    #table-pagos-temp_wrapper .page-link {
+        font-size: 0.65em !important;
+        font-family: "Montserrat" !important;
+    }
+
+    #table-reporte_filter,
+    #table-ots-trabajadas-tecnico_filter,
+    #table-materiales-temp_filter,
+    #table-pagos-temp_filter {
+        font-size: 0.65em !important;
+        font-family: "Montserrat" !important;
+    }
+
+    /* TABLES */
+}

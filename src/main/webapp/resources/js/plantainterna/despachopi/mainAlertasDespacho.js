@@ -28,7 +28,7 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
         $scope.vistaAuditoriaEvidencia = false;
 
 
-        $("#pills-mapa-tab").click();
+        // $("#pills-mapa-tab").click();
         $scope.idAlertaSelecionada = '';
         $scope.evidenciaAlertaConsultada = false;
         $scope.historicoAlertaConsultada = false;
@@ -62,6 +62,7 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
         mainAlertasService.getDetalleAlertas(params).then(function success(response) {
             console.log(response);
             if (response.data !== undefined) {
+                $("#pills-mapa-tab").click();
                 $scope.otsAlertas = response.data.result.detalleAlerta;
                 $scope.vistaDespacho = false;
                 $scope.tipoAlertaSeleccionada = angular.copy(alerta);

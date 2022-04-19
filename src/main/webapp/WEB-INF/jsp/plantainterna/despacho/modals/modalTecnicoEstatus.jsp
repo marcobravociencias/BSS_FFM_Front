@@ -3,7 +3,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" > Estatus t&eacute;cnico</h5>
+                <h5 class="modal-title modal-title-despacho-pi"> Estatus t&eacute;cnico</h5>
                 <button
                     type="button"
                     class="btn-close"
@@ -16,7 +16,7 @@
                     <div class="row align-items-center">
 						<div class="col-12">
 							<div class="form-group-tecnico form-group">
-								<label class="label-group-tecnico" ng-bind="elementEstatusTecnico.tecnico.nombreCompleto"></label>							                                             
+								<label class="label-group-tecnico label-nombreTecnico-estatus" ng-bind="elementEstatusTecnico.tecnico.nombreCompleto"></label>							                                             
 						  	</div>
 						</div>
 					</div>	
@@ -24,8 +24,8 @@
 						<div class="col-12">
 							<div class="form-group">
 								<i style="color: #34b5e5 !important;font-size: 1.5em;float: right;" id="icono_operario_status" class="fa fa-user-circle-o fa-2x"></i>
-								<label for="id-status-tecnico">Status:</label>
-								<select style="border-left:.4em solid {{elementEstatusTecnico.status.hexaColor}}" class="form-control" id="id-status-tecnico" ng-model="elementEstatusTecnico.status" ng-options="estatus.descripcion for estatus in listadoEstatusTecnico">
+								<label class="label-nombreTecnico-estatus" for="id-status-tecnico">Status:</label>
+								<select style="border-left:.4em solid {{elementEstatusTecnico.status.hexaColor}}" class="select-status-tecnico form-control" id="id-status-tecnico" ng-model="elementEstatusTecnico.status" ng-options="estatus.descripcion for estatus in listadoEstatusTecnico">
                                     <option value="">Seleccione ...</option>
 							    </select>                                               
 						  	</div>

@@ -4,7 +4,7 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Detalle de la orden {{}} </h5>
+                <h5 class="modal-title modal-title-despacho-pi">Detalle de la orden {{}} </h5>
                 <a class="btnCerrarModalDetalleOrdenOt" href="#" ng-click="cerrarModalDetalleOtPe()"></a>
             </div>
             <div class="modal-body">
@@ -289,8 +289,7 @@
                                         <div class="row" ng-repeat="elementHistorico in historialOrdenTrabajo" style="height: fit-content;">
                                             <div class="col-2 line-time-new">
                                                 <div style="background-color:white;" class="timeline__date">
-                                                    <span style="font-size: 15px !important;color:grey;"
-                                                        class="timeline__day">OT</span>
+                                                    <span class="timeline-day-detalleOT timeline__day">OT</span>
                                                     <span style="font-size: 12px !important;" class="timeline__month">
                                                         <i ng-if="elementHistorico.idEstatusOrden==1"
                                                             class="pendiente-historico  fas fa-pause circle-statushistorico-histo"></i>
@@ -354,10 +353,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
-
                                 </div>
                                 <div ng-show="permisosModal.indexOf('tabComentariosDespacho') !== -1"
                                     class="tab-pane fade" id="v-tabs-consulta-mensajeria" role="tabpanel"
@@ -381,14 +378,13 @@
                                                     <div class="chat" ng-if="comentario.origenSistema === 2">
                                                         <!-- APP-->
                                                         <div class="chat-avatar">
-                                                            <a class="avatar"><i
-                                                                    class="img-comentarios-chat android-mensaje fab fa-android"
-                                                                    style="margin-top: 1em;"></i></a>
+                                                            <a class="avatar">
+                                                                <i class="img-comentarios-chat android-mensaje fab fa-android" style="margin-top: 1em;"></i>
+                                                            </a>
                                                         </div>
 
                                                         <div class="chat-body">
-                                                            <span class="text-fecha-comentario"
-                                                                ng-bind="comentario.fechaComentario"></span>
+                                                            <span class="text-fecha-comentario" ng-bind="comentario.fechaComentario"></span>
                                                             <div class="chat-text">
                                                                 <p ng-bind="comentario.comentario"></p>
                                                             </div>
@@ -396,23 +392,20 @@
                                                     </div>
                                                     <div class="chat chat-right" ng-if="comentario.origenSistema !== 2">
                                                         <div class="chat-body">
-                                                            <span class="text-fecha-comentario"
-                                                                ng-bind="comentario.fechaComentario"></span>
+                                                            <span class="text-fecha-comentario" ng-bind="comentario.fechaComentario"></span>
                                                             <div class="chat-text">
                                                                 <p ng-bind="comentario.comentario"></p>
                                                             </div>
                                                         </div>
                                                         <div class="chat-avatar">
                                                             <a class="avatar">
-                                                                <i class="img-comentarios-chat web-mensaje fas fa-desktop"
-                                                                    style="margin-top: 1em;"></i>
+                                                                <i class="img-comentarios-chat web-mensaje fas fa-desktop" style="margin-top: 1em;"></i>
                                                             </a>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row float-right col-chat-fotter"
-                                                style="margin-top: 2em; margin-right: 2em;">
+                                            <div class="row float-right col-chat-fotter" style="margin-top: 2em; margin-right: 2em;">
                                                 <div class="col-6">
                                                     <input id="comentarioOt"
                                                         placeholder="Escribe el mensaje aqu&iacute; ..." type="text"
@@ -420,8 +413,7 @@
                                                         ng-model="comentarios">
                                                 </div>
                                                 <div class="col-3" style="left: 200px;height: 50px;">
-                                                    <button class="btn btn-primary btn-enviar-comentario-ot"
-                                                        ng-click="addComentariosOt()">Enviar</button>
+                                                    <button class="btn btn-primary btn-enviar-comentario-ot" ng-click="addComentariosOt()">Enviar</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -866,8 +858,8 @@
                                                             <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;"
                                                                 id="icono_operario_status"
                                                                 class="fa fa-user-circle-o fa-2x"></i>
-                                                            <label for="id-status-tecnico">Motivo:</label>
-                                                            <select class="form-control"
+                                                            <label class="label-acciones" for="id-status-tecnico">Motivo:</label>
+                                                            <select class="input-acciones form-control"
                                                                 ng-model="elementoRescate.motivo"
                                                                 ng-options="motivo.nombre for motivo in listadoMotivosRescate">
                                                                 <option value="">Seleccione ...</option>
@@ -878,8 +870,8 @@
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <div class="form-group">
-                                                            <label for="exampleTextarea">Comentario:</label>
-                                                            <textarea class="form-control" style=" resize: none"
+                                                            <label class="label-acciones" for="exampleTextarea">Comentario:</label>
+                                                            <textarea class="input-acciones form-control" style=" resize: none"
                                                                 ng-model="elementoRescate.comentario"
                                                                 placeholder="Se sugiere un m&aacute;ximo de 50 caracteres"
                                                                 rows="3"></textarea>
@@ -891,7 +883,7 @@
                                                         <button
                                                             ng-show="accionesUserConfigText.indexOf('accionCancelaOT') !== -1"
                                                             ng-click="cambioStatus('cancela')"
-                                                            class="btn  btn-primary">Recate</button>
+                                                            class="btn btn-modalAcciones btn-primary">Rescate</button>
 
                                                         <div ng-show="accionesUserConfigText.indexOf('accionCancelaOT') === -1"
                                                             class="text-accion-nopermiso">
@@ -911,11 +903,10 @@
                                                         <div class="form-group">
                                                             <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;"
                                                                 class="fa fa-user-circle-o fa-2x"></i>
-                                                            <label for="fecha-reagendamiento">Fecha
-                                                                reagendamiento:</label>
+                                                            <label class="label-acciones" for="fecha-reagendamiento">Fecha reagendamiento:</label>
                                                             <input type="text"
                                                                 ng-model="elementReagendaOT.fechaReagendamiento"
-                                                                id="fecha-reagendamiento" class="form-control" readonly>
+                                                                id="fecha-reagendamiento" class="input-acciones form-control" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -924,8 +915,8 @@
                                                         <div class="form-group">
                                                             <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;"
                                                                 class="fa fa-user-circle-o fa-2x"></i>
-                                                            <label for="id-turno-reagenda">Turno:</label>
-                                                            <select class="form-control" id="id-turno-reagenda"
+                                                            <label class="label-acciones" for="id-turno-reagenda">Turno:</label>
+                                                            <select class="input-acciones form-control" id="id-turno-reagenda"
                                                                 ng-model="elementReagendaOT.turno"
                                                                 ng-options="turno.nombre for turno in listadoTurnosAcciones">
                                                                 <option value="">Seleccione ...</option>
@@ -938,8 +929,8 @@
                                                         <div class="form-group">
                                                             <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;"
                                                                 class="fa fa-user-circle-o fa-2x"></i>
-                                                            <label for="id-motivo-reagenda">Motivo:</label>
-                                                            <select class="form-control" id="id-motivo-reagenda"
+                                                            <label class="label-acciones" for="id-motivo-reagenda">Motivo:</label>
+                                                            <select class="input-acciones form-control" id="id-motivo-reagenda"
                                                                 ng-model="elementReagendaOT.motivo"
                                                                 ng-options="motivo.nombre for motivo in listadoMotivosReagenda">
                                                                 <option value="">Seleccione ...</option>
@@ -950,8 +941,8 @@
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <div class="form-group">
-                                                            <label for="exampleTextarea">Comentario:</label>
-                                                            <textarea class="form-control" style=" resize: none"
+                                                            <label class="label-acciones" for="exampleTextarea">Comentario:</label>
+                                                            <textarea class="input-acciones form-control" style=" resize: none"
                                                                 ng-model="elementReagendaOT.comentario"
                                                                 placeholder="Se sugiere un m&aacute;ximo de 50 caracteres"
                                                                 rows="3"></textarea>
@@ -963,7 +954,7 @@
                                                         <button
                                                             ng-show="accionesUserConfigText.indexOf('accionReagendaOT') !== -1"
                                                             ng-click="cambioStatus('reagendamiento')"
-                                                            class="btn  btn-primary">Reagendar</button>
+                                                            class="btn btn-modalAcciones btn-primary">Reagendar</button>
 
                                                         <div ng-show="accionesUserConfigText.indexOf('accionReagendaOT') === -1"
                                                             class="text-accion-nopermiso">
@@ -983,11 +974,11 @@
                                                         <div class="form-group">
                                                             <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;"
                                                                 class="fa fa-user-circle-o fa-2x"></i>
-                                                            <label for="fecha-calendarizado">Fecha
+                                                            <label class="label-acciones" for="fecha-calendarizado">Fecha
                                                                 calendarizado:</label>
                                                             <input type="text" id="fecha-calendarizado"
                                                                 ng-model="elementCalendarizado.fechaCalendarizado"
-                                                                class="form-control " readonly>
+                                                                class="input-acciones form-control " readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -996,8 +987,8 @@
                                                         <div class="form-group">
                                                             <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;"
                                                                 class="fa fa-user-circle-o fa-2x"></i>
-                                                            <label for="id-turno-calendarizado">Turno:</label>
-                                                            <select class="form-control" id="id-turno-calendarizado"
+                                                            <label class="label-acciones" for="id-turno-calendarizado">Turno:</label>
+                                                            <select class="input-acciones form-control" id="id-turno-calendarizado"
                                                                 ng-model="elementCalendarizado.turno"
                                                                 ng-options="turno.nombre for turno in listadoTurnosAcciones">
                                                                 <option value="">Seleccione ...</option>
@@ -1010,8 +1001,8 @@
                                                         <div class="form-group">
                                                             <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;"
                                                                 class="fa fa-user-circle-o fa-2x"></i>
-                                                            <label for="id-motivo-calendarizado">Motivo:</label>
-                                                            <select class="form-control" id="id-motivo-calendarizado"
+                                                            <label class="label-acciones" for="id-motivo-calendarizado">Motivo:</label>
+                                                            <select class="input-acciones form-control" id="id-motivo-calendarizado"
                                                                 ng-model="elementCalendarizado.motivo"
                                                                 ng-options="motivo.nombre for motivo in listadoMotivosCalendarizado">
                                                                 <option value="">Seleccione ...</option>
@@ -1022,8 +1013,8 @@
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <div class="form-group">
-                                                            <label for="exampleTextarea">Comentario:</label>
-                                                            <textarea class="form-control" style=" resize: none"
+                                                            <label class="label-acciones" for="exampleTextarea">Comentario:</label>
+                                                            <textarea class="input-acciones form-control" style=" resize: none"
                                                                 ng-model="elementCalendarizado.comentario"
                                                                 placeholder="Se sugiere un m&aacute;ximo de 50 caracteres"
                                                                 rows="3"></textarea>
@@ -1036,7 +1027,7 @@
                                                         <button
                                                             ng-show="accionesUserConfigText.indexOf('accionCalendarizaOT') !== -1"
                                                             ng-click="cambioStatus('calendariza')"
-                                                            class="btn  btn-primary">Calendarizar</button>
+                                                            class="btn btn-primary btn-modalAcciones">Calendarizar</button>
 
                                                         <div ng-show="accionesUserConfigText.indexOf('accionCalendarizaOT') === -1"
                                                             class="text-accion-nopermiso">
@@ -1056,8 +1047,8 @@
                                                         <div class="form-group">
                                                             <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;"
                                                                 class="fa fa-user-circle-o fa-2x"></i>
-                                                            <label for="id-turno-calendarizado">Estado:</label>
-                                                            <select class="form-control" id="id-estado-plaza-comercial"
+                                                            <label class="label-acciones" for="id-turno-calendarizado">Estado:</label>
+                                                            <select class="input-acciones form-control" id="id-estado-plaza-comercial"
                                                                 ng-model="elementoPlazaComercial.estado"
                                                                 ng-options="turno.nombre for turno in listadoEstadoGestoria">
                                                                 <option value="">Seleccione ...</option>
@@ -1070,8 +1061,8 @@
                                                         <div class="form-group">
                                                             <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;"
                                                                 class="fa fa-user-circle-o fa-2x"></i>
-                                                            <label for="id-motivo-calendarizado">Motivo:</label>
-                                                            <select class="form-control" id="id-motivo-calendarizado"
+                                                            <label class="label-acciones" for="id-motivo-calendarizado">Motivo:</label>
+                                                            <select class="input-acciones form-control" id="id-motivo-calendarizado"
                                                                 ng-model="elementoPlazaComercial.motivo"
                                                                 ng-options="motivo.nombre for motivo in listadoMotivosGestaria">
                                                                 <option value="">Seleccione ...</option>
@@ -1082,8 +1073,8 @@
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <div class="form-group">
-                                                            <label for="exampleTextarea">Comentario:</label>
-                                                            <textarea class="form-control" style=" resize: none"
+                                                            <label class="label-acciones" for="exampleTextarea">Comentario:</label>
+                                                            <textarea class="input-acciones form-control" style=" resize: none"
                                                                 ng-model="elementoPlazaComercial.comentario"
                                                                 placeholder="Se sugiere un m&aacute;ximo de 50 caracteres"
                                                                 rows="3"></textarea>
@@ -1095,7 +1086,7 @@
                                                         <button
                                                             ng-show="accionesUserConfigText.indexOf('accionGestoriaOT') !== -1"
                                                             ng-click="cambioStatus('gestoria')"
-                                                            class="btn  btn-primary">Plaza</button>
+                                                            class="btn btn-modalAcciones btn-primary">Plaza</button>
 
                                                         <div ng-show="accionesUserConfigText.indexOf('accionGestoriaOT') === -1"
                                                             class="text-accion-nopermiso">
@@ -1118,8 +1109,8 @@
                                                         <div class="form-group">
                                                             <i style="color: #34b5e5 !important;font-size: 1.5em;float: right;"
                                                                 class="fa fa-user-circle-o fa-2x"></i>
-                                                            <label for="id-estado-terminar">Estado:</label>
-                                                            <select class="form-control" id="id-estado-terminar"
+                                                            <label class="label-acciones" for="id-estado-terminar">Estado:</label>
+                                                            <select class="input-acciones form-control" id="id-estado-terminar"
                                                                 ng-model="elementTerminar.estado"
                                                                 ng-options="estado.nombre for estado in listadoEstadosTerminado">
                                                                 <option value="">Seleccione ...</option>
@@ -1130,8 +1121,8 @@
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <div class="form-group">
-                                                            <label for="exampleTextarea">Comentario:</label>
-                                                            <textarea class="form-control" style=" resize: none"
+                                                            <label class="label-acciones" for="exampleTextarea">Comentario:</label>
+                                                            <textarea class="input-acciones form-control" style=" resize: none"
                                                                 ng-model="elementTerminar.comentario"
                                                                 placeholder="Se sugiere un m&aacute;ximo de 50 caracteres"
                                                                 rows="3"></textarea>
@@ -1143,7 +1134,7 @@
                                                         <button
                                                             ng-show="accionesUserConfigText.indexOf('accionTerminaOT') !== -1"
                                                             ng-click="cambioStatus('termina')"
-                                                            class="btn  btn-primary">Terminar</button>
+                                                            class="btn btn-modalAcciones btn-primary">Terminar</button>
 
                                                         <div ng-show="accionesUserConfigText.indexOf('accionTerminaOT') === -1"
                                                             class="text-accion-nopermiso">
@@ -1161,8 +1152,8 @@
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <div class="form-group">
-                                                            <label for="exampleTextarea">Comentario:</label>
-                                                            <textarea class="form-control" style=" resize: none"
+                                                            <label class="label-acciones" for="exampleTextarea">Comentario:</label>
+                                                            <textarea class="input-acciones form-control" style=" resize: none"
                                                                 ng-model="elementoDesasigna.comentario"
                                                                 placeholder="Se sugiere un m&aacute;ximo de 50 caracteres"
                                                                 rows="3"></textarea>
@@ -1174,7 +1165,7 @@
                                                         <button
                                                             ng-show="accionesUserConfigText.indexOf('accionDesasignaOT') !== -1"
                                                             ng-click="cambioStatus('desasigna')"
-                                                            class="btn  btn-primary">Desasigna</button>
+                                                            class="btn btn-modalAcciones btn-primary">Desasigna</button>
 
                                                         <div ng-show="accionesUserConfigText.indexOf('accionDesasignaOT') === -1"
                                                             class="text-accion-nopermiso">
@@ -1342,10 +1333,8 @@
                                                                         </tr>
                                                                     </tbody>
                                                                     <tfoot>
-                                                                        <tr
-                                                                            ng-if="responseServicios.resumenServicios === undefined || responseServicios.resumenServicios.length <= 0">
-                                                                            <td class="text-center" colspan="2">No se
-                                                                                cuenta con servicios</td>
+                                                                        <tr ng-if="responseServicios.resumenServicios === undefined || responseServicios.resumenServicios.length <= 0">
+                                                                            <td class="text-center" colspan="2">No se cuenta con servicios</td>
                                                                         </tr>
                                                                     </tfoot>
                                                                 </table>
@@ -1354,8 +1343,7 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-md-12">
-                                                            <h5 style="color:#767676" class="titlemodalproductos">
-                                                                Productos </h5>
+                                                            <h5 style="color:#767676" class="titlemodalproductos"> Productos </h5>
                                                             <div class="parent_table_detalle_productos">
                                                                 <table class="table detalle-productos-table table-sm">
                                                                     <thead class="thead_table_productos">
@@ -1366,18 +1354,15 @@
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                        <tr
-                                                                            ng-repeat="producto in responseServicios.productos">
+                                                                        <tr ng-repeat="producto in responseServicios.productos">
                                                                             <!--td ng-bind="producto.id"></td-->
                                                                             <td ng-bind="producto.descripcion"></td>
                                                                             <td ng-bind="producto.tipo"></td>
                                                                         </tr>
                                                                     </tbody>
                                                                     <tfoot>
-                                                                        <tr
-                                                                            ng-if="responseServicios.productos === undefined || responseServicios.productos.length <= 0">
-                                                                            <td class="text-center" colspan="2">No se
-                                                                                cuenta con productos</td>
+                                                                        <tr ng-if="responseServicios.productos === undefined || responseServicios.productos.length <= 0">
+                                                                            <td class="text-center" colspan="2">No se cuenta con productos</td>
                                                                         </tr>
                                                                     </tfoot>
                                                                 </table>
@@ -1386,31 +1371,24 @@
                                                     </div>
                                                     <div class="row ">
                                                         <div class="col-md-12">
-                                                            <h5 style="color:#767676" class="titlemodalproductos">
-                                                                Promociones </h5>
+                                                            <h5 style="color:#767676" class="titlemodalproductos"> Promociones </h5>
                                                             <div class="parent_table_detalle_promociones">
                                                                 <table class="detalle-productos-table table table-sm">
                                                                     <thead class="thead_table_promociones">
                                                                         <tr>
                                                                             <th scope="col">Folio promoci&oacute;n</th>
-                                                                            <th scope="col">Nombre de la
-                                                                                promoci&oacute;n</th>
+                                                                            <th scope="col">Nombre de la promoci&oacute;n</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                        <tr
-                                                                            ng-repeat="promocion in responseServicios.promociones">
+                                                                        <tr ng-repeat="promocion in responseServicios.promociones">
                                                                             <td ng-bind="promocion.FolioPromocion"></td>
-                                                                            <td ng-bind="promocion.Nombre_promocion">
-                                                                            </td>
+                                                                            <td ng-bind="promocion.Nombre_promocion"></td>
                                                                         </tr>
                                                                     </tbody>
                                                                     <tfoot>
-                                                                        <tr
-                                                                            ng-if="responseServicios.promociones === undefined || responseServicios.promociones.length <= 0">
-
-                                                                            <td class="text-center" colspan="2">No se
-                                                                                cuenta con promociones</td>
+                                                                        <tr ng-if="responseServicios.promociones === undefined || responseServicios.promociones.length <= 0">
+                                                                            <td class="text-center" colspan="2">No se cuenta con promociones</td>
                                                                         </tr>
                                                                     </tfoot>
                                                                 </table>
@@ -1419,7 +1397,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-4">
-                                                    <h5 style="color:#767676" class="text-center">Equipo y Modelos</h5>
+                                                    <h5 style="color:#767676" class="text-center titlemodalproductos">Equipo y Modelos</h5>
                                                     <div style="display: none;" class="content_info_detalle">
                                                         <h6 style="color: #797979	" class="text_equipo">PBX AVAYA</h6>
                                                         <ul style="color: #797979	" class="listado_modelos">
@@ -1427,7 +1405,7 @@
                                                     </div>
                                                     <div ng-if="detalleServicio.Modelos.Modelo === undefined"
                                                         class="not_info_detalle row h-100 justify-content-center">
-                                                        <h6 style="color:#abafae;">Sin seleccion de servicio</h6>
+                                                        <h6 style="color:#abafae;" class="text-noSeleccion">Sin seleccion de servicio</h6>
                                                     </div>
                                                     <div ng-if="detalleServicio.Modelos.Modelo !== undefined"
                                                         class="content_info_detalle">

@@ -5,7 +5,7 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" >Materiales operario</h5>
+                <h5 class="modal-title modal-title-despacho-pi">Materiales operario</h5>
                 <button type="button" class="btn-close"  data-mdb-dismiss="modal" aria-label="Close" ></button>
             </div>
 			<div class="modal-body">
@@ -105,7 +105,7 @@
                     </div>
                     <div class="tab-content" id="v-tabs-tabContent">
                       <div class="tab-pane fade show active" id="v-tabs-consulta-materiales" role="tabpanel" aria-labelledby="v-tabs-consulta-materiales-tab" >
-                          <table id="table-materiales-temp" class="table table-materiales table-sm ">
+                          <table id="table-materiales-temp" class="display table table-materiales table-sm ">
                               <thead>
                                 <tr>
                                   <th scope="col">Sku</th>

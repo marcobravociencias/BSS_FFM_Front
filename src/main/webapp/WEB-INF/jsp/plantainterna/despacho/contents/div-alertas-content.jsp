@@ -126,8 +126,8 @@
                                 <div class="row" ng-repeat="elementHistorico in listaHistoricoAlerta">
                                     <div class="col-2 line-time-new">
                                         <div style="background-color:white;" class="timeline__date">
-                                            <span style="font-size: 15px !important;color:grey;" class="timeline__day">OT</span>
-                                            <span style="font-size: 12px !important;" class="timeline__month">
+                                            <span class="timeline__day timeline-day-alertasDespacho">OT</span>
+                                            <span class="timeline-month-alertasDespacho timeline__month">
                                                 <i ng-if="elementHistorico.idEstatusOrden==1" class="pendiente-historico  fas fa-pause circle-statushistorico-histo"></i>
                                                 <i ng-if="elementHistorico.idEstatusOrden==2" class="asignacion-historico fas fa-arrow-right circle-statushistorico-histo"></i>
                                                 <i ng-if="elementHistorico.idEstatusOrden==3" class="detencion-historico far fa-hand-paper circle-statushistorico-histo"></i>
@@ -234,9 +234,9 @@
                             
                             <div class="col-12" style="margin-top: .5em;">
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder="Escribe el mensaje aqu&iacute; ..." ng-model="comentarioAlerta" style="height: 41px;">
+                                    <input type="text" class="form-control input-comentario-alerta" placeholder="Escribe el mensaje aqu&iacute; ..." ng-model="comentarioAlerta">
                                     <div class="input-group-append">
-                                      <button class="btn btn-primary btn-enviar-comentario-ot" ng-click="agregarComentario()" type="button" id="button-addon2" style="color: white!important;">Enviar</button>
+                                      <button class="btn btn-primary btn-enviar-comentario-ot btn-AgregarComentario" ng-click="agregarComentario()" type="button" id="button-addon2" style="color: white!important;">Enviar</button>
                                     </div>
                                   </div>
                             </div>                          

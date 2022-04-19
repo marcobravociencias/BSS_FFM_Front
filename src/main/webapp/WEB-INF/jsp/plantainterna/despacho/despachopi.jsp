@@ -15,35 +15,35 @@
         <link rel="icon" type="image/png" sizes="96x96"     href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-96x96.png">
         <link rel="icon" type="image/png" sizes="16x16"     href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-16x16.png">
         <link rel="manifest" href="${pageContext.request.contextPath}/resources/img/iconsistema/manifest.json">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet"/>
-        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
-        <link href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/font-awesome.min.css">
 
-        <link href="${pageContext.request.contextPath}/resources/libraries/typeahead/css/typeaheadjs.css" rel="stylesheet" />
-        <link href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap.css" rel="stylesheet"/>
-        <link href="${pageContext.request.contextPath}/resources/libraries/datePicker/css/bootstrap-datepicker3_1.9.0.min.css" rel="stylesheet"/>
-        <link href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css" rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/fullcalendar.min.css" rel="stylesheet" />
-		<link href="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/fullcalendar.print.min.css" rel="stylesheet" media="print" />
-		<link href="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/scheduler.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/typeahead/css/typeaheadjs.css" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap.css"/>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/datePicker/css/bootstrap-datepicker3_1.9.0.min.css"/>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/fullcalendar.min.css"/>
+		<link rel="stylesheet" media="print" href="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/fullcalendar.print.min.css" />
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/scheduler.min.css" />
         
-        <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css"  rel="stylesheet" />     
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css"/>     
 
-        <link href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/dataTables.fontAwesome.css" rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/dataTables.bootstrap.min.css" rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/jquery.dataTables.css"
-        rel="stylesheet">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/dataTables.fontAwesome.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/jquery.dataTables.css">
         
-        <link href="${pageContext.request.contextPath}/resources/libraries/sweetalert/css/sweetalert2.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/sweetalert/css/sweetalert2.min.css">
 
-        <link href="${pageContext.request.contextPath}/resources/libraries/jstree/css/style.min.css" rel="stylesheet" />
-        <link href="${pageContext.request.contextPath}/resources/libraries/jstree/css/proton/style.css" rel="stylesheet" />
-        <link href="${pageContext.request.contextPath}/resources/libraries/magnific_popup/magnific-popup.css" rel="stylesheet">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/jstree/css/style.min.css" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/jstree/css/proton/style.css" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/magnific_popup/magnific-popup.css">
 
-        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/despachopi/loaders.css?v=${sessionScope.versionDepl}" rel="stylesheet"/>
-        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/despachopi/mainAlertasPI.css?v=${sessionScope.versionDepl}" rel="stylesheet"/>
-        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/despachopi/mainDespachoPI.css?v=${sessionScope.versionDepl}" rel="stylesheet"/>
-        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/despachopi/mainModalInfoDetalleOtPe.css?v=${sessionScope.versionDepl}" rel="stylesheet"/>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/plantainterna/despachopi/loaders.css?v=${sessionScope.versionDepl}"/>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/plantainterna/despachopi/mainAlertasPI.css?v=${sessionScope.versionDepl}"/>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/plantainterna/despachopi/mainDespachoPI.css?v=${sessionScope.versionDepl}"/>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/plantainterna/despachopi/mainModalInfoDetalleOtPe.css?v=${sessionScope.versionDepl}"/>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/plantainterna/despachopi/responsiveComponents.css?v=${sessionScope.versionDepl}"/>
 
     </head>
     <body id="idBody" ng-controller="despachoController" style="display: none;">        
@@ -158,14 +158,14 @@
         <div ng-show="vistaDespacho" class="container-fluid container-calendar-despacho">
             <div class="row">
                 <div class="col-3 col-otspendientes">
-                    <div  ng-show="isCargaOtsPendientes"  class="container-busquedaotpendientes ">
+                    <div ng-show="isCargaOtsPendientes"  class="container-busquedaotpendientes ">
                         <div class="col-8">
-                            <div class="input-group input-group-sm content-seach-group  search-parent-buscarot">
-                                <input ng-keyup="buscarOtPendiente($event)" id="buscar-ot-pendiente" type="text" class="form-control form-control-sm buscar-input-otpend"  placeholder="B&uacute;scar OT"  />
+                            <div class="input-group input-group-sm content-seach-group search-parent-buscarot" style="position: absolute;">
+                                <input ng-keyup="buscarOtPendiente($event)" id="buscar-ot-pendiente" type="text" class="form-control form-control-sm buscar-input-otpend"  placeholder="Buscar OT"  />
                                 <!--span ng-click="buscarOtPendienteText();" class="input-group-text fa fa-search" id="buscar-btn-otpend"></span-->
                             </div>
                         </div>
-                        <i class="icon-menu-tecnicosdisp fas fa-align-center" ng-click="abrirModalOtsIntervencionres()"></i>                                                
+                        <i class="icon-menu-tecnicosdisp fas fa-align-center icon_buscarOT" ng-click="abrirModalOtsIntervencionres()"></i>
                     </div>
                     <div ng-show="!isCargaOtsPendientes" class="cargando-otspendientes ">
                         <div class="wrapper"> 
