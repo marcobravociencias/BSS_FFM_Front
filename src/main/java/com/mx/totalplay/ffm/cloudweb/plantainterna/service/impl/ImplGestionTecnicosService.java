@@ -199,6 +199,18 @@ public class ImplGestionTecnicosService implements GestionTecnicosService {
 		logger.info("RESULT busqueda "+gson.toJson(response));
 		return response;
 	}
+	
+	@Override
+	public ServiceResponseResult consultaMotivosJustificaciones() {
+		logger.info("ImplGestionTecnicosService.class [metodo = consultaMotivosJustificaciones() ]\n");
+		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
+		Map<String, String> paramsRequestGet = new HashMap<String, String>();
+		String tokenAcces=principalDetail.getAccess_token(); 
+		String url = principalDetail.getDireccionAmbiente().concat(constGestionTecnicos.getConsultaMotivosJustificaciones());
+		ServiceResponseResult response= restCaller.callGetBearerTokenRequest(paramsRequestGet, url, ServiceResponseResult.class, tokenAcces);
+		logger.info("RESULT busqueda motivos justificaciones "+gson.toJson(response));
+		return response;
+	}
 
 //	@Override
 //	public ServiceResponseResult consultaMotivosGestionTecnicos() {

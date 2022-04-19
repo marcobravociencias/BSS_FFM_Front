@@ -32,12 +32,13 @@
 .responsive-img-tecnico {
     box-shadow: 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%), 0 2px 4px -1px rgb(0 0 0 / 30%);
     border-radius: 50%;
-    width: 2.2em;
-    height: 2.2em;
+    width: 2em;
+    height: 2em;
 }
 
 p.text-aux {
-    font-size: .7em;
+    font-family: 'Montserrat', sans-serif;
+	font-size: .7em;
     font-weight: bold;
     margin-bottom: 0;
     cursor: pointer;
@@ -55,7 +56,8 @@ p.text-aux-active {
 }
 
 p.text-tecnico-nombre {
-    font-size: .7em;
+    font-family: 'Montserrat', sans-serif;
+	font-size: .7em;
     font-weight: bold;
     margin-bottom: 0;
     white-space: nowrap;
@@ -67,14 +69,14 @@ p.text-tecnico-nombre {
     display: -ms-flexbox;
     margin-bottom: .3px;
     padding: .3rem;
-    border-right: 3px solid transparent;
     display: flex;
     position: relative;
     border-bottom: 1px solid #eee;
 }
 
 p.text-adds-teccnico {
-    font-size: .7em;
+    font-family: 'Montserrat', sans-serif;
+	font-size: .6em;
     color: #3e3e3e;
     margin-bottom: 0;
 }
@@ -243,19 +245,20 @@ a:disabled:hover {
 
 .tecnico-content {
     padding: 0;
-    margin-bottom: .5em;
+    margin-bottom: .2em;
     /* border-bottom:1px solid #e1e1e1 */
 }
 
 span.text-title-tecnico {
+    font-family: 'Montserrat', sans-serif;
+	font-size: .8em;
     font-weight: bold;
-    font-size: 0.7em;
-    color: #444444;
 }
 
 span.text-content-tecnico {
-    font-size: 0.7em;
-    color: #303030;
+    font-family: 'Montserrat', sans-serif;
+	font-size: .8em;
+    color: #3e3e3e;
 }
 
 .btnDetalleJustificacion {
@@ -283,9 +286,8 @@ span.text-content-tecnico {
 
 .tecnico-content-detalle {
     padding: 0;
-    margin-bottom: .5em;
+    margin-bottom: .2em;
     display: flex;
-    /* border-bottom:1px solid #e1e1e1 */
 }
 
 .container-text-title-detalle {
@@ -310,28 +312,33 @@ span.text-content-tecnico {
 }
 
 .span-form-tecnicos {
+	font-family: 'Montserrat', sans-serif;
     color: #9d9d9d;
     font-size: .9em;
     margin-bottom: 0;
 }
 
 .input-filtro-tecnico {
+	font-family: 'Montserrat', sans-serif;
+    color: #9d9d9d;
+    font-size: .9em;
     border: 1px solid #bdbdbd !important;
-    font-weight: 400;
-    font-size: 1em;
-    color: #818181 !important;
     transition: all 0.5s ease;
     border-bottom: 1px solid white;
     background: white !important;
     border-radius: 0.5em !important;
     cursor: pointer;
-    /* box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.07), 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important; */
 }
 
-.input-filtro-tecnico::placeholder {
-    font-weight: 400;
-    font-size: 1em;
-    color: #818181 !important;
+.input-filtro-tecnico-select {
+	font-family: 'Montserrat', sans-serif;
+    color: #9d9d9d;
+    font-size: .9em;
+    border: 1px solid #bdbdbd !important;
+    transition: all 0.5s ease;
+    border-bottom: 1px solid white;
+    border-radius: 0.5em !important;
+    cursor: pointer;
 }
 
 /* DRAG AND DROP */

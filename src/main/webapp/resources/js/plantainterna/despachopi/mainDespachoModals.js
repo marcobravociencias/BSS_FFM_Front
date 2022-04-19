@@ -127,7 +127,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 
         $q.all([
             mainDespachoService.consultarDetalleOtDespacho(params),
-            mainDespachoService.consultarDetalleTecnicoOt(params),
+            mainDespachoService.consultarDetalleTecnicoOt(params)
 //            mainDespachoService.consultaDetalleOtPe(paramsDetalleOtPe)
 //            mainDespachoService.consultaDetalleOtPe(paramsDetalleOtPe2)
 //            mainDespachoService.consultaDetalleOtPe(paramsDetalleOtPe3)

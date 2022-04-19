@@ -62,18 +62,17 @@
 			                                </div>
 			                            </div>
 			                        </div>
-			                        <div style="margin-left: 2%; padding: 3px;" ng-repeat="tecnico in listTecnicos | filter:searchTecnico">
+			                        <div style="margin-left: 2%;" ng-repeat="tecnico in listTecnicos | filter:searchTecnico">
 			                            <div id="{{tecnico.idTecnico}}" class="valign-wrapper tecnicosDiv">
-			                                <div class="col-12">
+			                                <div class="col-12" style="margin-bottom: 0.1em;">
 			                                    <div class="row">
-			                                        <div class="col-1 media-image online pr-0" style="padding-left: 0; margin-top: .5em;">
+			                                        <div class="col-1 media-image online pr-0" style="padding-left: 0;">
 			                                            <img src="./resources/img/plantainterna/despacho/tecnicootasignada.png" class="circle responsive-img-tecnico">
 			                                        </div>
-			                                        <div id="" class="col-9" style="padding-left: 1.5em;">
+			                                        <div id="" class="col-9" style="padding-left: 1.3em;">
 			                                            <p class="text-tecnico-nombre">{{tecnico.nombre}}</p>
 			                                            <p class="text-adds-teccnico">
-			                                                <i style="color:#7716fa" class="fa fa-user"></i> {{tecnico.usuarioFfm}}
-			                                                <br>
+			                                                <i style="color:#7716fa" class="fa fa-user"></i> {{tecnico.usuarioFfm}} &nbsp
 			                                                <i style="color:#7716fa;" class="fa fa-phone"></i> {{tecnico.telefono}}
 			                                            </p>
 			                                        </div>
@@ -95,24 +94,23 @@
 			                                </div>
 			                            </div>
 			                        </div>
-			                        <div style="margin-left: 2%; padding: 3px;" ng-repeat="tecnico in listAuxiliares | filter:searchAuxiliar">
-			                            <div id="{{tecnico.idTecnico}}" class="valign-wrapper tecnicosDiv">
-			                                <div class="col-12">
+			                        <div style="margin-left: 2%;" ng-repeat="auxiliar in listAuxiliares | filter:searchAuxiliar">
+			                            <div id="{{auxiliar.idAuxiliar}}" class="valign-wrapper tecnicosDiv">
+			                                <div class="col-12" style="margin-bottom: 0.1em;">
 			                                    <div class="row">
-			                                        <div class="col-1 media-image online pr-0" style="padding-left: 0; margin-top: .5em;">
+			                                        <div class="col-1 media-image online pr-0" style="padding-left: 0;">
 			                                            <img src="./resources/img/plantainterna/despacho/tecnicootasignada.png" class="circle responsive-img-tecnico">
 			                                        </div>
-			                                        <div id="" class="col-9" style="padding-left: 1.5em;">
-			                                            <p class="text-tecnico-nombre">{{tecnico.nombre}}</p>
+			                                        <div id="" class="col-9" style="padding-left: 1.3em;">
+			                                            <p class="text-tecnico-nombre">{{auxiliar.nombre}}</p>
 			                                            <p class="text-adds-teccnico">
-			                                                <i style="color:#7716fa" class="fa fa-user"></i> {{tecnico.usuarioFfm}}
-			                                                <br>
-			                                                <i style="color:#7716fa;" class="fa fa-phone"></i> {{tecnico.telefono}}
+			                                                <i style="color:#7716fa" class="fa fa-user"></i> {{auxiliar.usuarioFfm}} &nbsp
+			                                                <i style="color:#7716fa;" class="fa fa-phone"></i> {{auxiliar.telefono}}
 			                                            </p>
 			                                        </div>
 			                                        <div class="col-2 icono_check_tecnico mt-1" >
-	<!-- 		                                            <p id="tec-{{tecnico.idTecnico}}" class="text-aux" ng-click="consultarDisponibilidadTecnico(tecnico)">TEC</p> -->
-			                                            <p id="aux-{{tecnico.idTecnico}}" class="text-aux" ng-click="consultarDisponibilidadTecnico(tecnico)">AUX</p>
+	<!-- 		                                            <p id="tec-{{auxiliar.idAuxiliar}}" class="text-aux" ng-click="consultarDisponibilidadTecnico(tecnico)">TEC</p> -->
+			                                            <p id="aux-{{auxiliar.idAuxiliar}}" class="text-aux" ng-click="consultarDisponibilidadTecnico(auxiliar)">AUX</p>
 			                                        </div>
 			                                    </div>
 			                                </div>
@@ -169,31 +167,31 @@
 	                                    <div ng-show="isJustificacion">
 	                                        <div class="container-fluid tecnico-content">
 	                                            <div class=""><span class="text-title-tecnico">USUARIO QUE CREA</span></div>
-	                                            <div class=""><span class="text-content-tecnico">{{justificacionDetalle.UsuarioCrea}}</span></div>
+	                                            <div class=""><span class="text-content-tecnico">{{justificacionDetalle.usuarioFFM}}</span></div>
 	                                        </div>
 	                                        <div class="container-fluid tecnico-content">
 	                                            <div class=""><span class="text-title-tecnico">NOMBRE QUE CREA</span></div>
-	                                            <div class=""><span class="text-content-tecnico">{{justificacionDetalle.NombreCrea}}</span></div>
+	                                            <div class=""><span class="text-content-tecnico">{{justificacionDetalle.nombreDepacho}}</span></div>
 	                                        </div>
 	                                        <div class="container-fluid tecnico-content">
 	                                            <div class=""><span class="text-title-tecnico">FECHA DE REGISTRO</span></div>
-	                                            <div class=""><span class="text-content-tecnico">{{justificacionDetalle.FechaRegistro}}</span></div>
+	                                            <div class=""><span class="text-content-tecnico">{{justificacionDetalle.fechaCreacion}}</span></div>
 	                                        </div>
 	                                        <div class="container-fluid tecnico-content">
 	                                            <div class=""><span class="text-title-tecnico">MOTIVO DE JUSTIFICACI&Oacute;N</span></div>
-	                                            <div class=""><span class="text-content-tecnico">{{justificacionDetalle.MotivoJustificacion}}</span></div>
+	                                            <div class=""><span class="text-content-tecnico">{{justificacionDetalle.justificacion}}</span></div>
 	                                        </div>
-	                                        <div class="container-fluid tecnico-content">
-	                                            <div class=""><span class="text-title-tecnico">FOLIO DE JUSTIFICACI&Oacute;N</span></div>
-	                                            <div class=""><span class="text-content-tecnico">{{justificacionDetalle.FolioJustificacion}}</span></div>
-	                                        </div>
+<!-- 	                                        <div class="container-fluid tecnico-content"> -->
+<!-- 	                                            <div class=""><span class="text-title-tecnico">FOLIO DE JUSTIFICACI&Oacute;N</span></div> -->
+<!-- 	                                            <div class=""><span class="text-content-tecnico">{{justificacionDetalle.FolioJustificacion}}</span></div> -->
+<!-- 	                                        </div> -->
 	                                        <div class="container-fluid tecnico-content">
 	                                            <div class=""><span class="text-title-tecnico">INICIO DE JUSTIFICACI&Oacute;N</span></div>
-	                                            <div class=""><span class="text-content-tecnico">{{justificacionDetalle.InicioJustificacion}}</span></div>
+	                                            <div class=""><span class="text-content-tecnico">{{justificacionDetalle.fechaInicio}}</span></div>
 	                                        </div>
 	                                        <div class="container-fluid tecnico-content">
 	                                            <div class=""><span class="text-title-tecnico">FIN DE JUSTIFICACI&Oacute;N</span></div>
-	                                            <div class=""><span class="text-content-tecnico">{{justificacionDetalle.FinJustificacion}}</span></div>
+	                                            <div class=""><span class="text-content-tecnico">{{justificacionDetalle.fechaFin}}</span></div>
 	                                        </div>
 	                                        <div class="container-fluid tecnico-content text-center mb-1">
 	                                            <button class="btn btn-sm btnDetalleJustificacion" ng-click="consultarComentariosJustificacion()"><i class="fa fa-comments"></i></button>

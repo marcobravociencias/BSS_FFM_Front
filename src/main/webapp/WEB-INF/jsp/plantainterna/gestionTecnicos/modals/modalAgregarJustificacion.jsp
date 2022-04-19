@@ -16,7 +16,7 @@
                                   <div style="text-align: center; padding-left: 0;" class="col-md-12">
                                     <form id="uploadFormAddJust" name="13" class="form-horizontal box form_drag_drop" novalidate="novalidate" enctype="multipart/form-data">
                                           <div class="box__input">
-                                            <input name="myFile" type="file" class="box__file inputFile" ng-on-change="convertFile($event, 'agregar')" id="fileAddJust" ng-model="archivoAdd"/>
+                                            <input name="myFile" type="file" multiple class="box__file inputFile" ng-on-change="convertFile($event, 'agregar')" id="fileAddJust" ng-model="archivoAdd"/>
                                             <label for="fileAddJust" id="etiqueta_archivo_edita_just">
                                               <strong class="text_select" style="cursor: pointer;">Selecciona un archivo</strong>
                                               <span class="box__dragndrop">o arrastra aqu&iacute;</span>
@@ -39,10 +39,10 @@
                             </div>
                             <div class="form-group">
                                 <label for="motivoJustificacion" class="span-form-tecnicos">Motivo</label>
-                                <select class="form-control form-controlt form-control-sm custom-select" name="motivo" id="motivoJustificacion" ng-model="justificacionA.motivo">
+                                <select class="form-control form-control-sm custom-select input-filtro-tecnico-select" name="motivo" id="motivoJustificacion" ng-model="justificacionA.motivo">
                                     <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
-                                    <option value="{{motivoA.idMotivo}}" ng-repeat="motivoA in listMotivosJustificacion">
-                                        {{motivoA.Motivo}}
+                                    <option value="{{motivo.idMotivo}}" ng-repeat="motivo in listMotivosJustificaciones">
+                                        {{motivo.motivo}}
                                     </option>
                                 </select>
                             </div>

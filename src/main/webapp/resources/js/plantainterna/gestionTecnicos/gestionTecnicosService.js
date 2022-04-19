@@ -89,6 +89,15 @@ app.service("gestionTecnicosService", function ($http) {
 			transformRequest: angular.identity
 		});
 	};
+	
+	this.consultaMotivosJustificaciones = function(){
+		return $http({
+			method: "post",
+			url: "req/consultaMotivosJustificaciones",
+			headers: {'Content-Type': "application/json; charset=utf-8"},
+			transformRequest: angular.identity
+		});
+	};
 
 //    this.consultaMotivosGestionTecnicos = function () {
 //        return $http({

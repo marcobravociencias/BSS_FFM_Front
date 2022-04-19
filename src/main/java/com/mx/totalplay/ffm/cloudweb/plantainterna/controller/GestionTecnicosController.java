@@ -115,6 +115,16 @@ public class GestionTecnicosController {
         }
         return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
 	}
+	
+	@PostMapping("/consultaMotivosJustificaciones")
+	public ResponseEntity<?> consultaMotivosJustificaciones() {
+		logger.info("##### CONSULTANDO MOTIVOS DE JUSTIFICACIONES GT");
+		ServiceResponseResult result = gestionTecnicosService.consultaMotivosJustificaciones();
+        if (result.getResult() instanceof Integer){
+            return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
+	}
 
 //	@GetMapping("/consultaMotivosGestionTecnicos")
 //	public ResponseEntity<?> consultaMotivosGestionTecnicos() {
