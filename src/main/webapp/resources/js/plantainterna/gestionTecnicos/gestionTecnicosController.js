@@ -297,6 +297,9 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
                 let fechaInicio;
                 let fechaN;
                 let fetchtl;
+                
+                let fechaFin;
+                
                 if (disponibilidad.fecha.includes('/')) {
                     fechaInicio = disponibilidad.fecha.split('/');
                     fechaN = fechaInicio[1] + '/' + fechaInicio[0] + '/' + fechaInicio[2];
@@ -306,6 +309,8 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
                     fechaInicio = disponibilidad.fecha.split('-');
                     fechaN = fechaInicio[1] + '-' + fechaInicio[0] + '-' + fechaInicio[2];
                     newFecha = new Date(fechaN);
+                    
+                    //fechaFin = disponibilidad.fecha.split('-');
                 }
                 let arrayValidacion = eventosDisponibilidad.filter(function (element) { return $scope.convertDate(element.start) === $scope.convertDate(newFecha) });
                 if (arrayValidacion.length === 0) {
@@ -954,7 +959,6 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
     });
 
     $scope.convertFile = function (e, type) {
-         console.log("-> ",e);
         if (e.target.files[0]) {
             let reader = new FileReader();
             reader.readAsDataURL(e.target.files[0]);
@@ -1026,7 +1030,35 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
             isValid = false;
             mensajeError += '<li>Selecciona un archivo</li>';
         }
+        
         if (isValid) {
+        	var fechaInicioRegistro = $("#fecha_inicio_justificacion").val().split("/");
+        	var fechaFinRegistro = $("#fecha_fin_justificacion").val().split("/");
+        	let paramsRegistroJustificacion = {};
+        	
+        	paramsRegistroJustificacion.idTecnico = 13;
+        	paramsRegistroJustificacion.fechaInicio = fechaInicioRegistro[2] + "/" + fechaInicioRegistro[1] + "/" + fechaInicioRegistro[0];
+        	paramsRegistroJustificacion.fechaFin = fechaFinRegistro[2] + "/" + fechaFinRegistro[1] + "/" + fechaFinRegistro[0];
+        	paramsRegistroJustificacion.idTipoJustificacion = $scope.justificacionA.motivo;
+        	paramsRegistroJustificacion.comentarios = $scope.justificacionA.comentario;
+        	
+        	paramsRegistroJustificacion.evidencias = [];
+        	angular.forEach($("#fileAddJust")[0].files,function(archivoCargado,index){
+        		let reader = new FileReader();
+                reader.readAsDataURL(archivoCargado);
+                reader.onload = function () {
+                    let fileBase64 = reader.result.toString().split(",")[1];
+                    var nombreFile = archivoCargado.name.split(".");
+                    paramsRegistroJustificacion.evidencias.push({
+                    	archivo: fileBase64,
+                    	nombre: nombreFile[0],
+                    	extension: nombreFile[1]
+                    });
+                }
+        	});
+        	
+        	console.log(paramsRegistroJustificacion);
+        	
             swal({
                 title: "\u00BFEst\u00E1 seguro de registrar la justificaci\u00F3n?",
                 type: "warning",
@@ -1038,23 +1070,19 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
                 if (isConfirm) {
                     swal({ text: 'Espera un momento...', allowOutsideClick: false });
                     swal.showLoading();
-                    console.log($("#fileAddJust"));
-                    // console.log($scope.justificacionA)
-//                    let paramsAdd = {};
-//                    gestionTecnicosService.agregarJustificacionGestionTec(paramsAdd).then(function success(response) {
-//                        console.log(response)
-//                        if (response.data.respuesta) {
-//                            if (response.data.result) {
-//                                $("#modal-agregar-justificacion").modal('hide');
-//                                swal.close();
-//                            } else {
-                                swal.close();
-//                            }
-//                        } else {
-//                            swal.close();
-//                            mostrarMensajeWarningValidacion(response.data.resultDescripcion)
-//                        }
-//                    });
+                    gestionTecnicosService.guardarJustificacionTecnico(paramsRegistroJustificacion).then(function success(response) {
+                        console.log(response);
+                        if (response.data.respuesta) {
+                            if (response.data.result) {
+                                $("#modal-agregar-justificacion").modal('hide');
+//                                alert("Se registro");
+                            } else {
+                            }
+                        } else {
+                            mostrarMensajeWarningValidacion(response.data.resultDescripcion)
+                        }
+                        swal.close();
+                    });
                 }
             }).catch(err => {
             });
@@ -1259,9 +1287,9 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
                 row[4] = elemento.tipo;
                 row[5] = elemento.subtipo;
                 row[6] = elemento.puntualidad;
-                row[7] = elemento.fechaAgenda;
-                row[8] = elemento.fechaInicio;
-                row[9] = elemento.fechaFin;
+                row[7] = elemento.fechaAgenda != null ? elemento.fechaAgenda.split(" ")[0] : "Sin dato";
+                row[8] = elemento.fechaInicio != null ? elemento.fechaInicio.split(" ")[0] : "Sin dato";
+                row[9] = elemento.fechaFin != null ? elemento.fechaFin.split(" ")[0] : "Sin dato";
                 arrayRow.push(row);
             });
             tableDetalleTrabajo = $('#tableDetalleTrabajo').DataTable({

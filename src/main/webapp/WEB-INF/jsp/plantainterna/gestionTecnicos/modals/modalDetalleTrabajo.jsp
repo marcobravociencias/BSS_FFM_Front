@@ -8,7 +8,7 @@
             </div>
             <div class="modal-body">
                 <div class="container">
-                    <div class="content-fluid" style="margin-top: 0.7em;">
+                    <div class="content-fluid">
                         <div class="table-responsive">
                             <table class="display table" cellspacing="0" width="100%" id="tableDetalleTrabajo">
                                 <thead id="thead_detalleTrabajo">

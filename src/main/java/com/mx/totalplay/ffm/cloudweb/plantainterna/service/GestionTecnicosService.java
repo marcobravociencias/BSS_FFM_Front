@@ -14,6 +14,7 @@ public interface GestionTecnicosService {
 	public ServiceResponseResult consultaDiasTrabajadosAuxiliarPorFecha(String params);
 	public ServiceResponseResult consultaJustificacionesTecnico(String params);
 	public ServiceResponseResult consultaMotivosJustificaciones();
+	public ServiceResponseResult guardarJustificacionTecnico(String params);
 	
 //	public ServiceResponseResult consultaMotivosGestionTecnicos();
 //	
