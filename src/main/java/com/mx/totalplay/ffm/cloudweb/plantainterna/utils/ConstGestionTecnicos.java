@@ -42,4 +42,7 @@ public class ConstGestionTecnicos implements Serializable{
 	@Value("${consultaMotivosJustificaciones}")
 	private String consultaMotivosJustificaciones;
 	
+	@Value("${guardarJustificacionTecnico}")
+	private String guardarJustificacionTecnico;
+	
 }

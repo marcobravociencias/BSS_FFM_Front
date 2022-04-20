@@ -211,6 +211,20 @@ public class ImplGestionTecnicosService implements GestionTecnicosService {
 		logger.info("RESULT busqueda motivos justificaciones "+gson.toJson(response));
 		return response;
 	}
+	
+	@Override
+	public ServiceResponseResult guardarJustificacionTecnico(String params) {
+		logger.info("ImplGestionTecnicosService.class [metodo = guardarJustificacionTecnico()]\n");
+		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		jsonObject.addProperty("idOrigen",principalDetail.getIdOrigen());
+		String tokenAcces=principalDetail.getAccess_token();
+		logger.info("json object params## "+jsonObject.toString());
+		String url = principalDetail.getDireccionAmbiente().concat(constGestionTecnicos.getGuardarJustificacionTecnico());
+		ServiceResponseResult response= restCaller.callPostBearerTokenRequest(jsonObject.toString(),url,ServiceResponseResult.class,tokenAcces);
+		logger.info("RESULT REGISTRO JUSTIFICACION TEC " + gson.toJson(response));
+		return response;
+	}
 
 //	@Override
 //	public ServiceResponseResult consultaMotivosGestionTecnicos() {
