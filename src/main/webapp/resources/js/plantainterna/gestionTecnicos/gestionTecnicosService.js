@@ -108,6 +108,16 @@ app.service("gestionTecnicosService", function ($http) {
 			transformRequest: angular.identity
 		});
 	};
+	
+	this.eliminarJustificacionTecnico = function(params){
+		return $http({
+			method: "post",
+			url: "req/eliminarJustificacionTecnico",
+			data:JSON.stringify(params),
+			headers: {'Content-Type': "application/json; charset=utf-8"},
+			transformRequest: angular.identity
+		});
+	};
 
 //    this.consultaMotivosGestionTecnicos = function () {
 //        return $http({

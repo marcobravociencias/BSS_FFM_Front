@@ -225,6 +225,21 @@ public class ImplGestionTecnicosService implements GestionTecnicosService {
 		logger.info("RESULT REGISTRO JUSTIFICACION TEC " + gson.toJson(response));
 		return response;
 	}
+	
+	@Override
+	public ServiceResponseResult eliminarJustificacionTecnico(String params) {
+		logger.info("ImplGestionTecnicosService.class [metodo = eliminarJustificacionTecnico() ]\n");
+		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		Map<String, String> paramsRequestGet = new HashMap<String, String>();
+		paramsRequestGet.put("idJustificacion", jsonObject.get("idJustificacion").getAsString());
+		logger.info("json object params## "+ params);
+		String tokenAcces=principalDetail.getAccess_token(); 
+		String url = principalDetail.getDireccionAmbiente().concat(constGestionTecnicos.getEliminarJustificacionTecnico());
+		ServiceResponseResult response= restCaller.callDeleteBearerTokenRequest(paramsRequestGet, url, ServiceResponseResult.class, tokenAcces);
+		logger.info("RESULT ELIMINACION "+gson.toJson(response));
+		return response;
+	}
 
 //	@Override
 //	public ServiceResponseResult consultaMotivosGestionTecnicos() {

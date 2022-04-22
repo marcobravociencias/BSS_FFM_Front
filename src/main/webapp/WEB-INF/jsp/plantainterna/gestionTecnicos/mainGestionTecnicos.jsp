@@ -197,7 +197,7 @@
 	                                            <button class="btn btn-sm btnDetalleJustificacion" ng-click="consultarComentariosJustificacion()"><i class="fa fa-comments"></i></button>
 	                                            <button class="btn btn-sm btnDetalleJustificacion" ng-click="consultarArchivosJustificacion()" style="padding: 0.3em 0.7em !important;"><i class="fa fa-file"></i></button>
 	                                            <button class="btn btn-sm btnDetalleJustificacion" ng-click="openModalEditarJustificacion(justificacionDetalle)"><i class="fa fa-pencil-square"></i></button>
-	                                            <button class="btn btn-sm btnDetalleJustificacion" ng-click="openModalEliminarJustificacion(justificacionDetalle)"><i class="far fa-trash-alt"></i></button>
+	                                            <button class="btn btn-sm btnDetalleJustificacion" ng-click="eliminarJustificacionTecnico(justificacionDetalle)"><i class="far fa-trash-alt"></i></button>
 	                                        </div>
 	                                    </div>
 	                                    <div ng-show="!isJustificacion">
@@ -362,7 +362,7 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/magnific_popup/jquery.magnific-popup.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
 	<!-- fin -->
-	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionTecnicos/gestionTecnicosController.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionTecnicos/gestionTecnicosController.js?v=${sessionScope.versionDepl}" charset="UTF-8"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionTecnicos/gestionTecnicosService.js?v=${sessionScope.versionDepl}"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionTecnicos/jsonGestionTecnicos.js?v=${sessionScope.versionDepl}"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js?v=${sessionScope.versionDepl}"></script>

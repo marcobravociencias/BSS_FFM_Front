@@ -45,4 +45,7 @@ public class ConstGestionTecnicos implements Serializable{
 	@Value("${guardarJustificacionTecnico}")
 	private String guardarJustificacionTecnico;
 	
+	@Value("${eliminarJustificacionTecnico}")
+	private String eliminarJustificacionTecnico;
+	
 }
