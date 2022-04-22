@@ -45,7 +45,8 @@
     padding-left: 0
 }
 
-.form-register .steps li, .form-register .steps li.current {
+.form-register .steps li,
+.form-register .steps li.current {
     outline: none;
     -o-outline: none;
     -ms-outline: none;
@@ -137,11 +138,16 @@
     -webkit-transform: translate(-50%, -50%)
 }
 
-.form-register .steps li.current a .step-icon, .form-register .steps li.current a:active .step-icon, .form-register .steps .done::before, .form-register .steps li.done a .step-icon, .form-register .steps li.done a:active .step-icon {
+.form-register .steps li.current a .step-icon,
+.form-register .steps li.current a:active .step-icon,
+.form-register .steps .done::before,
+.form-register .steps li.done a .step-icon,
+.form-register .steps li.done a:active .step-icon {
     background: #854d96;
 }
 
-.form-register .steps li.current a .step-icon, .form-register .steps li.current a:active .step-icon {
+.form-register .steps li.current a .step-icon,
+.form-register .steps li.current a:active .step-icon {
     box-shadow: 0 5px 18px 0 rgba(0, 0, 0, .2);
     -o-box-shadow: 0 5px 18px 0 rgba(0, 0, 0, .2);
     -ms-box-shadow: 0 5px 18px 0 rgba(0, 0, 0, .2);
@@ -185,7 +191,8 @@
   } 
   */
 
-#moda-add-disponibilidad .input-filtro-disponibilidad, #modificar_disponibilidad_modal .input-filtro-disponibilidad {
+#moda-add-disponibilidad .input-filtro-disponibilidad,
+#modificar_disponibilidad_modal .input-filtro-disponibilidad {
     font-weight: 400;
     font-size: 1em;
     color: #818181 !important;
@@ -254,7 +261,9 @@ span.refresh-cuenta.refresh-btn.fa.fa-search {
     font-size: .9em;
 }
 
-.vespertino-event, .matutino-event, .nocturno-event {
+.vespertino-event,
+.matutino-event,
+.nocturno-event {
     box-shadow: 0 3px 15px 0 rgba(0, 0, 0, .19);
     -o-box-shadow: 0 3px 15px 0 rgba(0, 0, 0, .19);
     -ms-box-shadow: 0 3px 15px 0 rgba(0, 0, 0, .19);
@@ -357,7 +366,8 @@ a.fc-col-header-cell-cushion {
 
 .fc .fc-daygrid-day-number {
     color: grey !important;
-    font-weight: bold font-size:.9em;
+    font-weight: bold;
+    font-size: .9em;
 }
 
 .input-filtro-disponibilidad {
@@ -389,6 +399,7 @@ a.fc-col-header-cell-cushion {
 .btn-buscar-generica span {
     border: none;
     color: #818181;
+    padding: 0 0.5em;
 }
 
 #turno-form {
@@ -409,7 +420,6 @@ a.fc-col-header-cell-cushion {
     -webkit-box-shadow: 0 3px 15px 0 rgb(0 0 0 / 19%);
     cursor: pointer;
 }
-
 
 #calendar_disponibilidad .fc-button {
     color: gray !important;
@@ -456,7 +466,6 @@ a.fc-col-header-cell-cushion {
     float: right;
 }
 
-
 .contenedor-steps .content-seach-group {
     height: 1em;
     display: inline-flex;
@@ -480,7 +489,6 @@ a.fc-col-header-cell-cushion {
     top: 0.4em;
     font-size: .9em;
 }
-
 
 a.ui-corner-all {
     padding: 0;
@@ -518,7 +526,8 @@ a.ui-corner-all {
     top: 50%;
     display: none !important;
 }
-.icon-validate-form-rigth-aplica  {
+
+.icon-validate-form-rigth-aplica {
     position: absolute;
     right: 12%;
     width: fit-content;
@@ -561,28 +570,28 @@ a.ui-corner-all {
     color: white !important;
 }
 
-.jstree-proton .jstree-wholerow-hovered .jstree-anchor.jstree-hovered{
+.jstree-proton .jstree-wholerow-hovered .jstree-anchor.jstree-hovered {
     color: #fff !important;
 }
 
-.jstree-disabled{
-  cursor: not-allowed;
+.jstree-disabled {
+    cursor: not-allowed;
 }
 
-.jstree-themeicon{
-  display: none;
+.jstree-themeicon {
+    display: none;
 }
 
 .fa-instagram {
-  display: none !important;
+    display: none !important;
 }
 
-.cursorEfect{
-  cursor: pointer;
+.cursorEfect {
+    cursor: pointer;
 }
 
-.columna-noaplica-dispnobilidad{
-    padding:0;
+.columna-noaplica-dispnobilidad {
+    padding: 0;
     display: inline-block;
 }
 
@@ -591,57 +600,61 @@ a.ui-corner-all {
     display: inline-block;
     text-align: left;
 }
-.columna-noaplica-dispnobilidad:first-child{
-   padding-right:.5em;
+
+.columna-noaplica-dispnobilidad:first-child {
+    padding-right: .5em;
 }
-.columna-noaplica-dispnobilidad .input-filtro-disponibilidad{
-    background:red;
+
+.columna-noaplica-dispnobilidad .input-filtro-disponibilidad {
+    background: red;
     display: block;
     width: 100%;
 }
 
-.content-disponbilidad-disabled{
+.content-disponbilidad-disabled {
     height: 650px !important;
     opacity: 0.4;
     cursor: not-allowed;
 }
-
-
 
 .mensaje-siguiente-seccion {
     font-size: .8em;
     text-align: left;
     margin-top: 1em;
     color: #979797;
-    font-weight:bold;
-}
-.icon-faltan-datos{
-    color: #faa22a;
-    font-size: 1.3em !important;
-    font-weight:bold !important;
-    margin-right:.5em;
+    font-weight: bold;
 }
 
-.icon-siguiente-datos{
+.icon-faltan-datos {
+    color: #faa22a;
+    font-size: 1.3em !important;
+    font-weight: bold !important;
+    margin-right: .5em;
+}
+
+.icon-siguiente-datos {
     color: #1db021;
     font-size: 1.3em !important;
     font-weight: bold !important;
-    margin-right:.5em;
+    margin-right: .5em;
 }
-.siguiente-seccion{
-    background:#854d96;
+
+.siguiente-seccion {
+    background: #854d96;
     z-index: 0 !important;
     top: .5em;
     position: absolute !important;
     right: 0;
 }
-.siguiente-seccion:hover{
-    background:#854d96;
+
+.siguiente-seccion:hover {
+    background: #854d96;
 }
 
-.col-resumen-datos{
-    padding:0 ;
+.col-resumen-datos {
+    padding: 0;
 }
+
 .divider-siguiente {
     height: 1px ba;
     height: 1px;
@@ -649,7 +662,20 @@ a.ui-corner-all {
     margin: .2em 0 .4em 0;
 }
 
-.disabled-siguiente-secc{
-    opacity:0.5;
-    cursor:no-drop !important;
+.disabled-siguiente-secc {
+    opacity: 0.5;
+    cursor: no-drop !important;
+}
+
+.disabled-icon-siguiente-sec {
+    cursor: no-drop !important;
+}
+
+.invalid-inputOrdenesUniversales {
+    padding-right: calc(1.5em + 0.75rem) !important;
+    border-bottom: 2px solid #f55756 !important;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23dc3545' viewBox='0 0 12 12'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e") !important;
+    background-repeat: no-repeat !important;
+    background-position: right calc(0.375em + 0.1875rem) center !important;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem) !important;
 }

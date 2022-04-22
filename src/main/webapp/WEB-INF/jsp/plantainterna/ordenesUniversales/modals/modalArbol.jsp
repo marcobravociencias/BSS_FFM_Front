@@ -18,7 +18,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary btn-cerrar-modal" data-mdb-dismiss="modal">
+                <button type="button" class="btn btn-secondary btn-cerrar-modal" data-mdb-dismiss="modal" ng-click="validarModalesTipoIntervencionesGeografia('arbol')">
                     Cerrar
                 </button>
             </div>

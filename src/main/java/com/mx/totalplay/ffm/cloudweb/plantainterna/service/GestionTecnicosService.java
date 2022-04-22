@@ -15,6 +15,7 @@ public interface GestionTecnicosService {
 	public ServiceResponseResult consultaJustificacionesTecnico(String params);
 	public ServiceResponseResult consultaMotivosJustificaciones();
 	public ServiceResponseResult guardarJustificacionTecnico(String params);
+	public ServiceResponseResult eliminarJustificacionTecnico(String params);
 	
 //	public ServiceResponseResult consultaMotivosGestionTecnicos();
 //	

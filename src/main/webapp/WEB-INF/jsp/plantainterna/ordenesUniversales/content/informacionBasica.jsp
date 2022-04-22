@@ -16,7 +16,7 @@
             <label for="compania_select" class="label-filter">Folio</label>
             <div class="input-group mb-1" style="padding: 0;">
                 <input style="width: 90%;" type="text" id="folio" name="folio" ng-model="infoBasica.folio" class="form-control-sm input-filtro-disponibilidad-folio" placeholder="Sin folio">
-                <div   style="width: 10%;" class="input-group-append btn-buscar-generica" ng-click="consultarInformacionFolio()">
+                <div style="width: 10%;" class="input-group-append btn-buscar-generica" ng-click="consultarInformacionFolio()">
                     <span class="input-group-text"><i class="fa fa-search"></i></span>
                 </div>
             </div>
@@ -29,17 +29,17 @@
         </div>
         <div class="row input-group columna-filtro-ind">
             <label class="label-filter">Canal de venta *</label>
-            <input type="text" id="distrito-form" ng-model="infoBasica.canalVenta" ng-click="mostrarModalCanalVentas()" readonly class=" form-control-sm   input-filtro-disponibilidad " placeholder="Selecciona canal de venta">
+            <input type="text" id="canalVenta-form" ng-model="infoBasica.canalVenta" ng-click="mostrarModalCanalVentas()" readonly class="form-control-sm input-filtro-disponibilidad " placeholder="Selecciona canal de venta">
             <i ng-class="{'show-validate':isValForm && !infoBasica.canalVenta}" class="fas fa-info-circle icon-validate-form"></i>
         </div>
         <div class="row input-group columna-filtro-ind">
             <label class="label-filter">Paquete *</label>
-            <input type="text" id="distrito-form" ng-model="infoBasica.paquete" ng-click="mostrarModalPaquete()" readonly class=" form-control-sm   input-filtro-disponibilidad " placeholder="Selecciona paquete">
+            <input type="text" id="paquete-form" ng-model="infoBasica.paquete" ng-click="mostrarModalPaquete()" readonly class=" form-control-sm input-filtro-disponibilidad " placeholder="Selecciona paquete">
             <i ng-class="{'show-validate':isValForm && !infoBasica.paquete}" class="fas fa-info-circle icon-validate-form"></i>
         </div>
         <div class="row input-group columna-filtro-ind">
             <label class="label-filter">Geograf&iacute;a *</label>
-            <input type="text" id="distrito-form" ng-model="infoBasica.distrito" ng-click="mostrarModalArbol()" readonly class=" form-control-sm   input-filtro-disponibilidad " placeholder="Selecciona geograf&iacute;a">
+            <input type="text" id="distrito-form" ng-model="infoBasica.distrito" ng-click="mostrarModalArbol()" readonly class=" form-control-sm  input-filtro-disponibilidad " placeholder="Selecciona geograf&iacute;a">
             <i ng-class="{'show-validate':isValForm && !infoBasica.distrito}" class="fas fa-info-circle icon-validate-form-rigth"></i>
         </div>
         <div class="row input-group columna-filtro-ind">
@@ -61,8 +61,7 @@
         <div ng-show="!verAplicaDisponbilidad && !errorSeleccionIntGeografia" class="row input-group columna-filtro-ind">
             <div class="col-6 columna-noaplica-dispnobilidad">
                 <label class="label-filter">Turno * </label>
-                <select  id="turnoAplicaDisp" class="form-control-sm input-filtro-disponibilidad"
-                    placeholder="Compañia" ng-model="infoBasica.idTurnoSeleccionAplica" >
+                <select  id="turnoAplicaDisp" class="form-control-sm input-filtro-disponibilidad" placeholder="Compañia" ng-model="infoBasica.idTurnoSeleccionAplica" >
                     <option value="">Seleccione ...</option>
                     <option value="1">Matutino</option>
                     <option value="2">Vespertino</option>
@@ -88,7 +87,7 @@
                 </div>
             </div>
             <div class="col-2 col-resumen-datos">
-                <button ng-click="dirigirSegundaSeccion()" id="siguiente-seccion" ng-class="{'disabled-siguiente-secc':isErrorCamposBasicos}"  type="button" class="btn btn-sm btn-primary btn-floating siguiente-seccion">
+                <button ng-click="dirigirSegundaSeccion()" id="siguiente-seccion" ng-class="{'disabled-siguiente-secc':isErrorCamposBasicos}" type="button" class="btn btn-sm btn-primary btn-floating siguiente-seccion">
                     <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
