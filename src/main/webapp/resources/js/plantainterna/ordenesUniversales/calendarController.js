@@ -8,7 +8,7 @@ app.calendarController = function ($scope, ordenesUniversalesService) {
 
     $scope.inicialCalendario = function () {
         calendar_disponibilidad = document.getElementById('calendar_disponibilidad');
-        console.log(arregloDisponibilidad);
+        // console.log(arregloDisponibilidad);
         $scope.calendarDisp = new FullCalendar.Calendar(calendar_disponibilidad, {
             height: 650,
             locale: 'es',
@@ -24,9 +24,8 @@ app.calendarController = function ($scope, ordenesUniversalesService) {
             },
             
             eventClick: function (info, jsEvent, view) {
-                console.log(info);
+                // console.log(info);
                 let eventObject = info.event;
-
                 $scope.infoBasica.turno = eventObject._def.extendedProps.tipo + " / " + eventObject.startStr
                 $scope.infoBasica.turnotext=eventObject._def.extendedProps.tipo
                 $scope.infoBasica.fechaTurnoText=eventObject.startStr
@@ -49,14 +48,14 @@ app.calendarController = function ($scope, ordenesUniversalesService) {
     $scope.inicialCalendario();
 
     $scope.muestraDisponibilidadCalendar = function (response) {
-        console.log("inicia");
+        // console.log("inicia");
         if ($scope.calendarDisp) 
             $scope.calendarDisp.destroy();
         
         arregloDisponibilidad = [];
         let eventoDisponibilibidadTurno={};
         let arrayDisponibilidad = (response.dias !== undefined && response.dias !== null) ? response.dias !== undefined ? response.dias : [] : [];
-        console.log(arrayDisponibilidad);
+        // console.log(arrayDisponibilidad);
         $.each(arrayDisponibilidad, function(index, disponibInd){
             
             $.each(disponibInd.turnos,function(indexj,eventInd){               

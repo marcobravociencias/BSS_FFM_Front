@@ -30,13 +30,11 @@ public class OrdenesUniversalesController {
 	@PostMapping("/consultarCuentaAsignadaGenerica")
 	public ResponseEntity<?> consultarCuentaAsignadaGenerica(@RequestBody String params) {
 		logger.info("##### CONSULTANDO consultarCuentaAsignadaGenerica");
-		//ServiceResponseResult response = ordenesUniversalesService.consultarCuentaAsignadaGenerica(params);
+//		ServiceResponseResult response = ordenesUniversalesService.consultarCuentaAsignadaGenerica(params);
 		ServiceResponseResult response = null;
-		/*
-		if (response.getResult() instanceof Integer){
-			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-		}
-		*/
+//		if (response.getResult() instanceof Integer){
+//			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+//		}
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 	
