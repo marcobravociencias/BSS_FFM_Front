@@ -1084,7 +1084,6 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                         $scope.limpiarContentDetalleTicket()
                         $scope.contentdetalleticket = true;
                         $scope.editTicket = results[0].data.result.detalleGeneral;
-
                         $scope.ticketSoporteDetalle.fallaTicketD = $scope.editTicket.detalleTicketSc.falla + '';
                         $scope.listCategoriasTicketDetalle = [];
                         $scope.catalogoFallasTicketSoporte.map(function (c) {
@@ -1092,7 +1091,6 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                                 $scope.listCategoriasTicketDetalle.push(c);
                             }
                         });
-                        console.log($scope.listCategoriasTicketDetalle);
                         $scope.ticketSoporteDetalle.categoriaTicketD = $scope.editTicket.detalleTicketSc.categoria + '';
                         $scope.listSubcategoriasTicketDetalle = [];
                         $scope.catalogoFallasTicketSoporte.map(function (s) {
@@ -1102,20 +1100,17 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                         });
                         $scope.ticketSoporteDetalle.subcategoriaTicketD = $scope.editTicket.detalleTicketSc.subcategoria + '';
                         $scope.ticketSoporteDetalle.estatus = $scope.editTicket.detalleTicketSc.idEstatus + '';
-                        let urlTec = $scope.editTicket.detalleOtDetenida.fotoTecnico ? $scope.detalleOtDetenida.fotoTecnico : "./resources/img/plantainterna/despacho/tecnicootasignada.png";
+                        let urlTec = $scope.editTicket.detalleOtDetenida.fotoTecnico ? $scope.editTicket.detalleOtDetenida.fotoTecnico : "./resources/img/plantainterna/despacho/tecnicootasignada.png";
                         let urlIng = $scope.editTicket.detalleTicketSc.fotoInge ? $scope.editTicket.detalleTicketSc.fotoInge : "./resources/img/plantainterna/despacho/tecnicootasignada.png";
-                
                         $("#fotoIngeniero").attr("src", urlIng);
                         $("#fotoTecnico").attr("src", urlTec);
-                        $scope.editTicket.tipoOrdenText = $scope.catTipoOrdenesGeneral.find(e => Number(e.id) == Number($scope.editTicket.detalleOtDetenida.tipoOrden));
-                        $scope.editTicket.subtipoOrdenText = $scope.catTipoOrdenesGeneral.find(e => Number(e.id) == Number($scope.editTicket.detalleOtDetenida.subtipoOrden));
-                
+                        $scope.editTicket.tipoOrdenText = $scope.catTipoOrdenesGeneral.find(e => Number(e.id) == Number($scope.editTicket.detalleOtDetenida.tipoOrden)).nombre;
+                        $scope.editTicket.subtipoOrdenText = $scope.catTipoOrdenesGeneral.find(e => Number(e.id) == Number($scope.editTicket.detalleOtDetenida.subtipoOrden)).nombre;
                         let clusterInd = $scope.listadoGeografiaSoporte.find(e => e.id == $scope.editTicket.detalleOtDetenida.idCluster)
                         let zonaInd = $scope.listadoGeografiaSoporte.find(e => e.id == parseInt(clusterInd.padre))
                         let distritoInd = $scope.listadoGeografiaSoporte.find(e => e.id == parseInt(zonaInd.padre))
                         let ciudadInd = $scope.listadoGeografiaSoporte.find(e => e.id == parseInt(distritoInd.padre))
                         let regionInd = $scope.listadoGeografiaSoporte.find(e => e.id == parseInt(ciudadInd.padre))
-
                         $scope.editTicket.clusterText = clusterInd.nombre
                         $scope.editTicket.zonaText = zonaInd.nombre
                         $scope.editTicket.distritoText = distritoInd.nombre
