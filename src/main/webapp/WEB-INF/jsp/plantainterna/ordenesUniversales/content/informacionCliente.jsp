@@ -1,6 +1,6 @@
 <div class="row ">
     <div class="col-6" style="text-align: left !important;">
-        <label class="label-filter active" for="os-cuenta-cliente-sec" style="display: inline; font-size: 1em; text-align: left;">
+            <label ng-click="colocarDatosTesting()" class="label-filter active" for="os-cuenta-cliente-sec" style="display: inline; font-size: 1em; text-align: left;">
             CUENTA: {{informacionCliente.cuenta == undefined ? 'Sin Informaci&oacute;n' : informacionCliente.cuenta}}
             &nbsp;&nbsp;
             OS: {{informacionCliente.os == undefined ? 'Sin Informaci&oacute;n' : informacionCliente.os}}

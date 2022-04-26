@@ -582,7 +582,23 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
     }
 
     $scope.borrarInformacionCliente = function () {
-        $scope.informacionCliente = {};
+        swal({
+            title: "Borrar datos",
+            text: "\u00BFDesea borrar los datos capturados?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#007bff',
+            confirmButtonText: 'Si',
+            cancelButtonText: 'Cancelar',
+            allowOutsideClick: false
+        }).then(function (motivo) {
+            if (motivo) {
+                $scope.informacionCliente = {};    
+                $scope.$apply()            
+            }
+        }).catch(err => {
+    
+        });
     }
 
     $scope.consultarDisponibilidad = function (distrito) {
@@ -1192,6 +1208,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                 if (response.data.result) {
                     $scope.mensajeRequestGuardado = response.data.result.mensaje
                     if (response.data.result.idOrden) {
+                        $scope.isErrorCamposBasicos = true
                         $scope.isGuardadoCreacion = true
                         $scope.informacionCliente = {}
                         $scope.infoBasica = {}
@@ -1224,7 +1241,36 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
             }
         }).catch(err => handleError(err));
     }
-
+    $scope.countDatosTesting=0;
+    $scope.colocarDatosTesting=function(){
+        $scope.countDatosTesting+=1
+        if($scope.countDatosTesting == 4){
+            $scope.informacionCliente = {
+                "nombre": "Carlos ",
+                "apaterno": "Gomez",
+                "amaterno": "Torres",
+                "nombreContacto": "ORGEMP SA DE CV",
+                "calle": "AVENIDA FLORES",
+                "numeroExt": "NA",
+                "numeroInt": "12",
+                "codigoPostal": "926152",
+                "comentario": "comentario testing",
+                "estado": "CDMX",
+                "municipio": "ALVARO OBREGON",
+                "entreCalles": "GUERRERO Y DEL CRUCERO",
+                "referencias": "ENTRE ASP. 1 Y RED..",
+                "ext": "",
+                "telefono": "5592894501",
+                "celular": "5592894502",
+                "ciudad": "SAN JERONIMO",
+                "colonia": "SAN JERONIMO COL",
+                "correo": "totalplaytest@gmail.com",
+                "telefonoContacto": "5592894503",
+                "razonsocial": "Total play empresarial DE cv"
+            }
+            $scope.countDatosTesting=0
+        }
+    }
     //$scope.armarTestCliente=function(){
     // $scope.informacionCliente = {
     //     "nombre": "HECTOR ",
