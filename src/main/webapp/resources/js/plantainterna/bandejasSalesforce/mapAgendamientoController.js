@@ -58,7 +58,7 @@ app.agendamientoMap = function ($scope, bandejasSalesforceService) {
             $scope.longitudSelected = this.getPosition().lng();
             $scope.$apply()
             $("#search-input-place").val(this.getPosition().lat() + ', ' + this.getPosition().lng());
-            $scope.consultarFactibilidadAgendamiento('residencial', $scope.latitudSelected, $scope.longitudSelected);
+            $scope.consultarFactibilidadAgendamiento('empresarial', $scope.latitudSelected, $scope.longitudSelected);
         });
 
         google.maps.event.addListener(mapAgendamiento, 'dblclick', function (e) {
@@ -69,7 +69,7 @@ app.agendamientoMap = function ($scope, bandejasSalesforceService) {
             $scope.longitudSelected = markerAg.getPosition().lng();
             $scope.$apply()
             $("#search-input-place").val($scope.latitudSelected + ', ' + $scope.longitudSelected);
-            $scope.consultarFactibilidadAgendamiento('residencial', $scope.latitudSelected, $scope.longitudSelected);
+            $scope.consultarFactibilidadAgendamiento('empresarial', $scope.latitudSelected, $scope.longitudSelected);
         });
     }
 
@@ -96,7 +96,7 @@ app.agendamientoMap = function ($scope, bandejasSalesforceService) {
                 markerAg.setPosition(new google.maps.LatLng($scope.latitudSelected, $scope.longitudSelected));
                 mapAgendamiento.setZoom(17);
                 mapAgendamiento.setCenter(new google.maps.LatLng($scope.latitudSelected, $scope.longitudSelected));
-                $scope.consultarFactibilidadAgendamiento('residencial', $scope.latitudSelected, $scope.longitudSelected);
+                $scope.consultarFactibilidadAgendamiento('empresarial', $scope.latitudSelected, $scope.longitudSelected);
 
                 if (place.geometry.viewport) {
                     bounds.union(place.geometry.viewport);

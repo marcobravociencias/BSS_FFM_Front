@@ -9,5 +9,7 @@ public interface BandejasSalesforceService {
 	public ServiceResponseResult consultarRescataventasBandejasSF(String params);
 	
 	public ServiceResponseResult consultarPendientesActivarBandejasSF(String params);
+	
+	public ServiceResponseResult consultarFactibilidadEmpresarialBandejasSF(String params);
 
 }

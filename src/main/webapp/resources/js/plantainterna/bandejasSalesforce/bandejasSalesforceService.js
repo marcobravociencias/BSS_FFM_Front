@@ -55,7 +55,7 @@ app.service("bandejasSalesforceService", function ($http) {
     this.consultaFactibilidadResidencialAgendamiento = function (params) {
         return $http({
             method: "post",
-            url: "req/consultaFactibilidadResidencial",
+            url: "req/consultarFactibilidadEmpresarialBandejasSF",
             data: JSON.stringify(params),
             headers: { 'Content-Type': "application/json; charset=utf-8" },
             transformRequest: angular.identity
@@ -65,7 +65,7 @@ app.service("bandejasSalesforceService", function ($http) {
     this.consultaFactibilidadEmpresarialAgendamiento = function (params) {
         return $http({
             method: "post",
-            url: "req/consultaFactibilidadEmpresarial",
+            url: "req/consultarFactibilidadEmpresarialBandejasSF",
             data: JSON.stringify(params),
             headers: { 'Content-Type': "application/json; charset=utf-8" },
             transformRequest: angular.identity
