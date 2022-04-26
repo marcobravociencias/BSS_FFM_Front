@@ -49,7 +49,9 @@ public class ParamConsultaOTPI {
 	private String fechaInicioOrden;
 	private String fechaFinOrden;
 	private int elementosPorPagina;
+	private int elementos;
 	private int pagina;
 	private int totalRegistros;
 	private String tipoFecha;
+	private List<Integer> idGeografias;
 }

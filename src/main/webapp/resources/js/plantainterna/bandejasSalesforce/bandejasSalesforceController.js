@@ -553,8 +553,8 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
 
     $scope.consultarFactibilidadAgendamiento = function (unidadNegocio, latitud, longitud) {
         let params = {
-            latitud: latitud,
-            longitud: longitud
+            latitud: Number(latitud),
+            longitud: Number(longitud)
         }
         swal({ text: 'Espere...', allowOutsideClick: false });
         swal.showLoading();
@@ -639,7 +639,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         $scope.$apply();
         $scope.clearFormAgendamiento();
         $scope.consultarDisponibilidadBandejas();
-        $scope.consultarFactibilidadAgendamiento('residencial', $scope.elementoCSP.latitud, $scope.elementoCSP.longitud);
+        $scope.consultarFactibilidadAgendamiento('empresarial', $scope.elementoCSP.latitud, $scope.elementoCSP.longitud);
         $scope.clearMarkersAgendamiento();
         $scope.setMarkerAgendamiento();
     }

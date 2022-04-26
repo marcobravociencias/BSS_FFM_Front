@@ -25,13 +25,13 @@
     border-radius: 0.5em !important;
     /* box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.07), 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important; */
     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 7%), 0 1px 2px 0 rgb(0 0 0 / 5%) !important;
-    border-bottom: 2px solid rgb(217, 217, 217) !important;
+    border-bottom: 0 1px 3px 0 rgb(0 0 0 / 7%), 0 1px 2px 0 rgb(0 0 0 / 5%) !important;
 }
 
 .columna-filtro-ind::after {
  content: "";
  position: absolute;
- right: 9%;
+ right: 3%;
  top: 65%;
  width: 0;
  height: 0;
@@ -74,7 +74,7 @@
 }
 .btnTicket:hover,.btnTicket:active,.btnTicket:focus {
     background-color:white;
-    color: #7716fa;
+    color: #7716fa !important;
 }
 
 .btnTicket {
@@ -134,12 +134,12 @@
 }
   
 #tableTicketSoporte>tbody>tr>td {
-    /* white-space: nowrap; */
     color: #39455b;
     font-family: 'Montserrat';
     font-size: .8em;
     border-top: 0px solid #eceeef !important;
     text-align: center;
+    white-space: nowrap;
 }
   
 #tableTicketSoporte thead th {
@@ -147,7 +147,7 @@
     background-color: #b1b1b1;
     color: #fff;
     font-size: 0.8em;
-    /* white-space: nowrap; */
+    white-space: nowrap;
     padding: 1em;
     border: none;
     font-weight: normal;
@@ -199,8 +199,13 @@ div.dataTables_wrapper div.dataTables_filter input {
     text-align: center;
 }
 
+.btnTables:hover,  .btnTables:active{
+    background-color: #7716fa !important;
+
+}
+
 .btn-option {
-    padding: 0.4em 1em !important;
+    padding: 0.4em 1.1em !important;
     border-radius: 0.2rem !important;
     cursor: pointer;
 }
@@ -554,8 +559,7 @@ thead#thead_tecnicosCuenta {
     margin-bottom: 0;
 }
 #filtros_config .label-filter i{
-    font-size: .9em;
-    margin-right: .5em;;
+    font-size: .9em;    
 }
 
 .row-datos-creacion .form-group {
@@ -596,14 +600,14 @@ thead#thead_tecnicosCuenta {
     display: flex;
 }
 span.text-tile-vehiculo {
-    font-weight: bold;
-    font-size: 0.8em;
-    color: #303030;
+    font-size: 0.7em;
+    color: #000;
+    text-transform: uppercase;
 }
 span.text-content-vehiculo {
     /* font-weight: bold; */
     font-size: 0.8em;
-    color: #303030;
+    color: #9d9ea2;
 }
 .container-text-content {
   width: 60%;
@@ -624,6 +628,21 @@ span.text-content-vehiculo {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.container-text-title-dictamen {
+    width: 80% !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .container-text-content-dictamen {
+    width: 20% !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
 .text-info-ot-text {
     margin-top: .8em;
 }
@@ -699,3 +718,54 @@ span.text-content-vehiculo {
     /* padding-left: .5em !important; */
 }
 
+#detalleTicketAccordion .accordion-button:after{
+    content: "\f054" !important;
+    font-size: 0.8em;
+    margin-top: 0.2em;
+}
+
+#detalleTicketAccordion .accordion-button:not(.collapsed):after{
+    transform: rotate(90deg);
+}
+
+#detalleTicketAccordion .accordion-button:focus {
+
+}
+
+#detalleTicketAccordion .imgFoto {
+    box-shadow: 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%), 0 2px 4px -1px rgb(0 0 0 / 30%);
+    cursor: pointer;
+    border-radius: 35px;
+    margin-top: 30%;
+}
+
+#detalleTicketAccordion .accordion-item{
+    margin: 1em;
+}
+
+#detalleTicketAccordion .accordion-collapse{
+    margin-top: 0.5em;
+    border-left: 1px solid #7716fa;
+}
+
+#detalleTicketAccordion .accordion-button{
+    color: #000000 !important;
+}
+
+#detalleTicketAccordion .accordion-button:hover, .accordion-button:not(:hover):focus {
+    background-color: #fff !important;
+}
+
+.input-filtro-content{
+    width: 170px;
+    padding-right: 0;
+}
+
+.content-falla{
+    padding: 0 1em;
+}
+
+i.icono-noseleccion {
+    color: #ff9f3b;
+    display: inline-block;
+}

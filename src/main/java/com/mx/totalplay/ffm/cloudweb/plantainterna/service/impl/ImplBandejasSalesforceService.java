@@ -1,5 +1,8 @@
 package com.mx.totalplay.ffm.cloudweb.plantainterna.service.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,6 +87,29 @@ public class ImplBandejasSalesforceService implements BandejasSalesforceService 
 		
 		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(jsonObject.toString(), urlRequest, ServiceResponseResult.class, tokenAccess);
 		
+		return response;
+	}
+
+	@Override
+	public ServiceResponseResult consultarFactibilidadEmpresarialBandejasSF(String params) {
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		logger.info("ImplBandejasSalesforceService.class [metodo = consultarFactibilidadEmpresarialBandejasSF() ] \n" + jsonObject);
+		
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String tokenAccess = principalDetail.getAccess_token();
+		logger.info("consultarPendientesActivarBandejasSF## "+tokenAccess);
+		
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constBandejasSalesforce.getConsultaFactibilidadEmpresarialBandejasSF());
+		logger.info("URL## " + urlRequest);
+		
+		Map<String, String> paramsRequestGet = new HashMap<String, String>();
+		paramsRequestGet.put("latitud", jsonObject.get("latitud").getAsString());
+		paramsRequestGet.put("longitud", jsonObject.get("longitud").getAsString());
+		
+		logger.info(paramsRequestGet);
+
+		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
+				ServiceResponseResult.class, tokenAccess);
 		return response;
 	}
     

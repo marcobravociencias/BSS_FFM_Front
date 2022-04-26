@@ -3,7 +3,7 @@
         <div class="form-row form-row-creacion">
             <div class="col-4 form-group">
                 <label for="cuentaTicket" class="span-form-tickets">Cuenta *</label>
-                <input ng-blur="consultarCuentaCliente()" type="text" class="form-control form-controlt  inputTicket" aria-describedby="basic-addon3" id="cuentaTicket" ng-model="ticketSoporteR.cuenta" />
+                <input type="text" ng-click="isSearchCuenta = false"  ng-change="isSearchCuenta = false" class="form-control form-controlt  inputTicket" aria-describedby="basic-addon3" id="cuentaTicket" ng-model="ticketSoporteR.cuenta" />
             </div>        
             <div class="col-4 form-group">
                 <label for="telefonoTicket" class="span-form-tickets">Tel&eacute;fono </label>
@@ -66,7 +66,7 @@
         </div-->
         <div class="form-row form-row-creacion">
             <div class="col-4 form-group">
-                <label for="fallaTicket" class="span-form-tickets">Falla *</label>
+                <label for="fallaTicket" class="span-form-tickets">Falla *<i ng-if="!catalogoFallasTicketSoporte.length" class="icono-noseleccion fas fa-exclamation-circle ml-2" title="No se encontr&oacute;o el catalogo de geograf&iacute;a"></i></label>
                 <select class="form-control form-controlt  custom-select inputTicket" name="fallaTicket" id="fallaTicket" ng-change="loadCategoriaTicketSoporte('registro')" ng-model="ticketSoporteR.fallaTicket">
                     <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
                     <option value="{{fallaTicket.id}}" ng-repeat="fallaTicket in listFallasTicket">
