@@ -70,7 +70,7 @@
     </div>
     <jsp:include page="./modals/modalGeografiaConsulta.jsp"></jsp:include>
     <jsp:include page="./modals/modalBusquedaTecnico.jsp"></jsp:include>
-
+    <jsp:include page="./modals/modalFoto.jsp"></jsp:include>
     <jsp:include page="./modals/modalBusquedaCuenta.jsp"></jsp:include>
 </body>
 <!-- Scripts libraries -->

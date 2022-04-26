@@ -17,7 +17,7 @@
             <input id="searchGeo" type="text" autocomplete="off" class="form-control buscadorGenerico" placeholder="Buscar geograf&iacute;a">
             <span class="fa fa-search iconoBusqueda"></span>
           </div>
-          <div id="jstree-consulta-tickets" class="proton-demo"></div>
+          <div id="jstree-consulta-tickets" class="proton-demo mt-1"></div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface" data-mdb-dismiss="modal">

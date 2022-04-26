@@ -1,24 +1,31 @@
 <div class="row md-form" id="filtros_config">
-    <div class="col-2 columna-filtro-ind">  
-        <label for="filtro_fecha_inicio_ticket" class="label-filter"><i class="fa fa-calendar"></i>Tipo de fecha</label>
-        <select class="input-filtro form-control form-control-sm input-filtro-ticket" id="tipo_reporte"   ng-model="tipoFechaConsulta">
-            <option value="" >Todos</option>
+    <div class="col-2 input-filtro-content">  
+        <label for="filtro_folio_ticket" class="label-filter"><i class="fas fa-ticket-alt"></i> Folio sistema</label>
+        <input type="text" id="filtro_folio_ticket" ng-change="filtroBusqueda.cuenta = ''" ng-model="filtroBusqueda.folio" placeholder="Ej:293870" class="input-filtro-ticket form-control form-control-sm" />
+    </div>
+    <div class="col-2 input-filtro-content">  
+        <label for="filtro_clave_ticket" class="label-filter"><i class="fa fa-user"></i> Cuenta</label>
+        <input type="text" id="filtro_clave_ticket" placeholder="Ej:2300023000" ng-change="filtroBusqueda.folio = ''" ng-model="filtroBusqueda.cuenta" class="input-filtro-ticket form-control form-control-sm" />
+    </div>
+    <div class="col-2 columna-filtro-ind input-filtro-content">  
+        <label for="filtro_fecha_inicio_ticket" class="label-filter"><i class="fa fa-calendar"></i> Tipo fecha</label>
+        <select class="input-filtro form-control form-control-sm input-filtro-ticket" id="tipo_reporte" ng-model="filtroBusqueda.tipoFechaConsulta">
+            <option value="" >Seleccione...</option>
             <option value="creacion" selected>Creaci&oacute;n</option>
             <option value="cierre">Cierre</option>
             <option value="asignacion">Asignacion</option>
-
         </select>
     </div>
-    <div class="col-2 columna-filtro-ind">  
+    <div class="col-2 columna-filtro-ind input-filtro-content">  
         <label for="filtro_fecha_inicio_ticket" class="label-filter"><i class="fa fa-calendar"></i> Fecha inicial</label>
         <input readonly type="text" id="filtro_fecha_inicio_ticket" class="datepicker input-filtro-ticket form-control form-control-sm" />
     </div>
-    <div class="col-2 columna-filtro-ind" >
-        <label for="filtro_fecha_fin_ticket" class="label-filter"><i class="fa fa-calendar"></i>Fecha final</label>
+    <div class="col-2 columna-filtro-ind input-filtro-content">
+        <label for="filtro_fecha_fin_ticket" class="label-filter"><i class="fa fa-calendar"></i> Fecha final</label>
         <input readonly type="text" id="filtro_fecha_fin_ticket" class="datepicker input-filtro-ticket form-control form-control-sm" />
     </div>
-    <div class="col-2 columna filtro-ind">
-        <label class="label-filter"><i class="fas fa-map-marked"></i> Geograf&iacute;a</label>
+    <div class="col-2 columna-filtro-ind input-filtro-content">
+        <label class="label-filter"><i class="fas fa-map-marked"></i> Geograf&iacute;a<i ng-if="!listadoGeografiaSoporte.length" class="icono-noseleccion fas fa-exclamation-circle ml-2" title="No se encontr&oacute;o el catalogo de geograf&iacute;a"></i></label>
         <input id="txtGeografiasConsulta" type="text" class="input-filtro-status form-control form-control-sm"
             ng-click="abrirModalGeografiaConsulta()" 
             placeholder="NO HAY SELECCI&Oacute;N" readonly autocomplete="off">
@@ -77,16 +84,15 @@
                 <thead id="thead_ticketSoporte">
                     <tr>
                         <th>OT</th>
-                        <th>Ticket</th>
-                        <!-- <th>OS</th> -->
-                        <th>Fecha creaci&oacute;n</th>
-                        <th>Falla inicial</th>
-                        <!-- <th>Tel&eacute;fono</th> -->
-                        <th>T&eacute;cnico</th>
-                        <th>Ingeniero</th>
-                        <th>H/A Asignaci&oacute;n</th>
+                        <th>OT Soporte</th>
+                        <th>Cuenta</th>
+                        <th>Folio</th>
+                        <th>Cliente</th>
+                        <th>Falla</th>
+                        <th>Categoria</th>
+                        <th>Subcategoria</th>
                         <th>Estatus</th>
-                        <th>Tiempo de atenci&oacute;n</th>
+                        <th>Fecha creaci&oacute;n</th>
                         <th style="width: 100px !important;">Acciones</th>
                     </tr>
                 </thead>

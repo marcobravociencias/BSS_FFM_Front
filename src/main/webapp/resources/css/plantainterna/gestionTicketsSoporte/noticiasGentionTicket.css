@@ -239,9 +239,9 @@
 }
 
 span.text-tile-ticket {
-  font-weight: bold;
-  font-size: 0.8em;
-  color: #444444;
+  /*font-weight: bold;*/
+  font-size: 0.7em;
+  color: #000;
 }
 
 .ticket-content {
@@ -361,7 +361,6 @@ span.text-content-ticket {
 
 div#filtros_config {
     margin-top: .5em;
-    border-top: 1px solid #d7d7d7;
     padding-top: .5em;
 }
 
@@ -460,23 +459,46 @@ a.descarga-adjuntadocomment {
     min-height: 1.5em !important;
 }
 
-##jstreeconsulta .jstree-anchor {
-    font-family: 'Montserrat';
-    font-size: .8em;
-} 
-.jstree-anchor {
-    font-family: 'Montserrat';
-    font-size: .8em;
+#jstree-consulta-tickets .jstree-clicked i {
+  color: #fff !important;
 }
-.jstree-proton .jstree-clicked {
-    color: #808080;
+
+#jstree-consulta-tickets .jstree-hovered i {
+  color: #fff !important;
 }
+
+#jstree-consulta-tickets .jstree-proton {
+  font-family: 'Montserrat' !important;
+  font-size: 0.9em;
+}
+
 .jstree-proton .jstree-wholerow-clicked {
-    background: white;
+  background: white !important;
 }
 
+.jstree-proton .jstree-clicked {
+  color: #808080 !important;
+}
 
+ .jstree-checkbox-selection .jstree-clicked {
+  color: #808080 !important;
+}
 
+.jstree-proton .jstree-search {
+  font-style: italic;
+  color: #8b0000 !important;
+  font-weight: bold;
+}
+.jstree-proton {
+  color: #808080 !important;
+  font-family: 'Montserrat' !important;
+  font-weight: lighter !important;
+  font-size: 0.8em;
+}
+
+.jstree-proton .jstree-clicked {
+  border-radius: 0;
+}
 
 
 #tabs-tickets {

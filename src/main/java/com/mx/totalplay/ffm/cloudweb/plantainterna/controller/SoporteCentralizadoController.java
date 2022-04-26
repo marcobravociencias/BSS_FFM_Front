@@ -81,13 +81,14 @@ public class SoporteCentralizadoController {
 	}
     
     @PostMapping("/consultaTicketsSoporte")
-	public ResponseEntity<?> consultaTicketsSoporte(@RequestBody String params) {
+	public ResponseEntity<?> consultaTicketsSoporte(@ModelAttribute ParamConsultaOTPI params) {
 		logger.info("#### consultaTicketsSoporte ### \n" + params);
-		ServiceResponseResult response = soporteCentralizadoService.consultaTicketsSoporte(params);
-		if (response.getResult() instanceof Integer){
-            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-        }
-        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+        
+        dataTableResponse = soporteCentralizadoService.consultaTicketsSoporte(params);
+		if (dataTableResponse.getResult() instanceof Integer){
+			return new ResponseEntity<DataTableResponse>(dataTableResponse, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<DataTableResponse>(dataTableResponse, HttpStatus.ACCEPTED);
 	}
     
     @PostMapping("/creaTicketSoporte")

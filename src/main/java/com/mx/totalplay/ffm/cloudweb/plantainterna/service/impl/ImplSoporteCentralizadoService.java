@@ -89,7 +89,7 @@ public class ImplSoporteCentralizadoService implements SoporteCentralizadoServic
         logger.info("### URL connsultarDetalleTicketGestion(): \n" + urlRequest);
 		
 		Map<String, String> paramsRequestGet = new HashMap<String, String>();
-		paramsRequestGet.put("claveCliente", "0100000185");
+		paramsRequestGet.put("idTicket", params);
 		
 		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest, ServiceResponseResult.class, tokenAcces);
         
@@ -149,21 +149,106 @@ public class ImplSoporteCentralizadoService implements SoporteCentralizadoServic
 	}
 
 	@Override
-	public ServiceResponseResult consultaTicketsSoporte(String params) {
+	public DataTableResponse consultaTicketsSoporte(ParamConsultaOTPI params) {
 		logger.info("ImplSoporteCentralizadoService.class [metodo = consultaTicketsSoporte() ] \n"+params);
-		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();		
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String[][] dataArray = new String[0][13];
+		DataTableResponse dataResponse = DataTableResponse.builder().isRespuesta(false).data(dataArray).paginaActual(0)
+				.registrosTotales(0).recordsFiltered("0").recordsTotal("0").draw(params.getDraw() + "").result(null)
+				.build();
+		params.setPagina((Integer.parseInt(params.getStart()) + 10) / 10);
+		
+		logger.info("### Object: " + gson.toJson(params));
+
 		String tokenAcces = principalDetail.getAccess_token();
-        logger.info("consultaTicketsSoporte ## " + tokenAcces);
-        String urlRequest = principalDetail.getDireccionAmbiente().concat(constSoporteCentralizado.getConsultaTicketsSoporte());
-        logger.info("URL ##+" + urlRequest);             
-        
-        ServiceResponseResult response = restCaller.callPostBearerTokenRequest(
-        		params, urlRequest,
-                ServiceResponseResult.class, tokenAcces);
-        
-        logger.info("response#### "+gson.toJson(response));
-        
-        return response;
+		logger.info("consultaTicketsSoporte ##+" + tokenAcces);
+		String urlRequest = principalDetail.getDireccionAmbiente()
+				.concat(constSoporteCentralizado.getConsultaTicketsSoporte());
+		logger.info("URL ##+" + urlRequest);
+
+		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(gson.toJson(params), urlRequest,
+				ServiceResponseResult.class, tokenAcces);
+
+		if (response.getResult() == null || response.getResult() instanceof Integer) {
+			dataResponse = DataTableResponse.builder().isRespuesta(false).data(dataArray).paginaActual(0)
+					.registrosTotales(0).recordsFiltered("0").recordsTotal("0").draw(params.getDraw() + "")
+					.result(response.getResult()).build();
+		} else {
+			JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
+			JsonArray ordenesArray = jsonObjectResponse.getAsJsonArray("tickets");
+			if (ordenesArray.size() > 0) {
+				if (jsonObjectResponse.get("registrosTotales").getAsInt() > 0) {
+					int count = 0;
+					dataArray = new String[ordenesArray.size()][12];
+					for (int i = 0; i < ordenesArray.size(); i++) {
+						JsonObject object = (JsonObject) ordenesArray.get(i);
+
+						dataArray[count][0] = object.get("otCentralizado").getAsInt() != 0
+								? String.valueOf(object.get("otCentralizado").getAsInt())
+								: "Sin dato";
+						dataArray[count][1] = object.get("otGeneraSoporte").getAsInt() != 0
+										? String.valueOf(object.get("otGeneraSoporte").getAsInt())
+										: "Sin dato";
+						dataArray[count][2] = (object.get("claveCliente") != null
+								&& object.get("claveCliente").getAsString().trim() != "")
+										? object.get("claveCliente").getAsString().trim()
+										: "Sin dato";
+						dataArray[count][3] = (object.get("folioSistema") != null
+								&& object.get("folioSistema").getAsString().trim() != "")
+										? object.get("folioSistema").getAsString().trim()
+										: "Sin dato";
+						dataArray[count][4] = (object.get("cliente") != null
+								&& object.get("cliente").getAsString().trim() != "")
+										? object.get("cliente").getAsString().trim()
+										: "Sin dato";
+						dataArray[count][5] = (object.get("fallaReportada") != null
+								&& object.get("fallaReportada").getAsString().trim() != "")
+										? object.get("fallaReportada").getAsString().trim()
+										: "Sin dato";
+						dataArray[count][6] = (object.get("categoria") != null
+								&& object.get("categoria").getAsString().trim() != "")
+										? object.get("categoria").getAsString().trim()
+										: "Sin dato";
+						dataArray[count][7] = (object.get("subcategoria") != null
+								&& object.get("subcategoria").getAsString().trim() != "")
+										? object.get("subcategoria").getAsString().trim()
+										: "Sin dato";
+						dataArray[count][8] = (object.get("estatus") != null
+								&& object.get("estatus").getAsString().trim() != "")
+										? object.get("estatus").getAsString().trim()
+										: "Sin dato";
+						dataArray[count][9] = (object.get("fechaCreacion") != null
+								&& object.get("fechaCreacion").getAsString().trim() != "")
+										? object.get("fechaCreacion").getAsString().trim()
+										: "Sin dato";
+
+						dataArray[count][10] = "<div class='tooltip-btn'> <span onclick='consultaDetalleTicketSoporte("
+								+ String.valueOf(object.get("idTicket").getAsInt()) + "," + String.valueOf(object.get("claveCliente").getAsInt())
+								+ ")' class='btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnTables'><th><i class='fa fa-bars' title='detalle'></i></th></span></div>";
+					
+						count++;
+
+					}
+					dataResponse = DataTableResponse.builder().isRespuesta(true).data(dataArray)
+							.paginaActual(jsonObjectResponse.get("paginaActual").getAsInt())
+							.registrosTotales(jsonObjectResponse.get("registrosTotales").getAsInt())
+							.recordsFiltered(jsonObjectResponse.get("registrosTotales").getAsInt() + "")
+							.recordsTotal(jsonObjectResponse.get("registrosTotales").getAsInt() + "")
+							.draw(params.getDraw() + "").result(response.getResult()).build();
+				} else {
+					dataResponse = DataTableResponse.builder().isRespuesta(true).data(dataArray)
+							.paginaActual(jsonObjectResponse.get("paginaActual").getAsInt())
+							.registrosTotales(jsonObjectResponse.get("registrosTotales").getAsInt())
+							.recordsFiltered(jsonObjectResponse.get("registrosTotales").getAsInt() + "")
+							.recordsTotal(jsonObjectResponse.get("registrosTotales").getAsInt() + "")
+							.draw(params.getDraw() + "").build();
+				}
+			}
+		}
+
+		logger.info("*** Objeto Response: " + gson.toJson(dataResponse));
+
+		return dataResponse;
 	}
 
 	@Override

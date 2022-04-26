@@ -16,7 +16,7 @@ public interface SoporteCentralizadoService {
     
     public ServiceResponseResult consultaHistoricoTicketSoporte(String params);
     
-    public ServiceResponseResult consultaTicketsSoporte(String params);
+    public DataTableResponse consultaTicketsSoporte(ParamConsultaOTPI params);
     
     public ServiceResponseResult creaTicketSoporte(String params);
     
