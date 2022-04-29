@@ -39,32 +39,33 @@
                 <h1 class="h6 subtitle-modulo"></h1>
             </div>
         </div>
-        <div class="content-fluid">
+        <div class="content-fluid" ng-show="isPermisoConsultaIncidencias">
             <div class="row md-form" id="filtros_config">
-                <div class="col-2 columna-filtro-ind">
+                <div class="col-2 columna-filtro-ind" style="width: 110px; padding-right: 0px !important;">
                     <label for="filtro_fecha_inicio_inspectorCobertura" class="label-filter">Fecha inicial</label>
-                    <input readonly type="text" id="filtro_fecha_inicio_inspectorCobertura" placeholder="Fecha Inicial" class="datepicker input-filtro-inspectorCobertura form-control form-control-sm" />
+                    <input readonly type="text" id="filtro_fecha_inicio_inspectorCobertura" placeholder="Fecha Inicial" class="datepicker input-filtro-inspectorCobertura form-control form-control-sm" style="width: 100px;" />
                 </div>
-                <div class="col-2 columna-filtro-ind">
+                <div class="col-2 columna-filtro-ind" style="width: 110px; padding-right: 0px !important;">
                     <label for="filtro_fecha_fin_inspectorCobertura" class="label-filter">Fecha final</label>
-                    <input readonly placeholder="Fecha Final" type="text" id="filtro_fecha_fin_inspectorCobertura" class="datepicker input-filtro-inspectorCobertura form-control form-control-sm" />
+                    <input readonly placeholder="Fecha Final" type="text" id="filtro_fecha_fin_inspectorCobertura" class="datepicker input-filtro-inspectorCobertura form-control form-control-sm" style="width: 100px;"/>
                 </div>
-                <div class="col-2 column-style-inspectorCobertura columna-filtro-ind">
-                    <i class="icono-noseleccion fas fa-exclamation-circle me-2" title="No se encontraron catalogo de fallas" ng-show="banderaErrorEstatus"></i>
+                <div class="col-2 column-style-inspectorcobertura columna-filtro-ind">
+                    <i class="icono-noseleccion fas fa-exclamation-circle me-2" title="No se encontraron cat&aacute;logo de fallas" ng-show="banderaErrorFallas"></i>
                     <label for="filtro-fallas" class="label-filter">Falla</label>
                     <div class="dropdown">
-                        <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..." type="text" id="filtro-fallas" class="input-filtro-inspectorCobertura form-control form-control-sm" />
+                        <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..." type="text" id="txtFalla" class="input-filtro-inspectorCobertura form-control form-control-sm" />
                         <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-fallas">
                             <li style="text-align: center;">
-                                <button ng-click="seleccionTodos(filtrosCobertura.fallas, true)" id="todo_filtro" type="button" class="btn btn-indigo btn-sm waves-effect waves-light">Todos</button>
-                                <button ng-click="seleccionTodos(filtrosCobertura.fallas, false)" id="ninguno_filtro" type="button" class="btn btn-indigo btn-sm waves-effect waves-light">Ninguno</button>
+                                <button ng-click="seleccionarTodosRecursivo(filtrosInspector.fallas)" id="todo_filtro" type="button" class="btn btn-indigo btn-sm waves-effect waves-light">Todos</button>
+                                <button ng-click="deseleccionarTodosRecursivo(filtrosInspector.fallas)" id="ninguno_filtro" type="button" class="btn btn-indigo btn-sm waves-effect waves-light">Ninguno</button>
                             </li>
                             <li class="elemento_menu dropdown-divider"></li>
-                            <li ng-repeat="filtroFalla in filtrosCobertura.fallas" class="element-menu-filter">
+                            <li ng-repeat="filtro in filtrosInspector.fallas" class="element-menu-filter">
                                 <label class="dropdown-item form-check-inputfiltro">
-                                    <input id="filtrotext-{{filtroFalla.id}}" class="form-check-input" type="checkbox" ng-model="filtroFalla.checkedOpcion" ng-checked="filtroFalla.checkedOpcion" />
-                                    <span for="filtrotext-{{filtroFalla.id}}" class="dropdown-item item-text-filtro" ng-bind="filtroFalla.descripcion"></span>
+                                    <input ng-click=setCheckFiltroGenericV2(filtro,filtrosInspector.fallas) id="filtrotext-{{filtro.id}}" class="form-check-input" type="checkbox" ng-model="filtro.checkedOpcion" ng-checked="filtro.checkedOpcion" />
+                                    <span for="filtrotext-{{filtro.id}}" class="dropdown-item item-text-filtro" ng-bind="filtro.descripcion"></span>
                                 </label>
+                                <ul ng-if="filtro.children !== undefined &&  filtro.children.length > 0" ng-include="'filtroFalla.html'" class="dropdown-menu"></ul>
                             </li>
                         </ul>
                     </div>
@@ -74,7 +75,7 @@
                         <i class="fa fa-search"></i>
                     </button>
                 </div>
-                <div class="col-1 download-file">
+                <div class="col-1 download-file" ng-show="false">
                     <img alt="excel" src="${pageContext.request.contextPath}/resources/img/generic/group-10.png" style="cursor:pointer" ng-click="downloadExcelReportFile()">
                 </div>
             </div>
@@ -82,7 +83,13 @@
     </div>
     <div class="container-fluid contenedor-inspectorCobertura">
         <div class="content-fluid">
-            <div class="row">
+            <div class="row" ng-show="!isPermisoConsultaIncidencias" style="padding: 1em  0;">
+                <div class="text-accion-nopermiso">
+                    <i class="icon-not-permiso fas fa-user-lock"></i>
+                    <b class="text-not-permiso">No cuentas con el permiso de consulta.</b>
+                </div>
+            </div>
+            <div class="row" ng-show="isPermisoConsultaIncidencias">
                 <div class="col-5" style="padding-right: 0; margin-top: 1em;">
                     <table id="tableCobertura" class="display table" cellspacing="0" width="100%">
                         <thead id="thead_cobertura">
@@ -91,14 +98,14 @@
                                 <th>FECHA</th>
                                 <th>REPORTA</th>
                                 <th>FALLA</th>
-                                <th><i class="fas fa-plus" style="color:#ffff"></i></th>
+                                <th class="text-center"><i class="fas fa-plus" style="color:#ffff"></i></th>
                             </tr>
                         </thead>
                         <tbody>
                         </tbody>
                     </table>
                 </div>
-                <div class="col-7" style="padding: 0;">
+                <div class="col-7" style="padding-left: 0;">
                     <div class="card map-card">
                         <div id="mapaInspectorCobertura">
                         </div>
@@ -119,30 +126,30 @@
                                                 <div class="row">
                                                     <div class="col-md-10">
                                                         <h5 class="card-title">
-                                                            &nbsp;&nbsp;ID: {{item.id}} 
+                                                            &nbsp;&nbsp;ID: {{item.idIncidencia}} 
                                                         </h5>
                                                     </div>
                                                     <div class="col-md-2" style="text-align: right; color: red;">
-                                                        <i class="fas fa-trash" style="cursor: pointer;" title="Eliminar" ng-click="eliminarIncidencia(item.id)"></i>
+                                                        <i class="fas fa-trash" style="cursor: pointer;" title="Eliminar" ng-click="eliminarIncidencia(item.idIncidencia)"></i>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-7">
-                                                        <span class="title_span"><strong>{{item.reporta}}</strong></span><br>
-                                                        <span class="title_span">{{item.falla}}</span>
+                                                        <span class="title_span"><strong>{{item.usuarioReporta}}</strong></span><br>
+                                                        <span class="title_span">{{item.desTipoIncidencia}}</span>
                                                     </div>
                                                     <div class="col-md-5" style="text-align: right;">
                                                         <div class="list-card-label"></div> 
                                                         <span class="badge badge-primary badge-inspector">INP</span><br>
                                                         <small class="title_span" style="color: #039be5;">
-                                                            <b>Fecha: </b>{{item.fecha}}
+                                                            <b>Fecha: </b>{{item.fechaRegistro}}
                                                         </small>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <div style=" max-height: 200px; overflow: auto;">
+                                            <div style=" max-height: 160px; overflow: auto;">
                                                 <div id="jstree-proton-3" class="proton-demo"></div>
                                             </div>
                                             <div class="row">
@@ -152,27 +159,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!--
-                                    <div class="card-bottom">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <h6 class="" id="titulo_Cluster">
-                                                    <center>Cl&uacute;ster</center>
-                                                </h6>
-                                            </div>
-                                            <div class="col-6">
-                                                <h6 class="select_cluster" id="cluster"><span
-                                                        id="texto_cluster_seleccionado">Sin
-                                                        selecci&oacute;n</span></h6>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="card-footer btn-ligar" ng-click="ligarIncidencias()">
-                                                <span>LIGAR INCIDENCIAS</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    -->
                                 </div>
                             </div>
                         </div>
@@ -182,6 +168,7 @@
         </div>
     </div>
     <jsp:include page="modals/modalCluster.jsp"></jsp:include>
+    <jsp:include page="../../generic/filtros/filtros.jsp"></jsp:include>
 </body>
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=${googlkeyattrvar['gkeactok']}&libraries=geometry,places"></script>
