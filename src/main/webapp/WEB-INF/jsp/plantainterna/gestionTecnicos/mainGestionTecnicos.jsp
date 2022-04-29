@@ -224,7 +224,7 @@
 	                                <div class="col-7">
 	                                    <div class="container-fluid tecnico-content-detalle">
 	                                        <div class="container-text-title-detalle"><span class="text-title-tecnico"># Empleado</span></div>
-	                                        <div class="container-text-content-detalle"><span class="text-content-tecnico">{{tecnicoDisp.tecnico}}</span></div>
+	                                        <div class="container-text-content-detalle"><span class="text-content-tecnico">{{tecnicoDisp.numeroEmpleado}}</span></div>
 	                                    </div>
 	                                    <div class="container-fluid tecnico-content-detalle">
 	                                        <div class="container-text-title-detalle"><span class="text-title-tecnico">T&eacute;cnico</span></div>
@@ -232,17 +232,17 @@
 	                                    </div>
 	                                    <div class="container-fluid tecnico-content-detalle">
 	                                        <div class="container-text-title-detalle"><span class="text-title-tecnico">OTs trabajadas</span></div>
-	                                        <div class="container-text-content-detalle"><span class="text-content-tecnico">{{tecnicoDisp.numots}}</span></div>
+	                                        <div class="container-text-content-detalle"><span class="text-content-tecnico">{{detalleMesTecnico.contadorOts}}</span></div>
 	                                    </div>
 	                                </div>
 	                                <div class="col-5">
 	                                    <div class="container-fluid tecnico-content-detalle">
 	                                        <div class="container-text-title-detalle"><span class="text-title-tecnico">D&iacute;as justificados</span></div>
-	                                        <div class="container-text-content-detalle"><span class="text-content-tecnico">0</span></div>
+	                                        <div class="container-text-content-detalle"><span class="text-content-tecnico">{{detalleMesTecnico.contadorDiasJustificados}}</span></div>
 	                                    </div>
 	                                    <div class="container-fluid tecnico-content-detalle">
 	                                        <div class="container-text-title-detalle"><span class="text-title-tecnico">D&iacute;as trabajados</span></div>
-	                                        <div class="container-text-content-detalle"><span class="text-content-tecnico">0</span></div>
+	                                        <div class="container-text-content-detalle"><span class="text-content-tecnico">{{detalleMesTecnico.contadorDiasTrabajados}}</span></div>
 	                                    </div>
 	                                </div>
 	                            </div>
@@ -314,7 +314,6 @@
 	                                                    <tr>
 	                                                        <th>#Empleado creador</th>
 	                                                        <th>Empleado creador</th>
-	                                                        <th>Folio</th>
 	                                                        <th>Fecha inicio</th>
 	                                                        <th>Falla fin</th>
 	                                                        <th>Fecha registro</th>
@@ -364,7 +363,7 @@
 	<!-- fin -->
 	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionTecnicos/gestionTecnicosController.js?v=${sessionScope.versionDepl}" charset="UTF-8"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionTecnicos/gestionTecnicosService.js?v=${sessionScope.versionDepl}"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionTecnicos/jsonGestionTecnicos.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionTecnicos/jsonGestionTecnicos.js?v=${sessionScope.versionDepl}" charset="UTF-8"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js?v=${sessionScope.versionDepl}"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js?v=${sessionScope.versionDepl}"></script>

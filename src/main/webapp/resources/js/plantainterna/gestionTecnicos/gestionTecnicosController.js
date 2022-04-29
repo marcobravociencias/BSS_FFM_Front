@@ -42,6 +42,9 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
     $scope.nombreFileAdd = '';
     $scope.nombreFileUpd = '';
     $scope.nombreFileDel = '';
+    $scope.anioActual = new Date().getFullYear();
+    $scope.rutaNombreEvidenciasJustificaciones = "justificaciones/mx/"+$scope.anioActual+"/{idJustificaciones}/{idJustificaciones}_";
+    $scope.detalleMesTecnico = {};
 
     $scope.convertDate = function (fecha) {
         function pad(s) { return (s < 10) ? '0' + s : s; }
@@ -97,15 +100,15 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
                 let fechaMod = FechaJustMod[2] + '/' + FechaJustMod[1] + '/' + FechaJustMod[0];
                 if ($("#calendar_gestionTecnicos td[data-date=" + $scope.fechaDiaJust + "] div.actividades-contadorac-gris").length > 0) {
                     idJust = ($("#calendar_gestionTecnicos td[data-date=" + $scope.fechaDiaJust + "] div.actividades-contadorac-gris").data('value'))
-                    console.log("No trabajado")
+//                    console.log("No trabajado");
                     $scope.consultarDetalleJustificacion(idJust);
                 } else if ($("#calendar_gestionTecnicos td[data-date=" + $scope.fechaDiaJust + "] div.actividades-contadorac-verde").length > 0) {
                     $scope.consultarDetalleTrabajo();
-                    console.log("trabajado");
+//                    console.log("trabajado");
                 } else {
-                    console.log("trabajado")
+//                    console.log("trabajado");
                     $scope.isJustificacion = false;
-                    $scope.openModalAgregarJustificacion();
+                    $scope.openModalAgregarJustificacion(info.date);
                     $scope.$apply();
                 }
             },
@@ -530,6 +533,7 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
                         	justificacion.fecha = justificacion.fechaInicio;
                         	$scope.resultDisponibilidad.disponibilidad.push(justificacion);
                         });
+                    	$scope.listJustificaciones = response[1].data.result.detalleJustificacion;
                     }
                     
                     $scope.pintarDisponibilidad($scope.resultDisponibilidad.disponibilidad, $scope.resultDisponibilidad.totalOrdenes ? $scope.resultDisponibilidad.totalOrdenes : [], mes, fechaArray[2]);
@@ -646,20 +650,20 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
         if (tableOtsTrabajadas) {
             tableOtsTrabajadas.destroy();
         }
-        $.each($scope.listOtsTrabajadas, function (i, elemento) {
+        $.each($scope.listDetalleTrabajo, function (i, elemento) {
             let rowOT = [];
-            rowOT[0] = elemento.ot;
-            rowOT[1] = elemento.os;
+            rowOT[0] = elemento.ot != null ? elemento.ot : "Sin dato";
+            rowOT[1] = elemento.os != null ? elemento.os : "Sin dato";
             rowOT[2] = elemento.cuenta;
             rowOT[3] = elemento.tipo;
             rowOT[4] = elemento.subtipo;
-            rowOT[5] = elemento.fechaInicio;
-            rowOT[6] = elemento.fechaFin;
-            rowOT[7] = elemento.usuarioAuxiliar;
-            rowOT[8] = elemento.nombreAuxiliar;
+            rowOT[5] = elemento.fechaInicio != null ? elemento.fechaInicio.split(" ")[0] : "Sin dato";
+            rowOT[6] = elemento.fechaFin != null ? elemento.fechaFin.split(" ")[0] : "Sin dato";
+            rowOT[7] = elemento.usuarioAuxiliar != null ? elemento.usuarioAuxiliar : "Sin dato";
+            rowOT[8] = elemento.nombreAuxiliar != null ? elemento.nombreAuxiliar : "Sin dato";
             rowOT[9] = elemento.puntualidad;
-            rowOT[10] = elemento.tiempoTotal;
-            rowOT[11] = elemento.tiempoTotal;
+            rowOT[10] = elemento.tiempoTotal != null ? elemento.tiempoTotal.split(".")[0] : "Sin dato";
+            rowOT[11] = "Sin dato";
             arrayOtsRow.push(rowOT);
         });
         tableOtsTrabajadas = $('#tableOtsTrabajadas').DataTable({
@@ -671,7 +675,13 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
             "scrollX": false,
             "data": arrayOtsRow,
             "autoWidth": false,
-            "language": idioma_espanol_not_font
+            "language": idioma_espanol_not_font,
+            "aoColumnDefs" : [
+            	{"aTargets" : [5], "sClass":  "columnasCentradas"},
+            	{"aTargets" : [6], "sClass":  "columnasCentradas"},
+            	{"aTargets" : [10], "sClass":  "columnasCentradas"},
+	        	{"aTargets" : [11], "sClass":  "columnasCentradas"}
+	        ]
         });
     }
 
@@ -680,12 +690,12 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
         if (tableDiasTrabajados) {
             tableDiasTrabajados.destroy();
         }
-        $.each($scope.listOtsTrabajadas, function (i, elemento) {
+        $.each($scope.listDiasTrabajados, function (i, elemento) {
             let rowDT = [];
             rowDT[0] = elemento.fecha;
             rowDT[1] = elemento.horaInicio;
             rowDT[2] = elemento.horaFin;
-            rowDT[3] = elemento.ots;
+            rowDT[3] = elemento.cantOrdenes;
             arrayDiasTRow.push(rowDT);
         });
         tableDiasTrabajados = $('#tableDiasTrabajados').DataTable({
@@ -698,6 +708,12 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
             "data": arrayDiasTRow,
             "autoWidth": false,
             "language": idioma_espanol_not_font,
+            "aoColumnDefs" : [
+            	{"aTargets" : [0], "sClass":  "columnasCentradas"},
+            	{"aTargets" : [1], "sClass":  "columnasCentradas"},
+            	{"aTargets" : [2], "sClass":  "columnasCentradas"},
+	        	{"aTargets" : [3], "sClass":  "columnasCentradas"}
+	        ]
         });
     }
 
@@ -708,13 +724,12 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
         }
         $.each($scope.listJustificaciones, function (i, elemento) {
             let rowJ = [];
-            rowJ[0] = elemento.emp_crea;
-            rowJ[1] = elemento.nomb_crea;
-            rowJ[2] = elemento.folio;
-            rowJ[3] = elemento.inicio;
-            rowJ[4] = elemento.fin;
-            rowJ[5] = elemento.fecha_registro;
-            rowJ[6] = elemento.fecha_modificacion;
+            rowJ[0] = elemento.usuarioFFM;
+            rowJ[1] = elemento.nombreDepacho;
+            rowJ[2] = elemento.fechaInicio;
+            rowJ[3] = elemento.fechaFin;
+            rowJ[4] = elemento.fechaCreacion;
+            rowJ[5] = elemento.fechaModificacion;
             arrayJustificacionRow.push(rowJ);
         });
         tableJustificaciones = $('#tableJustificaciones').DataTable({
@@ -727,6 +742,12 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
             "data": arrayJustificacionRow,
             "autoWidth": false,
             "language": idioma_espanol_not_font,
+            "aoColumnDefs" : [
+            	{"aTargets" : [2], "sClass":  "columnasCentradas"},
+            	{"aTargets" : [3], "sClass":  "columnasCentradas"},
+            	{"aTargets" : [4], "sClass":  "columnasCentradas"},
+	        	{"aTargets" : [5], "sClass":  "columnasCentradas"}
+	        ]
         });
     }
 
@@ -755,30 +776,81 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
     }
 
     $scope.consultarDetalleMesTecnico = function () {
+    	$scope.detalleMesTecnico = {};
+    	
         swal({ text: 'Cargando datos ...', allowOutsideClick: false });
         swal.showLoading();
-        let params = {};
-        gestionTecnicosService.consultaDetalleMesGestionTec(params).then(function success(response) {
-            if (response.data.respuesta) {
-                if (response.data.result) {
-                    $scope.isDetalleMesTecnico = true;
-                    const mesActual = document.getElementsByClassName('fc-toolbar-title')[0].innerText;
-                    $scope.tituloDetalle = mesActual.toUpperCase();
-                    const fechaArray = mesActual.split(" ");
-                    $scope.listJustificaciones = arrayTableDetalleJustificacion.data.result;
-                    $scope.pintarTablaJustificaciones();
-                    $scope.pintarTablaOtsTrabajadas();
-                    $scope.pintarTablaDiasTrabajados();
-                    swal.close();
-                } else {
-                    swal.close();
-                }
-            } else {
-                swal.close();
-                mostrarMensajeWarningValidacion(response.data.resultDescripcion)
-            }
+        
+        let paramsConsultaDiasTrabajados = {"idTecnico": 2,"fechaInicio": "01-03-2022","fechaFin":"30-04-2022"};
+    	let paramsConsultaOrdenes = {"idTecnico": 2,"fechaInicio": "01-03-2022","fechaFin":"30-04-2022"};
+        
+        $q.all([
+        	gestionTecnicosService.consultaDiasTrabajadosTecnicoPorFecha(paramsConsultaDiasTrabajados),
+        	gestionTecnicosService.consultaOrdenesTecnicoPorFecha(paramsConsultaOrdenes)
+//        	gestionTecnicosService.consultaOrdenesAuxiliarPorFecha(paramsServicio5),
+//        	gestionTecnicosService.consultaDiasTrabajadosAuxiliarPorFecha(paramsServicio8),
+        ]).then(function (results) {
+        	
+        	$scope.listDiasTrabajados = [];
+        	$scope.listDetalleTrabajo = [];
+        	
+        	if (results[0].data !== undefined) {
+            	if(results[0].data.respuesta){
+            		if(results[0].data.result.detalleDias.length > 0){
+            			$scope.listDiasTrabajados = results[0].data.result.detalleDias;
+            			$scope.detalleMesTecnico.contadorDiasTrabajados = $scope.listDiasTrabajados.length;
+            		}else{
+            			mostrarMensajeInformativo("¡Actualmente no existen días trabajados!");
+            		}
+            	}else{
+            		mostrarMensajeInformativo("¡Actualmente no existen días trabajados!");
+            	}
+        	}else{
+        		mostrarMensajeWarningValidacion("Error interno en el servidor.");
+        	}
+        	
+        	if (results[1].data !== undefined) {
+            	if(results[1].data.respuesta){
+            		if(results[1].data.result.ordenes.length > 0){
+            			$scope.listDetalleTrabajo = results[1].data.result.ordenes;
+            			$scope.detalleMesTecnico.contadorOts = $scope.listDetalleTrabajo.length;
+            		}else{
+            			mostrarMensajeInformativo("¡Actualmente no existen ordenes!");
+            		}
+            	}else{
+            		mostrarMensajeInformativo("¡Actualmente no existen ordenes!");
+            	}
+        	}else{
+        		mostrarMensajeWarningValidacion("Error interno en el servidor.");
+        	}
+        	
+        	$scope.isDetalleMesTecnico = true;
+            const mesActual = document.getElementsByClassName('fc-toolbar-title')[0].innerText;
+            $scope.tituloDetalle = mesActual.toUpperCase();
+            const fechaArray = mesActual.split(" ");
+        	
+            var totalDiasJustidicados = $scope.calcularDiasJustificados($scope.listJustificaciones);
+            $scope.detalleMesTecnico.contadorDiasJustificados = totalDiasJustidicados;
+            $scope.pintarTablaDiasTrabajados();
+            $scope.pintarTablaOtsTrabajadas();
+            $scope.pintarTablaJustificaciones();
+            
+        	swal.close();
         });
+
     }
+    
+    $scope.calcularDiasJustificados = function(diasJustificados) {
+    	var contadorDias = 0;
+    	angular.forEach(diasJustificados,function(dia,index){
+    		var fechaInicioFormat = dia.fechaInicio.split("-");
+    		var fechaFinFormat = dia.fechaFin.split("-");
+    		var fechaInicioCalcular = moment(fechaInicioFormat[2] + "-" + fechaInicioFormat[1] + "-" + fechaInicioFormat[0]);
+    		var fechaFinCalcular = moment(fechaFinFormat[2] + "-" + fechaFinFormat[1] + "-" + fechaFinFormat[0]);
+    		contadorDias = contadorDias + (fechaFinCalcular.diff(fechaInicioCalcular, 'days')+1);
+    	});
+    	return contadorDias;
+	}
 
     $scope.changeView = function () {
         if ($scope.isDetalleMesTecnico) {
@@ -809,72 +881,130 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
     }
 
     $scope.consultarComentariosJustificacion = function () {
-        swal({ text: 'Espera un momento...', allowOutsideClick: false });
-        swal.showLoading();
-        let params = {};
-        gestionTecnicosService.consultaComentariosJustificacionGestionTec(params).then(function success(response) {
-            if (response.data.respuesta) {
-                if (response.data.result) {
+//        swal({ text: 'Espera un momento...', allowOutsideClick: false });
+//        swal.showLoading();
+//        let params = {};
+//        gestionTecnicosService.consultaComentariosJustificacionGestionTec(params).then(function success(response) {
+//            if (response.data.respuesta) {
+//                if (response.data.result) {
                     $scope.comentariosJustificacion = arrayComentariosJustificacion.data.result.Comentarios;
                     $("#modal-comentarios-justificacion").modal('show');
-                    swal.close();
-                } else {
-                    swal.close();
-                }
-            } else {
-                swal.close();
-                mostrarMensajeWarningValidacion(response.data.resultDescripcion)
-            }
-        });
+//                    swal.close();
+//                } else {
+//                    swal.close();
+//                }
+//            } else {
+//                swal.close();
+//                mostrarMensajeWarningValidacion(response.data.resultDescripcion)
+//            }
+//        });
     }
 
     $scope.consultarArchivosJustificacion = function () {
-        swal({ text: 'Espera un momento...', allowOutsideClick: false });
-        swal.showLoading();
-        let params = {};
-        $scope.isCargaArchivos = false;
-        gestionTecnicosService.consultaArchivosJustificacionGestionTec(params).then(function success(response) {
-            if (response.data.respuesta) {
-                if (response.data.result) {
-                    let arrayRow = [];
-                    if (tableArchivosJustificacion) {
-                        tableArchivosJustificacion.destroy();
-                    }
-                    $scope.listArchivosJustificacion = arrayArchivosJustificacion.data.result.Archivos;
-                    $.each($scope.listArchivosJustificacion, function (i, elemento) {
-                        let row = [];
-                        row[0] = elemento.NombreUsuario;
-                        row[1] = elemento.Nombre;
-                        row[2] = elemento.Fecha;
-                        row[3] = '<span style="background-color: #58b3bf" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnTables" id="descargarArchivo' + elemento.idArchivo + '" onclick="">' +
-                            '<i class="fas fa-download" title="Descargar Archivo"></i>' +
-                            '</span> &nbsp;' +
-                            '<span style="background-color: #58b3bf" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnTables" id="descargarArchivo' + elemento.idArchivo + '" onclick="">' +
-                            '<i class="far fa-trash-alt" title="Descargar Archivo"></i>' +
-                            '</span> &nbsp;';
-                        arrayRow.push(row);
-                    });
-                    tableArchivosJustificacion = $('#tableArchivosJustificacion').DataTable({
-                        "paging": true,
-                        "lengthChange": false,
-                        "ordering": false,
-                        "pageLength": 10,
-                        "info": true,
-                        "data": arrayRow,
-                        "autoWidth": true,
-                        "language": idioma_espanol_not_font
-                    });
-                    $("#modal-archivos-justificacion").modal('show');
-                    swal.close();
-                } else {
-                    swal.close();
-                }
-            } else {
-                swal.close();
-                mostrarMensajeWarningValidacion(response.data.resultDescripcion)
-            }
+
+    	let arrayRow = [];
+        if (tableArchivosJustificacion) {
+            tableArchivosJustificacion.destroy();
+        }
+        
+        $.each($scope.justificacionDetalle.evidencias, function (i, elemento) {
+            let row = [];
+            row[0] = $scope.justificacionDetalle.nombreDepacho;
+            row[1] = elemento.nombre + "." + elemento.extension;
+            row[2] = elemento.fecha != null ? elemento.fecha : "Sin dato";
+            row[3] = '<span hidden style="background-color: #58b3bf" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnTables" id="descargarArchivo' + elemento.idEvidencia + '" onclick="descargarArchivoJustificacion('+"'"+elemento.url+"'"+')">' +
+                '<i class="fas fa-download" title="Descargar archivo"></i>' +
+                '</span> &nbsp;' +
+                '<span style="background-color: #58b3bf" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnTables" id="descargarArchivo' + elemento.idEvidencia + '" onclick="eliminarArchivoJustificacion('+elemento.idEvidencia+')">' +
+                '<i class="far fa-trash-alt" title="Eliminar archivo"></i>' +
+                '</span> &nbsp;';
+            arrayRow.push(row);
         });
+        tableArchivosJustificacion = $('#tableArchivosJustificacion').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "ordering": false,
+            "pageLength": 10,
+            "info": true,
+            "data": arrayRow,
+            "autoWidth": true,
+            "language": idioma_espanol_not_font,
+            "aoColumnDefs" : [ 
+            	{"aTargets" : [2], "sClass":  "columnasCentradas"},
+	        	{"aTargets" : [3], "sClass":  "columnasCentradas"}
+	        ]
+        });
+        $("#modal-archivos-justificacion").modal('show');
+        $scope.isCargaArchivos = false;
     }
+    
+    descargarArchivoJustificacion = function(urls) {
+//    	var request = new Request('https://blog.ida.cl/wp-content/uploads/sites/5/2020/04/tamano-redes-blog-655x470.png');
+//    	
+//    	fetch(request, {mode: 'no-cors'}).then(function(response) {
+//    		return response.blob().then(function(myBlob) {
+//	            var objectURL = URL.createObjectURL(myBlob);
+//	            console.log(objectURL);
+//	        });
+//    	}).catch(function(error) {
+//    	    console.log('There has been a problem with your fetch operation: ', error.message);
+//    	});
+
+//    	fetch(request, {mode: 'no-cors'})
+//        .then(resp => resp.blob())
+//        .then(blob => {
+//            const url = window.URL.createObjectURL(blob);
+//            const a = document.createElement('a');
+//            a.style.display = 'none';
+//            a.href = url;
+//            // the filename you want
+//            a.download = "xd.png";
+//            document.body.appendChild(a);
+//            a.click();
+//            window.URL.revokeObjectURL(url);
+//        })
+//        .catch(() => alert('An error sorry'));
+    }
+    
+    eliminarArchivoJustificacion = function(idEvidencia) {
+    	if(idEvidencia != undefined && idEvidencia > 0){
+    		let paramsEliminarArchivoJustificacion= {};
+    		paramsEliminarArchivoJustificacion.idJustificacion = $scope.justificacionDetalle.idJustificacion;
+    		paramsEliminarArchivoJustificacion.evidencias = [];
+    		paramsEliminarArchivoJustificacion.evidencias.push({
+        		idEvidencia: idEvidencia,
+        		activo: 0
+            });
+        	
+        	swal({
+                title: "\u00BFEst\u00E1 seguro de eliminar el archivo?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#007bff',
+                confirmButtonText: 'Si',
+                cancelButtonText: 'No'
+            }).then(function (isConfirm) {
+                if (isConfirm) {
+                    swal({ text: 'Espera un momento...', allowOutsideClick: false });
+                    swal.showLoading();
+                    gestionTecnicosService.modificarJustificacionTecnico(paramsEliminarArchivoJustificacion).then(function success(response) {
+                        if (response.data.respuesta) {
+                            if (response.data.result) {
+                            	$("#modal-archivos-justificacion").modal('hide');
+                                toastr.success('¡Archivo eliminado con éxito!');
+                                $scope.consultarDisponibilidadTecnico();
+                            } else {
+                            }
+                        } else {
+                            mostrarMensajeWarningValidacion(response.data.resultDescripcion)
+                        }
+                        swal.close();
+                    });
+                }
+            }).catch(err => {
+            });
+    	}
+	}
 
     $("#fileEditJust").change(function () {
         if ($('#fileEditJust').get(0).files[0] === undefined) {
@@ -943,7 +1073,7 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
         }
     }
 
-    $scope.openModalAgregarJustificacion = function () {
+    $scope.openModalAgregarJustificacion = function (fechaSeleccionada) {
         if ($scope.auxDisp.id !== undefined || $scope.tecnicoDisp.idTecnico !== undefined) {
             swal({ text: 'Espera un momento...', allowOutsideClick: false });
             swal.showLoading();
@@ -958,7 +1088,7 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
                 todayHighlight: true,
                 clearBtn: false
             });
-            $('.datepicker').datepicker('update', new Date());
+            $('.datepicker').datepicker('update', new Date(fechaSeleccionada));
             $scope.justificacionA = {}
             $("#modal-agregar-justificacion").modal('show');
             swal.close();
@@ -968,12 +1098,23 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
     }
 
     $scope.agregarJustificacion = function () {
+//    	justificaciones/mx/2022/{idJustificaciones}/{idJustificaciones}_
         let mensajeError = '';
         let isValid = true;
 
         if (!$scope.validarFecha('fecha_inicio_justificacion', 'fecha_fin_justificacion')) {
             mensajeError += "<li>La fecha inicical debe ser menor a la fecha final</li>";
             isValid = false;
+        }
+        
+        if ($scope.justificacionA.motivo === undefined || $scope.justificacionA.motivo === "") {
+            isValid = false;
+            mensajeError += '<li>Selecciona un motivo</li>';
+        }
+        
+        if ($scope.justificacionA.comentario === undefined || $scope.justificacionA.comentario === "") {
+            isValid = false;
+            mensajeError += '<li>Ingresa un comentario</li>';
         }
 
         if ($("#fileAddJust")[0].files.length == 0) {
@@ -1001,8 +1142,8 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
                     var nombreFile = archivoCargado.name.split(".");
                     paramsRegistroJustificacion.evidencias.push({
                     	archivo: fileBase64,
-                    	nombre: nombreFile[0],
-                    	extension: nombreFile[1]
+                    	nombre: $scope.rutaNombreEvidenciasJustificaciones + "" + nombreFile[0],
+                    	extension: "."+nombreFile[1]
                     });
                 }
         	});
@@ -1048,13 +1189,15 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
         $(".box__dragndrop").text("o arrastra aqu\u00ED");
         $("#fileEditJust").val("");
         $("#fileEditJust").prop("src", "");
-        $scope.justificacionE = justificacion;
-        $('#fecha_inicio_justificacion_update').datepicker('update', $scope.justificacionE.InicioJustificacion);
-        $('#fecha_fin_justificacion_update').datepicker('update', $scope.justificacionE.FinJustificacion);
+//        $scope.justificacionE = justificacion;
+        $('#fecha_inicio_justificacion_update').datepicker('update', $scope.justificacionDetalle.fechaInicio);
+        $('#fecha_fin_justificacion_update').datepicker('update', $scope.justificacionDetalle.fechaFin);
+        $("#motivoJustificacionMod").val(""+$scope.justificacionDetalle.idTipoJustificacion);
         $("#modal-editar-justificacion").modal('show');
         swal.close();
     }
 
+    //Método que modifica la información de la justificación en selección (solo el archivo es opcional en este caso).
     $scope.editarJustificacion = function (eJustificacion) {
         let mensajeError = '';
         let isValid = true;
@@ -1064,42 +1207,88 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
             isValid = false;
         }
 
-        if ($("#fileEditJust")[0].files.length == 0) {
+        if ($scope.justificacionDetalle.comentario == "" || $scope.justificacionDetalle.comentario == null) {
             isValid = false;
-            mensajeError += '<li>Selecciona un archivo</li>';
+            mensajeError += '<li>Agrega un comentario</li>';
         }
 
         if (isValid) {
-            $scope.justificacionE = eJustificacion;
-            swal({ text: 'Espera un momento...', allowOutsideClick: false });
-            swal.showLoading();
-            let params = {};
-            gestionTecnicosService.editarJustificacionGestionTec(params).then(function success(response) {
-                if (response.data.respuesta) {
-                    if (response.data.result) {
-                        $("#modal-editar-justificacion").modal('hide');
-                        $(".text_select").text("Selecciona un archivo");
-                        $(".box__dragndrop").text("o arrastra aqu\u00ED");
-                        $("#fileEditJust").val('');
-                        swal.close();
-                    } else {
-                        swal.close();
+        	
+        	var fechaInicioMod = $("#fecha_inicio_justificacion_update").val().split("/");
+        	var fechaFinMod = $("#fecha_fin_justificacion_update").val().split("/");
+        	let paramsModJustificacion = {};
+        	paramsModJustificacion.idJustificacion = $scope.justificacionDetalle.idJustificacion;
+        	paramsModJustificacion.idTecnico = 13;
+        	paramsModJustificacion.fechaInicio = fechaInicioMod[2] + "/" + fechaInicioMod[1] + "/" + fechaInicioMod[0];
+        	paramsModJustificacion.fechaFin = fechaFinMod[2] + "/" + fechaFinMod[1] + "/" + fechaFinMod[0];
+        	paramsModJustificacion.idTipoJustificacion = $scope.justificacionDetalle.idTipoJustificacion;
+        	paramsModJustificacion.comentarios = $scope.justificacionDetalle.comentario;
+        	
+        	if($("#fileEditJust")[0].files.length > 0){
+        		paramsModJustificacion.evidencias = [];
+            	angular.forEach($("#fileEditJust")[0].files,function(archivoCargado,index){
+            		let reader = new FileReader();
+                    reader.readAsDataURL(archivoCargado);
+                    reader.onload = function () {
+                        let fileBase64 = reader.result.toString().split(",")[1];
+                        var nombreFile = archivoCargado.name.split(".");
+                        paramsModJustificacion.evidencias.push({
+                        	archivo: fileBase64,
+                        	nombre: $scope.rutaNombreEvidenciasJustificaciones + "" + nombreFile[0],
+                        	extension: "."+nombreFile[1]
+                        });
                     }
-                } else {
-                    swal.close();
-                    mostrarMensajeWarningValidacion(response.data.resultDescripcion)
+            	});
+        	}
+        	
+        	swal({
+                title: "\u00BFEst\u00E1 seguro de modificar la justificaci\u00F3n?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#007bff',
+                confirmButtonText: 'Si',
+                cancelButtonText: 'No'
+            }).then(function (isConfirm) {
+                if (isConfirm) {
+                    swal({ text: 'Espera un momento...', allowOutsideClick: false });
+                    swal.showLoading();
+                    gestionTecnicosService.modificarJustificacionTecnico(paramsModJustificacion).then(function success(response) {
+                        if (response.data.respuesta) {
+                            if (response.data.result) {
+                            	$("#modal-editar-justificacion").modal('hide');
+                            	$(".text_select").text("Selecciona un archivo");
+                            	$(".box__dragndrop").text("o arrastra aqu\u00ED");
+                            	$("#fileEditJust").val('');
+                                toastr.success('¡Justificación modificada con éxito!');
+                                $scope.consultarDisponibilidadTecnico();
+                            } else {
+                            }
+                        } else {
+                            mostrarMensajeWarningValidacion(response.data.resultDescripcion)
+                        }
+                        swal.close();
+                    });
                 }
+            }).catch(err => {
             });
         } else {
             mostrarMensajeWarningValidacion(mensajeError);
         }
     }
 
+    //Método que elimina la justificación en selección, validando e indicando si se eliminará una justificación que abarca más de 1 día.
     $scope.eliminarJustificacionTecnico = function (justificacion) {
+    	var totalDiasJustidicados = $scope.calcularDiasJustificados([justificacion]);
+    	var tituloAlerta = "Se eliminar\u00E1 la justificaci\u00F3n"
+    	var txtAlerta = "\u00BFDesea continuar?";
+    	if(totalDiasJustidicados > 1){
+    		tituloAlerta = "\u00BFDesea continuar?";
+    		txtAlerta = "Se eliminar\u00E1 la justificaci\u00F3n del " + justificacion.fechaInicio + " al " + justificacion.fechaFin;
+    	}
     	let paramsEliminarJustificacion = {idJustificacion: justificacion.idJustificacion};
     	swal({
-            title: "Se eliminar\u00E1 la justificaci\u00F3n",
-	        text: "\u00BFDesea continuar?",
+            title: tituloAlerta,
+	        text: txtAlerta,
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: '#007bff',
@@ -1112,7 +1301,6 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
                 gestionTecnicosService.eliminarJustificacionTecnico(paramsEliminarJustificacion).then(function success(response) {
                     if (response.data.respuesta) {
                         if (response.data.result) {
-                        	console.log(response);
                         	toastr.success('¡Justificación eliminada con éxito!');
                         	$scope.consultarDisponibilidadTecnico();
                         } else {
@@ -1139,108 +1327,147 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
 //        swal.close();
     }
 
-    $scope.eliminarJustificacion = function (delJustificacion) {
-        let mensajeError = '';
+//    $scope.eliminarJustificacion = function (delJustificacion) {
+//        let mensajeError = '';
+//        let isValid = true;
+//
+//        if (!$scope.validarFecha('fecha_inicio_justificacion_update', 'fecha_fin_justificacion_update')) {
+//            mensajeError += "<li>La fecha inicical debe ser menor a la fecha final</li>";
+//            isValid = false;
+//        }
+//
+//        if ($("#fileDelJust")[0].files.length == 0) {
+//            isValid = false;
+//            mensajeError += '<li>Selecciona un archivo</li>';
+//        }
+//
+//        if (isValid) {
+//            swal({ text: 'Espera un momento...', allowOutsideClick: false });
+//            swal.showLoading();
+//            let params = {};
+//            gestionTecnicosService.eliminarJustificacionGestionTec(params).then(function success(response) {
+//                if (response.data.respuesta) {
+//                    if (response.data.result) {
+//                        $("#modal-editar-justificacion").modal('hide');
+//                        swal.close();
+//                    } else {
+//                        swal.close();
+//                    }
+//                } else {
+//                    swal.close();
+//                    mostrarMensajeWarningValidacion(response.data.resultDescripcion)
+//                }
+//            });
+//        } else {
+//            mostrarMensajeWarningValidacion(mensajeError);
+//        }
+//    }
+
+    //Método que agrega 1 o más archivos a la justificación en selección (hace la llamada a la petición de modificar justificación).
+    $scope.agregarArchivoJustificacion = function () {
+    	let mensajeError = '';
         let isValid = true;
-
-        if (!$scope.validarFecha('fecha_inicio_justificacion_update', 'fecha_fin_justificacion_update')) {
-            mensajeError += "<li>La fecha inicical debe ser menor a la fecha final</li>";
-            isValid = false;
-        }
-
-        if ($("#fileDelJust")[0].files.length == 0) {
+        
+        if ($("#fileArch")[0].files.length == 0) {
             isValid = false;
             mensajeError += '<li>Selecciona un archivo</li>';
         }
 
         if (isValid) {
-            swal({ text: 'Espera un momento...', allowOutsideClick: false });
-            swal.showLoading();
-            let params = {};
-            gestionTecnicosService.eliminarJustificacionGestionTec(params).then(function success(response) {
-                if (response.data.respuesta) {
-                    if (response.data.result) {
-                        $("#modal-editar-justificacion").modal('hide');
-                        swal.close();
-                    } else {
-                        swal.close();
-                    }
-                } else {
-                    swal.close();
-                    mostrarMensajeWarningValidacion(response.data.resultDescripcion)
+        	let paramsAgregarArchivoJustificacion = {};
+        	paramsAgregarArchivoJustificacion.idJustificacion = $scope.justificacionDetalle.idJustificacion;
+        	paramsAgregarArchivoJustificacion.evidencias = [];
+        	angular.forEach($("#fileArch")[0].files,function(archivoCargado,index){
+        		let reader = new FileReader();
+                reader.readAsDataURL(archivoCargado);
+                reader.onload = function () {
+                    let fileBase64 = reader.result.toString().split(",")[1];
+                    var nombreFile = archivoCargado.name.split(".");
+                    paramsAgregarArchivoJustificacion.evidencias.push({
+                    	archivo: fileBase64,
+                    	nombre: $scope.rutaNombreEvidenciasJustificaciones + "" + nombreFile[0],
+                    	extension: "."+nombreFile[1]
+                    });
                 }
+        	});
+        	
+        	swal({
+                title: "\u00BFEst\u00E1 seguro de agregar el archivo?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#007bff',
+                confirmButtonText: 'Si',
+                cancelButtonText: 'No'
+            }).then(function (isConfirm) {
+                if (isConfirm) {
+                    swal({ text: 'Espera un momento...', allowOutsideClick: false });
+                    swal.showLoading();
+                    gestionTecnicosService.modificarJustificacionTecnico(paramsAgregarArchivoJustificacion).then(function success(response) {
+                        if (response.data.respuesta) {
+                            if (response.data.result) {
+                            	$("#modal-archivos-justificacion").modal('hide');
+                            	$(".text_select").text("Selecciona un archivo");
+                                $(".box__dragndrop").text("o arrastra aqu\u00ED");
+                                $("#fileArch").val('');
+                                toastr.success('¡Archivo registrado con éxito!');
+                                $scope.consultarDisponibilidadTecnico();
+                            } else {
+                            }
+                        } else {
+                            mostrarMensajeWarningValidacion(response.data.resultDescripcion)
+                        }
+                        swal.close();
+                    });
+                }
+            }).catch(err => {
             });
-        } else {
+        }else {
             mostrarMensajeWarningValidacion(mensajeError);
         }
     }
 
-    $scope.agregarArchivoJustificacion = function () {
-        if ($scope.archivosA.file) {
-            swal({ text: 'Espera un momento...', allowOutsideClick: false });
-            swal.showLoading();
-            let paramsDel = {};
-            gestionTecnicosService.agregarArchivoJustificacionGestionTec(paramsDel).then(function success(response) {
-                if (response.data.respuesta) {
-                    if (response.data.result) {
-                        $scope.changeView();
-                        $(".text_select").text("Selecciona un archivo");
-                        $(".box__dragndrop").text("o arrastra aqu\u00ED");
-                        $("#fileArch").val('');
-                        swal.close();
-                    } else {
-                        swal.close();
-                    }
-                } else {
-                    swal.close();
-                    mostrarMensajeWarningValidacion(response.data.resultDescripcion)
-                }
-            });
-        } else {
-            mostrarMensajeWarningValidacion("Selecciona un archivo");
-        }
-    }
+//    $scope.eliminarArchivoJustificacion = function () {
+//        swal({
+//            title: "\u00BFEst\u00E1 seguro de eliminar el Archivo?",
+//            type: "warning",
+//            showCancelButton: true,
+//            confirmButtonColor: '#007bff',
+//            confirmButtonText: 'Si',
+//            cancelButtonText: 'No'
+//        }).then(function (isConfirm) {
+//            if (isConfirm) {
+//                swal({ text: 'Espera un momento...', allowOutsideClick: false });
+//                swal.showLoading();
+//                let paramsDel = {};
+//                gestionTecnicosService.eliminarArchivoJustificacionGestionTec(paramsDel).then(function success(response) {
+//                    if (response.data.respuesta) {
+//                        if (response.data.result) {
+//                            swal.close();
+//                        } else {
+//                            swal.close();
+//                        }
+//                    } else {
+//                        swal.close();
+//                        mostrarMensajeWarningValidacion(response.data.resultDescripcion)
+//                    }
+//                });
+//                swal.close();
+//            }
+//        });
+//    }
 
-    $scope.eliminarArchivoJustificacion = function () {
-        swal({
-            title: "\u00BFEst\u00E1 seguro de eliminar el Archivo?",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: '#007bff',
-            confirmButtonText: 'Si',
-            cancelButtonText: 'No'
-        }).then(function (isConfirm) {
-            if (isConfirm) {
-                swal({ text: 'Espera un momento...', allowOutsideClick: false });
-                swal.showLoading();
-                let paramsDel = {};
-                gestionTecnicosService.eliminarArchivoJustificacionGestionTec(paramsDel).then(function success(response) {
-                    if (response.data.respuesta) {
-                        if (response.data.result) {
-                            swal.close();
-                        } else {
-                            swal.close();
-                        }
-                    } else {
-                        swal.close();
-                        mostrarMensajeWarningValidacion(response.data.resultDescripcion)
-                    }
-                });
-                swal.close();
-            }
-        });
-    }
-
+    //Método que consulta el detalle de las ordenes trabajadas del día "trabajado" seleccionado.
     $scope.consultarDetalleTrabajo = function () {
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
         $scope.isDetalle = false;
         $scope.$apply();
         let arrayRow = [];
+        
         if (tableDetalleTrabajo) {
             tableDetalleTrabajo.destroy();
         }
-        
+
         let paramsOrdenesTecnicos = {"idTecnico": 2,"fechaInicio": "09-11-2021","fechaFin":"30-04-2022"};
         $q.all([
         	gestionTecnicosService.consultaOrdenesTecnicoPorFecha(paramsOrdenesTecnicos)
@@ -1274,14 +1501,12 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
             $("#modal-detalle-trabajo").modal('show');
         	
         });
-        
         swal.close();
     }
     
+    //Método que realiza la consulta de auxiliares y valida si ya fueron consultados no hace la llamada a la petición.
     $scope.consultarAuxiliares = function () {
-    	
     	$scope.limpiarDetalleJustificacion();
-    	
     	$.each($scope.listAuxiliares, function (i, elemento) {
             $("#"+elemento.idAuxiliar).css("background-color", "white");
             $("#tec-"+elemento.idAuxiliar).css("color", "grey");
@@ -1294,10 +1519,8 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
     	$scope.initCalendario();
     	if($scope.listAuxiliares.length < 1){
     		let paramsAuxiliares = {"tecnicos": [125471, 2, 3]};
-        	
             swal({ text: 'Cargando datos ...', allowOutsideClick: false });
             swal.showLoading();
-            
             $q.all([
             	gestionTecnicosService.consultaAuxiliaresGestionTecnicos(paramsAuxiliares)
             ]).then(function (results) {
@@ -1305,21 +1528,15 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
                 swal.close();
                 
             });
-    	}
-    	
+    	}  	
     }
     
+    //Método que oculta la vista del detalle del mes y del detalle de justificaciones, para visualizar.
     $scope.limpiarDetalleJustificacion = function() {
     	$scope.isDetalle = false;
         $scope.isJustificacion = false;
         $scope.justificacionDetalle = {};
 	}
-    
-    
-    
-    
-    
-    
 
     angular.element(document).ready(function () {
         $scope.initGestionTecnicos();
