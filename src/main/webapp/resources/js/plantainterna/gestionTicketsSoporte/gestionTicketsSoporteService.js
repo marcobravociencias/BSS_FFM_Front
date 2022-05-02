@@ -60,58 +60,58 @@ app.service("gestionTicketSoporteService", function ($http) {
         })
     }
 
-    this.consultarUsuariosPorPuesto=function(params){
-		return $http({
-			method: "post",
-			url: "req/consultarUsuariosPorTipoUsuario",
-			data:JSON.stringify(params),
-            headers : {
-                'Content-Type' : 'application/json'
+    this.consultarUsuariosPorPuesto = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarUsuariosPorTipoUsuario",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
             }
-		});
-	};
+        });
+    };
 
-    this.asigarTicketIngeniero=function(params){
-		return $http({
-			method: "post",
-			url: "req/asignarIngenieroTicket",
-			data:JSON.stringify(params),
-            headers : {
-                'Content-Type' : 'application/json'
+    this.asigarTicketIngeniero = function (params) {
+        return $http({
+            method: "post",
+            url: "req/asignarIngenieroTicket",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
             }
-		});
-	};
+        });
+    };
 
-    this.consultarAccionesDinamicaDetalle=function(){
-		return $http({
-			method: "post",
-			url: "req/consultarAccionesDinamicaDetalle",
-            headers : {
-                'Content-Type' : 'application/json'
+    this.consultarAccionesDinamicaDetalle = function () {
+        return $http({
+            method: "post",
+            url: "req/consultarAccionesDinamicaDetalle",
+            headers: {
+                'Content-Type': 'application/json'
             }
-		});
-	};
+        });
+    };
 
-    this.consultaPropietariosTicketSoporte=function(){
-		return $http({
-			method: "post",
-			url: "req/consultaPropietariosTicketSoporte",
-            headers : {
-                'Content-Type' : 'application/json'
+    this.consultaPropietariosTicketSoporte = function () {
+        return $http({
+            method: "post",
+            url: "req/consultaPropietariosTicketSoporte",
+            headers: {
+                'Content-Type': 'application/json'
             }
-		});
-	};
+        });
+    };
 
-    this.guardarTicketDetalle=function(params){
-		return $http({
-			method: "post",
-			url: "req/guardarTicketDetalle",
-			data:JSON.stringify(params),
-            headers : {
-                'Content-Type' : 'application/json'
+    this.guardarTicketDetalle = function (params) {
+        return $http({
+            method: "post",
+            url: "req/guardarTicketDetalle",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
             }
-		});
-	};
+        });
+    };
     /**fin cambios jose */
 
     this.consultaTicketsSoporte = function (params) {
@@ -142,7 +142,7 @@ app.service("gestionTicketSoporteService", function ($http) {
             transformRequest: angular.identity
         });
     }
-    
+
     this.consultarCatalogoTipoOrdenTicketSoporte = function () {
         return $http({
             method: "post",
@@ -154,44 +154,63 @@ app.service("gestionTicketSoporteService", function ($http) {
 
     this.eliminarNoticia = function (params) {
         return $http({
-          method: "post",
-          url: "req/eliminarNoticiaSF",
-          data: JSON.stringify(params),
-          headers: {'Content-Type': "application/json; charset=utf-8"},
-          transformRequest: angular.identity
+            method: "post",
+            url: "req/eliminarNoticiaSF",
+            data: JSON.stringify(params),
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
+            transformRequest: angular.identity
         });
     };
 
     this.eliminarSubNoticia = function (params) {
         return $http({
-          method: "post",
-          url: "req/eliminarSubNoticiaSF",
-          data: JSON.stringify(params),
-          headers: {'Content-Type': "application/json; charset=utf-8"},
-          transformRequest: angular.identity
+            method: "post",
+            url: "req/eliminarSubNoticiaSF",
+            data: JSON.stringify(params),
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
+            transformRequest: angular.identity
         });
     };
-    this.consulCatalogoGeografiaUsuarioDespacho=function(params){
-		return $http({
-			method: "post",
-			url: "req/consulCatalogoGeografiaUsuarioDespacho",
-			//data:JSON.stringify(params),
-            headers : {
-                'Content-Type' : 'application/json'
+    this.consulCatalogoGeografiaUsuarioDespacho = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consulCatalogoGeografiaUsuarioDespacho",
+            //data:JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
             }
-		});
-	};
-    this.consultarDetalleTicketGestion=function(params){
-		return $http({
-			method: "post",
-			url: "req/consultarDetalleTicketGestion",
-			data:JSON.stringify(params),
-            headers : {
-                'Content-Type' : 'application/json'
+        });
+    };
+    this.consultarDetalleTicketGestion = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarDetalleTicketGestion",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
             }
-		});
-	};
+        });
+    };
 
+    this.consultaEstatusTicketSoporte = function () {
+        return $http({
+            method: "get",
+            url: "req/consultaEstatusTicketSoporte",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    };
 
-    
+    this.reasigarTicketIngeniero = function (params) {
+        return $http({
+            method: "post",
+            url: "req/reasignarIngenieroTicket",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    };
+
 });

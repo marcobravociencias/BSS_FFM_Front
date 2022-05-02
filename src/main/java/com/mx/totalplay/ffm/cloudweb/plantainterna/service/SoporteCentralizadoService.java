@@ -31,4 +31,8 @@ public interface SoporteCentralizadoService {
     ServiceResponseResult guardarTicketDetalle(String params);
     
     public ServiceResponseResult consultarDetalleTicketGestion(String params) ;
+    
+    public ServiceResponseResult consultarEstatusTicket();
+    
+    public ServiceResponseResult reasignarIngenieroTicket(String params);
 }

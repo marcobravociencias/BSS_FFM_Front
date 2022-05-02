@@ -486,5 +486,6 @@
                 </div>
             </div>
         </div>
+        <input type="hidden" id="prop-session" value="${userStore.puesto}"/>
     </nav>
 </header>

@@ -3,7 +3,7 @@
     <div class="modal-dialog" style="max-width: 700px !important;">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" style="color: #7716fa;">Captura</h5>
+                <h5 class="modal-title">Captura</h5>
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close">
                 </button>
             </div>

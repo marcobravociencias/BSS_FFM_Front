@@ -38,6 +38,9 @@ public class ConstSoporteCentralizado {
 
     @Value("${asignarIngenieroTicket}")
     private String asignarIngenieroTicket;
+    
+    @Value("${reasignarIngenieroTicket}")
+    private String reasignarIngenieroTicket;
 
     @Value("${consultarAccionesDinamicoDetalle}")
     private String consultarAccionesDinamicoDetalle;
@@ -47,4 +50,7 @@ public class ConstSoporteCentralizado {
     
     @Value("${consultarDetalleTicketGestion}")
     private String consultarDetalleTicketGestion;
+    
+    @Value("${consultarEstatusTicket}")
+    private String consultarEstatusTicket;
 }

@@ -22,6 +22,7 @@ app.noticiasGestionTicketSoporte = function ($scope, gestionTicketSoporteService
        
         gestionTicketSoporteService.consultarComentariosNoticiasSF(params).then((response) => {
             if (response.data.respuesta) {
+                  $scope.isBusqueda = true;
                 if (response.data.result) {
                     $scope.listadoNoticias = response.data.result.news;
                     swal.close();
