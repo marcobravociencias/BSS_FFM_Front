@@ -13,19 +13,22 @@
                             <i class="fas fa-plus-circle icon-back" ng-click="changeView()" title="Cargar Archivo"></i>
                             <!-- <span style="margin-bottom: 0.1em;">Cargar Archivo</span> -->
                         </div>
-                        <table class="display table table-hover" width="100%" id="tableArchivosJustificacion">
-                            <thead id="thead_archivosJustificacion">
-                                <tr>
-                                    <th>Usuario</th>
-                                    <th>Nombre</th>
-                                    <th>Fecha de Registro</th>
-                                    <th>Opciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+                        <div class="table-responsive">
+	                        <table class="display table" cellspacing="0" width="100%" id="tableArchivosJustificacion">
+	                            <thead id="thead_archivosJustificacion">
+	                                <tr>
+	                                    <th>Usuario</th>
+	                                    <th>Nombre</th>
+	                                    <th>Fecha de Registro</th>
+	                                    <th>Opciones</th>
+	                                </tr>
+	                            </thead>
+	                            <tbody>
+	                            </tbody>
+	                        </table>
+                        </div>
                     </div>
+                    
                     <div class="content-fluid" ng-show="isCargaArchivos">
                         <div class="col-12 form-group" style="margin-bottom: 0; text-align: right;">
                             <i class="fas fa-arrow-circle-left icon-back" ng-click="changeView()" title="Regresar"></i>
@@ -36,8 +39,8 @@
                               <div style="text-align: center; padding-left: 0;" class="col-md-12">
                                 <form id="uploadFormEditaJust" name="13" class="form-horizontal box form_drag_drop" novalidate="novalidate" enctype="multipart/form-data">
                                       <div class="box__input">
-                                        <input name="myFile" type="file" class="box__file inputFile" ng-on-change="convertFile($event, 'archivos')" id="fileArch" />
-                                        <label for="fileArch" id="etiqueta_archivo_edita_just">
+                                        <input name="myFile" type="file" multiple class="box__file inputFile" ng-on-change="convertFile($event, 'archivos')" id="fileArch" />
+                                        <label for="fileArch" id="etiqueta_archivo_edita_just" class="etiqueta_archivo_justificacion">
                                           <strong class="text_select">Selecciona un archivo</strong>
                                           <span class="box__dragndrop">o arrastra aqu&iacute;</span>
                                         </label>

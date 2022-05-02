@@ -483,7 +483,7 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 							if (llavesResult.N_ESTATUS_TRASPASO_FILTRO)
 								$scope.nivelEstatusTraspasoFiltro = parseInt(llavesResult.N_ESTATUS_TRASPASO_FILTRO)
 							
-							if (llavesResult.N_ESTATUS_TRASPASO_FILTRO)
+							if (llavesResult.N_INTERVENCION_TRASPASO_FILTRO)
 								$scope.nivelIntervencionTraspasoFiltro = parseInt(llavesResult.N_INTERVENCION_TRASPASO_FILTRO)
 
 							$scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;

@@ -346,7 +346,7 @@ span.text-content-tecnico {
     font-size: 1.1rem;
     background-color: #f5f5f5;
     position: relative;
-    padding: 80px 80px;
+    padding: 80px 0px;
     width: 350px;
     height: 230px;
 }
@@ -668,6 +668,7 @@ span.text-content-tecnico {
 #tableOtsTrabajadas thead th, 
 #tableDiasTrabajados thead th 
 {
+	width: auto !important;
     position: relative;
     background-color: #b1b1b1;
     color: #fff;
@@ -677,8 +678,12 @@ span.text-content-tecnico {
     font-weight: normal;
 }
 
-#tableDetalleTrabajo tbody tr td, 
-#tableArchivosJustificacion tbody tr td, 
+#tableArchivosJustificacion tbody tr td{
+	padding: 0.5em;
+    border: none;
+}
+
+#tableDetalleTrabajo tbody tr td,
 #tableJustificaciones tbody tr td, 
 #tableOtsTrabajadas tbody tr td, 
 #tableDiasTrabajados tbody tr td 
@@ -702,7 +707,15 @@ span.text-content-tecnico {
 }
 
 #tableDetalleTrabajo_wrapper div.dataTables_paginate li.previous a:before,
-#tableDetalleTrabajo_wrapper div.dataTables_paginate li.next a:after {
+#tableDetalleTrabajo_wrapper div.dataTables_paginate li.next a:after,
+#tableDiasTrabajados_wrapper div.dataTables_paginate li.previous a:before,
+#tableDiasTrabajados_wrapper div.dataTables_paginate li.next a:after,
+#tableOtsTrabajadas_wrapper div.dataTables_paginate li.previous a:before,
+#tableOtsTrabajadas_wrapper div.dataTables_paginate li.next a:after,
+#tableJustificaciones_wrapper div.dataTables_paginate li.previous a:before,
+#tableJustificaciones_wrapper div.dataTables_paginate li.next a:after,
+#tableArchivosJustificacion_wrapper div.dataTables_paginate li.previous a:before,
+#tableArchivosJustificacion_wrapper div.dataTables_paginate li.next a:after {
 	content: none;
 }
 
@@ -793,4 +806,15 @@ div.actividades-contadorac-gris {
 .btn_subir_archivo:hover {
     background-color: #7716fa;
     color: #ffff;
+}
+
+.columnasCentradas {
+	text-align: center;
+}
+
+.etiqueta_archivo_justificacion {
+	width: 90%;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
 }

@@ -341,6 +341,8 @@ public class ImplSoporteCentralizadoService implements SoporteCentralizadoServic
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
 		String tokenAcces = principalDetail.getAccess_token();
 		String urlRequest = principalDetail.getDireccionAmbiente().concat(constSoporteCentralizado.getGuardarTicketDetalle().concat(jsonObject.get("tipo").getAsString()));
+		jsonObject.addProperty("idOrigenSistema", principalDetail.getIdOrigen());
+		jsonObject.addProperty("idPropietarioSc", principalDetail.getIdUsuario());
 		logger.info("### URL guardarTicketDetalle(): \n" + urlRequest);
 
 		ServiceResponseResult response = restCaller.callPatchBearerTokenRequest(
@@ -350,6 +352,38 @@ public class ImplSoporteCentralizadoService implements SoporteCentralizadoServic
 				tokenAcces);
 
 		logger.info("### RESULT guardarTicketDetalle(): \n" + gson.toJson(response));
+		return response;
+	}
+
+	@Override
+	public ServiceResponseResult consultarEstatusTicket() {
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String tokenAccess = principalDetail.getAccess_token();
+		logger.info("consultarEstatusTicket ## "+ tokenAccess);
+		
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constSoporteCentralizado.getConsultarEstatusTicket());
+		logger.info("### URL consultarEstatusTicket():" + urlRequest);
+		
+		Map<String, String> paramsRequestGet = new HashMap<String, String>();
+		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest, ServiceResponseResult.class, tokenAccess);
+		logger.info("### RESULT consultarEstatusTicket(): " + gson.toJson(response));   
+		return response;
+	}
+
+	@Override
+	public ServiceResponseResult reasignarIngenieroTicket(String params) {
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String tokenAcces = principalDetail.getAccess_token();
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constSoporteCentralizado.getReasignarIngenieroTicket());
+		logger.info("### URL reasignarIngenieroTicket(): \n" + urlRequest);
+
+		ServiceResponseResult response = restCaller.callPatchBearerTokenRequest(
+				params,
+				urlRequest,
+				ServiceResponseResult.class,
+				tokenAcces);
+
+		logger.info("### RESULT reasignarIngenieroTicket(): \n" + gson.toJson(response));
 		return response;
 	}
 }

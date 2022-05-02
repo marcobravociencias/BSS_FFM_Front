@@ -1,8 +1,8 @@
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modalAsigarTicket" aria-hidden="true" id="modalAsigarTicket">
+<div class="modal fade bd-example-modal-lg" role="dialog" aria-labelledby="modalAsignarTicket" aria-hidden="true" id="modalAsignarTicket">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header header-sin-border">
-                <h5 class="modal-title header-title-tec" style="color: #7716fa">Asignar Ingeniero</h5>
+                <h5 class="modal-title header-title-tec">Asignar Ingeniero</h5>
              
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close">
                 </button>
@@ -29,7 +29,7 @@
                 <button type="button" class="btn btn-cerrar-modal" data-mdb-dismiss="modal">
                     Cerrar
                 </button>
-                <button type="button" ng-click="siguenteAsignar()" class="btn-aceptar-modal btn_modificar_disp btn btn-sm ripple-surface"><i class="fa fa-user" aria-hidden="true"></i> Siguiente</button>
+                <button type="button" ng-click="siguienteAsignar()" class="btn-aceptar-modal btn_modificar_disp btn btn-sm ripple-surface"><i class="fa fa-user" aria-hidden="true"></i> Siguiente</button>
             </div>
         </div>
     </div>

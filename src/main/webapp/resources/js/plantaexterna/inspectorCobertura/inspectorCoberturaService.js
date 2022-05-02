@@ -1,10 +1,9 @@
-app.service("inspectorCoberturaService", function($http) {
-    this.consultarFallasCoberturaPE = function (params) {
+app.service("inspectorCoberturaService", function ($http) {
+    this.consultarFallasCoberturaPE = function () {
         return $http({
-            method: "post",
-            url: "req/consultarFallasCoberturaPE",
-            data: JSON.stringify(params),
-            headers: {'Content-Type': "application/json; charset=utf-8"},
+            method: "get",
+            url: "req/consultarFallasInspectorPE",
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
             transformRequest: angular.identity
         });
     };
@@ -14,7 +13,7 @@ app.service("inspectorCoberturaService", function($http) {
             method: "post",
             url: "req/consultarIncidenciasCoberturaPE",
             data: JSON.stringify(params),
-            headers: {'Content-Type': "application/json; charset=utf-8"},
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
             transformRequest: angular.identity
         });
     };
@@ -24,7 +23,7 @@ app.service("inspectorCoberturaService", function($http) {
             method: "post",
             url: "req/consultarFiltrosCoberturaPE",
             data: JSON.stringify(params),
-            headers: {'Content-Type': "application/json; charset=utf-8"},
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
             transformRequest: angular.identity
         });
     };
@@ -34,7 +33,7 @@ app.service("inspectorCoberturaService", function($http) {
             method: "post",
             url: "req/ligarIncidenciasCoberturasPE",
             data: JSON.stringify(params),
-            headers: {'Content-Type': "application/json; charset=utf-8"},
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
             transformRequest: angular.identity
         });
     };
@@ -51,7 +50,7 @@ app.service("inspectorCoberturaService", function($http) {
             }
         });
     };
-    
+
     this.consultaCatalogoGeografia = function () {
         return $http({
             method: "post",

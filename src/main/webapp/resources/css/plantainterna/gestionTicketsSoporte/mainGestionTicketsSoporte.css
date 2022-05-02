@@ -604,6 +604,23 @@ span.text-tile-vehiculo {
     color: #000;
     text-transform: uppercase;
 }
+
+.text-external-link{
+    font-size: 0.7em;
+    color: #0c56d0 !important;
+    font-weight: bold !important;
+    text-decoration-line: underline;
+
+}
+
+.text-external-link:hover{
+    color: #114291;
+    text-decoration: solid;
+    cursor: pointer;
+    text-decoration-line: underline;
+}
+
+
 span.text-content-vehiculo {
     /* font-weight: bold; */
     font-size: 0.8em;
@@ -616,14 +633,14 @@ span.text-content-vehiculo {
   text-overflow: ellipsis;
 }
 .container-text-title-detalle {
-  width: 30%;
+  width: 40%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .container-text-content-detalle {
-  width: 70%;
+  width: 60%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -729,23 +746,25 @@ span.text-content-vehiculo {
 }
 
 #detalleTicketAccordion .accordion-button:focus {
+    box-shadow: 0 0px 3px 0 rgb(0 0 0 / 5%);
+}
 
+#detalleTicketAccordion .accordion-item {
+    box-shadow: 0 2px 10px 0 rgb(0 0 0 / 5%);
+}
+
+.accordion-button,  .accordion-collapse{
+    box-shadow: 0 0px 3px 0 rgb(0 0 0 / 5%);
 }
 
 #detalleTicketAccordion .imgFoto {
     box-shadow: 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%), 0 2px 4px -1px rgb(0 0 0 / 30%);
     cursor: pointer;
     border-radius: 35px;
-    margin-top: 30%;
 }
 
 #detalleTicketAccordion .accordion-item{
     margin: 1em;
-}
-
-#detalleTicketAccordion .accordion-collapse{
-    margin-top: 0.5em;
-    border-left: 1px solid #7716fa;
 }
 
 #detalleTicketAccordion .accordion-button{
@@ -755,6 +774,43 @@ span.text-content-vehiculo {
 #detalleTicketAccordion .accordion-button:hover, .accordion-button:not(:hover):focus {
     background-color: #fff !important;
 }
+
+#detalleTicketAccordion  .accordion-body {
+    padding: 0.5rem 1rem;
+}
+
+.right-content .inputTicket {
+    border: 1px solid #dbdbdb !important;
+    font-weight: 400;
+    color: #818181 !important;
+    transition: all 0.5s ease;
+    padding: 0.4em 0.5em;
+    background: white !important;
+    border-radius: 0.5em !important;
+    /* box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.07), 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important; */
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 7%), 0 1px 2px 0 rgb(0 0 0 / 5%) !important;
+    border-bottom: 0 1px 3px 0 rgb(0 0 0 / 7%), 0 1px 2px 0 rgb(0 0 0 / 5%) !important;
+}
+
+.right-content .inputTicket input{
+    height: 2.2em;
+}
+
+.inputTicket-select::after{
+    content: "";
+    position: absolute;
+    right: 5%;
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 7px solid #939db2;
+    clear: both;
+    z-index: 2;
+    font-size: 14px;
+    margin-top: -1.2em;
+}
+
 
 .input-filtro-content{
     width: 170px;
@@ -768,4 +824,35 @@ span.text-content-vehiculo {
 i.icono-noseleccion {
     color: #ff9f3b;
     display: inline-block;
+}
+
+.text-accion-nopermiso {
+    font-size: 12px;
+    color: grey;
+    padding: 1em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.text-not-permiso {
+    margin-left: 0.5em;
+    font-size: 1.5em;
+    font-weight: normal;
+}
+
+.text-accion-nopermiso .icon-not-permiso {
+    color: #9586a9;
+    font-size: 1.3em;
+    padding: 0.5em;
+    border-radius: 50%;
+    /* background: #9586a9; */
+    width: 2em;
+    height: 2em;
+    /* box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);**/
+}
+
+.icon-user-detalle{
+    font-size: 0.6em;
+    margin: 0 0.5em 0 1.5em;
+    color: #000;
 }

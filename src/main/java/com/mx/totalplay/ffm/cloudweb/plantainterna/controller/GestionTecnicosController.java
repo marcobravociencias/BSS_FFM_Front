@@ -145,6 +145,16 @@ public class GestionTecnicosController {
         }
         return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
 	}
+	
+	@PostMapping("/modificarJustificacionTecnico")
+	public ResponseEntity<?> modificarJustificacionTecnico(@RequestBody String params) {
+		logger.info("##### MODIFICANDO JUSTIFICACION TECNICO GT");
+		ServiceResponseResult result = gestionTecnicosService.modificarJustificacionTecnico(params);
+        if (result.getResult() instanceof Integer){
+            return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
+	}
 
 //	@GetMapping("/consultaMotivosGestionTecnicos")
 //	public ResponseEntity<?> consultaMotivosGestionTecnicos() {

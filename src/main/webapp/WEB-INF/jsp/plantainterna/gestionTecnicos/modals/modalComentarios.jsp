@@ -14,7 +14,7 @@
                             </div>
                             <div class="chat-area" style="height: 20em; overflow-y: auto;">
                                 <div class="chats" ng-repeat="comentario in comentariosJustificacion">
-                                    <div class="chat" ng-if="comentario.idOrigen !== 2"><!-- APP-->
+                                    <div class="chat" ng-if="comentario.idOrigen != 2"><!-- APP-->
                                         <div class="chat-avatar">
                                             <a class="avatar"><i class="img-comentarios-chat android-mensaje fab fa-android" style="margin-top: 1em;"></i></a>
                                         </div>
@@ -25,7 +25,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="chat chat-right" ng-if="comentario.idOrigen === 2">
+                                    <div class="chat chat-right" ng-if="comentario.idOrigen == 2">
                                         <div class="chat-body">
                                             <span class="text-fecha-comentario" ng-bind="comentario.Fecha"></span>
                                             <div class="chat-text">
