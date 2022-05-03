@@ -71,7 +71,8 @@
                         </div>
                         <div class="col-4">
                             <div class="container-fluid vehiculo-content">
-                                <div class="container-text-title-detalle"><span class="text-tile-vehiculo">OT</span>
+                                <div class="container-text-title-detalle"><span class="text-tile-vehiculo">OT
+                                        CENTRALIZADO</span>
                                 </div>
                                 <div class="container-text-content-detalle"><span
                                         class="text-content-vehiculo ng-binding"
@@ -173,7 +174,49 @@
                                     </select>
                                 </div>
                             </div>
-
+                            <div class="dropleft">
+                                <span class="fas fa-comments icon-color-comments" title="Comentarios"
+                                    id="dropupComments" data-toggle="dropdown" aria-expanded="false"></span>
+                                <div class="dropdown-menu dropup-comments">
+                                    <div class="box-comments">
+                                        <div class="box-comments-header">
+                                            <span>Historico de comentarios</span>
+                                        </div>
+                                        <div class="container-comments justify-content-center">
+                                            <div class="box-content" ng-show="comentariosOrdenTrabajo.length">
+                                                <div class="d-flex justify-content-center py-2" 
+                                                    ng-repeat="comment in comentariosOrdenTrabajo">
+                                                    <div class="second py-2 px-2">
+                                                        <span class="text1" ng-bind="comment.comentario"></span>
+                                                        <div class="d-flex justify-content-between">
+                                                            <span class="text2" ng-bind="comment.nombreUsuario"></span>
+                                                        </div>
+                                                        <span class="text2" style="float: right;"
+                                                            ng-bind="comment.fechaComentario"></span>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="box-content" ng-show="!comentariosOrdenTrabajo.length">
+                                                <div class="no-comments">
+                                                    No se encontraron comentarios
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-center pt-3 pb-2">
+                                                <textarea type="text" cols="2" placeholder="Agragar comentario"
+                                                    class="form-control form-control-sm inputTicket addtxt"
+                                                    id="comentarioTicket" ng-model="comentarioTicket"></textarea>
+                                                <div>
+                                                    <button ng-click="addComentarios()" type="button"
+                                                        class="btn btn-primary btn-editar-cambios ripple-surface mr-0 send-comment"><i
+                                                            class="far fa-paper-plane"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -277,7 +320,7 @@
                         <div class="col-4">
                             <div class="container-fluid vehiculo-content">
                                 <div class="container-text-title-detalle"><span class="text-tile-vehiculo">OT
-                                        Soporte</span>
+                                        FFM</span>
                                 </div>
                                 <div class="container-text-content-detalle"><span
                                         class="text-content-vehiculo ng-binding"
@@ -357,8 +400,8 @@
                                     <div class="form-group col-md-2">
                                         <label class="label-nuevo-equipo" for="selectTipoEquipoAdd">Tipo</label>
                                         <select
-                                            ng-class="{'error-captura-input': !tipoEquipoCambio  && isEvaluarNuevoEquipo}"
-                                            ng-model="tipoEquipoCambio"
+                                            ng-class="{'error-captura-input': !cambioEquipo.idTipoEquipo  && isEvaluarNuevoEquipo}"
+                                            ng-model="cambioEquipo.idTipoEquipo"
                                             class="input-filtro form-control form-control-sm inputTicket"
                                             id="selectTipoEquipoAdd">
                                             <option value="">Seleccione ...</option>
@@ -369,32 +412,32 @@
                                     <div class="form-group col-md-2">
                                         <label class="label-nuevo-equipo" for="noSerieAnteriorEquipo">No. Serie</label>
                                         <input
-                                            ng-class="{'error-captura-input': !viejoEquipo.noSerie && isEvaluarNuevoEquipo}"
-                                            ng-model="viejoEquipo.noSerie" type="text"
+                                            ng-class="{'error-captura-input': !cambioEquipo.numSerieViejo && isEvaluarNuevoEquipo}"
+                                            ng-model="cambioEquipo.numSerieViejo" type="text"
                                             class="form-control form-control-sm inputTicket" id="noSerieAnteriorEquipo"
                                             placeholder="">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label class="label-nuevo-equipo" for="noMacViejoEquipo">MAC</label>
                                         <input
-                                            ng-class="{'error-captura-input': !viejoEquipo.mac && isEvaluarNuevoEquipo}"
-                                            ng-model="viejoEquipo.mac" type="text"
+                                            ng-class="{'error-captura-input': !cambioEquipo.macViejo && isEvaluarNuevoEquipo}"
+                                            ng-model="cambioEquipo.macViejo" type="text"
                                             class="form-control form-control-sm inputTicket" id="noMacViejoEquipo"
                                             placeholder="">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label class="label-nuevo-equipo" for="noSerieNuevoEquipo">No. Serie</label>
                                         <input
-                                            ng-class="{'error-captura-input': !nuevoEquipo.noSerie && isEvaluarNuevoEquipo}"
-                                            ng-model="nuevoEquipo.noSerie" type="text"
+                                            ng-class="{'error-captura-input': !cambioEquipo.numeSerieNuevo && isEvaluarNuevoEquipo}"
+                                            ng-model="cambioEquipo.numeSerieNuevo" type="text"
                                             class="form-control form-control-sm inputTicket" id="noSerieNuevoEquipo"
                                             placeholder="">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label class="label-nuevo-equipo" for="noMacNuevoEquipo">MAC</label>
                                         <input
-                                            ng-class="{'error-captura-input': !nuevoEquipo.mac && isEvaluarNuevoEquipo}"
-                                            ng-model="nuevoEquipo.mac" type="text"
+                                            ng-class="{'error-captura-input': !cambioEquipo.macNueva && isEvaluarNuevoEquipo}"
+                                            ng-model="cambioEquipo.macNueva" type="text"
                                             class="form-control form-control-sm inputTicket" id="noMacNuevoEquipo"
                                             placeholder="">
                                     </div>
@@ -409,29 +452,22 @@
                             <table ng-show="agregarNuevoEquipoContent" id="table-cambio-equipo" class="table table-sm">
                                 <thead>
                                     <tr>
-                                        <th scope="col"></th>
-                                        <th scope="col" style="text-align: center;" colspan="2">Equipo viejo</th>
-                                        <th scope="col" style="text-align: center;" colspan="2">Equipo nuevo</th>
-                                        <th scope="col"></th>
-
-                                    </tr>
-                                    <tr>
                                         <th scope="col">Tipo </th>
-                                        <th scope="col">No. serie</th>
-                                        <th scope="col">MAC</th>
-                                        <th scope="col">No serie</th>
-                                        <th scope="col">MAC</th>
+                                        <th scope="col">No. serie actual</th>
+                                        <th scope="col">MAC actual</th>
+                                        <th scope="col">No serie nueva</th>
+                                        <th scope="col">MAC nueva</th>
                                         <th scope="col"></th>
 
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="itemRegistro in listadoNuevoViejosEquipo track by $index">
-                                        <td ng-bind="itemRegistro.tipoEquipoCambio"></td>
-                                        <td ng-bind="itemRegistro.viejo.noSerie"></td>
-                                        <td ng-bind="itemRegistro.viejo.mac"></td>
-                                        <td ng-bind="itemRegistro.nuevo.noSerie"></td>
-                                        <td ng-bind="itemRegistro.nuevo.mac"></td>
+                                        <td ng-bind="itemRegistro.idTipoEquipo"></td>
+                                        <td ng-bind="itemRegistro.numSerieViejo"></td>
+                                        <td ng-bind="itemRegistro.macViejo"></td>
+                                        <td ng-bind="itemRegistro.numeSerieNuevo"></td>
+                                        <td ng-bind="itemRegistro.macNueva"></td>
                                         <td>
                                             <button ng-click="eliminarRegistro($index)" type="button"
                                                 class="eliminar-registro-cambioequipo btn btn-sm btn-primary ">
@@ -494,18 +530,24 @@
                     </select>
                 </div>
             </div>
+            <div class="container-fluid ticket-content content-select-ticket-detalle col-6"
+                ng-show="ticketSoporteDetalle.estatus !== '1'">
+                <div class="container-text-title-detalle"><span class="text-tile-ticket">COMENTARIOS</span></div>
+                <textarea class="form-control form-control-sm inputTicket" ng-model="ticketSoporteDetalle.comentarios"
+                    cols="2"></textarea>
+            </div>
         </div>
-    </div>
-    <div class="row content-falla">
-        <div class="col-12">
-            <button ng-click="guardarTicketDetalle()" type="button"
-                class="btn btn-primary btn-editar-cambios ripple-surface mr-0">
-                <b>Guardar cambios </b>
-            </button>
-            <button ng-click="cerrarDetalleTicket()" type="button" class="btn cerrar-cancelar-btn  btn-ligh"
-                data-mdb-dismiss="modal">
-                Cancelar
-            </button>
+        <div class="row content-falla">
+            <div class="col-12">
+                <button ng-click="guardarTicketDetalle()" type="button"
+                    class="btn btn-primary btn-editar-cambios ripple-surface mr-0">
+                    <b>Guardar cambios </b>
+                </button>
+                <button ng-click="cerrarDetalleTicket()" type="button" class="btn cerrar-cancelar-btn  btn-ligh"
+                    data-mdb-dismiss="modal">
+                    Cancelar
+                </button>
+            </div>
         </div>
     </div>
 </div>

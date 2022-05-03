@@ -285,11 +285,11 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                             }
 
                             if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
-                                //$scope.configPermisoAccionLiberaPagos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "liberaPagos" })[0] != undefined);
-                                //$scope.configPermisoAccionConsultaCambiaContrasena =($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaCambiaContrasenaPlanning" })[0] != undefined);
-                                //$scope.configPermisoAccionConsultaTecnicosPagos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaTecnicosPagosPlanning" })[0] != undefined);
-                                //$scope.configPermisoAccionConsultaPagos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaPagosPlanning" })[0] != undefined);
-                                //$scope.configPermisoAccionCambiaContrasena = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionCambiaContrasenaPlanning" })[0] != undefined);
+                                $scope.configPermisoAccionLiberaPagos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "liberaPagos" })[0] != undefined);
+                                $scope.configPermisoAccionConsultaCambiaContrasena =($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaCambiaContrasenaPlanning" })[0] != undefined);
+                                $scope.configPermisoAccionConsultaTecnicosPagos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaTecnicosPagosPlanning" })[0] != undefined);
+                                $scope.configPermisoAccionConsultaPagos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaPagosPlanning" })[0] != undefined);
+                                $scope.configPermisoAccionCambiaContrasena = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionCambiaContrasenaPlanning" })[0] != undefined);
                             }
 
                             if (!$scope.configPermisoAccionConsultaCambiaContrasena && $scope.configPermisoAccionConsultaTecnicosPagos) {

@@ -1,4 +1,4 @@
- #container_ticket_form, #container_ticket, #container_noticias_ticket {
+#container_ticket_form, #container_ticket, #container_noticias_ticket {
     box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
     /* padding-top: 1em; */
     background: white;
@@ -6,6 +6,7 @@
     margin-top: 1em;
     padding: 0;
 }
+
 /* TAB CONSULTAR TICKETS */
 /* FILTROS CONSULTA TICKETS */
 
@@ -29,18 +30,18 @@
 }
 
 .columna-filtro-ind::after {
- content: "";
- position: absolute;
- right: 3%;
- top: 65%;
- width: 0;
- height: 0;
- border-left: 0.3em solid transparent;
- border-right: 0.3em solid transparent;
- border-top: 0.6em solid #939db2;
- clear: both;
- z-index: 2;
- font-size: 14px;
+    content: "";
+    position: absolute;
+    right: 3%;
+    top: 65%;
+    width: 0;
+    height: 0;
+    border-left: 0.3em solid transparent;
+    border-right: 0.3em solid transparent;
+    border-top: 0.6em solid #939db2;
+    clear: both;
+    z-index: 2;
+    font-size: 14px;
 }
 
 .form-content {
@@ -72,8 +73,9 @@
     box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
     color: #7716fa;
 }
-.btnTicket:hover,.btnTicket:active,.btnTicket:focus {
-    background-color:white;
+
+.btnTicket:hover, .btnTicket:active, .btnTicket:focus {
+    background-color: white;
     color: #7716fa !important;
 }
 
@@ -93,14 +95,12 @@
 /* TABLE TICKETS */
 /* CSS TABLE */
 #tecnicosCuentaTable tbody tr:nth-child(even),
-#ingenierosTable tbody tr:nth-child(even)
-{
+#ingenierosTable tbody tr:nth-child(even) {
     background: #f5f5f5;
 }
-  
+
 #tecnicosCuentaTable>tbody>tr>td,
-#ingenierosTable>tbody>tr>td
-{
+#ingenierosTable>tbody>tr>td {
     white-space: nowrap;
     color: #39455b;
     font-family: 'Montserrat';
@@ -108,10 +108,9 @@
     border-top: 0px solid #eceeef !important;
     text-align: center;
 }
-  
-#tecnicosCuentaTable thead th, 
-#ingenierosTable thead th 
-{
+
+#tecnicosCuentaTable thead th,
+#ingenierosTable thead th {
     position: relative;
     background-color: #b1b1b1;
     color: #fff;
@@ -121,10 +120,9 @@
     border: none;
     font-weight: normal;
 }
-  
-#tecnicosCuentaTable tbody tr td, 
-#ingenierosTable tbody tr td 
-{
+
+#tecnicosCuentaTable tbody tr td,
+#ingenierosTable tbody tr td {
     padding: 1em;
     border: none;
 }
@@ -132,7 +130,7 @@
 #tableTicketSoporte tbody tr:nth-child(even) {
     background: #f5f5f5;
 }
-  
+
 #tableTicketSoporte>tbody>tr>td {
     color: #39455b;
     font-family: 'Montserrat';
@@ -141,7 +139,7 @@
     text-align: center;
     white-space: nowrap;
 }
-  
+
 #tableTicketSoporte thead th {
     position: relative;
     background-color: #b1b1b1;
@@ -152,33 +150,33 @@
     border: none;
     font-weight: normal;
 }
-  
+
 #tableTicketSoporte tbody tr td {
-    padding: 1em;
+    padding: 1em 0.7em;
     border: none;
 }
-  
-.page-link{
+
+.page-link {
     font-size: 0.7em !important;
     font-family: "Montserrat" !important;
 }
-  
+
 .dataTables_info {
     font-size: 0.7em;
     font-family: "Montserrat" !important;
     text-align: left;
     padding-left: 0.5em;
 }
-  
-.dataTables_paginate.paging_simple_numbers{
+
+.dataTables_paginate.paging_simple_numbers {
     float: right;
 }
-  
-.dataTables_filter{
+
+.dataTables_filter {
     font-size: 0.7em !important;
     font-family: 'Montserrat';
 }
-  
+
 div.dataTables_wrapper div.dataTables_filter input {
     width: 11.3em !important;
     height: 2.05em !important;
@@ -190,6 +188,7 @@ div.dataTables_wrapper div.dataTables_filter input {
 .table.dataTable {
     border-collapse: collapse !important;
 }
+
 .btnTables {
     background-color: #7716fa;
     color: #fff !important;
@@ -199,7 +198,7 @@ div.dataTables_wrapper div.dataTables_filter input {
     text-align: center;
 }
 
-.btnTables:hover,  .btnTables:active{
+.btnTables:hover, .btnTables:active {
     background-color: #7716fa !important;
 
 }
@@ -209,6 +208,7 @@ div.dataTables_wrapper div.dataTables_filter input {
     border-radius: 0.2rem !important;
     cursor: pointer;
 }
+
 /* TABLE TICKETS */
 /* TAB CONSULTAR TICKETS */
 
@@ -218,6 +218,7 @@ div.dataTables_wrapper div.dataTables_filter input {
     font-size: .9em;
     margin-bottom: 0;
 }
+
 /* FORM TICKETS */
 
 #estatusDropdown .nav-link {
@@ -350,7 +351,7 @@ div.dataTables_wrapper div.dataTables_filter input {
     padding: 0.5rem 1rem !important;
 }
 
-.user-filter span{
+.user-filter span {
     cursor: pointer;
     padding: 0.4em 1em;
     font-size: 0.9em;
@@ -362,7 +363,7 @@ div.dataTables_wrapper div.dataTables_filter input {
     /* width: 20%; */
 }
 
-.user-filter .fa-filter{
+.user-filter .fa-filter {
     font-size: 0.9em;
     color: #ccc;
     padding: 0.3em;
@@ -395,7 +396,7 @@ div.dataTables_wrapper div.dataTables_filter input {
     /* box-shadow: 1px 0px 0 0 rgb(0 0 0 / 3%), 1px 0 10px 0 rgb(0 0 0 / 12%); */
 }
 
-.search-filtro-tecnicos{
+.search-filtro-tecnicos {
     float: right;
     height: 2.8em;
     border-radius: 2em !important;
@@ -424,9 +425,9 @@ div.dataTables_wrapper div.dataTables_filter input {
 }
 
 /* div#tableTicketSoporte_info {
-    font-family: "Montserrat";
-    font-size: 0.8em;
-    color: #a5a5a5 !important;
+   font-family: "Montserrat";
+   font-size: 0.8em;
+   color: #a5a5a5 !important;
 } */
 
 .cardTecnicosBusqueda {
@@ -488,11 +489,13 @@ thead#thead_tecnicosCuenta tr th {
     text-align: center;
     border-top: 1px white solid;
     border-bottom: 1px solid #ccc;
-}  
+}
+
 #thead_tecnicosCuenta .fa {
     font-size: 13px;
     color: gray;
 }
+
 thead#thead_tecnicosCuenta {
     font-weight: bold !important;
     border: 1px #ccc;
@@ -506,7 +509,7 @@ thead#thead_tecnicosCuenta {
 .btn-asignarTecnico {
     font-size: .7em;
     padding: 0.6em 2em 0.6em 2em;
-    border: 0.09rem solid #1266f1; 
+    border: 0.09rem solid #1266f1;
     box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
 }
 
@@ -519,7 +522,8 @@ thead#thead_tecnicosCuenta {
     background-color: #7716fa !important;
     border-color: #7716fa !important;
 }
-#ingenierosTable img{
+
+#ingenierosTable img {
     box-shadow: 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%), 0 2px 4px -1px rgb(0 0 0 / 30%);
 }
 
@@ -541,44 +545,49 @@ thead#thead_tecnicosCuenta {
     white-space: nowrap;
 }
 
-.content-select-ticket-detalle{
+.content-select-ticket-detalle {
     margin-bottom: 0.5em;
 }
 
-.titulo-acciones-dinamicas{
+.titulo-acciones-dinamicas {
     width: 55% !important;
 }
-#filtros_config .label-filter{
+
+#filtros_config .label-filter {
     color: #9d9d9d;
     font-size: .9em;
     margin-bottom: 0;
 }
-#txtGeografiasConsulta .label-filter{
+
+#txtGeografiasConsulta .label-filter {
     color: #9d9d9d;
     font-size: .9em;
     margin-bottom: 0;
 }
-#filtros_config .label-filter i{
-    font-size: .9em;    
+
+#filtros_config .label-filter i {
+    font-size: .9em;
 }
 
 .row-datos-creacion .form-group {
     margin-bottom: .5em;
 }
-#opcion-creatickets select.form-control{
-    height:2.2em;
-    font-size:.9em;
-    color:#858585;
-}
-#opcion-creatickets input.form-control{
-    height:2.2em;
-    font-size:.9em;
-    color:#858585;
+
+#opcion-creatickets select.form-control {
+    height: 2.2em;
+    font-size: .9em;
+    color: #858585;
 }
 
-#content-mapa-creacion-ticket{
-    min-heigth:65vh;
-    height:65vh;
+#opcion-creatickets input.form-control {
+    height: 2.2em;
+    font-size: .9em;
+    color: #858585;
+}
+
+#content-mapa-creacion-ticket {
+    min-heigth: 65vh;
+    height: 65vh;
 }
 
 .form-row.form-row-creacion {
@@ -599,13 +608,14 @@ thead#thead_tecnicosCuenta {
     padding: 0;
     display: flex;
 }
+
 span.text-tile-vehiculo {
     font-size: 0.7em;
     color: #000;
     text-transform: uppercase;
 }
 
-.text-external-link{
+.text-external-link {
     font-size: 0.7em;
     color: #0c56d0 !important;
     font-weight: bold !important;
@@ -613,7 +623,7 @@ span.text-tile-vehiculo {
 
 }
 
-.text-external-link:hover{
+.text-external-link:hover {
     color: #114291;
     text-decoration: solid;
     cursor: pointer;
@@ -626,24 +636,26 @@ span.text-content-vehiculo {
     font-size: 0.8em;
     color: #9d9ea2;
 }
+
 .container-text-content {
-  width: 60%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    width: 60%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
+
 .container-text-title-detalle {
-  width: 40%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    width: 40%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .container-text-content-detalle {
-  width: 60%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    width: 60%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .container-text-title-dictamen {
@@ -651,55 +663,61 @@ span.text-content-vehiculo {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
-  
-  .container-text-content-dictamen {
+}
+
+.container-text-content-dictamen {
     width: 20% !important;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
+}
 
 .text-info-ot-text {
     margin-top: .8em;
 }
-.form-gruponoserie{
+
+.form-gruponoserie {
     padding-right: .3em;
 }
-.form-gruponoserienuevo{
+
+.form-gruponoserienuevo {
     padding-left: .3em;
 }
 
-#cerrar-gestion-ticket{
-    position:absolute;
+#cerrar-gestion-ticket {
+    position: absolute;
     right: 0;
     margin-right: .5em;
     z-index: 1em;
     margin-top: .5em;
     z-index: 2;
 }
-.content-detalle-ticket{
+
+.content-detalle-ticket {
     /* padding:0em 1.5em 1em 1.5em !important; */
     position: relative;
     padding: 0;
 }
-.title-bloque-detalle{
-    margin-bottom:0;
-    font-size:1em;
-    font-weight:bold;
-    color:#8032f9;
-    border-bottom:1px solid #dbdbdb;
-    margin-bottom:.5em;
+
+.title-bloque-detalle {
+    margin-bottom: 0;
+    font-size: 1em;
+    font-weight: bold;
+    color: #8032f9;
+    border-bottom: 1px solid #dbdbdb;
+    margin-bottom: .5em;
 }
+
 .content-falla.content-tipo-folio {
     margin-bottom: 1em;
 }
-.opciones-checkbox-dictamen{
-    margin-bottom:.2em;
+
+.opciones-checkbox-dictamen {
+    margin-bottom: .2em;
 }
 
 
-.btn-editar-cambios ,#asignar-ticket-ingenierobtn{
+.btn-editar-cambios, #asignar-ticket-ingenierobtn {
     font-size: .7em;
     background: #0c56d0;
     color: white;
@@ -709,11 +727,12 @@ span.text-content-vehiculo {
     border: .09rem solid #0c56d0;
     box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
     margin-left: 1em;
-    float:right;
-    margin-top:1em;
+    float: right;
+    margin-top: 1em;
     margin-bottom: 1em;
     margin-right: 1em;
 }
+
 .cerrar-cancelar-btn {
     font-size: .7em;
     background: white;
@@ -723,25 +742,26 @@ span.text-content-vehiculo {
     padding: .6em 2em .6em 2em;
     border: .09rem solid #0c56d0;
     box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
-    float:right;
-    margin-top:1em;
-}
-#tableTicketSoporte thead tr{
-    text-align:center;
+    float: right;
+    margin-top: 1em;
 }
 
-#ingenierosTable_wrapper .col-12,#ingenierosTable_wrapper .col-sm-12{
+#tableTicketSoporte thead tr {
+    text-align: center;
+}
+
+#ingenierosTable_wrapper .col-12, #ingenierosTable_wrapper .col-sm-12 {
     /* padding: 0 !important; */
     /* padding-left: .5em !important; */
 }
 
-#detalleTicketAccordion .accordion-button:after{
+#detalleTicketAccordion .accordion-button:after {
     content: "\f054" !important;
     font-size: 0.8em;
     margin-top: 0.2em;
 }
 
-#detalleTicketAccordion .accordion-button:not(.collapsed):after{
+#detalleTicketAccordion .accordion-button:not(.collapsed):after {
     transform: rotate(90deg);
 }
 
@@ -753,7 +773,7 @@ span.text-content-vehiculo {
     box-shadow: 0 2px 10px 0 rgb(0 0 0 / 5%);
 }
 
-.accordion-button,  .accordion-collapse{
+.accordion-button, .accordion-collapse {
     box-shadow: 0 0px 3px 0 rgb(0 0 0 / 5%);
 }
 
@@ -763,11 +783,11 @@ span.text-content-vehiculo {
     border-radius: 35px;
 }
 
-#detalleTicketAccordion .accordion-item{
+#detalleTicketAccordion .accordion-item {
     margin: 1em;
 }
 
-#detalleTicketAccordion .accordion-button{
+#detalleTicketAccordion .accordion-button {
     color: #000000 !important;
 }
 
@@ -775,11 +795,11 @@ span.text-content-vehiculo {
     background-color: #fff !important;
 }
 
-#detalleTicketAccordion  .accordion-body {
+#detalleTicketAccordion .accordion-body {
     padding: 0.5rem 1rem;
 }
 
-.right-content .inputTicket {
+.inputTicket {
     border: 1px solid #dbdbdb !important;
     font-weight: 400;
     color: #818181 !important;
@@ -792,11 +812,11 @@ span.text-content-vehiculo {
     border-bottom: 0 1px 3px 0 rgb(0 0 0 / 7%), 0 1px 2px 0 rgb(0 0 0 / 5%) !important;
 }
 
-.right-content .inputTicket input{
+.inputTicket input {
     height: 2.2em;
 }
 
-.inputTicket-select::after{
+.inputTicket-select::after {
     content: "";
     position: absolute;
     right: 5%;
@@ -811,13 +831,17 @@ span.text-content-vehiculo {
     margin-top: -1.2em;
 }
 
+.inputTicket-select {
+    height: 2em;
+}
 
-.input-filtro-content{
+
+.input-filtro-content {
     width: 170px;
     padding-right: 0;
 }
 
-.content-falla{
+.content-falla {
     padding: 0 1em;
 }
 
@@ -851,8 +875,94 @@ i.icono-noseleccion {
     /* box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);**/
 }
 
-.icon-user-detalle{
+.icon-user-detalle {
     font-size: 0.6em;
     margin: 0 0.5em 0 1.5em;
     color: #000;
 }
+
+
+/*BOX COMMENTS*/
+.icon-color-comments {
+    color: #7f4c9d;
+    display: inline;
+    float: right;
+    margin-right: 1em;
+    cursor: pointer;
+    transition: all 0.5s ease;
+    font-size: 1.8em;
+    text-shadow: -4px 1px 10px rgb(14 51 33 / 28%);
+}
+
+
+.box-comments {
+    z-index: 2;
+    top: 0;
+    max-width: 400px;
+    left: 3em;
+    box-shadow: 0 0.46875rem 2.1875rem rgb(4 9 20 / 3%), 0 0.9375rem 1.40625rem rgb(4 9 20 / 3%), 0 0.25rem 0.53125rem rgb(4 9 20 / 5%), 0 0.125rem 0.1875rem rgb(4 9 20 / 3%);
+}
+
+.container-comments {
+    background-color: #cccccc1a;
+    padding: 0.5em;
+}
+
+.box-content {
+    overflow-y: scroll;
+    overflow: auto;
+    max-height: 15em;
+}
+
+.addtxt {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 0.6em;
+    width: 350px;
+}
+
+.no-comments{
+    padding: 1em;
+    color: #ccc;
+    text-align: center;
+}
+
+.form-control: focus {
+    color: #000;
+}
+
+.second {
+    width: 350px;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 4px 4px 8px 5px rgb(0 0 0 / 5%)
+}
+
+.text1 {
+    font-size: 0.8em;
+    font-weight: 500;
+    color: #000;
+}
+
+.text2 {
+    font-size: 0.6em;
+    font-weight: 500;
+    margin-left: 6px;
+    color: #56575b;
+}
+
+.send-comment {
+    height: 2em;
+    width: 2em;
+    padding: 0 0.2em;
+    border-radius: 50%;
+    margin-left: 0.5em;
+    font-size: 1em;
+}
+
+.box-comments-header {
+    padding: 0.5em;
+    color: #000;
+}
+
+/*BOX COMMENTS*/

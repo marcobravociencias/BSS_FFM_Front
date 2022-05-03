@@ -340,9 +340,8 @@ public class ImplSoporteCentralizadoService implements SoporteCentralizadoServic
 		JsonObject jsonObject = new Gson().fromJson(params, JsonObject.class);
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
 		String tokenAcces = principalDetail.getAccess_token();
-		String urlRequest = principalDetail.getDireccionAmbiente().concat(constSoporteCentralizado.getGuardarTicketDetalle().concat(jsonObject.get("tipo").getAsString()));
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constSoporteCentralizado.getGuardarTicketDetalle());
 		jsonObject.addProperty("idOrigenSistema", principalDetail.getIdOrigen());
-		jsonObject.addProperty("idPropietarioSc", principalDetail.getIdUsuario());
 		logger.info("### URL guardarTicketDetalle(): \n" + urlRequest);
 
 		ServiceResponseResult response = restCaller.callPatchBearerTokenRequest(

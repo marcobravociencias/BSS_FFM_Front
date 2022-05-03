@@ -42,6 +42,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     $scope.configPermisoAccionModificaDetalleTicket = false;
     $scope.configPermisoAccionModificaAsignaIng = false;
     $scope.configPermisoAccionModificaGestionEvidencia = false;
+    $scope.filtroBusqueda.tipoFechaConsulta = 'creacion';
 
     let ingenieroTable = $('#ingenierosTable').DataTable({
         "paging": true,
@@ -55,23 +56,8 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
 
     $scope.contentprincipal = true
     $scope.contentdetalleticket = false;
-    angular.element(document).ready(function () {
-        $('#modalAsignarTicket').on('hidden.bs.modal', function () {
-            $scope.listIngenieros.map(function (e) { e.isChecked = false; return e; })
-            if (ingenieroTable) {
-                ingenieroTable.destroy();
-            }
-            $scope.initTableingeniero();
-        })
-        $scope.filtroBusqueda.tipoFechaConsulta = 'creacion';
-        setTimeout(function () {
-            $("#tipo_reporte").val('creacion');
-        }, 300)
-    })
 
-    $scope.tipoEquipoCambio = "";
-    $scope.nuevoEquipo = {}
-    $scope.viejoEquipo = {}
+    $scope.cambioEquipo = {}
     $scope.agregarNuevoEquipoContent = false;
     $scope.listadoNuevoViejosEquipo = [];
     $scope.isEvaluarNuevoEquipo = false
@@ -79,17 +65,21 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
 
         let isError = false
 
-        if (!$scope.nuevoEquipo.noSerie) {
+        if (!$scope.cambioEquipo.numSerieViejo) {
             isError = true
         }
-        if (!$scope.nuevoEquipo.mac) {
+        if (!$scope.cambioEquipo.numeSerieNuevo) {
             isError = true
         }
 
-        if (!$scope.viejoEquipo.noSerie) {
+        if (!$scope.cambioEquipo.macNueva) {
             isError = true
         }
-        if (!$scope.viejoEquipo.mac) {
+        if (!$scope.cambioEquipo.macViejo) {
+            isError = true
+        }
+
+        if (!$scope.cambioEquipo.idTipoEquipo) {
             isError = true
         }
 
@@ -99,14 +89,14 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         }
 
         $scope.listadoNuevoViejosEquipo.push({
-            viejo: angular.copy($scope.viejoEquipo),
-            nuevo: angular.copy($scope.nuevoEquipo),
-            tipoEquipoCambio: angular.copy($scope.tipoEquipoCambio)
+            numSerieViejo: $scope.cambioEquipo.numSerieViejo,
+            macViejo: $scope.cambioEquipo.macViejo,
+            macNueva: $scope.cambioEquipo.macNueva,
+            numeSerieNuevo: $scope.cambioEquipo.numeSerieNuevo,
+            idTipoEquipo: $scope.cambioEquipo.idTipoEquipo
         })
 
-        $scope.tipoEquipoCambio = "";
-        $scope.nuevoEquipo = {}
-        $scope.viejoEquipo = {}
+        $scope.cambioEquipo = {}
         $scope.isEvaluarNuevoEquipo = false
 
     }
@@ -134,37 +124,40 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     }
 
     $scope.limpiarContentDetalleTicket = function () {
-        $scope.tipoEquipoCambio = "";
-        $scope.nuevoEquipo = {}
-        $scope.viejoEquipo = {}
+        $scope.cambioEquipo = {}
         $scope.agregarNuevoEquipoContent = false;
         $scope.listadoNuevoViejosEquipo = [];
         $scope.isEvaluarNuevoEquipo = false
     }
     $scope.cerrarDetalleTicket = function () {
-        swal({
-            title: "\u00BFSeguro que desea salir del detalle?",
-            text: "Se perder\u00E1n los datos actualizados",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: '#007bff',
-            confirmButtonText: 'Si',
-            cancelButtonText: 'No'
-        }).then(function (isConfirm) {
-            if (isConfirm) {
-                $scope.limpiarContentDetalleTicket();
-                $scope.contentdetalleticket = false;
-                $scope.contentprincipal = true;
-                $scope.isConsultaComentarios = false
-                $scope.isBusqueda = false;
-                $scope.$apply();
-            }
-        }).catch(err => {
+        if ($scope.isBusqueda) {
+            $scope.isBusqueda = false;
+        } else {
+            swal({
+                title: "\u00BFSeguro que desea salir del detalle?",
+                text: "Se perder\u00E1n los datos actualizados",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#007bff',
+                confirmButtonText: 'Si',
+                cancelButtonText: 'No'
+            }).then(function (isConfirm) {
+                if (isConfirm) {
+                    $scope.limpiarContentDetalleTicket();
+                    $scope.contentdetalleticket = false;
+                    $scope.contentprincipal = true;
+                    $scope.isConsultaComentarios = false
+                    $scope.$apply();
+                }
+            }).catch(err => {
 
-        });
+            });
+        }
+
     }
 
     app.noticiasGestionTicketSoporte($scope, gestionTicketSoporteService);
+
 
     $('#searchTextTicket').on('keyup', function () {
         $(".user-filter span").removeClass('selected-filter');
@@ -1097,6 +1090,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                         $scope.contentdetalleticket = true;
                         $scope.contentprincipal = false
                         $scope.editTicket = results[0].data.result.detalleGeneral;
+                        $scope.consultaChat();
                         $scope.ticketSoporteDetalle.fallaTicketD = $scope.editTicket.detalleTicketSc.falla + '';
                         $scope.listCategoriasTicketDetalle = [];
                         $scope.catalogoFallasTicketSoporte.map(function (c) {
@@ -1392,10 +1386,13 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
 
     $scope.asignarTicketIngeniero = function (comentario) {
         let params = {
-            idTicket: Number($scope.ticketDetalle),
-            idIngenieroSoporte: Number($scope.ingenieroSelect.idUsuario),
-            comentarios: comentario
+            comentarios: comentario,
+            folioSistema: $scope.editTicket.detalleTicketSc.folioSistema,
+            idMotivo: 500,
+            idUsuarioTecnico: Number($scope.ingenieroSelect.idUsuario),
+            idtipoAsignacion: 2
         }
+
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
         if ($scope.editTicket.detalleTicketSc.numEmpleadoInge) {
@@ -1504,18 +1501,21 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
 
         let arrayAcciones = [];
         $scope.accionesDinamicasDetalle.map(function (e) {
+            console.log(e);
             let accion = $scope.editTicket.detalleTicketSc.acciones.find((s) => s.id == e.idAccion);
-            let isChecked = $("dictamen-" + e.idAccion).is(":checked");
+            let isChecked = $("#dictamen-" + e.id).is(":checked");
             let accionTemp = {
                 idDictamen: accion ? accion.idDictamen : 0,
-                idAccion: e.idAccion,
+                idAccion: e.id,
                 valor: isChecked ? 1 : 0,
                 comentario: "",
-                detalleSeries: e.idAccion ? listadoNuevoViejosEquipo : []
+                detalleSeries: e.id == 2 ? $scope.listadoNuevoViejosEquipo : []
             }
             arrayAcciones.push(accionTemp);
 
         })
+        let propietario = $scope.escalamientoListDetalle.find((p) => p.id === Number($scope.ticketSoporteDetalle.estado));
+        let motivo = $scope.escalamientoListDetalle.find((p) => p.id === Number($scope.ticketSoporteDetalle.motivo));
 
         let params = {
             fechaHoraFin: moment(new Date()).format('YYYY-MM-DD hh:mm'),
@@ -1523,13 +1523,13 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             otCentralizado: $scope.editTicket.detalleTicketSc.otCentralizado,
             folioSistema: $scope.editTicket.detalleTicketSc.folioSistema,
             idTicketSc: Number($scope.ticketDetalle),
-            idMotivo: 209,
-            idEstatus: $scope.editTicket.detalleTicketSc.idEstatus,
-            idMotivoSc: $scope.ticketSoporteDetalle.motivo.id,
-            "idTicketSf": "5003C000007g0VM",
-            idPropietarioSf: $scope.ticketSoporteDetalle.estado.idSalesforce,
-            idMotivoSf: 0,
-            comentarios: "test",
+            idMotivo: 0,
+            idEstatus: $scope.ticketSoporteDetalle.estatus,
+            idMotivoSc: $scope.ticketSoporteDetalle.motivo,
+            idTicketSf: $scope.editTicket.detalleTicketSc.idTicketSf,
+            idPropietarioSf: propietario ? propietario.idSalesforce : 0,
+            idMotivoSf: motivo ? motivo.idSalesforce : 0,
+            comentarios: $scope.ticketSoporteDetalle.comentarios,
             acciones: arrayAcciones
         }
         console.log(params);
@@ -1562,8 +1562,93 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         $scope.isConsultaComentarios = false
         $scope.isBusqueda = false
     }
+
+    $scope.comentariosOrdenTrabajo = [];
+    $scope.consultaChat = function () {
+        $scope.comentariosOrdenTrabajo = [];
+        let params = {
+            idOt: $scope.editTicket.detalleTicketSc.otCentralizado
+        }
+
+        genericService.consultarComentariosDespachoOT(params).then(function success(response) {
+            if (response.data !== undefined) {
+                if (response.data.respuesta) {
+                    if (response.data.result) {
+                        if (response.data.result.detalle) {
+                            $scope.comentariosOrdenTrabajo = response.data.result.detalle;
+                            angular.forEach($scope.comentariosOrdenTrabajo, function (comentario, index) {
+                                comentario.fechaComentario = moment(comentario.fecha + ' ' + comentario.hora).format("dddd, D [de] MMMM [de] YYYY hh:mm A");
+                            });
+                        } else {
+                            toastr.warning(response.data.result.mensaje);
+                        }
+                    } else {
+                        toastr.warning('No se encontraron comentarios');
+                    }
+                } else {
+                    toastr.warning(response.data.resultDescripcion);
+                }
+            } else {
+                toastr.warning(response.data.resultDescripcion);
+            }
+        }).catch(err => handleError(err));
+    }
+    $scope.comentarioTicket = '';
+    $scope.addComentarios = function () {
+        if ($('#comentarioTicket').val().trim() !== '' && !/^\s/.test($('#comentarioTicket').val())) {
+
+            let params = {
+                idOrden: $scope.editTicket.detalleTicketSc.otCentralizado,
+                comentario: $scope.comentarioTicket,
+                origenSistema: 1
+            }
+
+            $('.send-comment').prop("disabled", 'disabled');
+
+            genericService.agregarComentariosOt(params).then(function success(response) {
+                $('.send-comment').prop("disabled", false);
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        $scope.comentarioTicket = '';
+                        $('#comentarioTicket').val('');
+                        $scope.consultaChat();
+                    } else {
+                        toastr.error(response.data.resultDescripcion);
+                    }
+                } else {
+                    toastr.error(response.data.resultDescripcion);
+                }
+            }).catch(err => handleError(err))
+
+        } else {
+            $scope.comentarioTicket = '';
+            $('#comentarioTicket').val('');
+            toastr.warning('Intoducir un comentario.');
+        }
+    }
+
+    $('.dropup-comments').click(function (e) {
+        e.stopPropagation();
+    });
+
+    setTimeout(function () {
+        $("#tipo_reporte").val('creacion');
+    }, 300)
+
+    
+    $('#modalAsignarTicket').on('hidden.bs.modal', function () {
+        
+        $scope.listIngenieros.map(function (e) { e.isChecked = false; return e; })
+        if (ingenieroTable) {
+            ingenieroTable.destroy();
+        }
+        $scope.initTableingeniero();
+    })
+
 }]);
 
 angular.element(document).ready(function () {
     $("#moduloGestionTickets").addClass('active');
+
+
 });
