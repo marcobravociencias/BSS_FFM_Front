@@ -13,7 +13,7 @@
                             <div class="chat-header">
                             </div>
                             <div class="chat-area" style="height: 20em; overflow-y: auto;">
-                                <div class="chats" ng-repeat="comentario in comentariosJustificacion">
+                                <div class="chats" ng-repeat="comentario in comentariosJustificacion | orderBy:'id' track by $index"">
                                     <div class="chat" ng-if="comentario.idOrigen == 2"><!-- APP-->
                                         <div class="chat-avatar">
                                             <a class="avatar"><i class="img-comentarios-chat android-mensaje fab fa-android" style="margin-top: 1em;"></i></a>

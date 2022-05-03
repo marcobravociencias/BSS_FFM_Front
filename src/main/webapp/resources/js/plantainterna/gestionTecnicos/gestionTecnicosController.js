@@ -128,10 +128,6 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
         
         $scope.fechaInicioMes = moment($scope.fechaInicioMes).format('YYYY-MM-DD');
         $scope.fechaFinMes = moment($scope.fechaFinMes).format('YYYY-MM-DD');
-        
-        console.log($scope.fechaInicioMes);
-        console.log($scope.fechaFinMes);
-       
 
         setTimeout(function () {
             if (eventosDisponibilidad.length > 0) {
@@ -411,7 +407,6 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
             $scope.initCalendario(mes, anio);
             document.querySelector('button.fc-prev-button').addEventListener('click', function () {
                 if ($scope.tipoConsulta === 'TEC') {
-                	console.log("--->");
                     $scope.consultarDisponibilidadTecnico();
                 } else {
                     $scope.consultarDisponibilidadAux();
