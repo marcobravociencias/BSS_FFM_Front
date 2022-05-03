@@ -14,22 +14,22 @@
                             </div>
                             <div class="chat-area" style="height: 20em; overflow-y: auto;">
                                 <div class="chats" ng-repeat="comentario in comentariosJustificacion">
-                                    <div class="chat" ng-if="comentario.idOrigen != 2"><!-- APP-->
+                                    <div class="chat" ng-if="comentario.idOrigen == 2"><!-- APP-->
                                         <div class="chat-avatar">
                                             <a class="avatar"><i class="img-comentarios-chat android-mensaje fab fa-android" style="margin-top: 1em;"></i></a>
                                         </div>
                                         <div class="chat-body">
-                                            <span class="text-fecha-comentario" ng-bind="comentario.Fecha"></span>
+                                            <span class="text-fecha-comentario" ng-bind="comentario.fecha"></span>
                                             <div class="chat-text">
-                                                <p ng-bind="comentario.Comentario"></p>
+                                                <p ng-bind="comentario.comentario"></p>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="chat chat-right" ng-if="comentario.idOrigen == 2">
+                                    <div class="chat chat-right" ng-if="comentario.idOrigen == 1">
                                         <div class="chat-body">
-                                            <span class="text-fecha-comentario" ng-bind="comentario.Fecha"></span>
+                                            <span class="text-fecha-comentario" ng-bind="comentario.fecha"></span>
                                             <div class="chat-text">
-                                                <p ng-bind="comentario.Comentario"></p>
+                                                <p ng-bind="comentario.comentario"></p>
                                             </div>
                                         </div>
                                         <div class="chat-avatar">
@@ -42,10 +42,10 @@
                             </div>
                             <div class="row float-right col-chat-fotter" style="margin-top: 2em; margin-right: 2em;">
                                 <div class="col-6">
-                                    <input id="comentarioConsultaOt" placeholder="Escribe el mensaje aqu&iacute; ..." type="text" class="input-mensaje-chat form-control form-control-sm ng-pristine ng-valid ng-empty ng-touched input-comentario" ng-model="comentario">
+                                    <input id="comentarioNuevoJustificacion" placeholder="Escribe el comentario aqu&iacute; ..." type="text" class="input-mensaje-chat form-control form-control-sm ng-pristine ng-valid ng-empty ng-touched input-comentario" ng-model="comentario">
                                 </div>
                                 <div class="col-3" style="left: 200px;height: 50px;">
-                                    <button class="btn btn-primary btn-enviar-comentario" ng-click="">Enviar</button>
+                                    <button class="btn btn-primary btn-enviar-comentario" ng-click="agregarComentarioJustificacion()">Enviar</button>
                                 </div>
                             </div>
                         </div>

@@ -194,7 +194,7 @@
 	                                            <div class=""><span class="text-content-tecnico">{{justificacionDetalle.fechaFin}}</span></div>
 	                                        </div>
 	                                        <div class="container-fluid tecnico-content text-center mb-1">
-	                                            <button class="btn btn-sm btnDetalleJustificacion" ng-click="consultarComentariosJustificacion()"><i class="fa fa-comments"></i></button>
+	                                            <button class="btn btn-sm btnDetalleJustificacion" ng-click="consultarComentariosJustificacion(justificacionDetalle)"><i class="fa fa-comments"></i></button>
 	                                            <button class="btn btn-sm btnDetalleJustificacion" ng-click="consultarArchivosJustificacion()" style="padding: 0.3em 0.7em !important;"><i class="fa fa-file"></i></button>
 	                                            <button class="btn btn-sm btnDetalleJustificacion" ng-click="openModalEditarJustificacion(justificacionDetalle)"><i class="fa fa-pencil-square"></i></button>
 	                                            <button class="btn btn-sm btnDetalleJustificacion" ng-click="eliminarJustificacionTecnico(justificacionDetalle)"><i class="far fa-trash-alt"></i></button>
