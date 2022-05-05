@@ -3,6 +3,12 @@
 		<h5>Informaci&oacute;n detalle detenci&oacute;n</h5>
 	</div>
 </div>
+<div class="row row-not-result-detalle-pe" ng-show="infoDetalleOtPe.detalleDetencion == undefined || 
+						  infoDetalleOtPe.detalleDetencion.length <= 0" >
+	<div class="col-md-12">
+		<b class="not-result-detallepe">No se encontraron resultados</b>
+	</div>
+</div>
 
 <div id="" class="pl-0 pr-0 custom-slider-main">
 	<ul class="nav nav-tabs" id="tabs_info_detalle_detencion_falla" role="tablist">
@@ -288,7 +294,7 @@
 					<tfoot>
 						<tr>
 							<td colspan="1">
-								<!-- Navegar a una página especifica -->
+								<!-- Navegar a una pï¿½gina especifica -->
 								<!-- ng-disabled="$index == 0" -->
 								<div style="width: 100%; text-align: center;">
 									<button id="btnPaginadorTablaSpliters{{falla.idOrden}}{{splitterPag.idGsa}}{{$index+1}}" 

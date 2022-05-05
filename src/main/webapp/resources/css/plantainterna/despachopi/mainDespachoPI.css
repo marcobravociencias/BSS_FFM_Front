@@ -2701,3 +2701,14 @@ i.fas.fa-lock.iconoAsignacionOtPermiso {
     max-width: 458px;
   }
 }
+
+
+.row-not-result-detalle-pe{
+  margin-top:2em;
+  margin-bottom:2em;
+}
+
+.row-not-result-detalle-pe .not-result-detallepe{
+  font-style: italic;
+  color: #898989;
+}

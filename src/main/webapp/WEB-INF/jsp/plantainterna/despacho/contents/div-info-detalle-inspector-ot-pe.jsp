@@ -3,8 +3,17 @@
 		<h5>Informaci&oacute;n detalle inspector</h5>
 	</div>
 </div>
-
-<div id="" class="pl-0 pr-0 custom-slider-main">
+<div class="row row-not-result-detalle-pe" ng-show="  infoDetalleOtPe.detalleInspeccion == undefined ||  
+							infoDetalleOtPe.detalleInspeccion.fallas == undefined ||  
+							infoDetalleOtPe.detalleInspeccion.fallas.length <= 0" >
+	<div class="col-md-12">
+		<b class="not-result-detallepe">No se encontraron resultados</b>
+	</div>
+</div>
+<div id="" ng-show="infoDetalleOtPe.detalleInspeccion != undefined &&  
+					infoDetalleOtPe.detalleInspeccion.fallas != undefined &&  
+					infoDetalleOtPe.detalleInspeccion.fallas.length > 0" class="pl-0 pr-0 custom-slider-main">
+					
 	<ul class="nav nav-tabs" id="tabs_info_detalle_inspector_falla" role="tablist">
 		<li class="nav-item" style="display: inline-block" ng-repeat="falla in infoDetalleOtPe.detalleInspeccion.fallas track by $index">
 			<a class="nav-link {{$index == 0 ? 'active' : ''}}" id="v-tabs-info-detalle-inspector-falla-tab-{{falla.idDetallefalla}}" 
@@ -13,8 +22,7 @@
 		</li>
 	</ul>
 </div>
-
-<div id="" class="tab-content">
+<div id="" ng-show="infoDetalleOtPe.detalleInspeccion.fallas.length >  0" class="tab-content">
 	<div class="tab-pane fade {{$index == 0 ? 'active show' : ''}}" id="v-tabs-info-detalle-inspector-falla-{{falla.idDetallefalla}}" role="tabpanel" 
 		aria-labelledby="v-tabs-info-detalle-inspector-falla-tab-{{falla.idDetallefalla}}"
 		ng-repeat="falla in infoDetalleOtPe.detalleInspeccion.fallas">
@@ -84,7 +92,13 @@
 				</div>
 			</div>
 			<div class="col-md-6">
-				<section class="carouselImgDetalleFalla" aria-label="Gallery">
+				<div class="nodata-message" ng-show="falla.imagenes ==undefined || falla.imagenes.length<=0">
+					<h4  style="font-size: 1em !important;color: #a3a3a3;">
+						<i class="fa fa-exclamation-circle warning-nodata"></i>
+						No se encontr&oacute; evidencia
+					</h4>
+				</div>
+				<section ng-show="falla.imagenes !=undefined &&  falla.imagenes.length>0" class="carouselImgDetalleFalla" aria-label="Gallery">
 					<ol class="carousel__viewport">
 				    	<li id="carousel-slide-{{falla.idDetallefalla}}-{{$index+1}}"
 				        	tabindex="0"

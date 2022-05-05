@@ -13,26 +13,27 @@
                         <div style="padding-left: 0;" class="col-2">
                             <div class="nav flex-column nav-tabs text-center" id="v-tabs-tab-detalle-ot" role="tablist"
                                 aria-orientation="vertical">
-                                
-                                <a ng-show="tabDetalleCorteMasivo" class="nav-link" id="v-tabs-consulta-detalle-corte-masivo-tab" data-mdb-toggle="tab" 
-									href="#v-tabs-consulta-detalle-corte-masivo" role="tab" aria-controls="v-tabs-consulta-detalle-corte-masivo-tab" 
-									aria-selected="false">Detalle corte masivo</a>
-									
-								<a ng-show=tabDetalleDetencion class="nav-link" id="v-tabs-consulta-info-gral-ot-detalle-detencion-tab" data-mdb-toggle="tab" 
-									href="#v-tabs-consulta-info-gral-ot-detalle-detencion" role="tab" aria-controls="v-tabs-consulta-info-gral-ot-detalle-detencion-tab" 
-									aria-selected="false">Informaci&oacute;n OT</a>
-								<a ng-show=tabDetalleDetencion class="nav-link" id="v-tabs-consulta-detalle-detencion-tab" data-mdb-toggle="tab" 
-									href="#v-tabs-consulta-detalle-detencion" role="tab" aria-controls="v-tabs-consulta-detalle-detencion-tab" 
-									aria-selected="false">Detalle detenci&oacute;n</a>
-									
-								<a ng-show="tabDetalleInspector" class="nav-link" id="v-tabs-consulta-detalle-inspector-tab" data-mdb-toggle="tab" 
-									href="#v-tabs-consulta-detalle-inspector" role="tab" aria-controls="v-tabs-consulta-detalle-inspector-tab" 
-									aria-selected="false">Detalle inspector</a>
-                                
                                 <a class="nav-link active" id="v-tabs-consulta-detalleot-tab" data-mdb-toggle="tab"
                                     href="#v-tabs-consulta-detalleot" role="tab"
                                     aria-controls="v-tabs-consulta-detalleot-tab"
                                     aria-selected="true">Informaci&oacute;n</a>
+
+                                <a  ng-click="consultarDetalleOtPE();" ng-show="permisosModal.indexOf('tabCorteMasivo') !== -1" class="nav-link" id="v-tabs-consulta-detalle-corte-masivo-tab" data-mdb-toggle="tab" 
+									href="#v-tabs-consulta-detalle-corte-masivo" role="tab" aria-controls="v-tabs-consulta-detalle-corte-masivo-tab" 
+									aria-selected="false">Detalle corte masivo</a>
+									
+								<a  ng-click="consultarDetalleOtPE();" ng-show="permisosModal.indexOf('tabOperacionDiaria') !== -1"  class="nav-link" id="v-tabs-consulta-info-gral-ot-detalle-detencion-tab" data-mdb-toggle="tab" 
+									href="#v-tabs-consulta-info-gral-ot-detalle-detencion" role="tab" aria-controls="v-tabs-consulta-info-gral-ot-detalle-detencion-tab" 
+									aria-selected="false">Orden detenida</a>
+								
+                                <a  ng-click="consultarDetalleOtPE();" ng-show="permisosModal.indexOf('tabOperacionDiaria') !== -1"  class="nav-link" id="v-tabs-consulta-detalle-detencion-tab" data-mdb-toggle="tab" 
+									href="#v-tabs-consulta-detalle-detencion" role="tab" aria-controls="v-tabs-consulta-detalle-detencion-tab" 
+									aria-selected="false">Detalle detenci&oacute;n</a>
+									
+								<a  ng-click="consultarDetalleOtPE();" ng-show="permisosModal.indexOf('tabInspectorRed') !== -1" class="nav-link" id="v-tabs-consulta-detalle-inspector-tab" data-mdb-toggle="tab" 
+									href="#v-tabs-consulta-detalle-inspector" role="tab" aria-controls="v-tabs-consulta-detalle-inspector-tab" 
+									aria-selected="false">Detalle inspector</a>
+                                                                               
                                 <a ng-show="permisosModal.indexOf('tabHistoricoDespacho') !== -1" class="nav-link "
                                     id="v-tabs-consulta-historico-tab" data-mdb-toggle="tab"
                                     href="#v-tabs-consulta-historico" role="tab" ng-click="consultarHistorial()"
@@ -419,7 +420,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div  ng-show="permisosModal.indexOf('tabPedidoDespacho') !== -1" 
                                     class="tab-pane fade" id="v-tabs-consulta-pedido" role="tabpanel" 
                                     aria-labelledby="v-tabs-consulta-pedido-tab">
@@ -804,7 +804,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div ng-show="permisosModal.indexOf('tabAccionesOrdenDespacho') !== -1"
                                     class="tab-pane fade" id="v-tabs-consulta-acciones" role="tabpanel"
                                     aria-labelledby="v-tabs-consulta-acciones-tab">
@@ -1421,30 +1420,27 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                
+                                </div>                                
                                 <div ng-show="permisosModal.indexOf('tabCambioDireccion') !== -1"
                                     class="tab-pane fade" id="v-tabs-consulta-cambio-direccion" role="tabpanel"
                                     aria-labelledby="v-tabs-consulta-cambio-direccion-tab">
                                     <jsp:include page="./../contents/div-cambio-direccion-ot.jsp"></jsp:include>
                                 </div>
-                                <div ng-show="tabDetalleCorteMasivo" class="tab-pane fade" id="v-tabs-consulta-detalle-corte-masivo" role="tabpanel" 
+                                <div  ng-show="permisosModal.indexOf('tabCorteMasivo') !== -1" class="tab-pane fade" id="v-tabs-consulta-detalle-corte-masivo" role="tabpanel" 
                                 	aria-labelledby="v-tabs-consulta-detalle-corte-masivo-tab">
                                 	<jsp:include page="./../contents/div-info-general-detalle-ot-pe.jsp"></jsp:include>
                                 	<hr />
                                 	<jsp:include page="./../contents/div-info-detalle-corte-masivo-ot-pe.jsp"></jsp:include>
-								</div>
-								
-								<div ng-if="tabDetalleDetencion" class="tab-pane fade" id="v-tabs-consulta-info-gral-ot-detalle-detencion" role="tabpanel" 
+								</div>								
+								<div ng-show="permisosModal.indexOf('tabOperacionDiaria') !== -1" class="tab-pane fade" id="v-tabs-consulta-info-gral-ot-detalle-detencion" role="tabpanel" 
                                 	aria-labelledby="v-tabs-consulta-info-gral-ot-detalle-detencion-tab">
                                 	<jsp:include page="./../contents/div-info-general-detalle-ot-pe.jsp"></jsp:include>
 								</div>
-								<div ng-if="tabDetalleDetencion" class="tab-pane fade" id="v-tabs-consulta-detalle-detencion" role="tabpanel" 
+								<div ng-show="permisosModal.indexOf('tabOperacionDiaria') !== -1" class="tab-pane fade" id="v-tabs-consulta-detalle-detencion" role="tabpanel" 
                                 	aria-labelledby="v-tabs-consulta-detalle-detencion-tab">
                                 	<jsp:include page="./../contents/div-info-detalle-detencion-ot-pe.jsp"></jsp:include>
-								</div>
-								
-								<div ng-show="tabDetalleInspector" class="tab-pane fade" id="v-tabs-consulta-detalle-inspector" role="tabpanel" 
+								</div>								
+								<div ng-show="permisosModal.indexOf('tabInspectorRed') !== -1" class="tab-pane fade" id="v-tabs-consulta-detalle-inspector" role="tabpanel" 
                                 	aria-labelledby="v-tabs-consulta-detalle-inspector-tab">
                                 	<jsp:include page="./../contents/div-info-general-detalle-ot-pe.jsp"></jsp:include>
                                 	<hr />
