@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" style="color: #7716fa">Ingresa Justificaci&oacute;n</h5>
+                <h5 class="modal-title">Ingresa Justificaci&oacute;n</h5>
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close">
                 </button>
             </div>
@@ -17,7 +17,8 @@
                                     <form id="uploadFormAddJust" name="13" class="form-horizontal box form_drag_drop" novalidate="novalidate" enctype="multipart/form-data">
                                           <div class="box__input">
                                             <input name="myFile" type="file" multiple class="box__file inputFile" ng-on-change="convertFile($event, 'agregar')" id="fileAddJust" ng-model="archivoAdd"/>
-                                            <label for="fileAddJust" id="etiqueta_archivo_edita_just" class="etiqueta_archivo_justificacion">
+                                            <label for="fileAddJust" id="etiqueta_archivo_crear_just" class="etiqueta_archivo_justificacion">
+                                              <span class="tooltipArchivosNuevosOculto">Selecciona un archivo o arrastra aqu&iacute;</span>
                                               <strong class="text_select" style="cursor: pointer;">Selecciona un archivo</strong>
                                               <span class="box__dragndrop">o arrastra aqu&iacute;</span>
                                             </label>

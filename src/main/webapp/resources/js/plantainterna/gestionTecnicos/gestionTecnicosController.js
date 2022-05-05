@@ -608,15 +608,15 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
         }
         $.each($scope.listDetalleTrabajo, function (i, elemento) {
             let rowOT = [];
-            rowOT[0] = elemento.ot != null ? elemento.ot : "Sin dato";
-            rowOT[1] = elemento.os != null ? elemento.os : "Sin dato";
+            rowOT[0] = elemento.idOrden != null ? elemento.idOrden : "Sin dato";
+            rowOT[1] = elemento.folio != null ? elemento.folio : "Sin dato";
             rowOT[2] = elemento.cuenta;
             rowOT[3] = elemento.tipo;
             rowOT[4] = elemento.subtipo;
             rowOT[5] = elemento.fechaInicio != null ? elemento.fechaInicio.split(" ")[0] : "Sin dato";
             rowOT[6] = elemento.fechaFin != null ? elemento.fechaFin.split(" ")[0] : "Sin dato";
-            rowOT[7] = elemento.usuarioAuxiliar != null ? elemento.usuarioAuxiliar : "Sin dato";
-            rowOT[8] = elemento.nombreAuxiliar != null ? elemento.nombreAuxiliar : "Sin dato";
+            rowOT[7] = elemento.usuarioffmAux != null ? elemento.usuarioffmAux : "Sin dato";
+            rowOT[8] = elemento.nombreAux != null ? elemento.nombreAux : "Sin dato";
             rowOT[9] = elemento.puntualidad;
             rowOT[10] = elemento.tiempoTotal != null ? elemento.tiempoTotal.split(".")[0] : "Sin dato";
             rowOT[11] = "Sin dato";
@@ -847,7 +847,12 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
     }
 
     $scope.consultarArchivosJustificacion = function () {
-
+    	
+    	$(".text_select").text("Selecciona un archivo");
+        $(".box__dragndrop").text("o arrastra aqu\u00ED");
+        $('#fileArch').val("");
+        $("#fileArch").prop("src", "");
+    	
     	let arrayRow = [];
         if (tableArchivosJustificacion) {
             tableArchivosJustificacion.destroy();
@@ -973,20 +978,17 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
             reader.onload = function () {
                 let fileBase64 = reader.result.toString().split(",")[1];
                 if (type == 'agregar') {
-                    $scope.nombreFileAdd = e.target.files[0].name;
-                    $scope.justificacionA.file = fileBase64;
+                	$scope.cargarNombresArchivos($("#fileAddJust")[0].files);
                 }
                 if (type == 'editar') {
-                    $scope.nombreFileUpd = e.target.files[0].name;
-                    $scope.justificacionE.file = fileBase64;
+                	$scope.cargarNombresArchivos($("#fileEditJust")[0].files);
                 }
                 if (type == 'eliminar') {
                     $scope.nombreFileDel = e.target.files[0].name;
                     $scope.justificacionD.file = fileBase64;
                 }
                 if (type == 'archivos') {
-                    $scope.nombreFileArch = e.target.files[0].name;
-                    $scope.archivosA.file = fileBase64;
+                    $scope.cargarNombresArchivos($("#fileArch")[0].files);
                 }
             };
             reader.onerror = function (error) {
@@ -994,6 +996,26 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
             };
         }
     }
+    
+    $scope.cargarNombresArchivos = function(listaArchivos) {
+    	if(listaArchivos.length > 1){
+        	var nombresArchivosCargados = "";
+            angular.forEach(listaArchivos,function(archivoCargado,index){
+            	nombresArchivosCargados += "<li class='listaNombresArchivosNuevos'>"+archivoCargado.name+"</li>";
+        	});
+            $(".tooltipArchivosNuevosOculto").text("");
+            $(".tooltipArchivosNuevosOculto").append(nombresArchivosCargados);
+            $(".tooltipArchivosNuevosOculto").addClass("tooltipArchivosNuevosNoOculto");
+            $(".text_select").text(listaArchivos.length + " archivos cargados...");
+            $(".box__dragndrop").empty();
+        }else if(listaArchivos.length == 1){
+        	$(".tooltipArchivosNuevosOculto").text("");
+            $(".tooltipArchivosNuevosOculto").empty();
+            $(".tooltipArchivosNuevosOculto").removeClass("tooltipArchivosNuevosNoOculto");
+            $(".text_select").text(listaArchivos[0].name);
+            $(".box__dragndrop").empty();
+        }
+	}
 
     $scope.openModalAgregarJustificacion = function (fechaSeleccionada) {
         if ($scope.auxDisp.id !== undefined || $scope.tecnicoDisp.idTecnico !== undefined) {
@@ -1200,7 +1222,7 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
     //Método que elimina la justificación en selección, validando e indicando si se eliminará una justificación que abarca más de 1 día.
     $scope.eliminarJustificacionTecnico = function (justificacion) {
     	var totalDiasJustidicados = $scope.calcularDiasJustificados([justificacion]);
-    	var tituloAlerta = "Se eliminar\u00E1 la justificaci\u00F3n"
+    	var tituloAlerta = "Se eliminar\u00E1 la justificaci\u00F3n";
     	var txtAlerta = "\u00BFDesea continuar?";
     	if(totalDiasJustidicados > 1){
     		tituloAlerta = "\u00BFDesea continuar?";
@@ -1264,8 +1286,14 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
                 }
         	});
         	
+        	var tituloAlerta = "\u00BFEst\u00E1 seguro de agregar el archivo?";
+        	var numArchivosCargados = $("#fileArch")[0].files.length;
+        	if(numArchivosCargados > 1){
+        		tituloAlerta = "\u00BFEst\u00E1 seguro de agregar los " + numArchivosCargados + " archivos?";
+        	}
+        	
         	swal({
-                title: "\u00BFEst\u00E1 seguro de agregar el archivo?",
+                title: tituloAlerta,
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: '#007bff',
@@ -1319,8 +1347,8 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
         	
             $.each($scope.listDetalleTrabajo, function (i, elemento) {
                 let row = [];
-                row[0] = elemento.cuenta;
-                row[1] = elemento.cuenta;
+                row[0] = elemento.idOrden;
+                row[1] = elemento.folio;
                 row[2] = elemento.cuenta;
                 row[3] = elemento.cliente;
                 row[4] = elemento.tipo;
@@ -1450,8 +1478,7 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
             }).on('drop', function (e) {
                 droppedFiles = e.originalEvent.dataTransfer.files;
                 $form.find('input[type="file"]').prop('files', droppedFiles);
-                $(".text_select").text(droppedFiles[0].name);
-                $(".box__dragndrop").empty()
+                $scope.cargarNombresArchivos(droppedFiles);
             });
         });
     });

@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" style="color: #7716fa">Archivos</h5>
+                <h5 class="modal-title">Evidencias</h5>
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close">
                 </button>
             </div>
@@ -36,13 +36,14 @@
                         <div id="content_drag_drop">
                             <div class="col-md-12" style="text-align: right;padding: 0px 25px 10px 15px !important;">       
                             </div> 
-                              <div style="text-align: center; padding-left: 0;" class="col-md-12">
+                              <div class="col-md-12">
                                 <form id="uploadFormEditaJust" name="13" class="form-horizontal box form_drag_drop" novalidate="novalidate" enctype="multipart/form-data">
                                       <div class="box__input">
                                         <input name="myFile" type="file" multiple class="box__file inputFile" ng-on-change="convertFile($event, 'archivos')" id="fileArch" />
-                                        <label for="fileArch" id="etiqueta_archivo_edita_just" class="etiqueta_archivo_justificacion">
-                                          <strong class="text_select">Selecciona un archivo</strong>
-                                          <span class="box__dragndrop">o arrastra aqu&iacute;</span>
+                                        <label for="fileArch" id="etiqueta_agregar_archivo_just" class="etiqueta_archivo_justificacion">
+                                        	<span class="tooltipArchivosNuevosOculto">Selecciona un archivo o arrastra aqu&iacute;</span>
+                                          	<strong class="text_select">Selecciona un archivo</strong>
+                                          	<span class="box__dragndrop">o arrastra aqu&iacute;</span>
                                         </label>
                                         <br />
                                         <div class="box__uploading"><i class="fas fa-cloud-upload-alt" style="display: block;"></i> </div>

@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header" ng-show="isEdit">
-                <h5 class="modal-title" style="color: #7716fa">Editar Justificaci&oacute;n</h5>
+                <h5 class="modal-title">Editar Justificaci&oacute;n</h5>
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-header" ng-show="!isEdit">
@@ -21,6 +21,7 @@
                                         <div class="box__input">
                                         <input name="myFile" type="file" multiple class="box__file inputFile" ng-on-change="convertFile($event, 'editar')" id="fileEditJust" />
                                         <label for="fileEditJust" id="etiqueta_archivo_edita_just" class="etiqueta_archivo_justificacion">
+                                            <span class="tooltipArchivosNuevosOculto">Selecciona un archivo o arrastra aqu&iacute;</span>
                                             <strong class="text_select" style="cursor: pointer;">Selecciona un archivo</strong>
                                             <span class="box__dragndrop">o arrastra aqu&iacute;</span>
                                         </label>
