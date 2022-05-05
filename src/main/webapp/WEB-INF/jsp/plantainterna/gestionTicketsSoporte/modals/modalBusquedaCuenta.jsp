@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header header-sin-border">
-                <h5 class="modal-title header-title-tec">Asignar T&eacute;cnico</h5>
+                <h5 class="modal-title header-title-tec">Ordenes de trabajo</h5>
         
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close">
                 </button>

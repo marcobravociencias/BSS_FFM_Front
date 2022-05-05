@@ -154,7 +154,7 @@ public class SoporteCentralizadoController {
     //fin cambios jose
     
     @GetMapping("/consultaEstatusTicketSoporte")
-	public ResponseEntity<?> consultaEstatusTicketSoporte(){
+	public ResponseEntity<?> consultarEstatusTicketSoporte(){
 		logger.info("###### SoporteCentralizadoController - consultaEstatusTicketSoporte");
 		ServiceResponseResult response = soporteCentralizadoService.consultarEstatusTicket();
 		if(response.getResult() instanceof Integer) {
@@ -162,6 +162,17 @@ public class SoporteCentralizadoController {
 		}
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
+    
+    
+    @GetMapping("/consultaEquiposSoporte")
+  	public ResponseEntity<?> consultarEquiposSoporte(){
+  		logger.info("###### SoporteCentralizadoController - consultarEquiposSoporte");
+  		ServiceResponseResult response = soporteCentralizadoService.consultarEquiposTicketSoporte();
+  		if(response.getResult() instanceof Integer) {
+  			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+  		}
+  		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+  	}
     
     @PostMapping("/reasignarIngenieroTicket")
     public  ResponseEntity<?> reasignarIngenieroTicket(@RequestBody String params){

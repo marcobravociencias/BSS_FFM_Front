@@ -36,6 +36,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     $scope.nGeografiaConsultaTickets = undefined
     $scope.filtroBusqueda = {};
     $scope.propietarioSession = 0;
+    $scope.equiposList = [];
 
     $scope.configPermisoAccionCreaTicket = false;
     $scope.configPermisoAccionConsultaTicket = false;
@@ -93,8 +94,10 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             macViejo: $scope.cambioEquipo.macViejo,
             macNueva: $scope.cambioEquipo.macNueva,
             numeSerieNuevo: $scope.cambioEquipo.numeSerieNuevo,
-            idTipoEquipo: $scope.cambioEquipo.idTipoEquipo
+            idTipoEquipo: $scope.cambioEquipo.idTipoEquipo,
+            descripcion: $scope.equiposList.find((e) => e.id == $scope.cambioEquipo.idTipoEquipo).descripcion,
         })
+        console.log($scope.listadoNuevoViejosEquipo);
 
         $scope.cambioEquipo = {}
         $scope.isEvaluarNuevoEquipo = false
@@ -119,8 +122,8 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         });
     }
     $scope.mostrarFormularioNuevoEquipo = function () {
+        $scope.agregarNuevoEquipoContent = $("#dictamen-2").is(":checked");
         console.log($scope.agregarNuevoEquipoContent);
-        $scope.agregarNuevoEquipoContent = !$scope.agregarNuevoEquipoContent;
     }
 
     $scope.limpiarContentDetalleTicket = function () {
@@ -133,27 +136,34 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         if ($scope.isBusqueda) {
             $scope.isBusqueda = false;
         } else {
-            swal({
-                title: "\u00BFSeguro que desea salir del detalle?",
-                text: "Se perder\u00E1n los datos actualizados",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: '#007bff',
-                confirmButtonText: 'Si',
-                cancelButtonText: 'No'
-            }).then(function (isConfirm) {
-                if (isConfirm) {
-                    $scope.limpiarContentDetalleTicket();
-                    $scope.contentdetalleticket = false;
-                    $scope.contentprincipal = true;
-                    $scope.isConsultaComentarios = false
-                    $scope.$apply();
-                }
-            }).catch(err => {
+            if ($scope.editTicket.detalleTicketSc.idEstatus !== 4 && $scope.editTicket.detalleTicketSc.idEstatus !== 5) {
+                swal({
+                    title: "\u00BFSeguro que desea salir del detalle?",
+                    text: "Se perder\u00E1n los datos actualizados",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: '#007bff',
+                    confirmButtonText: 'Si',
+                    cancelButtonText: 'No'
+                }).then(function (isConfirm) {
+                    if (isConfirm) {
+                        $scope.limpiarContentDetalleTicket();
+                        $scope.contentdetalleticket = false;
+                        $scope.contentprincipal = true;
+                        $scope.isConsultaComentarios = false
+                        $scope.$apply();
+                    }
+                }).catch(err => {
 
-            });
+                });
+            } else {
+                $scope.limpiarContentDetalleTicket();
+                $scope.contentdetalleticket = false;
+                $scope.contentprincipal = true;
+                $scope.isConsultaComentarios = false
+                $scope.$apply();
+            }
         }
-
     }
 
     app.noticiasGestionTicketSoporte($scope, gestionTicketSoporteService);
@@ -191,7 +201,8 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             gestionTicketSoporteService.consultarCatalogoTipoOrdenTicketSoporte(),
             gestionTicketSoporteService.consulCatalogoGeografiaUsuarioDespacho(),
             gestionTicketSoporteService.consultarAccionesDinamicaDetalle(),
-            gestionTicketSoporteService.consultaPropietariosTicketSoporte()
+            gestionTicketSoporteService.consultaPropietariosTicketSoporte(),
+            gestionTicketSoporteService.consultaEquiposSoporte()
         ]).then(function (results) {
             swal.close();
             if (results[0].data !== undefined) {
@@ -217,9 +228,6 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                             if (permisosResult != undefined && permisosResult.permisos != undefined && permisosResult.permisos.length > 0) {
                                 $scope.configPermisoAccionCreaTicket = (permisosResult.permisos.filter(e => { return e.clave == "accionCreacionTickets" })[0] != undefined);
                                 $scope.configPermisoAccionConsultaTicket = true//(permisosResult.permisos.filter(e => { return e.clave == "accionConsultaTickets" })[0] != undefined);
-                                $scope.configPermisoAccionModificaDetalleTicket = true//(permisosResult.permisos.filter(e => { return e.clave == "accionModificaDetalleTickets" })[0] != undefined);
-                                $scope.configPermisoAccionModificaAsignaIng = true //(permisosResult.permisos.filter(e => { return e.clave == "accionModificaAsignaIngTickets" })[0] != undefined);
-                                $scope.configPermisoAccionModificaGestionEvidencia = true//(permisosResult.permisos.filter(e => { return e.clave == "accionModificaGestionEvidenciaTickets" })[0] != undefined);
                             }
 
                             if ($scope.configPermisoAccionCreaTicket && !$scope.configPermisoAccionConsultaTicket) {
@@ -386,10 +394,20 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                     $scope.escalamientoListDetalle = results[6].data.result.propietarios
                     $scope.estadoEscalamientoDetalle = results[6].data.result.propietarios.filter(elemento => { return elemento.nivel === 1 })
                 } else {
-                    mostrarMensajeWarningValidacion('No se pudo realizar la consulta de motivos.')
+                    mostrarMensajeWarningValidacion('No se pudo realizar la consulta de propietarios.')
                 }
             } else {
-                mostrarMensajeWarningValidacion('No se pudo realizar la consulta de motivos.')
+                mostrarMensajeWarningValidacion('No se pudo realizar la consulta de propietarios.')
+            }
+
+            if (results[7].data.respuesta) {
+                if (results[7].data.result) {
+                    $scope.equiposList = results[7].data.result.equipos;
+                } else {
+                    mostrarMensajeWarningValidacion('No se pudo realizar la consulta de equipos.')
+                }
+            } else {
+                mostrarMensajeWarningValidacion('No se pudo realizar la consulta de equipos.')
             }
             $("#idBody").css("display", "block")
         });
@@ -527,22 +545,25 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                     $scope.tecnicoAsignado.tipoOrden = nombreOrden ? nombreOrden.nombre : 'Sin dato';
 
                     let geografiaTecnicoAsignadoCluster = $scope.catGeografiaGeneral.find(e => e.id == Number($scope.tecnicoAsignado.idGeografia));
-                    let geografiaTecnicoAsignadoZona = $scope.catGeografiaGeneral.find(e => e.id == Number(geografiaTecnicoAsignadoCluster.padre));
-                    let geografiaTecnicoAsignadoDistrito = $scope.catGeografiaGeneral.find(e => e.id == Number(geografiaTecnicoAsignadoZona.padre));
-                    let geografiaTecnicoAsignadoCiudad = $scope.catGeografiaGeneral.find(e => e.id == Number(geografiaTecnicoAsignadoDistrito.padre));
-                    let geografiaTecnicoAsignadoRegion = $scope.catGeografiaGeneral.find(e => e.id == Number(geografiaTecnicoAsignadoCiudad.padre));
+                    if (geografiaTecnicoAsignadoCluster) {
+                        let geografiaTecnicoAsignadoZona = $scope.catGeografiaGeneral.find(e => e.id == Number(geografiaTecnicoAsignadoCluster.padre));
+                        let geografiaTecnicoAsignadoDistrito = $scope.catGeografiaGeneral.find(e => e.id == Number(geografiaTecnicoAsignadoZona.padre));
+                        let geografiaTecnicoAsignadoCiudad = $scope.catGeografiaGeneral.find(e => e.id == Number(geografiaTecnicoAsignadoDistrito.padre));
+                        let geografiaTecnicoAsignadoRegion = $scope.catGeografiaGeneral.find(e => e.id == Number(geografiaTecnicoAsignadoCiudad.padre));
 
-                    $scope.tecnicoAsignado.cluster = geografiaTecnicoAsignadoCluster.nombre;
-                    $scope.tecnicoAsignado.zona = geografiaTecnicoAsignadoZona.nombre;
-                    $scope.tecnicoAsignado.distrito = geografiaTecnicoAsignadoDistrito.nombre;
-                    $scope.tecnicoAsignado.ciudad = geografiaTecnicoAsignadoCiudad.nombre;
-                    $scope.tecnicoAsignado.region = geografiaTecnicoAsignadoRegion.nombre;
+                        $scope.tecnicoAsignado.cluster = geografiaTecnicoAsignadoCluster.nombre;
+                        $scope.tecnicoAsignado.zona = geografiaTecnicoAsignadoZona.nombre;
+                        $scope.tecnicoAsignado.distrito = geografiaTecnicoAsignadoDistrito.nombre;
+                        $scope.tecnicoAsignado.ciudad = geografiaTecnicoAsignadoCiudad.nombre;
+                        $scope.tecnicoAsignado.region = geografiaTecnicoAsignadoRegion.nombre;
+                        $scope.ticketSoporteR.region = $scope.tecnicoAsignado.idGeografia;
+                    }
+
 
                     //---------------------------------------Fin código reynel
 
                     let nombreTecnico = $scope.tecnicoAsignado.nombre + ' ' + $scope.tecnicoAsignado.apellidoPaterno + ' ' + $scope.tecnicoAsignado.apellidoMaterno;
                     $scope.ticketSoporteR.tipoOrden = $scope.tecnicoAsignado.idIntervencion.toString();
-                    $scope.ticketSoporteR.region = $scope.tecnicoAsignado.idGeografia;
                     $scope.ticketSoporteR.tipoNegocio = $scope.tecnicoAsignado.idUnidadNegocio.toString();
                     $scope.ticketSoporteR.tecnico = nombreTecnico;
                     $scope.ticketSoporteR.telefonoTecnico = $scope.tecnicoAsignado.telefono;
@@ -569,11 +590,11 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         $.each($scope.listOrdenesCuenta, function (i, elemento) {
             if (elemento.isChecked) {
                 elemento.isChecked = false;
-                $('#' + elemento.id).prop('checked', false);
+                $('#tec-' + elemento.id).prop('checked', false);
                 $scope.$apply();
             }
-            if ($(event).attr('id') == elemento.id) {
-                elemento.isChecked = $(event).is(":checked");
+            if ($(event).attr('id').split('-')[1] == elemento.id) {
+                elemento.isChecked = true;
             }
         })
         $scope.$apply();
@@ -624,9 +645,10 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                             row[4] = elemento.usuarioFFM;
                             row[5] = nombreCompleto;
                             row[6] = elemento.telefono;
-                            row[7] = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class="form-check-input checkTecnico" onclick="changeCheck(this)" type="checkbox" name="checkTecnico" value="' + i + '" id="' + elemento.id + '">';
+                            row[7] = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class="form-check-input checkTecnico" onclick="changeCheck(this)" type="checkbox" name="checkTecnico" value="' + i + '" id="tec-' + elemento.id + '">';
                             arrayRow.push(row);
                         });
+
                         $scope.initTableTecnicosOtsDisp(arrayRow);
 
                         $("#modalBusquedaCuentaTicket").modal('show');
@@ -666,7 +688,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             document.getElementById('tecnicosCuentaTable_paginate').addEventListener('click', function () {
                 $.each($scope.listOrdenesCuenta, function (i, elemento) {
                     if (!elemento.isChecked) {
-                        $('#' + elemento.id).prop('checked', false);
+                        $('#tec-' + elemento.id).prop('checked', false);
                     }
                     $scope.$apply();
                 });
@@ -736,7 +758,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         let isValid = true;
 
         if ($("#cuentaTicket").val() == undefined || $("#cuentaTicket").val() == '') {
-            mensajeError += "<li>Debe ingresar un n&uacute;mero de Cuenta</li>";
+            mensajeError += "<li>Ingrese n&uacute;mero de cuenta</li>";
             $("#cuentaTicket").addClass("invalid-inputTicket");
             isValid = false;
         } else {
@@ -744,7 +766,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         }
 
         if ($scope.ticketSoporteR.idTecnico == undefined || !$scope.ticketSoporteR.idTecnico) {
-            mensajeError += "<li>Debe seleccionar un t&eacute;cnico</li>";
+            mensajeError += "<li>Seleccione orden de trabajo</li>";
             $("#cuentaTicket").addClass("invalid-inputTicket");
             isValid = false;
         } else {
@@ -752,7 +774,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         }
 
         if ($("#noSerieTicket").val() == undefined || $("#noSerieTicket").val() == '') {
-            mensajeError += "<li>Debe ingresar un n&uacute;mero de Serie del Ticket</li>";
+            mensajeError += "<li>Ingrese n&uacute;mero de serie del ticket</li>";
             $("#noSerieTicket").addClass("invalid-inputTicket");
             isValid = false;
         } else {
@@ -761,7 +783,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
 
         if ($("#descripcionProblemaTicket").val() == undefined || $("#descripcionProblemaTicket").val() == '') {
             $("#descripcionProblemaTicket").addClass("invalid-inputTicket");
-            mensajeError += "<li>Debe ingresar una descripci&oacute;n del Problema</li>";
+            mensajeError += "<li>Ingrese descripci&oacute;n del problema</li>";
             isValid = false;
         } else {
             $("#descripcionProblemaTicket").removeClass("invalid-inputTicket");
@@ -769,7 +791,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
 
         if ($("#fallaTicket").val() == undefined || $("#fallaTicket").val() == '') {
             $("#fallaTicket").addClass("invalid-inputTicket");
-            mensajeError += "<li>Debe seleccionar una Falla</li>";
+            mensajeError += "<li>Seleccione falla</li>";
             isValid = false;
         } else {
             $("#fallaTicket").removeClass("invalid-inputTicket");
@@ -777,7 +799,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
 
         if ($("#categoriaTicket").val() == undefined || $("#categoriaTicket").val() == '') {
             $("#categoriaTicket").addClass("invalid-inputTicket");
-            mensajeError += "<li>Debe seleccionar una Categor&iacute;a</li>";
+            mensajeError += "<li>Seleccione categor&iacute;a</li>";
             isValid = false;
         } else {
             $("#categoriaTicket").removeClass("invalid-inputTicket");
@@ -785,7 +807,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
 
         if ($("#subcategoriaTicket").val() == undefined || $("#subcategoriaTicket").val() == '') {
             $("#subcategoriaTicket").addClass("invalid-inputTicket");
-            mensajeError += "<li>Debe seleccionar una Subcategor&iacute;a</li>";
+            mensajeError += "<li>Seleccione subcategor&iacute;a</li>";
             isValid = false;
         } else {
             $("#subcategoriaTicket").removeClass("invalid-inputTicket");
@@ -793,7 +815,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
 
         if ($("#tecnologiaTicket").val() == undefined || $("#tecnologiaTicket").val() == '') {
             $("#tecnologiaTicket").addClass("invalid-inputTicket");
-            mensajeError += "<li>Debe seleccionar una Tecnolog&iacute;a</li>";
+            mensajeError += "<li>Seleccione tecnolog&iacute;a</li>";
             isValid = false;
         } else {
             $("#tecnologiaTicket").removeClass("invalid-inputTicket");
@@ -1115,23 +1137,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                             $("#fotoIngeniero").attr("src", urlIng);
                             $("#fotoTecnico").attr("src", urlTec);
                         }, 100);
-
-
-                        let tipoOrden = $scope.catTipoOrdenesGeneral.find(e => Number(e.id) == Number($scope.editTicket.detalleOtDetenida.tipoOrden));
-                        $scope.editTicket.tipoOrdenText = tipoOrden ? tipoOrden.nombre : null;
-                        let subtipoOrden = $scope.catTipoOrdenesGeneral.find(e => Number(e.id) == Number($scope.editTicket.detalleOtDetenida.subtipoOrden));
-                        $scope.editTicket.subtipoOrdenText = subtipoOrden ? subtipoOrden.nombre : null;
-
-                        let clusterInd = $scope.listadoGeografiaSoporte.find(e => e.id == $scope.editTicket.detalleOtDetenida.idCluster)
-                        let zonaInd = $scope.listadoGeografiaSoporte.find(e => e.id == parseInt(clusterInd.padre))
-                        let distritoInd = $scope.listadoGeografiaSoporte.find(e => e.id == parseInt(zonaInd.padre))
-                        let ciudadInd = $scope.listadoGeografiaSoporte.find(e => e.id == parseInt(distritoInd.padre))
-                        let regionInd = $scope.listadoGeografiaSoporte.find(e => e.id == parseInt(ciudadInd.padre))
-                        $scope.editTicket.clusterText = clusterInd.nombre
-                        $scope.editTicket.zonaText = zonaInd.nombre
-                        $scope.editTicket.distritoText = distritoInd.nombre
-                        $scope.editTicket.ciudadText = ciudadInd.nombre
-                        $scope.editTicket.regionText = regionInd.nombre
+                            
                         if ($scope.editTicket.detalleTicketSc.acciones.length) {
                             $scope.editTicket.detalleTicketSc.acciones.map(function (s) {
                                 if (Number(s.valor) == 1) {
@@ -1142,7 +1148,34 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                                 }
                             });
                         }
+                        if ($scope.editTicket.detalleTicketSc.idEstatus == 4 || $scope.editTicket.detalleTicketSc.idEstatus == 5) {
+                            $(".content-detalle-ticket .inputTicket").prop("disabled", true);
+                            $("#detalleTicketAccordion .dictamen-info").prop("disabled", true);
+                            $(".btn-disabled").prop("disabled", true);
+                            
+                        } else {
+                            $(".content-detalle-ticket .inputTicket").prop("disabled", false);
+                            $("#detalleTicketAccordion .dictamen-info").prop("disabled", false);
+                            $(".btn-disabled").prop("disabled", false);
+                        }
 
+
+                        let tipoOrden = $scope.catTipoOrdenesGeneral.find(e => Number(e.id) == Number($scope.editTicket.detalleOtDetenida.tipoOrden));
+                        $scope.editTicket.tipoOrdenText = tipoOrden ? tipoOrden.nombre : null;
+                        let subtipoOrden = $scope.catTipoOrdenesGeneral.find(e => Number(e.id) == Number($scope.editTicket.detalleOtDetenida.subtipoOrden));
+                        $scope.editTicket.subtipoOrdenText = subtipoOrden ? subtipoOrden.nombre : null;
+                        let clusterInd = $scope.listadoGeografiaSoporte.find(e => e.id == $scope.editTicket.detalleOtDetenida.idCluster)
+                        if (clusterInd) {
+                            let zonaInd = $scope.listadoGeografiaSoporte.find(e => e.id == parseInt(clusterInd.padre))
+                            let distritoInd = $scope.listadoGeografiaSoporte.find(e => e.id == parseInt(zonaInd.padre))
+                            let ciudadInd = $scope.listadoGeografiaSoporte.find(e => e.id == parseInt(distritoInd.padre))
+                            let regionInd = $scope.listadoGeografiaSoporte.find(e => e.id == parseInt(ciudadInd.padre))
+                            $scope.editTicket.clusterText = clusterInd.nombre
+                            $scope.editTicket.zonaText = zonaInd.nombre
+                            $scope.editTicket.distritoText = distritoInd.nombre
+                            $scope.editTicket.ciudadText = ciudadInd.nombre
+                            $scope.editTicket.regionText = regionInd.nombre
+                        }
 
                     } else {
                         mostrarMensajeInformativo("No se encontr&oacute; informaci&oacute;n del ticket");
@@ -1250,7 +1283,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         if (!$scope.isConsultarOtsTecnicos) {
             let params = {
                 idsGeografia: [129, 133, 130, 132, 131, 100, 103, 102, 101, 128, 125, 127, 126, 118, 119, 121, 122, 123, 120, 117, 134, 135, 136, 109, 113, 112, 105, 110, 111, 116, 106, 114, 107, 115, 108],
-                idTipoUsuario: [7]
+                idTipoUsuario: [$scope.nPuestoIngeniero]
             }
             if (ingenieroTable) {
                 ingenieroTable.destroy();
@@ -1430,7 +1463,9 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
 
     $scope.motivoEscalamientoDetalle = []
     $scope.motivosSelectDetalle = function () {
-        $scope.motivoEscalamientoDetalle = $scope.escalamientoListDetalle.filter(elemento => { return elemento.nivel === 2 && elemento.idPadre === $scope.ticketSoporteDetalle.estado })
+        $scope.motivoEscalamientoDetalle = $scope.escalamientoListDetalle.filter(elemento => {
+            return elemento.idPadre == $scope.ticketSoporteDetalle.estado
+        })
     }
     $scope.validacionTicketDetalle = false;
     $scope.guardarTicketDetalle = function () {
@@ -1441,79 +1476,63 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
 
         if (!$scope.ticketSoporteDetalle.fallaTicketD) {
             isErrorDetalle = true
-            stringErrores += '<li>Captura falla</li>'
+            stringErrores += '<li>Seleccione falla</li>'
         }
 
         if (!$scope.ticketSoporteDetalle.categoriaTicketD) {
             isErrorDetalle = true
-            stringErrores += '<li>Captura categor&iacute;a</li>'
+            stringErrores += '<li>Seleccione categor&iacute;a</li>'
         }
 
         if (!$scope.ticketSoporteDetalle.subcategoriaTicketD) {
             isErrorDetalle = true
-            stringErrores += '<li>Captura subcategor&iacute;a</li>'
+            stringErrores += '<li>Seleccione subcategor&iacute;a</li>'
         }
         if (!$scope.ticketSoporteDetalle.estatus) {
             isErrorDetalle = true
-            stringErrores += '<li>Captura estatus del ticket</li>'
+            stringErrores += '<li>Seleccione estatus del ticket</li>'
         }
 
-        if ($scope.ticketSoporteDetalle.estatus && $scope.ticketSoporteDetalle.estatus == '1') {
+        if ($scope.ticketSoporteDetalle.estatus && $scope.ticketSoporteDetalle.estatus == '3') {
             if (!$scope.ticketSoporteDetalle.estado) {
                 isErrorDetalle = true
-                stringErrores += '<li>Captura estado del ticket</li>'
+                stringErrores += '<li>Seleccione estado del ticket</li>'
             }
             if (!$scope.ticketSoporteDetalle.motivo) {
                 isErrorDetalle = true
-                stringErrores += '<li>Captura motivo del ticket</li>'
+                stringErrores += '<li>Seleccione motivo del ticket</li>'
             }
         }
-        /*
-        if (!$scope.editTicket.comentariosReporte) {
+
+        if (!$scope.ticketSoporteDetalle.comentarios && $scope.ticketSoporteDetalle.estatus !== '3') {
             isErrorDetalle = true
-            stringErrores += '<li>Captura comentarios del ticket</li>'
+            stringErrores += '<li>Ingrese comentario del ticket</li>'
         }
-        */
+
         if (isErrorDetalle) {
             mostrarMensajeWarningValidacion(stringErrores)
             $scope.validacionTicketDetalle = true;
             return false
         }
 
-        if ($scope.ticketSoporteDetalle.estatus) {
-
-            let tipoDetalle = '';
-            switch ($scope.ticketSoporteDetalle.estatus) {
-                case '1':
-                    tipoDetalle = 'escalacion'
-                    break;
-                case '2':
-                    tipoDetalle = 'cancela'
-                    break;
-                case '3':
-                    tipoDetalle = 'completa'
-                    break;
-                case '4':
-                    tipoDetalle = 'reasigna'
-                    break;
-            }
-        }
-
         let arrayAcciones = [];
-        $scope.accionesDinamicasDetalle.map(function (e) {
-            console.log(e);
-            let accion = $scope.editTicket.detalleTicketSc.acciones.find((s) => s.id == e.idAccion);
+        $.each($scope.accionesDinamicasDetalle, function (i, e) {
+            let accion = $scope.editTicket.detalleTicketSc.acciones.find((s) => Number(s.idAccion) == Number(e.id));
             let isChecked = $("#dictamen-" + e.id).is(":checked");
             let accionTemp = {
                 idDictamen: accion ? accion.idDictamen : 0,
                 idAccion: e.id,
                 valor: isChecked ? 1 : 0,
-                comentario: "",
+                comentario: $scope.ticketSoporteDetalle.comentarios,
                 detalleSeries: e.id == 2 ? $scope.listadoNuevoViejosEquipo : []
             }
             arrayAcciones.push(accionTemp);
 
         })
+        if ($scope.ticketSoporteDetalle.estatus !== '3') {
+            $scope.ticketSoporteDetalle.motivo = null;
+            $scope.ticketSoporteDetalle.estado = null;
+        }
         let propietario = $scope.escalamientoListDetalle.find((p) => p.id === Number($scope.ticketSoporteDetalle.estado));
         let motivo = $scope.escalamientoListDetalle.find((p) => p.id === Number($scope.ticketSoporteDetalle.motivo));
 
@@ -1523,23 +1542,28 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             otCentralizado: $scope.editTicket.detalleTicketSc.otCentralizado,
             folioSistema: $scope.editTicket.detalleTicketSc.folioSistema,
             idTicketSc: Number($scope.ticketDetalle),
-            idMotivo: 0,
             idEstatus: $scope.ticketSoporteDetalle.estatus,
             idMotivoSc: $scope.ticketSoporteDetalle.motivo,
+            idFalla: $scope.ticketSoporteDetalle.fallaTicketD,
+            idCategoria: $scope.ticketSoporteDetalle.categoriaTicketD,
+            idSubcategoria: $scope.ticketSoporteDetalle.subcategoriaTicketD,
             idTicketSf: $scope.editTicket.detalleTicketSc.idTicketSf,
             idPropietarioSf: propietario ? propietario.idSalesforce : 0,
+            idPropietarioSc: $scope.ticketSoporteDetalle.estado,
             idMotivoSf: motivo ? motivo.idSalesforce : 0,
-            comentarios: $scope.ticketSoporteDetalle.comentarios,
+            comentarios: $scope.ticketSoporteDetalle.comentarios ? $scope.ticketSoporteDetalle.comentarios : "",
             acciones: arrayAcciones
         }
-        console.log(params);
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
         gestionTicketSoporteService.guardarTicketDetalle(params).then(response => {
             swal.close()
             if (response.data.respuesta) {
                 if (response.data.result) {
-                    $('#modalDetalle').modal('hide')
+                    $scope.limpiarContentDetalleTicket();
+                    $scope.contentdetalleticket = false;
+                    $scope.contentprincipal = true;
+                    $scope.isConsultaComentarios = false
                     mostrarMensajeExitoAlert(response.data.result.mensaje)
                 } else {
                     mostrarMensajeWarningValidacion(response.data.result.mensaje)
@@ -1635,9 +1659,9 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         $("#tipo_reporte").val('creacion');
     }, 300)
 
-    
+
     $('#modalAsignarTicket').on('hidden.bs.modal', function () {
-        
+
         $scope.listIngenieros.map(function (e) { e.isChecked = false; return e; })
         if (ingenieroTable) {
             ingenieroTable.destroy();

@@ -45,12 +45,16 @@ public class ConstSoporteCentralizado {
     @Value("${consultarAccionesDinamicoDetalle}")
     private String consultarAccionesDinamicoDetalle;
 
-    @Value("${guardarTicketDetalle}")
-    private String guardarTicketDetalle;
     
     @Value("${consultarDetalleTicketGestion}")
     private String consultarDetalleTicketGestion;
     
     @Value("${consultarEstatusTicket}")
     private String consultarEstatusTicket;
+    
+    @Value("${consultaEquiposTicketSoporte}")
+    private String consultaEquiposTicketSoporte;
+    
+    @Value("${guardarDetalleTicketSoporte}")
+    private String guardarDetalleTicketSoporte;
 }

@@ -107,9 +107,8 @@ app.service("gestionTicketSoporteService", function ($http) {
             method: "post",
             url: "req/guardarTicketDetalle",
             data: JSON.stringify(params),
-            headers: {
-                'Content-Type': 'application/json'
-            }
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
         });
     };
     /**fin cambios jose */
@@ -196,6 +195,16 @@ app.service("gestionTicketSoporteService", function ($http) {
         return $http({
             method: "get",
             url: "req/consultaEstatusTicketSoporte",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    };
+
+    this.consultaEquiposSoporte = function () {
+        return $http({
+            method: "get",
+            url: "req/consultaEquiposSoporte",
             headers: {
                 'Content-Type': 'application/json'
             }

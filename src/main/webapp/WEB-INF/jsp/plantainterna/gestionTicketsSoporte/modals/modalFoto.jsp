@@ -1,5 +1,5 @@
-<div class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" id="modalFoto">
-    <div class="modal-dialog modal-sm">
+<div class="modal fade" tabindex="-1" style="z-index: 9999;background-color: rgba(0, 0, 0, 0.4);" aria-labelledby="exampleModalLabel" aria-hidden="true" id="modalFoto">
+    <div class="modal-dialog modal-sm" style="margin-top: 5%;">
         <div class="modal-content">
             <div class="modal-body" style="padding: 0;">
                 <div class="row">
