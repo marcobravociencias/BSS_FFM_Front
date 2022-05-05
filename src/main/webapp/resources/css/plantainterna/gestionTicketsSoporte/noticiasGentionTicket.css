@@ -38,7 +38,7 @@
   }
 
   h1.subtitelheader-detalle {
-    font-size: .9em;
+    font-size: .8em;
     margin-bottom: 0;
     color: #747474;
   }
@@ -51,7 +51,7 @@
 
   .titelheader-detalle{
     /* display: block; */
-    font-size: 1.1em;
+    font-size: 0.9em;
     font-weight: bold;
     margin-bottom: 0;
   }
@@ -212,13 +212,13 @@
   }
 
   .title-coment {
-    font-size: 1em;
+    font-size: 0.9em;
     font-weight: bold;
     margin-bottom: 0;
   }
 
   .title-subcomment {
-    font-size: .9em;
+    font-size: .8em;
     margin-bottom: 0;
     color: #747474;
   }
@@ -364,7 +364,7 @@ div#filtros_config {
 }
 
 .text-title-comment-top {
-  font-size: .8em;
+  font-size: .7em;
   font-weight: bold;
   margin-bottom: 0;
   /* font-family: 'Montserrat' !important; */
@@ -556,6 +556,7 @@ a.descarga-adjuntadocomment {
     padding: .5em .5em;
     border: none;
     font-weight: normal;
+    text-align: center;
 }
 #table-cambio-equipo tbody td {
     position: relative;
@@ -564,12 +565,18 @@ a.descarga-adjuntadocomment {
     border: none;
     font-weight: normal;
     font-size: .8em;
+    text-align: center;
 }
 .eliminar-registro-cambioequipo{
   background:#f55756;
   font-size:.7em;
   padding: .3em 1em;
 }
+
+.eliminar-registro-cambioequipo:hover,.eliminar-registro-cambioequipo:active, .eliminar-registro-cambioequipo:focus {
+  background:#f55756 !important;
+}
+
 #table-cambio-equipo tbody tr:nth-child(odd) {
     background: #f5f5f5;
 }
@@ -586,3 +593,5 @@ a.descarga-adjuntadocomment {
 .col-listadoregistros{
   text-align:center;
 }
+
+

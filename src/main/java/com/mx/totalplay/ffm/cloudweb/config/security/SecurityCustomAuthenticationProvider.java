@@ -39,7 +39,7 @@ public class SecurityCustomAuthenticationProvider implements AuthenticationProvi
         put("/enrutarUser","ROLE_USER");
         put("/parametrosAsignacion","ROLE_USER");  
         
-    	//put("/noticiasAppFFM","ROLE_USER");
+    	put("/moduloInspectorCoberturasPE","ROLE_USER");
 		put("/moduloMisProyectos","ROLE_USER");
 		put("/moduloMonitorPMS","ROLE_USER");
 		put("/moduloGestionTecnicos","ROLE_USER");

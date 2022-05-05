@@ -91,7 +91,7 @@
                     </div>
                 </div>
             </div>
-            <div ng-if="contentdetalleticket" class="row row-content-detalle">
+            <div ng-show="contentdetalleticket" class="row row-content-detalle">
                 <div class="col-md-12 content-detalle-ticket">
                     <jsp:include page="./content/opcionesTicket.jsp"></jsp:include>
                 </div>

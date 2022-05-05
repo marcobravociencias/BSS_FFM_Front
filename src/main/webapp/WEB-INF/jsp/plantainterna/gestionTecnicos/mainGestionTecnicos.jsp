@@ -39,7 +39,7 @@
 	        <div class="container-fluid" id="container_gestionTecnicos">
 	            <div class="content-fluid">
 	                <div class="row">
-	                    <div class="col-3 mb-2" id="container_busquedaTecnico" style="padding-right: 0;">
+	                    <div class="col-md-3" id="container_busquedaTecnico" style="padding-right: 0;">
 	                    	
 	                    	<ul class="nav nav-tabs" id="myTab" role="tablist" style="margin: 0.5em;">
 		                        <li class="nav-item">
@@ -63,23 +63,26 @@
 			                            </div>
 			                        </div>
 			                        <div style="margin-left: 2%;" ng-repeat="tecnico in listTecnicos | filter:searchTecnico">
-			                            <div id="{{tecnico.idTecnico}}" class="valign-wrapper tecnicosDiv">
+			                            <div id="{{tecnico.idTecnico}}" class="valign-wrapper tecnicosDiv" ng-click="consultarDisponibilidadTecnico(tecnico)">
 			                                <div class="col-12" style="margin-bottom: 0.1em;">
 			                                    <div class="row">
-			                                        <div class="col-1 media-image online pr-0" style="padding-left: 0;">
+			                                        <div class="col-md-1 media-image online pr-0" style="padding-left: 0;" ng-if="!tecnico.foto">
 			                                            <img src="./resources/img/plantainterna/despacho/tecnicootasignada.png" class="circle responsive-img-tecnico">
 			                                        </div>
-			                                        <div id="" class="col-9" style="padding-left: 1.3em;">
+			                                        <div class="col-md-1 media-image online pr-0" style="padding-left: 0;" ng-if="tecnico.foto">
+			                                            <img src="{{tecnico.foto}}" class="circle responsive-img-tecnico">
+			                                        </div>
+			                                        <div id="" class="col-md-11" style="padding-left: 1.3em;">
 			                                            <p class="text-tecnico-nombre">{{tecnico.nombre}}</p>
 			                                            <p class="text-adds-teccnico">
 			                                                <i style="color:#7716fa" class="fa fa-user"></i> {{tecnico.usuarioFfm}} &nbsp
 			                                                <i style="color:#7716fa;" class="fa fa-phone"></i> {{tecnico.telefono}}
 			                                            </p>
 			                                        </div>
-			                                        <div class="col-2 icono_check_tecnico mt-1" >
-			                                            <p id="tec-{{tecnico.idTecnico}}" class="text-aux" ng-click="consultarDisponibilidadTecnico(tecnico)">TEC</p>
-	<!-- 		                                            <p id="aux-{{tecnico.idTecnico}}" class="text-aux" ng-click="consultarDisponibilidadAux(tecnico)">AUX</p> -->
-			                                        </div>
+<!-- 			                                        <div class="col-2 icono_check_tecnico mt-1" > -->
+<!-- 			                                            <p id="tec-{{tecnico.idTecnico}}" class="text-aux" ng-click="consultarDisponibilidadTecnico(tecnico)">TEC</p> -->
+<!-- 			                                            <p id="aux-{{tecnico.idTecnico}}" class="text-aux" ng-click="consultarDisponibilidadAux(tecnico)">AUX</p> -->
+<!-- 			                                        </div> -->
 			                                    </div>
 			                                </div>
 			                            </div>
@@ -95,33 +98,34 @@
 			                            </div>
 			                        </div>
 			                        <div style="margin-left: 2%;" ng-repeat="auxiliar in listAuxiliares | filter:searchAuxiliar">
-			                            <div id="{{auxiliar.idAuxiliar}}" class="valign-wrapper tecnicosDiv">
+			                            <div id="{{auxiliar.idAuxiliar}}" class="valign-wrapper tecnicosDiv" ng-click="consultarDisponibilidadTecnico(auxiliar)">
 			                                <div class="col-12" style="margin-bottom: 0.1em;">
 			                                    <div class="row">
-			                                        <div class="col-1 media-image online pr-0" style="padding-left: 0;">
+			                                        <div class="col-md-1 media-image online pr-0" style="padding-left: 0;" ng-if="!auxiliar.foto">
 			                                            <img src="./resources/img/plantainterna/despacho/tecnicootasignada.png" class="circle responsive-img-tecnico">
 			                                        </div>
-			                                        <div id="" class="col-9" style="padding-left: 1.3em;">
+			                                        <div class="col-md-1 media-image online pr-0" style="padding-left: 0;" ng-if="auxiliar.foto">
+			                                            <img src="{{auxiliar.foto}}" class="circle responsive-img-tecnico">
+			                                        </div>
+			                                        <div id="" class="col-md-11" style="padding-left: 1.3em;">
 			                                            <p class="text-tecnico-nombre">{{auxiliar.nombre}}</p>
 			                                            <p class="text-adds-teccnico">
 			                                                <i style="color:#7716fa" class="fa fa-user"></i> {{auxiliar.usuarioFfm}} &nbsp
 			                                                <i style="color:#7716fa;" class="fa fa-phone"></i> {{auxiliar.telefono}}
 			                                            </p>
 			                                        </div>
-			                                        <div class="col-2 icono_check_tecnico mt-1" >
-	<!-- 		                                            <p id="tec-{{auxiliar.idAuxiliar}}" class="text-aux" ng-click="consultarDisponibilidadTecnico(tecnico)">TEC</p> -->
-			                                            <p id="aux-{{auxiliar.idAuxiliar}}" class="text-aux" ng-click="consultarDisponibilidadTecnico(auxiliar)">AUX</p>
-			                                        </div>
+<!-- 			                                        <div class="col-2 icono_check_tecnico mt-1" > -->
+<!-- 			                                            <p id="tec-{{auxiliar.idAuxiliar}}" class="text-aux" ng-click="consultarDisponibilidadTecnico(tecnico)">TEC</p> -->
+<!-- 			                                            <p id="aux-{{auxiliar.idAuxiliar}}" class="text-aux" ng-click="consultarDisponibilidadTecnico(auxiliar)">AUX</p> -->
+<!-- 			                                        </div> -->
 			                                    </div>
 			                                </div>
 			                            </div>
 			                        </div> 
 	                        	</div>
 	                        </div>
-	                        	                    	
-	                         
 	                    </div>
-	                    <div class="col-9" id="container_calendarioDetalle" ng-show="!isDetalleMesTecnico">
+	                    <div class="col-md-9" id="container_calendarioDetalle" ng-show="!isDetalleMesTecnico">
 	                        <div class="row">
 	                            <div class="col-8" id="container_calendarioActividades" style="padding-right: 0;">
 	                                <div class="row">
@@ -194,10 +198,22 @@
 	                                            <div class=""><span class="text-content-tecnico">{{justificacionDetalle.fechaFin}}</span></div>
 	                                        </div>
 	                                        <div class="container-fluid tecnico-content text-center mb-1">
-	                                            <button class="btn btn-sm btnDetalleJustificacion" ng-click="consultarComentariosJustificacion()"><i class="fa fa-comments"></i></button>
-	                                            <button class="btn btn-sm btnDetalleJustificacion" ng-click="consultarArchivosJustificacion()" style="padding: 0.3em 0.7em !important;"><i class="fa fa-file"></i></button>
-	                                            <button class="btn btn-sm btnDetalleJustificacion" ng-click="openModalEditarJustificacion(justificacionDetalle)"><i class="fa fa-pencil-square"></i></button>
-	                                            <button class="btn btn-sm btnDetalleJustificacion" ng-click="eliminarJustificacionTecnico(justificacionDetalle)"><i class="far fa-trash-alt"></i></button>
+	                                            <button id="btnComentariosJustificacion" class="btn btn-sm btnDetalleJustificacion" ng-click="consultarComentariosJustificacion(justificacionDetalle)">
+	                                            	<span id="tooltipComentariosJustificacion" class="tooltipComentariosJustificacion">Comentarios</span>
+	                                            	<i class="fa fa-comments"></i>
+	                                            </button>
+	                                            <button id="btnArchivosJustificacion" class="btn btn-sm btnDetalleJustificacion" ng-click="consultarArchivosJustificacion()" style="padding: 0.3em 0.7em !important;">
+	                                            	<span id="tooltipArchivosJustificacion" class="tooltipArchivosJustificacion">Evidencias</span>
+	                                            	<i class="fa fa-file"></i>
+	                                            </button>
+	                                            <button id="btnEditarJustificacion" class="btn btn-sm btnDetalleJustificacion" ng-click="openModalEditarJustificacion(justificacionDetalle)">
+	                                            	<span id="tooltipEditarJustificacion" class="tooltipEditarJustificacion">Editar justificaci&oacute;n</span>
+	                                            	<i class="fa fa-pencil-square"></i>
+	                                            </button>
+	                                            <button id="btnEliminarJustificacion" class="btn btn-sm btnDetalleJustificacion" ng-click="eliminarJustificacionTecnico(justificacionDetalle)">
+	                                            	<span id="tooltipEliminarJustificacion" class="tooltipEliminarJustificacion">Eliminar justificaci&oacute;n</span>
+	                                            	<i class="far fa-trash-alt"></i>
+	                                            </button>
 	                                        </div>
 	                                    </div>
 	                                    <div ng-show="!isJustificacion">

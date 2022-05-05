@@ -265,6 +265,7 @@ span.text-content-tecnico {
     padding: 0.3em 0.6em !important;
     background-color: #7716fa;
     color: #ffff;
+    position: inherit;
 }
 
 .btnDetalleJustificacion:hover {
@@ -817,4 +818,121 @@ div.actividades-contadorac-gris {
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	overflow: hidden;
+}
+
+.tecnicosDiv:hover {
+	cursor: pointer !important;
+	background-color:#dadada !important;   
+}
+
+#etiqueta_agregar_archivo_just .tooltipArchivosNuevosOculto,
+#etiqueta_archivo_crear_just .tooltipArchivosNuevosOculto,
+#etiqueta_archivo_edita_just .tooltipArchivosNuevosOculto {
+	visibility: hidden;
+  	width: 80%;
+  	background-color: #555;
+  	color: #fff;
+  	text-align: justify;
+  	border-radius: 6px;
+  	padding: 5px 0;
+  	position: absolute;
+  	z-index: 1;
+  	top: 30%;
+  	left: 80%;
+  	opacity: 0;
+  	transition: opacity 0.3s;
+  	font-family: 'Montserrat';
+    font-size: .7em;
+    padding-left: 1em;
+    padding-right: 1em;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+#etiqueta_agregar_archivo_just:hover .tooltipArchivosNuevosNoOculto,
+#etiqueta_archivo_crear_just:hover .tooltipArchivosNuevosNoOculto,
+#etiqueta_archivo_edita_just:hover .tooltipArchivosNuevosNoOculto {
+	visibility: visible;
+  	opacity: 1;
+}
+
+.listaNombresArchivosNuevos {
+	white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+#btnComentariosJustificacion .tooltipComentariosJustificacion {
+	visibility: hidden;
+  	background-color: #555;
+  	color: #fff;
+  	text-align: justify;
+  	border-radius: 6px;
+  	padding: 5px 0;
+  	position: absolute;
+  	top: 87%;
+  	z-index: 1;
+  	left: 15%;
+  	opacity: 0;
+  	transition: opacity 0.3s;
+  	font-family: 'Montserrat';
+    font-size: .8em;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+#btnComentariosJustificacion:hover .tooltipComentariosJustificacion {
+	visibility: visible;
+  	opacity: 1;
+}
+
+#btnArchivosJustificacion .tooltipArchivosJustificacion,
+#btnEditarJustificacion .tooltipEditarJustificacion {
+	visibility: hidden;
+  	background-color: #555;
+  	color: #fff;
+  	text-align: justify;
+  	border-radius: 6px;
+  	padding: 5px 0;
+  	position: absolute;
+  	top: 87%;
+  	z-index: 1;
+  	left: 30%;
+  	opacity: 0;
+  	transition: opacity 0.3s;
+  	font-family: 'Montserrat';
+    font-size: .8em;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+#btnArchivosJustificacion:hover .tooltipArchivosJustificacion,
+#btnEditarJustificacion:hover .tooltipEditarJustificacion {
+	visibility: visible;
+  	opacity: 1;
+}
+
+#btnEliminarJustificacion .tooltipEliminarJustificacion {
+	visibility: hidden;
+  	background-color: #555;
+  	color: #fff;
+  	text-align: justify;
+  	border-radius: 6px;
+  	padding: 5px 0;
+  	position: absolute;
+  	top: 87%;
+  	z-index: 1;
+  	left: 40%;
+  	opacity: 0;
+  	transition: opacity 0.3s;
+  	font-family: 'Montserrat';
+    font-size: .8em;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+#btnEliminarJustificacion:hover .tooltipEliminarJustificacion {
+	visibility: visible;
+  	opacity: 1;
 }

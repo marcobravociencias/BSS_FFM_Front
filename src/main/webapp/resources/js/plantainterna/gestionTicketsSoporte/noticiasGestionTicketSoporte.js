@@ -12,7 +12,7 @@ app.noticiasGestionTicketSoporte = function ($scope, gestionTicketSoporteService
     $scope.consultarComentariosTicketSoporte = function(){
         $scope.resetFileGeneral()
         let params = {
-            objectId: "a153C000000870NQAQ",
+            objectId: $scope.editTicket.detalleTicketSc.idFolioSf ? $scope.editTicket.detalleTicketSc.idFolioSf : "a153C000000870NQAQ",
             objectType: "OrdenServicio"
         }
         if (!swal.isVisible()) {
@@ -22,8 +22,8 @@ app.noticiasGestionTicketSoporte = function ($scope, gestionTicketSoporteService
        
         gestionTicketSoporteService.consultarComentariosNoticiasSF(params).then((response) => {
             if (response.data.respuesta) {
-                  $scope.isBusqueda = true;
                 if (response.data.result) {
+                    $scope.isBusqueda = true;
                     $scope.listadoNoticias = response.data.result.news;
                     swal.close();
                 } else {
