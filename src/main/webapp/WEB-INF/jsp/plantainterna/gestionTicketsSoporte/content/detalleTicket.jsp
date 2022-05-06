@@ -48,12 +48,15 @@
                                                 ng-bind="editTicket.detalleTicketSc.celularInge || 'Sin dato'"></span>
                                         </div>
                                     </div>
-                                    <span ng-if="propietarioSession !== 'Tecnico'" class="text-external-link"
-                                        ng-click="consultarOtsTecnicosTicket()">REASIGNAR
-                                        INGENIERO</span>
-                                    <span ng-if="propietarioSession === 'Tecnico'" class="text-external-link"
-                                        ng-click="consultarOtsTecnicosTicket()">ASIGNARME
-                                        OT</span>
+                                    <div ng-if="editTicket.detalleTicketSc.idEstatus !== 4 && editTicket.detalleTicketSc.idEstatus !== 5">
+                                        <span ng-if="propietarioSession !== 'Tecnico'" class="text-external-link"
+                                            ng-click="consultarOtsTecnicosTicket()">REASIGNAR
+                                            INGENIERO</span>
+                                        <span ng-if="propietarioSession === 'Tecnico'" class="text-external-link"
+                                            ng-click="consultarOtsTecnicosTicket()">ASIGNARME
+                                            OT</span>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -184,7 +187,7 @@
                                         </div>
                                         <div class="container-comments justify-content-center">
                                             <div class="box-content" ng-show="comentariosOrdenTrabajo.length">
-                                                <div class="d-flex justify-content-center py-2" 
+                                                <div class="d-flex justify-content-center py-2"
                                                     ng-repeat="comment in comentariosOrdenTrabajo">
                                                     <div class="second py-2 px-2">
                                                         <span class="text1" ng-bind="comment.comentario"></span>
@@ -195,7 +198,7 @@
                                                             ng-bind="comment.fechaComentario"></span>
                                                     </div>
                                                 </div>
-                                                
+
                                             </div>
                                             <div class="box-content" ng-show="!comentariosOrdenTrabajo.length">
                                                 <div class="no-comments">
@@ -208,7 +211,7 @@
                                                     id="comentarioTicket" ng-model="comentarioTicket"></textarea>
                                                 <div>
                                                     <button ng-click="addComentarios()" type="button"
-                                                        class="btn btn-primary btn-editar-cambios ripple-surface mr-0 send-comment"><i
+                                                        class="btn btn-primary btn-editar-cambios ripple-surface btn-disabled mr-0 send-comment"><i
                                                             class="far fa-paper-plane"></i>
                                                     </button>
                                                 </div>
@@ -387,7 +390,7 @@
                                     <div class="container-text-content-dictamen form-check form-switch">
                                         <input ng-if="$index != 1" class="form-check-input dictamen-info"
                                             id="dictamen-{{item.id}}" type="checkbox">
-                                        <input ng-if="$index == 1" ng-change="mostrarFormularioNuevoEquipo()"
+                                        <input ng-if="$index == 1" ng-click="mostrarFormularioNuevoEquipo()"
                                             ng-model="test" id="dictamen-{{item.id}}"
                                             class="form-check-input dictamen-info" type="checkbox">
                                     </div>
@@ -404,9 +407,10 @@
                                             ng-model="cambioEquipo.idTipoEquipo"
                                             class="input-filtro form-control form-control-sm inputTicket"
                                             id="selectTipoEquipoAdd">
-                                            <option value="">Seleccione ...</option>
-                                            <option value="stb">STB</option>
-                                            <option value="ont">ONT</option>
+                                            <option value="" disabled selected>Seleccione ...</option>
+                                            <option value="{{equipo.id}}" ng-repeat="equipo in equiposList">
+                                                {{equipo.descripcion}}
+                                            </option>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-2">
@@ -443,7 +447,7 @@
                                     </div>
                                     <div class="form-group col-md-2">
                                         <button ng-click="agregarRegistroCambioEquipo()" id="agregarnuevoEquivo"
-                                            type="button" class="btn btn-sm btn-primary btn-lg btn-floating">
+                                            type="button" class="btn btn-sm btn-primary btn-lg btn-floating btn-disabled">
                                             <i class="fas fa-plus"></i>
                                         </button>
                                     </div>
@@ -458,12 +462,11 @@
                                         <th scope="col">No serie nueva</th>
                                         <th scope="col">MAC nueva</th>
                                         <th scope="col"></th>
-
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="itemRegistro in listadoNuevoViejosEquipo track by $index">
-                                        <td ng-bind="itemRegistro.idTipoEquipo"></td>
+                                        <td ng-bind="itemRegistro.descripcion"></td>
                                         <td ng-bind="itemRegistro.numSerieViejo"></td>
                                         <td ng-bind="itemRegistro.macViejo"></td>
                                         <td ng-bind="itemRegistro.numeSerieNuevo"></td>
@@ -488,57 +491,60 @@
     </div>
     <div class="row content-falla">
         <div class="row">
-            <div class="container-fluid ticket-content content-select-ticket-detalle col-3" style="margin-left: 3.3em;">
+            <div class="container-fluid ticket-content content-select-ticket-detalle col-4">
                 <div class="container-text-title-detalle"><span class="text-tile-ticket">ESTATUS TICKET</span></div>
                 <div class="container-text-content-detalle inputTicket-select">
                     <select ng-class="{'error-captura-input': !ticketSoporteDetalle.estatus && validacionTicketDetalle}"
                         class="form-control form-control-sm inputTicket" name="estatusTicketDetalle"
                         id="estatusTicketDetalle" ng-model="ticketSoporteDetalle.estatus">
                         <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
-                        <option value="1" selected>ESCALAR</option>
-                        <option value="2" selected>CANCELAR</option>
-                        <option value="3" selected>COMPLETADA</option>
+                        <option value="3" selected>ESCALAR</option>
+                        <option value="5" selected>CANCELAR</option>
+                        <option value="4" selected>COMPLETADA</option>
                     </select>
                 </div>
             </div>
-            <div class="container-fluid ticket-content content-select-ticket-detalle col-3"
-                ng-show="ticketSoporteDetalle.estatus === '1'">
-                <div class="container-text-title-detalle"><span class="text-tile-ticket">ESTADO</span></div>
+            <div class="container-fluid ticket-content content-select-ticket-detalle col-4"
+                ng-show="ticketSoporteDetalle.estatus === '3'">
+                <div class="container-text-title-detalle"><span class="text-tile-ticket"
+                        style="margin-left: 5em;">ESTADO</span></div>
                 <div class="container-text-content-detalle inputTicket-select">
                     <select ng-class="{'error-captura-input': !ticketSoporteDetalle.estado && validacionTicketDetalle}"
                         class="form-control form-controlt form-control-sm inputTicket" name="estatusTicketDetalle"
                         id="estatusTicketDetalle" ng-model="ticketSoporteDetalle.estado"
                         ng-change="motivosSelectDetalle()">
                         <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
-                        <option ng-value="item.id" ng-repeat="item in estadoEscalamientoDetalle">
+                        <option value="{{item.id}}" ng-repeat="item in estadoEscalamientoDetalle">
                             {{item.descripcion}}
                         </option>
                     </select>
                 </div>
             </div>
-            <div class="container-fluid ticket-content content-select-ticket-detalle col-3"
-                ng-show="ticketSoporteDetalle.estatus === '1'">
-                <div class="container-text-title-detalle"><span class="text-tile-ticket">MOTIVO</span></div>
+            <div class="container-fluid ticket-content content-select-ticket-detalle col-4"
+                ng-show="ticketSoporteDetalle.estatus === '3'">
+                <div class="container-text-title-detalle"><span class="text-tile-ticket"
+                        style="margin-left: 5em;">MOTIVO</span></div>
                 <div class="container-text-content-detalle inputTicket-select">
                     <select ng-class="{'error-captura-input': !ticketSoporteDetalle.motivo && validacionTicketDetalle}"
                         class="form-control form-controlt form-control-sm inputTicket" name="estatusTicketDetalle"
                         id="estatusTicketDetalle" ng-model="ticketSoporteDetalle.motivo">
                         <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
-                        <option ng-value="item.id" ng-repeat="item in motivoEscalamientoDetalle">
+                        <option value="{{item.id}}" ng-repeat="item in motivoEscalamientoDetalle">
                             {{item.descripcion}}
                         </option>
                     </select>
                 </div>
             </div>
-            <div class="container-fluid ticket-content content-select-ticket-detalle col-6"
-                ng-show="ticketSoporteDetalle.estatus !== '1'">
-                <div class="container-text-title-detalle"><span class="text-tile-ticket">COMENTARIOS</span></div>
+            <div class="container-fluid ticket-content content-select-ticket-detalle offset-2 col-6"
+                ng-show="ticketSoporteDetalle.estatus !== '3'">
+                <div class="container-text-title-detalle"><span class="text-tile-ticket">COMENTARIO</span></div>
                 <textarea class="form-control form-control-sm inputTicket" ng-model="ticketSoporteDetalle.comentarios"
                     cols="2"></textarea>
             </div>
         </div>
+        
         <div class="row content-falla">
-            <div class="col-12">
+            <div class="col-12" ng-if="editTicket.detalleTicketSc.idEstatus !== 4 && editTicket.detalleTicketSc.idEstatus !== 5">
                 <button ng-click="guardarTicketDetalle()" type="button"
                     class="btn btn-primary btn-editar-cambios ripple-surface mr-0">
                     <b>Guardar cambios </b>
@@ -546,6 +552,12 @@
                 <button ng-click="cerrarDetalleTicket()" type="button" class="btn cerrar-cancelar-btn  btn-ligh"
                     data-mdb-dismiss="modal">
                     Cancelar
+                </button>
+            </div>
+            <div class="col-12" ng-if="editTicket.detalleTicketSc.idEstatus === 4 || editTicket.detalleTicketSc.idEstatus === 5">
+                <button ng-click="cerrarDetalleTicket()" type="button" class="btn cerrar-cancelar-btn  btn-ligh" style="margin: 1em 0;"
+                    data-mdb-dismiss="modal">
+                    Salir
                 </button>
             </div>
         </div>

@@ -47,11 +47,6 @@
     <body id="idBody" class="body" ng-controller="gestionUniversalController">
         <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
         <div class="container">
-            <div class="container-title-header" style="padding: 0 !important;">
-                <div class="header-modulo">
-                    <h5 class="title-modulo">Gesti&oacute;n Planning</h5>
-                </div>
-            </div>
             <div class="content-fluid" id="container_gestion_Universal" style="display: none;">
                 <div ng-show="!configPermisoAccionConsultaTecnicosPagos && !configPermisoAccionConsultaCambiaContrasena" class="text-accion-nopermiso">
                     <i class="icon-not-permiso fas fa-user-lock"></i>

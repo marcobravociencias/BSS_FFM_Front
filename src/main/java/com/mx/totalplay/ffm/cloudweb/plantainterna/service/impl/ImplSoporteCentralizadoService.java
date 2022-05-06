@@ -340,7 +340,8 @@ public class ImplSoporteCentralizadoService implements SoporteCentralizadoServic
 		JsonObject jsonObject = new Gson().fromJson(params, JsonObject.class);
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
 		String tokenAcces = principalDetail.getAccess_token();
-		String urlRequest = principalDetail.getDireccionAmbiente().concat(constSoporteCentralizado.getGuardarTicketDetalle());
+
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constSoporteCentralizado.getGuardarDetalleTicketSoporte());
 		jsonObject.addProperty("idOrigenSistema", principalDetail.getIdOrigen());
 		logger.info("### URL guardarTicketDetalle(): \n" + urlRequest);
 
@@ -383,6 +384,21 @@ public class ImplSoporteCentralizadoService implements SoporteCentralizadoServic
 				tokenAcces);
 
 		logger.info("### RESULT reasignarIngenieroTicket(): \n" + gson.toJson(response));
+		return response;
+	}
+
+	@Override
+	public ServiceResponseResult consultarEquiposTicketSoporte() {
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String tokenAccess = principalDetail.getAccess_token();
+		logger.info("consultarEquiposTicketSoporte ## "+ tokenAccess);
+		
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constSoporteCentralizado.getConsultaEquiposTicketSoporte());
+		logger.info("### URL consultarEquiposTicketSoporte():" + urlRequest);
+		
+		Map<String, String> paramsRequestGet = new HashMap<String, String>();
+		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest, ServiceResponseResult.class, tokenAccess);
+		logger.info("### RESULT consultarEquiposTicketSoporte(): " + gson.toJson(response));   
 		return response;
 	}
 }
