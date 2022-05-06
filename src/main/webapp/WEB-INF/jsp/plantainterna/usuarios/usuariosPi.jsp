@@ -151,13 +151,25 @@
                                             <a class="nav-link linkOpcionesRegistro" id="pills-accesos-tab" data-toggle="pill" href="#pills-accesos" ng-show="mostrarAccesos" role="tab" aria-controls="pills-accesos" aria-selected="false">Accesos</a>
                                         </li>
                                         <li id="pestaniaTecnico" class="nav-item tabOpcionesRegistro" role="presentation" ng-show="tabTecnicos">
-                                            <a class="nav-link linkOpcionesRegistro" id="pills-tecnico-tab" ng-click="revisionTecnicosDespachos()" data-toggle="pill" href="#pills-tecnico" ng-show="mostrarTecnicos" role="tab" aria-controls="pills-tecnico" aria-selected="false">T&eacute;cnicos</a>
+                                            <a class="nav-link linkOpcionesRegistro" id="pills-tecnico-tab" ng-click="revisionTecnicosDespachos('tabTecnicos')" data-toggle="pill" href="#pills-tecnico" role="tab" aria-controls="pills-tecnico" aria-selected="false">T&eacute;cnicos</a>
                                         </li>
                                         <li id="pestaniaDespacho" class="nav-item tabOpcionesRegistro" role="presentation" ng-show="tabDespachos">
-                                            <a class="nav-link linkOpcionesRegistro" id="pills-despacho-tab" ng-click="revisionTecnicosDespachos()" data-toggle="pill" href="#pills-despacho" ng-show="mostrarDespacho" role="tab" aria-controls="pills-despacho" aria-selected="false">Despachos</a>
+                                            <a class="nav-link linkOpcionesRegistro" id="pills-despacho-tab" ng-click="revisionTecnicosDespachos('tabDespachos')" data-toggle="pill" href="#pills-despacho" role="tab" aria-controls="pills-despacho" aria-selected="false">Despachos</a>
                                         </li>
                                         <li id="pestaniaPerfiles" class="nav-item tabOpcionesRegistro" role="presentation" ng-show="tabPerfiles">
                                             <a class="nav-link linkOpcionesRegistro" id="pills-perfiles-tab" data-toggle="pill" href="#pills-perfiles" role="tab" aria-controls="pills-perfiles" aria-selected="false">Perfiles</a>
+                                        </li>
+                                        <li id="pestaniaIngenieros" class="nav-item tabOpcionesRegistro" role="presentation" ng-show="tabIngenieros">
+                                            <a class="nav-link linkOpcionesRegistro" id="pills-ingenieros-tab" ng-click="revisionTecnicosDespachos('tabIngenieros')" data-toggle="pill" href="#pills-ingenieros" role="tab" aria-controls="pills-ingenieros" aria-selected="false">Ingenieros</a>
+                                        </li>
+                                        <li id="pestaniaSupervisorCentralizado" class="nav-item tabOpcionesRegistro" role="presentation" ng-show="tabSupervisorCentralizado">
+                                            <a class="nav-link linkOpcionesRegistro" id="pills-supervisor-centralizado-tab" ng-click="revisionTecnicosDespachos('tabSupervisorCentralizado')" data-toggle="pill" href="#pills-supervisor-centralizado" role="tab" aria-controls="pills-supervisor-centralizado" aria-selected="false">Supervisores Centralizado</a>
+                                        </li>
+                                        <li id="pestaniaCouchDespacho" class="nav-item tabOpcionesRegistro" role="presentation" ng-show="tabCouchDespacho">
+                                            <a class="nav-link linkOpcionesRegistro" id="pills-couch-despacho-tab" ng-click="revisionTecnicosDespachos('tabCouchDespacho')" data-toggle="pill" href="#pills-couch-despacho" role="tab" aria-controls="pills-couch-despacho" aria-selected="false">Couchs</a>
+                                        </li>
+                                        <li id="pestaniaSupervisor" class="nav-item tabOpcionesRegistro" role="presentation" ng-show="tabSupervisor">
+                                            <a class="nav-link linkOpcionesRegistro" id="pills-supervisor-tab" ng-click="revisionTecnicosDespachos('tabSupervisor')" data-toggle="pill" href="#pills-supervisor" role="tab" aria-controls="pills-supervisor" aria-selected="false">Supervisores</a>
                                         </li>
                                         <li class="nav-item tabOpcionesRegistro" role="presentation" ng-show="tabConfirmacion">
                                             <a class="nav-link linkOpcionesRegistro" id="pills-confirmar-tab" ng-click="cargarInfoConfirmacionRegistro()" data-toggle="pill" ng-click="mostrarConfirmacionUsuario()" href="#pills-confirmar" role="tab" aria-controls="pills-confirmar" aria-selected="false">Confirmar Usuario</a>
@@ -184,6 +196,18 @@
                                         </div>
                                         <div class="tab-pane fade" id="pills-perfiles" role="tabpanel" aria-labelledby="pills-perfiles-tab">
                                             <jsp:include page="./content/perfiles.jsp"></jsp:include>
+                                        </div>
+                                        <div class="tab-pane fade" id="pills-ingenieros" role="tabpanel" aria-labelledby="pills-ingenieros-tab">
+                                            <jsp:include page="./content/ingeniero.jsp"></jsp:include>
+                                        </div>
+                                        <div class="tab-pane fade" id="pills-supervisor-centralizado" role="tabpanel" aria-labelledby="pills-supervisor-centralizado-tab">
+                                            <jsp:include page="./content/supervisorCentralizado.jsp"></jsp:include>
+                                        </div>
+                                        <div class="tab-pane fade" id="pills-couch-despacho" role="tabpanel" aria-labelledby="pills-couch-despacho-tab">
+                                            <jsp:include page="./content/couchDespacho.jsp"></jsp:include>
+                                        </div>
+                                        <div class="tab-pane fade" id="pills-supervisor" role="tabpanel" aria-labelledby="pills-supervisor-tab">
+                                            <jsp:include page="./content/supervisor.jsp"></jsp:include>
                                         </div>
                                         <div class="tab-pane fade" id="pills-confirmar" role="tabpanel" aria-labelledby="pills-confirmar-tab">
                                             <jsp:include page="./content/confirmacion.jsp"></jsp:include>
