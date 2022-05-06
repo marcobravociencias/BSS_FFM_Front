@@ -1,0 +1,209 @@
+@media screen and (max-width: 1300px) {
+
+    .modal-title-usuariosPI {
+        font-size: 1em;
+    }
+
+    .jstree-anchor {
+        font-family: 'Montserrat';
+        font-size: .7em !important;
+    }
+
+    /* FILTROS */
+    #myTab .nav-link {
+        padding-top: 0.6em;
+        padding-bottom: 0.6em;
+        border: solid 1px #ccc;
+        font-size: .65em;
+    }
+
+    .span-consulta {
+        color: #9d9d9d;
+        font-size: .8em;
+        margin-bottom: 0;
+    }
+
+    .input-filtro-status {
+        border: 1px solid #dbdbdb;
+        font-size: 0.6em;
+        color: #818181 !important;
+        transition: all 0.5s ease;
+        border-bottom: 1px solid white;
+        background: white !important;
+        border-radius: 0.5em !important;
+        box-shadow: 0 1px 3px 0 rgb(0 0 0 / 7%), 0 1px 2px 0 rgb(0 0 0 / 5%) !important;
+        padding-right: 2em;
+    }
+
+    #btn-consultar-disponibilidad {
+        background-color: #ffffff;
+        color: #7716fa;
+        border: solid 1px #7716fa !important;
+        padding: 0.5em 1.5em;
+        border-radius: 5px;
+        font-size: 0.6em;
+        position: relative;
+        display: block;
+        border-radius: 0.5em !important;
+        margin-top: 0.1em;
+    }
+
+    /* FILTROS */
+
+    /* TABLA */
+    #table-usuario-pi_filter {
+        font-size: 0.6em !important;
+        font-family: "Montserrat" !important;
+    }
+
+    table.dataTable thead th {
+        position: relative;
+        background-color: #b1b1b1;
+        color: #fff;
+        font-size: .7em;
+    }
+
+    #table-usuario-pi>tbody>tr>td {
+        white-space: nowrap;
+        color: #39455b;
+        font-family: 'Montserrat', sans-serif;
+        font-size: .65em;
+    }
+
+    span.btnModificarUsuario {
+        background-color: #7716fa !important;
+        color: #fff !important;
+        -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+        box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+        font-size: 0.55em;
+    }
+
+    span.btnEliminarUsuario {
+        background-color: #f55756 !important;
+        color: #fff !important;
+        -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+        box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+        font-size: 0.55em;
+    }
+
+    .dataTables_info {
+        font-size: 0.65em;
+        font-family: "Montserrat" !important;
+        text-align: left;
+        padding-left: 0.5em;
+    }
+
+    #table-usuario-pi_paginate {
+        font-size: 0.8em;
+    }
+
+    /* TABLA */
+
+    /* MODIFICAR USUARIO */
+
+    #pills-tab-mod li a {
+        padding: 0.8em 2em;
+        border-radius: 0;
+        margin-top: 0;
+        margin-bottom: 0;
+        border-radius: 0.5em;
+        font-size: .65em !important;
+    }
+
+    .inputSelectFormulario {
+        align-items: stretch;
+        font-size: .7rem !important;
+        font-family: 'Montserrat' !important;
+    }
+
+    .inputFormulario {
+        align-items: stretch;
+        background: white !important;
+        padding: 0.5rem 1rem !important;
+        font-size: .7rem !important;
+        font-family: 'Montserrat' !important;
+    }
+
+    .titulo-opciones {
+        color: rgb(70, 88, 107);
+        font-weight: 450;
+        font-size: .9em;
+    }
+
+    .text-head-table-arbol {
+        font-size: .8em;
+        color: #784085;
+    }
+
+    .text-body-table-arbol {
+        color: #7c7c7d;
+        font-size: 11px;
+    }
+
+    .titulos-confirmacion {
+        color: #784085;
+        font-size: .8em;
+    }
+
+    .respuesta-confirmacion {
+        color: #7c7c7d;
+        font-size: 11px;
+        cursor: pointer;
+    }
+
+    .encabezado-confirmacion {
+        color: rgb(70, 88, 107);
+        font-weight: bold;
+        padding: 0.5em;
+        border-bottom: 1px solid #f3f3f3;
+        font-size: 1em;
+    }
+
+    .modal-footer .btn-cerrar-modal {
+        font-size: .6em !important;
+        background: white;
+        color: #0c56d0;
+        font-weight: bold;
+        box-shadow: none;
+        padding: 0.6em 2em 0.6em 2em;
+        border: 0.09rem solid #0c56d0;
+        box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
+    }
+
+    #btnModalModificarUsuario {
+        font-size: .6em;
+        border: 1px solid #1266f1;
+    }
+
+    .iconoEliminarFoto {
+        color: #f55756;
+        cursor: pointer;
+        font-size: .7em;
+    }
+
+    .txtPieFoto {
+        font-size: .75em !important;
+        font-family: 'Montserrat' !important;
+        color: #9d9d9d;
+    }
+
+    /* MODIFICAR USUARIO */
+
+    /* CREAR USUARIO */
+    #pills-tab-crearuser li a {
+        padding: 0.8em 2em;
+        border-radius: 0;
+        margin-top: 0;
+        margin-bottom: 0;
+        border-radius: 0.5em;
+        font-size: .65rem !important;
+    }
+
+    .text-info-regitro {
+        color: #7e7e7e;
+        margin-bottom: 0;
+        font-size: .8em;
+    }
+
+    /* CREAR USUARIO */
+}
