@@ -626,7 +626,7 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
                         if (response.data.respuesta) {
                             if (response.data.result) {
                                 if (response.data.result.detalle) {
-                                    $scope.listaHistoricoAlerta = response.data.result.detalle.reverse();
+                                    $scope.listaHistoricoAlerta = response.data.result.detalle;//.reverse();
                                 } else {
                                     toastr.warning(response.data.result.mensaje);
                                 }

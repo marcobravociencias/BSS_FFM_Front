@@ -7,7 +7,7 @@
 				<input id="buscadorDespachoRegistro" type="text" class="form-control form-control-sm buscar-input-operario" ng-model="buscarDespacho" placeholder="Buscar despacho"> <span class="search-icon-operario-busq fa fa-search" id="buscar-operario"></span>
 			</div>
 			<div class="tecnicos-container">
-				<div class="scrollListaTecnicos" id="divTecnicos">
+				<div class="scrollListaTecnicos" id="divTecnicos" ng-show="listaDespachos != ''">
 					<div ng-repeat="despacho in listaDespachos | filter:buscarDespacho track by $index" class="tecnico-section" ng-if="despacho.checkedOpcion == false" ng-click="seleccionarDespachoRegistro(despacho)">
 						<div class="col-md-1">
 							<img src="{{despacho.urlFoto != undefined && despacho.urlFoto != null && despacho.urlFoto != '' ? despacho.urlFoto :'./resources/img/plantainterna/despacho/tecnicootasignada.png'}}" class="circle responsive-img-tecnico">
@@ -20,6 +20,10 @@
 							<i class="fa fa-chevron-right" style="padding-top: .9em;"></i>
 						</div>
 					</div>	
+				</div>
+				<div class="text-accion-nopermiso" style="margin-top: 5em;" ng-show="listaDespachos == ''">
+		        	<i class="icon-not-permiso fas fa-user"></i>
+		            <b class="text-not-permiso">Actualmente no existen despachos.</b>
 				</div>
 			</div>
 		</div>
