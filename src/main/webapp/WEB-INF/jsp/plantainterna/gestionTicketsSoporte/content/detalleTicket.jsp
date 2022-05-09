@@ -351,7 +351,7 @@
                                 </div>
                                 <div class="container-text-content-detalle"><span
                                         class="text-content-vehiculo ng-binding"
-                                        ng-bind="editTicket.tipoOrdenText || 'Sin dato'"></span>
+                                        ng-bind="editTicket.detalleOtDetenida.descTipoOrden || 'Sin dato'"></span>
                                 </div>
                             </div>
                             <div class="container-fluid vehiculo-content">
@@ -360,7 +360,7 @@
                                 </div>
                                 <div class="container-text-content-detalle"><span
                                         class="text-content-vehiculo ng-binding"
-                                        ng-bind="editTicket.subtipoOrdenText || 'Sin dato'"></span>
+                                        ng-bind="editTicket.detalleOtDetenida.descSubTipoOrden || 'Sin dato'"></span>
                                 </div>
                             </div>
                             <div class="container-fluid vehiculo-content">
