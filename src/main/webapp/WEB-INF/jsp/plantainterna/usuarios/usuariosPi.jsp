@@ -26,6 +26,7 @@
         <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" rel="stylesheet" />
 		<!-- CSS INTERNAS -->
         <link href="${pageContext.request.contextPath}/resources/css/plantainterna/usuarios/usuariosPi.css?v=${sessionScope.versionDepl}" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/usuarios/responsiveComponentsUsuariosPI.css?v=${sessionScope.versionDepl}" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/css/plantainterna/skillsAdms/styleSkillsFeature.css?v=${sessionScope.versionDepl}" rel="stylesheet" />
 		
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.js"></script>

@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
 			<div class="modal-header">
-                <h5 class="modal-title">Modificar usuario</h5>
+                <h5 class="modal-title modal-title-usuariosPI">Modificar usuario</h5>
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close" ng-click="cerrarModalEdicionUsuario()"></button>
             </div>
             <div class="modal-body">
@@ -63,7 +63,7 @@
             </div>	
             
             <div class="modal-footer">
-            	<button type="button" class="btn btn-sm btn-primary" ng-click="modificarUsuario()" style="padding: 0.6em 2em 0.6em 2em;" ng-show="!existeUsuarioValidacionMod">MODIFICAR</button>
+            	<button type="button" id="btnModalModificarUsuario" class="btn btn-sm btn-primary" ng-click="modificarUsuario()" style="padding: 0.6em 2em 0.6em 2em;" ng-show="!existeUsuarioValidacionMod">MODIFICAR</button>
                 <div class="txtMensajeAlertaValidaciones" ng-show="existeUsuarioValidacionMod">
                 	<span><i class="fas fa-warning"></i>&nbsp; Revise la informaci&oacute;n ingresada, existen datos duplicados.</span>
                 </div>

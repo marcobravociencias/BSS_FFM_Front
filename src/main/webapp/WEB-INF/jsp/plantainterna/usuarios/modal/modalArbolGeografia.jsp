@@ -2,7 +2,7 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title">Geograf&iacute;a</h5>
+				<h5 class="modal-title modal-title-usuariosPI">Geograf&iacute;a</h5>
 				<button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close" ng-click="cerrarModalGeografiaConsulta()"></button>
 			</div>
 			<div class="modal-body">
