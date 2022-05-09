@@ -369,7 +369,7 @@
                             <span id="idTituloAccionesAlertas" class="titulo-alerta-modal">OPCIONES</span>
                         </div>
                         <div class="col-2 text-right">
-                            <i class="fa fa-times icon-cancelar-opcion" ng-click="cerrarCamposAccionAlerta()" ng-show="!alertaSeleccionada"></i>
+                            <i class="fa fa-times icon-cancelar-opcion" ng-click="cerrarCamposAccionAlerta()" ng-show="!opcionesAcciones"></i>
                         </div>
                     </div>
                 </div>
@@ -411,7 +411,7 @@
 	                        </div>
 	                    </div>
 	                    
-	                    <div class="row" ng-show="alertaSeleccionada">
+	                    <div class="row" ng-show="opcionesAcciones">
 	                        <div class="col-12">
 	                            <div class="row">
 	                                <div class="col-6 text-center">

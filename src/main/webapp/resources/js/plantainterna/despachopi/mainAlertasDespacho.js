@@ -5,6 +5,7 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
     $scope.vistaDespacho = true;
     $scope.vistaAuditoriaEvidencia = false;
     $scope.alertaSeleccionada = false;
+    $scope.opcionesAcciones = true
     $scope.alertaSeleccionadaObject = {};
     $scope.tipoAlertaSeleccionada = {};
     $scope.estatusAlerta = {};
@@ -42,6 +43,7 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
         clearMarkers();
         console.log(alerta);
         $scope.alertaSeleccionada = false;
+        $scope.opcionesAcciones = true
         swal({ text: 'Consultando datos ...', allowOutsideClick: false });
         swal.showLoading();
 
@@ -62,7 +64,7 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
         mainAlertasService.getDetalleAlertas(params).then(function success(response) {
             console.log(response);
             if (response.data !== undefined) {
-                $("#pills-mapa-tab").click();
+                //$("#pills-mapa-tab").click();
                 $scope.otsAlertas = response.data.result.detalleAlerta;
                 $scope.vistaDespacho = false;
                 $scope.tipoAlertaSeleccionada = angular.copy(alerta);
@@ -283,7 +285,8 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
 
         $("#idTituloAccionesAlertas").text("OPCIÓN " + accion.descripcion);
 
-        $scope.alertaSeleccionada = false;
+        //$scope.alertaSeleccionada = false;
+        $scope.opcionesAcciones = false
         accion.checkedOpcion = true;
 
         $('.campoFecha').datepicker({
@@ -644,7 +647,7 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
             }
         } else {
             setTimeout(function () {
-                $("#pills-mapa-tab").click();
+               $("#pills-mapa-tab").click();
             }, 0500);
         }
     }
@@ -942,6 +945,8 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
     };
 
     $scope.cerrarAlertas = function () {
+        $scope.alertaSeleccionada = false
+        $scope.opcionesAcciones = true
         $("#idTituloAccionesAlertas").text("OPCIONES");
         $scope.vistaDespacho = true;
         $scope.refrescarBusqueda();
@@ -1034,7 +1039,8 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
         angular.forEach($scope.listaOpcionesAlerta, function (opcion, index) {
             opcion.checkedOpcion = false;
         });
-        $scope.alertaSeleccionada = true;
+        //$scope.alertaSeleccionada = true;
+        $scope.opcionesAcciones = true
     }
 
     $scope.cambioOpcionSelectAccionAlerta = function (campo, accion) {
