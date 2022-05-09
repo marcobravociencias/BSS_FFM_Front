@@ -962,4 +962,9 @@ i.icono-noseleccion {
     color: #000;
 }
 
+.no-dictamen{
+    font-size: 0.8em;
+    padding: 2em;
+}
+
 /*BOX COMMENTS*/

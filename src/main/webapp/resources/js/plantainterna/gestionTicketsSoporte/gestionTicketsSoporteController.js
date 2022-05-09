@@ -37,12 +37,10 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     $scope.filtroBusqueda = {};
     $scope.propietarioSession = 0;
     $scope.equiposList = [];
+    $scope.busquedaSf = {};
 
     $scope.configPermisoAccionCreaTicket = false;
     $scope.configPermisoAccionConsultaTicket = false;
-    $scope.configPermisoAccionModificaDetalleTicket = false;
-    $scope.configPermisoAccionModificaAsignaIng = false;
-    $scope.configPermisoAccionModificaGestionEvidencia = false;
     $scope.filtroBusqueda.tipoFechaConsulta = 'creacion';
 
     let ingenieroTable = $('#ingenierosTable').DataTable({
@@ -149,8 +147,10 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                     if (isConfirm) {
                         $scope.limpiarContentDetalleTicket();
                         $scope.contentdetalleticket = false;
+                        $scope.validacionTicketDetalle = false;
                         $scope.contentprincipal = true;
                         $scope.isConsultaComentarios = false
+                        $scope.busquedaSf = {};
                         $scope.$apply();
                     }
                 }).catch(err => {
@@ -255,6 +255,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             } else {
                 toastr.error('Ha ocurrido un error en la consulta de configuraci\u00F3n');
             }
+            $("#idBody").css("display", "block")
             if (results[1].data !== undefined) {
                 if (results[1].data.respuesta) {
                     if (results[1].data.result) {
@@ -409,7 +410,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             } else {
                 mostrarMensajeWarningValidacion('No se pudo realizar la consulta de equipos.')
             }
-            $("#idBody").css("display", "block")
+
         });
     }
 
@@ -752,8 +753,9 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     $("#tecnologiaTicket").change(function () {
         $("#tecnologiaTicket").removeClass("invalid-inputTicket");
     });
-
+    $scope.validacionTicket = false;
     $scope.registrarTicketSoporte = function () {
+        $scope.validacionTicket = false;
         let mensajeError = '';
         let isValid = true;
 
@@ -839,7 +841,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                     let paramsTicket = {
                         "idTecnico": Number($scope.ticketSoporteR.idTecnico),
                         "idOrden": $scope.ticketSoporteR.idOrden,
-                        "origenSistema": 3,
+                        "origenSistema": 1,
                         "telefonoTecnico": Number($scope.ticketSoporteR.telefonoTecnico),
                         "noCuenta": $scope.ticketSoporteR.cuenta,
                         "idFalla": Number($scope.fallaTicketR.id),
@@ -887,6 +889,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             }).catch(err => {
             });
         } else {
+            $scope.validacionTicket = true;
             mostrarMensajeWarningValidacion(mensajeError);
         }
     }
@@ -1114,6 +1117,8 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                         $scope.editTicket = results[0].data.result.detalleGeneral;
                         $scope.consultaChat();
                         $scope.ticketSoporteDetalle.fallaTicketD = $scope.editTicket.detalleTicketSc.falla + '';
+                        $scope.ticketSoporteDetalle.estado = $scope.editTicket.detalleTicketSc.idPropietario + '';
+                        $scope.ticketSoporteDetalle.motivo = $scope.editTicket.detalleTicketSc.idMotivo + '';
                         $scope.listCategoriasTicketDetalle = [];
                         $scope.catalogoFallasTicketSoporte.map(function (c) {
                             if (c.idPadre == $scope.editTicket.detalleTicketSc.falla) {
@@ -1130,20 +1135,25 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
 
                         $scope.ticketSoporteDetalle.subcategoriaTicketD = $scope.editTicket.detalleTicketSc.subcategoria + '';
                         $scope.ticketSoporteDetalle.estatus = $scope.editTicket.detalleTicketSc.idEstatus + '';
+                        $scope.ticketSoporteDetalle.estado = $scope.editTicket.detalleTicketSc.idPropietarioSc || "";
+                        $scope.ticketSoporteDetalle.motivo = $scope.editTicket.detalleTicketSc.idMotivoSc || "";
+                        $scope.ticketSoporteDetalle.comentarios = $scope.editTicket.detalleTicketSc.comentarios;
 
                         let urlTec = $scope.editTicket.detalleOtDetenida.fotoTecnico ? $scope.editTicket.detalleOtDetenida.fotoTecnico : "./resources/img/plantainterna/despacho/tecnicootasignada.png";
                         let urlIng = $scope.editTicket.detalleTicketSc.fotoInge ? $scope.editTicket.detalleTicketSc.fotoInge : "./resources/img/plantainterna/despacho/tecnicootasignada.png";
+
                         setTimeout(() => {
                             $("#fotoIngeniero").attr("src", urlIng);
                             $("#fotoTecnico").attr("src", urlTec);
                         }, 100);
-                            
-                        if ($scope.editTicket.detalleTicketSc.acciones.length) {
+
+                        if ($scope.editTicket.detalleTicketSc.acciones.length && $scope.accionesDinamicasDetalle.length) {
                             $scope.editTicket.detalleTicketSc.acciones.map(function (s) {
                                 if (Number(s.valor) == 1) {
                                     $("#dictamen-" + s.idAccion).prop('checked', true);
                                     if (Number(s.idAccion) == 2) {
                                         $scope.agregarNuevoEquipoContent = true;
+                                        $scope.listadoNuevoViejosEquipo = s.detalleSeries ? s.detalleSeries : [];
                                     }
                                 }
                             });
@@ -1152,7 +1162,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                             $(".content-detalle-ticket .inputTicket").prop("disabled", true);
                             $("#detalleTicketAccordion .dictamen-info").prop("disabled", true);
                             $(".btn-disabled").prop("disabled", true);
-                            
+
                         } else {
                             $(".content-detalle-ticket .inputTicket").prop("disabled", false);
                             $("#detalleTicketAccordion .dictamen-info").prop("disabled", false);
@@ -1256,6 +1266,8 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             cancelButtonText: 'No'
         }).then(function (isConfirm) {
             if (isConfirm) {
+                $scope.validacionTicket = false;
+                $scope.$apply();
                 $scope.cleanForm();
                 $("#cuentaTicket").removeClass("invalid-inputTicket");
                 $("#tecnicoTicket").removeClass("invalid-inputTicket");
@@ -1467,6 +1479,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             return elemento.idPadre == $scope.ticketSoporteDetalle.estado
         })
     }
+
     $scope.validacionTicketDetalle = false;
     $scope.guardarTicketDetalle = function () {
         $scope.validacionTicketDetalle = false;
@@ -1490,17 +1503,17 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         }
         if (!$scope.ticketSoporteDetalle.estatus) {
             isErrorDetalle = true
-            stringErrores += '<li>Seleccione estatus del ticket</li>'
+            stringErrores += '<li>Seleccione estatus</li>'
         }
 
         if ($scope.ticketSoporteDetalle.estatus && $scope.ticketSoporteDetalle.estatus == '3') {
             if (!$scope.ticketSoporteDetalle.estado) {
                 isErrorDetalle = true
-                stringErrores += '<li>Seleccione estado del ticket</li>'
+                stringErrores += '<li>Seleccione estado</li>'
             }
             if (!$scope.ticketSoporteDetalle.motivo) {
                 isErrorDetalle = true
-                stringErrores += '<li>Seleccione motivo del ticket</li>'
+                stringErrores += '<li>Seleccione motivo</li>'
             }
         }
 
@@ -1537,8 +1550,9 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         let motivo = $scope.escalamientoListDetalle.find((p) => p.id === Number($scope.ticketSoporteDetalle.motivo));
 
         let params = {
-            fechaHoraFin: moment(new Date()).format('YYYY-MM-DD hh:mm'),
+            fechaHoraFin: moment(new Date()).format('YYYY-MM-DD hh:mm').add(2, 'hours').format(),
             fechaHoraInicio: moment(new Date()).format('YYYY-MM-DD hh:mm'),
+            fechaHoraAgenda: moment(new Date()).format('YYYY-MM-DD hh:mm'),
             otCentralizado: $scope.editTicket.detalleTicketSc.otCentralizado,
             folioSistema: $scope.editTicket.detalleTicketSc.folioSistema,
             idTicketSc: Number($scope.ticketDetalle),
@@ -1574,11 +1588,15 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         }).catch((err) => handleError(err));
     }
 
-    $scope.mostrarChatterSalesforce = function () {
-        if (!$scope.isConsultaComentarios) {
-            $scope.consultarComentariosTicketSoporte()
-        } else {
-            $scope.isConsultaComentarios = false
+    $scope.mostrarChatterSalesforce = function (isFolio) {
+        $scope.busquedaSf = {
+            type: isFolio ? 'OrdenServicio' : 'Ticket',
+            id: isFolio ? $scope.editTicket.detalleTicketSc.idfolioSf : $scope.editTicket.detalleTicketSc.idTicketSf
+        }
+        if( $scope.busquedaSf.id){
+            $scope.consultarComentariosTicketSoporte();
+        }else{
+            toastr.warning('No se encontr&oacute; informaci&oacute;n.');
         }
     }
 

@@ -48,7 +48,8 @@
                                                 ng-bind="editTicket.detalleTicketSc.celularInge || 'Sin dato'"></span>
                                         </div>
                                     </div>
-                                    <div ng-if="editTicket.detalleTicketSc.idEstatus !== 4 && editTicket.detalleTicketSc.idEstatus !== 5">
+                                    <div
+                                        ng-if="editTicket.detalleTicketSc.idEstatus !== 4 && editTicket.detalleTicketSc.idEstatus !== 5">
                                         <span ng-if="propietarioSession !== 'Tecnico'" class="text-external-link"
                                             ng-click="consultarOtsTecnicosTicket()">REASIGNAR
                                             INGENIERO</span>
@@ -83,14 +84,6 @@
                                 </div>
                             </div>
                             <div class="container-fluid vehiculo-content">
-                                <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Folio</span>
-                                </div>
-                                <div class="container-text-content-detalle"><span
-                                        class="text-content-vehiculo ng-binding"
-                                        ng-bind="editTicket.detalleTicketSc.idfolio || 'Sin dato'"></span>
-                                </div>
-                            </div>
-                            <div class="container-fluid vehiculo-content">
                                 <div class="container-text-title-detalle"><span class="text-tile-vehiculo">OS</span>
                                 </div>
                                 <div class="container-text-content-detalle">
@@ -98,36 +91,50 @@
                                         ng-if="!editTicket.detalleTicketSc.folioSistema">Sin dato</span>
                                     <span class="text-content-vehiculo text-external-link"
                                         ng-if="editTicket.detalleTicketSc.folioSistema"
-                                        ng-click="mostrarChatterSalesforce()"
+                                        ng-click="mostrarChatterSalesforce(true)"
                                         ng-bind="editTicket.detalleTicketSc.folioSistema"></span>
                                 </div>
                             </div>
                             <div class="container-fluid vehiculo-content">
                                 <div class="container-text-title-detalle"><span class="text-tile-vehiculo">N&uacute;m.
-                                        Ticket SF</span>
+                                        Ticket</span>
                                 </div>
                                 <div class="container-text-content-detalle">
                                     <span class="text-content-vehiculo"
-                                        ng-if="!editTicket.detalleTicketSc.numTicketSf">Sin dato</span>
+                                        ng-if="!editTicket.detalleTicketSc.numTicket">Sin dato</span>
                                     <span class="text-content-vehiculo text-external-link"
-                                        ng-if="editTicket.detalleTicketSc.numTicketSf"
-                                        ng-click="mostrarChatterSalesforce()"
-                                        ng-bind="editTicket.detalleTicketSc.numTicketSf"></span>
+                                        ng-if="editTicket.detalleTicketSc.numTicket"
+                                        ng-click="mostrarChatterSalesforce(false)"
+                                        ng-bind="editTicket.detalleTicketSc.numTicket"></span>
                                 </div>
                             </div>
                             <div class="container-fluid vehiculo-content">
-                                <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Ticket
-                                        SF</span>
+                                <div class="container-text-title-detalle"><span class="text-tile-vehiculo">TIPO
+                                        NEGOCIO</span>
                                 </div>
-                                <div class="container-text-content-detalle"><span
-                                        class="text-content-vehiculo ng-binding"
-                                        ng-bind="editTicket.detalleTicketSc.idTicketSf || 'Sin dato'"></span>
+                                <div ng-switch on="editTicket.detalleOtDetenida.tipoNegocio"
+                                    class="container-text-content-detalle">
+                                    <div ng-switch-when="1">
+                                        <span class="text-content-vehiculo">Residencial</span>
+                                    </div>
+                                    <div ng-switch-when="2">
+                                        <span class="text-content-vehiculo">Empresarial</span>
+                                    </div>
+                                    <div ng-switch-default>
+                                        <div ng-switch-when="1">
+                                            <span class="text-content-vehiculo">Sin datos</span>
+                                        </div>
+                                    </div>
                                 </div>
+
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="container-fluid ticket-content content-select-ticket-detalle">
-                                <div class="container-text-title-detalle"><span class="text-tile-ticket">FALLA</span>
+                                <div class="container-text-title-detalle"><span class="text-tile-ticket">FALLA<i
+                                            ng-if="!catalogoFallasTicketSoporte.length"
+                                            class="icono-noseleccion fas fa-exclamation-circle ml-2"
+                                            title="No se encontr&oacute; el catalogo de geograf&iacute;a"></i></span>
                                 </div>
                                 <div class="container-text-content-detalle inputTicket-select">
                                     <select
@@ -145,7 +152,11 @@
                             </div>
                             <div class="container-fluid ticket-content content-select-ticket-detalle">
                                 <div class="container-text-title-detalle "><span
-                                        class="text-tile-ticket">CATEGOR&Iacute;A</span></div>
+                                        class="text-tile-ticket">CATEGOR&Iacute;A<i
+                                            ng-if="!catalogoFallasTicketSoporte.length"
+                                            class="icono-noseleccion fas fa-exclamation-circle ml-2"
+                                            title="No se encontr&oacute; el catalogo de geograf&iacute;a"></i></span>
+                                </div>
                                 <div class="container-text-content-detalle inputTicket-select">
                                     <select
                                         ng-class="{'error-captura-input': !ticketSoporteDetalle.categoriaTicketD && validacionTicketDetalle}"
@@ -162,7 +173,11 @@
                             </div>
                             <div class="container-fluid ticket-content content-select-ticket-detalle">
                                 <div class="container-text-title-detalle"><span
-                                        class="text-tile-ticket">SUBCATEGOR&Iacute;A</span></div>
+                                        class="text-tile-ticket">SUBCATEGOR&Iacute;A<i
+                                            ng-if="!catalogoFallasTicketSoporte.length"
+                                            class="icono-noseleccion fas fa-exclamation-circle ml-2"
+                                            title="No se encontr&oacute; el catalogo de geograf&iacute;a"></i></span>
+                                </div>
                                 <div class="container-text-content-detalle inputTicket-select">
                                     <select
                                         ng-class="{'error-captura-input': !ticketSoporteDetalle.subcategoriaTicketD && validacionTicketDetalle}"
@@ -383,7 +398,12 @@
                                         <input class="form-check-input" type="checkbox">
                                     </div>
                                 </div-->
+                                <div ng-if="!accionesDinamicasDetalle.length" class="no-dictamen">
+                                    <i class="icono-noseleccion fas fa-exclamation-circle ml-2"></i>
+                                    <span>No se encontr&oacute; el catalogo de dictamen</span>
+                                </div>
                                 <div class="container-fluid ticket-content opciones-checkbox-dictamen"
+                                    ng-if="accionesDinamicasDetalle.length"
                                     ng-repeat="item in accionesDinamicasDetalle track by $index">
                                     <div class="container-text-title-dictamen titulo-acciones-dinamicas"><span
                                             class="text-tile-ticket">{{item.descripcion.toUpperCase()}}</span></div>
@@ -395,6 +415,7 @@
                                             class="form-check-input dictamen-info" type="checkbox">
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                         <div class="col-6">
@@ -447,7 +468,8 @@
                                     </div>
                                     <div class="form-group col-md-2">
                                         <button ng-click="agregarRegistroCambioEquipo()" id="agregarnuevoEquivo"
-                                            type="button" class="btn btn-sm btn-primary btn-lg btn-floating btn-disabled">
+                                            type="button"
+                                            class="btn btn-sm btn-primary btn-lg btn-floating btn-disabled">
                                             <i class="fas fa-plus"></i>
                                         </button>
                                     </div>
@@ -496,8 +518,10 @@
                 <div class="container-text-content-detalle inputTicket-select">
                     <select ng-class="{'error-captura-input': !ticketSoporteDetalle.estatus && validacionTicketDetalle}"
                         class="form-control form-control-sm inputTicket" name="estatusTicketDetalle"
-                        id="estatusTicketDetalle" ng-model="ticketSoporteDetalle.estatus">
+                        id="estatusTicketDetalle" ng-model="ticketSoporteDetalle.estatus"
+                        ng-change="validacionTicketDetalle = false">
                         <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
+                        <option value="1" disabled selected>PENDIENTE</option>
                         <option value="3" selected>ESCALAR</option>
                         <option value="5" selected>CANCELAR</option>
                         <option value="4" selected>COMPLETADA</option>
@@ -538,13 +562,15 @@
             <div class="container-fluid ticket-content content-select-ticket-detalle offset-2 col-6"
                 ng-show="ticketSoporteDetalle.estatus !== '3'">
                 <div class="container-text-title-detalle"><span class="text-tile-ticket">COMENTARIO</span></div>
-                <textarea class="form-control form-control-sm inputTicket" ng-model="ticketSoporteDetalle.comentarios"
-                    cols="2"></textarea>
+                <textarea class="form-control form-control-sm inputTicket"
+                    ng-class="{'error-captura-input': !ticketSoporteDetalle.estado && validacionTicketDetalle}"
+                    ng-model="ticketSoporteDetalle.comentarios" cols="2"></textarea>
             </div>
         </div>
-        
+
         <div class="row content-falla">
-            <div class="col-12" ng-if="editTicket.detalleTicketSc.idEstatus !== 4 && editTicket.detalleTicketSc.idEstatus !== 5">
+            <div class="col-12"
+                ng-if="editTicket.detalleTicketSc.idEstatus !== 4 && editTicket.detalleTicketSc.idEstatus !== 5">
                 <button ng-click="guardarTicketDetalle()" type="button"
                     class="btn btn-primary btn-editar-cambios ripple-surface mr-0">
                     <b>Guardar cambios </b>
@@ -554,9 +580,10 @@
                     Cancelar
                 </button>
             </div>
-            <div class="col-12" ng-if="editTicket.detalleTicketSc.idEstatus === 4 || editTicket.detalleTicketSc.idEstatus === 5">
-                <button ng-click="cerrarDetalleTicket()" type="button" class="btn cerrar-cancelar-btn  btn-ligh" style="margin: 1em 0;"
-                    data-mdb-dismiss="modal">
+            <div class="col-12"
+                ng-if="editTicket.detalleTicketSc.idEstatus === 4 || editTicket.detalleTicketSc.idEstatus === 5">
+                <button ng-click="cerrarDetalleTicket()" type="button" class="btn cerrar-cancelar-btn  btn-ligh"
+                    style="margin: 1em 0;" data-mdb-dismiss="modal">
                     Salir
                 </button>
             </div>

@@ -12,8 +12,8 @@ app.noticiasGestionTicketSoporte = function ($scope, gestionTicketSoporteService
     $scope.consultarComentariosTicketSoporte = function(){
         $scope.resetFileGeneral()
         let params = {
-            objectId: $scope.editTicket.detalleTicketSc.idFolioSf ? $scope.editTicket.detalleTicketSc.idFolioSf : "a153C000000870NQAQ",
-            objectType: "OrdenServicio"
+            objectId:  $scope.busquedaSf.id,
+            objectType:  $scope.busquedaSf.type
         }
         if (!swal.isVisible()) {
             swal({ text: 'Espera un momento...', allowOutsideClick: false });
@@ -107,7 +107,7 @@ app.noticiasGestionTicketSoporte = function ($scope, gestionTicketSoporteService
             return false;
         }
         params = {
-            objectId: 'a153C000000870NQAQ',
+            objectId:  $scope.busquedaSf.id,
             text: $scope.mensajeGeneral
         }
         if (document.querySelector('#fileComentariosTicket').files[0] !== undefined) {
@@ -122,7 +122,7 @@ app.noticiasGestionTicketSoporte = function ($scope, gestionTicketSoporteService
             reader.onload = function () {
                 //params.append("params.document", reader.result.split(",")[1]);
                 params = {
-                    objectId: 'a153C000000870NQAQ',
+                    objectId: $scope.busquedaSf.id,
                     text: $scope.mensajeGeneral,
                     documentName: document.querySelector('#fileComentariosTicket').files[0].name.split('.')[0],
                     documentExtension: document.querySelector('#fileComentariosTicket').files[0].name.split('.')[1],
@@ -270,13 +270,13 @@ app.noticiasGestionTicketSoporte = function ($scope, gestionTicketSoporteService
             let params = {};
                 if (tipo === 0) {
                     params = {
-                        objectType: 'OrdenServicio',
+                        objectType: $scope.busquedaSf.type,
                         newId: noticia
                     }
                     $scope.enviarEliminarComentario(params);
                 } else {
                     params = {
-                        objectType: 'OrdenServicio',
+                        objectType: $scope.busquedaSf.type,
                         subNewId: noticia
                     }
                     $scope.enviarEliminarSub(params);
