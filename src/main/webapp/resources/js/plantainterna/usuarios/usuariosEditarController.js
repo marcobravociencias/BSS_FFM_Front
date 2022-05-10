@@ -130,6 +130,14 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                             $scope.tabTecnicosVL_MULTISELECCION_mod = true;
                         	$scope.tabDespachosVL_MULTISELECCION_mod = true;
                         	$scope.tabArbol_NV_GEOGRAFIA_mod = null;
+                        	
+                        	$scope.idPuestoTecnico = null;
+                            $scope.idPuestoDespacho = null;
+                            $scope.idPuestoIngeniero = null;
+                            $scope.idPuestoSupervisorCentralizado = null;
+                            $scope.idPuestoCouchDespacho = null;
+                            $scope.idPuestoSupervisor = null;
+                        	
                         	angular.forEach($scope.configuracionPuestoRegistradoMod.configuraciones,function(conf,index){
                         		if(conf.llave == "tabInformacionVW_ASIG_AUTOMATICA"){
                         			if(conf.valor == "false"){
@@ -159,6 +167,13 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                         			$scope.tabTecnicosVL_MULTISELECCION_mod = conf.valor;
                         		}else if(conf.llave == "tabDespachosVL_MULTISELECCION"){
                         			$scope.tabDespachosVL_MULTISELECCION_mod = conf.valor;
+                        		}
+                        		
+                        		else if(conf.llave == "tabTecnicos_FL_TECNICOS"){
+                        			$scope.idPuestoTecnico = conf.valor;
+                        		}
+                        		else if(conf.llave == "tabDespachos_FL_DESPACHOS"){
+                        			$scope.idPuestoDespacho = conf.valor;
                         		}
                         	});
                             
@@ -404,7 +419,6 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                                             }
                                         }
                               		});
-                            		console.log($scope.listaMostrarPerfilesSeleccionadosMod);
                             		$scope.$apply();
                             	}
 		    	        	}, 1000);
@@ -989,7 +1003,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 	//MÉTODO PARA CONSULTAR LOS TÉCNICOS A REASIGNAR AL USUARIO (QUE NO SEA TÉCNICO) QUE SE MODIFICARÁ - PESTAÑA TÉCNICOS MODIFICACIÓN USUARIO
 	$scope.consultarTecnicosMod = function() {
 		$scope.listaTecnicosMod = [];
-		let params = {idsGeografia:$scope.listaIdsGeografiaCiudadNatalMod, idTipoUsuario:[$scope.idPuestoTecnico.id]};
+		let params = {idsGeografia:$scope.listaIdsGeografiaCiudadNatalMod, idTipoUsuario:[$scope.idPuestoTecnico]};
     	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
 		swal.showLoading();
     	$q.all([
@@ -1033,7 +1047,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 	$scope.consultarDespachosMod = function() {
 		$scope.listaDespachosMod = [];
 		if($scope.listaIdsGeografiaCiudadNatalMod.length > 0){
-			let params = {idsGeografia:$scope.listaIdsGeografiaCiudadNatalMod, idTipoUsuario:[$scope.idPuestoDespacho.id]};
+			let params = {idsGeografia:$scope.listaIdsGeografiaCiudadNatalMod, idTipoUsuario:[$scope.idPuestoDespacho]};
 	    	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
 			swal.showLoading();
 	    	$q.all([
@@ -1107,8 +1121,6 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     	jsonPerfilesIntervencionesMod = jsonPerfilesIntervencionesMod.filter(function(ele , pos){
     	    return jsonPerfilesIntervencionesMod.indexOf(ele) == pos;
     	});
-    	
-    	console.log(jsonPerfilesIntervencionesMod);
 		
 		var respuestaValidacionCamposMod = $scope.validarInformacionModificacion();
 		

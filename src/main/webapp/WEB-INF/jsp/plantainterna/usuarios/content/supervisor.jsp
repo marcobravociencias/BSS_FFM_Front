@@ -23,7 +23,7 @@
 				</div>
 				<div class="text-accion-nopermiso" style="margin-top: 5em;" ng-show="listaSupervisores == ''">
 		        	<i class="icon-not-permiso fas fa-user"></i>
-		            <b class="text-not-permiso">Actualmente no existen supervisores.</b>
+		            <b class="text-not-permiso">No existen supervisores en la geograf&iacute;a seleccionada.</b>
 				</div>
 			</div>
 		</div>
