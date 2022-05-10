@@ -11,7 +11,7 @@
 		<div class="row" ng-repeat="elementHistorico in movimientos" style="height: fit-content;">
 			<div class="col-2 line-time-new">
 				<div style="background-color:white;" class="timeline__date">
-					<span style="font-size: 15px !important;color:grey;" class="timeline__day">OT</span>
+					<span class="timeline-day-detalleOT timeline__day">OT</span>
 					<span style="font-size: 12px !important;" class="timeline__month">
 						<i ng-if="elementHistorico.idEstatusOrden==1" class="pendiente-historico  fas fa-pause circle-statushistorico-histo"></i>
 						<i ng-if="elementHistorico.idEstatusOrden==2" class="asignacion-historico fas fa-arrow-right circle-statushistorico-histo"></i>
@@ -21,7 +21,6 @@
 					</span>
 				</div>
 			</div>
-
 			<div id="content-historial-{{$index}}"  class="col-10" style="display: grid;">
 				<div  class="card-historico card text-center historico-alertas-div">
 					<div class="card-body">

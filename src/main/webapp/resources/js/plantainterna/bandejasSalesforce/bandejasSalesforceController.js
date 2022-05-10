@@ -971,7 +971,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
     }
 
     angular.element(document).ready(function () {
-        $('#moduloCoordInst').addClass('active');
+        $('#moduloBandejasSalesforce').addClass('active');
         $("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
         $scope.initBandejasSF();
         $scope.consultarFiltrosBandejasSF();

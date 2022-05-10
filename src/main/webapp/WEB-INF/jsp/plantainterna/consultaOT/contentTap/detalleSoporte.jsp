@@ -6,52 +6,93 @@
         NO SE ENCONTR&Oacute; INFORMACI&Oacute;N
     </span>
 </div>
-
-<ul class="nav nav-tabs" id="myTab" role="tablist" ng-if="detalleSoporteList.length > 0">
-    <li class="nav-item" ng-repeat="item in detalleSoporteList">
-        <a ng-class="{{$index}} == 0 ? 'nav-link active' : 'nav-link'" id="opcion-tab-{{$index + 1}}" data-toggle="tab" href="#opcion-{{$index + 1}}" role="tab"
-            aria-controls="opcion-consulta" aria-selected="true">Soporte {{$index + 1}}</a>
-    </li>
-</ul>
-
-<div class="tab-content" id="v-pills-tabContent" ng-if="detalleSoporteList.length">
+<div id="tabsContainer" class="rowTabs" ng-if="detalleSoporteList.length > 0">
+    <div id="left-arrow" class="buttonLeftArrow" style="display: none;">
+        <i class="fas fa-chevron-left" style="cursor: pointer" onclick="desplazarIzquierdaTabs()"></i>
+    </div>
+    <div id="containerTabsSoporte" class="pl-0 pr-0 custom-slider-main row" style="width: 100%;">
+        <ul class="nav nav-tabs tabHeader" id="myTab" role="tablist">
+            <li class="nav-item" style="display: inline-block" ng-repeat="item in detalleSoporteList">
+                <a ng-class="{{$index}} == 0 ? 'nav-link active' : 'nav-link'" id="opcion-tab-{{$index + 1}}" data-toggle="tab" href="#opcion-{{$index + 1}}" role="tab"
+                    aria-controls="opcion-consulta" aria-selected="true">Soporte {{$index + 1}}</a>
+            </li>
+        </ul>
+    </div>
+    <div id="right-arrow" class="buttonRightArrow" style="display: none;">
+        &nbsp;
+        <i class="fas fa-chevron-right" style="cursor: pointer" onclick="desplazarDerechaTabs()"></i>
+    </div>
+</div>
+<div class="tab-content" id="v-pills-tabContent" ng-if="detalleSoporteList.length" style="margin-top: 1em;">
     <div ng-repeat="item in detalleSoporteList" ng-class="{{$index}} == 0 ? 'tab-pane fade show active' : 'tab-pane fade'" id="opcion-{{$index + 1}}" role="tabpanel" aria-labelledby="opcion-tab-{{$index + 1}}">
         <div class="row">
             <div class="col-6">
                 <div class="container-fluid vehiculo-content">
-                    <div class="container-text-title-detalle"><span class="text-tile-vehiculo">N&uacute;mero empleado</span></div>
-                    <div class="container-text-content-detalle"><span class="text-content-vehiculo" ng-bind="item.numEmpleado || 'Sin dato'"></span> </div>
+                    <div class="container-text-title-detalle">
+                        <span class="text-tile-vehiculo">N&uacute;mero empleado</span>
+                    </div>
+                    <div class="container-text-content-detalle">
+                        <span class="text-content-vehiculo" ng-bind="item.numEmpleado || 'Sin Informaci&oacute;n'"></span> 
+                    </div>
                 </div>
                 <div class="container-fluid vehiculo-content">
-                    <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Nombre</span></div>
-                    <div class="container-text-content-detalle"><span class="text-content-vehiculo" ng-bind="item.nombre || 'Sin dato'"></span> </div>
+                    <div class="container-text-title-detalle">
+                        <span class="text-tile-vehiculo">Nombre</span>
+                    </div>
+                    <div class="container-text-content-detalle">
+                        <span class="text-content-vehiculo" ng-bind="item.nombre || 'Sin Informaci&oacute;n'"></span> 
+                    </div>
                 </div>
                 
                 <div class="container-fluid vehiculo-content">
-                    <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Clave cliente</span></div>
-                    <div class="container-text-content-detalle"><span class="text-content-vehiculo" ng-bind="item.claveCliente || 'Sin dato'"></span> </div>
+                    <div class="container-text-title-detalle">
+                        <span class="text-tile-vehiculo">Clave cliente</span>
+                    </div>
+                    <div class="container-text-content-detalle">
+                        <span class="text-content-vehiculo" ng-bind="item.claveCliente || 'Sin Informaci&oacute;n'"></span>
+                    </div>
                 </div>
                 <div class="container-fluid vehiculo-content">
-                    <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Fecha registro</span></div>
-                    <div class="container-text-content-detalle"><span class="text-content-vehiculo" ng-bind="item.fechaRegistro || 'Sin dato'"></span> </div>
+                    <div class="container-text-title-detalle">
+                        <span class="text-tile-vehiculo">Fecha registro</span>
+                    </div>
+                    <div class="container-text-content-detalle">
+                        <span class="text-content-vehiculo" ng-bind="item.fechaRegistro || 'Sin Informaci&oacute;n'"></span>
+                    </div>
                 </div>
             </div>
             <div class="col-6">
                 <div class="container-fluid vehiculo-content">
-                    <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Descripci&oacute;n falla</span></div>
-                    <div class="container-text-content-detalle"><span class="text-content-vehiculo" ng-bind="item.descripcionFalla || 'Sin dato'"></span> </div>
+                    <div class="container-text-title-detalle">
+                        <span class="text-tile-vehiculo">Descripci&oacute;n falla</span>
+                    </div>
+                    <div class="container-text-content-detalle">
+                        <span class="text-content-vehiculo" ng-bind="item.descripcionFalla || 'Sin Informaci&oacute;n'"></span>
+                    </div>
                 </div>
                 <div class="container-fluid vehiculo-content">
-                    <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Descripci&oacute;n causa falla</span></div>
-                    <div class="container-text-content-detalle"><span class="text-content-vehiculo" ng-bind="item.descripcionCausaFalla || 'Sin dato'"></span> </div>
+                    <div class="container-text-title-detalle">
+                        <span class="text-tile-vehiculo">Descripci&oacute;n causa falla</span>
+                    </div>
+                    <div class="container-text-content-detalle">
+                        <span class="text-content-vehiculo" ng-bind="item.descripcionCausaFalla || 'Sin Informaci&oacute;n'"></span>
+                    </div>
                 </div>
                 <div class="container-fluid vehiculo-content">
-                    <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Descripci&oacute;n soluci&oacute;n</span></div>
-                    <div class="container-text-content-detalle"><span class="text-content-vehiculo" ng-bind="item.descripcionSolucion || 'Sin dato'"></span> </div>
+                    <div class="container-text-title-detalle">
+                        <span class="text-tile-vehiculo">Descripci&oacute;n soluci&oacute;n</span>
+                    </div>
+                    <div class="container-text-content-detalle">
+                        <span class="text-content-vehiculo" ng-bind="item.descripcionSolucion || 'Sin Informaci&oacute;n'"></span>
+                    </div>
                 </div>
                 <div class="container-fluid vehiculo-content">
-                    <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Comentarios</span></div>
-                    <div class="container-text-content-detalle"><span class="text-content-vehiculo" ng-bind="item.comentarios || 'Sin dato'"></span> </div>
+                    <div class="container-text-title-detalle">
+                        <span class="text-tile-vehiculo">Comentarios</span>
+                    </div>
+                    <div class="container-text-content-detalle">
+                        <span class="text-content-vehiculo" ng-bind="item.comentarios || 'Sin Informaci&oacute;n'"></span>
+                    </div>
                 </div>
             </div>
         </div>
