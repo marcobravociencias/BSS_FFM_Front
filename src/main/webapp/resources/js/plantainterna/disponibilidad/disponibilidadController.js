@@ -306,7 +306,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                     //$scope.arrayTurnosDisponibilidad = [{"id":2,"nombre":"VESPERTINO"},{"id":3,"nombre":"NOCTURNO"}];
                     $scope.arrayTurnosDisponibilidad = result[3].data.result
                     result[3].data.result.forEach(elemento => {
-                        if (elemento.nombre === 'MATUTINO') {
+                        if (parseInt(elemento.id) === 1) {
                             $scope.banderaMatutino = true
                             $scope.arrayTitulo.map(titulo => {
                                 if (titulo.title === 'Matutino') {
@@ -314,7 +314,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                                 }
                                 return titulo
                             })
-                        } else if (elemento.nombre === 'VESPERTINO') {
+                        } else if (parseInt(elemento.id)  == 2) {
                             $scope.banderaVespertino = true
                             $scope.arrayTitulo.map(titulo => {
                                 if (titulo.title === 'Vespertino') {
@@ -349,7 +349,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
     $scope.consultaDisponibilidad = function () {
         let mensaje = '<ul>';
         let isValidado = true;
-        let distrito_cluster = '-1';
+        
 
         let ultimonivel;
         if ($scope.nGeografia) {
