@@ -49,6 +49,8 @@
             href="${pageContext.request.contextPath}/resources/css/plantainterna/gestionTicketsSoporte/mainChatter.css?v=${sessionScope.versionDepl}"
             rel="stylesheet">
         <link rel="stylesheet"
+            href="${pageContext.request.contextPath}/resources/css/generic/busquedaSalesforce\styleMainBusqueda.css?v=${sessionScope.versionDepl}">
+        <link rel="stylesheet"
             href="${pageContext.request.contextPath}/resources/css/plantainterna/gestionTicketsSoporte/mainGestionTicketsSoporte.css?v=${sessionScope.versionDepl}" />
         <link rel="stylesheet"
             href="${pageContext.request.contextPath}/resources/css/plantainterna/gestionTicketsSoporte\noticiasGentionTicket.css?v=${sessionScope.versionDepl}">
@@ -57,14 +59,14 @@
     <body id="idBody" class="body" ng-controller="ticketsSoporteController" style="display: none;">
         <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
         <div class="container" id="container_gestion_tickets" style="padding: 1em 0;"
-            ng-show="!configPermisoAccionCreaTicket && !configPermisoAccionConsultaTicket">
+            ng-show="!configPermisoAccionCreaTicket && !configPermisoAccionConsultaTicket && !detalleSalesforceView">
             <div class="text-accion-nopermiso">
                 <i class="icon-not-permiso fas fa-user-lock"></i>
                 <b class="text-not-permiso">No cuentas con el permiso de consulta.</b>
             </div>
         </div>
         <div class="container" id="container_gestion_tickets"
-            ng-show="configPermisoAccionCreaTicket || configPermisoAccionConsultaTicket">
+            ng-show="configPermisoAccionCreaTicket && !detalleSalesforceView || configPermisoAccionConsultaTicket && !detalleSalesforceView">
             <div ng-show="contentprincipal" class="row row-content-principal">
                 <div class="col-md-12">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -97,6 +99,7 @@
                 </div>
             </div>
         </div>
+        <jsp:include page="/WEB-INF/jsp/generic/busquedaSalesforce/mainBusquedaSalesforce.jsp"></jsp:include>
         <jsp:include page="./modals/modalGeografiaConsulta.jsp"></jsp:include>
         <jsp:include page="./modals/modalBusquedaTecnico.jsp"></jsp:include>
         <jsp:include page="./modals/modalFoto.jsp"></jsp:include>
@@ -151,5 +154,9 @@
         src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js?v=${sessionScope.versionDepl}"></script>
     <script
         src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionTicketsSoporte/noticiasGestionTicketSoporte.js?v=${sessionScope.versionDepl}"></script>
+    <script
+        src="${pageContext.request.contextPath}/resources/js/generic/busquedaSalesforce/busquedaSalesforceController.js?v=${sessionScope.versionDepl}"></script>
+    <script
+        src="${pageContext.request.contextPath}/resources/js/generic/busquedaSalesforce/busquedaSalesforceService.js?v=${sessionScope.versionDepl}"></script>
 
     </html>

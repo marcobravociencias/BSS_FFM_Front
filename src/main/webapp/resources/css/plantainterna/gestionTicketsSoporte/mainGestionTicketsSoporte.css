@@ -977,6 +977,27 @@ i.icono-noseleccion {
     padding: 2em;
 }
 
+.header-detalle {
+    background-color: #fff !important;
+    box-shadow: 0 0px 3px 0 rgb(0 0 0 / 5%);
+}
+
+.header-back-title {
+    background-color: #fff !important;
+    border-bottom: 0px solid rgba(255, 255, 255, 0.125);
+}
+
+.style_card_header_detallepro {
+    background-color: #fff !important;
+    box-shadow: 0 0px 3px 0 rgb(0 0 0 / 8%);
+}
+
+.style-head-card {
+    background-color: #fff !important;
+    box-shadow: 0 0px 3px 0 rgb(0 0 0 / 5%);
+    
+}
+
 /*BOX COMMENTS*/
 
 .estiloBlockIconoPermiso{

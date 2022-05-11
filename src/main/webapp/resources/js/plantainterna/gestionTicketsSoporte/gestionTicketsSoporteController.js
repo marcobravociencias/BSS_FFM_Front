@@ -1,8 +1,9 @@
 
 var app = angular.module('ticketsSoporteApp', []);
 
-app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoporteService', 'genericService', '$filter', function ($scope, $q, gestionTicketSoporteService, genericService, $filter) {
+app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoporteService', 'genericService', 'busquedaSalesforceService', '$filter', function ($scope, $q, gestionTicketSoporteService, genericService, busquedaSalesforceService, $filter) {
     app.ticketControllerMapa($scope, $q, gestionTicketSoporteService, genericService)
+    app.busquedaSalesforce($scope, busquedaSalesforceService)
     let ticketSoporteTable;
     let tecnicosCuentaTable;
     $scope.listFallasTicket = [];
