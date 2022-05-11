@@ -566,6 +566,10 @@ a.descarga-adjuntadocomment {
     font-weight: normal;
     font-size: .8em;
     text-align: center;
+    max-width: 25px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .eliminar-registro-cambioequipo{
   background:#f55756;

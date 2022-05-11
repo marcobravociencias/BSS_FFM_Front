@@ -117,6 +117,7 @@
     font-size: 0.8em;
     white-space: nowrap;
     padding: 1em;
+    text-align: center;
     border: none;
     font-weight: normal;
 }
@@ -616,6 +617,7 @@ span.text-tile-vehiculo {
 }
 
 
+
 span.text-content-vehiculo {
     /* font-weight: bold; */
     font-size: 0.8em;
@@ -908,7 +910,7 @@ i.icono-noseleccion {
 .box-content {
     overflow-y: scroll;
     overflow: auto;
-    max-height: 15em;
+    max-height: 26em;
 }
 
 .addtxt {
@@ -932,7 +934,9 @@ i.icono-noseleccion {
     width: 350px;
     background-color: white;
     border-radius: 4px;
-    box-shadow: 4px 4px 8px 5px rgb(0 0 0 / 5%)
+    box-shadow: 4px 4px 8px 5px rgb(0 0 0 / 5%);
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .text1 {
@@ -968,3 +972,8 @@ i.icono-noseleccion {
 }
 
 /*BOX COMMENTS*/
+
+.estiloBlockIconoPermiso{
+    opacity: 0.3 !important;
+    cursor: no-drop !important;
+}

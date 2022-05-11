@@ -486,6 +486,6 @@
                 </div>
             </div>
         </div>
-        <input type="hidden" id="prop-session" value="${userStore.puesto}"/>
+        <input type="hidden" id="prop-session" value="${userStore.idPuesto}_${userStore.idUsuario}"/>
     </nav>
 </header>

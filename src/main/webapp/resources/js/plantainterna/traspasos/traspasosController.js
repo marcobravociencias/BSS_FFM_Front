@@ -482,7 +482,7 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 
 							if (llavesResult.N_ESTATUS_TRASPASO_FILTRO)
 								$scope.nivelEstatusTraspasoFiltro = parseInt(llavesResult.N_ESTATUS_TRASPASO_FILTRO)
-							
+
 							if (llavesResult.N_INTERVENCION_TRASPASO_FILTRO)
 								$scope.nivelIntervencionTraspasoFiltro = parseInt(llavesResult.N_INTERVENCION_TRASPASO_FILTRO)
 
@@ -658,7 +658,7 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 				mostrarMensajeErrorAlert('Ha ocurrido un error al consultar los motivos');
 			}
 
-			
+
 			GenericMapa.prototype.callPrototypeMapa(results[3].data.result)
 			$scope.initializeMap();
 
@@ -911,14 +911,17 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 
 
 	consultaTraspaso = function (index) {
-		$scope.informacionClienteDetalle = {};
-		$scope.infoFactibilidad = {};
-		$("#info-factibilidad").css("display", "none");
-		$("#search-input-place").val('');
-		$scope.isFactibilidad = false;
-		let traspasoTemp = $scope.listadoConsultaOtsDisponibles[index];
-		$("#wizzard-1").click();
-		$scope.consultaDetalleTraspasoGen(traspasoTemp);
+		if ($scope.configPermisoAccionTraspaso) {
+			$scope.informacionClienteDetalle = {};
+			$scope.infoFactibilidad = {};
+			$("#info-factibilidad").css("display", "none");
+			$("#search-input-place").val('');
+			$scope.isFactibilidad = false;
+			let traspasoTemp = $scope.listadoConsultaOtsDisponibles[index];
+			$("#wizzard-1").click();
+			$scope.consultaDetalleTraspasoGen(traspasoTemp);
+		}
+
 	}
 
 	$scope.consultaDetalleOtGeneric = function (ordenObject) {
@@ -1440,9 +1443,9 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 				if (response.data.respuesta) {
 					if (response.data.result) {
 						$scope.isTraspaso = false;
-						if(response.data.result.description){
+						if (response.data.result.description) {
 							toastr.success('Traspaso de orden exitoso: "' + response.data.result.description + '"');
-						}else{
+						} else {
 							toastr.success('Traspaso de orden exitoso');
 						}
 					} else {
