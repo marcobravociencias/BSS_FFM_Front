@@ -404,4 +404,19 @@ public class ImplSoporteCentralizadoService implements SoporteCentralizadoServic
 		logger.info("### RESULT consultarEquiposTicketSoporte(): " + gson.toJson(response));   
 		return response;
 	}
+
+	@Override
+	public ServiceResponseResult consultarTecnologiaSoporte() {
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String tokenAccess = principalDetail.getAccess_token();
+		logger.info("consultarTecnologiaSoporte ## "+ tokenAccess);
+		
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constSoporteCentralizado.getConsultarTecnologiaSoporte());
+		logger.info("### URL consultarTecnologiaSoporte():" + urlRequest);
+		
+		Map<String, String> paramsRequestGet = new HashMap<String, String>();
+		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest, ServiceResponseResult.class, tokenAccess);
+		logger.info("### RESULT consultarTecnologiaSoporte(): " + gson.toJson(response));   
+		return response;
+	}
 }

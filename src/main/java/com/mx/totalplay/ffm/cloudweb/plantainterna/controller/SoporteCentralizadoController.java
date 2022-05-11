@@ -163,6 +163,16 @@ public class SoporteCentralizadoController {
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
     
+    @GetMapping("/consultaTecnologiaTicketSoporte")
+	public ResponseEntity<?> consultaTecnologiaTicketSoporte(){
+		logger.info("###### SoporteCentralizadoController - consultaTecnologiaTicketSoporte");
+		ServiceResponseResult response = soporteCentralizadoService.consultarTecnologiaSoporte();
+		if(response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+    
     
     @GetMapping("/consultaEquiposSoporte")
   	public ResponseEntity<?> consultarEquiposSoporte(){

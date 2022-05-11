@@ -14,15 +14,16 @@
                     onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="10" />
             </div>
             <div class="col-4 form-group inputTicket-select">
-                <label for="tecnologiaTicket" class="span-form-tickets">Tecnolog&iacute;a gestor</label>
+                <label for="tecnologiaTicket" class="span-form-tickets">Tecnolog&iacute;a gestor<i ng-if="!tecnologiaList.length"
+                    class="icono-noseleccion fas fa-exclamation-circle ml-2"
+                    title="No se encontr&oacute; el catalogo de tecnolog&iacute;as"></i></label>
                 <!-- <input readonly style="cursor: default;" class="form-control form-control-sm " name="tecnologiaTicket" id="tecnologiaTicket" ng-model="ticketSoporteR.tecnologia"/> -->
                 <select class="form-control form-control-sm inputTicket" name="tecnologiaTicket" id="tecnologiaTicket" ng-class="{'error-captura-input': !ticketSoporteR.tecnologia && validacionTicket}" 
                     ng-model="ticketSoporteR.tecnologia">
                     <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
-                    <option value="36" selected>HUAWEI</option>
-                    <option value="37" selected>NCE</option>
-                    <option value="38" selected>ZTE</option>
-                    <option value="39" selected>FIBER HOME</option>
+                    <option value="{{tec.id}}" ng-repeat="tec in tecnologiaList">
+                        {{tec.descripcion}}
+                    </option>
                 </select>
             </div>
 

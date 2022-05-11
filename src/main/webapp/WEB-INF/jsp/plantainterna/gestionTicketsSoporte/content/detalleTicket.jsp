@@ -437,32 +437,32 @@
                                     <div class="form-group col-md-2">
                                         <label class="label-nuevo-equipo" for="noSerieAnteriorEquipo">No. Serie</label>
                                         <input
-                                            ng-class="{'error-captura-input': !cambioEquipo.numSerieViejo && isEvaluarNuevoEquipo}" maxlength="30"
-                                            ng-model="cambioEquipo.numSerieViejo" type="text"
+                                            ng-class="{'error-captura-input': !cambioEquipo.numSerieViejo && isEvaluarNuevoEquipo}"
+                                            maxlength="30" ng-model="cambioEquipo.numSerieViejo" type="text"
                                             class="form-control form-control-sm inputTicket" id="noSerieAnteriorEquipo"
                                             placeholder="">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label class="label-nuevo-equipo" for="noMacViejoEquipo">MAC</label>
                                         <input
-                                            ng-class="{'error-captura-input': !cambioEquipo.macViejo && isEvaluarNuevoEquipo}" maxlength="30"
-                                            ng-model="cambioEquipo.macViejo" type="text"
+                                            ng-class="{'error-captura-input': !cambioEquipo.macViejo && isEvaluarNuevoEquipo}"
+                                            maxlength="30" ng-model="cambioEquipo.macViejo" type="text"
                                             class="form-control form-control-sm inputTicket" id="noMacViejoEquipo"
                                             placeholder="">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label class="label-nuevo-equipo" for="noSerieNuevoEquipo">No. Serie</label>
                                         <input
-                                            ng-class="{'error-captura-input': !cambioEquipo.numeSerieNuevo && isEvaluarNuevoEquipo}" maxlength="30"
-                                            ng-model="cambioEquipo.numeSerieNuevo" type="text"
+                                            ng-class="{'error-captura-input': !cambioEquipo.numeSerieNuevo && isEvaluarNuevoEquipo}"
+                                            maxlength="30" ng-model="cambioEquipo.numeSerieNuevo" type="text"
                                             class="form-control form-control-sm inputTicket" id="noSerieNuevoEquipo"
                                             placeholder="">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label class="label-nuevo-equipo" for="noMacNuevoEquipo">MAC</label>
                                         <input
-                                            ng-class="{'error-captura-input': !cambioEquipo.macNueva && isEvaluarNuevoEquipo}" maxlength="30"
-                                            ng-model="cambioEquipo.macNueva" type="text"
+                                            ng-class="{'error-captura-input': !cambioEquipo.macNueva && isEvaluarNuevoEquipo}"
+                                            maxlength="30" ng-model="cambioEquipo.macNueva" type="text"
                                             class="form-control form-control-sm inputTicket" id="noMacNuevoEquipo"
                                             placeholder="">
                                     </div>
@@ -488,10 +488,13 @@
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="itemRegistro in listadoNuevoViejosEquipo track by $index">
-                                        <td ng-bind="itemRegistro.descripcion" title="{{itemRegistro.descripcion}}"></td>
-                                        <td ng-bind="itemRegistro.numSerieViejo" title="{{itemRegistro.numSerieViejo}}"></td>
+                                        <td ng-bind="itemRegistro.descripcion" title="{{itemRegistro.descripcion}}">
+                                        </td>
+                                        <td ng-bind="itemRegistro.numSerieViejo" title="{{itemRegistro.numSerieViejo}}">
+                                        </td>
                                         <td ng-bind="itemRegistro.macViejo" title="{{itemRegistro.macViejo}}"></td>
-                                        <td ng-bind="itemRegistro.numeSerieNuevo" title="{{itemRegistro.numeSerieNuevo}}"></td>
+                                        <td ng-bind="itemRegistro.numeSerieNuevo"
+                                            title="{{itemRegistro.numeSerieNuevo}}"></td>
                                         <td ng-bind="itemRegistro.macNueva" title="{{itemRegistro.macNueva}}"></td>
                                         <td>
                                             <button ng-click="eliminarRegistro($index)" type="button"
@@ -514,27 +517,26 @@
     <div class="row content-falla">
         <div class="row">
             <div class="container-fluid ticket-content content-select-ticket-detalle col-4">
-                <div class="container-text-title-detalle"><span class="text-tile-ticket">ESTATUS TICKET</span></div>
+                <div class="container-text-title-detalle"><span class="text-tile-ticket">ESTATUS TICKET<i ng-if="!estatusList.length"
+                    class="icono-noseleccion fas fa-exclamation-circle ml-2"
+                    title="No se encontr&oacute; el catalogo de estatus"></i></span></div>
                 <div class="container-text-content-detalle inputTicket-select">
                     <select ng-class="{'error-captura-input': !ticketSoporteDetalle.estatus && validacionTicketDetalle}"
                         class="form-control form-control-sm inputTicket" name="estatusTicketDetalle"
-                        id="estatusTicketDetalle" ng-model="ticketSoporteDetalle.estatus"
-                        ng-change="changeEstatus()">
+                        id="estatusTicketDetalle" ng-model="ticketSoporteDetalle.estatus" ng-change="changeEstatus()">
                         <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
-                        <option value="1" disabled selected>PENDIENTE</option>
-                        <option value="3" selected>ESCALAR</option>
-                        <option value="5" selected>CANCELAR</option>
-                        <option value="4" selected>COMPLETADA</option>
+                        <option value="{{estatus.id}}" ng-repeat="estatus in estatusList">
+                            {{estatus.descripcion}}
+                        </option>
                     </select>
                 </div>
             </div>
             <div class="container-fluid ticket-content content-select-ticket-detalle col-4"
                 ng-show="ticketSoporteDetalle.estatus === '3'">
                 <div class="container-text-title-detalle"><span class="text-tile-ticket"
-                        style="margin-left: 5em;">ESTADO<i
-                        ng-if="!estadoEscalamientoDetalle.length"
-                        class="icono-noseleccion fas fa-exclamation-circle ml-2"
-                        title="No se encontr&oacute; el catalogo de propietarios"></i></span></div>
+                        style="margin-left: 5em;">ESTADO<i ng-if="!estadoEscalamientoDetalle.length"
+                            class="icono-noseleccion fas fa-exclamation-circle ml-2"
+                            title="No se encontr&oacute; el catalogo de propietarios"></i></span></div>
                 <div class="container-text-content-detalle inputTicket-select">
                     <select ng-class="{'error-captura-input': !ticketSoporteDetalle.estado && validacionTicketDetalle}"
                         class="form-control form-controlt form-control-sm inputTicket" name="estatusTicketDetalle"
@@ -550,10 +552,9 @@
             <div class="container-fluid ticket-content content-select-ticket-detalle col-4"
                 ng-show="ticketSoporteDetalle.estatus === '3'">
                 <div class="container-text-title-detalle"><span class="text-tile-ticket"
-                        style="margin-left: 5em;">MOTIVO<i
-                        ng-if="!estadoEscalamientoDetalle.length"
-                        class="icono-noseleccion fas fa-exclamation-circle ml-2"
-                        title="No se encontr&oacute; el catalogo de propietarios"></i></span></div>
+                        style="margin-left: 5em;">MOTIVO<i ng-if="!estadoEscalamientoDetalle.length"
+                            class="icono-noseleccion fas fa-exclamation-circle ml-2"
+                            title="No se encontr&oacute; el catalogo de propietarios"></i></span></div>
                 <div class="container-text-content-detalle inputTicket-select">
                     <select ng-class="{'error-captura-input': !ticketSoporteDetalle.motivo && validacionTicketDetalle}"
                         class="form-control form-controlt form-control-sm inputTicket" name="estatusTicketDetalle"

@@ -38,6 +38,8 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     $scope.propietarioSession = 0;
     $scope.equiposList = [];
     $scope.geografiaUsuarioList = [];
+    $scope.tecnologiaList = [];
+    $scope.estatusList = [];
     $scope.busquedaSf = {};
     $scope.nGeografiaConsultaUsuario = null
     $scope.nPuestoIngeniero = null
@@ -229,7 +231,9 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             gestionTicketSoporteService.consulCatalogoGeografiaUsuarioDespacho(),
             gestionTicketSoporteService.consultarAccionesDinamicaDetalle(),
             gestionTicketSoporteService.consultaPropietariosTicketSoporte(),
-            gestionTicketSoporteService.consultaEquiposSoporte()
+            gestionTicketSoporteService.consultaEquiposSoporte(),
+            gestionTicketSoporteService.consultaEstatusTicketSoporte(),
+            gestionTicketSoporteService.consultaTecnologiaTicketSoporte()
         ]).then(function (results) {
             swal.close();
             if (results[0].data !== undefined) {
@@ -403,7 +407,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             if (results[6].data.respuesta) {
                 if (results[6].data.result) {
                     $scope.escalamientoListDetalle = results[6].data.result.propietarios
-                    $scope.estadoEscalamientoDetalle = results[6].data.result.propietarios.filter(elemento => { return elemento.nivel === 1 })
+                    $scope.estadoEscalamientoDetalle = results[6].data.result.propietarios.filter(elemento => { return Number(elemento.nivel) == 1 })
                 } else {
                     mostrarMensajeWarningValidacion('No se pudo realizar la consulta de propietarios.')
                 }
@@ -421,6 +425,25 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                 mostrarMensajeWarningValidacion('No se pudo realizar la consulta de equipos.')
             }
 
+            if (results[8].data.respuesta) {
+                if (results[8].data.result) {
+                    $scope.estatusList = results[8].data.result.estatusTicketSC;
+                } else {
+                    mostrarMensajeWarningValidacion('No se pudo realizar la consulta de estatus.')
+                }
+            } else {
+                mostrarMensajeWarningValidacion('No se pudo realizar la consulta de estatus.')
+            }
+
+            if (results[9].data.respuesta) {
+                if (results[9].data.result) {
+                    $scope.tecnologiaList = results[9].data.result.tecnologiaTicketSC;
+                } else {
+                    mostrarMensajeWarningValidacion('No se pudo realizar la consulta de tecnolog\u00EDas.')
+                }
+            } else {
+                mostrarMensajeWarningValidacion('No se pudo realizar la consulta de tecnolog\u00EDas.')
+            }
         });
     }
 
@@ -1082,7 +1105,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                             }
                         });
 
-                        $scope.ticketSoporteDetalle.estatus = $scope.editTicket.detalleTicketSc.idEstatus + '';
+                        $scope.ticketSoporteDetalle.estatus = $scope.editTicket.detalleTicketSc.idEstatus == 1 ? '' : $scope.editTicket.detalleTicketSc.idEstatus + '';
                         $scope.ticketSoporteDetalle.comentarios = $scope.editTicket.detalleTicketSc.comentarios;
 
                         let urlTec = $scope.editTicket.detalleOtDetenida.fotoTecnico ? $scope.editTicket.detalleOtDetenida.fotoTecnico : "./resources/img/plantainterna/despacho/tecnicootasignada.png";

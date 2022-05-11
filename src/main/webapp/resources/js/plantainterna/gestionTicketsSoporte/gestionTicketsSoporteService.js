@@ -201,6 +201,16 @@ app.service("gestionTicketSoporteService", function ($http) {
         });
     };
 
+    this.consultaTecnologiaTicketSoporte = function () {
+        return $http({
+            method: "get",
+            url: "req/consultaTecnologiaTicketSoporte",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    };
+
     this.consultaEquiposSoporte = function () {
         return $http({
             method: "get",
