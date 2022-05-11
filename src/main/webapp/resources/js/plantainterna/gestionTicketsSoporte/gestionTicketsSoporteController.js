@@ -627,9 +627,10 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                 elemento.isChecked = false;
                 $('#tec-' + elemento.id).prop('checked', false);
                 $scope.$apply();
-            }
-            if ($(event).attr('id').split('-')[1] == elemento.id) {
-                elemento.isChecked = true;
+            } else {
+                if ($(event).attr('id').split('-')[1] == elemento.id) {
+                    elemento.isChecked = true;
+                }
             }
         })
         $scope.$apply();
