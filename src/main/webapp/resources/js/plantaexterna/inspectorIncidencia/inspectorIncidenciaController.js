@@ -141,9 +141,25 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         $("#txtEstatus").css("border-bottom", "2px solid #d9d9d9");
     }
 
-    $scope.fallaSeleccion = function () {
-        $('#txtFalla').val($scope.listaSeleccionSelectFalla($scope.filtrosInspector.fallas));
-        $("#txtFalla").css("border-bottom", "2px solid #d9d9d9");
+    $scope.mostrarNombresEstatus = function (array) {
+		let arrayNombre = [];
+		angular.forEach(array, function (elemento, index) {
+			if (elemento.checkedOpcion) {
+				arrayNombre.push(elemento.descripcion);
+			}
+			if (elemento.children !== undefined && elemento.children.length > 0) {
+				arrayNombre = arrayNombre.concat($scope.mostrarNombresEstatus(elemento.children));
+			}
+		});
+		return arrayNombre;
+	}
+
+    $scope.pintarNombreEstatus = function (array, input) {
+        let textoEstatus = $scope.mostrarNombresEstatus(array);
+        $(input).val(textoEstatus);
+        if (textoEstatus.length > 0) {
+            $(input).css("border-bottom", "2px solid #d9d9d9");
+        }
     }
 
     $scope.btnAceptarGeografiaConsulta = function () {
@@ -372,7 +388,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                             });
                             setTimeout(function () {
                                 $scope.estatusSeleccion();
-                                $scope.fallaSeleccion();
+                                $scope.pintarNombreEstatus($scope.filtrosInspector.fallas, '#txtFalla')
                             }, 500);
                         } else {
                             mostrarMensajeWarningValidacion('<li>No se encontraron datos para la geograf&iacute;a</li>Va');

@@ -10,19 +10,20 @@
             <div class="col-4 form-group">
                 <label for="telefonoTicket" class="span-form-tickets">Tel&eacute;fono </label>
                 <input type="text" autocomplete="off" class="form-control form-control-sm  inputTicket" id="telefonoTicket"
-                    ng-model="ticketSoporteR.telefonoTecnico" ng-class="{'error-captura-input': !ticketSoporteR.telefonoTecnico && validacionTicket}" 
+                    ng-model="ticketSoporteR.telefonoTecnico" 
                     onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="10" />
             </div>
             <div class="col-4 form-group inputTicket-select">
-                <label for="tecnologiaTicket" class="span-form-tickets">Tecnolog&iacute;a gestor</label>
+                <label for="tecnologiaTicket" class="span-form-tickets">Tecnolog&iacute;a gestor<i ng-if="!tecnologiaList.length"
+                    class="icono-noseleccion fas fa-exclamation-circle ml-2"
+                    title="No se encontr&oacute; el catalogo de tecnolog&iacute;as"></i></label>
                 <!-- <input readonly style="cursor: default;" class="form-control form-control-sm " name="tecnologiaTicket" id="tecnologiaTicket" ng-model="ticketSoporteR.tecnologia"/> -->
                 <select class="form-control form-control-sm inputTicket" name="tecnologiaTicket" id="tecnologiaTicket" ng-class="{'error-captura-input': !ticketSoporteR.tecnologia && validacionTicket}" 
                     ng-model="ticketSoporteR.tecnologia">
                     <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
-                    <option value="36" selected>HUAWEI</option>
-                    <option value="37" selected>NCE</option>
-                    <option value="38" selected>ZTE</option>
-                    <option value="39" selected>FIBER HOME</option>
+                    <option value="{{tec.id}}" ng-repeat="tec in tecnologiaList">
+                        {{tec.descripcion}}
+                    </option>
                 </select>
             </div>
 
@@ -77,12 +78,16 @@
         </div>
 
         <div class="row content-botones-creacion">
-            <div style=" margin: 1em 0 0 0;">
+            <div style=" margin: 0 0 0 0;">
                 <input type="button" class="btn btn-primary btn-editar-cambios ripple-surface"
                     ng-click="registrarTicketSoporte(ticket)" value="GUARDAR">
                 <button type="button" class="btn limpiar-btn btn-ligh"
                     ng-click="limpiarFormularioTicket()">LIMPIAR</button>
             </div>
+        </div>
+        <div id="message-success-resumen" ng-show="isGuardadoProcess && isMensajeSuccessOt" class="alert alert-success " role="alert"  ng-bind="mensajeRequestCreacion">            
+        </div>
+        <div id="message-error-resumen" ng-show="isGuardadoProcess && isMensajeErrorOt"  class="alert alert-danger"  role="alert" ng-bind="mensajeRequestCreacion">            
         </div>
     </div>
     <div class="col-6">

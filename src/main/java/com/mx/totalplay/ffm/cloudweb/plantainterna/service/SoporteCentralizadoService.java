@@ -34,6 +34,8 @@ public interface SoporteCentralizadoService {
     
     public ServiceResponseResult consultarEstatusTicket();
     
+    public ServiceResponseResult consultarTecnologiaSoporte();
+    
     public ServiceResponseResult consultarEquiposTicketSoporte();
     
     public ServiceResponseResult reasignarIngenieroTicket(String params);
