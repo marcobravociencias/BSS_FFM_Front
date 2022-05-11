@@ -249,8 +249,8 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
 
                             if (permisosResult != undefined && permisosResult.permisos != undefined && permisosResult.permisos.length > 0) {
                                 $scope.configPermisoAccionCreaTicket = (permisosResult.permisos.filter(e => { return e.clave == "accionCreacionTickets" })[0] != undefined);
-                                $scope.configPermisoAccionConsultaTicket = true//(permisosResult.permisos.filter(e => { return e.clave == "accionConsultaTickets" })[0] != undefined);
-                                $scope.configPermisoAccionModificarTicket = true//(permisosResult.permisos.filter(e => { return e.clave == "accionModificaTickets" })[0] != undefined);
+                                $scope.configPermisoAccionConsultaTicket = (permisosResult.permisos.filter(e => { return e.clave == "accionConsultaTickets" })[0] != undefined);
+                                $scope.configPermisoAccionModificarTicket = (permisosResult.permisos.filter(e => { return e.clave == "accionModificaTickets" })[0] != undefined);
                             }
 
                             if ($scope.configPermisoAccionCreaTicket && !$scope.configPermisoAccionConsultaTicket) {
