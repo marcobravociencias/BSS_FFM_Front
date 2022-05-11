@@ -1081,9 +1081,9 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         $scope.contentdetalleticket = false;
         $(".accordion-button").addClass("collapsed");
         $(".accordion-collapse").removeClass("show");
-        if ($("#panelsStayOpen-headingOne .accordion-button").hasClass("collapsed")) {
-            $("#panelsStayOpen-headingOne .accordion-button").click();
-        }
+        $("#panelsStayOpen-headingOne .accordion-button").click();
+        $("#panelsStayOpen-headingTwo .accordion-button").click();
+
         $q.all([
             gestionTicketSoporteService.consultarDetalleTicketGestion(ticket),
             gestionTicketSoporteService.consultaCuentaClienteTicketSoporte({ 'claveCliente': cliente })
