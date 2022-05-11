@@ -1017,10 +1017,10 @@ i.icono-noseleccion {
     font-weight:bold;
 }
 
-div#message-error-resumen ,#message-success-resumen{
+#opcion-creatickets div#message-error-resumen ,#message-success-resumen{
     font-size: .8em;
     line-height: 1;
 }
- .btn-editar-cambios,.limpiar-btn{
+ #opcion-creatickets .btn-editar-cambios,.limpiar-btn{
      margin-top:0 !important; 
  }
