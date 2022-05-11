@@ -552,6 +552,7 @@ a.descarga-adjuntadocomment {
     position: relative;
     background-color: #b1b1b1;
     color: #fff;
+    max-width: 25px;
     font-size: 0.8em;
     padding: .5em .5em;
     border: none;

@@ -545,9 +545,9 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                     $scope.agregarMarkerMapCrearTicket($scope.tecnicoAsignado.latitud, $scope.tecnicoAsignado.longitud);
                     $scope.tecnicoAsignado.nombreTecnico = $scope.tecnicoAsignado.nombre + " " + $scope.tecnicoAsignado.apellidoPaterno + " " + $scope.tecnicoAsignado.apellidoMaterno;
                     if ($scope.tecnicoAsignado.idUnidadNegocio == 1) {
-                        $scope.tecnicoAsignado.unidadNegocio = "RESIDENCIAL";
+                        $scope.tecnicoAsignado.unidadNegocio = "Residencial";
                     } else if ($scope.tecnicoAsignado.idUnidadNegocio == 2) {
-                        $scope.tecnicoAsignado.unidadNegocio = "EMPRESARIAL";
+                        $scope.tecnicoAsignado.unidadNegocio = "Empresarial";
                     } else {
                         $scope.tecnicoAsignado.unidadNegocio = null;
                     }
@@ -562,11 +562,11 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                         let geografiaTecnicoAsignadoCiudad = $scope.catGeografiaGeneral.find(e => e.id == Number(geografiaTecnicoAsignadoDistrito.padre));
                         let geografiaTecnicoAsignadoRegion = $scope.catGeografiaGeneral.find(e => e.id == Number(geografiaTecnicoAsignadoCiudad.padre));
 
-                        $scope.tecnicoAsignado.cluster = geografiaTecnicoAsignadoCluster.nombre;
-                        $scope.tecnicoAsignado.zona = geografiaTecnicoAsignadoZona.nombre;
-                        $scope.tecnicoAsignado.distrito = geografiaTecnicoAsignadoDistrito.nombre;
-                        $scope.tecnicoAsignado.ciudad = geografiaTecnicoAsignadoCiudad.nombre;
-                        $scope.tecnicoAsignado.region = geografiaTecnicoAsignadoRegion.nombre;
+                        $scope.tecnicoAsignado.cluster = camelCase(geografiaTecnicoAsignadoCluster.nombre);
+                        $scope.tecnicoAsignado.zona = camelCase(geografiaTecnicoAsignadoZona.nombre);
+                        $scope.tecnicoAsignado.distrito = camelCase(geografiaTecnicoAsignadoDistrito.nombre);
+                        $scope.tecnicoAsignado.ciudad = camelCase(geografiaTecnicoAsignadoCiudad.nombre);
+                        $scope.tecnicoAsignado.region = camelCase(geografiaTecnicoAsignadoRegion.nombre);
                         $scope.ticketSoporteR.region = $scope.tecnicoAsignado.idGeografia;
                     }
 
@@ -909,7 +909,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         return fechaPrueba[2] + '-' + fechaPrueba[1] + '-' + fechaPrueba[0];
     }
 
-   
+
     $scope.consultarTicketsSoporte = function () {
         $("#container_noticias_ticket").hide();
         $(".user-filter span").removeClass('selected-filter');
@@ -1025,8 +1025,14 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
 
     }
 
-    
-
+    function camelCase(text) {
+        let arr = text.split(" ");
+        for (var i = 0; i < arr.length; i++) {
+            arr[i] = arr[i].toLowerCase();
+            arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
+        }        
+        return arr.join(" ");
+    }
 
     $scope.editTicket = {}
     $scope.consultarDetalleTicketSoporteCentralizado = function (ticket, cliente) {
@@ -1050,7 +1056,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                         $scope.contentprincipal = false
                         $scope.editTicket = results[0].data.result.detalleGeneral;
                         $scope.consultaChat();
-                        if($scope.editTicket.detalleTicketSc.falla && $scope.catalogoFallasTicketSoporte.length){
+                        if ($scope.editTicket.detalleTicketSc.falla && $scope.catalogoFallasTicketSoporte.length) {
                             $scope.ticketSoporteDetalle.fallaTicketD = $scope.editTicket.detalleTicketSc.falla + '';
                             $scope.ticketSoporteDetalle.categoriaTicketD = $scope.editTicket.detalleTicketSc.categoria + '';
                             $scope.ticketSoporteDetalle.subcategoriaTicketD = $scope.editTicket.detalleTicketSc.subcategoria + '';
@@ -1119,11 +1125,11 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                             let distritoInd = $scope.listadoGeografiaSoporte.find(e => e.id == parseInt(zonaInd.padre))
                             let ciudadInd = $scope.listadoGeografiaSoporte.find(e => e.id == parseInt(distritoInd.padre))
                             let regionInd = $scope.listadoGeografiaSoporte.find(e => e.id == parseInt(ciudadInd.padre))
-                            $scope.editTicket.clusterText = clusterInd.nombre
-                            $scope.editTicket.zonaText = zonaInd.nombre
-                            $scope.editTicket.distritoText = distritoInd.nombre
-                            $scope.editTicket.ciudadText = ciudadInd.nombre
-                            $scope.editTicket.regionText = regionInd.nombre
+                            $scope.editTicket.clusterText = camelCase(clusterInd.nombre)
+                            $scope.editTicket.zonaText = camelCase(zonaInd.nombre)
+                            $scope.editTicket.distritoText = camelCase(distritoInd.nombre)
+                            $scope.editTicket.ciudadText = camelCase(ciudadInd.nombre)
+                            $scope.editTicket.regionText = camelCase(regionInd.nombre)
                         }
 
                     } else {
@@ -1256,7 +1262,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                     mostrarMensajeWarningValidacion('No se pudo realizar la operaci&oacute;n')
                 }
             }).catch((err) => handleError(err));
-        }else{
+        } else {
             swal({
                 title: 'Comentarios',
                 input: 'textarea',
@@ -1267,7 +1273,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                 showCancelButton: true,
                 confirmButtonText: 'Asignar'
             }).then((result) => {
-                $scope.ingenieroSelect = {idUsuario: $("#prop-session").val().split('_')[1]}
+                $scope.ingenieroSelect = { idUsuario: $("#prop-session").val().split('_')[1] }
                 $scope.asignarTicketIngeniero(result)
             }).catch((result) => {
             })
@@ -1358,7 +1364,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
 
     }
 
-    
+
 
     $scope.siguienteAsignar = function () {
         $scope.ingenieroSelect = $scope.listIngenieros.find(function (elem) { return elem.isChecked == true });
