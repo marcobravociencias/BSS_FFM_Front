@@ -66,6 +66,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	$scope.tabConfirmacion = false;
 	
 	$scope.tabInformacionVW_ASIG_AUTOMATICA = true;
+	$scope.tabInformacionVW_CUADRILLA = true;
 	$scope.tabInformacionVL_RFC = true;
 	$scope.tabInformacionVL_CURP = true;
 	$scope.tabArbol_LB_N1 = "";
@@ -120,8 +121,21 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     		usuarioPIService.consultaPermisos(),
     		usuarioPIService.consultaGeografias(),
     		usuarioPIService.consultaIntervenciones(),
-    		usuarioPIService.consultaPerfiles()
+    		usuarioPIService.consultaPerfiles(),
+    		usuarioPIService.consultarCuadrillasGestionUsuarios()
         ]).then(function(results) {
+        	
+        	var listaResultCuadrillas = results[7].data.result.tipoCuadrillas;
+        	$scope.listaCuadrillas = [];
+        	angular.forEach(listaResultCuadrillas,function(cuadrllaPadre,index){
+        		cuadrllaPadre.checkedOpcion = 0;
+    			if(cuadrllaPadre.idPadre == null){
+    				cuadrllaPadre.cuadrillasHijas = listaResultCuadrillas.filter(e => {return e.idPadre == cuadrllaPadre.id});
+    				$scope.listaCuadrillas.push(cuadrllaPadre);
+    			}
+    		});
+        	console.log($scope.listaCuadrillas);
+        	
         	// *** CONFIGURACIÓN DESPACHO ***
         	var nivelUsuario; 				
 
@@ -848,6 +862,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 //    	console.log("------------------------------------------------------");
     	
     	$scope.tabInformacionVW_ASIG_AUTOMATICA = true;
+    	$scope.tabInformacionVW_CUADRILLA = true;
     	$scope.tabInformacionVL_RFC = true;
     	$scope.tabInformacionVL_CURP = true;
     	$scope.tabArbol_LB_N1 = "";
@@ -873,6 +888,11 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	        	case "tabInformacionVW_ASIG_AUTOMATICA":
 	        		if(conf.valor == "false"){
 	    				$scope.tabInformacionVW_ASIG_AUTOMATICA = false;
+	    			}
+	        		break;
+	        	case "tabInformacionVW_CUADRILLA":
+	        		if(conf.valor == "false"){
+	        			$scope.tabInformacionVW_CUADRILLA = false;
 	    			}
 	        		break;
 	        	case "tabArbol_LB_N1":
@@ -1327,6 +1347,10 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 //    		paramsRegistro.+""llaveIng = $scope.informacionRegistro.ingenieros;
 //    	}
     	
+    	if($scope.tabInformacionVW_CUADRILLAs){
+    		paramsRegistro.tipoCuadrilla = $scope.informacionRegistro.cuadrilla;
+    	}
+    	
     	if($scope.fileFotoUsuario != null){
     		paramsRegistro.fotoPerfil = {
     				bucketId: $scope.fileFotoUsuario.bucketId,
@@ -1632,6 +1656,16 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 			}else{
 				$("#sexo_select_registro").css("border", "1px solid #bdbdbd");
 			}
+			
+			if($scope.tabInformacionVW_CUADRILLA){
+				if($scope.informacionRegistro.cuadrilla === "" || $scope.informacionRegistro.cuadrilla === undefined || $scope.informacionRegistro.cuadrilla === null){
+					$("#cuadrilla_select_registro").css("border-bottom", "2px solid #f55756");
+					validacionInformacionGeneral = false;
+					mensaje = mensaje + "<br/> *Cuadrilla";
+				}else{
+					$("#cuadrilla_select_registro").css("border", "1px solid #bdbdbd");
+				}
+			}
 		}
 		
 		//PESTAÑA INTERVENCIONES
@@ -1730,6 +1764,63 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 //    			$("#contenedorIngenierosRegistro").css("border", "white solid 0px");
 //    		}
 //    	}
+		
+		//PESTAÑA SUPERVISORES CENTRALIZADOS
+    	if($scope.tabSupervisorCentralizado){
+    		var checkSupCentralizados = 0;
+    		angular.forEach($scope.listaSupervisoresCentralizados,function(supervisorCentralizado,index){
+    			if(supervisorCentralizado.checkedOpcion == true){
+    				checkSupCentralizados++;
+    			}
+    		});
+    		if(checkSupCentralizados < 1){
+    			validacionSupervisorCentralizado = false;
+    			mensaje = mensaje + "<br/> *Supervisor(es) centralizado(s)";
+    			$("#labelSupervisorCentralizadoSeleccionados").css("color", "#f55756");
+    			$("#contenedorSupervisorCentralizadoRegistro").css("border", "#f55756 solid 1px");
+    		}else{
+    			$("#labelSupervisorCentralizadoSeleccionados").css("color", "rgb(70, 88, 107)");
+    			$("#contenedorSupervisorCentralizadoRegistro").css("border", "white solid 0px");
+    		}
+    	}
+    	
+    	//PESTAÑA COUCHS
+    	if($scope.tabCouchDespacho){
+    		var checkCouchs = 0;
+    		angular.forEach($scope.listaCouchsDespachos,function(couch,index){
+    			if(couch.checkedOpcion == true){
+    				checkCouchs++;
+    			}
+    		});
+    		if(checkCouchs < 1){
+    			validacionCouchDespacho = false;
+    			mensaje = mensaje + "<br/> *Couch(s)";
+    			$("#labelCouchsSeleccionados").css("color", "#f55756");
+    			$("#contenedorCouchsRegistro").css("border", "#f55756 solid 1px");
+    		}else{
+    			$("#labelCouchsSeleccionados").css("color", "rgb(70, 88, 107)");
+    			$("#contenedorCouchsRegistro").css("border", "white solid 0px");
+    		}
+    	}
+    	
+    	//PESTAÑA SUPERVISORES
+    	if($scope.tabSupervisor){
+    		var checkSupervisores = 0;
+    		angular.forEach($scope.listaSupervisores,function(supervisor,index){
+    			if(supervisor.checkedOpcion == true){
+    				checkSupervisores++;
+    			}
+    		});
+    		if(checkSupervisores < 1){
+    			validacionSupervisor = false;
+    			mensaje = mensaje + "<br/> *Supervisor(es)";
+    			$("#labelSupervisoresSeleccionados").css("color", "#f55756");
+    			$("#contenedorSupervisoresRegistro").css("border", "#f55756 solid 1px");
+    		}else{
+    			$("#labelSupervisoresSeleccionados").css("color", "rgb(70, 88, 107)");
+    			$("#contenedorSupervisoresRegistro").css("border", "white solid 0px");
+    		}
+    	}
     	
     	//PESTAÑA CONFIRMAR USUARIO
     	if($scope.tabConfirmacion){
@@ -1794,6 +1885,24 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 			$("#pills-confirmar").removeClass("active show");
 			$("#pills-ingenieros-tab").addClass("active");
 			$("#pills-ingenieros").addClass("active show");
+		}else if(validacionSupervisorCentralizado == false){
+			validacion = false;
+			$("#pills-confirmar-tab").removeClass("active");
+			$("#pills-confirmar").removeClass("active show");
+			$("#pills-supervisor-centralizado-tab").addClass("active");
+			$("#pills-supervisor-centralizado").addClass("active show");
+		}else if(validacionCouchDespacho == false){
+			validacion = false;
+			$("#pills-confirmar-tab").removeClass("active");
+			$("#pills-confirmar").removeClass("active show");
+			$("#pills-couch-despacho-tab").addClass("active");
+			$("#pills-couch-despacho").addClass("active show");
+		}else if(validacionSupervisor == false){
+			validacion = false;
+			$("#pills-confirmar-tab").removeClass("active");
+			$("#pills-confirmar").removeClass("active show");
+			$("#pills-supervisor-tab").addClass("active");
+			$("#pills-supervisor").addClass("active show");
 		}else{
 			//...
 		}
@@ -1916,6 +2025,21 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	$scope.companiaSeleccion = function() {
     	$('#txtCompania').val($scope.listaSeleccionSelectGral($scope.listaCompanias));
     	$("#txtCompania").css("border-bottom", "2px solid #d9d9d9");
+	}
+	
+	//
+	$scope.cuadrillaSeleccion = function(cuadrillaSeleccionada) {
+    	$('#cuadrilla_select_registro').val(cuadrillaSeleccionada.descripcion);
+    	$("#cuadrilla_select_registro").css("border-bottom", "2px solid #d9d9d9");
+//		angular.forEach($scope.listaCuadrillas,function(cuadrillaPadre,index){
+//			angular.forEach(cuadrillaPadre.cuadrillasHijas,function(cuadrillaHija,index){
+//				if(cuadrillaHija.id == cuadrillaSeleccionada.id){
+//					cuadrillaHija.checkedOpcion = 1;
+//				}else{
+//					cuadrillaHija.checkedOpcion = 0;
+//				}
+//			});
+//		});
 	}
 	
 	//VERIFICA EL ESTADO DEL CHECK PARA COLOCAR 'SI' O 'NO', SEGÚN EL ESTADO - PESTAÑA INFORMACIÓN REGISTRO USUARIO
@@ -2083,6 +2207,165 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		}else{
 			$("#checkTotdosIngenieroRegistro").prop('checked',false);
 			toastr.info('¡Solo se permite asignar 1 ingeniero!');
+		}
+	}
+	
+	//SELECCIONA O DESELECCIONA EL SUPERVISOR CENTRALIZADO ELEGIDO - PESTAÑA SUPERVISORES CENTRALIZADOS REGISTRO USUARIO
+	$scope.seleccionarSupervisorCentralizadoRegistro = function(despachoCentralizadoSeleccionado) {
+		
+		var totalSupCenSeleccionados = $scope.listaSupervisoresCentralizados.filter(supCentr => supCentr.checkedOpcion == true).length;
+		if(!$scope.tabSupervisorCentralizadoVL_MULTISELECCION && totalSupCenSeleccionados >0){
+			if(despachoCentralizadoSeleccionado.checkedOpcion == false){
+				toastr.info('¡Solo se permite asignar 1 supervisor centralizado!');
+			}
+			despachoCentralizadoSeleccionado.checkedOpcion = false;
+		}else{
+			if(despachoCentralizadoSeleccionado.checkedOpcion){
+				despachoCentralizadoSeleccionado.checkedOpcion = false;
+			}else{
+				despachoCentralizadoSeleccionado.checkedOpcion = true;
+				$("#labelSupervisorCentralizadoSeleccionados").css("color", "rgb(70, 88, 107)");
+				$("#contenedorSupervisorCentralizadoRegistro").css("border", "white solid 0px");
+			}
+		}
+
+		//Verifica si todos los 'checkedOpcion' son true para activar el check de seleccionar todos
+		var check = true;
+		angular.forEach($scope.listaSupervisoresCentralizados,function(supervisorCentralizado,index){
+			if(supervisorCentralizado.checkedOpcion != true){
+				check = false;
+			}
+		});
+		if(check){
+			$("#checkTotdosSupervisorCentralizadoRegistro").prop("checked",true);
+		}else{
+			$("#checkTotdosSupervisorCentralizadoRegistro").prop("checked",false);
+		}
+	}
+	
+	//SELECCIONA O DESELECCIONA TODOS LOS SUPERVISORES CENTRALIZADOS - PESTAÑA SUPERVISORES CENTRALIZADOS REGISTRO USUARIO
+	$scope.seleccionarTodosSupervisoresCentralizadosRegistro = function() {
+		if($scope.tabSupervisorCentralizadoVL_MULTISELECCION){
+			var check;
+			if($("#checkTotdosSupervisorCentralizadoRegistro").prop('checked')){
+				check = true;
+				$("#labelSupervisorCentralizadoSeleccionados").css("color", "rgb(70, 88, 107)");
+				$("#contenedorSupervisorCentralizadoRegistro").css("border", "white solid 0px");
+			}else{
+				check = false;
+			}
+			angular.forEach($scope.listaSupervisoresCentralizados,function(supervisorCentralizado,index){
+				supervisorCentralizado.checkedOpcion = check;
+			});
+		}else{
+			$("#checkTotdosSupervisorCentralizadoRegistro").prop('checked',false);
+			toastr.info('¡Solo se permite asignar 1 supervisor centralizado!');
+		}
+	}
+	
+	//SELECCIONA O DESELECCIONA EL COUCH ELEGIDO - PESTAÑA COUCHS REGISTRO USUARIO
+	$scope.seleccionarCouchRegistro = function(couchSeleccionado) {
+		
+		var totalCouchsSeleccionados = $scope.listaCouchsDespachos.filter(couch => couch.checkedOpcion == true).length;
+		if(!$scope.tabCouchDespachoVL_MULTISELECCION && totalCouchsSeleccionados >0){
+			if(couchSeleccionado.checkedOpcion == false){
+				toastr.info('¡Solo se permite asignar 1 couch!');
+			}
+			couchSeleccionado.checkedOpcion = false;
+		}else{
+			if(couchSeleccionado.checkedOpcion){
+				couchSeleccionado.checkedOpcion = false;
+			}else{
+				couchSeleccionado.checkedOpcion = true;
+				$("#labelCouchsSeleccionados").css("color", "rgb(70, 88, 107)");
+				$("#contenedorCouchsRegistro").css("border", "white solid 0px");
+			}
+		}
+
+		//Verifica si todos los 'checkedOpcion' son true para activar el check de seleccionar todos
+		var check = true;
+		angular.forEach($scope.listaCouchsDespachos,function(couch,index){
+			if(couch.checkedOpcion != true){
+				check = false;
+			}
+		});
+		if(check){
+			$("#checkTotdosCouchRegistro").prop("checked",true);
+		}else{
+			$("#checkTotdosCouchRegistro").prop("checked",false);
+		}
+	}
+	
+	//SELECCIONA O DESELECCIONA TODOS LOS COUCHS - PESTAÑA COUCHS REGISTRO USUARIO
+	$scope.seleccionarTodosCouchsRegistro = function() {
+		if($scope.tabCouchDespachoVL_MULTISELECCION){
+			var check;
+			if($("#checkTotdosCouchRegistro").prop('checked')){
+				check = true;
+				$("#labelCouchsSeleccionados").css("color", "rgb(70, 88, 107)");
+				$("#contenedorCouchsRegistro").css("border", "white solid 0px");
+			}else{
+				check = false;
+			}
+			angular.forEach($scope.listaCouchsDespachos,function(couch,index){
+				couch.checkedOpcion = check;
+			});
+		}else{
+			$("#checkTotdosCouchRegistro").prop('checked',false);
+			toastr.info('¡Solo se permite asignar 1 couch!');
+		}
+	}
+	
+	//SELECCIONA O DESELECCIONA EL SUPERVISOR ELEGIDO - PESTAÑA SUPERVISORES REGISTRO USUARIO
+	$scope.seleccionarSupervisorRegistro = function(supervisorSeleccionado) {
+		
+		var totalSupSeleccionados = $scope.listaSupervisores.filter(sup => sup.checkedOpcion == true).length;
+		if(!$scope.tabSupervisorVL_MULTISELECCION && totalSupSeleccionados >0){
+			if(supervisorSeleccionado.checkedOpcion == false){
+				toastr.info('¡Solo se permite asignar 1 supervisor!');
+			}
+			supervisorSeleccionado.checkedOpcion = false;
+		}else{
+			if(supervisorSeleccionado.checkedOpcion){
+				supervisorSeleccionado.checkedOpcion = false;
+			}else{
+				supervisorSeleccionado.checkedOpcion = true;
+				$("#labelSupervisoresSeleccionados").css("color", "rgb(70, 88, 107)");
+				$("#contenedorSupervisoresRegistro").css("border", "white solid 0px");
+			}
+		}
+
+		//Verifica si todos los 'checkedOpcion' son true para activar el check de seleccionar todos
+		var check = true;
+		angular.forEach($scope.listaSupervisores,function(supervisor,index){
+			if(supervisor.checkedOpcion != true){
+				check = false;
+			}
+		});
+		if(check){
+			$("#checkTotdosSupervisorRegistro").prop("checked",true);
+		}else{
+			$("#checkTotdosSupervisorRegistro").prop("checked",false);
+		}
+	}
+	
+	//SELECCIONA O DESELECCIONA TODOS LOS SUPERVISORES - PESTAÑA SUPERVISORES REGISTRO USUARIO
+	$scope.seleccionarTodosSupervisoresRegistro = function() {
+		if($scope.tabSupervisorVL_MULTISELECCION){
+			var check;
+			if($("#checkTotdosSupervisorRegistro").prop('checked')){
+				check = true;
+				$("#labelSupervisoresSeleccionados").css("color", "rgb(70, 88, 107)");
+				$("#contenedorSupervisoresRegistro").css("border", "white solid 0px");
+			}else{
+				check = false;
+			}
+			angular.forEach($scope.listaSupervisores,function(supervisor,index){
+				supervisor.checkedOpcion = check;
+			});
+		}else{
+			$("#checkTotdosSupervisorRegistro").prop('checked',false);
+			toastr.info('¡Solo se permite asignar 1 supervisor!');
 		}
 	}
 	

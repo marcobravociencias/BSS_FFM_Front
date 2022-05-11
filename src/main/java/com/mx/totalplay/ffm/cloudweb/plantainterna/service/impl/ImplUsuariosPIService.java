@@ -278,4 +278,16 @@ public class ImplUsuariosPIService implements UsuariosPIService {
 		return response;
 	}
 	
+	@Override
+	public ServiceResponseResult consultarCuadrillasGestionUsuarios() {
+		logger.info("ImplUsuariosPIService.class [metodo = consultarCuadrillasGestionUsuarios() ]\n");
+		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
+		Map<String, String> paramsRequestGet = new HashMap<String, String>();
+		String tokenAcces=principalDetail.getAccess_token(); 
+		String url = principalDetail.getDireccionAmbiente().concat(constUsuario.getConsultarCuadrillasGestionUsuarios());
+		ServiceResponseResult response= restCaller.callGetBearerTokenRequest(paramsRequestGet, url, ServiceResponseResult.class, tokenAcces);
+		logger.info("RESULT consultarCuadrillasGestionUsuarios "+gson.toJson(response));
+		return response;
+	}
+	
 }

@@ -164,7 +164,7 @@
                                             <a class="nav-link linkOpcionesRegistro" id="pills-ingenieros-tab" ng-click="revisionTecnicosDespachos('tabIngenieros')" data-toggle="pill" href="#pills-ingenieros" role="tab" aria-controls="pills-ingenieros" aria-selected="false">Ingenieros</a>
                                         </li>
                                         <li id="pestaniaSupervisorCentralizado" class="nav-item tabOpcionesRegistro" role="presentation" ng-show="tabSupervisorCentralizado">
-                                            <a class="nav-link linkOpcionesRegistro" id="pills-supervisor-centralizado-tab" ng-click="revisionTecnicosDespachos('tabSupervisorCentralizado')" data-toggle="pill" href="#pills-supervisor-centralizado" role="tab" aria-controls="pills-supervisor-centralizado" aria-selected="false">Supervisores Centralizado</a>
+                                            <a class="nav-link linkOpcionesRegistro" id="pills-supervisor-centralizado-tab" ng-click="revisionTecnicosDespachos('tabSupervisorCentralizado')" data-toggle="pill" href="#pills-supervisor-centralizado" role="tab" aria-controls="pills-supervisor-centralizado" aria-selected="false">Supervisores Centralizados</a>
                                         </li>
                                         <li id="pestaniaCouchDespacho" class="nav-item tabOpcionesRegistro" role="presentation" ng-show="tabCouchDespacho">
                                             <a class="nav-link linkOpcionesRegistro" id="pills-couch-despacho-tab" ng-click="revisionTecnicosDespachos('tabCouchDespacho')" data-toggle="pill" href="#pills-couch-despacho" role="tab" aria-controls="pills-couch-despacho" aria-selected="false">Couchs</a>

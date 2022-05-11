@@ -2,7 +2,7 @@
 	<div class="col-md-4">
 		<label class="span-consulta"><i class="fas fa-address-card"></i> Puesto*</label>
         <div class="input-group">
-        	<select class="form-control custom-select inputSelectFormulario" id="puesto_select_registro" aria-describedby="basic-addon3" style="height: 34px;">
+        	<select class="form-control custom-select inputSelectFormulario" id="puesto_select_registro" aria-describedby="basic-addon3" style="height: 34px; cursor: pointer;">
         		<option disabled selected>NO HAY SELECCI&Oacute;N</option>
         		<option ng-repeat="puesto in listaPuestos" value="{{puesto.id}}">{{puesto.descripcion}}</option>
         	</select>
@@ -11,7 +11,7 @@
     <div class="col-md-4">
 		<label class="span-consulta"><i class="fa fa-building"></i> Compa&ntilde;&iacute;a*</label>
         <div class="input-group">
-        	<select class="form-control custom-select inputSelectFormulario" id="compania_select_registro" aria-describedby="basic-addon3" style="height: 34px;">
+        	<select class="form-control custom-select inputSelectFormulario" id="compania_select_registro" aria-describedby="basic-addon3" style="height: 34px; cursor: pointer;">
         		<option disabled selected>NO HAY SELECCI&Oacute;N</option>
         		<option ng-repeat="compania in listaCompanias" value="{{compania.id}}">{{compania.descripcion}}</option>
         	</select>
@@ -108,13 +108,31 @@
     <div class="col-md-4">
 		<label class="span-consulta"><i class="fa fa-mars"></i> Sexo*</label>
         <div class="input-group">
-        	<select class="form-control custom-select inputSelectFormulario" id="sexo_select_registro" aria-describedby="basic-addon3" style="height: 34px;">
+        	<select class="form-control custom-select inputSelectFormulario" id="sexo_select_registro" aria-describedby="basic-addon3" style="height: 34px; cursor: pointer;">
         		<option disabled selected>NO HAY SELECCI&Oacute;N</option>
         		<option value="MASCULINO">Hombre</option>
         		<option value="FEMENINO">Mujer</option>
         	</select>
         </div>
-    </div>
+    </div> 
+    <div class="col-md-4" ng-if="tabInformacionVW_CUADRILLA">
+		<label class="span-consulta"><i class="fa fa-building"></i> Cuadrillas</label>
+		<div class="dropdown">
+			<input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="NO HAY SELECCI&Oacute;N" type="text" id="cuadrilla_select_registro" class="form-control inputFormulario" style="height: 34px; cursor: pointer;" />
+		    <ul class="dropdown-menu drop-down-filters" style="background-color: #F5F5F5; padding: 1em !important; width: 80%;">          
+		        <div ng-repeat="cuadrillaPadre in listaCuadrillas track by $index">
+		        	<label>{{cuadrillaPadre.descripcion}}</label>
+		            <li ng-repeat="cuadrillaHija in cuadrillaPadre.cuadrillasHijas" class="element-menu-filter">
+		            	<label class="dropdown-item form-check-inputfiltro">
+		                	<input id="" ng-click="cuadrillaSeleccion(cuadrillaHija)" class="form-check-input" type="radio" ng-model="informacionRegistro.cuadrilla" ng-value="cuadrillaHija.id" />
+		                    <span for="" class="dropdown-item item-text-filtro" ng-bind="cuadrillaHija.descripcion"></span>
+						</label>
+					</li>
+		            <li ng-if="!$last" class="elemento_menu dropdown-divider"></li>
+				</div>
+			</ul>
+		</div>
+    </div>   
     <div class="col-md-4" ng-if="tabInformacionVW_ASIG_AUTOMATICA">
 		<label class="span-consulta"><i class="fas fa-sync"></i> Asignaci&oacute;n autom&aacute;tica*</label>
         <div class="input-group">
@@ -123,7 +141,7 @@
 				<span class="text-info-regitro" id="checkAsignacionAutomatica">NO</span>
 			</div>
         </div>
-    </div>
+    </div> 
 </div>
 <div class="row" style="margin-top: 1em; text-align: right;" ng-show="txtExpresionValPassword">
     <div class="col-md-12">

@@ -19,5 +19,6 @@ public interface UsuariosPIService {
 	public ServiceResponseResult modificarUsuario(String params);
 	public ServiceResponseResult eliminarUsuario(String params);
 	public ServiceResponseResult validarUsuarioExistente(String params);
+	public ServiceResponseResult consultarCuadrillasGestionUsuarios();
 	
 }
