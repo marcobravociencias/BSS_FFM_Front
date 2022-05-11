@@ -134,7 +134,7 @@
                                 <div class="container-text-title-detalle"><span class="text-tile-ticket">FALLA<i
                                             ng-if="!catalogoFallasTicketSoporte.length"
                                             class="icono-noseleccion fas fa-exclamation-circle ml-2"
-                                            title="No se encontr&oacute; el catalogo de geograf&iacute;a"></i></span>
+                                            title="No se encontr&oacute; el catalogo de fallas"></i></span>
                                 </div>
                                 <div class="container-text-content-detalle inputTicket-select">
                                     <select
@@ -155,7 +155,7 @@
                                         class="text-tile-ticket">CATEGOR&Iacute;A<i
                                             ng-if="!catalogoFallasTicketSoporte.length"
                                             class="icono-noseleccion fas fa-exclamation-circle ml-2"
-                                            title="No se encontr&oacute; el catalogo de geograf&iacute;a"></i></span>
+                                            title="No se encontr&oacute; el catalogo de fallas"></i></span>
                                 </div>
                                 <div class="container-text-content-detalle inputTicket-select">
                                     <select
@@ -176,7 +176,7 @@
                                         class="text-tile-ticket">SUBCATEGOR&Iacute;A<i
                                             ng-if="!catalogoFallasTicketSoporte.length"
                                             class="icono-noseleccion fas fa-exclamation-circle ml-2"
-                                            title="No se encontr&oacute; el catalogo de geograf&iacute;a"></i></span>
+                                            title="No se encontr&oacute; el catalogo de fallas"></i></span>
                                 </div>
                                 <div class="container-text-content-detalle inputTicket-select">
                                     <select
@@ -531,7 +531,10 @@
             <div class="container-fluid ticket-content content-select-ticket-detalle col-4"
                 ng-show="ticketSoporteDetalle.estatus === '3'">
                 <div class="container-text-title-detalle"><span class="text-tile-ticket"
-                        style="margin-left: 5em;">ESTADO</span></div>
+                        style="margin-left: 5em;">ESTADO<i
+                        ng-if="!estadoEscalamientoDetalle.length"
+                        class="icono-noseleccion fas fa-exclamation-circle ml-2"
+                        title="No se encontr&oacute; el catalogo de propietarios"></i></span></div>
                 <div class="container-text-content-detalle inputTicket-select">
                     <select ng-class="{'error-captura-input': !ticketSoporteDetalle.estado && validacionTicketDetalle}"
                         class="form-control form-controlt form-control-sm inputTicket" name="estatusTicketDetalle"
@@ -547,7 +550,10 @@
             <div class="container-fluid ticket-content content-select-ticket-detalle col-4"
                 ng-show="ticketSoporteDetalle.estatus === '3'">
                 <div class="container-text-title-detalle"><span class="text-tile-ticket"
-                        style="margin-left: 5em;">MOTIVO</span></div>
+                        style="margin-left: 5em;">MOTIVO<i
+                        ng-if="!estadoEscalamientoDetalle.length"
+                        class="icono-noseleccion fas fa-exclamation-circle ml-2"
+                        title="No se encontr&oacute; el catalogo de propietarios"></i></span></div>
                 <div class="container-text-content-detalle inputTicket-select">
                     <select ng-class="{'error-captura-input': !ticketSoporteDetalle.motivo && validacionTicketDetalle}"
                         class="form-control form-controlt form-control-sm inputTicket" name="estatusTicketDetalle"

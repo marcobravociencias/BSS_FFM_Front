@@ -253,14 +253,17 @@ public class ImplSoporteCentralizadoService implements SoporteCentralizadoServic
 
 	@Override
 	public ServiceResponseResult creaTicketSoporte(String params) {
+		JsonObject jsonObject = new Gson().fromJson(params, JsonObject.class);
+
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
 		String tokenAccess = principalDetail.getAccess_token();
-		logger.info("creaTicketSoporte ## "+ tokenAccess);
 		
+		jsonObject.addProperty("origenSistema", principalDetail.getIdOrigen());
+		logger.info("creaTicketSoporte ## "+ jsonObject.toString());
 		String urlRequest = principalDetail.getDireccionAmbiente().concat(constSoporteCentralizado.getCreaTicketSoporte());
 		logger.info("### URL creaTicketSoporte():" + urlRequest);
 		
-		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(params, urlRequest, ServiceResponseResult.class, tokenAccess);
+		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(jsonObject.toString(), urlRequest, ServiceResponseResult.class, tokenAccess);
 		logger.info("### RESULT" + gson.toJson(response));   
 		return response;
 	}
@@ -346,7 +349,7 @@ public class ImplSoporteCentralizadoService implements SoporteCentralizadoServic
 		logger.info("### URL guardarTicketDetalle(): \n" + urlRequest);
 
 		ServiceResponseResult response = restCaller.callPatchBearerTokenRequest(
-				params,
+				jsonObject.toString(),
 				urlRequest,
 				ServiceResponseResult.class,
 				tokenAcces);

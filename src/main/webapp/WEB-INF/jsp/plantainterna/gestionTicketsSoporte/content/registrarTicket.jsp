@@ -36,7 +36,7 @@
             <div class="col-4 form-group inputTicket-select" style="height: auto;">
                 <label for="fallaTicket" class="span-form-tickets">Falla<i ng-if="!catalogoFallasTicketSoporte.length"
                         class="icono-noseleccion fas fa-exclamation-circle ml-2"
-                        title="No se encontr&oacute; el catalogo de geograf&iacute;a"></i></label>
+                        title="No se encontr&oacute; el catalogo de fallas"></i></label>
                 <select class="form-control form-control-sm inputTicket" name="fallaTicket" id="fallaTicket"
                     ng-change="loadCategoriaTicketSoporte('registro')" ng-model="ticketSoporteR.fallaTicket" ng-class="{'error-captura-input': !ticketSoporteR.fallaTicket && validacionTicket}" >
                     <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>

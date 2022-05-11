@@ -616,13 +616,6 @@ span.text-tile-vehiculo {
     text-decoration-line: underline;
 }
 
-.text-camel{
-    text-transform: uppercase;
-}
-
-.text-camel::first-letter{
-    text-transform: uppercase;
-}
 
 
 span.text-content-vehiculo {
