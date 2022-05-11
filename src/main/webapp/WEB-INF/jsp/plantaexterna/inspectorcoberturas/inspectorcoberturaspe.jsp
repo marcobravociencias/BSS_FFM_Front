@@ -56,13 +56,13 @@
                         <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..." type="text" id="txtFalla" class="input-filtro-inspectorCobertura form-control form-control-sm" />
                         <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-fallas">
                             <li style="text-align: center;">
-                                <button ng-click="seleccionarTodosRecursivo(filtrosInspector.fallas)" id="todo_filtro" type="button" class="btn btn-indigo btn-sm waves-effect waves-light">Todos</button>
-                                <button ng-click="deseleccionarTodosRecursivo(filtrosInspector.fallas)" id="ninguno_filtro" type="button" class="btn btn-indigo btn-sm waves-effect waves-light">Ninguno</button>
+                                <button ng-click="seleccionarTodosRecursivo(filtrosInspector.fallas); pintarNombreEstatus(filtrosInspector.fallas,'#txtFalla');" id="todo_filtro" type="button" class="btn btn-indigo btn-sm waves-effect waves-light">Todos</button>
+                                <button ng-click="deseleccionarTodosRecursivo(filtrosInspector.fallas); pintarNombreEstatus(filtrosInspector.fallas,'#txtFalla');" id="ninguno_filtro" type="button" class="btn btn-indigo btn-sm waves-effect waves-light">Ninguno</button>
                             </li>
                             <li class="elemento_menu dropdown-divider"></li>
                             <li ng-repeat="filtro in filtrosInspector.fallas" class="element-menu-filter">
                                 <label class="dropdown-item form-check-inputfiltro">
-                                    <input ng-click=setCheckFiltroGenericV2(filtro,filtrosInspector.fallas) id="filtrotext-{{filtro.id}}" class="form-check-input" type="checkbox" ng-model="filtro.checkedOpcion" ng-checked="filtro.checkedOpcion" />
+                                    <input ng-click="setCheckFiltroGenericV2(filtro,filtrosInspector.fallas); pintarNombreEstatus(filtrosInspector.fallas,'#txtFalla');" id="filtrotext-{{filtro.id}}" class="form-check-input" type="checkbox" ng-model="filtro.checkedOpcion" ng-checked="filtro.checkedOpcion" />
                                     <span for="filtrotext-{{filtro.id}}" class="dropdown-item item-text-filtro" ng-bind="filtro.descripcion"></span>
                                 </label>
                                 <ul ng-if="filtro.children !== undefined &&  filtro.children.length > 0" ng-include="'filtroFalla.html'" class="dropdown-menu"></ul>
@@ -153,9 +153,9 @@
                                                 <div id="jstree-proton-3" class="proton-demo"></div>
                                             </div>
                                             <div class="row">
-                                                <div class="card-footer btn-ligar" ng-click="ligarIncidencias()">
-                                                    <span>LIGAR INCIDENCIAS</span>
-                                                </div>
+                                                <button class="btn card-footer btn-ligar" ng-disabled="!isPermisoLigarIncidencia" id="btn-ligarIncidencia" ng-click="ligarIncidencias()">
+                                                    LIGAR INCIDENCIAS
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -168,7 +168,7 @@
         </div>
     </div>
     <jsp:include page="modals/modalCluster.jsp"></jsp:include>
-    <jsp:include page="../../generic/filtros/filtros.jsp"></jsp:include>
+    <jsp:include page="filtros.jsp"></jsp:include>
 </body>
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=${googlkeyattrvar['gkeactok']}&libraries=geometry,places"></script>

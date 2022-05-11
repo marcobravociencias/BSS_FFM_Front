@@ -9,6 +9,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
     $scope.banderaErrorFallas = false;
     $scope.banderaErrorGeografia = false;
     $scope.isPermisoConsultaIncidencias = false;
+    $scope.isPermisoLigarIncidencia = false;
 
     $scope.initMapaInspectorCobertura = function () {
         map = new google.maps.Map(document.getElementById('mapaInspectorCobertura'), {
@@ -227,9 +228,25 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
         return texto;
     }
 
-    $scope.fallaSeleccion = function () {
-        $('#txtFalla').val($scope.listaSeleccionSelectFalla($scope.filtrosInspector.fallas));
-        $("#txtFalla").css("border-bottom", "2px solid #d9d9d9");
+    $scope.mostrarNombresEstatus = function (array) {
+        let arrayNombre = [];
+        angular.forEach(array, function (elemento, index) {
+            if (elemento.checkedOpcion) {
+                arrayNombre.push(elemento.descripcion);
+            }
+            if (elemento.children !== undefined && elemento.children.length > 0) {
+                arrayNombre = arrayNombre.concat($scope.mostrarNombresEstatus(elemento.children));
+            }
+        });
+        return arrayNombre;
+    }
+
+    $scope.pintarNombreEstatus = function (array, input) {
+        let textoEstatus = $scope.mostrarNombresEstatus(array);
+        $(input).val(textoEstatus);
+        if (textoEstatus.length > 0) {
+            $(input).css("border-bottom", "2px solid #d9d9d9");
+        }
     }
 
     $scope.consultarCatalogosInspectorCobertura = function () {
@@ -254,6 +271,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                 $scope.permisosUsuario = resultConf.MODULO_ACCIONES_USUARIO.permisos;
                 console.log($scope.permisosUsuario);
                 $scope.isPermisoConsultaIncidencias = ($scope.permisosUsuario.filter(e => { return e.clave == "accionConsultarIncidenciasCobertura" })[0] != undefined);
+                $scope.isPermisoLigarIncidencia = ($scope.permisosUsuario.filter(e => { return e.clave == "accionLigarIncidenciaInspectorCobertura" })[0] != undefined);
             }
 
             GenericMapa.prototype.callPrototypeMapa(results[0].data.result);
@@ -312,7 +330,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                             });
                             $('#texto_cluster_seleccionado').text('Sin selecci\u00F3n');
                             setTimeout(function () {
-                                $scope.fallaSeleccion();
+                                $scope.pintarNombreEstatus($scope.filtrosInspector.fallas, '#txtFalla');
                                 swal.close();
                             }, 500);
                         } else {
@@ -391,11 +409,11 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                     fechaFin: $scope.getFechaFormato($("#filtro_fecha_fin_inspectorCobertura").val())
                 }
                 // let params = {
-                //     "idsFallas": [31, 32],
-                //     "fechaInicio": "01-03-2022",
-                //     "fechaFin": "28-04-2022"
+                //     "idsFallas": [259, 270, 272],
+                //     "fechaInicio": "01-05-2022",
+                //     "fechaFin": "11-05-2022"
                 // }
-                // console.log(params);
+                console.log(params);
                 swal({ text: 'Espera un momento...', allowOutsideClick: false });
                 swal.showLoading();
                 inspectorCoberturaService.consultarIncidenciasCoberturaPE(params).then(function success(response) {
@@ -529,7 +547,23 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
         // $(".gm-ui-hover-effect").click();
         $('#incidencia_' + incidenciaUb.idIncidencia).css('background', '#d3d3d3');
         var infowindows = new google.maps.InfoWindow();
-        var contentString =
+        var contentString;
+        if (!$scope.isPermisoLigarIncidencia) {
+            contentString =
+            '<div id="content">' +
+            '   <div id="siteNotice"></div>' +
+            '   <h5 id="firstHeading" class="firstHeading">' +
+            '   <span class="titleHeading">ID: </span>' + incidenciaUb.idIncidencia + '</h5><hr>' +
+            '   <div id="bodyContent">' +
+            '       <b><strong class="titleBody">Reporta:</strong></b>&nbsp;' + incidenciaUb.usuarioReporta +
+            '       <br><br><b><strong class="titleBody">Falla:</strong></b>&nbsp;' + incidenciaUb.desTipoIncidencia +
+            '       <br><br><b><strong class="titleBody">Fecha:</strong></b>&nbsp;' + incidenciaUb.fechaRegistro +
+            '       <br><br><b><strong class="titleBody">Latitud:</strong></b>&nbsp;' + incidenciaUb.latitud +
+            '       <br><br><b><strong class="titleBody">Longitud:</strong></b>&nbsp;' + incidenciaUb.longitud +
+            '   </div>' +
+            '</div>';
+        } else {
+            contentString =
             '<div id="content">' +
             '   <div id="siteNotice"></div>' +
             '   <h5 id="firstHeading" class="firstHeading">' +
@@ -543,7 +577,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
             '       <br><button id="inc_' + incidenciaUb.idIncidencia + '" class="agregarBtn btn-block btn btn-sm btn-outline-primary" onclick="agregarIncidencia(' + incidenciaUb.idIncidencia + ')">Agregar</button>' +
             '   </div>' +
             '</div>';
-
+        }
         infowindows.setContent(contentString);
         var marker = new google.maps.Marker({
             id_marker: incidenciaUb.idIncidencia,
@@ -615,12 +649,14 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
     }
 
     agregarIncidencia = function (idIncidencia) {
-        let incidenciaLigar = $scope.incidenciasCobertura.find((e) => e.idIncidencia == idIncidencia);
-        console.log(incidenciaLigar);
-        $scope.listaIncidenciasLigar.push(incidenciaLigar);
-        console.log($scope.listaIncidenciasLigar);
-        $("#inc_" + incidenciaLigar.idIncidencia).attr("disabled", true);
-        $scope.$apply();
+        if ($scope.isPermisoLigarIncidencia) {
+            let incidenciaLigar = $scope.incidenciasCobertura.find((e) => e.idIncidencia == idIncidencia);
+            console.log(incidenciaLigar);
+            $scope.listaIncidenciasLigar.push(incidenciaLigar);
+            console.log($scope.listaIncidenciasLigar);
+            $("#inc_" + incidenciaLigar.idIncidencia).attr("disabled", true);
+            $scope.$apply();
+        }
     }
 
     $scope.eliminarIncidencia = function (id) {
