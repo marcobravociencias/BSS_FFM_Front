@@ -10,7 +10,7 @@
             <div class="col-4 form-group">
                 <label for="telefonoTicket" class="span-form-tickets">Tel&eacute;fono </label>
                 <input type="text" autocomplete="off" class="form-control form-control-sm  inputTicket" id="telefonoTicket"
-                    ng-model="ticketSoporteR.telefonoTecnico" ng-class="{'error-captura-input': !ticketSoporteR.telefonoTecnico && validacionTicket}" 
+                    ng-model="ticketSoporteR.telefonoTecnico" 
                     onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="10" />
             </div>
             <div class="col-4 form-group inputTicket-select">
@@ -78,12 +78,16 @@
         </div>
 
         <div class="row content-botones-creacion">
-            <div style=" margin: 1em 0 0 0;">
+            <div style=" margin: 0 0 0 0;">
                 <input type="button" class="btn btn-primary btn-editar-cambios ripple-surface"
                     ng-click="registrarTicketSoporte(ticket)" value="GUARDAR">
                 <button type="button" class="btn limpiar-btn btn-ligh"
                     ng-click="limpiarFormularioTicket()">LIMPIAR</button>
             </div>
+        </div>
+        <div id="message-success-resumen" ng-show="isGuardadoProcess && isMensajeSuccessOt" class="alert alert-success " role="alert"  ng-bind="mensajeRequestCreacion">            
+        </div>
+        <div id="message-error-resumen" ng-show="isGuardadoProcess && isMensajeErrorOt"  class="alert alert-danger"  role="alert" ng-bind="mensajeRequestCreacion">            
         </div>
     </div>
     <div class="col-6">

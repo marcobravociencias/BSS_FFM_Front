@@ -571,7 +571,7 @@ thead#thead_tecnicosCuenta {
 }
 
 .row-datos-creacion .form-group {
-    margin-bottom: 1.5em;
+    /* margin-bottom: 1.5em; */
 }
 
 
@@ -582,7 +582,7 @@ thead#thead_tecnicosCuenta {
 
 #content-mapa-creacion-ticket {
     min-heigth: 70vh;
-    margin-top: 1.5em;
+    margin-top: 2.2em;
     height: 10em;
     border-radius: .5em;
     border: 1px solid #bdbdbd;
@@ -718,7 +718,7 @@ span.text-content-vehiculo {
     margin-top: 1em;
     margin-bottom: 1em;
     margin-right: 1em;
-}
+margin-right: 0;}
 
 .cerrar-cancelar-btn {
     font-size: .7em;
@@ -798,6 +798,12 @@ span.text-content-vehiculo {
     padding: 0.5rem 1rem;
 }
 
+#opcion-creatickets .inputTicket{
+    box-shadow:none !important;
+/* cursor: pointer; */}
+#opcion-creatickets select.inputTicket{
+    cursor:pointer;
+}
 .inputTicket {
     border: 1px solid #dbdbdb !important;
     font-weight: 400;
@@ -977,3 +983,23 @@ i.icono-noseleccion {
     opacity: 0.3 !important;
     cursor: no-drop !important;
 }
+
+#message-success-resumen {
+    color: #006e2c;
+    background-color: #ccf1db;
+    border-color: #b3e9c9;
+    padding:0.5em 1.5em;
+}
+
+#tecnicosCuentaTable tbody tr td:nth-child(2),#tecnicosCuentaTable tbody tr td:nth-child(3){
+    color:#0f0f0f !important;
+    font-weight:bold;
+}
+
+div#message-error-resumen ,#message-success-resumen{
+    font-size: .8em;
+    line-height: 1;
+}
+ .btn-editar-cambios,.limpiar-btn{
+     margin-top:0 !important; 
+ }

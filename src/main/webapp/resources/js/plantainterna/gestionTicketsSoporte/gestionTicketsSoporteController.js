@@ -555,7 +555,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         $scope.tecnicoAsignado = $scope.listOrdenesCuenta.find(function (elem) { return elem.isChecked == true });
         if ($scope.tecnicoAsignado && $scope.tecnicoAsignado.isChecked) {
             swal({
-                title: "\u00BFEst\u00E1 seguro de relacionar el ticket con el t\u00E9cnico FFM?",
+                title: "\u00BFEst\u00E1 seguro de relacionar la OT FFM seleccionada con el ticket ?",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: '#007bff',
@@ -616,7 +616,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                 }
             });
         } else {
-            mostrarMensajeInformativo("Debes seleccionar un t&eacute;cnico para poder asignarlo");
+            mostrarMensajeInformativo("Debes seleccionar una OT para poder relacionar al ticket");
         }
     }
 
@@ -787,7 +787,15 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         $("#tecnologiaTicket").removeClass("invalid-inputTicket");
     });
     $scope.validacionTicket = false;
+    $scope.isGuardadoProcess=false
+    $scope.isMensajeSuccessOt=false
+    $scope.isMensajeErrorOt=false
+
     $scope.registrarTicketSoporte = function () {
+        $scope.isGuardadoProcess=false
+        $scope.isMensajeSuccessOt=false
+        $scope.isMensajeErrorOt=false
+
         $scope.validacionTicket = false;
         let mensajeError = '';
         let isValid = true;
@@ -898,6 +906,9 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                         paramsTicket.noSerieNew = $scope.ticketSoporteR.noSerieNew
                     }
                     gestionTicketSoporteService.creaTicketSoporte(paramsTicket).then(function success(response) {
+                        $scope.isMensajeSuccessOt=false
+                        $scope.isMensajeErrorOt=false
+                        $scope.isGuardadoProcess=true
                         if (response.data !== undefined) {
                             if (response.data.respuesta) {
                                 $scope.tecnicoAsignado = {};
@@ -908,14 +919,20 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                                 }
                                 $scope.cleanForm();
                                 toastr.success(response.data.resultDescripcion);
+                                $scope.isMensajeSuccessOt=true
 
                             } else {
                                 swal.close();
                                 mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                                $scope.isMensajeErrorOt=true
                             }
+                            $scope.mensajeRequestCreacion=response.data.resultDescripcion
+                            
                         } else {
                             swal.close();
                             mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                            $scope.mensajeRequestCreacion=response.data.resultDescripcion
+                            $scope.isMensajeErrorOt=true
                         }
                     });
                 }
@@ -1234,8 +1251,10 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             cancelButtonText: 'No'
         }).then(function (isConfirm) {
             if (isConfirm) {
+                $scope.isGuardadoProcess=false
+                $scope.isMensajeSuccessOt=false
+                $scope.isMensajeErrorOt=false
                 $scope.validacionTicket = false;
-                $scope.$apply();
                 $scope.cleanForm();
                 $("#cuentaTicket").removeClass("invalid-inputTicket");
                 $("#tecnicoTicket").removeClass("invalid-inputTicket");
@@ -1253,7 +1272,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                 $scope.consultarTicketsSoporte();
                 markerCreacionTickets.setMap(null)
                 markerCreacionTickets = undefined
-
+                $scope.$apply();            
             }
         }).catch(swal.noop);
     }
