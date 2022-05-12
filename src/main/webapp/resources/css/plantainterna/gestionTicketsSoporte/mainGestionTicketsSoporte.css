@@ -892,7 +892,6 @@ i.icono-noseleccion {
     color: #7f4c9d;
     display: inline;
     float: right;
-    margin-right: 1em;
     cursor: pointer;
     transition: all 0.5s ease;
     font-size: 1.8em;
@@ -971,6 +970,13 @@ i.icono-noseleccion {
     padding: 0.5em;
     color: #000;
 }
+
+.no-ingeniero{
+    font-size: 0.9em;
+    padding: 1em;
+    text-align: right;
+}
+
 
 .no-dictamen{
     font-size: 0.8em;

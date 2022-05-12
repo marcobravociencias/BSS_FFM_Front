@@ -54,7 +54,7 @@
                                             ng-click="consultarOtsTecnicosTicket()">REASIGNAR
                                             INGENIERO</span>
                                         <span ng-if="propietarioSession == nPuestoIngeniero" class="text-external-link"
-                                            ng-click="consultarOtsTecnicosTicket()">ASIGNARME
+                                            ng-click="consultarOtsTecnicosTicket()">REASIGNARME
                                             TICKET</span>
                                     </div>
 
@@ -121,9 +121,7 @@
                                         <span class="text-content-vehiculo">Empresarial</span>
                                     </div>
                                     <div ng-switch-default>
-                                        <div ng-switch-when="1">
-                                            <span class="text-content-vehiculo">Sin datos</span>
-                                        </div>
+                                        <span class="text-content-vehiculo">Sin datos</span>
                                     </div>
                                 </div>
 
@@ -192,49 +190,26 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="dropleft">
-                                <span class="fas fa-comments icon-color-comments" title="Comentarios"
-                                    id="dropupComments" data-toggle="dropdown" aria-expanded="false"></span>
-                                <div class="dropdown-menu dropup-comments">
-                                    <div class="box-comments">
-                                        <div class="box-comments-header">
-                                            <span>Historico de comentarios</span>
-                                        </div>
-                                        <div class="container-comments justify-content-center">
-                                            <div class="box-content" ng-show="comentariosOrdenTrabajo.length">
-                                                <div class="d-flex justify-content-center py-2"
-                                                    ng-repeat="comment in comentariosOrdenTrabajo">
-                                                    <div class="second py-2 px-2">
-                                                        <span class="text1" ng-bind="comment.comentario"></span>
-                                                        <div class="d-flex justify-content-between">
-                                                            <span class="text2" ng-bind="comment.nombreUsuario"></span>
-                                                        </div>
-                                                        <span class="text2" style="float: right;"
-                                                            ng-bind="comment.fechaComentario"></span>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div class="box-content" ng-show="!comentariosOrdenTrabajo.length">
-                                                <div class="no-comments">
-                                                    No se encontraron comentarios
-                                                </div>
-                                            </div>
-                                            <div class="d-flex justify-content-center pt-3 pb-2">
-                                                <textarea type="text" cols="2" placeholder="Agragar comentario"
-                                                    class="form-control form-control-sm inputTicket addtxt"
-                                                    id="comentarioTicket" ng-model="comentarioTicket"></textarea>
-                                                <div>
-                                                    <button ng-click="addComentarios()" type="button"
-                                                        class="btn btn-primary btn-editar-cambios ripple-surface btn-disabled mr-0 send-comment"><i
-                                                            class="far fa-paper-plane"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div class="container-fluid ticket-content content-select-ticket-detalle">
+                                <div class="container-text-title-detalle"><span
+                                        class="text-tile-ticket">TECNOLOG&Iacute;A<i ng-if="!tecnologiaList.length"
+                                            class="icono-noseleccion fas fa-exclamation-circle ml-2"
+                                            title="No se encontr&oacute; el catalogo de tecnolog&iacute;as"></i></span>
+                                </div>
+                                <div class="container-text-content-detalle inputTicket-select">
+                                    <select
+                                        ng-class="{'error-captura-input': !ticketSoporteDetalle.tecnologia && validacionTicketDetalle}"
+                                        class="form-control form-controlt form-control-sm inputTicket"
+                                        id="tecnologiaGestor" name="tecnologiaGestor"
+                                        ng-model="ticketSoporteDetalle.tecnologia">
+                                        <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
+                                        <option value="{{tec.id}}" ng-repeat="tec in tecnologiaList">
+                                            {{tec.descripcion}}
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -370,6 +345,49 @@
                                 <div class="container-text-content-detalle"><span
                                         class="text-content-vehiculo ng-binding"
                                         ng-bind="editTicket.detalleOtDetenida.cliente || 'Sin dato'"></span>
+                                </div>
+                            </div>
+                            <div class="dropleft">
+                                <span class="fas fa-comments icon-color-comments" title="Comentarios"
+                                    id="dropupComments" data-toggle="dropdown" aria-expanded="false"></span>
+                                <div class="dropdown-menu dropup-comments">
+                                    <div class="box-comments">
+                                        <div class="box-comments-header">
+                                            <span>Historico de comentarios</span>
+                                        </div>
+                                        <div class="container-comments justify-content-center">
+                                            <div class="box-content" ng-show="comentariosOrdenTrabajo.length">
+                                                <div class="d-flex justify-content-center py-2"
+                                                    ng-repeat="comment in comentariosOrdenTrabajo">
+                                                    <div class="second py-2 px-2">
+                                                        <span class="text1" ng-bind="comment.comentario"></span>
+                                                        <div class="d-flex justify-content-between">
+                                                            <span class="text2" ng-bind="comment.nombreUsuario"></span>
+                                                        </div>
+                                                        <span class="text2" style="float: right;"
+                                                            ng-bind="comment.fechaComentario"></span>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="box-content" ng-show="!comentariosOrdenTrabajo.length">
+                                                <div class="no-comments">
+                                                    No se encontraron comentarios
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-center pt-3 pb-2">
+                                                <textarea type="text" cols="2" placeholder="Agragar comentario"
+                                                    class="form-control form-control-sm inputTicket addtxt"
+                                                    id="comentarioTicket" ng-model="comentarioTicket"></textarea>
+                                                <div>
+                                                    <button ng-click="addComentarios()" type="button"
+                                                        class="btn btn-primary btn-editar-cambios ripple-surface btn-disabled mr-0 send-comment"><i
+                                                            class="far fa-paper-plane"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -517,9 +535,9 @@
     <div class="row content-falla">
         <div class="row">
             <div class="container-fluid ticket-content content-select-ticket-detalle col-4">
-                <div class="container-text-title-detalle"><span class="text-tile-ticket">ESTATUS TICKET<i ng-if="!estatusList.length"
-                    class="icono-noseleccion fas fa-exclamation-circle ml-2"
-                    title="No se encontr&oacute; el catalogo de estatus"></i></span></div>
+                <div class="container-text-title-detalle"><span class="text-tile-ticket">ESTATUS TICKET<i
+                            ng-if="!estatusList.length" class="icono-noseleccion fas fa-exclamation-circle ml-2"
+                            title="No se encontr&oacute; el catalogo de estatus"></i></span></div>
                 <div class="container-text-content-detalle inputTicket-select">
                     <select ng-class="{'error-captura-input': !ticketSoporteDetalle.estatus && validacionTicketDetalle}"
                         class="form-control form-control-sm inputTicket" name="estatusTicketDetalle"
@@ -576,21 +594,28 @@
         </div>
 
         <div class="row content-falla">
-            <div class="col-12"
-                ng-if="editTicket.detalleTicketSc.idEstatus !== 4 && editTicket.detalleTicketSc.idEstatus !== 5">
-                <button ng-click="guardarTicketDetalle()" type="button"
+            <div class="col-4 offset-4" ng-if="!editTicket.detalleTicketSc.numEmpleadoInge">
+                <div class="no-ingeniero">
+                    <i class="icono-noseleccion fas fa-exclamation-circle ml-2"></i>
+                    <span ng-if="propietarioSession != nPuestoIngeniero">Asigna el ticket para continuar</span>
+                    <span ng-if="propietarioSession == nPuestoIngeniero">Toma el ticket para continuar</span>
+                </div>
+            </div>
+            <div class="col-4" ng-class="{'offset-8': editTicket.detalleTicketSc.numEmpleadoInge}">
+                <button ng-click="guardarTicketDetalle()" type="button" id="btnGuardarCambios"
+                    ng-if="editTicket.detalleTicketSc.idEstatus !== 4 && editTicket.detalleTicketSc.idEstatus !== 5"
                     class="btn btn-primary btn-editar-cambios ripple-surface mr-0">
                     <b>Guardar cambios </b>
                 </button>
                 <button ng-click="cerrarDetalleTicket()" type="button" class="btn cerrar-cancelar-btn  btn-ligh"
+                    ng-if="editTicket.detalleTicketSc.idEstatus !== 4 && editTicket.detalleTicketSc.idEstatus !== 5"
                     data-mdb-dismiss="modal">
                     Cancelar
                 </button>
-            </div>
-            <div class="col-12"
-                ng-if="editTicket.detalleTicketSc.idEstatus === 4 || editTicket.detalleTicketSc.idEstatus === 5">
-                <button ng-click="cerrarDetalleTicket()" type="button" class="btn cerrar-cancelar-btn  btn-ligh"
-                    style="margin: 1em 0;" data-mdb-dismiss="modal">
+                <button ng-click="cerrarDetalleTicket()"
+                    ng-if="editTicket.detalleTicketSc.idEstatus === 4 || editTicket.detalleTicketSc.idEstatus === 5"
+                    type="button" class="btn cerrar-cancelar-btn  btn-ligh" style="margin: 1em 0;"
+                    data-mdb-dismiss="modal">
                     Salir
                 </button>
             </div>

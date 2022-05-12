@@ -309,7 +309,7 @@ public class ImplSoporteCentralizadoService implements SoporteCentralizadoServic
 		String urlRequest = principalDetail.getDireccionAmbiente().concat(constSoporteCentralizado.getAsignarIngenieroTicket());
 		logger.info("### URL asignarIngenieroTicket(): \n" + urlRequest);
 
-		ServiceResponseResult response = restCaller.callPatchBearerTokenRequest(
+		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(
 				params,
 				urlRequest,
 				ServiceResponseResult.class,

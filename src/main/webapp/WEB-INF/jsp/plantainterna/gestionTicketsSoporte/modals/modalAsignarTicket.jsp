@@ -2,7 +2,8 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header header-sin-border">
-                <h5 class="modal-title header-title-tec">Asignar Ingeniero</h5>
+                <h5 class="modal-title header-title-tec" ng-if="editTicket.detalleTicketSc.numEmpleadoInge">Reasignar ingeniero</h5>
+                <h5 class="modal-title header-title-tec" ng-if="!editTicket.detalleTicketSc.numEmpleadoInge">Asignar ingeniero</h5>
              
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close">
                 </button>
