@@ -37,7 +37,7 @@
 						<div id="form-total" role="application" class="wizard clearfix">
 							<div class="steps clearfix">
 								<ul role="tablist">
-									<li role="tab" id="wizzard-1" class="tab-step-wizar first" aria-disabled="false" aria-selected="true" ng-click="mostrarTab(1)">
+									<li role="tab" id="wizzard-1" ng-class="{'current':elementTab==1}" class="tab-step-wizar first" aria-disabled="false" aria-selected="true" ng-click="mostrarTab(1)">
 										<a id="form-total-t-0" href="" aria-controls="form-total-p-0">
 											<span class="current-info audible"> </span>
 											<div class="title">
@@ -46,7 +46,7 @@
 											</div>
 										</a>
 									</li>
-									<li role="tab" id="wizzard-2" class="tab-step-wizar" aria-disabled="false" aria-selected="false" ng-click="mostrarTab(2)">
+									<li role="tab" id="wizzard-2" ng-class="{'current':elementTab==2}" class="tab-step-wizar" aria-disabled="false" aria-selected="false" ng-click="mostrarTab(2)">
 										<a id="form-total-t-1" href="" aria-controls="form-total-p-1">
 											<div class="title">
 												<span class="step-icon"><i class="fa fa-info"></i></span>
@@ -54,7 +54,7 @@
 											</div>
 										</a>
 									</li>
-									<li role="tab" id="wizzard-3" class="tab-step-wizar" aria-disabled="false" aria-selected="false" style="padding-right: 0% !important;" ng-click="mostrarTab(3);">
+									<li role="tab" id="wizzard-3" ng-class="{'current':elementTab==3}" class="tab-step-wizar" aria-disabled="false" aria-selected="false" style="padding-right: 0% !important;" ng-click="mostrarTab(3);">
 										<a id="form-total-t-2" href="" aria-controls="form-total-p-2">
 											<div class="title">
 												<span class="step-icon"><i class="fa fa-map-marker"></i></span>
@@ -62,7 +62,7 @@
 											</div>
 										</a>
 									</li>
-									<li role="tab" id="wizzard-4" class="tab-step-wizar last " aria-disabled="false" aria-selected="false" style="margin-left: 63px !important;" ng-click="mostrarTab(4)">
+									<li role="tab" id="wizzard-4" ng-class="{'current':elementTab==4}" class="tab-step-wizar last " aria-disabled="false" aria-selected="false" style="margin-left: 63px !important;" ng-click="mostrarTab(4)">
 										<a id="form-total-t-3" href="" aria-controls="form-total-p-3">
 											<div class="title">
 												<span class="step-icon"><i class="fa fa-list-alt"></i></span>
