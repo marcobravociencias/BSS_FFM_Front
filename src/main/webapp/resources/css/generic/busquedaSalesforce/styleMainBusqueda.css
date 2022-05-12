@@ -525,7 +525,7 @@ span.noosactivar.ng-scope {
 
 .alinear-derecha {
   float: right;
-}
+height: 55px;}
 
 .style_card_header_detallepro {
   border-bottom: 0px !important;
@@ -1832,4 +1832,9 @@ span.text-activacion-warning {
   position: absolute;
   top: 44px;
   left: 51%;
+}
+
+.icon-title {
+  height: 44px!important;
+  line-height: 44px;
 }

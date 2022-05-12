@@ -51,6 +51,8 @@
         <link rel="stylesheet"
             href="${pageContext.request.contextPath}/resources/css/generic/busquedaSalesforce\styleMainBusqueda.css?v=${sessionScope.versionDepl}">
         <link rel="stylesheet"
+            href="${pageContext.request.contextPath}/resources/css/generic/busquedaSalesforce\mainNoticiaBusqueda.css?v=${sessionScope.versionDepl}">
+        <link rel="stylesheet"
             href="${pageContext.request.contextPath}/resources/css/plantainterna/gestionTicketsSoporte/mainGestionTicketsSoporte.css?v=${sessionScope.versionDepl}" />
         <link rel="stylesheet"
             href="${pageContext.request.contextPath}/resources/css/plantainterna/gestionTicketsSoporte\noticiasGentionTicket.css?v=${sessionScope.versionDepl}">

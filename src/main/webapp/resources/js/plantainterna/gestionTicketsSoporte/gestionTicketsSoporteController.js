@@ -1727,6 +1727,24 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         $scope.initTableingeniero();
     })
 
+    $scope.validacionGenerica = function() {
+        if ($scope.historial.length === 1) {
+            if ($scope.historial[0].keyObject === 'TK') {
+                $scope.banderaNoticiasTicket = true;
+            }
+            if ($scope.historial[0].keyObject === 'OP') {
+                $scope.banderaNoticiasOportunidad = true;
+            }
+            if ($scope.historial[0].keyObject === 'OS') {
+                $scope.banderaNoticiasOs = true;
+            }
+        } else {
+            $scope.banderaNoticiasTicket = false;
+            $scope.banderaNoticiasOportunidad = false;
+            $scope.banderaNoticiasOs = false;
+        }
+    }
+
 }]);
 
 angular.element(document).ready(function () {

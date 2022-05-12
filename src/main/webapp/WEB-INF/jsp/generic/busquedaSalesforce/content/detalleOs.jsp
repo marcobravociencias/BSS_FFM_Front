@@ -1,17 +1,17 @@
-<!--div class="row">
+<div class="row">
     <div ng-show="isAbiertoOSNoticias">
-        noticiasGeneralesOs
+        <jsp:include page="/WEB-INF/jsp/generic/busquedaSalesforce/content/noticiasGeneralesOs.jsp"></jsp:include>
     </div>
-</div-->
+</div>
 <div class="col-12">
     <div class="row header-detalle">
         <div  ng-show="showOs" class="header-back-title col-4">
             <div  ng-click="regresarConsulta()" class="container-regresar-button text-center">
                 <span class="regresar-elemento fa fa-undo"></span>
             </div>
-            <!--div  ng-click="abrirVentanaNoticias()" class="container-regresar-button text-center">
+            <div  ng-click="abrirVentanaNoticias()" ng-show="banderaNoticiasOs" class="container-regresar-button text-center">
                 <span class="regresar-elemento fa fa-newspaper-o"></span>
-            </div-->
+            </div>
             <div  ng-click="regresarHome()" class="container-regresar-button text-center">
                 <span class="regresar-elemento fa fa-home"></span>
             </div>
