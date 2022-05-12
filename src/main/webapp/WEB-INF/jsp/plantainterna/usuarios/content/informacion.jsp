@@ -119,7 +119,7 @@
 		<label class="span-consulta"><i class="fa fa-building"></i> Cuadrillas</label>
 		<div class="dropdown">
 			<input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="NO HAY SELECCI&Oacute;N" type="text" id="cuadrilla_select_registro" class="form-control inputFormulario" style="height: 34px; cursor: pointer;" />
-		    <ul class="dropdown-menu drop-down-filters" style="background-color: #F5F5F5; padding: 1em !important; width: 80%;">          
+		    <ul class="dropdown-menu drop-down-filters" style="background-color: #F5F5F5; padding: 1em !important; width: 80%; border: 1px solid #d7d7d7 !important;">          
 		        <div ng-repeat="cuadrillaPadre in listaCuadrillas track by $index">
 		        	<label>{{cuadrillaPadre.descripcion}}</label>
 		            <li ng-repeat="cuadrillaHija in cuadrillaPadre.cuadrillasHijas" class="element-menu-filter">

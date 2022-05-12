@@ -66,7 +66,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	$scope.tabConfirmacion = false;
 	
 	$scope.tabInformacionVW_ASIG_AUTOMATICA = true;
-	$scope.tabInformacionVW_CUADRILLA = true;
+	$scope.tabInformacionVW_CUADRILLA = false;
 	$scope.tabInformacionVL_RFC = true;
 	$scope.tabInformacionVL_CURP = true;
 	$scope.tabArbol_LB_N1 = "";
@@ -125,6 +125,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     		usuarioPIService.consultarCuadrillasGestionUsuarios()
         ]).then(function(results) {
         	
+        	//********************* PENDIENTE VALIDAR *********************
         	var listaResultCuadrillas = results[7].data.result.tipoCuadrillas;
         	$scope.listaCuadrillas = [];
         	angular.forEach(listaResultCuadrillas,function(cuadrllaPadre,index){
@@ -134,7 +135,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     				$scope.listaCuadrillas.push(cuadrllaPadre);
     			}
     		});
-        	console.log($scope.listaCuadrillas);
+        	//******************* FIN PENDIENTE VALIDAR *******************
         	
         	// *** CONFIGURACIÓN DESPACHO ***
         	var nivelUsuario; 				
@@ -862,7 +863,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 //    	console.log("------------------------------------------------------");
     	
     	$scope.tabInformacionVW_ASIG_AUTOMATICA = true;
-    	$scope.tabInformacionVW_CUADRILLA = true;
+    	$scope.tabInformacionVW_CUADRILLA = false;
     	$scope.tabInformacionVL_RFC = true;
     	$scope.tabInformacionVL_CURP = true;
     	$scope.tabArbol_LB_N1 = "";
@@ -891,8 +892,8 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	    			}
 	        		break;
 	        	case "tabInformacionVW_CUADRILLA":
-	        		if(conf.valor == "false"){
-	        			$scope.tabInformacionVW_CUADRILLA = false;
+	        		if(conf.valor == "true"){
+	        			$scope.tabInformacionVW_CUADRILLA = true;
 	    			}
 	        		break;
 	        	case "tabArbol_LB_N1":
@@ -922,22 +923,46 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	        		$scope.tabIntervenciones_NV_INTERVENCIONES = conf.valor;
 	        		break;
 	        	case "tabTecnicosVL_MULTISELECCION":
-	        		$scope.tabTecnicosVL_MULTISELECCION = conf.valor;
+	        		if(conf.valor+"" == "true"){
+	    				$scope.tabTecnicosVL_MULTISELECCION = true;
+	    			}else if(conf.valor+"" == "false"){
+	    				$scope.tabTecnicosVL_MULTISELECCION = false;
+	    			}
 	        		break;
 	        	case "tabDespachosVL_MULTISELECCION":
-	        		$scope.tabDespachosVL_MULTISELECCION = conf.valor;
+	        		if(conf.valor+"" == "true"){
+	    				$scope.tabDespachosVL_MULTISELECCION = true;
+	    			}else if(conf.valor+"" == "false"){
+	    				$scope.tabDespachosVL_MULTISELECCION = false;
+	    			}
 	        		break;
 	        	case "tabIngenierosVL_MULTISELECCION":
-	        		$scope.tabIngenierosVL_MULTISELECCION = conf.valor;
+	        		if(conf.valor+"" == "true"){
+	    				$scope.tabIngenierosVL_MULTISELECCION = true;
+	    			}else if(conf.valor+"" == "false"){
+	    				$scope.tabIngenierosVL_MULTISELECCION = false;
+	    			}
 	        		break;
 	        	case "tabSupervisorCentralizadoVL_MULTISELECCION":
-	        		$scope.tabSupervisorCentralizadoVL_MULTISELECCION = conf.valor;
+	        		if(conf.valor+"" == "true"){
+	    				$scope.tabSupervisorCentralizadoVL_MULTISELECCION = true;
+	    			}else if(conf.valor+"" == "false"){
+	    				$scope.tabSupervisorCentralizadoVL_MULTISELECCION = false;
+	    			}
 	        		break;
 	        	case "tabCouchDespachoVL_MULTISELECCION":
-	        		$scope.tabCouchDespachoVL_MULTISELECCION = conf.valor;
+	        		if(conf.valor+"" == "true"){
+	    				$scope.tabCouchDespachoVL_MULTISELECCION = true;
+	    			}else if(conf.valor+"" == "false"){
+	    				$scope.tabCouchDespachoVL_MULTISELECCION = false;
+	    			}
 	        		break;
 	        	case "tabSupervisorVL_MULTISELECCION":
-	        		$scope.tabSupervisorVL_MULTISELECCION = conf.valor;
+	        		if(conf.valor+"" == "true"){
+	    				$scope.tabSupervisorVL_MULTISELECCION = true;
+	    			}else if(conf.valor+"" == "false"){
+	    				$scope.tabSupervisorVL_MULTISELECCION = false;
+	    			}
 	        		break;
 	        	case "tabTecnicos_FL_TECNICOS":
 	        		$scope.idPuestoTecnico = conf.valor;
@@ -1273,6 +1298,9 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	$scope.informacionRegistro.tecnicos = [];
     	$scope.informacionRegistro.despachos = [];
     	$scope.informacionRegistro.ingenieros = [];
+    	$scope.informacionRegistro.supervisoresCentralizados = [];
+    	$scope.informacionRegistro.couchs = [];
+    	$scope.informacionRegistro.supervisores = [];
     	
     	var puestoSeleccionado = $("#puesto_select_registro option:selected").val();
     	var companiaSeleccionada = $("#compania_select_registro option:selected").val();
@@ -1294,6 +1322,24 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	angular.forEach($scope.listaIngenieros,function(ingeniero,index){
 			if(ingeniero.checkedOpcion == true){
 				$scope.informacionRegistro.ingenieros.push(ingeniero.idUsuario);
+			}
+		});
+    	
+    	angular.forEach($scope.listaSupervisoresCentralizados,function(supCentralizado,index){
+			if(supCentralizado.checkedOpcion == true){
+				$scope.informacionRegistro.supervisoresCentralizados.push(supCentralizado.idUsuario);
+			}
+		});
+    	
+    	angular.forEach($scope.listaCouchsDespachos,function(couch,index){
+			if(couch.checkedOpcion == true){
+				$scope.informacionRegistro.couchs.push(couch.idUsuario);
+			}
+		});
+    	
+    	angular.forEach($scope.listaSupervisores,function(supervisor,index){
+			if(supervisor.checkedOpcion == true){
+				$scope.informacionRegistro.supervisores.push(supervisor.idUsuario);
 			}
 		});
     	
@@ -1329,11 +1375,17 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     			idDispositivo: "string",
     			fechaAlta: fechaSeleccionada[2] + '-' + fechaSeleccionada[1] + '-' + fechaSeleccionada[0],
     			geografias: $scope.informacionRegistro.geografias,
-    			intervenciones: $scope.informacionRegistro.intervenciones,
-    			perfilesOu: jsonPerfilesIntervenciones,
     			permisos: $scope.isTecnico == true ? [] : $scope.informacionRegistro.permisos,
     			idAsignacionAutomatica: $scope.tabInformacionVW_ASIG_AUTOMATICA == true ? $scope.informacionRegistro.asignacionAutomatica : 0
     	};
+    	
+    	if($scope.tabPerfiles){
+    		paramsRegistro.perfilesOu = jsonPerfilesIntervenciones;
+    	}
+    	
+    	if($scope.tabIntervenciones){
+    		paramsRegistro.intervenciones = $scope.informacionRegistro.intervenciones;
+    	}
     	
     	if($scope.tabTecnicos){
     		paramsRegistro.idOperarios = $scope.informacionRegistro.tecnicos;
@@ -1342,12 +1394,24 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	if($scope.tabDespachos){
     		paramsRegistro.idDespachos = $scope.informacionRegistro.despachos;
     	}
-//    	var llaveIng = "pollos";
-//    	if($scope.tabIngenieros){
-//    		paramsRegistro.+""llaveIng = $scope.informacionRegistro.ingenieros;
-//    	}
     	
-    	if($scope.tabInformacionVW_CUADRILLAs){
+    	if($scope.tabIngenieros){
+    		paramsRegistro.subordinados = $scope.informacionRegistro.ingenieros;
+    	}
+    	
+    	if($scope.tabSupervisorCentralizado){
+    		paramsRegistro.supervisores = $scope.informacionRegistro.supervisoresCentralizados;
+    	}
+    	
+    	if($scope.tabCouchDespacho){
+    		paramsRegistro.supervisores = $scope.informacionRegistro.couchs;
+    	}
+    	
+    	if($scope.tabSupervisor){
+    		paramsRegistro.supervisores = $scope.informacionRegistro.supervisores;
+    	}
+    	
+    	if($scope.tabInformacionVW_CUADRILLA){
     		paramsRegistro.tipoCuadrilla = $scope.informacionRegistro.cuadrilla;
     	}
     	
@@ -1364,6 +1428,8 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 			    nombre: ""
 			  }
     	}
+
+    	console.log(paramsRegistro);
 
     	var respuestaValidacionRegistro = $scope.validarInformacionRegistro();
     	if(respuestaValidacionRegistro){
@@ -1415,12 +1481,12 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     			mensaje:"Se realizará el registro sin los siguientes datos: ",
     			validacion: true
     	}
-    	if($scope.isTecnico == false){
-    		if($scope.informacionRegistro.tecnicos < 1){
-    			respuesta.mensaje = respuesta.mensaje + " *Técnicos ";
-    			respuesta.validacion = false;
-    		}
-    	}
+//    	if($scope.isTecnico == false){
+//    		if($scope.informacionRegistro.tecnicos < 1){
+//    			respuesta.mensaje = respuesta.mensaje + " *Técnicos ";
+//    			respuesta.validacion = false;
+//    		}
+//    	}
 		if($scope.fileFotoUsuario == null){
 			respuesta.mensaje = respuesta.mensaje + " *Fotografía ";
 			respuesta.validacion = false;
