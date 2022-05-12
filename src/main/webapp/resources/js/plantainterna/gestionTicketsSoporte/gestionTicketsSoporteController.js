@@ -1649,7 +1649,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     $scope.consultaChat = function () {
         $scope.comentariosOrdenTrabajo = [];
         let params = {
-            idOt: $scope.editTicket.detalleTicketSc.otCentralizado
+            idOt: $scope.editTicket.detalleOtDetenida.otGeneraSoporte
         }
 
         genericService.consultarComentariosDespachoOT(params).then(function success(response) {
