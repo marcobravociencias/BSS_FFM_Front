@@ -280,43 +280,64 @@ var listTitcket = {
     }
 }
 
-var ticketDetalle = {
-    "success": true,
+var ticketDetalleDta = {
     "result": {
-        "result": "0",
-        "resultDescription": "Proceso terminado correctamente.",
-        "orden": {
-            "tecnicoIDC": "SISTEMAS SISTEMAS2 VISUET",
-            "ticket": "103430445",
-            "ciudad": "CIUDAD DE MEXICO-CENTRO",
-            "distrito": "CONDESA D",
-            "telefono": "7711828350",
-            "despachoId": "2075804",
-            "despachoNombre": "SUPERVISOR SOPORTE CENTRALIZADO",
-            "region": "1-CENTRO",
-            "geocerca": "COYOACAN G ",
-            "cluster": "SAN ANGEL",
-            "numeroCuenta": "0102006737",
-            "idEstatusOT": "5",
-            "estatusOT": "CANCELADA",
-            "idEstadoOT": "18",
-            "estadoOT": "CANCELADA",
-            "idMotivoOT": "416",
-            "motivoOT": "OT DUPLICADA",
-            "idEstatusTicket": "2",
-            "estatusTicket": "Cerrado",
-            "ordenServicio": "OS-13964316",
-            "tecnicoId": "161",
-            "tecnicoNombre": "SISTEMAS SISTEMAS2 VISUET",
-            "tecnicoAsignado": "2075785",
-            "codificacion": "4",
-            "nivel1": "744",
-            "nivel2": "745",
-            "nivel3": "746",
-            "comentarios": "Prueba productiva de incidencias en ticket. HACER CASO OMISO",
-            "problemaSolucionado": "1"
+        "mensaje": "Operación exitosa",
+        "description": "Ejecución correcta",
+        "version": null,
+        "instancia": "LocalHost",
+        "detalleGeneral": {
+            "detalleTicketSc": {
+                "idPropietarioSc": 1,
+                "idMotivoSc": 1,
+                "falla": 1,
+                "categoria": 311,
+                "subcategoria": 1213,
+                "idTecnologia": 3,
+                "otCentralizado": 579823,
+                "numTicket": "58501946",
+                "idTicketSf": "5003C000007q7F9QAI",
+                "objectTypeTicket": "Ticket",
+                "idfolioSf": "a158A000001nhMcQAI",
+                "folioSistema": "OS-6949017",
+                "objectTypeFolio": "OrdenServicio",
+                "idEstatus": 2,
+                "numEmpleadoInge": "15015530",
+                "usuarioInge": "15015530",
+                "ingeNombre": "Jose",
+                "ingeApellidoPaterno": "Flores",
+                "ingeApellidoMaterno": "Carrillo",
+                "ingeniero": "Jose Flores Carrillo",
+                "celularInge": "5155015600",
+                "fotoInge": "https://firebasestorage.googleapis.com/v0/b/totalplay-ffm-core-dev.appspot.com/o/usuarios%2Fmex%2F15015530%2FfotoPerfil?alt=media&token=uuidv4()",
+                "acciones": []
+            },
+            "detalleOtDetenida": {
+                "otGeneraSoporte": 219035,
+                "tipoNegocio": "1",
+                "tipoOrden": "48",
+                "descTipoOrden": "Instalación",
+                "subtipoOrden": "106",
+                "descSubTipoOrden": "Instalacion Huawei",
+                "idCliente": "2952",
+                "cliente": "Gamaliel Aguilar Ceron",
+                "idCluster": "3160",
+                "idTecnico": 22,
+                "numEmpleadoTecnico": "65030867",
+                "usuarioTecnico": "TECNICOPI",
+                "tecnicoNombre": "Juan Carlos",
+                "tecnicoApellidoPaterno": "Herrera",
+                "tecnicoApellidoMaterno": "Lopez",
+                "tecnico": "Juan Carlos Herrera Lopez",
+                "celularTecnico": "5523377698",
+                "fotoTecnico": "https://firebasestorage.googleapis.com/v0/b/totalplay-ffm-core-dev.appspot.com/o/usuarios%2Fmex%2F65030867%2FfotoPerfil?alt=media&token=uuidv4()"
+            }
         }
-    }
+    },
+    "resultDescripcion": "Accion completada",
+    "mensajeException": null,
+    "codigoEstatusService": 200,
+    "respuesta": true
 }
 
 var infoUsuarioEstatusHoras = {
