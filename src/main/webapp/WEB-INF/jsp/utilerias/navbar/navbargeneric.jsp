@@ -222,7 +222,7 @@
                 <div class="content-header" id="user-info-login">
                     <div class="row dropdown-toggle" id="dropdownMenuLogin" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false" style="cursor: pointer;" onclick="cargarEstatusUs()">
-                        <div class="col-3" style="padding-right: 0;">
+                        <div class="col-3" style="padding-right: 0;padding-top: 0.5em;">
                             <c:if
                                 test="${userStore.urlFoto != null &&  userStore.urlFoto != '' && userStore.urlFoto != 'string'}">
                                 <div class="icon-wrapper icon-wrapper-alt-user rounded-circle ">
@@ -242,15 +242,18 @@
                             </c:if>
                         </div>
                         <div class="col-9" style="padding-right: 0; padding-top: 0.4em;">
-                            <h5 class="header-nombre-usuario">
-                                <sec:authentication property="principal.usuarioNombre" />
-                                <sec:authentication property="principal.usuarioApellidoPaterno" />
-                                -
-                                <sec:authentication property="principal.puesto" />
-                            </h5>
-                            <h5 class="header-perfil-usuario">
-                                <sec:authentication property="principal.propietario" />
-                            </h5>
+                            <div class="nav-nombre-usuario-generic">
+                                <span class="header-nombre-usuario">
+                                    <sec:authentication property="principal.usuarioNombre" />
+                                    <sec:authentication property="principal.usuarioApellidoPaterno" />
+                                    -
+                                    <sec:authentication property="principal.puesto" />
+                                </span>
+                                <h5 class="header-perfil-usuario">
+                                    <sec:authentication property="principal.propietario" />
+                                </h5>
+                            </div>
+
                         </div>
                     </div>
 
