@@ -37,4 +37,26 @@ public class GenericAccionesController {
 		}
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
+
+	@PostMapping("/agregarMensajeAccionSession")
+	public ResponseEntity<?> agregarMensajeAccionSession(@RequestBody String params){
+		logger.info("##### CONSULTANDO agregarMensajeAccionSession");
+
+		ServiceResponseResult response = genericAccionesService.agregarMensajeAccionSession(params);
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+
+	@PostMapping("/consultarAccionesRecientesSession")
+	public ResponseEntity<?> consultarAccionesRecientesSession(@RequestBody String params){
+		logger.info("##### CONSULTANDO consultarAccionesRecientesSession");
+
+		ServiceResponseResult response = genericAccionesService.consultarAccionesRecientesSession(params);
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
 }

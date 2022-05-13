@@ -314,7 +314,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                                 }
                                 return titulo
                             })
-                        } else if (parseInt(elemento.id)  == 2) {
+                        } else if (parseInt(elemento.id)  === 2) {
                             $scope.banderaVespertino = true
                             $scope.arrayTitulo.map(titulo => {
                                 if (titulo.title === 'Vespertino') {

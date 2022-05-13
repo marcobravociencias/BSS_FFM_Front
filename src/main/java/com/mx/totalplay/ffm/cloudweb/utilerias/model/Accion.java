@@ -1,0 +1,1 @@
+package com.mx.totalplay.ffm.cloudweb.utilerias.model;import lombok.Builder;import lombok.Data;@Data@Builderpublic class Accion {    private String identificadorModulo;    private String mensaje;    private String tipoMensaje;}

@@ -109,4 +109,15 @@ app.service("genericService", function ($http) {
 		});
 	};
 
+    this.agregarMensajeAccionSession = function (params) {
+        return $http({
+            method: "post",
+            url: "req/agregarMensajeAccionSession",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    }
+
 })

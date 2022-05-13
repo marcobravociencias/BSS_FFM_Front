@@ -5,14 +5,11 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.mx.totalplay.ffm.cloudweb.plantainterna.service.DespachoPIService;
 import com.mx.totalplay.ffm.cloudweb.plantainterna.utils.ConstDespachoPI;
-import com.mx.totalplay.ffm.cloudweb.utilerias.model.LoginResult;
-import com.mx.totalplay.ffm.cloudweb.utilerias.model.Permiso;
+import com.mx.totalplay.ffm.cloudweb.utilerias.model.*;
 import com.mx.totalplay.ffm.cloudweb.utilerias.utils.ConstantesGeneric;
 import com.mx.totalplay.ffm.cloudweb.utilerias.utils.ConsumeRest;
 import com.mx.totalplay.ffm.cloudweb.utilerias.utils.UtileriaGeneral;
-import com.mx.totalplay.ffm.cloudweb.utilerias.model.ServiceResponseResult;
 import com.mx.totalplay.ffm.cloudweb.plantainterna.model.consultaOTPI.ParamConsultaOTPI;
-import com.mx.totalplay.ffm.cloudweb.utilerias.model.DataTableResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -23,9 +20,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import javax.servlet.http.HttpSession;
 
 @Service
 public class ImplDespachoPIService implements DespachoPIService {
@@ -36,14 +36,16 @@ public class ImplDespachoPIService implements DespachoPIService {
     private final UtileriaGeneral utilerias;
     private final Environment env;
     private Gson gson = new Gson();
+    private final HttpSession session;
 
     @Autowired
-    public ImplDespachoPIService(ConstantesGeneric constantesAmbiente, ConstDespachoPI constDespachoPI, ConsumeRest restCaller, UtileriaGeneral utilerias, Environment env) {
+    public ImplDespachoPIService(ConstantesGeneric constantesAmbiente, ConstDespachoPI constDespachoPI, ConsumeRest restCaller, UtileriaGeneral utilerias, Environment env, HttpSession session) {
         this.constantesAmbiente = constantesAmbiente;
         this.constDespachoPI = constDespachoPI;
         this.restCaller = restCaller;
         this.utilerias = utilerias;
         this.env = env;
+        this.session = session;
     }
 
     @Override
@@ -565,14 +567,21 @@ public class ImplDespachoPIService implements DespachoPIService {
     }
 
     public ServiceResponseResult consultarConfiguracionDespachoDespachoServ(String params) {
+        List<Accion> accionesListSession;
+        List<Accion> accionesListResponse = new ArrayList<>();
+
         LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
 
         JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        String claveBusqueda = jsonObject.get("moduloAccionesUsuario").getAsString();
+        if (session.getAttribute("MODULO_MENSAJES_ACCIONES_RECIENTES") != null)
+            accionesListSession = (List<Accion>) session.getAttribute("MODULO_MENSAJES_ACCIONES_RECIENTES");
+        else
+            accionesListSession = new ArrayList<>();
 
         Map<String, Object> mapResponse = principalDetail.getConfiguraciones();
 
         if (jsonObject != null) {
-            String claveBusqueda = jsonObject.get("moduloAccionesUsuario").getAsString();
             Permiso permiso = principalDetail.getModulos()
                     .stream()
                     .filter(e -> claveBusqueda.equals(e.getClave()))
@@ -581,7 +590,12 @@ public class ImplDespachoPIService implements DespachoPIService {
 
             mapResponse.put("MODULO_ACCIONES_USUARIO", permiso);
         }
-
+        if (accionesListSession.size() > 0) {
+            accionesListResponse = accionesListSession.stream()
+                    .filter(e -> claveBusqueda.equals(e.getIdentificadorModulo()))
+                    .collect(Collectors.toList());
+        }
+        mapResponse.put("MODULO_MENSAJES_ACCIONES_RECIENTES", accionesListResponse);
 
         ServiceResponseResult response = ServiceResponseResult.builder().isRespuesta(true).result(mapResponse).build();
         return response;

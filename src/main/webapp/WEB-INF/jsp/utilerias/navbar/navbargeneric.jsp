@@ -258,6 +258,7 @@
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-login-info"
                         aria-labelledby="dropdownMenuLogin">
                         <div class="dropdown-menu-header">
+                            <input type="hidden" id="tipo1" value="${userStore.numEmpleado}">
                             <c:if
                                 test="${userStore.urlFoto != null &&  userStore.urlFoto != '' && userStore.urlFoto != 'string'}">
                                 <div class="dropdown-menu-header-inner" style="display: none;" id="content-in-img">
