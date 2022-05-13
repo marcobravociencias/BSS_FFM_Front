@@ -17,7 +17,7 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
     $scope.catalogosSeguimiento = {};
     $scope.catalogosSeguimientoGeografia = [];
     $scope.ticketDetalle = {};
-    scope.listadoNuevoViejosEquipo = [];
+    $scope.listadoNuevoViejosEquipo = [];
 
     $scope.consultarCatalogos = function () {
         $q.all([
