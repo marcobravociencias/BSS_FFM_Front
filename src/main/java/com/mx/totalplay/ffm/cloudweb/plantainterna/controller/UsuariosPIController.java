@@ -152,4 +152,13 @@ public class UsuariosPIController {
         return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
 	}
 	
+	@PostMapping("/consultarCuadrillasGestionUsuarios")
+    public ResponseEntity<?> consultarCuadrillasGestionUsuarios() {
+        ServiceResponseResult result = usuarioService.consultarCuadrillasGestionUsuarios();
+        if (result.getResult() instanceof Integer){
+            return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
+    }
+	
 }

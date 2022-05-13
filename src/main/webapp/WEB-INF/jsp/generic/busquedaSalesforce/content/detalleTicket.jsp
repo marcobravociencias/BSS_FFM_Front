@@ -1,8 +1,8 @@
-<!--div class="row">
+<div class="row">
     <div ng-show="isAbiertoOSNoticias">
-        noticiasGeneralesTicket
+        <jsp:include page="/WEB-INF/jsp/generic/busquedaSalesforce/content/noticiasGeneralesTicket.jsp"></jsp:include>
     </div>
-</div-->
+</div>
 
 <div class="col-12">
     <div class="row header-detalle">
@@ -10,21 +10,21 @@
             <div  ng-click="regresarConsulta()" class="container-regresar-button text-center">
                 <span class="regresar-elemento fa fa-undo"></span>
             </div>
-            <!--div  ng-click="abrirVentanaNoticias()" class="container-regresar-button text-center">
+            <div  ng-click="abrirVentanaNoticias()" ng-show="banderaNoticiasTicket" class="container-regresar-button text-center">
                 <span class="regresar-elemento fa fa-newspaper-o"></span>
-            </div-->
+            </div>
             <div  ng-click="regresarHome()" class="container-regresar-button text-center">
                 <span class="regresar-elemento fa fa-home"></span>
             </div>
         </div>
         <div  ng-show="showTicket" class="header-back-title col-10">
             <div class="alinear-derecha">
-                <div class="iconsf-container">
+                <div class="iconsf-container icon-title">
                     <img class="img-tickets img-header-back" src="${pageContext.request.contextPath}/resources/img/iconossf/tickets.png" alt="">
                 </div>      
                 <div class="textcontainer-header">
-                    <span class="text-title-elementoh">Ticket:</span>
-                    <span class="title-regresar-generic"  ng-bind="detalle.asunto"></span>
+                    <span class="text-title-elementoh">Ticket: </span>
+                    <span class="title-regresar-generic"  ng-bind="detalle.caseNumber"></span>
                 </div>   
             </div>          
         </div>
@@ -47,7 +47,7 @@
             <div class="col-12">
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-2 "><span class="content-first-title-head">Asunto:</span></div>
-                    <div class="col-10 crop-text-col"><span class="content-first-title-head-answer" title="{{detalle.asunto}}" ng-bind="detalle.asunto"></span></div>
+                    <div class="col-10 crop-text-col" style="padding-left: 0;"><span class="content-first-title-head-answer" title="{{detalle.asunto}}" ng-bind="detalle.asunto"></span></div>
                 </div>
             </div>
         </div>

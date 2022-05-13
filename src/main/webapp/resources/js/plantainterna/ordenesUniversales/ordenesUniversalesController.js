@@ -17,7 +17,6 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
     $scope.nGeografia1;
     $scope.nGeografia2;
     $scope.nTipoOrdenes;
-    $scope.nTipoOrdenes;
     $scope.dateSelectedCalendarEvent;
     $scope.dateTodayCalendar = new Date(moment(new Date()).format('MM-DD-YYYY'));
     $scope.isGuardadoProcess = false
@@ -108,7 +107,6 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
         $q.all([
             genericService.consultarConfiguracionDespachoDespacho(params),
             genericService.consulCatalogoGeografia(),
-            //ordenesUniversalesService.consultarCatalogosOrdenesUniversales(),
             ordenesUniversalesService.consultarPerfilesPorUsuario(),
             ordenesUniversalesService.consultarCatalogoCanalVentas(),
             ordenesUniversalesService.consultarCatalogoPaquete()
@@ -126,15 +124,11 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
 
                 $scope.nGeografia = (llavesResult.N_FILTRO_GEOGRAFIA) ? Number(llavesResult.N_FILTRO_GEOGRAFIA) : $scope.obtenerUltimoNivelFiltros(tempArrayGeog);
                 $scope.nTipoOrdenes = (llavesResult.N_FILTRO_INTERVENCIONES) ? Number(llavesResult.N_FILTRO_INTERVENCIONES) : $scope.obtenerUltimoNivelFiltros(tempArrayInt);
-                $scope.nTipoOrdenesConfig = (llavesResult.N_FILTRO_INTERVENCIONES) ? Number(llavesResult.N_FILTRO_INTERVENCIONES) : $scope.obtenerUltimoNivelFiltros(tempArrayInt);
                 $scope.nGeografia1 = (llavesResult.N_FILTRO_GEOGRAFIA_UNO) ? Number(llavesResult.N_FILTRO_GEOGRAFIA_UNO) : 2;
                 $scope.nGeografia2 = (llavesResult.N_FILTRO_GEOGRAFIA_DOS) ? Number(llavesResult.N_FILTRO_GEOGRAFIA_DOS) : 5;
-                // $scope.nGeografia1 = (llavesResult.N_FILTRO_GEOGRAFIA_UNO) ? Number(llavesResult.N_FILTRO_GEOGRAFIA_UNO) : 0;
-                // $scope.nGeografia2 = (llavesResult.N_FILTRO_GEOGRAFIA_DOS) ? Number(llavesResult.N_FILTRO_GEOGRAFIA_DOS) : 0;
             } else {
                 $scope.nGeografia = $scope.obtenerUltimoNivelFiltros(results[1].data.result.geografia);
                 $scope.nTipoOrdenes = $scope.obtenerUltimoNivelFiltros(results[2].data.result.tiposOrden);
-                $scope.nTipoOrdenesConfig = $scope.nTipoOrdenes;
                 $scope.nGeografia1 = 2;
                 $scope.nGeografia2 = 5;
             }
@@ -503,8 +497,8 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
     }
 
     $scope.elementTab = 1;
-    $("#wizzard-1").addClass("current");
     $scope.mostrarTab = function (element) {
+        /**
         let isError = false;
         if (element == 2) {
             isError = $scope.validarPrimerPaso();
@@ -542,7 +536,9 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                 $scope.isGuardadoProcess = false;
                 $scope.isGuardadoCreacion = false;
             }
-        }
+        }  **/
+        $scope.elementTab = element;
+
     }
 
     $scope.mostrarModalArbol = function () {
@@ -610,7 +606,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
         let selectedElms = $('#jstree-tipoordenes').jstree("get_selected", true)[0].original;
         let isElementIgual = false;
         while (!isElementIgual) {
-            if (selectedElms.nivel == $scope.nTipoOrdenesConfig) {
+            if (selectedElms.nivel == $scope.nTipoOrdenes) {
                 isElementIgual = true;
             } else {
                 selectedElms = $scope.listadoTipoOrdenes.find((e) => e.id === selectedElms.parent)
@@ -659,7 +655,6 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                 isSeleccionadoIgual = true;
             }
             $scope.infoBasica.distrito = $scope.textParentGeografia.text + " / " + selected_arbol.text;
-            $('#distrito-form').removeClass('invalid-inputOrdenesUniversales');
             isErrorGeograf = false;
         } else {
             $scope.infoBasica.distrito = ''
@@ -689,7 +684,6 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
 
             $scope.infoBasica.tipoordentext = textParent
             $scope.infoBasica.subtipoordentext = selected_tipo_orden.text
-            $('#subtipoordenes-form').removeClass('invalid-inputOrdenesUniversales');
             isErrorTipoOrden = false;
         } else {
             $scope.infoBasica.tiposubtipoordentext = ''
@@ -725,13 +719,11 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
         if ($scope.infoBasica.canalVenta == undefined) {
             isErrorValidate = true
             textError += '<li>Selecciona canal de venta</li>';
-            $('#canalVenta-form').addClass('invalid-inputOrdenesUniversales');
         }
 
         if ($scope.infoBasica.paquete == undefined) {
             isErrorValidate = true
             textError += '<li>Selecciona un paquete</li>';
-            $('#paquete-form').addClass('invalid-inputOrdenesUniversales');
         }
 
         let elementonivel = '-1';
@@ -748,19 +740,16 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
         if (elementonivel === '-1') {
             isErrorValidate = true
             textError += '<li>Selecciona un elemento v&aacute;lido de la geograf&iacute;a</li>';
-            $('#distrito-form').addClass('invalid-inputOrdenesUniversales');
         }
 
         if (!$scope.infoBasica.subTipoOrden) {
             isErrorValidate = true;
             textError += '<li>Selecciona Subtipo de orden</li>';
-            $('#subtipoordenes-form').addClass('invalid-inputOrdenesUniversales');
         }
 
         if ($scope.infoBasica.horaEstimada == undefined) {
             isErrorValidate = true
             textError += '<li>Selecciona una hora estimada</li>';
-            $('#horaestimada-form').addClass('invalid-inputOrdenesUniversales');
         }
 
         if ($scope.errorSeleccionIntGeografia) {
@@ -799,181 +788,145 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
         if (!$scope.informacionCliente.nombre) {
             isErrorValidate = true
             textError += '<li>Ingresa el Nombre del Cliente</li>';
-            $('#nombre-cliente').addClass('invalid-inputOrdenesUniversales');
         } else if (regExpresionEspecialCharacters.test($scope.informacionCliente.nombre)) {
             isErrorValidate = true
             textError += '<li>Nombre Contacto no v&aacute;lido</li>';
-            $('#nombre-cliente').addClass('invalid-inputOrdenesUniversales');
         }
 
         if (!$scope.informacionCliente.apaterno) {
             isErrorValidate = true
             textError += '<li>Ingresa el Apellido Paterno del Cliente</li>';
-            $('#apellidopaterno-cliente').addClass('invalid-inputOrdenesUniversales');
         } else if (regExpresionEspecialCharacters.test($scope.informacionCliente.apaterno)) {
             isErrorValidate = true
             textError += '<li>Nombre contacto no v&aacute;lido</li>';
-            $('#apellidopaterno-cliente').addClass('invalid-inputOrdenesUniversales');
         }
 
         if (!$scope.informacionCliente.amaterno) {
             isErrorValidate = true
             textError += '<li>Ingresa el Apellido Materno del Cliente</li>';
-            $('#apellidomaterno-cliente').addClass('invalid-inputOrdenesUniversales');
         } else if (regExpresionEspecialCharacters.test($scope.informacionCliente.amaterno)) {
             isErrorValidate = apaterno
             textError += '<li>Nombre contacto no v&aacute;lido</li>';
-            $('#apellidomaterno-cliente').addClass('invalid-inputOrdenesUniversales');
         }
 
         if (!$scope.informacionCliente.calle) {
             isErrorValidate = true
             textError += '<li>Ingresa La Calle</li>';
-            $('#calle-form').addClass('invalid-inputOrdenesUniversales');
         } else if (regExpresionEspecialCharacters.test($scope.informacionCliente.calle)) {
             isErrorValidate = true
             textError += '<li>Calle no v&aacute;lido</li>';
-            $('#calle-form').addClass('invalid-inputOrdenesUniversales');
         }
 
         if (!$scope.informacionCliente.numeroExt) {
             isErrorValidate = true
             textError += '<li>Ingresa el N&uacute;mero Exterior</li>';
-            $('#num-ext').addClass('invalid-inputOrdenesUniversales');
         } else if (regExpresionEspecialCharacters.test($scope.informacionCliente.numeroExt)) {
             isErrorValidate = true
             textError += '<li>N&uacute;mero Exterior no v&aacute;lido</li>';
-            $('#num-ext').addClass('invalid-inputOrdenesUniversales');
         }
 
         if (!$scope.informacionCliente.ciudad) {
             isErrorValidate = true
             textError += '<li>Ingresa la Ciudad</li>';
-            $('#ciudad-form').addClass('invalid-inputOrdenesUniversales');
         } else if (regExpresionEspecialCharacters.test($scope.informacionCliente.ciudad)) {
             isErrorValidate = true
             textError += '<li>Ciudad no v&aacute;lido';
-            $('#ciudad-form').addClass('invalid-inputOrdenesUniversales');
         }
 
         if (!$scope.informacionCliente.municipio) {
             isErrorValidate = true
             textError += '<li>Ingresa el Municipio</li>';
-            $('#municipio-contacto').addClass('invalid-inputOrdenesUniversales');
         } else if (regExpresionEspecialCharacters.test($scope.informacionCliente.municipio)) {
             isErrorValidate = true
             textError += '<li>Municipio no v&aacute;lido</li>';
-            $('#municipio-contacto').addClass('invalid-inputOrdenesUniversales');
         }
 
         if (!$scope.informacionCliente.estado) {
             isErrorValidate = true
             textError += '<li>Ingresa el Estado</li>';
-            $('#estado-form').addClass('invalid-inputOrdenesUniversales');
         } else if (regExpresionEspecialCharacters.test($scope.informacionCliente.estado)) {
             isErrorValidate = true
             textError += '<li>Estado no v&aacute;lido</li>';
-            $('#estado-form').addClass('invalid-inputOrdenesUniversales');
         }
 
         if (!$scope.informacionCliente.colonia) {
             isErrorValidate = true
             textError += '<li>Ingresa la colonia</li>';
-            $('#colonia-contacto').addClass('invalid-inputOrdenesUniversales');
         } else if (regExpresionEspecialCharacters.test($scope.informacionCliente.colonia)) {
             isErrorValidate = true
             textError += '<li>Colonia no v&aacute;lida</li>';
-            $('#colonia-contacto').addClass('invalid-inputOrdenesUniversales');
         }
 
         if (!$scope.informacionCliente.entreCalles) {
             isErrorValidate = true
             textError += '<li>Ingresa la Referencia Entre Calles </li>';
-            $('#entrecalle-form').addClass('invalid-inputOrdenesUniversales');
         } else if (regExpresionEspecialCharacters.test($scope.informacionCliente.entreCalles)) {
             isErrorValidate = true
             textError += '<li>Refeferencia Entre Calles no v&aacute;lida</li>';
-            $('#entrecalle-form').addClass('invalid-inputOrdenesUniversales');
         }
 
         if (!$scope.informacionCliente.referencias) {
             isErrorValidate = true
             textError += '<li>Ingresa las Referencias</li>';
-            $('#referencias-form').addClass('invalid-inputOrdenesUniversales');
         } else if (regExpresionEspecialCharacters.test($scope.informacionCliente.referencias)) {
             isErrorValidate = true
             textError += '<li>Referencias no v&aacute;lidas</li>';
-            $('#referencias-form').addClass('invalid-inputOrdenesUniversales');
         }
 
         if (!$scope.informacionCliente.codigoPostal) {
             isErrorValidate = true
             textError += '<li>Ingresa el C&oacute;digo Postal</li>';
-            $('#codigopostal-form').addClass('invalid-inputOrdenesUniversales');
         } else if (regExpresionEspecialCharacters.test($scope.informacionCliente.codigoPostal)) {
             isErrorValidate = true
             textError += '<li>C&oacutedigo Postal no v&aacute;lido</li>';
-            $('#codigopostal-form').addClass('invalid-inputOrdenesUniversales');
         }
 
         if (!$scope.informacionCliente.telefono) {
             isErrorValidate = true
             textError += '<li>Ingresa el n&uacute;mero de Tel&eacute;fono</li>';
-            $('#telefono-form').addClass('invalid-inputOrdenesUniversales');
         } else if (regExpresionEspecialCharacters.test($scope.informacionCliente.telefono)) {
             isErrorValidate = true
             textError += '<li>N&uacute;mero Telef&oacute;nico no v&aacute;lido</li>';
-            $('#telefono-form').addClass('invalid-inputOrdenesUniversales');
         }
 
         if (!$scope.informacionCliente.celular) {
             isErrorValidate = true
             textError += '<li>Ingresa un N&uacute;mero de Celular</li>';
-            $('#celular-form').addClass('invalid-inputOrdenesUniversales');
         } else if (regExpresionEspecialCharacters.test($scope.informacionCliente.celular)) {
             isErrorValidate = true
             textError += '<li>N&uacute;mero de Celular no v&aacute;lido</li>';
-            $('#celular-form').addClass('invalid-inputOrdenesUniversales');
         }
 
         if (!$scope.informacionCliente.razonsocial) {
             isErrorValidate = true
             textError += '<li>Ingresa la Raz&oacute;n Social</li>';
-            $('#rfc-form').addClass('invalid-inputOrdenesUniversales');
         } else if (regExpresionEspecialCharacters.test($scope.informacionCliente.razonsocial)) {
             isErrorValidate = true
             textError += '<li>Raz&oacute;n Social no v&aacute;lida</li>';
-            $('#rfc-form').addClass('invalid-inputOrdenesUniversales');
         }
 
         if (!$scope.informacionCliente.correo) {
             isErrorValidate = true
             textError += '<li>Ingresa un Correo Electr&oacute;nico v&aacute;lido</li>';
-            $('#correo-form').addClass('invalid-inputOrdenesUniversales');
         } else if (!$scope.emailFormat.test($scope.informacionCliente.correo)) {
             isErrorValidate = true
             textError += '<li>Correo Electr&oacute;nico no v&aacute;lido</li>';
-            $('#correo-form').addClass('invalid-inputOrdenesUniversales');
         }
 
         if (!$scope.informacionCliente.nombreContacto) {
             isErrorValidate = true
             textError += '<li>Ingresa el Nombre del Contacto</li>';
-            $('#nombre-contacto').addClass('invalid-inputOrdenesUniversales');
         } else if (regExpresionEspecialCharacters.test($scope.informacionCliente.nombreContacto)) {
             isErrorValidate = true
             textError += '<li>Nombre de Contacto no v&aacute;lido</li>';
-            $('#nombre-contacto').addClass('invalid-inputOrdenesUniversales');
         }
 
         if (!$scope.informacionCliente.telefonoContacto) {
             isErrorValidate = true
             textError += '<li>Ingresa el N&uacute;mero de Tel&eacute;fono del Contacto</li>';
-            $('#telefono-contacto').addClass('invalid-inputOrdenesUniversales');
         } else if (regExpresionEspecialCharacters.test($scope.informacionCliente.telefonoContacto)) {
             isErrorValidate = true
             textError += '<li>N&uacute;mero Telef&oacute;nico del Contacto no v&aacute;lido</li>';
-            $('#telefono-contacto').addClass('invalid-inputOrdenesUniversales');
         }
 
         if (isErrorValidate) {
@@ -1025,7 +978,6 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
             let venta = $('#jstree-canal-ventas').jstree("get_selected", true);
             if (venta.length) {
                 $scope.infoBasica.canalVenta = venta[0].text;
-                $("#canalVenta-form").removeClass("invalid-inputOrdenesUniversales");
                 $scope.$apply();
             }
             $scope.validarCamposBasicos()
@@ -1035,7 +987,6 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
             let paquete = $('#jstree-paquete').jstree("get_selected", true);
             if (paquete.length) {
                 $scope.infoBasica.paquete = paquete[0].text;
-                $("#paquete-form").removeClass("invalid-inputOrdenesUniversales");
                 $scope.$apply();
             }
             $scope.validarCamposBasicos()
@@ -1058,7 +1009,6 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                 let minutos = dateInput.getMinutes() + ""
                 let horas = dateInput.getHours() + ""
                 $scope.infoBasica.horaEstimada = (horas.padStart(2, '0')) + ':' + (minutos.padStart(2, '0'));
-                $("#horaestimada-form").removeClass("invalid-inputOrdenesUniversales");
                 $scope.$apply()
                 // console.log($scope.infoBasica.horaEstimada)
                 $scope.validarCamposBasicos()

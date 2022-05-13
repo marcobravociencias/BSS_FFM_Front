@@ -4,6 +4,8 @@ var app = angular.module('ticketsSoporteApp', []);
 app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoporteService', 'genericService', 'busquedaSalesforceService', '$filter', function ($scope, $q, gestionTicketSoporteService, genericService, busquedaSalesforceService, $filter) {
     app.ticketControllerMapa($scope, $q, gestionTicketSoporteService, genericService)
     app.busquedaSalesforce($scope, busquedaSalesforceService)
+    var regexUrl = /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/;
+
     let ticketSoporteTable;
     let tecnicosCuentaTable;
     $scope.listFallasTicket = [];
@@ -103,7 +105,6 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             idTipoEquipo: $scope.cambioEquipo.idTipoEquipo,
             descripcion: $scope.equiposList.find((e) => e.id == $scope.cambioEquipo.idTipoEquipo).descripcion,
         })
-        console.log($scope.listadoNuevoViejosEquipo);
 
         $scope.cambioEquipo = {}
         $scope.isEvaluarNuevoEquipo = false
@@ -137,7 +138,6 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     }
     $scope.mostrarFormularioNuevoEquipo = function () {
         $scope.agregarNuevoEquipoContent = $("#dictamen-2").is(":checked");
-        console.log($scope.agregarNuevoEquipoContent);
     }
 
     $scope.limpiarContentDetalleTicket = function () {
@@ -297,7 +297,6 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                                 $scope.listFallasTicketDetalle.push(e);
                             }
                         });
-                        console.log($scope.listFallasTicketDetalle);
 
                     } else {
                         toastr.warning('No se encontraron fallas');
@@ -347,7 +346,6 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                     if (results[4].data.result) {
                         $scope.listadoGeografiaSoporte = results[4].data.result.geografia
                         $scope.nGeografiaConsultaTickets = $scope.nGeografiaConsultaTickets ? $scope.nGeografiaConsultaTickets : $scope.obtenerNivelUltimoJerarquiaGeneric(results[4].data.result.geografia);
-                        console.log($scope.nGeografiaConsultaTickets);
                         let listGeografias = results[4].data.result.geografia.filter(elemento => { return elemento.nivel <= $scope.nGeografiaConsultaTickets });
 
                         let geografia = listGeografias
@@ -671,7 +669,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                             let imgDefault = './resources/img/plantainterna/despacho/tecnicootasignada.png';
                             let url = imgDefault;
                             if (elemento.urlFoto) {
-                                url = elemento.urlFoto;
+                                url = regexUrl.test(elemento.urlFoto) ? elemento.urlFoto : imgDefault;
                             }
                             let nombreCompleto = elemento.nombre + ' ' + elemento.apellidoPaterno + ' ' + elemento.apellidoMaterno;
                             row[0] = '<img style="cursor:pointer;border-radius: 25px" src="' + url + '" alt="Foto" width="30" height="30"/>';
@@ -789,14 +787,14 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         $("#tecnologiaTicket").removeClass("invalid-inputTicket");
     });
     $scope.validacionTicket = false;
-    $scope.isGuardadoProcess=false
-    $scope.isMensajeSuccessOt=false
-    $scope.isMensajeErrorOt=false
+    $scope.isGuardadoProcess = false
+    $scope.isMensajeSuccessOt = false
+    $scope.isMensajeErrorOt = false
 
     $scope.registrarTicketSoporte = function () {
-        $scope.isGuardadoProcess=false
-        $scope.isMensajeSuccessOt=false
-        $scope.isMensajeErrorOt=false
+        $scope.isGuardadoProcess = false
+        $scope.isMensajeSuccessOt = false
+        $scope.isMensajeErrorOt = false
 
         $scope.validacionTicket = false;
         let mensajeError = '';
@@ -908,9 +906,9 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                         paramsTicket.noSerieNew = $scope.ticketSoporteR.noSerieNew
                     }
                     gestionTicketSoporteService.creaTicketSoporte(paramsTicket).then(function success(response) {
-                        $scope.isMensajeSuccessOt=false
-                        $scope.isMensajeErrorOt=false
-                        $scope.isGuardadoProcess=true
+                        $scope.isMensajeSuccessOt = false
+                        $scope.isMensajeErrorOt = false
+                        $scope.isGuardadoProcess = true
                         if (response.data !== undefined) {
                             if (response.data.respuesta) {
                                 $scope.tecnicoAsignado = {};
@@ -931,8 +929,8 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                                 guardarAccionesRecientesModulo(accionesRecientesModulo('moduloGestionTickets', 'Se ha creado el ticket 2021  con la OT 20299292', 'warning', document.getElementById('tipo1').value))
                                 $scope.isMensajeErrorOt=true
                             }
-                            $scope.mensajeRequestCreacion=response.data.resultDescripcion
-                            
+                            $scope.mensajeRequestCreacion = response.data.resultDescripcion
+
                         } else {
                             swal.close();
                             mostrarMensajeErrorAlert(response.data.resultDescripcion);
@@ -1064,7 +1062,6 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             $('.dictamen-info').prop('checked', false);
             $scope.ticketSoporteDetalle = {};
             $scope.propietarioSession = $("#prop-session").val().split('_')[0];
-            console.log($scope.propietarioSession);
             swal({ text: 'Espera un momento...', allowOutsideClick: false });
             swal.showLoading();
             $scope.consultarDetalleTicketSoporteCentralizado(ticket, cliente)
@@ -1077,7 +1074,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         for (var i = 0; i < arr.length; i++) {
             arr[i] = arr[i].toLowerCase();
             arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
-        }        
+        }
         return arr.join(" ");
     }
 
@@ -1131,9 +1128,10 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
 
                         $scope.ticketSoporteDetalle.estatus = $scope.editTicket.detalleTicketSc.idEstatus == 1 ? '' : $scope.editTicket.detalleTicketSc.idEstatus + '';
                         $scope.ticketSoporteDetalle.comentarios = $scope.editTicket.detalleTicketSc.comentarios;
+                        $scope.ticketSoporteDetalle.tecnologia = $scope.editTicket.detalleTicketSc.idTecnologia + '';
 
-                        let urlTec = $scope.editTicket.detalleOtDetenida.fotoTecnico ? $scope.editTicket.detalleOtDetenida.fotoTecnico : "./resources/img/plantainterna/despacho/tecnicootasignada.png";
-                        let urlIng = $scope.editTicket.detalleTicketSc.fotoInge ? $scope.editTicket.detalleTicketSc.fotoInge : "./resources/img/plantainterna/despacho/tecnicootasignada.png";
+                        let urlTec = regexUrl.test($scope.editTicket.detalleOtDetenida.fotoTecnico) ? $scope.editTicket.detalleOtDetenida.fotoTecnico : "./resources/img/plantainterna/despacho/tecnicootasignada.png";
+                        let urlIng = regexUrl.test($scope.editTicket.detalleTicketSc.fotoInge) ? $scope.editTicket.detalleTicketSc.fotoInge : "./resources/img/plantainterna/despacho/tecnicootasignada.png";
 
                         setTimeout(() => {
                             $("#fotoIngeniero").attr("src", urlIng);
@@ -1145,25 +1143,27 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                                     $("#dictamen-" + s.idAccion).prop('checked', true);
                                     if (Number(s.idAccion) == 2) {
                                         $scope.agregarNuevoEquipoContent = true;
-                                        if (s.detalleSeries.length) {
-                                            $.each(s.detalleSeries, function (i, equipo) {
+                                        if (s.equipos.length) {
+                                            $.each(s.equipos, function (i, equipo) {
                                                 equipo.descripcion = $scope.equiposList.find((e) => e.id == equipo.idTipoEquipo).descripcion
                                             })
                                         }
-                                        $scope.listadoNuevoViejosEquipo = s.detalleSeries ? s.detalleSeries : [];
+                                        $scope.listadoNuevoViejosEquipo = s.equipos ? s.equipos : [];
                                     }
                                 }
                             });
                         }
-                        if ($scope.editTicket.detalleTicketSc.idEstatus == 4 || $scope.editTicket.detalleTicketSc.idEstatus == 5) {
+                        if ($scope.editTicket.detalleTicketSc.idEstatus == 4 || $scope.editTicket.detalleTicketSc.idEstatus == 5 || !$scope.editTicket.detalleTicketSc.usuarioInge) {
                             $(".content-detalle-ticket .inputTicket").prop("disabled", true);
                             $("#detalleTicketAccordion .dictamen-info").prop("disabled", true);
                             $(".btn-disabled").prop("disabled", true);
+                            $("#btnGuardarCambios").prop("disabled", true);
 
                         } else {
                             $(".content-detalle-ticket .inputTicket").prop("disabled", false);
                             $("#detalleTicketAccordion .dictamen-info").prop("disabled", false);
                             $(".btn-disabled").prop("disabled", false);
+                            $("#btnGuardarCambios").prop("disabled", false);
                         }
 
                         let clusterInd = $scope.listadoGeografiaSoporte.find(e => e.id == $scope.editTicket.detalleOtDetenida.idCluster)
@@ -1258,9 +1258,9 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             cancelButtonText: 'No'
         }).then(function (isConfirm) {
             if (isConfirm) {
-                $scope.isGuardadoProcess=false
-                $scope.isMensajeSuccessOt=false
-                $scope.isMensajeErrorOt=false
+                $scope.isGuardadoProcess = false
+                $scope.isMensajeSuccessOt = false
+                $scope.isMensajeErrorOt = false
                 $scope.validacionTicket = false;
                 $scope.cleanForm();
                 $("#cuentaTicket").removeClass("invalid-inputTicket");
@@ -1279,7 +1279,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                 $scope.consultarTicketsSoporte();
                 markerCreacionTickets.setMap(null)
                 markerCreacionTickets = undefined
-                $scope.$apply();            
+                $scope.$apply();
             }
         }).catch(swal.noop);
     }
@@ -1320,7 +1320,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                     autocapitalize: 'off'
                 },
                 showCancelButton: true,
-                confirmButtonText: 'Asignar'
+                confirmButtonText: $scope.editTicket.detalleTicketSc.numEmpleadoInge ? 'Reasignar' : 'Asignar'
             }).then((result) => {
                 $scope.ingenieroSelect = { idUsuario: $("#prop-session").val().split('_')[1] }
                 $scope.asignarTicketIngeniero(result)
@@ -1336,7 +1336,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             let array = []
             let url = imgDefault
             if (ingeniero.urlFoto) {
-                url = ingeniero.urlFoto
+                url = regexUrl.test(ingeniero.urlFoto) ? ingeniero.urlFoto : imgDefault;
             }
             array[0] = '<img style="cursor:pointer;border-radius: 25px" src="' + url + '" alt="Foto" width="30" height="30" onclick="showImage(' + "'ingeniero','" + ingeniero.noEmpleado + "'" + ')"/>';
             array[1] = ingeniero.noEmpleado ? ingeniero.noEmpleado : 'Sin informaci&oacute;n';
@@ -1387,21 +1387,22 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
 
     showImage = function (type, numEmpleado) {
         let url = './resources/img/plantainterna/despacho/tecnicootasignada.png';
+
         let usuario = {};
         if (numEmpleado) {
             usuario = $scope.listIngenieros.find((e) => e.noEmpleado == numEmpleado);
-            url = usuario.urlFoto ? usuario.urlFoto : url
+            url = regexUrl.test(usuario.urlFoto) ? usuario.urlFoto : url
             $scope.usuarioFoto.tipo = "Ingeniero";
             $scope.usuarioFoto.noEmpleado = usuario.noEmpleado;
             $scope.usuarioFoto.usuario = usuario.usuario;
         } else {
             if (type == 'tecnico') {
-                url = $scope.editTicket.detalleOtDetenida.fotoTecnico ? $scope.editTicket.detalleOtDetenida.fotoTecnico : url;
+                url = regexUrl.test($scope.editTicket.detalleOtDetenida.fotoTecnico) ? $scope.editTicket.detalleOtDetenida.fotoTecnico : url;
                 $scope.usuarioFoto.tipo = "Tecnico";
                 $scope.usuarioFoto.noEmpleado = $scope.editTicket.detalleOtDetenida.numEmpleadoTecnico;
                 $scope.usuarioFoto.usuario = $scope.editTicket.detalleOtDetenida.tecnico;
             } else if (type == 'ingeniero') {
-                url = $scope.editTicket.detalleTicketSc.fotoInge ? $scope.editTicket.detalleTicketSc.fotoInge : url;
+                url = regexUrl.test($scope.editTicket.detalleTicketSc.fotoInge) ? $scope.editTicket.detalleTicketSc.fotoInge : url;
                 $scope.usuarioFoto.tipo = "Ingeniero";
                 $scope.usuarioFoto.noEmpleado = $scope.editTicket.detalleTicketSc.numEmpleadoInge;
                 $scope.usuarioFoto.usuario = $scope.editTicket.detalleTicketSc.ingeniero;
@@ -1426,7 +1427,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                     autocapitalize: 'off'
                 },
                 showCancelButton: true,
-                confirmButtonText: 'Asignar'
+                confirmButtonText: $scope.editTicket.detalleTicketSc.numEmpleadoInge ? 'Reasignar' : 'Asignar'
             }).then((result) => {
                 $scope.asignarTicketIngeniero(result)
             }).catch((result) => {
@@ -1440,9 +1441,9 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         let params = {
             comentarios: comentario,
             folioSistema: $scope.editTicket.detalleTicketSc.folioSistema,
-            idMotivo: 500,
-            idUsuarioTecnico: Number($scope.ingenieroSelect.idUsuario),
-            idtipoAsignacion: 2
+            otCentralizado: $scope.editTicket.detalleTicketSc.otCentralizado,
+            idIngeniero: Number($scope.ingenieroSelect.idUsuario),
+            idTicketSc: Number($scope.ticketDetalle)
         }
 
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
@@ -1454,6 +1455,10 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                     toastr.success('Ingeniero asignado con exito');
                     $("#modalAsignarTicket").modal('hide');
                     $scope.consultaIngeniero();
+                    $(".content-detalle-ticket .inputTicket").prop("disabled", false);
+                    $("#detalleTicketAccordion .dictamen-info").prop("disabled", false);
+                    $(".btn-disabled").prop("disabled", false);
+                    $("#btnGuardarCambios").prop("disabled", false);
                 } else {
                     mostrarMensajeWarningValidacion('No se pudo realizar la operaci&oacute;n')
                 }
@@ -1465,6 +1470,10 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                     toastr.success('Ingeniero asignado con exito');
                     $("#modalAsignarTicket").modal('hide');
                     $scope.consultaIngeniero();
+                    $(".content-detalle-ticket .inputTicket").prop("disabled", false);
+                    $("#detalleTicketAccordion .dictamen-info").prop("disabled", false);
+                    $(".btn-disabled").prop("disabled", false);
+                    $("#btnGuardarCambios").prop("disabled", false);
                 } else {
                     mostrarMensajeWarningValidacion('No se pudo realizar la operaci&oacute;n')
                 }
@@ -1482,7 +1491,12 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                     $scope.editTicket.detalleTicketSc.numEmpleadoInge = ingeniero.numEmpleadoInge;
                     $scope.editTicket.detalleTicketSc.usuarioInge = ingeniero.usuarioInge;
                     $scope.editTicket.detalleTicketSc.celularInge = ingeniero.celularInge;
-                    $scope.editTicket.detalleTicketSc.fotoInge = ingeniero.fotoInge;
+                    let urlIng = regexUrl.test(ingeniero.fotoInge) ? ingeniero.fotoInge : "./resources/img/plantainterna/despacho/tecnicootasignada.png";
+                    setTimeout(() => {
+                        $("#fotoIngeniero").attr("src", urlIng);
+                    }, 100);
+                    $scope.ticketSoporteDetalle.estatus = ingeniero.idEstatus == 1 ? '' : ingeniero.idEstatus + '';
+
                 } else {
                     mostrarMensajeWarningValidacion('No se encontraron los datos actualizados')
                 }
@@ -1548,6 +1562,12 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             stringErrores += '<li>Ingrese comentario del ticket</li>'
         }
 
+        if (!$scope.ticketSoporteDetalle.tecnologia) {
+            isErrorDetalle = true
+            stringErrores += '<li>Seleccione tecnolog&iacute;a</li>'
+        }
+
+
         if (isErrorDetalle) {
             mostrarMensajeWarningValidacion(stringErrores)
             $scope.validacionTicketDetalle = true;
@@ -1563,7 +1583,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                 idAccion: e.id,
                 valor: isChecked ? 1 : 0,
                 comentario: $scope.ticketSoporteDetalle.comentarios,
-                detalleSeries: e.id == 2 ? $scope.listadoNuevoViejosEquipo : []
+                equipos: e.id == 2 ? $scope.listadoNuevoViejosEquipo : []
             }
             arrayAcciones.push(accionTemp);
 
@@ -1576,9 +1596,6 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         let motivo = $scope.escalamientoListDetalle.find((p) => p.id === Number($scope.ticketSoporteDetalle.motivo));
 
         let params = {
-            fechaHoraFin: moment(new Date()).add(2, 'hours').format('YYYY-MM-DD hh:mm'),
-            fechaHoraInicio: moment(new Date()).format('YYYY-MM-DD hh:mm'),
-            fechaHoraAgenda: moment(new Date()).format('YYYY-MM-DD hh:mm'),
             otCentralizado: $scope.editTicket.detalleTicketSc.otCentralizado,
             folioSistema: $scope.editTicket.detalleTicketSc.folioSistema,
             idTicketSc: Number($scope.ticketDetalle),
@@ -1591,6 +1608,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             idPropietarioSf: propietario ? propietario.idSalesforce : 0,
             idPropietarioSc: $scope.ticketSoporteDetalle.estado,
             idMotivoSf: motivo ? motivo.idSalesforce : 0,
+            idTecnologia: $scope.ticketSoporteDetalle.tecnologia,
             comentarios: $scope.ticketSoporteDetalle.comentarios ? $scope.ticketSoporteDetalle.comentarios : "",
             acciones: arrayAcciones
         }
@@ -1636,7 +1654,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     $scope.consultaChat = function () {
         $scope.comentariosOrdenTrabajo = [];
         let params = {
-            idOt: $scope.editTicket.detalleTicketSc.otCentralizado
+            idOt: $scope.editTicket.detalleOtDetenida.otGeneraSoporte
         }
 
         genericService.consultarComentariosDespachoOT(params).then(function success(response) {
@@ -1713,6 +1731,24 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         }
         $scope.initTableingeniero();
     })
+
+    $scope.validacionGenerica = function() {
+        if ($scope.historial.length === 1) {
+            if ($scope.historial[0].keyObject === 'TK') {
+                $scope.banderaNoticiasTicket = true;
+            }
+            if ($scope.historial[0].keyObject === 'OP') {
+                $scope.banderaNoticiasOportunidad = true;
+            }
+            if ($scope.historial[0].keyObject === 'OS') {
+                $scope.banderaNoticiasOs = true;
+            }
+        } else {
+            $scope.banderaNoticiasTicket = false;
+            $scope.banderaNoticiasOportunidad = false;
+            $scope.banderaNoticiasOs = false;
+        }
+    }
 
 }]);
 

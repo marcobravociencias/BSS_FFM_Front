@@ -12,7 +12,7 @@
                 <div class="badge badge-dot badge-dot-sm status-adjunto badge-warning" ng-show="!showEliminarFileGeneral"></div>
                 <div class="badge badge-dot badge-dot-sm status-adjunto badge-success" ng-show="showEliminarFileGeneral"></div>
             </div>
-            <button class="btn-send-mensaje " ng-click="enviarMesajeGeneral()">
+            <button class="btn-send-mensaje " ng-click="enviarMesajeGeneralBusqueda()">
                 <i class="fas fa-paper-plane"></i>
             </button>
             
@@ -46,7 +46,7 @@
                                 </div>
                                 <span class="option-mensajes" ng-click="responderComentario(noticia.id)">Responder</span>
                                 <!-- <span class="option-mensajes" ng-click="editarComentario(noticia.id, noticia.text, 0)">Editar</span> -->
-                                <span class="option-mensajes" ng-click="eliminarComentario(noticia.id, 0)">Eliminar</span>
+                                <span class="option-mensajes" ng-click="eliminarComentarioBusqueda(noticia.id, 0)">Eliminar</span>
                                 <span class="text-fecha-comentario" ng-bind="noticia.createdDate"></span>
                                 <button id="button-subcommet-{{noticia.id}}" type="button" class="btn-close close-enviar-subcomentario" ng-click="responderComentario(noticia.id)" aria-label="Close" style="display: none;"></button>
                                 <div id="content-subcomentario-os-{{noticia.id}}" class="row container-text-subcomentarios" style="display: none;">
@@ -60,7 +60,7 @@
                                         </div>
                                     </div>
                                     <div class="col-2" style="top: -34px; left: 34em;">
-                                        <button class="btn-send-mensaje" ng-click="enviarComentario(noticia.id)" style="height: 2.2em;">
+                                        <button class="btn-send-mensaje" ng-click="enviarComentarioBusqueda(noticia.id)" style="height: 2.2em;">
                                             <i class="fas fa-paper-plane"></i>
                                         </button>
                                     </div>
@@ -108,14 +108,14 @@
                                 <h1 class="title-coment" ng-bind="comentario.createdBy"></h1>
                                 <h1 class="title-subcomment" ng-bind="comentario.text"></h1>
                                 <!-- <span class="option-mensajes" ng-click="editarComentario(comentario.id, comentario.text, 1)">Editar</span> -->
-                                <span class="option-mensajes" ng-click="eliminarComentario(comentario.id, 1)">Eliminar</span>
+                                <span class="option-mensajes" ng-click="eliminarComentarioBusqueda(comentario.id, 1)">Eliminar</span>
                                 <span class="text-fecha-comentario" ng-bind="comentario.createdDate"></span>
                                 <div id="content-text-e-{{comentario.id}}" class="row content-text-send" style="display: none;">
                                     <div class="col-10">
                                         <input id="texto-comentario-os-{{comentario.id}}" type="text" class="form-control form-control-sm form-send">
                                     </div>
                                     <div class="col-2 col-btn-send">
-                                        <button class="btn btn-sm btn-primary btn-send" ng-click="enviarComentario(comentario.id)">Enviar</button>
+                                        <button class="btn btn-sm btn-primary btn-send" ng-click="enviarComentarioBusqueda(comentario.id)">Enviar</button>
                                     </div>
                                 </div>
                             </div>

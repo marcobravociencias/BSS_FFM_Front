@@ -28,7 +28,7 @@
 			</div>
 		</div>
         <div class="col-md-2">
-        	<div class=" valign-wrapper">
+        	<div class=" valign-wrapper" ng-show="tabIngenierosVL_MULTISELECCION">
         		<label class="span-consulta" style="padding-right: .5em;">Todos </label>
 				<div class="form-check-sm form-check form-switch">
 					<input class="form-check-input form-check-input-sm" type="checkbox" id="checkTotdosIngenieroRegistro" ng-click="seleccionarTodosIngenierosRegistro()" />

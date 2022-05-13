@@ -139,5 +139,14 @@ app.service("usuarioPIService", function ($http) {
 			transformRequest: angular.identity
         });
     };
+    
+    this.consultarCuadrillasGestionUsuarios = function(){
+    	return $http({
+			method: "post",
+			url: "req/consultarCuadrillasGestionUsuarios",
+			headers: {'Content-Type': "application/json; charset=utf-8"},
+			transformRequest: angular.identity
+		});
+	};
 
 });
