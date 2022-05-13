@@ -631,10 +631,10 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
                 objectId: $scope.elemento.detalle.id,
                 text: $scope.mensajeGeneral
             }
-            if (document.querySelector('#fileComentarioGeneral').files[0] !== undefined) {
+            if (document.querySelector('#fileComentarioGeneralBusqueda').files[0] !== undefined) {
 
 
-                var myFile = document.querySelector('#fileComentarioGeneral').files[0];
+                var myFile = document.querySelector('#fileComentarioGeneralBusqueda').files[0];
                 var reader = new FileReader();
                 reader.readAsDataURL(myFile);
                 console.log(reader)
@@ -643,8 +643,8 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
                     params = {
                         objectId: $scope.elemento.detalle.id,
                         text: $scope.mensajeGeneral,
-                        documentName: document.querySelector('#fileComentarioGeneral').files[0].name.split('.')[0],
-                        documentExtension: document.querySelector('#fileComentarioGeneral').files[0].name.split('.')[1],
+                        documentName: document.querySelector('#fileComentarioGeneralBusqueda').files[0].name.split('.')[0],
+                        documentExtension: document.querySelector('#fileComentarioGeneralBusqueda').files[0].name.split('.')[1],
                         document: reader.result.split(",")[1]
                     }
                     $scope.guardarMensaje(params);
@@ -666,10 +666,10 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
                 objectId: $scope.elemento.detalle.id,
                 text: $scope.mensajeGeneral
             }
-            if (document.querySelector('#fileComentarioGeneral').files[0]) {
+            if (document.querySelector('#fileComentarioGeneralBusqueda').files[0]) {
 
 
-                var myFile = document.querySelector('#fileComentarioGeneral').files[0];
+                var myFile = document.querySelector('#fileComentarioGeneralBusqueda').files[0];
                 var reader = new FileReader();
                 reader.readAsDataURL(myFile);
                 console.log(reader)
@@ -678,8 +678,8 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
                     params = {
                         objectId: $scope.elemento.detalle.id,
                         text: $scope.mensajeGeneral,
-                        documentName: document.querySelector('#fileComentarioGeneral').files[0].name.split('.')[0],
-                        documentExtension: document.querySelector('#fileComentarioGeneral').files[0].name.split('.')[1],
+                        documentName: document.querySelector('#fileComentarioGeneralBusqueda').files[0].name.split('.')[0],
+                        documentExtension: document.querySelector('#fileComentarioGeneralBusqueda').files[0].name.split('.')[1],
                         document: reader.result.split(",")[1]
                     }
                     $scope.guardarMensaje(params);
@@ -703,10 +703,10 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
                 objectId: $scope.elemento.detalle.id,
                 text: $scope.mensajeGeneral
             }
-            if (document.querySelector('#fileComentarioGeneral').files[0] !== undefined) {
+            if (document.querySelector('#fileComentarioGeneralBusqueda').files[0] !== undefined) {
 
 
-                var myFile = document.querySelector('#fileComentarioGeneral').files[0];
+                var myFile = document.querySelector('#fileComentarioGeneralBusqueda').files[0];
                 var reader = new FileReader();
                 reader.readAsDataURL(myFile);
                 console.log(reader)
@@ -715,8 +715,8 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
                     params = {
                         objectId: $scope.elemento.detalle.id,
                         text: $scope.mensajeGeneral,
-                        documentName: document.querySelector('#fileComentarioGeneral').files[0].name.split('.')[0],
-                        documentExtension: document.querySelector('#fileComentarioGeneral').files[0].name.split('.')[1],
+                        documentName: document.querySelector('#fileComentarioGeneralBusqueda').files[0].name.split('.')[0],
+                        documentExtension: document.querySelector('#fileComentarioGeneralBusqueda').files[0].name.split('.')[1],
                         document: reader.result.split(",")[1]
                     }
                     $scope.guardarMensaje(params);
@@ -812,9 +812,9 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
                     text: document.getElementById('texto-subcomentario-ticket-' + noticia).value
                 }
 
-                if (document.querySelector('#fileSubComentarioTicket-' + noticia).files[0] !== undefined) {
+                if (document.querySelector('#fileSubComentarioTicket2-' + noticia).files[0] !== undefined) {
 
-                    var myFile = document.querySelector('#fileSubComentarioTicket-' + noticia).files[0];
+                    var myFile = document.querySelector('#fileSubComentarioTicket2-' + noticia).files[0];
                     var reader = new FileReader();
                     console.log(myFile)
                     reader.readAsDataURL(myFile);
@@ -822,8 +822,8 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
                         params = {
                             newId: noticia,
                             text: document.getElementById('texto-subcomentario-ticket-' + noticia).value,
-                            documentName: document.querySelector('#fileSubComentarioTicket-' + noticia).files[0].name.split('.')[0],
-                            documentExtension: document.querySelector('#fileSubComentarioTicket-' + noticia).files[0].name.split('.')[1],
+                            documentName: document.querySelector('#fileSubComentarioTicket2-' + noticia).files[0].name.split('.')[0],
+                            documentExtension: document.querySelector('#fileSubComentarioTicket2-' + noticia).files[0].name.split('.')[1],
                             document: reader.result.split(",")[1]
                         }
                        
@@ -873,10 +873,10 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
                     text: document.getElementById('texto-subcomentario-ticket-' + noticia).value
                 }
 
-                if (document.querySelector('#fileSubComentarioTicket-' + noticia).files[0] !== undefined) {
+                if (document.querySelector('#fileSubComentarioTicket2-' + noticia).files[0] !== undefined) {
 
 
-                    var myFile = document.querySelector('#fileSubComentarioTicket-' + noticia).files[0];
+                    var myFile = document.querySelector('#fileSubComentarioTicket2-' + noticia).files[0];
                     var reader = new FileReader();
                     console.log(myFile)
                     reader.readAsDataURL(myFile);
@@ -885,8 +885,8 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
                         params = {
                             newId: noticia,
                             text: document.getElementById('texto-subcomentario-ticket-' + noticia).value,
-                            documentName: document.querySelector('#fileSubComentarioTicket-' + noticia).files[0].name.split('.')[0],
-                            documentExtension: document.querySelector('#fileSubComentarioTicket-' + noticia).files[0].name.split('.')[1],
+                            documentName: document.querySelector('#fileSubComentarioTicket2-' + noticia).files[0].name.split('.')[0],
+                            documentExtension: document.querySelector('#fileSubComentarioTicket2-' + noticia).files[0].name.split('.')[1],
                             document: reader.result.split(",")[1]
                         }
                         $scope.crearSubComnetarioBusqueda(params);
@@ -934,9 +934,9 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
                     text:  document.getElementById('texto-subcomentario-ticket-' + noticia).value
                 }
 
-                if (document.querySelector('#fileSubComentarioTicket-' + noticia).files[0] !== undefined) {
+                if (document.querySelector('#fileSubComentarioTicket2-' + noticia).files[0] !== undefined) {
                   
-                    var myFile = document.querySelector('#fileSubComentarioTicket-' + noticia).files[0];
+                    var myFile = document.querySelector('#fileSubComentarioTicket2-' + noticia).files[0];
                     var reader = new FileReader();
                     console.log(myFile)
                     reader.readAsDataURL(myFile);
@@ -945,8 +945,8 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
                         params = {
                             newId: noticia,
                             text: document.getElementById('texto-subcomentario-ticket-' + noticia).value,
-                            documentName: document.querySelector('#fileSubComentarioTicket-' + noticia).files[0].name.split('.')[0],
-                            documentExtension: document.querySelector('#fileSubComentarioTicket-' + noticia).files[0].name.split('.')[1],
+                            documentName: document.querySelector('#fileSubComentarioTicket2-' + noticia).files[0].name.split('.')[0],
+                            documentExtension: document.querySelector('#fileSubComentarioTicket2-' + noticia).files[0].name.split('.')[1],
                             document: reader.result.split(",")[1]
                         }
                         $scope.crearSubComnetarioBusqueda(params);
@@ -1186,7 +1186,8 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
         });
     }
 
-    cambiar = function(evento) {
+    cambiarBusqueda = function(evento) {
+        console.log("1");
         if ($scope.elemento.keyObject === 'OS') {
             if( $('#'+evento.id).get(0).files[0] === undefined ){
                 $(".text_select_archivo_sub").text("Adjuntar archivo");
@@ -1226,23 +1227,24 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
         $scope.mensajeGeneral = ''
     }
 
-    $scope.cambioGeneral = function(){
-        if ($('#fileComentarioGeneral').get(0).files[0] === undefined) {
+    $scope.cambioGeneralBusqueda = function(){
+        if ($('#fileComentarioGeneralBusqueda').get(0).files[0] === undefined) {
             $scope.tituloNombreArchivoGeneral = ''
             $scope.showEliminarFileGeneral= false
         } else {
-            $scope.tituloNombreArchivoGeneral = $('#fileComentarioGeneral').get(0).files[0].name
+            $scope.tituloNombreArchivoGeneral = $('#fileComentarioGeneralBusqueda').get(0).files[0].name
             $scope.showEliminarFileGeneral = true
         }
     }
 
     $scope.resetFileGeneralBusqueda = function(){
         $scope.tituloNombreArchivoGeneral = ''
-        $("#fileComentarioGeneral").val("");
+        $("#fileComentarioGeneralBusqueda").val("");
         $scope.showEliminarFileGeneral = false;
     }
 
-    cambiar = function (evento) {
+    cambiarBusqueda = function (evento) {
+        console.log("2");
         let noticia = evento.id.split('-')[1]
         if ($('#' + evento.id).get(0).files[0] === undefined) {
             document.getElementById('spnNombreAdSubComentarioOs-' + noticia).innerHTML = ''
@@ -1261,7 +1263,7 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
     $scope.resetFileBusqueda = function (noticia) {
         $("#fileSubComentarioOs-" + noticia).val("");
         $("#fileSubComentariotOp-" + noticia).val("");
-        $("#fileSubComentarioTicket-" + noticia).val("");
+        $("#fileSubComentarioTicket2-" + noticia).val("");
         document.getElementById('spnNombreAdSubComentarioOs-' + noticia).innerHTML = ''
         document.getElementById('spnNombreAdSubComentarioOp-' + noticia).innerHTML = ''
         document.getElementById('spnNombreAdSubComentarioTicket-' + noticia).innerHTML = ''

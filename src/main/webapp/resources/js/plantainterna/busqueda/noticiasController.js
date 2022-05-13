@@ -33,17 +33,17 @@ app.noticiasController = function ($scope, $q, busquedaService) {
         $scope.elemento;
         if ($scope.elemento.keyObject === 'OS') {
             params = {
-                objectId: $scope.elemento.detalle.id,
+                objectId: $scope.elemento.detalle.id ? $scope.elemento.detalle.id : $scope.idDetalleObject,
                 objectType: 'OrdenServicio'
             }
         } else if ($scope.elemento.keyObject === 'OP') {
             params = {
-                objectId: $scope.elemento.detalle.id,
+                objectId: $scope.elemento.detalle.id ? $scope.elemento.detalle.id : $scope.idDetalleObject,
                 objectType: 'Oportunidad'
             }
         } else {
             params = {
-                objectId: $scope.elemento.detalle.id,
+                objectId: $scope.elemento.detalle.id ? $scope.elemento.detalle.id : $scope.idDetalleObject,
                 objectType: 'Ticket'
             }
         }
@@ -78,7 +78,7 @@ app.noticiasController = function ($scope, $q, busquedaService) {
             }
 
             params = {
-                objectId: $scope.elemento.detalle.id,
+                objectId: $scope.elemento.detalle.id ? $scope.elemento.detalle.id : $scope.idDetalleObject,
                 text: $scope.mensajeGeneral
             }
             if (document.querySelector('#fileComentarioGeneral').files[0] !== undefined) {
@@ -91,7 +91,7 @@ app.noticiasController = function ($scope, $q, busquedaService) {
                 reader.onload = function () {
 
                     params = {
-                        objectId: $scope.elemento.detalle.id,
+                        objectId: $scope.elemento.detalle.id ? $scope.elemento.detalle.id : $scope.idDetalleObject,
                         text: $scope.mensajeGeneral,
                         documentName: document.querySelector('#fileComentarioGeneral').files[0].name.split('.')[0],
                         documentExtension: document.querySelector('#fileComentarioGeneral').files[0].name.split('.')[1],
@@ -113,7 +113,7 @@ app.noticiasController = function ($scope, $q, busquedaService) {
             }
 
             params = {
-                objectId: $scope.elemento.detalle.id,
+                objectId: $scope.elemento.detalle.id ? $scope.elemento.detalle.id : $scope.idDetalleObject,
                 text: $scope.mensajeGeneral
             }
             if (document.querySelector('#fileComentarioGeneral').files[0]) {
@@ -126,7 +126,7 @@ app.noticiasController = function ($scope, $q, busquedaService) {
                 reader.onload = function () {
 
                     params = {
-                        objectId: $scope.elemento.detalle.id,
+                        objectId: $scope.elemento.detalle.id ? $scope.elemento.detalle.id : $scope.idDetalleObject,
                         text: $scope.mensajeGeneral,
                         documentName: document.querySelector('#fileComentarioGeneral').files[0].name.split('.')[0],
                         documentExtension: document.querySelector('#fileComentarioGeneral').files[0].name.split('.')[1],
@@ -148,7 +148,7 @@ app.noticiasController = function ($scope, $q, busquedaService) {
             }
 
             params = {
-                objectId: $scope.elemento.detalle.id,
+                objectId: $scope.elemento.detalle.id ? $scope.elemento.detalle.id : $scope.idDetalleObject,
                 text: $scope.mensajeGeneral
             }
             if (document.querySelector('#fileComentarioGeneral').files[0] !== undefined) {
@@ -161,7 +161,7 @@ app.noticiasController = function ($scope, $q, busquedaService) {
                 reader.onload = function () {
 
                     params = {
-                        objectId: $scope.elemento.detalle.id,
+                        objectId: $scope.elemento.detalle.id ? $scope.elemento.detalle.id : $scope.idDetalleObject,
                         text: $scope.mensajeGeneral,
                         documentName: document.querySelector('#fileComentarioGeneral').files[0].name.split('.')[0],
                         documentExtension: document.querySelector('#fileComentarioGeneral').files[0].name.split('.')[1],
@@ -247,28 +247,28 @@ app.noticiasController = function ($scope, $q, busquedaService) {
         let params = {}
         if ($scope.elemento.keyObject === 'OS') {
             if ($scope.tipoResponse === 0) {
-                if (document.getElementById('texto-subcomentario-os-' + noticia).value === '') {
-                    mostrarMensajeWarning('Escribir un comentario')
+                if (document.getElementById('texto-subcomentario-ticket-' + noticia).value === '') {
+                    mostrarMensajeWarningValidacion('Escribir un comentario')
                     return false;
                 }
 
                 params = {
                     newId: noticia,
-                    text: document.getElementById('texto-subcomentario-os-' + noticia).value
+                    text: document.getElementById('texto-subcomentario-ticket-' + noticia).value
                 }
 
-                if (document.querySelector('#fileSubComentarioOs-' + noticia).files[0] !== undefined) {
+                if (document.querySelector('#fileSubComentarioTicket-' + noticia).files[0] !== undefined) {
 
-                    var myFile = document.querySelector('#fileSubComentarioOs-' + noticia).files[0];
+                    var myFile = document.querySelector('#fileSubComentarioTicket-' + noticia).files[0];
                     var reader = new FileReader();
                     console.log(myFile)
                     reader.readAsDataURL(myFile);
                     reader.onload = function () {
                         params = {
                             newId: noticia,
-                            text: document.getElementById('texto-subcomentario-os-' + noticia).value,
-                            documentName: document.querySelector('#fileSubComentarioOs-' + noticia).files[0].name.split('.')[0],
-                            documentExtension: document.querySelector('#fileSubComentarioOs-' + noticia).files[0].name.split('.')[1],
+                            text: document.getElementById('texto-subcomentario-ticket-' + noticia).value,
+                            documentName: document.querySelector('#fileSubComentarioTicket-' + noticia).files[0].name.split('.')[0],
+                            documentExtension: document.querySelector('#fileSubComentarioTicket-' + noticia).files[0].name.split('.')[1],
                             document: reader.result.split(",")[1]
                         }
                        
@@ -285,7 +285,7 @@ app.noticiasController = function ($scope, $q, busquedaService) {
             } else {
                 if ($scope.tipoComentario === 0) {
                     if (document.getElementById('texto-comentario-os-' + noticia).value === '') {
-                        mostrarMensajeWarning('Escribir un comentario')
+                        mostrarMensajeWarningValidacion('Escribir un comentario')
                         return false;
                     }
                     let params = {
@@ -295,7 +295,7 @@ app.noticiasController = function ($scope, $q, busquedaService) {
                     $scope.editComentario(params);
                 } else {
                     if (document.getElementById('texto-comentario-os-' + noticia).value === '') {
-                        mostrarMensajeWarning('Escribir un comentario')
+                        mostrarMensajeWarningValidacion('Escribir un comentario')
                         return false;
                     }
                     let params = {
@@ -308,20 +308,20 @@ app.noticiasController = function ($scope, $q, busquedaService) {
             }
         } else if ($scope.elemento.keyObject === 'OP') {
             if ($scope.tipoResponse === 0) {
-                if (document.getElementById('texto-subcomentario-op-' + noticia).value === '') {
-                    mostrarMensajeWarning('Escribir un comentario')
+                if (document.getElementById('texto-subcomentario-ticket-' + noticia).value === '') {
+                    mostrarMensajeWarningValidacion('Escribir un comentario')
                     return false;
                 }
 
                 params = {
                     newId: noticia,
-                    text: document.getElementById('texto-subcomentario-op-' + noticia).value
+                    text: document.getElementById('texto-subcomentario-ticket-' + noticia).value
                 }
 
-                if (document.querySelector('#fileSubComentarioOp-' + noticia).files[0] !== undefined) {
+                if (document.querySelector('#fileSubComentarioTicket-' + noticia).files[0] !== undefined) {
 
 
-                    var myFile = document.querySelector('#fileSubComentariotOp-' + noticia).files[0];
+                    var myFile = document.querySelector('#fileSubComentarioTicket-' + noticia).files[0];
                     var reader = new FileReader();
                     console.log(myFile)
                     reader.readAsDataURL(myFile);
@@ -329,9 +329,9 @@ app.noticiasController = function ($scope, $q, busquedaService) {
 
                         params = {
                             newId: noticia,
-                            text: document.getElementById('texto-subcomentario-op-' + noticia).value,
-                            documentName: document.querySelector('#fileSubComentariotOp-' + noticia).files[0].name.split('.')[0],
-                            documentExtension: document.querySelector('#fileSubComentariotOp-' + noticia).files[0].name.split('.')[1],
+                            text: document.getElementById('texto-subcomentario-ticket-' + noticia).value,
+                            documentName: document.querySelector('#fileSubComentarioTicket-' + noticia).files[0].name.split('.')[0],
+                            documentExtension: document.querySelector('#fileSubComentarioTicket-' + noticia).files[0].name.split('.')[1],
                             document: reader.result.split(",")[1]
                         }
                         $scope.crearSubComnetario(params);
@@ -346,7 +346,7 @@ app.noticiasController = function ($scope, $q, busquedaService) {
             } else {
                 if ($scope.tipoComentario === 0) {
                     if (document.getElementById('texto-comentario-op-' + noticia).value === '') {
-                        mostrarMensajeWarning('Escribir un comentario')
+                        mostrarMensajeWarningValidacion('Escribir un comentario')
                         return false;
                     }
                     params = {
@@ -356,7 +356,7 @@ app.noticiasController = function ($scope, $q, busquedaService) {
                     $scope.editComentario(params);
                 } else {
                     if (document.getElementById('texto-comentario-op-' + noticia).value === '') {
-                        mostrarMensajeWarning('Escribir un comentario')
+                        mostrarMensajeWarningValidacion('Escribir un comentario')
                         return false;
                     }
                     let params = {
@@ -370,7 +370,7 @@ app.noticiasController = function ($scope, $q, busquedaService) {
         } else {
             if ($scope.tipoResponse === 0) {
                 if (document.getElementById('texto-subcomentario-ticket-' + noticia).value === '') {
-                    mostrarMensajeWarning('Escribir un comentario')
+                    mostrarMensajeWarningValidacion('Escribir un comentario')
                     return false;
                 }
 
@@ -406,7 +406,7 @@ app.noticiasController = function ($scope, $q, busquedaService) {
             } else {
                 if ($scope.tipoComentario === 0) {
                     if (document.getElementById('texto-comentario-' + noticia).value === '') {
-                        mostrarMensajeWarning('Escribir un comentario')
+                        mostrarMensajeWarningValidacion('Escribir un comentario')
                         return false;
                     }
                     let params = {
@@ -416,7 +416,7 @@ app.noticiasController = function ($scope, $q, busquedaService) {
                     $scope.editComentario(params);
                 } else {
                     if (document.getElementById('texto-comentario-' + noticia).value === '') {
-                        mostrarMensajeWarning('Escribir un comentario')
+                        mostrarMensajeWarningValidacion('Escribir un comentario')
                         return false;
                     }
                     let params = {

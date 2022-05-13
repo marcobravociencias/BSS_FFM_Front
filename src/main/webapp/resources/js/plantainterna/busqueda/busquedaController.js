@@ -74,8 +74,10 @@ app.controller('busquedaController', ['$scope', '$q', 'busquedaService', 'generi
         }
     }
 
+    $scope.idDetalleObject = '';
     $scope.consultarDetalleObjectosSF = function (id, keyObjeto) {
         console.log("id: " + id + " tipo del objeto: " + keyObjeto)
+        $scope.idDetalleObject = id;
         $scope.isConsultaPrimeraVezNoticias = false;
         $scope.isAbiertoOSNoticias = false;
         swal({ text: 'Buscando datos ...', allowOutsideClick: false });

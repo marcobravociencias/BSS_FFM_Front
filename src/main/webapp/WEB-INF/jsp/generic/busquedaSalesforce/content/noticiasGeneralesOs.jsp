@@ -53,7 +53,7 @@
                                     <div class="col-8 col-input-text-subcomentarios" style="width: 90%;">
                                         <div class="input-group input-group-subcomentarios">
                                             <input type="text" id="texto-subcomentario-os-{{noticia.id}}" class="form-control form-send-general text-subcomentario-ticket" placeholder="Escribe aqu&iacute; tu mensaje" aria-label="Recipient's username"aria-describedby="basic-addon2"/>
-                                            <input type="file" class="box__file inputFile" id="fileSubComentarioOs-{{noticia.id}}" onchange="cambiar(this)"/>
+                                            <input type="file" class="box__file inputFile" id="fileSubComentarioOs-{{noticia.id}}" onchange="cambiarBusqueda(this)"/>
                                             <label for="fileSubComentarioOs-{{noticia.id}}" class="lbl-adjuntar-ticket"><i class="input-group-text icon-adjuntar-subcomentarios fas fa-paperclip" id="basic-addon2"></i></label>
                                             <div class="badge badge-dot badge-dot-sm status-adjunto badge-warning" ng-show="!showEliminarSubCom"></div>
                                             <div class="badge badge-dot badge-dot-sm status-adjunto badge-success" ng-show="showEliminarSubCom"></div>
