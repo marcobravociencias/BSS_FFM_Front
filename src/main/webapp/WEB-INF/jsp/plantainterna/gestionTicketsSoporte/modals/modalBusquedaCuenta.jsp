@@ -34,7 +34,7 @@
             </div>
             <div class="modal-footer ">
                 <button type="button" class="btn btn-cerrar-modal" data-mdb-dismiss="modal">
-                    Cerrarrr
+                    Cerrar
                 </button>
                 <button type="button" class="btn btn-primary btn-asignarTecnico" ng-click="asignarTecnicoTicket()">
                     Asignar
