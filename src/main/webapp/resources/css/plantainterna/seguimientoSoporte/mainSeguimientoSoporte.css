@@ -17,7 +17,7 @@
 .cerrar-cancelar-btn {
     font-size: .7em;
     background: white;
-    color: #0c56d0 !important; 
+    color: #0c56d0 !important;
     font-weight: bold;
     box-shadow: none;
     padding: .6em 2em .6em 2em;
@@ -77,7 +77,7 @@
 }
 
 
-.no-dictamen{
+.no-dictamen {
     font-size: 0.8em;
     padding: 2em;
 }
@@ -117,7 +117,7 @@
     box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
 }
 
-.icon-table{
+.icon-table {
     padding: 0.5em 1em !important;
     border-radius: 0.2rem !important;
     cursor: pointer;
@@ -166,7 +166,6 @@
 }
 
 .content-principal input,
-.content-falla input,
 .content-comentarios textarea {
     width: 60% !important;
 }
@@ -403,64 +402,85 @@ i.icono-noseleccion {
 /* CSS TABLE */
 
 #ticketTable tbody tr:nth-child(even),
+#table-cambio-equipo tbody tr:nth-child(even),
 #seguimientoTable tbody tr:nth-child(even) {
-  background: #f5f5f5;
+    background: #f5f5f5;
 }
 
 #ticketTable>tbody>tr>td,
+#table-cambio-equipo>tbody>tr>td,
 #seguimientoTable>tbody>tr>td {
-  white-space: nowrap;
-  color: #39455b;
-  font-family: 'Montserrat';
-  font-size: .8em;
-  border-top: 0px solid #eceeef !important;
-  text-align: center;
+    white-space: nowrap;
+    color: #39455b;
+    font-family: 'Montserrat';
+    font-size: .8em;
+    border-top: 0px solid #eceeef !important;
+    text-align: center;
 }
 
 #ticketTable thead th,
+#table-cambio-equipo thead th,
 #seguimientoTable thead th {
-  position: relative;
-  background-color: #b1b1b1;
-  color: #fff;
-  font-size: 0.8em;
-  white-space: nowrap;
-  padding: 1em;
-  border: none;
-  font-weight: normal;
-  text-align: center;
+    position: relative;
+    background-color: #b1b1b1;
+    color: #fff;
+    font-size: 0.8em;
+    white-space: nowrap;
+    padding: 1em;
+    border: none;
+    font-weight: normal;
+    text-align: center;
 }
 
 #ticketTable tbody tr td,
+#table-cambio-equipo tbody tr td,
 #seguimientoTable tbody tr td {
-  padding: 1em 0.7em;
-  border: none;
+    padding: 1em 0.7em;
+    border: none;
 }
 
 .page-link {
-  font-size: 0.7em !important;
-  font-family: "Montserrat" !important;
+    font-size: 0.7em !important;
+    font-family: "Montserrat" !important;
 }
 
 .dataTables_info {
-  font-size: 0.7em;
-  font-family: "Montserrat" !important;
-  text-align: left;
-  padding-left: 0.5em;
+    font-size: 0.7em;
+    font-family: "Montserrat" !important;
+    text-align: left;
+    padding-left: 0.5em;
 }
 
 .dataTables_paginate.paging_simple_numbers {
-  float: right;
+    float: right;
 }
 
 .dataTables_filter {
-  font-size: 0.7em !important;
-  font-family: 'Montserrat';
+    font-size: 0.7em !important;
+    font-family: 'Montserrat';
 }
 
 div.dataTables_wrapper div.dataTables_filter input {
-  width: 11.3em;
-  height: 2.05em;
-  margin-right: 1em;
+    width: 11.3em;
+    height: 2.05em;
+    margin-right: 1em;
+}
+
+#table-cambio-equipo tbody tr td, #table-cambio-equipo thead th {
+    padding: 0.5em !important;
+    font-size: 0.7em !important;
+    vertical-align: middle;
+}
+
+.eliminar-registro-cambioequipo:hover, .eliminar-registro-cambioequipo:active,
+.eliminar-registro-cambioequipo:focus, .eliminar-registro-cambioequipo:disabled {
+    background: #f55756 !important;
+}
+
+.eliminar-registro-cambioequipo {
+    background: #f55756;
+    font-size: .8em;
+    padding: .3em 1em;
 }
 
 /* CSS TABLE */

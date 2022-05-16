@@ -23,25 +23,29 @@
                                     <div class="container-fluid detalle-content">
                                         <div class="container-text-content-detalle" style="width: 95%;"><i
                                                 class="icon-user-detalle fas fa-user"></i><span
-                                                class="text-content-ticket ng-binding" ng-bind="ticketDetalle.detalleTicketSc.ingeniero || 'Sin dato'"></span>
+                                                class="text-content-ticket ng-binding"
+                                                ng-bind="ticketDetalle.detalleTicketSc.ingeniero || 'Sin dato'"></span>
                                         </div>
                                     </div>
                                     <div class="container-fluid detalle-content">
                                         <div class="container-text-content-detalle" style="width: 95%;"><i
                                                 class="icon-user-detalle fas fa-hashtag"></i><span
-                                                class="text-content-ticket ng-binding" ng-bind="ticketDetalle.detalleTicketSc.numEmpleadoInge || 'Sin dato'"></span>
+                                                class="text-content-ticket ng-binding"
+                                                ng-bind="ticketDetalle.detalleTicketSc.numEmpleadoInge || 'Sin dato'"></span>
                                         </div>
                                     </div>
                                     <div class="container-fluid detalle-content">
                                         <div class="container-text-content-detalle" style="width: 95%;"><i
                                                 class="icon-user-detalle fas fa-id-badge"></i><span
-                                                class="text-content-ticket ng-binding" ng-bind="ticketDetalle.detalleTicketSc.usuarioInge || 'Sin dato'"></span>
+                                                class="text-content-ticket ng-binding"
+                                                ng-bind="ticketDetalle.detalleTicketSc.usuarioInge || 'Sin dato'"></span>
                                         </div>
                                     </div>
                                     <div class="container-fluid detalle-content">
                                         <div class="container-text-content-detalle" style="width: 95%;"><i
                                                 class="icon-user-detalle fas fa-phone-alt"></i><span
-                                                class="text-content-ticket ng-binding" ng-bind="ticketDetalle.detalleTicketSc.celularInge || 'Sin dato'"></span>
+                                                class="text-content-ticket ng-binding"
+                                                ng-bind="ticketDetalle.detalleTicketSc.celularInge || 'Sin dato'"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -60,7 +64,8 @@
                                 <div class="container-text-title-detalle"><span class="text-tile-ticket">OS</span>
                                 </div>
                                 <div class="container-text-content-detalle">
-                                    <span class="text-content-ticket" ng-bind="ticketDetalle.detalleTicketSc.folioSistema || 'Sin dato'"></span>
+                                    <span class="text-content-ticket"
+                                        ng-bind="ticketDetalle.detalleTicketSc.folioSistema || 'Sin dato'"></span>
 
                                 </div>
                             </div>
@@ -69,7 +74,8 @@
                                         Ticket</span>
                                 </div>
                                 <div class="container-text-content-detalle">
-                                    <span class="text-content-ticket"  ng-bind="ticketDetalle.detalleTicketSc.numTicket || 'Sin dato'"></span>
+                                    <span class="text-content-ticket"
+                                        ng-bind="ticketDetalle.detalleTicketSc.numTicket || 'Sin dato'"></span>
 
                                 </div>
                             </div>
@@ -100,14 +106,14 @@
                                             title="No se encontr&oacute; el catalogo de fallas"></i></span>
                                 </div>
                                 <div class="container-text-content-detalle inputTicket-select">
-                                    <select class="form-control form-control-sm inputTicket"
-                                        >
+                                    <input disabled type="text" class="form-control form-control-sm inputTicket"
+                                        ng-model="ticketDetalle.detalleTicketSc.fallaTxt">
+                                    <!--select class="form-control form-control-sm inputTicket">
                                         <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
-                                        <option value="{{fallaTicketD.id}}"
-                                            ng-repeat="fallaTicketD in listFallasTicketDetalle">
-                                            {{fallaTicketD.descripcion}}
+                                        <option value="{{falla.id}}" ng-repeat="falla in listFallasTicketDetalle">
+                                            {{falla.descripcion}}
                                         </option>
-                                    </select>
+                                    </select-->
                                 </div>
                             </div>
                             <div class="container-fluid ticket-content content-select-ticket-detalle">
@@ -118,14 +124,16 @@
                                             title="No se encontr&oacute; el catalogo de fallas"></i></span>
                                 </div>
                                 <div class="container-text-content-detalle inputTicket-select">
-                                    <select class="form-control form-control-sm inputTicket"
-                                       >
+                                    <input disabled type="text" class="form-control form-control-sm inputTicket"
+                                        ng-model="ticketDetalle.detalleTicketSc.categoriaTxt">
+
+                                    <!--select class="form-control form-control-sm inputTicket">
                                         <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
-                                        <option value="{{categoriaTicketD.id}}"
-                                            ng-repeat="categoriaTicketD in listCategoriasTicketDetalle">
-                                            {{categoriaTicketD.descripcion}}
+                                        <option value="{{categoria.id}}"
+                                            ng-repeat="categoria in listCategoriasTicketDetalle">
+                                            {{categoria.descripcion}}
                                         </option>
-                                    </select>
+                                    </select-->
                                 </div>
                             </div>
                             <div class="container-fluid ticket-content content-select-ticket-detalle">
@@ -136,14 +144,16 @@
                                             title="No se encontr&oacute; el catalogo de fallas"></i></span>
                                 </div>
                                 <div class="container-text-content-detalle inputTicket-select">
-                                    <select class="form-control form-controlt form-control-sm inputTicket"
-                                        >
+                                    <input disabled type="text" class="form-control form-control-sm inputTicket"
+                                        ng-model="ticketDetalle.detalleTicketSc.subcategoriaTxt">
+
+                                    <!--select class="form-control form-controlt form-control-sm inputTicket">
                                         <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
-                                        <option value="{{subcategoriaTicketD.id}}"
-                                            ng-repeat="subcategoriaTicketD in listSubcategoriasTicketDetalle">
-                                            {{subcategoriaTicketD.descripcion}}
+                                        <option value="{{subcategoria.id}}"
+                                            ng-repeat="subcategoria in listSubcategoriasTicketDetalle">
+                                            {{subcategoria.descripcion}}
                                         </option>
-                                    </select>
+                                    </select-->
                                 </div>
                             </div>
                             <div class="container-fluid ticket-content content-select-ticket-detalle">
@@ -154,8 +164,8 @@
                                             title="No se encontr&oacute; el catalogo de tecnolog&iacute;as"></i></span>
                                 </div>
                                 <div class="container-text-content-detalle inputTicket-select">
-                                    <select class="form-control form-controlt form-control-sm inputTicket"
-                                        >
+                                    <select class="form-control form-controlt form-control-sm inputTicket" disabled
+                                        ng-model="ticketDetalle.detalleTicketSc.idTecnologia">
                                         <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
                                         <option value="{{tec.id}}" ng-repeat="tec in catalogosSeguimiento.tecnologias">
                                             {{tec.descripcion}}
@@ -324,7 +334,7 @@
                                     <div class="container-text-title-dictamen titulo-acciones-dinamicas"><span
                                             class="text-tile-ticket">{{item.descripcion.toUpperCase()}}</span></div>
                                     <div class="container-text-content-dictamen form-check form-switch">
-                                        <input class="form-check-input dictamen-info" id="dictamen-{{item.id}}"
+                                        <input class="form-check-input dictamen-info" id="dictamen-{{item.id}}" disabled
                                             type="checkbox">
                                     </div>
                                 </div>
@@ -354,7 +364,7 @@
                                             title="{{itemRegistro.numeSerieNuevo}}"></td>
                                         <td ng-bind="itemRegistro.macNueva" title="{{itemRegistro.macNueva}}"></td>
                                         <td>
-                                            <button ng-click="eliminarRegistro($index)" type="button"
+                                            <button disabled type="button"
                                                 class="eliminar-registro-cambioequipo btn btn-sm btn-primary ">
                                                 <i class="fas fa-times"></i>
                                             </button>
@@ -375,11 +385,12 @@
         <div class="row">
             <div class="container-fluid ticket-content content-select-ticket-detalle col-4">
                 <div class="container-text-title-detalle"><span class="text-tile-ticket">ESTATUS TICKET<i
-                            ng-if="!catalogosSeguimiento.estatus.length" class="icono-noseleccion fas fa-exclamation-circle ml-2"
+                            ng-if="!catalogosSeguimiento.estatus.length"
+                            class="icono-noseleccion fas fa-exclamation-circle ml-2"
                             title="No se encontr&oacute; el catalogo de estatus"></i></span></div>
                 <div class="container-text-content-detalle inputTicket-select">
-                    <select
-                        class="form-control form-control-sm inputTicket">
+                    <select class="form-control form-control-sm inputTicket" disabled
+                        ng-model="ticketDetalle.detalleTicketSc.idEstatus">
                         <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
                         <option value="{{estatus.id}}" ng-repeat="estatus in catalogosSeguimiento.estatus">
                             {{estatus.descripcion}}
@@ -388,45 +399,48 @@
                 </div>
             </div>
             <div class="container-fluid ticket-content content-select-ticket-detalle col-4"
-                ng-show="ticketDetalle.estatus === '3'">
+                ng-show="ticketDetalle.detalleTicketSc.idEstatus === '3'">
                 <div class="container-text-title-detalle"><span class="text-tile-ticket"
-                        style="margin-left: 5em;">ESTADO<i ng-if="!estadoEscalamientoDetalle.length"
+                        style="margin-left: 5em;">ESTADO<i ng-if="!catalogosSeguimiento.propietarios.length"
                             class="icono-noseleccion fas fa-exclamation-circle ml-2"
                             title="No se encontr&oacute; el catalogo de propietarios"></i></span></div>
                 <div class="container-text-content-detalle inputTicket-select">
-                    <select 
-                        class="form-control form-controlt form-control-sm inputTicket" name="estatusTicketDetalle"
+                    <input type="text" class="form-control form-control-sm inputTicket"
+                        ng-model="ticketDetalle.detalleTicketSc.propietarioTxt">
+
+                    <!--select class="form-control form-controlt form-control-sm inputTicket" name="estatusTicketDetalle"
                         id="estatusTicketDetalle">
                         <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
                         <option value="{{item.id}}" ng-repeat="item in estadoEscalamientoDetalle">
                             {{item.descripcion}}
                         </option>
-                    </select>
+                    </select-->
                 </div>
             </div>
             <div class="container-fluid ticket-content content-select-ticket-detalle col-4"
-                ng-show="ticketDetalle.estatus === '3'">
+                ng-show="ticketDetalle.detalleTicketSc.idEstatus === '3'">
                 <div class="container-text-title-detalle"><span class="text-tile-ticket"
-                        style="margin-left: 5em;">MOTIVO<i ng-if="!estadoEscalamientoDetalle.length"
+                        style="margin-left: 5em;">MOTIVO<i ng-if="!catalogosSeguimiento.propietarios.length"
                             class="icono-noseleccion fas fa-exclamation-circle ml-2"
                             title="No se encontr&oacute; el catalogo de propietarios"></i></span></div>
                 <div class="container-text-content-detalle inputTicket-select">
-                    <select 
-                        class="form-control form-controlt form-control-sm inputTicket" name="estatusTicketDetalle"
-                        id="estatusTicketDetalle" >
+                    <input disabled type="text" class="form-control form-control-sm inputTicket"
+                        ng-model="ticketDetalle.detalleTicketSc.motivoTxt">
+
+                    <!--select class="form-control form-controlt form-control-sm inputTicket" name="estatusTicketDetalle"
+                        id="estatusTicketDetalle">
                         <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
                         <option value="{{item.id}}" ng-repeat="item in motivoEscalamientoDetalle">
                             {{item.descripcion}}
                         </option>
-                    </select>
+                    </select-->
                 </div>
             </div>
             <div class="container-fluid ticket-content content-select-ticket-detalle offset-2 col-6"
-                ng-show="ticketDetalle.estatus !== '3'">
+                ng-show="ticketDetalle.detalleTicketSc.idEstatus !== '3'">
                 <div class="container-text-title-detalle"><span class="text-tile-ticket">COMENTARIO</span></div>
-                <textarea class="form-control form-control-sm inputTicket"
-                    
-                     cols="2"></textarea>
+                <textarea disabled class="form-control form-control-sm inputTicket" cols="2"
+                    ng-model="ticketDetalle.detalleTicketSc.comentario"></textarea>
             </div>
         </div>
         <div class="row content-falla" style="text-align: end;">

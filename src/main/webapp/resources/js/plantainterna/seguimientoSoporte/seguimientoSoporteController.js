@@ -344,13 +344,21 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
     consultaDetalle = function () {
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
-        seguimientoSoporteService.consultaDetalleSoporte(8).then((response) => {
+        seguimientoSoporteService.consultaDetalleSoporte(18).then((response) => {
             swal.close()
             if (response.data.respuesta) {
                 if (response.data.result) {
-                    $scope.isDetalleTicket = true;
+                  
                     let geografia = {};
                     $scope.ticketDetalle = response.data.result.detalleGeneral;
+                    $scope.ticketDetalle.detalleTicketSc.fallaTxt = $scope.catalogosSeguimiento.fallas.find((e) => e.id == $scope.ticketDetalle.detalleTicketSc.falla).descripcion
+                    $scope.ticketDetalle.detalleTicketSc.categoriaTxt = $scope.catalogosSeguimiento.fallas.find((e) => e.id == $scope.ticketDetalle.detalleTicketSc.categoria).descripcion
+                    $scope.ticketDetalle.detalleTicketSc.subcategoriaTxt = $scope.catalogosSeguimiento.fallas.find((e) => e.id == $scope.ticketDetalle.detalleTicketSc.subcategoria).descripcion
+                    $scope.ticketDetalle.detalleTicketSc.propietarioTxt = $scope.catalogosSeguimiento.propietarios.find((e) => e.id == $scope.ticketDetalle.detalleTicketSc.idPropietarioSc).descripcion
+                    $scope.ticketDetalle.detalleTicketSc.motivoTxt = $scope.catalogosSeguimiento.propietarios.find((e) => e.id == $scope.ticketDetalle.detalleTicketSc.idMotivoSc).descripcion
+                    
+                    $scope.ticketDetalle.detalleTicketSc.idTecnologia = $scope.ticketDetalle.detalleTicketSc.idTecnologia + '';
+                    $scope.ticketDetalle.detalleTicketSc.idEstatus = $scope.ticketDetalle.detalleTicketSc.idEstatus + '';
 
                     let urlTec = regexUrl.test($scope.ticketDetalle.detalleOtDetenida.fotoTecnico) ? $scope.ticketDetalle.detalleOtDetenida.fotoTecnico : "./resources/img/plantainterna/despacho/tecnicootasignada.png";
                     let urlIng = regexUrl.test($scope.ticketDetalle.detalleTicketSc.fotoInge) ? $scope.ticketDetalle.detalleTicketSc.fotoInge : "./resources/img/plantainterna/despacho/tecnicootasignada.png";
@@ -358,6 +366,8 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
                     setTimeout(() => {
                         $("#fotoIngeniero").attr("src", urlIng);
                         $("#fotoTecnico").attr("src", urlTec);
+                        $scope.isDetalleTicket = true;
+                        $scope.$apply();
                     }, 100);
 
                     let clusterInd = $scope.catalogosSeguimientoGeografia.find(e => e.id == $scope.ticketDetalle.detalleOtDetenida.idCluster)
@@ -382,16 +392,18 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
                                 $("#dictamen-" + s.idAccion).prop('checked', true);
                                 if (Number(s.idAccion) == 2) {
                                     $scope.isCambioEquipos = true;
-                                    if (s.equipos.length) {
-                                        $.each(s.equipos, function (i, equipo) {
+                                    if (s.detalleSeries.length) {
+                                        $.each(s.detalleSeries, function (i, equipo) {
                                             equipo.descripcion = $scope.catalogosSeguimiento.equipos.find((e) => e.id == equipo.idTipoEquipo).descripcion
                                         })
                                     }
-                                    $scope.listadoNuevoViejosEquipo = s.equipos ? s.equipos : [];
+                                    $scope.listadoNuevoViejosEquipo = s.detalleSeries ? s.detalleSeries : [];
                                 }
                             }
                         });
                     }
+
+                  
 
                 } else {
                     mostrarMensajeWarningValidacion('No se encontr&oacute; el detalle del ticket')

@@ -1,11 +1,11 @@
 <div class="row md-form" id="filtros_config">
     <div class="col-2 input-filtro-content">  
         <label for="filtro_folio_ticket" class="label-filter"><i class="fas fa-ticket-alt"></i> Folio sistema</label>
-        <input type="text" id="filtro_folio_ticket" ng-change="filtroBusqueda.cuenta = ''" ng-model="filtroBusqueda.folio" placeholder="Ej:293870" class="input-filtro-ticket form-control form-control-sm" />
+        <input ng-keyup="$event.keyCode == 13 && consultarTicketsSoporte()" type="text" id="filtro_folio_ticket" ng-change="filtroBusqueda.cuenta = ''" ng-model="filtroBusqueda.folio" placeholder="Ej:293870" class="input-filtro-ticket form-control form-control-sm" />
     </div>
     <div class="col-2 input-filtro-content">  
         <label for="filtro_clave_ticket" class="label-filter"><i class="fa fa-user"></i> Cuenta</label>
-        <input type="text" id="filtro_clave_ticket" placeholder="Ej:2300023000" ng-change="filtroBusqueda.folio = ''" ng-model="filtroBusqueda.cuenta" class="input-filtro-ticket form-control form-control-sm" />
+        <input ng-keyup="$event.keyCode == 13 && consultarTicketsSoporte()" type="text" id="filtro_clave_ticket" placeholder="Ej:2300023000" ng-change="filtroBusqueda.folio = ''" ng-model="filtroBusqueda.cuenta" class="input-filtro-ticket form-control form-control-sm" />
     </div>
     <div class="col-2 columna-filtro-ind input-filtro-content">  
         <label for="filtro_fecha_inicio_ticket" class="label-filter"><i class="fa fa-calendar"></i> Tipo fecha</label>
@@ -83,7 +83,7 @@
             <table class="display table" width="100%" id="tableTicketSoporte">
                 <thead id="thead_ticketSoporte">
                     <tr>
-                        <th>OT</th>
+                        <th>OT FFM</th>
                         <th>OT Soporte</th>
                         <th>Cuenta</th>
                         <th>Folio</th>
