@@ -183,12 +183,15 @@ public class ImplSoporteCentralizadoService implements SoporteCentralizadoServic
 					for (int i = 0; i < ordenesArray.size(); i++) {
 						JsonObject object = (JsonObject) ordenesArray.get(i);
 
-						dataArray[count][0] = object.get("otCentralizado").getAsInt() != 0
-								? String.valueOf(object.get("otCentralizado").getAsInt())
-								: "Sin dato";
-						dataArray[count][1] = object.get("otGeneraSoporte").getAsInt() != 0
+				
+						dataArray[count][0] = object.get("otGeneraSoporte").getAsInt() != 0
 										? String.valueOf(object.get("otGeneraSoporte").getAsInt())
 										: "Sin dato";
+						
+						dataArray[count][1] = object.get("otCentralizado").getAsInt() != 0
+								? String.valueOf(object.get("otCentralizado").getAsInt())
+								: "Sin dato";
+						
 						dataArray[count][2] = (object.get("claveCliente") != null
 								&& object.get("claveCliente").getAsString().trim() != "")
 										? object.get("claveCliente").getAsString().trim()
@@ -246,7 +249,7 @@ public class ImplSoporteCentralizadoService implements SoporteCentralizadoServic
 			}
 		}
 
-		logger.info("*** Objeto Response: " + gson.toJson(dataResponse));
+			logger.info("*** Objeto Response: " + gson.toJson(dataResponse));
 
 		return dataResponse;
 	}
