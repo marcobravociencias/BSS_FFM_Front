@@ -4,14 +4,13 @@
     background: white;
     border-radius: .5em;
     margin-top: 1em;
-    padding: 1em 0 0 0;
 }
 
 .form-content {
     font-size: 0.9em;
     margin-bottom: 1em;
     font-family: "Montserrat";
-
+    padding-top: 1em;
 }
 
 .cerrar-cancelar-btn {
@@ -58,7 +57,7 @@
     content: "";
     position: absolute;
     right: 10%;
-    top: 45%;
+    top: 65%;
     width: 0;
     height: 0;
     border-left: 0.3em solid transparent;
@@ -472,15 +471,138 @@ div.dataTables_wrapper div.dataTables_filter input {
     vertical-align: middle;
 }
 
-.eliminar-registro-cambioequipo:hover, .eliminar-registro-cambioequipo:active,
-.eliminar-registro-cambioequipo:focus, .eliminar-registro-cambioequipo:disabled {
-    background: #f55756 !important;
-}
-
-.eliminar-registro-cambioequipo {
-    background: #f55756;
-    font-size: .8em;
-    padding: .3em 1em;
-}
-
 /* CSS TABLE */
+
+.text-external-link {
+    color: #0c56d0 !important;
+    font-weight: bold !important;
+    text-decoration-line: underline;
+
+}
+
+.text-external-link:hover {
+    color: #114291;
+    text-decoration: solid;
+    cursor: pointer;
+    text-decoration-line: underline;
+}
+
+/*BOX COMMENTS*/
+.icon-color-comments {
+    color: #7f4c9d;
+    display: inline;
+    float: right;
+    cursor: pointer;
+    transition: all 0.5s ease;
+    font-size: 1.8em;
+    text-shadow: -4px 1px 10px rgb(14 51 33 / 28%);
+}
+
+
+.box-comments {
+    z-index: 2;
+    top: 0;
+    max-width: 400px;
+    left: 3em;
+    box-shadow: 0 0.46875rem 2.1875rem rgb(4 9 20 / 3%), 0 0.9375rem 1.40625rem rgb(4 9 20 / 3%), 0 0.25rem 0.53125rem rgb(4 9 20 / 5%), 0 0.125rem 0.1875rem rgb(4 9 20 / 3%);
+}
+
+.container-comments {
+    background-color: #cccccc1a;
+    padding: 0.5em;
+}
+
+.box-content {
+    overflow-y: scroll;
+    overflow: auto;
+    max-height: 26em;
+}
+
+.addtxt {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 0.6em;
+    width: 350px;
+}
+
+.no-comments {
+    padding: 1em;
+    color: #ccc;
+    text-align: center;
+}
+
+.form-control: focus {
+    color: #000;
+}
+
+.second {
+    width: 350px;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 4px 4px 8px 5px rgb(0 0 0 / 5%);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.text1 {
+    font-size: 0.8em;
+    font-weight: 500;
+    color: #000;
+}
+
+.text2 {
+    font-size: 0.6em;
+    font-weight: 500;
+    margin-left: 6px;
+    color: #56575b;
+}
+
+.send-comment {
+    height: 2em;
+    width: 2em;
+    padding: 0 0.2em;
+    border-radius: 50%;
+    margin-left: 0.5em;
+    font-size: 1em;
+    margin-top: 1em;
+}
+
+.box-comments-header {
+    padding: 0.5em;
+    color: #000;
+}
+
+.no-ingeniero {
+    font-size: 0.9em;
+    padding: 1em;
+    text-align: right;
+}
+
+
+.no-dictamen {
+    font-size: 0.8em;
+    padding: 2em;
+}
+
+.header-detalle {
+    background-color: #fff !important;
+    box-shadow: 0 0px 3px 0 rgb(0 0 0 / 5%);
+}
+
+.header-back-title {
+    background-color: #fff !important;
+    border-bottom: 0px solid rgba(255, 255, 255, 0.125);
+}
+
+.style_card_header_detallepro {
+    background-color: #fff !important;
+    box-shadow: 0 0px 3px 0 rgb(0 0 0 / 8%);
+}
+
+.style-head-card {
+    background-color: #fff !important;
+    box-shadow: 0 0px 3px 0 rgb(0 0 0 / 5%);
+
+}
+
+/*BOX COMMENTS*/

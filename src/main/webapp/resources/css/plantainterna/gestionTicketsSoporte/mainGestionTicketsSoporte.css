@@ -141,6 +141,13 @@
     white-space: nowrap;
 }
 
+#tableTicketSoporte>tbody>tr>:nth-child(5), #tableTicketSoporte>tbody>tr>:nth-child(7),  #tableTicketSoporte>tbody>tr>:nth-child(8){
+    max-width: 5px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+
 #tableTicketSoporte thead th {
     position: relative;
     background-color: #b1b1b1;
@@ -721,8 +728,12 @@ span.text-content-vehiculo {
     margin-right: 0;
 }
 
-.btn-editar-cambios:disabled{
-    padding:  .7em 2em !important;
+.btn-editar-cambios:disabled {
+    padding: .7em 2em !important;
+}
+
+.send-comment:disabled {
+    padding: 0 0.2em !important;
 }
 
 .cerrar-cancelar-btn {

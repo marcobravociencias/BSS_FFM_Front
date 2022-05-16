@@ -17,7 +17,7 @@
                             <div class="row">
                                 <div class="col-2">
                                     <img id="fotoIngeniero" src="" alt="Foto" width="55" height="55"
-                                        style="margin-top: 50%;" class="imgFoto">
+                                        style="margin-top: 50%;" class="imgFoto" ng-click="showImage('ingeniero')">
                                 </div>
                                 <div class="col-10">
                                     <div class="container-fluid detalle-content">
@@ -65,8 +65,11 @@
                                 </div>
                                 <div class="container-text-content-detalle">
                                     <span class="text-content-ticket"
-                                        ng-bind="ticketDetalle.detalleTicketSc.folioSistema || 'Sin dato'"></span>
-
+                                        ng-if="!ticketDetalle.detalleTicketSc.folioSistema">Sin dato</span>
+                                    <span class="text-content-ticket text-external-link"
+                                        ng-if="ticketDetalle.detalleTicketSc.folioSistema"
+                                        ng-click="consultarDetalleObjectosSF(ticketDetalle.detalleTicketSc.idfolioSf, 'OS')"
+                                        ng-bind="ticketDetalle.detalleTicketSc.folioSistema"></span>
                                 </div>
                             </div>
                             <div class="container-fluid detalle-content">
@@ -75,8 +78,11 @@
                                 </div>
                                 <div class="container-text-content-detalle">
                                     <span class="text-content-ticket"
-                                        ng-bind="ticketDetalle.detalleTicketSc.numTicket || 'Sin dato'"></span>
-
+                                        ng-if="!ticketDetalle.detalleTicketSc.numTicket">Sin dato</span>
+                                    <span class="text-content-ticket text-external-link"
+                                        ng-if="ticketDetalle.detalleTicketSc.numTicket"
+                                        ng-click="consultarDetalleObjectosSF(ticketDetalle.detalleTicketSc.idTicketSf, 'TK')"
+                                        ng-bind="ticketDetalle.detalleTicketSc.numTicket"></span>
                                 </div>
                             </div>
                             <div class="container-fluid detalle-content">
@@ -188,7 +194,7 @@
                     Detalle orden detenida
                 </button>
             </h2>
-            <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse"
+            <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show"
                 aria-labelledby="panelsStayOpen-headingTwo">
                 <div class="accordion-body">
                     <div class="row">
@@ -197,7 +203,7 @@
                             <div class="row">
                                 <div class="col-2">
                                     <img id="fotoTecnico" src="" alt="Foto" width="55" height="55"
-                                        style="margin-top: 50%;" class="imgFoto">
+                                        style="margin-top: 50%;" class="imgFoto" ng-click="showImage('tecnico')">
                                 </div>
                                 <div class="col-10">
                                     <div class="container-fluid detalle-content">
@@ -305,6 +311,49 @@
                                         ng-bind="ticketDetalle.detalleOtDetenida.cliente || 'Sin dato'"></span>
                                 </div>
                             </div>
+                            <div class="dropleft">
+                                <span class="fas fa-comments icon-color-comments" title="Comentarios"
+                                    id="dropupComments" data-toggle="dropdown" aria-expanded="false"></span>
+                                <div class="dropdown-menu dropup-comments">
+                                    <div class="box-comments">
+                                        <div class="box-comments-header">
+                                            <span>Historico de comentarios</span>
+                                        </div>
+                                        <div class="container-comments justify-content-center">
+                                            <div class="box-content" ng-show="comentariosOrdenTrabajo.length">
+                                                <div class="d-flex justify-content-center py-2"
+                                                    ng-repeat="comment in comentariosOrdenTrabajo">
+                                                    <div class="second py-2 px-2">
+                                                        <span class="text1" ng-bind="comment.comentario"></span>
+                                                        <div class="d-flex justify-content-between">
+                                                            <span class="text2" ng-bind="comment.nombreUsuario"></span>
+                                                        </div>
+                                                        <span class="text2" style="float: right;"
+                                                            ng-bind="comment.fechaComentario"></span>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="box-content" ng-show="!comentariosOrdenTrabajo.length">
+                                                <div class="no-comments">
+                                                    No se encontraron comentarios
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-center pt-3 pb-2">
+                                                <textarea type="text" cols="2" placeholder="Agragar comentario"
+                                                    class="form-control form-control-sm inputTicket addtxt"
+                                                    id="comentarioTicket" ng-model="comentarioTicket"></textarea>
+                                                <div>
+                                                    <button ng-click="addComentarios()" type="button"
+                                                        class="btn btn-primary btn-editar-cambios ripple-surface btn-disabled mr-0 send-comment"><i
+                                                            class="far fa-paper-plane"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -350,7 +399,6 @@
                                         <th scope="col">MAC actual</th>
                                         <th scope="col">No serie nueva</th>
                                         <th scope="col">MAC nueva</th>
-                                        <th scope="col"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -363,12 +411,6 @@
                                         <td ng-bind="itemRegistro.numeSerieNuevo"
                                             title="{{itemRegistro.numeSerieNuevo}}"></td>
                                         <td ng-bind="itemRegistro.macNueva" title="{{itemRegistro.macNueva}}"></td>
-                                        <td>
-                                            <button disabled type="button"
-                                                class="eliminar-registro-cambioequipo btn btn-sm btn-primary ">
-                                                <i class="fas fa-times"></i>
-                                            </button>
-                                        </td>
                                     </tr>
                                     <tr ng-show="listadoNuevoViejosEquipo.length <= 0">
                                         <td class="col-listadoregistros" colspan="6">Sin registros</td>
@@ -440,7 +482,7 @@
                 ng-show="ticketDetalle.detalleTicketSc.idEstatus !== '3'">
                 <div class="container-text-title-detalle"><span class="text-tile-ticket">COMENTARIO</span></div>
                 <textarea disabled class="form-control form-control-sm inputTicket" cols="2"
-                    ng-model="ticketDetalle.detalleTicketSc.comentario"></textarea>
+                    ng-model="ticketDetalle.detalleTicketSc.comentarios"></textarea>
             </div>
         </div>
         <div class="row content-falla" style="text-align: end;">

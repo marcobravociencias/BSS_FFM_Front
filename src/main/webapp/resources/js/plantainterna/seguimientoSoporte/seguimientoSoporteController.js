@@ -1,6 +1,9 @@
 var app = angular.module('seguimientoSoporteApp', []);
 
-app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSoporteService', '$filter', function ($scope, $q, seguimientoSoporteService, $filter) {
+app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSoporteService', '$filter', 'genericService','busquedaSalesforceService', function ($scope, $q, seguimientoSoporteService, $filter, genericService, busquedaSalesforceService) {
+    app.busquedaSalesforce($scope, busquedaSalesforceService)
+
+
     const FECHA_HOY_DATE = new Date();
     var regexUrl = /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/;
 
@@ -10,6 +13,7 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
     $scope.isBusquedaGeneral = true;
     $scope.isDetalleTicket = false;
     $scope.isCambioEquipos = false;
+    $scope.isNoticias = false;
     $scope.detalleCaptura = {};
     $scope.infoUsuario = {};
     $scope.catalogoEstatusUsuarios = [];
@@ -18,6 +22,7 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
     $scope.catalogosSeguimientoGeografia = [];
     $scope.ticketDetalle = {};
     $scope.listadoNuevoViejosEquipo = [];
+    $scope.usuarioFoto = {};
 
     $scope.consultarCatalogos = function () {
         $q.all([
@@ -173,6 +178,10 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
     }
     $scope.consultarCatalogos();
 
+    $('.dropup-comments').click(function (e) {
+        e.stopPropagation();
+    });
+
 
     $('.datepicker').datepicker({
         format: 'dd/mm/yyyy',
@@ -310,7 +319,7 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
             row[5] = elemento.na_asignacion;
             row[6] = elemento.estatus;
             row[7] = elemento.escalado ? elemento.escalado : 'Sin informaci&oacute;n';
-            row[8] = '<i class="fas fa-bars icon-table" title="Detalle" style="background-color: #58b3bf" onclick="consultaDetalle()"></i>';
+            row[8] = '<i class="fas fa-bars icon-table" title="Detalle" style="background-color: #7716fa" onclick="consultaDetalle()"></i>';
             arraRow.push(row);
         })
         ticketTable = $('#ticketTable').DataTable({
@@ -344,19 +353,19 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
     consultaDetalle = function () {
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
-        seguimientoSoporteService.consultaDetalleSoporte(18).then((response) => {
+        seguimientoSoporteService.consultaDetalleSoporte(88).then((response) => {
             swal.close()
             if (response.data.respuesta) {
                 if (response.data.result) {
-                  
                     let geografia = {};
                     $scope.ticketDetalle = response.data.result.detalleGeneral;
+                    $scope.consultaChat();
                     $scope.ticketDetalle.detalleTicketSc.fallaTxt = $scope.catalogosSeguimiento.fallas.find((e) => e.id == $scope.ticketDetalle.detalleTicketSc.falla).descripcion
                     $scope.ticketDetalle.detalleTicketSc.categoriaTxt = $scope.catalogosSeguimiento.fallas.find((e) => e.id == $scope.ticketDetalle.detalleTicketSc.categoria).descripcion
                     $scope.ticketDetalle.detalleTicketSc.subcategoriaTxt = $scope.catalogosSeguimiento.fallas.find((e) => e.id == $scope.ticketDetalle.detalleTicketSc.subcategoria).descripcion
                     $scope.ticketDetalle.detalleTicketSc.propietarioTxt = $scope.catalogosSeguimiento.propietarios.find((e) => e.id == $scope.ticketDetalle.detalleTicketSc.idPropietarioSc).descripcion
                     $scope.ticketDetalle.detalleTicketSc.motivoTxt = $scope.catalogosSeguimiento.propietarios.find((e) => e.id == $scope.ticketDetalle.detalleTicketSc.idMotivoSc).descripcion
-                    
+
                     $scope.ticketDetalle.detalleTicketSc.idTecnologia = $scope.ticketDetalle.detalleTicketSc.idTecnologia + '';
                     $scope.ticketDetalle.detalleTicketSc.idEstatus = $scope.ticketDetalle.detalleTicketSc.idEstatus + '';
 
@@ -403,7 +412,7 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
                         });
                     }
 
-                  
+
 
                 } else {
                     mostrarMensajeWarningValidacion('No se encontr&oacute; el detalle del ticket')
@@ -434,6 +443,106 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
                 $scope.$apply();
             }
         }).catch(swal.noop);
+    }
+
+    $scope.showImage = function (type) {
+        let url = './resources/img/plantainterna/despacho/tecnicootasignada.png';
+        if (type == 'tecnico') {
+            url = regexUrl.test($scope.ticketDetalle.detalleOtDetenida.fotoTecnico) ? $scope.ticketDetalle.detalleOtDetenida.fotoTecnico : url;
+            $scope.usuarioFoto.tipo = "Tecnico";
+            $scope.usuarioFoto.noEmpleado = $scope.ticketDetalle.detalleOtDetenida.numEmpleadoTecnico;
+            $scope.usuarioFoto.usuario = $scope.ticketDetalle.detalleOtDetenida.tecnico;
+        } else if (type == 'ingeniero') {
+            url = regexUrl.test($scope.ticketDetalle.detalleTicketSc.fotoInge) ? $scope.ticketDetalle.detalleTicketSc.fotoInge : url;
+            $scope.usuarioFoto.tipo = "Ingeniero";
+            $scope.usuarioFoto.noEmpleado = $scope.ticketDetalle.detalleTicketSc.numEmpleadoInge;
+            $scope.usuarioFoto.usuario = $scope.ticketDetalle.detalleTicketSc.ingeniero;
+        }
+
+        $('#img_tec').attr('src', url);
+        $('#modalFoto').modal('show');
+
+    }
+
+    $scope.comentariosOrdenTrabajo = [];
+    $scope.consultaChat = function () {
+        $scope.comentariosOrdenTrabajo = [];
+        let params = {
+            idOt: $scope.ticketDetalle.detalleOtDetenida.otGeneraSoporte
+        }
+        genericService.consultarComentariosDespachoOT(params).then(function success(response) {
+            if (response.data !== undefined) {
+                if (response.data.respuesta) {
+                    if (response.data.result) {
+                        if (response.data.result.detalle) {
+                            $scope.comentariosOrdenTrabajo = response.data.result.detalle;
+                            angular.forEach($scope.comentariosOrdenTrabajo, function (comentario, index) {
+                                comentario.fechaComentario = moment(comentario.fecha + ' ' + comentario.hora).format("dddd, D [de] MMMM [de] YYYY hh:mm A");
+                            });
+                        } else {
+                            toastr.warning(response.data.result.mensaje);
+                        }
+                    } else {
+                        toastr.warning('No se encontraron comentarios');
+                    }
+                } else {
+                    toastr.warning(response.data.resultDescripcion);
+                }
+            } else {
+                toastr.warning(response.data.resultDescripcion);
+            }
+        }).catch(err => handleError(err));
+    }
+    $scope.comentarioTicket = '';
+    $scope.addComentarios = function () {
+        if ($('#comentarioTicket').val().trim() !== '' && !/^\s/.test($('#comentarioTicket').val())) {
+
+            let params = {
+                idOrden: $scope.ticketDetalle.detalleOtDetenida.otGeneraSoporte,
+                comentario: $scope.comentarioTicket,
+                origenSistema: 1
+            }
+
+            $('.send-comment').prop("disabled", 'disabled');
+
+            genericService.agregarComentariosOt(params).then(function success(response) {
+                $('.send-comment').prop("disabled", false);
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        $scope.comentarioTicket = '';
+                        $('#comentarioTicket').val('');
+                        $scope.consultaChat();
+                    } else {
+                        toastr.error(response.data.resultDescripcion);
+                    }
+                } else {
+                    toastr.error(response.data.resultDescripcion);
+                }
+            }).catch(err => handleError(err))
+
+        } else {
+            $scope.comentarioTicket = '';
+            $('#comentarioTicket').val('');
+            toastr.warning('Intoducir un comentario.');
+        }
+    }
+
+    $scope.validacionGenerica = function() {
+        if ($scope.historial.length === 1) {
+            if ($scope.historial[0].keyObject === 'TK') {
+                $scope.banderaNoticiasTicket = true;
+            }
+            if ($scope.historial[0].keyObject === 'OP') {
+                $scope.banderaNoticiasOportunidad = true;
+            }
+            if ($scope.historial[0].keyObject === 'OS') {
+                $scope.banderaNoticiasOs = true;
+            }
+        } else {
+            $scope.banderaNoticiasTicket = false;
+            $scope.banderaNoticiasOportunidad = false;
+            $scope.banderaNoticiasOs = false;
+        }
     }
 
     angular.element(document).ready(function () {
