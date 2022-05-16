@@ -1143,12 +1143,12 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                                     $("#dictamen-" + s.idAccion).prop('checked', true);
                                     if (Number(s.idAccion) == 2) {
                                         $scope.agregarNuevoEquipoContent = true;
-                                        if (s.equipos.length) {
-                                            $.each(s.equipos, function (i, equipo) {
+                                        if (s.detalleSeries.length) {
+                                            $.each(s.detalleSeries, function (i, equipo) {
                                                 equipo.descripcion = $scope.equiposList.find((e) => e.id == equipo.idTipoEquipo).descripcion
                                             })
                                         }
-                                        $scope.listadoNuevoViejosEquipo = s.equipos ? s.equipos : [];
+                                        $scope.listadoNuevoViejosEquipo = s.detalleSeries ? s.detalleSeries : [];
                                     }
                                 }
                             });
