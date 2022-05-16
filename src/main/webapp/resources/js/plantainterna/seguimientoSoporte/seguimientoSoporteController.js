@@ -1,59 +1,177 @@
 var app = angular.module('seguimientoSoporteApp', []);
 
-app.controller('seguimientoSoporteController', ['$scope','$q', 'seguimientoSoporteService', '$filter', function ($scope, $q, seguimientoSoporteService, $filter) {
+app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSoporteService', '$filter', function ($scope, $q, seguimientoSoporteService, $filter) {
     const FECHA_HOY_DATE = new Date();
+    var regexUrl = /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/;
+
     let seguimientoTable;
     let ticketTable;
 
     $scope.isBusquedaGeneral = true;
+    $scope.isDetalleTicket = false;
+    $scope.isCambioEquipos = false;
     $scope.detalleCaptura = {};
     $scope.infoUsuario = {};
     $scope.catalogoEstatusUsuarios = [];
-    $scope.catalogoTicket = [];
     $scope.verCambioEstatusUsuario = true;
+    $scope.catalogosSeguimiento = {};
+    $scope.catalogosSeguimientoGeografia = [];
+    $scope.ticketDetalle = {};
+    $scope.listadoNuevoViejosEquipo = [];
 
-    $scope.consultarCatalogos = function() {
-		$q.all([
-			seguimientoSoporteService.consultarConfiguracionDespachoDespacho({ "moduloAccionesUsuario": "moduloSeguimiento" })
-		]).then(function(results) {
-			if (results[0].data !== undefined) {
-				if (results[0].data.respuesta) {
-					if (results[0].data.result) {
-						$scope.elementosConfigGeneral = new Map(Object.entries(results[0].data.result))
-						let resultConf = results[0].data.result
-						if (resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
-							let llavesResult = results[0].data.result.MODULO_ACCIONES_USUARIO.llaves;
-							if (llavesResult.N_FILTRO_GEOGRAFIA)
-								$scope.nivelGeografia = parseInt(llavesResult.N_FILTRO_GEOGRAFIA)
+    $scope.consultarCatalogos = function () {
+        $q.all([
+            seguimientoSoporteService.consultarConfiguracionDespachoDespacho({ "moduloAccionesUsuario": "moduloSeguimiento" }),
+            seguimientoSoporteService.consultaEstatusTicketSoporte(),
+            seguimientoSoporteService.consultaTecnologiaTicketSoporte(),
+            seguimientoSoporteService.consultaEquiposSoporte(),
+            seguimientoSoporteService.consultaPropietariosTicketSoporte(),
+            seguimientoSoporteService.consultarAccionesDinamicaDetalle(),
+            seguimientoSoporteService.consultaFallasTicketSoporte(),
+            seguimientoSoporteService.consultaCatalogoGeografia()
+        ]).then(function (results) {
+            if (results[0].data !== undefined) {
+                if (results[0].data.respuesta) {
+                    if (results[0].data.result) {
+                        $scope.elementosConfigGeneral = new Map(Object.entries(results[0].data.result))
+                        let resultConf = results[0].data.result
+                        if (resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
+                            let llavesResult = results[0].data.result.MODULO_ACCIONES_USUARIO.llaves;
+                            if (llavesResult.N_FILTRO_GEOGRAFIA)
+                                $scope.nivelGeografia = parseInt(llavesResult.N_FILTRO_GEOGRAFIA)
 
-							if (llavesResult.N_ESTATUS_PENDIENTES)
-								$scope.nivelEstatus = parseInt(llavesResult.N_ESTATUS_PENDIENTES)
+                            if (llavesResult.N_ESTATUS_PENDIENTES)
+                                $scope.nivelEstatus = parseInt(llavesResult.N_ESTATUS_PENDIENTES)
 
-							$scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
-							
-							if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
-								$scope.configPermisoAccionConsultaOrdenes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaOT" })[0] != undefined);
-								$scope.configPermisoAccionDescargaReporteOrdenes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaReporteOT" })[0] != undefined);
-							}
-							$("#idBody").removeAttr("style");
-							validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
-							validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
-						}
-					} else {
-						swal.close();
-						toastr.warning('No se encontraron datos para la configuracion');
-					}
-				} else {
-					swal.close();
-					toastr.warning(results[3].data.resultDescripcion);
-				}
-			} else {
-				swal.close();
-				toastr.error('Ha ocurrido un error en la consulta de configuracion');
-			}
-		}).catch(err => handleError(err));
-	}
-	$scope.consultarCatalogos();
+                            $scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
+
+                            if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
+                                $scope.configPermisoAccionConsultaOrdenes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaOT" })[0] != undefined);
+                                $scope.configPermisoAccionDescargaReporteOrdenes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaReporteOT" })[0] != undefined);
+                            }
+                            $("#idBody").removeAttr("style");
+                            validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
+                            validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
+                        }
+                    } else {
+                        swal.close();
+                        toastr.warning('No se encontraron datos para la configuracion');
+                    }
+                } else {
+                    swal.close();
+                    toastr.warning(results[3].data.resultDescripcion);
+                }
+            } else {
+                swal.close();
+                toastr.error('Ha ocurrido un error en la consulta de configuracion');
+            }
+            $("#idBody").css("display", "block");
+            if (results[1].data !== undefined) {
+                if (results[1].data.respuesta) {
+                    if (results[1].data.result) {
+                        $scope.catalogosSeguimiento.estatus = results[1].data.result.estatusTicketSC;
+
+                    } else {
+                        toastr.warning('No se encontr&oacute; el catalogo de estatus');
+                    }
+                } else {
+                    toastr.warning(results[1].data.resultDescripcion);
+                }
+            } else {
+                toastr.error('Ha ocurrido un error en la consulta del catalogo de estatus');
+            }
+            if (results[2].data !== undefined) {
+                if (results[2].data.respuesta) {
+                    if (results[2].data.result) {
+                        $scope.catalogosSeguimiento.tecnologias = results[2].data.result.tecnologiaTicketSC;
+
+                    } else {
+                        toastr.warning('No se encontr&oacute; el catalogo de tecnolog\u00EDas');
+                    }
+                } else {
+                    toastr.warning(results[2].data.resultDescripcion);
+                }
+            } else {
+                toastr.error('Ha ocurrido un error en la consulta del catalogo de tecnolog\u00EDas');
+            }
+
+            if (results[3].data !== undefined) {
+                if (results[3].data.respuesta) {
+                    if (results[3].data.result) {
+                        $scope.catalogosSeguimiento.equipos = results[3].data.result.equipos;
+
+                    } else {
+                        toastr.warning('No se encontr&oacute; el catalogo de equipos');
+                    }
+                } else {
+                    toastr.warning(results[3].data.resultDescripcion);
+                }
+            } else {
+                toastr.error('Ha ocurrido un error en la consulta del catalogo de equipos');
+            }
+
+            if (results[4].data !== undefined) {
+                if (results[4].data.respuesta) {
+                    if (results[4].data.result) {
+                        $scope.catalogosSeguimiento.propietarios = results[4].data.result.propietarios;
+
+                    } else {
+                        toastr.warning('No se encontr&oacute; el catalogo de propietarios');
+                    }
+                } else {
+                    toastr.warning(results[4].data.resultDescripcion);
+                }
+            } else {
+                toastr.error('Ha ocurrido un error en la consulta del catalogo de propietarios');
+            }
+
+            if (results[5].data !== undefined) {
+                if (results[5].data.respuesta) {
+                    if (results[5].data.result) {
+                        $scope.catalogosSeguimiento.acciones = results[5].data.result.acciones;
+
+                    } else {
+                        toastr.warning('No se encontr&oacute; el catalogo de dictamen');
+                    }
+                } else {
+                    toastr.warning(results[5].data.resultDescripcion);
+                }
+            } else {
+                toastr.error('Ha ocurrido un error en la consulta del catalogo de dictamen');
+            }
+
+            if (results[6].data !== undefined) {
+                if (results[6].data.respuesta) {
+                    if (results[6].data.result) {
+                        $scope.catalogosSeguimiento.fallas = results[6].data.result.soportes;
+
+                    } else {
+                        toastr.warning('No se encontr&oacute; el catalogo de fallas');
+                    }
+                } else {
+                    toastr.warning(results[6].data.resultDescripcion);
+                }
+            } else {
+                toastr.error('Ha ocurrido un error en la consulta del catalogo de fallas');
+            }
+
+            if (results[7].data !== undefined) {
+                if (results[7].data.respuesta) {
+                    if (results[7].data.result) {
+                        $scope.catalogosSeguimientoGeografia = results[7].data.result.geografia;
+
+                    } else {
+                        toastr.warning('No se encontr&oacute; el catalogo de fallas');
+                    }
+                } else {
+                    toastr.warning(results[6].data.resultDescripcion);
+                }
+            } else {
+                toastr.error('Ha ocurrido un error en la consulta del catalogo de fallas');
+            }
+        }).catch(err => handleError(err));
+    }
+    $scope.consultarCatalogos();
 
 
     $('.datepicker').datepicker({
@@ -72,10 +190,10 @@ app.controller('seguimientoSoporteController', ['$scope','$q', 'seguimientoSopor
         "lengthChange": false,
         "ordering": false,
         "pageLength": 10,
-        "info": false,
-        "autoWidth": true,
+        "info": true,
+        "scrollX": false,
+        "autoWidth": false,
         "language": idioma_espanol_not_font,
-        "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
     });
 
     ticketTable = $('#ticketTable').DataTable({
@@ -83,10 +201,10 @@ app.controller('seguimientoSoporteController', ['$scope','$q', 'seguimientoSopor
         "lengthChange": false,
         "ordering": false,
         "pageLength": 10,
-        "info": false,
-        "autoWidth": true,
+        "info": true,
+        "scrollX": false,
+        "autoWidth": false,
         "language": idioma_espanol_not_font,
-        "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
     });
 
     $('#searchTextGeneral').on('keyup', function () {
@@ -111,6 +229,10 @@ app.controller('seguimientoSoporteController', ['$scope','$q', 'seguimientoSopor
 
     $scope.consultaCatalogoInfoUsuario = function () {
         $scope.catalogoEstatusUsuarios = infoUsuarioEstatusHoras.result;
+    }
+
+    $scope.cerrarDetalleTicket = function () {
+        $scope.isDetalleTicket = false
     }
 
     $scope.consultaCatalogoInfoUsuario();
@@ -156,11 +278,11 @@ app.controller('seguimientoSoporteController', ['$scope','$q', 'seguimientoSopor
                 "lengthChange": false,
                 "ordering": false,
                 "pageLength": 10,
-                "info": false,
+                "info": true,
+                "scrollX": false,
                 "data": arraRow,
-                "autoWidth": true,
+                "autoWidth": false,
                 "language": idioma_espanol_not_font,
-                "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
             });
             swal.close();
         }
@@ -196,14 +318,24 @@ app.controller('seguimientoSoporteController', ['$scope','$q', 'seguimientoSopor
             "lengthChange": false,
             "ordering": false,
             "pageLength": 10,
-            "info": false,
+            "info": true,
+            "scrollX": false,
             "data": arraRow,
-            "autoWidth": true,
+            "autoWidth": false,
             "language": idioma_espanol_not_font,
-            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
         });
         swal.close();
     }
+
+    function camelCase(text) {
+        let arr = text.split(" ");
+        for (var i = 0; i < arr.length; i++) {
+            arr[i] = arr[i].toLowerCase();
+            arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
+        }
+        return arr.join(" ");
+    }
+
 
     $scope.backGeneral = function () {
         $scope.isBusquedaGeneral = true;
@@ -212,23 +344,66 @@ app.controller('seguimientoSoporteController', ['$scope','$q', 'seguimientoSopor
     consultaDetalle = function () {
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
-        $scope.detalleCaptura = ticketDetalle.result.orden;
-        $scope.findChildFalla(ticketDetalle.result.orden.nivel1, ticketDetalle.result.orden.nivel2, ticketDetalle.result.orden.nivel3);
-        $scope.$apply();
-        $("#modalDetalle").modal('show');
-        swal.close();
+        seguimientoSoporteService.consultaDetalleSoporte(8).then((response) => {
+            swal.close()
+            if (response.data.respuesta) {
+                if (response.data.result) {
+                    $scope.isDetalleTicket = true;
+                    let geografia = {};
+                    $scope.ticketDetalle = response.data.result.detalleGeneral;
+
+                    let urlTec = regexUrl.test($scope.ticketDetalle.detalleOtDetenida.fotoTecnico) ? $scope.ticketDetalle.detalleOtDetenida.fotoTecnico : "./resources/img/plantainterna/despacho/tecnicootasignada.png";
+                    let urlIng = regexUrl.test($scope.ticketDetalle.detalleTicketSc.fotoInge) ? $scope.ticketDetalle.detalleTicketSc.fotoInge : "./resources/img/plantainterna/despacho/tecnicootasignada.png";
+
+                    setTimeout(() => {
+                        $("#fotoIngeniero").attr("src", urlIng);
+                        $("#fotoTecnico").attr("src", urlTec);
+                    }, 100);
+
+                    let clusterInd = $scope.catalogosSeguimientoGeografia.find(e => e.id == $scope.ticketDetalle.detalleOtDetenida.idCluster)
+                    if (clusterInd) {
+                        let zonaInd = $scope.catalogosSeguimientoGeografia.find(e => e.id == parseInt(clusterInd.padre))
+                        let distritoInd = $scope.catalogosSeguimientoGeografia.find(e => e.id == parseInt(zonaInd.padre))
+                        let ciudadInd = $scope.catalogosSeguimientoGeografia.find(e => e.id == parseInt(distritoInd.padre))
+                        let regionInd = $scope.catalogosSeguimientoGeografia.find(e => e.id == parseInt(ciudadInd.padre))
+                        geografia = {
+                            clusterText: camelCase(clusterInd.nombre),
+                            zonaText: camelCase(zonaInd.nombre),
+                            distritoText: camelCase(distritoInd.nombre),
+                            ciudadText: camelCase(ciudadInd.nombre),
+                            regionText: camelCase(regionInd.nombre),
+                        }
+                    }
+                    $scope.ticketDetalle.geografia = geografia;
+
+                    if ($scope.ticketDetalle.detalleTicketSc.acciones.length && $scope.catalogosSeguimiento.acciones.length) {
+                        $scope.ticketDetalle.detalleTicketSc.acciones.map(function (s) {
+                            if (Number(s.valor) == 1) {
+                                $("#dictamen-" + s.idAccion).prop('checked', true);
+                                if (Number(s.idAccion) == 2) {
+                                    $scope.isCambioEquipos = true;
+                                    if (s.equipos.length) {
+                                        $.each(s.equipos, function (i, equipo) {
+                                            equipo.descripcion = $scope.catalogosSeguimiento.equipos.find((e) => e.id == equipo.idTipoEquipo).descripcion
+                                        })
+                                    }
+                                    $scope.listadoNuevoViejosEquipo = s.equipos ? s.equipos : [];
+                                }
+                            }
+                        });
+                    }
+
+                } else {
+                    mostrarMensajeWarningValidacion('No se encontr&oacute; el detalle del ticket')
+                }
+            } else {
+                mostrarMensajeWarningValidacion('No se pudo realizar la consulta')
+            }
+        }).catch((err) => handleError(err));
+
     }
 
     $scope.consultaSeguimiento();
-
-    $scope.findChildFalla = function (falla, categoria, subCategoria) {
-
-        let listCreacionTicket = catalogoTickets.result.catalogoCreacionTickets;
-
-        $scope.detalleCaptura.falla = listCreacionTicket.find((e) => e.id == parseInt(falla)).descripcion;
-        $scope.detalleCaptura.categoria = listCreacionTicket.find((e) => e.id == parseInt(categoria)).descripcion;
-        $scope.detalleCaptura.subCategoria = listCreacionTicket.find((e) => e.id == parseInt(subCategoria)).descripcion;
-    }
 
     $scope.changeEstatus = function (idEstatus) {
         let status = $scope.catalogoEstatusUsuarios.catalogoEstatusUsuarios.find((e) => parseInt(e.id) == parseInt(idEstatus));
@@ -250,7 +425,6 @@ app.controller('seguimientoSoporteController', ['$scope','$q', 'seguimientoSopor
     }
 
     angular.element(document).ready(function () {
-        $("#idBody").removeAttr("style");
         $("#moduloSeguimiento").addClass('active')
         $("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
 

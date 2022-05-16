@@ -53,9 +53,6 @@
                                         <span ng-if="propietarioSession != nPuestoIngeniero" class="text-external-link"
                                             ng-click="consultarOtsTecnicosTicket()">REASIGNAR
                                             INGENIERO</span>
-                                        <span ng-if="propietarioSession == nPuestoIngeniero" class="text-external-link"
-                                            ng-click="consultarOtsTecnicosTicket()">REASIGNARME
-                                            TICKET</span>
                                     </div>
 
                                 </div>

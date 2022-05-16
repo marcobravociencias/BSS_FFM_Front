@@ -1,19 +1,30 @@
-#container_seguimiento, #container_ticket {
+#container_seguimiento {
     box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
     /* padding-top: 1em; */
     background: white;
     border-radius: .5em;
     margin-top: 1em;
-    padding: 0;
+    padding: 1em 0 0 0;
 }
 
 .form-content {
-    font-size: 0.7em;
-    font-weight: bold !important;
+    font-size: 0.9em;
     margin-bottom: 1em;
-    margin-top: 1em;
     font-family: "Montserrat";
 
+}
+
+.cerrar-cancelar-btn {
+    font-size: .7em;
+    background: white;
+    color: #0c56d0 !important; 
+    font-weight: bold;
+    box-shadow: none;
+    padding: .6em 2em .6em 2em;
+    border: .09rem solid #0c56d0;
+    box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
+    float: right;
+    margin-top: 1em;
 }
 
 .input-filtro-seguimiento {
@@ -47,7 +58,7 @@
     content: "";
     position: absolute;
     right: 10%;
-    top: 65%;
+    top: 45%;
     width: 0;
     height: 0;
     border-left: 0.3em solid transparent;
@@ -56,93 +67,8 @@
     clear: both;
     z-index: 2;
     font-size: 14px;
-  }
-
-thead#thead_seguimiento tr th, thead#thead_ticket tr th {
-    font-size: 0.7em;
-    padding: 1em 1em 1em;
-    text-align: center;
-    border-top: 1px white solid;
-    border-bottom: 1px solid #ccc;
 }
 
-#seguimientoTable tr td, #ticketTable tr td {
-    font-size: 0.7em;
-    font-family: "Montserrat" !important;
-    text-align: center;
-    border-top: 1px white solid;
-    border-bottom: 1px white solid;
-}
-
-div.dataTables_wrapper div.dataTables_length label {
-    font-weight: inherit !important;
-    color: #828080 !important;
-}
-
-.dataTables_length .form-control.form-control-sm {
-    color: #9a9999 !important;
-    border-bottom: 2px solid #e4e2e2 !important;
-    font-family: "Montserrat" !important;
-}
-
-#seguimientoTable_length select.form-control.form-control-sm, #ticketTable_length select.form-control.form-control-sm {
-    border: none;
-}
-
-#seguimientoTable.table.dataTable.no-footer, #ticketTable.table.dataTable.no-footer {
-    border-bottom: none;
-}
-
-.pagination {
-    display: block !important;
-}
-
-.pagination .paginate_button a.page-link {
-    color: #828080;
-    font-family: "Montserrat";
-    background-color: white !important;
-    box-shadow: none !important;
-}
-
-.pagination .paginate_button.active {
-    background-color: gray !important;
-}
-
-.pagination .previous a.page-link {
-    color: white !important;
-    font-size: 0;
-}
-
-.pagination .next a.page-link {
-    color: white !important;
-    font-size: 0;
-}
-
-.pagination .previous a:after {
-    font-family: FontAwesome;
-    display: inline-block;
-    content: "\f104";
-    visibility: visible;
-    color: #828080 !important;
-    font-size: initial !important;
-}
-
-.pagination .next a:before {
-    font-family: FontAwesome;
-    display: inline-block;
-    content: "\f105";
-    visibility: visible;
-    color: #828080 !important;
-    font-size: initial !important;
-}
-
-.dataTables_wrapper .dataTables_paginate .paginate_button, .dataTables_wrapper .dataTables_paginate .paginate_button a {
-    padding: 0 !important;
-}
-
-.pagination .paginate_button>.active {
-    border: #000000 !important;
-}
 
 .btnSeguimiento:active, .btnSeguimiento:focus .btnSeguimiento:hover {
     background-color: white !important;
@@ -150,18 +76,24 @@ div.dataTables_wrapper div.dataTables_length label {
     color: #7716fa;
 }
 
+
+.no-dictamen{
+    font-size: 0.8em;
+    padding: 2em;
+}
+
 .btnSeguimiento {
     background-color: #ffffff !important;
     color: #7716fa !important;
     border: solid 1px #7716fa !important;
-    padding: .5em 2.5em;
+    padding: .5em 1.5em;
     border-radius: 5px;
-    font-size: 0.9em;
+    font-size: 0.7em;
     position: relative;
     display: block;
     border-radius: .5em !important;
     float: left;
-    margin-top: 2.5em;
+    margin-top: 2.3em;
 }
 
 .filter-content {
@@ -182,6 +114,15 @@ div.dataTables_wrapper div.dataTables_length label {
     color: #7716fa;
     cursor: pointer;
     border-radius: 25px;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+}
+
+.icon-table{
+    padding: 0.5em 1em !important;
+    border-radius: 0.2rem !important;
+    cursor: pointer;
+    font-size: 0.8em;
+    color: #fff;
     box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
 }
 
@@ -214,6 +155,10 @@ div.dataTables_wrapper div.dataTables_length label {
     font-weight: bolder;
 }
 
+.content-falla {
+    padding: 0 0 0 2em;
+}
+
 .content-principal label,
 .content-falla label,
 .content-comentarios label {
@@ -224,6 +169,12 @@ div.dataTables_wrapper div.dataTables_length label {
 .content-falla input,
 .content-comentarios textarea {
     width: 60% !important;
+}
+
+.label-filter {
+    color: #9d9d9d;
+    font-size: .9em;
+    margin-bottom: 0;
 }
 
 .content-checkbox .form-check-input {
@@ -274,11 +225,242 @@ div.dataTables_wrapper div.dataTables_length label {
     text-overflow: ellipsis !important;
 }
 
-#seguimientoTable .icon-table, #ticketTable .icon-table{
-    font-size: 1.3em !important;
-    cursor: pointer;
-    color: white;
-    padding: 0.3em;
-    border-radius: 0.2em;
-    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+
+#detalleTicketAccordion .accordion-button:after {
+    content: "\f054" !important;
+    font-size: 0.8em;
+    margin-top: 0.2em;
 }
+
+#detalleTicketAccordion .accordion-button:not(.collapsed):after {
+    transform: rotate(90deg);
+}
+
+#detalleTicketAccordion .accordion-button:focus {
+    box-shadow: 0 0px 3px 0 rgb(0 0 0 / 5%);
+}
+
+#detalleTicketAccordion .accordion-item {
+    box-shadow: 0 2px 10px 0 rgb(0 0 0 / 5%);
+}
+
+.accordion-button, .accordion-collapse {
+    box-shadow: 0 0px 3px 0 rgb(0 0 0 / 5%);
+}
+
+#detalleTicketAccordion .imgFoto {
+    box-shadow: 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%), 0 2px 4px -1px rgb(0 0 0 / 30%);
+    cursor: pointer;
+    border-radius: 35px;
+}
+
+#detalleTicketAccordion .accordion-item {
+    margin: 1em;
+}
+
+#detalleTicketAccordion .accordion-button {
+    color: #000000 !important;
+}
+
+#detalleTicketAccordion .accordion-button:hover, .accordion-button:not(:hover):focus {
+    background-color: #fff !important;
+}
+
+#detalleTicketAccordion .accordion-body {
+    padding: 0.5rem 1rem;
+}
+
+.text-tile-ticket {
+    font-size: 0.7em;
+    color: #000;
+    text-transform: uppercase;
+}
+
+.container-text-content {
+    width: 60%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.container-text-title-detalle {
+    width: 40%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.container-text-content-detalle {
+    width: 60%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.container-text-title-dictamen {
+    width: 80% !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.container-text-content-dictamen {
+    width: 20% !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.icon-user-detalle {
+    font-size: 0.6em;
+    margin: 0 0.5em 0 1.5em;
+    color: #000;
+}
+
+.text-content-ticket {
+    /* font-weight: bold; */
+    font-size: 0.8em;
+    color: #9d9ea2;
+}
+
+.container-fluid.detalle-content {
+    padding: 0;
+    display: flex;
+}
+
+.inputTicket {
+    border: 1px solid #dbdbdb !important;
+    font-weight: 400;
+    color: #818181 !important;
+    transition: all 0.5s ease;
+    padding: 0.4em 0.5em;
+    background: white !important;
+    border-radius: 0.5em !important;
+    /* box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.07), 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important; */
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 7%), 0 1px 2px 0 rgb(0 0 0 / 5%) !important;
+    border-bottom: 0 1px 3px 0 rgb(0 0 0 / 7%), 0 1px 2px 0 rgb(0 0 0 / 5%) !important;
+}
+
+.inputTicket input {
+    height: 2.2em;
+}
+
+.inputTicket-select::after {
+    content: "";
+    position: absolute;
+    right: 5%;
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 7px solid #939db2;
+    clear: both;
+    z-index: 2;
+    font-size: 14px;
+    margin-top: -1.2em;
+}
+
+.inputTicket-select {
+    height: 2em;
+}
+
+i.icono-noseleccion {
+    color: #ff9f3b;
+    display: inline-block;
+}
+
+.text-accion-nopermiso {
+    font-size: 12px;
+    color: grey;
+    padding: 1em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.text-not-permiso {
+    margin-left: 0.5em;
+    font-size: 1.5em;
+    font-weight: normal;
+}
+
+.text-accion-nopermiso .icon-not-permiso {
+    color: #9586a9;
+    font-size: 1.3em;
+    padding: 0.5em;
+    border-radius: 50%;
+    /* background: #9586a9; */
+    width: 2em;
+    height: 2em;
+    /* box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);**/
+}
+
+.ticket-content {
+    padding: 0;
+    display: flex;
+    /* border-bottom:1px solid #e1e1e1 */
+}
+
+/* CSS TABLE */
+
+#ticketTable tbody tr:nth-child(even),
+#seguimientoTable tbody tr:nth-child(even) {
+  background: #f5f5f5;
+}
+
+#ticketTable>tbody>tr>td,
+#seguimientoTable>tbody>tr>td {
+  white-space: nowrap;
+  color: #39455b;
+  font-family: 'Montserrat';
+  font-size: .8em;
+  border-top: 0px solid #eceeef !important;
+  text-align: center;
+}
+
+#ticketTable thead th,
+#seguimientoTable thead th {
+  position: relative;
+  background-color: #b1b1b1;
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+  padding: 1em;
+  border: none;
+  font-weight: normal;
+  text-align: center;
+}
+
+#ticketTable tbody tr td,
+#seguimientoTable tbody tr td {
+  padding: 1em 0.7em;
+  border: none;
+}
+
+.page-link {
+  font-size: 0.7em !important;
+  font-family: "Montserrat" !important;
+}
+
+.dataTables_info {
+  font-size: 0.7em;
+  font-family: "Montserrat" !important;
+  text-align: left;
+  padding-left: 0.5em;
+}
+
+.dataTables_paginate.paging_simple_numbers {
+  float: right;
+}
+
+.dataTables_filter {
+  font-size: 0.7em !important;
+  font-family: 'Montserrat';
+}
+
+div.dataTables_wrapper div.dataTables_filter input {
+  width: 11.3em;
+  height: 2.05em;
+  margin-right: 1em;
+}
+
+/* CSS TABLE */
