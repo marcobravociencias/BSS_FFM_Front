@@ -920,7 +920,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                                 }
                                 $scope.cleanForm();
                                 toastr.success(response.data.resultDescripcion);
-                                $scope.isMensajeSuccessOt=true
+                                $scope.isMensajeSuccessOt = true
                                 let objetoAccion = new GenericAccion('moduloGestionTickets', 'Se ha creado el ticket 2021  con la OT 20299292', 'success', document.getElementById('tipo1').value)
                                 //genericService.agregarMensajeAccionSession(accionesRecientesModulo('moduloGestionTickets', 'Se ha creado el ticket 2021  con la OT 20299292', 'success', document.getElementById('tipo1').value))
                                 //guardarAccionesRecientesModulo(accionesRecientesModulo('moduloGestionTickets', 'Se ha creado el ticket 2021  con la OT 20299292', 'success', document.getElementById('tipo1').value))
@@ -932,7 +932,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                                 //guardarAccionesRecientesModulo(accionesRecientesModulo('moduloGestionTickets', 'Se ha creado el ticket 2021  con la OT 20299292', 'warning', document.getElementById('tipo1').value))
                                 let objetoAccion = new GenericAccion('moduloGestionTickets', 'Se ha creado el ticket 2021  con la OT 20299292', 'warning', document.getElementById('tipo1').value)
                                 objetoAccion.guardarAccionesRecientesModulo(objetoAccion)
-                                $scope.isMensajeErrorOt=true
+                                $scope.isMensajeErrorOt = true
                             }
                             $scope.mensajeRequestCreacion = response.data.resultDescripcion
 
@@ -941,8 +941,8 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                             mostrarMensajeErrorAlert(response.data.resultDescripcion);
                             //genericService.agregarMensajeAccionSession(accionesRecientesModulo('moduloGestionTickets', 'No se pudo generar session id salesforce', 'warning', document.getElementById('tipo1').value))
                             //guardarAccionesRecientesModulo(accionesRecientesModulo('moduloGestionTickets', 'Se ha creado el ticket 2021  con la OT 20299292', 'warning', document.getElementById('tipo1').value))
-                            $scope.mensajeRequestCreacion=response.data.resultDescripcion
-                            $scope.isMensajeErrorOt=true
+                            $scope.mensajeRequestCreacion = response.data.resultDescripcion
+                            $scope.isMensajeErrorOt = true
                             let objetoAccion = new GenericAccion('moduloGestionTickets', 'Se ha creado el ticket 2021  con la OT 20299292', 'warning', document.getElementById('tipo1').value)
                             objetoAccion.guardarAccionesRecientesModulo(objetoAccion)
                         }
@@ -1049,7 +1049,14 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                         $(".btn-option i").removeClass("fa-bars");
                         $(".btn-option i").addClass("fa-unlock");
                     }
-                }
+                },
+                'createdRow': function (row, data, rowIndex) {
+                    $.each($('td', row), function (colIndex) {
+                        if(colIndex == 4 || colIndex == 6 || colIndex == 7){
+                            $(this).attr('title', $(this).text());
+                        }
+                    });
+                },
             });
 
 
@@ -1134,7 +1141,6 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                         });
 
                         $scope.ticketSoporteDetalle.estatus = $scope.editTicket.detalleTicketSc.idEstatus == 1 ? '' : $scope.editTicket.detalleTicketSc.idEstatus + '';
-                        $scope.ticketSoporteDetalle.comentarios = $scope.editTicket.detalleTicketSc.comentarios;
                         $scope.ticketSoporteDetalle.tecnologia = $scope.editTicket.detalleTicketSc.idTecnologia + '';
 
                         let urlTec = regexUrl.test($scope.editTicket.detalleOtDetenida.fotoTecnico) ? $scope.editTicket.detalleOtDetenida.fotoTecnico : "./resources/img/plantainterna/despacho/tecnicootasignada.png";
@@ -1165,7 +1171,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                             $("#detalleTicketAccordion .dictamen-info").prop("disabled", true);
                             $(".btn-disabled").prop("disabled", true);
                             $("#btnGuardarCambios").prop("disabled", true);
-
+                            $scope.ticketSoporteDetalle.comentarios = $scope.editTicket.detalleTicketSc.comentarioTicket;
                         } else {
                             $(".content-detalle-ticket .inputTicket").prop("disabled", false);
                             $("#detalleTicketAccordion .dictamen-info").prop("disabled", false);
@@ -1739,7 +1745,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         $scope.initTableingeniero();
     })
 
-    $scope.validacionGenerica = function() {
+    $scope.validacionGenerica = function () {
         if ($scope.historial.length === 1) {
             if ($scope.historial[0].keyObject === 'TK') {
                 $scope.banderaNoticiasTicket = true;

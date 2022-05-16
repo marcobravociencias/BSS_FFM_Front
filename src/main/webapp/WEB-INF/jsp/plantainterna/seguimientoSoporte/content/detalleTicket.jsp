@@ -103,6 +103,14 @@
                                 </div>
 
                             </div>
+                            <div class="container-fluid detalle-content">
+                                <div class="container-text-title-detalle"><span class="text-tile-ticket">N&uacute;n. serie ticket</span>
+                                </div>
+                                <div class="container-text-content-detalle"><span
+                                        class="text-content-ticket ng-binding"
+                                        ng-bind="editTicket.detalleTicketSc.noSerieTicket || 'Sin dato'"></span>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-4">
                             <div class="container-fluid ticket-content content-select-ticket-detalle">
@@ -482,7 +490,7 @@
                 ng-show="ticketDetalle.detalleTicketSc.idEstatus !== '3'">
                 <div class="container-text-title-detalle"><span class="text-tile-ticket">COMENTARIO</span></div>
                 <textarea disabled class="form-control form-control-sm inputTicket" cols="2"
-                    ng-model="ticketDetalle.detalleTicketSc.comentarios"></textarea>
+                    ng-model="ticketDetalle.detalleTicketSc.comentarioTicket"></textarea>
             </div>
         </div>
         <div class="row content-falla" style="text-align: end;">

@@ -123,6 +123,14 @@
                                 </div>
 
                             </div>
+                            <div class="container-fluid vehiculo-content">
+                                <div class="container-text-title-detalle"><span class="text-tile-vehiculo">N&uacute;n. serie ticket</span>
+                                </div>
+                                <div class="container-text-content-detalle"><span
+                                        class="text-content-vehiculo ng-binding"
+                                        ng-bind="editTicket.detalleTicketSc.noSerieTicket || 'Sin dato'"></span>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-4">
                             <div class="container-fluid ticket-content content-select-ticket-detalle">
