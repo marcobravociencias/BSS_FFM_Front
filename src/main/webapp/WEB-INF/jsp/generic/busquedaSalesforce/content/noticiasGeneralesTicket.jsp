@@ -7,8 +7,8 @@
          <div class="col-8 contenido-escribir-mensaje">
              <div class="input-group ">
                  <input type="text" class="form-control form-send-general text-general-general" placeholder="Escribe aqu&iacute; tu mensaje" aria-label="Recipient's username"aria-describedby="basic-addon2" ng-model="mensajeGeneral"/>
-                 <input name="myFile" type="file" ng-on-change="cambioGeneral()" class="box__file inputFile" id="fileComentarioGeneral">
-                 <label for="fileComentarioGeneral" class="lbl-adjuntar-ticket"><i class="input-group-text icono-adjuntar-archivo fas fa-paperclip" id="basic-addon2"></i></label>
+                 <input name="myFile" type="file" ng-on-change="cambioGeneralBusqueda()" class="box__file inputFile" id="fileComentarioGeneralBusqueda">
+                 <label for="fileComentarioGeneralBusqueda" class="lbl-adjuntar-ticket"><i class="input-group-text icono-adjuntar-archivo fas fa-paperclip" id="basic-addon2"></i></label>
                  <div class="badge badge-dot badge-dot-sm status-adjunto badge-warning" ng-show="!showEliminarFileGeneral"></div>
                  <div class="badge badge-dot badge-dot-sm status-adjunto badge-success" ng-show="showEliminarFileGeneral"></div>
              </div>
@@ -25,7 +25,7 @@
      <div class="row">
          <div class="col-12 col-input-adjunto">
              <span class="spn-titulo-adjunto">{{tituloNombreArchivoGeneral}}</span>
-             <i class="fas fa-trash-alt icon-eliminar-adjunto" ng-show="showEliminarFileGeneral" ng-click="resetFileGeneral()"></i>
+             <i class="fas fa-trash-alt icon-eliminar-adjunto" ng-show="showEliminarFileGeneral" ng-click="resetFileGeneralBusqueda()"></i>
          </div>
      </div>
   
@@ -53,8 +53,8 @@
                                      <div class="col-8 col-input-text-subcomentarios" style="width: 90%;">
                                          <div class="input-group input-group-subcomentarios">
                                              <input type="text" id="texto-subcomentario-ticket-{{noticia.id}}" class="form-control form-send-general text-subcomentario-ticket" placeholder="Escribe aqu&iacute; tu mensaje" aria-label="Recipient's username"aria-describedby="basic-addon2"/>
-                                             <input type="file" class="box__file inputFile" id="fileSubComentarioTicket-{{noticia.id}}" onchange="cambiar(this)"/>
-                                             <label for="fileSubComentarioTicket-{{noticia.id}}" class="lbl-adjuntar-ticket"><i class="input-group-text icon-adjuntar-subcomentarios fas fa-paperclip" id="basic-addon2"></i></label>
+                                             <input type="file" class="box__file inputFile" id="fileSubComentarioTicket2-{{noticia.id}}" onchange="cambiarBusqueda(this)"/>
+                                             <label for="fileSubComentarioTicket2-{{noticia.id}}" class="lbl-adjuntar-ticket"><i class="input-group-text icon-adjuntar-subcomentarios fas fa-paperclip" id="basic-addon2"></i></label>
                                              <div class="badge badge-dot badge-dot-sm status-adjunto badge-warning" ng-show="!showEliminarSubCom"></div>
                                              <div class="badge badge-dot badge-dot-sm status-adjunto badge-success" ng-show="showEliminarSubCom"></div>
                                          </div>
@@ -66,7 +66,7 @@
                                      </div>
                                      <div class="col-2 adjuntar-archivo-subcomentario">
                                          <span id="spnNombreAdSubComentarioTicket-{{noticia.id}}" class="spn-titulo-adjunto"></span>
-                                         <i class="fas fa-trash-alt icon-eliminar-adjunto" ng-show="showEliminarSubCom" ng-click="resetFile(noticia.id)"></i>
+                                         <i class="fas fa-trash-alt icon-eliminar-adjunto" ng-show="showEliminarSubCom" ng-click="resetFileBusqueda(noticia.id)"></i>
                                      </div>
                                  </div>
                                  <div class="row">
