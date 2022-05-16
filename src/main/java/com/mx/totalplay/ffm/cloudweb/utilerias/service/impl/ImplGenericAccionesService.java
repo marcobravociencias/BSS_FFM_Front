@@ -1,9 +1,6 @@
 package com.mx.totalplay.ffm.cloudweb.utilerias.service.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.Accion;
@@ -81,7 +78,11 @@ public class ImplGenericAccionesService implements GenericAccionesService{
 				.identificadorModulo(object.get("identificadorModulo").getAsString())
 				.mensaje(object.get("mensaje").getAsString())
 				.tipoMensaje(object.get("tipoMensaje").getAsString())
+				.hora(object.get("hora").getAsString())
+				.fecha(object.get("fecha").getAsString())
+				.sysdateJs(new Date())
 				.build();
+		logger.info("Objeto acciones:" + gson.toJson(accion));
 		accionesList.add(accion);
 		session.setAttribute("MODULO_MENSAJES_ACCIONES_RECIENTES", accionesList);
 
