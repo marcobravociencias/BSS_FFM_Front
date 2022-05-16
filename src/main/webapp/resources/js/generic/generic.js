@@ -104,6 +104,67 @@ GenericMapa.prototype.callPrototypeMapa = function (listadoData) {
 	GenericMapa.prototype.kmzConfigArray = listadoKmzConfig;
 }
 
+class GenericAccion {
+
+	constructor(moduloAccion, mensajeAccion, tipo, user){
+		this.identificadorModulo = moduloAccion
+        this.mensaje = mensajeAccion
+        this.tipoMensaje = tipo
+        this.usuario = user
+        this.hora = this.formatHora(new Date())
+        this.fecha = this.formatDateAccion(new Date())
+        this.sysdateJs = new Date()
+	}
+
+	formatHora(date) {
+		let hours = date.getHours();
+		let minutes = date.getMinutes();
+		let ampm = hours >= 12 ? 'PM' : 'AM';
+		hours = hours % 12;
+		hours = hours ? hours : 12;
+		minutes = minutes < 10 ? '0'+minutes : minutes;
+		let strTime = hours + ':' + minutes + ' ' + ampm;
+		return strTime;
+	}
+
+	formatDateAccion(date){
+		return [
+			this.padTo2Digits(date.getDate()),
+			this.padTo2Digits(date.getMonth() + 1),
+			date.getFullYear(),
+		  ].join('/');
+	}
+
+	padTo2Digits(num){
+		return num.toString().padStart(2, '0');
+	}
+
+	guardarAccionesRecientesModulo(object){
+		let accionesList;
+		if (localStorage.getItem('MODULO_MENSAJES_ACCIONES_RECIENTES')) {
+			accionesList = JSON.parse(localStorage.getItem('MODULO_MENSAJES_ACCIONES_RECIENTES'))
+		} else{
+			accionesList = []   
+		}
+	
+		accionesList.push(object)
+		localStorage.setItem('MODULO_MENSAJES_ACCIONES_RECIENTES', JSON.stringify(accionesList))
+	}
+
+	getAccionesRecientesUsuario(modulo){
+		debugger
+		let accionesList;
+		let usuario = document.getElementById('tipo1').value
+		if (localStorage.getItem('MODULO_MENSAJES_ACCIONES_RECIENTES')) {
+			accionesList = JSON.parse(localStorage.getItem('MODULO_MENSAJES_ACCIONES_RECIENTES'))
+		} else{
+			accionesList = []   
+		}
+	
+		let accionesUsuario = accionesList.filter(e => { return e.usuario === usuario && e.identificadorModulo === modulo })
+		return accionesUsuario
+	}
+}
 
 
 var idioma_espanol_not_font = {

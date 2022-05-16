@@ -162,4 +162,4 @@
         src="${pageContext.request.contextPath}/resources/js/generic/busquedaSalesforce/busquedaSalesforceService.js?v=${sessionScope.versionDepl}"></script>
 
     </html>
-    <script src="${pageContext.request.contextPath}/resources/js/generic/accionesRecientes.js?v=${sessionScope.versionDepl}"></script>
+    <!-- <script src="${pageContext.request.contextPath}/resources/js/generic/accionesRecientes.js?v=${sessionScope.versionDepl}"></script> -->

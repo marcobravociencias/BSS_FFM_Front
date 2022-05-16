@@ -485,6 +485,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             "autoWidth": true,
             "language": idioma_espanol_not_font
         });
+        console.log(new GenericAccion().getAccionesRecientesUsuario('moduloGestionTickets'))
     }
 
 
@@ -920,13 +921,17 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                                 $scope.cleanForm();
                                 toastr.success(response.data.resultDescripcion);
                                 $scope.isMensajeSuccessOt=true
-                                genericService.agregarMensajeAccionSession(accionesRecientesModulo('moduloGestionTickets', 'Se ha creado el ticket 2021  con la OT 20299292', 'success', document.getElementById('tipo1').value))
-                                guardarAccionesRecientesModulo(accionesRecientesModulo('moduloGestionTickets', 'Se ha creado el ticket 2021  con la OT 20299292', 'success', document.getElementById('tipo1').value))
+                                let objetoAccion = new GenericAccion('moduloGestionTickets', 'Se ha creado el ticket 2021  con la OT 20299292', 'success', document.getElementById('tipo1').value)
+                                //genericService.agregarMensajeAccionSession(accionesRecientesModulo('moduloGestionTickets', 'Se ha creado el ticket 2021  con la OT 20299292', 'success', document.getElementById('tipo1').value))
+                                //guardarAccionesRecientesModulo(accionesRecientesModulo('moduloGestionTickets', 'Se ha creado el ticket 2021  con la OT 20299292', 'success', document.getElementById('tipo1').value))
+                                objetoAccion.guardarAccionesRecientesModulo(objetoAccion)
                             } else {
                                 swal.close();
                                 mostrarMensajeErrorAlert(response.data.resultDescripcion);
-                                genericService.agregarMensajeAccionSession(accionesRecientesModulo('moduloGestionTickets', 'No se pudo generar session id salesforce', 'warning', document.getElementById('tipo1').value))
-                                guardarAccionesRecientesModulo(accionesRecientesModulo('moduloGestionTickets', 'Se ha creado el ticket 2021  con la OT 20299292', 'warning', document.getElementById('tipo1').value))
+                                //genericService.agregarMensajeAccionSession(accionesRecientesModulo('moduloGestionTickets', 'No se pudo generar session id salesforce', 'warning', document.getElementById('tipo1').value))
+                                //guardarAccionesRecientesModulo(accionesRecientesModulo('moduloGestionTickets', 'Se ha creado el ticket 2021  con la OT 20299292', 'warning', document.getElementById('tipo1').value))
+                                let objetoAccion = new GenericAccion('moduloGestionTickets', 'Se ha creado el ticket 2021  con la OT 20299292', 'warning', document.getElementById('tipo1').value)
+                                objetoAccion.guardarAccionesRecientesModulo(objetoAccion)
                                 $scope.isMensajeErrorOt=true
                             }
                             $scope.mensajeRequestCreacion = response.data.resultDescripcion
@@ -934,10 +939,12 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                         } else {
                             swal.close();
                             mostrarMensajeErrorAlert(response.data.resultDescripcion);
-                            genericService.agregarMensajeAccionSession(accionesRecientesModulo('moduloGestionTickets', 'No se pudo generar session id salesforce', 'warning', document.getElementById('tipo1').value))
-                            guardarAccionesRecientesModulo(accionesRecientesModulo('moduloGestionTickets', 'Se ha creado el ticket 2021  con la OT 20299292', 'warning', document.getElementById('tipo1').value))
+                            //genericService.agregarMensajeAccionSession(accionesRecientesModulo('moduloGestionTickets', 'No se pudo generar session id salesforce', 'warning', document.getElementById('tipo1').value))
+                            //guardarAccionesRecientesModulo(accionesRecientesModulo('moduloGestionTickets', 'Se ha creado el ticket 2021  con la OT 20299292', 'warning', document.getElementById('tipo1').value))
                             $scope.mensajeRequestCreacion=response.data.resultDescripcion
                             $scope.isMensajeErrorOt=true
+                            let objetoAccion = new GenericAccion('moduloGestionTickets', 'Se ha creado el ticket 2021  con la OT 20299292', 'warning', document.getElementById('tipo1').value)
+                            objetoAccion.guardarAccionesRecientesModulo(objetoAccion)
                         }
                     });
                 }
