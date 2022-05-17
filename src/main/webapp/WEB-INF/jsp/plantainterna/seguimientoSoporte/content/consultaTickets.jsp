@@ -1,5 +1,5 @@
 <div class="row filter-content">
-    <div class="col-1" style="padding: 0;">
+    <div class="col-1 offset-11" style="padding: 0;">
         <i class="fas fa-chevron-circle-left icon-back" title="Regresar" ng-click="backGeneral()"></i>
     </div>
 </div>

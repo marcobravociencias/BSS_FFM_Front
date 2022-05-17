@@ -96,6 +96,23 @@ public class ImplSoporteCentralizadoService implements SoporteCentralizadoServic
         logger.info("### RESULT consultaDetalleSoporte(): " + response);
         return response;
     }
+    
+	@Override
+	public ServiceResponseResult consultaEstatusSoporte() {
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String tokenAccess = principalDetail.getAccess_token();
+		logger.info("consultaEstatusSoporte ## "+ tokenAccess);
+		
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constSoporteCentralizado.getConsultaEstatusSoporte());
+		logger.info("### URL consultaEstatusSoporte():" + urlRequest);
+		
+		Map<String, String> paramsRequestGet = new HashMap<String, String>();
+		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest, ServiceResponseResult.class, tokenAccess);
+		logger.info("### RESULT consultaEstatusSoporte(): " + gson.toJson(response));   
+		return response;
+	}
+	
+	
     @Override
     public ServiceResponseResult consultaDetalleSoporte(String params) {
         JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
@@ -422,4 +439,6 @@ public class ImplSoporteCentralizadoService implements SoporteCentralizadoServic
 		logger.info("### RESULT consultarTecnologiaSoporte(): " + gson.toJson(response));   
 		return response;
 	}
+
+
 }

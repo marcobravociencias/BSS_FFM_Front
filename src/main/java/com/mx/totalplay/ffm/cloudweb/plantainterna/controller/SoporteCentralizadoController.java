@@ -51,15 +51,7 @@ public class SoporteCentralizadoController {
 //        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 //    }
 	
-	@PostMapping("/consultarDetalleTicketGestion")
-	public ResponseEntity<?> connsultarDetalleTicketGestion(@RequestBody String params ) {
-		logger.info("###### GestionTecnicosController - connsultarDetalleTicketGestion");
-		ServiceResponseResult response = soporteCentralizadoService.consultarDetalleTicketGestion(params);
-		if (response.getResult() instanceof Integer) {
-			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-		}
-		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-	}
+
     @PostMapping("/consultaDetalleSoporte")
     public ResponseEntity<?> consultaDetalleSoporte(@RequestBody String params){
         logger.info("#### SEGUIMIENTO SOPORTE consultaDetalleSoporte ### \n" + params);
@@ -69,6 +61,28 @@ public class SoporteCentralizadoController {
         }
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
+    
+    @GetMapping("/consultaEstatusSeguimientoSoporte")
+ 	public ResponseEntity<?> consultaEstatusSeguimientoSoporte(){
+ 		logger.info("###### SoporteCentralizadoController - consultaEstatusSeguimientoSoporte");
+ 		ServiceResponseResult response = soporteCentralizadoService.consultaEstatusSoporte();
+ 		if(response.getResult() instanceof Integer) {
+ 			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+ 		}
+ 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+ 	}
+    
+    
+    
+	@PostMapping("/consultarDetalleTicketGestion")
+	public ResponseEntity<?> connsultarDetalleTicketGestion(@RequestBody String params ) {
+		logger.info("###### GestionTecnicosController - connsultarDetalleTicketGestion");
+		ServiceResponseResult response = soporteCentralizadoService.consultarDetalleTicketGestion(params);
+		if (response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
     
     @GetMapping("/consultaFallasTicketSoporte")
 	public ResponseEntity<?> consultaFallasTicketSoporte(){

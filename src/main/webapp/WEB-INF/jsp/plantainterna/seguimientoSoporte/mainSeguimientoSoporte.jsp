@@ -130,7 +130,7 @@
             </div>
             <div ng-show="!isBusquedaGeneral && isDetalleTicket && !detalleSalesforceView">
                 <div style="text-align: right; padding-top: 0.5em;">
-                    <button ng-click="cerrarDetalleTicket()" type="button" class="btn-close" data-mdb-dismiss="modal"
+                    <button ng-click="cerrarDetalleTicket()" type="button" style="padding-right: 1em;" class="btn-close" data-mdb-dismiss="modal"
                         aria-label="Close">
                     </button>
                 </div>
