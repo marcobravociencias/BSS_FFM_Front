@@ -793,6 +793,7 @@
 
     /* TABLES */
 
+    #table-registrosLocalizados thead th,
     #table-materiales-temp thead th,
     #table-pagos-temp thead th {
         position: relative;
@@ -829,6 +830,7 @@
         font-size: .65em;
     }
 
+    #table-registrosLocalizados>tbody>tr>td,
     #table-materiales-temp>tbody>tr>td,
     #table-pagos-temp>tbody>tr>td {
         white-space: nowrap;
@@ -837,6 +839,7 @@
         font-size: .65em;
     }
 
+    #table-registrosLocalizados_wrapper .dataTables_info,
     #table-reporte_wrapper .dataTables_info,
     #table-ots-trabajadas-tecnico_wrapper .dataTables_info,
     #table-materiales-temp_wrapper .dataTables_info,
@@ -846,6 +849,7 @@
         text-align: center;
     }
 
+    #table-registrosLocalizados_wrapper .page-link,
     #table-reporte_wrapper .page-link,
     #table-alertas-pi_wrapper .page-link,
     #table-ots-trabajadas-tecnico_wrapper .page-link,
@@ -855,6 +859,7 @@
         font-family: "Montserrat" !important;
     }
 
+    #table-registrosLocalizadosfilter,
     #table-reporte_filter,
     #table-ots-trabajadas-tecnico_filter,
     #table-materiales-temp_filter,

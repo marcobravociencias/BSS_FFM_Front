@@ -21,13 +21,25 @@
                             <a class="nav-link linkOpcionesRegistro" id="pills-accesos-tab-mod" data-toggle="pill" href="#pills-accesos-mod" ng-show="mostrarAccesosMod" role="tab" aria-controls="pills-accesos-mod" aria-selected="false">Accesos</a>
                         </li>
                         <li class="nav-item tabOpcionesRegistro" role="presentation" ng-show="tabTecnicosMod">
-                            <a class="nav-link linkOpcionesRegistro" id="pills-tecnico-tab-mod" ng-click="revisionTecnicosDespachosMod()" data-toggle="pill" href="#pills-tecnico-mod" ng-show="mostrarTecnicosMod" role="tab" aria-controls="pills-tecnico-mod" aria-selected="false">T&eacute;cnicos</a>
+                            <a class="nav-link linkOpcionesRegistro" id="pills-tecnico-tab-mod" ng-click="revisionTecnicosDespachosMod('tabTecnicos')" data-toggle="pill" href="#pills-tecnico-mod" ng-show="mostrarTecnicosMod" role="tab" aria-controls="pills-tecnico-mod" aria-selected="false">T&eacute;cnicos</a>
                         </li>
                         <li class="nav-item tabOpcionesRegistro" role="presentation" ng-show="tabDespachosMod">
-                        	<a class="nav-link linkOpcionesRegistro" id="pills-despacho-tab-mod" ng-click="revisionTecnicosDespachosMod()" data-toggle="pill" href="#pills-despacho-mod" ng-show="mostrarDespachoMod" role="tab" aria-controls="pills-despacho-mod" aria-selected="false">Despachos</a>
+                        	<a class="nav-link linkOpcionesRegistro" id="pills-despacho-tab-mod" ng-click="revisionTecnicosDespachosMod('tabDespachos')" data-toggle="pill" href="#pills-despacho-mod" ng-show="mostrarDespachoMod" role="tab" aria-controls="pills-despacho-mod" aria-selected="false">Despachos</a>
                         </li>
                         <li class="nav-item tabOpcionesRegistro" role="presentation" ng-show="tabPerfilesMod">
                         	<a class="nav-link linkOpcionesRegistro" id="pills-perfiles-tab-mod" data-toggle="pill" href="#pills-perfiles-mod" role="tab" aria-controls="pills-perfiles-mod" aria-selected="false">Perfiles</a>
+                        </li>
+                        <li class="nav-item tabOpcionesRegistro" role="presentation" ng-show="tabIngenierosMod">
+                        	<a class="nav-link linkOpcionesRegistro" id="pills-ingenieros-tab-mod" ng-click="revisionTecnicosDespachosMod('tabIngenieros')" data-toggle="pill" href="#pills-ingenieros-mod" role="tab" aria-controls="pills-ingenieros-mod" aria-selected="false">Ingenieros</a>
+                        </li>
+                        <li class="nav-item tabOpcionesRegistro" role="presentation" ng-show="tabSupervisorCentralizadoMod">
+                        	<a class="nav-link linkOpcionesRegistro" id="pills-supervisor-centralizado-tab-mod" ng-click="revisionTecnicosDespachosMod('tabSupervisorCentralizado')" data-toggle="pill" href="#pills-supervisor-centralizado-mod" role="tab" aria-controls="pills-supervisor-centralizado-mod" aria-selected="false">Supervisores Centralizados</a>
+                        </li>
+                        <li class="nav-item tabOpcionesRegistro" role="presentation" ng-show="tabCouchDespachoMod">
+                        	<a class="nav-link linkOpcionesRegistro" id="pills-couch-despacho-tab-mod" ng-click="revisionTecnicosDespachosMod('tabCouchDespacho')" data-toggle="pill" href="#pills-couch-despacho-mod" role="tab" aria-controls="pills-couch-despacho-mod" aria-selected="false">Couchs</a>
+                        </li>
+                        <li class="nav-item tabOpcionesRegistro" role="presentation" ng-show="tabSupervisorMod">
+                        	<a class="nav-link linkOpcionesRegistro" id="pills-supervisor-tab-mod" ng-click="revisionTecnicosDespachosMod('tabSupervisor')" data-toggle="pill" href="#pills-supervisor-mod" role="tab" aria-controls="pills-supervisor-mod" aria-selected="false">Supervisores</a>
                         </li>
                         <li class="nav-item tabOpcionesRegistro" role="presentation" ng-show="tabConfirmacionMod">
                             <a class="nav-link linkOpcionesRegistro" id="pills-confirmar-tab-mod" data-toggle="pill" ng-click="cargarInfoConfirmacionModificacion()" href="#pills-confirmar-mod" role="tab" aria-controls="pills-confirmar-mod" aria-selected="false">Confirmar Usuario</a>
@@ -54,6 +66,18 @@
                         </div>
                         <div class="tab-pane fade" id="pills-perfiles-mod" role="tabpanel" aria-labelledby="pills-perfiles-tab-mod">
                         	<jsp:include page="./../content/perfilesMod.jsp"></jsp:include>
+                        </div>
+                        <div class="tab-pane fade" id="pills-ingenieros-mod" role="tabpanel" aria-labelledby="pills-ingenieros-tab-mod">
+                        	<jsp:include page="./../content/ingenieroMod.jsp"></jsp:include>
+                        </div>
+                        <div class="tab-pane fade" id="pills-supervisor-centralizado-mod" role="tabpanel" aria-labelledby="pills-supervisor-centralizado-tab-mod">
+                        	<jsp:include page="./../content/supervisorCentralizadoMod.jsp"></jsp:include>
+                        </div>
+                        <div class="tab-pane fade" id="pills-couch-despacho-mod" role="tabpanel" aria-labelledby="pills-couch-despacho-tab-mod">
+                        	<jsp:include page="./../content/couchDespachoMod.jsp"></jsp:include>
+                        </div>
+                        <div class="tab-pane fade" id="pills-supervisor-mod" role="tabpanel" aria-labelledby="pills-supervisor-tab-mod">
+                        	<jsp:include page="./../content/supervisorMod.jsp"></jsp:include>
                         </div>
                         <div class="tab-pane fade" id="pills-confirmar-mod" role="tabpanel" aria-labelledby="pills-confirmar-tab-mod">
                             <jsp:include page="./../content/confirmacionMod.jsp"></jsp:include>

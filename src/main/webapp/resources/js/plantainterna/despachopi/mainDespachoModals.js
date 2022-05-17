@@ -9,7 +9,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     $scope.listadoTecnicosOtsModal = []
     $scope.vehiculoOperario = {}
     $scope.objectMateriales = {}
-    $scope.procesandoAsignacion = false    
+    $scope.procesandoAsignacion = false
     $scope.procesandoReasignacion = false
     $scope.isConfirmadoDesconfirmado = false;
     $scope.idotConfirmacionDesconfirmacion = 0;
@@ -20,7 +20,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     $scope.verModDireccionOT = false;
     $scope.latitudModDireccionOt;
     $scope.longitudModDireccionOt;
-    
+
     $scope.tabDetalleCorteMasivo = false;
     $scope.tabDetalleDetencion = false;
     $scope.tabDetalleInspector = false;
@@ -49,8 +49,8 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         $scope.objConfirmaDesc = {
             isConfirmadoDesconfirmado: $(instanciaThis).is(':checked'),
             idOtConfirmaDesc: idot,
-            comentarios:"",
-            procesando:false
+            comentarios: "",
+            procesando: false
         }
         $scope.$apply()
         $("#modalConfirmaDesconfirma").modal('show')
@@ -58,61 +58,61 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 
     abrirModalDetalleOtPendiente = function (idotpendiente) {
         $scope.flagPaquete = false;
-        $scope.listadoMotivosRescate = $scope.estatusCambio.filter(e => {return e.idPadre === 212})
-        $scope.listadoMotivosCalendarizado = $scope.estatusCambio.filter(e => {return e.idPadre === 243})
-        $scope.listadoMotivosReagenda = $scope.estatusCambio.filter(e => {return e.idPadre === 201})
-        $scope.listadoEstadosTerminado = $scope.estatusCambio.filter(e => {return e.idPadre === 4})
-        $scope.listadoEstadoGestoria = $scope.estatusCambio.filter(e => {return e.idPadre === 7})
+        $scope.listadoMotivosRescate = $scope.estatusCambio.filter(e => { return e.idPadre === 212 })
+        $scope.listadoMotivosCalendarizado = $scope.estatusCambio.filter(e => { return e.idPadre === 243 })
+        $scope.listadoMotivosReagenda = $scope.estatusCambio.filter(e => { return e.idPadre === 201 })
+        $scope.listadoEstadosTerminado = $scope.estatusCambio.filter(e => { return e.idPadre === 4 })
+        $scope.listadoEstadoGestoria = $scope.estatusCambio.filter(e => { return e.idPadre === 7 })
         $scope.listadoTurnosAcciones = $scope.filtrosGeneral.turnosdisponibles;
-        $scope.detalleOtPendienteSelected=$scope.listadoOtsPendientes.find(e=>e.idOrden==idotpendiente)
-        $scope.permisosModal=$scope.elementosConfigGeneral.get("MODAL_FLUJO_"+ $scope.detalleOtPendienteSelected.idFlujo ).split(",")
-//        $scope.permisosModal.push("tabCambioDireccion");
-        console.log("##########permisos " + $scope.permisosModal )
+        $scope.detalleOtPendienteSelected = $scope.listadoOtsPendientes.find(e => e.idOrden == idotpendiente)
+        $scope.permisosModal = $scope.elementosConfigGeneral.get("MODAL_FLUJO_" + $scope.detalleOtPendienteSelected.idFlujo).split(",")
+        //        $scope.permisosModal.push("tabCambioDireccion");
+        console.log("##########permisos " + $scope.permisosModal)
         console.log($scope.detalleOtPendienteSelected)
         $scope.estatusModals = 'PENDIENTE'
-        $scope.otModalSelectedGeneric=angular.copy( $scope.detalleOtPendienteSelected);
+        $scope.otModalSelectedGeneric = angular.copy($scope.detalleOtPendienteSelected);
         $scope.requestModalInformacion(idotpendiente)
 
     }
     abrirModalInformacion = function (idotasignada) {
         $scope.flagPaquete = false;
-        $scope.listadoMotivosRescate = $scope.estatusCambio.filter(e => {return e.idPadre === 212})
-        $scope.listadoMotivosCalendarizado = $scope.estatusCambio.filter(e => {return e.idPadre === 243})
-        $scope.listadoMotivosReagenda = $scope.estatusCambio.filter(e => {return e.idPadre === 201})
-        $scope.listadoEstadosTerminado = $scope.estatusCambio.filter(e => {return e.idPadre === 4})
-        $scope.listadoEstadoGestoria = $scope.estatusCambio.filter(e => {return e.idPadre === 7})
+        $scope.listadoMotivosRescate = $scope.estatusCambio.filter(e => { return e.idPadre === 212 })
+        $scope.listadoMotivosCalendarizado = $scope.estatusCambio.filter(e => { return e.idPadre === 243 })
+        $scope.listadoMotivosReagenda = $scope.estatusCambio.filter(e => { return e.idPadre === 201 })
+        $scope.listadoEstadosTerminado = $scope.estatusCambio.filter(e => { return e.idPadre === 4 })
+        $scope.listadoEstadoGestoria = $scope.estatusCambio.filter(e => { return e.idPadre === 7 })
         $scope.listadoTurnosAcciones = $scope.filtrosGeneral.turnosdisponibles;
-        $scope.detalleOtAsignadaSelected= $scope.listadoOtsAsignadas.find(e=>e.idOrden==idotasignada)
-        $scope.permisosModal=$scope.elementosConfigGeneral.get("MODAL_ASIGNADA_" + $scope.detalleOtAsignadaSelected.idFlujo ).split(",")
-        console.log($scope.permisosModal )
+        $scope.detalleOtAsignadaSelected = $scope.listadoOtsAsignadas.find(e => e.idOrden == idotasignada)
+        $scope.permisosModal = $scope.elementosConfigGeneral.get("MODAL_ASIGNADA_" + $scope.detalleOtAsignadaSelected.idFlujo).split(",")
+        console.log($scope.permisosModal)
         console.log($scope.detalleOtAsignadaSelected)
         $scope.estatusModals = 'ASIGNADA'
-        $scope.otModalSelectedGeneric=angular.copy( $scope.detalleOtAsignadaSelected );
+        $scope.otModalSelectedGeneric = angular.copy($scope.detalleOtAsignadaSelected);
         $scope.requestModalInformacion(idotasignada)
     }
 
     $scope.idOtSelect = "";
     $scope.requestModalInformacion = function (idparams) {
-        $scope.otconsultamodal=
-        document.getElementById('v-tabs-consulta-detalleot-tab').click()
+        $scope.otconsultamodal =
+            document.getElementById('v-tabs-consulta-detalleot-tab').click()
         $scope.idOtSelect = idparams;
         $scope.flagComentarios = false;
         $scope.flagHistorico = false;
         $scope.flagPedido = false;
-        $scope.consultarDetalleOtPEFlag=false;
+        $scope.consultarDetalleOtPEFlag = false;
         $scope.comentariosOrdenTrabajo = [];
         $scope.historialOrdenTrabajo = [];
         $scope.infoOtDetalle = {}
         $scope.detalleCotizacion = {}
         $scope.detalleTecnicoOt = {};
-        $scope.infoDetalleOtPe={}
+        $scope.infoDetalleOtPe = {}
         swal({ text: 'Consultando detalle de la OT ...', allowOutsideClick: false });
         swal.showLoading();
 
         let params = {
-            "idOt":     idparams,
-            "idFlujo":  $scope.otModalSelectedGeneric.idFlujo,
-            "idOT":     idparams
+            "idOt": idparams,
+            "idFlujo": $scope.otModalSelectedGeneric.idFlujo,
+            "idOT": idparams
         }
 
         $q.all([
@@ -127,9 +127,9 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                             $scope.infoOtDetalle = results[0].data.result.orden
                             $("#modalDetalleOT").modal({ backdrop: 'static', keyboard: false });
                             $("#modalDetalleOT").modal('show')
-                            setTimeout(function(){ 
+                            setTimeout(function () {
                                 document.getElementsByClassName('permiso-accion-modal')[0].click();
-                            },500)
+                            }, 500)
 
                         } else {
                             toastr.info(results[0].data.result.mensaje);
@@ -156,21 +156,21 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             } else {
                 toastr.error('Ha ocurrido un error en la consulta de los datos');
             }
-       
-            
+
+
         }).catch(err => handleError(err));
-        
+
     }
-    $scope.consultarDetalleOtPEFlag=false;
+    $scope.consultarDetalleOtPEFlag = false;
 
     $scope.consultarDetalleOtPE = function () {
-        if( !$scope.consultarDetalleOtPEFlag ){        
+        if (!$scope.consultarDetalleOtPEFlag) {
             swal({ text: 'Consultando detalle de la OT ...', allowOutsideClick: false });
             swal.showLoading();
 
             let params = {
-                "idFlujo":  $scope.otModalSelectedGeneric.idFlujo,
-                "idOT":     $scope.otModalSelectedGeneric.idOrden
+                "idFlujo": $scope.otModalSelectedGeneric.idFlujo,
+                "idOT": $scope.otModalSelectedGeneric.idOrden
             }
             /**
             let paramsDetalleOtPe = {
@@ -187,19 +187,19 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                     "idOT": 481649,
                     "idFlujo": 11
             };**/
-        
+
             mainDespachoService.consultaDetalleOtPe(params).then(function success(response) {
                 if (response.data !== undefined) {
                     if (response.data.respuesta) {
                         if (response.data.result) {
                             if (response.data.result.orden) {
-                                $scope.consultarDetalleOtPEFlag=true;
-                                $scope.infoDetalleOtPe = response.data.result.orden;                                
-                                $scope.infoDetalleOtPe.tipoOrden = $scope.respaldoTipoOrdenArray.find(e=>{return e.id===$scope.infoDetalleOtPe.idTipoOrden});
-                                $scope.infoDetalleOtPe.subTipoOrden = $scope.respaldoTipoOrdenArray.find(e=>{return e.id===$scope.infoDetalleOtPe.idSubTipoOrden});
-                                $scope.infoDetalleOtPe.estado = $scope.respaldoStatusArray.find(e=>{return e.id===$scope.infoDetalleOtPe.idEstado});
-                                $scope.infoDetalleOtPe.estatus = $scope.respaldoStatusArray.find(e=>{return e.id===$scope.infoDetalleOtPe.idEstatus});
-                                
+                                $scope.consultarDetalleOtPEFlag = true;
+                                $scope.infoDetalleOtPe = response.data.result.orden;
+                                $scope.infoDetalleOtPe.tipoOrden = $scope.respaldoTipoOrdenArray.find(e => { return e.id === $scope.infoDetalleOtPe.idTipoOrden });
+                                $scope.infoDetalleOtPe.subTipoOrden = $scope.respaldoTipoOrdenArray.find(e => { return e.id === $scope.infoDetalleOtPe.idSubTipoOrden });
+                                $scope.infoDetalleOtPe.estado = $scope.respaldoStatusArray.find(e => { return e.id === $scope.infoDetalleOtPe.idEstado });
+                                $scope.infoDetalleOtPe.estatus = $scope.respaldoStatusArray.find(e => { return e.id === $scope.infoDetalleOtPe.idEstatus });
+
                                 /**
                                 if($scope.infoDetalleOtPe.detalleCorteMasivo !== undefined){
                                     $scope.tabDetalleCorteMasivo = true;
@@ -209,101 +209,101 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                                     $scope.tabDetalleInspector = true;
                                 }
                                 **/
-    //############################################ALTERAR ARREGLO PARA MAS FALLAS #####################################################################
-                                
-    //                        	--------------------------------INSPECTOR--------------------------------
-    //                        	--------------------------------INSPECTOR--------------------------------
-    //                        	$scope.infoDetalleOtPe.detalleInspeccion.fallas[0].imagenes[0].url = "https://firebasestorage.googleapis.com/v0/b/totalplay-ffm-core-dev.appspot.com/o/usuarios%2Fmex%2F15015902%2FfotoPerfil.jpg?alt=media&token=uuidv4()";
-    //                        	$scope.infoDetalleOtPe.detalleInspeccion.fallas[0].imagenes[1].url = "https://cdn.cienradios.com/wp-content/uploads/sites/2/2019/12/trabajador-escalera-640x415.gif";
-    //                        	var fallaExtra2 = angular.copy($scope.infoDetalleOtPe.detalleInspeccion.fallas[0]);
-    //                        	$scope.infoDetalleOtPe.detalleInspeccion.fallas[0].imagenes.push({nombre:"F3", url: "https://i.ytimg.com/vi/GgQ9YRx9r-o/maxresdefault.jpg"});
-    //                        	$scope.infoDetalleOtPe.detalleInspeccion.fallas[0].imagenes.push({nombre:"F4", url: "https://pbs.twimg.com/media/EpDvjEZW8AIHqRv.jpg"});
-    //                        	$scope.infoDetalleOtPe.detalleInspeccion.fallas[0].imagenes.push({nombre:"F5", url: "https://cimacnoticias.com.mx/wp-content/uploads/2020/04/FOTOJOS1OK.jpg"});
-    //                        	
-    //                        	fallaExtra2.idDetallefalla = 200;
-    //                        	fallaExtra2.descripcionDetalleFalla = "Falla duplicada";
-    //                        	
-    //                        	var fallaExtra3 = angular.copy($scope.infoDetalleOtPe.detalleInspeccion.fallas[0]);
-    //                        	fallaExtra3.idDetallefalla = 300;
-    //                        	fallaExtra3.descripcionDetalleFalla = "Falla triplicada";
-    //                        	fallaExtra3.imagenes.splice(3);
-    //                        	
-    //                        	var fallaExtra4 = angular.copy($scope.infoDetalleOtPe.detalleInspeccion.fallas[0]);
-    //                        	fallaExtra4.idDetallefalla = 400;
-    //                        	fallaExtra4.descripcionDetalleFalla = "Falla cuadruple";
-    //                        	fallaExtra4.imagenes.splice(4);
-    //                        	
-    //                        	console.log( "Fallas -> ", $scope.infoDetalleOtPe.detalleInspeccion.fallas );
-    //                        	$scope.infoDetalleOtPe.detalleInspeccion.fallas.push(fallaExtra2);
-    //                        	$scope.infoDetalleOtPe.detalleInspeccion.fallas.push(fallaExtra3);
-    //                        	$scope.infoDetalleOtPe.detalleInspeccion.fallas.push(fallaExtra4);
-    //                        	--------------------------------INSPECTOR--------------------------------
-    //                        	--------------------------------INSPECTOR--------------------------------
-                                
-    //                        	--------------------------------DETENCION--------------------------------
-    //                        	--------------------------------DETENCION--------------------------------
-    //                        	$scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter = [];
-    //                        	$scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter.push({"candado": "candado 1","estatus": "2","evidencias": [{"nombre": "nombre", "url": "https://cadenanoticias.com/assets/article/00122895/20211002_lVEOusxIi7.jpeg"},{"nombre": "nombre", "url": "https://ru83nc4.files.wordpress.com/2016/07/falla-en-la-red.jpg"},{"nombre": "nombre", "url": "https://queplan.mx/sites/default/files/inline-images/modems-totalplay.jpg"}],"idGsa": "IDGSA1","numeroCuenta": "numeroCuenta","puertoAsiganado": "1","puertosOcupados": "1","puertosTotales": "1","qr": "qr"},{"candado": "candado 2","estatus": "2","evidencias": [{"nombre": "nombre", "url": "https://pbs.twimg.com/media/EtqcHubVEAAiA5u.jpg"}],"idGsa": "IDGSA2","numeroCuenta": "numeroCuenta 2","puertoAsiganado": "2","puertosOcupados": "2","puertosTotales": "2","qr": "qr"},{"candado": "candado3","estatus": "2","evidencias": [{"nombre": "nombre", "url": "https://pbs.twimg.com/media/Ej_3pquXcAE5pgu.jpg"},{"nombre": "nombre", "url": "https://static.promodescuentos.com/pepperpdimages/threads/content/pU63G/501850.jpg"},{"nombre": "nombre", "url": "https://muralchiapas.com/images/fotonoticias/cable.jpg"},{"nombre": "nombre", "url": "https://3.bp.blogspot.com/-nJnnmzBgZAU/XN5FKZ3sEBI/AAAAAAAADIw/QST65Nh1YHgjoVKtPHv1kW1MVIDYUELcACLcBGAs/s1600/WhatsApp%2BImage%2B2019-05-17%2Bat%2B12.21.23%2BAM.jpeg"},{"nombre": "nombre", "url": "https://1.bp.blogspot.com/-LQYkZeZGoN8/XN5FKf-hdSI/AAAAAAAADIo/M2jbbaoNvu8kdEwyWsej-rqZgH9GxiM0gCLcBGAs/s1600/WhatsApp%2BImage%2B2019-05-17%2Bat%2B12.21.42%2BAM.jpeg"}],"idGsa": "IDGSA3","numeroCuenta": "numeroCuenta","puertoAsiganado": "3","puertosOcupados": "3","puertosTotales": "3","qr": "qr"},{"candado": "candado4","estatus": "2","evidencias": [{"nombre": "nombre", "url": "https://i.blogs.es/3871d1/velocidad-internet-telephono/450_1000.jpg"},{"nombre": "nombre", "url": "https://precoinprevencion.com/wp-content/uploads/2017/03/IMG_0055.jpg"}],"idGsa": "IDGSA4","numeroCuenta": "numeroCuenta","puertoAsiganado": "4","puertosOcupados": "4","puertosTotales": "4","qr": "qr"});
-    //                        	$scope.infoDetalleOtPe.detalleDetencion.push({"claveCliente": "TEST","detalleSplitter": [{"candado": "candado 5","estatus": "2","evidencias": [{"nombre": "nombre", "url": "https://i.eldiario.com.ec/fotos-manabi-ecuador/2017/06/20170628040049_retiran-postes-sin-uso-y-daa-ados.jpg"},{"nombre": "nombre", "url": "https://www.elsoldeirapuato.com.mx/policiaca/v5nynp-camion-derriba-postes-1.jpg/ALTERNATES/LANDSCAPE_768/Cami%C3%B3n-derriba-postes%20%20(1).jpg"},{"nombre": "nombre", "url": "https://images.freeimages.com/images/large-previews/a89/telephone-pole-2-1416522.jpg"},{"nombre": "nombre", "url": "https://previews.123rf.com/images/angelofoto/angelofoto1208/angelofoto120800018/14871321-viejo-poste-de-tel%C3%A9fono-de-madera-contra-un-gradiente-de-cielo-azul.jpg"},{"nombre": "nombre", "url": "https://c8.alamy.com/compes/2ddbh61/no-hay-pelicula-no-hay-video-no-hay-television-no-hay-documental-los-postes-de-telefono-danados-por-el-huracan-katrina-se-lluran-precariamente-sobre-la-calle-principal-de-la-place-louisiana-el-lunes-29-de-agosto-de-2005-foto-de-khampha-bouaphanh-fort-worth-star-telegram-krt-abacapress-com-2ddbh61.jpg"},{"nombre": "nombre", "url": "https://www.eloccidental.com.mx/policiaca/5zencz-poste-c5-danado.jpg/ALTERNATES/LANDSCAPE_1140/Poste%20C5%20da%C3%B1ado.jpg"}],"idGsa": "IDGSA5","numeroCuenta": "numeroCuenta 5","puertoAsiganado": "5","puertosOcupados": "5","puertosTotales": "5","qr": "qr"},{"candado": "candado 6","estatus": "2","evidencias": [{"nombre": "nombre", "url": "https://img.gruporeforma.com/imagenes/960x640/5/416/4415795.jpg"},{"nombre": "nombre", "url": ""},{"nombre": "nombre", "url": "https://img.gruporeforma.com/imagenes/960x640/5/416/44157955555555555555555.jpg"},{"nombre": "nombre", "url": "https://i.ytimg.com/vi/GgQ9YRx9r-o/maxresdefault.jpg"},{"nombre": "nombre", "url": "https://img.gruporeforma.com/imagenes/960x640/5/416/44157955555555555555555.jpg"}],"idGsa": "IDGSA6","numeroCuenta": "numeroCuenta 6","puertoAsiganado": "6","puertosOcupados": "6","puertosTotales": "6","qr": "qr"}],"fallaReportada": "Reparacion Poste","fechaReporte": "2022-03-018 13:34","folioSistema": "Folio Sis 002-86060","idOrden": 86060,"nombreEmpleadoReporta": "Reynel Flores Brito","subFallaReportada": "Reparación y Etiquetado","unidadNegocio": "Residencial"});
-                                
-                                
-    //                        	$scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter[0].evidencias[0].url = "https://cadenanoticias.com/assets/article/00122895/20211002_lVEOusxIi7.jpeg";
-    //                        	$scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter[0].evidencias[1].url = "https://ru83nc4.files.wordpress.com/2016/07/falla-en-la-red.jpg";
-    //                        	$scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter[0].evidencias[2].url = "https://queplan.mx/sites/default/files/inline-images/modems-totalplay.jpg";
-    //                        	
-    //                        	var detalle2 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[0]);
-    //                        	detalle2.idOrden = 200;
-    //                        	detalle2.detalleSplitter[0].idGsa = "IdGsa200";
-    //                        	$scope.infoDetalleOtPe.detalleDetencion.push(detalle2);
-    //                        	
-    //                        	var detalle3 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[0]);
-    //                        	detalle3.idOrden = 300;
-    //                        	detalle3.detalleSplitter[0].idGsa = "IdGsa300";
-    //                        	$scope.infoDetalleOtPe.detalleDetencion.push(detalle3);
-    //                        	
-    //                        	var spliter2 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter[0]);
-    //                        	spliter2.idGsa = "idSplitterGSA_v2"
-    //                        	$scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter.push(spliter2);
-    //                        	
-    //                        	var spliter3 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter[0]);
-    //                        	spliter3.idGsa = "idSplitterGSA_v3"
-    //                        	$scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter.push(spliter3);
-    //                        	
-    //                        	var spliter2_2 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter[0]);
-    //                        	spliter2_2.idGsa = "IdGsa200_v2"
-    //                        	$scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter.push(spliter2_2);
-    //                        	
-    //                        	var spliter2_3 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter[0]);
-    //                        	spliter2_3.idGsa = "IdGsa200_v3"
-    //                        	$scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter.push(spliter2_3);
-    //                        	
-    //                        	var spliter2_4 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter[0]);
-    //                        	spliter2_4.idGsa = "IdGsa200_v4"
-    //                        	$scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter.push(spliter2_4);
-    //                        	
-    //                        	var spliter2_5 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter[0]);
-    //                        	spliter2_5.idGsa = "IdGsa200_v5"
-    //                        	$scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter.push(spliter2_5);
-                                
-    //                        	$scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter[0].evidencias[0].url = "https://cadenanoticias.com/assets/article/00122895/20211002_lVEOusxIi7.jpeg";
-    //                        	$scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter[0].evidencias[1].url = "https://ru83nc4.files.wordpress.com/2016/07/falla-en-la-red.jpg";
-    //                        	$scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter[0].evidencias[2].url = "https://queplan.mx/sites/default/files/inline-images/modems-totalplay.jpg";
-                                
-    //                        	console.log("DETENCION---> ", $scope.infoDetalleOtPe.detalleDetencion);
-    //                        	--------------------------------DETENCION--------------------------------
-    //                        	--------------------------------DETENCION--------------------------------
-    //############################################ALTERAR ARREGLO PARA MAS FALLAS #####################################################################
+                                //############################################ALTERAR ARREGLO PARA MAS FALLAS #####################################################################
+
+                                //                        	--------------------------------INSPECTOR--------------------------------
+                                //                        	--------------------------------INSPECTOR--------------------------------
+                                //                        	$scope.infoDetalleOtPe.detalleInspeccion.fallas[0].imagenes[0].url = "https://firebasestorage.googleapis.com/v0/b/totalplay-ffm-core-dev.appspot.com/o/usuarios%2Fmex%2F15015902%2FfotoPerfil.jpg?alt=media&token=uuidv4()";
+                                //                        	$scope.infoDetalleOtPe.detalleInspeccion.fallas[0].imagenes[1].url = "https://cdn.cienradios.com/wp-content/uploads/sites/2/2019/12/trabajador-escalera-640x415.gif";
+                                //                        	var fallaExtra2 = angular.copy($scope.infoDetalleOtPe.detalleInspeccion.fallas[0]);
+                                //                        	$scope.infoDetalleOtPe.detalleInspeccion.fallas[0].imagenes.push({nombre:"F3", url: "https://i.ytimg.com/vi/GgQ9YRx9r-o/maxresdefault.jpg"});
+                                //                        	$scope.infoDetalleOtPe.detalleInspeccion.fallas[0].imagenes.push({nombre:"F4", url: "https://pbs.twimg.com/media/EpDvjEZW8AIHqRv.jpg"});
+                                //                        	$scope.infoDetalleOtPe.detalleInspeccion.fallas[0].imagenes.push({nombre:"F5", url: "https://cimacnoticias.com.mx/wp-content/uploads/2020/04/FOTOJOS1OK.jpg"});
+                                //                        	
+                                //                        	fallaExtra2.idDetallefalla = 200;
+                                //                        	fallaExtra2.descripcionDetalleFalla = "Falla duplicada";
+                                //                        	
+                                //                        	var fallaExtra3 = angular.copy($scope.infoDetalleOtPe.detalleInspeccion.fallas[0]);
+                                //                        	fallaExtra3.idDetallefalla = 300;
+                                //                        	fallaExtra3.descripcionDetalleFalla = "Falla triplicada";
+                                //                        	fallaExtra3.imagenes.splice(3);
+                                //                        	
+                                //                        	var fallaExtra4 = angular.copy($scope.infoDetalleOtPe.detalleInspeccion.fallas[0]);
+                                //                        	fallaExtra4.idDetallefalla = 400;
+                                //                        	fallaExtra4.descripcionDetalleFalla = "Falla cuadruple";
+                                //                        	fallaExtra4.imagenes.splice(4);
+                                //                        	
+                                //                        	console.log( "Fallas -> ", $scope.infoDetalleOtPe.detalleInspeccion.fallas );
+                                //                        	$scope.infoDetalleOtPe.detalleInspeccion.fallas.push(fallaExtra2);
+                                //                        	$scope.infoDetalleOtPe.detalleInspeccion.fallas.push(fallaExtra3);
+                                //                        	$scope.infoDetalleOtPe.detalleInspeccion.fallas.push(fallaExtra4);
+                                //                        	--------------------------------INSPECTOR--------------------------------
+                                //                        	--------------------------------INSPECTOR--------------------------------
+
+                                //                        	--------------------------------DETENCION--------------------------------
+                                //                        	--------------------------------DETENCION--------------------------------
+                                //                        	$scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter = [];
+                                //                        	$scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter.push({"candado": "candado 1","estatus": "2","evidencias": [{"nombre": "nombre", "url": "https://cadenanoticias.com/assets/article/00122895/20211002_lVEOusxIi7.jpeg"},{"nombre": "nombre", "url": "https://ru83nc4.files.wordpress.com/2016/07/falla-en-la-red.jpg"},{"nombre": "nombre", "url": "https://queplan.mx/sites/default/files/inline-images/modems-totalplay.jpg"}],"idGsa": "IDGSA1","numeroCuenta": "numeroCuenta","puertoAsiganado": "1","puertosOcupados": "1","puertosTotales": "1","qr": "qr"},{"candado": "candado 2","estatus": "2","evidencias": [{"nombre": "nombre", "url": "https://pbs.twimg.com/media/EtqcHubVEAAiA5u.jpg"}],"idGsa": "IDGSA2","numeroCuenta": "numeroCuenta 2","puertoAsiganado": "2","puertosOcupados": "2","puertosTotales": "2","qr": "qr"},{"candado": "candado3","estatus": "2","evidencias": [{"nombre": "nombre", "url": "https://pbs.twimg.com/media/Ej_3pquXcAE5pgu.jpg"},{"nombre": "nombre", "url": "https://static.promodescuentos.com/pepperpdimages/threads/content/pU63G/501850.jpg"},{"nombre": "nombre", "url": "https://muralchiapas.com/images/fotonoticias/cable.jpg"},{"nombre": "nombre", "url": "https://3.bp.blogspot.com/-nJnnmzBgZAU/XN5FKZ3sEBI/AAAAAAAADIw/QST65Nh1YHgjoVKtPHv1kW1MVIDYUELcACLcBGAs/s1600/WhatsApp%2BImage%2B2019-05-17%2Bat%2B12.21.23%2BAM.jpeg"},{"nombre": "nombre", "url": "https://1.bp.blogspot.com/-LQYkZeZGoN8/XN5FKf-hdSI/AAAAAAAADIo/M2jbbaoNvu8kdEwyWsej-rqZgH9GxiM0gCLcBGAs/s1600/WhatsApp%2BImage%2B2019-05-17%2Bat%2B12.21.42%2BAM.jpeg"}],"idGsa": "IDGSA3","numeroCuenta": "numeroCuenta","puertoAsiganado": "3","puertosOcupados": "3","puertosTotales": "3","qr": "qr"},{"candado": "candado4","estatus": "2","evidencias": [{"nombre": "nombre", "url": "https://i.blogs.es/3871d1/velocidad-internet-telephono/450_1000.jpg"},{"nombre": "nombre", "url": "https://precoinprevencion.com/wp-content/uploads/2017/03/IMG_0055.jpg"}],"idGsa": "IDGSA4","numeroCuenta": "numeroCuenta","puertoAsiganado": "4","puertosOcupados": "4","puertosTotales": "4","qr": "qr"});
+                                //                        	$scope.infoDetalleOtPe.detalleDetencion.push({"claveCliente": "TEST","detalleSplitter": [{"candado": "candado 5","estatus": "2","evidencias": [{"nombre": "nombre", "url": "https://i.eldiario.com.ec/fotos-manabi-ecuador/2017/06/20170628040049_retiran-postes-sin-uso-y-daa-ados.jpg"},{"nombre": "nombre", "url": "https://www.elsoldeirapuato.com.mx/policiaca/v5nynp-camion-derriba-postes-1.jpg/ALTERNATES/LANDSCAPE_768/Cami%C3%B3n-derriba-postes%20%20(1).jpg"},{"nombre": "nombre", "url": "https://images.freeimages.com/images/large-previews/a89/telephone-pole-2-1416522.jpg"},{"nombre": "nombre", "url": "https://previews.123rf.com/images/angelofoto/angelofoto1208/angelofoto120800018/14871321-viejo-poste-de-tel%C3%A9fono-de-madera-contra-un-gradiente-de-cielo-azul.jpg"},{"nombre": "nombre", "url": "https://c8.alamy.com/compes/2ddbh61/no-hay-pelicula-no-hay-video-no-hay-television-no-hay-documental-los-postes-de-telefono-danados-por-el-huracan-katrina-se-lluran-precariamente-sobre-la-calle-principal-de-la-place-louisiana-el-lunes-29-de-agosto-de-2005-foto-de-khampha-bouaphanh-fort-worth-star-telegram-krt-abacapress-com-2ddbh61.jpg"},{"nombre": "nombre", "url": "https://www.eloccidental.com.mx/policiaca/5zencz-poste-c5-danado.jpg/ALTERNATES/LANDSCAPE_1140/Poste%20C5%20da%C3%B1ado.jpg"}],"idGsa": "IDGSA5","numeroCuenta": "numeroCuenta 5","puertoAsiganado": "5","puertosOcupados": "5","puertosTotales": "5","qr": "qr"},{"candado": "candado 6","estatus": "2","evidencias": [{"nombre": "nombre", "url": "https://img.gruporeforma.com/imagenes/960x640/5/416/4415795.jpg"},{"nombre": "nombre", "url": ""},{"nombre": "nombre", "url": "https://img.gruporeforma.com/imagenes/960x640/5/416/44157955555555555555555.jpg"},{"nombre": "nombre", "url": "https://i.ytimg.com/vi/GgQ9YRx9r-o/maxresdefault.jpg"},{"nombre": "nombre", "url": "https://img.gruporeforma.com/imagenes/960x640/5/416/44157955555555555555555.jpg"}],"idGsa": "IDGSA6","numeroCuenta": "numeroCuenta 6","puertoAsiganado": "6","puertosOcupados": "6","puertosTotales": "6","qr": "qr"}],"fallaReportada": "Reparacion Poste","fechaReporte": "2022-03-018 13:34","folioSistema": "Folio Sis 002-86060","idOrden": 86060,"nombreEmpleadoReporta": "Reynel Flores Brito","subFallaReportada": "Reparación y Etiquetado","unidadNegocio": "Residencial"});
+
+
+                                //                        	$scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter[0].evidencias[0].url = "https://cadenanoticias.com/assets/article/00122895/20211002_lVEOusxIi7.jpeg";
+                                //                        	$scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter[0].evidencias[1].url = "https://ru83nc4.files.wordpress.com/2016/07/falla-en-la-red.jpg";
+                                //                        	$scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter[0].evidencias[2].url = "https://queplan.mx/sites/default/files/inline-images/modems-totalplay.jpg";
+                                //                        	
+                                //                        	var detalle2 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[0]);
+                                //                        	detalle2.idOrden = 200;
+                                //                        	detalle2.detalleSplitter[0].idGsa = "IdGsa200";
+                                //                        	$scope.infoDetalleOtPe.detalleDetencion.push(detalle2);
+                                //                        	
+                                //                        	var detalle3 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[0]);
+                                //                        	detalle3.idOrden = 300;
+                                //                        	detalle3.detalleSplitter[0].idGsa = "IdGsa300";
+                                //                        	$scope.infoDetalleOtPe.detalleDetencion.push(detalle3);
+                                //                        	
+                                //                        	var spliter2 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter[0]);
+                                //                        	spliter2.idGsa = "idSplitterGSA_v2"
+                                //                        	$scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter.push(spliter2);
+                                //                        	
+                                //                        	var spliter3 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter[0]);
+                                //                        	spliter3.idGsa = "idSplitterGSA_v3"
+                                //                        	$scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter.push(spliter3);
+                                //                        	
+                                //                        	var spliter2_2 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter[0]);
+                                //                        	spliter2_2.idGsa = "IdGsa200_v2"
+                                //                        	$scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter.push(spliter2_2);
+                                //                        	
+                                //                        	var spliter2_3 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter[0]);
+                                //                        	spliter2_3.idGsa = "IdGsa200_v3"
+                                //                        	$scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter.push(spliter2_3);
+                                //                        	
+                                //                        	var spliter2_4 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter[0]);
+                                //                        	spliter2_4.idGsa = "IdGsa200_v4"
+                                //                        	$scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter.push(spliter2_4);
+                                //                        	
+                                //                        	var spliter2_5 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter[0]);
+                                //                        	spliter2_5.idGsa = "IdGsa200_v5"
+                                //                        	$scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter.push(spliter2_5);
+
+                                //                        	$scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter[0].evidencias[0].url = "https://cadenanoticias.com/assets/article/00122895/20211002_lVEOusxIi7.jpeg";
+                                //                        	$scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter[0].evidencias[1].url = "https://ru83nc4.files.wordpress.com/2016/07/falla-en-la-red.jpg";
+                                //                        	$scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter[0].evidencias[2].url = "https://queplan.mx/sites/default/files/inline-images/modems-totalplay.jpg";
+
+                                //                        	console.log("DETENCION---> ", $scope.infoDetalleOtPe.detalleDetencion);
+                                //                        	--------------------------------DETENCION--------------------------------
+                                //                        	--------------------------------DETENCION--------------------------------
+                                //############################################ALTERAR ARREGLO PARA MAS FALLAS #####################################################################
 
                             } else {
                                 toastr.info(results[2].data.result.mensaje);
                             }
-                        }else {
+                        } else {
                             toastr.warning('No se encontraron datos en el detalle de la OT');
                         }
-                    }else{
+                    } else {
                         toastr.warning(results[2].data.resultDescripcion);
                     }
-                }else {
+                } else {
                     toastr.error('Ha ocurrido un error en la consulta del detalle de la OT');
                 }
                 swal.close()
@@ -312,11 +312,23 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         }
     }
 
-    
+    let tableRegistrosLocalizados;
+
+    tableRegistrosLocalizados = $('#table-registrosLocalizados').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": true,
+        "ordering": false,
+        "pageLength": 10,
+        "info": true,
+        "autoWidth": true,
+        "language": idioma_espanol_not_font
+    });
+
+
     $scope.listadoArrayOtsLocalizacion = []
     $scope.consultarLocalizacionOtDespacho = function (valorbusqueda) {
-        $scope.listadoArrayOtsLocalizacion = []
-
+        $scope.listadoArrayOtsLocalizacion = [];
         swal({ text: 'Consultando registros ...', allowOutsideClick: false });
         swal.showLoading();
         let params = {
@@ -329,8 +341,38 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 if (response.data.respuesta) {
                     if (response.data.result) {
                         if (response.data.result.ordenes && response.data.result.ordenes.length > 0) {
+                            let arrayRow = [];
+                            if (tableRegistrosLocalizados) {
+                                tableRegistrosLocalizados.destroy();
+                            }
                             //$scope.listadoTecnicosGeneral=tecnicosAsignacion
-                            $scope.listadoArrayOtsLocalizacion = response.data.result.ordenes
+                            $scope.listadoArrayOtsLocalizacion = response.data.result.ordenes;
+                           
+                            $.each($scope.listadoArrayOtsLocalizacion, function (i, elemento) {
+                                let row = [];
+                                row[0] = elemento.idOrden && elemento.idOrden !== '' ? elemento.idOrden : 'Sin informaci&oacute;n';
+                                row[1] = elemento.folioSistema && elemento.folioSistema !== '' ? elemento.folioSistema : 'Sin informaci&oacute;n';
+                                row[2] = elemento.claveCliente && elemento.claveCliente !== '' ? elemento.claveCliente : 'Sin informaci&oacute;n';
+                                row[3] = elemento.nombreCliente && elemento.nombreCliente !== '' ? elemento.nombreCliente : 'Sin informaci&oacute;n';
+                                row[4] = elemento.ciudad && elemento.ciudad !== '' ? elemento.ciudad : 'Sin informaci&oacute;n';
+                                row[5] = elemento.cluster && elemento.cluster !== '' ? elemento.cluster : 'Sin informaci&oacute;n';
+                                row[6] = elemento.fechaAgenda && elemento.fechaAgenda !== '' ? elemento.fechaAgenda : 'Sin informaci&oacute;n';
+                                row[7] = elemento.descripcionEstado && elemento.descripcionEstado !== '' ? elemento.descripcionEstado : 'Sin informaci&oacute;n';
+                                row[8] = elemento.descripcionEstatus && elemento.descripcionEstatus !== '' ? elemento.descripcionEstatus : 'Sin informaci&oacute;n';
+                                row[9] = elemento.descripcionMotivo && elemento.descripcionMotivo !== '' ? elemento.descripcionMotivo : 'Sin informaci&oacute;n';
+                                arrayRow.push(row);
+                            });
+                            tableRegistrosLocalizados = $('#table-registrosLocalizados').DataTable({
+                                "paging": true,
+                                "lengthChange": false,
+                                "ordering": false,
+                                "pageLength": 10,
+                                "info": true,
+                                "data": arrayRow,
+                                "autoWidth": true,
+                                "language": idioma_espanol_not_font,
+                            });
+                            
                             $("#modalRegistrosLocalizados").modal('show')
                         } else {
                             toastr.info(response.data.result.mensaje);
@@ -406,12 +448,12 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                             if (response.data.result.detalle) {
                                 $scope.flagHistorico = true;
                                 $scope.historialOrdenTrabajo = response.data.result.detalle//.reverse();
-                                setTimeout(function(){
+                                setTimeout(function () {
                                     $(".dot-dependencia").remove()
                                     $scope.pintarDependenciasHistorico();
-                                },500)
-                            }else{
-                                toastr.warning( response.data.result.mensaje );                
+                                }, 500)
+                            } else {
+                                toastr.warning(response.data.result.mensaje);
                             }
                         } else {
                             toastr.warning('No se encontraron resultados');
@@ -426,11 +468,11 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         }
     }
 
-    $scope.isConsultaPrimeraVezEstatus=false;
+    $scope.isConsultaPrimeraVezEstatus = false;
 
     abrirCambioEstatusTecnico = function (idOperario) {
-        
-        if( !$scope.isConsultaPrimeraVezEstatus ){
+
+        if (!$scope.isConsultaPrimeraVezEstatus) {
             let params = {
                 "tipoRequest": "estatusTecnico"
             }
@@ -438,19 +480,19 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 console.log(response);
                 if (response.data !== undefined) {
                     if (response.data.respuesta) {
-                        if (response.data.result.detalleTiposOrden !== undefined && response.data.result.detalleTiposOrden.length>0) {
-                            $scope.isConsultaPrimeraVezEstatus=true;
+                        if (response.data.result.detalleTiposOrden !== undefined && response.data.result.detalleTiposOrden.length > 0) {
+                            $scope.isConsultaPrimeraVezEstatus = true;
                             console.log("############## catalogo")
                             //$scope.listadoOtsPendientes=otspendientes           
-                            $scope.listadoEstatusTecnico=response.data.result.detalleTiposOrden 
-                            $scope.listadoEstatusTecnico=$scope.listadoEstatusTecnico.map(e=>{ e.descripcion = e.nombre;return e;});
+                            $scope.listadoEstatusTecnico = response.data.result.detalleTiposOrden
+                            $scope.listadoEstatusTecnico = $scope.listadoEstatusTecnico.map(e => { e.descripcion = e.nombre; return e; });
                             $scope.elementEstatusTecnico.status = null
                             $scope.elementEstatusTecnico.comentario = ''
-                    
+
                             $scope.elementEstatusTecnico.tecnico = angular.copy(
                                 $scope.listadoTecnicosGeneral.find((e) => e.idTecnico == idOperario)
                             );
-                    
+
                             if ($scope.listadoEstatusTecnico && $scope.listadoEstatusTecnico.length > 0) {
                                 $("#modalStatusOperario").modal('show')
                                 let optionTempSelected = $scope.listadoEstatusTecnico.find(function (e) {
@@ -460,18 +502,18 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                             }
                             console.log($scope.elementEstatusTecnico.tecnico)
 
-                        }   
+                        }
                     }
                 }
             }).catch(err => handleError(err))
-        }else{
+        } else {
             $scope.elementEstatusTecnico.status = null
             $scope.elementEstatusTecnico.comentario = ''
-    
+
             $scope.elementEstatusTecnico.tecnico = angular.copy(
                 $scope.listadoTecnicosGeneral.find((e) => e.idTecnico == idOperario)
             );
-    
+
             if ($scope.listadoEstatusTecnico && $scope.listadoEstatusTecnico.length > 0) {
                 $("#modalStatusOperario").modal('show')
                 let optionTempSelected = $scope.listadoEstatusTecnico.find(function (e) {
@@ -482,9 +524,9 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             $scope.$apply()
             console.log($scope.elementEstatusTecnico.tecnico)
         }
-      
 
-       
+
+
     }
 
     let tableOtsTecnico;
@@ -497,7 +539,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             let arrayOts = [];
             tecnico.listadoOts.forEach(ot => {
                 let array = [];
-                
+
                 array[0] = ot.idOrden ? ot.idOrden : 'Sin dato';
                 array[1] = ot.folioOrden ? ot.folioOrden : 'Sin dato';
                 array[2] = ot.nombreCliente ? ot.nombreCliente : 'Sin dato';
@@ -516,7 +558,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 
 
             if (tableOtsTecnico) {
-                tableOtsTecnico.destroy() 
+                tableOtsTecnico.destroy()
             }
             tableOtsTecnico = $('#table-ots-trabajadas-tecnico').DataTable({
                 "paging": true,
@@ -526,9 +568,9 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 "pageLength": 10,
                 "info": true,
                 "autoWidth": true,
-                "data": arrayOts, 
+                "data": arrayOts,
                 "language": idioma_espanol_not_font,
-                dom: 'Bfrtip', 
+                dom: 'Bfrtip',
             });
             $('#modalOtTrabajadasTecnico').modal('show')
         } else {
@@ -559,21 +601,21 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 $scope.vehiculoOperario.urlFotoPlaca ? $scope.evidenciaPlaca = $scope.vehiculoOperario.urlFotoPlaca : $scope.evidenciaPlaca = './resources/img/generic/not_found.png';
                 $scope.vehiculoOperario.urlFotoVehiculo ? $scope.evidenciaVehiculo = $scope.vehiculoOperario.urlFotoVehiculo : $scope.evidenciaVehiculo = './resources/img/generic/not_found.png';
                 $('#modalVehiculoOperario').modal('show')
-            } else{
+            } else {
                 mostrarMensajeWarningValidacion('El t&eacute;cnico no cuenta con vehiculo asignado.')
             }
         }).catch(err => handleError(err))
     }
 
     abrirInformacionMateriales = function (id) {
-        let tecnicoTemp=angular.copy($scope.listadoTecnicosGeneral.find(e=>{return e.idTecnico==id}) )
-        let params =  {
+        let tecnicoTemp = angular.copy($scope.listadoTecnicosGeneral.find(e => { return e.idTecnico == id }))
+        let params = {
             numEmpleado: tecnicoTemp.numeroEmpleado,
-            idUsuario:tecnicoTemp.idTecnico   
+            idUsuario: tecnicoTemp.idTecnico
             //idFlujo:1    
-        }          
- 
-        if ( tableMaterialesDespacho ) 
+        }
+
+        if (tableMaterialesDespacho)
             tableMaterialesDespacho.destroy();
 
         $("#table-materiales-temp tbody").empty()
@@ -581,16 +623,16 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         swal({ text: 'Consultando datos ...', allowOutsideClick: false });
         swal.showLoading();
         mainDespachoService.consultandoMaterialesPI(params).then(function success(response) {
-           console.log(response)
-           console.log("data materiales ",response.data)           
-           if( response.data.respuesta){
-                if (response.data.result) {                    
-                    params.centro=response.data.result.centro;
-                    params.almacen=response.data.result.almacen;
-                    tecnicoTemp.centro=params.centro
-                    tecnicoTemp.almacen=params.almacen
-                    $scope.tecnicoConsultaMateriales=tecnicoTemp
-                   
+            console.log(response)
+            console.log("data materiales ", response.data)
+            if (response.data.respuesta) {
+                if (response.data.result) {
+                    params.centro = response.data.result.centro;
+                    params.almacen = response.data.result.almacen;
+                    tecnicoTemp.centro = params.centro
+                    tecnicoTemp.almacen = params.almacen
+                    $scope.tecnicoConsultaMateriales = tecnicoTemp
+
                     $scope.consultarMaterialesPorCentroAlmacenUser(params)
 
                 } else {
@@ -598,21 +640,21 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                     $scope.inicializarTableMateriales()
                     swal.close()
                 }
-           }else{
+            } else {
                 toastr.warning("Ha ocurrido un error al consultar los materiales");
                 $scope.inicializarTableMateriales()
                 swal.close()
-           }
+            }
         }).catch(err => handleError(err))
     }
 
-    abrirInformacionPagos = function(id){
-        let tecnicoTemp=angular.copy($scope.listadoTecnicosGeneral.find(e=>{return e.idTecnico==id}) )
-        let params =  {
-            idUsuario:tecnicoTemp.idTecnico   
-        }          
- 
-        if ( tablePagosDespacho ) 
+    abrirInformacionPagos = function (id) {
+        let tecnicoTemp = angular.copy($scope.listadoTecnicosGeneral.find(e => { return e.idTecnico == id }))
+        let params = {
+            idUsuario: tecnicoTemp.idTecnico
+        }
+
+        if (tablePagosDespacho)
             tablePagosDespacho.destroy();
 
         $("#table-pagos-temp tbody").empty()
@@ -658,7 +700,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
            }
         }).catch(err => handleError(err))
         */
-      
+
         $.each(JSONArraysPagos.pagos, function (i, elemento) {
             let row = [];
             row[0] = elemento.idCveCliente ? elemento.idCveCliente : '';
@@ -675,39 +717,39 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         $scope.inicializarTablePagos(arrayRow);
         swal.close()
         $("#modalPagos").modal('show');
-    
+
     }
 
-    function transformarTextCantidad(num){
-        return  ( num && num != '' && num != '0' ) ?   parseInt( num )  : "0"
-	}
-	function transformarTextPrecio(num){
-		if( ( num && num != '' && num != '0' ) ){
-			return ( Math.round( parseFloat( num ) * 100) / 100 ).toLocaleString('en-US', {
+    function transformarTextCantidad(num) {
+        return (num && num != '' && num != '0') ? parseInt(num) : "0"
+    }
+    function transformarTextPrecio(num) {
+        if ((num && num != '' && num != '0')) {
+            return (Math.round(parseFloat(num) * 100) / 100).toLocaleString('en-US', {
                 style: 'currency',
                 currency: 'USD',
-              }); 
-		} else{
-			return parseFloat('0.00').toLocaleString('en-US', {
+            });
+        } else {
+            return parseFloat('0.00').toLocaleString('en-US', {
                 style: 'currency',
                 currency: 'USD',
-              }); 
-		}
-	}
+            });
+        }
+    }
     function isNumeric(val) {
         return /^-?\d+$/.test(val);
     }
-    $scope.consultarMaterialesPorCentroAlmacenUser=function(params){
-        $scope.totalMaterialesModal=0
+    $scope.consultarMaterialesPorCentroAlmacenUser = function (params) {
+        $scope.totalMaterialesModal = 0
         mainDespachoService.consultaMaterialesPorAlmacenUserCentro(params).then(function success(response) {
             console.log(response)
             if (response.data.respuesta) {
                 if (response.data.result) {
-                    let tempArrayResult=response.data.result.materiales
-                    
-                    angular.forEach(tempArrayResult,function(elem,index){
-                        if( !isNaN( elem.precio ) ){
-                            $scope.totalMaterialesModal+=  ( Math.round( parseFloat( elem.precio  ) * 100) / 100 )
+                    let tempArrayResult = response.data.result.materiales
+
+                    angular.forEach(tempArrayResult, function (elem, index) {
+                        if (!isNaN(elem.precio)) {
+                            $scope.totalMaterialesModal += (Math.round(parseFloat(elem.precio) * 100) / 100)
                         }
 
                         $("#table-materiales-temp tbody").append(`
@@ -715,24 +757,24 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                                 <td >${elem.sku} </td>
                                 <td >${elem.descripcion} </td>
                                 <td >${elem.lote} </td>
-                                <td >${ transformarTextCantidad(elem.cantidad) } </td>
+                                <td >${transformarTextCantidad(elem.cantidad)} </td>
                                 <td >${elem.unidadMedida} </td>
-                                <td >${ transformarTextPrecio(elem.precio) }  </td>
+                                <td >${transformarTextPrecio(elem.precio)}  </td>
                                 <td >${elem.familia} </td>
                                 <td >${elem.categoria} </td>
                                 <td >${elem.grupo} </td>
                             </tr>
                         `)
                     })
-                    $scope.totalMaterialesModal= transformarTextPrecio( $scope.totalMaterialesModal )
+                    $scope.totalMaterialesModal = transformarTextPrecio($scope.totalMaterialesModal)
                     $scope.inicializarTableMateriales()
                     swal.close()
-                    $("#modalMaterialesOperario").modal('show')                            
+                    $("#modalMaterialesOperario").modal('show')
                 } else {
                     swal.close()
                     mostrarMensajeWarningValidacion('No se encontro informaci&oacute;n.')
                     $scope.inicializarTableMateriales()
-                    $scope.totalMaterialesModal=transformarTextPrecio( $scope.totalMaterialesModal )
+                    $scope.totalMaterialesModal = transformarTextPrecio($scope.totalMaterialesModal)
 
 
                 }
@@ -740,45 +782,45 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 swal.close()
                 mostrarMensajeErrorAlert(response.data.resultDescripcion)
                 $scope.inicializarTableMateriales()
-                $scope.totalMaterialesModal=transformarTextPrecio( $scope.totalMaterialesModal )
+                $scope.totalMaterialesModal = transformarTextPrecio($scope.totalMaterialesModal)
 
             }
-         }).catch(err => handleError(err))
+        }).catch(err => handleError(err))
     }
 
-    $scope.inicializarTableMateriales=function(){           
-        tableMaterialesDespacho=$('#table-materiales-temp').DataTable({
+    $scope.inicializarTableMateriales = function () {
+        tableMaterialesDespacho = $('#table-materiales-temp').DataTable({
             "processing": false,
-			"ordering": false,
-			"serverSide": false,
-			"scrollX": false,
-			"paging": true,
-			"lengthChange": false,
-			"searching": true,
-			"ordering": false,
-			"pageLength": 10,
-			"columns": [null, null, null, null, null, null, null, null,null],
-            "language":idioma_espanol_not_font
-        });        
+            "ordering": false,
+            "serverSide": false,
+            "scrollX": false,
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": false,
+            "pageLength": 10,
+            "columns": [null, null, null, null, null, null, null, null, null],
+            "language": idioma_espanol_not_font
+        });
     }
 
-    $scope.inicializarTablePagos=function(arrayRowPagos){           
-        tablePagosDespacho=$('#table-pagos-temp').DataTable({
+    $scope.inicializarTablePagos = function (arrayRowPagos) {
+        tablePagosDespacho = $('#table-pagos-temp').DataTable({
             "processing": false,
-			"ordering": false,
-			"serverSide": false,
-			"scrollX": false,
-			"paging": true,
-			"lengthChange": false,
-			"searching": true,
-			"ordering": false,
+            "ordering": false,
+            "serverSide": false,
+            "scrollX": false,
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": false,
             "data": arrayRowPagos,
-			"pageLength": 10,
-			"columns": [null, null, null, null, null, null, null, null,null],
-            "language":idioma_espanol_not_font
-        });        
+            "pageLength": 10,
+            "columns": [null, null, null, null, null, null, null, null, null],
+            "language": idioma_espanol_not_font
+        });
     }
-  
+
     $scope.cambiarEstatusOperario = function () {
         console.log("Entra a cambiar estatus:")
         var n = $('#id-status-tecnico').val();
@@ -801,11 +843,11 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             console.log("Estatus: ", response.status);
             if (response.data !== undefined) {
                 if (response.data.respuesta) {
-                    if( response.data.codigoEstatusService == 201 ){
-                        toastr.success(response.data.result.description);                       
-                    }else{
+                    if (response.data.codigoEstatusService == 201) {
+                        toastr.success(response.data.result.description);
+                    } else {
                         toastr.warning("No se pudo actualizar estatus ");
-                    }                    
+                    }
                 } else {
                     toastr.warning(response.data.resultDescripcionn);
                 }
@@ -815,124 +857,124 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     }
 
     $scope.confirmarDesconfirmarOt = function () {
-        console.log("antes de confirma/desconfirma  ",$scope.objConfirmaDesc)
+        console.log("antes de confirma/desconfirma  ", $scope.objConfirmaDesc)
 
-        if(!$scope.objConfirmaDesc.comentarios){
+        if (!$scope.objConfirmaDesc.comentarios) {
             toastr.info("Captura comentarios");
             return false;
         }
 
-        $scope.objConfirmaDesc.procesando=true
+        $scope.objConfirmaDesc.procesando = true
         swal({ text: 'Cambiando estatus de la OT ...', allowOutsideClick: false });
         swal.showLoading();
         let params = {
             "idOrden": $scope.objConfirmaDesc.idOtConfirmaDesc,
-            "idOrigen":1,
-            "esConfirmada": $scope.objConfirmaDesc.isConfirmadoDesconfirmado ? 1 :0 ,
+            "idOrigen": 1,
+            "esConfirmada": $scope.objConfirmaDesc.isConfirmadoDesconfirmado ? 1 : 0,
             "comentarios": $scope.objConfirmaDesc.comentarios
-        }        
-        console.log("params",params)
+        }
+        console.log("params", params)
         mainDespachoService.confirmaDesconfirmaOtDespacho(params).then(function success(response) {
-            $scope.banderaRegresarCheckbox = true;        
+            $scope.banderaRegresarCheckbox = true;
             if (response.data !== undefined) {
-                if (response.data.respuesta) {                
+                if (response.data.respuesta) {
                     $("#modalConfirmaDesconfirma").modal('hide')
                     console.log(response);
                     swal.close()
                     toastr.success('Cambio de estatus correcto');
                     $scope.refrescarBusqueda()
-                }else{
+                } else {
                     toastr.info("No se pudo cambiar el estatus de la ot");
                 }
-            }else{
+            } else {
                 toastr.info("No se pudo cambiar el estatus de la ot");
             }
-            $scope.objConfirmaDesc.procesando=false
+            $scope.objConfirmaDesc.procesando = false
         }).catch(err => handleError(err))
     }
 
     $scope.abrirModalDetalleIconografia = function () {
-            
-        if( $scope.listadoIconografia ){
-            $("#modalIconografiaDespacho").modal('show')       
-        }else{
+
+        if ($scope.listadoIconografia) {
+            $("#modalIconografiaDespacho").modal('show')
+        } else {
             swal({ text: 'Consultando datos ...', allowOutsideClick: false });
             swal.showLoading();
             mainDespachoService.consultarPaletaColoresService().then(function success(response) {
                 swal.close()
-                $("#modalIconografiaDespacho").modal('show')  
-                $scope.listadoIconografia={}
-                
+                $("#modalIconografiaDespacho").modal('show')
+                $scope.listadoIconografia = {}
+
                 console.log(response);
                 if (response.data !== undefined) {
-                        if (response.data[0].respuesta) {
-                            if (response.data[0].result.detalleTiposOrden !== undefined && response.data[0].result.detalleTiposOrden.length>0) {
-                                console.log("############## catalogo")/** **/
-                                $scope.listadoIconografia.tipoIntervencion=response.data[0].result.detalleTiposOrden
-                             }  
+                    if (response.data[0].respuesta) {
+                        if (response.data[0].result.detalleTiposOrden !== undefined && response.data[0].result.detalleTiposOrden.length > 0) {
+                            console.log("############## catalogo")/** **/
+                            $scope.listadoIconografia.tipoIntervencion = response.data[0].result.detalleTiposOrden
                         }
-                       
-                        if (response.data[1].respuesta) {
-                            if (response.data[1].result.detalleTiposOrden !== undefined && response.data[1].result.detalleTiposOrden.length>0) {
-                                console.log("############## catalogo")/** **/
-                                $scope.listadoIconografia.estatusIntervencion=response.data[1].result.detalleTiposOrden
-                            }
-                        }
-    
-                        if (response.data[2].respuesta) {
-                            if (response.data[2].result.detalleIconos !== undefined && response.data[2].result.detalleIconos.length>0) {
-                               console.log("############## catalogo")/** **/
-                               $scope.listadoIconografia.estatusIconografia=$scope.retornarBase64Icons(response.data[2].result.detalleIconos)
-                            }
-                        }
+                    }
 
-                        
-                        if (response.data[3].respuesta) {
-                            if (response.data[3].result.detalleTiposOrden !== undefined && response.data[3].result.detalleTiposOrden.length>0) {
-                                console.log("############## catalogo")/** **/
-                                $scope.listadoIconografia.estatusTecnico=response.data[3].result.detalleTiposOrden
-                            }
+                    if (response.data[1].respuesta) {
+                        if (response.data[1].result.detalleTiposOrden !== undefined && response.data[1].result.detalleTiposOrden.length > 0) {
+                            console.log("############## catalogo")/** **/
+                            $scope.listadoIconografia.estatusIntervencion = response.data[1].result.detalleTiposOrden
                         }
+                    }
+
+                    if (response.data[2].respuesta) {
+                        if (response.data[2].result.detalleIconos !== undefined && response.data[2].result.detalleIconos.length > 0) {
+                            console.log("############## catalogo")/** **/
+                            $scope.listadoIconografia.estatusIconografia = $scope.retornarBase64Icons(response.data[2].result.detalleIconos)
+                        }
+                    }
+
+
+                    if (response.data[3].respuesta) {
+                        if (response.data[3].result.detalleTiposOrden !== undefined && response.data[3].result.detalleTiposOrden.length > 0) {
+                            console.log("############## catalogo")/** **/
+                            $scope.listadoIconografia.estatusTecnico = response.data[3].result.detalleTiposOrden
+                        }
+                    }
                 }
 
-                
 
-                    
+
+
             }).catch(err => handleError(err))
-       }
+        }
     }
 
-    $scope.retornarBase64Icons=function(listadoIcons){
-        angular.forEach( listadoIcons , function(elem,index){       
-            elem.url='';
-            elem.base64=false    
-            switch(  elem.archivo ){
+    $scope.retornarBase64Icons = function (listadoIcons) {
+        angular.forEach(listadoIcons, function (elem, index) {
+            elem.url = '';
+            elem.base64 = false
+            switch (elem.archivo) {
                 case 'ZteLogo.svg':
-                    elem.url=`./resources/img/generic/ZteLogo.svg`                                                  
+                    elem.url = `./resources/img/generic/ZteLogo.svg`
                     break;
                 case 'Huawei.svg':
-                    elem.url=`./resources/img/generic/Huawei.svg`                                                                             
-                    break;   
+                    elem.url = `./resources/img/generic/Huawei.svg`
+                    break;
                 default:
-                    let tipoDato = elem.archivo.substring( elem.archivo.indexOf(".")+1 , elem.archivo.length )
-                    let iconoEncontradoConfig=$scope.listadoIconosConfig.find( e =>{return e.icon=== elem.archivo } ).value
-                    switch( tipoDato ){
+                    let tipoDato = elem.archivo.substring(elem.archivo.indexOf(".") + 1, elem.archivo.length)
+                    let iconoEncontradoConfig = $scope.listadoIconosConfig.find(e => { return e.icon === elem.archivo }).value
+                    switch (tipoDato) {
                         case 'svg':
-                            elem.url+=`data:image/svg+xml;base64,${iconoEncontradoConfig}`                            
+                            elem.url += `data:image/svg+xml;base64,${iconoEncontradoConfig}`
                             break;
                         case 'png':
-                            elem.url+=`data:image/png;base64,${iconoEncontradoConfig}`                           
+                            elem.url += `data:image/png;base64,${iconoEncontradoConfig}`
                             break;
                         case 'jpg':
-                            elem.url+=`data:image/jpeg;charset=utf-8;base64,${iconoEncontradoConfig}`                            
+                            elem.url += `data:image/jpeg;charset=utf-8;base64,${iconoEncontradoConfig}`
                             break;
                         case 'jpeg':
-                            elem.url+=`data:image/jpeg;charset=utf-8;base64,${iconoEncontradoConfig}`                            
+                            elem.url += `data:image/jpeg;charset=utf-8;base64,${iconoEncontradoConfig}`
                             break;
                         default:
                     }
-            }        
-        })      
+            }
+        })
         return listadoIcons;
     }
 
@@ -1099,20 +1141,20 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         if (url == undefined || url == "") {
             url = "./resources/img/plantainterna/despacho/tecnicootasignada.png";
         }
-    
-        $("#num_emp").html("<span><strong>N&Uacute;M. EMPLEADO: </strong>" + validarUndefinedVacio( usuario ) + "</span>");
-        $("#tel_emp").html("<span><strong>TEL&Eacute;FONO: </strong>" + validarUndefinedVacio( telefono ) + "</span>");
-        $("#full_name").html("<span><strong>" + validarUndefinedVacio( nombre ) + "</strong></span>");
+
+        $("#num_emp").html("<span><strong>N&Uacute;M. EMPLEADO: </strong>" + validarUndefinedVacio(usuario) + "</span>");
+        $("#tel_emp").html("<span><strong>TEL&Eacute;FONO: </strong>" + validarUndefinedVacio(telefono) + "</span>");
+        $("#full_name").html("<span><strong>" + validarUndefinedVacio(nombre) + "</strong></span>");
         $("#centro").html(`
             <span style="background-color:${color};font-size:.6em;" class="color-badge-paleta color-tecnico-estatus-modal badge badge-pill ">&nbsp;</span>
-            <span><strong> ${ validarUndefinedVacio( estatus ) } </strong></span>`
+            <span><strong> ${validarUndefinedVacio(estatus)} </strong></span>`
         );
         $("#estatus").html("");
         $("#img_emp").attr("src", url);
         $("#modalFotoUsuario").modal('show');
     }
-    validarUndefinedVacio=function(texto){
-      return  ( texto == undefined || texto == '' || texto == 'undefined' || texto == null )  ?  'Sin dato' : texto
+    validarUndefinedVacio = function (texto) {
+        return (texto == undefined || texto == '' || texto == 'undefined' || texto == null) ? 'Sin dato' : texto
     }
     $scope.flagPedido = false;
     $scope.consultarPedido = function () {
@@ -1161,16 +1203,16 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 
     $scope.getListOt = function (id) {
         let listOt = [];
-        
+
         angular.forEach($scope.listadoTecnicosGeneral, function (tecnico, index) {
             //$scope.listadoTecnicosOtsModal.push(tecnico);
             if ((!id || tecnico.id == id) && tecnico.listadoOts.length) {
-                let  tecnicoObj = {
+                let tecnicoObj = {
                     "longitud": tecnico.longitud,
                     "latitud": tecnico.latitud,
                     "idOt": []
                 }
-                
+
                 angular.forEach(tecnico.listadoOts, function (ot, index) {
                     tecnicoObj.idOt.push(ot.idOrden);
                 });
@@ -1190,15 +1232,15 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     }
 
     abrirModalVistaMapa = function () {
-         $scope.getListOt()
+        $scope.getListOt()
         $(".content-tecnico").removeClass("selected-tecnico");
-        $("#modalVistaMapa").modal('show'); 
-       /* if ($scope.getListOt()) {
-            $(".content-tecnico").removeClass("selected-tecnico");
-            $("#modalVistaMapa").modal('show');
-        } else {
-            swal({ text: 'No hay OTs disponibles para mostrar en mapa', allowOutsideClick: true });
-        } */
+        $("#modalVistaMapa").modal('show');
+        /* if ($scope.getListOt()) {
+             $(".content-tecnico").removeClass("selected-tecnico");
+             $("#modalVistaMapa").modal('show');
+         } else {
+             swal({ text: 'No hay OTs disponibles para mostrar en mapa', allowOutsideClick: true });
+         } */
     }
 
 
@@ -1210,11 +1252,11 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     }
 
 
-    $scope.cambioStatus = function(tipo){
+    $scope.cambioStatus = function (tipo) {
         let errorMensaje = '<ul>';
         let isValido = true;
         let params = {};
-        $scope.tipoaccioncambioestatus=tipo
+        $scope.tipoaccioncambioestatus = tipo
         if (tipo === 'asigna') {
             let horaasignacionInicio = angular.copy($scope.asignacionObject.otInfo.fechahoraasignacion);
             let horaasignacionFin = angular.copy($scope.asignacionObject.otInfo.fechahoraasignacion);
@@ -1308,8 +1350,8 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 }
             }
 
-                
-            
+
+
         } else if (tipo === 'calendariza') {
 
             if ($scope.elementCalendarizado.fechaCalendarizado.trim() === '') {
@@ -1373,12 +1415,12 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             }
         } else if (tipo === 'cancela') {
 
-            if (!$scope.elementoRescate ||!$scope.elementoRescate.motivo) {
+            if (!$scope.elementoRescate || !$scope.elementoRescate.motivo) {
                 errorMensaje += '<li>Seleccione campo motivo.</li>'
                 isValido = false;
             }
 
-            if (!$scope.elementoRescate ||!$scope.elementoRescate.comentario || $scope.elementoRescate.comentario.trim() === '') {
+            if (!$scope.elementoRescate || !$scope.elementoRescate.comentario || $scope.elementoRescate.comentario.trim() === '') {
                 errorMensaje += '<li>Completa campo comnentario.</li>'
                 isValido = false;
             }
@@ -1417,7 +1459,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                     }
                 }
             }
-            
+
         } else if (tipo === 'reagendamiento') {
 
             if (!$scope.elementReagendaOT || $scope.elementReagendaOT.fechaReagendamiento.trim() === '') {
@@ -1480,14 +1522,14 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                     }
                 }
             }
-        } else if (tipo === 'termina'){
+        } else if (tipo === 'termina') {
 
             if (!$scope.elementTerminar || !$scope.elementTerminar.estado) {
                 errorMensaje += '<li>Seleccione campo motivo.</li>'
                 isValido = false;
             }
 
-            if (!$scope.elementTerminar ||!$scope.elementTerminar.comentario || $scope.elementTerminar.comentario.trim() === '') {
+            if (!$scope.elementTerminar || !$scope.elementTerminar.comentario || $scope.elementTerminar.comentario.trim() === '') {
                 errorMensaje += '<li>Completa campo comentario.</li>'
                 isValido = false;
             }
@@ -1527,7 +1569,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 }
             }
 
-        } else if (tipo === 'gestoria'){
+        } else if (tipo === 'gestoria') {
             if (!$scope.elementoPlazaComercial || !$scope.elementoPlazaComercial.estado) {
                 errorMensaje += '<li>Seleccione campo estado.</li>'
                 isValido = false;
@@ -1588,60 +1630,60 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 
     }
 
-    envioCambioStatus = function(params){
+    envioCambioStatus = function (params) {
         swal({ text: 'Cambiando estatus de la OT ...', allowOutsideClick: false });
         swal.showLoading();
-        genericService.cambioStatusOts(params).then(result =>{
+        genericService.cambioStatusOts(params).then(result => {
             console.log(result);
-            $scope.procesandoAsignacion=false;
-            $scope.procesandoReasignacion=false
-            
+            $scope.procesandoAsignacion = false;
+            $scope.procesandoReasignacion = false
+
             swal.close();
             $scope.elementTerminar = {};
             $scope.elementReagendaOT = {};
             $scope.elementoRescate = {};
             $scope.elementoDesasigna = {};
-            if(result.data.respuesta){
-             
-                toastr.success( result.data.result.mensaje );
-                
-                switch( $scope.tipoaccioncambioestatus ){
+            if (result.data.respuesta) {
+
+                toastr.success(result.data.result.mensaje);
+
+                switch ($scope.tipoaccioncambioestatus) {
                     case 'asigna':
                         $("#modalAsignacionOrdenTrabajo").modal('hide')
                         break;
-                    case 'reasigna': 
+                    case 'reasigna':
                         $("#modalReAsignacionOrdenTrabajo").modal('hide')
-                        break;                     
+                        break;
                     default:
                         $("#modalDetalleOT").modal('hide')
                         $scope.refrescarBusqueda()
 
                 }
-            }else{
+            } else {
                 console.log(result.data.resultDescripcion)
-                toastr.warning( result.data.resultDescripcion );
-                
+                toastr.warning(result.data.resultDescripcion);
+
             }
         }).catch(err => handleError(err));
     }
 
-    document.getElementById('id-estado-plaza-comercial').addEventListener('change', function(){
+    document.getElementById('id-estado-plaza-comercial').addEventListener('change', function () {
         $scope.listadoMotivosGestaria = [];
         let x = document.getElementById('id-estado-plaza-comercial')
         let select = x.options[x.selectedIndex].text
         if (select !== 'Seleccione ...') {
-            $scope.listadoMotivosGestaria = $scope.estatusCambio.filter(e => {return e.idPadre === 249})
+            $scope.listadoMotivosGestaria = $scope.estatusCambio.filter(e => { return e.idPadre === 249 })
         }
     });
 
-    abrirModalReporte = function(){
+    abrirModalReporte = function () {
         //$scope.repDiario.fechaSeleccionada = 'fechaCreacion'
-       
-        if($scope.filtrosGeneral.tipoOrdenes){
+
+        if ($scope.filtrosGeneral.tipoOrdenes) {
             $scope.seleccionarTodosRecursivo($scope.filtrosGeneral.tipoOrdenes);
         }
 
-        if($scope.filtrosGeneral.estatusdisponibles){
+        if ($scope.filtrosGeneral.estatusdisponibles) {
             $scope.seleccionarTodosRecursivo($scope.filtrosGeneral.estatusdisponibles);
         }
         $("#jstree-proton-3").jstree("destroy");
@@ -1652,21 +1694,21 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         $("#idos-reporte").val('');
         $("#cuenta-reporte").val('');
         $("#tipo_reporte").val('fechaCreacion');
-        $('#filtro_fecha_inicio_reporte').datepicker('update',   moment(FECHA_HOY_DATE).toDate() );
-        $('#filtro_fecha_fin_reporte').datepicker('update',   moment(FECHA_HOY_DATE).toDate() );
-        
+        $('#filtro_fecha_inicio_reporte').datepicker('update', moment(FECHA_HOY_DATE).toDate());
+        $('#filtro_fecha_fin_reporte').datepicker('update', moment(FECHA_HOY_DATE).toDate());
+
         consultarReporteDiario();
-        
+
         $("#modalReporte").modal('show');
     }
 
     $('#modalReporte').on("hidden.bs.modal", function () {
 
-        if($scope.filtrosGeneral.tipoOrdenes){
+        if ($scope.filtrosGeneral.tipoOrdenes) {
             $scope.seleccionarTodosRecursivo($scope.filtrosGeneral.tipoOrdenes);
         }
 
-        if($scope.filtrosGeneral.estatusdisponibles){
+        if ($scope.filtrosGeneral.estatusdisponibles) {
             $scope.seleccionarTodosRecursivo($scope.filtrosGeneral.estatusdisponibles);
         }
 
@@ -1675,9 +1717,9 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         $scope.resetArbol();
     });
 
-    $scope.resetArbol = function(){
+    $scope.resetArbol = function () {
         let geografia = $scope.listadogeografiacopy;
-        $('#jstree-proton-3').bind('loaded.jstree', function(e, data) {
+        $('#jstree-proton-3').bind('loaded.jstree', function (e, data) {
         }).jstree({
             'plugins': ["wholerow", "checkbox", "search"],
             'core': {
@@ -1685,7 +1727,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 'themes': {
                     'name': 'proton',
                     'responsive': true,
-                    "icons":false        
+                    "icons": false
                 }
             },
             "search": {
@@ -1695,34 +1737,34 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         });
     }
 
-    $scope.responseServicios={}
-    $scope.obtenerPaquete = function(){
+    $scope.responseServicios = {}
+    $scope.obtenerPaquete = function () {
         if (!$scope.flagPaquete) {
-            let osOtSelected='';
-            if($scope.estatusModals=='PENDIENTE'){
-                osOtSelected=$scope.detalleOtPendienteSelected.folioOrden
+            let osOtSelected = '';
+            if ($scope.estatusModals == 'PENDIENTE') {
+                osOtSelected = $scope.detalleOtPendienteSelected.folioOrden
             }
 
-            if($scope.estatusModals=='ASIGNADA')
-               osOtSelected=$scope.detalleOtAsignadaSelected.folioOrden
+            if ($scope.estatusModals == 'ASIGNADA')
+                osOtSelected = $scope.detalleOtAsignadaSelected.folioOrden
 
             let params = {
-               folio: osOtSelected 
+                folio: osOtSelected
             }
             swal({ text: 'Espere un momento ...', allowOutsideClick: false });
             swal.showLoading();
-            $scope.responseServicios={}
+            $scope.responseServicios = {}
             mainDespachoService.consultarResumenPaquete(params).then(response => {
                 console.log(response);
                 swal.close()
                 $scope.flagPaquete = true;
                 if (response.data.respuesta) {
                     if (response.data.result) {
-                        if(response.data.result.resumenPaquete != undefined){
-                            $scope.responseServicios=response.data.result.resumenPaquete
-                        }else{
+                        if (response.data.result.resumenPaquete != undefined) {
+                            $scope.responseServicios = response.data.result.resumenPaquete
+                        } else {
 
-                        }                        
+                        }
                     }
                 } else {
                     mostrarMensajeErrorAlert(response.data.resultDescripcion)
@@ -1731,8 +1773,8 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         }
     }
 
-    $scope.abrirModalOtsIntervencionres = function(){
-        console.log( $scope.intervencionesConteo)
+    $scope.abrirModalOtsIntervencionres = function () {
+        console.log($scope.intervencionesConteo)
         console.log($scope.listadoOtsPendientes)
 
         $scope.intervencionesConteo.map(e => {
@@ -1741,34 +1783,34 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         })
         $('#modalOtIntervenciones').modal('show')
     }
-    
-    $scope.regresarVistaCambioDireccion = function() {
-    	$scope.verModDireccionOT = false;
+
+    $scope.regresarVistaCambioDireccion = function () {
+        $scope.verModDireccionOT = false;
     }
-    
-    $scope.cambiarIndicadorBtnImg = function(falla,img) {
-    	$(".btnImgPorFalla"+falla).removeClass("btnControlImgsSinOpacidad");
-		$(".btnImgPorFalla"+falla).addClass("btnControlImgsOpacidad");
-		$("#btnIndicadorIndividual"+falla+img).addClass("btnControlImgsSinOpacidad");
-	}
-    
-    $scope.cambiarPagTablaSpliters = function(falla, splitter, index) {
-    	$(".filasTablaSpliters"+falla).addClass("ocultarFilaTablaSplitersFallaDetalleDetencion");
-    	$("#filaTablaSplitersFallaDetalleDetencion"+falla+splitter).removeClass("ocultarFilaTablaSplitersFallaDetalleDetencion");
-    	$(".btnPaginadorTablaSpliters"+falla).removeClass("btnPaginadorTablaSplitersActive");
-    	$(".btnPaginadorTablaSpliters"+falla).addClass("btnPaginadorTablaSplitersNoActive");
-    	$("#btnPaginadorTablaSpliters"+falla+splitter+index).removeClass("btnPaginadorTablaSplitersNoActive");
-    	$("#btnPaginadorTablaSpliters"+falla+splitter+index).addClass("btnPaginadorTablaSplitersActive");
-	}
-    
-    $scope.cerrarModalDetalleOtPe = function() {
-    	$("#modalDetalleOT").modal("hide");
-    	
-    	$scope.tabDetalleCorteMasivo = false;
+
+    $scope.cambiarIndicadorBtnImg = function (falla, img) {
+        $(".btnImgPorFalla" + falla).removeClass("btnControlImgsSinOpacidad");
+        $(".btnImgPorFalla" + falla).addClass("btnControlImgsOpacidad");
+        $("#btnIndicadorIndividual" + falla + img).addClass("btnControlImgsSinOpacidad");
+    }
+
+    $scope.cambiarPagTablaSpliters = function (falla, splitter, index) {
+        $(".filasTablaSpliters" + falla).addClass("ocultarFilaTablaSplitersFallaDetalleDetencion");
+        $("#filaTablaSplitersFallaDetalleDetencion" + falla + splitter).removeClass("ocultarFilaTablaSplitersFallaDetalleDetencion");
+        $(".btnPaginadorTablaSpliters" + falla).removeClass("btnPaginadorTablaSplitersActive");
+        $(".btnPaginadorTablaSpliters" + falla).addClass("btnPaginadorTablaSplitersNoActive");
+        $("#btnPaginadorTablaSpliters" + falla + splitter + index).removeClass("btnPaginadorTablaSplitersNoActive");
+        $("#btnPaginadorTablaSpliters" + falla + splitter + index).addClass("btnPaginadorTablaSplitersActive");
+    }
+
+    $scope.cerrarModalDetalleOtPe = function () {
+        $("#modalDetalleOT").modal("hide");
+
+        $scope.tabDetalleCorteMasivo = false;
         $scope.tabDetalleDetencion = false;
         $scope.tabDetalleInspector = false;
-	}
-    
+    }
+
 }
 /**
 

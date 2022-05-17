@@ -39,6 +39,10 @@
             rel="stylesheet" />
         <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css"
             rel="stylesheet" />
+        <link rel="stylesheet"
+            href="${pageContext.request.contextPath}/resources/css/generic/busquedaSalesforce\styleMainBusqueda.css?v=${sessionScope.versionDepl}">
+        <link rel="stylesheet"
+            href="${pageContext.request.contextPath}/resources/css/generic/busquedaSalesforce\mainNoticiaBusqueda.css?v=${sessionScope.versionDepl}">
         <link
             href="${pageContext.request.contextPath}/resources/css/plantainterna/seguimientoSoporte/mainSeguimientoSoporte.css?v=${sessionScope.versionDepl}"
             rel="stylesheet">
@@ -50,16 +54,18 @@
 
     <body id="idBody" class="body" ng-controller="seguimientoSoporteController" style="display:none;">
         <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
-        <div class="container" id="container_seguimiento">
+        <div class="container" id="container_seguimiento" ng-show="!detalleSalesforceView">
             <div class="form-content" ng-show="!isDetalleTicket">
                 <div class="col-12 row md-form" id="filtros_config">
                     <div class="col-2 columna-filtro-ind">
-                        <label for="filtro_fecha_inicio" class="label-filter"><i class="fa fa-calendar"></i> Fecha inicial</label>
+                        <label for="filtro_fecha_inicio" class="label-filter"><i class="fa fa-calendar"></i> Fecha
+                            inicial</label>
                         <input readonly type="text" id="filtro_fecha_inicio"
                             class="datepicker input-filtro-seguimiento form-control form-control-sm" />
                     </div>
                     <div class="col-2 columna-filtro-ind">
-                        <label for="filtro_fecha_fin" class="label-filter"><i class="fa fa-calendar"></i> Fecha inicial</label>
+                        <label for="filtro_fecha_fin" class="label-filter"><i class="fa fa-calendar"></i> Fecha
+                            inicial</label>
                         <input readonly type="text" id="filtro_fecha_fin"
                             class="datepicker input-filtro-seguimiento form-control form-control-sm" />
                     </div>
@@ -93,7 +99,7 @@
                             ng-click="consultaSeguimiento()">
                             <i class="fa fa-search"></i>
                     </div>
-                    <div class="col-1 offset-1 user-info-content">
+                    <!--div class="col-1 offset-1 user-info-content">
                         <span>Entrada</span></br>
                         <span class="info">{{catalogoEstatusUsuarios.infoHorasUser.horaEntrada ?
                             catalogoEstatusUsuarios.infoHorasUser.horaEntrada : 'Sin datos'}}</span>
@@ -112,7 +118,7 @@
                         <span>Salida</span></br>
                         <span class="info">{{catalogoEstatusUsuarios.infoHorasUser.horaSalida ?
                             catalogoEstatusUsuarios.infoHorasUser.horaSalida : 'Sin datos'}}</span>
-                    </div>
+                    </div-->
 
                 </div>
             </div>
@@ -122,11 +128,19 @@
             <div ng-show="!isBusquedaGeneral && !isDetalleTicket">
                 <jsp:include page="./content/consultaTickets.jsp"></jsp:include>
             </div>
-            <div ng-show="!isBusquedaGeneral && isDetalleTicket">
+            <div ng-show="!isBusquedaGeneral && isDetalleTicket && !detalleSalesforceView">
+                <div style="text-align: right; padding-top: 0.5em;">
+                    <button ng-click="cerrarDetalleTicket()" type="button" class="btn-close" data-mdb-dismiss="modal"
+                        aria-label="Close">
+                    </button>
+                </div>
+
                 <jsp:include page="./content/detalleTicket.jsp"></jsp:include>
             </div>
         </div>
+        <jsp:include page="/WEB-INF/jsp/generic/busquedaSalesforce/mainBusquedaSalesforce.jsp"></jsp:include>
         <jsp:include page="./modals/modalDetalle.jsp"></jsp:include>
+        <jsp:include page="./modals/modalFoto.jsp"></jsp:include>
     </body>
     <!-- Scripts libraries -->
     <script src="${pageContext.request.contextPath}/resources/libraries/angularjs/js/angular.min.js"></script>
@@ -160,6 +174,8 @@
     <script
         src="${pageContext.request.contextPath}/resources/js/plantainterna/seguimientoSoporte/seguimientoSoporteService.js?v=${sessionScope.versionDepl}"></script>
     <script
+        src="${pageContext.request.contextPath}/resources/js/plantainterna/seguimientoSoporte/seguimientoSoporteService.js?v=${sessionScope.versionDepl}"></script>
+    <script
         src="${pageContext.request.contextPath}/resources/js/plantainterna/seguimientoSoporte/jsonTemp.js?v=${sessionScope.versionDepl}"></script>
     <script
         src="${pageContext.request.contextPath}/resources/js/generic/genericService.js?v=${sessionScope.versionDepl}"></script>
@@ -167,5 +183,9 @@
         src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
     <script
         src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js?v=${sessionScope.versionDepl}"></script>
+    <script
+        src="${pageContext.request.contextPath}/resources/js/generic/busquedaSalesforce/busquedaSalesforceController.js?v=${sessionScope.versionDepl}"></script>
+    <script
+        src="${pageContext.request.contextPath}/resources/js/generic/busquedaSalesforce/busquedaSalesforceService.js?v=${sessionScope.versionDepl}"></script>
 
     </html>
