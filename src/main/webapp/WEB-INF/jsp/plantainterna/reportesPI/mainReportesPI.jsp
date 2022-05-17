@@ -60,22 +60,22 @@
                 <div class="col-md-12">
                     <ul class="nav nav-tabs left-menu small-menu flex-column" id="opciones-menu" role="tablist"
                         style="margin-left: 0; height: 100%;">
-                        <li class="nav-item" ng-if="configPermisoAccionConsultaReporteSeguimiento">
-                            <a class="opcion-menu" id="seguimientoDiario-tab" data-toggle="tab"
+                        <li class="nav-item opcion-menu" ng-if="configPermisoAccionConsultaReporteSeguimiento">
+                            <a id="seguimientoDiario-tab" data-toggle="tab"
                                 ng-click="cambiaReporte('seguimiento', true,'seguimientoDiario')"
                                 href="seguimientoDiario" role="tab" aria-controls="seguimientoDiario"
                                 aria-selected="false"><i class="icon-menu-left fas fa-calendar-check"></i>&nbsp;<span
                                     class="titulo-menu">Seguimiento Diario</span></a>
                         </li>
-                        <li class="nav-item" ng-if="configPermisoAccionConsultaReporteCierre">
-                            <a class="opcion-menu" id="cierreDiario-tab" data-toggle="tab"
+                        <li class="nav-item opcion-menu" ng-if="configPermisoAccionConsultaReporteCierre">
+                            <a id="cierreDiario-tab" data-toggle="tab"
                                 ng-click="cambiaReporte('cierre',true,'cierreDiario')" href="cierreDiario" role="tab"
                                 aria-controls="cierreDiario" aria-selected="false"><i
                                     class="icon-menu-left fas fa-calendar-week"></i>&nbsp;<span
                                     class="titulo-menu">Cierre Diario</span></a>
                         </li>
-                        <li class="nav-item" ng-if="configPermisoAccionConsultaReporteAsignadas">
-                            <a class="opcion-menu" id="asignadasCompensacion-tab" data-toggle="tab"
+                        <li class="nav-item opcion-menu" ng-if="configPermisoAccionConsultaReporteAsignadas">
+                            <a id="asignadasCompensacion-tab" data-toggle="tab"
                                 ng-click="cambiaReporte('asignadas',true,'asignadasCompensacion')"
                                 href="asignadasCompensacion" role="tab" aria-controls="asignadasCompensacion"
                                 aria-selected="false"><i class="icon-menu-left fas fa-file-alt"></i>&nbsp;<span

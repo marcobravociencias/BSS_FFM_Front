@@ -1437,7 +1437,6 @@ div#reporteAsignadasTable_filter {
 
 .opcion-menu {
     cursor: pointer;
-    height: 2em;
     line-height: 2.5em;
 }
 
@@ -1505,13 +1504,6 @@ div#reporteAsignadasTable_filter {
     color: #fff !important;
     background: #7700ff;
     font-weight: bold;
-}
-
-#container_reportes .left-menu .active {
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
-    padding-right: 20%;
-    /*background: linear-gradient(to right, #7700ff1f, white);*/
 }
 
 .icon-menu-left {
