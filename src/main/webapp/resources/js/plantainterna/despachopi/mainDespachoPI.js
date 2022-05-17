@@ -1052,6 +1052,7 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                             $scope.nfiltroestatuspendiente = $scope.nfiltroestatuspendiente ? $scope.nfiltroestatuspendiente : $scope.obtenerUltimoNivelFiltros($scope.respaldoStatusArray);
                             $scope.filtrosGeneral.estatusdisponibles = []
                             $scope.filtrosGeneral.estatusdisponibles = $scope.conversionAnidadaRecursiva($scope.respaldoStatusArray, 1, $scope.nfiltroestatuspendiente);
+                            $scope.filtrosGeneral.estatusConsultaTodos =  angular.copy($scope.filtrosGeneral.estatusdisponibles)
                             //$scope.filtrosGeneral.estatusdisponibles=$scope.realizarConversionAnidado( results[4].data.result)   
                             //Valida estatus con estatus
                             if( $scope.nfiltroestatusDisponbiles != undefined  &&  $scope.nfiltroestatusDisponbiles ){
@@ -1269,7 +1270,7 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
             let numerosOnly = /^[0-9]*$/i;
             $scope.resultReporteDiario = {};
 
-            let statuscopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.estatusdisponibles, $scope.nfiltroestatuspendiente);
+            let statuscopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.estatusConsultaTodos, $scope.nfiltroestatuspendiente);
 
             let intervencioncopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.tipoOrdenes, $scope.nfiltrointervenciones);
 

@@ -10,20 +10,20 @@
                 <div class="col-12">
                     <div class="row">
                         <div class="col-2  columna-filtro-ind-rep input-box" style="width: 100px !important;">
-                            <label for="filtro-estatus-substatus" class="label-filter"><i ng-if="filtrosGeneral && !filtrosGeneral.estatusdisponibles.length" class="icono-noseleccion fas fa-exclamation-circle ml-2" title="No se encontr&oacute;o el catalogo de estatus"></i></label>
+                            <label for="filtro-estatus-substatus" class="label-filter"><i ng-if="filtrosGeneral && !filtrosGeneral.estatusConsultaTodos.length" class="icono-noseleccion fas fa-exclamation-circle ml-2" title="No se encontr&oacute;o el catalogo de estatus"></i></label>
                             <div class="dropdown">
                                 <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Estatus"
                                     type="text" id="filtro-estatus-reporte"
                                     class="input-filtro-reporte form-control form-control-sm" />
                                     <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-estatus">      
                                         <li style="text-align: center;">
-                                            <button ng-click="seleccionarTodosRecursivo(filtrosGeneral.estatusdisponibles)" id="todo_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
-                                            <button ng-click="deseleccionarTodosRecursivo(filtrosGeneral.estatusdisponibles)" id="ninguno_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
+                                            <button ng-click="seleccionarTodosRecursivo(filtrosGeneral.estatusConsultaTodos)" id="todo_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
+                                            <button ng-click="deseleccionarTodosRecursivo(filtrosGeneral.estatusConsultaTodos)" id="ninguno_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
                                         </li>     
                                         <li class="elemento_menu dropdown-divider"></li>
-                                        <li ng-repeat="filtro in filtrosGeneral.estatusdisponibles " class="element-menu-filter"  class="element-menu-filter">
+                                        <li ng-repeat="filtro in filtrosGeneral.estatusConsultaTodos " class="element-menu-filter"  class="element-menu-filter">
                                             <label  class="dropdown-item form-check-inputfiltro">
-                                                <input ng-click=setCheckFiltroGenericV2(filtro,filtrosGeneral.estatusdisponibles) id="filtrotext-{{filtro.id}}" class="form-check-input" type="checkbox" ng-model="filtro.checkedOpcion" ng-checked="filtro.checkedOpcion"  />
+                                                <input ng-click=setCheckFiltroGenericV2(filtro,filtrosGeneral.estatusConsultaTodos) id="filtrotext-{{filtro.id}}" class="form-check-input" type="checkbox" ng-model="filtro.checkedOpcion" ng-checked="filtro.checkedOpcion"  />
                                                 <span  for="filtrotext-{{filtro.id}}" class="dropdown-item item-text-filtro" href="#" ng-bind="filtro.nombre"></span>
                                             </label>
                                             <ul ng-if="filtro.children !== undefined &&  filtro.children.length > 0" ng-include="'filtroEstatus.html'" class="dropdown-menu"></ul>
