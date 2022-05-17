@@ -176,7 +176,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                 if (result[1].data.result) {
                     let intervencionesArray = [];
                     if ($scope.nIntervencion) {
-                        intervencionesArray = result[1].data.result.filter(elemento => { return elemento.nivel <= $scope.nIntervencion });
+                        intervencionesArray = result[1].data.result.filter(elemento => { return elemento.nivel <= $scope.nIntervencion && elemento.aplicaDisponibilidad === 1});
                     } else {
                         intervencionesArray = result[1].data.result;
                     }
@@ -201,7 +201,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                             return e
                         })
                         console.log(intervencionesArray)
-                        let arrayInterven = intervencionesArray.filter(elemento =>{ return elemento.aplicaDisponibilidad === 1 })
+                        //let arrayInterven = intervencionesArray.filter(elemento =>{ return elemento.aplicaDisponibilidad === 1 })
                         $scope.arrayIntervencion = intervencionesArray;
 
                         $('#jstreeIntervencion')
@@ -213,7 +213,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
     							"show_only_matches": true
     						},
                             'core': {
-                                'data': arrayInterven,
+                                'data': intervencionesArray,
                                 'themes': {
                                     'name': 'proton',
                                     'responsive': true,
