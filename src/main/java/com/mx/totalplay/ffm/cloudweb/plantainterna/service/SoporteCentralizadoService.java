@@ -12,6 +12,8 @@ public interface SoporteCentralizadoService {
 
     ServiceResponseResult consultaDetalleSoporte(String params);
     
+    ServiceResponseResult consultaEstatusSoporte();
+    
     public ServiceResponseResult consultaFallasTicketSoporte();
     
     public ServiceResponseResult consultaHistoricoTicketSoporte(String params);
