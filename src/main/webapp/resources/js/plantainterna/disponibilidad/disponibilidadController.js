@@ -191,19 +191,21 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                                 e.parent = e.padre == undefined ? "#" : e.padre;
                                 e.text = e.nombre;
                                 e.icon = "fa fa-globe";
-
-
+                                e.aplicaDisponibilidad = e.aplicaDisponibilidad
                             } else {
                                 e.parent = e.idPadre;
                                 e.text = e.nombre;
                                 e.icon = "fa fa-globe";
+                                e.aplicaDisponibilidad = e.aplicaDisponibilidad
                             }
                             return e
                         })
                         console.log(intervencionesArray)
+                        let arrayInterven = intervencionesArray.filter(elemento =>{ return elemento.aplicaDisponibilidad === 1 })
                         $scope.arrayIntervencion = intervencionesArray;
 
-                        $('#jstreeIntervencion').bind('loaded.jstree', function (e, data) {
+                        $('#jstreeIntervencion')
+                        .bind('loaded.jstree', function (e, data) {
                         }).jstree({
                             'plugins': ["wholerow", 'search'],
                             'search': {
@@ -211,7 +213,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
     							"show_only_matches": true
     						},
                             'core': {
-                                'data': intervencionesArray,
+                                'data': arrayInterven,
                                 'themes': {
                                     'name': 'proton',
                                     'responsive': true,
@@ -219,6 +221,22 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                                 }
                             },
                         });
+                        /*.on("ready.jstree", function (e, data) {
+
+                            var jsonNodes = $('#jstreeIntervencion').jstree(true).get_json('#', { flat: true });
+                        
+                            $.each(jsonNodes, function (i, val) {
+                        
+                                var treeNode = document.getElementById($(val).attr('id'));
+                                var nodeText = $(val).attr('text');
+                        
+                                let intervencion = intervencionesArray.find(elemento =>{ return elemento.id ==  val.id})
+                                if(intervencion.aplicaDisponibilidad === 0) {
+                                    $(treeNode).hide();
+                                    //console.log(treeNode + "Found")
+                                }
+                            })
+                        })*/
                     } else {
                         $scope.banderaErrorIntervencion = true;
                         $scope.banderaErrorGeneral = true;
@@ -264,8 +282,9 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                                 return e
                             })
 
-                            $('#jstreeconsulta').bind('loaded.jstree', function (e, data) {
-                            }).jstree({
+                            $('#jstreeconsulta')
+                            .bind('loaded.jstree', function (e, data) {})
+                            .jstree({
                                 'plugins': ["wholerow", 'search'],
                                 'search': {
         							"case_sensitive": false,

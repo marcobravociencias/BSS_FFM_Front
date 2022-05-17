@@ -486,6 +486,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             "language": idioma_espanol_not_font
         });
         console.log(new GenericAccion().getAccionesRecientesUsuario('moduloGestionTickets'))
+
     }
 
 

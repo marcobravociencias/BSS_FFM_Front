@@ -152,7 +152,6 @@ class GenericAccion {
 	}
 
 	getAccionesRecientesUsuario(modulo){
-		debugger
 		let accionesList;
 		let usuario = document.getElementById('tipo1').value
 		if (localStorage.getItem('MODULO_MENSAJES_ACCIONES_RECIENTES')) {
