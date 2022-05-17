@@ -2,6 +2,7 @@
     <div class="container-filtros">
         <div class="row md-form" id="filtros_config">
             <div class="col-md-1 columna-filtro-indRR borderFilterR borderAlignR">
+                <label class="label-filter">Estatus</label>
                 <div class="dropdown">
                     <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="ESTATUS" type="text"
                         id="filtro-estatus-reporte-asignadas" class="input-filtro form-control form-control-sm" />
@@ -31,6 +32,7 @@
                 </div>
             </div>
             <div class="col-md-2 columna-filtro-indRR borderFilterR" style="width: 130px;">
+                <label class="label-filter">Intervenci&oacute;n</label>
                 <div class="dropdown">
                     <input readonly data-toggle="dropdown" aria-expanded="false" placeholder="INTERVENCI&Oacute;N"
                         type="text" id="filtro-intervencion-reporte-asignadas" class="input-filtro form-control form-control-sm" />
@@ -60,22 +62,27 @@
                 </div>
             </div>
             <div class="col-md-1 borderFilterR" id="borderAlign">
+                <label class="label-filter">OT</label>
                 <input type="text" placeholder="OT" id="idot-reporte-asignadas" autocomplete="off" ng-model="repAsignadas.idOrden" ng-change="repAsignadas.folio = ''" ng-keypress="repAsignadas.idCuenta = ''"
                     class="form-control input-filtro form-control-sm">
             </div>
             <div class="col-md-1 borderFilterR">
+                <label class="label-filter">OS</label>
                 <input type="text" placeholder="OS" id="idos-reporte-asignadas" autocomplete="off" ng-model="repAsignadas.folio" ng-change="repAsignadas.idOrden = ''" ng-keypress="repAsignadas.idCuenta = ''"
                     class="form-control input-filtro form-control-sm">
             </div>
             <div class="col-md-1 borderFilterR"> 
+                <label class="label-filter">Cuenta</label>
                 <input type="text" placeholder="CUENTA" id="cuenta-reporte-asignadas" autocomplete="off" ng-model="repAsignadas.idCuenta" ng-change="repAsignadas.folio = ''" ng-keypress="repAsignadas.idOrden = ''"
                     class="form-control input-filtro form-control-sm">
             </div>
             <div class="col-md-1 columna-filtro-indRR borderFilterR" style="width: 110px;">
+                <label class="label-filter">Geograf&iacute;a</label>
                 <input readonly placeholder="GEOGRAF&Iacute;A" type="text" id="cluster-asignadas"
                     class="input-filtro form-control form-control-sm" ng-click="abrirModalGeografiaRep('asignadas')" />
             </div>
             <div class="col-md-1 columna-filtro-indR borderFilterR" style="width: 120px;">
+                <label class="label-filter">Tipo fecha</label>
                 <select class="input-filtro form-control form-control-sm" id="tipo_reporte_asignadas"
                     style="border: 1px solid #dbdbdb !important; background: white !important;"
                     ng-model="repAsignadas.fechaSeleccionada">
@@ -88,23 +95,25 @@
                 </select>
             </div>
             <div class="col-md-1 columna-filtro-indR borderFilterR">
+                <label class="label-filter">Fecha inicio</label>
                 <input readonly placeholder="Fecha Inicial" type="text" id="filtro_fecha_inicio_reporte_asignadas"
                     class="datepicker input-filtro form-control form-control-sm" />
             </div>
             <div class="col-md-1 columna-filtro-indR borderFilterR">
+                <label class="label-filter">Fecha fin</label>
                 <input readonly placeholder="Fecha Final" type="text" id="filtro_fecha_fin_reporte_asignadas"
                     class="datepicker input-filtro form-control form-control-sm" />
             </div>
             <div class="col-1 div-btn-busqueda borderFilterR" style="width: 55px;">
                 <button id="btn_consultar" type="button"
                     class="btn btn-sm  btn-primary  waves-effect waves-light btn_consultar"
-                    style="margin-top: 0; margin: 0 !important; height: 28px;" ng-click="consultarReporteAsignadasCompensacion()">
+                    style="margin-top: 2.5em;height: 28px;" ng-click="consultarReporteAsignadasCompensacion()">
                     <i class="fa fa-search"></i>
                 </button>
             </div>
             <div class="col-1 download-file" ng-if="configPermisoAccionDescargaReporteAsignadas">
                 <img alt="excel" src="${pageContext.request.contextPath}/resources/img/generic/group-10.png"
-                    style="cursor:pointer" onclick="downloadExcelReportAsignadasFile()">
+                    style="cursor:pointer;margin-top: 1.5em;" onclick="downloadExcelReportAsignadasFile()">
             </div>
         </div>
     </div>

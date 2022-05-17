@@ -1276,7 +1276,7 @@ div#reporteInspectorTable_info {
     content: "";
     position: absolute;
     right: 5%;
-    top: 40%;
+    top: 65%;
     width: 0;
     height: 0;
     border-left: 0.3em solid transparent;
@@ -1291,7 +1291,7 @@ div#reporteInspectorTable_info {
     content: "";
     position: absolute;
     right: 5%;
-    top: 40%;
+    top: 65%;
     width: 0;
     height: 0;
     border-left: 0.3em solid transparent;
@@ -1697,4 +1697,10 @@ label.dropdown-item.form-check-inputfiltro {
     margin-left: 0.5em;
     font-size: 1.5em;
     font-weight: normal;
+}
+
+.label-filter{
+    margin: 0;
+    font-size: 0.7em;
+    font-weight: bold;
 }

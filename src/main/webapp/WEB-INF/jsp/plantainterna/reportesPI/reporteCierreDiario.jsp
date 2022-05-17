@@ -2,6 +2,7 @@
     <div class="container-filtros">
         <div class="row md-form" id="filtros_config">
             <div class="col-md-1 columna-filtro-indRR borderFilterR borderAlignR">
+                <label class="label-filter">Estatus</label>
                 <div class="dropdown">
                     <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="ESTATUS" type="text"
                         id="filtro-estatus-reporte-cierre" class="input-filtro form-control form-control-sm" />
@@ -31,6 +32,7 @@
                 </div>
             </div>
             <div class="col-md-2 columna-filtro-indRR borderFilterR" style="width: 130px;">
+                <label class="label-filter">Intervenci&oacute;n</label>
                 <div class="dropdown">
                     <input readonly data-toggle="dropdown" aria-expanded="false" placeholder="INTERVENCI&Oacute;N"
                         type="text" id="filtro-intervencion-cierre" class="input-filtro form-control form-control-sm" />
@@ -59,22 +61,27 @@
                 </div>
             </div>
             <div class="col-md-1 borderFilterR" id="borderAlign">
+                <label class="label-filter">OT</label>
                 <input type="text" placeholder="OT" id="idot-reporte-cierre" autocomplete="off" ng-model="repCierreDiario.idOrden" ng-change="repCierreDiario.folio = ''" ng-keypress="repCierreDiario.idCuenta = ''"
                     class="form-control input-filtro form-control-sm">
             </div>
             <div class="col-md-1 borderFilterR">
+                <label class="label-filter">OS</label>
                 <input type="text" placeholder="OS" id="idos-reporte-cierre" autocomplete="off" ng-model="repCierreDiario.folio" ng-change="repCierreDiario.idOrden = ''" ng-keypress="repCierreDiario.idCuenta = ''"
                     class="form-control input-filtro form-control-sm">
             </div>
             <div class="col-md-1 borderFilterR">
+                <label class="label-filter">Cuenta</label>
                 <input type="text" placeholder="CUENTA" id="cuenta-reporte-cierre" autocomplete="off" ng-model="repCierreDiario.idCuenta" ng-change="repCierreDiario.folio = ''" ng-keypress="repCierreDiario.idOrden = ''"
                     class="form-control input-filtro form-control-sm">
             </div>
             <div class="col-md-1 columna-filtro-indRR borderFilterR" style="width: 110px;">
+                <label class="label-filter">Geograf&iacute;a</label>
                 <input readonly placeholder="GEOGRAF&Iacute;A" type="text" id="cluster-cierre"
                     class="input-filtro form-control form-control-sm" ng-click="abrirModalGeografiaRep('cierre')" />
             </div>
             <div class="col-md-1 columna-filtro-indR borderFilterR" style="width: 120px;">
+                <label class="label-filter">Tipo fecha</label>
                 <select class="input-filtro form-control form-control-sm" id="tipo_reporte_cierre"
                     style="border: 1px solid #dbdbdb !important; background: white !important;"
                     ng-model="repCierreDiario.fechaSeleccionada">
@@ -87,23 +94,25 @@
                 </select>
             </div>
             <div class="col-md-1 columna-filtro-indR borderFilterR">
+                <label class="label-filter">Fecha inicio</label>
                 <input readonly placeholder="Fecha Inicial" type="text" id="filtro_fecha_inicio_reporte_cierre"
                     class="datepicker input-filtro form-control form-control-sm" />
             </div>
             <div class="col-md-1 columna-filtro-indR borderFilterR">
+                <label class="label-filter">Fecha fin</label>
                 <input readonly placeholder="Fecha Final" type="text" id="filtro_fecha_fin_reporte_cierre"
                     class="datepicker input-filtro form-control form-control-sm" />
             </div>
             <div class="col-1 div-btn-busqueda borderFilterR" style="width: 55px;">
                 <button id="btn_consultar" type="button"
                     class="btn btn-sm  btn-primary  waves-effect waves-light btn_consultar"
-                    style="margin-top: 0; margin: 0 !important; height: 28px;" ng-click="consultarCierreDiario()">
+                    style="margin-top: 2.5em; height: 28px;" ng-click="consultarCierreDiario()">
                     <i class="fa fa-search"></i>
                 </button>
             </div>
             <div class="col-1 download-file" ng-if="configPermisoAccionDescargaReporteCierre">
                 <img alt="excel" src="${pageContext.request.contextPath}/resources/img/generic/group-10.png"
-                    style="cursor:pointer" onclick="downloadExcelReportCierreFile()">
+                    style="cursor:pointer; margin-top: 1.5em;" onclick="downloadExcelReportCierreFile()">
             </div>
         </div>
     </div>
