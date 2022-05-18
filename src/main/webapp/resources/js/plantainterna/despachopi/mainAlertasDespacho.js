@@ -18,13 +18,13 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
     $scope.listaMotivosAlertaAccion = [];
     $scope.contadorCaracteresTextArea = 0;
     $scope.listaTotal = { aceptadas: 0, rechazadas: 0 };
-//    $scope.detalleEvidencia = detalleEvidencias.result.evidencias;
+    //    $scope.detalleEvidencia = detalleEvidencias.result.evidencias;
     $scope.detalleEvidencia = [];
 
 
     $scope.getDetalleAlertas = function (alerta) {
-    	
-    	$scope.permisoAtenderAlertas = $scope.permisosConfigUser.permisos.find(e=>{return e.clave==='accionAtiendeAL'});
+
+        $scope.permisoAtenderAlertas = $scope.permisosConfigUser.permisos.find(e => { return e.clave === 'accionAtiendeAL' });
 
         $scope.vistaAuditoriaEvidencia = false;
 
@@ -50,22 +50,21 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
         var params = {
             "idTipoAlerta": alerta.id
         }
-//        PENDIENTE ALERTA "AUDITORIA EVIDENCIAS" 
-//        if (alerta.id == 9) {
-//            $scope.listaTotal = { aceptadas: 0, rechazadas: 0 };
-//            $(".radio-evidencias").prop("checked", false);
-//            $(".checkbox-evidencia").prop("checked", false);
-//            $(".checkbox-evidencia").removeClass("rechazada-check");
-//            $scope.vistaAuditoriaEvidencia = true;
-//            $scope.vistaDespacho = false;
-//            $scope.applyMagnific();
-//        }
-        console.log("params", params)
+        if (alerta.id == 9) {
+            $scope.listaTotal = { aceptadas: 0, rechazadas: 0 };
+            $(".radio-evidencias").prop("checked", false);
+            $(".checkbox-evidencia").prop("checked", false);
+            $(".checkbox-evidencia").removeClass("rechazada-check");
+            $scope.vistaAuditoriaEvidencia = true;
+            $scope.vistaDespacho = false;
+            $scope.applyMagnific();
+        }
+        console.log("params", params);
+        $scope.otsAlertas = [];
         mainAlertasService.getDetalleAlertas(params).then(function success(response) {
-            console.log(response);
             if (response.data !== undefined) {
                 //$("#pills-mapa-tab").click();
-                $scope.otsAlertas = response.data.result.detalleAlerta;
+                $scope.otsAlertas = response.data.result ?  response.data.result.detalleAlerta : [];
                 $scope.vistaDespacho = false;
                 $scope.tipoAlertaSeleccionada = angular.copy(alerta);
                 $scope.mostrarDetalleAlertas($scope.otsAlertas);
@@ -80,7 +79,6 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
     }
 
     $scope.mostrarDetalleAlertas = function (alertas) {
-
         $scope.viewTableResumen = [];
         angular.forEach(alertas, function (value, index) {
             let alertaob = value.alerta;
@@ -143,7 +141,7 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
             $scope.viewTableResumen.push(arra);
 
         });
-
+        
         if (tableAlerta) {
             tableAlerta.destroy();
         }
@@ -647,7 +645,7 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
             }
         } else {
             setTimeout(function () {
-               $("#pills-mapa-tab").click();
+                $("#pills-mapa-tab").click();
             }, 0500);
         }
     }

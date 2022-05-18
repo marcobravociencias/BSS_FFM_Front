@@ -69,7 +69,7 @@
                         <input readonly type="text" id="filtro_fecha_fin"
                             class="datepicker input-filtro-seguimiento form-control form-control-sm" />
                     </div>
-                    <div class="col-2">
+                    <!--div class="col-2">
                         <label for="filtro_fecha_fin" class="label-filter"><i class="fa fa-user"></i> Estatus</label>
                         <li class="nav-item dropdown form-control form-control-sm input-filtro-seguimiento"
                             id="estatusDropdown">
@@ -79,7 +79,6 @@
                                     style="color: {{catalogoEstatusUsuarios.infoHorasUser.ultimoEstatus.split('-')[1]}} ;"></i>
                                 {{catalogoEstatusUsuarios.infoHorasUser.ultimoEstatus.split('-')[0]}}
                             </a>
-                            <!-- Dropdown menu -->
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li>
                                     <a class="dropdown-item"
@@ -92,7 +91,7 @@
                                 </li>
                             </ul>
                         </li>
-                    </div>
+                    </div-->
                     <div class="col-1">
                         <button id="btn_buscar" type="button"
                             class="btn btn-sm btn-primary waves-effect waves-light btnSeguimiento"
