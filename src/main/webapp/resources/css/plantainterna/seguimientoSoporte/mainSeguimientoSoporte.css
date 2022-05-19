@@ -540,6 +540,7 @@ div.dataTables_wrapper div.dataTables_filter input {
     width: 350px;
     background-color: white;
     border-radius: 4px;
+    overflow-wrap: break-word !important;
     box-shadow: 4px 4px 8px 5px rgb(0 0 0 / 5%);
     overflow: hidden;
     text-overflow: ellipsis;

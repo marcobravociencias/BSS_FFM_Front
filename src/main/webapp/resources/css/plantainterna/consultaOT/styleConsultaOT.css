@@ -1389,6 +1389,7 @@ span.content-titlehistorico.ng-binding {
   box-shadow: 1px 1px 10px 0 rgb(0 0 0 / 14%);
   border-radius: 5px;
   max-width: 350px;
+  overflow-wrap: break-word !important;
   display: inline-block !important;
   overflow: hidden;
   text-overflow: ellipsis !important;
