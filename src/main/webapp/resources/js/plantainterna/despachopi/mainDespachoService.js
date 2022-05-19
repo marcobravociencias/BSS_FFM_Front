@@ -383,5 +383,16 @@ app.service("mainDespachoService", function ($http) {
             }
 		});
 	};
+
+	this.actualizarDireccionOt=function(params){
+		return $http({
+			method: "post",
+			url: "req/actualizaDireccionOt",
+			data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
 	
 });

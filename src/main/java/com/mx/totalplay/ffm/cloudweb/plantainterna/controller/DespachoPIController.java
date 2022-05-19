@@ -504,6 +504,16 @@ public class DespachoPIController {
         }
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
+    
+    @PostMapping("/actualizaDireccionOt")
+    public ResponseEntity<?> actualizaDireccionOt(@RequestBody String params) {
+        LOGGER.info("##### ACTUALIZA DIRECCION OT");
+        ServiceResponseResult response = despachoService.actualizarDireccionOt(params);
+        if (response.getResult() instanceof Integer) {
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
 }
 
 

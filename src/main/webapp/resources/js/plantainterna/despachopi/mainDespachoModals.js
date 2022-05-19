@@ -347,7 +347,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                             }
                             //$scope.listadoTecnicosGeneral=tecnicosAsignacion
                             $scope.listadoArrayOtsLocalizacion = response.data.result.ordenes;
-                           
+
                             $.each($scope.listadoArrayOtsLocalizacion, function (i, elemento) {
                                 let row = [];
                                 row[0] = elemento.idOrden && elemento.idOrden !== '' ? elemento.idOrden : 'Sin informaci&oacute;n';
@@ -372,7 +372,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                                 "autoWidth": true,
                                 "language": idioma_espanol_not_font,
                             });
-                            
+
                             $("#modalRegistrosLocalizados").modal('show')
                         } else {
                             toastr.info(response.data.result.mensaje);
@@ -1809,6 +1809,65 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         $scope.tabDetalleCorteMasivo = false;
         $scope.tabDetalleDetencion = false;
         $scope.tabDetalleInspector = false;
+    }
+
+    $scope.guardarCambioDireccion = function () {
+        let codigoRegex = /^[0-9]{5,6}$/;
+
+        if($.trim($scope.infoOtDetalle.direccion.codigoPostal) == '' || !codigoRegex.test($scope.infoOtDetalle.direccion.codigoPostal)){
+            toastr.warning('Ingresa un c&oacute;digo postal valido');
+            return false;
+        }
+
+        swal({
+            title: 'Comentarios',
+            input: 'textarea',
+            closeOnClickOutside: false,
+            inputAttributes: {
+                autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Guardar'
+        }).then((result) => {
+
+            if (result) {
+                let params = {
+                    codigoPostal: $scope.infoOtDetalle.direccion.codigoPostal,
+                    latitud: $scope.latitudModDireccionOt,
+                    longitud: $scope.longitudModDireccionOt,
+                    comentarios: result,
+                    idOrdenTrabajo: $scope.infoOtDetalle.idOrden,
+                }
+                console.log(params);
+                swal({ text: 'Cambiando estatus de la OT ...', allowOutsideClick: false });
+                swal.showLoading();
+                mainDespachoService.actualizarDireccionOt(params).then(function success(response) {
+                    swal.close()
+                    if (response.data !== undefined) {
+                        if (response.data.respuesta) {
+                            if (response.data.result) {
+                                $scope.infoOtDetalle.direccion.longitud =  $scope.longitudModDireccionOt;
+                                $scope.infoOtDetalle.direccion.latitud =  $scope.latitudModDireccionOt;
+                                $scope.verMapaCambioDireccion($scope.infoOtDetalle.direccion.latitud, $scope.infoOtDetalle.direccion.longitud);
+                                toastr.success('Direcci&oacute;n actualizada');
+                                $scope.regresarVistaCambioDireccion()
+                            } else {
+                                toastr.warning('No se cambio la direcci&oacute;n');
+                            }
+                        } else {
+                            toastr.warning(response.data.resultDescripcion);
+                        }
+                    } else {
+                        toastr.error('Ha ocurrido un error en el cambio de direcci&oacute;n');
+                    }
+                }).catch(err => handleError(err));
+            } else {
+                toastr.warning('Ingresa el comentario para cambiar la direcci&oacute;n');
+            }
+
+        }).catch((result) => {
+        })
+
     }
 
 }

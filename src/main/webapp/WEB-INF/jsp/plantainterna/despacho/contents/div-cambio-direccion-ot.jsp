@@ -5,8 +5,7 @@
 				<span class="text-tile-vehiculo">Nombre cuenta</span>
 			</div>
 			<div class="container-text-content-detalle">
-				<span class="text-content-vehiculo"
-					title="{{infoOtDetalle.idOrden}}"
+				<span class="text-content-vehiculo" title="{{infoOtDetalle.claveCliente}}"
 					ng-bind="infoOtDetalle.claveCliente || 'Sin dato'"></span>
 			</div>
 		</div>
@@ -15,8 +14,7 @@
 				<span class="text-tile-vehiculo">N&uacute;mero exterior</span>
 			</div>
 			<div class="container-text-content-detalle">
-				<span class="text-content-vehiculo"
-					title="{{infoOtDetalle.idOrden}}"
+				<span class="text-content-vehiculo" title="{{infoOtDetalle.direccion.numeroExterior}}"
 					ng-bind="infoOtDetalle.direccion.numeroExterior || 'Sin dato'"></span>
 			</div>
 		</div>
@@ -25,8 +23,7 @@
 				<span class="text-tile-vehiculo">Entre calles</span>
 			</div>
 			<div class="container-text-content-detalle">
-				<span class="text-content-vehiculo"
-					title="{{infoOtDetalle.idOrden}}"
+				<span class="text-content-vehiculo" title="{{infoOtDetalle.direccion.entreCalles}}"
 					ng-bind="infoOtDetalle.direccion.entreCalles || 'Sin dato'"></span>
 			</div>
 		</div>
@@ -35,8 +32,7 @@
 				<span class="text-tile-vehiculo">Colonia</span>
 			</div>
 			<div class="container-text-content-detalle">
-				<span class="text-content-vehiculo"
-					title="{{infoOtDetalle.idOrden}}"
+				<span class="text-content-vehiculo" title="{{infoOtDetalle.direccion.colonia}}"
 					ng-bind="infoOtDetalle.direccion.colonia || 'Sin dato'"></span>
 			</div>
 		</div>
@@ -45,8 +41,7 @@
 				<span class="text-tile-vehiculo">Municipio</span>
 			</div>
 			<div class="container-text-content-detalle">
-				<span class="text-content-vehiculo"
-					title="{{infoOtDetalle.idOrden}}"
+				<span class="text-content-vehiculo" title="{{infoOtDetalle.direccion.municipio}}"
 					ng-bind="infoOtDetalle.direccion.municipio || 'Sin dato'"></span>
 			</div>
 		</div>
@@ -55,8 +50,7 @@
 				<span class="text-tile-vehiculo">C&oacute;digo postal</span>
 			</div>
 			<div class="container-text-content-detalle">
-				<span class="text-content-vehiculo"
-					title="{{infoOtDetalle.idOrden}}"
+				<span class="text-content-vehiculo" title="{{infoOtDetalle.direccion.codigoPostal}}"
 					ng-bind="infoOtDetalle.direccion.codigoPostal || 'Sin dato'"></span>
 			</div>
 		</div>
@@ -65,8 +59,7 @@
 				<span class="text-tile-vehiculo">Longitud</span>
 			</div>
 			<div class="container-text-content-detalle">
-				<span class="text-content-vehiculo"
-					title="{{infoOtDetalle.idOrden}}"
+				<span class="text-content-vehiculo" title="{{infoOtDetalle.direccion.longitud}}"
 					ng-bind="infoOtDetalle.direccion.longitud || 'Sin dato'"></span>
 			</div>
 		</div>
@@ -77,8 +70,7 @@
 				<span class="text-tile-vehiculo">Calle</span>
 			</div>
 			<div class="container-text-content-detalle">
-				<span class="text-content-vehiculo"
-					title="{{infoOtDetalle.idOrden}}"
+				<span class="text-content-vehiculo" title="{{infoOtDetalle.direccion.calle}}"
 					ng-bind="infoOtDetalle.direccion.calle || 'Sin dato'"></span>
 			</div>
 		</div>
@@ -87,8 +79,7 @@
 				<span class="text-tile-vehiculo">N&uacute;mero interior</span>
 			</div>
 			<div class="container-text-content-detalle">
-				<span class="text-content-vehiculo"
-					title="{{infoOtDetalle.idOrden}}"
+				<span class="text-content-vehiculo" title="{{infoOtDetalle.direccion.numeroInterior}}"
 					ng-bind="infoOtDetalle.direccion.numeroInterior || 'Sin dato'"></span>
 			</div>
 		</div>
@@ -97,8 +88,7 @@
 				<span class="text-tile-vehiculo">Referencia</span>
 			</div>
 			<div class="container-text-content-detalle">
-				<span class="text-content-vehiculo"
-					title="{{infoOtDetalle.idOrden}}"
+				<span class="text-content-vehiculo" title="{{infoOtDetalle.direccion.referencias}}"
 					ng-bind="infoOtDetalle.direccion.referencias || 'Sin dato'"></span>
 			</div>
 		</div>
@@ -107,8 +97,7 @@
 				<span class="text-tile-vehiculo">Ciudad</span>
 			</div>
 			<div class="container-text-content-detalle">
-				<span class="text-content-vehiculo"
-					title="{{infoOtDetalle.idOrden}}"
+				<span class="text-content-vehiculo" title="{{infoOtDetalle.direccion.ciudad}}"
 					ng-bind="infoOtDetalle.direccion.ciudad || 'Sin dato'"></span>
 			</div>
 		</div>
@@ -117,8 +106,7 @@
 				<span class="text-tile-vehiculo">Estado</span>
 			</div>
 			<div class="container-text-content-detalle">
-				<span class="text-content-vehiculo"
-					title="{{infoOtDetalle.idOrden}}"
+				<span class="text-content-vehiculo" title="{{infoOtDetalle.direccion.estado}}"
 					ng-bind="infoOtDetalle.direccion.estado || 'Sin dato'"></span>
 			</div>
 		</div>
@@ -127,19 +115,14 @@
 				<span class="text-tile-vehiculo">Latitud</span>
 			</div>
 			<div class="container-text-content-detalle">
-				<span class="text-content-vehiculo"
-					title="{{infoOtDetalle.idOrden}}"
+				<span class="text-content-vehiculo" title="{{infoOtDetalle.direccion.latitud}}"
 					ng-bind="infoOtDetalle.direccion.latitud || 'Sin dato'"></span>
 			</div>
 		</div>
-		<div class="container-fluid vehiculo-content">
-			<div class="container-text-title-detalle">
-				<span class="text-tile-vehiculo"></span>
-			</div>
-			<div class="container-text-content-detalle">
-				<button id="btnEditarDireccionOT" class="btn btn-sm btn-primary"
-					ng-click="mostrarVistaModificarDireccion(infoOtDetalle.direccion.latitud, infoOtDetalle.direccion.longitud)">Editar</button>
-			</div>
+		<div class="container-fluid">
+
+			<button id="btnEditarDireccionOT" class="btn btn-sm btn-primary"
+				ng-click="mostrarVistaModificarDireccion(infoOtDetalle.direccion.latitud, infoOtDetalle.direccion.longitud)">Editar</button>
 		</div>
 	</div>
 </div>
@@ -150,8 +133,7 @@
 </div>
 <div class="row" ng-show="verModDireccionOT">
 	<div class="col-md-8">
-		<input id="txtBuscadorDireccionMap" class="controls" type="text"
-			placeholder="B&uacute;scar lugar en mapa"
+		<input id="txtBuscadorDireccionMap" class="controls" type="text" placeholder="B&uacute;scar lugar en mapa"
 			style="position: absolute !important; left: 0px !important; top: 0px !important;" />
 	</div>
 	<div class="col-md-8">
@@ -174,22 +156,20 @@
 			<div class="col-md-12">
 				<label class="etiquetaCambioDireccion">C&oacute;digo postal</label>
 				<div class="input-group">
-					<input type="text" class="form-control txtCambioDireccion"
+					<input type="text" class="form-control form-control-sm txtCambioDireccion"
 						ng-model="infoOtDetalle.direccion.codigoPostal" id="">
 				</div>
 			</div>
 		</div>
 		<div class="row" style="margin-top: 1em;">
 			<div class="col-md-2 offset-6">
-				<button id="btnRegresarVistaCambioDireccion"
-					class="btn btn-sm btn-primary"
+				<button id="btnRegresarVistaCambioDireccion" class="btn btn-sm btn-primary"
 					ng-click="regresarVistaCambioDireccion()">
 					<i class="fas fa-arrow-left"></i>
 				</button>
 			</div>
 			<div class="col-md-2 offset-1">
-				<button id="btnCambioDireccionOTMod" class="btn btn-sm btn-primary"
-					ng-click="">
+				<button id="btnCambioDireccionOTMod" class="btn btn-sm btn-primary" ng-click="guardarCambioDireccion()">
 					<i class="fas fa-save"></i>
 				</button>
 			</div>

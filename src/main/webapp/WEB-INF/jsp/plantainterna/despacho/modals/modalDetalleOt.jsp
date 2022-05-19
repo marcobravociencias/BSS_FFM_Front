@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!-- Modal -->
-<div class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" id="modalDetalleOT">
+<div class="modal fade"  aria-labelledby="exampleModalLabel" aria-hidden="true" id="modalDetalleOT">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -221,7 +221,7 @@
                                                 <div class="container-text-content-detalle"><span
                                                         class="text-content-vehiculo"
                                                         title="{{infoOtDetalle.direccion.numeroExterior}}"
-                                                        ng-bind="infoOtDetalle.direccion.entreCalles || 'Sin dato'"></span>
+                                                        ng-bind="infoOtDetalle.direccion.numeroExterior || 'Sin dato'"></span>
                                                 </div>
                                             </div>
 
@@ -387,7 +387,7 @@
                                                         <div class="chat-body">
                                                             <span class="text-fecha-comentario" ng-bind="comentario.fechaComentario"></span>
                                                             <div class="chat-text">
-                                                                <p ng-bind="comentario.comentario"></p>
+                                                                <span ng-bind="comentario.comentario"></span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -395,7 +395,7 @@
                                                         <div class="chat-body">
                                                             <span class="text-fecha-comentario" ng-bind="comentario.fechaComentario"></span>
                                                             <div class="chat-text">
-                                                                <p ng-bind="comentario.comentario"></p>
+                                                                <span ng-bind="comentario.comentario"></span>
                                                             </div>
                                                         </div>
                                                         <div class="chat-avatar">

@@ -837,26 +837,32 @@ color: #3c475d !important;
 }
 
 .chat-area .chats .chat .chat-body .chat-text {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
   margin: 0 1rem 1rem;
+  box-shadow: 1px 1px 10px 0 rgb(0 0 0 / 14%);
+  border-radius: 5px;
+  max-width: 350px;
+  display: inline-block !important;
+  overflow: hidden;
+  text-overflow: ellipsis !important;
+  padding: 0.5rem 1rem;
 }
 
-.chat-area .chats .chat.chat-right .chat-body .chat-text p {
+.chat-area .chats .chat.chat-right .chat-body .chat-text {
   color: #fff;
   background-color: #2196f3;
 }
 
-.chat-area .chats .chat .chat-body .chat-text p {
-  max-width: 400px;
-  padding: 0.5rem 1rem;
+.chat-area .chats .chat .chat-body .chat-text {
   color: #757575;
-  border-radius: 5px;
   background-color: #fff;
-  box-shadow: 1px 1px 10px 0 rgb(0 0 0 / 14%);
 }
+
+.text-fecha-comentario {
+  padding-left: 15px;
+  padding-right: 15px;
+  font-size: 0.7em;
+}
+
 .chat-area .chats .chat .chat-body .chat-text:first-child:before {
   box-sizing: border-box;
   width: 0;

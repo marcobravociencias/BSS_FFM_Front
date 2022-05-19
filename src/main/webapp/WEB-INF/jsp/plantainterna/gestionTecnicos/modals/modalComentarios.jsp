@@ -21,7 +21,7 @@
                                         <div class="chat-body">
                                             <span class="text-fecha-comentario" ng-bind="comentario.fecha"></span>
                                             <div class="chat-text">
-                                                <p ng-bind="comentario.comentario"></p>
+                                                <span ng-bind="comentario.comentario"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -29,7 +29,7 @@
                                         <div class="chat-body">
                                             <span class="text-fecha-comentario" ng-bind="comentario.fecha"></span>
                                             <div class="chat-text">
-                                                <p ng-bind="comentario.comentario"></p>
+                                                <span ng-bind="comentario.comentario"></span>
                                             </div>
                                         </div>
                                         <div class="chat-avatar">

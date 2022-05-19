@@ -281,19 +281,9 @@
         font-size: 0.6em;
     }
 
-    .chat-area .chats .chat .chat-body .chat-text p {
-        max-width: 400px;
+    .chat-area .chats .chat .chat-body .chat-text {
+        max-width: 360px;
         padding: 0.5rem 1rem;
-        color: #757575;
-        border-radius: 5px;
-        background-color: #fff;
-        box-shadow: 1px 1px 10px 0 rgb(0 0 0 / 14%);
-        font-size: .8em;
-    }
-
-    .chat-area .chats .chat.chat-right .chat-body .chat-text p {
-        color: #fff;
-        background-color: #2196f3;
         font-size: .8em;
     }
 

@@ -1158,4 +1158,26 @@ public class ImplDespachoPIService implements DespachoPIService {
         ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest, ServiceResponseResult.class, tokenAcces);
         return response;
     }
+
+	@Override
+	public ServiceResponseResult actualizarDireccionOt(String params) {
+		logger.info("### URL actualizarDireccionOt(): \n" + params);
+
+		JsonObject jsonObject = new Gson().fromJson(params, JsonObject.class);
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String tokenAcces = principalDetail.getAccess_token();
+
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constDespachoPI.getActualizarDireccionOt());
+		jsonObject.addProperty("idOrigen", principalDetail.getIdOrigen());
+		logger.info("### URL actualizarDireccionOt(): \n" + urlRequest);
+
+		ServiceResponseResult response = restCaller.callPatchBearerTokenRequest(
+				jsonObject.toString(),
+				urlRequest,
+				ServiceResponseResult.class,
+				tokenAcces);
+
+		logger.info("### RESULT actualizarDireccionOt(): \n" + gson.toJson(response));
+		return response;
+	}
 }

@@ -145,5 +145,8 @@ public class ConstDespachoPI implements Serializable{
 	
 	@Value("${consultaDetalleOtPe}")
 	private String consultaDetalleOtPe;
+	
+	@Value("${actualizarDireccionOt}")
+	private String actualizarDireccionOt;
 }
 
