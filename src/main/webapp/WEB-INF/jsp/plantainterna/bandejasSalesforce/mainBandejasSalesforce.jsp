@@ -94,49 +94,6 @@
         </div>
     </div>
 
-    <ul class="nav nav-tabs right-menuAcciones small-menuAcciones flex-column" id="menu-acciones" role="tablist">
-        <li class="nav-item">
-            <a class="opcion-menuAcciones" id="" ng-click="mostarUltimasAcciones()">
-                <i class="icon-menu-ultimAccion fas fa-bars"></i>
-                <span class="titulo-menuAcciones">&Uacute;ltimas Acciones</span>
-            </a>
-        </li>
-    </ul>
-
-    <div id="container-ultimasAcciones" class="contenedor-ultimasAcciones" style="display: none;">
-        <div class="content-fluid">
-            <div class="row">
-                <div class="col-11 pl-4 mt-2">
-                    <h5>&Uacute;ltimas Acciones</h5>
-                </div>  
-                <div class="col-1" style="padding: 0;">
-                    <button type="button" class="btn-close btn-closeAcciones" ng-click="ocultarUltimasAcciones()"></button>
-                </div>
-                <hr>
-            </div>
-            <div id="ultimasAccionesContent">
-                <div class="activity">
-                    <ul class="styleAction action-timeline mb-0">
-                        <li class="timeline-actions timeline-icon-success active mb-3">
-                            <div class="action-time">Hoy</div>
-                            <h6 class="action-title">Ejecutada con &Eacute;xito</h6>
-                            <p class="action-text">Se ha creado el ticket 2021  con la OT 20299292.</p>
-                        </li>
-                        <li class="timeline-actions timeline-icon-warning active mb-3">
-                            <div class="action-time">10 min</div>
-                            <h6 class="action-title">Ejecutada con Incidencia</h6>
-                            <p class="action-text">Se ha creado el ticket 2021  con la OT 20299292.</p>
-                        </li>
-                        <li class="timeline-actions timeline-icon-error active mb-3">
-                            <div class="action-time">30 mins</div>
-                            <h6 class="action-title">Ejecutada con Error</h6>
-                            <p class="action-text">Se ha creado el ticket 2021  con la OT 20299292.</p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
     <jsp:include page="./modals/modalGeografia.jsp"></jsp:include>
     <jsp:include page="./modals/modalNuevoContacto.jsp"></jsp:include>
 </body>

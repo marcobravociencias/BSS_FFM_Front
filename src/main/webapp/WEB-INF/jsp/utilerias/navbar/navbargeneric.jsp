@@ -6,6 +6,7 @@
 <link
     href="${pageContext.request.contextPath}/resources/css/plantainterna/generic/navbar.css?v=${sessionScope.versionDepl}"
     rel="stylesheet" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/plantainterna/generic/mainAccionesRealizadas.css?v=${sessionScope.versionDepl}" />
 <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 <jsp:include page="./modalFotoDespacho.jsp"></jsp:include>
 <jsp:include page="./modalCambiaContrasenia.jsp"></jsp:include>
@@ -493,3 +494,9 @@
         <input type="hidden" id="prop-session" value="${userStore.idPuesto}_${userStore.idUsuario}"/>
     </nav>
 </header>
+
+<!-- BOTON ULTIMAS ACCIONES -->
+
+<div id="menuAccionesRealizadas"></div>
+
+<!-- BOTON ULTIMAS ACCIONES -->

@@ -104,16 +104,29 @@ GenericMapa.prototype.callPrototypeMapa = function (listadoData) {
 	GenericMapa.prototype.kmzConfigArray = listadoKmzConfig;
 }
 
-class GenericAccion {
+class GenericAccionRealizada {
 
-	constructor(moduloAccion, mensajeAccion, tipo, user){
-		this.identificadorModulo = moduloAccion
-        this.mensaje = mensajeAccion
-        this.tipoMensaje = tipo
-        this.usuario = user
-        this.hora = this.formatHora(new Date())
-        this.fecha = this.formatDateAccion(new Date())
-        this.sysdateJs = new Date()
+	/**
+	 * 
+	 * @param {*} nombreModuloAccion; 
+	 * @param {*} posicionBotonAccion; 
+	 */
+
+	constructor(nombreModuloAccion, posicionBotonAccion) {
+		this.nombreModuloAccion = nombreModuloAccion;
+		this.posicionBotonAccion = posicionBotonAccion;
+	}
+
+	getObjectAccionRealizada(mensajeAccion, tipo, user) {
+		return {
+			identificadorModulo: this.nombreModuloAccion,
+			mensaje: mensajeAccion,
+			tipoMensaje: tipo,
+			usuario: user,
+			hora: this.formatHora(new Date()),
+			fecha: this.formatDateAccion(new Date()),
+			sysdateJs: new Date()
+		}
 	}
 
 	formatHora(date) {
@@ -122,46 +135,186 @@ class GenericAccion {
 		let ampm = hours >= 12 ? 'PM' : 'AM';
 		hours = hours % 12;
 		hours = hours ? hours : 12;
-		minutes = minutes < 10 ? '0'+minutes : minutes;
+		minutes = minutes < 10 ? '0' + minutes : minutes;
 		let strTime = hours + ':' + minutes + ' ' + ampm;
 		return strTime;
 	}
 
-	formatDateAccion(date){
+	formatDateAccion(date) {
 		return [
 			this.padTo2Digits(date.getDate()),
 			this.padTo2Digits(date.getMonth() + 1),
 			date.getFullYear(),
-		  ].join('/');
+		].join('/');
 	}
 
-	padTo2Digits(num){
+	padTo2Digits(num) {
 		return num.toString().padStart(2, '0');
 	}
 
-	guardarAccionesRecientesModulo(object){
+	guardarAccionesRecientesModulo(object) {
 		let accionesList;
 		if (localStorage.getItem('MODULO_MENSAJES_ACCIONES_RECIENTES')) {
 			accionesList = JSON.parse(localStorage.getItem('MODULO_MENSAJES_ACCIONES_RECIENTES'))
-		} else{
-			accionesList = []   
+		} else {
+			accionesList = []
 		}
-	
+
 		accionesList.push(object)
-		localStorage.setItem('MODULO_MENSAJES_ACCIONES_RECIENTES', JSON.stringify(accionesList))
+		localStorage.setItem('MODULO_MENSAJES_ACCIONES_RECIENTES', JSON.stringify(accionesList));
 	}
 
-	getAccionesRecientesUsuario(modulo){
+	getAccionesRecientesUsuario() {
+		console.log(this.nombreModuloAccion);
 		let accionesList;
-		let usuario = document.getElementById('tipo1').value
+		let usuario = document.getElementById('tipo1').value;
 		if (localStorage.getItem('MODULO_MENSAJES_ACCIONES_RECIENTES')) {
-			accionesList = JSON.parse(localStorage.getItem('MODULO_MENSAJES_ACCIONES_RECIENTES'))
-		} else{
-			accionesList = []   
+			accionesList = JSON.parse(localStorage.getItem('MODULO_MENSAJES_ACCIONES_RECIENTES'));
+		} else {
+			accionesList = [];
 		}
-	
-		let accionesUsuario = accionesList.filter(e => { return e.usuario === usuario && e.identificadorModulo === modulo })
-		return accionesUsuario
+
+		let accionesUsuario = accionesList.filter(e => { return e.usuario === usuario && e.identificadorModulo === this.nombreModuloAccion });
+		return accionesUsuario;
+	}
+
+	ocultarUltimasAcciones() {
+		$("#container-ultimasAcciones").hide(1000);
+		$("#listAccionesRecientes").empty();
+
+	}
+
+	mostrarUltimasAccionesUsuario() {
+		$("#container-ultimasAcciones").show(1000);
+		let listaUltimasAcciones = this.getAccionesRecientesUsuario();
+
+		console.log(listaUltimasAcciones);
+		$("#listAccionesRecientes").empty();
+		let contentAcciones = "";
+		if (listaUltimasAcciones.length > 0) {
+			$.each(listaUltimasAcciones, function (i, accion) {
+				if (accion.tipoMensaje == 'success') {
+					contentAcciones += '<li class="timeline-actions timeline-icon-success active">' +
+						'					<div class="action-time">' + accion.fecha + ' - ' + accion.hora + '</div>' +
+						'					<h6 class="action-title">Ejecutada con &Eacute;xito</h6>' +
+						'					<p class="action-text">' + accion.mensaje + '</p>' +
+						'				</li>';
+				} else if (accion.tipoMensaje == 'warning') {
+					contentAcciones += '<li class="timeline-actions timeline-icon-warning active">' +
+						'					<div class="action-time">' + accion.fecha + ' - ' + accion.hora + '</div>' +
+						'					<h6 class="action-title">Ejecutada con Incidencia</h6>' +
+						'					<p class="action-text">' + accion.mensaje + '</p>' +
+						'				</li>';
+				} else {
+					contentAcciones += '<li class="timeline-actions timeline-icon-error active">' +
+						'					<div class="action-time">' + accion.fecha + ' - ' + accion.hora + '</div>' +
+						'					<h6 class="action-title">Ejecutada con Incidencia<</h6>' +
+						'					<p class="action-text">' + accion.mensaje + '</p>' +
+						'				</li>';
+				}
+			});
+			$("#listAccionesRecientes").append(contentAcciones);
+		} else {
+			$("#ultimasAccionesContent").empty();
+			contentAcciones = '<div class="text-no-acciones">' +
+			'	<i class="icon-not-action fas fa-ban"></i>' +
+			'	<b class="text-not-action">Sin acciones para mostrar.</b>' +
+			'</div>';
+			
+			$("#ultimasAccionesContent").append(contentAcciones);
+		}
+
+	}
+
+	pintarBotonAccionesRecientes() {
+		$("#menuAccionesRealizadas").empty();
+		$("#menuAccionesRealizadas").append(
+			'<ul class="nav nav-tabs small-menuAcciones flex-column" id="menu-acciones" style="display: none;" role="tablist">' +
+			'<li class="nav-item">' +
+			'	<a class="opcion-menuAcciones" id="">' +
+			'		<i class="icon-menu-ultimAccion fas fa-bars"></i>' +
+			'		<span class="titulo-menuAcciones">&Uacute;ltimas Acciones</span>' +
+			'	</a>' +
+			'</li>' +
+			'</ul>' +
+			'<div id="container-ultimasAcciones" class="contenedor-ultimasAcciones" style="display: none;">' +
+			'	<div class="content-fluid">' +
+			'		<div class="" id="headerUltimasAcciones">' +
+			'			<div class="col-12 row" style="padding-right: 0;">' +
+			'				<div class="col-10 mt-2">' +
+			'					<h5>&Uacute;ltimas Acciones</h5>' +
+			'				</div>' +
+			'				<div class="col-2" style="text-align: right; padding-right: 0;">' +
+			'					<div class="row">' +
+			'						<button id="cerrarUltimasAcciones" type="button" class="btn-refreshAcciones">'+
+			'							<i class="fas fa-redo-alt"></i>'+
+			'						</button> &nbsp;&nbsp;' +
+			'						<button id="cerrarUltimasAcciones" type="button" class="btn-close btn-closeAcciones"></button>' +
+			'					</div>' +
+			'				</div>' +
+			'				<hr>' +
+			'			</div>' +
+			'		</div>' +
+			'		<div id="ultimasAccionesContent">' +
+			'			<div class="activity">' +
+			'				<ul id="listAccionesRecientes" class="styleAction action-timeline mb-0">' +
+			'				</ul>' +
+			'			</div>' +
+			'		</div>' +
+			'	</div>' +
+			'</div>'
+		);
+
+		$('#menuAccionesRealizadas').find('.btn-refreshAcciones').on('click', (e) => {
+			this.mostrarUltimasAccionesUsuario();
+		});
+
+		$('#menuAccionesRealizadas').find('.opcion-menuAcciones').on('click', (e) => {
+			this.mostrarUltimasAccionesUsuario();
+		});
+
+		$('#menuAccionesRealizadas').find('.btn-closeAcciones').on('click', (e) => {
+			this.ocultarUltimasAcciones();
+		});
+	}
+
+	inicializarBotonAccionesRecientes() {
+		this.pintarBotonAccionesRecientes();
+
+		if ($("#menu-acciones").hasClass('left-menuAcciones')) {
+			$("#menu-acciones").removeClass('left-menuAcciones');
+		}
+		if ($("#menu-acciones").hasClass('right-menuAcciones')) {
+			$("#menu-acciones").removeClass('rigth-menuAcciones');
+		}
+
+		switch (this.posicionBotonAccion) {
+			case 'TOP_LEFT':
+				$("#menu-acciones").addClass('left-menuAcciones');
+				$("#menu-acciones").css('top', '10%');
+				break;
+			case 'CENTER_LEFT':
+				$("#menu-acciones").addClass('left-menuAcciones');
+				$("#menu-acciones").css('top', '50%');
+				break;
+			case 'BOTTOM_LEFT':
+				$("#menu-acciones").addClass('left-menuAcciones');
+				$("#menu-acciones").css('top', '90%');
+				break;
+			case 'TOP_RIGHT':
+				$("#menu-acciones").addClass('right-menuAcciones');
+				$("#menu-acciones").css('top', '10%');
+				break;
+			case 'CENTER_RIGHT':
+				$("#menu-acciones").addClass('right-menuAcciones');
+				$("#menu-acciones").css('top', '50%');
+				break;
+			case 'BOTTOM_RIGHT':
+				$("#menu-acciones").addClass('right-menuAcciones');
+				$("#menu-acciones").css('top', '90%');
+				break;
+		}
+		$("#menu-acciones").show();
 	}
 }
 

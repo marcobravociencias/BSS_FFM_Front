@@ -970,14 +970,6 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         }
     }
 
-    $scope.mostarUltimasAcciones = function () {
-        $("#container-ultimasAcciones").show(1000);
-    }
-    
-    $scope.ocultarUltimasAcciones = function () {
-        $("#container-ultimasAcciones").hide(1000);
-    }
-
     angular.element(document).ready(function () {
         $('#moduloBandejasSalesforce').addClass('active');
         $("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
