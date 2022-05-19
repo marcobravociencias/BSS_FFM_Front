@@ -492,6 +492,13 @@
 
     }
 
+    #pills-chat .chat-area .chats .chat .chat-body .chat-text {
+        max-width: 190px;
+        padding: 0.5rem 1rem;
+        font-size: .8em;
+
+    }
+
     /* CHAT */
 
     /* ACCIONES */

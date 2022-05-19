@@ -1445,6 +1445,17 @@ span.content-titlehistorico.ng-binding {
   -ms-flex-direction: row-reverse;
 }
 
+#pills-chat .chat-area .chats .chat .chat-body .chat-text {
+  margin: 0 1rem 1rem;
+  box-shadow: 1px 1px 10px 0 rgb(0 0 0 / 14%);
+  border-radius: 5px;
+  max-width: 340px;
+  display: inline-block !important;
+  overflow: hidden;
+  text-overflow: ellipsis !important;
+  padding: 0.5rem 1rem;
+}
+
 .chat-area .chats .chat .chat-body .chat-text {
   margin: 0 1rem 1rem;
   box-shadow: 1px 1px 10px 0 rgb(0 0 0 / 14%);
