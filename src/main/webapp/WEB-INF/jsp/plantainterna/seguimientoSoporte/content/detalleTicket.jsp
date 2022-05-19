@@ -104,10 +104,10 @@
 
                             </div>
                             <div class="container-fluid detalle-content">
-                                <div class="container-text-title-detalle"><span class="text-tile-ticket">N&uacute;n. serie ticket</span>
+                                <div class="container-text-title-detalle"><span class="text-tile-ticket">N&uacute;n.
+                                        serie ticket</span>
                                 </div>
-                                <div class="container-text-content-detalle"><span
-                                        class="text-content-ticket ng-binding"
+                                <div class="container-text-content-detalle"><span class="text-content-ticket ng-binding"
                                         ng-bind="editTicket.detalleTicketSc.noSerieTicket || 'Sin dato'"></span>
                                 </div>
                             </div>
@@ -247,7 +247,8 @@
                         </div>
                         <div class="col-4">
                             <div class="container-fluid detalle-content">
-                                <div class="container-text-title-detalle"><span class="text-tile-ticket">Region</span>
+                                <div class="container-text-title-detalle"><span
+                                        class="text-tile-ticket">Regi&oacute;n</span>
                                 </div>
                                 <div class="container-text-content-detalle"><span
                                         class="text-content-ticket text-camel ng-binding"
@@ -338,6 +339,10 @@
                                                         </div>
                                                         <span class="text2  text-hora-comments" style="float: right;"
                                                             ng-bind="comment.fechaComentario"></span>
+                                                        <div class="avatar">
+                                                            <i class="web-mensaje fas fa-desktop" ng-if="comment.origenSistema == 1"></i>
+                                                            <i class="android-mensaje fab fa-android" ng-if="comment.origenSistema == 2"></i>
+                                                        </div>
                                                     </div>
                                                 </div>
 

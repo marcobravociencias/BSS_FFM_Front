@@ -1,6 +1,6 @@
 var app = angular.module('seguimientoSoporteApp', []);
 
-app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSoporteService', '$filter', 'genericService','busquedaSalesforceService', function ($scope, $q, seguimientoSoporteService, $filter, genericService, busquedaSalesforceService) {
+app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSoporteService', '$filter', 'genericService', 'busquedaSalesforceService', function ($scope, $q, seguimientoSoporteService, $filter, genericService, busquedaSalesforceService) {
     app.busquedaSalesforce($scope, busquedaSalesforceService)
 
 
@@ -358,6 +358,10 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
             if (response.data.respuesta) {
                 if (response.data.result) {
                     let geografia = {};
+                    $(".accordion-button").addClass("collapsed");
+                    $(".accordion-collapse").removeClass("show");
+                    $("#panelsStayOpen-headingOne .accordion-button").click();
+                    $("#panelsStayOpen-headingTwo .accordion-button").click();
                     $scope.ticketDetalle = response.data.result.detalleGeneral;
                     $scope.consultaChat();
                     $scope.ticketDetalle.detalleTicketSc.fallaTxt = $scope.catalogosSeguimiento.fallas.find((e) => e.id == $scope.ticketDetalle.detalleTicketSc.falla).descripcion
@@ -411,9 +415,6 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
                             }
                         });
                     }
-
-
-
                 } else {
                     mostrarMensajeWarningValidacion('No se encontr&oacute; el detalle del ticket')
                 }
@@ -527,7 +528,7 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
         }
     }
 
-    $scope.validacionGenerica = function() {
+    $scope.validacionGenerica = function () {
         if ($scope.historial.length === 1) {
             if ($scope.historial[0].keyObject === 'TK') {
                 $scope.banderaNoticiasTicket = true;

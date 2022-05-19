@@ -124,7 +124,8 @@
 
                             </div>
                             <div class="container-fluid vehiculo-content">
-                                <div class="container-text-title-detalle"><span class="text-tile-vehiculo">N&uacute;n. serie ticket</span>
+                                <div class="container-text-title-detalle"><span class="text-tile-vehiculo">N&uacute;n.
+                                        serie ticket</span>
                                 </div>
                                 <div class="container-text-content-detalle"><span
                                         class="text-content-vehiculo ng-binding"
@@ -273,7 +274,7 @@
                         </div>
                         <div class="col-4">
                             <div class="container-fluid vehiculo-content">
-                                <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Region</span>
+                                <div class="container-text-title-detalle"><span class="text-tile-vehiculo">Regi&oacute;n</span>
                                 </div>
                                 <div class="container-text-content-detalle"><span
                                         class="text-content-vehiculo text-camel ng-binding"
@@ -371,6 +372,12 @@
                                                         </div>
                                                         <span class="text2 text-hora-comments" style="float: right;"
                                                             ng-bind="comment.fechaComentario"></span>
+                                                        <div class="avatar">
+                                                            <i class="web-mensaje fas fa-desktop"
+                                                                ng-if="comment.origenSistema == 1"></i>
+                                                            <i class="android-mensaje fab fa-android"
+                                                                ng-if="comment.origenSistema == 2"></i>
+                                                        </div>
                                                     </div>
                                                 </div>
 

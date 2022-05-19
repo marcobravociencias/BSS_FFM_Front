@@ -502,6 +502,7 @@ div.dataTables_wrapper div.dataTables_filter input {
 .dropleft.show .dropup-comments {
     border: 1px solid #e0e0e0 !important;
 }
+
 .box-comments {
     z-index: 2;
     top: 0;
@@ -534,15 +535,13 @@ div.dataTables_wrapper div.dataTables_filter input {
     text-align: center;
 }
 
-.form-control: focus {
-    color: #000;
-}
 
 .second {
     width: 350px;
     background-color: white;
     border-radius: 4px;
     overflow-wrap: break-word !important;
+    line-height: normal;
     box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
     overflow: hidden;
     text-overflow: ellipsis;
@@ -574,12 +573,13 @@ div.dataTables_wrapper div.dataTables_filter input {
 .box-comments-header {
     /* padding: 0.5em; */
     /* color: #000; */
-padding: 1em;
+    padding: 1em;
     color: #000;
     border-bottom: 1px solid #e0e0e0;
     color: #686868;
     font-size: 1.1em;
-    font-weight: bold;}
+    font-weight: bold;
+}
 
 .no-ingeniero {
     font-size: 0.9em;
@@ -612,6 +612,26 @@ padding: 1em;
     background-color: #fff !important;
     box-shadow: 0 0px 3px 0 rgb(0 0 0 / 5%);
 
+}
+
+.avatar {
+    line-height: 1;
+    font-size: 0.7em;
+    margin-top: 0.5em;
+}
+
+.web-mensaje {
+    color: #fff;
+    background: #63a6e0;
+    padding: 0.4em;
+    border-radius: 25px;
+}
+
+.android-mensaje {
+    color: #fff;
+    background: #7ad119;
+    padding: 0.4em;
+    border-radius: 25px;
 }
 
 /*BOX COMMENTS*/
