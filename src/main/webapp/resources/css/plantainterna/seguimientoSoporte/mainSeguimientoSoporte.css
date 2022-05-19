@@ -499,7 +499,9 @@ div.dataTables_wrapper div.dataTables_filter input {
     text-shadow: -4px 1px 10px rgb(14 51 33 / 28%);
 }
 
-
+.dropleft.show .dropup-comments {
+    border: 1px solid #e0e0e0 !important;
+}
 .box-comments {
     z-index: 2;
     top: 0;
@@ -541,7 +543,7 @@ div.dataTables_wrapper div.dataTables_filter input {
     background-color: white;
     border-radius: 4px;
     overflow-wrap: break-word !important;
-    box-shadow: 4px 4px 8px 5px rgb(0 0 0 / 5%);
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -555,7 +557,7 @@ div.dataTables_wrapper div.dataTables_filter input {
 .text2 {
     font-size: 0.6em;
     font-weight: 500;
-    margin-left: 6px;
+    /* margin-left: 6px; */
     color: #56575b;
 }
 
@@ -570,9 +572,14 @@ div.dataTables_wrapper div.dataTables_filter input {
 }
 
 .box-comments-header {
-    padding: 0.5em;
+    /* padding: 0.5em; */
+    /* color: #000; */
+padding: 1em;
     color: #000;
-}
+    border-bottom: 1px solid #e0e0e0;
+    color: #686868;
+    font-size: 1.1em;
+    font-weight: bold;}
 
 .no-ingeniero {
     font-size: 0.9em;

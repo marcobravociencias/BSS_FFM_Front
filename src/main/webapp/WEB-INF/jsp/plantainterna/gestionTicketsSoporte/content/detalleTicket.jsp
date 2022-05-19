@@ -358,7 +358,7 @@
                                 <div class="dropdown-menu dropup-comments">
                                     <div class="box-comments">
                                         <div class="box-comments-header">
-                                            <span>Historico de comentarios</span>
+                                            <span>Hist&oacute;rico de comentarios</span>
                                         </div>
                                         <div class="container-comments justify-content-center">
                                             <div class="box-content" ng-show="comentariosOrdenTrabajo.length">
@@ -369,7 +369,7 @@
                                                         <div class="d-flex justify-content-between">
                                                             <span class="text2" ng-bind="comment.nombreUsuario"></span>
                                                         </div>
-                                                        <span class="text2" style="float: right;"
+                                                        <span class="text2 text-hora-comments" style="float: right;"
                                                             ng-bind="comment.fechaComentario"></span>
                                                     </div>
                                                 </div>
@@ -381,7 +381,7 @@
                                                 </div>
                                             </div>
                                             <div class="d-flex justify-content-center pt-3 pb-2">
-                                                <textarea type="text" cols="2" placeholder="Agragar comentario"
+                                                <textarea type="text" cols="2" placeholder="Agregar comentario"
                                                     class="form-control form-control-sm inputTicket addtxt"
                                                     id="comentarioTicket" ng-model="comentarioTicket"></textarea>
                                                 <div>

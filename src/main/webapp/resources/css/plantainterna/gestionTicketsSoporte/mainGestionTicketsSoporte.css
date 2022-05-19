@@ -959,7 +959,7 @@ i.icono-noseleccion {
     background-color: white;
     border-radius: 4px;
     overflow-wrap: break-word !important;
-    box-shadow: 4px 4px 8px 5px rgb(0 0 0 / 5%);
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -972,9 +972,10 @@ i.icono-noseleccion {
 
 .text2 {
     font-size: 0.6em;
-    font-weight: 500;
-    margin-left: 6px;
     color: #56575b;
+}
+.text-hora-comments{
+    font-style:italic;
 }
 
 .send-comment {
@@ -987,9 +988,9 @@ i.icono-noseleccion {
 }
 
 .box-comments-header {
-    padding: 0.5em;
+    padding: 1em;
     color: #000;
-}
+border-bottom: 1px solid #e0e0e0;color: #686868;font-size: 1.1em;font-weight: bold;}
 
 .no-ingeniero {
     font-size: 0.9em;
@@ -1051,3 +1052,7 @@ i.icono-noseleccion {
 #opcion-creatickets .btn-editar-cambios, .limpiar-btn {
     margin-top: 0 !important;
 }
+
+.dropleft.show .dropup-comments{
+    
+border: 1px solid #e0e0e0 !important;}
