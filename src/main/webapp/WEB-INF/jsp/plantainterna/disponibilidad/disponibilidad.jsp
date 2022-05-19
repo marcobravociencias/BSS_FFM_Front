@@ -113,26 +113,42 @@ pageEncoding="ISO-8859-1"%>
 												<tbody>
 													<tr>
 														<td>
-															<span>Disponibilidad:</span>
+															<span class="text-indicadores">Disponibilidad:</span>
 															<span id="disponibilidad_span" class="spanTable">Sin info.</span>
 														</td>
 													</tr>
 													<tr>
 														<td>
-															<span>Tipo de orden:</span>
+															<span class="text-indicadores">Tipo de orden:</span>
 															<span id="intervencion_span" class="spanTable">Sin info.</span>
 														</td>
 													</tr>
-													<tr ng-repeat="item in arrayTurnosDisponibilidad">
+													<tr>
+														<td style="border-right: .01rem solid #e2e2e2 !important;">
+															<span id="intervencion_span" class="spanTable">Real</span>
+														</td>
 														<td>
-															<span>{{item.nombre}}</span>
+															<span id="intervencion_span" class="spanTable">Planeado</span>
+														</td>
+													</tr>
+													<tr ng-repeat="item in arrayTurnosDisponibilidad">
+														<td style="border-right: .01rem solid #e2e2e2 !important;">
+															<span class="text-indicadores" ng-bind="item.nombre"></span>
 															<span id="{{item.nombre.toLowerCase()}}_disponibilidad" class="spanTable">Sin info.</span>
+														</td>
+														<td>
+															<span class="text-indicadores" ng-bind="item.nombre"></span>
+															<span id="{{item.nombre.toLowerCase()}}_disponibilidad_planeada" class="spanTable">Sin info.</span>
 														</td>
 													</tr>
 													<tr style="background: #f4f5fc;">
-														<td>
-															<span>Total Capacidad:</span>
+														<td style="border-right: .01rem solid #e2e2e2 !important;">
+															<span class="text-indicadores">Total Capacidad:</span>
 															<span id="total_dispo" class="spanTable">Sin info.</span>
+														</td>
+														<td>
+															<span class="text-indicadores">Total Capacidad:</span>
+															<span id="total_dispo_planeada" class="spanTable">Sin info.</span>
 														</td>
 													</tr>
 												</tbody>

@@ -154,8 +154,11 @@ app.disponibilidadCalendar = function ($scope) {
         let dato = (response.dias !== undefined && response.dias !== null) ? response.dias !== undefined ? response.dias : [] : [];
         let events;
         let totalMatutino = 0;
+        let totalMatutinoPlaneada = 0;
         let totalVespertino = 0;
+        let totalVespertinoPlaneada = 0;
         let totalNocturno = 0;
+        let totalNocturnoPlaneada = 0;
         $.each(dato, function (index, datosDisponibilidad) {
             let totalMatutinoEvent = 0;
             let totalVespertinoEvent = 0;
@@ -165,15 +168,18 @@ app.disponibilidadCalendar = function ($scope) {
                 if ($scope.banderaMatutino && turno.idCatTurno === 1) {
                     totalMatutinoEvent = turno.cantidad;
                     totalMatutino += turno.cantidad;
+                    totalMatutinoPlaneada += turno.cantidadPlaneada;
                 }
 
                 if ($scope.banderaVespertino && turno.idCatTurno === 2) {
                     totalVespertinoEvent = turno.cantidad;
                     totalVespertino += turno.cantidad;
+                    totalVespertinoPlaneada += turno.cantidadPlaneada;
                 }
                 if ($scope.banderaNocturno && turno.idCatTurno === 3) {
                     totalNocturnoEvent = turno.cantidad;
                     totalNocturno += turno.cantidad;
+                    totalNocturnoPlaneada += turno.cantidadPlaneada;
                 }
             });
             let tittleMatutino = ($scope.banderaMatutino) ? 'Matutino: ' + totalMatutinoEvent + '\n' : '';
@@ -199,14 +205,18 @@ app.disponibilidadCalendar = function ($scope) {
         })
         if ($scope.banderaMatutino) {
             document.getElementById('matutino_disponibilidad').innerHTML = totalMatutino;
+            document.getElementById('matutino_disponibilidad_planeada').innerHTML = totalMatutinoPlaneada;
         }
         if ($scope.banderaVespertino) {
             document.getElementById('vespertino_disponibilidad').innerHTML = totalVespertino;
+            document.getElementById('vespertino_disponibilidad_planeada').innerHTML = totalVespertinoPlaneada;
         }
         if ($scope.banderaNocturno) {
             document.getElementById('nocturno_disponibilidad').innerHTML = totalNocturno;
+            document.getElementById('nocturno_disponibilidad_planeada').innerHTML = totalNocturnoPlaneada;
         } 
         document.getElementById('total_dispo').innerHTML = totalMatutino + totalVespertino + totalNocturno;
+        document.getElementById('total_dispo_planeada').innerHTML = totalMatutinoPlaneada + totalVespertinoPlaneada + totalNocturnoPlaneada;
         $scope.inicialCalendario();
     }
 
