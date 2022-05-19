@@ -50,6 +50,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     $scope.idPuestoSupervisor = null;
     $scope.fileFotoUsuario = null;
 	$scope.respaldoIntervenciones = [];
+	$scope.listaResultCuadrillas = [];
 	
 //	CONFIGURACIÓN DE TABS
 	$scope.tabInformacion = true;
@@ -126,12 +127,12 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
         ]).then(function(results) {
         	
         	//********************* PENDIENTE VALIDAR *********************
-        	var listaResultCuadrillas = results[7].data.result.tipoCuadrillas;
+        	$scope.listaResultCuadrillas = results[7].data.result.tipoCuadrillas;
         	$scope.listaCuadrillas = [];
-        	angular.forEach(listaResultCuadrillas,function(cuadrllaPadre,index){
+        	angular.forEach($scope.listaResultCuadrillas,function(cuadrllaPadre,index){
         		cuadrllaPadre.checkedOpcion = 0;
     			if(cuadrllaPadre.idPadre == null){
-    				cuadrllaPadre.cuadrillasHijas = listaResultCuadrillas.filter(e => {return e.idPadre == cuadrllaPadre.id});
+    				cuadrllaPadre.cuadrillasHijas = $scope.listaResultCuadrillas.filter(e => {return e.idPadre == cuadrllaPadre.id});
     				$scope.listaCuadrillas.push(cuadrllaPadre);
     			}
     		});
@@ -1813,23 +1814,23 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		}
 		
 		//PESTAÑA INGENIEROS
-//    	if($scope.tabIngenieros){
-//    		var checkIngs = 0;
-//    		angular.forEach($scope.listaIngenieros,function(ingeniero,index){
-//    			if(ingeniero.checkedOpcion == true){
-//    				checkIngs++;
-//    			}
-//    		});
-//    		if(checkIngs < 1){
-//    			validacionIngenieros = false;
-//    			mensaje = mensaje + "<br/> *Ingeniero(s)";
-//    			$("#labelIngenierosSeleccionados").css("color", "#f55756");
-//    			$("#contenedorIngenierosRegistro").css("border", "#f55756 solid 1px");
-//    		}else{
-//    			$("#labelIngenierosSeleccionados").css("color", "rgb(70, 88, 107)");
-//    			$("#contenedorIngenierosRegistro").css("border", "white solid 0px");
-//    		}
-//    	}
+    	if($scope.tabIngenieros){
+    		var checkIngs = 0;
+    		angular.forEach($scope.listaIngenieros,function(ingeniero,index){
+    			if(ingeniero.checkedOpcion == true){
+    				checkIngs++;
+    			}
+    		});
+    		if(checkIngs < 1){
+    			validacionIngenieros = false;
+    			mensaje = mensaje + "<br/> *Ingeniero(s)";
+    			$("#labelIngenierosSeleccionados").css("color", "#f55756");
+    			$("#contenedorIngenierosRegistro").css("border", "#f55756 solid 1px");
+    		}else{
+    			$("#labelIngenierosSeleccionados").css("color", "rgb(70, 88, 107)");
+    			$("#contenedorIngenierosRegistro").css("border", "white solid 0px");
+    		}
+    	}
 		
 		//PESTAÑA SUPERVISORES CENTRALIZADOS
     	if($scope.tabSupervisorCentralizado){

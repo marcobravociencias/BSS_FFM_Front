@@ -95,6 +95,24 @@
         	</select>
         </div>
     </div>
+    <div class="col-md-4" ng-if="tabInformacionVW_CUADRILLA_mod">
+		<label class="span-consulta"><i class="fa fa-building"></i> Cuadrillas</label>
+		<div class="dropdown">
+			<input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="NO HAY SELECCI&Oacute;N" type="text" id="cuadrilla_select_mod" class="form-control inputFormulario" style="height: 34px; cursor: pointer;" />
+		    <ul class="dropdown-menu drop-down-filters" style="background-color: #F5F5F5; padding: 1em !important; width: 80%; border: 1px solid #d7d7d7 !important;">          
+		        <div ng-repeat="cuadrillaPadre in listaCuadrillas track by $index">
+		        	<label>{{cuadrillaPadre.descripcion}}</label>
+		            <li ng-repeat="cuadrillaHija in cuadrillaPadre.cuadrillasHijas" class="element-menu-filter">
+		            	<label class="dropdown-item form-check-inputfiltro">
+		                	<input id="" ng-click="cuadrillaSeleccionMod(cuadrillaHija)" class="form-check-input" type="radio" ng-model="detalleUsuario.cuadrilla" ng-value="cuadrillaHija.id" ng-checked="detalleUsuario.cuadrilla == cuadrillaHija.id" />
+		                    <span for="" class="dropdown-item item-text-filtro" ng-bind="cuadrillaHija.descripcion"></span>
+						</label>
+					</li>
+		            <li ng-if="!$last" class="elemento_menu dropdown-divider"></li>
+				</div>
+			</ul>
+		</div>
+    </div>
     <div class="col-md-4" ng-if="tabInformacionVW_ASIG_AUTOMATICA_mod">
 		<label class="span-consulta"><i class="fas fa-sync"></i> Asignaci&oacute;n autom&aacute;tica*</label>
         <div class="input-group">
