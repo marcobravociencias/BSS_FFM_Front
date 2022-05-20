@@ -461,13 +461,13 @@ a.ui-corner-all {
 
 .boton-factibilidad:hover {
     background-color: white;
-    color: #7716fa;
+    color: var(--estandar-color);
 }
 
 .boton-factibilidad {
     background-color: white;
-    color: #7716fa;
-    border: solid 1px #7716fa;
+    color: var(--estandar-color);
+    border: solid 1px var(--estandar-color);
     /* cursor: none !important; */
     float: right;
     border-radius: 5px;
@@ -524,8 +524,8 @@ a.ui-corner-all {
 
 .content-actualizar .boton-factibilidad {
     background: white;
-    color: #7716fa;
-    border: 1px solid #7716fa;
+    color: var(--estandar-color);
+    border: 1px solid var(--estandar-color);
     border-radius: 5px;
     font-size: 0.7em;
     padding: 0.2em 1em;

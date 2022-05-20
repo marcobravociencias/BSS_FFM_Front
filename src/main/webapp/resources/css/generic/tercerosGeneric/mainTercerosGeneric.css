@@ -52,8 +52,8 @@
 
 #btnConsultarOts {
     background-color: #ffffff;
-    color: #7716fa;
-    border: solid 1px #7716fa !important;
+    color: var(--estandar-color);
+    border: solid 1px var(--estandar-color) !important;
     padding: .6em 1.5em;
     border-radius: 5px;
     font-family: 'Montserrat';

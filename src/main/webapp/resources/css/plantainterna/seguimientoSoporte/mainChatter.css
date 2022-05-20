@@ -83,7 +83,7 @@
     border-top: 1px solid #dbdbdb;
 }
 .enviar-comentario{
-    background: #7716fa;
+    background: var(--estandar-color);
     color:white;
     box-shadow:none;
     border-radius:0;

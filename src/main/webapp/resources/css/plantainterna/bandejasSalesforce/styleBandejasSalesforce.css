@@ -825,7 +825,7 @@ i.fa.fa-times-circle.cancel {
 }
 
 #myTab .nav-link.active {
-  color: #7716fa !important;
+  color: var(--estandar-color) !important;
   font-weight: bolder;
   background: #f9f9f9;
 }
@@ -907,7 +907,7 @@ i.fa.fa-times-circle.cancel {
 }
 
 .small-menu .opcion-menu:hover .titulo-menu {
-  color: #7700ff;
+  color: var(--estandar-color);
   font-weight: bold;
 }
 
@@ -915,7 +915,7 @@ i.fa.fa-times-circle.cancel {
   white-space: nowrap;
   width: 100%;
   text-align: center;
-  padding-left: 1em;
+  padding-left: 0.8em;
   transition: width 1s ease;
 }
 
@@ -952,17 +952,17 @@ i.fa.fa-times-circle.cancel {
 }
 
 span.titulo-menu.active-text-menu {
-  color: #7700ff;
+  color: var(--estandar-color);
   font-weight: bold;
 }
 
 .icon-menu-left {
-  color: #7700ff;
+  color: var(--estandar-color);
   color: #7e7e7e;
 }
 
 .active-iconmenu {
-  color: #7700ff;
+  color: var(--estandar-color);
   /* font-size: 1.2em; */
   font-weight: bold;
 }
@@ -1204,8 +1204,8 @@ label.label-filter {
 #btn_consultar_rescataventas,
 #btn_consultar_pendientesActivar {
   background-color: #ffffff;
-  color: #7716fa;
-  border: solid 1px #7716fa !important;
+  color: var(--estandar-color);
+  border: solid 1px var(--estandar-color) !important;
   padding: 0.5em 2em;
   border-radius: 5px;
   font-size: 0.7em;
@@ -1288,7 +1288,7 @@ div.dataTables_wrapper div.dataTables_filter input {
 }
 
 .btnTables {
-  background-color: #7716fa;
+  background-color: var(--estandar-color);
   color: #fff !important;
   -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
   box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
@@ -1303,7 +1303,7 @@ div.dataTables_wrapper div.dataTables_filter input {
 }
 
 span.btn-floating.btn-sm.btn-secondary.waves-effect.waves-light.acciones {
-  background-color: #7716fa !important;
+  background-color: var(--estandar-color) !important;
   color: #fff !important;
   -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
   box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
@@ -1312,9 +1312,9 @@ span.btn-floating.btn-sm.btn-secondary.waves-effect.waves-light.acciones {
 }
 
 .btnAgendamiento {
-  background-color: #7716fa !important;
+  background-color: var(--estandar-color) !important;
   cursor: pointer;
-  border: 1px solid #7716fa;
+  border: 1px solid var(--estandar-color);
 }
 
 /* TABLES */
@@ -1349,8 +1349,8 @@ span.btn-floating.btn-sm.btn-secondary.waves-effect.waves-light.acciones {
 
 .content-actualizar .boton-factibilidad {
   background: white;
-  color: #7716fa;
-  border: 1px solid #7716fa;
+  color: var(--estandar-color);
+  border: 1px solid var(--estandar-color);
   border-radius: 5px;
   font-size: 0.7em;
   padding: 0.2em 1em;
@@ -1620,14 +1620,14 @@ a:disabled:hover {
 
 #calendar_agendamiento button.fc-prev-button.fc-button.fc-state-default.fc-corner-left,
 #calendar_agendamiento button.fc-next-button.fc-button.fc-state-default.fc-corner-right {
-  background: #7716fa !important;
+  background: var(--estandar-color) !important;
   padding: 5px 12px;
   margin: 2px 1px 5px;
 }
 
 .fc .fc-toolbar-title {
   text-transform: capitalize !important;
-  color: #7716fa !important;
+  color: var(--estandar-color) !important;
   font-weight: bold;
   font-family: "Montserrat", sans-serif;
   font-size: 20px !important;

@@ -49,22 +49,22 @@
 
 .txtCabeceraTabla:hover{
 	cursor: pointer !important;
-	color: #7716fa !important;
+	color: var(--estandar-color) !important;
 }
 
 .iconoOjoColumna:hover{
 	cursor: pointer !important;
-	color: #7716fa !important;
+	color: var(--estandar-color) !important;
 }
 
 .iconoMostrarColumnas:hover{
 	cursor: pointer !important;
-	color: #7716fa !important;
+	color: var(--estandar-color) !important;
 }
 
 .iconoMostrarOcultarColumnas:hover{
 	cursor: pointer !important;
-	color: #7716fa !important;
+	color: var(--estandar-color) !important;
 }
 
 /* --------------------------------------------------------------------- */
@@ -352,8 +352,8 @@ div.dataTables_paginate li.next a:after{
 }
 button.btn.btn-gris{
 	background-color: #ffffff;
-	color: #7716fa;
-	border: solid 1px #7716fa !important;
+	color: var(--estandar-color);
+	border: solid 1px var(--estandar-color) !important;
 	padding: .3em 2em;
 	border-radius: 5px;
 	font-size: .7em;
@@ -408,8 +408,8 @@ button.btn.btn-gris{
 
  button#search-arbol-cluster {
       background-color: #ffffff;
-      color: #7716fa;
-      border: solid 1px #7716fa !important;
+      color: var(--estandar-color);
+      border: solid 1px var(--estandar-color) !important;
       padding: .3em 2em;
       border-radius: 5px;
       font-size: .7em;
@@ -503,18 +503,18 @@ table.dataTable thead th, table.dataTable thead td{
 }
 
 .pestaniaActivada{
-   border-bottom: .3em solid #7716FA;
+   border-bottom: .3em solid var(--estandar-color);
 }
 .pestaniaActivada{
     color: #000000 !important;
 }	
 
 .linkGeografia{
-    color: #7716fa !important;
+    color: var(--estandar-color) !important;
 }
 
 .iconoGeografia{
-    color: #7716fa !important;
+    color: var(--estandar-color) !important;
 }
 
 .iconoOjoColumna{
@@ -544,7 +544,7 @@ table.dataTable thead th, table.dataTable thead td{
 
 .contenedorCheckTodasSkillsFiltro{
 	margin: 1.2em 0em 0em;
-	color: #7716fa !important;
+	color: var(--estandar-color) !important;
 }
 
 .zui-wrapper {
@@ -649,7 +649,7 @@ table.dataTable thead th, table.dataTable thead td{
 }
 
 .btn-guardar-cambios {
-    background-color: #7716FA;
+    background-color: var(--estandar-color);
     border: 0;
     -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
     box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);

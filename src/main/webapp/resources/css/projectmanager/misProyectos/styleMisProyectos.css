@@ -397,8 +397,8 @@
 .style_fa_angle {
     width: 18px;
     height: 18px;
-    border: 1px solid #7716fa;
-    color: #7716fa;
+    border: 1px solid var(--estandar-color);
+    color: var(--estandar-color);
     text-align: center;
     font-size: 1.2em;
     font-weight: bold;
@@ -419,7 +419,7 @@
     color: #7e7e7e !important;
 }.header-text-actividad {
     font-size: .9em;
-    color: #7716FA !important;
+    color: var(--estandar-color) !important;
     font-weight:bold;
 }
 .text-content-actividad {

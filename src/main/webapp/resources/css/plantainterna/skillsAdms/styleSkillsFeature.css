@@ -205,7 +205,7 @@ p.text-tecnico-nombre {
 }
 
 #myTab .nav-link.active {
-  color: #7716fa !important;
+  color: var(--estandar-color) !important;
   font-weight: bolder;
   background:#f9f9f9;
 }

@@ -15,7 +15,7 @@
 
 #tabs_info_detalle_inspector_falla .nav-link.active,
 #tabs_info_detalle_detencion_falla .nav-link.active {
-    color: #7716fa !important;
+    color: var(--estandar-color) !important;
     font-weight: bolder;
     background: #f9f9f9;
 }

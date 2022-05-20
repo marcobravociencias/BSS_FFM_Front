@@ -37,8 +37,8 @@
 
     #btn-consultar-disponibilidad {
         background-color: #ffffff;
-        color: #7716fa;
-        border: solid 1px #7716fa !important;
+        color: var(--estandar-color);
+        border: solid 1px var(--estandar-color) !important;
         padding: 0.5em 1.5em;
         border-radius: 5px;
         font-size: 0.6em;
@@ -71,7 +71,7 @@
     }
 
     span.btnModificarUsuario {
-        background-color: #7716fa !important;
+        background-color: var(--estandar-color) !important;
         color: #fff !important;
         -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
         box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);

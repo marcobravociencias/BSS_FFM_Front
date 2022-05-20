@@ -72,7 +72,7 @@
 .btnSeguimiento:active, .btnSeguimiento:focus .btnSeguimiento:hover {
     background-color: white !important;
     box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
-    color: #7716fa;
+    color: var(--estandar-color);
 }
 
 
@@ -83,8 +83,8 @@
 
 .btnSeguimiento {
     background-color: #ffffff !important;
-    color: #7716fa !important;
-    border: solid 1px #7716fa !important;
+    color: var(--estandar-color) !important;
+    border: solid 1px var(--estandar-color) !important;
     padding: .5em 1.5em;
     border-radius: 5px;
     font-size: 0.7em;

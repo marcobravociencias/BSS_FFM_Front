@@ -143,7 +143,7 @@
 .form-register .steps .done::before,
 .form-register .steps li.done a .step-icon,
 .form-register .steps li.done a:active .step-icon {
-    background: #854d96;
+    background: var(--estandar-color);
 }
 
 .form-register .steps li.current a .step-icon,

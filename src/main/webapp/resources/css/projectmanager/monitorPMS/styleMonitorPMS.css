@@ -1453,13 +1453,13 @@ div#nuevo_folio-table_info {
 .btn_consultar:active, .btn_consultar:focus .btn_consultar:hover {
     background-color: white !important;
     box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
-    color: #7716fa;
+    color: var(--estandar-color);
 }
 
 .btn_consultar {
     background-color: #ffffff !important;
-    color: #7716fa !important;
-    border: solid 1px #7716fa !important;
+    color: var(--estandar-color) !important;
+    border: solid 1px var(--estandar-color) !important;
     padding: .5em 2.5em;
     border-radius: 5px;
     font-size: 0.6em;
@@ -1616,15 +1616,15 @@ div.dataTables_wrapper div.dataTables_length label {
 
 .btn-encabezado {
     background-color: #ffffff;
-    color: #7716fa;
-    border: solid 1px #7716fa;
+    color: var(--estandar-color);
+    border: solid 1px var(--estandar-color);
     padding: 0.3em 2em;
     border-radius: 5px;
     font-size: 0.7em;
 }
 
 .btn-encabezado:hover{
-    color: #7716fa;
+    color: var(--estandar-color);
 }
 
 #refrescar-detalle,
@@ -1636,8 +1636,8 @@ div.dataTables_wrapper div.dataTables_length label {
 #refrescar-segmento, 
 #segmento-filtros{
     background-color: white;
-    color: #7716fa;
-    border: solid 1px #7716fa;
+    color: var(--estandar-color);
+    border: solid 1px var(--estandar-color);
     padding: 0.3em 1em;
     border-radius: 5px;
     font-size: 0.7em;

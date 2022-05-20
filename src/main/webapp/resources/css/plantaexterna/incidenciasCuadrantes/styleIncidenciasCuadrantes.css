@@ -75,8 +75,8 @@ i.icono-noseleccion {
 
 #btn_consultar_incidencias {
     background-color: #ffffff;
-    color: #7716fa;
-    border: solid 1px #7716fa !important;
+    color: var(--estandar-color);
+    border: solid 1px var(--estandar-color) !important;
     padding: 0.5em 2em;
     border-radius: 5px;
     font-size: 0.7em;

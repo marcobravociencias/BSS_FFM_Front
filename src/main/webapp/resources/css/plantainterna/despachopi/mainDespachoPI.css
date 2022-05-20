@@ -348,8 +348,8 @@ div#calendar {
 
 #buscar-otsasignadas {
   background-color: #ffffff;
-  color: #7716fa;
-  border: solid 1px #7716fa;
+  color: var(--estandar-color);
+  border: solid 1px var(--estandar-color);
   padding: 0.3em 2em;
   border-radius: 5px;
   font-size: 0.7em;
@@ -357,8 +357,8 @@ div#calendar {
 
 #refrescar-otsasignadas {
   background-color: white;
-  color: #7716fa;
-  border: solid 1px #7716fa;
+  color: var(--estandar-color);
+  border: solid 1px var(--estandar-color);
   padding: 0.3em 1em;
   border-radius: 5px;
   font-size: 0.7em;
@@ -508,12 +508,12 @@ span#buscar-operario {
 
 /* #table-ot-pendientes_wrapper li.paginate_button.active a, #table-reporte_wrapper li.paginate_button.active a {
   background: transparent !important;
-  color: #7716fa;
+  color: var(--estandar-color);
   font-weight: bold;
 } */
 #table-ot-pendientes_wrapper li.paginate_button.active a {
   background: transparent !important;
-  color: #7716fa;
+  color: var(--estandar-color);
   font-weight: bold;
 }
 
@@ -950,7 +950,7 @@ p.top-title-comentario {
   margin-top: 0.3em;
   margin-right: 0.5em;
   font-weight: bold !important;
-  color: #7716fa;
+  color: var(--estandar-color);
   cursor: pointer;
 }
 
@@ -1183,8 +1183,8 @@ h5.title-nombrecliente {
 #colores-ots {
   /* display:inline; */
   background-color: #ffffff;
-  color: #7716fa;
-  border: solid 1px #7716fa;
+  color: var(--estandar-color);
+  border: solid 1px var(--estandar-color);
   padding: 0.3em 2em;
   border-radius: 5px;
   font-size: 0.7em;
@@ -1216,7 +1216,7 @@ h5.title-nombrecliente {
 }
 
 .paleta-color-despacho:hover {
-  color: #7716fa;
+  color: var(--estandar-color);
 }
 
 .search-parent-buscarot {
@@ -1281,13 +1281,13 @@ h5.title-paleta-colores {
 
 .ptext-confirma {
   font-weight: bold;
-  color: #7716fa;
+  color: var(--estandar-color);
   display: contents;
 }
 
 .ptext-desconfirma {
   font-weight: bold;
-  color: #7716fa;
+  color: var(--estandar-color);
   display: contents;
 }
 
@@ -2047,8 +2047,8 @@ b.text-not-permiso {
 
 #buscarReporte {
   background-color: #ffffff;
-  color: #7716fa;
-  border: solid 1px #7716fa;
+  color: var(--estandar-color);
+  border: solid 1px var(--estandar-color);
   padding: 0.3em 2em;
   border-radius: 5px;
   font-size: 0.7em;
@@ -2812,8 +2812,8 @@ i.fas.fa-lock.iconoAsignacionOtPermiso {
 
 #btnEditarDireccionOT {
   background-color: #ffffff;
-  color: #7716fa;
-  border: solid 1px #7716fa;
+  color: var(--estandar-color);
+  border: solid 1px var(--estandar-color);
   padding: 0.3em 2em;
   border-radius: 5px;
   font-size: 0.7em;
@@ -2830,8 +2830,8 @@ i.fas.fa-lock.iconoAsignacionOtPermiso {
 
 #btnRegresarVistaCambioDireccion {
   background-color: #ffffff;
-  color: #7716fa;
-  border: solid 1px #7716fa;
+  color: var(--estandar-color);
+  border: solid 1px var(--estandar-color);
   padding: 0.3em 2em;
   border-radius: 5px;
   font-size: 0.7em;

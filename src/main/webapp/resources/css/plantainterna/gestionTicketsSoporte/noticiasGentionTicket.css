@@ -26,7 +26,7 @@
     position: absolute;
     right: 0;
     /* top: .2em; */
-    color: #7716fa;
+    color: var(--estandar-color);
     font-weight: bold;
     font-size: .9em;
     text-decoration: underline;
@@ -270,18 +270,18 @@ span.text-content-ticket {
 }
 
 #detalleTicket-tab.active {
-  color: #7716fa;
-  border-color: #7716fa;
+  color: var(--estandar-color);
+  border-color: var(--estandar-color);
 }
 
 #asignarTicket-tab.active {
-  color: #7716fa;
-  border-color: #7716fa;
+  color: var(--estandar-color);
+  border-color: var(--estandar-color);
 }
 
 #comentariosTicket-tab.active {
-  color: #7716fa;
-  border-color: #7716fa;
+  color: var(--estandar-color);
+  border-color: var(--estandar-color);
 }
 
 .content-text-send {
@@ -319,7 +319,7 @@ span.text-content-ticket {
     padding-bottom: 0;
 }
 #myTab .nav-link.active {
-    color: #7716fa !important;
+    color: #3942d7 !important;
     font-weight: bolder;
     background: #f9f9f9;
 }
@@ -405,7 +405,7 @@ a.descarga-adjuntadocomment {
 }
 
 .titulo-comentarios-ticket{
-  color: #7716fa !important;
+  color: var(--estandar-color) !important;
   font-weight: bold;
 }
 
@@ -507,7 +507,7 @@ a.descarga-adjuntadocomment {
 }
 
 #tabs-tickets .nav-link.active {
-    color: #7716fa !important;
+    color: var(--estandar-color) !important;
     font-weight: bolder;
     background: #f9f9f9;
 }

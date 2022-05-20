@@ -71,8 +71,8 @@ body {
 
 .btn-consultar-busqueda {
   background-color: #ffffff !important;
-  color: #7716fa !important;
-  border: solid 1px #7716fa !important;
+  color: var(--estandar-color) !important;
+  border: solid 1px var(--estandar-color) !important;
   padding: 0.3em 2em !important;
   border-radius: 5px !important;
   font-size: 0.7em !important;
@@ -1288,7 +1288,7 @@ span.cerrarnoticias {
   position: absolute;
   right: 0;
   top: .2em;
-  color: #7716fa;
+  color: var(--estandar-color);
   font-weight: bold;
   font-size: .9em;
   text-decoration: underline;

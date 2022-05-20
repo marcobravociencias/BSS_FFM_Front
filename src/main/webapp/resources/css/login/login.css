@@ -157,7 +157,7 @@ button#submit, #restabler_password_login {
     width: 100%;
     height: 47px;
     border-radius: 5px;
-    background-color: #7716fa !important;
+    background-color: var(--estandar-color) !important;
     margin-top: 3em;
     border: none;
     /* float: right; */
@@ -326,7 +326,7 @@ img.logo-login_sin_permiso {
     line-height: 0.5em;
     letter-spacing: normal;
     text-align: left;
-    color: #7716fa;
+    color: var(--estandar-color);
 }
 .texto_credenciales {
     text-align: center;
@@ -353,9 +353,9 @@ img.logo-login_sin_permiso {
     width: 208px;
     height: 40px;
     border-radius: 5px;
-    border: solid 1px #7716fa;
+    border: solid 1px var(--estandar-color);
     background: white;
-    color: #7716fa;
+    color: var(--estandar-color);
     margin-top: 2em;
     max-height: 2.2em;
 }
@@ -408,7 +408,7 @@ button#ingresar-btn-login, #restabler_password_login {
     width: 100%;
     height: 47px;
     border-radius: 5px;
-    background-color: #7716fa !important;
+    background-color: var(--estandar-color) !important;
     margin-top: 3em;
     border: none;
     /* float: right; */

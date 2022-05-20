@@ -54,13 +54,13 @@
 .btnTotal:active, .btnTotal:focus .btnTotal:hover {
     background-color: white !important;
     box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
-    color: #7716fa;
+    color: var(--estandar-color);
 }
 
 .btnTotal {
     background-color: #ffffff !important;
-    color: #7716fa !important;
-    border: solid 1px #7716fa !important;
+    color: var(--estandar-color) !important;
+    border: solid 1px var(--estandar-color) !important;
     padding: .6em 1.5em;
     border-radius: 5px;
     font-size: 0.9em;
@@ -82,14 +82,14 @@
 
 #calendar_disponibilidad button.fc-prev-button.fc-button.fc-state-default.fc-corner-left,
 #calendar_disponibilidad button.fc-next-button.fc-button.fc-state-default.fc-corner-right {
-    background: #7716fa !important;
+    background: var(--estandar-color) !important;
     padding: 5px 12px;
     margin: 2px 1px 5px;
 }
 
 .fc .fc-toolbar-title {
     text-transform: capitalize !important;
-    color: #7716fa !important;
+    color: var(--estandar-color) !important;
     font-weight: bold;
     font-family: "Montserrat", sans-serif;
     font-size: 20px !important;

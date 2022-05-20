@@ -168,8 +168,8 @@
 
     #buscar-otsasignadas {
         background-color: #ffffff;
-        color: #7716fa;
-        border: solid 1px #7716fa;
+        color: #3942d7;
+        border: solid 1px #3942d7;
         padding: 0.3em 2em;
         border-radius: 5px;
         font-size: 0.5em;
@@ -216,8 +216,8 @@
 
     #refrescar-otsasignadas {
         background-color: white;
-        color: #7716fa;
-        border: solid 1px #7716fa;
+        color: var(--estandar-color);
+        border: solid 1px var(--estandar-color);
         padding: 0.3em 1em;
         border-radius: 5px;
         font-size: 0.6em;
@@ -781,8 +781,8 @@
 
     #buscarReporte {
         background-color: #ffffff;
-        color: #7716fa;
-        border: solid 1px #7716fa;
+        color: var(--estandar-color);
+        border: solid 1px var(--estandar-color);
         padding: 0.3em 2em;
         border-radius: 5px;
         font-size: 0.65em;
