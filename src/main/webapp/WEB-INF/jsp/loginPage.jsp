@@ -18,6 +18,8 @@
         <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
         <link href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css"  rel="stylesheet"/>
         <link href="${pageContext.request.contextPath}/resources/css/login/login.css"  rel="stylesheet" >
+		<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+		<link href="${pageContext.request.contextPath}/resources/css/plantainterna/generic/navbar.css?v=${sessionScope.versionDepl}"rel="stylesheet" />
     </head>
 	<body>
 	
