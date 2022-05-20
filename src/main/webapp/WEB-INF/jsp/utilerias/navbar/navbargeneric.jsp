@@ -10,6 +10,7 @@
 <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 <jsp:include page="./modalFotoDespacho.jsp"></jsp:include>
 <jsp:include page="./modalCambiaContrasenia.jsp"></jsp:include>
+<input type="hidden" id="numempleadohidden" value="${userStore.numEmpleado}">
 
 <header class="header-navbar-p">
     <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-menu-generic">

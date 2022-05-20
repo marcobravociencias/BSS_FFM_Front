@@ -1,6 +1,8 @@
 
 var app = angular.module('ticketsSoporteApp', []);
 
+var objectTempAccion = new GenericAccionRealizada('moduloGestionTickets', 'TOP_RIGHT');
+objectTempAccion.inicializarBotonAccionesRecientes();
 app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoporteService', 'genericService', 'busquedaSalesforceService', '$filter', function ($scope, $q, gestionTicketSoporteService, genericService, busquedaSalesforceService, $filter) {
     app.ticketControllerMapa($scope, $q, gestionTicketSoporteService, genericService)
     app.busquedaSalesforce($scope, busquedaSalesforceService)
@@ -909,6 +911,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                         $scope.isMensajeSuccessOt = false
                         $scope.isMensajeErrorOt = false
                         $scope.isGuardadoProcess = true
+                        let tituloAccion='Creaci&oacute;n de ticket' 
                         if (response.data !== undefined) {
                             if (response.data.respuesta) {
                                 $scope.tecnicoAsignado = {};
@@ -919,25 +922,23 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                                 }
                                 $scope.cleanForm();
                                 toastr.success(response.data.resultDescripcion);
-                               
-                                //genericService.agregarMensajeAccionSession(accionesRecientesModulo('moduloGestionTickets', 'Se ha creado el ticket 2021  con la OT 20299292', 'success', document.getElementById('tipo1').value))
-                                //guardarAccionesRecientesModulo(accionesRecientesModulo('moduloGestionTickets', 'Se ha creado el ticket 2021  con la OT 20299292', 'success', document.getElementById('tipo1').value))
+                                objectTempAccion.guardarAccionesRecientesModulo( response.data.resultDescripcion, MENSAJE_ACCION_EXITO , tituloAccion);
                                 objetoAccion.guardarAccionesRecientesModulo(objetoAccion)
                             } else {
                                 swal.close();
                                 mostrarMensajeErrorAlert(response.data.resultDescripcion);
-                                //genericService.agregarMensajeAccionSession(accionesRecientesModulo('moduloGestionTickets', 'No se pudo generar session id salesforce', 'warning', document.getElementById('tipo1').value))
-                                //guardarAccionesRecientesModulo(accionesRecientesModulo('moduloGestionTickets', 'Se ha creado el ticket 2021  con la OT 20299292', 'warning', document.getElementById('tipo1').value))
-                              
                                 $scope.isMensajeErrorOt = true
+                                let mensajeEnvio=  'Ha ocurrido un error al crear el ticket con la cuenta'+$scope.ticketSoporteR.cuenta
+                                objectTempAccion.guardarAccionesRecientesModulo( mensajeEnvio , MENSAJE_ACCION_ERROR , tituloAccion );
                             }
                             $scope.mensajeRequestCreacion = response.data.resultDescripcion
 
                         } else {
+                            let mensajeEnvio=  'Ha ocurrido un error al crear el ticket con la cuenta'+$scope.ticketSoporteR.cuenta
+                            objectTempAccion.guardarAccionesRecientesModulo(  mensajeEnvio,  MENSAJE_ACCION_ERROR , tituloAccion );   
+
                             swal.close();
                             mostrarMensajeErrorAlert(response.data.resultDescripcion);
-                            //genericService.agregarMensajeAccionSession(accionesRecientesModulo('moduloGestionTickets', 'No se pudo generar session id salesforce', 'warning', document.getElementById('tipo1').value))
-                            //guardarAccionesRecientesModulo(accionesRecientesModulo('moduloGestionTickets', 'Se ha creado el ticket 2021  con la OT 20299292', 'warning', document.getElementById('tipo1').value))
                             $scope.mensajeRequestCreacion = response.data.resultDescripcion
                             $scope.isMensajeErrorOt = true
                         }

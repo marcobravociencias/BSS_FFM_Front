@@ -138,7 +138,8 @@
     <script type="text/javascript"
         src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker.es.min.js"></script>
     <!-- fin -->
-
+    <script
+        src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
     <script
         src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionTicketsSoporte/gestionTicketsSoporteController.js?v=${sessionScope.versionDepl}"></script>
     <script
@@ -150,8 +151,7 @@
         src="${pageContext.request.contextPath}/resources/js/plantainterna/gestionTicketsSoporte/jsonGestionTicketsSoporte.js?v=${sessionScope.versionDepl}"></script>
     <script
         src="${pageContext.request.contextPath}/resources/js/generic/genericService.js?v=${sessionScope.versionDepl}"></script>
-    <script
-        src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
+
     <script
         src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js?v=${sessionScope.versionDepl}"></script>
     <script

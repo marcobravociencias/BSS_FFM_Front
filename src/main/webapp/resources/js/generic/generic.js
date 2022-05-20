@@ -1,4 +1,8 @@
 
+const MENSAJE_ACCION_EXITO="success"
+const MENSAJE_ACCION_ERROR='error';
+const MENSAJE_ACCION_WARNING='warning'
+const MENSAJE_ACCION_INFO='info'
 class GenericMapa {
 	/**
 	 * 
@@ -115,17 +119,19 @@ class GenericAccionRealizada {
 	constructor(nombreModuloAccion, posicionBotonAccion) {
 		this.nombreModuloAccion = nombreModuloAccion;
 		this.posicionBotonAccion = posicionBotonAccion;
+		this.usuarioAccionGestion=document.getElementById('numempleadohidden').value;
 	}
 
-	getObjectAccionRealizada(mensajeAccion, tipo, user) {
+	getObjectAccionRealizada(mensajeAccion, tipoMensaje , tituloAccion) {
 		return {
 			identificadorModulo: this.nombreModuloAccion,
 			mensaje: mensajeAccion,
-			tipoMensaje: tipo,
-			usuario: user,
+			tipoMensaje: tipoMensaje,
+			usuario:  this.usuarioAccionGestion,
 			hora: this.formatHora(new Date()),
 			fecha: this.formatDateAccion(new Date()),
-			sysdateJs: new Date()
+			sysdateJs: new Date(),
+			tituloAccion:tituloAccion
 		}
 	}
 
@@ -152,7 +158,8 @@ class GenericAccionRealizada {
 		return num.toString().padStart(2, '0');
 	}
 
-	guardarAccionesRecientesModulo(object) {
+	guardarAccionesRecientesModulo(mensajeAccion, tipoMensaje  , tituloAccion) {
+		let objectGuardado=this.getObjectAccionRealizada(mensajeAccion, tipoMensaje,tituloAccion)		
 		let accionesList;
 		if (localStorage.getItem('MODULO_MENSAJES_ACCIONES_RECIENTES')) {
 			accionesList = JSON.parse(localStorage.getItem('MODULO_MENSAJES_ACCIONES_RECIENTES'))
@@ -160,14 +167,14 @@ class GenericAccionRealizada {
 			accionesList = []
 		}
 
-		accionesList.push(object)
+		accionesList.push(objectGuardado)
 		localStorage.setItem('MODULO_MENSAJES_ACCIONES_RECIENTES', JSON.stringify(accionesList));
 	}
 
 	getAccionesRecientesUsuario() {
 		console.log(this.nombreModuloAccion);
 		let accionesList;
-		let usuario = document.getElementById('tipo1').value;
+		let usuario = this.usuarioAccionGestion
 		if (localStorage.getItem('MODULO_MENSAJES_ACCIONES_RECIENTES')) {
 			accionesList = JSON.parse(localStorage.getItem('MODULO_MENSAJES_ACCIONES_RECIENTES'));
 		} else {
@@ -179,37 +186,49 @@ class GenericAccionRealizada {
 	}
 
 	ocultarUltimasAcciones() {
-		$("#container-ultimasAcciones").hide(1000);
+		$("#container-ultimasAcciones").hide();
 		$("#listAccionesRecientes").empty();
 
 	}
 
 	mostrarUltimasAccionesUsuario() {
-		$("#container-ultimasAcciones").show(1000);
-		let listaUltimasAcciones = this.getAccionesRecientesUsuario();
 
+		let validarAcci=function(dato){
+			console.log("hereee-- -")
+			return  (dato == undefined || dato == '') ? 'Sin dato' :dato  
+		}
+
+		$("#container-ultimasAcciones").show();
+		let listaUltimasAcciones = this.getAccionesRecientesUsuario();
 		console.log(listaUltimasAcciones);
 		$("#listAccionesRecientes").empty();
 		let contentAcciones = "";
+		
 		if (listaUltimasAcciones.length > 0) {
 			$.each(listaUltimasAcciones, function (i, accion) {
 				if (accion.tipoMensaje == 'success') {
 					contentAcciones += '<li class="timeline-actions timeline-icon-success active">' +
-						'					<div class="action-time">' + accion.fecha + ' - ' + accion.hora + '</div>' +
-						'					<h6 class="action-title">Ejecutada con &Eacute;xito</h6>' +
-						'					<p class="action-text">' + accion.mensaje + '</p>' +
+						'					<div class="action-time">' + validarAcci(accion.fecha) + ' - ' + validarAcci(accion.hora) + '</div>' +
+						'					<h6 class="action-title">'+validarAcci(accion.tituloAccion)+'</h6>' +
+						'					<p class="action-text">' + validarAcci(accion.mensaje) + '</p>' +
 						'				</li>';
 				} else if (accion.tipoMensaje == 'warning') {
 					contentAcciones += '<li class="timeline-actions timeline-icon-warning active">' +
-						'					<div class="action-time">' + accion.fecha + ' - ' + accion.hora + '</div>' +
-						'					<h6 class="action-title">Ejecutada con Incidencia</h6>' +
-						'					<p class="action-text">' + accion.mensaje + '</p>' +
+						'					<div class="action-time">' + validarAcci(accion.fecha) + ' - ' + validarAcci(accion.hora) + '</div>' +
+						'					<h6 class="action-title">'+validarAcci(accion.tituloAccion)+'</h6>' +
+						'					<p class="action-text">' + validarAcci(accion.mensaje) + '</p>' +
 						'				</li>';
-				} else {
+				} else if (accion.tipoMensaje == 'error') {
 					contentAcciones += '<li class="timeline-actions timeline-icon-error active">' +
-						'					<div class="action-time">' + accion.fecha + ' - ' + accion.hora + '</div>' +
-						'					<h6 class="action-title">Ejecutada con Incidencia<</h6>' +
-						'					<p class="action-text">' + accion.mensaje + '</p>' +
+						'					<div class="action-time">' + validarAcci(accion.fecha) + ' - ' + validarAcci(accion.hora) + '</div>' +
+						'					<h6 class="action-title">'+validarAcci(accion.tituloAccion)+'</h6>' +
+						'					<p class="action-text">' + validarAcci(accion.mensaje) + '</p>' +
+						'				</li>';
+				}	else if (accion.tipoMensaje == 'info') {
+					contentAcciones += '<li class="timeline-actions timeline-icon-info active">' +
+						'					<div class="action-time">' + validarAcci(accion.fecha) + ' - ' + validarAcci(accion.hora) + '</div>' +
+						'					<h6 class="action-title">'+validarAcci(accion.tituloAccion)+'</h6>' +
+						'					<p class="action-text">' + validarAcci(accion.mensaje) + '</p>' +
 						'				</li>';
 				}
 			});
@@ -218,7 +237,7 @@ class GenericAccionRealizada {
 			$("#ultimasAccionesContent").empty();
 			contentAcciones = '<div class="text-no-acciones">' +
 			'	<i class="icon-not-action fas fa-ban"></i>' +
-			'	<b class="text-not-action">Sin acciones para mostrar.</b>' +
+			'	<b class="text-not-action">Sin movimientos para mostrar</b>' +
 			'</div>';
 			
 			$("#ultimasAccionesContent").append(contentAcciones);
@@ -232,8 +251,7 @@ class GenericAccionRealizada {
 			'<ul class="nav nav-tabs small-menuAcciones flex-column" id="menu-acciones" style="display: none;" role="tablist">' +
 			'<li class="nav-item">' +
 			'	<a class="opcion-menuAcciones" id="">' +
-			'		<i class="icon-menu-ultimAccion fas fa-bars"></i>' +
-			'		<span class="titulo-menuAcciones">&Uacute;ltimas Acciones</span>' +
+			'		<i class="icon-menu-ultimAccion far fa-clock"></i>' +
 			'	</a>' +
 			'</li>' +
 			'</ul>' +
@@ -242,7 +260,7 @@ class GenericAccionRealizada {
 			'		<div class="" id="headerUltimasAcciones">' +
 			'			<div class="col-12 row" style="padding-right: 0;">' +
 			'				<div class="col-10 mt-2">' +
-			'					<h5>&Uacute;ltimas Acciones</h5>' +
+			'					<h5 class="title-movimientos">&Uacute;ltimos movimientos</h5>' +
 			'				</div>' +
 			'				<div class="col-2" style="text-align: right; padding-right: 0;">' +
 			'					<div class="row">' +
@@ -252,7 +270,6 @@ class GenericAccionRealizada {
 			'						<button id="cerrarUltimasAcciones" type="button" class="btn-close btn-closeAcciones"></button>' +
 			'					</div>' +
 			'				</div>' +
-			'				<hr>' +
 			'			</div>' +
 			'		</div>' +
 			'		<div id="ultimasAccionesContent">' +
