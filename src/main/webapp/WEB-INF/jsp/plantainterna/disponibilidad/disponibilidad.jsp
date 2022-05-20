@@ -132,7 +132,7 @@ pageEncoding="ISO-8859-1"%>
 														</td>
 													</tr>
 													<tr ng-repeat="item in arrayTurnosDisponibilidad">
-														<td style="border-right: .01rem solid #e2e2e2 !important;">
+														<td>
 															<span class="text-indicadores" ng-bind="item.nombre"></span>
 															<span id="{{item.nombre.toLowerCase()}}_disponibilidad" class="spanTable">Sin info.</span>
 														</td>
@@ -142,7 +142,7 @@ pageEncoding="ISO-8859-1"%>
 														</td>
 													</tr>
 													<tr style="background: #f4f5fc;">
-														<td style="border-right: .01rem solid #e2e2e2 !important;">
+														<td>
 															<span class="text-indicadores">Total Capacidad:</span>
 															<span id="total_dispo" class="spanTable">Sin info.</span>
 														</td>

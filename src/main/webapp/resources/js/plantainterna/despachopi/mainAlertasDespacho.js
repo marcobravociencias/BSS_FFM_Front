@@ -63,14 +63,20 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
         $scope.otsAlertas = [];
         mainAlertasService.getDetalleAlertas(params).then(function success(response) {
             if (response.data !== undefined) {
-                //$("#pills-mapa-tab").click();
-                $scope.otsAlertas = response.data.result ?  response.data.result.detalleAlerta : [];
-                $scope.vistaDespacho = false;
-                $scope.tipoAlertaSeleccionada = angular.copy(alerta);
-                $scope.mostrarDetalleAlertas($scope.otsAlertas);
+                if (response.data.result) {
+                    //$("#pills-mapa-tab").click();
+                    $scope.otsAlertas = response.data.result ?  response.data.result.detalleAlerta : [];
+                    $scope.vistaDespacho = false;
+                    $scope.tipoAlertaSeleccionada = angular.copy(alerta);
+                    $scope.mostrarDetalleAlertas($scope.otsAlertas);
 
-                $("#buscador-alertas-ot").val('')
-                //swal.close();
+                    $("#buscador-alertas-ot").val('')
+                    //swal.close();
+                } else {
+                    toastr.warning('No se encontraron resultados');
+                    swal.close();
+                }
+                
             } else {
                 swal.close();
             }
