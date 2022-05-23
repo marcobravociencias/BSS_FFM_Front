@@ -3,7 +3,7 @@ var app = angular.module('seguimientoSoporteApp', []);
 app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSoporteService', '$filter', 'genericService', 'busquedaSalesforceService', function ($scope, $q, seguimientoSoporteService, $filter, genericService, busquedaSalesforceService) {
     app.busquedaSalesforce($scope, busquedaSalesforceService)
 
-
+    var maxColumnsSeguimiento = 13; //Si cambias el numero debes cambiar las columnas en jsp
     const FECHA_HOY_DATE = new Date();
     var regexUrl = /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/;
 
@@ -23,6 +23,8 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
     $scope.ticketDetalle = {};
     $scope.listadoNuevoViejosEquipo = [];
     $scope.usuarioFoto = {};
+    $scope.idIngeniero = '';
+    $scope.listIngenieros = [];
 
     $scope.consultarCatalogos = function () {
         $q.all([
@@ -169,7 +171,7 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
                         toastr.warning('No se encontr&oacute; el catalogo de fallas');
                     }
                 } else {
-                    toastr.warning(results[6].data.resultDescripcion);
+                    toastr.warning(results[7].data.resultDescripcion);
                 }
             } else {
                 toastr.error('Ha ocurrido un error en la consulta del catalogo de fallas');
@@ -193,6 +195,8 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
 
     $('#filtro_fecha_inicio').datepicker('update', moment(FECHA_HOY_DATE).toDate());
     $('#filtro_fecha_fin').datepicker('update', moment(FECHA_HOY_DATE).toDate());
+    $('#filtro_fecha_inicio_ticket').datepicker('update', moment(FECHA_HOY_DATE).toDate());
+    $('#filtro_fecha_fin_ticket').datepicker('update', moment(FECHA_HOY_DATE).toDate());
 
     seguimientoTable = $('#seguimientoTable').DataTable({
         "paging": true,
@@ -202,8 +206,11 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
         "info": true,
         "scrollX": false,
         "autoWidth": false,
+        "columns": [null, null, null, null, null, null, { "visible": false }, { "visible": false }, { "visible": false }, { "visible": false }, { "visible": false }, { "visible": false }, { "visible": false }],
         "language": idioma_espanol_not_font,
     });
+
+
 
     ticketTable = $('#ticketTable').DataTable({
         "paging": true,
@@ -246,9 +253,15 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
 
     $scope.consultaCatalogoInfoUsuario();
 
+    $scope.getFechaFormato = function (fecha) {
+        let fechaPrueba = fecha.split('/');
+        return fechaPrueba[2] + '-' + fechaPrueba[1] + '-' + fechaPrueba[0];
+    }
+
     $scope.consultaSeguimiento = function () {
         let mensaje = '<ul>';
         let isValid = true;
+        $scope.listIngenieros = [];
 
         if (!$scope.validarFecha('filtro_fecha_inicio', 'filtro_fecha_fin')) {
             mensaje += '<li>La fecha final debe ser mayor que la fecha inicio</li>';
@@ -263,26 +276,153 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
             swal({ text: 'Espera un momento...', allowOutsideClick: false });
             swal.showLoading();
 
-            if (seguimientoTable) {
-                seguimientoTable.destroy();
+            let params = {
+                fechaInicio: $scope.getFechaFormato($("#filtro_fecha_inicio").val()),
+                fechaFin: $scope.getFechaFormato($("#filtro_fecha_fin").val()),
+                tipoFecha: $("#tipo_fecha").val(),
+                idSupervisor: $("#prop-session").val().split('_')[1]
             }
 
             let arraRow = [];
-            $.each(listGeneral.result, function (i, elemento) {
-                let row = [];
-                let color = elemento.conexion.split('-');
-                row[0] = '<i class="fas fa-circle icon-conexion" style="color:' + color[1] + '"></i>';
-                row[1] = elemento.tecnico;
-                row[2] = elemento.abierto;
-                row[3] = elemento.cerrado;
-                row[4] = elemento.escalado;
-                row[5] = elemento.entrada;
-                row[6] = elemento.comida ? elemento.comida : 'Sin informaci&oacute;n';
-                row[7] = elemento.salida ? elemento.salida : 'Sin informaci&oacute;n';
-                row[8] = '<i class="fas fa-ticket-alt icon-table" title="Tickets" style="background-color: #7f4c9d" onclick="consultaTicket(' + "'" + elemento.id_conexion + "'" + ')"></i>';
-                arraRow.push(row);
-            })
-            seguimientoTable = $('#seguimientoTable').DataTable({
+            let columns = [
+                { "title": "Foto" },
+                { "title": "Nombre" },
+                { "title": "#Empleado" },
+                { "title": "Usuario" },
+                { "title": "Ciudad" },
+                { "title": "Acciones" },
+                { "visible": false },
+                { "visible": false },
+                { "visible": false },
+                { "visible": false },
+                { "visible": false },
+                { "visible": false },
+                { "visible": false }
+            ];
+            seguimientoSoporteService.consultaSeguimientoGeneral(params).then(function success(response) {
+
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        if (response.data.result) {
+                            if (response.data.result.seguimientoDetalle.length) {
+                                $scope.listIngenieros = response.data.result.seguimientoDetalle;
+                                $.each(response.data.result.seguimientoDetalle, function (i, elemento) {
+                                    let row = [];
+                                    let urlFoto = regexUrl.test(elemento.urlFoto) ? elemento.urlFoto : './resources/img/plantainterna/despacho/tecnicootasignada.png';
+                                    row[0] = '<img class="imgFoto" src="' + urlFoto + '" alt="Foto" width="30" height="30" onclick="showImageIng(' + "'" + elemento.numeroIngeniero + "'" + ')"/>';
+                                    row[1] = elemento.nombreCompletoIngeniero ? elemento.nombreCompletoIngeniero : 'Sin informaci&oacute;n';
+                                    row[2] = elemento.numeroIngeniero ? elemento.numeroIngeniero : 'Sin informaci&oacute;n';
+                                    row[3] = elemento.usuarioIngeniero ? elemento.usuarioIngeniero : 'Sin informaci&oacute;n';
+                                    row[4] = elemento.ciudad ? elemento.ciudad : 'Sin informaci&oacute;n';
+                                    let count = 5;
+                                    if (elemento.contadores) {
+                                        $.map(elemento.contadores, function (total, contador) {
+                                            row[count] = total;
+                                            columns[count] = { "title": contador };
+                                            count = count + 1;
+                                        })
+                                    }
+
+                                    //LLenando columnas y filas vacias
+                                    if (row.length < maxColumnsSeguimiento) {
+                                        for (let index = row.length + 1; index < maxColumnsSeguimiento; index++) {
+                                            columns[index] = { "visible": false };
+                                            row[index] = '-';
+                                        }
+                                    }
+
+                                    columns[count] = { "title": "Acciones" };
+                                    row[count] = '<i class="fas fa-ticket-alt icon-table" title="Tickets" onclick="consultaTicket(' + "'" + elemento.idIngeniero + "', true" + ')"></i>';
+                                    arraRow.push(row);
+                                })
+                            }
+                        } else {
+                            toastr.warning('No se encontraron ingenieros');
+                        }
+                    } else {
+                        toastr.warning(response.data.resultDescripcion);
+                    }
+                } else {
+                    toastr.warning(response.data.resultDescripcion);
+                }
+
+                seguimientoTable = $('#seguimientoTable').DataTable({
+                    "paging": true,
+                    "lengthChange": false,
+                    "ordering": false,
+                    "pageLength": 10,
+                    "info": true,
+                    "data": arraRow,
+                    "autoWidth": false,
+                    "bDestroy": true,
+                    "columns": columns,
+                    "language": idioma_espanol_not_font
+                });
+
+            }).catch(err => handleError(err));
+            swal.close();
+        }
+    }
+
+
+    $scope.consultaTicketFecha = function () {
+        consultaTicket($scope.idIngeniero, false);
+    }
+
+    consultaTicket = function (ingeniero, isSetDate) {
+        $scope.idIngeniero = ingeniero;
+        $scope.isBusquedaGeneral = false;
+
+        swal({ text: 'Espera un momento...', allowOutsideClick: false });
+        swal.showLoading();
+
+        if (ticketTable) {
+            ticketTable.destroy();
+        }
+
+        if (isSetDate) {
+            $("#filtro_fecha_inicio_ticket").val($("#filtro_fecha_inicio").val());
+            $("#filtro_fecha_fin_ticket").val($("#filtro_fecha_fin").val());
+            $("#tipo_fecha_ticket").val($("#tipo_fecha").val());
+        }
+
+        let params = {
+            fechaInicio: $scope.getFechaFormato($("#filtro_fecha_inicio_ticket").val()),
+            fechaFin: $scope.getFechaFormato($("#filtro_fecha_fin_ticket").val()),
+            tipoFecha: $("#tipo_fecha_ticket").val(),
+            idIngeniero: ingeniero
+        }
+
+
+        let arraRow = [];
+        seguimientoSoporteService.consultaTicketGeneral(params).then(function success(response) {
+            swal.close();
+            if (response.data !== undefined) {
+                if (response.data.respuesta) {
+                    if (response.data.result) {
+                        $.each(response.data.result.detalleIngeniero, function (i, elemento) {
+                            let row = [];
+                            row[0] = elemento.otCentralizado ? elemento.otCentralizado : 'Sin informaci&oacute;n';
+                            row[1] = elemento.folioSistema ? elemento.folioSistema : 'Sin informaci&oacute;n';
+                            row[2] = elemento.claveCliente ? elemento.claveCliente : 'Sin informaci&oacute;n';
+                            row[3] = elemento.fechaCreacion ? elemento.fechaCreacion : 'Sin informaci&oacute;n';
+                            row[4] = elemento.nombreCompletoIngeniero ? elemento.nombreCompletoIngeniero : 'Sin informaci&oacute;n';
+                            row[5] = elemento.numeroEmpleadoIngeniero ? elemento.numeroEmpleadoIngeniero : 'Sin informaci&oacute;n';
+                            row[6] = elemento.estatus ? elemento.estatus : 'Sin informaci&oacute;n';
+                            row[7] = elemento.fallaReportada ? elemento.fallaReportada : 'Sin informaci&oacute;n';
+                            row[8] = '<i class="fas fa-bars icon-table" title="Detalle" onclick="consultaDetalle(' + "'" + elemento.idTicket + "'" + ')"></i>';
+                            arraRow.push(row);
+                        })
+                    } else {
+                        toastr.warning('No se encontraron tickets');
+                    }
+                } else {
+                    toastr.warning(response.data.resultDescripcion);
+                }
+            } else {
+                toastr.warning(response.data.resultDescripcion);
+            }
+            ticketTable = $('#ticketTable').DataTable({
                 "paging": true,
                 "lengthChange": false,
                 "ordering": false,
@@ -293,47 +433,7 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
                 "autoWidth": false,
                 "language": idioma_espanol_not_font,
             });
-            swal.close();
-        }
-    }
-
-    consultaTicket = function (conexion) {
-        $scope.isBusquedaGeneral = false;
-        $scope.$apply();
-
-        swal({ text: 'Espera un momento...', allowOutsideClick: false });
-        swal.showLoading();
-
-        if (ticketTable) {
-            ticketTable.destroy();
-        }
-
-        let arraRow = [];
-        $.each(listTitcket.result.tablaTickets, function (i, elemento) {
-            let row = [];
-            row[0] = elemento.ot;
-            row[1] = elemento.ticket;
-            row[2] = elemento.os;
-            row[3] = elemento.fecha_creacion;
-            row[4] = elemento.tarea ? elemento.tarea : 'Sin informaci&oacute;n';
-            row[5] = elemento.na_asignacion;
-            row[6] = elemento.estatus;
-            row[7] = elemento.escalado ? elemento.escalado : 'Sin informaci&oacute;n';
-            row[8] = '<i class="fas fa-bars icon-table" title="Detalle" style="background-color: #7716fa" onclick="consultaDetalle()"></i>';
-            arraRow.push(row);
-        })
-        ticketTable = $('#ticketTable').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "ordering": false,
-            "pageLength": 10,
-            "info": true,
-            "scrollX": false,
-            "data": arraRow,
-            "autoWidth": false,
-            "language": idioma_espanol_not_font,
-        });
-        swal.close();
+        }).catch(err => handleError(err));
     }
 
     function camelCase(text) {
@@ -350,10 +450,10 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
         $scope.isBusquedaGeneral = true;
     }
 
-    consultaDetalle = function () {
+    consultaDetalle = function (ticket) {
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
-        seguimientoSoporteService.consultaDetalleSoporte(88).then((response) => {
+        seguimientoSoporteService.consultaDetalleSoporte(Number(ticket)).then((response) => {
             swal.close()
             if (response.data.respuesta) {
                 if (response.data.result) {
@@ -427,24 +527,7 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
 
     $scope.consultaSeguimiento();
 
-    $scope.changeEstatus = function (idEstatus) {
-        let status = $scope.catalogoEstatusUsuarios.catalogoEstatusUsuarios.find((e) => parseInt(e.id) == parseInt(idEstatus));
-
-        swal({
-            title: "Cambio de status",
-            text: '\u00BFEsta seguro de cambiar el status a ' + status.descripcion.split("-")[0] + '?',
-            type: "question",
-            showCancelButton: true,
-            confirmButtonColor: '#007bff',
-            confirmButtonText: 'Si',
-            cancelButtonText: 'No'
-        }).then(function (isConfirm) {
-            if (isConfirm) {
-                $scope.catalogoEstatusUsuarios.infoHorasUser.ultimoEstatus = status.descripcion;
-                $scope.$apply();
-            }
-        }).catch(swal.noop);
-    }
+    
 
     $scope.showImage = function (type) {
         let url = './resources/img/plantainterna/despacho/tecnicootasignada.png';
@@ -463,6 +546,18 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
         $('#img_tec').attr('src', url);
         $('#modalFoto').modal('show');
 
+    }
+
+    showImageIng = function(numeroIngeniero){
+        let url = './resources/img/plantainterna/despacho/tecnicootasignada.png';
+        let ing = $scope.listIngenieros.find((e) => e.numeroIngeniero ==numeroIngeniero);
+        url = regexUrl.test(ing.urlFoto) ? ing.urlFoto : url;
+        $scope.usuarioFoto.tipo = "Ingeniero";
+        $scope.usuarioFoto.noEmpleado = numeroIngeniero;
+        $scope.usuarioFoto.usuario = ing.nombreCompletoIngeniero;
+        $scope.$apply();
+        $('#img_tec').attr('src', url);
+        $('#modalFoto').modal('show');
     }
 
     $scope.comentariosOrdenTrabajo = [];

@@ -911,7 +911,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                         $scope.isMensajeSuccessOt = false
                         $scope.isMensajeErrorOt = false
                         $scope.isGuardadoProcess = true
-                        let tituloAccion='Creaci&oacute;n de ticket' 
+                        let tituloAccion = 'Creaci&oacute;n de ticket'
                         if (response.data !== undefined) {
                             if (response.data.respuesta) {
                                 $scope.tecnicoAsignado = {};
@@ -922,20 +922,20 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                                 }
                                 $scope.cleanForm();
                                 toastr.success(response.data.resultDescripcion);
-                                objectTempAccion.guardarAccionesRecientesModulo( response.data.resultDescripcion, MENSAJE_ACCION_EXITO , tituloAccion);
+                                objectTempAccion.guardarAccionesRecientesModulo(response.data.resultDescripcion, MENSAJE_ACCION_EXITO, tituloAccion);
                                 objetoAccion.guardarAccionesRecientesModulo(objetoAccion)
                             } else {
                                 swal.close();
                                 mostrarMensajeErrorAlert(response.data.resultDescripcion);
                                 $scope.isMensajeErrorOt = true
-                                let mensajeEnvio=  'Ha ocurrido un error al crear el ticket con la cuenta'+$scope.ticketSoporteR.cuenta
-                                objectTempAccion.guardarAccionesRecientesModulo( mensajeEnvio , MENSAJE_ACCION_ERROR , tituloAccion );
+                                let mensajeEnvio = 'Ha ocurrido un error al crear el ticket con la cuenta' + $scope.ticketSoporteR.cuenta
+                                objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                             }
                             $scope.mensajeRequestCreacion = response.data.resultDescripcion
 
                         } else {
-                            let mensajeEnvio=  'Ha ocurrido un error al crear el ticket con la cuenta'+$scope.ticketSoporteR.cuenta
-                            objectTempAccion.guardarAccionesRecientesModulo(  mensajeEnvio,  MENSAJE_ACCION_ERROR , tituloAccion );   
+                            let mensajeEnvio = 'Ha ocurrido un error al crear el ticket con la cuenta' + $scope.ticketSoporteR.cuenta
+                            objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
 
                             swal.close();
                             mostrarMensajeErrorAlert(response.data.resultDescripcion);
@@ -1048,7 +1048,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                 },
                 'createdRow': function (row, data, rowIndex) {
                     $.each($('td', row), function (colIndex) {
-                        if(colIndex == 4 || colIndex == 6 || colIndex == 7){
+                        if (colIndex == 4 || colIndex == 6 || colIndex == 7) {
                             $(this).attr('title', $(this).text());
                         }
                     });
@@ -1296,23 +1296,26 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     $scope.consultarOtsTecnicosTicket = function () {
         if ($scope.propietarioSession != $scope.nPuestoIngeniero) {
             let params = {
-                idsGeografia: $scope.geografiaUsuarioList.map(function (e) { return e.id }),
-                idTipoUsuario: [$scope.nPuestoIngeniero]
+                idSupervisor: $("#prop-session").val().split('_')[1]
             }
             if (ingenieroTable) {
                 ingenieroTable.destroy();
             }
             swal({ text: 'Espera un momento...', allowOutsideClick: false });
             swal.showLoading();
-            gestionTicketSoporteService.consultarUsuariosPorPuesto(params).then((response) => {
+            gestionTicketSoporteService.consultarIngenierosSoporte(params).then((response) => {
                 swal.close()
                 if (response.data.respuesta) {
                     if (response.data.result) {
-                        $scope.listIngenieros = response.data.result.usuarios;
-                        $scope.listIngenieros.map(function (e) { e.isChecked = false; return e; })
-                        $scope.initTableingeniero();
-                        $scope.isConsultarOtsTecnicos = true
-                        $("#modalAsignarTicket").modal('show');
+                        if (response.data.result.usuarios.length) {
+                            $scope.listIngenieros = response.data.result.usuarios;
+                            $scope.listIngenieros.map(function (e) { e.isChecked = false; return e; })
+                            $scope.initTableingeniero();
+                            $scope.isConsultarOtsTecnicos = true
+                            $("#modalAsignarTicket").modal('show');
+                        }else{
+                            mostrarMensajeInformativo('No se encontraron ingenieros')
+                        }
                     } else {
                         mostrarMensajeWarningValidacion('No hay ingenieros')
                     }

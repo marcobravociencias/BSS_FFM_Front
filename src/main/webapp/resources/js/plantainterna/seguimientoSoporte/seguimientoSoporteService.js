@@ -26,7 +26,7 @@ app.service("seguimientoSoporteService", function ($http) {
     this.consultaTicketGeneral = function (params) {
         return $http({
             method: "post",
-            url: "req/consultaTicketSoporte",
+            url: "req/consultaTicketSoporteSeguimiento",
             data: JSON.stringify(params),
             headers: { 'Content-Type': "application/json; charset=utf-8" },
             transformRequest: angular.identity

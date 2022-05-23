@@ -12,8 +12,8 @@ public class ConstSoporteCentralizado {
     @Value("${consultaSeguimientoSoporte}")
     private String consultaSeguimientoSoporte;
 
-    @Value("${consultaTicketSoporte}")
-    private String consultaTicketSoporte;
+    @Value("${consultaTicketSeguimiento}")
+    private String consultaTicketSeguimiento;
 
     @Value("${consultaDetalleSoporte}")
     private String consultaDetalleSoporte;
@@ -63,4 +63,7 @@ public class ConstSoporteCentralizado {
     
     @Value("${guardarDetalleTicketSoporte}")
     private String guardarDetalleTicketSoporte;
+    
+    @Value("${consultarIngenierosSoporte}")
+    private String consultarIngenierosSoporte;
 }

@@ -8,7 +8,7 @@ public interface SoporteCentralizadoService {
 
     ServiceResponseResult consultaSeguimientoSoporte(String params);
 
-    ServiceResponseResult consultaTicketSoporte(String params);
+    ServiceResponseResult consultaTicketSoporteSeguimiento(String params);
 
     ServiceResponseResult consultaDetalleSoporte(String params);
     
@@ -41,4 +41,6 @@ public interface SoporteCentralizadoService {
     public ServiceResponseResult consultarEquiposTicketSoporte();
     
     public ServiceResponseResult reasignarIngenieroTicket(String params);
+    
+    public ServiceResponseResult consultarIngenierosSoporte(String params);
 }

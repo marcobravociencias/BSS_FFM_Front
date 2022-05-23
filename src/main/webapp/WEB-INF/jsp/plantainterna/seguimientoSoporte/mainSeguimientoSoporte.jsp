@@ -55,72 +55,7 @@
     <body id="idBody" class="body" ng-controller="seguimientoSoporteController" style="display:none;">
         <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
         <div class="container" id="container_seguimiento" ng-show="!detalleSalesforceView">
-            <div class="form-content" ng-show="!isDetalleTicket">
-                <div class="col-12 row md-form" id="filtros_config">
-                    <div class="col-2 columna-filtro-ind">
-                        <label for="filtro_fecha_inicio" class="label-filter"><i class="fa fa-calendar"></i> Fecha
-                            inicial</label>
-                        <input readonly type="text" id="filtro_fecha_inicio"
-                            class="datepicker input-filtro-seguimiento form-control form-control-sm" />
-                    </div>
-                    <div class="col-2 columna-filtro-ind">
-                        <label for="filtro_fecha_fin" class="label-filter"><i class="fa fa-calendar"></i> Fecha
-                            inicial</label>
-                        <input readonly type="text" id="filtro_fecha_fin"
-                            class="datepicker input-filtro-seguimiento form-control form-control-sm" />
-                    </div>
-                    <!--div class="col-2">
-                        <label for="filtro_fecha_fin" class="label-filter"><i class="fa fa-user"></i> Estatus</label>
-                        <li class="nav-item dropdown form-control form-control-sm input-filtro-seguimiento"
-                            id="estatusDropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="otros-option-navbar" role="button"
-                                data-mdb-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-circle"
-                                    style="color: {{catalogoEstatusUsuarios.infoHorasUser.ultimoEstatus.split('-')[1]}} ;"></i>
-                                {{catalogoEstatusUsuarios.infoHorasUser.ultimoEstatus.split('-')[0]}}
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li>
-                                    <a class="dropdown-item"
-                                        ng-repeat="estatus in catalogoEstatusUsuarios.catalogoEstatusUsuarios"
-                                        ng-click="changeEstatus(estatus.id)">
-                                        <i class="fas fa-circle"
-                                            style="color: {{estatus.descripcion.split('-')[1]}} ;"></i>
-                                        {{estatus.descripcion.split('-')[0]}}
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    </div-->
-                    <div class="col-1">
-                        <button id="btn_buscar" type="button"
-                            class="btn btn-sm btn-primary waves-effect waves-light btnSeguimiento"
-                            ng-click="consultaSeguimiento()">
-                            <i class="fa fa-search"></i>
-                    </div>
-                    <!--div class="col-1 offset-1 user-info-content">
-                        <span>Entrada</span></br>
-                        <span class="info">{{catalogoEstatusUsuarios.infoHorasUser.horaEntrada ?
-                            catalogoEstatusUsuarios.infoHorasUser.horaEntrada : 'Sin datos'}}</span>
-                    </div>
-                    <div class="col-1 user-info-content">
-                        <span>S/comida</span></br>
-                        <span class="info">{{catalogoEstatusUsuarios.infoHorasUser.horaSalidaComida ?
-                            catalogoEstatusUsuarios.infoHorasUser.horaSalidaComida : 'Sin datos'}}</span>
-                    </div>
-                    <div class="col-1 user-info-content">
-                        <span>LL/comida</span></br>
-                        <span class="info">{{catalogoEstatusUsuarios.infoHorasUser.horaLLegadaComida ?
-                            catalogoEstatusUsuarios.infoHorasUser.horaLLegadaComida : 'Sin datos'}}</span>
-                    </div>
-                    <div class="col-1 user-info-content">
-                        <span>Salida</span></br>
-                        <span class="info">{{catalogoEstatusUsuarios.infoHorasUser.horaSalida ?
-                            catalogoEstatusUsuarios.infoHorasUser.horaSalida : 'Sin datos'}}</span>
-                    </div-->
-
-                </div>
-            </div>
+           
             <div ng-show="isBusquedaGeneral && !isDetalleTicket">
                 <jsp:include page="./content/consultaIngenieros.jsp"></jsp:include>
             </div>

@@ -16,11 +16,11 @@
 .cerrar-cancelar-btn {
     font-size: .7em;
     background: white;
-    color: #0c56d0 !important;
+    color: var(--estandar-color) !important;
     font-weight: bold;
     box-shadow: none;
     padding: .6em 2em .6em 2em;
-    border: .09rem solid #0c56d0;
+    border: .09rem solid var(--estandar-color);
     box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
     float: right;
     margin-top: 1em;
@@ -109,7 +109,7 @@
 
 .icon-back {
     font-size: 1.5em;
-    color: #7f4c9d;
+    color: var(--estandar-color);
     cursor: pointer;
     border-radius: 25px;
     box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
@@ -123,6 +123,7 @@
     cursor: pointer;
     font-size: 0.8em;
     color: #fff;
+    background: var(--estandar-color);
     box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
 }
 
@@ -568,6 +569,15 @@ div.dataTables_wrapper div.dataTables_filter input {
     margin-left: 0.5em;
     font-size: 1em;
     margin-top: 1em;
+    background-color: var(--estandar-color);
+    box-shadow: 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%), 0 2px 4px -1px rgb(0 0 0 / 30%);
+
+
+}
+
+.send-comment:hover, .send-comment:focus, .send-comment:active{
+    background-color: var(--estandar-color) !important;
+
 }
 
 .box-comments-header {
@@ -637,3 +647,9 @@ div.dataTables_wrapper div.dataTables_filter input {
 }
 
 /*BOX COMMENTS*/
+
+.imgFoto{ 
+    box-shadow: 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%), 0 2px 4px -1px rgb(0 0 0 / 30%); 
+    cursor: pointer; 
+    border-radius: 35px; 
+}
