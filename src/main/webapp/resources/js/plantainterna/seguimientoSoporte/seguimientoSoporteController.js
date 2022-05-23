@@ -527,7 +527,7 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
 
     $scope.consultaSeguimiento();
 
-    
+
 
     $scope.showImage = function (type) {
         let url = './resources/img/plantainterna/despacho/tecnicootasignada.png';
@@ -548,9 +548,9 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
 
     }
 
-    showImageIng = function(numeroIngeniero){
+    showImageIng = function (numeroIngeniero) {
         let url = './resources/img/plantainterna/despacho/tecnicootasignada.png';
-        let ing = $scope.listIngenieros.find((e) => e.numeroIngeniero ==numeroIngeniero);
+        let ing = $scope.listIngenieros.find((e) => e.numeroIngeniero == numeroIngeniero);
         url = regexUrl.test(ing.urlFoto) ? ing.urlFoto : url;
         $scope.usuarioFoto.tipo = "Ingeniero";
         $scope.usuarioFoto.noEmpleado = numeroIngeniero;

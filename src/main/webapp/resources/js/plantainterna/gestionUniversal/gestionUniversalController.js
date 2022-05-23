@@ -104,6 +104,10 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
             });
             $('#inputSearchGeoUsuario').val(textoGeografiasUser);
         })
+
+        $("#modalPagos").on("hidden.bs.modal", function () {
+
+        })
     });
 
     $scope.puestoSeleccion = function () {
@@ -286,7 +290,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
 
                             if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
                                 $scope.configPermisoAccionLiberaPagos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "liberaPagos" })[0] != undefined);
-                                $scope.configPermisoAccionConsultaCambiaContrasena =($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaCambiaContrasenaPlanning" })[0] != undefined);
+                                $scope.configPermisoAccionConsultaCambiaContrasena = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaCambiaContrasenaPlanning" })[0] != undefined);
                                 $scope.configPermisoAccionConsultaTecnicosPagos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaTecnicosPagosPlanning" })[0] != undefined);
                                 $scope.configPermisoAccionConsultaPagos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaPagosPlanning" })[0] != undefined);
                                 $scope.configPermisoAccionCambiaContrasena = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionCambiaContrasenaPlanning" })[0] != undefined);
@@ -442,7 +446,9 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
     consultarPagos = function (tecnico) {
         $scope.idUsuario = tecnico;
         $scope.tecnicoPagos = $scope.listaTecnicosPagos.find((e) => e.numEmpleado == tecnico)
-
+        $.each($scope.tecnicoPagos.pagos, function (i, elemento) {
+            elemento.isChecked = false;
+        })
         if ($scope.tecnicoPagos.pagos.length) {
             let arraRow = [];
             if (pagosLiberarTable) {
@@ -453,16 +459,17 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                 if (elemento.idEstatusPago == 3) {
                     clase = "free";
                 }
+
                 let row = [];
-                row[0] = elemento.idCveCliente ? elemento.idCveCliente : '';
-                row[1] = elemento.folioSistema ? elemento.folioSistema : '';
-                row[2] = elemento.monto ? elemento.monto : '';
-                row[3] = elemento.fechaRegistroPago ? elemento.fechaRegistroPago : '';
-                row[4] = elemento.hora ? elemento.hora : '';
-                row[5] = elemento.descEstatusPago ? elemento.descEstatusPago : '';
-                row[6] = elemento.fechaHoraCierreOT ? elemento.fechaHoraCierreOT : '';
-                row[7] = elemento.tipoIntervencion ? elemento.tipoIntervencion : '';
-                row[8] = elemento.subTipoIntervencion ? elemento.subTipoIntervencion : '';
+                row[0] = elemento.idCveCliente ? elemento.idCveCliente : 'Sin informaci&oacute;n';
+                row[1] = elemento.folioSistema ? elemento.folioSistema : 'Sin informaci&oacute;n';
+                row[2] = elemento.monto ? Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(elemento.monto) : 'Sin informaci&oacute;n';
+                row[3] = elemento.fechaRegistroPago ? elemento.fechaRegistroPago : 'Sin informaci&oacute;n';
+                row[4] = elemento.hora ? elemento.hora : 'Sin informaci&oacute;n';
+                row[5] = elemento.descEstatusPago ? elemento.descEstatusPago : 'Sin informaci&oacute;n';
+                row[6] = elemento.fechaHoraCierreOT ? elemento.fechaHoraCierreOT : 'Sin informaci&oacute;n';
+                row[7] = elemento.tipoIntervencion ? elemento.tipoIntervencion : 'Sin informaci&oacute;n';
+                row[8] = elemento.subTipoIntervencion ? elemento.subTipoIntervencion : 'Sin informaci&oacute;n';
                 row[9] = '<div class="icon-status"><span class="fas ' + clase + '" id="' + elemento.folioSistema + '" onclick="changeLock(' + "'" + elemento.folioSistema + "'," + elemento.idEstatusPago + ')"></span></div>'
                 if (elemento.idEstatusPago == 2) {
                     row[9] = '<input type="checkbox" onclick="changeCheck(this)" class="form-check-input pagos-selected" id="' + elemento.idPago + '"/>';

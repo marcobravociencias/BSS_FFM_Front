@@ -9,7 +9,7 @@
             </div>
             <div class="col-md-1 search-form">
                 <button id="btnBuscar" type="button" class="btn btn-primary btnTotal"
-                    ng-click="consultarTecnicosPagos()" style="margin-top: 2.3em;">
+                    ng-click="consultarTecnicosPagos(true)" style="margin-top: 2.3em;">
                     <i class="fa fa-search"></i>
                 </button>
             </div>
