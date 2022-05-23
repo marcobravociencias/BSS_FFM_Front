@@ -172,10 +172,34 @@ class GenericAccionRealizada {
 	}
 
 	getAccionesRecientesUsuario() {
-		console.log(this.nombreModuloAccion);
+		console.log("Obteniendo Registros " + this.nombreModuloAccion);
 		let accionesList;
-		let usuario = this.usuarioAccionGestion
+		let accionesListModulo;
+		let accionesListGeneral;
+		let usuario = document.getElementById('tipo1').value;
+
 		if (localStorage.getItem('MODULO_MENSAJES_ACCIONES_RECIENTES')) {
+			accionesList = JSON.parse(localStorage.getItem('MODULO_MENSAJES_ACCIONES_RECIENTES'));
+			localStorage.removeItem('MODULO_MENSAJES_ACCIONES_RECIENTES');
+			accionesListGeneral = accionesList.filter(e => { return e.identificadorModulo !== this.nombreModuloAccion });
+			accionesListModulo = accionesList.filter(e => { return e.usuario === usuario && e.identificadorModulo === this.nombreModuloAccion });
+			accionesList = [];
+			
+			console.log(accionesListGeneral);
+			console.log(accionesListModulo);
+
+			if (accionesListModulo.length > 50) {
+				let ultimasAcciones = accionesListModulo.slice(-5);
+				$.each(ultimasAcciones, function (i, accion) {
+					accionesListGeneral.push(accion);
+				});
+			} else {
+				$.each(accionesListModulo, function (i, accionModulo) {
+					accionesListGeneral.push(accionModulo);
+				});
+			}
+
+			localStorage.setItem('MODULO_MENSAJES_ACCIONES_RECIENTES', JSON.stringify(accionesListGeneral));
 			accionesList = JSON.parse(localStorage.getItem('MODULO_MENSAJES_ACCIONES_RECIENTES'));
 		} else {
 			accionesList = [];
