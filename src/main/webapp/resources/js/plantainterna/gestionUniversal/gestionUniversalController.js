@@ -104,10 +104,6 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
             });
             $('#inputSearchGeoUsuario').val(textoGeografiasUser);
         })
-
-        $("#modalPagos").on("hidden.bs.modal", function () {
-
-        })
     });
 
     $scope.puestoSeleccion = function () {
@@ -215,10 +211,10 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                                 let nombreCompleto = elemento.nombre + ' ' + elemento.apellidoPaterno + ' ' + elemento.apellidoMaterno;
 
                                 row[0] = '<img style="cursor:pointer;border-radius: 25px" src="' + url + '" alt="Foto" width="30" height="30" onclick="showImage(' + "'" + elemento.numEmpleado + "', 'tecnico'" + ')"/>';
-                                row[1] = elemento.numEmpleado ? elemento.numEmpleado : '-';
-                                row[2] = elemento.usuarioFFM ? elemento.usuarioFFM : '-';
-                                row[3] = nombreCompleto;
-                                row[4] = elemento.ciudadOrigen ? elemento.ciudadOrigen : '-';
+                                row[1] = elemento.numEmpleado ? elemento.numEmpleado : 'Sin informaci&oacute;n';
+                                row[2] = elemento.usuarioFFM ? elemento.usuarioFFM : 'Sin informaci&oacute;n';
+                                row[3] = nombreCompleto ? nombreCompleto : 'Sin informaci&oacute;n';
+                                row[4] = elemento.ciudadOrigen ? elemento.ciudadOrigen : 'Sin informaci&oacute;n';
                                 row[5] = '<span onclick="consultarPagos(' + "'" + elemento.numEmpleado + "'" + ')" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnCambiaContrasena" style="padding:4px 0px !important"><i class="fas fa-check-double" aria-hidden="true"></i></span>';
                                 if (!$scope.configPermisoAccionConsultaPagos) {
                                     row[5] = '<span title="No tienes permisos para consultar" style="cursor: no-drop; opacity: 0.3 !important;padding:4px 0px !important" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnCambiaContrasena"><i class="fas fa-unlock" aria-hidden="true"></i></span>';
@@ -464,10 +460,10 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                 row[0] = elemento.idCveCliente ? elemento.idCveCliente : 'Sin informaci&oacute;n';
                 row[1] = elemento.folioSistema ? elemento.folioSistema : 'Sin informaci&oacute;n';
                 row[2] = elemento.monto ? Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(elemento.monto) : 'Sin informaci&oacute;n';
-                row[3] = elemento.fechaRegistroPago ? elemento.fechaRegistroPago : 'Sin informaci&oacute;n';
-                row[4] = elemento.hora ? elemento.hora : 'Sin informaci&oacute;n';
-                row[5] = elemento.descEstatusPago ? elemento.descEstatusPago : 'Sin informaci&oacute;n';
-                row[6] = elemento.fechaHoraCierreOT ? elemento.fechaHoraCierreOT : 'Sin informaci&oacute;n';
+                row[3] = elemento.fechaRegistro ? elemento.fechaRegistro : 'Sin informaci&oacute;n';
+                row[4] = elemento.tiempo ? elemento.tiempo : 'Sin informaci&oacute;n';
+                row[5] = elemento.estatusPago ? elemento.estatusPago : 'Sin informaci&oacute;n';
+                row[6] = elemento.fechaCierreOT ? elemento.fechaCierreOT : 'Sin informaci&oacute;n';
                 row[7] = elemento.tipoIntervencion ? elemento.tipoIntervencion : 'Sin informaci&oacute;n';
                 row[8] = elemento.subTipoIntervencion ? elemento.subTipoIntervencion : 'Sin informaci&oacute;n';
                 row[9] = '<div class="icon-status"><span class="fas ' + clase + '" id="' + elemento.folioSistema + '" onclick="changeLock(' + "'" + elemento.folioSistema + "'," + elemento.idEstatusPago + ')"></span></div>'
