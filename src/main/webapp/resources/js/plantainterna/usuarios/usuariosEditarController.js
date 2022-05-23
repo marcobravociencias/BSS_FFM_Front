@@ -60,6 +60,12 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 	$scope.tabSupervisorCentralizadoVL_MULTISELECCION_mod = true;
 	$scope.tabCouchDespachoVL_MULTISELECCION_mod = true;
 	$scope.tabSupervisorVL_MULTISELECCION_mod = true;
+	$scope.tabTecnicos_VL_CAMPOS_mod = false;
+	$scope.tabDespachos_VL_CAMPOS_mod = false;
+	$scope.tabIngenieros_VL_CAMPOS_mod = false;
+	$scope.tabSupervisorCentralizado_VL_CAMPOS_mod = false;
+	$scope.tabCouchDespacho_VL_CAMPOS_mod = false;
+	$scope.tabSupervisor_VL_CAMPOS_mod = false;
 	
 	$scope.geoSelectMod = [];
 	$scope.intervencionSelectMod = [];
@@ -160,6 +166,12 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                         	$scope.tabCouchDespachoVL_MULTISELECCION_mod = true;
                         	$scope.tabSupervisorVL_MULTISELECCION_mod = true;
                         	$scope.tabArbol_NV_GEOGRAFIA_mod = null;
+                        	$scope.tabTecnicos_VL_CAMPOS_mod = false;
+                        	$scope.tabDespachos_VL_CAMPOS_mod = false;
+                        	$scope.tabIngenieros_VL_CAMPOS_mod = false;
+                        	$scope.tabSupervisorCentralizado_VL_CAMPOS_mod = false;
+                        	$scope.tabCouchDespacho_VL_CAMPOS_mod = false;
+                        	$scope.tabSupervisor_VL_CAMPOS_mod = false;
                         	
                         	$scope.idPuestoTecnico = null;
                             $scope.idPuestoDespacho = null;
@@ -183,7 +195,6 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 	                	        			$scope.detalleUsuario.cuadrilla = 12; 
 	                                    	var txtCuadrilla = $scope.listaResultCuadrillas.find((e) => e.id == $scope.detalleUsuario.cuadrilla);
 	                                    	$("#cuadrilla_select_mod").val(txtCuadrilla.descripcion);
-	                	        			
 	                	    			}
 	                	        		break;
 	                	        	case "tabArbol_LB_N1":
@@ -273,6 +284,48 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 	                	        		break;
 	                	        	case "tabSupervisor_FL_SUPERVISORES":
 	                	        		$scope.idPuestoSupervisor = conf.valor;
+	                	        		break;
+	                	        	case "tabTecnicos_VL_CAMPOS":
+	                	        		if(conf.valor+"" == "true"){
+	                	    				$scope.tabTecnicos_VL_CAMPOS_mod = true;
+	                	    			}else if(conf.valor+"" == "false"){
+	                	    				$scope.tabTecnicos_VL_CAMPOS_mod = false;
+	                	    			}
+	                	        		break;
+	                	        	case "tabDespachos_VL_CAMPOS":
+	                	        		if(conf.valor+"" == "true"){
+	                	    				$scope.tabDespachos_VL_CAMPOS_mod = true;
+	                	    			}else if(conf.valor+"" == "false"){
+	                	    				$scope.tabDespachos_VL_CAMPOS_mod = false;
+	                	    			}
+	                	        		break;
+	                	        	case "tabIngenieros_VL_CAMPOS":
+	                	        		if(conf.valor+"" == "true"){
+	                	    				$scope.tabIngenieros_VL_CAMPOS_mod = true;
+	                	    			}else if(conf.valor+"" == "false"){
+	                	    				$scope.tabIngenieros_VL_CAMPOS_mod = false;
+	                	    			}
+	                	        		break;
+	                	        	case "tabSupervisorCentralizado_VL_CAMPOS":
+	                	        		if(conf.valor+"" == "true"){
+	                	    				$scope.tabSupervisorCentralizado_VL_CAMPOS_mod = true;
+	                	    			}else if(conf.valor+"" == "false"){
+	                	    				$scope.tabSupervisorCentralizado_VL_CAMPOS_mod = false;
+	                	    			}
+	                	        		break;
+	                	        	case "tabCouchDespacho_VL_CAMPOS":
+	                	        		if(conf.valor+"" == "true"){
+	                	    				$scope.tabCouchDespacho_VL_CAMPOS_mod = true;
+	                	    			}else if(conf.valor+"" == "false"){
+	                	    				$scope.tabCouchDespacho_VL_CAMPOS_mod = false;
+	                	    			}
+	                	        		break;
+	                	        	case "tabSupervisor_VL_CAMPOS":
+	                	        		if(conf.valor+"" == "true"){
+	                	    				$scope.tabSupervisor_VL_CAMPOS_mod = true;
+	                	    			}else if(conf.valor+"" == "false"){
+	                	    				$scope.tabSupervisor_VL_CAMPOS_mod = false;
+	                	    			}
 	                	        		break;
                         		}
                         		
@@ -2029,7 +2082,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     		
 		}else{
 			//PESTAÑA DESPACHOS
-        	if($scope.tabDespachosMod){
+        	if($scope.tabDespachos_VL_CAMPOS_mod){
         		var checkDes = 0;
         		angular.forEach($scope.listaDespachosMod,function(despacho,index){
         			if(despacho.checkedOpcion == true){
@@ -2061,7 +2114,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 		}
 		
 		//PESTAÑA INGENIEROS
-    	if($scope.tabIngenierosMod){
+    	if($scope.tabIngenieros_VL_CAMPOS_mod){
     		var checkIngs = 0;
     		angular.forEach($scope.listaIngenierosMod,function(ingeniero,index){
     			if(ingeniero.checkedOpcion == true){
@@ -2080,7 +2133,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     	}
     	
     	//PESTAÑA SUPERVISORES CENTRALIZADOS
-    	if($scope.tabSupervisorCentralizadoMod){
+    	if($scope.tabSupervisorCentralizado_VL_CAMPOS_mod){
     		var checkSupCentralizados = 0;
     		angular.forEach($scope.listaSupervisoresCentralizadosMod,function(supervisorCentralizado,index){
     			if(supervisorCentralizado.checkedOpcion == true){
@@ -2099,7 +2152,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     	}
     	
     	//PESTAÑA COUCHS
-    	if($scope.tabCouchDespachoMod){
+    	if($scope.tabCouchDespacho_VL_CAMPOS_mod){
     		var checkCouchs = 0;
     		angular.forEach($scope.listaCouchsDespachosMod,function(couch,index){
     			if(couch.checkedOpcion == true){
@@ -2118,7 +2171,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     	}
     	
     	//PESTAÑA SUPERVISORES
-    	if($scope.tabSupervisorMod){
+    	if($scope.tabSupervisor_VL_CAMPOS_mod){
     		var checkSupervisores = 0;
     		angular.forEach($scope.listaSupervisoresMod,function(supervisor,index){
     			if(supervisor.checkedOpcion == true){
