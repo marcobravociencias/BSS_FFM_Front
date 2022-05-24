@@ -62,7 +62,8 @@
             </div>
         </div>
         <div class="container" id="container_seguimiento" ng-show="!detalleSalesforceView && configPermisoAccionConsultaSeguimiento">
-           
+            <i ng-show="!isBusquedaGeneral && !isDetalleTicket" class="fas fa-chevron-circle-left icon-back" title="Regresar" ng-click="backGeneral()"></i>
+
             <div ng-show="isBusquedaGeneral && !isDetalleTicket">
                 <jsp:include page="./content/consultaIngenieros.jsp"></jsp:include>
             </div>

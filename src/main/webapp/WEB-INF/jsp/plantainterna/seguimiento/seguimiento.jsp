@@ -35,7 +35,6 @@
             rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css"
             rel="stylesheet" />
-        rel="stylesheet" />
     </head>
 
     <body id="idBody" class="body">

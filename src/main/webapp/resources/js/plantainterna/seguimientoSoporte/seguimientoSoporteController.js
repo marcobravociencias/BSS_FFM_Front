@@ -54,7 +54,7 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
                             $scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
 
                             if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
-                                $scope.configPermisoAccionConsultaSeguimiento = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaSeguimiento" })[0] != undefined);
+                                $scope.configPermisoAccionConsultaSeguimiento = true//($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaSeguimiento" })[0] != undefined);
                             }
                             $("#idBody").removeAttr("style");
                             validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
@@ -334,9 +334,11 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
                                     row[count] = '<i class="fas fa-ticket-alt icon-table" title="Tickets" onclick="consultaTicket(' + "'" + elemento.idIngeniero + "', true" + ')"></i>';
                                     arraRow.push(row);
                                 })
+                            }else{
+                                toastr.info('No se encontraron datos');
                             }
                         } else {
-                            toastr.warning('No se encontraron ingenieros');
+                            toastr.info('No se encontraron datos');
                         }
                     } else {
                         toastr.warning(response.data.resultDescripcion);
@@ -357,9 +359,8 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
                     "columns": columns,
                     "language": idioma_espanol_not_font
                 });
-
+                swal.close();
             }).catch(err => handleError(err));
-            swal.close();
         }
     }
 

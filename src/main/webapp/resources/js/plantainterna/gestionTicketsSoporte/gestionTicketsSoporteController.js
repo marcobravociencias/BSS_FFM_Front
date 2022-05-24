@@ -923,7 +923,8 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                                 $scope.cleanForm();
                                 toastr.success(response.data.resultDescripcion);
                                 objectTempAccion.guardarAccionesRecientesModulo(response.data.resultDescripcion, MENSAJE_ACCION_EXITO, tituloAccion);
-                                objetoAccion.guardarAccionesRecientesModulo(objetoAccion)
+                                $scope.isMensajeSuccessOt = true
+
                             } else {
                                 swal.close();
                                 mostrarMensajeErrorAlert(response.data.resultDescripcion);
