@@ -1384,7 +1384,7 @@ span.btn-floating.btn-sm.btn-secondary.waves-effect.waves-light.acciones:hover{
 }
 
 #info-factibilidad .title-tipoot-map-filtros {
-  font-weight: lighter;
+  font-weight: bolder;
 }
 
 .div-contenedor-info-factibilidad {
@@ -1676,3 +1676,8 @@ a:disabled:hover {
 
 /* VISTA AGENDAMIENTO */
 
+.spinner-border.spinner-cargando-info.ng-scope {
+  width: 1.5em;
+  height: 1.5em;
+  color:#8e50fc;
+}

@@ -526,12 +526,44 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         }
 
         if (isValid) {
-            contactoAg.id = 1;
-            $scope.listContactosAgendamiento.push(contactoAg);
-            $("#modalNuevoContacto").modal('hide');
+            $scope.guardarContactoAgendamiento(contactoAg);
+            // contactoAg.id = 1;
+            // $scope.listContactosAgendamiento.push(contacto);
+            // $("#modalNuevoContacto").modal('hide');
         } else {
             mostrarMensajeWarningValidacion(mensajeError);
         }
+    }
+
+    $scope.guardarContactoAgendamiento = function(contacto) {
+        let params = {
+            "id": "1"
+        }
+        swal({ text: 'Espera un momento...', allowOutsideClick: false });
+            swal.showLoading();
+        bandejasSalesforceService.guardarContactoSalesforce(params).then(function success(response) {
+            console.log(response);
+            if (response.data !== undefined) {
+                if (true) {//response.data.respuesta
+                    if (true) {//response.data.result
+                        contacto.id = 1;
+                        $scope.listContactosAgendamiento.push(contacto);
+                        $("#modalNuevoContacto").modal('hide');
+                        mostrarMensajeExitoAlert("Contacto agregado correctamente");
+                        swal.close();
+                    } else {
+                        mostrarMensajeWarningValidacion('No se encontr&oacute; factibilidad');
+                        swal.close();
+                    }
+                } else {
+                    mostrarMensajeWarningValidacion(response.data.resultDescripcion);
+                    swal.close();
+                }
+            } else {
+                mostrarMensajeErrorAlert('Ha ocurrido un error al consultar la factibilidad');
+                swal.close();
+            }
+        });
     }
 
     $("#contactoAgendamiento").change(function () {
@@ -551,19 +583,22 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         $scope.$apply();
     }
 
+    $scope.flagConsultandoFactibilidad = false;
+    $scope.flagRespuestaFactibilidad = false;
     $scope.consultarFactibilidadAgendamiento = function (unidadNegocio, latitud, longitud) {
+        $scope.flagConsultandoFactibilidad = true;
         let params = {
             latitud: Number(latitud),
             longitud: Number(longitud)
         }
-        swal({ text: 'Espere...', allowOutsideClick: false });
-        swal.showLoading();
         if (unidadNegocio == 'empresarial') {
             bandejasSalesforceService.consultaFactibilidadEmpresarialAgendamiento(params).then(function success(response) {
                 console.log(response);
                 if (response.data !== undefined) {
                     if (response.data.respuesta) {
                         if (response.data.result) {
+                            $scope.flagConsultandoFactibilidad = false;
+                            $scope.flagRespuestaFactibilidad = true;
                             let data = {
                                 factibilidad: response.data.result.factibilidad,
                                 region: response.data.result.regionEnlace,
@@ -575,18 +610,20 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                             if (Number(response.data.result.factibilidad) === 0) {
                                 mostrarMensajeWarningValidacion('Sin factibilidad en esta ubicaci&oacute;n');
                             }
-                            swal.close();
                         } else {
+                            $scope.flagConsultandoFactibilidad = false;
+                            $scope.flagRespuestaFactibilidad = false;
                             mostrarMensajeWarningValidacion('No se encontr&oacute; factibilidad');
-                            swal.close();
                         }
                     } else {
+                        $scope.flagConsultandoFactibilidad = false;
+                        $scope.flagRespuestaFactibilidad = false;
                         mostrarMensajeWarningValidacion(response.data.resultDescripcion);
-                        swal.close();
                     }
                 } else {
+                    $scope.flagConsultandoFactibilidad = false;
+                    $scope.flagRespuestaFactibilidad = false;
                     mostrarMensajeErrorAlert('Ha ocurrido un error al consultar la factibilidad');
-                    swal.close();
                 }
             });
         } else if (unidadNegocio == 'residencial') {
@@ -625,6 +662,32 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         }
     }
 
+    $scope.consultarInfoSitioInstalacion = function() {
+        let params = {
+            "id": "1"
+        }
+        bandejasSalesforceService.consultarInfoSitioInstalacion(params).then(function success(response) {
+            console.log(response);
+            if (true) {//response.data !== undefined
+                if (true) {//response.data.respuesta
+                    if (true) {//response.data.result
+                       
+                        swal.close();
+                    } else {
+                        mostrarMensajeWarningValidacion('No se encontr&oacute; factibilidad');
+                        swal.close();
+                    }
+                } else {
+                    mostrarMensajeWarningValidacion(response.data.resultDescripcion);
+                    swal.close();
+                }
+            } else {
+                mostrarMensajeErrorAlert('Ha ocurrido un error al consultar la factibilidad');
+                swal.close();
+            }
+        });
+    }
+
     visualizarAgendamiento = function (index) {
         $scope.isAgendamiento = true;
         $scope.isContactoSelected = false;
@@ -633,13 +696,14 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         $scope.listContactosAgendamiento = [];
         $scope.infoFactibilidad = {};
         $scope.elementoCSP = {};
-        $scope.elementoCSP = $scope.listPendientesAgendar[index];;
+        $scope.elementoCSP = $scope.listPendientesAgendar[index];
         $scope.elementoCSP.latitud = '19.346519036181018';
         $scope.elementoCSP.longitud = '-99.2159671376953';
         $scope.$apply();
         $scope.clearFormAgendamiento();
         $scope.consultarDisponibilidadBandejas();
         $scope.consultarFactibilidadAgendamiento('empresarial', $scope.elementoCSP.latitud, $scope.elementoCSP.longitud);
+        //$scope.consultarInfoSitioInstalacion();
         $scope.clearMarkersAgendamiento();
         $scope.setMarkerAgendamiento();
     }

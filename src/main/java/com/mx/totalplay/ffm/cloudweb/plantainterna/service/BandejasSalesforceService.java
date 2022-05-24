@@ -11,5 +11,11 @@ public interface BandejasSalesforceService {
 	public ServiceResponseResult consultarPendientesActivarBandejasSF(String params);
 	
 	public ServiceResponseResult consultarFactibilidadEmpresarialBandejasSF(String params);
+	
+	public ServiceResponseResult consultarInfoSitioInstalacion(String params);
+	
+	public ServiceResponseResult guardarContactoSalesforce(String params);
+	
+	public ServiceResponseResult agendarOrdenSalesforce(String params);
 
 }

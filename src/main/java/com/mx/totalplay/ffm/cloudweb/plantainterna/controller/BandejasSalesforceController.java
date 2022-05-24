@@ -68,5 +68,35 @@ public class BandejasSalesforceController {
 		}
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
+	
+	@PostMapping("/consultarInfoSitioInstalacion")
+	public ResponseEntity<?> consultarInfoSitioInstalacion(@RequestBody String params) {
+		logger.info("###### BandejasSalesforceController - consultarInfoSitioInstalacion");
+		ServiceResponseResult response = bandejasSalesforceService.consultarInfoSitioInstalacion(params);
+		if(response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	
+	@PostMapping("/guardarContactoSalesforce")
+	public ResponseEntity<?> guardarContactoSalesforce(@RequestBody String params) {
+		logger.info("###### BandejasSalesforceController - guardarContactoSalesforce");
+		ServiceResponseResult response = bandejasSalesforceService.guardarContactoSalesforce(params);
+		if(response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	
+	@PostMapping("/agendarOrdenSalesforce")
+	public ResponseEntity<?> agendarOrdenSalesforce(@RequestBody String params) {
+		logger.info("###### BandejasSalesforceController - agendarOrdenSalesforce");
+		ServiceResponseResult response = bandejasSalesforceService.agendarOrdenSalesforce(params);
+		if(response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
 
 }

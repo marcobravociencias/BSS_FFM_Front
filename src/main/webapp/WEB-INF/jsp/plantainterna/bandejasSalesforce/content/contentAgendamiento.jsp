@@ -213,42 +213,49 @@
                     <div class="content-info-mapa" id="info-factibilidad">
                         <div style="bottom:0; left:0 ;" class="card div-contenedor-kmz-buttons div-contenedor-info-factibilidad">
                             <div class="card-header" style="border-bottom: none; text-align: left;">
-                                <span class="title-tipoot-map-filtros" ng-if="infoFactibilidad.factibilidad !== '0'">
+                                <span class="title-tipoot-map-filtros" ng-show="!flagConsultandoFactibilidad && flagRespuestaFactibilidad">
                                     <i class="far fa-check-circle icon-informacion-fac" style="color: green;"></i>
                                     Factibilidad
                                 </span>
-                                <span class="title-tipoot-map-filtros" ng-if="infoFactibilidad.factibilidad === '0'">
+                                <span class="title-tipoot-map-filtros" ng-show="!flagConsultandoFactibilidad && !flagRespuestaFactibilidad">
                                     <i class="fa fa-exclamation-circle icon-informacion-fac" style="color: orange;"></i>
                                     Factibilidad
                                 </span>
+                                <div ng-if="flagConsultandoFactibilidad" class="spinner-border spinner-cargando-info" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <span class="title-tipoot-map-filtros" ng-show="flagConsultandoFactibilidad">
+                                    Cargando...
+                                </span>
                                 <span
-                                    class="icono-hideoptions-mapa-ubicacion icono-accion-card icono-ocultar-mostrar-map fa fa-minus"></span>
+                                    class="icono-hideoptions-mapa-ubicacion icono-accion-card icono-ocultar-mostrar-map fa fa-minus">&nbsp;</span>
                             </div>
                             <div class="card-body" style="padding: 0;" ng-if="infoFactibilidad.factibilidad !== '0'">
-                                <div style="text-align: left;" class="info_ot_detail">
+                                <div ng-show="!flagConsultandoFactibilidad" style="text-align: left;" class="info_ot_detail">
                                     <div class="col-md-12">
                                         <b class="title_span_detalle"> Regi&oacute;n:</b>
-                                        <span class="ciudad-detalle-cuenta" ng-bind="infoFactibilidad.region"> </span>
+                                        <span class="ciudad-detalle-cuenta" ng-bind="infoFactibilidad.region ? infoFactibilidad.region : 'Sin info'"> </span>
                                     </div>
                                     <div class="col-md-12">
                                         <b class="title_span_detalle"> Ciudad:</b>
-                                        <span class="ciudad-detalle-cuenta" ng-bind="infoFactibilidad.ciudad"> </span>
+                                        <span class="ciudad-detalle-cuenta" ng-bind="infoFactibilidad.ciudad ? infoFactibilidad.ciudad : 'Sin info'"> </span>
                                     </div>
                                     <div class="col-md-12">
                                         <b class="title_span_detalle"> Distrito:</b>
-                                        <span class="ciudad-detalle-cuenta" ng-bind="infoFactibilidad.distrito"> </span>
+                                        <span class="ciudad-detalle-cuenta" ng-bind="infoFactibilidad.distrito ? infoFactibilidad.distrito : 'Sin info'"> </span>
                                     </div>
                                     <div class="col-md-12">
                                         <b class="title_span_detalle"> Cl&uacute;ster:</b>
-                                        <span class="ciudad-detalle-cuenta" ng-bind="infoFactibilidad.cluster"> </span>
+                                        <span class="ciudad-detalle-cuenta" ng-bind="infoFactibilidad.cluster ? infoFactibilidad.cluster : 'Sin info'"> </span>
                                     </div>
                                     <div class="content-actualizar">
                                         <hr style="margin: 0.5rem 0;">
-                                        <button title="Actualizar factibilidad" ng-click="actualizarFactibilidadBandejas()" class="btn boton-factibilidad ripple-surface">
+                                        <button title="Actualizar factibilidad" ng-disabled="!flagRespuestaFactibilidad" ng-click="actualizarFactibilidadBandejas()" class="btn boton-factibilidad ripple-surface">
                                             <i class="fa fa-redo"></i>
                                         </button>
                                     </div>
                                 </div>
+                                
                             </div>
                             <div class="card-body" style="padding: 0;" ng-if="infoFactibilidad.factibilidad === '0'">
                                 <div style="text-align: center;font-size: 0.9em;" class="info_ot_detail">

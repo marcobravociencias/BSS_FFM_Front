@@ -112,6 +112,46 @@ public class ImplBandejasSalesforceService implements BandejasSalesforceService 
 				ServiceResponseResult.class, tokenAccess);
 		return response;
 	}
+
+	@Override
+	public ServiceResponseResult consultarInfoSitioInstalacion(String params) {
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		logger.info("ImplBandejasSalesforceService.class [metodo = consultarPendientesActivarBandejasSF() ] \n" + jsonObject);
+		
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String tokenAccess = principalDetail.getAccess_token();
+		logger.info("consultarPendientesActivarBandejasSF## "+tokenAccess);
+		
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constBandejasSalesforce.getConsultaPendientesActivarBandejasSF());
+		logger.info("URL## " + urlRequest);
+		
+		//ServiceResponseResult response = restCaller.callPostBearerTokenRequest(jsonObject.toString(), urlRequest, ServiceResponseResult.class, tokenAccess);
+		ServiceResponseResult response = null;
+		return response;
+	}
+
+	@Override
+	public ServiceResponseResult guardarContactoSalesforce(String params) {
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		logger.info("ImplBandejasSalesforceService.class [metodo = guardarContactoSalesforce() ] \n" + jsonObject);
+		
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String tokenAccess = principalDetail.getAccess_token();
+		logger.info("guardarContactoSalesforce## "+tokenAccess);
+		
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constBandejasSalesforce.getConsultaPendientesActivarBandejasSF());
+		logger.info("URL## " + urlRequest);
+		
+		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(jsonObject.toString(), urlRequest, ServiceResponseResult.class, tokenAccess);
+		
+		return response;
+	}
+
+	@Override
+	public ServiceResponseResult agendarOrdenSalesforce(String params) {
+		// TODO Auto-generated method stub
+		return null;
+	}
     
     
 }

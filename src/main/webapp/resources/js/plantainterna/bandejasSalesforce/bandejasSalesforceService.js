@@ -82,4 +82,35 @@ app.service("bandejasSalesforceService", function ($http) {
         });
     };
 
+    this.consultarInfoSitioInstalacion = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarInfoSitioInstalacion",
+            data: JSON.stringify(params),
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
+            transformRequest: angular.identity
+        });
+    };
+
+    this.guardarContactoSalesforce = function (params) {
+        return $http({
+            method: "post",
+            url: "req/guardarContactoSalesforce",
+            data: JSON.stringify(params),
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
+            transformRequest: angular.identity
+        });
+    };
+
+    this.agendarOrdenSalesforce = function (params) {
+        return $http({
+            method: "post",
+            url: "req/agendarOrdenSalesforce",
+            data: JSON.stringify(params),
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
+            transformRequest: angular.identity
+        });
+    };
+
+
 });
