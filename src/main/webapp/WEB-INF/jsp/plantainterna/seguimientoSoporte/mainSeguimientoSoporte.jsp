@@ -54,7 +54,14 @@
 
     <body id="idBody" class="body" ng-controller="seguimientoSoporteController" style="display:none;">
         <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
-        <div class="container" id="container_seguimiento" ng-show="!detalleSalesforceView">
+        <div class="container" id="container_seguimiento" style="padding: 1em 0;"
+            ng-show="!configPermisoAccionConsultaSeguimiento">
+            <div class="text-accion-nopermiso">
+                <i class="icon-not-permiso fas fa-user-lock"></i>
+                <b class="text-not-permiso">No cuentas con el permiso de consulta.</b>
+            </div>
+        </div>
+        <div class="container" id="container_seguimiento" ng-show="!detalleSalesforceView && configPermisoAccionConsultaSeguimiento">
            
             <div ng-show="isBusquedaGeneral && !isDetalleTicket">
                 <jsp:include page="./content/consultaIngenieros.jsp"></jsp:include>

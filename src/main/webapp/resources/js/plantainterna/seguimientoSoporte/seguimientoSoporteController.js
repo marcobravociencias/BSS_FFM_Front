@@ -25,6 +25,7 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
     $scope.usuarioFoto = {};
     $scope.idIngeniero = '';
     $scope.listIngenieros = [];
+    $scope.configPermisoAccionConsultaSeguimiento = false;
 
     $scope.consultarCatalogos = function () {
         $q.all([
@@ -53,8 +54,7 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
                             $scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
 
                             if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
-                                $scope.configPermisoAccionConsultaOrdenes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaOT" })[0] != undefined);
-                                $scope.configPermisoAccionDescargaReporteOrdenes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaReporteOT" })[0] != undefined);
+                                $scope.configPermisoAccionConsultaSeguimiento = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaSeguimiento" })[0] != undefined);
                             }
                             $("#idBody").removeAttr("style");
                             validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
@@ -209,7 +209,6 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
         "columns": [null, null, null, null, null, null, { "visible": false }, { "visible": false }, { "visible": false }, { "visible": false }, { "visible": false }, { "visible": false }, { "visible": false }],
         "language": idioma_espanol_not_font,
     });
-
 
 
     ticketTable = $('#ticketTable').DataTable({
@@ -370,70 +369,85 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
     }
 
     consultaTicket = function (ingeniero, isSetDate) {
-        $scope.idIngeniero = ingeniero;
-        $scope.isBusquedaGeneral = false;
+        let mensaje = '<ul>';
+        let isValid = true;
+        $scope.listIngenieros = [];
 
-        swal({ text: 'Espera un momento...', allowOutsideClick: false });
-        swal.showLoading();
-
-        if (ticketTable) {
-            ticketTable.destroy();
+        if (!$scope.validarFecha('filtro_fecha_inicio_ticket', 'filtro_fecha_fin_ticket')) {
+            mensaje += '<li>La fecha final debe ser mayor que la fecha inicio</li>';
+            isValid = false;
         }
 
-        if (isSetDate) {
-            $("#filtro_fecha_inicio_ticket").val($("#filtro_fecha_inicio").val());
-            $("#filtro_fecha_fin_ticket").val($("#filtro_fecha_fin").val());
-            $("#tipo_fecha_ticket").val($("#tipo_fecha").val());
-        }
+        if (!isValid) {
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            $scope.idIngeniero = ingeniero;
+            $scope.isBusquedaGeneral = false;
 
-        let params = {
-            fechaInicio: $scope.getFechaFormato($("#filtro_fecha_inicio_ticket").val()),
-            fechaFin: $scope.getFechaFormato($("#filtro_fecha_fin_ticket").val()),
-            tipoFecha: $("#tipo_fecha_ticket").val(),
-            idIngeniero: ingeniero
-        }
+            swal({ text: 'Espera un momento...', allowOutsideClick: false });
+            swal.showLoading();
+
+            if (ticketTable) {
+                ticketTable.destroy();
+            }
+
+            if (isSetDate) {
+                $("#filtro_fecha_inicio_ticket").val($("#filtro_fecha_inicio").val());
+                $("#filtro_fecha_fin_ticket").val($("#filtro_fecha_fin").val());
+                $("#tipo_fecha_ticket").val($("#tipo_fecha").val());
+            }
+
+            let params = {
+                fechaInicio: $scope.getFechaFormato($("#filtro_fecha_inicio_ticket").val()),
+                fechaFin: $scope.getFechaFormato($("#filtro_fecha_fin_ticket").val()),
+                tipoFecha: $("#tipo_fecha_ticket").val(),
+                idIngeniero: ingeniero
+            }
 
 
-        let arraRow = [];
-        seguimientoSoporteService.consultaTicketGeneral(params).then(function success(response) {
-            swal.close();
-            if (response.data !== undefined) {
-                if (response.data.respuesta) {
-                    if (response.data.result) {
-                        $.each(response.data.result.detalleIngeniero, function (i, elemento) {
-                            let row = [];
-                            row[0] = elemento.otCentralizado ? elemento.otCentralizado : 'Sin informaci&oacute;n';
-                            row[1] = elemento.folioSistema ? elemento.folioSistema : 'Sin informaci&oacute;n';
-                            row[2] = elemento.claveCliente ? elemento.claveCliente : 'Sin informaci&oacute;n';
-                            row[3] = elemento.fechaCreacion ? elemento.fechaCreacion : 'Sin informaci&oacute;n';
-                            row[4] = elemento.nombreCompletoIngeniero ? elemento.nombreCompletoIngeniero : 'Sin informaci&oacute;n';
-                            row[5] = elemento.numeroEmpleadoIngeniero ? elemento.numeroEmpleadoIngeniero : 'Sin informaci&oacute;n';
-                            row[6] = elemento.estatus ? elemento.estatus : 'Sin informaci&oacute;n';
-                            row[7] = elemento.fallaReportada ? elemento.fallaReportada : 'Sin informaci&oacute;n';
-                            row[8] = '<i class="fas fa-bars icon-table" title="Detalle" onclick="consultaDetalle(' + "'" + elemento.idTicket + "'" + ')"></i>';
-                            arraRow.push(row);
-                        })
+            let arraRow = [];
+            seguimientoSoporteService.consultaTicketGeneral(params).then(function success(response) {
+                swal.close();
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        if (response.data.result) {
+                            $.each(response.data.result.detalleIngeniero, function (i, elemento) {
+                                let row = [];
+                                row[0] = elemento.otCentralizado ? elemento.otCentralizado : 'Sin informaci&oacute;n';
+                                row[1] = elemento.folioSistema ? elemento.folioSistema : 'Sin informaci&oacute;n';
+                                row[2] = elemento.claveCliente ? elemento.claveCliente : 'Sin informaci&oacute;n';
+                                row[3] = elemento.fechaCreacion ? elemento.fechaCreacion : 'Sin informaci&oacute;n';
+                                row[4] = elemento.nombreCompletoIngeniero ? elemento.nombreCompletoIngeniero : 'Sin informaci&oacute;n';
+                                row[5] = elemento.numeroEmpleadoIngeniero ? elemento.numeroEmpleadoIngeniero : 'Sin informaci&oacute;n';
+                                row[6] = elemento.estatus ? elemento.estatus : 'Sin informaci&oacute;n';
+                                row[7] = elemento.fallaReportada ? elemento.fallaReportada : 'Sin informaci&oacute;n';
+                                row[8] = '<i class="fas fa-bars icon-table" title="Detalle" onclick="consultaDetalle(' + "'" + elemento.idTicket + "'" + ')"></i>';
+                                arraRow.push(row);
+                            })
+                        } else {
+                            toastr.warning('No se encontraron tickets');
+                        }
                     } else {
-                        toastr.warning('No se encontraron tickets');
+                        toastr.warning(response.data.resultDescripcion);
                     }
                 } else {
                     toastr.warning(response.data.resultDescripcion);
                 }
-            } else {
-                toastr.warning(response.data.resultDescripcion);
-            }
-            ticketTable = $('#ticketTable').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "ordering": false,
-                "pageLength": 10,
-                "info": true,
-                "scrollX": false,
-                "data": arraRow,
-                "autoWidth": false,
-                "language": idioma_espanol_not_font,
-            });
-        }).catch(err => handleError(err));
+                ticketTable = $('#ticketTable').DataTable({
+                    "paging": true,
+                    "lengthChange": false,
+                    "ordering": false,
+                    "pageLength": 10,
+                    "info": true,
+                    "scrollX": false,
+                    "data": arraRow,
+                    "autoWidth": false,
+                    "language": idioma_espanol_not_font,
+                });
+            }).catch(err => handleError(err));
+        }
     }
 
     function camelCase(text) {
@@ -525,7 +539,10 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
 
     }
 
-    $scope.consultaSeguimiento();
+    if ($scope.configPermisoAccionConsultaSeguimiento) {
+        $scope.consultaSeguimiento();
+    }
+
 
 
 
