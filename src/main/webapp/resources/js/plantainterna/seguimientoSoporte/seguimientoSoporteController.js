@@ -372,7 +372,6 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
     consultaTicket = function (ingeniero, isSetDate) {
         let mensaje = '<ul>';
         let isValid = true;
-        $scope.listIngenieros = [];
 
         if (!$scope.validarFecha('filtro_fecha_inicio_ticket', 'filtro_fecha_fin_ticket')) {
             mensaje += '<li>La fecha final debe ser mayor que la fecha inicio</li>';
