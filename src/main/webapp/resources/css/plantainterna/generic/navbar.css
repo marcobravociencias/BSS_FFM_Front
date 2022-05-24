@@ -1,17 +1,17 @@
 :root {
   --estandar-color: #3942d7;
-  --btn-color-guardar: #f55756;
-  --btn-color-buscar: #04F8F4;
-  --btn-color-guardar-modal: #ffff00;
-  --btn-color-cerrar-modal: #800080;
+  --btn-color-guardar: #1266f1;
+  --btn-color-buscar: #3942d7;
+  --btn-color-guardar-modal: #1266f1;
+  --btn-color-cerrar-modal: #3942d7;
   --btn-color-editar-tabla: #3942d7;
   --btn-color-eliminar-tabla: #f55756;
-  --btn-color-detalle-tabla: #FF8800;
-  --btn-color-evidencia-tabla: #F804F4;
-  --btn-color-agendar-tabla: #28B463;
-  --btn-color-cambiar-contrasena-tabla: #D4AC0D;
-  --btn-color-liberar-pago-tabla: #922B21;
-  --btn-color-paginador-tabla: #00FF00;
+  --btn-color-detalle-tabla: #3942d7;
+  --btn-color-evidencia-tabla: #3942d7;
+  --btn-color-agendar-tabla: #3942d7;
+  --btn-color-cambiar-contrasena-tabla: #3942d7;
+  --btn-color-liberar-pago-tabla: #3942d7;
+  --btn-color-paginador-tabla: #1266f1;
 }
 /* #3942d7 */
 /* #1266f1 */
