@@ -2895,3 +2895,63 @@ i.fas.fa-lock.iconoAsignacionOtPermiso {
   font-style: italic;
   color: #898989;
 }
+
+.icono-pago-liberado{
+    text-align: center;
+    color: #51b37d;
+    font-size: 1.5em;
+}
+#table-pagos-temp tbody tr{
+    text-align:center;
+}
+.icono-pago-pendiente{
+   text-align: center;
+   color: #fdc149;
+   font-size: .9em;
+border: .2em solid #fdc149;width: 2em;height: 2em;border-radius: 50%;line-height: 1.7em !important;}
+
+.card-pricing .card-icon i {
+    font-size: 40px;
+    width: 105px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    height: 105px;
+    line-height: 105px;
+}
+
+.estatus-container-pagos,.estatus-container-pagos-pendiente{
+  margin-bottom: 1em;
+}
+
+.estatus-container-pagos i {
+    font-size: 40px;
+    width: 2em;
+    border: 2px solid #51b37d;
+    border-radius: 50%;
+    height: 2em;
+    line-height: 2em;
+    text-align:center;
+    color: #51b37d;
+}
+
+.sin-pagos-pendientes{
+  color:#51b37d;
+  font-weight:bold;
+}
+.con-pagos-pendientes{
+   color: #fdc149;
+   font-weight:bold;
+}
+
+
+
+.estatus-container-pagos-pendiente i {
+    font-size: 40px;
+    width: 2em;
+    border: 2px solid #fdc149;
+    border-radius: 50%;
+    height: 2em;
+    line-height: 2em;
+    text-align:center;
+    color: #fdc149;
+}

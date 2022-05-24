@@ -1128,8 +1128,9 @@ public class ImplDespachoPIService implements DespachoPIService {
         logger.info("### URL consultaPagosTecnico(): \n" + urlRequest);
         Map<String, String> paramsRequestGet = new HashMap<>(); 
        
-        paramsRequestGet.put("idUsuario", jsonObject.get("idUsuario").getAsString() );
-        
+        paramsRequestGet.put("idTecnico", jsonObject.get("idTecnico").getAsString() );
+        paramsRequestGet.put("fechaInicio", jsonObject.get("fechaInicio").getAsString() );
+        paramsRequestGet.put("fechaFin", jsonObject.get("fechaFin").getAsString() );
         
         ServiceResponseResult response = restCaller.callGetBearerTokenRequest(
                 paramsRequestGet,

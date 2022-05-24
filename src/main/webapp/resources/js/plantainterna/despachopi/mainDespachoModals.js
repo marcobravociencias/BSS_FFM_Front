@@ -1,5 +1,10 @@
 var tableMaterialesDespacho;
 var tablePagosDespacho;
+const formatterMonto = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2
+})
 app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericService) {
     $scope.listadoIconografia = undefined
 
@@ -647,12 +652,9 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             }
         }).catch(err => handleError(err))
     }
-
     abrirInformacionPagos = function (id) {
         let tecnicoTemp = angular.copy($scope.listadoTecnicosGeneral.find(e => { return e.idTecnico == id }))
-        let params = {
-            idUsuario: tecnicoTemp.idTecnico
-        }
+        $scope.tecnicoConsultaPagos = angular.copy(tecnicoTemp)
 
         if (tablePagosDespacho)
             tablePagosDespacho.destroy();
@@ -662,61 +664,62 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         swal({ text: 'Consultando datos ...', allowOutsideClick: false });
         swal.showLoading();
         let arrayRow = [];
-        /*
+        let fechaFormatConsulta=moment(new Date()).format('YYYY-MM-DD');
+        let params = {
+            idTecnico : tecnicoTemp.idTecnico,
+            fechaInicio : fechaFormatConsulta,
+            fechaFin : fechaFormatConsulta
+        }
         mainDespachoService.consultarInformacionPagos(params).then(function success(response) {
            console.log(response)
+           $scope.tecnicoConsultaPagos.isPagosPendientes=false
            if( response.data.respuesta){
                 if (response.data.result) {   
                     swal.close()       
-                    if(response.data.result.pagos.length){
-                        $.each(response.data.result.pagos, function (i, elemento) {
+                    if(response.data.result.detallePago!=undefined && response.data.result.detallePago.length){
+                        let estatusIconEstatus=''
+
+                        $.each(response.data.result.detallePago, function (i, elemento) {
+                            estatusIconEstatus=''
+                     
+                            if(elemento.idEstatusPago == 2){
+                                estatusIconEstatus=` <i class="fas fa-exclamation icono-pago-pendiente"></i> `
+                                $scope.tecnicoConsultaPagos.isPagosPendientes=true
+                            }else{
+                                estatusIconEstatus=` <i class="far fa-check-circle icono-pago-liberado"></i> `
+                            }
                             let row = [];
                             row[0] = elemento.idCveCliente ? elemento.idCveCliente : '';
-                            row[1] = elemento.folioSistema ? elemento.folioSistema : '';
-                            row[2] = elemento.monto ? elemento.monto : '';
-                            row[3] = elemento.fechaRegistroPago ? elemento.fechaRegistroPago : '';
-                            row[4] = elemento.hora ? elemento.hora : '';
-                            row[5] = elemento.descEstatusPago ? elemento.descEstatusPago : '';
-                            row[6] = elemento.fechaHoraCierreOT ? elemento.fechaHoraCierreOT : '';
-                            row[7] = elemento.tipoIntervencion ? elemento.tipoIntervencion : '';
-                            row[8] = elemento.subTipoIntervencion ? elemento.subTipoIntervencion : '';
+                            row[1] = elemento.idOrden ? elemento.idOrden : '';
+                            row[2] = elemento.folioSistema ? elemento.folioSistema : '';
+                            row[3] = elemento.fechaRegistro ? elemento.fechaRegistro : '';
+                            row[4] = elemento.fechaCierreOT ? elemento.fechaCierreOT : '';
+                            row[5] = elemento.tipoIntervencion ? elemento.tipoIntervencion : '';
+                            row[6] = elemento.subTipoIntervencion ? elemento.subTipoIntervencion : '';
+                            row[7] = elemento.tiempo ? elemento.tiempo : '';
+                            row[8] = elemento.tipoPago ? elemento.tipoPago : '';
+                            row[9] = elemento.monto ? formatterMonto.format( elemento.monto )   : '$ 0.0';
+                            row[10] = estatusIconEstatus ;
                             arrayRow.push(row);
                         })
                         $scope.inicializarTablePagos(arrayRow);
-                        $("#modalMaterialesOperario").modal('show')   
+                        $("#modalPagos").modal('show');                  
                     }else{
-                        swal({ text: 'Tiene todos sus pagos al corriente', allowOutsideClick: true, type: 'success' });
-                    }          
-                  
+                        $scope.inicializarTablePagos(arrayRow);
+                    }                                                 
                 } else {
-                    mostrarMensajeWarningValidacion('No se encontr&oacute; informaci&oacute;n.')
+                    mostrarMensajeInformativo('No se encontr&oacute; informaci&oacute;n.')
                     $scope.inicializarTablePagos(arrayRow)
                     swal.close()
                 }
            }else{
-                toastr.warning("Ha ocurrido un error al consultar los pagos");
+                mostrarMensajeInformativo('No se encontr&oacute; informaci&oacute;n.')
                 $scope.inicializarTablePagos(arrayRow)
                 swal.close()
            }
         }).catch(err => handleError(err))
-        */
 
-        $.each(JSONArraysPagos.pagos, function (i, elemento) {
-            let row = [];
-            row[0] = elemento.idCveCliente ? elemento.idCveCliente : '';
-            row[1] = elemento.folioSistema ? elemento.folioSistema : '';
-            row[2] = elemento.monto ? elemento.monto : '';
-            row[3] = elemento.fechaRegistroPago ? elemento.fechaRegistroPago : '';
-            row[4] = elemento.hora ? elemento.hora : '';
-            row[5] = elemento.descEstatusPago ? elemento.descEstatusPago : '';
-            row[6] = elemento.fechaHoraCierreOT ? elemento.fechaHoraCierreOT : '';
-            row[7] = elemento.tipoIntervencion ? elemento.tipoIntervencion : '';
-            row[8] = elemento.subTipoIntervencion ? elemento.subTipoIntervencion : '';
-            arrayRow.push(row);
-        })
-        $scope.inicializarTablePagos(arrayRow);
-        swal.close()
-        $("#modalPagos").modal('show');
+     
 
     }
 
@@ -816,7 +819,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             "ordering": false,
             "data": arrayRowPagos,
             "pageLength": 10,
-            "columns": [null, null, null, null, null, null, null, null, null],
+            "columns": [null, null, null, null, null, null, null, null, null,null,null],
             "language": idioma_espanol_not_font
         });
     }
