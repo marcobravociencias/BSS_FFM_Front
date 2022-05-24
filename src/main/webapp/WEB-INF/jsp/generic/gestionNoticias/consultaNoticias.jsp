@@ -90,7 +90,7 @@
                                 <span class=" fecha-fin-consulta-tex" ng-bind="noticia.fechaExpiracion"></span>	
                             </div> 
                             <span class=" text-detalle-consulta" ng-bind="noticia.detalle"></span>                   
-                            <span onclick="window.open( 'www.google.com', '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');" class="link-archivo-noticia link-consulta-noticiaexterno" > {{noticia.urlLinkExterno}} </span>                             
+                            <a href="{{noticia.urlLinkExterno}}" target="_blank" onclick="window.open(this.href,this.target, 'location=yes,height=570,width=520,scrollbars=yes,status=yes');" class="link-archivo-noticia link-consulta-noticiaexterno" >{{noticia.urlLinkExterno}}</a>                             
                             <div ng-if="noticia.permanente==1 || noticia.urlArchivo" class="divider-consulta-noticia"></div>                                                                                                                         
                             <div ng-show="noticia.permanente == 1" class="parent-icon-permanente">   
                                 <div class="wrapper-icon-permanente">

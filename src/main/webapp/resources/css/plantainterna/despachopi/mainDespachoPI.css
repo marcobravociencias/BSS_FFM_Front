@@ -348,8 +348,8 @@ div#calendar {
 
 #buscar-otsasignadas {
   background-color: #ffffff;
-  color: var(--estandar-color);
-  border: solid 1px var(--estandar-color);
+  color: var(--btn-color-buscar) !important;
+  border: solid 1px var(--btn-color-buscar);
   padding: 0.3em 2em;
   border-radius: 5px;
   font-size: 0.7em;
@@ -1832,7 +1832,7 @@ span.cerrarnoticias {
 .btn-enviar-comentario-ot {
   height: 41px;
   font-size: 1em;
-  /* color: #2196f3; */
+  background-color: var(--btn-color-guardar-modal) !important;
   font-size: 1em !important;
   color: #ffffff !important;
 }
@@ -2748,6 +2748,12 @@ img.img-sap-materiales {
   font-family: "Montserrat" !important;
 }
 
+#table-ots-trabajadas-tecnico_paginate .page-item.active .page-link,
+#table-materiales-temp_paginate .page-item.active .page-link,
+#table-pagos-temp_paginate .page-item.active .page-link {
+    background-color: var(--btn-color-paginador-tabla) !important;
+}
+
 .total-materiales {
   color: #1b68c0 !important;
   font-weight: bold;
@@ -2812,26 +2818,26 @@ i.fas.fa-lock.iconoAsignacionOtPermiso {
 
 #btnEditarDireccionOT {
   background-color: #ffffff;
-  color: var(--estandar-color);
-  border: solid 1px var(--estandar-color);
+  color: var(--btn-color-guardar-modal);
+  border: solid 1px var(--btn-color-guardar-modal);
   padding: 0.3em 2em;
   border-radius: 5px;
   font-size: 0.7em;
-  margin-left: 15%;
+  margin-left: 27%;
 }
 
 #btnCambioDireccionOTMod {
-  border: solid 1px #0c56d0;
+  border: solid 1px var(--btn-color-guardar-modal) !important;
   padding: 0.3em 2em;
   border-radius: 5px;
   font-size: 0.7em;
-  background-color: #0c56d0;
+  background-color: var(--btn-color-guardar-modal) !important;
 }
 
 #btnRegresarVistaCambioDireccion {
   background-color: #ffffff;
-  color: var(--estandar-color);
-  border: solid 1px var(--estandar-color);
+  color: var(--btn-color-guardar-modal);
+  border: solid 1px var(--btn-color-guardar-modal);
   padding: 0.3em 2em;
   border-radius: 5px;
   font-size: 0.7em;
@@ -2962,4 +2968,9 @@ i.fas.fa-lock.iconoAsignacionOtPermiso {
   line-height: 2em;
   text-align: center;
   color: #fdc149;
+}
+
+.modal-footer .btn-cerrar-modal {
+	color: var(--btn-color-cerrar-modal) !important;
+    border: 0.09rem solid var(--btn-color-cerrar-modal) !important;
 }

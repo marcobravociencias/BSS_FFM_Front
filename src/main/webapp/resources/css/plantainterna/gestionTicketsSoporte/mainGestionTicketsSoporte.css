@@ -71,18 +71,18 @@
 .btnTicket:active, .btnTicket:focus .btnTicket:hover {
     background-color: white !important;
     box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
-    color: var(--estandar-color);
+    color: var(--btn-color-buscar);
 }
 
 .btnTicket:hover, .btnTicket:active, .btnTicket:focus {
     background-color: white;
-    color: var(--estandar-color) !important;
+    color: var(--btn-color-buscar) !important;
 }
 
 .btnTicket {
     background-color: #ffffff;
-    color: var(--estandar-color);
-    border: solid 1px var(--estandar-color) !important;
+    color: var(--btn-color-buscar);
+    border: solid 1px var(--btn-color-buscar) !important;
     padding: .4em 1.5em;
     border-radius: 5px;
     font-size: 0.7em;
@@ -1086,6 +1086,10 @@ i.icono-noseleccion {
 }
 
 .dropleft.show .dropup-comments {
+	border: 1px solid #e0e0e0 !important;
+}
 
-    border: 1px solid #e0e0e0 !important;
+.modal-footer .btn-cerrar-modal {
+	color: var(--btn-color-cerrar-modal) !important;
+    border: 0.09rem solid var(--btn-color-cerrar-modal) !important;
 }

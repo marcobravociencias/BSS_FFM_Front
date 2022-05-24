@@ -37,8 +37,8 @@
 
     #btn-consultar-disponibilidad {
         background-color: #ffffff;
-        color: var(--estandar-color);
-        border: solid 1px var(--estandar-color) !important;
+        color: var(--btn-color-buscar);
+        border: solid 1px var(--btn-color-buscar) !important;
         padding: 0.5em 1.5em;
         border-radius: 5px;
         font-size: 0.6em;
@@ -71,7 +71,7 @@
     }
 
     span.btnModificarUsuario {
-        background-color: var(--estandar-color) !important;
+        background-color: var(--btn-color-editar-tabla) !important;
         color: #fff !important;
         -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
         box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
@@ -79,7 +79,7 @@
     }
 
     span.btnEliminarUsuario {
-        background-color: #f55756 !important;
+        background-color: var(--btn-color-eliminar-tabla) !important;
         color: #fff !important;
         -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
         box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
@@ -162,17 +162,23 @@
     .modal-footer .btn-cerrar-modal {
         font-size: .6em !important;
         background: white;
-        color: #0c56d0;
+        color: var(--btn-color-cerrar-modal) !important;
         font-weight: bold;
         box-shadow: none;
         padding: 0.6em 2em 0.6em 2em;
-        border: 0.09rem solid #0c56d0;
+        border: 0.09rem solid var(--btn-color-cerrar-modal) !important;
         box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
+    }
+    
+    .btn-cerrar-modal {
+    	color: var(--btn-color-cerrar-modal) !important;
+    	border: 0.09rem solid var(--btn-color-cerrar-modal) !important;
     }
 
     #btnModalModificarUsuario {
         font-size: .6em;
-        border: 1px solid #1266f1;
+        background-color: var(--btn-color-guardar-modal) !important;
+        border: 1px solid var(--btn-color-guardar-modal);
     }
 
     .iconoEliminarFoto {

@@ -168,8 +168,8 @@
 
     #buscar-otsasignadas {
         background-color: #ffffff;
-        color: #3942d7;
-        border: solid 1px #3942d7;
+        color: var(--btn-color-buscar) !important;
+        border: solid 1px var(--btn-color-buscar);
         padding: 0.3em 2em;
         border-radius: 5px;
         font-size: 0.5em;
@@ -600,12 +600,12 @@
 
     .modal-footer .btn-aceptar-modal {
         font-size: .6em !important;
-        background: #0c56d0;
+        background-color: var(--btn-color-guardar-modal) !important;
         color: white;
         font-weight: bold;
         box-shadow: none;
         padding: 0.6em 2em 0.6em 2em;
-        border: 0.09rem solid #0c56d0;
+        border: 0.09rem solid var(--btn-color-guardar-modal) !important;
         box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
         margin-left: 1em;
     }

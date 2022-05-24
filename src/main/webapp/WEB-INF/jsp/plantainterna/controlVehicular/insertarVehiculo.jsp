@@ -498,7 +498,7 @@
                     informaci&oacute;n antes de guardar</h5>
             </div>
             <div style="text-align: right; margin: 1em 0 0 0;">
-                <button type="button" class="btn btn-primary ripple-surface" onclick="guardarCambios()"
+                <button type="button" class="btn btn-primary ripple-surface btnGuardarVehiculo" onclick="guardarCambios()"
                     style="margin-bottom: 1em;">
                     Guardar
                 </button>

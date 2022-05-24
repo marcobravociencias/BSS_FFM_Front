@@ -500,13 +500,13 @@ img.img-icon-categoria {
 }
 
 .boton-iniciar-ot:hover {
-	background-color:#6b3efd;
+	background-color: var(--btn-color-guardar-modal) !important;
     color:white;
     box-shadow:none;
 }
 
 .boton-iniciar-ot {
-    background-color: var(--estandar-color);
+    background-color: var(--btn-color-guardar-modal) !important;
     border-radius:2em;
     box-shadow:none;
     color:white;
@@ -779,7 +779,7 @@ img.imagen-visor-creanotica {
     margin-bottom: 0;
     font-size: .7em;
     font-weight: bold;
-    color: #6b3efd;
+    color: var(--estandar-color) !important;
     line-height: initial;
 }
 
@@ -811,7 +811,7 @@ img.imagen-visor-creanotica {
 span.link-geografia {
     margin-bottom: 0 !important;
     font-size: .8em;
-    color: #6b3efd;
+    color: var(--estandar-color) !important;
     text-decoration: dashed;
     border-bottom: .2em solid #6b3efd;
     font-weight: bold;
@@ -1029,7 +1029,7 @@ img.banner-file-noticias {
 }
 
 .consultaLinkExterno,.descarga-archivo{
-    color: #0d6efd;
+    color: var(--estandar-color) !important;
     text-decoration: underline;
     font-weight:bold;
     cursor: pointer;
@@ -1040,7 +1040,8 @@ img.banner-file-noticias {
     font-size: .7em;
     border-radius: 0.2rem;
     box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
-background: var(--estandar-color);}
+	background: var(--btn-color-editar-tabla);
+}
 
 .content-edicion-noticia{
 	width: 60%;
@@ -1249,13 +1250,18 @@ img#full-image {
 }
 
 .link-consulta-noticiaexterno  {
-    color: #0d6efd;
+    color: var(--estandar-color) !important;
     text-decoration: underline;
     font-weight: bold;
     cursor: pointer;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.btnRegistrarNoticia,
+.btnModificarNoticia {
+	background-color: var(--btn-color-guardar-modal) !important;
 }
 
 .fechas-noticia-detalle-consulta{
@@ -1316,6 +1322,7 @@ img#full-image {
     border-top-right-radius: 1em;
     border-bottom-right-radius: 1em;
 }
+
 #myTab .nav-link.active {
     color: var(--estandar-color) !important;
     font-weight: bolder;
@@ -1328,22 +1335,27 @@ img#full-image {
     padding: 1em;
     font-weight: bold;
     text-align: center;
-  }
+}
   
-  .text-accion-nopermiso .icon-not-permiso {
-      color: #9586a9;
-      font-size: 1.3em;
-      padding: 0.5em;
-      border-radius: 50%;
-      /* background: #9586a9; */
-      width: 2em;
-      height: 2em;
-      /* box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);**/
-  }
+.text-accion-nopermiso .icon-not-permiso {
+	color: #9586a9;
+    font-size: 1.3em;
+    padding: 0.5em;
+    border-radius: 50%;
+    /* background: #9586a9; */
+    width: 2em;
+    height: 2em;
+    /* box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);**/
+}
   
-  .text-not-permiso{
-      margin-left: 0.5em;
-      font-size: 1.5em;
-      font-weight: normal;
-  }
+.text-not-permiso{
+	margin-left: 0.5em;
+    font-size: 1.5em;
+    font-weight: normal;
+}
+  
+.modal-footer .btn-cerrar-modal {
+	color: var(--btn-color-cerrar-modal) !important;
+    border: 0.09rem solid var(--btn-color-cerrar-modal) !important;
+}
   

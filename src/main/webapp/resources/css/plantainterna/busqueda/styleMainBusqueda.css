@@ -1,10 +1,10 @@
 body {
-  font-family: "Montserrat";
+	font-family: "Montserrat";
 }
 
 .glyphicon-refresh-animate {
-  -animation: spin 0.7s infinite linear;
-  -webkit-animation: spin2 0.7s infinite linear;
+  	-animation: spin 0.7s infinite linear;
+  	-webkit-animation: spin2 0.7s infinite linear;
 }
 
 @-webkit-keyframes spin2 {
@@ -28,33 +28,32 @@ body {
 }
 
 .circulo {
-  width: 55px;
-  height: 55px;
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  border: 1px solid;
-  border-color: #8b95a5;
-  border-radius: 50%;
-  background: white;
+	width: 55px;
+  	height: 55px;
+  	-moz-border-radius: 50%;
+  	-webkit-border-radius: 50%;
+  	border: 1px solid;
+  	border-color: #8b95a5;
+  	border-radius: 50%;
+  	background: white;
 }
 
 .input-filtro-busqueda {
-  border: 1px solid #dbdbdb !important;
-  ;
-  font-weight: 400;
-  font-size: 1em;
-  color: #818181 !important;
-  transition: all 0.5s ease;
-  border-bottom: 1px solid white;
-  background: white !important;
-  border-radius: .5em !important;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .07), 0 1px 2px 0 rgba(0, 0, 0, .05) !important;
+  	border: 1px solid #dbdbdb !important;
+  	font-weight: 400;
+  	font-size: 1em;
+  	color: #818181 !important;
+  	transition: all 0.5s ease;
+  	border-bottom: 1px solid white;
+  	background: white !important;
+  	border-radius: .5em !important;
+  	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .07), 0 1px 2px 0 rgba(0, 0, 0, .05) !important;
 }
 
 .input-filtro-busqueda::placeholder {
-  font-weight: 400;
-  font-size: 1em;
-  color: #818181 !important;
+  	font-weight: 400;
+  	font-size: 1em;
+  	color: #818181 !important;
 }
 
 /* .input-filtro-busqueda:focus {
@@ -64,100 +63,100 @@ body {
 } */
 
 .input-filtro-busqueda:hover {
-  background: #e4e6f2 !important;
-  cursor: pointer;
-  border-bottom: 2px solid #a4b1ff !important;
+  	background: #e4e6f2 !important;
+  	cursor: pointer;
+  	border-bottom: 2px solid #a4b1ff !important;
 }
 
 .btn-consultar-busqueda {
-  background-color: #ffffff !important;
-  color: var(--estandar-color) !important;
-  border: solid 1px var(--estandar-color) !important;
-  padding: 0.3em 2em !important;
-  border-radius: 5px !important;
-  font-size: 0.7em !important;
-  height: 27px;
+  	background-color: #ffffff !important;
+  	color: var(--btn-color-buscar) !important;
+  	border: solid 1px var(--btn-color-buscar) !important;
+  	padding: 0.3em 2em !important;
+  	border-radius: 5px !important;
+  	font-size: 0.7em !important;
+  	height: 27px;
 }
 
 .column-text-busqueda {
-  width: 225px !important;
-  padding-right: 5px;
-  margin-left: 16px;
+  	width: 225px !important;
+  	padding-right: 5px;
+  	margin-left: 16px;
 }
 
 .colunm-btn-busqueda {
-  padding-left: 0px !important;
+  	padding-left: 0px !important;
 }
 
 .iconsf-container,
 .textcontainer-header {
-  display: table-cell;
-  padding-left: 0.3em;
+  	display: table-cell;
+  	padding-left: 0.3em;
 }
 
 .iconsf-container img {
-  width: 35px;
-  border-radius: 0.3em;
-  margin-top: 0.5em;
-  margin-right: 0.5em;
+  	width: 35px;
+  	border-radius: 0.3em;
+  	margin-top: 0.5em;
+  	margin-right: 0.5em;
 }
 
 .img-oportunidad {
-  background-color: #fcba5d;
+  	background-color: #fcba5d;
 }
 
 .img-cotsitio {
-  background-color: #00a1e0;
+  	background-color: #00a1e0;
 }
 
 .imgcuenta {
-  background-color: #818ee1;
+  	background-color: #818ee1;
 }
 
 .imgcuentasfactura {
-  background-color: #7dcf62;
+  	background-color: #7dcf62;
 }
 
 .img-cotizacion {
-  background-color: #4fca77;
+  	background-color: #4fca77;
 }
 
 .img-os {
-  background-color: #cea067;
+  	background-color: #cea067;
 }
 
 .img-csp {
-  background-color: #e78171;
+  	background-color: #e78171;
 }
 
 .img-oportunidad {
-  background-color: #fcba5d;
+  	background-color: #fcba5d;
 }
 
 .img-tickets {
-  background-color: #f2cf5d;
+  	background-color: #f2cf5d;
 }
 
 .textcontainer-header {
-  padding-top: 0 !important;
+  	padding-top: 0 !important;
 }
 
 span.text-title-elementoh {
-  display: block;
-  font-size: 0.8em;
-  font-weight: bold;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: normal;
-  font-family: "Montserrat", sans-serif;
+  	display: block;
+  	font-size: 0.8em;
+  	font-weight: bold;
+  	white-space: nowrap;
+  	overflow: hidden;
+  	text-overflow: ellipsis;
+  	line-height: normal;
+  	font-family: "Montserrat", sans-serif;
 }
 
 .text-title-elementohcantidad {
-  font-size: 0.8em;
-  line-height: normal;
-  display: block;
-  font-family: "Montserrat", sans-serif;
+  	font-size: 0.8em;
+  	line-height: normal;
+  	display: block;
+  	font-family: "Montserrat", sans-serif;
 }
 
 .col-first-parent {
@@ -217,15 +216,19 @@ span.text-title-elementoh {
 }
 
 .is-odd-table {
-  background-color: #ffffff;
-  padding: 0.2em;
+	background-color: #ffffff;
+  	padding: 0.2em;
 }
 
 .link-consultardetalle span {
-  color: #1686ff;
-  text-decoration: underline;
-  font-size: 0.8em;
-  cursor: pointer;
+	color: var(--estandar-color) !important;
+  	text-decoration: underline;
+  	font-size: 0.8em;
+  	cursor: pointer;
+}
+
+.txtMostrarMasMenos {
+	color: var(--estandar-color) !important;
 }
 
 .text-table-click:hover {
@@ -290,21 +293,6 @@ span.text-title-elementoh {
 #consultaInformacion {
   cursor: pointer;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*aqui empieza lo viejo de busqueda ffm residencial*/
 
@@ -478,34 +466,34 @@ body {
 }
 
 .is-odd-table {
-  background-color: #FFFFFF;
-  padding: .2em;
+  	background-color: #FFFFFF;
+  	padding: .2em;
 }
 
 .separador-according {
-  margin-top: 1em !important;
+  	margin-top: 1em !important;
 }
 
 span.link-perfiles {
-  border-bottom: 1px dotted #1a88ff;
-  text-decoration: none;
-  color: #1686ff;
-  cursor: pointer;
+  	border-bottom: 1px dotted var(--estandar-color);
+  	text-decoration: none;
+  	color: var(--estandar-color);
+  	cursor: pointer;
 }
 
 span.noosactivar.ng-scope {
-  font-size: 12px;
-  font-family: 'Montserrat', sans-serif;
-  color: #39455b;
+  	font-size: 12px;
+  	font-family: 'Montserrat', sans-serif;
+  	color: #39455b;
 }
 
 .style-link {
-  font-size: 12px;
-  font-family: 'Montserrat', sans-serif;
+  	font-size: 12px;
+  	font-family: 'Montserrat', sans-serif;
 }
 
 .no-encontradosregistros {
-  background-color: whitesmoke;
+  	background-color: whitesmoke;
 }
 
 .container-regresar-button {

@@ -40,7 +40,7 @@
                     Cerrar
                 </button>
                 <button type="button" ng-show="configPermisoAccionLiberaPagos"
-                    class="btn btn-primary ripple-surface" ng-click="liberarPago()">
+                    class="btn btn-primary ripple-surface btnLiberarPago" ng-click="liberarPago()">
                     Liberar
                 </button>
             </div>

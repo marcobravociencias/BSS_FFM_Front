@@ -87,7 +87,7 @@
             </div>	
             
             <div class="modal-footer">
-            	<button type="button" id="btnModalModificarUsuario" class="btn btn-sm btn-primary" ng-click="modificarUsuario()" style="padding: 0.6em 2em 0.6em 2em;" ng-show="!existeUsuarioValidacionMod">MODIFICAR</button>
+            	<button type="button" id="btnModalModificarUsuario" class="btn btn-sm btn-primary btnModificarUsuario" ng-click="modificarUsuario()" style="padding: 0.6em 2em 0.6em 2em;" ng-show="!existeUsuarioValidacionMod">MODIFICAR</button>
                 <div class="txtMensajeAlertaValidaciones" ng-show="existeUsuarioValidacionMod">
                 	<span><i class="fas fa-warning"></i>&nbsp; Revise la informaci&oacute;n ingresada, existen datos duplicados.</span>
                 </div>

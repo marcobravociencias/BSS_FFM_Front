@@ -263,7 +263,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button ng-click="actualizarNoticia()" class="btn btn-primary btn-block">Actualizar noticia</button>
+                                <button ng-click="actualizarNoticia()" class="btn btn-primary btn-block btnModificarNoticia">Actualizar noticia</button>
                             </div>   
                         </div>
                     </div>

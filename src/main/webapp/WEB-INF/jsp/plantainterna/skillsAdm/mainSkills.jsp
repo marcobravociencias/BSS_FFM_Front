@@ -134,7 +134,7 @@
 										<a id="txtContadorSkillsSeleccionadas" class="seleccion-skills" ng-click="abrirModalSkillsSeleccionadas()" href="">Skills seleccionadas: {{contadorSkillsSeleccionadas}}</a>
 									</div>
 									<div style="text-align: right;">
-										<input type="button" class="btn btn-primary" ng-click="guardarAsignacionSkillsIndividual()" value="GUARDAR">
+										<input type="button" class="btn btn-primary btnGuardarSkills" ng-click="guardarAsignacionSkillsIndividual()" value="GUARDAR">
 									</div>
 								</div>
 							</div>	
@@ -202,7 +202,7 @@
 									</div>
 								</div>
 								<div class="col-md-12" style="text-align: right;">
-									<button class="btn btn-primary" ng-click="guardarAsignacionTablaCompleta()">GUARDAR TODO</button>
+									<button class="btn btn-primary btnGuardarSkills" ng-click="guardarAsignacionTablaCompleta()">GUARDAR TODO</button>
 								</div>
 							</div>
 						</div>
@@ -279,7 +279,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface" data-mdb-dismiss="modal" ng-click="regresarContenedorIndividual()">CERRAR</button>
-                                            <button class="btn btn-primary btn-aceptar-modal" ng-click="guardarAsignacionSkillsMultiseleccion()">GUARDAR</button>
+                                            <button class="btn btn-primary btn-aceptar-modal btnGuardarSkillsModal" ng-click="guardarAsignacionSkillsMultiseleccion()">GUARDAR</button>
                                         </div>
                                     </div>
                                 </div>

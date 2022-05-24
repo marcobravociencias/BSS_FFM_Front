@@ -1047,15 +1047,6 @@ span.btn-floating.btn-sm.btn-default.waves-effect.waves-light {
   font-size: 0.9em;
 }
 
-span.btn-floating.btn-sm.btn-secondary.waves-effect.waves-light.acciones {
-  background-color: #58b3bf !important;
-  color: #fff !important;
-  -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
-    0 2px 10px 0 rgba(0, 0, 0, 0.12);
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-  font-size: 0.9em;
-}
-
 span.btn-floating.btn-evidencia.btn-sm.btn-secondary.waves-effect.waves-light {
   -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
     0 2px 10px 0 rgba(0, 0, 0, 0.12);
@@ -1204,8 +1195,8 @@ label.label-filter {
 #btn_consultar_rescataventas,
 #btn_consultar_pendientesActivar {
   background-color: #ffffff;
-  color: var(--estandar-color);
-  border: solid 1px var(--estandar-color) !important;
+  color: var(--btn-color-buscar) !important;
+  border: solid 1px var(--btn-color-buscar) !important;
   padding: 0.5em 2em;
   border-radius: 5px;
   font-size: 0.7em;
@@ -1303,7 +1294,7 @@ div.dataTables_wrapper div.dataTables_filter input {
 }
 
 span.btn-floating.btn-sm.btn-secondary.waves-effect.waves-light.acciones {
-  background-color: var(--estandar-color) !important;
+  background-color: var(--btn-color-agendar-tabla) !important;
   color: #fff !important;
   -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
   box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
@@ -1311,10 +1302,14 @@ span.btn-floating.btn-sm.btn-secondary.waves-effect.waves-light.acciones {
   text-align: center;
 }
 
+span.btn-floating.btn-sm.btn-secondary.waves-effect.waves-light.acciones:hover{
+  border: solid 1px var(--btn-color-agendar-tabla) !important;
+}
+
 .btnAgendamiento {
-  background-color: var(--estandar-color) !important;
+  background-color: var(--btn-color-agendar-tabla) !important;
   cursor: pointer;
-  border: 1px solid var(--estandar-color);
+  border: 1px solid var(--btn-color-agendar-tabla);
 }
 
 /* TABLES */
@@ -1406,24 +1401,24 @@ span.btn-floating.btn-sm.btn-secondary.waves-effect.waves-light.acciones {
 
 .btn-aceptar-agendamiento {
   font-size: .7em;
-  background: #0c56d0;
+  background-color: var(--btn-color-guardar) !important;
   color: white;
   font-weight: bold;
   box-shadow: none;
   padding: .6em 2em .6em 2em;
-  border: .09rem solid #0c56d0;
+  border: .09rem solid var(--btn-color-guardar) !important;
   box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
   margin-left: 1em;
 }
 
 .btn-aceptar-agendamiento:hover {
   font-size: .7em;
-  background: #0c56d0;
+  background: var(--btn-color-guardar) !important;
   color: white;
   font-weight: bold;
   box-shadow: none;
   padding: .6em 2em .6em 2em;
-  border: .09rem solid #0c56d0;
+  border: .09rem solid var(--btn-color-guardar) !important;
   box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
   margin-left: 1em;
 }
@@ -1665,6 +1660,16 @@ a:disabled:hover {
 
 #calendar_agendamiento .fc-license-message {
   display: none;
+}
+
+.modal-footer .btn-cerrar-modal {
+	color: var(--btn-color-cerrar-modal) !important;
+    border: 0.09rem solid var(--btn-color-cerrar-modal) !important;
+}
+
+#tablePendientesAgendar_paginate .page-item.active .page-link,
+#tableRescataventas_paginate .page-item.active .page-link {
+    background-color: var(--btn-color-paginador-tabla) !important;
 }
 
 /* CALENDARIO */

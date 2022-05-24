@@ -150,8 +150,8 @@
                         <div class="row" ng-show="resultBusqueda.oportunidades.length > 10">
                             <div class="col-12">
                                 <a class="style-link" href="" ng-click="mostrarMasMenosOportunidad()">
-                                    <span ng-show="limitOportunidad === 10">Mostrar mas...</span>
-                                    <span ng-show="limitOportunidad !== 10">Mostrar menos...</span>
+                                    <span class="txtMostrarMasMenos" ng-show="limitOportunidad === 10">Mostrar mas...</span>
+                                    <span class="txtMostrarMasMenos" ng-show="limitOportunidad !== 10">Mostrar menos...</span>
                                 </a>
                             </div>
                         </div>

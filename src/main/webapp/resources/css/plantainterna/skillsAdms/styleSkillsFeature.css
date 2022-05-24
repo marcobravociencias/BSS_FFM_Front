@@ -245,6 +245,7 @@ span#contadorTecnicos {
 }
 
 .multiseleccion-interve{
+	color: var(--estandar-color) !important;
     font-size: .9em;
     margin: 0;
     padding: 0;

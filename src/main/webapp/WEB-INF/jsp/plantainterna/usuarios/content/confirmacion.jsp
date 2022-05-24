@@ -102,7 +102,7 @@
                     </div>
                     <div class="row" ng-show="!existeUsuarioValidacion">
                         <div style="text-align: right; margin: 1em 0 0 0;">
-                            <input type="button" class="btn btn-primary" ng-click="guardarUsuario()" value="GUARDAR">
+                            <input type="button" class="btn btn-primary btnGuardarUsuario" ng-click="guardarUsuario()" value="GUARDAR">
                         </div> 
                     </div>
                     <div class="row" style="margin-top: 1em; text-align: right;" ng-show="existeUsuarioValidacion">

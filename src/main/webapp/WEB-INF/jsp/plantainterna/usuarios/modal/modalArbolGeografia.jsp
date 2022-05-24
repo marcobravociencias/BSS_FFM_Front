@@ -24,7 +24,7 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface" data-mdb-dismiss="modal" ng-click="btnAceptarModalGeografiaConsulta()">CERRAR</button>
+				<button id="btnCerrarModalGeografia" type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface" data-mdb-dismiss="modal" ng-click="btnAceptarModalGeografiaConsulta()">CERRAR</button>
 			</div>
 		</div>
 	</div>

@@ -809,11 +809,11 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                             $("#modalEdicionUsuario").modal('show');
                             
                         } else {
-                            
+                        	toastr.warning(response.data.result.mensaje)
                         }
                         swal.close();
                     } else {
-                    	toastr.warning(response.data.result.mensaje)
+                    	toastr.warning(response.data.resultDescripcion);
                         swal.close();
                     }
                     

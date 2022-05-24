@@ -53,13 +53,13 @@
 .btnTotal:active, .btnTotal:focus .btnTotal:hover {
     background-color: white !important;
     box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
-    color: var(--estandar-color);
+    color: var(--btn-color-buscar);
 }
 
 .btnTotal {
     background-color: #ffffff !important;
-    color: var(--estandar-color) !important;
-    border: solid 1px var(--estandar-color) !important;
+    color: var(--btn-color-buscar) !important;
+    border: solid 1px var(--btn-color-buscar) !important;
     padding: 0.4em 1.5em;
     border-radius: 5px;
     font-size: 0.7em;
@@ -519,7 +519,16 @@ div.dataTables_wrapper div.dataTables_filter input {
 /* CSS TABLE */
 
 .btnCambiaContrasena {
-    background-color: var(--estandar-color) !important;
+    background-color: var(--btn-color-cambiar-contrasena-tabla) !important;
+    color: #fff !important;
+    -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    /* box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%); */
+    font-size: 0.7em;
+    text-align: center;
+}
+
+.btnLiberarPagosTabla {
+    background-color: var(--btn-color-liberar-pago-tabla) !important;
     color: #fff !important;
     -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
     /* box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%); */
@@ -561,4 +570,20 @@ div.dataTables_wrapper div.dataTables_filter input {
 i.icono-noseleccion {
     color: #ff9f3b;
     display: inline-block;
-  }
+}
+
+.btnRestablecerContrasena,
+.btnLiberarPago {
+	background-color: var(--btn-color-guardar-modal) !important;
+}
+  
+.modal-footer .btn-cerrar-modal {
+	color: var(--btn-color-cerrar-modal) !important;
+    border: 0.09rem solid var(--btn-color-cerrar-modal) !important;
+}
+
+#cambiaContrasenaTable_paginate .page-item.active .page-link,
+#pagosLiberarTable_paginate .page-item.active .page-link,
+#pagosTecnicosTable_paginate .page-item.active .page-link {
+	background-color: var(--btn-color-paginador-tabla) !important;
+}

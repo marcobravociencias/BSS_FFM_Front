@@ -66,7 +66,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	$scope.tabSupervisor = false;
 	$scope.tabConfirmacion = false;
 	
-	$scope.tabInformacionVW_ASIG_AUTOMATICA = true;
+	$scope.tabInformacionVW_ASIG_AUTOMATICA = false;
 	$scope.tabInformacionVW_CUADRILLA = false;
 	$scope.tabInformacionVL_RFC = true;
 	$scope.tabInformacionVL_CURP = true;
@@ -869,7 +869,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		});
 //    	console.log("------------------------------------------------------");
     	
-    	$scope.tabInformacionVW_ASIG_AUTOMATICA = true;
+    	$scope.tabInformacionVW_ASIG_AUTOMATICA = false;
     	$scope.tabInformacionVW_CUADRILLA = false;
     	$scope.tabInformacionVL_RFC = true;
     	$scope.tabInformacionVL_CURP = true;
@@ -900,8 +900,8 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     		
     		switch(conf.llave){
 	        	case "tabInformacionVW_ASIG_AUTOMATICA":
-	        		if(conf.valor == "false"){
-	    				$scope.tabInformacionVW_ASIG_AUTOMATICA = false;
+	        		if(conf.valor == "true"){
+	    				$scope.tabInformacionVW_ASIG_AUTOMATICA = true;
 	    			}
 	        		break;
 	        	case "tabInformacionVW_CUADRILLA":

@@ -262,7 +262,7 @@
 		                                        </div>
 		                                </div>
 		                        </div>
-		                        <button ng-click="registrarNoticia()" class="btn btn-primary btn-block">Registrar noticia</button>
+		                        <button ng-click="registrarNoticia()" class="btn btn-primary btn-block btnRegistrarNoticia">Registrar noticia</button>
 		                    </div>   
 		                </div>
 		            </div>

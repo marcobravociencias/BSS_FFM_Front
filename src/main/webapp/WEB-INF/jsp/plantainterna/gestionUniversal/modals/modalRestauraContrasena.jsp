@@ -36,7 +36,7 @@
                     data-mdb-dismiss="modal">
                     Cerrar
                 </button>
-                <button type="button" class="btn btn-primary ripple-surface" ng-click="restablecer()">
+                <button type="button" class="btn btn-primary ripple-surface btnRestablecerContrasena" ng-click="restablecer()">
                     Restaurar
                 </button>
             </div>

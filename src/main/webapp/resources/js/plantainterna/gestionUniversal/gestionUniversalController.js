@@ -215,9 +215,9 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                                 row[2] = elemento.usuarioFFM ? elemento.usuarioFFM : 'Sin informaci&oacute;n';
                                 row[3] = nombreCompleto ? nombreCompleto : 'Sin informaci&oacute;n';
                                 row[4] = elemento.ciudadOrigen ? elemento.ciudadOrigen : 'Sin informaci&oacute;n';
-                                row[5] = '<span onclick="consultarPagos(' + "'" + elemento.numEmpleado + "'" + ')" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnCambiaContrasena" style="padding:4px 0px !important"><i class="fas fa-check-double" aria-hidden="true"></i></span>';
+                                row[5] = '<span onclick="consultarPagos(' + "'" + elemento.numEmpleado + "'" + ')" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnLiberarPagosTabla" style="padding:4px 0px !important"><i class="fas fa-check-double" aria-hidden="true"></i></span>';
                                 if (!$scope.configPermisoAccionConsultaPagos) {
-                                    row[5] = '<span title="No tienes permisos para consultar" style="cursor: no-drop; opacity: 0.3 !important;padding:4px 0px !important" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnCambiaContrasena"><i class="fas fa-unlock" aria-hidden="true"></i></span>';
+                                    row[5] = '<span title="No tienes permisos para consultar" style="cursor: no-drop; opacity: 0.3 !important;padding:4px 0px !important" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnLiberarPagosTabla"><i class="fas fa-unlock" aria-hidden="true"></i></span>';
                                 }
                                 arraRow.push(row);
                             })

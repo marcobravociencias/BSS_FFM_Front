@@ -254,6 +254,10 @@
 	opacity: 1;
 }
 
+.btn-modalAcciones {
+	background-color: var(--btn-color-guardar-modal) !important;
+}
+
 /* .carouselImgDetalleFalla::before, */
 /* .carouselImgDetalleFalla::after { */
 /*   content: ''; */
