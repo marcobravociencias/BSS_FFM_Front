@@ -632,6 +632,7 @@ div.borderFilter {
 /* CSS TABLE */
 #otTable tbody tr:nth-child(even),
 #table-materiales-ot tbody tr:nth-child(even),
+#table_pagos_ot tbody tr:nth-child(even),
 #table_dispositovos_ot tbody tr:nth-child(even),
 #table-recoleccion-temp tbody tr:nth-child(even) {
   background: #f5f5f5;
@@ -639,6 +640,7 @@ div.borderFilter {
 
 #table-materiales-ot>tbody>tr>td,
 #table_dispositovos_ot>tbody>tr>td,
+#table_pagos_ot>tbody>tr>td,
 #table-recoleccion-temp>tbody>tr>td {
   white-space: nowrap;
   color: #39455b;
@@ -658,6 +660,7 @@ div.borderFilter {
 
 #otTable thead th,
 #table-materiales-ot thead th,
+
 #table_dispositovos_ot thead th,
 #table-recoleccion-temp thead th {
   position: relative;
@@ -677,6 +680,24 @@ div.borderFilter {
   padding: 1em;
   border: none;
 }
+
+#table_pagos_ot tbody tr td{
+  padding: 0.7em;
+  border: none;
+  text-align: center;
+}
+
+#table_pagos_ot thead th{
+  position: relative;
+  background-color: #b1b1b1;
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+  padding: 0.7em;
+  border: none;
+  font-weight: normal;
+}
+
 
 .page-link {
   font-size: 0.7em !important;
@@ -706,6 +727,60 @@ div.dataTables_wrapper div.dataTables_filter input {
 
 
 /* CSS TABLE */
+
+.icono-pago-liberado {
+  text-align: center;
+  color: #51b37d;
+  font-size: 1.5em;
+}
+
+.icono-pago-pendiente {
+  text-align: center;
+  color: #fdc149;
+  font-size: .79em;
+  border: .25em solid #fdc149;
+  width: 1.9em;
+  height: 1.9em;
+  border-radius: 50%;
+  line-height: 1.5em !important;
+}
+
+.estatus-container-pagos, .estatus-container-pagos-pendiente {
+  position: absolute;
+  margin-left: -0.9em;
+}
+
+.estatus-container-pagos-pendiente i {
+  font-size: 10px;
+  width: 2.1em;
+  border: 2px solid #fdc149;
+  border-radius: 50%;
+  height: 2.1em;
+  line-height: 1.8em;
+  text-align: center;
+  color: #fdc149;
+}
+
+.estatus-container-pagos i {
+  font-size: 10px;
+  width: 2.1em;
+  border: 2px solid #51b37d;
+  border-radius: 50%;
+  height: 2.1em;
+  line-height: 1.8em;
+  text-align: center;
+  color: #51b37d;
+}
+
+.sin-pagos-pendientes {
+  color: #51b37d;
+  font-size: 0.9em;
+}
+
+.con-pagos-pendientes {
+  color: #fdc149;
+  font-size: 0.9em;
+}
 
 div.style_modal_header {
   /*  background: #834594; */

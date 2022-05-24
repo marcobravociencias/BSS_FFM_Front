@@ -47,6 +47,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	$scope.configPermisoAccionConsultaOrdenes = false;
 	$scope.configPermisoAccionDescargaReporteOrdenes = false;
 	let dispositivoOtTable;
+	let pagosOtTable;
 	$scope.tecnicoConsultaMateriales = {
 		almacen: "",
 		apellidoMaterno: "Calder",
@@ -653,6 +654,17 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		});
 
 		dispositivoOtTable = $('#table_dispositovos_ot').DataTable({
+			"paging": true,
+			"lengthChange": false,
+			"info": true,
+			"searching": false,
+			"ordering": false,
+			"pageLength": 10,
+			"autoWidth": true,
+			"language": idioma_espanol_not_font,
+
+		});
+		pagosOtTable = $('#table_pagos_ot').DataTable({
 			"paging": true,
 			"lengthChange": false,
 			"info": true,
@@ -2037,24 +2049,65 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 
 	$scope.consultaPagosOt = function () {
 		if (!isConsultaDetallePago) {
+			let arrayRow = [];
 			let params = {
 				orden: $scope.datoOt
 			}
+			$scope.detallePagoObj.isPagosPendientes = false;
 			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 			swal.showLoading();
 			consultaOTService.consultaPagosOt(JSON.stringify(params)).then((result) => {
 				swal.close()
-				console.log(result)
 				isConsultaDetallePago = true
 				if (result.data.respuesta) {
 					if (result.data.result) {
 						$scope.detallePagoObj = result.data.result.detallePago
+						let estatusIconEstatus=''
+						
+                        $.each($scope.detallePagoObj, function (i, elemento) {
+
+                            if(elemento.idEstatusPago == 2){
+								$scope.detallePagoObj.isPagosPendientes = true;
+                                estatusIconEstatus=` <i class="fas fa-exclamation icono-pago-pendiente"></i> `
+                            }else{
+                                estatusIconEstatus=` <i class="far fa-check-circle icono-pago-liberado"></i> `
+                            }
+                            let row = [];
+                            row[0] = elemento.idCveCliente ? elemento.idCveCliente : '';
+                            row[1] = elemento.idOrden ? elemento.idOrden : '';
+                            row[2] = elemento.folioSistema ? elemento.folioSistema : '';
+                            row[3] = elemento.fechaRegistro ? elemento.fechaRegistro : '';
+                            row[4] = elemento.fechaCierreOT ? elemento.fechaCierreOT : '';
+                            row[5] = elemento.tipoIntervencion ? elemento.tipoIntervencion : '';
+                            row[6] = elemento.subTipoIntervencion ? elemento.subTipoIntervencion : '';
+                            row[7] = elemento.tiempo ? elemento.tiempo : '';
+                            row[8] = elemento.tipoPago ? elemento.tipoPago : '';
+                            row[9] = elemento.monto ? Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(elemento.monto)  : '$ 0.00';
+                            row[10] = estatusIconEstatus ;
+                            arrayRow.push(row);
+                        })
+
 					} else {
 						mostrarMensajeWarningValidacion('No se encontro informaci&oacute;n')
 					}
 				} else {
 					mostrarMensajeErrorAlert(result.data.resultDescripcion)
 				}
+				pagosOtTable = $('#table_pagos_ot').DataTable({
+					"processing": false,
+					"ordering": false,
+					"serverSide": false,
+					"scrollX": false,
+					"paging": true,
+					"lengthChange": false,
+					"searching": true,
+					"bDestroy": true,
+					"ordering": false,
+					"data": arrayRow,
+					"pageLength": 10,
+					"columns": [null, null, null, null, null, null, null, null, null,null,null],
+					"language": idioma_espanol_not_font
+				});
 			}).catch(err => handleError(err));
 		}
 	}
