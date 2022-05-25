@@ -348,7 +348,7 @@ span.refresh-cuenta.refresh-btn.fa.fa-search {
     font-weight: bold;
     float: right;
     margin-left: 1em;
-    color: #7c7c7c;
+    color: var(--btn-color-limpiar) !important;
     cursor: pointer;
 }
 
@@ -457,7 +457,7 @@ a.fc-col-header-cell-cushion {
     -ms-align-items: center;
     -moz-align-items: center;
     -webkit-align-items: center;
-    background: #6eba2a;
+    background: var(--btn-color-guardar) !important;
     font-family: 'Raleway', sans-serif;
     font-size: 16px;
     font-weight: 400;
@@ -641,7 +641,7 @@ a.ui-corner-all {
 }
 
 .siguiente-seccion {
-    background: #854d96;
+    background-color: var(--btn-color-siguiente) !important;
     z-index: 0 !important;
     top: .5em;
     position: absolute !important;
@@ -679,4 +679,9 @@ a.ui-corner-all {
     background-repeat: no-repeat !important;
     background-position: right calc(0.375em + 0.1875rem) center !important;
     background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem) !important;
+}
+
+.modal-footer .btn-cerrar-modal {
+	color: var(--btn-color-cerrar-modal) !important;
+    border: 0.09rem solid var(--btn-color-cerrar-modal) !important;
 }

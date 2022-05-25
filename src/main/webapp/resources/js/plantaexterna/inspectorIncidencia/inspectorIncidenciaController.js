@@ -1164,7 +1164,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                                         row[7] = '<div class="col-12 text-center">' +
                                             '<div class="row">' +
                                             '   <div class="col-6">' +
-                                            '       <span title="Detalle" style="background-color: #7716fa; cursor: pointer; border: 1px solid #7716fa;" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnTables" id="detalleIncidencia' + elemento.idIncidencia + '" onclick="consultarDetalleIncidencia(' + elemento.idIncidencia + ');">' +
+                                            '       <span title="Detalle" style="background-color: var(--btn-color-detalle-tabla); cursor: pointer; border: 1px solid var(--btn-color-detalle-tabla);" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnTables" id="detalleIncidencia' + elemento.idIncidencia + '" onclick="consultarDetalleIncidencia(' + elemento.idIncidencia + ');">' +
                                             '           <i class="fa fa-bars"></i>' +
                                             '       </span>' +
                                             '   </div>' +

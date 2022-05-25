@@ -198,7 +198,7 @@ div.dataTables_wrapper div.dataTables_filter input {
 }
 
 .btnTables {
-    background-color: var(--estandar-color);
+    background-color: var(--btn-color-detalle-tabla);
     color: #fff !important;
     -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
     box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
@@ -207,7 +207,7 @@ div.dataTables_wrapper div.dataTables_filter input {
 }
 
 .btnTables:hover, .btnTables:active {
-    background-color: var(--estandar-color) !important;
+    background-color: var(--btn-color-detalle-tabla) !important;
 
 }
 
@@ -517,7 +517,8 @@ thead#thead_tecnicosCuenta {
 .btn-asignarTecnico {
     font-size: .7em;
     padding: 0.6em 2em 0.6em 2em;
-    border: 0.09rem solid #1266f1;
+    background-color: var(--btn-color-guardar-modal) !important;
+    border: 0.09rem solid var(--btn-color-guardar-modal) !important;
     box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
 }
 
@@ -713,12 +714,12 @@ span.text-content-vehiculo {
 
 .btn-editar-cambios, #asignar-ticket-ingenierobtn {
     font-size: .7em;
-    background: #0c56d0;
+    background: var(--btn-color-guardar) !important;
     color: white;
     font-weight: bold;
     box-shadow: none;
     padding: .6em 2em .6em 2em;
-    border: .09rem solid #0c56d0;
+    border: .09rem solid var(--btn-color-guardar) !important;
     box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
     margin-left: 1em;
     float: right;
@@ -739,11 +740,11 @@ span.text-content-vehiculo {
 .cerrar-cancelar-btn {
     font-size: .7em;
     background: white;
-    color: #0c56d0 !important;
+    color: var(--btn-color-cancelar) !important;
     font-weight: bold;
     box-shadow: none;
     padding: .6em 2em .6em 2em;
-    border: .09rem solid #0c56d0;
+    border: .09rem solid var(--btn-color-cancelar) !important;
     box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
     float: right;
     margin-top: 1em;
@@ -757,8 +758,8 @@ span.text-content-vehiculo {
     float: right;
     margin-top: 1em;
     box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
-    border: .09rem solid #4f4f4f;
-    color: #4f4f4f;
+    border: .09rem solid var(--btn-color-limpiar) !important;
+    color: var(--btn-color-limpiar) !important;
 }
 
 #tableTicketSoporte thead tr {
@@ -1092,4 +1093,15 @@ i.icono-noseleccion {
 .modal-footer .btn-cerrar-modal {
 	color: var(--btn-color-cerrar-modal) !important;
     border: 0.09rem solid var(--btn-color-cerrar-modal) !important;
+}
+
+.btn_modificar_disp {
+	background-color: var(--btn-color-siguiente-modal) !important;
+	border: 0.09rem solid var(--btn-color-siguiente-modal) !important;	
+}
+
+#tableTicketSoporte_paginate .page-item.active .page-link,
+#tecnicosCuentaTable_paginate .page-item.active .page-link,
+#ingenierosTable_paginate .page-item.active .page-link {
+	background-color: var(--btn-color-paginador-tabla) !important;
 }

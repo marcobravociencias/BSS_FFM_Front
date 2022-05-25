@@ -2,8 +2,12 @@
   --estandar-color: #3942d7;
   --btn-color-guardar: #1266f1;
   --btn-color-buscar: #3942d7;
+  --btn-color-cancelar: #3942d7;
+  --btn-color-limpiar: #3942d7;
+  --btn-color-siguiente: #1266f1;
   --btn-color-guardar-modal: #1266f1;
   --btn-color-cerrar-modal: #3942d7;
+  --btn-color-siguiente-modal: #1266f1;
   --btn-color-editar-tabla: #3942d7;
   --btn-color-eliminar-tabla: #f55756;
   --btn-color-detalle-tabla: #3942d7;
@@ -11,6 +15,7 @@
   --btn-color-agendar-tabla: #3942d7;
   --btn-color-cambiar-contrasena-tabla: #3942d7;
   --btn-color-liberar-pago-tabla: #3942d7;
+  --btn-color-ubicacion-tabla: #3942d7;
   --btn-color-paginador-tabla: #1266f1;
 }
 /* #3942d7 */

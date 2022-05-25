@@ -1505,6 +1505,16 @@ div#reporteAsignadasTable_filter {
     font-weight: bold;
 }
 
+#container_reportes .left-menu .opcion-menu:hover span {
+	color: var(--estandar-color) !important;
+}
+
+#container_reportes .left-menu .opcion-menu:hover i {
+	color: #fff !important;
+    background: var(--estandar-color) !important;
+    font-weight: bold;
+}
+
 .icon-menu-left {
     color: #7e7e7e;
     padding: 0.4em;
@@ -1582,8 +1592,8 @@ div#reporteAsignadasTable_filter {
 
 .btn_consultar {
     background-color: #ffffff !important;
-    color: var(--estandar-color) !important;
-    border: solid 1px var(--estandar-color) !important;
+    color: var(--btn-color-buscar) !important;
+    border: solid 1px    var(--btn-color-buscar) !important;
     padding: .5em 2.5em;
     border-radius: 5px;
     font-size: 0.6em;
@@ -1694,4 +1704,15 @@ label.dropdown-item.form-check-inputfiltro {
     margin: 0;
     font-size: 0.7em;
     font-weight: bold;
+}
+
+.modal-footer .btn-cerrar-modal {
+	color: var(--btn-color-cerrar-modal) !important;
+    border: 0.09rem solid var(--btn-color-cerrar-modal) !important;
+}
+
+#reporteSeguimientoTable_paginate .page-item.active .page-link,
+#reporteCierreTable_paginate .page-item.active .page-link,
+#reporteAsignadasTable_paginate .page-item.active .page-link {
+    background-color: var(--btn-color-paginador-tabla) !important;
 }

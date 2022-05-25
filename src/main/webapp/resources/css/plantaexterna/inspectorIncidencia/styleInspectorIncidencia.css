@@ -126,8 +126,8 @@ i.icono-noseleccion {
 
 #btn_consultar_incidencias {
     background-color: #ffffff;
-    color: var(--estandar-color);
-    border: solid 1px var(--estandar-color) !important;
+    color: var(--btn-color-buscar);
+    border: solid 1px    var(--btn-color-buscar) !important;
     padding: 0.5em 2em;
     border-radius: 5px;
     font-size: 0.7em;
@@ -810,21 +810,22 @@ h4#texto_not_arboles {
 }  
 
 .icon-menu-left{
-    color: #7e7e7e;
     padding: 0.4em;
     border-radius: 5px;
     color: #fff !important;
-    background: #7700ff;
+    background: var(--estandar-color) !important;
     font-weight: bold;
  }
  
- .parent-monitor-menu .icon-menu-left {
+.parent-monitor-menu .icon-menu-left {
      color: #7700ff;
      font-size: 1.3em;
  }
- .col-left-contenedor,.col-rigth-contenedor{
+ 
+.col-left-contenedor,.col-rigth-contenedor{
     transition: all 0.5s ease-in-out;
 }
+
 .col-rigth-contenedor {
     /* padding: 0; */
     /* z-index: 1001; */
@@ -834,12 +835,14 @@ h4#texto_not_arboles {
     border-left: 1px solid #d2d2d2;
     padding-top: 1em;
 }
+
 .visualizar-visible {
     visibility: visible;
     opacity: 1;
     transition: visibility 2.1s, opacity 0.7s linear;
     
 }
+
 .visualizar-disable {
     visibility: hidden;
     opacity: 0;
@@ -948,4 +951,13 @@ h4#texto_not_arboles {
 	margin-left: 0.5em;
 	font-size: 1.3em;
 	font-weight: normal;
+}
+
+.modal-footer .btn-cerrar-modal {
+	color: var(--btn-color-cerrar-modal) !important;
+    border: 0.09rem solid var(--btn-color-cerrar-modal) !important;
+}
+
+#tableIncidencia_paginate .page-item.active .page-link {
+    background-color: var(--btn-color-paginador-tabla) !important;
 }

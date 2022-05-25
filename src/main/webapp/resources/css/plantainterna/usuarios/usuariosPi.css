@@ -227,8 +227,6 @@ img.responsive-img-tecnico {
     cursor: no-drop !important;
 }
 
-/* -------------------------------------------------------------------------------------------------- */
-
 .form-switch .form-check-input:after {
     width: 1em;
     height: 1em;
@@ -477,9 +475,6 @@ label.form-check-inputfiltro {
 .selecRegistro {
     width: 100% !important;
 }
-
-/* FIN CAMBIOS REYNEL */
-/* ----------------------------------------------------------------------------------------------------- */
 
 .btn-group.bootstrap-select.show-tick.select_consulta {
     width: 100% !important;
