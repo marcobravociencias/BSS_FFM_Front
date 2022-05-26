@@ -18,11 +18,13 @@
 
             <div class="collapse navbar-collapse container-menus-hader justify-content-center" id="navbarTogglerDemo02">
                 <div class="content-image">
-                    <c:if
-                        test="${userStore.configuraciones['KEY_BANER'] != null &&  userStore.configuraciones['KEY_BANER'] != ''}">
-                        <img class="image-totalplayheader"
-                            src="${pageContext.request.contextPath}/resources/img/navbar/${userStore.configuraciones['KEY_BANER']}"
-                            height="27" alt="" loading="lazy" />
+                    <c:if test="${userStore.configuraciones['KEY_BANER'] != null &&  userStore.configuraciones['KEY_BANER'] != ''}">
+                        <c:if test="${userStore.configuraciones['KEY_BANER_HORIZONTAL'] != null &&  userStore.configuraciones['KEY_BANER_HORIZONTAL'] != ''}">
+                            <img class="image-totalplayheader" src="${pageContext.request.contextPath}/resources/img/navbar/${userStore.configuraciones['KEY_BANER']}"   alt="" loading="lazy" />
+                        </c:if>
+                        <c:if test="${userStore.configuraciones['KEY_BANER_HORIZONTAL'] == null }">
+                            <img class="image-totalplayheader-vertical" src="${pageContext.request.contextPath}/resources/img/navbar/${userStore.configuraciones['KEY_BANER']}"   alt="" loading="lazy" />
+                        </c:if> 
                     </c:if>
                     <c:if
                         test="${userStore.configuraciones['KEY_BANER'] == null ||  userStore.configuraciones['KEY_BANER'] == ''}">

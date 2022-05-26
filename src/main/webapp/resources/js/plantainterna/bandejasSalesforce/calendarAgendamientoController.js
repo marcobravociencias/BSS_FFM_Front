@@ -83,39 +83,5 @@ app.agendamientoCalendar = function ($scope, bandejasSalesforceService) {
         $scope.initCalendarioAgendamiento();
     }
 
-    $scope.consultarDisponibilidadBandejas = function () {
-        swal({ text: 'Espera un momento ...', allowOutsideClick: false });
-        swal.showLoading();
-        let params = {
-            subtipoIntervencion: 121,
-            geografia2: 2047
-        }
-        bandejasSalesforceService.consultaDisponibilidadAgendamiento(params).then(function success(response) {
-            console.log(response);
-            if (response.data) {
-                if (response.data.respuesta) {
-                    if (response.data.result) {
-                        if (response.data.result.dias.length) {
-                            swal.close();
-                            $scope.muestraDisponibilidadCalendar(response.data.result);
-                        } else {
-                            $scope.muestraDisponibilidadCalendar([]);
-                            mostrarMensajeInformativo("No se encontr&oacute; Disponibilidad");
-                            swal.close();
-                        }
-                    } else {
-                        $scope.muestraDisponibilidadCalendar([]);
-                        mostrarMensajeInformativo("No se encontr&oacute; Disponibilidad");
-                        swal.close();
-                    }
-                } else {
-                    mostrarMensajeErrorAlert(response.data.resultDescripcion);
-                    swal.close();
-                }
-            } else {
-                mostrarMensajeErrorAlert(response.data.resultDescripcion);
-                swal.close();
-            }
-        });
-    }
+ 
 }

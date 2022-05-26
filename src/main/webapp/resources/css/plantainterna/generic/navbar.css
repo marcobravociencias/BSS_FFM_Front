@@ -17,6 +17,7 @@
   --btn-color-liberar-pago-tabla: #3942d7;
   --btn-color-ubicacion-tabla: #3942d7;
   --btn-color-paginador-tabla: #1266f1;
+  --link-ref-generic:#428bca;
 }
 /* #3942d7 */
 /* #1266f1 */
@@ -256,7 +257,6 @@ h1.h6.subtitle-modulo {
   padding: .6em 2em .6em 2em;
   border: .09rem solid #0c56d0;
   box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
-  border-radius
 }
 
 .modal-footer .btn-aceptar-modal {
@@ -391,11 +391,17 @@ h1.h6.subtitle-modulo {
 }
 
 img.image-totalplayheader {
-  height: 1.5em;
+  height: 1.7em;
   margin-left: 1em;
-  margin-bottom: .5em;
+  margin-right:1em;
 }
 
+.image-totalplayheader-vertical{
+  height: auto;
+  margin-left: 1em;
+  margin-right:1em;
+  width: 4em;
+}
 
 .flag-icon-background {
   background-size: contain;

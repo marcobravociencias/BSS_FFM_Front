@@ -16,6 +16,9 @@ public interface BandejasSalesforceService {
 	
 	public ServiceResponseResult guardarContactoSalesforce(String params);
 	
+	public ServiceResponseResult actualizarFactibilidadSitio(String params);	
+
 	public ServiceResponseResult agendarOrdenSalesforce(String params);
+
 
 }

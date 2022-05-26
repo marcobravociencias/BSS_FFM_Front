@@ -10,6 +10,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.mx.totalplay.ffm.cloudweb.plantainterna.service.BandejasSalesforceService;
 import com.mx.totalplay.ffm.cloudweb.plantainterna.utils.ConstBandejasSalesforce;
@@ -115,36 +116,62 @@ public class ImplBandejasSalesforceService implements BandejasSalesforceService 
 
 	@Override
 	public ServiceResponseResult consultarInfoSitioInstalacion(String params) {
-		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-		logger.info("ImplBandejasSalesforceService.class [metodo = consultarPendientesActivarBandejasSF() ] \n" + jsonObject);
-		
-		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
-		String tokenAccess = principalDetail.getAccess_token();
-		logger.info("consultarPendientesActivarBandejasSF## "+tokenAccess);
-		
-		String urlRequest = principalDetail.getDireccionAmbiente().concat(constBandejasSalesforce.getConsultaPendientesActivarBandejasSF());
-		logger.info("URL## " + urlRequest);
-		
-		//ServiceResponseResult response = restCaller.callPostBearerTokenRequest(jsonObject.toString(), urlRequest, ServiceResponseResult.class, tokenAccess);
-		ServiceResponseResult response = null;
+	    JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+	    logger.info("ImplBandejasSalesforceService.class [metodo = consultarInfoSitioInstalacion() ] \n" + params);		
+	    LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+	    String tokenAccess = principalDetail.getAccess_token();				
+	    String urlRequest = principalDetail.getDireccionAmbiente().concat(constBandejasSalesforce.getConsultaDetalleSitioAgendamiento());		
+	    Map<String, String> paramsRequestGet = new HashMap<String, String>();
+	    paramsRequestGet.put("cuenta", jsonObject.get("cuenta").getAsString());		
+	    logger.info(paramsRequestGet);
+	    logger.info("url sitio "+urlRequest);
+
+	    ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
+	            ServiceResponseResult.class, tokenAccess);
 		return response;
 	}
 
 	@Override
 	public ServiceResponseResult guardarContactoSalesforce(String params) {
 		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-		logger.info("ImplBandejasSalesforceService.class [metodo = guardarContactoSalesforce() ] \n" + jsonObject);
+		logger.info("ImplBandejasSalesforceService.class [metodo = guardarContactoSalesforce() ] \n" + params);
 		
+		JsonArray arrayContacto = jsonObject.get("arrayContactos").getAsJsonArray();
+		String cuenta=jsonObject.get("cuenta").getAsString();
+				
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
 		String tokenAccess = principalDetail.getAccess_token();
-		logger.info("guardarContactoSalesforce## "+tokenAccess);
 		
-		String urlRequest = principalDetail.getDireccionAmbiente().concat(constBandejasSalesforce.getConsultaPendientesActivarBandejasSF());
-		logger.info("URL## " + urlRequest);
+	    Map<String, String> paramUri = new HashMap<String, String>(){{
+            put("cuenta", cuenta);
+        }};
+        
+        String contacto=arrayContacto.toString();
+        logger.info("contacto --"+contacto);
+                
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constBandejasSalesforce.getAgregaContactoAgenda());
 		
-		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(jsonObject.toString(), urlRequest, ServiceResponseResult.class, tokenAccess);
 		
+		ServiceResponseResult response=restCaller.callPostBearerTokenRequestURL2(paramUri, contacto, urlRequest, ServiceResponseResult.class, tokenAccess)	;	
 		return response;
+	}
+	
+	@Override
+	public ServiceResponseResult actualizarFactibilidadSitio(String params) {
+	    JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+	    logger.info("ImplBandejasSalesforceService.class [metodo = actualizarFactibilidadSitio() ] \n" + params);
+
+	    LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+	    String tokenAccess = principalDetail.getAccess_token();
+	    String urlRequest = principalDetail.getDireccionAmbiente().concat(constBandejasSalesforce.getActualizaFactibilidadSitio());
+	    logger.info("URL## " + urlRequest);
+	    
+	    Map<String, String> paramsRequestGet = new HashMap<String, String>();
+	    paramsRequestGet.put("cuenta", jsonObject.get("cuenta").getAsString());
+	    
+	    ServiceResponseResult response = restCaller.callPostBearerTokenRequestURL(paramsRequestGet, urlRequest,
+	            ServiceResponseResult.class, tokenAccess);
+	    return response;
 	}
 
 	@Override

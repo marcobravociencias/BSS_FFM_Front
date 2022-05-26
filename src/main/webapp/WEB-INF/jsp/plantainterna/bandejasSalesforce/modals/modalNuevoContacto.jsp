@@ -8,17 +8,17 @@
             <div class="modal-body" style=" max-height: 300px; overflow: auto;">
                 <form novalidate name="formAgregarContacto">
                     <div class="form-row form-row-creacion">
-                        <div class="col-4 form-group">
+                        <div class="col-4 form-group">                                         
                             <label for="nombreContacto" class="span-form-contacto">Nombre contacto </label>
-                            <input type="text" maxlength="50" class="form-control form-control-sm inputContacto" id="nombreContacto" placeholder="Ej. Rom&aacute;n" ng-model="nuevoContactoAg.nombreContacto"/>
+                            <input type="text" maxlength="50" class="form-control form-control-sm inputContacto" id="nombreContacto" placeholder="Ej. Rom&aacute;n" ng-model="nuevoContactoAg.nombre"/>
                         </div>
                         <div class="col-4 form-group">
                             <label for="aPaternoContacto" class="span-form-contacto">Apellido paterno</label>
-                            <input type="text" maxlength="50" class="form-control form-control-sm inputContacto" id="aPaternoContacto" placeholder="Ej. Garc&iacute;a" ng-model="nuevoContactoAg.aPaterno"/>
+                            <input type="text" maxlength="50" class="form-control form-control-sm inputContacto" id="aPaternoContacto" placeholder="Ej. Garc&iacute;a" ng-model="nuevoContactoAg.apellidoP"/>
                         </div>
                         <div class="col-4 form-group">
                             <label for="aMaternoContacto" class="span-form-contacto">Apellido materno </label>
-                            <input type="text" maxlength="50" class="form-control form-control-sm inputContacto" id="aMaternoContacto" placeholder="Ej. P&eacute;rez" ng-model="nuevoContactoAg.aMaterno"/>
+                            <input type="text" maxlength="50" class="form-control form-control-sm inputContacto" id="aMaternoContacto" placeholder="Ej. P&eacute;rez" ng-model="nuevoContactoAg.apellidoM"/>
                         </div>
                     </div>
                     <div class="form-row form-row-creacion">
@@ -28,8 +28,8 @@
                         </div>
                         <div class="col-4 form-group">
                             <label for="sexoContacto" class="span-form-contacto">Sexo</label>
-                            <select class="form-control form-control-sm custom-select inputContacto" id="generoContacto" name="generoContacto" ng-model="nuevoContactoAg.genero">
-                                <option value="" disabled selected>NO HAY SELECCI&Oacute;N</option>
+                            <select class="form-control form-control-sm custom-select inputContacto" id="generoContacto" name="generoContacto" ng-model="nuevoContactoAg.sexoC">
+                                <option value="" disabled selected>Seleccione ...</option>
                                 <option value="Masculino">MASCULINO</option>
                                 <option value="Femenino">FEMENINO</option>
                             </select>
@@ -38,15 +38,15 @@
                     <div class="form-row form-row-creacion">
                         <div class="col-4 form-group">
                             <label for="telefonoFijoContacto" class="span-form-contacto">Tel&eacute;fono fijo</label>
-                            <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' minlength="10" maxlength="10" class="form-control form-control-sm inputContacto" id="telefonoFijoContacto"  ng-model="nuevoContactoAg.numeroFijo"/>
+                            <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' minlength="10" maxlength="10" class="form-control form-control-sm inputContacto" id="telefonoFijoContacto"  ng-model="nuevoContactoAg.telefono"/>
                         </div>
                         <div class="col-4 form-group">
                             <label for="celularContacto" class="span-form-contacto">Celular</label>
-                            <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' minlength="10" maxlength="10" class="form-control form-control-sm inputContacto" id="celularContacto" ng-model="nuevoContactoAg.numeroCelular"/>
+                            <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' minlength="10" maxlength="10" class="form-control form-control-sm inputContacto" id="celularContacto" ng-model="nuevoContactoAg.mobilePhone"/>
                         </div>
                         <div class="col-4 form-group">
                             <label for="extensionContacto" class="span-form-contacto">Ext. </label>
-                            <input type="text" maxlength="10" class="form-control form-control-sm" id="extensionContacto" ng-model="nuevoContactoAg.numeroExtension" />
+                            <input type="text" maxlength="10" class="form-control form-control-sm" id="extensionContacto" ng-model="nuevoContactoAg.extensionC" />
                         </div>
                     </div>
                 </form>
@@ -56,7 +56,7 @@
                     Cerrar
                 </button>
                 <button type="button" ng-click="agregarContactoAgendamiento(nuevoContactoAg)" class="btn-aceptar-modal btn btn-sm ripple-surface">
-                    Aceptar
+                    Guardar contacto
                 </button>
             </div>
         </div>

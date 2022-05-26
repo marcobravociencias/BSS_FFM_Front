@@ -1395,9 +1395,9 @@ span.btn-floating.btn-sm.btn-secondary.waves-effect.waves-light.acciones:hover{
   box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%) !important;
   background-color: white;
   margin: 0.5em;
-  min-width: 250px;
-  border-radius: 0;
-}
+  margin-left: 2em;min-width: 250px;
+  /* border-radius: 0; */
+border-radius: .25rem;}
 
 .btn-aceptar-agendamiento {
   font-size: .7em;
@@ -1498,6 +1498,10 @@ span.text-tile-agendamiento {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.container-text-direccion {
+  width: 70%;
+}
+
 
 span.text-content-agendamiento {
   font-size: 0.8em;
@@ -1567,7 +1571,7 @@ a.fc-col-header-cell-cushion {
   height: 1.6em;
   font-size: .9em;
   margin-bottom: .6em;
-}
+cursor: pointer;}
 
 #calendar_agendamiento .eventDisponibilidad {
   box-shadow: 0 3px 15px 0 rgb(0 0 0 / 19%);
@@ -1681,3 +1685,37 @@ a:disabled:hover {
   height: 1.5em;
   color:#8e50fc;
 }
+select.inputContacto {
+    font-size: .6em !important;
+    line-height: 1.5;
+}
+.selectContactoAgendamiento{
+    font-size: .7em !important;
+    line-height: 1.5;
+}
+
+.not-selected-contacto {
+    position: absolute;
+    right: 0;
+    margin-right: 1em;
+    color: #fdc149;
+    margin-top: .2em;
+}
+.selected-contacto-agenda{
+    position: absolute;
+    right: 0;
+    margin-right: 1em;
+    color: #28a645;
+    margin-top: .2em;
+}
+.text-agrega-contacto{
+  color:var(--link-ref-generic);
+  font-size:.7em;
+  text-decoration:underline;
+  font-weight:bold;
+  cursor:pointer;
+ }
+
+.content-link-agrega-contacto{
+  display: grid !important;
+text-align: right;}

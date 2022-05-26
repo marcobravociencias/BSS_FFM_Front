@@ -22,9 +22,8 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
     $scope.banderaErrorGeografia = false;
     $scope.isAgendamiento = false;
     $scope.elementoCSP = {};
-    $scope.contactoSelected = {};
-    $scope.isContactoSelected = false;
-    $scope.listContactosAgendamiento = [];
+    $scope.contactoSelected = {}
+    $scope.listContactosAgendamiento =[]
     $scope.infoFactibilidad = {};
     $scope.isPermisoConsultaPendientesAgendar = false;
     $scope.isPermisoConsultaRescataventas = false;
@@ -375,7 +374,6 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                             }
 
                             $("#idBody").removeAttr("style");
-                            swal.close();
                         } else {
                             mostrarMensajeWarningValidacion('<li>No se encontraron datos para la geograf&iacute;a</li>Va');
                             $scope.banderaErrorGeografia = true;
@@ -399,17 +397,6 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         });
     }
 
-    $('#contactoAgendamiento').change(function () {
-        var valueContact = $(this).val();
-        if (valueContact == 'NUEVO') {
-            $("#modalNuevoContacto").modal('show');
-        } else {
-            $scope.isContactoSelected = true;
-            $scope.contactoSelected = $scope.listContactosAgendamiento.find(function (elem) { return elem.id === Number($("#contactoAgendamiento").val()) });
-            $scope.$apply();
-        }
-    });
-
     $scope.limpiarFormularioNuevoContacto = function () {
         $("#nombreContacto").removeClass("invalid-inputContacto");
         $("#aPaternoContacto").removeClass("invalid-inputContacto");
@@ -430,7 +417,6 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
     }
 
     $('#modalNuevoContacto').on('hidden.bs.modal', function () {
-        $('#contactoAgendamiento').val('');
         $scope.limpiarFormularioNuevoContacto();
     });
 
@@ -450,31 +436,30 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
     $scope.agregarContactoAgendamiento = function (contactoAg) {
         let isValid = true;
         let mensajeError = '';
+        $("#nombreContacto").removeClass("invalid-inputContacto");
+        $("#aPaternoContacto").removeClass("invalid-inputContacto");
+        $("#aMaternoContacto").removeClass("invalid-inputContacto");
+        $("#emailContacto").removeClass("invalid-inputContacto");
+        $("#generoContacto").removeClass("invalid-inputContacto");
+        $("#telefonoFijoContacto").removeClass("invalid-inputContacto");
+        $("#celularContacto").removeClass("invalid-inputContacto");
 
         if ($("#nombreContacto").val() == undefined || $("#nombreContacto").val() == '') {
             $("#nombreContacto").addClass("invalid-inputContacto");
             mensajeError += "<li>Debe ingresar un Nombre de Contacto</li>";
             isValid = false;
-        } else {
-            $("#nombreContacto").removeClass("invalid-inputContacto");
-        }
-
+        } 
         if ($("#aPaternoContacto").val() == undefined || $("#aPaternoContacto").val() == '') {
             $("#aPaternoContacto").addClass("invalid-inputContacto");
             mensajeError += "<li>Debe ingresar el Apellido Paterno del Contacto</li>";
             isValid = false;
-        } else {
-            $("#aPaternoContacto").removeClass("invalid-inputContacto");
         }
 
         if ($("#aMaternoContacto").val() == undefined || $("#aMaternoContacto").val() == '') {
             $("#aMaternoContacto").addClass("invalid-inputContacto");
             mensajeError += "<li>Debe ingresar el Apellido Materno del Contacto</li>";
             isValid = false;
-        } else {
-            $("#aMaternoContacto").removeClass("invalid-inputContacto");
         }
-
         if ($("#emailContacto").val() == undefined || $("#emailContacto").val() == '') {
             $("#emailContacto").addClass("invalid-inputContacto");
             mensajeError += "<li>Debe ingresar el Correo Electr&oacute;nico del Contacto</li>";
@@ -484,17 +469,13 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                 $("#emailContacto").addClass("invalid-inputContacto");
                 mensajeError += "<li>Valida el formato del correo electr&oacute;nico</li>";
                 isValid = false;
-            } else {
-                $("#emailContacto").removeClass("invalid-inputContacto");
-            }
+            } 
         }
 
         if ($("#generoContacto").val() == undefined || $("#generoContacto").val() == '') {
             $("#generoContacto").addClass("invalid-inputContacto");
             mensajeError += "<li>Debe seleccionar un G&eacute;nero</li>";
             isValid = false;
-        } else {
-            $("#generoContacto").removeClass("invalid-inputContacto");
         }
 
         if ($("#telefonoFijoContacto").val() == undefined || $("#telefonoFijoContacto").val() == '') {
@@ -506,9 +487,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                 $("#telefonoFijoContacto").addClass("invalid-inputContacto");
                 mensajeError += "<li>Debe ingresar un N&uacute;mero de Tel&eacute;fono v&aacute;lido</li>";
                 isValid = false;
-            } else {
-                $("#telefonoFijoContacto").removeClass("invalid-inputContacto");
-            }
+            } 
         }
 
         if ($("#celularContacto").val() == undefined || $("#celularContacto").val() == '') {
@@ -520,9 +499,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                 $("#celularContacto").addClass("invalid-inputContacto");
                 mensajeError += "<li>Debe ingresar un N&uacute;mero de Celular v&aacute;lido</li>";
                 isValid = false;
-            } else {
-                $("#celularContacto").removeClass("invalid-inputContacto");
-            }
+            } 
         }
 
         if (isValid) {
@@ -536,27 +513,34 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
     }
 
     $scope.guardarContactoAgendamiento = function(contacto) {
-        let params = {
-            "id": "1"
-        }
+        contacto.nombreCompleto=contacto.nombre+' '+  contacto.apellidoP+' '+ contacto.apellidoM
+        contacto.title = "Jefe"                     
+        let params={
+            arrayContactos:[ contacto ],
+            cuenta:$scope.elementoCSP.infoSitio.numeroCuenta
+        }          
+
+        let copyContacto=angular.copy(contacto);
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
-            swal.showLoading();
+        swal.showLoading();
         bandejasSalesforceService.guardarContactoSalesforce(params).then(function success(response) {
             console.log(response);
             if (response.data !== undefined) {
-                if (true) {//response.data.respuesta
-                    if (true) {//response.data.result
-                        contacto.id = 1;
-                        $scope.listContactosAgendamiento.push(contacto);
+                if (response.data.result!=undefined) {
+                    if(response.data.result.ids != undefined && response.data.result.ids.length>0){
+                        copyContacto.id=response.data.result.ids[0]
+                        $scope.listContactosAgendamiento.push(copyContacto);
+                        $scope.idContactoSelected= copyContacto.id
+                        $scope.contactoSelected=angular.copy(copyContacto)
                         $("#modalNuevoContacto").modal('hide');
                         mostrarMensajeExitoAlert("Contacto agregado correctamente");
                         swal.close();
-                    } else {
-                        mostrarMensajeWarningValidacion('No se encontr&oacute; factibilidad');
+                    }else{
+                        mostrarMensajeWarningValidacion('No se pudo guardar el contacto');
                         swal.close();
-                    }
+                    }                 
                 } else {
-                    mostrarMensajeWarningValidacion(response.data.resultDescripcion);
+                    mostrarMensajeErrorAlert(response.data.resultDescripcion);
                     swal.close();
                 }
             } else {
@@ -566,13 +550,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         });
     }
 
-    $("#contactoAgendamiento").change(function () {
-        if ($("#contactoAgendamiento").val() !== 'NUEVO') {
-            $scope.isContactoSelected = true;
-            $scope.contactoSelected = $scope.listContactosAgendamiento.find(function (elem) { return elem.id === Number($("#contactoAgendamiento").val()) });
-            $scope.$apply();
-        }
-    });
+ 
 
     $scope.clearFormAgendamiento = function () {
         $("#opcion-calendarioAgendamiento-tab").trigger("click");
@@ -662,50 +640,99 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         }
     }
 
-    $scope.consultarInfoSitioInstalacion = function() {
-        let params = {
-            "id": "1"
-        }
-        bandejasSalesforceService.consultarInfoSitioInstalacion(params).then(function success(response) {
-            console.log(response);
-            if (true) {//response.data !== undefined
-                if (true) {//response.data.respuesta
-                    if (true) {//response.data.result
-                       
-                        swal.close();
-                    } else {
-                        mostrarMensajeWarningValidacion('No se encontr&oacute; factibilidad');
-                        swal.close();
-                    }
-                } else {
-                    mostrarMensajeWarningValidacion(response.data.resultDescripcion);
-                    swal.close();
-                }
-            } else {
-                mostrarMensajeErrorAlert('Ha ocurrido un error al consultar la factibilidad');
-                swal.close();
-            }
-        });
-    }
-
     visualizarAgendamiento = function (index) {
         $scope.isAgendamiento = true;
-        $scope.isContactoSelected = false;
         $scope.isFactibilidad = false;
         $scope.isFechaSelected = false;
-        $scope.listContactosAgendamiento = [];
+        $scope.listContactosAgendamiento = []
+        
         $scope.infoFactibilidad = {};
         $scope.elementoCSP = {};
         $scope.elementoCSP = $scope.listPendientesAgendar[index];
-        $scope.elementoCSP.latitud = '19.346519036181018';
-        $scope.elementoCSP.longitud = '-99.2159671376953';
-        $scope.$apply();
-        $scope.clearFormAgendamiento();
-        $scope.consultarDisponibilidadBandejas();
-        $scope.consultarFactibilidadAgendamiento('empresarial', $scope.elementoCSP.latitud, $scope.elementoCSP.longitud);
-        //$scope.consultarInfoSitioInstalacion();
+        console.log("elemento CSP ",$scope.elementoCSP)
         $scope.clearMarkersAgendamiento();
         $scope.setMarkerAgendamiento();
+        $scope.clearFormAgendamiento();
+
+        let dataDisp={
+            geografia2: 2047,
+            subtipoIntervencion: 310
+        }
+        let paramsDetalleSitio={
+            cuenta:'0290005899'
+        }
+        swal({ text: 'Espera un momento...', allowOutsideClick: false });
+        swal.showLoading();
+
+        $q.all([
+            bandejasSalesforceService.consultaDisponibilidadAgendamiento(dataDisp),
+            bandejasSalesforceService.consultarInfoSitioInstalacion(paramsDetalleSitio)
+        ]).then(function (results) {
+            if (results[0].data) {
+                if (results[0].data.respuesta) {
+                    if (results[0].data.result) {
+                        if (results[0].data.result.dias.length) {
+                            $scope.muestraDisponibilidadCalendar(results[0].data.result);
+                        } else {
+                            $scope.muestraDisponibilidadCalendar([]);
+                            mostrarMensajeInformativo("No se encontr&oacute; Disponibilidad");
+                        }
+                    } else {
+                        $scope.muestraDisponibilidadCalendar([]);
+                        mostrarMensajeInformativo("No se encontr&oacute; Disponibilidad");
+                    }
+                } else {
+                    mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                    swal.close();
+                }
+            } else {
+                mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                swal.close();
+            }
+
+            if (results[1].data) {
+                if (results[1].data.respuesta) {
+                    if (results[1].data.result) {
+                        if (results[1].data.result.resultadoConsulta != undefined) {
+                            $scope.elementoCSP.infoSitio = results[1].data.result.resultadoConsulta 
+                            
+                            $scope.consultarFactibilidadAgendamiento(   'empresarial', 
+                                                                        $scope.elementoCSP.infoSitio.geolocalizacionInstalacionLatitudeS, 
+                                                                        $scope.elementoCSP.infoSitio.geolocalizacionInstalacionLongitudeS );
+                            
+                        }else{
+                            mostrarMensajeInformativo("No se encontr&oacute; informaci&oacute;n del sitio");
+                        }                  
+                        if ( results[1].data.result.resultadoContactos != undefined && results[1].data.result.resultadoContactos.length > 0 ) {
+                            $scope.listContactosAgendamiento=$scope.listContactosAgendamiento.concat( results[1].data.result.resultadoContactos )
+                        }
+                    } else {
+                        mostrarMensajeInformativo("No se encontr&oacute; informaci&oacute;n del sitio");
+                    }
+                } else {
+                    mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                    swal.close();
+                }
+            } else {
+                mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                swal.close();
+            }
+            swal.close()
+        });
+
+
+    }
+
+    $scope.colocarContactoSeleccionado=function(){
+        console.log("contacto selected",$scope.contactoSelected)
+        $scope.contactoSelected={}    
+        if($scope.idContactoSelected==undefined)
+            return 
+                 
+        $scope.contactoSelected=angular.copy($scope.listContactosAgendamiento.find(function (elem) { return elem.id === $scope.idContactoSelected  }))
+    } 
+    $scope.abrirModalRegistroContacto=function(){
+        $("#modalNuevoContacto").modal('show')
     }
 
     $scope.agendarCSPBandejas = function () {
@@ -721,11 +748,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
             mensajeError += "<li>Debe seleccionar un turno del Calendario</li>";
             isValid = false;
         }
-
-        if (!$scope.isContactoSelected) {
-            mensajeError += "<li>Debe seleccionar un contacto</li>";
-            isValid = false;
-        }
+        
 
         if (isValid) {
             swal({
@@ -791,12 +814,14 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         }
 
         if (isValid) {
-            swal({ text: 'Espera un momento...', allowOutsideClick: false });
-            swal.showLoading();
+            if (!swal.isVisible()) {
+                swal({ text: 'Espera un momento...', allowOutsideClick: false });
+                swal.showLoading();
+            }
             let paramsfecha = $scope.getFechaFormato(document.getElementById('fecha_pendientes_agendar').value);
             let params = {
                 "geografias": clustersSelected,
-                "fechaInicio": paramsfecha.fechaInicio,
+                "fechaInicio": '2022-02-01',//paramsfecha.fechaInicio,
                 "fechaFin": paramsfecha.fechaFin
                 // "geografias": ["CIUDAD DE MEXICO"], "fechaFin": "2021-01-01", "fechaInicio": "2019-01-01"
             }
@@ -964,9 +989,10 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         }
 
         if (isValid) {
-            swal({ text: 'Espera un momento...', allowOutsideClick: false });
-            swal.showLoading();
-
+            if (!swal.isVisible()) {
+                swal({ text: 'Espera un momento...', allowOutsideClick: false });
+                swal.showLoading();
+            }
             let paramsFecha = $scope.getFechaFormato(document.getElementById('fecha_pendiente_activar').value);
             let params = {
                 'geografias': clustersSelected,

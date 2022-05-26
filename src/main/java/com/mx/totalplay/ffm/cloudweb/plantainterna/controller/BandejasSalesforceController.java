@@ -88,6 +88,16 @@ public class BandejasSalesforceController {
 		}
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
+		
+	@PostMapping("/actualizarFactibilidadSitio")
+	public ResponseEntity<?> actualizarFactibilidadSitio(@RequestBody String params) {
+	    logger.info("###### BandejasSalesforceController - actualizarFactibilidadSitio");
+	    ServiceResponseResult response = bandejasSalesforceService.actualizarFactibilidadSitio(params);
+	    if(response.getResult() instanceof Integer) {
+	        return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+	    }
+	    return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
 	
 	@PostMapping("/agendarOrdenSalesforce")
 	public ResponseEntity<?> agendarOrdenSalesforce(@RequestBody String params) {
@@ -98,5 +108,4 @@ public class BandejasSalesforceController {
 		}
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
-
 }
