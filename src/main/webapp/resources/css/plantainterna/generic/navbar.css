@@ -391,9 +391,16 @@ h1.h6.subtitle-modulo {
 }
 
 img.image-totalplayheader {
-  height: 1.7em;
+  /* height: 1.7em; */
   margin-left: 1em;
   margin-right:1em;
+  height: inherit;
+  width: -webkit-fill-available;
+}
+
+.content-image {
+  height: 4em; 
+  width: 9em;
 }
 
 .image-totalplayheader-vertical{

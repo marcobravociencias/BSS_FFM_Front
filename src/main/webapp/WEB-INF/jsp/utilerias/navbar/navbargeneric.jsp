@@ -23,14 +23,11 @@
                             <img class="image-totalplayheader" src="${pageContext.request.contextPath}/resources/img/navbar/${userStore.configuraciones['KEY_BANER']}"   alt="" loading="lazy" />
                         </c:if>
                         <c:if test="${userStore.configuraciones['KEY_BANER_HORIZONTAL'] == null }">
-                            <img class="image-totalplayheader-vertical" src="${pageContext.request.contextPath}/resources/img/navbar/${userStore.configuraciones['KEY_BANER']}"   alt="" loading="lazy" />
+                            <img class="image-totalplayheader" src="${pageContext.request.contextPath}/resources/img/navbar/${userStore.configuraciones['KEY_BANER']}"   alt="" loading="lazy" />
                         </c:if> 
                     </c:if>
-                    <c:if
-                        test="${userStore.configuraciones['KEY_BANER'] == null ||  userStore.configuraciones['KEY_BANER'] == ''}">
-                        <img class="image-totalplayheader"
-                            src="${pageContext.request.contextPath}/resources/img/logotipos/residencial.png" height="27"
-                            alt="" loading="lazy" />
+                    <c:if test="${userStore.configuraciones['KEY_BANER'] == null ||  userStore.configuraciones['KEY_BANER'] == ''}">
+                        <img class="image-totalplayheader" src="${pageContext.request.contextPath}/resources/img/logotipos/residencial.png" alt="" loading="lazy" />
                     </c:if>
                 </div>
                 <ul class="ul-elementos-nav navbar-nav me-auto mb-2 mb-lg-0">
