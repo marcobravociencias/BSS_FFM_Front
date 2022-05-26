@@ -4,7 +4,8 @@
         	<h6 class="text-center titulo-opciones">T&Eacute;CNICOS DISPONIBLES*</h6>
             <hr/>
 			<div class="input-group input-group-sm content-seach-group">
-				<input id="buscadorTecnicoMod" type="text" class="form-control form-control-sm buscar-input-operario" ng-model="buscarTecnicoMod" placeholder="Buscar t&eacute;cnico"> <span class="search-icon-operario-busq fa fa-search"></span>
+				<input id="buscadorTecnicoMod" type="text" class="form-control buscadorGenerico" ng-model="buscarTecnicoMod" placeholder="Buscar t&eacute;cnico"> 
+				<span class="fa fa-search iconoBusqueda"></span>
 			</div>
 			<div class="tecnicos-container">
 				<div class="scrollListaTecnicos" id="divTecnicos">
@@ -35,7 +36,8 @@
         	<h6 id="labelTecnicosSeleccionadosMod" class="text-center titulo-opciones">T&Eacute;CNICOS SELECCIONADOS</h6>
             <hr/>
 			<div class="input-group input-group-sm content-seach-group">
-				<input id="buscadorTecnicoSeleccionadoMod" type="text" class="form-control form-control-sm buscar-input-operario" ng-model="buscarTecnicoSeleccionadoMod" placeholder="Buscar t&eacute;cnico seleccionado"> <span class="search-icon-operario-busq fa fa-search"></span>
+				<input id="buscadorTecnicoSeleccionadoMod" type="text" class="form-control buscadorGenerico" ng-model="buscarTecnicoSeleccionadoMod" placeholder="Buscar t&eacute;cnico seleccionado"> 
+				<span class="fa fa-search iconoBusqueda"></span>
 			</div>
 			<div class="tecnicos-container">
 				<div class="scrollListaTecnicos" id="contenedorTecnicosMod">

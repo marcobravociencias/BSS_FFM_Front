@@ -1,3 +1,7 @@
+body {
+    background:#f9f9f9;
+}
+
 #arbolGeografiaRegistro.jstree-checkbox-selection .jstree-wholerow-clicked,
 #arbolGeografiaMod.jstree-checkbox-selection .jstree-wholerow-clicked,
 #arbolIntervencionRegistro .jstree-wholerow-clicked,
@@ -374,6 +378,7 @@ label.form-check-inputfiltro {
     right: 0.8em;
     top: 0.4em;
     font-size: 0.8em;
+	z-index: 3;
 }
 
 .content-seach-group {
@@ -877,8 +882,8 @@ div.dataTables_wrapper div.dataTables_filter input {
 }
 
 #myTab .nav-link {
-    padding-top: .6em;
-    padding-bottom: .6em;
+    padding-top: 0.4em;
+    padding-bottom: 0.4em;
     border: solid 1px #ccc;
 }
 
@@ -1054,6 +1059,22 @@ div.dataTables_wrapper div.dataTables_filter input {
 .tooltip-btn:hover .tooltiptext-btn {
     visibility: visible;
     opacity: 1;
+}
+
+.container-treegeofria {
+    min-height: 9em;
+    max-height: 15em;
+}
+
+.valign-wrapper {
+    display: -ms-flexbox;
+    margin-bottom: .3px;
+    padding: .3rem;
+    cursor: pointer;
+    border-right: 3px solid transparent;
+    display: flex;
+    position: relative;
+    border-bottom: 1px solid #eee;
 }
 
 span.btnModificarUsuario {

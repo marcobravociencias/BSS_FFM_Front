@@ -75,8 +75,8 @@
 			                                        <div id="" class="col-md-11" style="padding-left: 1.3em;">
 			                                            <p class="text-tecnico-nombre">{{tecnico.nombre}}</p>
 			                                            <p class="text-adds-teccnico">
-			                                                <i style="color:#7716fa" class="fa fa-user"></i> {{tecnico.usuarioFfm}} &nbsp
-			                                                <i style="color:#7716fa;" class="fa fa-phone"></i> {{tecnico.telefono}}
+			                                                <i style="color:var(--estandar-color);" class="fa fa-user"></i> {{tecnico.usuarioFfm}} &nbsp
+			                                                <i style="color:var(--estandar-color);" class="fa fa-phone"></i> {{tecnico.telefono}}
 			                                            </p>
 			                                        </div>
 <!-- 			                                        <div class="col-2 icono_check_tecnico mt-1" > -->
@@ -110,8 +110,8 @@
 			                                        <div id="" class="col-md-11" style="padding-left: 1.3em;">
 			                                            <p class="text-tecnico-nombre">{{auxiliar.nombre}}</p>
 			                                            <p class="text-adds-teccnico">
-			                                                <i style="color:#7716fa" class="fa fa-user"></i> {{auxiliar.usuarioFfm}} &nbsp
-			                                                <i style="color:#7716fa;" class="fa fa-phone"></i> {{auxiliar.telefono}}
+			                                                <i style="color:var(--estandar-color);" class="fa fa-user"></i> {{auxiliar.usuarioFfm}} &nbsp
+			                                                <i style="color:var(--estandar-color);" class="fa fa-phone"></i> {{auxiliar.telefono}}
 			                                            </p>
 			                                        </div>
 <!-- 			                                        <div class="col-2 icono_check_tecnico mt-1" > -->
@@ -140,11 +140,11 @@
 	                                        </div>
 	                                        <div style="float: right;">
 	                                            <div class="contenido_color">
-	                                                <i class="fas fa-arrow-circle-right icon-back" style="color: #7716fa;"></i>
+	                                                <i class="fas fa-arrow-circle-right icon-back"></i>
 	                                                <small> Hora ingreso</small>
 	                                            </div>
 	                                            <div class="contenido_color">
-	                                                <i class="fas fa-arrow-circle-left icon-back" style="color: #7716fa;"></i>
+	                                                <i class="fas fa-arrow-circle-left icon-back"></i>
 	                                                <small> Hora salida</small>
 	                                            </div>
 	                                        </div>
@@ -159,13 +159,13 @@
 	                                    </div>
 	                                </div>
 	                                <div class="col-12" id="containerTecnico_vacio" ng-show="!isDetalle">
-	                                    <span style="color:#7716fa; font-weight: bold;">SIN SELECCI&Oacute;N DE D&Iacute;A</span>
+	                                    <span style="color:var(--estandar-color) !important; font-weight: bold;">SIN SELECCI&Oacute;N DE D&Iacute;A</span>
 	                                    <hr>
 	                                    Selecciona un d&iacute;a del calendario y podr&aacute;s visualizar el detalle
 	                                </div>
 	                                <div class="col-12" id="containerTecnico_detalle" ng-show="isDetalle">
 	                                    <div style="text-align: center;">
-	                                        <span style="color:#7716fa; font-weight: bold;">Detalle Justificaci&oacute;n</span>
+	                                        <span style="color:var(--estandar-color) !important; font-weight: bold;">Detalle Justificaci&oacute;n</span>
 	                                    </div>
 	                                    <hr>
 	                                    <div ng-show="isJustificacion">

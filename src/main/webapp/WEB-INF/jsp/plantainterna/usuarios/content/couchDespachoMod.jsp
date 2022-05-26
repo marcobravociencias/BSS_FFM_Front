@@ -4,7 +4,8 @@
         	<h6 class="text-center titulo-opciones">COUCHS DISPONIBLES*</h6>
             <hr/>
 			<div class="input-group input-group-sm content-seach-group">
-				<input id="buscadorCouchMod" type="text" class="form-control form-control-sm buscar-input-operario" ng-model="buscarCouchMod" placeholder="Buscar couch"> <span class="search-icon-operario-busq fa fa-search"></span>
+				<input id="buscadorCouchMod" type="text" class="form-control buscadorGenerico" ng-model="buscarCouchMod" placeholder="Buscar couch"> 
+				<span class="fa fa-search iconoBusqueda"></span>
 			</div>
 			<div class="tecnicos-container">
 				<div class="scrollListaTecnicos" ng-show="listaCouchsDespachosMod != ''">
@@ -39,7 +40,8 @@
         	<h6 id="labelCouchsSeleccionadosMod" class="text-center titulo-opciones">COUCHS SELECCIONADOS</h6>
             <hr/>
 			<div class="input-group input-group-sm content-seach-group">
-				<input type="text" class="form-control form-control-sm buscar-input-operario" ng-model="buscarCouchSeleccionadoMod" placeholder="Buscar couch seleccionado"> <span class="search-icon-operario-busq fa fa-search"></span>
+				<input type="text" class="form-control buscadorGenerico" ng-model="buscarCouchSeleccionadoMod" placeholder="Buscar couch seleccionado"> 
+				<span class="fa fa-search iconoBusqueda"></span>
 			</div>
 			<div class="tecnicos-container">
 				<div class="scrollListaTecnicos" id="contenedorCouchsMod">

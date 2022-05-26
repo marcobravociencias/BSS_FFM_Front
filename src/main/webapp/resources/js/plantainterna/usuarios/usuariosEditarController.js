@@ -2507,6 +2507,12 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     	}, 750);
     });
     
+    $("#pills-perfiles-tab-mod").click(function() {
+    	setTimeout(function (){
+	        $("#buscadorIntervencionPerfilMod").focus();
+	    }, 750);
+    });
+    
     $("#pills-arbol-tab-mod").click(function() {
     	setTimeout(function (){
 	        $("#buscadorGeografiaMod").focus();
@@ -2528,6 +2534,30 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
     $("#pills-despacho-tab-mod").click(function() {
     	setTimeout(function (){
 	        $("#buscadorDespachoMod").focus();
+    	}, 750);
+    });
+    
+    $("#pills-ingenieros-tab-mod").click(function() {
+    	setTimeout(function (){
+	        $("#buscadorIngenieroMod").focus();
+    	}, 750);
+    });
+    
+    $("#pills-supervisor-centralizado-tab-mod").click(function() {
+    	setTimeout(function (){
+	        $("#buscadorSupervisorCentralizadoMod").focus();
+    	}, 750);
+    });
+    
+    $("#pills-couch-despacho-tab-mod").click(function() {
+    	setTimeout(function (){
+	        $("#buscadorCouchMod").focus();
+    	}, 750);
+    });
+    
+    $("#pills-supervisor-tab-mod").click(function() {
+    	setTimeout(function (){
+	        $("#buscadorSupervisorMod").focus();
     	}, 750);
     });
     

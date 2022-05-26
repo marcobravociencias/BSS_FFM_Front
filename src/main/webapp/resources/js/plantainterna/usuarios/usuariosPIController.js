@@ -1484,8 +1484,6 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 			  }
     	}
 
-    	console.log(paramsRegistro);
-
     	var respuestaValidacionRegistro = $scope.validarInformacionRegistro();
     	if(respuestaValidacionRegistro){
     		
@@ -3014,6 +3012,24 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     $("#pills-ingenieros-tab").click(function() {
     	setTimeout(function (){
 	        $("#buscadorIngenieroRegistro").focus();
+    	}, 750);
+    });
+    
+    $("#pills-supervisor-centralizado-tab").click(function() {
+    	setTimeout(function (){
+	        $("#buscadorSupervisorCentralizadoRegistro").focus();
+    	}, 750);
+    });
+    
+    $("#pills-couch-despacho-tab").click(function() {
+    	setTimeout(function (){
+	        $("#buscadorCouchRegistro").focus();
+    	}, 750);
+    });
+    
+    $("#pills-supervisor-tab").click(function() {
+    	setTimeout(function (){
+	        $("#buscadorSupervisorRegistro").focus();
     	}, 750);
     });
     

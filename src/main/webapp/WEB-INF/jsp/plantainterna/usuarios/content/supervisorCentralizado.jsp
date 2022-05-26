@@ -4,7 +4,8 @@
         	<h6 class="text-center titulo-opciones">SUPERVISORES CENTRALIZADOS DISPONIBLES*</h6>
             <hr/>
 			<div class="input-group input-group-sm content-seach-group">
-				<input id="buscadorSupervisorCentralizadoRegistro" type="text" class="form-control form-control-sm buscar-input-operario" ng-model="buscarSupervisorCentralizado" placeholder="Buscar supervisor"> <span class="search-icon-operario-busq fa fa-search"></span>
+				<input id="buscadorSupervisorCentralizadoRegistro" type="text" class="form-control buscadorGenerico" ng-model="buscarSupervisorCentralizado" placeholder="Buscar supervisor"> 
+				<span class="fa fa-search iconoBusqueda"></span>
 			</div>
 			<div class="tecnicos-container">
 				<div class="scrollListaTecnicos" ng-show="listaSupervisoresCentralizados != ''">
@@ -39,7 +40,8 @@
         	<h6 id="labelSupervisorCentralizadoSeleccionados" class="text-center titulo-opciones">SUPERVISORES CENTRALIZADOS SELECCIONADOS</h6>
             <hr/>
 			<div class="input-group input-group-sm content-seach-group">
-				<input type="text" class="form-control form-control-sm buscar-input-operario" ng-model="buscarSupervisorCentralizadoSeleccionado" placeholder="Buscar supervisor seleccionado"> <span class="search-icon-operario-busq fa fa-search"></span>
+				<input type="text" class="form-control buscadorGenerico" ng-model="buscarSupervisorCentralizadoSeleccionado" placeholder="Buscar supervisor seleccionado"> 
+				<span class="fa fa-search iconoBusqueda"></span>
 			</div>
 			<div class="tecnicos-container">
 				<div class="scrollListaTecnicos" id="contenedorSupervisorCentralizadoRegistro">

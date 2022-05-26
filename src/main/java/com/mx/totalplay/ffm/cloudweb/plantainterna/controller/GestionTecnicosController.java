@@ -47,9 +47,9 @@ public class GestionTecnicosController {
 	}
 	
 	@PostMapping("/consultaTecnicosPorDespacho")
-	public ResponseEntity<?> consultaTecnicosPorDespacho(@RequestBody String params) {
+	public ResponseEntity<?> consultaTecnicosPorDespacho() {
 		logger.info("##### CONSULTANDO TECNICOS POR DESPACHO GT");
-		ServiceResponseResult result = gestionTecnicosService.consultaTecnicosPorDespacho(params);
+		ServiceResponseResult result = gestionTecnicosService.consultaTecnicosPorDespacho();
         if (result.getResult() instanceof Integer){
             return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
         }

@@ -146,7 +146,6 @@ p.text-tecnico-nombre {
 .content-seach-group {
     height: 1em;
     display: inline-flex;
-    /* margin-bottom: 1.2em; */
 }
 
 .buscar-input-operario {
@@ -158,6 +157,7 @@ p.text-tecnico-nombre {
     border: 1px solid #e2e2e2;
     background:#fcfcfc;
 }
+
 .content-seach-group span {
     height: 1.5em !important;
     min-height: 1.5em !important;
@@ -170,10 +170,10 @@ p.text-tecnico-nombre {
     font-size:.9em;
     background: transparent;
 }
+
 .buscar-input-operario::placeholder{
     color:#a4a4a4;
     font-size:1em;
-
 }
 
 .navbar-skills-option li a{

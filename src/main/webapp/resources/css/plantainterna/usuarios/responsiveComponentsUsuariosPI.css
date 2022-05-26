@@ -11,9 +11,9 @@
 
     /* FILTROS */
     #myTab .nav-link {
-        padding-top: 0.6em;
-        padding-bottom: 0.6em;
-        border: solid 1px #ccc;
+        padding-top: 0.4em;
+    	padding-bottom: 0.4em;
+    	border: solid 1px #ccc;
         font-size: .65em;
     }
 

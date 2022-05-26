@@ -100,15 +100,7 @@
                     Cerrar
                 </button>
                 <button type="button" class="btn btn-primary btn-justificacion" ng-click="editarJustificacion(justificacionE)">
-                    Aceptar
-                </button>
-            </div>
-            <div class="modal-footer border-tecnico-ticket" ng-show="!isEdit">
-                <button type="button" class="btn btn-cerrar-modal" data-mdb-dismiss="modal">
-                    Cerrar
-                </button>
-                <button type="button" class="btn btn-primary btn-justificacion" ng-click="eliminarJustificacion(justificacionD)">
-                    Aceptar
+                    Modificar
                 </button>
             </div>
         </div>

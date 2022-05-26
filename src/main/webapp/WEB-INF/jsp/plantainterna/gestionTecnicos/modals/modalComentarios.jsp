@@ -42,7 +42,7 @@
                             </div>
                             <div class="row float-right col-chat-fotter" style="margin-top: 2em; margin-right: 2em;">
                                 <div class="col-6">
-                                    <input id="comentarioNuevoJustificacion" placeholder="Escribe el comentario aqu&iacute; ..." type="text" class="input-mensaje-chat form-control form-control-sm ng-pristine ng-valid ng-empty ng-touched input-comentario" ng-model="comentario">
+                                    <input id="comentarioNuevoJustificacion" placeholder="Escribe el comentario aqu&iacute;..." type="text" class="input-mensaje-chat form-control form-control-sm ng-pristine ng-valid ng-empty ng-touched input-comentario" ng-model="comentario">
                                 </div>
                                 <div class="col-3" style="left: 200px;height: 50px;">
                                     <button class="btn btn-primary btn-enviar-comentario" ng-click="agregarComentarioJustificacion()">Enviar</button>

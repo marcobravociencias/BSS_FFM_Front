@@ -4,7 +4,8 @@
         	<h6 class="text-center titulo-opciones">DESPACHOS DISPONIBLES*</h6>
             <hr/>
 			<div class="input-group input-group-sm content-seach-group">
-				<input id="buscadorDespachoRegistro" type="text" class="form-control form-control-sm buscar-input-operario" ng-model="buscarDespacho" placeholder="Buscar despacho"> <span class="search-icon-operario-busq fa fa-search" id="buscar-operario"></span>
+				<input id="buscadorDespachoRegistro" type="text" class="form-control buscadorGenerico" ng-model="buscarDespacho" placeholder="Buscar despacho"> 
+				<span class="fa fa-search iconoBusqueda"></span>
 			</div>
 			<div class="tecnicos-container">
 				<div class="scrollListaTecnicos" id="divTecnicos" ng-show="listaDespachos != ''">
@@ -39,7 +40,8 @@
         	<h6 id="labelDespachosSeleccionados" class="text-center titulo-opciones">DESPACHOS SELECCIONADOS</h6>
             <hr/>
 			<div class="input-group input-group-sm content-seach-group">
-				<input type="text" class="form-control form-control-sm buscar-input-operario" ng-model="buscarDespachoSeleccionado" placeholder="Buscar despacho seleccionado"> <span class="search-icon-operario-busq fa fa-search" id="buscar-operario"></span>
+				<input type="text" class="form-control buscadorGenerico" ng-model="buscarDespachoSeleccionado" placeholder="Buscar despacho seleccionado"> 
+				<span class="fa fa-search iconoBusqueda"></span>
 			</div>
 			<div class="tecnicos-container">
 				<div class="scrollListaTecnicos" id="contenedorDespachosRegistro">

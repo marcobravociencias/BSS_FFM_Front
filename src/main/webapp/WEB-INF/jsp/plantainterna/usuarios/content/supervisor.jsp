@@ -4,7 +4,8 @@
         	<h6 class="text-center titulo-opciones">SUPERVISORES DISPONIBLES*</h6>
             <hr/>
 			<div class="input-group input-group-sm content-seach-group">
-				<input id="buscadorSupervisorRegistro" type="text" class="form-control form-control-sm buscar-input-operario" ng-model="buscarSupervisor" placeholder="Buscar supervisor"> <span class="search-icon-operario-busq fa fa-search"></span>
+				<input id="buscadorSupervisorRegistro" type="text" class="form-control buscadorGenerico" ng-model="buscarSupervisor" placeholder="Buscar supervisor"> 
+				<span class="fa fa-search iconoBusqueda"></span>
 			</div>
 			<div class="tecnicos-container">
 				<div class="scrollListaTecnicos" ng-show="listaSupervisores != ''">
@@ -39,7 +40,8 @@
         	<h6 id="labelSupervisoresSeleccionados" class="text-center titulo-opciones">SUPERVISORES SELECCIONADOS</h6>
             <hr/>
 			<div class="input-group input-group-sm content-seach-group">
-				<input type="text" class="form-control form-control-sm buscar-input-operario" ng-model="buscarSupervisorSeleccionado" placeholder="Buscar supervisor seleccionado"> <span class="search-icon-operario-busq fa fa-search"></span>
+				<input type="text" class="form-control buscadorGenerico" ng-model="buscarSupervisorSeleccionado" placeholder="Buscar supervisor seleccionado"> 
+				<span class="fa fa-search iconoBusqueda"></span>
 			</div>
 			<div class="tecnicos-container">
 				<div class="scrollListaTecnicos" id="contenedorSupervisoresRegistro">

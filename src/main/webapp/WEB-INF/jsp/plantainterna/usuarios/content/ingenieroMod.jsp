@@ -4,7 +4,8 @@
         	<h6 class="text-center titulo-opciones">INGENIEROS DISPONIBLES*</h6>
             <hr/>
 			<div class="input-group input-group-sm content-seach-group">
-				<input id="buscadorIngenieroMod" type="text" class="form-control form-control-sm buscar-input-operario" ng-model="buscarIngenieroMod" placeholder="Buscar ingeniero"> <span class="search-icon-operario-busq fa fa-search"></span>
+				<input id="buscadorIngenieroMod" type="text" class="form-control buscadorGenerico" ng-model="buscarIngenieroMod" placeholder="Buscar ingeniero"> 
+				<span class="fa fa-search iconoBusqueda"></span>
 			</div>
 			<div class="tecnicos-container">
 				<div class="scrollListaTecnicos" ng-show="listaIngenierosMod != ''">
@@ -39,7 +40,8 @@
         	<h6 id="labelIngenierosSeleccionadosMod" class="text-center titulo-opciones">INGENIEROS SELECCIONADOS</h6>
             <hr/>
 			<div class="input-group input-group-sm content-seach-group">
-				<input type="text" class="form-control form-control-sm buscar-input-operario" ng-model="buscarIngenieroSeleccionadoMod" placeholder="Buscar ingeniero seleccionado"> <span class="search-icon-operario-busq fa fa-search"></span>
+				<input type="text" class="form-control buscadorGenerico" ng-model="buscarIngenieroSeleccionadoMod" placeholder="Buscar ingeniero seleccionado"> 
+				<span class="fa fa-search iconoBusqueda"></span>
 			</div>
 			<div class="tecnicos-container">
 				<div class="scrollListaTecnicos" id="contenedorIngenierosMod">

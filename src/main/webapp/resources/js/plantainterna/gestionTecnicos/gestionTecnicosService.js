@@ -20,11 +20,10 @@ app.service("gestionTecnicosService", function ($http) {
 		});
 	};
 	
-	this.consultaTecnicosPorDespacho = function(params){
+	this.consultaTecnicosPorDespacho = function(){
 		return $http({
 			method: "post",
 			url: "req/consultaTecnicosPorDespacho",
-			data:JSON.stringify(params),
 			headers: {'Content-Type': "application/json; charset=utf-8"},
 			transformRequest: angular.identity
 		});
