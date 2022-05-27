@@ -19,9 +19,9 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
             },
             mapTypeControlOptions: {
                 style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-                position: google.maps.ControlPosition.LEFT_TOP
-            }, zoomControlOptions: {
                 position: google.maps.ControlPosition.RIGHT_BOTTOM
+            }, zoomControlOptions: {
+                position: google.maps.ControlPosition.BOTTOM_CENTER
             }, streetViewControlOptions: {
                 position: google.maps.ControlPosition.RIGHT_BOTTOM
             },
@@ -35,7 +35,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
         $('.drop-down-filters').on("click.bs.dropdown", function (e) {
             e.stopPropagation();
         });
-
+        /*
         $("#content_mapa").toggleClass('closed');
         $("#content_mapa").click(function () {
             $(this).toggleClass('closed');
@@ -45,6 +45,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                 $("#content-card-selected").show();
             }
         });
+        */
 
         $('.datepicker').datepicker({
             format: 'dd/mm/yyyy',
@@ -403,6 +404,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                 map.setZoom(15);
 
                 $scope.listaIncidenciasLigar = [];
+                $scope.incidenciasCobertura = [];
                 let params = {
                     idsFallas: fallasSelected,
                     fechaInicio: $scope.getFechaFormato($("#filtro_fecha_inicio_inspectorCobertura").val()),
@@ -417,17 +419,18 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                 swal({ text: 'Espera un momento...', allowOutsideClick: false });
                 swal.showLoading();
                 inspectorCoberturaService.consultarIncidenciasCoberturaPE(params).then(function success(response) {
-                    console.log(response);
+                    swal.close();
                     if (response.data) {
                         if (response.data.respuesta) {
                             if (response.data.result) {
                                 if (response.data.result.detalleIncidencias.length) {
-                                    let arrayRow = [];
+                                    $scope.incidenciasCobertura = response.data.result.detalleIncidencias;
+
+                                    /*let arrayRow = [];
                                     if (coberturaTable) {
                                         coberturaTable.destroy();
                                     }
-                                    $scope.incidenciasCobertura = response.data.result.detalleIncidencias;
-                                    console.log($scope.incidenciasCobertura);
+                                    
                                     $.each($scope.incidenciasCobertura, function (i, elemento) {
                                         let row = [];
                                         row[0] = elemento.idIncidencia && elemento.idIncidencia !== '' ? elemento.idIncidencia : 'Sin informaci&oacute;n';
@@ -455,13 +458,14 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                                             $(nRow).attr('id', 'incidencia_' + aData[0]); // or whatever you choose to set as the id
                                         },
                                     });
+                                    
                                     document.getElementById('tableCobertura_paginate').addEventListener('click', function () {
                                         $('#tableCobertura tbody tr').css('background', '');
                                         $.each(markers, function (i, elemento) {
                                             $('#incidencia_' + elemento.id_marker).css('background', '#d3d3d3');
                                         });
                                         $scope.$apply();
-                                    })
+                                    })*/
                                     swal.close();
                                 } else {
                                     mostrarMensajeInformativo("No se encontraron Incidencias");
@@ -487,8 +491,9 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
         }
     }
 
-    pintarUbicacion = function (indexI) {
-        $scope.incidenciaSeleccionada = $scope.incidenciasCobertura[indexI];
+    $scope.pintarUbicacion = function (idIncidencia) {
+        //$scope.incidenciaSeleccionada = $scope.incidenciasCobertura[indexI];
+        $scope.incidenciaSeleccionada = $scope.incidenciasCobertura.find((e) => e.idIncidencia == idIncidencia);
         if (!$("#content_mapa").hasClass('closed')) {
             $("#content_mapa").click();
         }
@@ -547,36 +552,38 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
         // $(".gm-ui-hover-effect").click();
         $('#incidencia_' + incidenciaUb.idIncidencia).css('background', '#d3d3d3');
         var infowindows = new google.maps.InfoWindow();
+        let isSelected = $scope.listaIncidenciasLigar.find((e) => e.idIncidencia == $scope.incidenciaSeleccionada.idIncidencia);
         var contentString;
+        let contentDisabled = isSelected ? 'disabled' : '';
         if (!$scope.isPermisoLigarIncidencia) {
             contentString =
-            '<div id="content">' +
-            '   <div id="siteNotice"></div>' +
-            '   <h5 id="firstHeading" class="firstHeading">' +
-            '   <span class="titleHeading">ID: </span>' + incidenciaUb.idIncidencia + '</h5><hr>' +
-            '   <div id="bodyContent">' +
-            '       <b><strong class="titleBody">Reporta:</strong></b>&nbsp;' + incidenciaUb.usuarioReporta +
-            '       <br><br><b><strong class="titleBody">Falla:</strong></b>&nbsp;' + incidenciaUb.desTipoIncidencia +
-            '       <br><br><b><strong class="titleBody">Fecha:</strong></b>&nbsp;' + incidenciaUb.fechaRegistro +
-            '       <br><br><b><strong class="titleBody">Latitud:</strong></b>&nbsp;' + incidenciaUb.latitud +
-            '       <br><br><b><strong class="titleBody">Longitud:</strong></b>&nbsp;' + incidenciaUb.longitud +
-            '   </div>' +
-            '</div>';
+                '<div id="content">' +
+                '   <div id="siteNotice"></div>' +
+                '   <h5 id="firstHeading" class="firstHeading">' +
+                '   <span class="titleHeading">ID: </span>' + incidenciaUb.idIncidencia + '</h5><hr>' +
+                '   <div id="bodyContent">' +
+                '       <b><strong class="titleBody">Reporta:</strong></b>&nbsp;' + incidenciaUb.usuarioReporta +
+                '       <br><br><b><strong class="titleBody">Falla:</strong></b>&nbsp;' + incidenciaUb.desTipoIncidencia +
+                '       <br><br><b><strong class="titleBody">Fecha:</strong></b>&nbsp;' + incidenciaUb.fechaRegistro +
+                '       <br><br><b><strong class="titleBody">Latitud:</strong></b>&nbsp;' + incidenciaUb.latitud +
+                '       <br><br><b><strong class="titleBody">Longitud:</strong></b>&nbsp;' + incidenciaUb.longitud +
+                '   </div>' +
+                '</div>';
         } else {
             contentString =
-            '<div id="content">' +
-            '   <div id="siteNotice"></div>' +
-            '   <h5 id="firstHeading" class="firstHeading">' +
-            '   <span class="titleHeading">ID: </span>' + incidenciaUb.idIncidencia + '</h5><hr>' +
-            '   <div id="bodyContent">' +
-            '       <b><strong class="titleBody">Reporta:</strong></b>&nbsp;' + incidenciaUb.usuarioReporta +
-            '       <br><br><b><strong class="titleBody">Falla:</strong></b>&nbsp;' + incidenciaUb.desTipoIncidencia +
-            '       <br><br><b><strong class="titleBody">Fecha:</strong></b>&nbsp;' + incidenciaUb.fechaRegistro +
-            '       <br><br><b><strong class="titleBody">Latitud:</strong></b>&nbsp;' + incidenciaUb.latitud +
-            '       <br><br><b><strong class="titleBody">Longitud:</strong></b>&nbsp;' + incidenciaUb.longitud +
-            '       <br><button id="inc_' + incidenciaUb.idIncidencia + '" class="agregarBtn btn-block btn btn-sm btn-outline-primary" onclick="agregarIncidencia(' + incidenciaUb.idIncidencia + ')">Agregar</button>' +
-            '   </div>' +
-            '</div>';
+                '<div id="content">' +
+                '   <div id="siteNotice"></div>' +
+                '   <h5 id="firstHeading" class="firstHeading">' +
+                '   <span class="titleHeading">ID: </span>' + incidenciaUb.idIncidencia + '</h5><hr>' +
+                '   <div id="bodyContent">' +
+                '       <b><strong class="titleBody">Reporta:</strong></b>&nbsp;' + incidenciaUb.usuarioReporta +
+                '       <br><br><b><strong class="titleBody">Falla:</strong></b>&nbsp;' + incidenciaUb.desTipoIncidencia +
+                '       <br><br><b><strong class="titleBody">Fecha:</strong></b>&nbsp;' + incidenciaUb.fechaRegistro +
+                '       <br><br><b><strong class="titleBody">Latitud:</strong></b>&nbsp;' + incidenciaUb.latitud +
+                '       <br><br><b><strong class="titleBody">Longitud:</strong></b>&nbsp;' + incidenciaUb.longitud +
+                '       <br><button ' + contentDisabled + '  id="inc_' + incidenciaUb.idIncidencia + '" class="agregarBtn btn-block btn btn-sm btn-outline-primary" onclick="agregarIncidencia(' + incidenciaUb.idIncidencia + ')">Agregar</button>' +
+                '   </div>' +
+                '</div>';
         }
         infowindows.setContent(contentString);
         var marker = new google.maps.Marker({
@@ -601,6 +608,10 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
 
         markers.push(marker);
         map.setCenter(new google.maps.LatLng(incidenciaUb.latitud, incidenciaUb.longitud));
+    }
+
+    $scope.openMdlCluster = function(){
+        $("#modalCluster").modal('show');
     }
 
     $scope.ligarIncidencias = function () {
@@ -649,13 +660,21 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
     }
 
     agregarIncidencia = function (idIncidencia) {
+        $scope.agregarIncidenciaList(idIncidencia);
+        $("#inc_" + idIncidencia).attr("disabled", true);
+        $scope.$apply();
+    }
+
+    $scope.agregarIncidenciaList = function (idIncidencia) {
+        let isSelected = $scope.listaIncidenciasLigar.find((e) => e.idIncidencia == idIncidencia);
         if ($scope.isPermisoLigarIncidencia) {
-            let incidenciaLigar = $scope.incidenciasCobertura.find((e) => e.idIncidencia == idIncidencia);
-            console.log(incidenciaLigar);
-            $scope.listaIncidenciasLigar.push(incidenciaLigar);
-            console.log($scope.listaIncidenciasLigar);
-            $("#inc_" + incidenciaLigar.idIncidencia).attr("disabled", true);
-            $scope.$apply();
+            if (!isSelected) {
+                let incidenciaLigar = $scope.incidenciasCobertura.find((e) => e.idIncidencia == idIncidencia);
+                $("#icon-" + idIncidencia).removeClass("fa-plus");
+                $("#icon-" + idIncidencia).addClass("fa-check");
+                $("#icon-" + idIncidencia).css("color","#51b37d");
+                $scope.listaIncidenciasLigar.push(incidenciaLigar);
+            }
         }
     }
 
@@ -665,6 +684,9 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
             if (elemento.idIncidencia == id) {
                 $scope.listaIncidenciasLigar.splice(i, 1);
                 $scope.deleteMarker(id);
+                $("#icon-" + id).removeClass("fa-check");
+                $("#icon-" + id).addClass("fa-plus");
+                $("#icon-" + id).css("color","#000");
                 return false;
             }
         });
