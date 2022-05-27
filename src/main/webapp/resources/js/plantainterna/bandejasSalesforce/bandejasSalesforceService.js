@@ -52,17 +52,7 @@ app.service("bandejasSalesforceService", function ($http) {
         })
     }
 
-    this.consultaFactibilidadResidencialAgendamiento = function (params) {
-        return $http({
-            method: "post",
-            url: "req/consultarFactibilidadEmpresarialBandejasSF",
-            data: JSON.stringify(params),
-            headers: { 'Content-Type': "application/json; charset=utf-8" },
-            transformRequest: angular.identity
-        });
-    };
-
-    this.consultaFactibilidadEmpresarialAgendamiento = function (params) {
+    this.consultaFactibilidadAgendamiento = function (params) {
         return $http({
             method: "post",
             url: "req/consultarFactibilidadEmpresarialBandejasSF",

@@ -1,8 +1,5 @@
 <div class="row mt-2">
-    <div class="col-5">
-        <span class="" style="font-weight: bold;">Cuenta: {{elementoCSP.infoSitio.numeroCuenta}}</span>
-    </div>
-    <div class="col-5">
+    <div class="col-10">
         <span class="" style="font-weight: bold;">Cliente: {{elementoCSP.cuentaFacturaSf.nombreCuentaFactura}}</span>
     </div>
     <div class="col-2 pr-0">
@@ -12,6 +9,14 @@
 </div>
 <div class="row mt-3">
     <div class="col-4">
+        <div class="container-fluid agendamiento-content">
+            <div class="container-text-title-detalle">
+                <span class="text-tile-agendamiento" >Cuenta:</span>
+            </div>
+            <div class="container-text-content-detalle">
+                <span class="text-content-agendamiento" ng-bind="elementoCSP.infoSitio.numeroCuenta || 'Sin dato'" ></span>
+            </div>
+        </div>
         <div class="container-fluid agendamiento-content">
             <div class="container-text-title-detalle">
                 <span class="text-tile-agendamiento">Paquete: </span>
@@ -50,7 +55,7 @@
                 <span class="text-tile-agendamiento">Ciudad: </span>
             </div>
             <div class="container-text-content-detalle">
-                <span class="text-content-agendamiento"  ng-bind="elementoCSP.infoSitio.ciudadInstalacionC || 'Sin dato'"></span>
+                <span class="text-content-agendamiento"  ng-bind="elementoCSP.infoSitio.plazaC || 'Sin dato'"></span>
             </div>
         </div>
         <div class="container-fluid agendamiento-content">
@@ -202,11 +207,11 @@
                     <div class="row">
                         <div class="col-12" style="text-align: right;">
                             <strong class="color_titulos_resumen" ng-if="!isFactibilidad">
-                                <i class="fa fa-exclamation icon-factibilidad" style="background: orange; padding: 0.6em 0.75em !important;"></i>
+                                <i class="fa fa-exclamation-circle icon-noencontrada-factibilidad"></i>
                                 No has actualizado la factibilidad
                             </strong>
                             <strong class="color_titulos_resumen" ng-if="isFactibilidad">
-                                <i class="fa fa-check icon-factibilidad" style="background: green;"></i>
+                                <i class="far fa-check-circle icon-exito-factibilidad"></i>
                                 Factibilidad actualizada
                             </strong>
                         </div>
@@ -216,26 +221,30 @@
                     <div id="mapa-ubicacion"></div>
                     <div class="content-info-mapa" id="info-factibilidad">
                         <div style="bottom:0; left:0 ;" class="card  div-contenedor-info-factibilidad">
-                            <div class="card-header" style="border-bottom: none; text-align: left;">
-                                <span class="title-tipoot-map-filtros" ng-show="!flagConsultandoFactibilidad && flagRespuestaFactibilidad">
-                                    <i class="far fa-check-circle icon-informacion-fac" style="color: green;"></i>
+                            <div class="card-header card-header-factibilidad" >
+                                <span class="title-factbilidad-result" ng-show="!flagConsultandoFactibilidad && flagRespuestaFactibilidad=='exito'">
+                                    <i class="far fa-check-circle icon-exito-factibilidad"></i>
                                     Factibilidad
                                 </span>
-                                <span class="title-tipoot-map-filtros" ng-show="!flagConsultandoFactibilidad && !flagRespuestaFactibilidad">
-                                    <i class="fa fa-exclamation-circle icon-informacion-fac" style="color: orange;"></i>
+                                <span class="title-factbilidad-result" ng-show="!flagConsultandoFactibilidad && flagRespuestaFactibilidad=='noencontrada'">
+                                    <i class="fa fa-exclamation-circle icon-noencontrada-factibilidad"></i>
+                                    Factibilidad
+                                </span>                                
+                                <span class="title-factbilidad-result" ng-show="!flagConsultandoFactibilidad && flagRespuestaFactibilidad=='error'">
+                                    <i class="far fa-times-circle icon-error-factibilidad"></i>
                                     Factibilidad
                                 </span>
-                                <div ng-if="flagConsultandoFactibilidad" class="spinner-border spinner-cargando-info" role="status">
+
+                                <div  class="spinner-border spinner-cargando-info" ng-if="flagConsultandoFactibilidad" role="status">
                                     <span class="visually-hidden">Loading...</span>
                                 </div>
-                                <span class="title-tipoot-map-filtros" ng-show="flagConsultandoFactibilidad">
+                                <span class="title-factbilidad-result" ng-show="flagConsultandoFactibilidad">
                                     Cargando...
                                 </span>
-                                <span
-                                    class="icono-hideoptions-mapa-ubicacion icono-accion-card icono-ocultar-mostrar-map fa fa-minus">&nbsp;</span>
+                                <span class="icono-hideoptions-mapa-ubicacion icono-accion-card icono-ocultar-mostrar-map fa fa-minus">&nbsp;</span>
                             </div>
-                            <div class="card-body" style="padding: 0;" ng-if="infoFactibilidad.factibilidad !== '0'">
-                                <div ng-show="!flagConsultandoFactibilidad" style="text-align: left;" class="info_ot_detail">
+                            <div class="card-body card-body-factibilidad" style="padding: 0;" ng-if="!flagConsultandoFactibilidad && flagRespuestaFactibilidad=='exito'">
+                                <div style="text-align: left;" class="info_ot_detail">
                                     <div class="col-md-12">
                                         <b class="title_span_detalle"> Regi&oacute;n:</b>
                                         <span class="ciudad-detalle-cuenta" ng-bind="infoFactibilidad.region ? infoFactibilidad.region : 'Sin info'"> </span>
@@ -254,18 +263,27 @@
                                     </div>
                                     <div class="content-actualizar">
                                         <hr style="margin: 0.5rem 0;">
-                                        <button title="Actualizar factibilidad" ng-disabled="!flagRespuestaFactibilidad" ng-click="actualizarFactibilidadBandejas()" class="btn boton-factibilidad ripple-surface">
+                                        <button title="Actualizar factibilidad" ng-click="actualizarFactibilidadBandejas()" class="btn boton-factibilidad ripple-surface">
                                             <i class="fa fa-redo"></i>
                                         </button>
                                     </div>
-                                </div>
-                                
+                                </div>                                
                             </div>
-                            <div class="card-body" style="padding: 0;" ng-if="infoFactibilidad.factibilidad === '0'">
+                            <div class="card-body card-body-factibilidad" style="padding: 0;" ng-if="!flagConsultandoFactibilidad && flagRespuestaFactibilidad=='noencontrada'">
                                 <div style="text-align: center;font-size: 0.9em;" class="info_ot_detail">
-                                    <span>
-                                        No se encontr&oacute; factibilidad </br> Selecciona otra ubicaci&oacute;n
+                                    <span class="mensaje-result-factibilidad">
+                                        No se encontr&oacute; factibilidad  
                                     </span>
+                                    <span class="mensaje-result-factibilidad"> Selecciona otra ubicaci&oacute;n </span>
+
+                                </div>
+                            </div>
+                            <div class="card-body card-body-factibilidad" style="padding: 0;" ng-if="!flagConsultandoFactibilidad && flagRespuestaFactibilidad=='error'">
+                                <div style="text-align: center;font-size: 0.9em;" class="info_ot_detail">
+                                    <span class="mensaje-result-factibilidad">
+                                        No se pudo consultar la factibilidad 
+                                    </span>
+                                    <span class="mensaje-result-factibilidad"> Selecciona otra ubicaci&oacute;n </span>
                                 </div>
                             </div>
                         </div>
@@ -278,13 +296,13 @@
                 <div class="col-6 mt-3">
                     <div class="">
                         <span class="text-tile-agendamiento">Fecha de agendamiento: </span>
-                        <span class="text-content-agendamiento" ng-if="!isFechaSelected">Sin selecci&oacute;n </span>
-                        <span class="text-content-agendamiento" ng-if="isFechaSelected">{{elementoCSP.fechaAgendamiento}}</span>
+                        <span ng-click="abrirDisponibilidad()" class="text-content-agendamiento text-agrega-contacto" ng-if="!isFechaSelected">Sin selecci&oacute;n </span>
+                        <span class="text-content-agendamiento" ng-if="isFechaSelected" ng-bind="elementoCSP.fechaAgendamiento" ></span>
                     </div>
                     <div class="">
                         <span class="text-tile-agendamiento">Turno: </span>
-                        <span class="text-content-agendamiento" ng-if="!isFechaSelected">Sin selecci&oacute;n </span>
-                        <span class="text-content-agendamiento" ng-if="isFechaSelected">{{elementoCSP.turnoAgendamiento}}</span>
+                        <span ng-click="abrirDisponibilidad()" class="text-content-agendamiento text-agrega-contacto" ng-if="!isFechaSelected">Sin selecci&oacute;n </span>
+                        <span class="text-content-agendamiento" ng-if="isFechaSelected" ng-bind="elementoCSP.turnoAgendamiento" ></span>
                     </div>
                 </div>
                 <div class="col-6">
@@ -298,6 +316,5 @@
             </button>
         </div>
     </div>
-    <pre>{{ elementoCSP.infoSitio | json}}</pre>
 
 </div>

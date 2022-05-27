@@ -1397,7 +1397,7 @@ span.btn-floating.btn-sm.btn-secondary.waves-effect.waves-light.acciones:hover{
   margin: 0.5em;
   margin-left: 2em;min-width: 250px;
   /* border-radius: 0; */
-border-radius: .25rem;}
+border-radius: .25rem;/* padding-bottom: .5em; */}
 
 .btn-aceptar-agendamiento {
   font-size: .7em;
@@ -1426,7 +1426,7 @@ border-radius: .25rem;}
 .color_titulos_resumen {
   color: #7a7a7a;
   font-weight: bold;
-  font-size: .8em;
+  font-size: .9em;
 }
 
 #search-input-place {
@@ -1718,4 +1718,42 @@ select.inputContacto {
 
 .content-link-agrega-contacto{
   display: grid !important;
-text-align: right;}
+  text-align: right;
+}
+
+
+.icon-noencontrada-factibilidad, .icon-error-factibilidad, .icon-exito-factibilidad{
+   margin-right: .5em;
+}
+
+.icon-noencontrada-factibilidad{
+   color:#fdc149;
+}
+.icon-error-factibilidad{
+    color: #ff5b5b;
+    font-size: 1.1em;
+}
+.icon-exito-factibilidad{
+    color: #51b37d;
+    font-size: 1.1em;
+}
+.title-factbilidad-result {
+    margin-left: 0em;
+    color: #444444;
+    font-weight: bolder;
+    text-align: left;
+}
+
+.mensaje-result-factibilidad {
+    color: black;
+    font-size: .9em;
+    display: block;
+}
+
+.card-header.card-header-factibilidad {
+    text-align: left;
+/* margin-bottom: .5em; */border-bottom: none;
+}
+.card-body-factibilidad{
+  
+margin-bottom: .5em;border-top: 1px solid rgba(0,0,0,.125);}

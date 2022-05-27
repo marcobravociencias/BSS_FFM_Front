@@ -169,7 +169,7 @@ public class ImplBandejasSalesforceService implements BandejasSalesforceService 
 	    Map<String, String> paramsRequestGet = new HashMap<String, String>();
 	    paramsRequestGet.put("cuenta", jsonObject.get("cuenta").getAsString());
 	    
-	    ServiceResponseResult response = restCaller.callPostBearerTokenRequestURL(paramsRequestGet, urlRequest,
+	    ServiceResponseResult response = restCaller.callPatchBearerTokenRequestURL(paramsRequestGet,params, urlRequest,
 	            ServiceResponseResult.class, tokenAccess);
 	    return response;
 	}

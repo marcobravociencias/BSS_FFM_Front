@@ -4,10 +4,10 @@ app.agendamientoMap = function ($scope, bandejasSalesforceService) {
     let objectMapaUbiacion;
     var mapAgendamiento;
     $scope.isFactibilidad = false;
-    $scope.latitudSelected;
-    $scope.longitudSelected;
+    $scope.latitudSelectedMap;
+    $scope.longitudSelectedMap;
     $scope.isMapaLoaded = false;
-
+    var searchBox;
     $scope.initMapaAgendamiento = function () {
         mapAgendamiento = new google.maps.Map(document.getElementById('mapa-ubicacion'), {
             center: {
@@ -30,6 +30,16 @@ app.agendamientoMap = function ($scope, bandejasSalesforceService) {
 
         geocoder = new google.maps.Geocoder;
         $scope.printInputSearchMap();
+        
+        //Se agrega marcador
+        markerAg = new google.maps.Marker({
+            map: mapAgendamiento,
+            draggable: true,
+            animation: google.maps.Animation.DROP
+        });
+        google.maps.event.addListener(markerAg, 'dragend',$scope.functionDragEndMap );
+        google.maps.event.addListener(mapAgendamiento, 'dblclick', $scope.functiondbclickMap );
+        
     }
 
     $scope.clearMarkersAgendamiento = function () {
@@ -37,77 +47,83 @@ app.agendamientoMap = function ($scope, bandejasSalesforceService) {
             markerAg.setMap(null);
         }
     }
-
-    $scope.setMarkerAgendamiento = function () {
-        mapAgendamiento.setZoom(17);
-        mapAgendamiento.setCenter(new google.maps.LatLng($scope.elementoCSP.latitud, $scope.elementoCSP.longitud));
-
-        markerAg = new google.maps.Marker({
-            map: mapAgendamiento,
-            draggable: true,
-            animation: google.maps.Animation.DROP,
-            position: {
-                lat: Number($scope.elementoCSP.latitud),
-                lng: Number($scope.elementoCSP.longitud)
-            }
-        });
-
-        google.maps.event.addListener(markerAg, 'dragend', function (event) {
+    $scope.functionDragEndMap=function(event){
+        console.log("drgend")
             markerAg.setMap(mapAgendamiento)
-            $scope.latitudSelected = this.getPosition().lat();
-            $scope.longitudSelected = this.getPosition().lng();
+            $scope.latitudSelectedMap = this.getPosition().lat();
+            $scope.longitudSelectedMap = this.getPosition().lng();
+            $scope.flagConsultandoFactibilidad = true;
             $scope.$apply()
             $("#search-input-place").val(this.getPosition().lat() + ', ' + this.getPosition().lng());
-            $scope.consultarFactibilidadAgendamiento('empresarial', $scope.latitudSelected, $scope.longitudSelected);
-        });
-
-        google.maps.event.addListener(mapAgendamiento, 'dblclick', function (e) {
-            markerAg.setMap(mapAgendamiento)
-            let positionDoubleclick = e.latLng;
-            markerAg.setPosition(positionDoubleclick);
-            $scope.latitudSelected = markerAg.getPosition().lat();
-            $scope.longitudSelected = markerAg.getPosition().lng();
-            $scope.$apply()
-            $("#search-input-place").val($scope.latitudSelected + ', ' + $scope.longitudSelected);
-            $scope.consultarFactibilidadAgendamiento('empresarial', $scope.latitudSelected, $scope.longitudSelected);
-        });
+            $scope.consultarFactibilidadAgendamiento('empresarial', $scope.latitudSelectedMap, $scope.longitudSelectedMap);
     }
+    $scope.functiondbclickMap=function(e){
+        console.log("dbclock")
+        markerAg.setMap(mapAgendamiento)
+        let positionDoubleclick = e.latLng;
+        markerAg.setPosition(positionDoubleclick);
+        $scope.latitudSelectedMap = markerAg.getPosition().lat();
+        $scope.longitudSelectedMap = markerAg.getPosition().lng();
+        $scope.flagConsultandoFactibilidad = true;
 
+        $scope.$apply()
+        $("#search-input-place").val($scope.latitudSelectedMap + ', ' + $scope.longitudSelectedMap);
+        $scope.consultarFactibilidadAgendamiento('empresarial', $scope.latitudSelectedMap, $scope.longitudSelectedMap);
+    }
+    
+    $scope.setMarkerAgendamiento = function ( latitud , longitud ) {
+        let latitudLongitud=new google.maps.LatLng( parseFloat( latitud  ), parseFloat( longitud ) )
+        mapAgendamiento.setZoom(17);        
+        mapAgendamiento.setCenter( latitudLongitud ); 
+        markerAg.setPosition( latitudLongitud );
+    }
+   
+    $scope.placesChangedMap=function(){
+        console.log("places_changed ")
+
+        let places = searchBox.getPlaces();
+        // console.log(places);
+        if (places.length == 0 || places.length > 1) {
+            return;
+        }
+        let bounds = new google.maps.LatLngBounds();
+        markerAg.setMap(mapAgendamiento)
+        places.forEach(function (place) {
+            console.log("places_changed forEach")
+
+            $scope.latitudSelectedMap = place.geometry.location.lat();
+            $scope.longitudSelectedMap = place.geometry.location.lng();
+            $scope.flagConsultandoFactibilidad = true;
+            $scope.$apply()
+
+
+            markerAg.setPosition(new google.maps.LatLng( $scope.latitudSelectedMap, $scope.longitudSelectedMap) );
+            mapAgendamiento.setZoom(17);
+            mapAgendamiento.setCenter(new google.maps.LatLng( $scope.latitudSelectedMap, $scope.longitudSelectedMap));
+            $scope.consultarFactibilidadAgendamiento('empresarial', $scope.latitudSelectedMap, $scope.longitudSelectedMap);
+
+            if (place.geometry.viewport) {
+                bounds.union(place.geometry.viewport);
+            } else {
+                bounds.extend(place.geometry.location);
+            }
+        });
+        mapAgendamiento.fitBounds(bounds);
+    }
     $scope.printInputSearchMap = function () {
         let input = document.getElementById('search-input-place');
-        let searchBox = new google.maps.places.SearchBox(input);
+        searchBox = new google.maps.places.SearchBox(input);
         mapAgendamiento.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+      
         mapAgendamiento.addListener('bounds_changed', function () {
+            console.log("bounds_changed ")
             searchBox.setBounds(mapAgendamiento.getBounds());
         });
-        searchBox.addListener('places_changed', function () {
-            let places = searchBox.getPlaces();
-            // console.log(places);
-            if (places.length == 0 || places.length > 1) {
-                return;
-            }
-            let bounds = new google.maps.LatLngBounds();
-            markerAg.setMap(mapAgendamiento)
-            places.forEach(function (place) {
-                $scope.latitudSelected = place.geometry.location.lat();
-                $scope.longitudSelected = place.geometry.location.lng();
-                $scope.$apply()
-
-                markerAg.setPosition(new google.maps.LatLng($scope.latitudSelected, $scope.longitudSelected));
-                mapAgendamiento.setZoom(17);
-                mapAgendamiento.setCenter(new google.maps.LatLng($scope.latitudSelected, $scope.longitudSelected));
-                $scope.consultarFactibilidadAgendamiento('empresarial', $scope.latitudSelected, $scope.longitudSelected);
-
-                if (place.geometry.viewport) {
-                    bounds.union(place.geometry.viewport);
-                } else {
-                    bounds.extend(place.geometry.location);
-                }
-            });
-            mapAgendamiento.fitBounds(bounds);
-        });
+        searchBox.addListener('places_changed', $scope.placesChangedMap );
     }
-
+    $scope.abrirDisponibilidad=function(){
+        $("#opcion-calendarioAgendamiento-tab").click()
+    }
     $scope.actualizarFactibilidadBandejas = function () {
         swal({
             title: "\u00BFDesea actualizar la factibilidad?",
@@ -144,8 +160,31 @@ app.agendamientoMap = function ($scope, bandejasSalesforceService) {
                 $scope.elementoCSP.distrito = $scope.infoFactibilidad.distrito;
                 $scope.elementoCSP.latitud = $scope.infoFactibilidad.latitud;
                 $scope.elementoCSP.longitud = $scope.infoFactibilidad.longitud;
-                $scope.$apply();
-                mostrarMensajeExitoAlert("Ubicaci&oacute;n actualizada");
+                $scope.$apply();            
+                swal({ text: 'Espera un momento...', allowOutsideClick: false });
+                swal.showLoading();                
+                let params={    
+                    "plazaC":"CIUDAD DE MEXICO",       
+                    "ciudadInstalacionC": "CIUDAD DE MEXICO",
+                    "zonaInstalacionC": "CIUDAD DE MEXICO",
+                    "clusterInstalacionC":  $scope.infoFactibilidad.cluster,
+                    "distritoInstalacionC": $scope.infoFactibilidad.distrito,
+                    "regionInstalacionC":   $scope.infoFactibilidad.region,
+                    "regionInstalacionIdC": "12",
+                    "geolocalizacionInstalacionLatitudeS":  $scope.infoFactibilidad.latitud ,            
+                    "geolocalizacionInstalacionLongitudeS": $scope.infoFactibilidad.longitud,
+                    "cuenta":$scope.elementoCSP.infoSitio.numeroCuenta
+                }
+                bandejasSalesforceService.actualizarFactibilidadSitio(params).then(function success(response) {
+                    console.log(response);
+                    if (response.data !== undefined && response.data.result != undefined) {
+                        mostrarMensajeExitoAlert( response.data.result.mensaje )
+                        swal.close();                        
+                    } else {
+                        mostrarMensajeErrorAlert('Ha ocurrido un error al actualizar la factibilidad');
+                        swal.close();
+                    }
+                });
             }
         }).catch(err => {
         });

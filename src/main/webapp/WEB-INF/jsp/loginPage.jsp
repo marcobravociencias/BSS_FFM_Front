@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.mx.totalplay.ffm.cloudweb.utilerias.utils.*" %>
+<%@ page import="com.dsfc.cloud.web.utilerias.utils.*" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -18,8 +18,9 @@
         <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
         <link href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css"  rel="stylesheet"/>
         <link href="${pageContext.request.contextPath}/resources/css/login/login.css"  rel="stylesheet" >
-		<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+		<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/css/plantainterna/generic/navbar.css?v=${sessionScope.versionDepl}"rel="stylesheet" />
+
     </head>
 	<body>
 	
@@ -28,19 +29,30 @@
 				<div class="content-fluid" id="content-login">
 				    <div class="col-12 row style-col-row">
 						<div class="col-6 container-texto-login">
-							<div class="col-6 offset-3 content-info-login">
-								<form id="form-in-te" class="form" name='login' action="<c:url value='/loginPage'  />" method='POST'>	
+							<div class="content-info-login">
+								<form id="form-in-te" class="form form-login-access" name='login' action="<c:url value='/loginPage'  />" method='POST'>	
+									<img class="login-top-form" src="${pageContext.request.contextPath}/resources/img/navbar/SVGDespacho.svg" alt=""/>
+
 									<div class="form-outline mb-4">				
-										<label class="label-form-login form-check-label " for="form2Example3">Usuario: </label>
-										<input placeholder="Ingresa tu usuario:" type='text' class="input-form-login " name='username' id="user_user" value=''>
+										<label class="label-form-login form-check-label " for="form2Example3">Nombre </label>
+										<input type='text' class="input-form-login " name='username' id="user_user" value=''>
 									</div>
 									<div class="form-outline mb-4">
 										<label class="label-form-login form-check-label" for="form2Example3">Contrase&ntilde;a </label>	
-										<input placeholder="Ingresa tu contrase&ntilde;a" type='password' class="input-form-login " id="user_pswd" name='password' />			
+										<input  type='password' class="input-form-login " id="user_pswd" name='password' />			
 									</div>						
-									<button id="ingresar-btn-login" class="btn btn-primary btn-block mb-4" name="submit" type="submit" value="submit" >Ingresar</button>
+									<button id="ingresar-btn-login" class="btn btn-primary btn-block mb-4" name="submit" type="submit" value="submit" >Iniciar sesi&oacute;n</button>
 									<input class="btn btn-primary btn-block mb-4" type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-								</form>
+
+									<!--div class="form-outline content-recordarme">
+										<input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3"  />
+										<label class="form-check-label label-recordarme" for="inlineCheckbox3">Recordarme</label>
+									</div>
+									<div class="divider-login"></div>
+									<div class="form-outline content-text-contraolvidada ">
+										<label class="label-olvidastecontra" for="inlineCheckbox3">&iquest;Olvidaste la contrase&ntilde;a?</label>
+									</div-->
+								</form>						
 								<c:if test="${not empty error}">
 									<div class="alert alert-danger mensaje-alert" role="alert" data-mdb-color="danger">
 										${error}
@@ -53,7 +65,6 @@
 										${message}
 									</div>
 								</c:if>	
-
 								<div class="alert alert-danger mensaje-alert" id="validateLogin" role="alert" data-mdb-color="danger" style="display: none;">
 									Los campos usuario y contrase&ntilde;a son obligatorios
 								</div>
@@ -61,14 +72,9 @@
 							</div>
 							
 						</div>
-	
-	        
-					    
+		        					    
 					    <div class="col-6 container-imagen-login">
-						
-					    	<img src="${pageContext.request.contextPath}/resources/img/login/logoLogin.png" class="logo-login"><br>
-					    	<h6 class="texto_field_">Field Force Management</h6><br>
-					    	<span class="texto_powered">Powered by<span class="style_texto_tp">&nbspTotalplay</span></span>
+							<img src="${pageContext.request.contextPath}/resources/img/login/logoDramleyAnimacion796-x-796.gif" class="img-background-dramley" alt="">
 					    </div>
 				    </div>
 				</div>
@@ -94,8 +100,6 @@
 
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-2.2.4.js" ></script>    
 	<script>
-		//document.getElementById("user_user").value = "FFMBACK";
-		//document.getElementById("user_pswd").value = "accesoFFM";
 			$("#ingresar-btn-login").click(function(){
 				//$(this).attr('disabled','disabled')
 				if($("#user_user").val() == '' || $("#user_user").val() == undefined || $("#user_pswd").val() == '' || $("#user_pswd").val() == undefined){
