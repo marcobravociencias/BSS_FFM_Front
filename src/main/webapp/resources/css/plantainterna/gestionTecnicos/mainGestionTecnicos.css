@@ -588,22 +588,26 @@ span.text-content-tecnico {
     font-size: 1.1em !important;
 }
 
-#myTab{
+#myTab,
+#myTabDetalle {
     margin-bottom:1em;
 }
 
-#myTab .nav-item:first-child .nav-link {
+#myTab .nav-item:first-child .nav-link,
+#myTabDetalle .nav-item:first-child .nav-link {
     border-top-left-radius:1em;
     border-bottom-left-radius:1em;
 
 }
 
-#myTab .nav-item:last-child .nav-link {
+#myTab .nav-item:last-child .nav-link,
+#myTabDetalle .nav-item:last-child .nav-link {
     border-top-right-radius:1em;
     border-bottom-right-radius:1em;
 }
 
-#myTab .nav-link {
+#myTab .nav-link,
+#myTabDetalle .nav-link {
     padding-top: .4em;
     padding-bottom: .4em;
     /* margin-top: 20px; */
@@ -612,7 +616,8 @@ span.text-content-tecnico {
     /* box-shadow: 0px 0px 10px #878ee04d; */ 
 }
   
-#myTab .nav-link.active {
+#myTab .nav-link.active,
+#myTabDetalle .nav-link.active {
     color: var(--estandar-color) !important;
     font-weight: bolder;
     background:#f9f9f9;

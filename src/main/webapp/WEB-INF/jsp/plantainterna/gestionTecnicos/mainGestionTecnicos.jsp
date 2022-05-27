@@ -263,7 +263,7 @@
 	                                </div>
 	                            </div>
 	                            <br>
-	                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+	                            <ul class="nav nav-tabs" id="myTabDetalle" role="tablist">
 	                                <li class="nav-item">
 	                                    <a class="nav-link active" id="opcion-dias-tab" data-toggle="tab" href="#opcion-dias" role="tab"
 	                                        aria-controls="opcion-dias" aria-selected="true" >D&iacute;as trabajados</a>
@@ -277,7 +277,7 @@
 	                                        aria-controls="opcion-justificaciones" aria-selected="false">Justificaciones</a>
 	                                </li>
 	                            </ul>
-	                            <div class="tab-content">
+	                            <div class="tab-content" id="v-pills-tabContent-detalle">
 	                                <div class="tab-pane fade show active" id="opcion-dias" role="tabpanel" aria-labelledby="opcion-dias-tab">
 	                                    <div class="content-fluid" style="margin-top: 0.7em;">
 	                                        <div class="table-responsive">

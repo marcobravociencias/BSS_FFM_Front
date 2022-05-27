@@ -93,7 +93,8 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
                 }
             },
             eventClick: function (info, jsEvent, view) {
-                $scope.consultarDetalleTrabajo();
+            	let fechaConsultarOrdenesDiaEvent = moment(info.event.start).format('DD-MM-YYYY'); 
+                $scope.consultarDetalleTrabajo(fechaConsultarOrdenesDiaEvent);
             },
             dateClick: function (info) {
                 let idJust;
@@ -101,12 +102,13 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
                 $scope.fechaDiaJust = info.dateStr;
                 let FechaJustMod = $scope.fechaDiaJust.split('-');
                 let fechaMod = FechaJustMod[2] + '/' + FechaJustMod[1] + '/' + FechaJustMod[0];
+                let fechaConsultarOrdenesDia = FechaJustMod[2] + '-' + FechaJustMod[1] + '-' + FechaJustMod[0];
                 if ($("#calendar_gestionTecnicos td[data-date=" + $scope.fechaDiaJust + "] div.actividades-contadorac-gris").length > 0) {
                     idJust = ($("#calendar_gestionTecnicos td[data-date=" + $scope.fechaDiaJust + "] div.actividades-contadorac-gris").data('value'))
 //                    console.log("No trabajado");
                     $scope.consultarDetalleJustificacion(idJust);
                 } else if ($("#calendar_gestionTecnicos td[data-date=" + $scope.fechaDiaJust + "] div.actividades-contadorac-verde").length > 0) {
-                    $scope.consultarDetalleTrabajo();
+                    $scope.consultarDetalleTrabajo(fechaConsultarOrdenesDia);
 //                    console.log("trabajado");
                 } else {
 //                    console.log("trabajado");
@@ -460,6 +462,7 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
         swal({ text: 'Cargando datos ...', allowOutsideClick: false });
         swal.showLoading();
         
+        $scope.listJustificaciones = [];
         $scope.limpiarDetalleJustificacion();
         
         if ($scope.isDetalleMesTecnico) {
@@ -754,6 +757,11 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
 
     $scope.consultarDetalleMesTecnico = function () {
     	$scope.detalleMesTecnico = {};
+    	
+    	$("#myTabDetalle li a").removeClass('active');
+		$("#v-pills-tabContent-detalle .tab-pane").removeClass('active show');
+		$("#opcion-dias-tab").addClass("active");
+		$("#opcion-dias").addClass("active show");
     	
         swal({ text: 'Cargando datos ...', allowOutsideClick: false });
         swal.showLoading();
@@ -1369,7 +1377,7 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
     }
 
     //Método que consulta el detalle de las ordenes trabajadas del día "trabajado" seleccionado.
-    $scope.consultarDetalleTrabajo = function () {
+    $scope.consultarDetalleTrabajo = function (fechaDia) {
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
         $scope.isDetalle = false;
@@ -1380,7 +1388,7 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
             tableDetalleTrabajo.destroy();
         }
 
-        let paramsOrdenesTecnicos = {"idTecnico": 2,"fechaInicio": "09-11-2021","fechaFin":"30-04-2022"};
+        let paramsOrdenesTecnicos = {"idTecnico": $scope.idTecnico,"fechaInicio": fechaDia,"fechaFin":fechaDia};
         $q.all([
         	gestionTecnicosService.consultaOrdenesTecnicoPorFecha(paramsOrdenesTecnicos)
         ]).then(function(results) {
