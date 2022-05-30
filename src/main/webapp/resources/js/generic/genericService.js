@@ -120,4 +120,25 @@ app.service("genericService", function ($http) {
         });
     }
 
+    this.consultarNombreTablas = function () {
+        return $http({
+            method: "post",
+            url: "req/getNombresTablas",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    }
+
+    this.consultaRequestQuery = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultaQuery",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    }
+
 })

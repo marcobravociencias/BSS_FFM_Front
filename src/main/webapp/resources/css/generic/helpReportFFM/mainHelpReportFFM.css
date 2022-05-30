@@ -1,0 +1,41 @@
+#btn-consultar-query {
+    background-color: #ffffff;
+    color: var(--btn-color-buscar);
+    border: solid 1px var(--btn-color-buscar) !important;
+    padding: 0.5em 1.5em;
+    border-radius: 5px;
+    font-size: 0.6em;
+    position: relative;
+    display: block;
+    border-radius: 0.5em !important;
+    margin-top: 0.1em;
+}
+
+#queryTable {
+    border-collapse: collapse !important;
+}
+
+thead#thead_queryReport {
+    font-weight: bold;
+    border: 1px #ccc;
+    font-family: "Montserrat" !important;
+}
+
+#queryTable thead th {
+    position: relative;
+    background-color: #b1b1b1;
+    color: #fff;
+    font-size: 0.8em;
+    white-space: nowrap;
+    padding: 1em;
+    border: none;
+    font-weight: normal;
+}
+
+#queryTable>tbody>tr>td {
+    font-size: .8em !important;
+    color: #39455b;
+    font-family: 'Montserrat' !important;
+    font-size: .8em;
+    border-top: 0px solid #eceeef !important;
+}

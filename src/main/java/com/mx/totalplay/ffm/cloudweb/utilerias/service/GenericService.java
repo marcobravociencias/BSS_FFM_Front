@@ -1,0 +1,1 @@
+package com.mx.totalplay.ffm.cloudweb.utilerias.service;import com.mx.totalplay.ffm.cloudweb.utilerias.model.ServiceResponseResult;public interface GenericService {    ServiceResponseResult getNombresTablas();    ServiceResponseResult consultaQuery(String params);}
