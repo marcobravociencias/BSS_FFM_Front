@@ -1,5 +1,6 @@
 var app = angular.module('inspectorCoberturaApp', []);
 app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCoberturaService', 'genericService', function ($scope, $q, inspectorCoberturaService, genericService) {
+    var regexUrl = /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/;
 
     let coberturaTable;
     let markers = [];
@@ -30,6 +31,10 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
             disableDoubleClickZoom: true
         });
     }
+
+    $('#searchGeografia').on('keyup', function () {
+        $("#jstree-proton-3").jstree("search", this.value);
+    })
 
     $scope.initInspectorCobertura = function () {
         $('.drop-down-filters').on("click.bs.dropdown", function (e) {
@@ -271,9 +276,9 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
             if (resultConf != undefined && resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.permisos && resultConf.MODULO_ACCIONES_USUARIO.permisos != "") {
                 $scope.permisosUsuario = resultConf.MODULO_ACCIONES_USUARIO.permisos;
                 console.log($scope.permisosUsuario);
-                $scope.isPermisoConsultaIncidencias = ($scope.permisosUsuario.filter(e => { return e.clave == "accionConsultarIncidenciasCobertura" })[0] != undefined);
-                $scope.isPermisoLigarIncidencia = ($scope.permisosUsuario.filter(e => { return e.clave == "accionLigarIncidenciaInspectorCobertura" })[0] != undefined);
             }
+            $scope.isPermisoConsultaIncidencias = true//($scope.permisosUsuario.filter(e => { return e.clave == "accionConsultarIncidenciasCobertura" })[0] != undefined);
+            $scope.isPermisoLigarIncidencia = true//($scope.permisosUsuario.filter(e => { return e.clave == "accionLigarIncidenciaInspectorCobertura" })[0] != undefined);
 
             GenericMapa.prototype.callPrototypeMapa(results[0].data.result);
             $scope.initMapaInspectorCobertura();
@@ -320,6 +325,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                             $('#jstree-proton-3').bind('loaded.jstree', function (e, data) {
                                 $scope.consultarCoberturas();
                             }).jstree({
+                                'plugins': ["search"],
                                 'core': {
                                     'data': geografia,
                                     'themes': {
@@ -327,6 +333,10 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                                         'responsive': true,
                                         "icons": false
                                     }
+                                },
+                                "search": {
+                                    "case_sensitive": false,
+                                    "show_only_matches": true
                                 }
                             });
                             $('#texto_cluster_seleccionado').text('Sin selecci\u00F3n');
@@ -425,6 +435,10 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                             if (response.data.result) {
                                 if (response.data.result.detalleIncidencias.length) {
                                     $scope.incidenciasCobertura = response.data.result.detalleIncidencias;
+                                    let url = './resources/img/plantainterna/despacho/tecnicootasignada.png';
+                                    $.each($scope.incidenciasCobertura, function (i, elemento) {
+                                        elemento.urlFoto = regexUrl.test(elemento.urlFoto) ? elemento.urlFoto : url;
+                                    });
 
                                     /*let arrayRow = [];
                                     if (coberturaTable) {
@@ -520,6 +534,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                     return false;
                 }
             });
+            /*
             $.each($scope.listaIncidenciasLigar, function (i, elemento) {
                 if (elemento.idIncidencia == $scope.incidenciaSeleccionada.idIncidencia) {
                     $scope.listaIncidenciasLigar.splice(i, 1);
@@ -527,6 +542,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                     return false;
                 }
             });
+            */
         }
     }
 
@@ -610,7 +626,12 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
         map.setCenter(new google.maps.LatLng(incidenciaUb.latitud, incidenciaUb.longitud));
     }
 
-    $scope.openMdlCluster = function(){
+    $scope.openMdlCluster = function () {
+        $("#jstree-proton-3").jstree("search", '');
+        $("#searchGeografia").val('');
+        setTimeout(function () {
+            $("#searchGeografia").focus();
+        }, 750);
         $("#modalCluster").modal('show');
     }
 
@@ -669,10 +690,8 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
         let isSelected = $scope.listaIncidenciasLigar.find((e) => e.idIncidencia == idIncidencia);
         if ($scope.isPermisoLigarIncidencia) {
             if (!isSelected) {
+                $scope.validarSelected(true, idIncidencia);
                 let incidenciaLigar = $scope.incidenciasCobertura.find((e) => e.idIncidencia == idIncidencia);
-                $("#icon-" + idIncidencia).removeClass("fa-plus");
-                $("#icon-" + idIncidencia).addClass("fa-check");
-                $("#icon-" + idIncidencia).css("color","#51b37d");
                 $scope.listaIncidenciasLigar.push(incidenciaLigar);
             }
         }
@@ -682,12 +701,18 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
         $("#content_mapa").click();
         $.each($scope.listaIncidenciasLigar, function (i, elemento) {
             if (elemento.idIncidencia == id) {
+                $scope.validarSelected(false, id);
                 $scope.listaIncidenciasLigar.splice(i, 1);
                 $scope.deleteMarker(id);
-                $("#icon-" + id).removeClass("fa-check");
-                $("#icon-" + id).addClass("fa-plus");
-                $("#icon-" + id).css("color","#000");
                 return false;
+            }
+        });
+    }
+
+    $scope.validarSelected = function (isSelected, id) {
+        $.each($scope.incidenciasCobertura, function (i, elemento) {
+            if (elemento.idIncidencia == id) {
+                elemento.isSelected = isSelected;
             }
         });
     }
@@ -734,6 +759,15 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
            
         }).catch(err => handleError(err));
         */
+    }
+    $scope.usuarioFoto = {};
+    $scope.showImage = function (id) {
+        let insp = $scope.incidenciasCobertura.find((e) => e.idIncidencia == id);
+        $scope.usuarioFoto.tipo = "Ingeniero";
+        $scope.usuarioFoto.noEmpleado = insp.numeroEmpleado;
+        $scope.usuarioFoto.usuario = insp.usuarioReporta;
+        $('#img_tec').attr('src', insp.urlFoto);
+        $('#modalFoto').modal('show');
     }
 
     angular.element(document).ready(function () {

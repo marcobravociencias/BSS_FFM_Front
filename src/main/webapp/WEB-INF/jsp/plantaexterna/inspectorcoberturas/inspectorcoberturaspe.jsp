@@ -155,7 +155,7 @@
                                                             </div>
                                                             <div class="card card-incidencia">
                                                                 <div class="row">
-                                                                    <div class="col-md-12">
+                                                                    <div class="col-md-12 text-format">
                                                                         <span
                                                                             class="title_span"><strong>{{item.usuarioReporta}}</strong></span><br>
                                                                         <span
@@ -181,42 +181,47 @@
                             </div>
                             <div class="pill-counter">
                                 <div class="row">
-                                    <div class="col-md-2 icon-content-count">
+                                    <div class="col-md-2 icon-content-count" style="cursor: auto;">
                                         <i class="fas fa-check"></i>
                                     </div>
                                     <div class="col-md-10 mt-1 p-0" style="margin-left: 2.5em;text-align: center;">
-                                        <span>Incidencias seleccionadas <strong><span
+                                        <span>Incidencias seleccionadas <strong><span style="color: #000;"
                                                     ng-bind="listaIncidenciasLigar.length"></span></strong></span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-body-consulta" style="height:9%;top:1%;">
+                            <div class="card-body-consulta" style="height:8%;top:1%;border-radius: 0.2rem;">
                                 <div class="search-incidencia">
                                     <i class="fas fa-search"></i>
                                     <input type="text" value="" class="form-control form-control-sm"
-                                        placeholder="Buscar incidencia" />
+                                        ng-model="filtroBusqueda" placeholder="Buscar incidencia" />
                                 </div>
                             </div>
                             <div class="card-body-consulta">
                                 <div class="content-incidencia">
                                     <div class="incidencia-card"
-                                        ng-repeat="incidencia in incidenciasCobertura track by $index">
+                                        ng-repeat="incidencia in incidenciasCobertura  | filter:filtroBusqueda">
                                         <div class="row">
                                             <div class="col-2" style="text-align:center;">
-                                                <img src="./resources/img/plantainterna/despacho/tecnicootasignada.png"
+                                                <img src="{{incidencia.urlFoto}}" ng-click="showImage(incidencia.idIncidencia)"
                                                     alt="Foto" width="35" height="35" class="imgFoto">
-                                                    <div class="badge badge-dot badge-dot-sm" style="top: 5px; right: 5px;"></div>
                                             </div>
-                                            <div class="col-7 content-text">
+                                            <div class="col-8 content-text">
                                                 <span class="text-title" title="{{incidencia.usuarioReporta}}"><strong
                                                         ng-bind="incidencia.usuarioReporta"></strong></span>
                                                 <p class="text-title" ng-bind="incidencia.numeroEmpleado"></p>
                                             </div>
-                                            <div class="col-3 incidencia-options">
+                                            <div class="col-2 incidencia-options">
                                                 <div class="icon-content"
                                                     ng-click="agregarIncidenciaList(incidencia.idIncidencia)"
                                                     style="right: 2.5em; border-color: #ccc;">
-                                                    <i class="fas fa-plus" title="Agregar" id="icon-{{incidencia.idIncidencia}}"
+                                                    <i class="fas fa-check" title="Agregado"
+                                                        ng-if="incidencia.isSelected"
+                                                        id="icon-{{incidencia.idIncidencia}}"
+                                                        style="color: #51b37d; font-size: 0.8em;"></i>
+                                                    <i class="fas fa-plus" title="Agregar"
+                                                        ng-if="!incidencia.isSelected"
+                                                        id="icon-{{incidencia.idIncidencia}}"
                                                         style="color: #000; font-size: 0.8em;"></i>
                                                 </div>
                                                 <div class="icon-content" style="border-color: #ccc;"
@@ -266,6 +271,7 @@
             </div>
         </div>
         <jsp:include page="modals/modalCluster.jsp"></jsp:include>
+        <jsp:include page="modals/modalFoto.jsp"></jsp:include>
         <jsp:include page="filtros.jsp"></jsp:include>
     </body>
 
