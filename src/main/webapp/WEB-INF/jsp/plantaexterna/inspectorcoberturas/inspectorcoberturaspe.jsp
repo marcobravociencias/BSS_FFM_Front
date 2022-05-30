@@ -50,7 +50,7 @@
 
     <body id="idBody" ng-controller="inspectorCoberturaController" style="display: none;">
         <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
-        <div class="row" ng-show="!isPermisoConsultaIncidencias" style="padding: 1em  0;">
+        <div class="container container-fluid contenedor-inspectorCobertura" ng-show="!isPermisoConsultaIncidencias">
             <div class="text-accion-nopermiso">
                 <i class="icon-not-permiso fas fa-user-lock"></i>
                 <b class="text-not-permiso">No cuentas con el permiso de consulta.</b>
@@ -212,7 +212,7 @@
                                                 <p class="text-title" ng-bind="incidencia.numeroEmpleado"></p>
                                             </div>
                                             <div class="col-2 incidencia-options">
-                                                <div class="icon-content"
+                                                <div class="icon-content" ng-if="isPermisoLigarIncidencia"
                                                     ng-click="agregarIncidenciaList(incidencia.idIncidencia)"
                                                     style="right: 2.5em; border-color: #ccc;">
                                                     <i class="fas fa-check" title="Agregado"

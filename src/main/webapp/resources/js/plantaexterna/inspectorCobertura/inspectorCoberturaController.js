@@ -2,7 +2,6 @@ var app = angular.module('inspectorCoberturaApp', []);
 app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCoberturaService', 'genericService', function ($scope, $q, inspectorCoberturaService, genericService) {
     var regexUrl = /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/;
 
-    let coberturaTable;
     let markers = [];
     $scope.filtrosInspector = {};
     $scope.incidenciasCobertura = [];
@@ -63,17 +62,6 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
 
         document.getElementById('jstree-proton-3').addEventListener('click', function () {
             $("#content_mapa").click();
-        });
-
-        coberturaTable = $('#tableCobertura').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": true,
-            "ordering": false,
-            "pageLength": 10,
-            "info": true,
-            "autoWidth": true,
-            "language": idioma_espanol_not_font,
         });
 
         $("#modalCluster").on("hidden.bs.modal", function () {
@@ -275,13 +263,14 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
 
             if (resultConf != undefined && resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.permisos && resultConf.MODULO_ACCIONES_USUARIO.permisos != "") {
                 $scope.permisosUsuario = resultConf.MODULO_ACCIONES_USUARIO.permisos;
-                console.log($scope.permisosUsuario);
+                $scope.isPermisoConsultaIncidencias = ($scope.permisosUsuario.filter(e => { return e.clave == "accionConsultarIncidenciasCobertura" })[0] != undefined);
+                $scope.isPermisoLigarIncidencia = ($scope.permisosUsuario.filter(e => { return e.clave == "accionLigarIncidenciaInspectorCobertura" })[0] != undefined);
             }
-            $scope.isPermisoConsultaIncidencias = true//($scope.permisosUsuario.filter(e => { return e.clave == "accionConsultarIncidenciasCobertura" })[0] != undefined);
-            $scope.isPermisoLigarIncidencia = true//($scope.permisosUsuario.filter(e => { return e.clave == "accionLigarIncidenciaInspectorCobertura" })[0] != undefined);
+           
 
             GenericMapa.prototype.callPrototypeMapa(results[0].data.result);
             $scope.initMapaInspectorCobertura();
+            $("#idBody").removeAttr("style");
 
             if (results[1].data !== undefined) {
                 if (results[1].data.respuesta) {
@@ -420,11 +409,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                     fechaInicio: $scope.getFechaFormato($("#filtro_fecha_inicio_inspectorCobertura").val()),
                     fechaFin: $scope.getFechaFormato($("#filtro_fecha_fin_inspectorCobertura").val())
                 }
-                // let params = {
-                //     "idsFallas": [259, 270, 272],
-                //     "fechaInicio": "01-05-2022",
-                //     "fechaFin": "11-05-2022"
-                // }
+               
                 console.log(params);
                 swal({ text: 'Espera un momento...', allowOutsideClick: false });
                 swal.showLoading();
@@ -439,47 +424,6 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                                     $.each($scope.incidenciasCobertura, function (i, elemento) {
                                         elemento.urlFoto = regexUrl.test(elemento.urlFoto) ? elemento.urlFoto : url;
                                     });
-
-                                    /*let arrayRow = [];
-                                    if (coberturaTable) {
-                                        coberturaTable.destroy();
-                                    }
-                                    
-                                    $.each($scope.incidenciasCobertura, function (i, elemento) {
-                                        let row = [];
-                                        row[0] = elemento.idIncidencia && elemento.idIncidencia !== '' ? elemento.idIncidencia : 'Sin informaci&oacute;n';
-                                        row[1] = elemento.fechaRegistro && elemento.fechaRegistro !== '' ? elemento.fechaRegistro : 'Sin informaci&oacute;n';
-                                        row[2] = elemento.usuarioReporta && elemento.usuarioReporta !== '' ? elemento.usuarioReporta : 'Sin informaci&oacute;n';
-                                        row[3] = elemento.desSupTipoIncidencia && elemento.desSupTipoIncidencia !== '' ? elemento.desSupTipoIncidencia : 'Sin informaci&oacute;n';
-                                        row[4] = '<div class="text-center">' +
-                                            '   <span title="Ubicaci&oacute;n" style="border: 1px solid ' + elemento.colorEstatus + ' !important; background-color: #ffff; cursor: pointer;" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnTables" onclick="pintarUbicacion(' + i + ')">' +
-                                            '       <i class="fa fa-globe-americas" style="color: ' + elemento.colorEstatus + ';"></i>' +
-                                            '   </span> ' +
-                                            '</div>';
-                                        arrayRow.push(row);
-                                    })
-                                    coberturaTable = $('#tableCobertura').DataTable({
-                                        "paging": true,
-                                        "lengthChange": false,
-                                        "searching": true,
-                                        "ordering": false,
-                                        "pageLength": 10,
-                                        "info": false,
-                                        "rowId": "idIncidencia",
-                                        "data": arrayRow,
-                                        "language": idioma_espanol_not_font,
-                                        'fnCreatedRow': function (nRow, aData, iDataIndex) {
-                                            $(nRow).attr('id', 'incidencia_' + aData[0]); // or whatever you choose to set as the id
-                                        },
-                                    });
-                                    
-                                    document.getElementById('tableCobertura_paginate').addEventListener('click', function () {
-                                        $('#tableCobertura tbody tr').css('background', '');
-                                        $.each(markers, function (i, elemento) {
-                                            $('#incidencia_' + elemento.id_marker).css('background', '#d3d3d3');
-                                        });
-                                        $scope.$apply();
-                                    })*/
                                     swal.close();
                                 } else {
                                     mostrarMensajeInformativo("No se encontraron Incidencias");
@@ -531,6 +475,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                 if (i == markers.length - 1) {
                     map.setCenter(elemento.position);
                     map.setZoom(15);
+                    $scope.deleteMarker(idIncidencia);
                     return false;
                 }
             });
@@ -648,7 +593,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
             .map(e => parseInt(e.id))
 
         if (clustersparam.length == 0) {
-            mostrarMensajeWarningValidacion('Selecciona cluster valido');
+            mostrarMensajeWarningValidacion('Selecciona cluster v&aacute;lido');
             return false;
         }
 
@@ -666,10 +611,11 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
         }).then(function (response) {
             if (response.length) {
                 $("#content_mapa").click();
+                $("#modalCluster").modal('hide');
+                $('#jstree-proton-3').jstree("deselect_all");
+                $('#jstree-proton-3').jstree("close_all");
                 $scope.consultarCoberturas();
-                $('#jstree-proton-3').jstree("destroy");
                 $scope.$apply();
-                $scope.loadTree();
                 mostrarMensajeExitoAlert('Operaci&oacute;n exitosa');
             } else {
                 mostrarMensajeWarningValidacion('El comentario es obligatorio para ligar incidencias');
@@ -773,7 +719,6 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
     angular.element(document).ready(function () {
         $scope.initInspectorCobertura();
         $scope.consultarCatalogosInspectorCobertura();
-        $("#idBody").removeAttr("style");
         $("#moduloInspectorCoberturasPE").addClass('active');
     });
 
