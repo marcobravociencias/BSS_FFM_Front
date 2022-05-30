@@ -6,6 +6,8 @@ public interface DisponibilidadService {
     ServiceResponseResult insertarDisponibilidad(String params);
 
     ServiceResponseResult consultarDisponibilidad(String params);
+    
+    ServiceResponseResult consultarDisponibilidadToken(String params, String token, String direccionAmbiente);
 
     ServiceResponseResult actualizarDisponibilidad(String params);
 }

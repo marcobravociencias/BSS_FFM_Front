@@ -84,4 +84,20 @@ public class ImplDisponibilidadService implements DisponibilidadService {
         logger.info("RESULT" + gson.toJson(response));
         return response;
     }
+
+	@Override
+	public ServiceResponseResult consultarDisponibilidadToken(String params, String token, String direccionAmbiente) {
+		logger.info("ImplDisponibilidadService.class [metodo = consultarDisponibilidadToken() ]\n" + params);
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        logger.info("consultarDisponibilidadToken ##+" + token);
+        String urlRequest = direccionAmbiente.concat(constDisponbilidadPI.getFfmDisponibilidad() + "?subtipoIntervencion=" + jsonObject.get("subtipoIntervencion").getAsString() + "&geografia2=" + jsonObject.get("geografia2").getAsString());
+        logger.info("***URL: "+ urlRequest);
+        Map<String, String> paramsRequestGet = new HashMap<String, String>();
+        paramsRequestGet.put("subtipoIntervencion", jsonObject.get("subtipoIntervencion").getAsString());
+        paramsRequestGet.put("geografia2", jsonObject.get("geografia2").getAsString());
+        ServiceResponseResult response = consumeRest.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
+                ServiceResponseResult.class, token);
+        logger.info("RESULT" + gson.toJson(response));
+        return response;
+	}
 }

@@ -33,7 +33,7 @@
 
 .container-agendar .input-agendar {
     font-size: 0.9em !important;
-    height: ;
+    
 }
 
 .container-info .detail-title {
@@ -154,4 +154,28 @@
 
 #calendar_disponibilidad.fc td {
    font-size: 0.9em !important;
+}
+
+.text-confirmaot {
+  text-align: center;
+}
+.text-desconfirmaot {
+    text-align: center;
+  }
+.ptext-confirma,
+.ptext-desconfirmaconfirma {
+  margin-bottom: 0;
+  display: contents;
+}
+
+.ptext-desconfirma {
+  font-weight: bold;
+  color: var(--estandar-color);
+  display: contents;
+}
+
+.ptext-confirma {
+    font-weight: bold;
+    color: var(--estandar-color);
+    display: contents;
 }

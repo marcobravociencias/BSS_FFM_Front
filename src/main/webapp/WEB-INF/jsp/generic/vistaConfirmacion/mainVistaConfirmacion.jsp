@@ -113,7 +113,7 @@
                             </tr>
                         </table>
                         <div class="form-group mt-3">
-                            <button id="btnReagendar" type="button" class="btn btn-primary btnTotal">
+                            <button id="btnReagendar" ng-click="mostrarModalConfirmacion()" type="button" class="btn btn-primary btnTotal">
                                 Desconfirmar
                             </button>
                         </div>
@@ -155,6 +155,8 @@
                 </div>
             </div>
         </div>
+
+        <jsp:include page="./modal/modalConfirmar.jsp"></jsp:include>
     </body>
     <!-- Scripts libraries -->
     <script src="${pageContext.request.contextPath}/resources/libraries/angularjs/js/angular.min.js"></script>

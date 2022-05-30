@@ -18,6 +18,7 @@ public interface DespachoPIService {
 
 	public ServiceResponseResult consultarCotizacionOTSe(String params);
 	public ServiceResponseResult consultarCatalogoEstatusOrden();
+	public ServiceResponseResult consultarCatalogoEstatusOrdenToken(String token, String direccionAmbiente);
 	public ServiceResponseResult consultarCatalogoGeografiaGeneral();
 	public ServiceResponseResult consultarCatalogoGeografiaUsuario();	
 	public ServiceResponseResult consultarCatalogoTurnosPI();
@@ -27,6 +28,7 @@ public interface DespachoPIService {
 	public ServiceResponseResult consultarOperariosAsignadosDespacho();
 	public ServiceResponseResult consultarlocalizacionOtPIDespacho(String params); 
 	public ServiceResponseResult consultarDetalleOTPI(String params);
+	public ServiceResponseResult consultarDetalleOTPIToken(String params, String token, String direccionAmbiente);
 	public ServiceResponseResult consultarComentariosOTPI(String params);
 	public ServiceResponseResult consultarHistoricoOTPI(String params);
 
@@ -47,6 +49,7 @@ public interface DespachoPIService {
 	public ServiceResponseResult setComentariosIntegrador(String params);
 	public ServiceResponseResult cambiarEstatusTecnicoPI(String params);
 	public ServiceResponseResult confirmaDesconfirmaOtDespacho(String params);
+	public ServiceResponseResult confirmaDesconfirmaOtDespachoToken(String params, String token, String direccionAmbiente);
 	
 	public ServiceResponseResult consultaDetalleOtPe(String params);
 	

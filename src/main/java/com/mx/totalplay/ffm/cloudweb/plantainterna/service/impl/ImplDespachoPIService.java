@@ -1181,4 +1181,69 @@ public class ImplDespachoPIService implements DespachoPIService {
 		logger.info("### RESULT actualizarDireccionOt(): \n" + gson.toJson(response));
 		return response;
 	}
+
+	@Override
+	public ServiceResponseResult consultarDetalleOTPIToken(String params, String token, String direccionAmbiente) {
+		logger.info("ImplDespachoPIService.class [metodo = consultarDetalleOTPIToken() ]\n" + params);
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        String idotdetalle = jsonObject.get("idOt").getAsString();
+        logger.info("consultarDetalleOTPIToken ##+" + token);
+        String urlRequest = direccionAmbiente.concat(constDespachoPI.getConsultaDetalleOrdenPI());
+        logger.info("#########3--" + urlRequest);
+        logger.info("#######idotdetalle------" + idotdetalle);
+        Map<String, String> paramsRequestGet = new HashMap<String, String>();
+        paramsRequestGet.put("idotasign", idotdetalle);
+
+        ServiceResponseResult response = restCaller.callGetBearerTokenRequest(
+                paramsRequestGet,
+                urlRequest,
+                ServiceResponseResult.class,
+                token);
+        logger.info("RESULT" + gson.toJson(response));
+        return response;
+	}
+
+	@Override
+	public ServiceResponseResult consultarCatalogoEstatusOrdenToken(String token, String direccionAmbiente) {
+		logger.info("ImplDespachoPIService.class [metodo = consultarCatalogoEstatusOrdenToken() ]\n");
+        logger.info("consultarCatalogoEstatusOrdenToken ##+" + token);
+        String urlRequest = direccionAmbiente.concat(constDespachoPI.getConsultaCatalogoEstatusOrdenDespacho());
+        logger.info("consultarCatalogoEstatusOrdenToken" + urlRequest);
+        Map<String, String> paramsRequestGet = new HashMap<String, String>();
+        ServiceResponseResult response = restCaller.callGetBearerTokenRequest(
+                paramsRequestGet,
+                urlRequest,
+                ServiceResponseResult.class,
+                token);
+        logger.info("RESULT" + gson.toJson(response));
+        return response;
+	}
+
+	@Override
+	public ServiceResponseResult confirmaDesconfirmaOtDespachoToken(String params, String token, String direccionAmbiente) {
+		logger.info("ImplDespachoPIService.class [metodo = confirmaDesconfirmaOtDespachoToken() ]\n" + params);
+        logger.info(" constDespachoPI.confirmaDesconfirmaOtDespachoToken()" + constDespachoPI.getConfirmarDesconfirmarOtDespacho());
+      
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        String idOrden = jsonObject.get("idOrden").getAsString();
+        
+        logger.info("confirmaDesconfirmaOtDespachoToken ##+" + token);
+
+        String urlRequest = direccionAmbiente.concat(constDespachoPI.getConfirmarDesconfirmarOtDespacho()).concat(idOrden);
+
+        Map<String, String> paramsRequestGet = new HashMap<String, String>();
+        paramsRequestGet.put("idOrden", idOrden);
+        paramsRequestGet.put("idOrigen", idOrden);
+        paramsRequestGet.put("esConfirmada", idOrden);
+        paramsRequestGet.put("comentarios", idOrden);
+
+        ServiceResponseResult response = restCaller.callPatchBearerTokenRequest(
+                params,
+                urlRequest,
+                ServiceResponseResult.class,
+                token);
+
+        logger.info("RESULT" + gson.toJson(response));
+        return response;
+	}
 }

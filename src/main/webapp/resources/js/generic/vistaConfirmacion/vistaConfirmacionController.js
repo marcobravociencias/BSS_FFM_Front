@@ -7,6 +7,7 @@ app.controller('vistaConfirmacionController', ['$scope', '$q', 'vistaConfirmacio
     $scope.listadoMotivo = [];
     let arregloDisponibilidad = [];
     $scope.isSelected = false;
+    $scope.objConfirmaDesc = {};
 
     $scope.inicialCalendario = function () {
         calendar_disponibilidad = document.getElementById('calendar_disponibilidad');
@@ -81,7 +82,7 @@ app.controller('vistaConfirmacionController', ['$scope', '$q', 'vistaConfirmacio
     $scope.buscarOS = function () {
         var url = new URL(window.location.href);
         var ot = url.searchParams.get("otconfirma");
-
+        $scope.objConfirmaDesc.idOtConfirmaDesc = ot;
         let params = {
             idOt: ot
         }
@@ -116,8 +117,6 @@ app.controller('vistaConfirmacionController', ['$scope', '$q', 'vistaConfirmacio
         })
     }
 
-    $scope.buscarOS();
-
     $scope.buscarCatalogoMotivo = function () {
         vistaConfirmacionService.consultarCatalogoEstatus().then(function success(response) {
             if (response.data !== undefined) {
@@ -136,7 +135,21 @@ app.controller('vistaConfirmacionController', ['$scope', '$q', 'vistaConfirmacio
         })
     }
 
-    $scope.buscarCatalogoMotivo();
+    $scope.obtenerToken = function() {
+        vistaConfirmacionService.obtenerToken().then(function success(response) {
+            if (response.data !== undefined) {
+                $scope.buscarOS();
+                $scope.buscarCatalogoMotivo();
+            } else {
+                toastr.error('Ha ocurrido un error en la consulta');
+            }
+        })
+    }
+    $scope.obtenerToken();
+
+    $scope.mostrarModalConfirmacion = function() {
+        $("#modalConfirmaDesconfirma").modal('show');
+    }
 
     $scope.consultaDisponibilidad = function () {
         let params = {
@@ -158,6 +171,41 @@ app.controller('vistaConfirmacionController', ['$scope', '$q', 'vistaConfirmacio
                 toastr.error('Ha ocurrido un error en la consulta');
             }
         })
+    }
+
+    $scope.confirmarDesconfirmarOt = function () {
+        if (!$scope.objConfirmaDesc.comentarios) {
+            toastr.info("Captura comentarios");
+            return false;
+        }
+
+
+        $scope.objConfirmaDesc.procesando = true
+        swal({ text: 'Cambiando estatus de la OT ...', allowOutsideClick: false });
+        swal.showLoading();
+        let params = {
+            "idOrden": $scope.objConfirmaDesc.idOtConfirmaDesc,
+            "idOrigen": 1,
+            "esConfirmada": $scope.objConfirmaDesc.isConfirmadoDesconfirmado ? 1 : 0,
+            "comentarios": $scope.objConfirmaDesc.comentarios
+        }
+        console.log("params", params)
+        vistaConfirmacionService.confirmaDesconfirmaOtDespacho(params).then(function success(response) {
+            $scope.banderaRegresarCheckbox = true;
+            if (response.data !== undefined) {
+                if (response.data.respuesta) {
+                    $("#modalConfirmaDesconfirma").modal('hide')
+                    console.log(response);
+                    swal.close()
+                    toastr.success('Cambio de estatus correcto');
+                } else {
+                    toastr.info("No se pudo cambiar el estatus de la ot");
+                }
+            } else {
+                toastr.info("No se pudo cambiar el estatus de la ot");
+            }
+            $scope.objConfirmaDesc.procesando = false
+        }).catch(err => handleError(err))
     }
 
     $scope.reagendar = function(){
