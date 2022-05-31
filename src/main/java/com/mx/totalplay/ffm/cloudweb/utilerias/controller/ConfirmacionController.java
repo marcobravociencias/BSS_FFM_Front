@@ -69,7 +69,7 @@ public class ConfirmacionController {
             throw new BadCredentialsException("1");
         }
         
-        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
     }
 	
 	@PostMapping("consultarDetalleDespachoOT")

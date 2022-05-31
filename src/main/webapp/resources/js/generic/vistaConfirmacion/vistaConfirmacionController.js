@@ -122,7 +122,8 @@ app.controller('vistaConfirmacionController', ['$scope', '$q', 'vistaConfirmacio
             if (response.data !== undefined) {
                 if (response.data.respuesta) {
                     if (response.data.result) {
-                        $scope.listadoMotivo = response.data.result;
+                        //$scope.listadoMotivo = response.data.result;
+                        $scope.listadoMotivo = response.data.result.filter(e => { return e.idPadre === 201 })
                     } else {
                         toastr.warning('No se encontró ningún valor en catalogo motivo');
                     }
