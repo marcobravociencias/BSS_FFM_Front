@@ -513,7 +513,7 @@ a.ui-corner-all {
     position: absolute;
     right: 0;
     width: fit-content;
-    color: #faa22a;
+    color: #ff6363;
     top: 50%;
     display: none !important;
 }
@@ -522,11 +522,18 @@ a.ui-corner-all {
     position: absolute;
     right: 0%;
     width: fit-content;
-    color: #faa22a;
+    color: #ff6363;
     top: 50%;
     display: none !important;
 }
-
+.icon-validatecliente-form-rigth {
+    position: absolute;
+    right: 1.2em;
+    width: fit-content;
+    color: #ff6363;
+    top: 55%;
+    display: none !important;
+}
 
 .icon-validate-form-rigth-aplica {
     position: absolute;
@@ -627,7 +634,7 @@ a.ui-corner-all {
 }
 
 .icon-faltan-datos {
-    color: #faa22a;
+    color: #ff6363;
     font-size: 1.3em !important;
     font-weight: bold !important;
     margin-right: .5em;

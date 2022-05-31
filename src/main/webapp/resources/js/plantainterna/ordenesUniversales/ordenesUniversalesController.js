@@ -718,12 +718,12 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
 
         if ($scope.infoBasica.canalVenta == undefined) {
             isErrorValidate = true
-            textError += '<li>Selecciona canal de venta</li>';
+            textError += '<br/>*Canal de venta';
         }
 
         if ($scope.infoBasica.paquete == undefined) {
             isErrorValidate = true
-            textError += '<li>Selecciona un paquete</li>';
+            textError += '<br/>*Paquete';
         }
 
         let elementonivel = '-1';
@@ -739,42 +739,43 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
         }
         if (elementonivel === '-1') {
             isErrorValidate = true
-            textError += '<li>Selecciona un elemento v&aacute;lido de la geograf&iacute;a</li>';
+            textError += '<br/>*Geograf&iacute;a inv&aacute;lida</li>';
         }
 
         if (!$scope.infoBasica.subTipoOrden) {
             isErrorValidate = true;
-            textError += '<li>Selecciona Subtipo de orden</li>';
+            textError += '<br/>*Subtipo de orden';
         }
 
         if ($scope.infoBasica.horaEstimada == undefined) {
             isErrorValidate = true
-            textError += '<li>Selecciona una hora estimada</li>';
+            textError += '<br/>*Hora estimada';
         }
 
         if ($scope.errorSeleccionIntGeografia) {
             isErrorValidate = true
-            textError += '<li>Selecciona un turno </li>';
-            textError += '<li>Selecciona d&iacute;a agendamiento </li>';
+            textError += '<br/>*Turno ';
+            textError += '<br/>*D&iacute;a agendamiento ';
         } else {
             if ($scope.verAplicaDisponbilidad) {
                 if ($scope.infoBasica.turno == undefined || !$scope.infoBasica.turno) {
                     isErrorValidate = true
-                    textError += '<li>Selecciona un turno del calendario</li>';
+                    textError += '<br/>*Turno del calendario';
                 }
             } else {
                 if ($scope.infoBasica.idTurnoSeleccionAplica == undefined || !$scope.infoBasica.idTurnoSeleccionAplica) {
                     isErrorValidate = true
-                    textError += '<li>Selecciona un turno </li>';
+                    textError += '<br/>*Turno ';
                 }
                 if ($scope.infoBasica.fechaTurnoTextAplica == undefined || !$scope.infoBasica.fechaTurnoTextAplica) {
                     isErrorValidate = true
-                    textError += '<li>Selecciona un d&acute;a de agendamiento</li>';
+                    textError += '<br/>*D&acute;a de agendamiento';
                 }
             }
         }
         if (isErrorValidate) {
-            mostrarMensajeWarningValidacion(textError)
+            textError = "VALIDA LOS SIGUIENTES CAMPOS: " + textError;
+            mostrarMensajeInformativo(textError)
         }
         return isErrorValidate;
     }
@@ -787,168 +788,166 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
 
         if (!$scope.informacionCliente.nombre) {
             isErrorValidate = true
-            textError += '<li>Ingresa el Nombre del Cliente</li>';
+            textError += '<br/>*Nombre';
         } else if (regExpresionEspecialCharacters.test($scope.informacionCliente.nombre)) {
             isErrorValidate = true
-            textError += '<li>Nombre Contacto no v&aacute;lido</li>';
+            textError += '<br/>*Nombre no v&aacute;lido';
         }
 
         if (!$scope.informacionCliente.apaterno) {
             isErrorValidate = true
-            textError += '<li>Ingresa el Apellido Paterno del Cliente</li>';
+            textError += '<br/>*Apellido paterno';
         } else if (regExpresionEspecialCharacters.test($scope.informacionCliente.apaterno)) {
             isErrorValidate = true
-            textError += '<li>Nombre contacto no v&aacute;lido</li>';
+            textError += '<br/>*Apellido paterno no v&aacute;lido';
         }
 
         if (!$scope.informacionCliente.amaterno) {
             isErrorValidate = true
-            textError += '<li>Ingresa el Apellido Materno del Cliente</li>';
+            textError += '<br/>*Apellido materno';
         } else if (regExpresionEspecialCharacters.test($scope.informacionCliente.amaterno)) {
             isErrorValidate = apaterno
-            textError += '<li>Nombre contacto no v&aacute;lido</li>';
+            textError += '<br/>*Apellido materno no v&aacute;lido';
         }
 
         if (!$scope.informacionCliente.calle) {
             isErrorValidate = true
-            textError += '<li>Ingresa La Calle</li>';
+            textError += '<br/>*Calle';
         } else if (regExpresionEspecialCharacters.test($scope.informacionCliente.calle)) {
             isErrorValidate = true
-            textError += '<li>Calle no v&aacute;lido</li>';
+            textError += '<br/>*Calle no v&aacute;lida';
         }
 
         if (!$scope.informacionCliente.numeroExt) {
             isErrorValidate = true
-            textError += '<li>Ingresa el N&uacute;mero Exterior</li>';
+            textError += '<br/>*N&uacute;mero exterior';
         } else if (regExpresionEspecialCharacters.test($scope.informacionCliente.numeroExt)) {
             isErrorValidate = true
-            textError += '<li>N&uacute;mero Exterior no v&aacute;lido</li>';
-        }
-
-        if (!$scope.informacionCliente.ciudad) {
-            isErrorValidate = true
-            textError += '<li>Ingresa la Ciudad</li>';
-        } else if (regExpresionEspecialCharacters.test($scope.informacionCliente.ciudad)) {
-            isErrorValidate = true
-            textError += '<li>Ciudad no v&aacute;lido';
-        }
-
-        if (!$scope.informacionCliente.municipio) {
-            isErrorValidate = true
-            textError += '<li>Ingresa el Municipio</li>';
-        } else if (regExpresionEspecialCharacters.test($scope.informacionCliente.municipio)) {
-            isErrorValidate = true
-            textError += '<li>Municipio no v&aacute;lido</li>';
+            textError += '<br/>*N&uacute;mero exterior no v&aacute;lido';
         }
 
         if (!$scope.informacionCliente.estado) {
             isErrorValidate = true
-            textError += '<li>Ingresa el Estado</li>';
+            textError += '<br/>*Estado';
         } else if (regExpresionEspecialCharacters.test($scope.informacionCliente.estado)) {
             isErrorValidate = true
-            textError += '<li>Estado no v&aacute;lido</li>';
+            textError += '<br/>*Estado no v&aacute;lido';
+        }
+
+        if (!$scope.informacionCliente.ciudad) {
+            isErrorValidate = true
+            textError += '<br/>*Ciudad';
+        } else if (regExpresionEspecialCharacters.test($scope.informacionCliente.ciudad)) {
+            isErrorValidate = true
+            textError += '<br/>*Ciudad no v&aacute;lida';
+        }
+
+        if (!$scope.informacionCliente.municipio) {
+            isErrorValidate = true
+            textError += '<br/>*Municipio';
+        } else if (regExpresionEspecialCharacters.test($scope.informacionCliente.municipio)) {
+            isErrorValidate = true
+            textError += '<br/>*Municipio no v&aacute;lido';
         }
 
         if (!$scope.informacionCliente.colonia) {
             isErrorValidate = true
-            textError += '<li>Ingresa la colonia</li>';
+            textError += '<br/>*Colonia';
         } else if (regExpresionEspecialCharacters.test($scope.informacionCliente.colonia)) {
             isErrorValidate = true
-            textError += '<li>Colonia no v&aacute;lida</li>';
+            textError += '<br/>*Colonia no v&aacute;lida';
         }
 
         if (!$scope.informacionCliente.entreCalles) {
             isErrorValidate = true
-            textError += '<li>Ingresa la Referencia Entre Calles </li>';
+            textError += '<br/>*Entre calles ';
         } else if (regExpresionEspecialCharacters.test($scope.informacionCliente.entreCalles)) {
             isErrorValidate = true
-            textError += '<li>Refeferencia Entre Calles no v&aacute;lida</li>';
+            textError += '<br/>*Entre calles no v&aacute;lida';
         }
 
         if (!$scope.informacionCliente.referencias) {
             isErrorValidate = true
-            textError += '<li>Ingresa las Referencias</li>';
+            textError += '<br/>*Referencias';
         } else if (regExpresionEspecialCharacters.test($scope.informacionCliente.referencias)) {
             isErrorValidate = true
-            textError += '<li>Referencias no v&aacute;lidas</li>';
+            textError += '<br/>*Referencias no v&aacute;lidas';
         }
 
         if (!$scope.informacionCliente.codigoPostal) {
             isErrorValidate = true
-            textError += '<li>Ingresa el C&oacute;digo Postal</li>';
+            textError += '<br/>*C&oacute;digo postal';
         } else if (regExpresionEspecialCharacters.test($scope.informacionCliente.codigoPostal)) {
             isErrorValidate = true
-            textError += '<li>C&oacutedigo Postal no v&aacute;lido</li>';
+            textError += '<br/>*C&oacutedigo postal no v&aacute;lido';
         }
 
         if (!$scope.informacionCliente.telefono) {
             isErrorValidate = true
-            textError += '<li>Ingresa el n&uacute;mero de Tel&eacute;fono</li>';
+            textError += '<br/>*N&uacute;mero de tel&eacute;fono';
         } else if (regExpresionEspecialCharacters.test($scope.informacionCliente.telefono)) {
             isErrorValidate = true
-            textError += '<li>N&uacute;mero Telef&oacute;nico no v&aacute;lido</li>';
+            textError += '<br/>*N&uacute;mero telef&oacute;nico no v&aacute;lido';
         }
 
         if (!$scope.informacionCliente.celular) {
             isErrorValidate = true
-            textError += '<li>Ingresa un N&uacute;mero de Celular</li>';
+            textError += '<br/>*N&uacute;mero de celular';
         } else if (regExpresionEspecialCharacters.test($scope.informacionCliente.celular)) {
             isErrorValidate = true
-            textError += '<li>N&uacute;mero de Celular no v&aacute;lido</li>';
+            textError += '<br/>*N&uacute;mero de celular no v&aacute;lido';
         }
 
         if (!$scope.informacionCliente.razonsocial) {
             isErrorValidate = true
-            textError += '<li>Ingresa la Raz&oacute;n Social</li>';
+            textError += '<br/>*Raz&oacute;n social';
         } else if (regExpresionEspecialCharacters.test($scope.informacionCliente.razonsocial)) {
             isErrorValidate = true
-            textError += '<li>Raz&oacute;n Social no v&aacute;lida</li>';
+            textError += '<br/>*Raz&oacute;n social no v&aacute;lida';
         }
 
         if (!$scope.informacionCliente.correo) {
             isErrorValidate = true
-            textError += '<li>Ingresa un Correo Electr&oacute;nico v&aacute;lido</li>';
+            textError += '<br/>*Correo electr&oacute;nico v&aacute;lido';
         } else if (!$scope.emailFormat.test($scope.informacionCliente.correo)) {
             isErrorValidate = true
-            textError += '<li>Correo Electr&oacute;nico no v&aacute;lido</li>';
+            textError += '<br/>*Correo electr&oacute;nico no v&aacute;lido';
         }
 
         if (!$scope.informacionCliente.nombreContacto) {
             isErrorValidate = true
-            textError += '<li>Ingresa el Nombre del Contacto</li>';
+            textError += '<br/>*Nombre del contacto';
         } else if (regExpresionEspecialCharacters.test($scope.informacionCliente.nombreContacto)) {
             isErrorValidate = true
-            textError += '<li>Nombre de Contacto no v&aacute;lido</li>';
+            textError += '<br/>*Nombre de contacto no v&aacute;lido';
         }
 
         if (!$scope.informacionCliente.telefonoContacto) {
             isErrorValidate = true
-            textError += '<li>Ingresa el N&uacute;mero de Tel&eacute;fono del Contacto</li>';
+            textError += '<br/>*N&uacute;mero de tel&eacute;fono contacto';
         } else if (regExpresionEspecialCharacters.test($scope.informacionCliente.telefonoContacto)) {
             isErrorValidate = true
-            textError += '<li>N&uacute;mero Telef&oacute;nico del Contacto no v&aacute;lido</li>';
+            textError += '<br/>*N&uacute;mero t&eacute;lefono contacto no v&aacute;lido';
         }
 
         if (isErrorValidate) {
-            mostrarMensajeWarningValidacion(textError)
+            textError = "VALIDA LOS SIGUIENTES CAMPOS: " + textError;
+            mostrarMensajeInformativo(textError)
         }
+
+        
         return isErrorValidate;
     }
 
-    $(".inputCliente").keyup(function () {
-        var input = $(this).attr("id");
-        if ($(this).val() === "" || $(this).val() === undefined) {
-            $("#" + input).addClass("invalid-inputOrdenesUniversales");
-        } else {
-            $("#" + input).removeClass("invalid-inputOrdenesUniversales");
-        }
-    });
+
 
     $scope.validarTercerPaso = function () {
         let isValidateLatitudLongitud = $scope.validarLatitudLongitudMap();
         if (isValidateLatitudLongitud) {
-            mostrarMensajeWarningValidacion('<li>Selecciona la ubicaci&oacute;n en el mapa</li>')
+            mostrarMensajeInformativo('VALIDA LOS SIGUIENTES CAMPOS:  <br/>*Ubicaci&oacute;n en el mapa')
         }
+
+
         return isValidateLatitudLongitud;
     }
 

@@ -638,7 +638,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
 
         let dataDisp={
             geografia2: 2047,
-            subtipoIntervencion: 310
+            subtipoIntervencion: 102
         }
         let paramsDetalleSitio={
             cuenta:'0290005899'
