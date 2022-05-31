@@ -31,7 +31,7 @@
 					<div class="col-md-12">
 						<div class="container-fluid vehiculo-content">
 							<div class="container-text-title-detalle-pe">
-								<span class="text-tile-vehiculo">ID Orden</span>
+								<span class="text-tile-vehiculo" title="ID Orden">ID Orden</span>
 							</div>
 							<div class="container-text-content-detalle">
 								<span class="text-content-vehiculo" title="{{falla.idOrden}}" 
@@ -44,7 +44,7 @@
 					<div class="col-md-12">
 						<div class="container-fluid vehiculo-content">
 							<div class="container-text-title-detalle-pe">
-								<span class="text-tile-vehiculo">Folio sistema</span>
+								<span class="text-tile-vehiculo" title="Folio sistema">Folio sistema</span>
 							</div>
 							<div class="container-text-content-detalle">
 								<span class="text-content-vehiculo" title="{{falla.folioSistema}}" 
@@ -57,7 +57,7 @@
 					<div class="col-md-12">
 						<div class="container-fluid vehiculo-content">
 							<div class="container-text-title-detalle-pe">
-								<span class="text-tile-vehiculo">Clave cliente</span>
+								<span class="text-tile-vehiculo" title="Clave cliente">Clave cliente</span>
 							</div>
 							<div class="container-text-content-detalle">
 								<span class="text-content-vehiculo" title="{{falla.claveCliente}}" 
@@ -70,7 +70,7 @@
 					<div class="col-md-12">
 						<div class="container-fluid vehiculo-content">
 							<div class="container-text-title-detalle-pe">
-								<span class="text-tile-vehiculo">Empleado que reporta</span>
+								<span class="text-tile-vehiculo" title="Empleado que reporta">Empleado que reporta</span>
 							</div>
 							<div class="container-text-content-detalle">
 								<span class="text-content-vehiculo" title="{{falla.nombreEmpleadoReporta}}" 
@@ -85,7 +85,7 @@
 					<div class="col-md-12">
 						<div class="container-fluid vehiculo-content">
 							<div class="container-text-title-detalle-pe">
-								<span class="text-tile-vehiculo">Unidad de negocio</span>
+								<span class="text-tile-vehiculo" title="Unidad de negocio">Unidad de negocio</span>
 							</div>
 							<div class="container-text-content-detalle">
 								<span class="text-content-vehiculo" title="{{falla.unidadNegocio}}" 
@@ -98,7 +98,7 @@
 					<div class="col-md-12">
 						<div class="container-fluid vehiculo-content">
 							<div class="container-text-title-detalle-pe">
-								<span class="text-tile-vehiculo">Falla reportada</span>
+								<span class="text-tile-vehiculo" title="Falla reportada">Falla reportada</span>
 							</div>
 							<div class="container-text-content-detalle">
 								<span class="text-content-vehiculo" title="{{falla.fallaReportada}}" 
@@ -111,7 +111,7 @@
 					<div class="col-md-12">
 						<div class="container-fluid vehiculo-content">
 							<div class="container-text-title-detalle-pe">
-								<span class="text-tile-vehiculo">Subfalla reportada</span>
+								<span class="text-tile-vehiculo" title="Subfalla reportada">Subfalla reportada</span>
 							</div>
 							<div class="container-text-content-detalle">
 								<span class="text-content-vehiculo" title="{{falla.subFallaReportada}}" 
@@ -124,7 +124,7 @@
 					<div class="col-md-12">
 						<div class="container-fluid vehiculo-content">
 							<div class="container-text-title-detalle-pe">
-								<span class="text-tile-vehiculo">Fecha reporte</span>
+								<span class="text-tile-vehiculo" title="Fecha reporte">Fecha reporte</span>
 							</div>
 							<div class="container-text-content-detalle">
 								<span class="text-content-vehiculo" title="{{falla.fechaReporte}}" 
@@ -162,7 +162,7 @@
 									<div class="col-md-12">
 										<div class="container-fluid vehiculo-content">
 											<div class="container-text-title-detalle-pe">
-												<span class="text-tile-vehiculo">ID GSA</span>
+												<span class="text-tile-vehiculo" title="ID GSA">ID GSA</span>
 											</div>
 											<div class="container-text-content-detalle">
 												<span class="text-content-vehiculo" title="{{splitter.idGsa}}" 
@@ -175,7 +175,7 @@
 									<div class="col-md-12">
 										<div class="container-fluid vehiculo-content">
 											<div class="container-text-title-detalle-pe">
-												<span class="text-tile-vehiculo">N&uacute;mero cuenta</span>
+												<span class="text-tile-vehiculo" title="N&uacute;mero cuenta">N&uacute;mero cuenta</span>
 											</div>
 											<div class="container-text-content-detalle">
 												<span class="text-content-vehiculo" title="{{splitter.numeroCuenta}}" 
@@ -188,7 +188,7 @@
 									<div class="col-md-12">
 										<div class="container-fluid vehiculo-content">
 											<div class="container-text-title-detalle-pe">
-												<span class="text-tile-vehiculo">Estatus</span>
+												<span class="text-tile-vehiculo" title="Estatus">Estatus</span>
 											</div>
 											<div class="container-text-content-detalle">
 												<span class="text-content-vehiculo" title="{{splitter.estatus}}" 
@@ -201,7 +201,7 @@
 									<div class="col-md-12">
 										<div class="container-fluid vehiculo-content">
 											<div class="container-text-title-detalle-pe">
-												<span class="text-tile-vehiculo">Candado</span>
+												<span class="text-tile-vehiculo" title="Candado">Candado</span>
 											</div>
 											<div class="container-text-content-detalle">
 												<span class="text-content-vehiculo" title="{{splitter.candado}}" 
@@ -214,7 +214,7 @@
 									<div class="col-md-12">
 										<div class="container-fluid vehiculo-content">
 											<div class="container-text-title-detalle-pe">
-												<span class="text-tile-vehiculo">Puertos asiganado</span>
+												<span class="text-tile-vehiculo" title="Puertos asiganados">Puertos asiganados</span>
 											</div>
 											<div class="container-text-content-detalle">
 												<span class="text-content-vehiculo" title="{{splitter.puertoAsiganado}}" 
@@ -227,7 +227,7 @@
 									<div class="col-md-12">
 										<div class="container-fluid vehiculo-content">
 											<div class="container-text-title-detalle-pe">
-												<span class="text-tile-vehiculo">Puertos ocupados</span>
+												<span class="text-tile-vehiculo" title="Puertos ocupados">Puertos ocupados</span>
 											</div>
 											<div class="container-text-content-detalle">
 												<span class="text-content-vehiculo" title="{{splitter.puertosOcupados}}" 
@@ -240,7 +240,7 @@
 									<div class="col-md-12">
 										<div class="container-fluid vehiculo-content">
 											<div class="container-text-title-detalle-pe">
-												<span class="text-tile-vehiculo">Puertos totales</span>
+												<span class="text-tile-vehiculo" title="Puertos totales">Puertos totales</span>
 											</div>
 											<div class="container-text-content-detalle">
 												<span class="text-content-vehiculo" title="{{splitter.puertosTotales}}" 
