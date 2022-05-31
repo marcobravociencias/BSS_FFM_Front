@@ -25,9 +25,8 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
     $scope.getDetalleAlertas = function (alerta) {
 
         $scope.permisoAtenderAlertas = $scope.permisosConfigUser.permisos.find(e => { return e.clave === 'accionAtiendeAL' });
-
         $scope.vistaAuditoriaEvidencia = false;
-
+        $scope.detencionVistaModal = false;
 
         // $("#pills-mapa-tab").click();
         $scope.idAlertaSelecionada = '';
@@ -38,10 +37,8 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
         $scope.alertaSeleccionadaObject = {};
         $scope.tipoAlertaSeleccionada = {};
         $scope.isDetalleAlerta = false;
-        console.log(alerta);
         deleteMarkers();
         clearMarkers();
-        console.log(alerta);
         $scope.alertaSeleccionada = false;
         $scope.opcionesAcciones = true
         swal({ text: 'Consultando datos ...', allowOutsideClick: false });
@@ -50,6 +47,7 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
         var params = {
             "idTipoAlerta": alerta.id
         }
+        
         if (alerta.id == 9) {
             $scope.listaTotal = { aceptadas: 0, rechazadas: 0 };
             $(".radio-evidencias").prop("checked", false);
@@ -59,7 +57,7 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
             $scope.vistaDespacho = false;
             $scope.applyMagnific();
         }
-        console.log("params", params);
+        
         $scope.otsAlertas = [];
         mainAlertasService.getDetalleAlertas(params).then(function success(response) {
             if (response.data !== undefined) {
@@ -90,6 +88,12 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
             let alertaob = value.alerta;
             let ordenobj = value.orden;
             let tecnicoObj = value.tecnico;
+            
+//            $scope.otModalSelectedGeneric.idFlujo = ordenobj.idFlujo;
+//            $scope.otModalSelectedGeneric.idOrden = ordenobj.id;
+            $scope.otModalSelectedGeneric.idFlujo = 10;
+            $scope.otModalSelectedGeneric.idOrden = 592525;
+            
             let arra = [];
             arra[0] = alertaob.id ? alertaob.id : '';
             arra[1] = alertaob.folioSistema ? alertaob.folioSistema : '';
@@ -204,7 +208,7 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
         if ($scope.idAlertaSelecionada !== ot) {
             $(".cards-lertas").css("border-left", "1px solid #dddddd");
             $(".cards-lertas").css("box-shadow", "0 0 0 0 #ffffff");
-            $("#cardAlerta" + ot).css("border-left", "4px solid #31a7ee");
+            $("#cardAlerta" + ot).css("border-left", "4px solid var(--estandar-color)");
             $("#cardAlerta" + ot).css("box-shadow", "0 2px 8px 0 rgb(0 0 0 / 16%), 0 2px 8px 0 rgb(0 0 0 / 16%)");
 
             $scope.idAlertaSelecionada = ot;
@@ -228,7 +232,6 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
                 idAlerta: idAlerta,
                 idFlujo: idFlujo
             };
-            console.log($scope.alertaSeleccionadaObject);
             $scope.$apply();
             $scope.setMarkets($scope.alertaSeleccionadaObject);
 
@@ -243,7 +246,6 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
             }
             mainAlertasService.consultaAccionesAlerta(params).then(function success(response) {
                 //response.data = accionesOt;
-                console.log(response);
                 if (response.data !== undefined) {
                     if (response.data.respuesta) {
 
@@ -335,7 +337,6 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
 
     $scope.showOpcion = 0;
     $scope.mostrarOpcionAlerta = function (accion) {
-        console.log(accion);
         switch (accion.id) {
             case "12":
                 //RESCATE
@@ -362,7 +363,6 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
 
     $scope.listaMotivoEstatus = [];
     $scope.consultarMotivoAlerta = function (element) {
-        console.log(element);
         $scope.listaMotivoEstatus = [];
         $scope.listaMotivoEstatus = $scope.listaCatalogoEstatusAlerta.filter(estatus => estatus.ID_Padre === element.ID);
     }
@@ -379,7 +379,6 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
             "Id_motivo": $scope.estatusAlerta.motivo.ID
         }
         mainAlertasService.cambiarEstatusIntegrador(params).then(function success(response) {
-            console.log(response);
             response.data = catalogoEstatusAlerta;
             if (response.data !== undefined) {
                 toastr.success(response.data.result.resultDescription);
@@ -404,10 +403,7 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
                 "Propietario": "87"
             }
             mainAlertasService.consultarEvidenciaAlertaPI(params).then(function success(response) {
-                console.log(response);
-
                 response = imagenesAlerta;
-                console.log(response);
                 if (response.data !== undefined) {
                     $("#categorias_div").empty();
                     $("#contenido_imagenes").empty();
@@ -628,7 +624,6 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
                     "idOt": $scope.alertaSeleccionadaObject.IdOT
                 }
                 mainAlertasService.consultarHistoricoAlertaPI(params).then(function success(response) {
-                    console.log(response);
                     if (response.data !== undefined) {
                         if (response.data.respuesta) {
                             if (response.data.result) {
@@ -669,7 +664,6 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
                     "idOt": $scope.alertaSeleccionadaObject.IdOT
                 }
                 mainAlertasService.consultarComentariosAlertaPI(params).then(function success(response) {
-                    console.log(response);
                     if (response.data !== undefined) {
                         if (response.data.respuesta) {
                             // $scope.listaComentariosAlerta = response.data.result.detalle;
@@ -709,10 +703,8 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
                 "origenSistema": "1"
             }
             genericService.agregarComentariosOt(params).then(function success(response) {
-                console.log(response);
                 if (response.data !== undefined) {
                     if (response.data.respuesta) {
-                        console.log("Agregando ");
                         toastr.success(response.data.resultDescripcion);
                         $scope.comentarioAlerta = "";
                         $scope.chatAlertaConsultada = false;
@@ -835,7 +827,6 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
     $scope.cambiarEstatusAlerta = function (params) {
 
         genericService.cambiarEstatusAlertaGeneric(params).then(result => {
-            console.log(result);
             swal.close();
             if (result.data.respuesta) {
 
@@ -843,7 +834,6 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
                 $("#modalDetalleOT").modal('hide')
                 $scope.refrescarBusqueda()
             } else {
-                console.log(result.data.resultDescripcion)
                 toastr.warning(result.data.resultDescripcion);
 
             }
@@ -957,7 +947,6 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
     }
 
     $scope.initTableOrdenesPendientes = function () {
-        console.log($scope.listaOrdenesPendientes);
         /*
         $scope.viewTable = [];
         angular.forEach(listaOrdenes,function(value,key){
@@ -973,7 +962,6 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
         }
 
         $('.ot-pendiente-event').each(function (index) {
-            console.log(index);
             let otpendiente = $scope.otsAlertas[index]
             $(this).data('event', {
                 objectevent: otpendiente,
@@ -999,7 +987,6 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
 
 
         $('#filterPendiente').keyup(function () {
-            console.log("Gg");
             tableOrdenes.draw();
         });
 
@@ -1108,7 +1095,6 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
                     params[campo.nombreParamentro] = $("#" + campo.nombreParamentro + "" + accion.id).val();
                 }
             });
-            console.log(params);
 
             swal({ text: 'Cambiando estatus de la OT...', allowOutsideClick: false });
             swal.showLoading();
@@ -1195,8 +1181,6 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
             let id = (elemento.id).split("_")[1];
             rechazadas.push(id);
         });
-        console.log(aceptadas);
-        console.log(rechazadas);
     }
 
 

@@ -418,7 +418,7 @@ li {
 }
 
 #pills-tab-vehiculo li a.active {
-  background-color: #adadad;
+  background-color: var(--tab-secundario-color);
   box-shadow: none;
   /* color: #888888; */
   font-weight: bolder;

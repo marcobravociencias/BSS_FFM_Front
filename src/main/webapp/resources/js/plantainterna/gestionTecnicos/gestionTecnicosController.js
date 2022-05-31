@@ -1446,8 +1446,6 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
     	$scope.isTecnicoSelected = false;
     	$.each($scope.listAuxiliares, function (i, elemento) {
             $("#"+elemento.idAuxiliar).css("background-color", "white");
-            $("#tec-"+elemento.idAuxiliar).css("color", "grey");
-            $("#aux-"+elemento.idAuxiliar).css("color", "grey");
         });
     	eventosDisponibilidad = [];
     	if ($scope.calendarTec) {

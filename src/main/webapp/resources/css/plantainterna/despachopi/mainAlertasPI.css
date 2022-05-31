@@ -63,7 +63,8 @@
 
 
 
-#pills-historico, #pills-imagenes, #pills-chat, #pills-mapa {
+#pills-historico, #pills-imagenes, #pills-chat, #pills-mapa,
+#pills-orden-detenida-alertas, #pills-detalle-detencion-alertas {
     height: 60vh;
     max-height: 60vh;
     overflow: auto;
@@ -335,10 +336,14 @@ div#contenido_imagenes {
 .options-alertas {
     text-align: center;
     height: 1em;
-    width: 10em;
-    line-height: 1em;
-    /* padding: 0; */
-    padding: 10px 10px 20px 10px !important;
+    width: auto !important;
+    margin: 0.2rem !important;
+    margin-top: 0.5rem !important;
+}
+
+.options-alertas.active {
+    background-color: var(--tab-secundario-color) !important;
+    font-weight: bolder;
 }
 
 .titlehistorico-alerta {
@@ -419,6 +424,8 @@ div#contenido_imagenes {
 }
 
 .btnBuscadorOTAlerta {
+	border: solid 1px var(--estandar-color) !important;
+	color: var(--estandar-color) !important;
     font-family: 'Montserrat' !important;
     font-size: .7em !important;
     padding: .19em .5em;
@@ -692,4 +699,8 @@ div#contenido_imagenes {
 	margin-left: 0.5em;
 	font-size: 1em;
 	font-weight: normal;
+}
+
+#table-alertas-pi_paginate .page-item.active .page-link {
+	background-color: var(--btn-color-paginador-tabla) !important;
 }

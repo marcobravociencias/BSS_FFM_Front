@@ -7,6 +7,9 @@ const formatterMonto = new Intl.NumberFormat('en-US', {
 })
 app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericService) {
     $scope.listadoIconografia = undefined
+    
+    $scope.otModalSelectedGeneric = {};
+    $scope.detencionVistaModal = null;
 
     $scope.listadoEstatusTecnico = []
     $scope.elementEstatusTecnico = {};
@@ -50,7 +53,6 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 
     abrirModalConfirmacionDesconfirmacion = function (instanciaThis, idot) {
         $scope.banderaRegresarCheckbox = false;
-        console.log($(instanciaThis).is(':checked'))
         $scope.objConfirmaDesc = {
             isConfirmadoDesconfirmado: $(instanciaThis).is(':checked'),
             idOtConfirmaDesc: idot,
@@ -63,6 +65,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 
     abrirModalDetalleOtPendiente = function (idotpendiente) {
         $scope.flagPaquete = false;
+        $scope.detencionVistaModal = true;
         $scope.listadoMotivosRescate = $scope.estatusCambio.filter(e => { return e.idPadre === 212 })
         $scope.listadoMotivosCalendarizado = $scope.estatusCambio.filter(e => { return e.idPadre === 243 })
         $scope.listadoMotivosReagenda = $scope.estatusCambio.filter(e => { return e.idPadre === 201 })
@@ -72,15 +75,14 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         $scope.detalleOtPendienteSelected = $scope.listadoOtsPendientes.find(e => e.idOrden == idotpendiente)
         $scope.permisosModal = $scope.elementosConfigGeneral.get("MODAL_FLUJO_" + $scope.detalleOtPendienteSelected.idFlujo).split(",")
         //        $scope.permisosModal.push("tabCambioDireccion");
-        console.log("##########permisos " + $scope.permisosModal)
-        console.log($scope.detalleOtPendienteSelected)
         $scope.estatusModals = 'PENDIENTE'
         $scope.otModalSelectedGeneric = angular.copy($scope.detalleOtPendienteSelected);
         $scope.requestModalInformacion(idotpendiente)
-
     }
+    
     abrirModalInformacion = function (idotasignada) {
         $scope.flagPaquete = false;
+        $scope.detencionVistaModal = true;
         $scope.listadoMotivosRescate = $scope.estatusCambio.filter(e => { return e.idPadre === 212 })
         $scope.listadoMotivosCalendarizado = $scope.estatusCambio.filter(e => { return e.idPadre === 243 })
         $scope.listadoMotivosReagenda = $scope.estatusCambio.filter(e => { return e.idPadre === 201 })
@@ -89,8 +91,6 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         $scope.listadoTurnosAcciones = $scope.filtrosGeneral.turnosdisponibles;
         $scope.detalleOtAsignadaSelected = $scope.listadoOtsAsignadas.find(e => e.idOrden == idotasignada)
         $scope.permisosModal = $scope.elementosConfigGeneral.get("MODAL_ASIGNADA_" + $scope.detalleOtAsignadaSelected.idFlujo).split(",")
-        console.log($scope.permisosModal)
-        console.log($scope.detalleOtAsignadaSelected)
         $scope.estatusModals = 'ASIGNADA'
         $scope.otModalSelectedGeneric = angular.copy($scope.detalleOtAsignadaSelected);
         $scope.requestModalInformacion(idotasignada)
@@ -177,6 +177,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 "idFlujo": $scope.otModalSelectedGeneric.idFlujo,
                 "idOT": $scope.otModalSelectedGeneric.idOrden
             }
+            
             /**
             let paramsDetalleOtPe = {
                     "idOT": 1234567,
@@ -238,7 +239,6 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                                 //                        	fallaExtra4.descripcionDetalleFalla = "Falla cuadruple";
                                 //                        	fallaExtra4.imagenes.splice(4);
                                 //                        	
-                                //                        	console.log( "Fallas -> ", $scope.infoDetalleOtPe.detalleInspeccion.fallas );
                                 //                        	$scope.infoDetalleOtPe.detalleInspeccion.fallas.push(fallaExtra2);
                                 //                        	$scope.infoDetalleOtPe.detalleInspeccion.fallas.push(fallaExtra3);
                                 //                        	$scope.infoDetalleOtPe.detalleInspeccion.fallas.push(fallaExtra4);
@@ -247,54 +247,52 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 
                                 //                        	--------------------------------DETENCION--------------------------------
                                 //                        	--------------------------------DETENCION--------------------------------
-                                //                        	$scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter = [];
-                                //                        	$scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter.push({"candado": "candado 1","estatus": "2","evidencias": [{"nombre": "nombre", "url": "https://cadenanoticias.com/assets/article/00122895/20211002_lVEOusxIi7.jpeg"},{"nombre": "nombre", "url": "https://ru83nc4.files.wordpress.com/2016/07/falla-en-la-red.jpg"},{"nombre": "nombre", "url": "https://queplan.mx/sites/default/files/inline-images/modems-totalplay.jpg"}],"idGsa": "IDGSA1","numeroCuenta": "numeroCuenta","puertoAsiganado": "1","puertosOcupados": "1","puertosTotales": "1","qr": "qr"},{"candado": "candado 2","estatus": "2","evidencias": [{"nombre": "nombre", "url": "https://pbs.twimg.com/media/EtqcHubVEAAiA5u.jpg"}],"idGsa": "IDGSA2","numeroCuenta": "numeroCuenta 2","puertoAsiganado": "2","puertosOcupados": "2","puertosTotales": "2","qr": "qr"},{"candado": "candado3","estatus": "2","evidencias": [{"nombre": "nombre", "url": "https://pbs.twimg.com/media/Ej_3pquXcAE5pgu.jpg"},{"nombre": "nombre", "url": "https://static.promodescuentos.com/pepperpdimages/threads/content/pU63G/501850.jpg"},{"nombre": "nombre", "url": "https://muralchiapas.com/images/fotonoticias/cable.jpg"},{"nombre": "nombre", "url": "https://3.bp.blogspot.com/-nJnnmzBgZAU/XN5FKZ3sEBI/AAAAAAAADIw/QST65Nh1YHgjoVKtPHv1kW1MVIDYUELcACLcBGAs/s1600/WhatsApp%2BImage%2B2019-05-17%2Bat%2B12.21.23%2BAM.jpeg"},{"nombre": "nombre", "url": "https://1.bp.blogspot.com/-LQYkZeZGoN8/XN5FKf-hdSI/AAAAAAAADIo/M2jbbaoNvu8kdEwyWsej-rqZgH9GxiM0gCLcBGAs/s1600/WhatsApp%2BImage%2B2019-05-17%2Bat%2B12.21.42%2BAM.jpeg"}],"idGsa": "IDGSA3","numeroCuenta": "numeroCuenta","puertoAsiganado": "3","puertosOcupados": "3","puertosTotales": "3","qr": "qr"},{"candado": "candado4","estatus": "2","evidencias": [{"nombre": "nombre", "url": "https://i.blogs.es/3871d1/velocidad-internet-telephono/450_1000.jpg"},{"nombre": "nombre", "url": "https://precoinprevencion.com/wp-content/uploads/2017/03/IMG_0055.jpg"}],"idGsa": "IDGSA4","numeroCuenta": "numeroCuenta","puertoAsiganado": "4","puertosOcupados": "4","puertosTotales": "4","qr": "qr"});
-                                //                        	$scope.infoDetalleOtPe.detalleDetencion.push({"claveCliente": "TEST","detalleSplitter": [{"candado": "candado 5","estatus": "2","evidencias": [{"nombre": "nombre", "url": "https://i.eldiario.com.ec/fotos-manabi-ecuador/2017/06/20170628040049_retiran-postes-sin-uso-y-daa-ados.jpg"},{"nombre": "nombre", "url": "https://www.elsoldeirapuato.com.mx/policiaca/v5nynp-camion-derriba-postes-1.jpg/ALTERNATES/LANDSCAPE_768/Cami%C3%B3n-derriba-postes%20%20(1).jpg"},{"nombre": "nombre", "url": "https://images.freeimages.com/images/large-previews/a89/telephone-pole-2-1416522.jpg"},{"nombre": "nombre", "url": "https://previews.123rf.com/images/angelofoto/angelofoto1208/angelofoto120800018/14871321-viejo-poste-de-tel%C3%A9fono-de-madera-contra-un-gradiente-de-cielo-azul.jpg"},{"nombre": "nombre", "url": "https://c8.alamy.com/compes/2ddbh61/no-hay-pelicula-no-hay-video-no-hay-television-no-hay-documental-los-postes-de-telefono-danados-por-el-huracan-katrina-se-lluran-precariamente-sobre-la-calle-principal-de-la-place-louisiana-el-lunes-29-de-agosto-de-2005-foto-de-khampha-bouaphanh-fort-worth-star-telegram-krt-abacapress-com-2ddbh61.jpg"},{"nombre": "nombre", "url": "https://www.eloccidental.com.mx/policiaca/5zencz-poste-c5-danado.jpg/ALTERNATES/LANDSCAPE_1140/Poste%20C5%20da%C3%B1ado.jpg"}],"idGsa": "IDGSA5","numeroCuenta": "numeroCuenta 5","puertoAsiganado": "5","puertosOcupados": "5","puertosTotales": "5","qr": "qr"},{"candado": "candado 6","estatus": "2","evidencias": [{"nombre": "nombre", "url": "https://img.gruporeforma.com/imagenes/960x640/5/416/4415795.jpg"},{"nombre": "nombre", "url": ""},{"nombre": "nombre", "url": "https://img.gruporeforma.com/imagenes/960x640/5/416/44157955555555555555555.jpg"},{"nombre": "nombre", "url": "https://i.ytimg.com/vi/GgQ9YRx9r-o/maxresdefault.jpg"},{"nombre": "nombre", "url": "https://img.gruporeforma.com/imagenes/960x640/5/416/44157955555555555555555.jpg"}],"idGsa": "IDGSA6","numeroCuenta": "numeroCuenta 6","puertoAsiganado": "6","puertosOcupados": "6","puertosTotales": "6","qr": "qr"}],"fallaReportada": "Reparacion Poste","fechaReporte": "2022-03-018 13:34","folioSistema": "Folio Sis 002-86060","idOrden": 86060,"nombreEmpleadoReporta": "Reynel Flores Brito","subFallaReportada": "Reparación y Etiquetado","unidadNegocio": "Residencial"});
-
-
-                                //                        	$scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter[0].evidencias[0].url = "https://cadenanoticias.com/assets/article/00122895/20211002_lVEOusxIi7.jpeg";
-                                //                        	$scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter[0].evidencias[1].url = "https://ru83nc4.files.wordpress.com/2016/07/falla-en-la-red.jpg";
-                                //                        	$scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter[0].evidencias[2].url = "https://queplan.mx/sites/default/files/inline-images/modems-totalplay.jpg";
-                                //                        	
-                                //                        	var detalle2 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[0]);
-                                //                        	detalle2.idOrden = 200;
-                                //                        	detalle2.detalleSplitter[0].idGsa = "IdGsa200";
-                                //                        	$scope.infoDetalleOtPe.detalleDetencion.push(detalle2);
-                                //                        	
-                                //                        	var detalle3 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[0]);
-                                //                        	detalle3.idOrden = 300;
-                                //                        	detalle3.detalleSplitter[0].idGsa = "IdGsa300";
-                                //                        	$scope.infoDetalleOtPe.detalleDetencion.push(detalle3);
-                                //                        	
-                                //                        	var spliter2 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter[0]);
-                                //                        	spliter2.idGsa = "idSplitterGSA_v2"
-                                //                        	$scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter.push(spliter2);
-                                //                        	
-                                //                        	var spliter3 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter[0]);
-                                //                        	spliter3.idGsa = "idSplitterGSA_v3"
-                                //                        	$scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter.push(spliter3);
-                                //                        	
-                                //                        	var spliter2_2 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter[0]);
-                                //                        	spliter2_2.idGsa = "IdGsa200_v2"
-                                //                        	$scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter.push(spliter2_2);
-                                //                        	
-                                //                        	var spliter2_3 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter[0]);
-                                //                        	spliter2_3.idGsa = "IdGsa200_v3"
-                                //                        	$scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter.push(spliter2_3);
-                                //                        	
-                                //                        	var spliter2_4 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter[0]);
-                                //                        	spliter2_4.idGsa = "IdGsa200_v4"
-                                //                        	$scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter.push(spliter2_4);
-                                //                        	
-                                //                        	var spliter2_5 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter[0]);
-                                //                        	spliter2_5.idGsa = "IdGsa200_v5"
-                                //                        	$scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter.push(spliter2_5);
-
-                                //                        	$scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter[0].evidencias[0].url = "https://cadenanoticias.com/assets/article/00122895/20211002_lVEOusxIi7.jpeg";
-                                //                        	$scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter[0].evidencias[1].url = "https://ru83nc4.files.wordpress.com/2016/07/falla-en-la-red.jpg";
-                                //                        	$scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter[0].evidencias[2].url = "https://queplan.mx/sites/default/files/inline-images/modems-totalplay.jpg";
-
-                                //                        	console.log("DETENCION---> ", $scope.infoDetalleOtPe.detalleDetencion);
+//                                                        	$scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter = [];
+//                                                        	$scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter.push({"candado": "candado 1","estatus": "2","evidencias": [{"nombre": "nombre", "url": "https://cadenanoticias.com/assets/article/00122895/20211002_lVEOusxIi7.jpeg"},{"nombre": "nombre", "url": "https://ru83nc4.files.wordpress.com/2016/07/falla-en-la-red.jpg"},{"nombre": "nombre", "url": "https://queplan.mx/sites/default/files/inline-images/modems-totalplay.jpg"}],"idGsa": "IDGSA1","numeroCuenta": "numeroCuenta","puertoAsiganado": "1","puertosOcupados": "1","puertosTotales": "1","qr": "qr"},{"candado": "candado 2","estatus": "2","evidencias": [{"nombre": "nombre", "url": "https://pbs.twimg.com/media/EtqcHubVEAAiA5u.jpg"}],"idGsa": "IDGSA2","numeroCuenta": "numeroCuenta 2","puertoAsiganado": "2","puertosOcupados": "2","puertosTotales": "2","qr": "qr"},{"candado": "candado3","estatus": "2","evidencias": [{"nombre": "nombre", "url": "https://pbs.twimg.com/media/Ej_3pquXcAE5pgu.jpg"},{"nombre": "nombre", "url": "https://static.promodescuentos.com/pepperpdimages/threads/content/pU63G/501850.jpg"},{"nombre": "nombre", "url": "https://muralchiapas.com/images/fotonoticias/cable.jpg"},{"nombre": "nombre", "url": "https://3.bp.blogspot.com/-nJnnmzBgZAU/XN5FKZ3sEBI/AAAAAAAADIw/QST65Nh1YHgjoVKtPHv1kW1MVIDYUELcACLcBGAs/s1600/WhatsApp%2BImage%2B2019-05-17%2Bat%2B12.21.23%2BAM.jpeg"},{"nombre": "nombre", "url": "https://1.bp.blogspot.com/-LQYkZeZGoN8/XN5FKf-hdSI/AAAAAAAADIo/M2jbbaoNvu8kdEwyWsej-rqZgH9GxiM0gCLcBGAs/s1600/WhatsApp%2BImage%2B2019-05-17%2Bat%2B12.21.42%2BAM.jpeg"}],"idGsa": "IDGSA3","numeroCuenta": "numeroCuenta","puertoAsiganado": "3","puertosOcupados": "3","puertosTotales": "3","qr": "qr"},{"candado": "candado4","estatus": "2","evidencias": [{"nombre": "nombre", "url": "https://i.blogs.es/3871d1/velocidad-internet-telephono/450_1000.jpg"},{"nombre": "nombre", "url": "https://precoinprevencion.com/wp-content/uploads/2017/03/IMG_0055.jpg"}],"idGsa": "IDGSA4","numeroCuenta": "numeroCuenta","puertoAsiganado": "4","puertosOcupados": "4","puertosTotales": "4","qr": "qr"});
+//                                                        	$scope.infoDetalleOtPe.detalleDetencion.push({"claveCliente": "TEST","detalleSplitter": [{"candado": "candado 5","estatus": "2","evidencias": [{"nombre": "nombre", "url": "https://i.eldiario.com.ec/fotos-manabi-ecuador/2017/06/20170628040049_retiran-postes-sin-uso-y-daa-ados.jpg"},{"nombre": "nombre", "url": "https://www.elsoldeirapuato.com.mx/policiaca/v5nynp-camion-derriba-postes-1.jpg/ALTERNATES/LANDSCAPE_768/Cami%C3%B3n-derriba-postes%20%20(1).jpg"},{"nombre": "nombre", "url": "https://images.freeimages.com/images/large-previews/a89/telephone-pole-2-1416522.jpg"},{"nombre": "nombre", "url": "https://previews.123rf.com/images/angelofoto/angelofoto1208/angelofoto120800018/14871321-viejo-poste-de-tel%C3%A9fono-de-madera-contra-un-gradiente-de-cielo-azul.jpg"},{"nombre": "nombre", "url": "https://c8.alamy.com/compes/2ddbh61/no-hay-pelicula-no-hay-video-no-hay-television-no-hay-documental-los-postes-de-telefono-danados-por-el-huracan-katrina-se-lluran-precariamente-sobre-la-calle-principal-de-la-place-louisiana-el-lunes-29-de-agosto-de-2005-foto-de-khampha-bouaphanh-fort-worth-star-telegram-krt-abacapress-com-2ddbh61.jpg"},{"nombre": "nombre", "url": "https://www.eloccidental.com.mx/policiaca/5zencz-poste-c5-danado.jpg/ALTERNATES/LANDSCAPE_1140/Poste%20C5%20da%C3%B1ado.jpg"}],"idGsa": "IDGSA5","numeroCuenta": "numeroCuenta 5","puertoAsiganado": "5","puertosOcupados": "5","puertosTotales": "5","qr": "qr"},{"candado": "candado 6","estatus": "2","evidencias": [{"nombre": "nombre", "url": "https://img.gruporeforma.com/imagenes/960x640/5/416/4415795.jpg"},{"nombre": "nombre", "url": ""},{"nombre": "nombre", "url": "https://img.gruporeforma.com/imagenes/960x640/5/416/44157955555555555555555.jpg"},{"nombre": "nombre", "url": "https://i.ytimg.com/vi/GgQ9YRx9r-o/maxresdefault.jpg"},{"nombre": "nombre", "url": "https://img.gruporeforma.com/imagenes/960x640/5/416/44157955555555555555555.jpg"}],"idGsa": "IDGSA6","numeroCuenta": "numeroCuenta 6","puertoAsiganado": "6","puertosOcupados": "6","puertosTotales": "6","qr": "qr"}],"fallaReportada": "Reparacion Poste","fechaReporte": "2022-03-018 13:34","folioSistema": "Folio Sis 002-86060","idOrden": 86060,"nombreEmpleadoReporta": "Reynel Flores Brito","subFallaReportada": "Reparación y Etiquetado","unidadNegocio": "Residencial"});
+//
+//
+//                                                        	$scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter[0].evidencias[0].url = "https://cadenanoticias.com/assets/article/00122895/20211002_lVEOusxIi7.jpeg";
+//                                                        	$scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter[0].evidencias[1].url = "https://ru83nc4.files.wordpress.com/2016/07/falla-en-la-red.jpg";
+//                                                        	$scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter[0].evidencias[2].url = "https://queplan.mx/sites/default/files/inline-images/modems-totalplay.jpg";
+//                                                        	
+//                                                        	var detalle2 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[0]);
+//                                                        	detalle2.idOrden = 200;
+//                                                        	detalle2.detalleSplitter[0].idGsa = "IdGsa200";
+//                                                        	$scope.infoDetalleOtPe.detalleDetencion.push(detalle2);
+//                                                        	
+//                                                        	var detalle3 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[0]);
+//                                                        	detalle3.idOrden = 300;
+//                                                        	detalle3.detalleSplitter[0].idGsa = "IdGsa300";
+//                                                        	$scope.infoDetalleOtPe.detalleDetencion.push(detalle3);
+//                                                        	
+//                                                        	var spliter2 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter[0]);
+//                                                        	spliter2.idGsa = "idSplitterGSA_v2"
+//                                                        	$scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter.push(spliter2);
+//                                                        	
+//                                                        	var spliter3 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter[0]);
+//                                                        	spliter3.idGsa = "idSplitterGSA_v3"
+//                                                        	$scope.infoDetalleOtPe.detalleDetencion[0].detalleSplitter.push(spliter3);
+//                                                        	
+//                                                        	var spliter2_2 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter[0]);
+//                                                        	spliter2_2.idGsa = "IdGsa200_v2"
+//                                                        	$scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter.push(spliter2_2);
+//                                                        	
+//                                                        	var spliter2_3 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter[0]);
+//                                                        	spliter2_3.idGsa = "IdGsa200_v3"
+//                                                        	$scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter.push(spliter2_3);
+//                                                        	
+//                                                        	var spliter2_4 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter[0]);
+//                                                        	spliter2_4.idGsa = "IdGsa200_v4"
+//                                                        	$scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter.push(spliter2_4);
+//                                                        	
+//                                                        	var spliter2_5 = angular.copy($scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter[0]);
+//                                                        	spliter2_5.idGsa = "IdGsa200_v5"
+//                                                        	$scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter.push(spliter2_5);
+//
+//                                                        	$scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter[0].evidencias[0].url = "https://cadenanoticias.com/assets/article/00122895/20211002_lVEOusxIi7.jpeg";
+//                                                        	$scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter[0].evidencias[1].url = "https://ru83nc4.files.wordpress.com/2016/07/falla-en-la-red.jpg";
+//                                                        	$scope.infoDetalleOtPe.detalleDetencion[1].detalleSplitter[0].evidencias[2].url = "https://queplan.mx/sites/default/files/inline-images/modems-totalplay.jpg";
                                 //                        	--------------------------------DETENCION--------------------------------
                                 //                        	--------------------------------DETENCION--------------------------------
                                 //############################################ALTERAR ARREGLO PARA MAS FALLAS #####################################################################
@@ -340,7 +338,6 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             "yekparam": valorbusqueda
         }
         mainDespachoService.consultarLocalizacionOtDespacho(params).then(function success(response) {
-            console.log(response);
             swal.close()
             if (response.data !== undefined) {
                 if (response.data.respuesta) {
@@ -482,12 +479,10 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 "tipoRequest": "estatusTecnico"
             }
             mainDespachoService.consultarCatalogoEstatusTecnico(params).then(function success(response) {
-                console.log(response);
                 if (response.data !== undefined) {
                     if (response.data.respuesta) {
                         if (response.data.result.detalleTiposOrden !== undefined && response.data.result.detalleTiposOrden.length > 0) {
                             $scope.isConsultaPrimeraVezEstatus = true;
-                            console.log("############## catalogo")
                             //$scope.listadoOtsPendientes=otspendientes           
                             $scope.listadoEstatusTecnico = response.data.result.detalleTiposOrden
                             $scope.listadoEstatusTecnico = $scope.listadoEstatusTecnico.map(e => { e.descripcion = e.nombre; return e; });
@@ -505,8 +500,6 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                                 })
                                 $scope.elementEstatusTecnico.status = optionTempSelected
                             }
-                            console.log($scope.elementEstatusTecnico.tecnico)
-
                         }
                     }
                 }
@@ -524,10 +517,9 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 let optionTempSelected = $scope.listadoEstatusTecnico.find(function (e) {
                     return e.id == parseInt($scope.elementEstatusTecnico.tecnico.idEstatusTecnico);
                 })
-                $scope.elementEstatusTecnico.status = optionTempSelected
+                $scope.elementEstatusTecnico.status = optionTempSelected;
             }
-            $scope.$apply()
-            console.log($scope.elementEstatusTecnico.tecnico)
+            $scope.$apply();
         }
 
 
@@ -538,7 +530,6 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     abrirOtsTrabajadas = function (idTecnico) {
         let tecnico = $scope.listadoTecnicosGeneral.find(e => { return e.idTecnico == idTecnico })
         if (tecnico.listadoOts.length > 0) {
-            console.log(tecnico.listadoOts)
             document.getElementById('nombreTecnico').innerHTML = tecnico.nombreCompleto
 
             let arrayOts = [];
@@ -592,14 +583,12 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     $scope.evidenciaPlaca = '';
     $scope.evidenciaVehiculo = '';
     abrirInformacionVehiculo = function (idTecnico) {
-        console.log(idTecnico)
         let params = {
             idTecnico: idTecnico
         }
         swal({ text: 'Consultando datos ...', allowOutsideClick: false });
         swal.showLoading();
         mainDespachoService.consultaInformacionVehiculoTecnico(params).then(function success(response) {
-            console.log(response)
             swal.close();
             if (response.data.result) {
                 $scope.vehiculoOperario = response.data.result.vehiculo
@@ -628,8 +617,6 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         swal({ text: 'Consultando datos ...', allowOutsideClick: false });
         swal.showLoading();
         mainDespachoService.consultandoMaterialesPI(params).then(function success(response) {
-            console.log(response)
-            console.log("data materiales ", response.data)
             if (response.data.respuesta) {
                 if (response.data.result) {
                     params.centro = response.data.result.centro;
@@ -671,7 +658,6 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             fechaFin : fechaFormatConsulta
         }
         mainDespachoService.consultarInformacionPagos(params).then(function success(response) {
-           console.log(response)
            $scope.tecnicoConsultaPagos.isPagosPendientes=false
            if( response.data.respuesta){
                 if (response.data.result) {   
@@ -745,7 +731,6 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     $scope.consultarMaterialesPorCentroAlmacenUser = function (params) {
         $scope.totalMaterialesModal = 0
         mainDespachoService.consultaMaterialesPorAlmacenUserCentro(params).then(function success(response) {
-            console.log(response)
             if (response.data.respuesta) {
                 if (response.data.result) {
                     let tempArrayResult = response.data.result.materiales
@@ -825,9 +810,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     }
 
     $scope.cambiarEstatusOperario = function () {
-        console.log("Entra a cambiar estatus:")
         var n = $('#id-status-tecnico').val();
-        console.log(n)
         if ($scope.elementEstatusTecnico.status == null) {
             toastr.warning('Selecciona estatus')
             return false
@@ -843,7 +826,6 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         mainDespachoService.cambiarEstatusTecnicoPI(params).then(function success(response) {
 
             $("#modalStatusOperario").modal('hide')
-            console.log("Estatus: ", response.status);
             if (response.data !== undefined) {
                 if (response.data.respuesta) {
                     if (response.data.codigoEstatusService == 201) {
@@ -860,7 +842,6 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     }
 
     $scope.confirmarDesconfirmarOt = function () {
-        console.log("antes de confirma/desconfirma  ", $scope.objConfirmaDesc)
 
         if (!$scope.objConfirmaDesc.comentarios) {
             toastr.info("Captura comentarios");
@@ -876,13 +857,12 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             "esConfirmada": $scope.objConfirmaDesc.isConfirmadoDesconfirmado ? 1 : 0,
             "comentarios": $scope.objConfirmaDesc.comentarios
         }
-        console.log("params", params)
+        
         mainDespachoService.confirmaDesconfirmaOtDespacho(params).then(function success(response) {
             $scope.banderaRegresarCheckbox = true;
             if (response.data !== undefined) {
                 if (response.data.respuesta) {
                     $("#modalConfirmaDesconfirma").modal('hide')
-                    console.log(response);
                     swal.close()
                     toastr.success('Cambio de estatus correcto');
                     $scope.refrescarBusqueda()
@@ -908,25 +888,21 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 $("#modalIconografiaDespacho").modal('show')
                 $scope.listadoIconografia = {}
 
-                console.log(response);
                 if (response.data !== undefined) {
                     if (response.data[0].respuesta) {
                         if (response.data[0].result.detalleTiposOrden !== undefined && response.data[0].result.detalleTiposOrden.length > 0) {
-                            console.log("############## catalogo")/** **/
                             $scope.listadoIconografia.tipoIntervencion = response.data[0].result.detalleTiposOrden
                         }
                     }
 
                     if (response.data[1].respuesta) {
                         if (response.data[1].result.detalleTiposOrden !== undefined && response.data[1].result.detalleTiposOrden.length > 0) {
-                            console.log("############## catalogo")/** **/
                             $scope.listadoIconografia.estatusIntervencion = response.data[1].result.detalleTiposOrden
                         }
                     }
 
                     if (response.data[2].respuesta) {
                         if (response.data[2].result.detalleIconos !== undefined && response.data[2].result.detalleIconos.length > 0) {
-                            console.log("############## catalogo")/** **/
                             $scope.listadoIconografia.estatusIconografia = $scope.retornarBase64Icons(response.data[2].result.detalleIconos)
                         }
                     }
@@ -934,7 +910,6 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 
                     if (response.data[3].respuesta) {
                         if (response.data[3].result.detalleTiposOrden !== undefined && response.data[3].result.detalleTiposOrden.length > 0) {
-                            console.log("############## catalogo")/** **/
                             $scope.listadoIconografia.estatusTecnico = response.data[3].result.detalleTiposOrden
                         }
                     }
@@ -1039,16 +1014,13 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         mainDespachoService.cambiarEstatusOrdenTrabajoPI(params).then(function success(response) {
 
             $("#modalAsignacionOrdenTrabajo").modal('hide')
-            console.log(response);
             swal.close()
             toastr.success('Agendado correctamente');
-
             $scope.procesandoAsignacion = false
 
             if (response.data !== undefined) {
                 if (response.data.respuesta) {
                     if (response.data.result.result === '0') {
-                        console.log("############## catalogo")
                         //$scope.listadoOtsPendientes=otspendientes                         
                     }
                 }
@@ -1098,7 +1070,6 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         /** mainDespachoService.cambiarEstatusOrdenTrabajoPI(params).then(function success(response) {
 
             $("#modalAsignacionOrdenTrabajo").modal('hide')
-            console.log(response);
             swal.close()
             toastr.success('Reagendadado correctamente');
 
@@ -1107,7 +1078,6 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             if (response.data !== undefined) {
                 if (response.data.respuesta) {
                     if (response.d(ata.result.result === '0') {
-                        console.log("############## catalogo")
                         //$scope.listadoOtsPendientes=otspendientes                         
                     }
                 }
@@ -1126,13 +1096,9 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             //$scope.listadoMotivosCalendarizado = $scope.listadoCatalogoAcciones.filter((e) => e.Nivel === '3' && e.ID_Padre === '320')
             $scope.listadoEstadosTerminado = $scope.listadoCatalogoAcciones.filter((e) => e.Nivel === '2' && e.ID_Padre === '4')
 
-
-
-            console.log($scope.listadoCatalogoAcciones);
             if (response.data !== undefined) {
                 if (response.data.respuesta) {
                     if (response.data.result.result === '0') {
-                        console.log("############## catalogo")
                         //$scope.listadoOtsPendientes=otspendientes    
                     }
                 }
@@ -1181,10 +1147,8 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 
             genericService.agregarComentariosOt(params).then(function success(response) {
                 swal.close();
-                console.log(response);
                 if (response.data !== undefined) {
                     if (response.data.respuesta) {
-                        console.log("############## Comentario agregado")
                         $scope.comentarios = '';
                         $scope.flagComentarios = false;
                         $(".chat-area").scrollTop(0);
@@ -1637,7 +1601,6 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         swal({ text: 'Cambiando estatus de la OT ...', allowOutsideClick: false });
         swal.showLoading();
         genericService.cambioStatusOts(params).then(result => {
-            console.log(result);
             $scope.procesandoAsignacion = false;
             $scope.procesandoReasignacion = false
 
@@ -1663,7 +1626,6 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 
                 }
             } else {
-                console.log(result.data.resultDescripcion)
                 toastr.warning(result.data.resultDescripcion);
 
             }
@@ -1758,7 +1720,6 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             swal.showLoading();
             $scope.responseServicios = {}
             mainDespachoService.consultarResumenPaquete(params).then(response => {
-                console.log(response);
                 swal.close()
                 $scope.flagPaquete = true;
                 if (response.data.respuesta) {
@@ -1777,9 +1738,6 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     }
 
     $scope.abrirModalOtsIntervencionres = function () {
-        console.log($scope.intervencionesConteo)
-        console.log($scope.listadoOtsPendientes)
-
         $scope.intervencionesConteo.map(e => {
             e.cantidad = $scope.listadoOtsPendientes.filter(element => { return element.idtipoOrden === e.id }).length
             return e;
@@ -1841,7 +1799,6 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                     comentarios: result,
                     idOrdenTrabajo: $scope.infoOtDetalle.idOrden,
                 }
-                console.log(params);
                 swal({ text: 'Cambiando estatus de la OT ...', allowOutsideClick: false });
                 swal.showLoading();
                 mainDespachoService.actualizarDireccionOt(params).then(function success(response) {

@@ -53,6 +53,12 @@
                         <li class="nav-item" role="presentation">
                             <a class="nav-link options-alertas" id="pills-chat-tab" data-toggle="pill" href="#pills-detalle" role="tab" ng-click="abirDetalle()" aria-controls="pills-detalle" aria-selected="false">Detalle</a>
                         </li>
+                        <li class="nav-item" role="presentation" >
+                            <a ng-click="consultarDetalleOtPE();" class="nav-link options-alertas" id="pills-orden-detenida-alertas-tab" data-toggle="pill" href="#pills-orden-detenida-alertas" role="tab" aria-controls="pills-orden-detenida-alertas" aria-selected="false">Orden detenida</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a ng-click="consultarDetalleOtPE();" class="nav-link options-alertas" id="pills-detalle-detencion-alertas-tab" data-toggle="pill" href="#pills-detalle-detencion-alertas" role="tab" ng-click="" aria-controls="pills-detalle-detencion-alertas" aria-selected="false">Detalle detenci&oacute;n</a>
+                        </li>
                     </ul>
                 </div>
                 <div class="card-body card-body-alerta-principal">
@@ -60,7 +66,6 @@
                         <div class="tab-pane fade show active" id="pills-mapa" role="tabpanel" aria-labelledby="pills-mapa-tab">
                            <div id="mapAlerta" class="contenido-card" style="width:100%;height:100%; border-radius: 10px;"></div>
                         </div>
-
                         <div class="tab-pane fade" id="pills-imagenes" role="tabpanel" aria-labelledby="pills-imagenes-tab">
                             <div id="categorias_div" class="container row justify-content-center  text-center " style="margin-top: 1em;">
                                 <div class="content_category">
@@ -69,33 +74,28 @@
                                     <i class="fa fa-truck"></i>
                                   </button>
                                 </div>
-                                
                                 <div class="content_category">
                                   <b class="badge accent-3" id="alerta-p-i">3</b>
                                     <button type="button" class="btn btn-sm  btn-outline-blue-grey waves-effect waves-light"  >
                                     <i class="fa fa-truck"></i>
                                   </button>
                                 </div>
-                              
                                 <div class="content_category">
                                   <button type="button" class="btn btn-sm  btn-outline-blue-grey waves-effect waves-light"  >
                                     <i class="fa fa-truck"></i>
                                   </button>
                                 </div>
-                              
                                 <div class="content_category">
                                   <b class="badge accent-3" id="alerta-p-i">23</b>
                                   <button type="button" class="btn btn-sm  btn-outline-blue-grey waves-effect waves-light"  >
                                     <i class="fa fa-truck"></i>
                                   </button>
                                 </div>
-                              
                                 <div class="content_category">
                                   <button type="button" class="btn btn-sm  btn-outline-blue-grey waves-effect waves-light"  >
                                     <i class="fa fa-truck"></i>
                                   </button>
                                 </div>
-                              
                                 <div class="content_category">
                                   <b class="badge accent-3" id="alerta-p-i">13</b>
                                   <button type="button" class="btn btn-sm  btn-outline-blue-grey waves-effect waves-light"  >
@@ -357,6 +357,12 @@
                                </div>
                            </div>
                         </div>
+                        <div class="tab-pane fade" id="pills-orden-detenida-alertas" role="tabpanel" aria-labelledby="pills-orden-detenida-alertas-tab" style="overflow-x: hidden;">
+                        	<jsp:include page="./../contents/div-info-general-detalle-ot-pe.jsp"></jsp:include>
+                        </div>
+                        <div ng-if="!detencionVistaModal" class="tab-pane fade" id="pills-detalle-detencion-alertas" role="tabpanel" aria-labelledby="pills-detalle-detencion-alertas-tab" style="overflow-x: hidden;">
+							<jsp:include page="./../contents/div-info-detalle-detencion-ot-pe.jsp"></jsp:include>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -374,10 +380,6 @@
                     </div>
                 </div>
                 <div class="card-body card-body-alerta-principal">
-                
-                
-                
-                
                 	<div ng-show="!permisoAtenderAlertas">
                 		<div class="row contenedor-not-permiso-atender-alertas">
 	                    	<div class="col-md-12">
@@ -455,9 +457,7 @@
 	                                        <textarea class="form-control form-control-sm txtFormOpcion {{campo.nombreParamentro}} validarCampoAccionAlerta" style=" resize: none" ng-model="terminarAlerta.comentario" placeholder="Se sugiere un m&aacute;ximo de 50 caracteres" id="{{campo.nombreParamentro+''+opcion.id}}" rows="3" ng-keyup="contadorTextArea(campo.nombreParamentro+''+opcion.id)"></textarea>                             
 	                                    	<label style="float: right;" class="etiquetaFormOpcion etiquetaContador">{{contadorCaracteresTextArea}} - 50</label>
 	                                    </div>
-	                                    
 	                                </div>
-	                                
 	                                <div class="col-12">
 	                                    <button class="btn btn-primary btnAccionCamposOpcion" style="width: 100%" ng-click="guardarAccionAlerta(opcion)">{{opcion.descripcion}}</button>
 	                                </div>
@@ -465,12 +465,6 @@
 	                        </div>
 	                    </div>
                     </div>
-                    
-                    
-                    
-                    
-                    
-                    
                 </div>
             </div>
         </div>

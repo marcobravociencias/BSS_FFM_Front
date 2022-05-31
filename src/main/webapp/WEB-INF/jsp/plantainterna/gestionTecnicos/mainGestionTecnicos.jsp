@@ -79,10 +79,6 @@
 			                                                <i style="color:var(--estandar-color);" class="fa fa-phone"></i> {{tecnico.telefono}}
 			                                            </p>
 			                                        </div>
-<!-- 			                                        <div class="col-2 icono_check_tecnico mt-1" > -->
-<!-- 			                                            <p id="tec-{{tecnico.idTecnico}}" class="text-aux" ng-click="consultarDisponibilidadTecnico(tecnico)">TEC</p> -->
-<!-- 			                                            <p id="aux-{{tecnico.idTecnico}}" class="text-aux" ng-click="consultarDisponibilidadAux(tecnico)">AUX</p> -->
-<!-- 			                                        </div> -->
 			                                    </div>
 			                                </div>
 			                            </div>
@@ -114,10 +110,6 @@
 			                                                <i style="color:var(--estandar-color);" class="fa fa-phone"></i> {{auxiliar.telefono}}
 			                                            </p>
 			                                        </div>
-<!-- 			                                        <div class="col-2 icono_check_tecnico mt-1" > -->
-<!-- 			                                            <p id="tec-{{auxiliar.idAuxiliar}}" class="text-aux" ng-click="consultarDisponibilidadTecnico(tecnico)">TEC</p> -->
-<!-- 			                                            <p id="aux-{{auxiliar.idAuxiliar}}" class="text-aux" ng-click="consultarDisponibilidadTecnico(auxiliar)">AUX</p> -->
-<!-- 			                                        </div> -->
 			                                    </div>
 			                                </div>
 			                            </div>
@@ -185,10 +177,6 @@
 	                                            <div class=""><span class="text-title-tecnico">MOTIVO DE JUSTIFICACI&Oacute;N</span></div>
 	                                            <div class=""><span class="text-content-tecnico">{{justificacionDetalle.justificacion}}</span></div>
 	                                        </div>
-<!-- 	                                        <div class="container-fluid tecnico-content"> -->
-<!-- 	                                            <div class=""><span class="text-title-tecnico">FOLIO DE JUSTIFICACI&Oacute;N</span></div> -->
-<!-- 	                                            <div class=""><span class="text-content-tecnico">{{justificacionDetalle.FolioJustificacion}}</span></div> -->
-<!-- 	                                        </div> -->
 	                                        <div class="container-fluid tecnico-content">
 	                                            <div class=""><span class="text-title-tecnico">INICIO DE JUSTIFICACI&Oacute;N</span></div>
 	                                            <div class=""><span class="text-content-tecnico">{{justificacionDetalle.fechaInicio}}</span></div>

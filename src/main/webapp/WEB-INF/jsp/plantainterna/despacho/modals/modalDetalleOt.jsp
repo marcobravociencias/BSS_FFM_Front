@@ -1438,7 +1438,9 @@
 								</div>
 								<div ng-show="permisosModal.indexOf('tabOperacionDiaria') !== -1" class="tab-pane fade" id="v-tabs-consulta-detalle-detencion" role="tabpanel" 
                                 	aria-labelledby="v-tabs-consulta-detalle-detencion-tab">
-                                	<jsp:include page="./../contents/div-info-detalle-detencion-ot-pe.jsp"></jsp:include>
+                                	<div ng-if="detencionVistaModal">
+                                		<jsp:include page="./../contents/div-info-detalle-detencion-ot-pe.jsp"></jsp:include>
+                                	</div>
 								</div>								
 								<div ng-show="permisosModal.indexOf('tabInspectorRed') !== -1" class="tab-pane fade" id="v-tabs-consulta-detalle-inspector" role="tabpanel" 
                                 	aria-labelledby="v-tabs-consulta-detalle-inspector-tab">

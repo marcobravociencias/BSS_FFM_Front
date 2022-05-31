@@ -984,7 +984,7 @@ div.dataTables_wrapper div.dataTables_filter input {
 }
 
 #pills-tab-crearuser li a.active {
-    background-color: #adadad;
+    background-color: var(--tab-secundario-color);
     box-shadow: none;
     /* color:#888888; */
     font-weight: bolder;
@@ -1011,7 +1011,7 @@ div.dataTables_wrapper div.dataTables_filter input {
 }
 
 #pills-tab-mod li a.active {
-    background-color: #adadad;
+    background-color: var(--tab-secundario-color);
     box-shadow: none;
     /* color:#888888; */
     font-weight: bolder;
