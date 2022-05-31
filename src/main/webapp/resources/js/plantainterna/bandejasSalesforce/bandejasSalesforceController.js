@@ -1,6 +1,9 @@
 var app = angular.module('bandejasSalesforceApp', []);
-app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesforceService', 'genericService', function ($scope, $q, bandejasSalesforceService, genericService) {
-
+app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesforceService', 'genericService', 'busquedaSalesforceService', function ($scope, $q, bandejasSalesforceService, genericService, busquedaSalesforceService) {
+    app.busquedaSalesforce($scope, busquedaSalesforceService)
+    $scope.banderaNoticiasTicket = false;
+    $scope.banderaNoticiasOportunidad = false;
+    $scope.banderaNoticiasOs = false;
     $scope.vistaSf = 0;
     $scope.nombreBandejaSf = "";
     $scope.isPendienteActivar = false;

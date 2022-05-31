@@ -11,6 +11,7 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
 
     Nota: En caso de implementar la funcion en otros modulos favor de agregarlos en la siguiente lista
         * moduloGestionTickets
+        * moduloBandejasSalesforce
 
     */
     $scope.historial = [];

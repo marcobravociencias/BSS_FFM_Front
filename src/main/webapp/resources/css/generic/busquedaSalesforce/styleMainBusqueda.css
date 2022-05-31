@@ -1838,3 +1838,10 @@ span.text-activacion-warning {
   height: 44px!important;
   line-height: 44px;
 }
+.link-busqueda-salesforce {
+  font-size: 0.8em;
+  color: #0c56d0 !important;
+  font-weight: bold !important;
+  text-decoration-line: underline;
+  cursor: pointer;
+}

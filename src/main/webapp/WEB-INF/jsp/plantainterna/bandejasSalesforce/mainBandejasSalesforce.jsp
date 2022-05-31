@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/magnific_popup/magnific-popup.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/fullcalendar/main.css">
     <!-- Libraries -->
-
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/generic/busquedaSalesforce\styleMainBusqueda.css?v=${sessionScope.versionDepl}">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/plantainterna/bandejasSalesforce/styleBandejasSalesforce.css?v=${sessionScope.versionDepl}" />
 </head>
 
@@ -36,7 +36,7 @@
     <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
     <br>
     <div class="container" id="container_bandejas_salesforce">
-        <div class="content-fluid" ng-show="!isAgendamiento">
+        <div class="content-fluid" ng-show="!isAgendamiento && !detalleSalesforceView">
             <div class="row" ng-show="!isPermisoConsultaPendientesAgendar && !isPermisoConsultaRescataventas && !isPermisoConsultaPendientesActivar" style="padding: 1em  0;">
                 <div class="text-accion-nopermiso">
                     <i class="icon-not-permiso fas fa-user-lock"></i>
@@ -83,7 +83,7 @@
                 </div>
             </div>
         </div>
-        <div class="content-fluid" ng-show="isAgendamiento">
+        <div class="content-fluid" ng-show="isAgendamiento && !detalleSalesforceView">
             <div class="row row-parent-bandejas">
                 <div class="col-12 col-parent-bandejas mb-3">
                     <div class="col-12">
@@ -93,6 +93,8 @@
             </div>
         </div>
     </div>
+
+    <jsp:include page="/WEB-INF/jsp/generic/busquedaSalesforce/mainBusquedaSalesforce.jsp"></jsp:include>
 
     <jsp:include page="./modals/modalGeografia.jsp"></jsp:include>
     <jsp:include page="./modals/modalNuevoContacto.jsp"></jsp:include>
@@ -124,6 +126,8 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/bandejasSalesforce/calendarAgendamientoController.js?v=${sessionScope.versionDepl}"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/bandejasSalesforce/mapAgendamientoController.js?v=${sessionScope.versionDepl}"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/bandejasSalesforce/bandejasSalesforceService.js?v=${sessionScope.versionDepl}"></script>
+<script src="${pageContext.request.contextPath}/resources/js/generic/busquedaSalesforce/busquedaSalesforceController.js?v=${sessionScope.versionDepl}"></script>
+<script src="${pageContext.request.contextPath}/resources/js/generic/busquedaSalesforce/busquedaSalesforceService.js?v=${sessionScope.versionDepl}"></script>
 <script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js?v=${sessionScope.versionDepl}"></script>
 <script src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
 <script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js?v=${sessionScope.versionDepl}"></script>

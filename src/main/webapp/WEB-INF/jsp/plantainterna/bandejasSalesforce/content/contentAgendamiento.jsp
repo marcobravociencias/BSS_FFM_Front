@@ -30,7 +30,7 @@
                 <span class="text-tile-agendamiento">CSP: </span>
             </div>
             <div class="container-text-content-detalle">
-                <span class="text-content-agendamiento"  ng-bind="elementoCSP.name || 'Sin dato'" ></span>
+                <span class="link-busqueda-salesforce" ng-click="consultarDetalleObjectosSF(elementoCSP.idCSP, 'CP')" ng-bind="elementoCSP.name || 'Sin dato'" ></span>
             </div>
         </div>
         <br>
