@@ -307,6 +307,11 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
 
                 validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
                 validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
+
+                let arrayDefaultKmzElemts=llavesResult.KEY_DEFAULT_KMZ ? llavesResult.KEY_DEFAULT_KMZ.split(",") : null;
+                GenericMapa.prototype.callPrototypeMapa(results[0].data.result,arrayDefaultKmzElemts);
+                
+                $scope.initMapaAgendamiento();
             }
 
             if (resultConf != undefined && resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.permisos && resultConf.MODULO_ACCIONES_USUARIO.permisos != "") {
@@ -318,8 +323,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                 $scope.isPermisoAgendamiento = ($scope.permisosUsuario.filter(e => { return e.clave == "accionAgendamiento" })[0] != undefined);
             }
 
-            GenericMapa.prototype.callPrototypeMapa(results[0].data.result);
-            $scope.initMapaAgendamiento();
+	
 
             if (results[1].data !== undefined) {
                 if (results[1].data.respuesta) {

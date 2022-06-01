@@ -133,7 +133,9 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                 $scope.nGeografia2 = 5;
             }
 
-            GenericMapa.prototype.callPrototypeMapa(results[0].data.result);
+        
+            let arrayDefaultKmzElemts=results[0].data.result.KEY_DEFAULT_KMZ ? results[0].data.result.KEY_DEFAULT_KMZ.split(",") : null;
+            GenericMapa.prototype.callPrototypeMapa(results[0].data.result,arrayDefaultKmzElemts);
             $scope.initializeMap();
 
             // ****************** ARBOL

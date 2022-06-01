@@ -56,6 +56,7 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
                             if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
                                 $scope.configPermisoAccionConsultaSeguimiento =($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaSeguimiento" })[0] != undefined);
                             }
+                            $scope.configPermisoAccionConsultaSeguimiento=true
                             $("#idBody").removeAttr("style");
                             validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
                             validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;

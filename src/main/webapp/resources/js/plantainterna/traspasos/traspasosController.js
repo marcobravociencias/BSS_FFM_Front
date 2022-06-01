@@ -498,6 +498,9 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 							validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
 							validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
 
+							let arrayDefaultKmzElemts=llavesResult.KEY_DEFAULT_KMZ ? llavesResult.KEY_DEFAULT_KMZ.split(",") : null;
+							GenericMapa.prototype.callPrototypeMapa(results[3].data.result,arrayDefaultKmzElemts);
+							$scope.initializeMap();
 							if (!$scope.configPermisoAccionConsultaOts && $scope.configPermisoAccionConsultaTraspasos) {
 								setTimeout(function () {
 									$("#traspasos-tab").click();
@@ -658,9 +661,9 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 				mostrarMensajeErrorAlert('Ha ocurrido un error al consultar los motivos');
 			}
 
+		
 
-			GenericMapa.prototype.callPrototypeMapa(results[3].data.result)
-			$scope.initializeMap();
+
 
 		}).catch(err => handleError(err));
 	}
