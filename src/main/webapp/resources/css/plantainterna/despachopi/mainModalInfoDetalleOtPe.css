@@ -258,6 +258,84 @@
 	background-color: var(--btn-color-guardar-modal) !important;
 }
 
+.tooltipEtiqueta {
+	white-space: normal;
+	visibility: hidden;
+	background-color: #555;
+	color: #fff;
+	text-align: left;
+	border-radius: 6px;
+	padding: 3px 0;
+	position: absolute;
+	z-index: 1;
+	left: 4%;
+	right: 50%;
+	bottom: 80%;
+	opacity: 0;
+	transition: opacity 0.3s;
+	font-family: 'Montserrat';
+	font-size: .6em;
+	padding-left: 0.8em;
+	padding-right: 0.8em;
+}
+
+.etiquetaCampo:hover .tooltipEtiqueta {
+	visibility: visible;
+  	opacity: 1;
+}
+
+.tooltipEtiquetaTabla {
+	white-space: normal;
+	visibility: hidden;
+	background-color: #555;
+	color: #fff;
+	text-align: left;
+	border-radius: 6px;
+	padding: 3px 0;
+	position: absolute;
+	z-index: 1;
+	left: 6%;
+	right: 30%;
+	bottom: 80%;
+	opacity: 0;
+	transition: opacity 0.3s;
+	font-family: 'Montserrat';
+	font-size: .6em;
+	padding-left: 0.8em;
+	padding-right: 0.8em;
+}
+
+.etiquetaCampoTabla:hover .tooltipEtiquetaTabla {
+	visibility: visible;
+  	opacity: 1;
+}
+
+.tooltipTxtCampo {
+    white-space: normal;
+    visibility: hidden;
+    background-color: #555;
+    color: #fff;
+    text-align: left;
+    border-radius: 6px;
+    padding: 3px 0;
+    position: absolute;
+    z-index: 1;
+    left: 42%;
+	right: 5%;
+    bottom: 80%;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-family: 'Montserrat';
+    font-size: .6em;
+    padding-left: 0.8em;
+    padding-right: 0.8em;
+}
+
+.contenedorCampo:hover .tooltipTxtCampo {
+	visibility: visible;
+  	opacity: 1;
+}
+
 /* .carouselImgDetalleFalla::before, */
 /* .carouselImgDetalleFalla::after { */
 /*   content: ''; */

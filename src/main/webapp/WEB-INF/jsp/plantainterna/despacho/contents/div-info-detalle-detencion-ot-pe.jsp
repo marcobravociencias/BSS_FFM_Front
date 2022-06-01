@@ -30,25 +30,13 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="container-fluid vehiculo-content">
-							<div class="container-text-title-detalle-pe">
-								<span class="text-tile-vehiculo" title="ID Orden">ID Orden</span>
+							<div class="container-text-title-detalle-pe etiquetaCampo">
+								<span class="text-tile-vehiculo">ID orden</span>
+								<span class="tooltipEtiqueta">ID orden</span>
 							</div>
-							<div class="container-text-content-detalle">
-								<span class="text-content-vehiculo" title="{{falla.idOrden}}" 
-								ng-bind="falla.idOrden || 'Sin dato'"></span>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-12">
-						<div class="container-fluid vehiculo-content">
-							<div class="container-text-title-detalle-pe">
-								<span class="text-tile-vehiculo" title="Folio sistema">Folio sistema</span>
-							</div>
-							<div class="container-text-content-detalle">
-								<span class="text-content-vehiculo" title="{{falla.folioSistema}}" 
-								ng-bind="falla.folioSistema || 'Sin dato'"></span>
+							<div class="container-text-content-detalle contenedorCampo">
+								<span class="text-content-vehiculo" ng-bind="falla.idOrden || 'Sin dato'"></span>
+								<span class="tooltipTxtCampo" ng-bind="falla.idOrden || 'Sin dato'"></span>
 							</div>
 						</div>
 					</div>
@@ -56,12 +44,13 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="container-fluid vehiculo-content">
-							<div class="container-text-title-detalle-pe">
-								<span class="text-tile-vehiculo" title="Clave cliente">Clave cliente</span>
+							<div class="container-text-title-detalle-pe etiquetaCampo">
+								<span class="text-tile-vehiculo">Folio sistema</span>
+								<span class="tooltipEtiqueta">Folio sistema</span>
 							</div>
-							<div class="container-text-content-detalle">
-								<span class="text-content-vehiculo" title="{{falla.claveCliente}}" 
-								ng-bind="falla.claveCliente || 'Sin dato'"></span>
+							<div class="container-text-content-detalle contenedorCampo">
+								<span class="text-content-vehiculo" ng-bind="falla.folioSistema || 'Sin dato'"></span>
+								<span class="tooltipTxtCampo" ng-bind="falla.folioSistema || 'Sin dato'"></span>
 							</div>
 						</div>
 					</div>
@@ -69,12 +58,27 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="container-fluid vehiculo-content">
-							<div class="container-text-title-detalle-pe">
-								<span class="text-tile-vehiculo" title="Empleado que reporta">Empleado que reporta</span>
+							<div class="container-text-title-detalle-pe etiquetaCampo">
+								<span class="text-tile-vehiculo">Clave cliente</span>
+								<span class="tooltipEtiqueta">Clave cliente</span>
 							</div>
-							<div class="container-text-content-detalle">
-								<span class="text-content-vehiculo" title="{{falla.nombreEmpleadoReporta}}" 
-								ng-bind="falla.nombreEmpleadoReporta || 'Sin dato'"></span>
+							<div class="container-text-content-detalle contenedorCampo">
+								<span class="text-content-vehiculo" ng-bind="falla.claveCliente || 'Sin dato'"></span>
+								<span class="tooltipTxtCampo" ng-bind="falla.claveCliente || 'Sin dato'"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="container-fluid vehiculo-content">
+							<div class="container-text-title-detalle-pe etiquetaCampo">
+								<span class="text-tile-vehiculo">Empleado que reporta</span>
+								<span class="tooltipEtiqueta">Empleado que reporta</span>
+							</div>
+							<div class="container-text-content-detalle contenedorCampo">
+								<span class="text-content-vehiculo" ng-bind="falla.nombreEmpleadoReporta || 'Sin dato'"></span>
+								<span class="tooltipTxtCampo" ng-bind="falla.nombreEmpleadoReporta || 'Sin dato'"></span>
 							</div>
 						</div>
 					</div>
@@ -84,25 +88,13 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="container-fluid vehiculo-content">
-							<div class="container-text-title-detalle-pe">
-								<span class="text-tile-vehiculo" title="Unidad de negocio">Unidad de negocio</span>
+							<div class="container-text-title-detalle-pe etiquetaCampo">
+								<span class="text-tile-vehiculo">Unidad de negocio</span>
+								<span class="tooltipEtiqueta">Unidad de negocio</span>
 							</div>
-							<div class="container-text-content-detalle">
-								<span class="text-content-vehiculo" title="{{falla.unidadNegocio}}" 
-								ng-bind="falla.unidadNegocio || 'Sin dato'"></span>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-12">
-						<div class="container-fluid vehiculo-content">
-							<div class="container-text-title-detalle-pe">
-								<span class="text-tile-vehiculo" title="Falla reportada">Falla reportada</span>
-							</div>
-							<div class="container-text-content-detalle">
-								<span class="text-content-vehiculo" title="{{falla.fallaReportada}}" 
-								ng-bind="falla.fallaReportada || 'Sin dato'"></span>
+							<div class="container-text-content-detalle contenedorCampo">
+								<span class="text-content-vehiculo" ng-bind="falla.unidadNegocio || 'Sin dato'"></span>
+								<span class="tooltipTxtCampo" ng-bind="falla.unidadNegocio || 'Sin dato'"></span>
 							</div>
 						</div>
 					</div>
@@ -110,12 +102,13 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="container-fluid vehiculo-content">
-							<div class="container-text-title-detalle-pe">
-								<span class="text-tile-vehiculo" title="Subfalla reportada">Subfalla reportada</span>
+							<div class="container-text-title-detalle-pe etiquetaCampo">
+								<span class="text-tile-vehiculo">Falla reportada</span>
+								<span class="tooltipEtiqueta">Falla reportada</span>
 							</div>
-							<div class="container-text-content-detalle">
-								<span class="text-content-vehiculo" title="{{falla.subFallaReportada}}" 
-								ng-bind="falla.subFallaReportada || 'Sin dato'"></span>
+							<div class="container-text-content-detalle contenedorCampo">
+								<span class="text-content-vehiculo" ng-bind="falla.fallaReportada || 'Sin dato'"></span>
+								<span class="tooltipTxtCampo" ng-bind="falla.fallaReportada || 'Sin dato'"></span>
 							</div>
 						</div>
 					</div>
@@ -123,12 +116,27 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="container-fluid vehiculo-content">
-							<div class="container-text-title-detalle-pe">
-								<span class="text-tile-vehiculo" title="Fecha reporte">Fecha reporte</span>
+							<div class="container-text-title-detalle-pe etiquetaCampo">
+								<span class="text-tile-vehiculo">Subfalla reportada</span>
+								<span class="tooltipEtiqueta">Subfalla reportada</span>
 							</div>
-							<div class="container-text-content-detalle">
-								<span class="text-content-vehiculo" title="{{falla.fechaReporte}}" 
-								ng-bind="falla.fechaReporte || 'Sin dato'"></span>
+							<div class="container-text-content-detalle contenedorCampo">
+								<span class="text-content-vehiculo" ng-bind="falla.subFallaReportada || 'Sin dato'"></span>
+								<span class="tooltipTxtCampo" ng-bind="falla.subFallaReportada || 'Sin dato'"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="container-fluid vehiculo-content">
+							<div class="container-text-title-detalle-pe etiquetaCampo">
+								<span class="text-tile-vehiculo">Fecha reporte</span>
+								<span class="tooltipEtiqueta">Fecha reporte</span>
+							</div>
+							<div class="container-text-content-detalle contenedorCampo">
+								<span class="text-content-vehiculo" ng-bind="falla.fechaReporte || 'Sin dato'"></span>
+								<span class="tooltipTxtCampo" ng-bind="falla.fechaReporte || 'Sin dato'"></span>
 							</div>
 						</div>
 					</div>
@@ -161,8 +169,9 @@
 								<div class="row">
 									<div class="col-md-12">
 										<div class="container-fluid vehiculo-content">
-											<div class="container-text-title-detalle-pe">
-												<span class="text-tile-vehiculo" title="ID GSA">ID GSA</span>
+											<div class="container-text-title-detalle-pe etiquetaCampoTabla">
+												<span class="text-tile-vehiculo">ID GSA</span>
+												<span class="tooltipEtiquetaTabla">ID GSA</span>
 											</div>
 											<div class="container-text-content-detalle">
 												<span class="text-content-vehiculo" title="{{splitter.idGsa}}" 
@@ -174,8 +183,9 @@
 								<div class="row">
 									<div class="col-md-12">
 										<div class="container-fluid vehiculo-content">
-											<div class="container-text-title-detalle-pe">
-												<span class="text-tile-vehiculo" title="N&uacute;mero cuenta">N&uacute;mero cuenta</span>
+											<div class="container-text-title-detalle-pe etiquetaCampoTabla">
+												<span class="text-tile-vehiculo">N&uacute;mero cuenta</span>
+												<span class="tooltipEtiquetaTabla">N&uacute;mero cuenta</span>
 											</div>
 											<div class="container-text-content-detalle">
 												<span class="text-content-vehiculo" title="{{splitter.numeroCuenta}}" 
@@ -187,8 +197,9 @@
 								<div class="row">
 									<div class="col-md-12">
 										<div class="container-fluid vehiculo-content">
-											<div class="container-text-title-detalle-pe">
-												<span class="text-tile-vehiculo" title="Estatus">Estatus</span>
+											<div class="container-text-title-detalle-pe etiquetaCampoTabla">
+												<span class="text-tile-vehiculo">Estatus</span>
+												<span class="tooltipEtiquetaTabla">Estatus</span>
 											</div>
 											<div class="container-text-content-detalle">
 												<span class="text-content-vehiculo" title="{{splitter.estatus}}" 
@@ -200,8 +211,9 @@
 								<div class="row">
 									<div class="col-md-12">
 										<div class="container-fluid vehiculo-content">
-											<div class="container-text-title-detalle-pe">
-												<span class="text-tile-vehiculo" title="Candado">Candado</span>
+											<div class="container-text-title-detalle-pe etiquetaCampoTabla">
+												<span class="text-tile-vehiculo">Candado</span>
+												<span class="tooltipEtiquetaTabla">Candado</span>
 											</div>
 											<div class="container-text-content-detalle">
 												<span class="text-content-vehiculo" title="{{splitter.candado}}" 
@@ -213,8 +225,9 @@
 								<div class="row">
 									<div class="col-md-12">
 										<div class="container-fluid vehiculo-content">
-											<div class="container-text-title-detalle-pe">
-												<span class="text-tile-vehiculo" title="Puertos asiganados">Puertos asiganados</span>
+											<div class="container-text-title-detalle-pe etiquetaCampoTabla">
+												<span class="text-tile-vehiculo">Puertos asiganados</span>
+												<span class="tooltipEtiquetaTabla">Puertos asiganados</span>
 											</div>
 											<div class="container-text-content-detalle">
 												<span class="text-content-vehiculo" title="{{splitter.puertoAsiganado}}" 
@@ -226,8 +239,9 @@
 								<div class="row">
 									<div class="col-md-12">
 										<div class="container-fluid vehiculo-content">
-											<div class="container-text-title-detalle-pe">
-												<span class="text-tile-vehiculo" title="Puertos ocupados">Puertos ocupados</span>
+											<div class="container-text-title-detalle-pe etiquetaCampoTabla">
+												<span class="text-tile-vehiculo">Puertos ocupados</span>
+												<span class="tooltipEtiquetaTabla">Puertos ocupados</span>
 											</div>
 											<div class="container-text-content-detalle">
 												<span class="text-content-vehiculo" title="{{splitter.puertosOcupados}}" 
@@ -239,8 +253,9 @@
 								<div class="row">
 									<div class="col-md-12">
 										<div class="container-fluid vehiculo-content">
-											<div class="container-text-title-detalle-pe">
-												<span class="text-tile-vehiculo" title="Puertos totales">Puertos totales</span>
+											<div class="container-text-title-detalle-pe etiquetaCampoTabla">
+												<span class="text-tile-vehiculo">Puertos totales</span>
+												<span class="tooltipEtiquetaTabla">Puertos totales</span>
 											</div>
 											<div class="container-text-content-detalle">
 												<span class="text-content-vehiculo" title="{{splitter.puertosTotales}}" 
