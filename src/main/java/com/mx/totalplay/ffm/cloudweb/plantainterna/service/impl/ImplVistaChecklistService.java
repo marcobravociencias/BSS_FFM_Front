@@ -66,7 +66,8 @@ public class ImplVistaChecklistService implements VistaChecklistService{
         logger.info("URL ##+" + urlRequest);
 
         Map<String, String> paramsRequestGet = new HashMap<String, String>();
-      //paramsRequestGet.put("idOt", jsonObject.get("idOt").getAsString());
+        paramsRequestGet.put("idOt", jsonObject.get("idOt").getAsString());
+        paramsRequestGet.put("idUsuario", jsonObject.get("idUsuario").getAsString());
 
         ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
                 ServiceResponseResult.class, tokenAcces);
@@ -84,10 +85,7 @@ public class ImplVistaChecklistService implements VistaChecklistService{
            String urlRequest = principalDetail.getDireccionAmbiente().concat(constVistaChecklist.getGuardarEvidenciaChecklist());
            logger.info("URL ##+" + urlRequest);
 
-           Map<String, String> paramsRequestGet = new HashMap<String, String>();
-         //paramsRequestGet.put("idOt", jsonObject.get("idOt").getAsString());
-
-           ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
+           ServiceResponseResult response = restCaller.callPatchBearerTokenRequest(params, urlRequest,
                    ServiceResponseResult.class, tokenAcces);
            return response;
    	}

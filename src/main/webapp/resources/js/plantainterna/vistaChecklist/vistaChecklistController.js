@@ -13,10 +13,10 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
         "lengthChange": false,
         "ordering": false,
         "pageLength": 10,
-        "info": false,
-        "autoWidth": true,
-        "language": idioma_espanol_not_font,
-        "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+        "info": true,
+        "scrollX": false,
+        "autoWidth": false,
+        "language": idioma_espanol_not_font
     });
 
     $('.datepicker').datepicker({
@@ -135,10 +135,9 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
             row[3] = elemento.num_cuenta ? elemento.num_cuenta : '-';
             row[4] = elemento.cliente ? elemento.cliente : '-';
             row[5] = elemento.direccion ? elemento.direccion : '-';
-            row[6] = elemento.referencias ? elemento.referencias : '-';
-            row[7] = elemento.tecnico ? elemento.tecnico : '-';
-            row[8] = elemento.estatus ? elemento.estatus : '-';
-            row[9] = '<i class="fas fa-bars icon-table" title="Detalle" onclick="consultaDetalle(' + "'" + elemento.ot + "'" + ')"></i>';
+            row[6] = elemento.tecnico ? elemento.tecnico : '-';
+            row[7] = elemento.estatus ? elemento.estatus : '-';
+            row[8] = '<i class="fas fa-bars icon-table" title="Detalle" onclick="consultaDetalle(' + "'" + elemento.ot + "'" + ')"></i>';
             arraRow.push(row);
         })
         /*
@@ -153,19 +152,18 @@ toastr.error('Ha ocurrido un error en la consulta');
 }
 })
 */
-        if (evidenciasTable) {
-            evidenciasTable.destroy();
-        }
+
         evidenciasTable = $('#evidenciasTable').DataTable({
             "paging": true,
             "lengthChange": false,
             "ordering": false,
             "pageLength": 10,
-            "info": false,
-            "autoWidth": true,
+            "bDestroy": true,
+            "info": true,
+            "scrollX": false,
             "data": arraRow,
-            "language": idioma_espanol_not_font,
-            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+            "autoWidth": false,
+            "language": idioma_espanol_not_font
         });
 
     }

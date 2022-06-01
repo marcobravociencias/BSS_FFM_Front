@@ -47,7 +47,7 @@ var listaEvidencia = {
             "num_cuenta": "0102006737",
             "cliente": "Alberto Lara Alvarez  ",
             "direccion": "6ta Oriente 50 50 Isidro Fabela 14030 Ciudad De Mexico",
-            "referencias": "CASA COLOR DE LADRILLO NARANJA ES EN LA EZQUINA DE DEL NAVARRO",
+            "referencias": "CASA COLOR DE LADRILLO",
             "estatus": "Validacion Pendiente",
             "distrito_id": "1308",
             "distrito_name": "TLALPAN D",

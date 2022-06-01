@@ -8,99 +8,66 @@
     font-family: "Montserrat" !important;
 }
 
+/* CSS TABLE */
 
-#container_checklist tr th {
-    font-size: 0.7em;
-    text-align: center;
+#container_checklist tbody tr:nth-child(even) {
+  background: #f5f5f5;
 }
 
-#container_checklist .table td, #container_checklist .table th {
-    border-top: 1px solid #fff;
-    vertical-align: middle;
+#container_checklist thead th {
+  position: relative;
+  background-color: #b1b1b1;
+  color: #fff;
+  font-size: 0.75em;
+  white-space: nowrap;
+  padding: 1em 0.5em;
+  border: none;
+  font-weight: normal;
+  text-align: center;
 }
 
-#container_checklist .table thead {
-    border-bottom: 1px solid #ccc;
+#container_checklist tbody tr td {
+  padding: 0.5em;
+  border: none;
+  white-space: nowrap;
+  color: #39455b;
+  font-family: 'Montserrat';
+  font-size: .75em;
+  border-top: 0px solid #eceeef !important;
+  text-align: center;
 }
 
-#container_checklist .table tr td, #container_checklist .table tr td {
-    font-size: 0.7em;
-    font-family: "Montserrat" !important;
-    text-align: center;
-    border-top: 1px white solid;
-    border-bottom: 1px white solid;
+.page-link {
+  font-size: 0.7em !important;
+  font-family: "Montserrat" !important;
 }
 
-#container_checklist div.dataTables_wrapper div.dataTables_length label {
-    font-weight: inherit !important;
-    color: #828080 !important;
+.dataTables_info {
+  font-size: 0.7em;
+  font-family: "Montserrat" !important;
+  text-align: left;
+  padding-left: 0.5em;
 }
 
-#container_checklist .dataTables_length .form-control.form-control-sm {
-    color: #9a9999 !important;
-    border-bottom: 2px solid #e4e2e2 !important;
-    font-family: "Montserrat" !important;
+.dataTables_paginate.paging_simple_numbers {
+  float: right;
 }
 
-#container_checklist select.form-control.form-control-sm, #container_checklist select.form-control.form-control-sm {
-    border: none;
+.dataTables_filter {
+  font-size: 0.7em !important;
+  font-family: 'Montserrat';
 }
 
-#container_checklist .table.dataTable.no-footer, #container_gestion_Universa .table.dataTable.no-footer {
+div.dataTables_wrapper div.dataTables_filter input {
+  width: 11.3em;
+  height: 2.05em;
+  margin-right: 1em;
+}
+
+table.dataTable.no-footer{
     border-bottom: none;
 }
-
-#container_checklist .pagination {
-    display: block !important;
-}
-
-#container_checklist .pagination .paginate_button a.page-link {
-    color: #828080;
-    font-family: "Montserrat";
-    background-color: white !important;
-    box-shadow: none !important;
-}
-
-#container_checklist .pagination .paginate_button.active {
-    background-color: gray !important;
-}
-
-#container_checklist .pagination .previous a.page-link,
-#modalPagos .pagination .previous a.page-link {
-    color: white !important;
-    font-size: 0;
-}
-
-#container_checklist .pagination .next a.page-link {
-    color: white !important;
-    font-size: 0;
-}
-
-#container_checklist .pagination .previous a:after {
-    font-family: FontAwesome;
-    display: inline-block;
-    content: "\f104";
-    visibility: visible;
-    color: #828080 !important;
-    font-size: initial !important;
-}
-
-#container_checklist .pagination .next a:before {
-    font-family: FontAwesome;
-    display: inline-block;
-    content: "\f105";
-    visibility: visible;
-    color: #828080 !important;
-    font-size: initial !important;
-}
-
-#container_checklist .dataTables_wrapper .dataTables_paginate .paginate_button, #container_checklist .dataTables_wrapper .dataTables_paginate .paginate_button a {
-    padding: 0 !important;
-}
-
-#container_checklist .pagination .paginate_button>.active {
-    border: #000000 !important;
-}
+/* CSS TABLE */
 
 
 .search-filtro {
@@ -293,10 +260,6 @@ div#contenido_imagenes {
     /* color:  black; */
 }
 
-tfoot {
-    background-color: #ebecefa1;
-    color: black;
-}
 
 img.img_evidencia {
     width: 100%;

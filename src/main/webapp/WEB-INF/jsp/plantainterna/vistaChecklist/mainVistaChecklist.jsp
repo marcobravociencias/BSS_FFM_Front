@@ -44,15 +44,8 @@
 
     <body id="idBody" class="body" ng-controller="vistaChecklistController">
         <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
-        <div class="container">
-            <div class="container-title-header" style="padding: 0 !important;">
-                <div class="header-modulo">
-                    <h5 class="title-modulo">Vista Checklist</h5>
-                    <h1 class="h6 subtitle-modulo">En este m&oacute;dulo podr&aacute;s realizar la busqueda de las
-                        evidencias</h1>
-                </div>
-            </div>
-            <div class="row content-fluid">
+        <div class="container"  id="container_checklist">
+            <div class="row col-12 content-fluid">
                 <div class="col-2 columna-filtro">
                     <label for="filtro_fecha_inicio" class="label-filter">Geograf&iacute;a</label>
                     <input readonly placeholder="Geograf&iacute;a" type="text" id="filtro_geografia"
@@ -75,15 +68,8 @@
                     </button>
                 </div>
             </div>
-            <div class="container-fluid" id="container_checklist">
-                <div class="row filter-content">
-                    <div class="col-2 offset-10 form-group">
-                        <input placeholder="Buscar" type="text" autocomplete="off" style=" height: 2em !important;"
-                            class="search-filtro form-control form-control-sm mt-1" id="searchTextGeneral"><i
-                            class="fa fa-search icon-search" style="margin-top: -1.5em;"></i>
-                    </div>
-                </div>
-                <div class="content-fluid" style="margin-top: 0.7em;">
+            <div class="content-fluid p-0">
+                <div class="table-responsive">
                     <table id="evidenciasTable" class="display table" cellspacing="0" width="100%">
                         <thead id="thead_evidencias">
                             <tr>
@@ -93,7 +79,6 @@
                                 <th>NO. CUENTA</th>
                                 <th>CLIENTE</th>
                                 <th>DIRECCI&Oacute;N</th>
-                                <th>REFERENCIA</th>
                                 <th>T&Eacute;CNICO</th>
                                 <th>ESTATUS</th>
                                 <th>DETALLE</th>
