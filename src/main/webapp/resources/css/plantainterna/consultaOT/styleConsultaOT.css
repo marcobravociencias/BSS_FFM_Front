@@ -155,7 +155,7 @@ span#basic-addon1 {
 .imagen_content_evidencia {
   display: inline-grid;
   max-width: 15em !important;
-  margin-left: 4em;
+  margin-left: 2em;
 }
 
 .idoti {
@@ -681,13 +681,13 @@ div.borderFilter {
   border: none;
 }
 
-#table_pagos_ot tbody tr td{
+#table_pagos_ot tbody tr td {
   padding: 0.7em;
   border: none;
   text-align: center;
 }
 
-#table_pagos_ot thead th{
+#table_pagos_ot thead th {
   position: relative;
   background-color: #b1b1b1;
   color: #fff;
@@ -1620,8 +1620,8 @@ span.text-content-vehiculo {
 }
 
 .btn-enviar-comentario-ot {
-	background-color: var(--btn-color-guardar-modal) !important;
-  	height: 41px;
+  background-color: var(--btn-color-guardar-modal) !important;
+  height: 41px;
 }
 
 label.label-filter {
@@ -2185,10 +2185,24 @@ img.img-tecnico-materiales {
 #table-materiales-ot_paginate .page-item.active .page-link,
 #otTable_paginate .page-item.active .page-link,
 #table_dispositovos_ot_paginate .page-item.active .page-link {
-	background-color: var(--btn-color-paginador-tabla) !important;
+  background-color: var(--btn-color-paginador-tabla) !important;
 }
 
 .modal-footer .btn-cerrar-modal {
-	color: var(--btn-color-cerrar-modal) !important;
-    border: 0.09rem solid var(--btn-color-cerrar-modal) !important;
+  color: var(--btn-color-cerrar-modal) !important;
+  border: 0.09rem solid var(--btn-color-cerrar-modal) !important;
+}
+
+.categorias-evidencia-content {
+  max-width: 18em !important;
+  padding: 0;
+  overflow: auto;
+  max-height: 350px;
+  direction: rtl;
+}
+
+.imagenes-evidencia-content {
+  padding: 0;
+  overflow: auto;
+  max-height: 70vh;
 }

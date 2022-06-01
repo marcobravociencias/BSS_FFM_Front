@@ -32,7 +32,7 @@ public class ImplConsultaOTService implements ConsultaOTService {
     private final ConstConsultaOT constConsultaOT;
     private final UtileriaGeneral utilerias;
     Gson gson = new Gson();
-    private final int CANTIDAD_COLUMNS_COLUMNSOT=12;
+    private final int CANTIDAD_COLUMNS_COLUMNSOT=13;
     @Autowired
     public ImplConsultaOTService(ConsumeRest restCaller, ConstantesGeneric constantesGeneric, Environment env, ConstConsultaOT constConsultaOT, UtileriaGeneral utilerias) {
         this.restCaller = restCaller;
@@ -111,19 +111,20 @@ public class ImplConsultaOTService implements ConsultaOTService {
                     for (int i = 0; i < ordenesArray.size(); i++) {
                         JsonObject object = (JsonObject) ordenesArray.get(i);
                         
-                        dataArray[count][0] = object.get("idOrden").getAsInt() != 0 ? String.valueOf(object.get("idOrden").getAsInt()) : "";                        
-                        dataArray[count][1] = ( object.get("nombreCliente") != null && object.get("nombreCliente").getAsString().trim() !="" )  ? object.get("nombreCliente").getAsString().trim() : "Sin dato";
-                        dataArray[count][2] = ( object.get("claveCliente") != null && object.get("claveCliente").getAsString().trim() !="" )  ? object.get("claveCliente").getAsString().trim() : "Sin dato";
-                        dataArray[count][3] = ( object.get("ciudad") != null && object.get("ciudad").getAsString().trim() !="" )  ? object.get("ciudad").getAsString().trim() : "Sin dato";
-                        dataArray[count][4] = ( object.get("fechaAgenda") != null && object.get("fechaAgenda").getAsString().trim() !="" )  ? object.get("fechaAgenda").getAsString().trim() : "Sin dato";
-                        dataArray[count][5] = ( object.get("descTipo") != null && object.get("descTipo").getAsString().trim() !="" )  ? object.get("descTipo").getAsString().trim() : "Sin dato";
-                        dataArray[count][6] = ( object.get("descSubTipo") != null && object.get("descSubTipo").getAsString().trim() !="" )  ? object.get("descSubTipo").getAsString().trim() : "Sin dato";
-                        dataArray[count][7] = ( object.get("descripcionEstatus") != null && object.get("descripcionEstatus").getAsString().trim() !="" )  ? object.get("descripcionEstatus").getAsString().trim() : "Sin dato";
-                        dataArray[count][8] = ( object.get("descripcionEstado") != null && object.get("descripcionEstado").getAsString().trim() !="" )  ? object.get("descripcionEstado").getAsString().trim() : "Sin dato";
-                        dataArray[count][9] = ( object.get("descripcionMotivo") != null && object.get("descripcionMotivo").getAsString().trim() !="" )  ? object.get("descripcionMotivo").getAsString().trim() : "Sin dato";
+                        dataArray[count][0] = object.get("idOrden").getAsInt() != 0 ? String.valueOf(object.get("idOrden").getAsInt()) : "";
+                        dataArray[count][1] = ( object.get("folioSistema") != null && object.get("folioSistema").getAsString().trim() !="" )  ? object.get("folioSistema").getAsString().trim() : "Sin dato";
+                        dataArray[count][2] = ( object.get("nombreCliente") != null && object.get("nombreCliente").getAsString().trim() !="" )  ? object.get("nombreCliente").getAsString().trim() : "Sin dato";
+                        dataArray[count][3] = ( object.get("claveCliente") != null && object.get("claveCliente").getAsString().trim() !="" )  ? object.get("claveCliente").getAsString().trim() : "Sin dato";
+                        dataArray[count][4] = ( object.get("ciudad") != null && object.get("ciudad").getAsString().trim() !="" )  ? object.get("ciudad").getAsString().trim() : "Sin dato";
+                        dataArray[count][5] = ( object.get("fechaAgenda") != null && object.get("fechaAgenda").getAsString().trim() !="" )  ? object.get("fechaAgenda").getAsString().trim() : "Sin dato";
+                        dataArray[count][6] = ( object.get("descTipo") != null && object.get("descTipo").getAsString().trim() !="" )  ? object.get("descTipo").getAsString().trim() : "Sin dato";
+                        dataArray[count][7] = ( object.get("descSubTipo") != null && object.get("descSubTipo").getAsString().trim() !="" )  ? object.get("descSubTipo").getAsString().trim() : "Sin dato";
+                        dataArray[count][8] = ( object.get("descripcionEstatus") != null && object.get("descripcionEstatus").getAsString().trim() !="" )  ? object.get("descripcionEstatus").getAsString().trim() : "Sin dato";
+                        dataArray[count][9] = ( object.get("descripcionEstado") != null && object.get("descripcionEstado").getAsString().trim() !="" )  ? object.get("descripcionEstado").getAsString().trim() : "Sin dato";
+                        dataArray[count][10] = ( object.get("descripcionMotivo") != null && object.get("descripcionMotivo").getAsString().trim() !="" )  ? object.get("descripcionMotivo").getAsString().trim() : "Sin dato";
 
-                        dataArray[count][10] = "<div class='tooltip-btn'> <span onclick='consultaImagenesOT(" + String.valueOf(object.get("idOrden").getAsInt()) + ", "+ String.valueOf(object.get("claveCliente")) + ")' class='btn-option btn-floating btn-evidencia btn-sm btn-secondary waves-effect waves-light'><th><i class='icono_cons_bg fa fa-picture-o' aria-hidden='true'></i></th></span></div>";
-                        dataArray[count][11] = "<div class='tooltip-btn'> <span onclick='consultaDetalleOt("+i+")' class='btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones'><th><i class='icono_cons_bg fa fa-bars' aria-hidden='true'></i></th></span></div>";
+                        dataArray[count][11] = "<div class='tooltip-btn'> <span onclick='consultaImagenesOT(" + String.valueOf(object.get("idOrden").getAsInt()) + ", "+ String.valueOf(object.get("claveCliente")) + ")' class='btn-option btn-floating btn-evidencia btn-sm btn-secondary waves-effect waves-light'><th><i class='icono_cons_bg fa fa-picture-o' aria-hidden='true'></i></th></span></div>";
+                        dataArray[count][12] = "<div class='tooltip-btn'> <span onclick='consultaDetalleOt("+i+")' class='btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones'><th><i class='icono_cons_bg fa fa-bars' aria-hidden='true'></i></th></span></div>";
 
                         count++;
 
@@ -352,6 +353,7 @@ public class ImplConsultaOTService implements ConsultaOTService {
                         JsonObject result = new JsonObject();
                         logger.info("objeto: " + object);
                         result.addProperty("OT", object.get("idOrden").getAsInt() != 0 ? String.valueOf(object.get("idOrden").getAsInt()) : "");
+                        result.addProperty("OS", object.get("folioSistema") != null ? object.get("folioSistema").getAsString().trim() : "");
                         result.addProperty("CLIENTE", object.get("nombreCliente") != null ? object.get("nombreCliente").getAsString().trim() : "");
                         result.addProperty("CUENTA", object.get("claveCliente") != null ? object.get("claveCliente").getAsString().trim() : "");
                         result.addProperty("CIUDAD", object.get("ciudad") != null ? object.get("ciudad").getAsString().trim() : "");

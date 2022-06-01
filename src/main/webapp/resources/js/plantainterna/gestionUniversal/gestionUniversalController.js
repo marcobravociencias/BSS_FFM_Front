@@ -210,7 +210,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                                 }
                                 let nombreCompleto = elemento.nombre + ' ' + elemento.apellidoPaterno + ' ' + elemento.apellidoMaterno;
 
-                                row[0] = '<img style="cursor:pointer;border-radius: 25px" src="' + url + '" alt="Foto" width="30" height="30" onclick="showImage(' + "'" + elemento.numEmpleado + "', 'tecnico'" + ')"/>';
+                                row[0] = '<img class="imgFoto" src="' + url + '" alt="Foto" width="30" height="30" onclick="showImage(' + "'" + elemento.numEmpleado + "', 'tecnico'" + ')"/>';
                                 row[1] = elemento.numEmpleado ? elemento.numEmpleado : 'Sin informaci&oacute;n';
                                 row[2] = elemento.usuarioFFM ? elemento.usuarioFFM : 'Sin informaci&oacute;n';
                                 row[3] = nombreCompleto ? nombreCompleto : 'Sin informaci&oacute;n';
@@ -628,7 +628,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                                 if (elemento.urlFoto) {
                                     url = elemento.urlFoto;
                                 }
-                                row[0] = '<img style="cursor:pointer;border-radius: 25px" src="' + url + '" alt="Foto" width="30" height="30" onclick="showImage(' + "'" + elemento.noEmpleado + "', 'usuario'" + ')"/>';
+                                row[0] = '<img class="imgFoto" src="' + url + '" alt="Foto" width="30" height="30" onclick="showImage(' + "'" + elemento.noEmpleado + "', 'usuario'" + ')"/>';
                                 row[1] = elemento.noEmpleado ? elemento.noEmpleado : 'Sin informaci&oacute;n';
                                 row[2] = elemento.puesto ? elemento.puesto : 'Sin informaci&oacute;n';
                                 row[3] = elemento.usuario ? elemento.usuario : 'Sin informaci&oacute;n';

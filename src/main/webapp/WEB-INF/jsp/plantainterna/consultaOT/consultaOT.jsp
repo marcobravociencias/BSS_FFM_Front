@@ -128,7 +128,7 @@
                         <thead id="thead_consultaOT">
                             <tr>
                                 <th>OT</th>
-                                <!-- <th>OS</th> -->
+                                <th>OS</th>
                                 <th>Cliente</th>
                                 <th>Cuenta</th>
                                 <!-- <th>TICKET</th> -->

@@ -730,7 +730,7 @@ span.text-content-vehiculo {
 }
 
 .btn-editar-cambios:disabled {
-    padding: .7em 2em !important;
+    padding: .6em 2em !important;
 }
 
 .send-comment:disabled {

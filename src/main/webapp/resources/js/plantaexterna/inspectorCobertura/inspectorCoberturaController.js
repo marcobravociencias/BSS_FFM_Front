@@ -17,15 +17,16 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                 lat: parseFloat(19.4326),
                 lng: parseFloat(-99.1332)
             },
-            mapTypeControlOptions: {
+            mapTypeControl:false,
+            zoomControlOptions: {
                 style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-                position: google.maps.ControlPosition.RIGHT_BOTTOM
-            }, zoomControlOptions: {
-                position: google.maps.ControlPosition.BOTTOM_CENTER
+                position: google.maps.ControlPosition.TOP_RIGHT
             }, streetViewControlOptions: {
-                position: google.maps.ControlPosition.RIGHT_BOTTOM
+                position: google.maps.ControlPosition.TOP_RIGHT
             },
-            mapTypeControl: true,
+            fullscreenControlOptions:{
+                position: google.maps.ControlPosition.TOP_RIGHT
+            },
             zoom: 15,
             disableDoubleClickZoom: true
         });
@@ -39,17 +40,17 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
         $('.drop-down-filters').on("click.bs.dropdown", function (e) {
             e.stopPropagation();
         });
-        /*
+        
         $("#content_mapa").toggleClass('closed');
         $("#content_mapa").click(function () {
             $(this).toggleClass('closed');
             if ($(this).hasClass('closed')) {
-                $("#content-card-selected").hide();
+                $("#content-card-consulta").hide();
             } else {
-                $("#content-card-selected").show();
+                $("#content-card-consulta").show();
             }
         });
-        */
+        
 
         $('.datepicker').datepicker({
             format: 'dd/mm/yyyy',
@@ -251,7 +252,6 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
             inspectorCoberturaService.consultarFallasCoberturaPE(),
             inspectorCoberturaService.consultaCatalogoGeografia(),
         ]).then(function (results) {
-            console.log(results);
             let resultConf = results[0].data.result;
             if (resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
                 let llavesResult = results[0].data.result.MODULO_ACCIONES_USUARIO.llaves;
@@ -275,13 +275,12 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
             if (results[1].data !== undefined) {
                 if (results[1].data.respuesta) {
                     if (results[1].data.result) {
-                        console.log(results[1].data);
                         $scope.respaldoFallaArray = [];
                         $scope.respaldoFallaArray = angular.copy(results[1].data.result.incidentes);
                         $scope.nfiltrofallas = $scope.nfiltrofallas ? $scope.nfiltrofallas : $scope.obtenerUltimoNivelFiltros($scope.respaldoFallaArray);
                         $scope.filtrosInspector.fallas = $scope.conversionAnidadaRecursiva($scope.respaldoFallaArray, 1, $scope.nfiltrofallas);
                     } else {
-                        mostrarMensajeWarningValidacion("<li>No se encontraron datos para el Cat&aacute;alogo de Fallas</i>");
+                        mostrarMensajeWarningValidacion("<li>No se encontraron datos para el cat&aacute;alogo de Fallas</i>");
                         $scope.banderaErrorFallas = true;
                     }
                 } else {
@@ -289,7 +288,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                     $scope.banderaErrorFallas = true;
                 }
             } else {
-                mostrarMensajeWarningValidacion("<li>No se encontraron datos para el Cat&aacute;logo de Fallas</i>");
+                mostrarMensajeWarningValidacion("<li>No se encontraron datos para el cat&aacute;logo de Fallas</i>");
                 $scope.banderaErrorFallas = true;
             }
 
@@ -410,7 +409,6 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                     fechaFin: $scope.getFechaFormato($("#filtro_fecha_fin_inspectorCobertura").val())
                 }
                
-                console.log(params);
                 swal({ text: 'Espera un momento...', allowOutsideClick: false });
                 swal.showLoading();
                 inspectorCoberturaService.consultarIncidenciasCoberturaPE(params).then(function success(response) {
@@ -450,11 +448,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
     }
 
     $scope.pintarUbicacion = function (idIncidencia) {
-        //$scope.incidenciaSeleccionada = $scope.incidenciasCobertura[indexI];
         $scope.incidenciaSeleccionada = $scope.incidenciasCobertura.find((e) => e.idIncidencia == idIncidencia);
-        if (!$("#content_mapa").hasClass('closed')) {
-            $("#content_mapa").click();
-        }
         let isMarker = false;
         let index = 0;
         $.each(markers, function (i, elemento) {
@@ -616,7 +610,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                 $('#jstree-proton-3').jstree("close_all");
                 $scope.consultarCoberturas();
                 $scope.$apply();
-                mostrarMensajeExitoAlert('Operaci&oacute;n exitosa');
+                mostrarMensajeExitoAlert('Operaci&oacute;n &eacute;xitosa');
             } else {
                 mostrarMensajeWarningValidacion('El comentario es obligatorio para ligar incidencias');
             }
@@ -719,6 +713,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
     angular.element(document).ready(function () {
         $scope.initInspectorCobertura();
         $scope.consultarCatalogosInspectorCobertura();
+        $(".chevron").click();
         $("#moduloInspectorCoberturasPE").addClass('active');
     });
 
