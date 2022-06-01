@@ -18,10 +18,12 @@ class GenericMapa {
 	}
 	inicializarKmz() {
 		let kmzArray = this.arrayKmzLayerMapa
+		let mapSet=this.mapa;
 		$.each(this.kmzConfigArray, function (index, elemento) {
+			
 			let ctaLayer = new google.maps.KmlLayer({
 				url: elemento.value,
-				map: null,
+				map: elemento.banderaDefaultKmz ? mapSet : null,
 				clickable: false,
 				preserveViewport: true,
 				elemento: elemento
@@ -34,10 +36,13 @@ class GenericMapa {
 
 		let optionCheckBox = ''
 		let tempCont = this.contenedorId
+
+		let textBanderaCheck=''
 		$.each(this.kmzConfigArray, function (index, elm) {
+			textBanderaCheck= elm.banderaDefaultKmz ? 'checked' : ''
 			optionCheckBox += `
 				<div class="form-check form-check-vistamapa">
-					<input tag-index="${index}" id="${tempCont}-${index}"  type="checkbox" class="form-check-input checkinput-${tempCont}">			
+					<input ${textBanderaCheck} tag-index="${index}" id="${tempCont}-${index}"  type="checkbox" class="form-check-input checkinput-${tempCont}">			
 					<label for="${tempCont}-${index}"  class="form-check-label label-form " >${elm.text}</label>
 				</div>    
 			`
@@ -93,11 +98,19 @@ class GenericMapa {
 		}, 1000)
 	}
 }
-GenericMapa.prototype.callPrototypeMapa = function (listadoData) {
-	let listadoKmzConfig = []
+GenericMapa.prototype.callPrototypeMapa = function (listadoData,arrayPreseleccionado) {
+	let listadoKmzConfig = []	
 	for (const elm in listadoData) {
 		if (elm.toUpperCase().includes("KMZ_")) {
+
+			let banderaDefault=false			
+			if( arrayPreseleccionado != undefined &&  arrayPreseleccionado.length>0 && 
+				arrayPreseleccionado.find( (e) =>  e ===elm.trim() ) != undefined  ){
+				banderaDefault=true
+			}
+							
 			listadoKmzConfig.push({
+				banderaDefaultKmz:banderaDefault,
 				identificador: elm,
 				text: elm.substring(elm.indexOf("_") + 1, elm.length).replaceAll('_', ' '),
 				value: listadoData[elm]

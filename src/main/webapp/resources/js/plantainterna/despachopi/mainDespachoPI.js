@@ -1007,7 +1007,8 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                     validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
                     validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
 
-                    GenericMapa.prototype.callPrototypeMapa(resultConf)
+                    let arrayDefaultKmzElemts=llavesResult.KEY_DEFAULT_KMZ ? llavesResult.KEY_DEFAULT_KMZ.split(",") : null;
+                    GenericMapa.prototype.callPrototypeMapa(resultConf,arrayDefaultKmzElemts)
 
                     $scope.elementosConfigGeneral = new Map(Object.entries(resultConf))
                     for (const elm in resultConf) {
