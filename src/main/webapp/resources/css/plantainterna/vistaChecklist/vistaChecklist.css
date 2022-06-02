@@ -11,62 +11,63 @@
 /* CSS TABLE */
 
 #container_checklist tbody tr:nth-child(even) {
-  background: #f5f5f5;
+    background: #f5f5f5;
 }
 
 #container_checklist thead th {
-  position: relative;
-  background-color: #b1b1b1;
-  color: #fff;
-  font-size: 0.75em;
-  white-space: nowrap;
-  padding: 1em 0.5em;
-  border: none;
-  font-weight: normal;
-  text-align: center;
+    position: relative;
+    background-color: #b1b1b1;
+    color: #fff;
+    font-size: 0.75em;
+    white-space: nowrap;
+    padding: 1em 0.5em;
+    border: none;
+    font-weight: normal;
+    text-align: center;
 }
 
 #container_checklist tbody tr td {
-  padding: 0.5em;
-  border: none;
-  white-space: nowrap;
-  color: #39455b;
-  font-family: 'Montserrat';
-  font-size: .75em;
-  border-top: 0px solid #eceeef !important;
-  text-align: center;
+    padding: 0.5em;
+    border: none;
+    white-space: nowrap;
+    color: #39455b;
+    font-family: 'Montserrat';
+    font-size: .75em;
+    border-top: 0px solid #eceeef !important;
+    text-align: center;
 }
 
 .page-link {
-  font-size: 0.7em !important;
-  font-family: "Montserrat" !important;
+    font-size: 0.7em !important;
+    font-family: "Montserrat" !important;
 }
 
 .dataTables_info {
-  font-size: 0.7em;
-  font-family: "Montserrat" !important;
-  text-align: left;
-  padding-left: 0.5em;
+    font-size: 0.7em;
+    font-family: "Montserrat" !important;
+    text-align: left;
+    padding-left: 0.5em;
 }
 
 .dataTables_paginate.paging_simple_numbers {
-  float: right;
+    float: right;
 }
 
 .dataTables_filter {
-  font-size: 0.7em !important;
-  font-family: 'Montserrat';
+    font-size: 0.7em !important;
+    font-family: 'Montserrat';
 }
 
 div.dataTables_wrapper div.dataTables_filter input {
-  width: 11.3em;
-  height: 2.05em;
-  margin-right: 1em;
+    width: 11.3em;
+    height: 2.05em;
+    margin-right: 1em;
 }
 
-table.dataTable.no-footer{
+table.dataTable.no-footer {
     border-bottom: none;
 }
+
 /* CSS TABLE */
 
 
@@ -78,7 +79,8 @@ table.dataTable.no-footer{
     background: #fcfcfc !important;
 }
 
-.btnTotal:active, .btnTotal:focus .btnTotal:hover {
+.btnTotal:active,
+.btnTotal:focus .btnTotal:hover {
     background-color: white !important;
     box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
     color: var(--estandar-color);
@@ -294,7 +296,8 @@ img.img_evidencia {
 }
 
 
-#rechazar.form-check-input[type=radio]:checked:after, #rechazar.form-check-input[type=radio]:after {
+#rechazar.form-check-input[type=radio]:checked:after,
+#rechazar.form-check-input[type=radio]:after {
     font-family: FontAwesome;
     display: inline-block;
     visibility: visible;
@@ -312,7 +315,8 @@ img.img_evidencia {
     padding: 0.1em .3em !important;
 }
 
-#aceptar.form-check-input[type=radio]:checked:after, #aceptar.form-check-input[type=radio]:after {
+#aceptar.form-check-input[type=radio]:checked:after,
+#aceptar.form-check-input[type=radio]:after {
     font-family: FontAwesome;
     display: inline-block;
     visibility: visible;
@@ -351,11 +355,13 @@ img.img_evidencia {
     border-radius: 50%;
 }
 
-.content-select .form-check-input:focus:before, .imagen_content_evidencia .form-check-input:focus:before {
+.content-select .form-check-input:focus:before,
+.imagen_content_evidencia .form-check-input:focus:before {
     box-shadow: none;
 }
 
-.content-select .form-check-input:active, .imagen_content_evidencia .form-check-input:active {
+.content-select .form-check-input:active,
+.imagen_content_evidencia .form-check-input:active {
     filter: none !important;
 }
 
@@ -475,4 +481,63 @@ body.ver_scroll.pg-loaded.modal-open {
     padding: 0.6em 2em;
     border: 0.09rem solid #0c56d0;
     box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
+}
+
+.drop-down-filters {
+    margin-top: 0.3em;
+    min-width: 12rem;
+}
+
+#todo_filtro,
+#ninguno_filtro {
+    width: 45%;
+    background: #1266f1;
+    color: white;
+    margin-top: 0.5em;
+    padding: 0;
+}
+
+.element-menu-filter:hover>.dropdown-menu {
+    top: 0;
+    left: 100%;
+}
+
+.element-menu-filter {
+    position: relative;
+    cursor: pointer !important;
+}
+
+.element-menu-filter:hover>.dropdown-menu {
+    display: block;
+}
+
+.element-menu-filter:hover>.dropdown-menu {
+    top: 0;
+    left: 100%;
+}
+
+.element-menu-filter {
+    position: relative;
+}
+
+label.form-check-inputfiltro {
+    display: flex;
+}
+
+label.dropdown-item.form-check-inputfiltro {
+    margin-bottom: 0;
+    cursor: pointer !important;
+}
+
+.dropdown-item.item-text-filtro {
+    display: contents;
+}
+
+label.dropdown-item.form-check-inputfiltro {
+    margin-bottom: 0;
+    cursor: pointer !important;
+}
+
+.form-check-input {
+    margin-right: 0.5em;
 }
