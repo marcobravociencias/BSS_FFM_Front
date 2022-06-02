@@ -162,28 +162,28 @@
 	                                    <hr>
 	                                    <div ng-show="isJustificacion">
 	                                        <div class="container-fluid tecnico-content">
-	                                            <div class=""><span class="text-title-tecnico">USUARIO QUE CREA</span></div>
-	                                            <div class=""><span class="text-content-tecnico">{{justificacionDetalle.usuarioFFM}}</span></div>
+	                                            <div><span class="text-title-tecnico">USUARIO QUE CREA</span></div>
+	                                            <div><span class="text-content-tecnico">{{justificacionDetalle.usuarioFFM}}</span></div>
 	                                        </div>
 	                                        <div class="container-fluid tecnico-content">
-	                                            <div class=""><span class="text-title-tecnico">NOMBRE QUE CREA</span></div>
-	                                            <div class=""><span class="text-content-tecnico">{{justificacionDetalle.nombreDepacho}}</span></div>
+	                                            <div><span class="text-title-tecnico">NOMBRE QUE CREA</span></div>
+	                                            <div><span class="text-content-tecnico">{{justificacionDetalle.nombreDepacho}}</span></div>
 	                                        </div>
 	                                        <div class="container-fluid tecnico-content">
-	                                            <div class=""><span class="text-title-tecnico">FECHA DE REGISTRO</span></div>
-	                                            <div class=""><span class="text-content-tecnico">{{justificacionDetalle.fechaCreacion}}</span></div>
+	                                            <div><span class="text-title-tecnico">FECHA DE REGISTRO</span></div>
+	                                            <div><span class="text-content-tecnico">{{justificacionDetalle.fechaCreacion}}</span></div>
 	                                        </div>
 	                                        <div class="container-fluid tecnico-content">
-	                                            <div class=""><span class="text-title-tecnico">MOTIVO DE JUSTIFICACI&Oacute;N</span></div>
-	                                            <div class=""><span class="text-content-tecnico">{{justificacionDetalle.justificacion}}</span></div>
+	                                            <div><span class="text-title-tecnico">MOTIVO DE JUSTIFICACI&Oacute;N</span></div>
+	                                            <div><span class="text-content-tecnico">{{justificacionDetalle.justificacion}}</span></div>
 	                                        </div>
 	                                        <div class="container-fluid tecnico-content">
-	                                            <div class=""><span class="text-title-tecnico">INICIO DE JUSTIFICACI&Oacute;N</span></div>
-	                                            <div class=""><span class="text-content-tecnico">{{justificacionDetalle.fechaInicio}}</span></div>
+	                                            <div><span class="text-title-tecnico">INICIO DE JUSTIFICACI&Oacute;N</span></div>
+	                                            <div><span class="text-content-tecnico">{{justificacionDetalle.fechaInicio}}</span></div>
 	                                        </div>
 	                                        <div class="container-fluid tecnico-content">
-	                                            <div class=""><span class="text-title-tecnico">FIN DE JUSTIFICACI&Oacute;N</span></div>
-	                                            <div class=""><span class="text-content-tecnico">{{justificacionDetalle.fechaFin}}</span></div>
+	                                            <div><span class="text-title-tecnico">FIN DE JUSTIFICACI&Oacute;N</span></div>
+	                                            <div><span class="text-content-tecnico">{{justificacionDetalle.fechaFin}}</span></div>
 	                                        </div>
 	                                        <div class="container-fluid tecnico-content text-center mb-1">
 	                                            <button id="btnComentariosJustificacion" class="btn btn-sm btnDetalleJustificacion" ng-click="consultarComentariosJustificacion(justificacionDetalle)">

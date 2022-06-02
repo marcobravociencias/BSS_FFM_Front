@@ -13,7 +13,6 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
 
     $scope.consultarUbicacionOperario = function (id) {
         let tecnicoSelect = $scope.listadoTecnicosGeneral.find(e => { return e.idTecnico.toString() === id })
-        console.log(tecnicoSelect);
         let latitudRes = parseFloat(tecnicoSelect.latitud)
         let longitudRes = parseFloat(tecnicoSelect.longitud)
         if (!mapubicacionoperario) {
@@ -96,7 +95,6 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
         }
         
         mainDespachoService.consultarOtsTrabajadasDespacho(params).then(function success(response) {
-            console.log(response);
             let latitudRes = parseFloat('19.342848228399788')
             let longitudRes = parseFloat('-98.81238282971054')
             if (!mapubicacionoperario) {
@@ -135,7 +133,6 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
             if (response.data !== undefined) {
                 if (response.data.respuesta) {
                     if (response.data.result.result === '0') {
-                        console.log("############## ots trabajadas")
                         //$scope.listadoOtsPendientes=otspendientes                         
                     }
                 }
@@ -147,8 +144,6 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
     $scope.listadomarkerscotizacion = [];
     $scope.consultarDetalleCotizacion = function (idot) {
         $scope.isAbiertoDetalleDireccion = false;
-        //$scope.$apply()
-        console.log(idot)
         $scope.consultarCotizacionDespacho(idot);
     }
 
@@ -165,7 +160,6 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
         $scope.estatusModals = 'PENDIENTE'
         $scope.estatusModals = 'ASIGNADA'
         */
-        console.log($scope.detalleCotizacion)
         swal({ text: 'Consultando detalle de la OT ...', allowOutsideClick: false });
         swal.showLoading();
         let params = {
@@ -646,7 +640,6 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
     let mDetalleTecnico;
     $scope.pintarMarkesMapDetalleAlerta = function () {
         $scope.limpiarMakerTecnicos();
-
         let isDataMarkerTecnico = $scope.validarLatitudLongitudMap($scope.objectDetalleAlerta.tecnico.latitud, $scope.objectDetalleAlerta.tecnico.longitud);
         let isDataMarkerAlerta = $scope.validarLatitudLongitudMap($scope.objectDetalleAlerta.alerta.latitudAlerta, $scope.objectDetalleAlerta.alerta.longitudAlerta);
         

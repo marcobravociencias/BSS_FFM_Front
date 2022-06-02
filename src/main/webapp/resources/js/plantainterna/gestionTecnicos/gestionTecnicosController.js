@@ -338,7 +338,7 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
                         }
                         if (disponibilidad.enTrabajo !== undefined) {
                             eventDisponibilidad = {
-                                title: "Tiempo Trabajado: " + disponibilidad.enTrabajo,
+                                title: "Tiempo Trabajado: " + (disponibilidad.enTrabajo == null ? 'sin información' : disponibilidad.enTrabajo),
                                 tipo: 'TIEMPOTRABAJANO',
                                 start: newFecha,
                                 end: newFecha,
@@ -349,10 +349,10 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
                             eventosDisponibilidad.push(eventDisponibilidad);
                         }
                         if (disponibilidad.horaFin !== undefined) {
-                            let horaFin = disponibilidad.horaFin.split(' ');
+                            let horaFin = disponibilidad.horaFin !== null ? disponibilidad.horaFin.split(' ') : [];
                             eventDisponibilidad = {
                                 height: 800,
-                                title: disponibilidad.enTrabajo == 'SIN INFORMACION' ? 'sin informacion' : moment(horaFin[0], "hh::mm").format('LT'),
+                                title: disponibilidad.horaFin == 'SIN INFORMACION' || disponibilidad.horaFin == null ? 'Sin información' : moment(horaFin[0], "hh::mm").format('LT'),
                                 tipo: 'TRABAJADO',
                                 start: newFecha,
                                 end: newFecha,
@@ -367,9 +367,9 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
                             eventosDisponibilidad.push(eventDisponibilidad);
                         }
                         if (disponibilidad.horaInicio !== undefined) {
-                            let horaInicio = disponibilidad.horaInicio.split(' ');
+                            let horaInicio = disponibilidad.horaInicio !== null ? disponibilidad.horaInicio.split(' ') : [];
                             eventDisponibilidad = {
-                                title: disponibilidad.horaInicio == 'SIN INFORMACION' ? 'sin informacion' : moment(horaInicio[0], "hh::mm").format('LT'),
+                                title: disponibilidad.horaInicio == 'SIN INFORMACION' || disponibilidad.horaInicio == null ? 'Sin información' : moment(horaInicio[0], "hh::mm").format('LT'),
                                 tipo: 'TRABAJADO',
                                 start: newFecha,
                                 end: newFecha,
