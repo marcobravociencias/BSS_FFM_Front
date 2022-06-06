@@ -1050,6 +1050,10 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         }
     }
 
+    $scope.validacionGenerica = function() {
+        
+    }
+
     angular.element(document).ready(function () {
         $('#moduloBandejasSalesforce').addClass('active');
         $("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
