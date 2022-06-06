@@ -94,7 +94,6 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
                             $scope.nfiltroestatusDisponbiles = results[0].data.result.MODULO_ACCIONES_USUARIO.llaves.N_ESTATUS_ARRAY ? results[0].data.result.MODULO_ACCIONES_USUARIO.llaves.N_ESTATUS_ARRAY : null;
                             $scope.nFiltroEstatus = results[0].data.result.MODULO_ACCIONES_USUARIO.llaves.N_ESTATUS_PENDIENTES ? Number(results[0].data.result.MODULO_ACCIONES_USUARIO.llaves.N_ESTATUS_PENDIENTES) : null;
                         }
-
                     } else {
                         toastr.warning('No se encontraron datos para la configuraci\u00F3n');
                     }
@@ -111,7 +110,7 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
                         if (results[1].data.result.geografia || results[1].data.result.geografia.length > 0) {
 
                             $scope.nGeografia = $scope.nGeografia ? $scope.nGeografia : $scope.obtenerNivelUltimoJerarquia(results[1].data.result.geografia);
-                            listGeo = results[1].data.result.geografia.filter(e => { return e.nivel <= $scope.nGeografia });
+                            let listGeo = results[1].data.result.geografia.filter(e => { return e.nivel <= $scope.nGeografia });
                             $scope.listaGeografia = listGeo;
                             let geografia = listGeo;
                             geografia.map((e) => {
@@ -167,12 +166,8 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
                         $scope.respaldoIntervecionesArray = results[2].data.result
                         $scope.nInterveciones = $scope.nInterveciones ? $scope.nInterveciones : $scope.obtenerNivelUltimoJerarquia(results[2].data.result);
 
-                        if ($scope.nInterveciones) {
-                            $scope.arrayIntervenciones = $scope.conversionAnidadaRecursiva($scope.respaldoIntervecionesArray, 1, $scope.nInterveciones)
-                        } else {
-                            let ultimoNivel = $scope.obtenerNivelUltimoJerarquia(results[2].data.result)
-                            $scope.arrayIntervenciones = $scope.conversionAnidadaRecursiva($scope.respaldoIntervecionesArray, 1, ultimoNivel)
-                        }
+                        $scope.arrayIntervenciones = $scope.conversionAnidadaRecursiva($scope.respaldoIntervecionesArray, 1, $scope.nInterveciones)
+
                         $scope.pintarNombreEstatus($scope.arrayIntervenciones, '#filtro-intervencion');
 
                     } else {
@@ -190,7 +185,7 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
                     if (results[3].data.result) {
                         $scope.respaldoArrayEstatus = results[3].data.result
                         $scope.nFiltroEstatus = $scope.nFiltroEstatus ? $scope.nFiltroEstatus : $scope.obtenerNivelUltimoJerarquia(results[3].data.result);
-
+                        console.log($scope.nfiltroestatusDisponbiles);
                         if ($scope.nfiltroestatusDisponbiles != undefined && $scope.nfiltroestatusDisponbiles) {
                             let tempSlice = $scope.nfiltroestatusDisponbiles.split(",").map(e => parseInt(e));
                             let tempArray = []
@@ -200,8 +195,8 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
                                     tempArray.push(elemEstatus)
                             });
                         } else {
-                            let ultimoNivel = $scope.obtenerNivelUltimoJerarquia(results[3].data.result)
-                            $scope.arrayEstatus = $scope.conversionAnidadaRecursiva(results[3].data.result, 1, ultimoNivel)
+                            $scope.arrayEstatus = $scope.conversionAnidadaRecursiva(results[3].data.result, 1, $scope.nFiltroEstatus)
+                            console.log($scope.arrayEstatus);
                         }
                         $scope.pintarNombreEstatus($scope.arrayEstatus, '#filtro-estatus-substatus');
 
