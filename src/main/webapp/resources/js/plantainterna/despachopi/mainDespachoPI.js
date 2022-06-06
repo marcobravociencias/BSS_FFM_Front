@@ -28,8 +28,8 @@ function logwarning(mensaje) {
 function logprocess(mensaje) {
     console.log('%c ' + mensaje, 'background: #7716fa; color: white')
 }
-app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'mainAlertasService', 'genericService',
-    function ($scope, $q, mainDespachoService, mainAlertasService, genericService) {
+app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'mainAlertasService', 'genericService', 'busquedaSalesforceService',
+    function ($scope, $q, mainDespachoService, mainAlertasService, genericService, busquedaSalesforceService) {
 
 
         app.filtrosDespachoPrincipal($scope, mainDespachoService)
@@ -37,6 +37,7 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
         app.modalDespachoPrincipal($scope, mainDespachoService, $q, genericService)
         app.alertasDespachoPrincipal($scope, mainAlertasService, genericService)
         app.misProyectosDependencias($scope, mainDespachoService)
+        app.busquedaSalesforce($scope, busquedaSalesforceService)
 
         $scope.isCargaTecnicosDisponibles = false;
         $scope.isCargaOtsPendientes = false;
@@ -536,7 +537,7 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                                                 <div class="positiontres">
                                                     <div class="content-posiciontres">
                                                         <p class="text-otpendiente-tres-title">FOLIO:</p>
-                                                        <p class="text-otpendiente-tres" >${otpendiente.folioOrden}</p>
+                                                        <p class="text-otpendiente-tres link-busqueda-salesforce" onclick="mostrarModalDetalleSf('${otpendiente.folioOrden}')">${otpendiente.folioOrden}</p>
                                                     </div>
                                                     <div class="content-posiciontres">
                                                         <p class="text-otpendiente-tres-title">OT:</p>
@@ -1491,6 +1492,27 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                     }
 
                 }).catch(err => handleError(err));
+            }
+        }
+
+        mostrarModalDetalleSf = function(os) {
+            if (os !== 'NA') {
+                $scope.consultarDetalleObjectosSF('a153C000000870NQAQ', 'OS');
+                $("#modalDetalleSalesforce").modal('show');
+            } else {
+                toastr.warning("No se cuenta con OS");
+            }
+            
+
+        }
+
+        $scope.cerrarModalDetalleSalesforce = function() {
+            $("#modalDetalleSalesforce").modal('hide');
+        }
+
+        $scope.validacionGenerica = function() {
+            if ($scope.historial.length === 0) {
+                $("#modalDetalleSalesforce").modal('hide');
             }
         }
 

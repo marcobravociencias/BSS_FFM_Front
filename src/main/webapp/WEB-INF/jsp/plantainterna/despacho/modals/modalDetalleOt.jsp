@@ -158,6 +158,14 @@
                                                         ng-bind="infoOtDetalle.direccion.longitud || 'Sin dato'"></span>
                                                 </div>
                                             </div>
+                                            <div class="container-fluid vehiculo-content">
+                                                <div class="container-text-title-detalle"><span
+                                                        class="text-tile-vehiculo">Carta aceptaci&oacute;n</span></div>
+                                                <div class="container-text-content-detalle"><span
+                                                        class="text-content-vehiculo"
+                                                        ng-bind="'Sin dato'"></span>
+                                                </div>
+                                            </div>
 
                                         </div>
                                         <div class="col-6">

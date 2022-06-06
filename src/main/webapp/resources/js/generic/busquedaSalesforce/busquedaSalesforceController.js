@@ -496,7 +496,7 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
         $scope.showOs = false;
         $scope.showTicket = false;
         $scope.historial = [];
-
+        $scope.validacionGenerica();
         $scope.detalleSalesforceView = false;
     }
 
@@ -509,6 +509,8 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
         if ($scope.historial.length !== 0) {
             $scope.detalle = $scope.historial.slice(-1).pop().detalle;
             $scope.redirecionarVistaDetalle($scope.historial.slice(-1).pop().keyObject);
+            $scope.validacionGenerica();
+        } else{
             $scope.validacionGenerica();
         }
     }
