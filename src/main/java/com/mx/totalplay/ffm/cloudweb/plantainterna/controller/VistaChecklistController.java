@@ -1,6 +1,8 @@
 package com.mx.totalplay.ffm.cloudweb.plantainterna.controller;
 
+import com.mx.totalplay.ffm.cloudweb.plantainterna.model.consultaOTPI.ParamConsultaOTPI;
 import com.mx.totalplay.ffm.cloudweb.plantainterna.service.VistaChecklistService;
+import com.mx.totalplay.ffm.cloudweb.utilerias.model.DataTableResponse;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.ServiceResponseResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,6 +17,8 @@ public class VistaChecklistController {
 
     private final Logger logger = LogManager.getLogger(GestionPlanningController.class.getName());
     private final VistaChecklistService vistaChecklistService;
+	private DataTableResponse dataTableResponse;
+
 
     @Autowired
     public VistaChecklistController( VistaChecklistService vistaChecklistService) {
@@ -22,13 +26,13 @@ public class VistaChecklistController {
     }
 
     @PostMapping("/consultarEvidencias")
-    public ResponseEntity<?> consultarEvidencias(@RequestBody String params) {
+    public ResponseEntity<DataTableResponse> consultarEvidencias(@ModelAttribute ParamConsultaOTPI params) {
         logger.info("#### CONSULTANDO EVIDENCIAS ***consultarEvidencias: " + params);
-        ServiceResponseResult response = vistaChecklistService.consultaEvidenciasChecklist(params);
-        if (response.getResult() instanceof Integer){
-            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        dataTableResponse = vistaChecklistService.consultaEvidenciasChecklist(params);
+        if (dataTableResponse.getResult() instanceof Integer){
+            return new ResponseEntity<DataTableResponse>(dataTableResponse, HttpStatus.FORBIDDEN);
         }
-        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+        return new ResponseEntity<DataTableResponse>(dataTableResponse, HttpStatus.ACCEPTED);
     }
 
     @PostMapping("/consultarDetalleEvidencia")

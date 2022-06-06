@@ -320,53 +320,7 @@
                                         ng-bind="ticketDetalle.detalleOtDetenida.cliente || 'Sin dato'"></span>
                                 </div>
                             </div>
-                            <div class="dropleft">
-                                <span class="fas fa-comments icon-color-comments" title="Comentarios"
-                                    id="dropupComments" data-toggle="dropdown" aria-expanded="false"></span>
-                                <div class="dropdown-menu dropup-comments">
-                                    <div class="box-comments">
-                                        <div class="box-comments-header">
-                                            <span>Hist&oacute;rico de comentarios</span>
-                                        </div>
-                                        <div class="container-comments justify-content-center">
-                                            <div class="box-content" ng-show="comentariosOrdenTrabajo.length">
-                                                <div class="d-flex justify-content-center py-2"
-                                                    ng-repeat="comment in comentariosOrdenTrabajo">
-                                                    <div class="second py-2 px-2">
-                                                        <span class="text1" ng-bind="comment.comentario"></span>
-                                                        <div class="d-flex justify-content-between">
-                                                            <span class="text2" ng-bind="comment.nombreUsuario"></span>
-                                                        </div>
-                                                        <span class="text2  text-hora-comments" style="float: right;"
-                                                            ng-bind="comment.fechaComentario"></span>
-                                                        <div class="avatar">
-                                                            <i class="web-mensaje fas fa-desktop" ng-if="comment.origenSistema == 1"></i>
-                                                            <i class="android-mensaje fab fa-android" ng-if="comment.origenSistema == 2"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div class="box-content" ng-show="!comentariosOrdenTrabajo.length">
-                                                <div class="no-comments">
-                                                    No se encontraron comentarios
-                                                </div>
-                                            </div>
-                                            <div class="d-flex justify-content-center pt-3 pb-2">
-                                                <textarea type="text" cols="2" placeholder="Agregar comentario"
-                                                    class="form-control form-control-sm inputTicket addtxt"
-                                                    id="comentarioTicket" ng-model="comentarioTicket"></textarea>
-                                                <div>
-                                                    <button ng-click="addComentarios()" type="button"
-                                                        class="btn btn-primary btn-editar-cambios ripple-surface btn-disabled mr-0 send-comment"><i
-                                                            class="far fa-paper-plane"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                           
                         </div>
                     </div>
                 </div>

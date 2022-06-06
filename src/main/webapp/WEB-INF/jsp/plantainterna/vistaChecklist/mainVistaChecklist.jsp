@@ -16,9 +16,9 @@
             href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-16x16.png">
         <link href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap.min.css"
             rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/jquery.dataTables.css"
+        <link href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/dataTables.fontAwesome.css"
             rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/dataTables.bootstrap4.min.css"
+        <link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/dataTables.bootstrap.min.css"
             rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/font-awesome.min.css"
             rel="stylesheet">
@@ -38,100 +38,135 @@
             rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css"
             rel="stylesheet" />
-        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/vistaChecklist/vistaChecklist.css?v=${sessionScope.versionDepl}"
+        <link
+            href="${pageContext.request.contextPath}/resources/css/plantainterna/vistaChecklist/vistaChecklist.css?v=${sessionScope.versionDepl}"
             rel="stylesheet">
     </head>
 
-    <body id="idBody" class="body" ng-controller="vistaChecklistController">
+    <body id="idBody" class="body" ng-controller="vistaChecklistController" style="display: none;">
         <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
-        <div class="container"  id="container_checklist">
+        <div class="container" id="container_checklist">
             <div class="row col-12 content-fluid">
-                <div class="col-1">
+                <div class="col-1 input-filtro-content">
                     <label for="idot" class="label-filter">OT</label>
-                    <input type="text" id="idot" placeholder="Ej: 65434" ng-model="camposFiltro.idot" ng-change="limpiarCamposFiltro(1)" class="form-control input-filtro form-control-sm">
+                    <input type="text" id="idot" placeholder="Ej: 65434" ng-model="camposFiltro.idot"
+                        ng-change="limpiarCamposFiltro(1)" class="form-control input-filtro form-control-sm">
                 </div>
-                <div class="col-1">
+                <div class="col-1 input-filtro-content">
                     <label for="idos" class="label-filter">OS</label>
-                    <input type="text" id="idos" placeholder="Ej: 23214" ng-model="camposFiltro.idos" ng-change="limpiarCamposFiltro(2)" class="form-control input-filtro form-control-sm">
+                    <input type="text" id="idos" placeholder="Ej: 23214" ng-model="camposFiltro.idos"
+                        ng-change="limpiarCamposFiltro(2)" class="form-control input-filtro form-control-sm">
                 </div>
-                <div class="col-1 columna-filtro">
-                    <i class="icono-noseleccion fas fa-exclamation-circle me-2" title="No se encontraron catalogo de estatus" ng-show="banderaErrorEstatus"></i>
+                <div class="col-1 columna-filtro input-filtro-content">
+                    <i class="icono-noseleccion fas fa-exclamation-circle"
+                        title="No se encontraron catalogo de estatus" ng-show="!arrayEstatus.length"></i>
                     <label for="filtro-estatus-substatus" class="label-filter">Estatus</label>
                     <div class="dropdown">
-                        <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..." type="text" id="filtro-estatus-substatus" class="input-filtro form-control form-control-sm" />
+                        <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..."
+                            type="text" id="filtro-estatus-substatus"
+                            class="input-filtro form-control form-control-sm" />
                         <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-estatus-substatus">
                             <li style="text-align: center;">
-                                <button ng-click="seleccionarTodosRecursivo(arrayEstatus); pintarNombreEstatus(arrayEstatus,'#filtro-estatus-substatus');" id="todo_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
-                                <button ng-click="deseleccionarTodosRecursivo(arrayEstatus); pintarNombreEstatus(arrayEstatus,'#filtro-estatus-substatus');" id="ninguno_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
+                                <button
+                                    ng-click="seleccionarTodosRecursivo(arrayEstatus); pintarNombreEstatus(arrayEstatus,'#filtro-estatus-substatus');"
+                                    id="todo_filtro" type="button"
+                                    class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
+                                <button
+                                    ng-click="deseleccionarTodosRecursivo(arrayEstatus); pintarNombreEstatus(arrayEstatus,'#filtro-estatus-substatus');"
+                                    id="ninguno_filtro" type="button"
+                                    class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
                             </li>
                             <li class="elemento_menu dropdown-divider"></li>
-                            <li ng-repeat="filtro in arrayEstatus " class="element-menu-filter" class="element-menu-filter">
+                            <li ng-repeat="filtro in arrayEstatus " class="element-menu-filter"
+                                class="element-menu-filter">
                                 <label class="dropdown-item form-check-inputfiltro">
-                                    <input ng-click="setCheckFiltroGenericV2(filtro,arrayEstatus); pintarNombreEstatus(arrayEstatus,'#filtro-estatus-substatus');" id="filtrotext-{{filtro.id}}" class="form-check-input" type="checkbox" ng-model="filtro.checkedOpcion" ng-checked="filtro.checkedOpcion" />
-                                    <span for="filtrotext-{{filtro.id}}" class="dropdown-item item-text-filtro" href="#" ng-bind="filtro.nombre"></span>
+                                    <input
+                                        ng-click="setCheckFiltroGenericV2(filtro,arrayEstatus); pintarNombreEstatus(arrayEstatus,'#filtro-estatus-substatus');"
+                                        id="filtrotext-{{filtro.id}}" class="form-check-input" type="checkbox"
+                                        ng-model="filtro.checkedOpcion" ng-checked="filtro.checkedOpcion" />
+                                    <span for="filtrotext-{{filtro.id}}" class="dropdown-item item-text-filtro" href="#"
+                                        ng-bind="filtro.nombre"></span>
                                 </label>
-                                <ul ng-if="filtro.children !== undefined &&  filtro.children.length > 0" ng-include="'filtroEstatus.html'" class="dropdown-menu"></ul>
+                                <ul ng-if="filtro.children !== undefined &&  filtro.children.length > 0"
+                                    ng-include="'filtroEstatus.html'" class="dropdown-menu"></ul>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <div class="col-2 columna-filtro">
-                    <i class="icono-noseleccion fas fa-exclamation-circle me-2" title="No se encontraron catalogo de intervenciones" ng-show="banderaErrorIntervencion"></i>
+                <div class="col-1 columna-filtro input-filtro-content">
+                    <i class="icono-noseleccion fas fa-exclamation-circle"
+                        title="No se encontraron catalogo de intervenciones" ng-show="!arrayIntervenciones.length"></i>
                     <label for="filtro-intervencion" class="label-filter">Intervenci&oacute;n</label>
                     <div class="dropdown">
-                        <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..." type="text" id="filtro-intervencion" class="input-filtro form-control form-control-sm" />
+                        <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..."
+                            type="text" id="filtro-intervencion" class="input-filtro form-control form-control-sm" />
                         <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-intervencion">
                             <li style="text-align: center;">
-                                <button ng-click="seleccionarTodosRecursivo(arrayIntervenciones); pintarNombreEstatus(arrayIntervenciones,'#filtro-intervencion');" id="todo_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
-                                <button ng-click="deseleccionarTodosRecursivo(arrayIntervenciones); pintarNombreEstatus(arrayIntervenciones,'#filtro-intervencion');" id="ninguno_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
+                                <button
+                                    ng-click="seleccionarTodosRecursivo(arrayIntervenciones); pintarNombreEstatus(arrayIntervenciones,'#filtro-intervencion');"
+                                    id="todo_filtro" type="button"
+                                    class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
+                                <button
+                                    ng-click="deseleccionarTodosRecursivo(arrayIntervenciones); pintarNombreEstatus(arrayIntervenciones,'#filtro-intervencion');"
+                                    id="ninguno_filtro" type="button"
+                                    class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
                             </li>
                             <li class="elemento_menu dropdown-divider"></li>
                             <li ng-repeat="filtro in arrayIntervenciones " class="element-menu-filter">
                                 <label class="dropdown-item form-check-inputfiltro">
-                                    <input ng-click="setCheckFiltroGenericV2(filtro,arrayIntervenciones); pintarNombreEstatus(arrayIntervenciones,'#filtro-intervencion');" id="filtrotext-{{filtro.id}}" class="form-check-input" type="checkbox" ng-model="filtro.checkedOpcion" ng-checked="filtro.checkedOpcion" />
-                                    <span for="filtrotext-{{filtro.id}}" class="dropdown-item item-text-filtro" href="#" ng-bind="filtro.nombre"></span>
+                                    <input
+                                        ng-click="setCheckFiltroGenericV2(filtro,arrayIntervenciones); pintarNombreEstatus(arrayIntervenciones,'#filtro-intervencion');"
+                                        id="filtrotext-{{filtro.id}}" class="form-check-input" type="checkbox"
+                                        ng-model="filtro.checkedOpcion" ng-checked="filtro.checkedOpcion" />
+                                    <span for="filtrotext-{{filtro.id}}" class="dropdown-item item-text-filtro" href="#"
+                                        ng-bind="filtro.nombre"></span>
                                 </label>
-                                <ul ng-if="filtro.children !== undefined &&  filtro.children.length > 0" ng-include="'filtroIntervencion.html'" class="dropdown-menu"></ul>
+                                <ul ng-if="filtro.children !== undefined &&  filtro.children.length > 0"
+                                    ng-include="'filtroIntervencion.html'" class="dropdown-menu"></ul>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <div class="col-2 columna-filtro">
+                <div class="col-1 columna-filtro input-filtro-content"> <i class="icono-noseleccion fas fa-exclamation-circle"
+                    title="No se encontraron catalogo de intervenciones" ng-show="!listaGeografia.length"></i>
                     <label for="filtro_fecha_inicio" class="label-filter">Geograf&iacute;a</label>
                     <input readonly placeholder="Geograf&iacute;a" type="text" id="filtro_geografia"
-                        class="search-filtro input-filtro form-control form-control-sm"
+                        class="input-filtro form-control form-control-sm"
                         ng-click="abrirModalGeografia()">
                 </div>
-                <div class="col-2 columna-filtro">
+                <div class="col-1 columna-filtro input-filtro-content">
                     <label for="filtro_fecha_inicio" class="label-filter">Fecha inicial</label>
                     <input readonly type="text" id="filtro_fecha_inicio"
                         class="datepicker input-filtro form-control form-control-sm" />
                 </div>
-                <div class="col-2 columna-filtro">
+                <div class="col-1 columna-filtro input-filtro-content">
                     <label for="filtro_fecha_fin" class="label-filter">Fecha final</label>
                     <input readonly type="text" id="filtro_fecha_fin"
                         class="datepicker input-filtro form-control form-control-sm" />
                 </div>
                 <div class="col-1">
-                    <button id="btnBuscar" type="button" class="btn btn-primary btnTotal" ng-click="buscarCheckList()">
+                    <button id="btnBuscar" type="button" class="btn btn-primary btnTotal" ng-click="consultaEvidencias()">
                         <i class="fa fa-search"></i>
                     </button>
                 </div>
             </div>
-            <div class="content-fluid p-0" style="margin-top: 0.5em;">
+            <div class="content-fluid p-0" style="margin-top: 1em;">
                 <div class="table-responsive">
                     <table id="evidenciasTable" class="display table" cellspacing="0" width="100%">
                         <thead id="thead_evidencias">
                             <tr>
                                 <th>OT</th>
                                 <th>OS</th>
-                                <th>DISTRITO</th>
-                                <th>NO. CUENTA</th>
-                                <th>CLIENTE</th>
-                                <th>DIRECCI&Oacute;N</th>
-                                <th>T&Eacute;CNICO</th>
-                                <th>ESTATUS</th>
-                                <th>DETALLE</th>
+                                <th>Cliente</th>
+                                <th>Cuenta</th>
+                                <th>Ciudad</th>
+                                <th>Fecha agenda</th>
+                                <th>Tipo</th>
+                                <th>Subtipo</th>
+                                <th>Estatus</th>
+                                <th>Estado</th>
+                                <th>Motivo</th>
+                                <th style="text-align: center;">Evidencia</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -179,8 +214,11 @@
         src="${pageContext.request.contextPath}/resources/js/plantainterna/vistaChecklist/vistaChecklistController.js?v=${sessionScope.versionDepl}"></script>
     <script
         src="${pageContext.request.contextPath}/resources/js/plantainterna/vistaChecklist/vistaChecklistService.js?v=${sessionScope.versionDepl}"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js?v=${sessionScope.versionDepl}"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js?v=${sessionScope.versionDepl}"></script>
+    <script
+        src="${pageContext.request.contextPath}/resources/js/generic/genericService.js?v=${sessionScope.versionDepl}"></script>
+    <script
+        src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
+    <script
+        src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js?v=${sessionScope.versionDepl}"></script>
 
     </html>

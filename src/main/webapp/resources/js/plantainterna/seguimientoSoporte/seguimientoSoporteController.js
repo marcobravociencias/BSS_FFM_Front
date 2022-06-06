@@ -54,9 +54,9 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
                             $scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
 
                             if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
-                                $scope.configPermisoAccionConsultaSeguimiento =($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaSeguimiento" })[0] != undefined);
+                                $scope.configPermisoAccionConsultaSeguimiento = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaSeguimiento" })[0] != undefined);
                             }
-                            $scope.configPermisoAccionConsultaSeguimiento=true
+                            $scope.configPermisoAccionConsultaSeguimiento = true
                             $("#idBody").removeAttr("style");
                             validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
                             validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
@@ -73,7 +73,11 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
                 swal.close();
                 toastr.error('Ha ocurrido un error en la consulta de configuracion');
             }
-            $("#idBody").css("display", "block");
+
+            if ($scope.configPermisoAccionConsultaSeguimiento) {
+                $scope.consultaSeguimiento();
+            }
+
             if (results[1].data !== undefined) {
                 if (results[1].data.respuesta) {
                     if (results[1].data.result) {
@@ -335,7 +339,7 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
                                     row[count] = '<i class="fas fa-ticket-alt icon-table" title="Tickets" onclick="consultaTicket(' + "'" + elemento.idIngeniero + "', true" + ')"></i>';
                                     arraRow.push(row);
                                 })
-                            }else{
+                            } else {
                                 toastr.info('No se encontraron datos');
                             }
                         } else {
@@ -478,7 +482,6 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
                     $("#panelsStayOpen-headingOne .accordion-button").click();
                     $("#panelsStayOpen-headingTwo .accordion-button").click();
                     $scope.ticketDetalle = response.data.result.detalleGeneral;
-                    $scope.consultaChat();
                     $scope.ticketDetalle.detalleTicketSc.fallaTxt = $scope.catalogosSeguimiento.fallas.find((e) => e.id == $scope.ticketDetalle.detalleTicketSc.falla).descripcion
                     $scope.ticketDetalle.detalleTicketSc.categoriaTxt = $scope.catalogosSeguimiento.fallas.find((e) => e.id == $scope.ticketDetalle.detalleTicketSc.categoria).descripcion
                     $scope.ticketDetalle.detalleTicketSc.subcategoriaTxt = $scope.catalogosSeguimiento.fallas.find((e) => e.id == $scope.ticketDetalle.detalleTicketSc.subcategoria).descripcion
@@ -540,10 +543,6 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
 
     }
 
-    if ($scope.configPermisoAccionConsultaSeguimiento) {
-        $scope.consultaSeguimiento();
-    }
-
 
 
 
@@ -576,69 +575,6 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
         $scope.$apply();
         $('#img_tec').attr('src', url);
         $('#modalFoto').modal('show');
-    }
-
-    $scope.comentariosOrdenTrabajo = [];
-    $scope.consultaChat = function () {
-        $scope.comentariosOrdenTrabajo = [];
-        let params = {
-            idOt: $scope.ticketDetalle.detalleOtDetenida.otGeneraSoporte
-        }
-        genericService.consultarComentariosDespachoOT(params).then(function success(response) {
-            if (response.data !== undefined) {
-                if (response.data.respuesta) {
-                    if (response.data.result) {
-                        if (response.data.result.detalle) {
-                            $scope.comentariosOrdenTrabajo = response.data.result.detalle;
-                            angular.forEach($scope.comentariosOrdenTrabajo, function (comentario, index) {
-                                comentario.fechaComentario = moment(comentario.fecha + ' ' + comentario.hora).format("dddd, D [de] MMMM [de] YYYY hh:mm A");
-                            });
-                        } else {
-                            toastr.warning(response.data.result.mensaje);
-                        }
-                    } else {
-                        toastr.warning('No se encontraron comentarios');
-                    }
-                } else {
-                    toastr.warning(response.data.resultDescripcion);
-                }
-            } else {
-                toastr.warning(response.data.resultDescripcion);
-            }
-        }).catch(err => handleError(err));
-    }
-    $scope.comentarioTicket = '';
-    $scope.addComentarios = function () {
-        if ($('#comentarioTicket').val().trim() !== '' && !/^\s/.test($('#comentarioTicket').val())) {
-
-            let params = {
-                idOrden: $scope.ticketDetalle.detalleOtDetenida.otGeneraSoporte,
-                comentario: $scope.comentarioTicket,
-                origenSistema: 1
-            }
-
-            $('.send-comment').prop("disabled", 'disabled');
-
-            genericService.agregarComentariosOt(params).then(function success(response) {
-                $('.send-comment').prop("disabled", false);
-                if (response.data !== undefined) {
-                    if (response.data.respuesta) {
-                        $scope.comentarioTicket = '';
-                        $('#comentarioTicket').val('');
-                        $scope.consultaChat();
-                    } else {
-                        toastr.error(response.data.resultDescripcion);
-                    }
-                } else {
-                    toastr.error(response.data.resultDescripcion);
-                }
-            }).catch(err => handleError(err))
-
-        } else {
-            $scope.comentarioTicket = '';
-            $('#comentarioTicket').val('');
-            toastr.warning('Intoducir un comentario.');
-        }
     }
 
     $scope.validacionGenerica = function () {

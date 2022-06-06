@@ -1,16 +1,16 @@
 var app = angular.module('vistaChecklistApp', []);
 
 app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistService', '$filter', 'genericService', function ($scope, $q, vistaChecklistService, $filter, genericService) {
+    var regexUrl = /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/;
     let evidenciasTable;
     $scope.listaEvidencias = [];
     $scope.detalleEvidencia = [];
     $scope.nGeografia = '';
     $scope.listaGeografia = [];
+    $scope.listImagenesTipo = [];
     $scope.listaTotal = { aceptadas: 0, rechazadas: 0 };
     $scope.nInterveciones = '';
     $scope.arrayIntervenciones = []
-    $scope.banderaErrorIntervencion = false
-    $scope.banderaErrorEstatus = false
     $scope.arrayEstatus = []
     $scope.nFiltroEstatus = ''
     $scope.respaldoArrayEstatus = []
@@ -23,15 +23,28 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
         e.stopPropagation();
     });
 
+    angular.element(document).ready(function () {
+        $("#modalGeografia").on("hidden.bs.modal", function () {
+            var geografias = $('#jstreeConsulta').jstree("get_selected", true);
+            let textoGeografias = [];
+            angular.forEach(geografias, (geografia, index) => {
+                textoGeografias.push(geografia.text);
+            });
+            $('#filtro_geografia').val(textoGeografias);
+        })
+    });
+
+
     evidenciasTable = $('#evidenciasTable').DataTable({
         "paging": true,
         "lengthChange": false,
+        "searching": false,
         "ordering": false,
         "pageLength": 10,
-        "info": true,
-        "scrollX": false,
-        "autoWidth": false,
-        "language": idioma_espanol_not_font
+        "info": false,
+        "autoWidth": true,
+        "language": idioma_espanol_not_font,
+        "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
     });
 
     $('.datepicker').datepicker({
@@ -71,215 +84,364 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
             genericService.consultarCatalogoIntervenciones(),
             genericService.consultarCatalogoEstatusDespachoPI()
         ]).then(function (results) {
-            if (results[0].data.result && results[0].data.respuesta) {
-                $scope.nGeografia =  5////results[0].data.result.MODULO_ACCIONES_USUARIO.llaves.N_FILTRO_GEOGRAFIA ? Number(results[0].data.result.MODULO_ACCIONES_USUARIO.llaves.N_FILTRO_GEOGRAFIA) : null;
-                $scope.nInterveciones = null //results[0].data.result.MODULO_ACCIONES_USUARIO.llaves.N_FILTRO_INTERVENCIONES ? Number(results[0].data.result.MODULO_ACCIONES_USUARIO.llaves.N_FILTRO_INTERVENCIONES) : null;
-                $scope.nfiltroestatusDisponbiles = null //results[0].data.result.MODULO_ACCIONES_USUARIO.llaves.N_ESTATUS_ARRAY ? results[0].data.result.MODULO_ACCIONES_USUARIO.llaves.N_ESTATUS_ARRAY  : null;
-                $scope.nFiltroEstatus = null//results[0].data.result.MODULO_ACCIONES_USUARIO.llaves.N_ESTATUS_PENDIENTES ? Number(results[0].data.result.MODULO_ACCIONES_USUARIO.llaves.N_ESTATUS_PENDIENTES)  : null;
-            } else {
-                mostrarMensajeErrorAlert(results[0].data.resultDescripcion)
-            }
-            if (results[1].data.result && results[1].data.respuesta) {
-                if (results[1].data.result) {
-                    if (results[1].data.result.geografia || results[1].data.result.geografia.length > 0) {
-                        let listGeo = [];
-
-                        if ($scope.nGeografia) {
-                            listGeo = results[1].data.result.geografia.filter(e => { return e.nivel <= $scope.nGeografia });
-                        } else {
-                            listGeo = results[1].data.result.geografia;
+            if (results[0].data !== undefined) {
+                if (results[0].data.respuesta) {
+                    if (results[0].data.result) {
+                        let resultConf = results[0].data.result
+                        if (resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
+                            $scope.nGeografia = results[0].data.result.MODULO_ACCIONES_USUARIO.llaves.N_FILTRO_GEOGRAFIA ? Number(results[0].data.result.MODULO_ACCIONES_USUARIO.llaves.N_FILTRO_GEOGRAFIA) : null;
+                            $scope.nInterveciones = results[0].data.result.MODULO_ACCIONES_USUARIO.llaves.N_FILTRO_INTERVENCIONES ? Number(results[0].data.result.MODULO_ACCIONES_USUARIO.llaves.N_FILTRO_INTERVENCIONES) : null;
+                            $scope.nfiltroestatusDisponbiles = results[0].data.result.MODULO_ACCIONES_USUARIO.llaves.N_ESTATUS_ARRAY ? results[0].data.result.MODULO_ACCIONES_USUARIO.llaves.N_ESTATUS_ARRAY : null;
+                            $scope.nFiltroEstatus = results[0].data.result.MODULO_ACCIONES_USUARIO.llaves.N_ESTATUS_PENDIENTES ? Number(results[0].data.result.MODULO_ACCIONES_USUARIO.llaves.N_ESTATUS_PENDIENTES) : null;
                         }
-                        $scope.listaGeografia = listGeo;
-                        let geografia = listGeo;
-                        geografia.map((e) => {
-                            e.parent = e.padre == null ? "#" : e.padre;
-                            e.text = e.nombre;
-                            e.icon = "fa fa-globe";
-                            e.state = {
-                                opened: true,
-                                selected: true,
-                            }
-                            return e
-                        })
-                        $('#jstreeConsulta').bind('loaded.jstree', function (e, data) {
-                            $scope.consultaEvidencias();
-                        }).jstree({
-                            'plugins': ["wholerow", "checkbox", "search"],
-                            'core': {
-                                'data': geografia,
-                                'themes': {
-                                    'name': 'proton',
-                                    'responsive': true,
-                                    "icons": false
+
+                    } else {
+                        toastr.warning('No se encontraron datos para la configuraci\u00F3n');
+                    }
+                } else {
+                    toastr.warning(results[0].data.resultDescripcion);
+                }
+            } else {
+                toastr.error('Ha ocurrido un error en la consulta de configuraci\u00F3n');
+            }
+
+            if (results[1].data !== undefined) {
+                if (results[1].data.respuesta) {
+                    if (results[1].data.result) {
+                        if (results[1].data.result.geografia || results[1].data.result.geografia.length > 0) {
+
+                            $scope.nGeografia = $scope.nGeografia ? $scope.nGeografia : $scope.obtenerNivelUltimoJerarquia(results[1].data.result.geografia);
+                            listGeo = results[1].data.result.geografia.filter(e => { return e.nivel <= $scope.nGeografia });
+                            $scope.listaGeografia = listGeo;
+                            let geografia = listGeo;
+                            geografia.map((e) => {
+                                e.parent = e.padre == null ? "#" : e.padre;
+                                e.text = e.nombre;
+                                e.icon = "fa fa-globe";
+                                e.state = {
+                                    opened: true,
+                                    selected: true,
                                 }
-                            },
-                            "search": {
-                                "case_sensitive": false,
-                                "show_only_matches": true
-                            }
-                        });
+                                return e
+                            })
+                            $('#jstreeConsulta').bind('loaded.jstree', function (e, data) {
+                                var geografias = $('#jstreeConsulta').jstree("get_selected", true);
+                                let textoGeografias = [];
+                                angular.forEach(geografias, (geografia, index) => {
+                                    textoGeografias.push(geografia.text);
+                                });
+                                $('#filtro_geografia').val(textoGeografias);
+                                $scope.consultaEvidencias();
+                            }).jstree({
+                                'plugins': ["wholerow", "checkbox", "search"],
+                                'core': {
+                                    'data': geografia,
+                                    'themes': {
+                                        'name': 'proton',
+                                        'responsive': true,
+                                        "icons": false
+                                    }
+                                },
+                                "search": {
+                                    "case_sensitive": false,
+                                    "show_only_matches": true
+                                }
+                            });
+
+                        } else {
+                            mostrarMensajeWarningValidacion('No existen geograf\u00EDas actualmente')
+                        }
+                    } else {
+                        toastr.warning('No se encontraron datos para la geograf\u00EDa');
+                    }
+                } else {
+                    toastr.warning(results[1].data.resultDescripcion);
+                }
+            } else {
+                toastr.error('Ha ocurrido un error en la consulta de la geograf\u00EDa');
+            }
+
+            if (results[2].data !== undefined) {
+                if (results[2].data.respuesta) {
+                    if (results[2].data.result) {
+                        $scope.respaldoIntervecionesArray = results[2].data.result
+                        $scope.nInterveciones = $scope.nInterveciones ? $scope.nInterveciones : $scope.obtenerNivelUltimoJerarquia(results[2].data.result);
+
+                        if ($scope.nInterveciones) {
+                            $scope.arrayIntervenciones = $scope.conversionAnidadaRecursiva($scope.respaldoIntervecionesArray, 1, $scope.nInterveciones)
+                        } else {
+                            let ultimoNivel = $scope.obtenerNivelUltimoJerarquia(results[2].data.result)
+                            $scope.arrayIntervenciones = $scope.conversionAnidadaRecursiva($scope.respaldoIntervecionesArray, 1, ultimoNivel)
+                        }
+                        $scope.pintarNombreEstatus($scope.arrayIntervenciones, '#filtro-intervencion');
 
                     } else {
-                        mostrarMensajeWarningValidacion('No existen geografias actualmente')
+                        toastr.info('No se encontraron intervenciones');
                     }
                 } else {
-                    mostrarMensajeErrorAlert(results[1].data.result.mensaje)
+                    toastr.warning(results[2].data.resultDescripcion);
                 }
             } else {
-                mostrarMensajeErrorAlert(results[1].data.resultDescripcion)
-            }
-            if (results[2].data.result && results[2].data.respuesta) {
-                if (results[2].data.result) {
-                    $scope.respaldoIntervecionesArray = results[2].data.result
-                    if ($scope.nInterveciones) {
-                        $scope.arrayIntervenciones = $scope.conversionAnidadaRecursiva($scope.respaldoIntervecionesArray,1, $scope.nInterveciones)
-                    } else {
-                        let ultimoNivel = $scope.obtenerNivelUltimoJerarquia(results[2].data.result)
-                        $scope.arrayIntervenciones = $scope.conversionAnidadaRecursiva($scope.respaldoIntervecionesArray,1, ultimoNivel)
-                    }
-                    
-                   
-                } else {
-                    mostrarMensajeWarningValidacion('No existen intervenciones actualmente')
-                    $scope.banderaErrorIntervencion = true
-                }
-            } else {
-                mostrarMensajeErrorAlert(results[1].data.resultDescripcion)
+                toastr.error('Ha ocurrido un error en la consulta de intervenciones');
             }
 
-            if (results[3].data.result && results[3].data.respuesta) {
-                if (results[3].data.result) {
-                    $scope.respaldoArrayEstatus = results[3].data.result
-                    if( $scope.nfiltroestatusDisponbiles != undefined  &&  $scope.nfiltroestatusDisponbiles ){
-                        let tempSlice=$scope.nfiltroestatusDisponbiles.split(",").map(e=>parseInt(e));
-                        let tempArray=[]
-                        angular.forEach( tempSlice , function(  elm , index ){
-                            let elemEstatus=angular.copy(results[3].data.result.find( e => e.id == elm ) )
-                            if( !elemEstatus != undefined )
-                                tempArray.push(  elemEstatus )
-                        });
-                        $scope.arrayEstatus = tempArray
-                    } else{
-                        let ultimoNivel = $scope.obtenerNivelUltimoJerarquia(results[3].data.result)
-                        $scope.arrayEstatus = $scope.conversionAnidadaRecursiva(results[3].data.result,1, ultimoNivel)
+            if (results[3].data !== undefined) {
+                if (results[3].data.respuesta) {
+                    if (results[3].data.result) {
+                        $scope.respaldoArrayEstatus = results[3].data.result
+                        $scope.nFiltroEstatus = $scope.nFiltroEstatus ? $scope.nFiltroEstatus : $scope.obtenerNivelUltimoJerarquia(results[3].data.result);
+
+                        if ($scope.nfiltroestatusDisponbiles != undefined && $scope.nfiltroestatusDisponbiles) {
+                            let tempSlice = $scope.nfiltroestatusDisponbiles.split(",").map(e => parseInt(e));
+                            let tempArray = []
+                            angular.forEach(tempSlice, function (elm, index) {
+                                let elemEstatus = angular.copy(results[3].data.result.find(e => e.id == elm))
+                                if (!elemEstatus != undefined)
+                                    tempArray.push(elemEstatus)
+                            });
+                        } else {
+                            let ultimoNivel = $scope.obtenerNivelUltimoJerarquia(results[3].data.result)
+                            $scope.arrayEstatus = $scope.conversionAnidadaRecursiva(results[3].data.result, 1, ultimoNivel)
+                        }
+                        $scope.pintarNombreEstatus($scope.arrayEstatus, '#filtro-estatus-substatus');
+
+                    } else {
+                        toastr.info('No se encontraron estatus');
                     }
                 } else {
-                    mostrarMensajeWarningValidacion('No existen estatus actualmente')
-                    $scope.banderaErrorEstatus = true
+                    toastr.warning(results[2].data.resultDescripcion);
                 }
             } else {
-                mostrarMensajeErrorAlert(results[1].data.resultDescripcion)
+                toastr.error('Ha ocurrido un error en la consulta de estatus');
             }
-            
+
+            $("#idBody").removeAttr("style");
 
         }).catch(err => handleError(err));
     }
 
     $scope.getInformacionGeneral();
 
+    $scope.getFechaFormato = function (fecha) {
+        let fechaPrueba = fecha.split('/');
+        return fechaPrueba[2] + '-' + fechaPrueba[1] + '-' + fechaPrueba[0];
+    }
+
+    validarFecha = function () {
+        if (document.getElementById('filtro_fecha_inicio').value.trim() != "" && document.getElementById('filtro_fecha_fin').value.trim() != "") {
+            var inicio = document.getElementById('filtro_fecha_inicio').value.split('/');
+            var fin = document.getElementById('filtro_fecha_fin').value.split('/');
+            var date_inicio = new Date(inicio[2] + '-' + inicio[1] + '-' + inicio[0]);
+            var date_fin = new Date(fin[2] + '-' + fin[1] + '-' + fin[0]);
+            if (date_inicio <= date_fin) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
     $scope.consultaEvidencias = function () {
+        let isValido = true;
+        let errorMensaje = '';
 
-
-        let arraRow = [];
-        let params = {
-
+        let intervenciones = []
+        if ($scope.nInterveciones) {
+            intervenciones = $scope.obtenerElementosSeleccionadosFiltro($scope.arrayIntervenciones, $scope.nInterveciones);
+        } else {
+            let ultimoNivel = $scope.obtenerNivelUltimoJerarquia($scope.respaldoIntervecionesArray)
+            intervenciones = $scope.obtenerElementosSeleccionadosFiltro($scope.arrayIntervenciones, ultimoNivel);
         }
-        /*
-        vistaChecklistService.consultarEvidencias(params).then(function success(response) {
+
+
+        let estatusDisponiblesCheck = [];
+        if ($scope.nFiltroEstatus) {
+            estatusDisponiblesCheck = $scope.obtenerElementosSeleccionadosFiltro($scope.arrayEstatus, $scope.nFiltroEstatus);
+        } else {
+            let ultimoNivelEstatus = $scope.obtenerNivelUltimoJerarquia($scope.respaldoArrayEstatus)
+            estatusDisponiblesCheck = $scope.obtenerElementosSeleccionadosFiltro($scope.arrayEstatus, ultimoNivelEstatus);
+        }
+
+
+        let clustersparam = []
+        if ($scope.nGeografia) {
+            clustersparam = $("#jstreeConsulta").jstree("get_selected", true)
+                .filter(e => e.original.nivel == $scope.nGeografia)
+                .map(e => parseInt(e.id))
+        } else {
+            let nivelBusquedaArbol = $scope.obtenerNivelUltimoJerarquia($scope.listaGeografia)
+            clustersparam = $("#jstreeConsulta").jstree("get_selected", true)
+                .filter(e => e.original.nivel == nivelBusquedaArbol)
+                .map(e => parseInt(e.id))
+        }
+
+        if ($.trim(document.getElementById('idot').value) !== '') {
+            if (!($.isNumeric($.trim(document.getElementById('idot').value)))) {
+                errorMensaje += '<li>Introduce un n&uacute;mero correcto de OT.</li>';
+                isValido = false;
+            }
+        }
+
+        if (estatusDisponiblesCheck.length === 0) {
+            errorMensaje += '<li>Seleccione estatus.</li>';
+            isValido = false
+        }
+
+        if (intervenciones.length === 0) {
+            errorMensaje += '<li>Seleccione intervenci&oacute;n.</li>';
+            isValido = false
+        }
+
+        if (clustersparam.length === 0) {
+            errorMensaje += '<li>Seleccione geograf&iacute;a.</li>';
+            isValido = false
+        }
+
+        if (!validarFecha()) {
+            $('.datepicker').datepicker('update', new Date());
+            errorMensaje += '<li>La fecha inicial no tiene que ser mayor a la final.</li>';
+            isValido = false
+        }
+
+
+        if (isValido) {
+            let params = {
+                idOrden: $scope.camposFiltro.idot,
+                folioSistema: $scope.camposFiltro.idos,
+                idSubTipoOrdenes: intervenciones,
+                idEstatus: estatusDisponiblesCheck,
+                idClusters: clustersparam,
+                fechaInicio: $scope.getFechaFormato(document.getElementById('filtro_fecha_inicio').value),
+                fechaFin: $scope.getFechaFormato(document.getElementById('filtro_fecha_fin').value),
+                elementosPorPagina: 10
+            }
+
+            evidenciasTable = $('#evidenciasTable').DataTable({
+                "processing": false,
+                "ordering": false,
+                "serverSide": true,
+                "scrollX": false,
+                "bDestroy": true,
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": false,
+                "ajax": {
+                    "url": "req/consultarEvidencias",
+                    "type": "POST",
+                    "data": params,
+                    "beforeSend": function () {
+                        if (!swal.isVisible()) {
+                            swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                            swal.showLoading();
+                        }
+                    },
+                    "dataSrc": function (json) {
+                        return json.data;
+                    },
+                    "error": function (xhr, error, thrown) {
+                        handleError(xhr);
+                    },
+                    "complete": function () {
+                        swal.close()
+                    }
+                },
+                "language": idioma_espanol_not_font
+            });
+        } else {
+            mostrarMensajeWarningValidacion(errorMensaje);
+        }
+    }
+
+    let groupBy = function (xs, key) {
+        return xs.reduce(function (rv, x) {
+            (rv[x[key]] = rv[x[key]] || []).push(x);
+            return rv;
+        }, {});
+    };
+
+
+    consultaDetalle = function (id, usuario) {
+        let params = {
+            idOt: id,
+            idUsuario: usuario
+        }
+        swal({ text: 'Espera un momento...', allowOutsideClick: false });
+        swal.showLoading();
+        vistaChecklistService.consultarDetalleEvidencia(params).then(function success(response) {
+            swal.close();
             if (response.data !== undefined) {
                 if (response.data.respuesta) {
                     if (response.data.result) {
-                        */
-        $scope.listaEvidencias = listaEvidencia.result;
-        $.each($scope.listaEvidencias, function (i, elemento) {
-            let row = [];
-            row[0] = elemento.ot ? elemento.ot : '-';
-            row[1] = elemento.os ? elemento.os : '-';
-            row[2] = elemento.distrito_name ? elemento.distrito_name : '-';
-            row[3] = elemento.num_cuenta ? elemento.num_cuenta : '-';
-            row[4] = elemento.cliente ? elemento.cliente : '-';
-            row[5] = elemento.direccion ? elemento.direccion : '-';
-            row[6] = elemento.tecnico ? elemento.tecnico : '-';
-            row[7] = elemento.estatus ? elemento.estatus : '-';
-            row[8] = '<i class="fas fa-bars icon-table" title="Detalle" onclick="consultaDetalle(' + "'" + elemento.ot + "'" + ')"></i>';
-            arraRow.push(row);
-        })
-        /*
-    } else {
-        toastr.warning('No se encontró ningún valor');
+                        $scope.detalleEvidencia = response.data.result;
+                        $scope.detalleEvidencia.tipos = [];
+                        $scope.listImagenesTipo = response.data.result.evidencias;
+
+                        let listaTipos = [];
+                        let aceptadas = 0;
+                        let rechazadas = 0;
+                        let urlTec = regexUrl.test($scope.detalleEvidencia.urlFotoPerfil) ? $scope.detalleEvidencia.urlFotoPerfil : "./resources/img/plantainterna/despacho/tecnicootasignada.png";
+                        $("#fotoTecnico").attr("src", urlTec);
+                        var count_cantidad_por_tipo = groupBy(response.data.result.evidencias, 'idEvidencia');
+                        response.data.result.evidencias.map(function (e) {
+                            aceptadas = aceptadas + (e.idEstatus == 2 ? 1 : 0);
+                            rechazadas = rechazadas + (e.idEstatus == 3 ? 1 : 0);
+                            let isExist = listaTipos.find((t) => e.idEvidencia == t.id)
+                            if (!isExist) {
+                                let imagenes = [];
+                                if (count_cantidad_por_tipo[e.idEvidencia].length) {
+                                    imagenes = count_cantidad_por_tipo[e.idEvidencia]
+                                }
+                                listaTipos.push(
+                                    {
+                                        id: e.idEvidencia,
+                                        descripcion: e.tipo,
+                                        imagenes: imagenes
+                                    }
+                                )
+                            }
+                        });
+                        $scope.listaTotal.rechazadas = rechazadas;
+                        $scope.listaTotal.aceptadas = aceptadas;
+                        $scope.detalleEvidencia.tipos = listaTipos;
+                        $("#modalDetalle").modal('show');
+                        $scope.applyMagnific();
+                        setTimeout(function () {
+                            $("#categoria_img_0").click();
+                        }, 100);
+
+                    } else {
+                        toastr.warning('No se encontró ningún valor');
+                    }
+                } else {
+                    toastr.warning(response.data.resultDescripcion);
+                }
+            } else {
+                toastr.error('Ha ocurrido un error en la consulta');
+            }
+        }).catch(err => handleError(err));
     }
-} else {
-    toastr.warning(response.data.resultDescripcion);
-}
-} else {
-toastr.error('Ha ocurrido un error en la consulta');
-}
-})
-*/
 
-        evidenciasTable = $('#evidenciasTable').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "ordering": false,
-            "pageLength": 10,
-            "bDestroy": true,
-            "info": true,
-            "scrollX": false,
-            "data": arraRow,
-            "autoWidth": false,
-            "language": idioma_espanol_not_font
-        });
-
-    }
-
-
-    consultaDetalle = function (id) {
-
-        /*
-        let params = {
-
-        }
-
-        vistaChecklistService.consultarDetalleEvidencias(params).then(function success(response) {
-            if (response.data !== undefined) {
-                if (response.data.respuesta) {
-                    if (response.data.result) {
-                        */
-        $scope.detalleEvidencia = detalleEvidencias.result.evidencias;
-        $scope.$apply();
-        console.log($scope.detalleEvidencia);
-        $("#modalDetalle").modal('show');
-        $scope.applyMagnific();
-        /*
-
-    } else {
-        toastr.warning('No se encontró ningún valor');
-    }
-} else {
-    toastr.warning(response.data.resultDescripcion);
-}
-} else {
-toastr.error('Ha ocurrido un error en la consulta');
-}
-})
-*/
-
-    }
 
     $scope.abrirModalGeografia = function () {
+        $("#searchGeoConsulta").val("");
+        $("#jstreeConsultaTecnicos").jstree("search", '');
         $("#modalGeografia").modal('show');
+        setTimeout(function () {
+            $("#searchGeoConsulta").focus();
+        }, 750);
     }
 
     $scope.seleciconarTodas = function (isSelected) {
         if (isSelected == '1') {
             $(".checkbox-evidencia").prop("checked", true);
             $(".checkbox-evidencia").removeClass("rechazada-check");
-            $scope.listaTotal.aceptadas = $scope.detalleEvidencia.length;
+            $scope.listaTotal.aceptadas = $scope.detalleEvidencia.evidencias.length;
             $scope.listaTotal.rechazadas = 0;
         } else {
             $(".checkbox-evidencia").prop("checked", false);
             $(".checkbox-evidencia").addClass("rechazada-check");
-            $scope.listaTotal.rechazadas = $scope.detalleEvidencia.length;
+            $scope.listaTotal.rechazadas = $scope.detalleEvidencia.evidencias.length;
             $scope.listaTotal.aceptadas = 0;
         }
     }
@@ -287,9 +449,14 @@ toastr.error('Ha ocurrido un error en la consulta');
     $scope.changeSelect = function (element) {
         $(".radio-evidencias").prop("checked", false);
         let id = element.target.id;
+        $.each($scope.listImagenesTipo, function (e, img) {
+            if (id.split('_')[1] == img.id) {
+                img.idEstatus = $("#" + id).is(":checked") ? 2 : 3;
+            }
+        })
         if ($("#" + id).is(":checked")) {
             $("#" + id).removeClass("rechazada-check");
-            $scope.listaTotal.rechazadas = $scope.listaTotal.rechazadas !== 0 ? $scope.listaTotal.rechazadas - 1 : 0;
+            $scope.listaTotal.rechazadas = $(".rechazada-check").length;
             $scope.listaTotal.aceptadas = $scope.listaTotal.aceptadas + 1;
         } else {
             $("#" + id).addClass("rechazada-check");
@@ -299,22 +466,66 @@ toastr.error('Ha ocurrido un error en la consulta');
     }
 
     $scope.guardarEvidencia = function () {
-        let aceptadas = [];
-        let rechazadas = [];
-        
-        $.each($scope.detalleEvidencia, function (i, elemento) {
-            if ($("#check_" + elemento.idEvidencia).is(":checked")) {
-                aceptadas.push(elemento.idEvidencia);
+
+        let objectGroup = groupBy($scope.detalleEvidencia.evidencias, 'arreglo');
+        let arrayList = Object.keys(objectGroup).map(function (key) { return objectGroup[key]; });
+        let newObjectGroup = {};
+        console.log(arrayList);
+        $.each(arrayList, function (e, categoria) {
+            let aceptadas = [];
+            let rechazadas = [];
+
+            $.each(categoria, function (i, elemento) {
+                if ($("#check_" + elemento.id).is(":checked")) {
+                    aceptadas.push(elemento.id);
+                }
+            });
+
+            $.each(categoria, function (i, elemento) {
+                if ($("#check_" + elemento.id).hasClass("rechazada-check")) {
+                    rechazadas.push(elemento.id);
+                }
+            });
+
+            if (aceptadas.length || rechazadas.length) {
+                let nombreGrupo = arrayList[e][0].arreglo;
+                let list = [];
+
+                if (aceptadas.length) {
+                    let obj = {
+                        idEstatus: 2,
+                        idEvidencia: aceptadas,
+                    }
+                    list.push(obj);
+                }
+
+                if (rechazadas.length) {
+                    let obj = {
+                        idEstatus: 3,
+                        idEvidencia: rechazadas
+                    }
+                    list.push(obj);
+                }
+                newObjectGroup[nombreGrupo] = list;
             }
-        });
-        
-        $.each($(".rechazada-check"), function (i, elemento) {
-            let id = (elemento.id).split("_")[1];
-            rechazadas.push(id);
-        });
-        console.log(aceptadas);
-        console.log(rechazadas);
+        })
+        swal({ text: 'Espera un momento...', allowOutsideClick: false });
+        swal.showLoading();
+        vistaChecklistService.guardarEvidencia(newObjectGroup).then(function success(response) {
+            swal.close();
+            if (response.data !== undefined) {
+                if (response.data.respuesta) {
+                    toastr.success('Las evidencias se guardaron con &eacute;xito');
+                    $("#modalDetalle").modal('hide');
+                } else {
+                    toastr.error('No se guardaron las evidencias');
+                }
+            } else {
+                toastr.error('Ocurri&oacute; un arror al guardar la evidencia');
+            }
+        }).catch(err => handleError(err));
     }
+
 
     $scope.applyMagnific = function () {
         var id_categoria = $.trim($(this).attr('attr_id_cat'));
@@ -390,171 +601,135 @@ toastr.error('Ha ocurrido un error en la consulta');
         });
     }
 
+    $scope.getEvidenciasImagenes = function (tipo) {
+        $scope.listImagenesTipo = [];
+
+        if (tipo.toString() === '0') {
+            $scope.listImagenesTipo = $scope.detalleEvidencia.evidencias;
+        } else {
+            $scope.detalleEvidencia.tipos.map(function (e) {
+                if (e.id.toString() === tipo.toString()) {
+                    $scope.listImagenesTipo = e.imagenes;
+                    return false;
+                }
+            });
+        }
+
+        $(".tipo_evidencia").removeClass("tipo-evidencia-selected");
+        $("#categoria_img_" + tipo).addClass("tipo-evidencia-selected");
+        setTimeout(() => {
+            $scope.listImagenesTipo.map(function (e) {
+                if (e.idEstatus == 2) {
+                    console.log(e);
+                    $("#check_" + e.id).prop("checked", true);
+                }
+            });
+        }, 50);
+    }
+
     angular.element(document).ready(function () {
-        $("#idBody").removeAttr("style");
         $("#moduloChecklist").addClass('active')
         $("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
 
     });
 
     $scope.conversionAnidadaRecursiva = function (array, nivelInit, maxNivel) {
-		let arrayReturn = [];
-		angular.forEach(array.filter(e => e.nivel === nivelInit), function (elem, index) {
-			let elemento = angular.copy(elem);
-			elemento.checkedOpcion = true;
-			if (nivelInit < maxNivel) {
-				elemento.children = $scope.conversionAnidadaRecursiva(array, nivelInit + 1, maxNivel).filter(e2 => e2.idPadre === elemento.id);
-				elemento.children = (elemento.children !== undefined && elemento.children.length > 0) ? elemento.children : [];
-			}
-			arrayReturn.push(elemento)
-		});
-		return arrayReturn;
-	}
+        let arrayReturn = [];
+        angular.forEach(array.filter(e => e.nivel === nivelInit), function (elem, index) {
+            let elemento = angular.copy(elem);
+            elemento.checkedOpcion = true;
+            if (nivelInit < maxNivel) {
+                elemento.children = $scope.conversionAnidadaRecursiva(array, nivelInit + 1, maxNivel).filter(e2 => e2.idPadre === elemento.id);
+                elemento.children = (elemento.children !== undefined && elemento.children.length > 0) ? elemento.children : [];
+            }
+            arrayReturn.push(elemento)
+        });
+        return arrayReturn;
+    }
 
     $scope.seleccionarTodosRecursivo = function (array) {
-		array.map(function (e) {
-			e.checkedOpcion = true;
-			if (e.children !== undefined && e.children.length > 0) {
-				$scope.seleccionarTodosRecursivo(e.children);
-			}
-		});
-	}
+        array.map(function (e) {
+            e.checkedOpcion = true;
+            if (e.children !== undefined && e.children.length > 0) {
+                $scope.seleccionarTodosRecursivo(e.children);
+            }
+        });
+    }
 
-	$scope.deseleccionarTodosRecursivo = function (array) {
-		array.map(function (e) {
-			e.checkedOpcion = false;
-			if (e.children !== undefined && e.children.length > 0) {
-				$scope.deseleccionarTodosRecursivo(e.children);
-			}
-		});
-	}
+    $scope.deseleccionarTodosRecursivo = function (array) {
+        array.map(function (e) {
+            e.checkedOpcion = false;
+            if (e.children !== undefined && e.children.length > 0) {
+                $scope.deseleccionarTodosRecursivo(e.children);
+            }
+        });
+    }
 
     $scope.setCheckFiltroGenericV2 = function (filtro, principalArray) {
-		if (filtro.children !== undefined && filtro.children.length > 0) {
-			if (filtro.checkedOpcion) {
-				$scope.deseleccionarTodosRecursivo(filtro.children);
-			} else {
-				$scope.seleccionarTodosRecursivo(filtro.children);
-			}
-		}
-		filtro.checkedOpcion = !filtro.checkedOpcion;
-		$scope.checkPadre(filtro.idPadre, principalArray, principalArray);
-	}
+        if (filtro.children !== undefined && filtro.children.length > 0) {
+            if (filtro.checkedOpcion) {
+                $scope.deseleccionarTodosRecursivo(filtro.children);
+            } else {
+                $scope.seleccionarTodosRecursivo(filtro.children);
+            }
+        }
+        filtro.checkedOpcion = !filtro.checkedOpcion;
+        $scope.checkPadre(filtro.idPadre, principalArray, principalArray);
+    }
 
     $scope.checkPadre = function (idPadre, array, principalArray) {
-		array.map(function (e) {
-			if (e.id === idPadre) {
-				e.checkedOpcion = e.children.length === e.children.filter(function (e) { return e.checkedOpcion }).length;
-				$scope.checkPadre(e.idPadre, principalArray, principalArray);
-			} else {
-				if (e.children !== undefined && e.children.length > 0) {
-					$scope.checkPadre(idPadre, e.children, principalArray);
-				}
-			}
-		});
-	}
+        array.map(function (e) {
+            if (e.id === idPadre) {
+                e.checkedOpcion = e.children.length === e.children.filter(function (e) { return e.checkedOpcion }).length;
+                $scope.checkPadre(e.idPadre, principalArray, principalArray);
+            } else {
+                if (e.children !== undefined && e.children.length > 0) {
+                    $scope.checkPadre(idPadre, e.children, principalArray);
+                }
+            }
+        });
+    }
 
     $scope.pintarNombreEstatus = function (array, input) {
-		let textoEstatus = $scope.mostrarNombresEstatus(array);
-		$(input).val(textoEstatus);
-		if (textoEstatus.length > 0) {
-			$(input).css("border-bottom", "2px solid #d9d9d9");
-		}
-	}
+        let textoEstatus = $scope.mostrarNombresEstatus(array);
+        $(input).val(textoEstatus);
+        if (textoEstatus.length > 0) {
+            $(input).css("border-bottom", "2px solid #d9d9d9");
+        }
+    }
 
     $scope.mostrarNombresEstatus = function (array) {
-		let arrayNombre = [];
-		angular.forEach(array, function (elemento, index) {
-			if (elemento.checkedOpcion) {
-				arrayNombre.push(elemento.nombre);
-			}
-			if (elemento.children !== undefined && elemento.children.length > 0) {
-				arrayNombre = arrayNombre.concat($scope.mostrarNombresEstatus(elemento.children));
-			}
-		});
-		return arrayNombre;
-	}
+        let arrayNombre = [];
+        angular.forEach(array, function (elemento, index) {
+            if (elemento.checkedOpcion) {
+                arrayNombre.push(elemento.nombre);
+            }
+            if (elemento.children !== undefined && elemento.children.length > 0) {
+                arrayNombre = arrayNombre.concat($scope.mostrarNombresEstatus(elemento.children));
+            }
+        });
+        return arrayNombre;
+    }
 
     $scope.obtenerUltimoNivelFiltros = function (array) {
-		return Math.max.apply(Math, array.map(function (o) { return o.nivel; }));
-	}
-
-    $scope.listaSeleccionSelectGral = function (array, nivel) {
-		let arrayReturn = "";
-		angular.forEach(array, function (elemento, index) {
-			if (elemento.nivel == nivel && elemento.checkedOpcion) {
-				if (arrayReturn !== "") {
-					arrayReturn += ',';
-				}
-				arrayReturn += elemento.nombre.toUpperCase();
-			} else {
-				arrayReturn = arrayReturn.concat($scope.listaSeleccionSelectGral(elemento.children, nivel));
-			}
-		});
-		return arrayReturn;
-
-	}
+        return Math.max.apply(Math, array.map(function (o) { return o.nivel; }));
+    }
 
     $scope.limpiarCamposFiltro = function (opcion) {
-		switch (opcion) {
-			case 1:
-				$scope.camposFiltro.idos = "";
-				break;
-			case 2:
-				$scope.camposFiltro.idot = "";
-				break;
-			case 3:
-				$scope.camposFiltro.idot = "";
-				$scope.camposFiltro.idos = "";
-				break;
-			default:
-				break;
-		}
-	}
-
-    $scope.buscarCheckList = function(){
-        
-        let intervenciones = []
-        if ($scope.nInterveciones) {
-            intervenciones = $scope.obtenerElementosSeleccionadosFiltro($scope.arrayIntervenciones, $scope.nInterveciones);
-        } else{
-            let ultimoNivel = $scope.obtenerNivelUltimoJerarquia($scope.respaldoIntervecionesArray)
-            intervenciones =  $scope.obtenerElementosSeleccionadosFiltro($scope.arrayIntervenciones, ultimoNivel);
+        switch (opcion) {
+            case 1:
+                $scope.camposFiltro.idos = "";
+                break;
+            case 2:
+                $scope.camposFiltro.idot = "";
+                break;
+            case 3:
+                $scope.camposFiltro.idot = "";
+                $scope.camposFiltro.idos = "";
+                break;
+            default:
+                break;
         }
-        
-
-        let estatusDisponiblesCheck = [];
-        if ($scope.nFiltroEstatus) {
-            estatusDisponiblesCheck = $scope.obtenerElementosSeleccionadosFiltro($scope.arrayEstatus, $scope.nFiltroEstatus);
-        } else {
-            let ultimoNivelEstatus = $scope.obtenerNivelUltimoJerarquia($scope.respaldoArrayEstatus)
-            estatusDisponiblesCheck = $scope.obtenerElementosSeleccionadosFiltro($scope.arrayEstatus, ultimoNivelEstatus);
-        }
-       
-
-        let clustersparam = []
-        if ($scope.nGeografia) {
-            clustersparam = $("#jstreeConsulta").jstree("get_selected", true)
-            .filter(e => e.original.nivel == $scope.nGeografia)
-            .map(e => parseInt(e.id))
-        } else{
-            let nivelBusquedaArbol = $scope.obtenerNivelUltimoJerarquia($scope.listaGeografia)
-            clustersparam = $("#jstreeConsulta").jstree("get_selected", true)
-                .filter(e => e.original.nivel == nivelBusquedaArbol)
-                .map(e => parseInt(e.id))
-        }
-        let params = {
-            ot: $scope.camposFiltro.idot,
-            os: $scope.camposFiltro.idos,
-            intervecion: intervenciones,
-            estatus: estatusDisponiblesCheck,
-            cluster: clustersparam,
-            fechaInicio: document.getElementById('filtro_fecha_inicio').value,
-            fechaFin: document.getElementById('filtro_fecha_fin').value
-        }
-
-        console.log(params)
-       
     }
 
     $scope.obtenerElementosSeleccionadosFiltro = function (array, nivel) {
@@ -570,14 +745,14 @@ toastr.error('Ha ocurrido un error en la consulta');
     }
 
     function compareGeneric(a, b) {
-		let niveluno = a.nivel;
-		let niveldos = b.nivel;
-		if (niveluno > niveldos) {
-			return -1
-		} else if (niveluno < niveldos) {
-			return 1
-		}
-		return 0
-	}
+        let niveluno = a.nivel;
+        let niveldos = b.nivel;
+        if (niveluno > niveldos) {
+            return -1
+        } else if (niveluno < niveldos) {
+            return 1
+        }
+        return 0
+    }
 
 }])

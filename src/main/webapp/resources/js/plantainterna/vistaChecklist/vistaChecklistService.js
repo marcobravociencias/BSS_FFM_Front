@@ -46,7 +46,7 @@ app.service("vistaChecklistService", function ($http) {
     this.guardarEvidencia = function (params) {
         return $http({
             method: "post",
-            data: JSON.stringify(params),
+            data: params,
             url: "req/guardarEvidencia",
             headers: {
                 'Content-Type': 'application/json'
