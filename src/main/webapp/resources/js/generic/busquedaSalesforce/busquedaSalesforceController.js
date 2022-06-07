@@ -239,6 +239,7 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
         $scope.historialUsuario = [];
         $scope.historialUsuario.push($scope.detalleContacto);
         $("#modalDetalleContacto").modal('show');
+        $("#modalDetalleSalesforce").addClass('scroll-modal-proyect');
     }
 
     $scope.historialUsuario = [];
@@ -1271,6 +1272,10 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
         document.getElementById('spnNombreAdSubComentarioOp-' + noticia).innerHTML = ''
         document.getElementById('spnNombreAdSubComentarioTicket-' + noticia).innerHTML = ''
         $scope.showEliminarSubCom = false;
+    }
+
+    $scope.cerrarModalDetalleContacto = function() {
+        $("#modalDetalleContacto").modal('hide');
     }
 
 }

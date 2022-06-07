@@ -4,7 +4,7 @@
             <div class="modal-header">
                 <li class="fa fa-arrow-left retorno-perfil" ng-show="historialUsuario.length > 1" ng-click="regresarHistorialUsuario();"></li>
                 <h5 class="modal-title" id="titulo-usuario"> Informaci&oacute;n del usuario</h5>
-                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" ng-click="cerrarModalDetalleContacto()"></button>
             </div>
             <div class="modal-body">
                 <div class="container">

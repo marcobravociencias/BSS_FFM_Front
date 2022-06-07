@@ -1845,3 +1845,7 @@ span.text-activacion-warning {
   text-decoration-line: underline;
   cursor: pointer;
 }
+.scroll-modal-proyect {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
