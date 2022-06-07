@@ -595,7 +595,6 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                         $('#jstree-proton-3').jstree("deselect_all");
                         $('#jstree-proton-3').jstree("close_all");
                         $scope.consultarCoberturas();
-                        $scope.$apply();
                     } else {
                         mostrarMensajeErrorAlert(response.data.resultDescripcion);
                         swal.close();
