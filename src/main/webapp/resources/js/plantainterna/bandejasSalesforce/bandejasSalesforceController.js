@@ -811,7 +811,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
             let paramsfecha = $scope.getFechaFormato(document.getElementById('fecha_pendientes_agendar').value);
             let params = {
                 "geografias": clustersSelected,
-                "fechaInicio": '2022-02-01',//paramsfecha.fechaInicio,
+                "fechaInicio": paramsfecha.fechaInicio,
                 "fechaFin": paramsfecha.fechaFin
                 // "geografias": ["CIUDAD DE MEXICO"], "fechaFin": "2021-01-01", "fechaInicio": "2019-01-01"
             }
