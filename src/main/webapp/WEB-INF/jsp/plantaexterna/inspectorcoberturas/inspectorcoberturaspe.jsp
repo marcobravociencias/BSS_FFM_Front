@@ -120,7 +120,7 @@
                         <div class="card map-card">
                             <div id="mapaInspectorCobertura">
                             </div>
-                            <div class="card-body">
+                            <div class="card-body" ng-if="isPermisoLigarIncidencia">
                                 <div class="col-md-12 card-selected">
                                     <div class="timeline">
                                         <div class="timeline-container primary"
@@ -168,7 +168,7 @@
                                     <span>Ning&uacute;na incidencia seleccionada</span>
                                 </div>
                             </div>
-                            <div class="pill-counter">
+                            <div class="pill-counter" ng-if="isPermisoLigarIncidencia">
                                 <div class="row">
                                     <div class="col-md-2 icon-content-count" style="cursor: auto;">
                                         <i class="fas fa-check"></i>
