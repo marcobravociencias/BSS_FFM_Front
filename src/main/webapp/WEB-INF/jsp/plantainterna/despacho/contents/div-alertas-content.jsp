@@ -745,7 +745,7 @@
                         <div class="col-2 p-0">
                             <div class="content-img">
                                 <img id="fotoTecnico" src="" alt="Foto" width="70" height="70" class="imgFoto"
-                                    ng-click="showImage(detalleEvidencia.numeroEmpleado)">
+                                    ng-click="showImage(detalleEvidencia.idUsuario)">
                             </div>
                             <div class="content-info mt-2" style="text-align: center;">
                                 <div class="container-text-content-detalle"><span class="text-content ng-binding"

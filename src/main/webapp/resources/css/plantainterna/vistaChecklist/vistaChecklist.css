@@ -3,7 +3,7 @@
     /* padding-top: 1em; */
     background: white;
     border-radius: .5em;
-    margin-top: 1em;
+    margin-top: 2em;
     padding: 0;
     font-family: "Montserrat" !important;
 }
@@ -680,4 +680,37 @@ span.btn-floating.btn-evidencia.btn-sm.btn-secondary.waves-effect.waves-light {
     border-radius: .2rem;
     padding: 0.5em 1.15em;
     cursor: pointer;
+}
+
+.text-accion-nopermiso {
+    font-size: 12px;
+    color: grey;
+    padding: 2em 1em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.text-accion-nopermiso .icon-not-permiso {
+    color: #9586a9;
+    font-size: 1.3em;
+    padding: 0.5em;
+    border-radius: 50%;
+    width: 2em;
+    height: 2em;
+}
+
+.text-not-permiso {
+    margin-left: 0.5em;
+    font-size: 1.5em;
+    font-weight: normal;
+}
+
+i.icono-noseleccion {
+    color: #ff9f3b;
+    display: inline-block;
+}
+
+.estiloBlockIconoPermiso {
+    opacity: 0.3 !important;
+    cursor: no-drop !important;
 }

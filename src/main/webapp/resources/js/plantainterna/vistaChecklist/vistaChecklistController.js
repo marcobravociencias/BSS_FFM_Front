@@ -19,6 +19,10 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
         idos: ''
     }
 
+    $scope.configPermisoAccionActualizaEvidencia = false;
+    $scope.configPermisoAccionConsultaEvidencia = false;
+    $scope.configPermisoAccionConsultaOt = false;
+
     $('.drop-down-filters').on("click.bs.dropdown", function (e) {
         e.stopPropagation();
     });
@@ -93,7 +97,18 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
                             $scope.nInterveciones = results[0].data.result.MODULO_ACCIONES_USUARIO.llaves.N_FILTRO_INTERVENCIONES ? Number(results[0].data.result.MODULO_ACCIONES_USUARIO.llaves.N_FILTRO_INTERVENCIONES) : null;
                             $scope.nfiltroestatusDisponbiles = results[0].data.result.MODULO_ACCIONES_USUARIO.llaves.N_ESTATUS_ARRAY ? results[0].data.result.MODULO_ACCIONES_USUARIO.llaves.N_ESTATUS_ARRAY : null;
                             $scope.nFiltroEstatus = results[0].data.result.MODULO_ACCIONES_USUARIO.llaves.N_ESTATUS_PENDIENTES ? Number(results[0].data.result.MODULO_ACCIONES_USUARIO.llaves.N_ESTATUS_PENDIENTES) : null;
+                            $scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
+                            validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
+                            validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
+                            validateCreedText = llavesResult.KEY_TEXTFORMATO_CREED_RES ? KEY_TEXTFORMATO_CREED_RES : '';
+
+                            if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
+                                $scope.configPermisoAccionConsultaOt = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaOtChecklist" })[0] != undefined);
+                                $scope.configPermisoAccionConsultaEvidencia = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaEvidenciaChecklist" })[0] != undefined);
+                                $scope.configPermisoAccionActualizaEvidencia = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionActualizaEvidenciaChecklist" })[0] != undefined);
+                            }
                         }
+
                     } else {
                         toastr.warning('No se encontraron datos para la configuraci\u00F3n');
                     }
@@ -130,7 +145,10 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
                                     textoGeografias.push(geografia.text);
                                 });
                                 $('#filtro_geografia').val(textoGeografias);
-                                $scope.consultaEvidencias();
+                                if ($scope.configPermisoAccionConsultaOt) {
+                                    $scope.consultaEvidencias();
+                                }
+
                             }).jstree({
                                 'plugins': ["wholerow", "checkbox", "search"],
                                 'core': {
@@ -341,7 +359,14 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
                         swal.close()
                     }
                 },
-                "language": idioma_espanol_not_font
+                "language": idioma_espanol_not_font,
+                "drawCallback": function (settings) {
+                    if (!$scope.configPermisoAccionConsultaEvidencia) {
+                        $(".btn-evidencia").addClass("estiloBlockIconoPermiso");
+                        $(".btn-evidencia i").removeClass("fa-exchange-alt");
+                        $(".btn-evidencia i").addClass("fa-unlock");
+                    }
+                }
             });
         } else {
             mostrarMensajeWarningValidacion(errorMensaje);
@@ -357,64 +382,67 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
 
 
     consultaDetalle = function (id, usuario) {
-        let params = {
-            idOt: id,
-            idUsuario: usuario
-        }
-        swal({ text: 'Espera un momento...', allowOutsideClick: false });
-        swal.showLoading();
-        vistaChecklistService.consultarDetalleEvidencia(params).then(function success(response) {
-            swal.close();
-            if (response.data !== undefined) {
-                if (response.data.respuesta) {
-                    if (response.data.result) {
-                        $scope.detalleEvidencia = response.data.result;
-                        $scope.detalleEvidencia.tipos = [];
-                        $scope.listImagenesTipo = response.data.result.evidencias;
+        if ($scope.configPermisoAccionConsultaEvidencia) {
+            let params = {
+                idOt: id,
+                idUsuario: usuario
+            }
+            swal({ text: 'Espera un momento...', allowOutsideClick: false });
+            swal.showLoading();
+            vistaChecklistService.consultarDetalleEvidencia(params).then(function success(response) {
+                swal.close();
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        if (response.data.result) {
+                            $scope.detalleEvidencia = response.data.result;
+                            $scope.detalleEvidencia.tipos = [];
+                            $scope.listImagenesTipo = response.data.result.evidencias;
 
-                        let listaTipos = [];
-                        let aceptadas = 0;
-                        let rechazadas = 0;
-                        let urlTec = regexUrl.test($scope.detalleEvidencia.urlFotoPerfil) ? $scope.detalleEvidencia.urlFotoPerfil : "./resources/img/plantainterna/despacho/tecnicootasignada.png";
-                        $("#fotoTecnico").attr("src", urlTec);
-                        var count_cantidad_por_tipo = groupBy(response.data.result.evidencias, 'idEvidencia');
-                        response.data.result.evidencias.map(function (e) {
-                            aceptadas = aceptadas + (e.idEstatus == 2 ? 1 : 0);
-                            rechazadas = rechazadas + (e.idEstatus == 3 ? 1 : 0);
-                            let isExist = listaTipos.find((t) => e.idEvidencia == t.id)
-                            if (!isExist) {
-                                let imagenes = [];
-                                if (count_cantidad_por_tipo[e.idEvidencia].length) {
-                                    imagenes = count_cantidad_por_tipo[e.idEvidencia]
-                                }
-                                listaTipos.push(
-                                    {
-                                        id: e.idEvidencia,
-                                        descripcion: e.tipo,
-                                        imagenes: imagenes
+                            let listaTipos = [];
+                            let aceptadas = 0;
+                            let rechazadas = 0;
+                            let urlTec = regexUrl.test($scope.detalleEvidencia.urlFotoPerfil) ? $scope.detalleEvidencia.urlFotoPerfil : "./resources/img/plantainterna/despacho/tecnicootasignada.png";
+                            $("#fotoTecnico").attr("src", urlTec);
+                            var count_cantidad_por_tipo = groupBy(response.data.result.evidencias, 'idEvidencia');
+                            response.data.result.evidencias.map(function (e) {
+                                aceptadas = aceptadas + (e.idEstatus == 2 ? 1 : 0);
+                                rechazadas = rechazadas + (e.idEstatus == 3 ? 1 : 0);
+                                let isExist = listaTipos.find((t) => e.idEvidencia == t.id)
+                                if (!isExist) {
+                                    let imagenes = [];
+                                    if (count_cantidad_por_tipo[e.idEvidencia].length) {
+                                        imagenes = count_cantidad_por_tipo[e.idEvidencia]
                                     }
-                                )
-                            }
-                        });
-                        $scope.listaTotal.rechazadas = rechazadas;
-                        $scope.listaTotal.aceptadas = aceptadas;
-                        $scope.detalleEvidencia.tipos = listaTipos;
-                        $("#modalDetalle").modal('show');
-                        $scope.applyMagnific();
-                        setTimeout(function () {
-                            $("#categoria_img_0").click();
-                        }, 100);
+                                    listaTipos.push(
+                                        {
+                                            id: e.idEvidencia,
+                                            descripcion: e.tipo,
+                                            imagenes: imagenes
+                                        }
+                                    )
+                                }
+                            });
+                            $scope.listaTotal.rechazadas = rechazadas;
+                            $scope.listaTotal.aceptadas = aceptadas;
+                            $scope.detalleEvidencia.tipos = listaTipos;
 
+                            $("#modalDetalle").modal('show');
+                            setTimeout(function () {
+                                $("#categoria_img_0").click();
+                            }, 100);
+
+                        } else {
+                            toastr.info('No se encontraron evidencias');
+                        }
                     } else {
-                        toastr.info('No se encontraron evidencias');
+                        toastr.warning(response.data.resultDescripcion);
                     }
                 } else {
-                    toastr.warning(response.data.resultDescripcion);
+                    toastr.error('Ha ocurrido un error en la consulta');
                 }
-            } else {
-                toastr.error('Ha ocurrido un error en la consulta');
-            }
-        }).catch(err => handleError(err));
+            }).catch(err => handleError(err));
+        }
+
     }
 
 
@@ -442,22 +470,25 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
     }
 
     $scope.changeSelect = function (element) {
-        $(".radio-evidencias").prop("checked", false);
-        let id = element.target.id;
-        $.each($scope.listImagenesTipo, function (e, img) {
-            if (id.split('_')[1] == img.id) {
-                img.idEstatus = $("#" + id).is(":checked") ? 2 : 3;
+        if ($scope.configPermisoAccionActualizaEvidencia) {
+            $(".radio-evidencias").prop("checked", false);
+            let id = element.target.id;
+            $.each($scope.listImagenesTipo, function (e, img) {
+                if (id.split('_')[1] == img.id) {
+                    img.idEstatus = $("#" + id).is(":checked") ? 2 : 3;
+                }
+            })
+            if ($("#" + id).is(":checked")) {
+                $("#" + id).removeClass("rechazada-check");
+                $scope.listaTotal.rechazadas = $(".rechazada-check").length;
+                $scope.listaTotal.aceptadas = $scope.listaTotal.aceptadas + 1;
+            } else {
+                $("#" + id).addClass("rechazada-check");
+                $scope.listaTotal.aceptadas = $scope.listaTotal.aceptadas !== 0 ? $scope.listaTotal.aceptadas - 1 : 0;
+                $scope.listaTotal.rechazadas = $(".rechazada-check").length;
             }
-        })
-        if ($("#" + id).is(":checked")) {
-            $("#" + id).removeClass("rechazada-check");
-            $scope.listaTotal.rechazadas = $(".rechazada-check").length;
-            $scope.listaTotal.aceptadas = $scope.listaTotal.aceptadas + 1;
-        } else {
-            $("#" + id).addClass("rechazada-check");
-            $scope.listaTotal.aceptadas = $scope.listaTotal.aceptadas !== 0 ? $scope.listaTotal.aceptadas - 1 : 0;
-            $scope.listaTotal.rechazadas = $(".rechazada-check").length;
         }
+
     }
 
     $scope.guardarEvidencia = function () {
@@ -505,7 +536,7 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
                 isSelected = true;
             }
         })
-        if(!isSelected){
+        if (!isSelected) {
             toastr.warning('Selecciona la evidencia');
             return false;
         }
@@ -618,13 +649,18 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
         $(".tipo_evidencia").removeClass("tipo-evidencia-selected");
         $("#categoria_img_" + tipo).addClass("tipo-evidencia-selected");
         setTimeout(() => {
+            if (!$scope.configPermisoAccionActualizaEvidencia) {
+                $(".checkbox-evidencia").prop("disabled", 'disabled');
+            }
             $scope.listImagenesTipo.map(function (e) {
                 if (e.idEstatus == 2) {
                     console.log(e);
                     $("#check_" + e.id).prop("checked", true);
                 }
             });
+
         }, 50);
+        $scope.applyMagnific();
     }
 
     angular.element(document).ready(function () {

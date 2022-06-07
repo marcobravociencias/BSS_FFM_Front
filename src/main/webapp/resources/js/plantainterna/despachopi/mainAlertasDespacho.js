@@ -197,8 +197,9 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
         });
     }
 
-    $scope.showImage = function(empleado){
-        console.log(usuario);
+    $scope.showImage = function(usuario){
+        let ot = $scope.otsAlertas.find((t) => t.tecnico.id == usuario);
+        abrirModalFoto(ot.tecnico.nombre,ot.tecnico.urlFotoPerfil, ot.tecnico.numEmpleado, ot.tecnico.telefonoContacto, '#0B50C4', 'Sin dato')
     }
 
     consultarEvidencia = function (id, usuario, ot) {
@@ -250,7 +251,6 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
                         $scope.listaTotal.rechazadas = rechazadas;
                         $scope.listaTotal.aceptadas = aceptadas;
                         $scope.detalleEvidencia.tipos = listaTipos;
-                        $scope.applyMagnific();
                         setTimeout(function () {
                             $("#categoria_img_0").click();
                         }, 100);
@@ -290,6 +290,7 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
                 }
             });
         }, 50);
+        $scope.applyMagnific();
     }
 
     $scope.mostrarDetalleAlertasEvidencia = function (alertas) {

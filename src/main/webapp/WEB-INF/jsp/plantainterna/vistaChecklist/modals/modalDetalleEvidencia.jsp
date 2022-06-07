@@ -10,7 +10,7 @@
             </div>
             <div class="modal-body">
                 <div class="row content-filters">
-                    <div class="col-3 offset-2 content-select">
+                    <div class="col-3 offset-2 content-select" ng-if="configPermisoAccionActualizaEvidencia">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input radio-evidencias" type="radio" name="inlineRadioOptions"
                                 id="aceptar" ng-click="seleciconarTodas('1')" value="option1">
@@ -22,7 +22,7 @@
                             <label class="form-check-label" for="rechazar">Rechazar todas</label>
                         </div>
                     </div>
-                    <div class="row col-5 content-total">
+                    <div class="row col-5 content-total" ng-class="{'offset-5': !configPermisoAccionActualizaEvidencia}">
                         <div class="col-4">
                             <span>Total evidencia: <strong ng-bind="detalleEvidencia.evidencias.length"></strong></span>
                         </div>
@@ -108,7 +108,7 @@
                     data-mdb-dismiss="modal">
                     Cancelar
                 </button>
-                <button type="button" ng-click="guardarEvidencia()" class="btn btn-primary btn-guardar ripple-surface"
+                <button ng-if="configPermisoAccionActualizaEvidencia" type="button" ng-click="guardarEvidencia()" class="btn btn-primary btn-guardar ripple-surface"
                     style="height: 2.95em">
                     Guardar
                 </button>

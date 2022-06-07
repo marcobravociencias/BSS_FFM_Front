@@ -46,134 +46,144 @@
     <body id="idBody" class="body" ng-controller="vistaChecklistController" style="display: none;">
         <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
         <div class="container" id="container_checklist">
-            <div class="row col-12 content-fluid">
-                <div class="col-1 input-filtro-content">
-                    <label for="idot" class="label-filter">OT</label>
-                    <input type="text" id="idot" placeholder="Ej: 65434" ng-model="camposFiltro.idot"
-                        ng-change="limpiarCamposFiltro(1)" class="form-control input-filtro form-control-sm">
-                </div>
-                <div class="col-1 input-filtro-content">
-                    <label for="idos" class="label-filter">OS</label>
-                    <input type="text" id="idos" placeholder="Ej: 23214" ng-model="camposFiltro.idos"
-                        ng-change="limpiarCamposFiltro(2)" class="form-control input-filtro form-control-sm">
-                </div>
-                <div class="col-1 columna-filtro input-filtro-content">
-                    <i class="icono-noseleccion fas fa-exclamation-circle"
-                        title="No se encontraron catalogo de estatus" ng-show="!arrayEstatus.length"></i>
-                    <label for="filtro-estatus-substatus" class="label-filter">Estatus</label>
-                    <div class="dropdown">
-                        <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..."
-                            type="text" id="filtro-estatus-substatus"
-                            class="input-filtro form-control form-control-sm" />
-                        <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-estatus-substatus">
-                            <li style="text-align: center;">
-                                <button
-                                    ng-click="seleccionarTodosRecursivo(arrayEstatus); pintarNombreEstatus(arrayEstatus,'#filtro-estatus-substatus');"
-                                    id="todo_filtro" type="button"
-                                    class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
-                                <button
-                                    ng-click="deseleccionarTodosRecursivo(arrayEstatus); pintarNombreEstatus(arrayEstatus,'#filtro-estatus-substatus');"
-                                    id="ninguno_filtro" type="button"
-                                    class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
-                            </li>
-                            <li class="elemento_menu dropdown-divider"></li>
-                            <li ng-repeat="filtro in arrayEstatus " class="element-menu-filter"
-                                class="element-menu-filter">
-                                <label class="dropdown-item form-check-inputfiltro">
-                                    <input
-                                        ng-click="setCheckFiltroGenericV2(filtro,arrayEstatus); pintarNombreEstatus(arrayEstatus,'#filtro-estatus-substatus');"
-                                        id="filtrotext-{{filtro.id}}" class="form-check-input" type="checkbox"
-                                        ng-model="filtro.checkedOpcion" ng-checked="filtro.checkedOpcion" />
-                                    <span for="filtrotext-{{filtro.id}}" class="dropdown-item item-text-filtro" href="#"
-                                        ng-bind="filtro.nombre"></span>
-                                </label>
-                                <ul ng-if="filtro.children !== undefined &&  filtro.children.length > 0"
-                                    ng-include="'filtroEstatus.html'" class="dropdown-menu"></ul>
-                            </li>
-                        </ul>
+            <div ng-show="!configPermisoAccionConsultaOt" class="text-accion-nopermiso">
+                <i class="icon-not-permiso fas fa-user-lock"></i>
+                <b class="text-not-permiso">No cuentas con el permiso de consulta.</b>
+            </div>
+            <div ng-show="configPermisoAccionConsultaOt">
+                <div class="row col-12 content-fluid">
+                    <div class="col-1 input-filtro-content">
+                        <label for="idot" class="label-filter">OT</label>
+                        <input type="text" id="idot" placeholder="Ej: 65434" ng-model="camposFiltro.idot"
+                            ng-change="limpiarCamposFiltro(1)" class="form-control input-filtro form-control-sm">
+                    </div>
+                    <div class="col-1 input-filtro-content">
+                        <label for="idos" class="label-filter">OS</label>
+                        <input type="text" id="idos" placeholder="Ej: 23214" ng-model="camposFiltro.idos"
+                            ng-change="limpiarCamposFiltro(2)" class="form-control input-filtro form-control-sm">
+                    </div>
+                    <div class="col-1 columna-filtro input-filtro-content">
+                        <i class="icono-noseleccion fas fa-exclamation-circle"
+                            title="No se encontraron catalogo de estatus" ng-show="!arrayEstatus.length"></i>
+                        <label for="filtro-estatus-substatus" class="label-filter">Estatus</label>
+                        <div class="dropdown">
+                            <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..."
+                                type="text" id="filtro-estatus-substatus"
+                                class="input-filtro form-control form-control-sm" />
+                            <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-estatus-substatus">
+                                <li style="text-align: center;">
+                                    <button
+                                        ng-click="seleccionarTodosRecursivo(arrayEstatus); pintarNombreEstatus(arrayEstatus,'#filtro-estatus-substatus');"
+                                        id="todo_filtro" type="button"
+                                        class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
+                                    <button
+                                        ng-click="deseleccionarTodosRecursivo(arrayEstatus); pintarNombreEstatus(arrayEstatus,'#filtro-estatus-substatus');"
+                                        id="ninguno_filtro" type="button"
+                                        class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
+                                </li>
+                                <li class="elemento_menu dropdown-divider"></li>
+                                <li ng-repeat="filtro in arrayEstatus " class="element-menu-filter"
+                                    class="element-menu-filter">
+                                    <label class="dropdown-item form-check-inputfiltro">
+                                        <input
+                                            ng-click="setCheckFiltroGenericV2(filtro,arrayEstatus); pintarNombreEstatus(arrayEstatus,'#filtro-estatus-substatus');"
+                                            id="filtrotext-{{filtro.id}}" class="form-check-input" type="checkbox"
+                                            ng-model="filtro.checkedOpcion" ng-checked="filtro.checkedOpcion" />
+                                        <span for="filtrotext-{{filtro.id}}" class="dropdown-item item-text-filtro"
+                                            href="#" ng-bind="filtro.nombre"></span>
+                                    </label>
+                                    <ul ng-if="filtro.children !== undefined &&  filtro.children.length > 0"
+                                        ng-include="'filtroEstatus.html'" class="dropdown-menu"></ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-1 columna-filtro input-filtro-content">
+                        <i class="icono-noseleccion fas fa-exclamation-circle"
+                            title="No se encontraron catalogo de intervenciones"
+                            ng-show="!arrayIntervenciones.length"></i>
+                        <label for="filtro-intervencion" class="label-filter">Intervenci&oacute;n</label>
+                        <div class="dropdown">
+                            <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..."
+                                type="text" id="filtro-intervencion"
+                                class="input-filtro form-control form-control-sm" />
+                            <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-intervencion">
+                                <li style="text-align: center;">
+                                    <button
+                                        ng-click="seleccionarTodosRecursivo(arrayIntervenciones); pintarNombreEstatus(arrayIntervenciones,'#filtro-intervencion');"
+                                        id="todo_filtro" type="button"
+                                        class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
+                                    <button
+                                        ng-click="deseleccionarTodosRecursivo(arrayIntervenciones); pintarNombreEstatus(arrayIntervenciones,'#filtro-intervencion');"
+                                        id="ninguno_filtro" type="button"
+                                        class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
+                                </li>
+                                <li class="elemento_menu dropdown-divider"></li>
+                                <li ng-repeat="filtro in arrayIntervenciones " class="element-menu-filter">
+                                    <label class="dropdown-item form-check-inputfiltro">
+                                        <input
+                                            ng-click="setCheckFiltroGenericV2(filtro,arrayIntervenciones); pintarNombreEstatus(arrayIntervenciones,'#filtro-intervencion');"
+                                            id="filtrotext-{{filtro.id}}" class="form-check-input" type="checkbox"
+                                            ng-model="filtro.checkedOpcion" ng-checked="filtro.checkedOpcion" />
+                                        <span for="filtrotext-{{filtro.id}}" class="dropdown-item item-text-filtro"
+                                            href="#" ng-bind="filtro.nombre"></span>
+                                    </label>
+                                    <ul ng-if="filtro.children !== undefined &&  filtro.children.length > 0"
+                                        ng-include="'filtroIntervencion.html'" class="dropdown-menu"></ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-1 columna-filtro input-filtro-content"> <i
+                            class="icono-noseleccion fas fa-exclamation-circle"
+                            title="No se encontraron catalogo de intervenciones" ng-show="!listaGeografia.length"></i>
+                        <label for="filtro_fecha_inicio" class="label-filter">Geograf&iacute;a</label>
+                        <input readonly placeholder="Geograf&iacute;a" type="text" id="filtro_geografia"
+                            class="input-filtro form-control form-control-sm" ng-click="abrirModalGeografia()">
+                    </div>
+                    <div class="col-1 columna-filtro input-filtro-content">
+                        <label for="filtro_fecha_inicio" class="label-filter">Fecha inicial</label>
+                        <input readonly type="text" id="filtro_fecha_inicio"
+                            class="datepicker input-filtro form-control form-control-sm" />
+                    </div>
+                    <div class="col-1 columna-filtro input-filtro-content">
+                        <label for="filtro_fecha_fin" class="label-filter">Fecha final</label>
+                        <input readonly type="text" id="filtro_fecha_fin"
+                            class="datepicker input-filtro form-control form-control-sm" />
+                    </div>
+                    <div class="col-1">
+                        <button id="btnBuscar" type="button" class="btn btn-primary btnTotal"
+                            ng-click="consultaEvidencias()">
+                            <i class="fa fa-search"></i>
+                        </button>
                     </div>
                 </div>
-                <div class="col-1 columna-filtro input-filtro-content">
-                    <i class="icono-noseleccion fas fa-exclamation-circle"
-                        title="No se encontraron catalogo de intervenciones" ng-show="!arrayIntervenciones.length"></i>
-                    <label for="filtro-intervencion" class="label-filter">Intervenci&oacute;n</label>
-                    <div class="dropdown">
-                        <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..."
-                            type="text" id="filtro-intervencion" class="input-filtro form-control form-control-sm" />
-                        <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-intervencion">
-                            <li style="text-align: center;">
-                                <button
-                                    ng-click="seleccionarTodosRecursivo(arrayIntervenciones); pintarNombreEstatus(arrayIntervenciones,'#filtro-intervencion');"
-                                    id="todo_filtro" type="button"
-                                    class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
-                                <button
-                                    ng-click="deseleccionarTodosRecursivo(arrayIntervenciones); pintarNombreEstatus(arrayIntervenciones,'#filtro-intervencion');"
-                                    id="ninguno_filtro" type="button"
-                                    class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
-                            </li>
-                            <li class="elemento_menu dropdown-divider"></li>
-                            <li ng-repeat="filtro in arrayIntervenciones " class="element-menu-filter">
-                                <label class="dropdown-item form-check-inputfiltro">
-                                    <input
-                                        ng-click="setCheckFiltroGenericV2(filtro,arrayIntervenciones); pintarNombreEstatus(arrayIntervenciones,'#filtro-intervencion');"
-                                        id="filtrotext-{{filtro.id}}" class="form-check-input" type="checkbox"
-                                        ng-model="filtro.checkedOpcion" ng-checked="filtro.checkedOpcion" />
-                                    <span for="filtrotext-{{filtro.id}}" class="dropdown-item item-text-filtro" href="#"
-                                        ng-bind="filtro.nombre"></span>
-                                </label>
-                                <ul ng-if="filtro.children !== undefined &&  filtro.children.length > 0"
-                                    ng-include="'filtroIntervencion.html'" class="dropdown-menu"></ul>
-                            </li>
-                        </ul>
+                <div class="content-fluid p-0" style="margin-top: 1em;">
+                    <div class="table-responsive">
+                        <table id="evidenciasTable" class="display table" cellspacing="0" width="100%">
+                            <thead id="thead_evidencias">
+                                <tr>
+                                    <th>OT</th>
+                                    <th>OS</th>
+                                    <th>Cliente</th>
+                                    <th>Cuenta</th>
+                                    <th>Ciudad</th>
+                                    <th>Fecha agenda</th>
+                                    <th>Tipo</th>
+                                    <th>Subtipo</th>
+                                    <th>Estatus</th>
+                                    <th>Estado</th>
+                                    <th>Motivo</th>
+                                    <th style="text-align: center;">Evidencia</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <div class="col-1 columna-filtro input-filtro-content"> <i class="icono-noseleccion fas fa-exclamation-circle"
-                    title="No se encontraron catalogo de intervenciones" ng-show="!listaGeografia.length"></i>
-                    <label for="filtro_fecha_inicio" class="label-filter">Geograf&iacute;a</label>
-                    <input readonly placeholder="Geograf&iacute;a" type="text" id="filtro_geografia"
-                        class="input-filtro form-control form-control-sm"
-                        ng-click="abrirModalGeografia()">
-                </div>
-                <div class="col-1 columna-filtro input-filtro-content">
-                    <label for="filtro_fecha_inicio" class="label-filter">Fecha inicial</label>
-                    <input readonly type="text" id="filtro_fecha_inicio"
-                        class="datepicker input-filtro form-control form-control-sm" />
-                </div>
-                <div class="col-1 columna-filtro input-filtro-content">
-                    <label for="filtro_fecha_fin" class="label-filter">Fecha final</label>
-                    <input readonly type="text" id="filtro_fecha_fin"
-                        class="datepicker input-filtro form-control form-control-sm" />
-                </div>
-                <div class="col-1">
-                    <button id="btnBuscar" type="button" class="btn btn-primary btnTotal" ng-click="consultaEvidencias()">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </div>
             </div>
-            <div class="content-fluid p-0" style="margin-top: 1em;">
-                <div class="table-responsive">
-                    <table id="evidenciasTable" class="display table" cellspacing="0" width="100%">
-                        <thead id="thead_evidencias">
-                            <tr>
-                                <th>OT</th>
-                                <th>OS</th>
-                                <th>Cliente</th>
-                                <th>Cuenta</th>
-                                <th>Ciudad</th>
-                                <th>Fecha agenda</th>
-                                <th>Tipo</th>
-                                <th>Subtipo</th>
-                                <th>Estatus</th>
-                                <th>Estado</th>
-                                <th>Motivo</th>
-                                <th style="text-align: center;">Evidencia</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+
         </div>
         <jsp:include page="./modals/modalDetalleEvidencia.jsp"></jsp:include>
         <jsp:include page="./modals/modalGeografia.jsp"></jsp:include>
