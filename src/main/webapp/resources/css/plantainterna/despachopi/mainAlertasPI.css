@@ -255,8 +255,6 @@ div#contenido_imagenes {
 }
 
 .btn_categoria_img {
-    width: 120% !important;
-    height: 100% !important;
     padding-bottom: 0 !important;
     padding-top: 0 !important;
     font-size: 0.55em !important;
@@ -459,8 +457,8 @@ div#contenido_imagenes {
 
 #alertaAuditoriaEvidencia .imagen_content_evidencia {
     display: inline-grid;
-    max-width: 15em !important;
-    margin-left: 2em;
+    max-width: 11em !important;
+    margin-left: 1em;
     margin-bottom: 1em;
     margin-top: 1em;
     max-height: 9em;
@@ -470,6 +468,7 @@ div#contenido_imagenes {
     padding: 0.5em;
     border: 1px solid #ccc;
     box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    width: 11em;
 }
 
 #alertaAuditoriaEvidencia .text_img_evidencia {
@@ -524,7 +523,7 @@ div#contenido_imagenes {
 
 #alertaAuditoriaEvidencia .content-filters {
     margin: 0 0 1em 0;
-    font-size: 0.8em;
+    font-size: 0.7em;
     font-family: "Montserrat" !important;
 }
 
@@ -634,7 +633,7 @@ div#contenido_imagenes {
     color: white;
     border: none;
     margin-top: 0;
-    margin-left: .2rem;
+    margin-right: .2rem;
 }
 
 #alertaAuditoriaEvidencia .imagen_content_evidencia .form-check-input[type=checkbox]:checked {
@@ -705,4 +704,119 @@ div#contenido_imagenes {
 
 #table-alertas-pi_paginate .page-item.active .page-link {
 	background-color: var(--btn-color-paginador-tabla) !important;
+}
+
+#alertaAuditoriaEvidencia #categorias_div .content_category .badge { 
+    position: absolute !important; 
+    z-index: 1; 
+    background: #4285f4 !important; 
+    margin-left: -1em !important; 
+    font-size: 10px; 
+    top: -5px; 
+} 
+ 
+#alertaAuditoriaEvidencia #categorias_div { 
+    padding: 0; 
+} 
+ 
+#alertaAuditoriaEvidencia .content_category { 
+    max-width: 16em; 
+    display:  block;
+} 
+ 
+#alertaAuditoriaEvidencia .category_full { 
+    margin: 0; 
+    max-width: 16em !important; 
+    margin-left: 4.5em !important; 
+} 
+ 
+#alertaAuditoriaEvidencia .tipo_evidencia { 
+    padding: 0.5em 0 0 0; 
+    text-align: center; 
+    font-size: 0.6em; 
+    height: 2.3em;
+    cursor: pointer; 
+    margin-bottom: 0.8em; 
+    background-color: #fff; 
+    font-weight: bolder; 
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%); 
+    border-left: 2px solid #4991e1; 
+} 
+ 
+#alertaAuditoriaEvidencia .total-imagen-evidencia { 
+    width: 2.5em; 
+    padding: 0.3em; 
+    margin-top: -0.5em; 
+    margin-right: -1.5em; 
+    font-size: 0.9em; 
+    height: 2.5em; 
+    border-radius: 25px; 
+    color: #fff; 
+    background-color: #4991e1; 
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%); 
+    float: right; 
+    border: 2px solid #fff 
+} 
+ 
+#alertaAuditoriaEvidencia .label-tipo { 
+    width: 80%; 
+    display: inline-block; 
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+} 
+ 
+#alertaAuditoriaEvidencia .tipo-evidencia-selected, 
+#alertaAuditoriaEvidencia .tipo_evidencia:hover { 
+    background-color: #e4e6f2; 
+} 
+ 
+#alertaAuditoriaEvidencia .container-text-content-detalle { 
+    width: 95%; 
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    font-size: 0.65em; 
+    padding: 0.5em 
+} 
+ 
+#alertaAuditoriaEvidencia .container-text-content-detalle .text-content { 
+    margin-left: 0.5em; 
+} 
+ 
+#content-evidencia ::-webkit-scrollbar { 
+    width: 0.1em; 
+} 
+ 
+#alertaAuditoriaEvidencia .content-img { 
+    text-align: center; 
+    padding: 1em; 
+} 
+ 
+#alertaAuditoriaEvidencia .imgFoto { 
+    box-shadow: 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%), 0 2px 4px -1px rgb(0 0 0 / 30%); 
+    cursor: pointer; 
+    border-radius: 35px; 
+} 
+ 
+#alertaAuditoriaEvidencia .text-external-link { 
+    color: #0c56d0 !important; 
+    font-weight: bold !important; 
+    text-decoration-line: underline; 
+    font-size: 0.8em; 
+    margin-right: 1em; 
+    vertical-align: bottom;
+} 
+ 
+#alertaAuditoriaEvidencia .text-external-link:hover { 
+    color: #114291; 
+    text-decoration: solid; 
+    cursor: pointer; 
+    text-decoration-line: underline; 
+} 
+
+#alertaAuditoriaEvidencia .message-nodata {
+    text-align: center;
+    font-size: 0.9em;
+    padding: 3em;
 }

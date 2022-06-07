@@ -20,5 +20,8 @@ public class ConstInspectorCobertura {
 
     @Value("${consultaIncidenciasInspectorCoberturaPE}")
 	private String consultaIncidenciasInspectorCoberturaPE;
+    
+    @Value("${reasignarIncidenciasPE}")
+    private String reasignarIncidenciasPE;
 
 }

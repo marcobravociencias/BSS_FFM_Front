@@ -17,14 +17,14 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                 lat: parseFloat(19.4326),
                 lng: parseFloat(-99.1332)
             },
-            mapTypeControl:false,
+            mapTypeControl: false,
             zoomControlOptions: {
                 style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
                 position: google.maps.ControlPosition.TOP_RIGHT
             }, streetViewControlOptions: {
                 position: google.maps.ControlPosition.TOP_RIGHT
             },
-            fullscreenControlOptions:{
+            fullscreenControlOptions: {
                 position: google.maps.ControlPosition.TOP_RIGHT
             },
             zoom: 15,
@@ -40,7 +40,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
         $('.drop-down-filters').on("click.bs.dropdown", function (e) {
             e.stopPropagation();
         });
-        
+
         $("#content_mapa").toggleClass('closed');
         $("#content_mapa").click(function () {
             $(this).toggleClass('closed');
@@ -50,7 +50,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                 $("#content-card-consulta").show();
             }
         });
-        
+
 
         $('.datepicker').datepicker({
             format: 'dd/mm/yyyy',
@@ -266,10 +266,10 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                 $scope.isPermisoConsultaIncidencias = ($scope.permisosUsuario.filter(e => { return e.clave == "accionConsultarIncidenciasCobertura" })[0] != undefined);
                 $scope.isPermisoLigarIncidencia = ($scope.permisosUsuario.filter(e => { return e.clave == "accionLigarIncidenciaInspectorCobertura" })[0] != undefined);
             }
-           
 
-            let arrayDefaultKmzElemts=results[0].data.result.KEY_DEFAULT_KMZ ? results[0].data.result.KEY_DEFAULT_KMZ.split(",") : null;
-            GenericMapa.prototype.callPrototypeMapa(results[0].data.result,arrayDefaultKmzElemts);
+
+            let arrayDefaultKmzElemts = results[0].data.result.KEY_DEFAULT_KMZ ? results[0].data.result.KEY_DEFAULT_KMZ.split(",") : null;
+            GenericMapa.prototype.callPrototypeMapa(results[0].data.result, arrayDefaultKmzElemts);
 
             $scope.initMapaInspectorCobertura();
             $("#idBody").removeAttr("style");
@@ -410,7 +410,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                     fechaInicio: $scope.getFechaFormato($("#filtro_fecha_inicio_inspectorCobertura").val()),
                     fechaFin: $scope.getFechaFormato($("#filtro_fecha_fin_inspectorCobertura").val())
                 }
-               
+
                 swal({ text: 'Espera un momento...', allowOutsideClick: false });
                 swal.showLoading();
                 inspectorCoberturaService.consultarIncidenciasCoberturaPE(params).then(function success(response) {
@@ -576,18 +576,51 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
         $("#modalCluster").modal('show');
     }
 
+    $scope.ligarIncidenciaPe = function (comentario, cluster) {
+        let incidenciasArray = $scope.listaIncidenciasLigar.map(e => Number(e.idIncidencia))
+        let params = {
+            comentario: comentario,
+            idsIncidentes: incidenciasArray,
+            idGeografia: cluster
+        }
+        swal({ text: 'Espera un momento...', allowOutsideClick: false });
+        swal.showLoading();
+        inspectorCoberturaService.ligarIncidenciasCoberturaPE(params).then(function success(response) {
+            if (response.data) {
+                if (response.data.respuesta) {
+                    if (response.data.result) {
+                        toastr.success('Operaci&oacute;n &eacute;xitosa');
+                        $("#content_mapa").click();
+                        $("#modalCluster").modal('hide');
+                        $('#jstree-proton-3').jstree("deselect_all");
+                        $('#jstree-proton-3').jstree("close_all");
+                        $scope.consultarCoberturas();
+                        $scope.$apply();
+                    } else {
+                        mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                        swal.close();
+                    }
+                } else {
+                    mostrarMensajeErrorAlert("No se pudo ligar al cluster");
+                    swal.close();
+                }
+            } else {
+                mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                swal.close();
+            }
+        }).catch(err => handleError(err));
+    }
+
     $scope.ligarIncidencias = function () {
         $("#content_mapa").click();
         if (!$scope.listaIncidenciasLigar.length) {
             mostrarMensajeWarningValidacion('Selecciona al menos una incidencia');
             return false;
         }
-
         let ultimonivel = $scope.obtenerNivelUltimoJerarquia()
         let clustersparam = $("#jstree-proton-3").jstree("get_selected", true)
             .filter(e => e.original.nivel == ultimonivel)
             .map(e => parseInt(e.id))
-
         if (clustersparam.length == 0) {
             mostrarMensajeWarningValidacion('Selecciona cluster v&aacute;lido');
             return false;
@@ -606,13 +639,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
             cancelButtonText: 'Cancelar'
         }).then(function (response) {
             if (response.length) {
-                $("#content_mapa").click();
-                $("#modalCluster").modal('hide');
-                $('#jstree-proton-3').jstree("deselect_all");
-                $('#jstree-proton-3').jstree("close_all");
-                $scope.consultarCoberturas();
-                $scope.$apply();
-                mostrarMensajeExitoAlert('Operaci&oacute;n &eacute;xitosa');
+                $scope.ligarIncidenciaPe(response, clustersparam[0]);
             } else {
                 mostrarMensajeWarningValidacion('El comentario es obligatorio para ligar incidencias');
             }

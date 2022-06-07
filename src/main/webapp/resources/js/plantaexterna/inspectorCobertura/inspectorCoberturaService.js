@@ -31,7 +31,7 @@ app.service("inspectorCoberturaService", function ($http) {
     this.ligarIncidenciasCoberturaPE = function (params) {
         return $http({
             method: "post",
-            url: "req/ligarIncidenciasCoberturasPE",
+            url: "req/ligarIncidenciaPE",
             data: JSON.stringify(params),
             headers: { 'Content-Type': "application/json; charset=utf-8" },
             transformRequest: angular.identity

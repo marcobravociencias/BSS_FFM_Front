@@ -1,5 +1,6 @@
 var tableAlerta;
 app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericService) {
+    var regexUrl = /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/;
 
     $scope.otsAlertas = [];
     $scope.vistaDespacho = true;
@@ -19,7 +20,8 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
     $scope.contadorCaracteresTextArea = 0;
     $scope.listaTotal = { aceptadas: 0, rechazadas: 0 };
     //    $scope.detalleEvidencia = detalleEvidencias.result.evidencias;
-    $scope.detalleEvidencia = [];
+    $scope.detalleEvidencia = {};
+    $scope.listImagenesTipo = [];
 
 
     $scope.getDetalleAlertas = function (alerta) {
@@ -47,26 +49,31 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
         var params = {
             "idTipoAlerta": alerta.id
         }
-        
+
         if (alerta.id == 9) {
             $scope.listaTotal = { aceptadas: 0, rechazadas: 0 };
-            $(".radio-evidencias").prop("checked", false);
-            $(".checkbox-evidencia").prop("checked", false);
-            $(".checkbox-evidencia").removeClass("rechazada-check");
             $scope.vistaAuditoriaEvidencia = true;
             $scope.vistaDespacho = false;
-            $scope.applyMagnific();
         }
-        
+
         $scope.otsAlertas = [];
         mainAlertasService.getDetalleAlertas(params).then(function success(response) {
             if (response.data !== undefined) {
                 if (response.data.result) {
+
                     //$("#pills-mapa-tab").click();
-                    $scope.otsAlertas = response.data.result ?  response.data.result.detalleAlerta : [];
+                    $scope.otsAlertas = response.data.result ? response.data.result.detalleAlerta : [];
                     $scope.vistaDespacho = false;
                     $scope.tipoAlertaSeleccionada = angular.copy(alerta);
-                    $scope.mostrarDetalleAlertas($scope.otsAlertas);
+                    switch (alerta.id) {
+                        case '9':
+                            $scope.mostrarDetalleAlertasEvidencia($scope.otsAlertas);
+                            break;
+
+                        default:
+                            $scope.mostrarDetalleAlertas($scope.otsAlertas);
+                            break;
+                    }
 
                     $("#buscador-alertas-ot").val('')
                     //swal.close();
@@ -74,7 +81,7 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
                     toastr.warning('No se encontraron resultados');
                     swal.close();
                 }
-                
+
             } else {
                 swal.close();
             }
@@ -88,12 +95,12 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
             let alertaob = value.alerta;
             let ordenobj = value.orden;
             let tecnicoObj = value.tecnico;
-            
-//            $scope.otModalSelectedGeneric.idFlujo = ordenobj.idFlujo;
-//            $scope.otModalSelectedGeneric.idOrden = ordenobj.id;
+
+            //            $scope.otModalSelectedGeneric.idFlujo = ordenobj.idFlujo;
+            //            $scope.otModalSelectedGeneric.idOrden = ordenobj.id;
             $scope.otModalSelectedGeneric.idFlujo = 10;
             $scope.otModalSelectedGeneric.idOrden = 592525;
-            
+
             let arra = [];
             arra[0] = alertaob.id ? alertaob.id : '';
             arra[1] = alertaob.folioSistema ? alertaob.folioSistema : '';
@@ -151,7 +158,202 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
             $scope.viewTableResumen.push(arra);
 
         });
-        
+
+        if (tableAlerta) {
+            tableAlerta.destroy();
+        }
+
+        tableAlerta = $('#table-alertas-pi').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "ordering": false,
+            "scrollX": true,
+            "info": false,
+            "autoWidth": true,
+            "pageLength": 3,
+            "language": idioma_espanol_not_font,
+            "data": $scope.viewTableResumen,
+            "sDom": '<"top"f>rt<"bottom"lp><"bottom"r><"clear">',
+            "columns": [
+                {
+                    "title": "",
+                    "visible": false,
+                }, {
+                    "title": "",
+                    "visible": false,
+                }, {
+                    "title": ""
+                }
+            ],
+            "initComplete": function (settings, json) {
+                setTimeout(function (e) {
+                    let objclic = document.getElementsByClassName('card-alertas-pendientes')[0]
+                    if (objclic != undefined)
+                        document.getElementsByClassName('card-alertas-pendientes')[0].click();
+                    else
+                        swal.close()
+                }, 500)
+            }
+        });
+    }
+
+    $scope.showImage = function(empleado){
+        console.log(usuario);
+    }
+
+    consultarEvidencia = function (id, usuario, ot) {
+        $(".cards-lertas").css("border-left", "1px solid #dddddd");
+        $(".cards-lertas").css("box-shadow", "0 0 0 0 #ffffff");
+        $("#cardAlerta_" + ot).css("border-left", "4px solid var(--estandar-color)");
+        $("#cardAlerta_" + ot).css("box-shadow", "0 2px 8px 0 rgb(0 0 0 / 16%), 0 2px 8px 0 rgb(0 0 0 / 16%)");
+        let params = {
+            idOt: id,
+            idUsuario: usuario
+        }
+        if (!swal.isVisible()) {
+            swal({ text: 'Cargando registros...', allowOutsideClick: false });
+            swal.showLoading();
+        }
+        mainAlertasService.consultarDetalleEvidencia(params).then(function success(response) {
+            swal.close();
+            if (response.data !== undefined) {
+                if (response.data.respuesta) {
+                    if (response.data.result) {
+                        $scope.detalleEvidencia = response.data.result;
+                        $scope.detalleEvidencia.tipos = [];
+                        $scope.listImagenesTipo = response.data.result.evidencias;
+
+                        let listaTipos = [];
+                        let aceptadas = 0;
+                        let rechazadas = 0;
+                        let urlTec = regexUrl.test($scope.detalleEvidencia.urlFotoPerfil) ? $scope.detalleEvidencia.urlFotoPerfil : "./resources/img/plantainterna/despacho/tecnicootasignada.png";
+                        $("#fotoTecnico").attr("src", urlTec);
+                        var count_cantidad_por_tipo = groupBy(response.data.result.evidencias, 'idEvidencia');
+                        response.data.result.evidencias.map(function (e) {
+                            aceptadas = aceptadas + (e.idEstatus == 2 ? 1 : 0);
+                            rechazadas = rechazadas + (e.idEstatus == 3 ? 1 : 0);
+                            let isExist = listaTipos.find((t) => e.idEvidencia == t.id)
+                            if (!isExist) {
+                                let imagenes = [];
+                                if (count_cantidad_por_tipo[e.idEvidencia].length) {
+                                    imagenes = count_cantidad_por_tipo[e.idEvidencia]
+                                }
+                                listaTipos.push(
+                                    {
+                                        id: e.idEvidencia,
+                                        descripcion: e.tipo,
+                                        imagenes: imagenes
+                                    }
+                                )
+                            }
+                        });
+                        $scope.listaTotal.rechazadas = rechazadas;
+                        $scope.listaTotal.aceptadas = aceptadas;
+                        $scope.detalleEvidencia.tipos = listaTipos;
+                        $scope.applyMagnific();
+                        setTimeout(function () {
+                            $("#categoria_img_0").click();
+                        }, 100);
+
+                    }
+                } else {
+                    toastr.warning(response.data.resultDescripcion);
+                }
+            } else {
+                toastr.error('Ha ocurrido un error en la consulta de evidencias');
+            }
+            $("#displayContent").css("display", "block");
+        }).catch(err => handleError(err));
+    }
+
+    $scope.getEvidenciasImagenes = function (tipo) {
+        $scope.listImagenesTipo = [];
+
+        if (tipo.toString() === '0') {
+            $scope.listImagenesTipo = $scope.detalleEvidencia.evidencias;
+        } else {
+            $scope.detalleEvidencia.tipos.map(function (e) {
+                if (e.id.toString() === tipo.toString()) {
+                    $scope.listImagenesTipo = e.imagenes;
+                    return false;
+                }
+            });
+        }
+
+        $(".tipo_evidencia").removeClass("tipo-evidencia-selected");
+        $("#categoria_img_" + tipo).addClass("tipo-evidencia-selected");
+        setTimeout(() => {
+            $scope.listImagenesTipo.map(function (e) {
+                if (e.idEstatus == 2) {
+                    console.log(e);
+                    $("#check_" + e.id).prop("checked", true);
+                }
+            });
+        }, 50);
+    }
+
+    $scope.mostrarDetalleAlertasEvidencia = function (alertas) {
+        $scope.viewTableResumen = [];
+        angular.forEach(alertas, function (value, index) {
+            let alertaob = value.alerta;
+            let ordenobj = value.orden;
+            let tecnicoObj = value.tecnico;
+
+            let arra = [];
+            arra[0] = alertaob.id ? alertaob.id : '';
+            arra[1] = alertaob.folioSistema ? alertaob.folioSistema : '';
+            arra[2] = `
+                <div id="cardAlerta_${ordenobj.id}" class="card card-alertas-pendientes cards-lertas" onclick="consultarEvidencia('${ordenobj.id}', '${tecnicoObj.id}', '${ordenobj.id}')">
+                    <div class="card-body card-body-alertas">
+
+                        <div class="top-title-ot">
+                            <div class="content-top-element bars-content">
+                                <p class="text-otpendiente-tres-title">${ordenobj.claveCliente}</p>
+                            </div>                        
+                        </div>
+                        <div class="posiciondos">
+                            <div class="content-dos-element ">
+                                <p class="text-otpendiente-tres-title">${ordenobj.nombreCliente}</p>
+                            </div>
+                        </div>
+                        <div class="positiontres">
+                            <div class="content-posiciontres">
+                                <p class="text-otpendiente-tres-title">FOLIO:</p>
+                                <p class="text-otpendiente-tres"> ${ordenobj.folioSistema}</p>
+                            </div>
+                            <div class="content-posiciontres">
+                                <p class="text-otpendiente-tres-title">OT:</p>
+                                <p class="text-otpendiente-tres"> ${ordenobj.id}  </p>
+                            </div>
+                        </div>
+
+                        <div class="info-content-otpendeinte">
+                            <div class="line-content-infootpend">
+                                <b class="text-otpendiente-tres-title">Intevenci&oacute;n:</b>
+                                <span class="text-otpendiente-tres">${ordenobj.descSubIntervencion}</span>                               
+                            </div> 
+                            <div class="line-content-infootpend">
+                                <b class="text-otpendiente-tres-title">Subintervenci&oacute;n.</b>
+                                <span class="text-otpendiente-tres">${ordenobj.descIntervencion}</span>                                
+                            </div>                                               
+                        </div>
+                                       
+                    </div>
+                    <div class="card-footer text-muted card-alertas-pendientes-foot">
+                        <div class="row">
+                            <div class="col-12">
+                                <span class="text-otpendiente-tres-title">Alerta: </span><span class="text-otpendiente-tres">  ${alertaob.descripcionSubtipoAlerta}  </span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `
+            $scope.filtrosGeneral.turnosdisponibles;
+            $scope.viewTableResumen.push(arra);
+
+        });
+
         if (tableAlerta) {
             tableAlerta.destroy();
         }
@@ -188,6 +390,71 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
                 }, 500)
             }
         });
+    }
+
+    $scope.guardarEvidencia = function () {
+
+        let objectGroup = groupBy($scope.detalleEvidencia.evidencias, 'arreglo');
+        let arrayList = Object.keys(objectGroup).map(function (key) { return objectGroup[key]; });
+        let newObjectGroup = {};
+        let isSelected = false;
+        $.each(arrayList, function (e, categoria) {
+            let aceptadas = [];
+            let rechazadas = [];
+
+            $.each(categoria, function (i, elemento) {
+                if ($("#check_" + elemento.id).is(":checked")) {
+                    aceptadas.push(elemento.id);
+                }
+            });
+
+            $.each(categoria, function (i, elemento) {
+                if ($("#check_" + elemento.id).hasClass("rechazada-check")) {
+                    rechazadas.push(elemento.id);
+                }
+            });
+
+            if (aceptadas.length || rechazadas.length) {
+                let nombreGrupo = arrayList[e][0].arreglo;
+                let list = [];
+
+                if (aceptadas.length) {
+                    let obj = {
+                        idEstatus: 2,
+                        idEvidencia: aceptadas,
+                    }
+                    list.push(obj);
+                }
+
+                if (rechazadas.length) {
+                    let obj = {
+                        idEstatus: 3,
+                        idEvidencia: rechazadas
+                    }
+                    list.push(obj);
+                }
+                newObjectGroup[nombreGrupo] = list;
+                isSelected = true;
+            }
+        })
+        if (!isSelected) {
+            toastr.warning('Selecciona la evidencia');
+            return false;
+        }
+        swal({ text: 'Espera un momento...', allowOutsideClick: false });
+        swal.showLoading();
+        mainAlertasService.guardarEvidencia(newObjectGroup).then(function success(response) {
+            swal.close();
+            if (response.data !== undefined) {
+                if (response.data.respuesta) {
+                    toastr.success('Las evidencias se guardaron con &eacute;xito');
+                } else {
+                    toastr.error('No se guardaron las evidencias');
+                }
+            } else {
+                toastr.error('Ocurri&oacute; un arror al guardar la evidencia');
+            }
+        }).catch(err => handleError(err));
     }
 
     $scope.buscarOtAlertaKeyUpOt = function (event) {
@@ -943,6 +1210,9 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
         $scope.opcionesAcciones = true
         $("#idTituloAccionesAlertas").text("OPCIONES");
         $scope.vistaDespacho = true;
+        $scope.listImagenesTipo = [];
+        $scope.detalleEvidencia = {};
+        $("#displayContent").css("display", "none");
         $scope.refrescarBusqueda();
     }
 
@@ -1143,12 +1413,12 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
         if (isSelected == '1') {
             $(".checkbox-evidencia").prop("checked", true);
             $(".checkbox-evidencia").removeClass("rechazada-check");
-            $scope.listaTotal.aceptadas = $scope.detalleEvidencia.length;
+            $scope.listaTotal.aceptadas = $scope.listImagenesTipo.length;
             $scope.listaTotal.rechazadas = 0;
         } else {
             $(".checkbox-evidencia").prop("checked", false);
             $(".checkbox-evidencia").addClass("rechazada-check");
-            $scope.listaTotal.rechazadas = $scope.detalleEvidencia.length;
+            $scope.listaTotal.rechazadas = $scope.listImagenesTipo.length;
             $scope.listaTotal.aceptadas = 0;
         }
     }
@@ -1156,31 +1426,20 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
     $scope.changeSelect = function (element) {
         $(".radio-evidencias").prop("checked", false);
         let id = element.target.id;
+        $.each($scope.listImagenesTipo, function (e, img) {
+            if (id.split('_')[1] == img.id) {
+                img.idEstatus = $("#" + id).is(":checked") ? 2 : 3;
+            }
+        })
         if ($("#" + id).is(":checked")) {
             $("#" + id).removeClass("rechazada-check");
-            $scope.listaTotal.rechazadas = $scope.listaTotal.rechazadas !== 0 ? $scope.listaTotal.rechazadas - 1 : 0;
+            $scope.listaTotal.rechazadas = $(".rechazada-check").length;
             $scope.listaTotal.aceptadas = $scope.listaTotal.aceptadas + 1;
         } else {
             $("#" + id).addClass("rechazada-check");
-            $scope.listaTotal.rechazadas = $(".rechazada-check").length;
             $scope.listaTotal.aceptadas = $scope.listaTotal.aceptadas !== 0 ? $scope.listaTotal.aceptadas - 1 : 0;
+            $scope.listaTotal.rechazadas = $(".rechazada-check").length;
         }
-    }
-
-    $scope.guardarEvidencia = function () {
-        let aceptadas = [];
-        let rechazadas = [];
-
-        $.each($scope.detalleEvidencia, function (i, elemento) {
-            if ($("#check_" + elemento.idEvidencia).is(":checked")) {
-                aceptadas.push(elemento.idEvidencia);
-            }
-        });
-
-        $.each($(".rechazada-check"), function (i, elemento) {
-            let id = (elemento.id).split("_")[1];
-            rechazadas.push(id);
-        });
     }
 
 

@@ -8,5 +8,6 @@ public interface InspectorCoberturaService {
     public ServiceResponseResult consultarFallasCoberturaPE(String params);
     public ServiceResponseResult consultarFiltrosCoberturaPE(String params);
     public ServiceResponseResult consultarIncidenciasCoberturaPE(String params);
+    public ServiceResponseResult ligarIncidencia(String params);
 
 }

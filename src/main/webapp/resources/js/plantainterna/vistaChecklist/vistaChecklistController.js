@@ -204,7 +204,7 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
                         toastr.info('No se encontraron estatus');
                     }
                 } else {
-                    toastr.warning(results[2].data.resultDescripcion);
+                    toastr.warning(results[3].data.resultDescripcion);
                 }
             } else {
                 toastr.error('Ha ocurrido un error en la consulta de estatus');
@@ -406,7 +406,7 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
                         }, 100);
 
                     } else {
-                        toastr.warning('No se encontró ningún valor');
+                        toastr.info('No se encontraron evidencias');
                     }
                 } else {
                     toastr.warning(response.data.resultDescripcion);
@@ -465,7 +465,7 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
         let objectGroup = groupBy($scope.detalleEvidencia.evidencias, 'arreglo');
         let arrayList = Object.keys(objectGroup).map(function (key) { return objectGroup[key]; });
         let newObjectGroup = {};
-        console.log(arrayList);
+        let isSelected = false;
         $.each(arrayList, function (e, categoria) {
             let aceptadas = [];
             let rechazadas = [];
@@ -502,8 +502,13 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
                     list.push(obj);
                 }
                 newObjectGroup[nombreGrupo] = list;
+                isSelected = true;
             }
         })
+        if(!isSelected){
+            toastr.warning('Selecciona la evidencia');
+            return false;
+        }
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
         vistaChecklistService.guardarEvidencia(newObjectGroup).then(function success(response) {

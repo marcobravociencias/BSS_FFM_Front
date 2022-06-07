@@ -63,4 +63,15 @@ public class InspectorCoberturaController {
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 		
 	}
+	
+	@PostMapping("/ligarIncidenciaPE")
+	public ResponseEntity<?> ligarIncidenciaPE(@RequestBody String params) {
+		logger.info("##### InspectorCoberturaController - ligarIncidenciaPE");
+		ServiceResponseResult response = inspectorCoberturaService.ligarIncidencia(params);
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+		
+	}
 }

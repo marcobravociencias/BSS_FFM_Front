@@ -92,6 +92,24 @@ public class ImplInspectorCoberturaService implements InspectorCoberturaService 
 	    logger.info("RESULT" + gson.toJson(response));
 		return response;
 	}
+	
+	@Override
+	public ServiceResponseResult ligarIncidencia(String params) {
+		logger.info("### URL ligarIncidencia(): \n" + params);
 
+		JsonObject jsonObject = new Gson().fromJson(params, JsonObject.class);
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String tokenAcces = principalDetail.getAccess_token();
+
+		String urlRequest = principalDetail.getDireccionAmbiente()
+				.concat(constInspectorCobertura.getReasignarIncidenciasPE());
+		logger.info("### URL ligarIncidencia(): \n" + urlRequest);
+
+		ServiceResponseResult response = restCaller.callPatchBearerTokenRequest(jsonObject.toString(), urlRequest,
+				ServiceResponseResult.class, tokenAcces);
+
+		logger.info("### RESULT ligarIncidencia(): \n" + gson.toJson(response));
+		return response;
+	}
 	
 }

@@ -65,7 +65,7 @@
                                 <div class="contenedor_img_evidencia">
                                     <a href="{{img.url ? img.url : './resources/img/generic/not_found.png'}}"
                                         class="magnific item imgtipo_{{img.idEvidencia}}"
-                                        data-title="{{img.nombreEvidencia}}">
+                                        data-title="{{img.clasificacion}}">
                                         <img class="z-depth-1 img_evidencia"
                                             ng-src="{{img.url ? img.url : './resources/img/generic/not_found.png'}}"
                                             width="180" height="130" />

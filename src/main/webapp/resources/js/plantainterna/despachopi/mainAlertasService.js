@@ -87,5 +87,27 @@ app.service("mainAlertasService", function ($http) {
             }
 		});
 	};
+	this.consultarDetalleEvidencia = function (params) {
+        return $http({
+            method: "post",
+            data: JSON.stringify(params),
+            url: "req/consultarDetalleEvidencia",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    }
+
+	this.guardarEvidencia = function (params) {
+        return $http({
+            method: "post",
+            data: params,
+            url: "req/guardarEvidencia",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    }
+
 
 });
