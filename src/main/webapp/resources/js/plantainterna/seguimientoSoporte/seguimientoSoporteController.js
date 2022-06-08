@@ -482,6 +482,7 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
                     $("#panelsStayOpen-headingOne .accordion-button").click();
                     $("#panelsStayOpen-headingTwo .accordion-button").click();
                     $scope.ticketDetalle = response.data.result.detalleGeneral;
+                    $scope.consultaChat(); 
                     $scope.ticketDetalle.detalleTicketSc.fallaTxt = $scope.catalogosSeguimiento.fallas.find((e) => e.id == $scope.ticketDetalle.detalleTicketSc.falla).descripcion
                     $scope.ticketDetalle.detalleTicketSc.categoriaTxt = $scope.catalogosSeguimiento.fallas.find((e) => e.id == $scope.ticketDetalle.detalleTicketSc.categoria).descripcion
                     $scope.ticketDetalle.detalleTicketSc.subcategoriaTxt = $scope.catalogosSeguimiento.fallas.find((e) => e.id == $scope.ticketDetalle.detalleTicketSc.subcategoria).descripcion
@@ -576,6 +577,36 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
         $('#img_tec').attr('src', url);
         $('#modalFoto').modal('show');
     }
+
+    $scope.comentariosOrdenTrabajo = []; 
+    $scope.consultaChat = function () { 
+        $scope.comentariosOrdenTrabajo = []; 
+        let params = { 
+            idOt: $scope.ticketDetalle.detalleOtDetenida.otGeneraSoporte 
+        } 
+        genericService.consultarComentariosDespachoOT(params).then(function success(response) { 
+            if (response.data !== undefined) { 
+                if (response.data.respuesta) { 
+                    if (response.data.result) { 
+                        if (response.data.result.detalle) { 
+                            $scope.comentariosOrdenTrabajo = response.data.result.detalle; 
+                            angular.forEach($scope.comentariosOrdenTrabajo, function (comentario, index) { 
+                                comentario.fechaComentario = moment(comentario.fecha + ' ' + comentario.hora).format("dddd, D [de] MMMM [de] YYYY hh:mm A"); 
+                            }); 
+                        } else { 
+                            toastr.warning(response.data.result.mensaje); 
+                        } 
+                    } else { 
+                        toastr.warning('No se encontraron comentarios'); 
+                    } 
+                } else { 
+                    toastr.warning(response.data.resultDescripcion); 
+                } 
+            } else { 
+                toastr.warning(response.data.resultDescripcion); 
+            } 
+        }).catch(err => handleError(err)); 
+    } 
 
     $scope.validacionGenerica = function () {
         if ($scope.historial.length === 1) {

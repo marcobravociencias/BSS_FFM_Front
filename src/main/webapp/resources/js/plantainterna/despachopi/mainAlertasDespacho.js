@@ -242,7 +242,7 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
                                 listaTipos.push(
                                     {
                                         id: e.idEvidencia,
-                                        descripcion: e.tipo,
+                                        descripcion: e.clasificacion,
                                         imagenes: imagenes
                                     }
                                 )

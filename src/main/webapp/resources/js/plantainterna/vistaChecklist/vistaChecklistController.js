@@ -83,7 +83,7 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
     $scope.respaldoIntervecionesArray = [];
     $scope.getInformacionGeneral = function () {
         $q.all([
-            vistaChecklistService.consultarConfiguracion({ "moduloAccionesUsuario": "moduloVistaChecklist" }),
+            vistaChecklistService.consultarConfiguracion({ "moduloAccionesUsuario": "moduloChecklist" }),
             vistaChecklistService.consultarGeografiaChecklist(),
             genericService.consultarCatalogoIntervenciones(),
             genericService.consultarCatalogoEstatusDespachoPI()
@@ -102,11 +102,12 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
                             validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
                             validateCreedText = llavesResult.KEY_TEXTFORMATO_CREED_RES ? KEY_TEXTFORMATO_CREED_RES : '';
 
-                            if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
-                                $scope.configPermisoAccionConsultaOt = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaOtChecklist" })[0] != undefined);
-                                $scope.configPermisoAccionConsultaEvidencia = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaEvidenciaChecklist" })[0] != undefined);
-                                $scope.configPermisoAccionActualizaEvidencia = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionActualizaEvidenciaChecklist" })[0] != undefined);
-                            }
+                           
+                        }
+                        if (resultConf != undefined && resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.permisos && resultConf.MODULO_ACCIONES_USUARIO.permisos != "") {
+                            $scope.configPermisoAccionConsultaOt = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaOtChecklist" })[0] != undefined);
+                            $scope.configPermisoAccionConsultaEvidencia = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaEvidenciaChecklist" })[0] != undefined);
+                            $scope.configPermisoAccionActualizaEvidencia = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionActualizaEvidenciaChecklist" })[0] != undefined);
                         }
 
                     } else {
@@ -416,7 +417,7 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
                                     listaTipos.push(
                                         {
                                             id: e.idEvidencia,
-                                            descripcion: e.tipo,
+                                            descripcion: e.clasificacion,
                                             imagenes: imagenes
                                         }
                                     )
