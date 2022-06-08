@@ -1050,6 +1050,72 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         }
     }
 
+    $scope.detallePaqueteCSP = {};
+    $scope.consultarResumenPaqueteBandejasSF = function (idCSP) {
+        $scope.listDetalleEquipos = [];
+        $scope.detallePaqueteCSP = {};
+        if (!swal.isVisible()) {
+            swal({ text: 'Espera un momento...', allowOutsideClick: false });
+            swal.showLoading();
+        }
+        let params = {
+            "folio": "OS-6944916"
+        };
+        console.log(params);
+        bandejasSalesforceService.consultarResumenPaqueteBandejasSF(params).then(function success(response) {
+            console.log(response);
+            if (response.data) {
+                if (response.data.respuesta) {
+                    if (response.data.result) {
+                        if (response.data.result.resumenPaquete) {
+                            $scope.detallePaqueteCSP = angular.copy(response.data.result.resumenPaquete);
+                            $scope.detallePaqueteCSP.idCSP = idCSP;
+                            $("#modalDetallePaquete").modal('show');
+                            swal.close();
+                        }
+                    }
+                } else {
+                    mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                    swal.close();
+                }
+            } else {
+                mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                swal.close();
+            }
+        });
+    }
+
+    $scope.listDetalleEquipos = [];
+    $scope.consultarDetalleEquiposBandejas = function () {
+        $scope.listDetalleEquipos = [];
+        if (!swal.isVisible()) {
+            swal({ text: 'Espera un momento...', allowOutsideClick: false });
+            swal.showLoading();
+        }
+        let idCSP = $("#idCSPPaquete").val();
+        let params = {
+            'idCotSitioPlan': idCSP
+        }
+        console.log(params);
+        bandejasSalesforceService.consultarDetalleEquiposBandejasSF(params).then(function success(response) {
+            console.log(response);
+            if (response.data) {
+                if (response.data.respuesta) {
+                    if (response.data.result) {
+                        $scope.listDetalleEquipos = angular.copy(response.data.result.detalleEquipos);
+                        swal.close();
+                    }
+                } else {
+                    mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                    swal.close();
+                }
+            } else {
+                mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                swal.close();
+            }
+        });
+    }
+
     $scope.validacionGenerica = function() {
         
     }

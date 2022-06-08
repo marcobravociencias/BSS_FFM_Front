@@ -110,4 +110,24 @@ app.service("bandejasSalesforceService", function ($http) {
             transformRequest: angular.identity
         });
     };
+
+    this.consultarDetalleEquiposBandejasSF = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarDetalleEquiposBandejasSF",
+            data: JSON.stringify(params),
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
+            transformRequest: angular.identity
+        });
+    };
+    
+    this.consultarResumenPaqueteBandejasSF = function (params) {        
+        return $http({
+            method: "post",
+            url: "req/obtenerResumenPaquete",
+            data: JSON.stringify(params),
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
+            transformRequest: angular.identity
+        });
+    }
 });

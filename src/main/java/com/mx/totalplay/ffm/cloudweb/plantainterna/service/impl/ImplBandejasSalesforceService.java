@@ -179,6 +179,26 @@ public class ImplBandejasSalesforceService implements BandejasSalesforceService 
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public ServiceResponseResult consultarDetalleEquiposBandejasSF(String params) {
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+	    logger.info("ImplBandejasSalesforceService.class [metodo = consultarDetalleEquiposBandejasSF() ] \n" + params);
+
+	    LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+	    String tokenAccess = principalDetail.getAccess_token();
+		logger.info("consultarDetalleEquiposBandejasSF## "+tokenAccess);
+		
+	    String urlRequest = principalDetail.getDireccionAmbiente().concat(constBandejasSalesforce.getConsultaDetalleEquiposBandejasSF());
+	    logger.info("URL## " + urlRequest);
+	    
+	    Map<String, String> paramsRequestGet = new HashMap<String, String>();
+	    paramsRequestGet.put("idCotSitioPlan", jsonObject.get("idCotSitioPlan").getAsString());
+	    
+	    ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
+	            ServiceResponseResult.class, tokenAccess);
+	    return response;
+	}
     
     
 }

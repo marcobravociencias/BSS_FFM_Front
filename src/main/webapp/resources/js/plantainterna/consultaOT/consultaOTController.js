@@ -1932,7 +1932,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				isConsultaDetalleSoporte = true
 				if (result.data.respuesta) {
 					if (result.data.result.length > 0) {
-						$scope.detalleSoporteList = angularresult.data.result;
+						$scope.detalleSoporteList = angular.copy(result.data.result);
 
 						if ($scope.detalleSoporteList.length > 7) {
 							$('#containerTabsSoporte').removeClass('row');
