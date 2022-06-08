@@ -11,6 +11,7 @@
 <jsp:include page="./modalFotoDespacho.jsp"></jsp:include>
 <jsp:include page="./modalCambiaContrasenia.jsp"></jsp:include>
 <input type="hidden" id="numempleadohidden" value="${userStore.numEmpleado}">
+<input type="hidden" id="empleadohidden" value="${userStore.idUsuario}">
 
 <header class="header-navbar-p">
     <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-menu-generic">
@@ -307,7 +308,7 @@
                                                 <div class="widget-content-left">
                                                     <c:if
                                                         test="${userStore.urlFoto != null &&  userStore.urlFoto != '' && userStore.urlFoto != 'string'}">
-                                                        <img class="img-despacho-navbar img-user-profile-navbar"
+                                                        <img id="imgFotoUsuarioLog" class="img-despacho-navbar img-user-profile-navbar"
                                                             style="cursor: auto;" src="${userStore.urlFoto}" height="40"
                                                             alt="" loading="lazy" />
                                                     </c:if>
@@ -327,6 +328,12 @@
                                         <div class="widget-subheading opacity-8">
                                             <sec:authentication property="principal.propietario" />
                                         </div>
+                                        
+                                        <div class="widget-content-icon-foto" title="Cambiar foto">
+                                            <input type="file" class="fotoUsuarioLog" id="fileFotoUsuarioLog" onchange="cambiarFotoUsuarioLog(this)" accept="image/*" />
+                                            <i style="cursor: pointer; margin-top: 0.3em;" class="fas fa-camera"></i>
+                                        </div>
+                                        
                                         <div class="widget-content-icon-size-in" onclick="inOutImg('in')"
                                             title="Minimizar foto">
                                             <i class="fas fa-compress-alt"></i>

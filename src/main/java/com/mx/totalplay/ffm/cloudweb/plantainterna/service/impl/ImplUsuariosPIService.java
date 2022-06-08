@@ -240,7 +240,13 @@ public class ImplUsuariosPIService implements UsuariosPIService {
 		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
 		Map<String, String> paramsRequestGet = new HashMap<String, String>();
 		paramsRequestGet.put("id", jsonObject.get("id").getAsString());
-		logger.info("json object params## "+ params);
+		JsonObject jsonProperty= jsonObject.getAsJsonObject("fotoPerfil");
+		if(jsonProperty != null) {
+			jsonProperty.addProperty("bucketId", (String)principalDetail.getConfiguraciones().get("BUCKETID_FB"));
+			jsonObject.remove("fotoPerfil");
+			jsonObject.add("fotoPerfil", jsonProperty);
+		}
+		logger.info("json object params## "+ jsonObject);
 		String tokenAcces=principalDetail.getAccess_token(); 
 		String url = principalDetail.getDireccionAmbiente().concat(constUsuario.getModificarUsuario());
 		logger.info("url  " + gson.toJson(url));

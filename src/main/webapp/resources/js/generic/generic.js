@@ -117,7 +117,6 @@ GenericMapa.prototype.callPrototypeMapa = function (listadoData,arrayPreseleccio
 			});
 		}
 	}
-	console.log(listadoKmzConfig)
 	GenericMapa.prototype.kmzConfigArray = listadoKmzConfig;
 }
 
@@ -185,7 +184,6 @@ class GenericAccionRealizada {
 	}
 
 	getAccionesRecientesUsuario() {
-		console.log("Obteniendo Registros " + this.nombreModuloAccion);
 		let accionesList;
 		let accionesListModulo;
 		let accionesListGeneral;
@@ -197,9 +195,6 @@ class GenericAccionRealizada {
 			accionesListGeneral = accionesList.filter(e => { return e.identificadorModulo !== this.nombreModuloAccion });
 			accionesListModulo = accionesList.filter(e => { return e.usuario === usuario && e.identificadorModulo === this.nombreModuloAccion });
 			accionesList = [];
-			
-			console.log(accionesListGeneral);
-			console.log(accionesListModulo);
 
 			if (accionesListModulo.length > 50) {
 				let ultimasAcciones = accionesListModulo.slice(-5);
@@ -231,13 +226,11 @@ class GenericAccionRealizada {
 	mostrarUltimasAccionesUsuario() {
 
 		let validarAcci=function(dato){
-			console.log("hereee-- -")
 			return  (dato == undefined || dato == '') ? 'Sin dato' :dato  
 		}
 
 		$("#container-ultimasAcciones").show();
 		let listaUltimasAcciones = this.getAccionesRecientesUsuario();
-		console.log(listaUltimasAcciones);
 		$("#listAccionesRecientes").empty();
 		let contentAcciones = "";
 		
@@ -632,6 +625,51 @@ inOutImg = function (size) {
 		$('#content-in-img').css('display', 'block');
 
 	}
+}
+
+cambiarFotoUsuarioLog = function(evento) {
+	var fileFoto = $("#fileFotoUsuarioLog")[0].files[0];
+	var idUsuarioLog = $("#empleadohidden").val();
+	var nombreFoto = $("#numempleadohidden").val();
+	
+	let reader = new FileReader();
+	reader.readAsDataURL(fileFoto);
+	reader.onload = function () {
+		let base64 = reader.result.toString().split(",");
+		let imgMod = {
+			"archivo": base64[1],
+			"nombre": "usuarios/mex/"+nombreFoto+"/fotoPerfil"
+		}
+		
+		let paramsCambiarFotoUsuarioLog = {
+				id: idUsuarioLog,
+				fotoPerfil: imgMod
+		};
+		
+		swal({ text: 'Espera un momento...', allowOutsideClick: false });
+		swal.showLoading();
+		$.ajax({
+			url: "req/modificarUsuario",
+			type: "POST",
+			data: JSON.stringify(paramsCambiarFotoUsuarioLog),
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			error: function (xhr, error, thrown) {
+				handleError(xhr);
+				swal.close();
+			},
+			complete: function (response) {
+				swal.close();
+				if (response.responseJSON.respuesta) {
+					$(".img-user-profile-navbar").attr("src", "data:image/jpeg;base64," + base64[1]);
+					toastr.success("\u00a1Fotograf\u00eda actualizada exitosamente!");
+				} else {
+					mostrarMensajeInformativo(response.responseJSON.resultDescripcion);
+				}
+			}
+		});
+	};
 }
 
 var monster = document.getElementById('monsterPlay');

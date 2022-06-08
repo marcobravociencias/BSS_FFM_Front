@@ -647,6 +647,7 @@ span.text-content-tecnico {
 
 #tableDetalleTrabajo tbody tr:nth-child(even),
 #tableArchivosJustificacion tbody tr:nth-child(even),
+#tableDetalleOtTrabajada tbody tr:nth-child(even),
 #tableJustificaciones tbody tr:nth-child(even),
 #tableOtsTrabajadas tbody tr:nth-child(even),
 #tableDiasTrabajados tbody tr:nth-child(even)
@@ -655,7 +656,8 @@ span.text-content-tecnico {
 }
   
 #tableDetalleTrabajo>tbody>tr>td, 
-#tableArchivosJustificacion>tbody>tr>td, 
+#tableArchivosJustificacion>tbody>tr>td,
+#tableDetalleOtTrabajada>tbody>tr>td, 
 #tableJustificaciones>tbody>tr>td, 
 #tableOtsTrabajadas>tbody>tr>td, 
 #tableDiasTrabajados>tbody>tr>td {
@@ -667,6 +669,7 @@ span.text-content-tecnico {
   
 #tableDetalleTrabajo thead th, 
 #tableArchivosJustificacion thead th, 
+#tableDetalleOtTrabajada thead th, 
 #tableJustificaciones thead th, 
 #tableOtsTrabajadas thead th, 
 #tableDiasTrabajados thead th 
@@ -682,6 +685,11 @@ span.text-content-tecnico {
 }
 
 #tableArchivosJustificacion tbody tr td{
+	padding: 0.5em;
+    border: none;
+}
+
+#tableDetalleOtTrabajada tbody tr td{
 	padding: 0.5em;
     border: none;
 }
@@ -718,7 +726,9 @@ span.text-content-tecnico {
 #tableJustificaciones_wrapper div.dataTables_paginate li.previous a:before,
 #tableJustificaciones_wrapper div.dataTables_paginate li.next a:after,
 #tableArchivosJustificacion_wrapper div.dataTables_paginate li.previous a:before,
-#tableArchivosJustificacion_wrapper div.dataTables_paginate li.next a:after {
+#tableArchivosJustificacion_wrapper div.dataTables_paginate li.next a:after,
+#tableDetalleOtTrabajada_wrapper div.dataTables_paginate li.previous a:before,
+#tableDetalleOtTrabajada_wrapper div.dataTables_paginate li.next a:after {
 	content: none;
 }
 
@@ -947,7 +957,12 @@ div.actividades-contadorac-gris {
 	background-color: var(--btn-color-eliminar-tabla) !important;
 }
 
+.btnDetalleOtTrabajada {
+	background-color: var(--btn-color-detalle-tabla) !important;
+}
+
 #tableArchivosJustificacion_paginate .page-item.active .page-link,
+#tableDetalleOtTrabajada_paginate .page-item.active .page-link,
 #tableJustificaciones_paginate .page-item.active .page-link,
 #tableOtsTrabajadas_paginate .page-item.active .page-link,
 #tableDiasTrabajados_paginate .page-item.active .page-link {

@@ -87,6 +87,8 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	$scope.tabSupervisorCentralizado_VL_CAMPOS = false;
 	$scope.tabCouchDespacho_VL_CAMPOS = false;
 	$scope.tabSupervisor_VL_CAMPOS = false;
+	$scope.tabAccesosActivos = [];
+	$scope.tabAccesosProhibidos = [];
 	
 	$scope.catalogoGeografias = [];
 	$scope.geoSelect = [];
@@ -196,7 +198,6 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 				$scope.configPermisoAccionCreaUsuarios = ($scope.permisosUsuariosAcciones.filter(e => {return e.clave == "accionCreaUsuarios"})[0] != undefined);
 				$scope.configPermisoAccionEditaUsuarios = ($scope.permisosUsuariosAcciones.filter(e => {return e.clave == "accionEditaUsuarios"})[0] != undefined);
 				$scope.configPermisoAccionEliminaUsuarios = ($scope.permisosUsuariosAcciones.filter(e => {return e.clave == "accionEliminaUsuarios"})[0] != undefined);
-				
 				$scope.bucketIdImg = resultConf.BUCKETID_FB;
 				
 				// *** COMPAÑÍAS ***
@@ -222,8 +223,6 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	            	if(results[2].data.respuesta){
 	            		if(results[2].data.result.puestos.length > 0){
 	            			$scope.listaPuestos = results[2].data.result.puestos;
-//	            			$scope.idPuestoTecnico = $scope.listaPuestos.filter(e => {return e.descripcion == "TECNICO"})[0];
-//	            		    $scope.idPuestoDespacho = $scope.listaPuestos.filter(e => {return e.descripcion == "DESPACHO"})[0];
 	            		    angular.forEach($scope.listaPuestos,function(puestoCheck,index){
 	            		    	puestoCheck.checkedOpcion = true;
 	            			});
@@ -241,33 +240,9 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	        	if (results[3].data !== undefined) {
 	            	if(results[3].data.respuesta){
 	            		if(results[3].data.result.permisos.length > 0){
-	            			let permisosLista = results[3].data.result.permisos;
+	            			//let permisosLista = results[3].data.result.permisos;
 	            			$scope.listaPermisos = results[3].data.result.permisos;
-	            			permisosLista.push({id: 0, nombre: "PERMISOS", nivel: 0, idPadre: "#", state:{opened: true}});
-	            			permisosLista.map((e)=>{
-	            				e.parent = e.idPadre == null ? 0 : e.idPadre;
-	                            e.text= e.nombre;
-	                            e.icon= "fa fa-globe";
-	                            return e
-	                        })       
-							$scope.listaPermisosRespaldo = angular.copy(permisosLista);
-	                        $('#arbolPermisoRegistro').bind('loaded.jstree', function(e, data) {
-								//$(this).jstree("open_all");
-	                        }).jstree({
-	                        	'plugins': ['search', 'checkbox', 'wholerow'],
-	                        	'search': {
-	    							"case_sensitive": false,
-	    							"show_only_matches": true
-	    						},
-								'core': {
-									'data': permisosLista,
-	                                'themes': {
-	                                    'name': 'proton',
-	                                    'responsive': true,
-	                                    "icons":false        
-	                                }
-	                            }
-							});
+	            			$scope.listaPermisosRespaldo = angular.copy($scope.listaPermisos);
 	            		}else{
 	            			toastr.info('¡Actualmente no existen permisos!');
 	            		}
@@ -765,6 +740,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	$('#arbolIntervencionPerfilRegistro').jstree("destroy");
     	$('#arbolIntervencionPerfilRegistro').jstree("deselect_all");
     	$('#arbolGeografiaRegistro').jstree("deselect_all");
+    	$('#arbolPermisoRegistro').jstree("destroy");
     	$('#arbolPermisoRegistro').jstree("deselect_all");
     	$("#arbolIntervencionRegistro").jstree('close_all');
     	$("#arbolIntervencionPerfilRegistro").jstree('close_all');
@@ -825,9 +801,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	$scope.tabConfirmacion = false;
     	
     	var tabsPuestoSeleccionadoRegistro = $scope.listaPuestos.filter(e => {return e.id == $(this).val()})[0];
-//    	console.log("-------------------- TAB's Puesto --------------------");
     	angular.forEach(tabsPuestoSeleccionadoRegistro.tabs,function(tab,index){
-//    		console.log(tab.llaveFront);
     		switch(tab.llaveFront){
             	case "tabInformacion":
             		$scope.tabInformacion = true;
@@ -867,7 +841,6 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
             		break;
     		}
 		});
-//    	console.log("------------------------------------------------------");
     	
     	$scope.tabInformacionVW_ASIG_AUTOMATICA = false;
     	$scope.tabInformacionVW_CUADRILLA = false;
@@ -895,6 +868,8 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	$scope.tabSupervisorCentralizado_VL_CAMPOS = false;
     	$scope.tabCouchDespacho_VL_CAMPOS = false;
     	$scope.tabSupervisor_VL_CAMPOS = false;
+    	$scope.tabAccesosActivos = [];
+    	$scope.tabAccesosProhibidos = [];
     	
     	angular.forEach(tabsPuestoSeleccionadoRegistro.configuraciones,function(conf,index){
     		
@@ -1037,57 +1012,46 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	    				$scope.tabSupervisor_VL_CAMPOS = false;
 	    			}
 	        		break;
+	        	case "tabAccesosActivos":
+	        		$scope.tabAccesosActivos = conf.valor.trim().split(",");
+	        		break;
+	        	case "tabAccesosProhibidos":
+	        		$scope.tabAccesosProhibidos = conf.valor.trim().split(",");
+	        		break;
 			}
     		
-//    		if(conf.llave == "tabInformacionVW_ASIG_AUTOMATICA"){
-//    			if(conf.valor == "false"){
-//    				$scope.tabInformacionVW_ASIG_AUTOMATICA = false;
-//    			}
-//    		}else if(conf.llave == "tabArbol_LB_N1"){
-//    			$scope.tabArbol_LB_N1 = conf.valor;
-//    		}else if(conf.llave == "tabArbol_LB_N2"){
-//    			$scope.tabArbol_LB_N2 = conf.valor;
-//    		}else if(conf.llave == "tabInformacionVL_RFC"){
-//    			if(conf.valor+"" == "true"){
-//    				$scope.tabInformacionVL_RFC = true;
-//    			}else if(conf.valor+"" == "false"){
-//    				$scope.tabInformacionVL_RFC = false;
-//    			}
-//    		}else if(conf.llave == "tabInformacionVL_CURP"){
-//    			if(conf.valor+"" == "true"){
-//    				$scope.tabInformacionVL_CURP = true;
-//    			}else if(conf.valor+"" == "false"){
-//    				$scope.tabInformacionVL_CURP = false;
-//    			}
-//    		}else if(conf.llave == "tabArbol_NV_GEOGRAFIA"){
-//    			$scope.tabArbol_NV_GEOGRAFIA = conf.valor;
-//    		}else if(conf.llave == "tabIntervenciones_NV_INTERVENCIONES"){
-//    			$scope.tabIntervenciones_NV_INTERVENCIONES = conf.valor;
-//    		}else if(conf.llave == "tabTecnicosVL_MULTISELECCION"){
-//    			$scope.tabTecnicosVL_MULTISELECCION = conf.valor;
-//    		}else if(conf.llave == "tabDespachosVL_MULTISELECCION"){
-//    			$scope.tabDespachosVL_MULTISELECCION = conf.valor;
-//    		}else if(conf.llave == "tabTecnicos_FL_TECNICOS"){
-//    			$scope.idPuestoTecnico = conf.valor;
-//        		$scope.idPuestoDespacho = conf.valor;
-//    		}
-    		
     	});
-    	
-    	//---------------------------------------------------------------------------------------------------------------------------
-    	//---------------------------------------------------------------------------------------------------------------------------
-    	//---------------------------------------------------------------------------------------------------------------------------
-    	//ID estáticos
-//    	$scope.idPuestoIngeniero = 7;
-//    	$scope.idPuestoSupervisorCentralizado = 7;
-//    	$scope.idPuestoCouchDespacho = 7;
-//    	$scope.idPuestoDespacho = 6;
-    	//MULTISELECCION estática
-//    	$scope.tabIngenierosVL_MULTISELECCION = true;
-    	//---------------------------------------------------------------------------------------------------------------------------
-    	//---------------------------------------------------------------------------------------------------------------------------
-    	//---------------------------------------------------------------------------------------------------------------------------
-    	
+		
+		let permisosLista = angular.copy($scope.listaPermisos);
+		permisosLista.push({id: 0, nombre: "PERMISOS", nivel: 0, idPadre: "#", state:{opened: true}});
+		permisosLista.map((e)=>{
+			e.state = {selected: ( $scope.tabAccesosActivos.find((a) => a == e.id) != undefined ? true : false ) };
+			e.parent = e.idPadre == null ? 0 : e.idPadre;
+            e.text= e.nombre;
+            e.icon= "fa fa-globe";
+            return e
+        });
+		
+		permisosLista = permisosLista.filter(item => !$scope.tabAccesosProhibidos.includes(item.parent+''));
+		permisosLista = permisosLista.filter(item => !$scope.tabAccesosProhibidos.includes(item.id+''));
+
+        $('#arbolPermisoRegistro').bind('loaded.jstree', function(e, data) {
+			//$(this).jstree("open_all");
+        }).jstree({
+        	'plugins': ['search', 'checkbox', 'wholerow'],
+        	'search': {
+				"case_sensitive": false,
+				"show_only_matches": true
+			},
+			'core': {
+				'data': permisosLista,
+                'themes': {
+                    'name': 'proton',
+                    'responsive': true,
+                    "icons":false        
+                }
+            }
+		});
     	$scope.$apply();
     	$scope.cargarArbolIntervenciones();
     	$scope.mostrarArbolGeografiaRegistro();
@@ -3142,6 +3106,10 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     		
     	}
     });
+    
+    revisionAccesosRegistro = function() {
+    	$("#arbolPermisoRegistro").trigger('click');
+	}
     
     //-------------------------------------------------------------------    
     $scope.iniciarModuloUsuarios();

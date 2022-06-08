@@ -9,6 +9,7 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
     let tableArchivosJustificacion;
     let tableDetalleTrabajo;
     let eventosDisponibilidad = [];
+    let tableDetalleOtTrabajada;
     $scope.listTecnicos = [];
     $scope.listAuxiliares = [];
     $scope.listMotivosJustificaciones = [];
@@ -230,6 +231,18 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
         });
         
         tableOtsTrabajadas = $('#tableOtsTrabajadas').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "pageLength": 10,
+            "info": true,
+            "scrollX": false,
+            "autoWidth": false,
+            "language": idioma_espanol_not_font
+        });
+        
+        tableDetalleOtTrabajada = $('#tableDetalleOtTrabajada').DataTable({
             "paging": true,
             "lengthChange": false,
             "searching": false,
@@ -649,14 +662,14 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
             rowOT[1] = elemento.folio != null ? elemento.folio : "Sin dato";
             rowOT[2] = elemento.cuenta;
             rowOT[3] = elemento.tipo;
-            rowOT[4] = elemento.subtipo;
-            rowOT[5] = elemento.fechaInicio != null ? elemento.fechaInicio.split(" ")[0] : "Sin dato";
-            rowOT[6] = elemento.fechaFin != null ? elemento.fechaFin.split(" ")[0] : "Sin dato";
-            rowOT[7] = elemento.usuarioffmAux != null ? elemento.usuarioffmAux : "Sin dato";
-            rowOT[8] = elemento.nombreAux != null ? elemento.nombreAux : "Sin dato";
-            rowOT[9] = elemento.puntualidad;
-            rowOT[10] = elemento.tiempoTotal != null ? elemento.tiempoTotal.split(".")[0] : "Sin dato";
-            rowOT[11] = "Sin dato";
+//            rowOT[4] = elemento.subtipo;
+            rowOT[4] = elemento.fechaInicio != null ? elemento.fechaInicio.split(" ")[0] : "Sin dato";
+            rowOT[5] = elemento.fechaFin != null ? elemento.fechaFin.split(" ")[0] : "Sin dato";
+            rowOT[6] = elemento.usuarioffmAux != null ? elemento.usuarioffmAux : "Sin dato";
+            rowOT[7] = elemento.nombreAux != null ? elemento.nombreAux : "Sin dato";
+            rowOT[8] = elemento.puntualidad;
+//            rowOT[10] = elemento.tiempoTotal != null ? elemento.tiempoTotal.split(".")[0] : "Sin dato";
+            rowOT[9] = '<span onclick="abrirModalDetalleOtTrabajada('+elemento.idOrden+')" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light btnDetalleOtTrabajada"><i class="fas fa-bars" aria-hidden="true"></i></span>';
             arrayOtsRow.push(rowOT);
         });
         tableOtsTrabajadas = $('#tableOtsTrabajadas').DataTable({
@@ -670,12 +683,44 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
             "autoWidth": false,
             "language": idioma_espanol_not_font,
             "aoColumnDefs" : [
+            	{"aTargets" : [4], "sClass":  "columnasCentradas"},
             	{"aTargets" : [5], "sClass":  "columnasCentradas"},
-            	{"aTargets" : [6], "sClass":  "columnasCentradas"},
-            	{"aTargets" : [10], "sClass":  "columnasCentradas"},
-	        	{"aTargets" : [11], "sClass":  "columnasCentradas"}
+            	{"aTargets" : [8], "sClass":  "columnasCentradas"},
+	        	{"aTargets" : [9], "sClass":  "columnasCentradas"}
 	        ]
         });
+    }
+    
+    abrirModalDetalleOtTrabajada = function (ot) {
+    	var otSeleccionadaDetalle = $scope.listDetalleTrabajo.find((e) => e.idOrden == ot);
+    	
+    	let arrayOtDetalleRows = [];
+    	
+        if (tableDetalleOtTrabajada) {
+            tableDetalleOtTrabajada.destroy();
+        }
+        
+        let rowOT = [];
+        rowOT[0] = otSeleccionadaDetalle.subtipo != null ? otSeleccionadaDetalle.subtipo : "Sin dato";
+        rowOT[1] = otSeleccionadaDetalle.descEstatus != null ? otSeleccionadaDetalle.descEstatus : "Sin dato";
+        rowOT[2] = otSeleccionadaDetalle.fechaInicio != null ? otSeleccionadaDetalle.fechaInicio : "Sin dato";
+        rowOT[3] = otSeleccionadaDetalle.fechaFin != null ? otSeleccionadaDetalle.fechaFin : "Sin dato";
+        rowOT[4] = otSeleccionadaDetalle.tiempoTotal != null ? otSeleccionadaDetalle.tiempoTotal : "Sin dato";
+        arrayOtDetalleRows.push(rowOT);
+        
+        tableDetalleOtTrabajada = $('#tableDetalleOtTrabajada').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "ordering": false,
+            "pageLength": 10,
+            "info": true,
+            "scrollX": false,
+            "data": arrayOtDetalleRows,
+            "autoWidth": false,
+            "language": idioma_espanol_not_font
+        });
+    	
+    	$("#modal-detalle-ot-trabajada").modal('show');
     }
 
     $scope.pintarTablaDiasTrabajados = function () {
@@ -687,7 +732,7 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
             let rowDT = [];
             rowDT[0] = elemento.fecha;
             rowDT[1] = elemento.horaInicio;
-            rowDT[2] = elemento.horaFin;
+            rowDT[2] = elemento.horaFin != null ? elemento.horaFin : "Sin dato";
             rowDT[3] = elemento.cantOrdenes;
             arrayDiasTRow.push(rowDT);
         });
@@ -1381,12 +1426,6 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
         $scope.isDetalle = false;
-        $scope.$apply();
-        let arrayRow = [];
-        
-        if (tableDetalleTrabajo) {
-            tableDetalleTrabajo.destroy();
-        }
 
         let paramsOrdenesTecnicos = {"idTecnico": $scope.idTecnico,"fechaInicio": fechaDia,"fechaFin":fechaDia};
         $q.all([
@@ -1398,6 +1437,13 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
                     if(results[0].data.result !== null){
                         if(results[0].data.result.ordenes.length > 0){
                         	$scope.listDetalleTrabajo = results[0].data.result.ordenes;
+                        	
+                        	let arrayRow = [];
+                            
+                            if (tableDetalleTrabajo) {
+                                tableDetalleTrabajo.destroy();
+                            }
+                        	
                         	$.each($scope.listDetalleTrabajo, function (i, elemento) {
                                 let row = [];
                                 row[0] = elemento.idOrden;

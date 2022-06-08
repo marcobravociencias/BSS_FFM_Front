@@ -294,13 +294,13 @@
 	                                                        <th>OS</th>
 	                                                        <th>Cuenta</th>
 	                                                        <th>Tipo</th>
-	                                                        <th>Subtipo</th>
+<!-- 	                                                        <th>Subtipo</th> -->
 	                                                        <th>Fecha inicio</th>
 	                                                        <th>Fecha fin</th>
 	                                                        <th>Usuario auxiliar</th>
 	                                                        <th>Auxiliar</th>
 	                                                        <th>Puntualidad</th>
-	                                                        <th>Tiempo total</th>
+<!-- 	                                                        <th>Tiempo total</th> -->
 	                                                        <th>Opciones</th>
 	                                                    </tr>
 	                                                </thead>
@@ -342,6 +342,7 @@
 	    <jsp:include page="./modals/modalEditarJustificacion.jsp"></jsp:include>
 	    <jsp:include page="./modals/modalAgregarJustificacion.jsp"></jsp:include>
 	    <jsp:include page="./modals/modalDetalleTrabajo.jsp"></jsp:include>
+	    <jsp:include page="./modals/modalDetalleOtTrabajada.jsp"></jsp:include>
 	</body>
 	
 	<!-- Scripts libraries -->

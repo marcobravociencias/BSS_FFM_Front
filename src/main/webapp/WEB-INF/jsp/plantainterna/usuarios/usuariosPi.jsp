@@ -148,7 +148,7 @@
                                             <a class="nav-link linkOpcionesRegistro" id="pills-arbol-tab" data-toggle="pill" href="#pills-arbol" role="tab" aria-controls="pills-arbol" aria-selected="false">&Aacute;rbol</a>
                                         </li>
                                         <li id="pestaniaPermisos" class="nav-item tabOpcionesRegistro" role="presentation" ng-show="tabAccesos">
-                                            <a class="nav-link linkOpcionesRegistro" id="pills-accesos-tab" data-toggle="pill" href="#pills-accesos" ng-show="mostrarAccesos" role="tab" aria-controls="pills-accesos" aria-selected="false">Accesos</a>
+                                            <a class="nav-link linkOpcionesRegistro" id="pills-accesos-tab" onclick="revisionAccesosRegistro()" data-toggle="pill" href="#pills-accesos" ng-show="mostrarAccesos" role="tab" aria-controls="pills-accesos" aria-selected="false">Accesos</a>
                                         </li>
                                         <li id="pestaniaTecnico" class="nav-item tabOpcionesRegistro" role="presentation" ng-show="tabTecnicos">
                                             <a class="nav-link linkOpcionesRegistro" id="pills-tecnico-tab" ng-click="revisionTecnicosDespachos('tabTecnicos')" data-toggle="pill" href="#pills-tecnico" role="tab" aria-controls="pills-tecnico" aria-selected="false">T&eacute;cnicos</a>

@@ -66,6 +66,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 	$scope.tabSupervisorCentralizado_VL_CAMPOS_mod = false;
 	$scope.tabCouchDespacho_VL_CAMPOS_mod = false;
 	$scope.tabSupervisor_VL_CAMPOS_mod = false;
+	$scope.tabAccesosProhibidosMod = [];
 	
 	$scope.geoSelectMod = [];
 	$scope.intervencionSelectMod = [];
@@ -172,6 +173,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                         	$scope.tabSupervisorCentralizado_VL_CAMPOS_mod = false;
                         	$scope.tabCouchDespacho_VL_CAMPOS_mod = false;
                         	$scope.tabSupervisor_VL_CAMPOS_mod = false;
+                        	$scope.tabAccesosProhibidosMod = [];
                         	
                         	$scope.idPuestoTecnico = null;
                             $scope.idPuestoDespacho = null;
@@ -326,6 +328,9 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 	                	    			}else if(conf.valor+"" == "false"){
 	                	    				$scope.tabSupervisor_VL_CAMPOS_mod = false;
 	                	    			}
+	                	        		break;
+	                	        	case "tabAccesosProhibidos":
+	                	        		$scope.tabAccesosProhibidosMod = conf.valor.trim().split(",");
 	                	        		break;
                         		}
                         		
@@ -735,7 +740,19 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                             });
                             
                             // ********** PREPARA LOS DATOS DE LA PESTAÑA DE ACCESOS (PERMISOS)
+                            
                             $scope.arbolAccesosModificar = angular.copy($scope.listaPermisosRespaldo);
+                            $scope.arbolAccesosModificar.push({id: 0, nombre: "PERMISOS", nivel: 0, idPadre: "#", state:{opened: true}});
+                            $scope.arbolAccesosModificar.map((e)=>{
+                    			e.parent = e.idPadre == null ? 0 : e.idPadre;
+                                e.text= e.nombre;
+                                e.icon= "fa fa-globe";
+                                return e
+                            });
+                            
+                            $scope.arbolAccesosModificar = $scope.arbolAccesosModificar.filter(item => !$scope.tabAccesosProhibidosMod.includes(item.parent+''));
+                            $scope.arbolAccesosModificar = $scope.arbolAccesosModificar.filter(item => !$scope.tabAccesosProhibidosMod.includes(item.id+''));
+                            
                             $scope.listaAccesosRegistradosMod = [];
                             $scope.detalleUsuario.permisosId = [];
                             

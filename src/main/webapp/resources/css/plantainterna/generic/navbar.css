@@ -711,6 +711,13 @@ img.img-despacho-navbar.img-user-profile-navbar {
   margin-top: -1em;
 }
 
+#user-info-login .widget-content-icon-foto {
+  float: left;
+  cursor: pointer;
+  font-size: 1.5em;
+  margin-top: -1em;
+}
+
 #user-info-login .dropdown-menu-header .icon-wrapper-alt-user-default {
   width: 2.5em;
   height: 2.3em;
@@ -727,6 +734,18 @@ img.img-despacho-navbar.img-user-profile-navbar {
   border:1px solid #2955c8 !important:
 }
 
+.fotoUsuarioLog {
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	background-color: transparent !important;
+	font-size: .8em;
+	color: transparent !important;
+	cursor: pointer;
+	border: none !important;
+	opacity: 0;
+	margin-top: 0.3em;
+}
 
 .monster{
   position: relative;
