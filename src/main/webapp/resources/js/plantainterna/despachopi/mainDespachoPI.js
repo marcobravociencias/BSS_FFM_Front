@@ -8,6 +8,7 @@ var tableReporte;
 var fullcalendarAsignadas;
 var app = angular.module('despacho', []);
 var triggerOperarioKeyup;
+var accionDetalleSf;
 
 var mapubicacionoperario;
 var mapaucotizaciondetalle;
@@ -47,6 +48,7 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
         $scope.accionAsignacionOtPermiso = false
         $scope.accionReAsignacionOtPermiso = false
         $scope.isConsultarConteoAlertas = false
+        $scope.accionDetalleSalesforce = false;
 
         $scope.filtrosGeneral = {}
         $scope.listadoOtsPendientes = []
@@ -536,9 +538,9 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                                                 </div>
                                                 <div class="positiontres">
                                                     <div class="content-posiciontres">
-                                                        <p class="text-otpendiente-tres-title">FOLIO:</p>
-                                                        <p class="text-otpendiente-tres link-busqueda-salesforce" onclick="mostrarModalDetalleSf('${otpendiente.folioOrden}')">${otpendiente.folioOrden}</p>
-                                                    </div>
+                                                        <p class="text-otpendiente-tres-title">FOLIO: </p>`;
+                                                    tableelemetn = tableelemetn + (($scope.accionDetalleSalesforce && otpendiente.folioOrden.substr(0,3) === "OS-") ? `<p class="text-otpendiente-tres link-busqueda-salesforce" onclick="mostrarModalDetalleSf('${otpendiente.folioOrden}', '${otpendiente.idFolioOrden}')">${otpendiente.folioOrden}</p>` : `<p class="text-otpendiente-tres" >${otpendiente.folioOrden}</p>`);
+                                                    tableelemetn = tableelemetn + `</div>
                                                     <div class="content-posiciontres">
                                                         <p class="text-otpendiente-tres-title">OT:</p>
                                                         <p class="text-otpendiente-tres" >${otpendiente.idOrden}</p>
@@ -1028,6 +1030,8 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                     $scope.permisosConfigUser.permisos.map(e => { e.banderaPermiso = true; return e; });
                     $scope.accionesUserConfigText = $scope.permisosConfigUser.permisos.map(e => { return e.clave })
                     $scope.accionAsignacionOtPermiso = $scope.permisosConfigUser.permisos.find(e => { return e.clave === 'accionAsignaOT' })
+                    $scope.accionDetalleSalesforce = $scope.permisosConfigUser.permisos.find(e => { return e.clave === 'accionDetalleSalesforce' })
+                    accionDetalleSf = $scope.accionDetalleSalesforce;
                     $scope.permisoDescargaSeguimientoDiario = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaSeguimientoDiario" })[0] != undefined);
 
                     if ($scope.accionAsignacionOtPermiso != undefined) {
@@ -1495,9 +1499,11 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
             }
         }
 
-        mostrarModalDetalleSf = function(os) {
-            if (os !== 'NA') {
-                $scope.consultarDetalleObjectosSF('a153C000000870NQAQ', 'OS');
+        mostrarModalDetalleSf = function(os, idFolio) {
+            if (os.substr(0,3) === "OS-") {
+                $scope.detalleSalesforceView = false;
+                $scope.respaldoHistorial = [];
+                $scope.consultarDetalleObjectosSF(idFolio, 'OS');
                 $("#modalDetalleSalesforce").modal('show');
             } else {
                 toastr.warning("No se cuenta con OS");
@@ -1510,10 +1516,15 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
             $("#modalDetalleSalesforce").modal('hide');
         }
 
+        $scope.respaldoHistorial = [];
         $scope.validacionGenerica = function() {
-            if ($scope.historial.length === 0) {
-                $("#modalDetalleSalesforce").modal('hide');
+            if ($scope.historial.length === 1 && $scope.respaldoHistorial.length === 0) {
+                $scope.respaldoHistorial = angular.copy($scope.historial);
             }
+            if ($scope.historial.length === 0) {
+                $scope.mostrarDetalleOs($scope.respaldoHistorial[0].detalle, "OS");
+            }
+            
         }
 
     }]);

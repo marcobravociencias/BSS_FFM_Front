@@ -497,8 +497,8 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
         $scope.showOs = false;
         $scope.showTicket = false;
         $scope.historial = [];
-        $scope.validacionGenerica();
         $scope.detalleSalesforceView = false;
+        $scope.validacionGenerica();
     }
 
     $scope.regresarConsulta = function () {

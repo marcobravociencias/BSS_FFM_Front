@@ -3678,9 +3678,9 @@ TimelineGrid = (function(superClass) {
         <div class="content-text-otasignada" >      
             <div class="izquierda-icon">
               <i class="far ${event.tipoAsignacion === 2 ?'far fa-hand-paper':'fas fa-desktop'}  icon-tipoot-operacion"></i>
-            </div>  
-            <b class="os-content-asignada link-busqueda-salesforce" onclick="mostrarModalDetalleSf('${event.folioOrden}')">${event.folioOrden}</b>&nbsp&nbsp            
-        </div>
+            </div>`
+            content = content + ((accionDetalleSf && event.folioOrden.substr(0,3) === "OS-") ? `<b class="os-content-asignada link-busqueda-salesforce" onclick="mostrarModalDetalleSf('${event.folioOrden}', '${event.idFolioOrden}')">${event.folioOrden}</b>&nbsp&nbsp` : `<b class="os-content-asignada">${event.folioOrden}</b>&nbsp&nbsp`);           
+            content = content +`</div>
         <div class="content-text-otasignada" >       
             <div class="izquierda-icon">
               <span title="${event.descipcionTipoOrden}" style="background-color:${ event.colorEstatus}" class="elemen-izquierda-asignada intervencion_asignada badge badge-pill ">${intervencion_letter}</span>
