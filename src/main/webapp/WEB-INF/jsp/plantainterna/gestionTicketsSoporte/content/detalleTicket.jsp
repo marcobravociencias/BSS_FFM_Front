@@ -321,9 +321,12 @@
                                 <div class="container-text-title-detalle"><span class="text-tile-vehiculo">OT
                                         FFM</span>
                                 </div>
-                                <div class="container-text-content-detalle"><span
-                                        class="text-content-vehiculo ng-binding"
-                                        ng-bind="editTicket.detalleOtDetenida.otGeneraSoporte || 'Sin dato'"></span>
+                                <div class="container-text-content-detalle">
+                                    <span class="text-content-vehiculo" ng-if="!editTicket.detalleOtDetenida.otGeneraSoporte">Sin dato</span>
+                                    <span class="text-content-vehiculo text-external-link"
+                                        ng-if="editTicket.detalleOtDetenida.otGeneraSoporte"
+                                        ng-click="consultaEvidenciaOTDetalle(editTicket.detalleOtDetenida.otGeneraSoporte)"
+                                        ng-bind="editTicket.detalleOtDetenida.otGeneraSoporte"></span>
                                 </div>
                             </div>
                             <div class="container-fluid vehiculo-content">
@@ -355,7 +358,8 @@
                             </div>
                             <div class="dropleft">
                                 <span class="fas fa-comments icon-color-comments" title="Comentarios"
-                                    id="dropupComments" data-toggle="dropdown" aria-expanded="false"></span>
+                                id="dropupComments" data-toggle="dropdown" aria-expanded="false"></span>
+                                <span ng-click="consultaEvidenciaOTDetalle(editTicket.detalleOtDetenida.otGeneraSoporte)" class="fa fa-picture-o icon-color-comments" style="margin-right: .4em;" title="Evidencia"></span>
                                 <div class="dropdown-menu dropup-comments">
                                     <div class="box-comments">
                                         <div class="box-comments-header">

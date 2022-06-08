@@ -44,6 +44,7 @@
             rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css"
             rel="stylesheet" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/magnific_popup/magnific-popup.css">
 
         <link
             href="${pageContext.request.contextPath}/resources/css/plantainterna/gestionTicketsSoporte/mainChatter.css?v=${sessionScope.versionDepl}"
@@ -107,6 +108,7 @@
         <jsp:include page="./modals/modalFoto.jsp"></jsp:include>
         <jsp:include page="./modals/modalBusquedaCuenta.jsp"></jsp:include>
         <jsp:include page="./modals/modalAsignarTicket.jsp"></jsp:include>
+        <jsp:include page="./modals/modalEvidenciaOT.jsp"></jsp:include>
     </body>
     <!-- Scripts libraries -->
     <script type="text/javascript"
@@ -137,6 +139,7 @@
         src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker_1.9.0.min.js"></script>
     <script type="text/javascript"
         src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker.es.min.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/magnific_popup/jquery.magnific-popup.min.js"></script>
     <!-- fin -->
     <script
         src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
