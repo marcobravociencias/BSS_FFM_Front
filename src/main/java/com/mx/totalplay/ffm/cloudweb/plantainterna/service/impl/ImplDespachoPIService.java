@@ -464,6 +464,33 @@ public class ImplDespachoPIService implements DespachoPIService {
                 urlRequest,
                 ServiceResponseResult.class,
                 tokenAcces);
+
+        JsonObject jsonResponse = gson.fromJson(gson.toJson(response).toString(), JsonObject.class);
+        if (jsonResponse.get("codigoEstatusService").getAsInt() == 200) {
+        	JsonObject jsonResult = jsonResponse.get("result").getAsJsonObject();
+        	JsonObject jsonOrden = jsonResult.get("orden").getAsJsonObject();
+        	if (jsonOrden.get("telefonoCliente") != null) {
+        		String telefonoCliente = jsonOrden.get("telefonoCliente").getAsString();
+        		String nuevoNumeroCliente = "";
+        		for (int i = 0; i < telefonoCliente.length()-3; i++) {
+        			nuevoNumeroCliente = nuevoNumeroCliente+"*";
+                }
+        		nuevoNumeroCliente = nuevoNumeroCliente + telefonoCliente.charAt(telefonoCliente.length()-3) + telefonoCliente.charAt(telefonoCliente.length()-2) + telefonoCliente.charAt(telefonoCliente.length()-1);
+        		jsonOrden.addProperty("telefonoCliente", nuevoNumeroCliente);
+        	}
+        	if (jsonOrden.get("telefonoContacto") != null) {
+        		String telefonoContacto = jsonOrden.get("telefonoContacto").getAsString();
+        		String nuevoNumeroContacto = "";
+        		for (int i = 0; i < telefonoContacto.length()-3; i++) {
+        			nuevoNumeroContacto = nuevoNumeroContacto+"*";
+                }
+        		nuevoNumeroContacto = nuevoNumeroContacto + telefonoContacto.charAt(telefonoContacto.length()-3) + telefonoContacto.charAt(telefonoContacto.length()-2) + telefonoContacto.charAt(telefonoContacto.length()-1);
+        		jsonOrden.addProperty("telefonoContacto", nuevoNumeroContacto);
+        	}
+        	jsonResult.add("orden", jsonOrden);
+        	jsonResponse.add("result", jsonResult);
+        	response = gson.fromJson(jsonResponse, ServiceResponseResult.class);
+        }
         logger.info("RESULT" + gson.toJson(response));
         return response;
     }

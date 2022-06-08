@@ -2974,3 +2974,34 @@ i.fas.fa-lock.iconoAsignacionOtPermiso {
 	color: var(--btn-color-cerrar-modal) !important;
     border: 0.09rem solid var(--btn-color-cerrar-modal) !important;
 }
+.content-descarga-archivo {
+  position: absolute;
+  bottom: .2em;
+  width: auto;
+  max-width: 60%;
+  border-radius: 1em;
+  border: 1px solid #dadada;
+  display: flex;
+  transition: all .3s ease-in;
+  cursor: pointer;
+}
+.content-descarga-archivo:hover {
+  background-color: #dadada;
+  border: 1px solid #b9b9b9;
+}
+.iconoDescargaArchivo {
+  color: #9f9f9f;
+  font-size: .7em;
+  margin-right: .5em;
+}
+.text-descarga-consulta {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #858585;
+  font-size: .7em;
+}
+.textoTituloCardsConsulta {
+  margin-bottom: 0;
+  font-weight: bold;
+}

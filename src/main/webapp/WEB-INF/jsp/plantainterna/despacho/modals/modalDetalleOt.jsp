@@ -163,7 +163,12 @@
                                                         class="text-tile-vehiculo">Carta aceptaci&oacute;n</span></div>
                                                 <div class="container-text-content-detalle">
                                                     <span class="text-content-vehiculo" ng-show="!infoOtDetalle.acta" ng-bind="'No se encontr&oacute; carta de aceptaci&oacute;n'"></span>
-                                                    <a href="{{infoOtDetalle.acta}}" ng-show="infoOtDetalle.acta" style="cursor: pointer;" class="text-title-descarga-adjuntado" >Descargar</a>
+                                                    <div class="content-descarga-archivo content-descarga-consulta"  ng-show="infoOtDetalle.acta" style="padding-right: calc(var(--bs-gutter-x)/2); padding-left: calc(var(--bs-gutter-x)/2);">
+                                                        <a href="{{infoOtDetalle.acta}}" style="cursor: pointer; text-decoration: none;" class="text-title-descarga-adjuntado">
+                                                            <i class="iconoDescargaArchivo fas fa-cloud-download-alt"></i>
+                                                            <span class="textoTituloCardsConsulta text-descarga-consulta ng-binding">Descargar</span>
+                                                        </a>
+                                                    </div>
                                                     <!--div style="padding: .5em 1em .5em .4em; width: 100%; display: flex;">
                                                         <img src="${pageContext.request.contextPath}/resources/img/iconossf/pdf.png" style="width: 1em; height: 1em;" class="imagen-adjuntado-comentarios" alt="">
                                                         <div class="title-file-adjuntado">
