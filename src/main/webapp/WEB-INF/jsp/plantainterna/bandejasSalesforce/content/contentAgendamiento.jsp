@@ -7,6 +7,10 @@
     </div>
     <div class="divider-agendamiento"></div>
 </div>
+
+
+
+    
 <div class="row mt-3">
     <div class="col-4">
         <div class="container-fluid agendamiento-content">
@@ -29,12 +33,12 @@
             <div class="container-text-title-detalle">
                 <span class="text-tile-agendamiento">CSP: </span>
             </div>
-            <div class="container-text-content-detalle">
-                <span class="link-busqueda-salesforce" ng-click="consultarDetalleObjectosSF(elementoCSP.idCSP, 'CP')" ng-bind="elementoCSP.name || 'Sin dato'" ></span>
-                <span class="text-content-agendamiento btn-detalle-csp" ng-click="consultarResumenPaqueteBandejasSF(elementoCSP.idCSP)">
-                    <i class="fa fa-bars"></i>
-                </span>
-            </div>
+            <div class="container-text-content-detalle"> 
+                <span class="link-busqueda-salesforce" ng-click="consultarDetalleObjectosSF(elementoCSP.idCSP, 'CP')" ng-bind="elementoCSP.name || 'Sin dato'" ></span> 
+                <span class="text-content-agendamiento btn-detalle-csp" ng-click="consultarResumenPaqueteBandejasSF(elementoCSP.idCSP)"> 
+                    <i class="fa fa-bars"></i> 
+                </span> 
+            </div> 
         </div>
         <br>
         <div class="container-fluid agendamiento-content">
@@ -45,15 +49,15 @@
         <div class="">
             <div class="divider-agendamiento"></div>
         </div>
-        <div class="container-fluid agendamiento-content">
+        <div ng-if="tipoGeografiaFact=='empresarial'" class="container-fluid agendamiento-content">
             <div class="container-text-title-detalle">
                 <span class="text-tile-agendamiento">Regi&oacute;n: </span>
             </div>
             <div class="container-text-content-detalle">
-                <span class="text-content-agendamiento"  ng-bind="elementoCSP.infoSitio.plazaC || 'Sin dato'" ></span>
+                <span class="text-content-agendamiento"  ng-bind="elementoCSP.infoSitio.regionInstalacionC || 'Sin dato'" ></span>
             </div>
         </div>
-        <div class="container-fluid agendamiento-content">
+        <div ng-if="tipoGeografiaFact=='empresarial'" class="container-fluid agendamiento-content">
             <div class="container-text-title-detalle">
                 <span class="text-tile-agendamiento">Ciudad: </span>
             </div>
@@ -61,7 +65,7 @@
                 <span class="text-content-agendamiento"  ng-bind="elementoCSP.infoSitio.plazaC || 'Sin dato'"></span>
             </div>
         </div>
-        <div class="container-fluid agendamiento-content">
+        <div ng-if="tipoGeografiaFact=='empresarial'" class="container-fluid agendamiento-content">
             <div class="container-text-title-detalle">
                 <span class="text-tile-agendamiento">Distrito: </span>
             </div>
@@ -69,7 +73,7 @@
                 <span class="text-content-agendamiento"  ng-bind="elementoCSP.infoSitio.distritoInstalacionC || 'Sin dato'"></span>
             </div>
         </div>
-        <div class="container-fluid agendamiento-content">
+        <div ng-if="tipoGeografiaFact=='empresarial'" class="container-fluid agendamiento-content">
             <div class="container-text-title-detalle">
                 <span class="text-tile-agendamiento">Cl&uacute;ster: </span>
             </div>
@@ -108,7 +112,7 @@
                         <span class="text-tile-agendamiento">Latitud: </span>
                     </div>
                     <div class="container-text-content-detalle">
-                        <span class="text-content-agendamiento">{{elementoCSP.latitud}}</span>
+                        <span class="text-content-agendamiento" ng-bind="elementoCSP.infoSitio.geolocalizacionInstalacionLatitudeS || 'Sin dato'" ></span>
                     </div>
                 </div>
                 <div class="container-fluid agendamiento-content">
@@ -116,7 +120,7 @@
                         <span class="text-tile-agendamiento">Longitud: </span>
                     </div>
                     <div class="container-text-content-detalle">
-                        <span class="text-content-agendamiento">{{elementoCSP.longitud}}</span>
+                        <span class="text-content-agendamiento" ng-bind="elementoCSP.infoSitio.geolocalizacionInstalacionLongitudeS || 'Sin dato'"></span>
                     </div>
                 </div>
             </div>

@@ -576,58 +576,64 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
             latitud: parseFloat( latitud ),
             longitud: parseFloat( longitud )
         }
-        if (unidadNegocio == '1') {                  
-        }                                                  
-        if (unidadNegocio == '2') {            
-        }
-        setTimeout(function(){
-            let resultFactibilidad = {
-                factibilidad: '1',
-                region: 'CIUDAD DE MEXICO2',//'response.data.result.regionTotalplay',
-                ciudad: 'CIUDAD DE MEXICO2',//'response.data.result.ciudadTotalplay',
-                distrito: 'NORTE2',//'response.data.result.distritoTotalplay',
-                cluster: 'PEDREGAL2',//'response.data.result.clusterTotalplay',
-                latitud: latitud,
-                longitud: longitud
-            }
-            $scope.infoFactibilidad = resultFactibilidad;            
-            $scope.flagConsultandoFactibilidad = false;
-            $scope.flagRespuestaFactibilidad = 'exito';
-            $scope.$apply()
-        },2000)      
-        /**
-            bandejasSalesforceService.consultaFactibilidadAgendamiento(params).then(function success(response) {
+
+        bandejasSalesforceService.consultaFactibilidadAgendamiento(params).then(function success(response) {
             console.log(response);
             if (response.data !== undefined) {
                 if (response.data.respuesta) {
-                    if (response.data.result) {
-                        let resultFactibilidad = {
-                            factibilidad: response.data.result.factibilidad,
-                            region: response.data.result.regionTotalplay,
-                            ciudad: response.data.result.ciudadTotalplay,
-                            distrito: response.data.result.distritoTotalplay,
-                            cluster: response.data.result.clusterTotalplay,
-                            latitud: latitud,
-                            longitud: longitud
-                        }
-                        $scope.infoFactibilidad = resultFactibilidad;
+                    if (response.data.result) {                       
+                        let respFact=response.data.result                     
                         if (Number(response.data.result.factibilidad) === 0) {
                             mostrarMensajeWarningValidacion('Sin factibilidad en esta ubicaci&oacute;n');
+                            $scope.flagRespuestaFactibilidad='noencontrada'
+                        }else{
+                            let resultFactibilidad = {
+                                factibilidad:               respFact.factibilidad,
+                                regionIdc:                  respFact.regionEnlace.split("-")[0],
+                                region:                     respFact.regionEnlace.split("-")[1],
+                                ciudad:                     respFact.ciudadEnlace,
+                                distrito:                   respFact.distritoEnlace,
+                                cluster:                    respFact.clusterTotalplay,
+                                latitud: latitud,
+                                longitud: longitud,
+                                tipoFibra:                  respFact.tipoFibra,
+                                tipoCoberturaMicroonda:     respFact.tipoCoberturaMicroonda,
+                                regionEnlace:               respFact.regionEnlace,
+                                nombreRadiobase:            respFact.nombreRadiobase,
+                                nombreOlt:                  respFact.nombreOlt,
+                                infraestructura:            respFact.infraestructura,
+                                domicilio:                  respFact.domicilio,
+                                distanciaRadiobase:         respFact.distanciaRadiobase,
+                                distanciaFo:                respFact.distanciaFo,
+                                comentario:                 respFact.comentario,
+                                bufferEnlace:               respFact.bufferEnlace,
+                            }
+                            $scope.infoFactibilidad = resultFactibilidad;
+                            $scope.flagRespuestaFactibilidad='exito'
                         }
+                        $scope.flagConsultandoFactibilidad = false; 
                         swal.close();
                     } else {
+                        $scope.flagConsultandoFactibilidad = false; 
+                        $scope.flagRespuestaFactibilidad=='error'
                         mostrarMensajeWarningValidacion('No se encontr&oacute; factibilidad');
                         swal.close();
                     }
                 } else {
+
+                    $scope.flagConsultandoFactibilidad = false; 
+                    $scope.flagRespuestaFactibilidad=='error'
                     mostrarMensajeWarningValidacion(response.data.resultDescripcion);
                     swal.close();
                 }
             } else {
+
+                $scope.flagConsultandoFactibilidad = false; 
+                $scope.flagRespuestaFactibilidad=='error'
                 mostrarMensajeErrorAlert('Ha ocurrido un error al consultar la factibilidad');
                 swal.close();
             }
-        });**/
+        });    
     }
 
     visualizarAgendamiento = function (index) {
@@ -671,11 +677,11 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                         mostrarMensajeInformativo("No se encontr&oacute; Disponibilidad");
                     }
                 } else {
-                    mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                    mostrarMensajeErrorAlert(results[0].data.resultDescripcion);
                     swal.close();
                 }
             } else {
-                mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                mostrarMensajeErrorAlert(results[0].data.resultDescripcion);
                 swal.close();
             }
 
@@ -684,7 +690,8 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                     if (results[1].data.result) {
                         if (results[1].data.result.resultadoConsulta != undefined) {
                             $scope.elementoCSP.infoSitio = results[1].data.result.resultadoConsulta                             
-                          
+                            
+                            $scope.tipoGeografiaFact="empresarial"
                             let latitud=$scope.elementoCSP.infoSitio.geolocalizacionInstalacionLatitudeS
                             let longitud=$scope.elementoCSP.infoSitio.geolocalizacionInstalacionLongitudeS
                             $scope.setMarkerAgendamiento( latitud , longitud );                                                            
@@ -700,11 +707,11 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                         mostrarMensajeInformativo("No se encontr&oacute; informaci&oacute;n del sitio");
                     }
                 } else {
-                    mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                    mostrarMensajeErrorAlert(results[1].data.resultDescripcion);
                     swal.close();
                 }
             } else {
-                mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                mostrarMensajeErrorAlert(results[1].data.resultDescripcion);
                 swal.close();
             }
             swal.close()
@@ -811,7 +818,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
             let paramsfecha = $scope.getFechaFormato(document.getElementById('fecha_pendientes_agendar').value);
             let params = {
                 "geografias": clustersSelected,
-                "fechaInicio": paramsfecha.fechaInicio,
+                "fechaInicio": '2021-01-01',//paramsfecha.fechaInicio,
                 "fechaFin": paramsfecha.fechaFin
                 // "geografias": ["CIUDAD DE MEXICO"], "fechaFin": "2021-01-01", "fechaInicio": "2019-01-01"
             }
@@ -1050,75 +1057,77 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         }
     }
 
-    $scope.detallePaqueteCSP = {};
-    $scope.consultarResumenPaqueteBandejasSF = function (idCSP) {
-        $scope.listDetalleEquipos = [];
-        $scope.detallePaqueteCSP = {};
-        if (!swal.isVisible()) {
-            swal({ text: 'Espera un momento...', allowOutsideClick: false });
-            swal.showLoading();
-        }
-        let params = {
-            "folio": "OS-6944916"
-        };
-        console.log(params);
-        bandejasSalesforceService.consultarResumenPaqueteBandejasSF(params).then(function success(response) {
-            console.log(response);
-            if (response.data) {
-                if (response.data.respuesta) {
-                    if (response.data.result) {
-                        if (response.data.result.resumenPaquete) {
-                            $scope.detallePaqueteCSP = angular.copy(response.data.result.resumenPaquete);
-                            $scope.detallePaqueteCSP.idCSP = idCSP;
-                            $("#modalDetallePaquete").modal('show');
-                            swal.close();
-                        }
-                    }
-                } else {
-                    mostrarMensajeErrorAlert(response.data.resultDescripcion);
-                    swal.close();
-                }
-            } else {
-                mostrarMensajeErrorAlert(response.data.resultDescripcion);
-                swal.close();
-            }
-        });
-    }
-
-    $scope.listDetalleEquipos = [];
-    $scope.consultarDetalleEquiposBandejas = function () {
-        $scope.listDetalleEquipos = [];
-        if (!swal.isVisible()) {
-            swal({ text: 'Espera un momento...', allowOutsideClick: false });
-            swal.showLoading();
-        }
-        let idCSP = $("#idCSPPaquete").val();
-        let params = {
-            'idCotSitioPlan': idCSP
-        }
-        console.log(params);
-        bandejasSalesforceService.consultarDetalleEquiposBandejasSF(params).then(function success(response) {
-            console.log(response);
-            if (response.data) {
-                if (response.data.respuesta) {
-                    if (response.data.result) {
-                        $scope.listDetalleEquipos = angular.copy(response.data.result.detalleEquipos);
-                        swal.close();
-                    }
-                } else {
-                    mostrarMensajeErrorAlert(response.data.resultDescripcion);
-                    swal.close();
-                }
-            } else {
-                mostrarMensajeErrorAlert(response.data.resultDescripcion);
-                swal.close();
-            }
-        });
-    }
-
     $scope.validacionGenerica = function() {
         
     }
+    
+    $scope.detallePaqueteCSP = {}; 
+    $scope.consultarResumenPaqueteBandejasSF = function (idCSP) { 
+        $scope.listDetalleEquipos = []; 
+        $scope.detallePaqueteCSP = {}; 
+        if (!swal.isVisible()) { 
+            swal({ text: 'Espera un momento...', allowOutsideClick: false }); 
+            swal.showLoading(); 
+        } 
+        let params = { 
+            "folio": "OS-6944916" 
+        }; 
+        console.log(params); 
+        bandejasSalesforceService.consultarResumenPaqueteBandejasSF(params).then(function success(response) { 
+            console.log(response); 
+            if (response.data) { 
+                if (response.data.respuesta) { 
+                    if (response.data.result) { 
+                        if (response.data.result.resumenPaquete) { 
+                            $scope.detallePaqueteCSP = angular.copy(response.data.result.resumenPaquete); 
+                            $scope.detallePaqueteCSP.idCSP = idCSP; 
+                            $("#modalDetallePaquete").modal('show'); 
+                            swal.close(); 
+                        } 
+                    } 
+                } else { 
+                    mostrarMensajeErrorAlert(response.data.resultDescripcion); 
+                    swal.close(); 
+                } 
+            } else { 
+                mostrarMensajeErrorAlert(response.data.resultDescripcion); 
+                swal.close(); 
+            } 
+        }); 
+    } 
+
+    $scope.listDetalleEquipos = []; 
+    $scope.consultarDetalleEquiposBandejas = function () { 
+        $scope.listDetalleEquipos = []; 
+        if (!swal.isVisible()) { 
+            swal({ text: 'Espera un momento...', allowOutsideClick: false }); 
+            swal.showLoading(); 
+        } 
+        let idCSP = $("#idCSPPaquete").val(); 
+        let params = { 
+            'idCotSitioPlan': idCSP 
+        } 
+        console.log(params); 
+        bandejasSalesforceService.consultarDetalleEquiposBandejasSF(params).then(function success(response) { 
+            console.log(response); 
+            if (response.data) { 
+                if (response.data.respuesta) { 
+                    if (response.data.result) { 
+                        $scope.listDetalleEquipos = angular.copy(response.data.result.detalleEquipos); 
+                        swal.close(); 
+                    } 
+                } else { 
+                    mostrarMensajeErrorAlert(response.data.resultDescripcion); 
+                    swal.close(); 
+                } 
+            } else { 
+                mostrarMensajeErrorAlert(response.data.resultDescripcion); 
+                swal.close(); 
+            } 
+        }); 
+    } 
+
+
 
     angular.element(document).ready(function () {
         $('#moduloBandejasSalesforce').addClass('active');

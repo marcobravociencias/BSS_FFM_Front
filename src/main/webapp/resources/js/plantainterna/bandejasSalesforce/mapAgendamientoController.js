@@ -76,6 +76,7 @@ app.agendamientoMap = function ($scope, bandejasSalesforceService) {
         mapAgendamiento.setZoom(17);        
         mapAgendamiento.setCenter( latitudLongitud ); 
         markerAg.setPosition( latitudLongitud );
+        markerAg.setMap( mapAgendamiento )
     }
    
     $scope.placesChangedMap=function(){
@@ -124,7 +125,20 @@ app.agendamientoMap = function ($scope, bandejasSalesforceService) {
     $scope.abrirDisponibilidad=function(){
         $("#opcion-calendarioAgendamiento-tab").click()
     }
+
     $scope.actualizarFactibilidadBandejas = function () {
+        $scope.actualizarFactibilidadEmpresarial()
+        if($scope.tipoGeografiaFact =='empresarial ')
+            $scope.actualizarFactibilidadEmpresarial()
+        
+        if($scope.tipoGeografiaFact =='residencial ')
+            $scope.actualizarFactibilidadResidencial()
+
+    }
+    $scope.actualizarFactibilidadResidencial=function(){
+        console.log("acutalizando factibilidad residencial")
+    }
+    $scope.actualizarFactibilidadEmpresarial=function(){
         swal({
             title: "\u00BFDesea actualizar la factibilidad?",
             type: "warning",
@@ -152,29 +166,32 @@ app.agendamientoMap = function ($scope, bandejasSalesforceService) {
                 '	</div>' +
                 '</div>',
         }).then(function (isConfirm) {
-            if (isConfirm) {
+            if (isConfirm) {                         
                 $scope.isFactibilidad = true;
-                $scope.elementoCSP.cluster = $scope.infoFactibilidad.cluster;
-                $scope.elementoCSP.region = $scope.infoFactibilidad.region;
-                $scope.elementoCSP.ciudad = $scope.infoFactibilidad.ciudad;
-                $scope.elementoCSP.distrito = $scope.infoFactibilidad.distrito;
+                //Se muestra en la vista del plan
+                /**
+                $scope.elementoCSP.niveluno = $scope.infoFactibilidad.region;
+                $scope.elementoCSP.niveldos = $scope.infoFactibilidad.ciudad;
+                $scope.elementoCSP.niveltres = $scope.infoFactibilidad.distrito;
+                $scope.elementoCSP.nivelcuatro = $scope.infoFactibilidad.cluster;                
                 $scope.elementoCSP.latitud = $scope.infoFactibilidad.latitud;
-                $scope.elementoCSP.longitud = $scope.infoFactibilidad.longitud;
-                $scope.$apply();            
+                $scope.elementoCSP.longitud = $scope.infoFactibilidad.longitud;                 
+                **/
+                $scope.$apply();                           
                 swal({ text: 'Espera un momento...', allowOutsideClick: false });
-                swal.showLoading();                
+                swal.showLoading();                  
                 let params={    
-                    "plazaC":"CIUDAD DE MEXICO",       
-                    "ciudadInstalacionC": "CIUDAD DE MEXICO",
-                    "zonaInstalacionC": "CIUDAD DE MEXICO",
-                    "clusterInstalacionC":  $scope.infoFactibilidad.cluster,
+                    "plazaC":               $scope.infoFactibilidad.ciudad,       
+                    "zonaInstalacionC":     "",
+                    "clusterInstalacionC":  $scope.infoFactibilidad.clusterTotalplay,
                     "distritoInstalacionC": $scope.infoFactibilidad.distrito,
+                    "ciudadInstalacionC":   $scope.infoFactibilidad.ciudad,
                     "regionInstalacionC":   $scope.infoFactibilidad.region,
-                    "regionInstalacionIdC": "12",
+                    "regionInstalacionIdC": $scope.infoFactibilidad.regionIdc,
                     "geolocalizacionInstalacionLatitudeS":  $scope.infoFactibilidad.latitud ,            
                     "geolocalizacionInstalacionLongitudeS": $scope.infoFactibilidad.longitud,
-                    "cuenta":$scope.elementoCSP.infoSitio.numeroCuenta
-                }
+                    "cuenta":               $scope.elementoCSP.infoSitio.numeroCuenta
+                }                   
                 bandejasSalesforceService.actualizarFactibilidadSitio(params).then(function success(response) {
                     console.log(response);
                     if (response.data !== undefined && response.data.result != undefined) {

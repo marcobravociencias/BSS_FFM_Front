@@ -16,7 +16,7 @@ var mapavistageneral;
 const HEIGTH_PADDING_TABLE = 270;
 const HEIGTH_FULLCALENDAR = 100
 const HEIGTH_FULLCALENDAR_AFTER = 145
-const MILISEGUNDOS_ALERTAS = (1000 * 60) * 3;
+var MILISEGUNDOS_ALERTAS = (1000 * 60) * 3;
 function logerror(mensaje) {
     console.log('%c ' + mensaje, 'background: red; color: white');
 }
@@ -920,9 +920,7 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                 }, 500)
             }
         }
-        setInterval(function () {
-            $scope.consultarConteoAlertasPI()
-        }, MILISEGUNDOS_ALERTAS);
+        
 
 
         $scope.getCatControlleripoOrdenUsuarioDespacho = function () {
@@ -1007,6 +1005,11 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                     $scope.nfiltroestatuspendiente = llavesResult.N_ESTATUS_PENDIENTES
                     $scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
                     $scope.nfiltroestatusDisponbiles = llavesResult.N_ESTATUS_ARR_ENVIO
+
+                    if( llavesResult.DURACION_CONTEO_ALERTAS !=undefined    ){
+                        MILISEGUNDOS_ALERTAS= parseInt( llavesResult.DURACION_CONTEO_ALERTAS ) * 1000
+                    }       
+
                     validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
                     validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
 
@@ -1171,7 +1174,10 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                 }
 
 
-
+                setInterval(function () {
+                    $scope.consultarConteoAlertasPI()
+                }, MILISEGUNDOS_ALERTAS);
+                
             }).catch(err => handleError(err));
         }
 

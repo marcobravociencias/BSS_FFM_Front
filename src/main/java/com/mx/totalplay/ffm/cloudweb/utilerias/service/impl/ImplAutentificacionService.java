@@ -28,7 +28,7 @@ public class ImplAutentificacionService  implements AutentificacionService{
 	private final Logger logger = LogManager.getLogger(ImplAutentificacionService.class.getName());
 	private final Environment env;
 	private final ConsumeRest restCaller;
-	private final int VALOR_NAVBAR=4;
+	private final int VALOR_NAVBAR=5;
 	private Gson gson = new Gson();
 
 	@Autowired
@@ -62,7 +62,7 @@ public class ImplAutentificacionService  implements AutentificacionService{
 			String base64Creds = Base64.getEncoder().encodeToString(crdospas.getBytes());
 			responseLog.setCreedResult(base64Creds);
 			Map<String, Object> configuraciones = responseLog.getConfiguraciones();
-			String ordenamiento=(String)configuraciones.get("NAVBAR_ORDER");
+			String ordenamiento=(String)configuraciones.get("NAVBAR_ORDER");//"moduloBandejasSalesforce,moduloUsuarios";
 			if (responseLog.getModulos().size() != 0) {
 				
 				if (ordenamiento != null) {
