@@ -1264,3 +1264,182 @@ body.modal-open.mfp-zoom-out-cur {
     z-index: 1222222222222222222222222222 !important;
 }
 /* MODAL EVIDENCIA OT */
+
+/* MODAL DETALLE OT */
+#v-tabs-tab-detalle-ot .nav-link {
+    border-top-right-radius: 2rem;
+    border-bottom-right-radius: 2rem;
+}
+
+#v-tabs-tab-detalle-ot .nav-link.active {
+    border-top-right-radius: 2rem;
+    border-bottom-right-radius: 2rem;
+    background-color: #2196f3;
+    /* box-shadow: 0 0 8px 0 #2196f3; */
+    border-bottom: 0;
+    color: white !important;
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%),
+        0 1px 5px 0 rgb(0 0 0 / 20%);
+    z-index: 1;
+}
+
+#modal-detalleOT .modal-body {
+    padding-left: 0;
+}
+
+span.text-title-detalle-ot {
+    font-weight: bold;
+    font-size: 0.8em;
+    color: #444444;
+}
+
+span.text-content-detalle-ot {
+    font-size: 0.8em;
+    color: #303030;
+}
+
+/* HISTORICO DETALLE OT */
+.content-historico-ot {
+    height: 25em;
+}
+
+.line-time-new:before {
+    content: "";
+    width: 4px;
+    height: 100%;
+    background-color: #78a7f7;
+    position: absolute;
+    top: 0;
+    left: 2.5em;
+}
+
+.timeline-day-detalleOT {
+    font-size: 15px !important;
+    color: grey;
+}
+
+.pendiente-historico {
+    background-color: #ffd453 !important;
+}
+
+.asignacion-historico {
+    background-color: #7ad119 !important;
+}
+
+.detencion-historico {
+    background-color: #ff9e3c !important;
+}
+
+.terminar-historico {
+    background-color: #63a6e0 !important;
+}
+
+.cancelado-historico {
+    background-color: #ff4b4b !important;
+}
+
+.circle-statushistorico-histo {
+    font-size: 0.8em;
+    line-height: 2em !important;
+    text-align: center;
+    color: #fff;
+    background-color: #999;
+    width: 2em;
+    height: 2em;
+    vertical-align: middle;
+    border-radius: 50%;
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%),
+        0 1px 5px 0 rgb(0 0 0 / 20%);
+}
+
+.card-historico.card.text-center {
+    overflow: hidden;
+    margin: 0.5rem 0 1rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    box-shadow: none;
+    /* box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%); */
+}
+
+.card-historico.card.text-center:hover {
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%),
+        0 1px 5px 0 rgb(0 0 0 / 20%) !important;
+}
+
+.card-historico .card-footer {
+    padding: 0.2em;
+}
+
+.card-historico .card-body {
+    text-align: left;
+    padding: 0.5em 0.5em;
+}
+
+.historico-alertas-div .card-body .container-deschistorico {
+    line-height: 1.3;
+}
+
+.pendiente-historico {
+    background-color: #ffd453 !important;
+}
+
+.asignacion-historico {
+    background-color: #7ad119 !important;
+}
+
+.detencion-historico {
+    background-color: #ff9e3c !important;
+}
+
+.terminar-historico {
+    background-color: #63a6e0 !important;
+}
+
+.cancelado-historico {
+    background-color: #ff4b4b !important;
+}
+
+.circle-statushistorico {
+    font-size: 0.7em;
+    line-height: 2em !important;
+    text-align: center;
+    color: #fff;
+    background-color: #999;
+    width: 2em;
+    height: 2em;
+    vertical-align: middle;
+    border-radius: 50%;
+    /* box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%); */
+}
+
+.circle-statushistorico {
+    position: absolute;
+    right: 0;
+    margin-right: 1em;
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%),
+        0 1px 5px 0 rgb(0 0 0 / 20%);
+}
+
+.titlehistorico {
+    font-weight: bold;
+    font-size: 0.8em;
+    color: #818181;
+}
+
+span.content-titlehistorico.ng-binding {
+    font-size: 0.8em;
+    font-weight: bold;
+    color: #303030;
+}
+
+.footer-card-historico-alerta {
+    position: absolute;
+    right: 0.5em;
+    bottom: 1.8em;
+    font-size: 0.8em;
+    font-weight: bold;
+    /* margin-bottom: 0; */
+    /* color: red; */
+}
+/* HISTORICO DETALLE OT */
+/* MODAL DETALLE OT */

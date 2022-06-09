@@ -1912,6 +1912,74 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         }).catch(err => handleError(err));
     }
 
+    $scope.infoOtDetalle = {};
+    let is_consulta_info_ot = false;
+    $scope.consultaDetalleOT = function (idOrden) {
+        $scope.infoOtDetalle = {};
+        let params = {
+            Id_ot: idOrden
+        }
+        swal({ text: 'Espera un momento...', allowOutsideClick: false });
+        swal.showLoading();
+        gestionTicketSoporteService.consultaDetalleOT(params).then(function success(response) {
+            console.log(response);
+            if (response.data !== undefined) {
+                if (response.data.respuesta) {
+                    if (response.data.result.orden) {
+                        $scope.infoOtDetalle = angular.copy(response.data.result.orden);                        
+						is_consulta_info_ot = true;
+                        $('#modal-detalleOT').modal('show');
+                        swal.close();
+                    }
+                }
+            }
+        });
+    }
+
+    let is_consulta_historico = false;
+    $scope.consultaHistoricoDetalleOt = function () {
+        if (!is_consulta_historico) {
+            let params = {
+                idOt: $scope.infoOtDetalle.idOrden
+            }
+            swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
+            swal.showLoading();
+            genericService.consultarHistoricoDespachoOT(params).then(function (result) {
+                console.log(result);
+                if (result.data !== undefined) {
+                    if (result.data.respuesta) {
+                        if (result.data.result !== undefined) {
+                            jsonm = result.data;
+                            if (result.data.result.detalle != undefined && result.data.result.detalle.length > 0) {
+                                $scope.movimientos = angular.copy(result.data.result.detalle);
+                                is_consulta_historico = true;
+                                swal.close();
+                            } else {
+                                swal.close();
+                                mostrarMensajeErrorAlert(response.data.result.resultDescription)
+                            }
+                        } else {
+                            swal.close();
+                            mostrarMensajeErrorAlert(response.data.result.resultDescription)
+                        }
+                    } else {
+                        swal.close();
+                        mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                    }
+                } else {
+                    swal.close();
+                    mostrarMensajeErrorAlert("Error del servidor");
+                }
+            }).catch(err => handleError(err));
+        }
+    }
+
+    $('#modal-detalleOT').on('hidden.bs.modal', function () {
+        is_consulta_info_ot = false;
+        is_consulta_historico = false;
+        document.querySelector('#informacion-ot').click()
+    });
+
 }]);
 
 

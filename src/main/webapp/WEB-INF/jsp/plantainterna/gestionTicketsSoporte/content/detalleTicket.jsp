@@ -325,7 +325,7 @@
                                     <span class="text-content-vehiculo" ng-if="!editTicket.detalleOtDetenida.otGeneraSoporte">Sin dato</span>
                                     <span class="text-content-vehiculo text-external-link"
                                         ng-if="editTicket.detalleOtDetenida.otGeneraSoporte"
-                                        ng-click="consultaEvidenciaOTDetalle(editTicket.detalleOtDetenida.otGeneraSoporte)"
+                                        ng-click="consultaDetalleOT(editTicket.detalleOtDetenida.otGeneraSoporte)"
                                         ng-bind="editTicket.detalleOtDetenida.otGeneraSoporte"></span>
                                 </div>
                             </div>
