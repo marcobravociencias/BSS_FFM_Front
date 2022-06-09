@@ -813,7 +813,7 @@ span.text-content-asignacionmodal.ng-binding {
 .evento-ot-asignada:hover {
   width: fit-content;
   /* display:block; */
-  z-index: 12;
+  z-index: 10001;
   /* width: -webkit-fill-available; */
   box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
   -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%),
@@ -3004,4 +3004,8 @@ i.fas.fa-lock.iconoAsignacionOtPermiso {
 .textoTituloCardsConsulta {
   margin-bottom: 0;
   font-weight: bold;
+}
+
+.fc-now-indicator.fc-now-indicator-line{
+  z-index:0;
 }
