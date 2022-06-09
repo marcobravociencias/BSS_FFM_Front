@@ -1113,13 +1113,13 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                         $scope.contentdetalleticket = true;
                         $scope.contentprincipal = false
                         $scope.editTicket = results[0].data.result.detalleGeneral;
-                        if($scope.editTicket.detalleTicketSc.idEstatus !== 2 && $scope.editTicket.detalleTicketSc.idEstatus !== 1){
-                            $scope.estatusList =  $scope.estatusList.filter((e)=> {return e.id != 2});
+                        if ($scope.editTicket.detalleTicketSc.idEstatus !== 2 && $scope.editTicket.detalleTicketSc.idEstatus !== 1) {
+                            $scope.estatusList = $scope.estatusList.filter((e) => { return e.id != 2 });
                         }
-                        if($scope.editTicket.detalleTicketSc.idEstatus != 6){
-                            $scope.estatusList =  $scope.estatusList.filter((e)=> {return e.id != 6});
+                        if ($scope.editTicket.detalleTicketSc.idEstatus != 6) {
+                            $scope.estatusList = $scope.estatusList.filter((e) => { return e.id != 6 });
                         }
-                        
+
 
                         $scope.consultaChat();
                         if ($scope.editTicket.detalleTicketSc.falla && $scope.catalogoFallasTicketSoporte.length) {
@@ -1325,7 +1325,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                             $scope.initTableingeniero();
                             $scope.isConsultarOtsTecnicos = true
                             $("#modalAsignarTicket").modal('show');
-                        }else{
+                        } else {
                             mostrarMensajeInformativo('No se encontraron ingenieros')
                         }
                     } else {
@@ -1469,13 +1469,15 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             idIngeniero: Number($scope.ingenieroSelect.idUsuario),
             idTicketSc: Number($scope.ticketDetalle)
         }
-
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
         if ($scope.editTicket.detalleTicketSc.numEmpleadoInge) {
             gestionTicketSoporteService.reasigarTicketIngeniero(params).then((response) => {
                 swal.close()
+                $scope.estatusList = angular.copy($scope.estatusListOriginal);
                 if (response.data.respuesta) {
+                    $scope.estatusList = $scope.estatusList.filter((e) => { return e.id != 2 });
+
                     toastr.success('Ingeniero asignado con exito');
                     $("#modalAsignarTicket").modal('hide');
                     $scope.consultaIngeniero();
@@ -1763,92 +1765,92 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     }
 
     mostarImagenesCategoriaEvidenciaOT = function () {
-		var $imageLinks = $('.magnific.item:visible');
-		var items = [];
+        var $imageLinks = $('.magnific.item:visible');
+        var items = [];
 
-		$imageLinks.each(function (index, elemento) {
-			var $item = $(this);
-			var magItem = {
-				src: $item.attr('href'),
-				type: 'image'
-			};
-			magItem.title = $item.data('title');
-			items.push(magItem);
-		});
-		$imageLinks.magnificPopup({
-			mainClass: 'mfp-fade',
-			items: items,
-			gallery: {
-				enabled: true,
-				tPrev: $(this).data('prev-text'),
-				tNext: $(this).data('next-text')
-			},
-			type: 'image',
-			callbacks: {
-				beforeOpen: function () {
-					var index = $imageLinks.index(this.st.el);
-					if (-1 !== index) {
-						this.goTo(index);
+        $imageLinks.each(function (index, elemento) {
+            var $item = $(this);
+            var magItem = {
+                src: $item.attr('href'),
+                type: 'image'
+            };
+            magItem.title = $item.data('title');
+            items.push(magItem);
+        });
+        $imageLinks.magnificPopup({
+            mainClass: 'mfp-fade',
+            items: items,
+            gallery: {
+                enabled: true,
+                tPrev: $(this).data('prev-text'),
+                tNext: $(this).data('next-text')
+            },
+            type: 'image',
+            callbacks: {
+                beforeOpen: function () {
+                    var index = $imageLinks.index(this.st.el);
+                    if (-1 !== index) {
+                        this.goTo(index);
 
-					}
-				},
-				open: function () {
-					$.magnificPopup.instance._onFocusIn = function (e) { };
-				}
-			}
-		});
-	}
+                    }
+                },
+                open: function () {
+                    $.magnificPopup.instance._onFocusIn = function (e) { };
+                }
+            }
+        });
+    }
 
     $(document.body).on("click", ".btn_categoria_img", function () {
-		var id_categoria = $.trim($(this).attr('attr_id_cat'));
-		if (id_categoria === '') {
-			$(".magnific.item").show();
-			$('.imagen_content:hidden').show(400);
-			setTimeout(function () { mostarImagenesCategoriaEvidenciaOT(); }, 500);
-		} else {
-			if ($(".imagen_content:visible").length > 0) {
-				$(".imagen_content:visible").hide(150, "linear", function () {
+        var id_categoria = $.trim($(this).attr('attr_id_cat'));
+        if (id_categoria === '') {
+            $(".magnific.item").show();
+            $('.imagen_content:hidden').show(400);
+            setTimeout(function () { mostarImagenesCategoriaEvidenciaOT(); }, 500);
+        } else {
+            if ($(".imagen_content:visible").length > 0) {
+                $(".imagen_content:visible").hide(150, "linear", function () {
 
-					$(".magnific.item:not(.imgtipo_" + id_categoria + ")").hide();
-					$(".magnific.item.imgtipo_" + id_categoria + "").show();
+                    $(".magnific.item:not(.imgtipo_" + id_categoria + ")").hide();
+                    $(".magnific.item.imgtipo_" + id_categoria + "").show();
 
-					$('.content_img_' + id_categoria).show(200);
-					//Manda function magnific popup
-					mostarImagenesCategoriaEvidenciaOT();
-				});
-			} else {
-				$(".magnific.item:not(.imgtipo_" + id_categoria + ")").hide();
-				$(".magnific.item.imgtipo_" + id_categoria + "").show();
+                    $('.content_img_' + id_categoria).show(200);
+                    //Manda function magnific popup
+                    mostarImagenesCategoriaEvidenciaOT();
+                });
+            } else {
+                $(".magnific.item:not(.imgtipo_" + id_categoria + ")").hide();
+                $(".magnific.item.imgtipo_" + id_categoria + "").show();
 
-				$('.content_img_' + id_categoria).show(200);
-				//Manda function magnific popup
-				mostarImagenesCategoriaEvidenciaOT();
-			}
-		}
-	});
+                $('.content_img_' + id_categoria).show(200);
+                //Manda function magnific popup
+                mostarImagenesCategoriaEvidenciaOT();
+            }
+        }
+    });
 
     $scope.getEvidenciasImagenes = function (tipo) {
-		$scope.listImagenesTipo = [];
-		if (tipo.toString() === '0') {
-			$scope.listImagenesTipo = $scope.listEvidenciaImagenes.imagenes;
-		} else {
-			$scope.listEvidenciaImagenes.tipos.map(function (e) {
-				if (e.id.toString() === tipo.toString()) {
-					$scope.listImagenesTipo = e.imagenes;
-					return false;
-				}
-			});
-		}
-		$(".tipo_evidencia").removeClass("tipo-evidencia-selected");
-		$("#categoria_img_" + tipo).addClass("tipo-evidencia-selected");
-	}
+        $scope.listImagenesTipo = [];
+        if (tipo.toString() === '0') {
+            $scope.listImagenesTipo = $scope.listEvidenciaImagenes.imagenes;
+        } else {
+            $scope.listEvidenciaImagenes.tipos.map(function (e) {
+                if (e.id.toString() === tipo.toString()) {
+                    $scope.listImagenesTipo = e.imagenes;
+                    return false;
+                }
+            });
+        }
+        $(".tipo_evidencia").removeClass("tipo-evidencia-selected");
+        $("#categoria_img_" + tipo).addClass("tipo-evidencia-selected");
+    }
 
     let groupByEvidencias = function (xs, key) {
-		return xs.reduce(function (rv, x) {
-			(rv[x[key]] = rv[x[key]] || []).push(x);
-			return rv;
-		}, {});
-	};
+        return xs.reduce(function (rv, x) {
+            (rv[x[key]] = rv[x[key]] || []).push(x);
+            return rv;
+        }, {});
+    };
 
     $scope.consultaEvidenciaOTDetalle = function (ot) {
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
