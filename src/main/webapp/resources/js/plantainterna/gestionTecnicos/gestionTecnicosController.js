@@ -392,6 +392,20 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
                             }
                             eventosDisponibilidad.push(eventDisponibilidad);
                         }
+                        
+                        if (disponibilidad.cantidad !== undefined) {
+                            eventDisponibilidad = {
+                                title: "Ots Atendidas: " + (disponibilidad.cantidad == null ? 'sin información' : disponibilidad.cantidad),
+                                tipo: 'TIEMPONOTRABAJANO',
+                                start: newFecha,
+                                end: newFecha,
+                                tipoevento: 'tiempotrabajando',
+                                usuario: $scope.idTecnico,
+                                objetodisponibilidad: disponibilidad
+                            }
+                            eventosDisponibilidad.push(eventDisponibilidad);
+                        }
+                        
                     } else {
                     	var valFechaUnica = true;
                     	do {
