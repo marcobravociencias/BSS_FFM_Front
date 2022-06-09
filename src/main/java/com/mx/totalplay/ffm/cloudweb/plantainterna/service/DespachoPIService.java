@@ -73,4 +73,6 @@ public interface DespachoPIService {
 	ServiceResponseResult consultaPagosTecnico(String params);
 	
 	ServiceResponseResult actualizarDireccionOt(String params);
+	
+	ServiceResponseResult consultarJerarquiaOrganigrama(String params);
 }

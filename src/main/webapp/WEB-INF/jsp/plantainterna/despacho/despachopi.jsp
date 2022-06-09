@@ -236,6 +236,7 @@
         <jsp:include page="./modals/modalOtIntervenciones.jsp"></jsp:include>
         <jsp:include page="./modals/modalPagos.jsp"></jsp:include>
         <jsp:include page="./modals/modalDetalleSalesforce.jsp"></jsp:include>
+        <jsp:include page="./modals/modalOrganigrama.jsp"></jsp:include>
        
         <!--div ng-show="vistaDespacho" class="container-fluid d-flex justify-content-center">    
             <ul class="wall content-alert-parent">
@@ -287,6 +288,7 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/fullcalendar.min.js" ></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/schedulerPlantaInterna.js" ></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/magnific_popup/jquery.magnific-popup.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/orgChartJS/orgchart.js"></script>
 
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/despachopi/jsonotsasignadas.js?v=${sessionScope.versionDepl}"></script>

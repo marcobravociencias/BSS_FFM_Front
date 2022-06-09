@@ -394,5 +394,16 @@ app.service("mainDespachoService", function ($http) {
             }
 		});
 	};
+
+	this.consultarJerarquiaOrganigrama=function(params){
+		return $http({
+			method: "post",
+			url: "req/consultarJerarquiaOrganigrama",
+			data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
 	
 });

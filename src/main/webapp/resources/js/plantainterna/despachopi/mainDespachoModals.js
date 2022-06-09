@@ -1830,6 +1830,52 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 
     }
 
+    //ORGCHARTJS
+
+    $scope.mostrarModalOrganigrama = function() {
+        swal({ text: 'Cambiando estatus de la OT ...', allowOutsideClick: false });
+        swal.showLoading();
+        let params = {
+            idSupervisor: "156896"
+        }
+
+        mainDespachoService.consultarJerarquiaOrganigrama(params).then(function success(response) {
+            if (response.data !== undefined) {
+                if (response.data.respuesta) {
+                    if (response.data.result) {
+                        if (response.data.result.subordinados) {
+                            swal.close()
+                            OrgChart.templates.ana.img_0 = '<image preserveAspectRatio="xMidYMid slice" xlink:href="{val}" x="20" y="5" width="80" height="80"></image>';
+                            var chart = new OrgChart(document.getElementById("tree"), {
+                                nodeBinding: {
+                                    field_0: "name",
+                                    img_0: "photo1"
+                                },
+                                nodes: [
+                                    { id: 1, name: "Amber McKenzie", photo1: "https://firebasestorage.googleapis.com/v0/b/totalplay-ffm-core-dev.appspot.com/o/usuarios%2Fmex%2FPIRESIDENCIAL%2FfotoPerfil?alt=media&token=uuidv4()" },
+                                    { id: 2, pid: 1, name: "Ava Field", photo1: "https://firebasestorage.googleapis.com/v0/b/totalplay-ffm-core-dev.appspot.com/o/usuarios%2Fmex%2FPIRESIDENCIAL%2FfotoPerfil?alt=media&token=uuidv4()" },
+                                    { id: 3, pid: 1, name: "Peter Stevens", photo1: "https://firebasestorage.googleapis.com/v0/b/totalplay-ffm-core-dev.appspot.com/o/usuarios%2Fmex%2FPIRESIDENCIAL%2FfotoPerfil?alt=media&token=uuidv4()" }
+                                ]
+                            });
+                            $("#modalOrganigrama").modal('show');
+                        }
+                    } else {
+                        swal.close();
+                        toastr.info('No se encontraron datos');
+                    }
+                } else {
+                    swal.close();
+                    toastr.warning(response.data.resultDescripcion);
+                }
+            } else {
+                swal.close();
+                toastr.error('Ha ocurrido un error en la consulta de los datos');
+            }
+        }).catch(err => handleError(err));
+
+        
+    }
+
 }
 /**
 

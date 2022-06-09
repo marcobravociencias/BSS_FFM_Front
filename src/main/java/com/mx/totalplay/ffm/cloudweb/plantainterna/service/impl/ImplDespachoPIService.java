@@ -1296,4 +1296,19 @@ public class ImplDespachoPIService implements DespachoPIService {
         logger.info("RESULT" + gson.toJson(response));
         return response;
 	}
+
+	@Override
+	public ServiceResponseResult consultarJerarquiaOrganigrama(String params) {
+		logger.info("ImplDespachoPIService.class [metodo = consultarJerarquiaOrganigrama() ]\n" + params);
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        String tokenAcces = principalDetail.getAccess_token();
+        logger.info("ACCESOS consultarJerarquiaOrganigrama ##+" + tokenAcces);
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constDespachoPI.getConsultarJerarquiaOrganigrama());
+        logger.info("URL ##+" + urlRequest);
+        Map<String, String> paramsRequestGet = new HashMap<String, String>();
+        paramsRequestGet.put("idSupervisor", jsonObject.get("idSupervisor").getAsString());
+        ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest, ServiceResponseResult.class, tokenAcces);
+        return response;
+	}
 }
