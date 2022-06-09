@@ -45,6 +45,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     $scope.geografiaUsuarioList = [];
     $scope.tecnologiaList = [];
     $scope.estatusList = [];
+    $scope.estatusListOriginal = [];
     $scope.busquedaSf = {};
     $scope.nGeografiaConsultaUsuario = null
     $scope.nPuestoIngeniero = null
@@ -170,6 +171,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                         $scope.isConsultaComentarios = false
                         $scope.busquedaSf = {};
                         $scope.$apply();
+                        $scope.consultarTicketsSoporte()
                     }
                 }).catch(err => {
 
@@ -429,6 +431,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             if (results[8].data.respuesta) {
                 if (results[8].data.result) {
                     $scope.estatusList = results[8].data.result.estatusTicketSC;
+                    $scope.estatusListOriginal = results[8].data.result.estatusTicketSC;
                 } else {
                     mostrarMensajeWarningValidacion('No se pudo realizar la consulta de estatus.')
                 }
@@ -1097,7 +1100,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         $(".accordion-collapse").removeClass("show");
         $("#panelsStayOpen-headingOne .accordion-button").click();
         $("#panelsStayOpen-headingTwo .accordion-button").click();
-
+        $scope.estatusList = angular.copy($scope.estatusListOriginal);
         $q.all([
             gestionTicketSoporteService.consultarDetalleTicketGestion(ticket),
             gestionTicketSoporteService.consultaCuentaClienteTicketSoporte({ 'claveCliente': cliente })
@@ -1110,6 +1113,14 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                         $scope.contentdetalleticket = true;
                         $scope.contentprincipal = false
                         $scope.editTicket = results[0].data.result.detalleGeneral;
+                        if($scope.editTicket.detalleTicketSc.idEstatus !== 2 && $scope.editTicket.detalleTicketSc.idEstatus !== 1){
+                            $scope.estatusList =  $scope.estatusList.filter((e)=> {return e.id != 2});
+                        }
+                        if($scope.editTicket.detalleTicketSc.idEstatus != 6){
+                            $scope.estatusList =  $scope.estatusList.filter((e)=> {return e.id != 6});
+                        }
+                        
+
                         $scope.consultaChat();
                         if ($scope.editTicket.detalleTicketSc.falla && $scope.catalogoFallasTicketSoporte.length) {
                             $scope.ticketSoporteDetalle.fallaTicketD = $scope.editTicket.detalleTicketSc.falla + '';

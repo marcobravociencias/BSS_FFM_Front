@@ -517,7 +517,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                 '<div id="content">' +
                 '   <div id="siteNotice"></div>' +
                 '   <h5 id="firstHeading" class="firstHeading">' +
-                '   <span class="titleHeading">ID: </span>' + incidenciaUb.idIncidencia + '</h5><hr>' +
+                '   <span class="titleHeading">ID: </span>' + incidenciaUb.idIncidencia + '</h5><hr style="margin:0.5em">' +
                 '   <div id="bodyContent">' +
                 '       <b><strong class="titleBody">Reporta:</strong></b>&nbsp;' + incidenciaUb.usuarioReporta +
                 '       <br><br><b><strong class="titleBody">Falla:</strong></b>&nbsp;' + incidenciaUb.desTipoIncidencia +
@@ -531,7 +531,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                 '<div id="content">' +
                 '   <div id="siteNotice"></div>' +
                 '   <h5 id="firstHeading" class="firstHeading">' +
-                '   <span class="titleHeading">ID: </span>' + incidenciaUb.idIncidencia + '</h5><hr>' +
+                '   <span class="titleHeading">ID: </span>' + incidenciaUb.idIncidencia + '</h5><hr style="margin:0.5em">' +
                 '   <div id="bodyContent">' +
                 '       <b><strong class="titleBody">Reporta:</strong></b>&nbsp;' + incidenciaUb.usuarioReporta +
                 '       <br><br><b><strong class="titleBody">Falla:</strong></b>&nbsp;' + incidenciaUb.desTipoIncidencia +
@@ -562,9 +562,10 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
         marker.addListener('click', function () {
             infowindows.open(map, marker);
         });
-
+       
         markers.push(marker);
         map.setCenter(new google.maps.LatLng(incidenciaUb.latitud, incidenciaUb.longitud));
+        infowindows.open(map, marker);
     }
 
     $scope.openMdlCluster = function () {

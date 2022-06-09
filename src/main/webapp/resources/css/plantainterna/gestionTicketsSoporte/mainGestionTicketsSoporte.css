@@ -914,7 +914,7 @@ i.icono-noseleccion {
     float: right;
     cursor: pointer;
     transition: all 0.5s ease;
-    font-size: 1.8em;
+    font-size: 1.5em;
     text-shadow: -4px 1px 10px rgb(14 51 33 / 28%);
 }
 

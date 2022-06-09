@@ -265,6 +265,10 @@ tfoot {
     font-size: 1em;
 }
 
+#bodyContent{
+    padding-left: 5px;
+}
+
 .firstHeading {
     font-size: 1.3em !important;
     font-weight: lighter !important;
@@ -285,7 +289,7 @@ tfoot {
     color: var(--estandar-color) !important;
     border: solid 1px var(--estandar-color) !important;
     margin: 10px 0;
-    width: 250px;
+    width: 98%;
     box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
 }
 
@@ -587,14 +591,15 @@ map-card .map-container iframe {
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;
     border: none;
-    transition:all 0.3s ease-in-out;
+    transition:all 0.3s ease-out;
 }
 
 .search-incidencia input:active, .search-incidencia input:focus {
    box-shadow: none;
    border: none;
    border-bottom: 1px solid #ccc;
-   transition:all 0.3s ease-in-out;
+   transition:all 0.3s ease-out;
+   border-radius: 0;
    
 }
 
@@ -808,4 +813,13 @@ map-card .map-container iframe {
 
 #consulta-incidencias .accordion-button, .accordion-button:focus, .accordion-collapse{
     box-shadow: none !important;
+}
+
+#mapaInspectorCobertura .gm-style .gm-style-iw-c {
+    padding-right: 0.8em !important;
+    padding-bottom: 0.8em !important;
+}
+
+#mapaInspectorCobertura .gm-style-iw-d{
+    overflow: hidden !important;
 }
