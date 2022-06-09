@@ -7,5 +7,6 @@ public interface GestionNoticiasService {
 	public ServiceResponseResult consultarNoticia();
 	public ServiceResponseResult registrarNoticia(String params);
 	public ServiceResponseResult actualizarNoticia(String params);
+	public ServiceResponseResult eliminarNoticia(String params);
 
 }

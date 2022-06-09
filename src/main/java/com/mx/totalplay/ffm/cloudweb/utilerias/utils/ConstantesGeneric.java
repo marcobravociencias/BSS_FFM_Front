@@ -40,6 +40,9 @@ public class ConstantesGeneric implements Serializable{
 	
 	@Value("${gestionNoticiasGeneric}")
 	private String gestionNoticiasGeneric;
+	
+	@Value("${eliminarNoticia}")
+	private String eliminarNoticia;
 
 	@Value("${version.deploy.ffm-cloud}")
 	private String versionDeploy;

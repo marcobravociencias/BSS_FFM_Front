@@ -82,4 +82,17 @@ public class ImplGestionNoticiasService implements GestionNoticiasService{
 		return response;
 	}
 
+	@Override
+	public ServiceResponseResult eliminarNoticia(String params) {
+		logger.info("ImplGestionNoticiasService.class [metodo = eliminarNoticia() ]\n");
+		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		String tokenAcces=principalDetail.getAccess_token() ;
+		logger.info("json object params## "+jsonObject.toString());
+		String url = principalDetail.getDireccionAmbiente().concat(constantesAmbiente.getEliminarNoticia());
+		ServiceResponseResult response=restCaller.callPatchBearerTokenRequest(jsonObject.toString(), url, ServiceResponseResult.class, tokenAcces);
+		logger.info("RESULT eliminarNoticia"+gson.toJson(response));
+		return response;
+	}
+
 }

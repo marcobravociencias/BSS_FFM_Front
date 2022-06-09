@@ -52,6 +52,59 @@ app.edicionNoticiaController=function($scope,gestionNoticiasService){
         $scope.$apply()
     }
 
+	abrirModalEliminar = function(index) {
+		$scope.eliminarObject=angular.copy( $scope.litadoNoticiasTemp[index] );
+		let params = {};
+		params.noticias = [$scope.eliminarObject.id];
+
+		swal({
+			title: "Se dará de baja la noticia",
+			text: "\u00BFDesea eliminar la noticia?",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: '#007bff',
+			confirmButtonText: 'Si',
+			cancelButtonText: 'Cancelar',
+			allowOutsideClick: false
+		  }).then(function () {
+			swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
+			swal.showLoading();
+			gestionNoticiasService.eliminarNoticia(params).then((result) => {
+				swal.close()
+				if (result.data !== undefined) {
+					if(result.data.respuesta){
+						swal("Correcto", "¡Noticia eliminada con éxito!", "success");
+						setTimeout(function() {
+							$scope.consultarNoticias();
+						}, 3000);
+					}else{
+						swal.close();
+						swal("Error", results.data.resultDescripcion, "error");
+					}
+				} else {
+					swal.close()
+					toastr.warning(result.data.resultDescripcion)
+				}
+			}).catch((err) => handleError(err));
+			$q.all([
+				gestionNoticiasService.eliminarNoticia(params)
+			]).then(function(results) {
+				swal.close();
+				if(results[0].data.respuesta){
+					swal("Correcto", "¡Noticia eliminada con éxito!", "success");
+					setTimeout(function() {
+						$scope.consultarNoticias();
+					}, 1000);
+				}else{
+					swal("Error", results[0].data.resultDescripcion, "error");
+				}
+			});
+		}).catch(err => {
+
+		});
+
+	}
+
     /** Archivos banner */
 
     $scope.removerImagenEditar=function(){

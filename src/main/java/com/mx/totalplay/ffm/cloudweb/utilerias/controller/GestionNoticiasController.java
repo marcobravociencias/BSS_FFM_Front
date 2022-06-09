@@ -52,4 +52,14 @@ public class GestionNoticiasController {
         }
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
+	
+	@PostMapping("/eliminarNoticia")
+    public ResponseEntity<?> eliminarNoticia(@RequestBody String params){
+		logger.info("#### GestionNoticiasController - eliminarNoticia ### \n" + params);
+		ServiceResponseResult response = gestionNoticiasService.eliminarNoticia(params);
+		if (response.getResult() instanceof Integer){
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
 }

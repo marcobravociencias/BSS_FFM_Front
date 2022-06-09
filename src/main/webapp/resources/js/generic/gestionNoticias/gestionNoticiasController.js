@@ -21,6 +21,7 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 	$scope.configPermisoAccionConsultaNoticias = false;
 	$scope.configPermisoAccionCreaNoticia = false;
 	$scope.configPermisoAccionEditaNoticia = false;
+	$scope.configPermisoAccionEliminaNoticia = false;
 
 	angular.element(document).ready(function () {
 		$("#idBody").removeAttr("style");
@@ -196,6 +197,7 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 				$scope.configPermisoAccionConsultaNoticias = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultarNoticias" })[0] != undefined);
 				$scope.configPermisoAccionCreaNoticia = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionCreacionNoticias" })[0] != undefined);
 				$scope.configPermisoAccionEditaNoticia = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionEdicionNoticias" })[0] != undefined);
+				$scope.configPermisoAccionEliminaNoticia = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionEliminarNoticias" })[0] != undefined);
 			}
 
 		
@@ -383,6 +385,15 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 							if (!$scope.configPermisoAccionEditaNoticia) {
 								buttonEditar = buttonEditarNoPermiso;
 							}
+							let buttonEliminar = `<button onclick="abrirModalEliminar( ${index} )" type="button" class="btn btn-sm btn-eliminar-noticia ">
+													<i class="fas fa-trash-alt"></i>					
+							  					</button>`;
+							let buttonEliminarNoPermiso = `<button type="button" class="btn btn-sm btn-eliminar-noticia " title="No tienes permisos para eliminar" style="cursor:no-drop;opacity:0.3 !important;padding:2.3px 10.7px">
+												  <i class="fas fa-unlock"></i>					
+												</button>`;
+							if (!$scope.configPermisoAccionEliminaNoticia) {
+								buttonEliminar = buttonEliminarNoPermiso;
+							}
 							let tableelemetn = `
 							<tr>
 								<td> 	<img   onclick="abrirImagenSize(this)"  class="banner-file-noticias hover-overlay" src="${el.urlBanner}">  </td>
@@ -394,7 +405,7 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 								<td>  	<span class="consultaFechaNoticia"> ${el.permanente ? 'NA' : el.fechaInicio} </span> </td>
 								<td>  	<span class="consultaFechaNoticia"> ${el.permanente ? 'NA' : el.fechaExpiracion} </span> </td>
 								<td>  	<span class="consultaDetalleNoticia"> ${el.detalle} </span> </td>
-								<td>  	`+ buttonEditar + ` 
+								<td>  	`+ buttonEditar +` `+ buttonEliminar +` 
 								</td>
 
 							</tr>	
