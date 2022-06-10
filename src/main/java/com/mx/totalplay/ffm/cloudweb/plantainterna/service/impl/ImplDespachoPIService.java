@@ -592,7 +592,6 @@ public class ImplDespachoPIService implements DespachoPIService {
         
         JsonObject jsonResponse = gson.fromJson(gson.toJson(response).toString(), JsonObject.class);
         if (jsonResponse.get("codigoEstatusService").getAsInt() == 200) {
-            			nuevoNumero = nuevoNumero+"*"; 
         	if (jsonResponse.get("result") != null) {
         		JsonObject jsonResult =  jsonResponse.get("result").getAsJsonObject();
         		if (jsonResult.get("detalleOrdenes") != null) {
@@ -614,10 +613,10 @@ public class ImplDespachoPIService implements DespachoPIService {
                     		otObject.addProperty("telefono", nuevoNumero);
                 		}
                 		nuevaOts.add(otObject);
-                		jsonResult.add("detalleOrdenes", nuevaOts);
-                        jsonResponse.add("result", jsonResult);
-                        response = gson.fromJson(jsonResponse, ServiceResponseResult.class);
                 	}
+            		jsonResult.add("detalleOrdenes", nuevaOts);
+                    jsonResponse.add("result", jsonResult);
+                    response = gson.fromJson(jsonResponse, ServiceResponseResult.class);
         		}
         	}
         }
