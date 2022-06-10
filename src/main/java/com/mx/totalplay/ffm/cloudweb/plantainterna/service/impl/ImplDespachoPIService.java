@@ -470,22 +470,10 @@ public class ImplDespachoPIService implements DespachoPIService {
         	JsonObject jsonResult = jsonResponse.get("result").getAsJsonObject();
         	JsonObject jsonOrden = jsonResult.get("orden").getAsJsonObject();
         	if (jsonOrden.get("telefonoCliente") != null) {
-        		String telefonoCliente = jsonOrden.get("telefonoCliente").getAsString();
-        		String nuevoNumeroCliente = "";
-        		for (int i = 0; i < telefonoCliente.length()-3; i++) {
-        			nuevoNumeroCliente = nuevoNumeroCliente+"*";
-                }
-        		nuevoNumeroCliente = nuevoNumeroCliente + telefonoCliente.charAt(telefonoCliente.length()-3) + telefonoCliente.charAt(telefonoCliente.length()-2) + telefonoCliente.charAt(telefonoCliente.length()-1);
-        		jsonOrden.addProperty("telefonoCliente", nuevoNumeroCliente);
+        		jsonOrden.addProperty("telefonoCliente", utilerias.ocultarNumero(jsonOrden.get("telefonoCliente").getAsString()));
         	}
         	if (jsonOrden.get("telefonoContacto") != null) {
-        		String telefonoContacto = jsonOrden.get("telefonoContacto").getAsString();
-        		String nuevoNumeroContacto = "";
-        		for (int i = 0; i < telefonoContacto.length()-3; i++) {
-        			nuevoNumeroContacto = nuevoNumeroContacto+"*";
-                }
-        		nuevoNumeroContacto = nuevoNumeroContacto + telefonoContacto.charAt(telefonoContacto.length()-3) + telefonoContacto.charAt(telefonoContacto.length()-2) + telefonoContacto.charAt(telefonoContacto.length()-1);
-        		jsonOrden.addProperty("telefonoContacto", nuevoNumeroContacto);
+        		jsonOrden.addProperty("telefonoContacto", utilerias.ocultarNumero(jsonOrden.get("telefonoContacto").getAsString()));
         	}
         	jsonResult.add("orden", jsonOrden);
         	jsonResponse.add("result", jsonResult);
@@ -600,17 +588,7 @@ public class ImplDespachoPIService implements DespachoPIService {
                 	for(JsonElement ot : ots) {
                 		JsonObject otObject = gson.fromJson(ot.toString(), JsonObject.class);
                 		if (otObject.get("telefono") != null) {
-                			String numero = otObject.get("telefono").getAsString();
-                    		String nuevoNumero = "";
-                    		for (int i = 0; i < numero.length()-3; i++) { 
-                    			nuevoNumero = nuevoNumero+"*"; 
-              		        }
-                    		if (numero.length() > 3) {
-                    			nuevoNumero = nuevoNumero + numero.charAt(numero.length()-3) + numero.charAt(numero.length()-2) + numero.charAt(numero.length()-1);
-                    		} else {
-                    			nuevoNumero = numero;
-                    		}
-                    		otObject.addProperty("telefono", nuevoNumero);
+                			otObject.addProperty("telefono", utilerias.ocultarNumero(otObject.get("telefono").getAsString()));
                 		}
                 		nuevaOts.add(otObject);
                 	}

@@ -229,6 +229,27 @@ public class ImplConsultaOTService implements ConsultaOTService {
 
         ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
                 ServiceResponseResult.class, tokenAcces);
+        
+        JsonObject jsonResponse = gson.fromJson(gson.toJson(response).toString(), JsonObject.class);
+        if (jsonResponse.get("codigoEstatusService").getAsInt() == 200) {
+        	if (jsonResponse.get("result") != null) {
+        		JsonObject jsonResult = jsonResponse.get("result").getAsJsonObject();
+        		if (jsonResult.get("orden") != null) {
+        			JsonObject jsonOrden = jsonResult.get("orden").getAsJsonObject();
+        			if (jsonOrden.get("telefonoCliente") != null) {
+                		jsonOrden.addProperty("telefonoCliente", utilerias.ocultarNumero(jsonOrden.get("telefonoCliente").getAsString()));
+                	}
+        			if (jsonOrden.get("telefonoContacto") != null) {
+                		jsonOrden.addProperty("telefonoContacto", utilerias.ocultarNumero(jsonOrden.get("telefonoContacto").getAsString()));
+                	}
+        			jsonResult.add("orden", jsonOrden);
+        		}
+        		jsonResponse.add("result", jsonResult);
+        	}
+        	response = gson.fromJson(jsonResponse, ServiceResponseResult.class);
+        }
+        
+        logger.info("RESULT" + gson.toJson(response));
         return response;
     }
 

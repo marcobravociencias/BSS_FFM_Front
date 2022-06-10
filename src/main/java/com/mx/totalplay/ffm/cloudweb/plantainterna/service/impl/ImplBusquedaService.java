@@ -62,7 +62,7 @@ public class ImplBusquedaService implements BusquedaService {
     @Override
     public ServiceResponseResult consultarDetalleObjectSF(String params) {
         logger.info("ImplBusquedaService.class consultarDetalleObjectSF(): \n" + params);
-
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
         LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
         String tokenAcces = principalDetail.getAccess_token();
         String urlRequest = principalDetail.getDireccionAmbiente().concat(constBusqueda.getConsultaDetalleObjetoSF());
@@ -72,6 +72,7 @@ public class ImplBusquedaService implements BusquedaService {
                 urlRequest,
                 ServiceResponseResult.class,
                 tokenAcces);
+        response = ocultarNumeroDetalleSalesforce(response, jsonObject.get("typeObjectSF").getAsString());
         logger.info("####RESULT: " + gson.toJson(response));
         return response;
     }
@@ -309,6 +310,58 @@ public class ImplBusquedaService implements BusquedaService {
         response = restCaller.callDeleteBearerTokenRequest(paramsRequest,urlRequest, ServiceResponseResult.class, tokenAcces);
         logger.info("##### RESULT ELIMINAR NOTICIAS: \n" + gson.toJson(response));
         return response;
+    }
+    
+    public ServiceResponseResult ocultarNumeroDetalleSalesforce(ServiceResponseResult response, String typeObject) {
+    	JsonObject jsonResponse = gson.fromJson(gson.toJson(response).toString(), JsonObject.class);
+    	if (jsonResponse.get("codigoEstatusService").getAsInt() == 200) {
+        	if (jsonResponse.get("result") != null) {
+        		JsonObject jsonResult =  jsonResponse.get("result").getAsJsonObject();
+        		switch (typeObject) {
+        		case "CU":
+        			if (jsonResult.get("detalleCuenta") != null) {
+        				//informacion general
+        				JsonObject detalleCuenta = jsonResult.get("detalleCuenta").getAsJsonObject();
+        				if (detalleCuenta.get("telefono") != null) {
+        					detalleCuenta.addProperty("telefono", utilerias.ocultarNumero(detalleCuenta.get("telefono").getAsString()));
+        				}
+        				//contactoPrincipal
+        				if (detalleCuenta.get("contactoPrincipal") != null) {
+        					JsonObject contactoPrincipal = detalleCuenta.get("contactoPrincipal").getAsJsonObject();
+        					if (contactoPrincipal.get("telefono") != null) {
+        						contactoPrincipal.addProperty("telefono", utilerias.ocultarNumero(contactoPrincipal.get("telefono").getAsString()));
+            				}
+        					if (contactoPrincipal.get("celular") != null) {
+        						contactoPrincipal.addProperty("celular", utilerias.ocultarNumero(contactoPrincipal.get("celular").getAsString()));
+            				}
+        					detalleCuenta.add("contactoPrincipal", contactoPrincipal);
+        				}
+        				jsonResult.add("detalleCuenta", detalleCuenta);
+            		}
+        			jsonResponse.add("result", jsonResult);
+        			
+        			break;
+        			
+        		case "CF":
+        			if (jsonResult.get("detalleCuentaFactura") != null) {
+        				//detalleCuentaFactura
+        				JsonObject detalleCuentaFactura = jsonResult.get("detalleCuentaFactura").getAsJsonObject();
+        				if (detalleCuentaFactura.get("telefonoPrincipal") != null) {
+        					detalleCuentaFactura.addProperty("telefonoPrincipal", utilerias.ocultarNumero(detalleCuentaFactura.get("telefonoPrincipal").getAsString()));
+        				}
+        				if (detalleCuentaFactura.get("celular") != null) {
+        					detalleCuentaFactura.addProperty("celular", utilerias.ocultarNumero(detalleCuentaFactura.get("celular").getAsString()));
+        				}
+        			}
+        			break;
+        		default:
+        			
+        			break;
+        		}
+        		response = gson.fromJson(jsonResponse, ServiceResponseResult.class);
+        	}
+    	}
+    	return response;
     }
 
 }

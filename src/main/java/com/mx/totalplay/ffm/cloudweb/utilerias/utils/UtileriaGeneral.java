@@ -174,4 +174,32 @@ public class UtileriaGeneral {
 			}
 			return base64File;
 		}
+		
+		public String ocultarNumero(String numero) {
+			String nuevoNumero = "";
+			if (numero != null) {
+				if (isNumeric(numero)) {
+					if (numero.length() > 3) {
+			    		for (int i = 0; i < numero.length()-3; i++) { 
+			    			nuevoNumero = nuevoNumero+"*"; 
+				        }
+		    			nuevoNumero = nuevoNumero + numero.charAt(numero.length()-3) + numero.charAt(numero.length()-2) + numero.charAt(numero.length()-1);
+		    		} else {
+		    			nuevoNumero = numero;
+		    		}
+				} else {
+					nuevoNumero = numero;
+				}
+			}
+			return nuevoNumero;
+		}
+		
+		public static boolean isNumeric(String str) {
+			try {  
+			    Double.parseDouble(str);  
+			    return true;
+			} catch(NumberFormatException e){  
+			    return false;  
+			}  
+		}
 }
