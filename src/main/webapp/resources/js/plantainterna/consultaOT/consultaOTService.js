@@ -23,7 +23,7 @@ app.service("consultaOTService", function($http){
     this.consultaInfoDetalle = function (params) {
         return $http({
             method: "post",
-            url: "req/consultaInformacionDetalleOt",
+            url: "req/consultarDetalleDespachoOT",
             data: params,
             headers: {'Content-Type': "application/json; charset=utf-8"},
             transformRequest: angular.identity

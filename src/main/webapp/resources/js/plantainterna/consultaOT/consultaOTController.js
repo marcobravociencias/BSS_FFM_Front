@@ -900,7 +900,8 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 
 	$scope.consultaDetalleOtGeneric = function (ordenObject) {
 		let params = {
-			Id_ot: ordenObject.idOrden
+			idOT:  ordenObject.idOrden,
+			idOt:  ordenObject.idOrden
 		}
 		swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 		swal.showLoading();

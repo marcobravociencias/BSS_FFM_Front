@@ -1318,6 +1318,11 @@ span.text-content-ot {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.iconoDescargaArchivo {
+    color: #9f9f9f;
+    font-size: .7em;
+    margin-right: .5em;
+}
 
 /* HISTORICO MODAL */
 .card-historico.card.text-center {
