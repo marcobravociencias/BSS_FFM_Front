@@ -592,27 +592,34 @@ public class ImplDespachoPIService implements DespachoPIService {
         
         JsonObject jsonResponse = gson.fromJson(gson.toJson(response).toString(), JsonObject.class);
         if (jsonResponse.get("codigoEstatusService").getAsInt() == 200) {
-        	JsonObject jsonResult =  jsonResponse.get("result").getAsJsonObject();
-        	JsonArray ots = jsonResult.get("detalleOrdenes").getAsJsonArray();
-        	JsonArray nuevaOts = new JsonArray();
-        	for(JsonElement ot : ots) {
-        		JsonObject otObject = gson.fromJson(ot.toString(), JsonObject.class);
-        		if (otObject.get("telefono") != null) {
-        			String numero = otObject.get("telefono").getAsString();
-            		String nuevoNumero = "";
-            		for (int i = 0; i < numero.length()-3; i++) { 
             			nuevoNumero = nuevoNumero+"*"; 
-      		        }
-            		if(numero.length() >3) {
-                		nuevoNumero = nuevoNumero + numero.charAt(numero.length()-3) + numero.charAt(numero.length()-2) + numero.charAt(numero.length()-1);
-            		}
-            		otObject.addProperty("telefono", nuevoNumero);
+        	if (jsonResponse.get("result") != null) {
+        		JsonObject jsonResult =  jsonResponse.get("result").getAsJsonObject();
+        		if (jsonResult.get("detalleOrdenes") != null) {
+        			JsonArray ots = jsonResult.get("detalleOrdenes").getAsJsonArray();
+                	JsonArray nuevaOts = new JsonArray();
+                	for(JsonElement ot : ots) {
+                		JsonObject otObject = gson.fromJson(ot.toString(), JsonObject.class);
+                		if (otObject.get("telefono") != null) {
+                			String numero = otObject.get("telefono").getAsString();
+                    		String nuevoNumero = "";
+                    		for (int i = 0; i < numero.length()-3; i++) { 
+                    			nuevoNumero = nuevoNumero+"*"; 
+              		        }
+                    		if (numero.length() > 3) {
+                    			nuevoNumero = nuevoNumero + numero.charAt(numero.length()-3) + numero.charAt(numero.length()-2) + numero.charAt(numero.length()-1);
+                    		} else {
+                    			nuevoNumero = numero;
+                    		}
+                    		otObject.addProperty("telefono", nuevoNumero);
+                		}
+                		nuevaOts.add(otObject);
+                		jsonResult.add("detalleOrdenes", nuevaOts);
+                        jsonResponse.add("result", jsonResult);
+                        response = gson.fromJson(jsonResponse, ServiceResponseResult.class);
+                	}
         		}
-        		nuevaOts.add(otObject);
         	}
-            jsonResult.add("detalleOrdenes", nuevaOts);
-            jsonResponse.add("result", jsonResult);
-            response = gson.fromJson(jsonResponse, ServiceResponseResult.class);
         }
         logger.info("RESULT" + gson.toJson(response));
         return response;
