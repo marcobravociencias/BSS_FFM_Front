@@ -216,6 +216,7 @@ tfoot {
 .contenido_color {
     display: inline;
     margin-right: 0.5em;
+    cursor: pointer;
 }
 
 .contenido_color i {
@@ -225,6 +226,8 @@ tfoot {
 .contenido_color>small {
     color: #4e5f71;
     font-size: .6em;
+    position: relative;
+    top: -0.2em;
 }
 
 #colores_estados {
@@ -1236,4 +1239,16 @@ h4#texto_not_arboles {
 
 #mapaInspectorIncidencia .gm-style-iw-d{
     overflow: hidden !important;
+}
+
+
+.filter-selected {
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    padding: 0.1em 0.5em;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+}
+
+.filter-selected small {
+    font-weight: bolder;
 }

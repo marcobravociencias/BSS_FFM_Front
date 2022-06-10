@@ -5,6 +5,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
 
     $scope.filtrosInspector = {};
     $scope.incidencias = [];
+    $scope.incidenciasTemp = [];
     $scope.listCatEstatus = [];
     $scope.latIncidencia = "";
     $scope.longIncidencia = "";
@@ -407,6 +408,15 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                 $scope.banderaErrorGeografia = true;
             }
         });
+    }
+
+    $scope.filterBy = function(id){
+        $scope.incidencias =  $scope.incidenciasTemp;
+        $(".contenido_color").removeClass("filter-selected");
+        $("#color_selected_" + id).addClass("filter-selected");
+        if(id != 0){
+            $scope.incidencias = $scope.incidencias.filter((e) => { return e.idEstatus == id });
+        }
     }
 
     mostarImagenesCarousel = function () {
@@ -1077,6 +1087,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
     }
 
     $scope.consultarIncidenciasInspector = function () {
+        $scope.filterBy('0');
         if ($scope.isPermisoConsultaIncidencias) {
             let mensajeError = '';
             let isValid = true;
@@ -1144,6 +1155,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                     "fechaFin": $scope.getFechaFormato(document.getElementById('filtro_fecha_fin_inspectorincidencia').value)
                 };
                 $scope.incidencias = [];
+                $scope.incidenciasTemp  = [];
                 // console.log(params)
                 inspectorIncidenciaService.consultarIncidenciasInspectorPE(params).then(function success(response) {
                     console.log(response);
@@ -1153,6 +1165,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                                 if (response.data.result.detalleIncidencias.length) {
                                     $("#content_mapa").css("display", "block");
                                     $scope.incidencias = response.data.result.detalleIncidencias;
+                                    $scope.incidenciasTemp = response.data.result.detalleIncidencias;
                     
                                     swal.close();
                                 } else {

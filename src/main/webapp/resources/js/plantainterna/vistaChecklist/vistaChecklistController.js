@@ -93,6 +93,7 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
                     if (results[0].data.result) {
                         let resultConf = results[0].data.result
                         if (resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
+                            let llavesResult = results[0].data.result.MODULO_ACCIONES_USUARIO.llaves;
                             $scope.nGeografia = results[0].data.result.MODULO_ACCIONES_USUARIO.llaves.N_FILTRO_GEOGRAFIA ? Number(results[0].data.result.MODULO_ACCIONES_USUARIO.llaves.N_FILTRO_GEOGRAFIA) : null;
                             $scope.nInterveciones = results[0].data.result.MODULO_ACCIONES_USUARIO.llaves.N_FILTRO_INTERVENCIONES ? Number(results[0].data.result.MODULO_ACCIONES_USUARIO.llaves.N_FILTRO_INTERVENCIONES) : null;
                             $scope.nfiltroestatusDisponbiles = results[0].data.result.MODULO_ACCIONES_USUARIO.llaves.N_ESTATUS_ARRAY ? results[0].data.result.MODULO_ACCIONES_USUARIO.llaves.N_ESTATUS_ARRAY : null;
@@ -100,15 +101,16 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
                             $scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
                             validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
                             validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
-                            validateCreedText = llavesResult.KEY_TEXTFORMATO_CREED_RES ? KEY_TEXTFORMATO_CREED_RES : '';
-
-                           
+                            validateCreedText = llavesResult.KEY_TEXTFORMATO_CREED_RES ? KEY_TEXTFORMATO_CREED_RES : '';                           
                         }
                         if (resultConf != undefined && resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.permisos && resultConf.MODULO_ACCIONES_USUARIO.permisos != "") {
                             $scope.configPermisoAccionConsultaOt = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaOtChecklist" })[0] != undefined);
                             $scope.configPermisoAccionConsultaEvidencia = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaEvidenciaChecklist" })[0] != undefined);
                             $scope.configPermisoAccionActualizaEvidencia = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionActualizaEvidenciaChecklist" })[0] != undefined);
                         }
+                        $("#idBody").css("display", "block");
+
+
 
                     } else {
                         toastr.warning('No se encontraron datos para la configuraci\u00F3n');
@@ -229,7 +231,6 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
                 toastr.error('Ha ocurrido un error en la consulta de estatus');
             }
 
-            $("#idBody").removeAttr("style");
 
         }).catch(err => handleError(err));
     }

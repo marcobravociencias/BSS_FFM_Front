@@ -161,8 +161,13 @@
                     <div class="row" style="text-align: right;">
                         <div style="padding-left: 1.5em; height: 2.5em; line-height: 2.5em;"
                             class="col-12 visualizar-visible">
-                            <div class="contenido_color" ng-repeat="color in listCatEstatus">
-                                <i class="fa-xs fa fa-circle" style="{{'color:'+ color.hexaColor}}"
+                            <div class="contenido_color" id="color_selected_0" ng-click="filterBy('0')">
+                                <i class="fa-xs fa fa-circle" style="color: #000;"
+                                    aria-hidden="true"></i>
+                                <small>Todos</small>
+                            </div>
+                            <div class="contenido_color" id="color_selected_{{color.id}}" ng-click="filterBy(color.id)" ng-repeat="color in listCatEstatus">
+                                <i class="fa-xs fa fa-circle" style="{{'color:'+ color.hexaColor}}" 
                                     aria-hidden="true"></i>
                                 <small ng-bind="color.descripcion"></small>
                             </div>
@@ -223,7 +228,7 @@
                                                             <div class="item-title"><strong>ID: <span
                                                                         ng-bind="incidencia.idIncidencia"></span></strong>
                                                             </div>
-                                                            <div class="item-title"><span
+                                                            <div class="item-title"><span style="font-weight: bolder; color: {{incidencia.colorEstatus}};"
                                                                     ng-bind="incidencia.descEstatus"></span>
                                                             </div>
                                                         </li>
