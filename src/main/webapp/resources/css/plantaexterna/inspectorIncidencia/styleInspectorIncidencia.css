@@ -1244,11 +1244,26 @@ h4#texto_not_arboles {
 
 .filter-selected {
     border: 1px solid #ccc;
-    border-radius: 0.5rem;
+    border-radius: 0.3rem;
     padding: 0.1em 0.5em;
     box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+    background: #cccccc52;
 }
 
 .filter-selected small {
     font-weight: bolder;
+}
+
+.badge-status {
+    background-color: #039be5;
+    padding: 4px 8px;
+    border-radius: 3px;
+    font-size: 0.5em;
+    font-weight: bold;
+}
+
+.content-badge-status{
+    float: left;
+    margin-top: -2.5em;
+    margin-left: 14em;
 }

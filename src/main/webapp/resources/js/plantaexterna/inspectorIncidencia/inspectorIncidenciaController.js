@@ -2,7 +2,7 @@ var app = angular.module('inspectorIncidenciaApp', []);
 var incidenciaTable = undefined;
 var tableDetalleStatus = undefined;
 app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncidenciaService', 'genericService', function ($scope, $q, inspectorIncidenciaService, genericService) {
-
+    var infowindows = [];
     $scope.filtrosInspector = {};
     $scope.incidencias = [];
     $scope.incidenciasTemp = [];
@@ -143,17 +143,17 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
     }
 
     $scope.mostrarNombresEstatus = function (array) {
-		let arrayNombre = [];
-		angular.forEach(array, function (elemento, index) {
-			if (elemento.checkedOpcion) {
-				arrayNombre.push(elemento.descripcion);
-			}
-			if (elemento.children !== undefined && elemento.children.length > 0) {
-				arrayNombre = arrayNombre.concat($scope.mostrarNombresEstatus(elemento.children));
-			}
-		});
-		return arrayNombre;
-	}
+        let arrayNombre = [];
+        angular.forEach(array, function (elemento, index) {
+            if (elemento.checkedOpcion) {
+                arrayNombre.push(elemento.descripcion);
+            }
+            if (elemento.children !== undefined && elemento.children.length > 0) {
+                arrayNombre = arrayNombre.concat($scope.mostrarNombresEstatus(elemento.children));
+            }
+        });
+        return arrayNombre;
+    }
 
     $scope.pintarNombreEstatus = function (array, input) {
         let textoEstatus = $scope.mostrarNombresEstatus(array);
@@ -176,54 +176,54 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
     }
 
     $scope.conversionAnidadaRecursiva = function (array, nivelInit, maxNivel) {
-		let arrayReturn = [];
-		angular.forEach(array.filter(e => e.nivel === nivelInit), function (elem, index) {
-			let elemento = angular.copy(elem);
-			elemento.checkedOpcion = true;
-			if (nivelInit < maxNivel) {
-				elemento.children = $scope.conversionAnidadaRecursiva(array, nivelInit + 1, maxNivel).filter(e2 => Number(e2.idPadre) === Number(elemento.id));
-				elemento.children = (elemento.children !== undefined && elemento.children.length > 0) ? elemento.children : [];
-			}
-			arrayReturn.push(elemento)
-		});
-		return arrayReturn;
-	}
+        let arrayReturn = [];
+        angular.forEach(array.filter(e => e.nivel === nivelInit), function (elem, index) {
+            let elemento = angular.copy(elem);
+            elemento.checkedOpcion = true;
+            if (nivelInit < maxNivel) {
+                elemento.children = $scope.conversionAnidadaRecursiva(array, nivelInit + 1, maxNivel).filter(e2 => Number(e2.idPadre) === Number(elemento.id));
+                elemento.children = (elemento.children !== undefined && elemento.children.length > 0) ? elemento.children : [];
+            }
+            arrayReturn.push(elemento)
+        });
+        return arrayReturn;
+    }
 
-	$scope.obtenerUltimoNivelFiltros = function (array) {
-		return Math.max.apply(Math, array.map(function (o) { return o.nivel; }));
-	}
+    $scope.obtenerUltimoNivelFiltros = function (array) {
+        return Math.max.apply(Math, array.map(function (o) { return o.nivel; }));
+    }
 
-	$scope.obtenerElementosSeleccionadosFiltro = function (array, nivel) {
-		let arrayReturn = [];
-		angular.forEach(array, function (elemento, index) {
-			if (elemento.nivel == nivel && elemento.checkedOpcion) {
-				arrayReturn.push(elemento.id);
-			} else {
-				arrayReturn = arrayReturn.concat($scope.obtenerElementosSeleccionadosFiltro(elemento.children, nivel));
-			}
-		});
-		return arrayReturn;
-	}
+    $scope.obtenerElementosSeleccionadosFiltro = function (array, nivel) {
+        let arrayReturn = [];
+        angular.forEach(array, function (elemento, index) {
+            if (elemento.nivel == nivel && elemento.checkedOpcion) {
+                arrayReturn.push(elemento.id);
+            } else {
+                arrayReturn = arrayReturn.concat($scope.obtenerElementosSeleccionadosFiltro(elemento.children, nivel));
+            }
+        });
+        return arrayReturn;
+    }
 
-    $scope.seleccionarTodosRecursivo = function(array) {
-        array.map(function(e){
+    $scope.seleccionarTodosRecursivo = function (array) {
+        array.map(function (e) {
             e.checkedOpcion = true;
             if (e.children !== undefined && e.children.length > 0) {
                 $scope.seleccionarTodosRecursivo(e.children);
             }
         });
     }
- 
-    $scope.deseleccionarTodosRecursivo = function(array) {
-        array.map(function(e){
+
+    $scope.deseleccionarTodosRecursivo = function (array) {
+        array.map(function (e) {
             e.checkedOpcion = false;
             if (e.children !== undefined && e.children.length > 0) {
                 $scope.deseleccionarTodosRecursivo(e.children);
             }
         });
     }
- 
-    $scope.setCheckFiltroGenericV2 = function(filtro, principalArray) {
+
+    $scope.setCheckFiltroGenericV2 = function (filtro, principalArray) {
         if (filtro.children !== undefined && filtro.children.length > 0) {
             if (filtro.checkedOpcion) {
                 $scope.deseleccionarTodosRecursivo(filtro.children);
@@ -235,10 +235,10 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         $scope.checkPadre(filtro.idPadre, principalArray, principalArray);
     }
 
-    $scope.checkPadre = function(idPadre, array, principalArray) {
-        array.map(function(e){
+    $scope.checkPadre = function (idPadre, array, principalArray) {
+        array.map(function (e) {
             if (Number(e.id) === Number(idPadre)) {
-                e.checkedOpcion = e.children.length === e.children.filter(function(e){return e.checkedOpcion}).length;
+                e.checkedOpcion = e.children.length === e.children.filter(function (e) { return e.checkedOpcion }).length;
                 $scope.checkPadre(e.idPadre, principalArray, principalArray);
             } else {
                 if (e.children !== undefined && e.children.length > 0) {
@@ -335,7 +335,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                 if (results[2].data.respuesta) {
                     if (results[2].data.result) {
                         $scope.respaldoFallaArray = [];
-						$scope.respaldoFallaArray = angular.copy(results[2].data.result.incidentes);
+                        $scope.respaldoFallaArray = angular.copy(results[2].data.result.incidentes);
                         $scope.nfiltrofallas = $scope.nfiltrofallas ? $scope.nfiltrofallas : $scope.obtenerUltimoNivelFiltros($scope.respaldoFallaArray);
                         //$scope.nfiltrofallas = $scope.nfiltrofallas ? $scope.nfiltrofallas : $scope.obtenerNivelUltimoJerarquiaGeneric(results[2].data.result.incidentes);
                         //$scope.filtrosInspector.fallas = $scope.realizarConversionAnidado(results[2].data.result.incidentes.filter(e => e.nivel <= parseInt($scope.nfiltrofallas)));
@@ -410,11 +410,11 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         });
     }
 
-    $scope.filterBy = function(id){
-        $scope.incidencias =  $scope.incidenciasTemp;
+    $scope.filterBy = function (id) {
+        $scope.incidencias = $scope.incidenciasTemp;
         $(".contenido_color").removeClass("filter-selected");
         $("#color_selected_" + id).addClass("filter-selected");
-        if(id != 0){
+        if (id != 0) {
             $scope.incidencias = $scope.incidencias.filter((e) => { return e.idEstatus == id });
         }
     }
@@ -637,7 +637,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         swal.close();
     }
 
-    consultarDetalleIncidenciaMap = function(idIncidencia){
+    consultarDetalleIncidenciaMap = function (idIncidencia) {
         $scope.consultarDetalleIncidencia(idIncidencia);
     }
 
@@ -775,13 +775,13 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
     }
 
     $scope.pintarUbicacionIncidencia = function (idIncidencia) {
+
         $scope.incidenciaSeleccionada = $scope.incidencias.find((e) => e.idIncidencia == idIncidencia);
         let isUbicacion = false;
         let index = 0;
         $.each(markers, function (i, elemento) {
             if (elemento.id_marker == $scope.incidenciaSeleccionada.idIncidencia) {
                 index = i;
-                $('#incidencia_' + $scope.incidenciaSeleccionada.idIncidencia).css('background', '');
                 elemento.setMap(null);
                 isUbicacion = true;
                 return;
@@ -789,8 +789,10 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         });
 
         if (!isUbicacion) {
+            $("#icon-cross-" + idIncidencia).css("color", $scope.incidenciaSeleccionada.colorEstatus)
             $scope.pintarUbicacion($scope.incidenciaSeleccionada);
         } else {
+            $("#icon-cross-" + idIncidencia).css("color", "#000")
             markers.splice(index, 1);
             $.each(markers, function (i, elemento) {
                 if (i == markers.length - 1) {
@@ -801,7 +803,18 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         }
     }
 
+    limpiarAllInfoWindows = function () {
+        $.each(infowindows, function (index, elemento) {
+            elemento.close();
+        });
+    }
+
     $scope.pintarUbicacion = function (incidenciaUb) {
+        if (infowindows) {
+            limpiarAllInfoWindows();
+        }
+
+
         $('#incidencia_' + incidenciaUb.idIncidencia).css('background', '#d3d3d3');
         var myLatlng = new google.maps.LatLng(incidenciaUb.latitud, incidenciaUb.longitud);
         var contentMarker =
@@ -818,7 +831,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
             '       <br><br><button onclick="consultarDetalleIncidenciaMap(' + incidenciaUb.idIncidencia + ')" class="btn-block btn btn-sm btn-outline-primary">Detalle</button>' +
             '   </div>' +
             '</div>';
-        var infowindows = new google.maps.InfoWindow({
+        var infowindow = new google.maps.InfoWindow({
             content: contentMarker
         });
         mapInspector.setCenter(new google.maps.LatLng(incidenciaUb.latitud, incidenciaUb.longitud));
@@ -836,13 +849,14 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                 fillOpacity: 1,
                 strokeWeight: 0.4
             },
-            infowindow: infowindows,
+            infowindow: infowindow,
         });
         marker.addListener('click', function () {
-            infowindows.open(mapInspector, marker);
+            infowindow.open(mapInspector, marker);
         });
         markers.push(marker);
-        infowindows.open(mapInspector, marker);
+        infowindow.open(mapInspector, marker);
+        infowindows.push(infowindow);
     }
 
     $scope.validarFecha = function (idFechaInicio, idFechaFin) {
@@ -1122,7 +1136,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
             */
             let fallasSelected = []
             fallasSelected = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosInspector.fallas, $scope.nfiltrofallas);
- 
+
 
             if (fallasSelected.length === 0) {
                 mensajeError += '<li>Selecciona al menos una falla</li>';
@@ -1155,7 +1169,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                     "fechaFin": $scope.getFechaFormato(document.getElementById('filtro_fecha_fin_inspectorincidencia').value)
                 };
                 $scope.incidencias = [];
-                $scope.incidenciasTemp  = [];
+                $scope.incidenciasTemp = [];
                 // console.log(params)
                 inspectorIncidenciaService.consultarIncidenciasInspectorPE(params).then(function success(response) {
                     console.log(response);
@@ -1166,7 +1180,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                                     $("#content_mapa").css("display", "block");
                                     $scope.incidencias = response.data.result.detalleIncidencias;
                                     $scope.incidenciasTemp = response.data.result.detalleIncidencias;
-                    
+
                                     swal.close();
                                 } else {
                                     mostrarMensajeInformativo("No se encontraron Incidencias");
@@ -1191,7 +1205,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         }
     }
 
-   
+
     $scope.usuarioFoto = {};
     $scope.showImage = function (id) {
         let insp = $scope.incidencias.find((e) => e.idIncidencia == id);

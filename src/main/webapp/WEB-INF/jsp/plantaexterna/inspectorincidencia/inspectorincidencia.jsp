@@ -162,12 +162,12 @@
                         <div style="padding-left: 1.5em; height: 2.5em; line-height: 2.5em;"
                             class="col-12 visualizar-visible">
                             <div class="contenido_color" id="color_selected_0" ng-click="filterBy('0')">
-                                <i class="fa-xs fa fa-circle" style="color: #000;"
-                                    aria-hidden="true"></i>
+                                <i class="fa-xs fa fa-circle" style="color: #000;" aria-hidden="true"></i>
                                 <small>Todos</small>
                             </div>
-                            <div class="contenido_color" id="color_selected_{{color.id}}" ng-click="filterBy(color.id)" ng-repeat="color in listCatEstatus">
-                                <i class="fa-xs fa fa-circle" style="{{'color:'+ color.hexaColor}}" 
+                            <div class="contenido_color" id="color_selected_{{color.id}}" ng-click="filterBy(color.id)"
+                                ng-repeat="color in listCatEstatus">
+                                <i class="fa-xs fa fa-circle" style="{{'color:'+ color.hexaColor}}"
                                     aria-hidden="true"></i>
                                 <small ng-bind="color.descripcion"></small>
                             </div>
@@ -187,10 +187,10 @@
                             </div>
                         </div>
 
-                        <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" 
+                        <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse"
                             aria-labelledby="panelsStayOpen-headingTwo">
                             <div class="card-body-consulta">
-                                <div class="content-incidencia"  id="content_mapa" style="display: none;">
+                                <div class="content-incidencia" id="content_mapa" style="display: none;">
                                     <div class="incidencia-card"
                                         ng-repeat="incidencia in incidencias  | filter:filtroBusqueda">
                                         <div class="row">
@@ -214,7 +214,7 @@
                                                 </div>
                                                 <div class="icon-content" style="border-color: #ccc;"
                                                     ng-click="pintarUbicacionIncidencia(incidencia.idIncidencia)">
-                                                    <i class="fas fa-crosshairs" title="Buscar en mapa"
+                                                    <i class="fas fa-crosshairs" title="Buscar en mapa" id="icon-cross-{{incidencia.idIncidencia}}"
                                                         style="color: #000;"></i>
                                                 </div>
 
@@ -225,10 +225,7 @@
                                                 <div class="rb-container">
                                                     <ul class="rb">
                                                         <li class="rb-item">
-                                                            <div class="item-title"><strong>ID: <span
-                                                                        ng-bind="incidencia.idIncidencia"></span></strong>
-                                                            </div>
-                                                            <div class="item-title"><span style="font-weight: bolder; color: {{incidencia.colorEstatus}};"
+                                                            <div class="item-title"><span
                                                                     ng-bind="incidencia.descEstatus"></span>
                                                             </div>
                                                         </li>
@@ -249,29 +246,36 @@
                                                     </ul>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <hr style="margin: 0.2em 1em;">
-                                    </div>
-                                    <div ng-if="!incidencias.length" class="message-nodata">
-                                        <span>Ning&uacute;n dato disponible</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-7" ng-show="false">
-                        <div class="row" id="colores_estados">
-                            <div class="col-12">
-                                <div class="contenido_color" ng-repeat="color in filtrosInspector.coloresStatus">
-                                    <i class="fa-sm fa fa-circle" style="{{'color:'+ color.id}}" aria-hidden="true"></i>
-                                    <small ng-bind="color.descripcion"></small>
-                                </div>
-                            </div>
-                        </div>
+                                            <div class="content-badge-status">
+                                                <span class="badge badge-status" style="background-color: {{incidencia.colorEstatus}} !important">ID:
+                                                    <span 
+                                                        ng-bind="incidencia.idIncidencia"></span>
+                                                </span>
 
+                                            </div>
+                                            <hr style="margin: 0.2em 1em;">
+                                        </div>
+                                        <div ng-if="!incidencias.length" class="message-nodata">
+                                            <span>Ning&uacute;n dato disponible</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-7" ng-show="false">
+                            <div class="row" id="colores_estados">
+                                <div class="col-12">
+                                    <div class="contenido_color" ng-repeat="color in filtrosInspector.coloresStatus">
+                                        <i class="fa-sm fa fa-circle" style="{{'color:'+ color.id}}"
+                                            aria-hidden="true"></i>
+                                        <small ng-bind="color.descripcion"></small>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
-                </div>
-                <!--div class="col-7" ng-show="false">
+                    <!--div class="col-7" ng-show="false">
                         <div class="row" id="colores_estados">
                             <div class="col-12">
                                 <div class="contenido_color" ng-repeat="color in filtrosInspector.coloresStatus">
@@ -283,12 +287,12 @@
                         <div id="mapaInspectorIncidencia">
                         </div>
                     </div-->
+                </div>
             </div>
-        </div>
 
-        <jsp:include page="modals/modalFoto.jsp"></jsp:include>
-        <jsp:include page="modals/modalCluster.jsp"></jsp:include>
-        <jsp:include page="modals/modalDetalleIncidencia.jsp"></jsp:include>
+            <jsp:include page="modals/modalFoto.jsp"></jsp:include>
+            <jsp:include page="modals/modalCluster.jsp"></jsp:include>
+            <jsp:include page="modals/modalDetalleIncidencia.jsp"></jsp:include>
 
     </body>
     <jsp:include page="filtros.jsp"></jsp:include>
