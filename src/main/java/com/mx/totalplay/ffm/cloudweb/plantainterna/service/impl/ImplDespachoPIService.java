@@ -603,7 +603,9 @@ public class ImplDespachoPIService implements DespachoPIService {
             		for (int i = 0; i < numero.length()-3; i++) { 
             			nuevoNumero = nuevoNumero+"*"; 
       		        }
-            		nuevoNumero = nuevoNumero + numero.charAt(numero.length()-3) + numero.charAt(numero.length()-2) + numero.charAt(numero.length()-1);
+            		if(numero.length() >3) {
+                		nuevoNumero = nuevoNumero + numero.charAt(numero.length()-3) + numero.charAt(numero.length()-2) + numero.charAt(numero.length()-1);
+            		}
             		otObject.addProperty("telefono", nuevoNumero);
         		}
         		nuevaOts.add(otObject);
