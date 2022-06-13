@@ -154,10 +154,8 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
     	$scope.initCalendario();
     	
     	if($scope.listTecnicos.length < 1){
-        	
             swal({ text: 'Cargando datos ...', allowOutsideClick: false });
             swal.showLoading();
-            
             $q.all([
             	gestionTecnicosService.consultaTecnicosPorDespacho(),
             	gestionTecnicosService.consultaMotivosJustificaciones()
@@ -198,8 +196,14 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
             	}else{
             		mostrarMensajeWarningValidacion("Error interno en el servidor.");
             	}
-            	
             	swal.close();
+            	
+            	if($scope.listTecnicos.length > 0){
+            		setTimeout(function () {
+                		$("#"+$scope.listTecnicos[0].idTecnico).trigger('click');
+    	    		}, 500);
+            	}
+            	
             });
     	}
     }
