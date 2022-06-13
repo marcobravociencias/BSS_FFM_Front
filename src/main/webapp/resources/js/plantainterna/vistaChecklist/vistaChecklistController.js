@@ -204,21 +204,21 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
             if (results[3].data !== undefined) {
                 if (results[3].data.respuesta) {
                     if (results[3].data.result) {
+
                         $scope.respaldoArrayEstatus = results[3].data.result
                         $scope.nFiltroEstatus = $scope.nFiltroEstatus ? $scope.nFiltroEstatus : $scope.obtenerNivelUltimoJerarquia(results[3].data.result);
-                        console.log($scope.nfiltroestatusDisponbiles);
+                        $scope.arrayEstatus = $scope.conversionAnidadaRecursiva(results[3].data.result, 1, $scope.nFiltroEstatus)
+
                         if ($scope.nfiltroestatusDisponbiles != undefined && $scope.nfiltroestatusDisponbiles) {
                             let tempSlice = $scope.nfiltroestatusDisponbiles.split(",").map(e => parseInt(e));
                             let tempArray = []
                             angular.forEach(tempSlice, function (elm, index) {
-                                let elemEstatus = angular.copy(results[3].data.result.find(e => e.id == elm))
+                                let elemEstatus = angular.copy($scope.arrayEstatus.find(e => e.id == elm))
                                 if (!elemEstatus != undefined)
                                     tempArray.push(elemEstatus)
                             });
-                        } else {
-                            $scope.arrayEstatus = $scope.conversionAnidadaRecursiva(results[3].data.result, 1, $scope.nFiltroEstatus)
-                            console.log($scope.arrayEstatus);
-                        }
+                            $scope.arrayEstatus = tempArray;
+                        } 
                         $scope.pintarNombreEstatus($scope.arrayEstatus, '#filtro-estatus-substatus');
 
                     } else {
