@@ -1,10 +1,14 @@
 var app = angular.module('inspectorIncidenciaApp', []);
 var incidenciaTable = undefined;
 var tableDetalleStatus = undefined;
+
 app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncidenciaService', 'genericService', function ($scope, $q, inspectorIncidenciaService, genericService) {
     var infowindows = [];
     var regexUrl = /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/;
-
+    
+    var objectTempAccion = new GenericAccionRealizada('moduloInspectorIncidenciasPE', 'TOP_RIGHT');
+    objectTempAccion.inicializarBotonAccionesRecientes();
+    
     $scope.filtrosInspector = {};
     $scope.incidencias = [];
     $scope.incidenciasTemp = [];
@@ -1059,24 +1063,31 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                 // console.log(params);
                 inspectorIncidenciaService.generarOTIncidenciaInspectorPE(params).then(function success(response) {
                     console.log(response);
+                    let tituloAccion = "Generaci&oacute;n de OT";
+                    let mensajeEnvio = 'Ha ocurrido un error al generar la OT con la incidencia: ' + $scope.incidenciaDetalle.idIncidencia;
                     if (response.data) {
                         if (response.data.respuesta) {
                             if (response.data.result) {
                                 $('#modalDetalleIncidencia').modal('toggle');
                                 $scope.consultarIncidenciasInspector();
                                 swal.close();
-                                mostrarMensajeExitoAlert("OT generada con &eacute;xito");
+                                mensajeEnvio = response.data.result.mensaje;
+                                objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
+                                mostrarMensajeExitoAlert(mensajeEnvio);
                             } else {
                                 mostrarMensajeWarningValidacion(response.data.resultDescripcion);
                                 swal.close();
+                                objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                             }
                         } else {
                             mostrarMensajeWarningValidacion(response.data.resultDescripcion);
                             swal.close();
+                            objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                         }
                     } else {
                         mostrarMensajeWarningValidacion(response.data.resultDescripcion);
                         swal.close();
+                        objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                     }
                 });
             }
