@@ -1442,4 +1442,303 @@ span.content-titlehistorico.ng-binding {
     /* color: red; */
 }
 /* HISTORICO DETALLE OT */
+
+/* DISPOSITIVOS DETALLE OT */
+.container-tabla-dispositivo-detalle-ot {
+    margin-top: 20px;
+    /*  box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%),
+      0 1px 5px 0 rgb(0 0 0 / 20%); */
+    max-width: 1115px;
+    border-radius: 0.5em;
+    padding: 0px !important;
+  }
+/* DISPOSITIVOS DETALLE OT */
+
+/* SOPORTE DETALLE OT */
+
+.warning-nodata {
+    color: orange;
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%),
+        0 1px 5px 0 rgb(0 0 0 / 20%);
+    border-radius: 25px;
+    font-size: 20px !important;
+}
+
+.rowTabs {
+    margin: 0 !important;
+    padding-left: 0.1em !important;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: hidden !important;
+}
+
+.tabHeader {
+    display: flex;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    overflow-x: hidden;
+    padding-bottom: 1px;
+}
+
+.buttonLeftArrow {
+    width: 3%;
+    height: 2em;
+    padding: 0.1em;
+}
+
+.buttonRightArrow {
+    width: 5%;
+    height: 2em;
+    padding: 0.1em;
+}
+
+#myTabSoporteDetalle .nav-item:first-child .nav-link {
+    border-top-left-radius: 1em;
+    border-bottom-left-radius: 1em;
+}
+
+#myTabSoporteDetalle .nav-link.active {
+    color: var(--estandar-color) !important;
+    font-weight: bolder;
+    background: #f9f9f9;
+}
+
+#myTabSoporteDetalle .nav-link {
+    padding-top: 0.6em;
+    padding-bottom: 0.6em;
+    border: solid 1px #ccc;
+}
+
+#myTabSoporteDetalle .nav-item:last-child .nav-link {
+    border-top-right-radius: 1em;
+    border-bottom-right-radius: 1em;
+}
+
+#myTabSoporteDetalle .nav-link {
+    padding-top: 0.6em;
+    padding-bottom: 0.6em;
+    border: solid 1px #ccc;
+}
+
+#headerT {
+    display: none;
+}
+
+.custom-slider-main {
+    margin: 0 auto;
+    display: flex;
+}
+/* SOPORTE DETALLE OT */
+
+/* MATERIALES DETALLE OT */
+.divider-materiales-centroalmacen {
+    border-bottom: 0.2em solid #f0f0f0;
+    width: 100%;
+    margin: 0em 40% 0 0;
+}
+
+img.img-tecnico-materiales {
+    /* cursor: pointer; */
+    border-radius: 50%;
+    -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+    max-height: 12em;
+    height: 12em;
+    width: 12em;
+    min-width: 12em;
+    object-fit: cover;
+}
+/* MATERIALES DETALLE OT */
+
+/* PAGOS DETALLE OT */
+.icono-pago-liberado {
+    text-align: center;
+    color: #51b37d;
+    font-size: 1.5em;
+}
+
+.icono-pago-pendiente {
+    text-align: center;
+    color: #fdc149;
+    font-size: .79em;
+    border: .25em solid #fdc149;
+    width: 1.9em;
+    height: 1.9em;
+    border-radius: 50%;
+    line-height: 1.5em !important;
+}
+
+.estatus-container-pagos,
+.estatus-container-pagos-pendiente {
+    position: absolute;
+    margin-left: -0.9em;
+}
+
+.estatus-container-pagos-pendiente i {
+    font-size: 10px;
+    width: 2.1em;
+    border: 2px solid #fdc149;
+    border-radius: 50%;
+    height: 2.1em;
+    line-height: 1.8em;
+    text-align: center;
+    color: #fdc149;
+}
+
+.estatus-container-pagos i {
+    font-size: 10px;
+    width: 2.1em;
+    border: 2px solid #51b37d;
+    border-radius: 50%;
+    height: 2.1em;
+    line-height: 1.8em;
+    text-align: center;
+    color: #51b37d;
+}
+
+.sin-pagos-pendientes {
+    color: #51b37d;
+    font-size: 0.9em;
+}
+
+.con-pagos-pendientes {
+    color: #fdc149;
+    font-size: 0.9em;
+}
+/* PAGOS DETALLE OT */
+
+/* DISPOSITIVOS DETALLE OT */
+.option-mas-dispositivo {
+    cursor: pointer;
+}
+
+.icono-dispositivo-detalle-ot {
+    color: #aeaeae;
+    font-size: 1.5em;
+}
+
+.icon-color-table-dispositivo-ot {
+    color: #b1b1b1 !important;
+}
+
+#thead_dispositivo_consulta_ot_nivel2 tr th {
+    font-size: 0.6em !important;
+    text-align: center;
+    border: 1px #ccc;
+    color: #39455b;
+    font-weight: bold;
+}
+
+#table_dispositovos_ot_nivel2 tr td {
+    font-size: 0.6em !important;
+    font-family: "Montserrat" !important;
+    text-align: center;
+    border: 1px #ccc;
+    background-color: #ffffff !important;
+}
+/* DISPOSITIVOS DETALLE OT */
+
+/* RECOLECCION DETALLE OT */
+img.img-recoleccion {
+    /* cursor: pointer; */
+    border-radius: 50%;
+    -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+    max-height: 12em;
+    height: 12em;
+    width: 12em;
+    min-width: 12em;
+    object-fit: cover;
+}
+
+/* RECOLECCION DETALLE OT */
+
+#tableRecoleccionDetalleOT tbody tr:nth-child(even),
+#tableDispositivosDetalleOT tbody tr:nth-child(even),
+#tablePagosDetalleOT tbody tr:nth-child(even),
+#tableMaterialesDetalleOT tbody tr:nth-child(even) {
+    background: #f5f5f5;
+}
+
+#tableRecoleccionDetalleOT>tbody>tr>td,
+#tableDispositivosDetalleOT>tbody>tr>td,
+#tablePagosDetalleOT>tbody>tr>td,
+#tableMaterialesDetalleOT>tbody>tr>td {
+    /* white-space: nowrap; */
+    color: #39455b;
+    font-family: 'Montserrat';
+    font-size: .8em;
+    border-top: 0px solid #eceeef !important;
+}
+
+#tableRecoleccionDetalleOT thead th,
+#tableDispositivosDetalleOT thead th,
+#tablePagosDetalleOT thead th,
+#tableMaterialesDetalleOT thead th {
+    position: relative;
+    background-color: #b1b1b1;
+    color: #fff;
+    font-size: 0.8em;
+    white-space: nowrap;
+    padding: 1em;
+    border: none;
+    font-weight: normal;
+}
+
+#tableRecoleccionDetalleOT tbody tr td,
+#tableDispositivosDetalleOT tbody tr td,
+#tablePagosDetalleOT tbody tr td,
+#tableMaterialesDetalleOT tbody tr td {
+    padding: 1em;
+    border: none;
+}
+
+#tableRecoleccionDetalleOT .page-link,
+#tableDispositivosDetalleOT .page-link,
+#tablePagosDetalleOT .page-link,
+#tableMaterialesDetalleOT .page-link {
+    font-size: 0.7em !important;
+    font-family: "Montserrat" !important;
+}
+
+#tableRecoleccionDetalleOT .dataTables_info,
+#tableDispositivosDetalleOT .dataTables_info,
+#tablePagosDetalleOT .dataTables_info,
+#tableMaterialesDetalleOT .dataTables_info {
+    font-size: 0.7em;
+    font-family: "Montserrat" !important;
+    text-align: left;
+    padding-left: 0.5em;
+}
+
+#tableRecoleccionDetalleOT .dataTables_paginate.paging_simple_numbers,
+#tableDispositivosDetalleOT .dataTables_paginate.paging_simple_numbers,
+#tablePagosDetalleOT .dataTables_paginate.paging_simple_numbers,
+#tableMaterialesDetalleOT .dataTables_paginate.paging_simple_numbers {
+    float: right;
+}
+
+#tableRecoleccionDetalleOT .dataTables_filter,
+#tableDispositivosDetalleOT .dataTables_filter,
+#tablePagosDetalleOT .dataTables_filter,
+#tableMaterialesDetalleOT .dataTables_filter {
+    font-size: 0.7em !important;
+    font-family: 'Montserrat';
+}
+
+#tableRecoleccionDetalleOT div.dataTables_wrapper div.dataTables_filter input,
+#tableDispositivosDetalleOT div.dataTables_wrapper div.dataTables_filter input,
+#tablePagosDetalleOT div.dataTables_wrapper div.dataTables_filter input,
+#tableMaterialesDetalleOT div.dataTables_wrapper div.dataTables_filter input {
+    width: 11.3em !important;
+    height: 2.05em !important;
+    margin-right: 1em !important;
+}
+
+#tableRecoleccionDetalleOT .table.dataTable,
+#tableDispositivosDetalleOT .table.dataTable,
+#tablePagosDetalleOT .table.dataTable,
+#tableMaterialesDetalleOT .table.dataTable {
+    border-collapse: collapse !important;
+}
 /* MODAL DETALLE OT */

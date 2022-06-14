@@ -73,6 +73,75 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     $scope.agregarNuevoEquipoContent = false;
     $scope.listadoNuevoViejosEquipo = [];
     $scope.isEvaluarNuevoEquipo = false
+
+    // MODAL DETALLE OT
+    $scope.listEvidenciaImagenes = {};
+    $scope.infoOtDetalle = {};
+    $scope.movimientos = [];
+    $scope.detalleSoporteList = [];
+    $scope.detallePagoObj = {};
+    $scope.isDispositivosDetalleOT = false;
+    $scope.listDispositivosDetalle = [];
+    $scope.isTecnicoConsultaMateriales = false;
+    $scope.tecnicoConsultaMateriales = {};
+    $scope.listaMaterialesDetalleOT = [];
+    $scope.equiposTecnicoRecoleccion = [];
+    $scope.tecnicoConsultaRecoleccion = {};
+    $scope.isTecnicoConsultaRecoleccion = false;
+    let is_consulta_detalle_materiales = false;
+    let is_consulta_detalle_soporte = false;
+    let is_consulta_info_ot = false;
+    let is_consulta_historico = false;
+    let is_consulta_detalle_pagos = false;
+    let is_consulta_detalle_dispositivos = false;
+    let is_consulta_detalle_recoleccion = false;
+
+    let tableRecoleccionDetalleOT = $('#tableRecoleccionDetalleOT').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": true,
+        "ordering": false,
+        "pageLength": 10,
+        "info": true,
+        "autoWidth": true,
+        "language": idioma_espanol_not_font
+    });
+
+    let tablePagosDetalleOT = $('#tablePagosDetalleOT').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": true,
+        "ordering": false,
+        "pageLength": 10,
+        "info": true,
+        "autoWidth": true,
+        "language": idioma_espanol_not_font
+    });
+
+    let tableDispositivosDetalleOT = $('#tableDispositivosDetalleOT').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": true,
+        "ordering": false,
+        "pageLength": 10,
+        "info": true,
+        "autoWidth": true,
+        "language": idioma_espanol_not_font
+    });
+
+    let tableMaterialesDetalleOT = $('#tableMaterialesDetalleOT').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": true,
+        "ordering": false,
+        "pageLength": 10,
+        "info": true,
+        "autoWidth": true,
+        "language": idioma_espanol_not_font
+    });
+
+    // MODAL DETALLE OT
+
     $scope.agregarRegistroCambioEquipo = function () {
 
         let isError = false
@@ -1912,8 +1981,6 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         }).catch(err => handleError(err));
     }
 
-    $scope.infoOtDetalle = {};
-    let is_consulta_info_ot = false;
     $scope.consultaDetalleOT = function (idOrden) {
         $scope.infoOtDetalle = {};
         let params = {
@@ -1923,22 +1990,33 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         swal.showLoading();
         gestionTicketSoporteService.consultaDetalleOT(params).then(function success(response) {
             console.log(response);
-            if (response.data !== undefined) {
+            if (response.data) {
                 if (response.data.respuesta) {
                     if (response.data.result.orden) {
-                        $scope.infoOtDetalle = angular.copy(response.data.result.orden);                        
-						is_consulta_info_ot = true;
+                        $scope.infoOtDetalle = angular.copy(response.data.result.orden);
+                        $scope.permisosModalDetalleOT = $scope.elementosConfigGeneral.get("MODAL_CO_FLUJO_" + $scope.infoOtDetalle.idFlujo).split(",");
+                        console.log($scope.permisosModalDetalleOT);
+                        is_consulta_info_ot = true;
                         $('#modal-detalleOT').modal('show');
                         swal.close();
+                    } else {
+                        swal.close();
+                        mostrarMensajeWarningValidacion('No se encontr&oacute; informaci&oacute;n');
                     }
+                } else {
+                    swal.close();
+                    mostrarMensajeWarningValidacion('No se encontr&oacute; informaci&oacute;n');
                 }
+            } else {
+                swal.close();
+                mostrarMensajeErrorAlert(response.data.resultDescripcion);
             }
         });
     }
 
-    let is_consulta_historico = false;
     $scope.consultaHistoricoDetalleOt = function () {
         if (!is_consulta_historico) {
+            $scope.movimientos = [];
             let params = {
                 idOt: $scope.infoOtDetalle.idOrden
             }
@@ -1946,9 +2024,9 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             swal.showLoading();
             genericService.consultarHistoricoDespachoOT(params).then(function (result) {
                 console.log(result);
-                if (result.data !== undefined) {
+                if (result.data) {
                     if (result.data.respuesta) {
-                        if (result.data.result !== undefined) {
+                        if (result.data.result) {
                             jsonm = result.data;
                             if (result.data.result.detalle != undefined && result.data.result.detalle.length > 0) {
                                 $scope.movimientos = angular.copy(result.data.result.detalle);
@@ -1956,11 +2034,11 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                                 swal.close();
                             } else {
                                 swal.close();
-                                mostrarMensajeErrorAlert(response.data.result.resultDescription)
+                                mostrarMensajeWarningValidacion("No se encontr&oacute; informaci&oacute;n");
                             }
                         } else {
                             swal.close();
-                            mostrarMensajeErrorAlert(response.data.result.resultDescription)
+                            mostrarMensajeWarningValidacion("No se encontr&oacute; informaci&oacute;n");
                         }
                     } else {
                         swal.close();
@@ -1968,7 +2046,501 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                     }
                 } else {
                     swal.close();
-                    mostrarMensajeErrorAlert("Error del servidor");
+                    mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                }
+            }).catch(err => handleError(err));
+        }
+    }
+
+    desplazarDerechaTabs = function () {
+		$('#myTabSoporteDetalle').animate({ scrollLeft: '+=100' }, 150);
+	}
+
+	desplazarIzquierdaTabs = function () {
+		$('#myTabSoporteDetalle').animate({ scrollLeft: '-=100' }, 150);
+	}
+
+    $scope.consultarPostVentaDetalleOt = function () {
+        if (!is_consulta_detalle_soporte) {
+			$scope.detalleSoporteList = [];
+			let params = {
+				orden: $scope.infoOtDetalle.idOrden
+			}
+			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
+			swal.showLoading();
+			gestionTicketSoporteService.consultaDetallePostVentaOt(params).then((result) => {
+				console.log(result)
+				isConsultaDetalleSoporte = true
+				if (result.data.respuesta) {
+					if (result.data.result.length) {
+						$scope.detalleSoporteList = angular.copy(result.data.result);
+
+						setTimeout(() => {
+							if ($scope.detalleSoporteList.length > 7) {
+								$("#left-arrow").css('display', 'block');
+								$("#right-arrow").css('display', 'block');
+								$("#containerTabsSoporte").removeClass('row');
+								$("#containerTabsSoporte").css('width', '94%');
+							} else {
+								$("#left-arrow").hide();
+								$("#right-arrow").hide();
+								$('#containerTabsSoporte').addClass('row');
+								$("#containerTabsSoporte").css('width', '100%');
+							}
+							$scope.detalleSoporteList.forEach((elemento, ind) => {
+								let html_tmp = "";
+								if (elemento.detalleCambioEquipo) {
+									elemento.detalleCambioEquipo.forEach((detalle, index) => {
+										if (detalle.evidencias && detalle.evidencias.length) {
+											contenido_imagenes = retornarFormatoSliders(detalle.evidencias, index);
+										} else {
+											contenido_imagenes =
+												'<h4 id="texto_not_arboles" style="color:#abafae; text-align:center">' +
+												'	SIN IMAGENES PARA ESTA FALLA' +
+												'</h4>';
+										}
+										html_tmp += '' +
+											'<tr>' +
+											'	<td>' +
+											'		<div class="row">' +
+											'			<div class="col-md-6 colInformacionTabla">' +
+											'				<div class="row textFallaOT">' +
+											'					<div class="col-md-5">' +
+											'						<b  class="title_span_1"> Tipo equipo:</b>' +
+											'		        	</div>				               ' +
+											'		        	<div class="col-md-7">' +
+											'		        		<span id="ot_fallas"  class="content_text" >' + detalle.descTipoEquipo + '</span>' +
+											'		        	</div>' +
+											'				</div>' +
+											'				<div class="row textFallaOT">' +
+											'					<div class="col-md-5">' +
+											'						<b  class="title_span_1"> Modelo anterior:</b>' +
+											'		        	</div>				               ' +
+											'		        	<div class="col-md-7">' +
+											'		        		<span id="tipo_falla_corte"  class="content_text" > ' + detalle.descModeloViejo + ' </span>' +
+											'		        	</div>' +
+											'				</div>' +
+											'				<div class="row textFallaOT">' +
+											'					<div class="col-md-5">' +
+											'						<b  class="title_span_1"> Modelo nuevo:</b>	 ' +
+											'		        	</div>				               ' +
+											'		        	<div class="col-md-7">' +
+											'		        		<span id="tecnico_falla"  class="content_text" > ' + detalle.descModeloNuevo + ' </span>' +
+											'		        	</div>' +
+											'				</div>' +
+											'				<div class="row textFallaOT">' +
+											'					<div class="col-md-5">' +
+											'						<b  class="title_span_1"> N&uacute;m. serie equipo anterior:</b>' +
+											'		        	</div>				               ' +
+											'		        	<div class="col-md-7">' +
+											'		        		<span id="status_falla_corte"  class="content_text" > ' + detalle.numSerieModeloViejo + ' </span>' +
+											'		        	</div>' +
+											'				</div>' +
+											'				<div class="row">' +
+											'					<div class="col-md-5">' +
+											'						<b  class="title_span_1">N&uacute;mero serie equipo nuevo:</b>' +
+											'		        	</div>				               ' +
+											'		        	<div class="col-md-7">' +
+											'		        		<span id="comentarios_falla"  class="content_text" > ' + detalle.numSerieModeloNuevo + ' </span>' +
+											'		        	</div>' +
+											'				</div>' +
+											'			</div>' +
+											'			<div class="col-md-6">' +
+											'					<div class="class-12">' +
+											contenido_imagenes +
+											'					</div>' +
+											'			</div>' +
+											'		</div>' +
+											'	</tr>' +
+											'</td>';
+									})
+								}
+								$('#tablaOTDetalle' + ind + ' tbody').empty().append(html_tmp);
+								$('#tablaOTDetalle' + ind).DataTable({
+									"processing": false,
+									"ordering": false,
+									"pageLength": 1,
+									"pagingType": "numbers",
+									"info": false,
+									"bInfo": false,
+									"bFilter": false,
+									"bAutoWidth": false,
+									"language": idioma_espanol_not_font,
+									"columns": [null],
+									"lengthChange": false,
+									"fnDrawCallback": function (oSettings) {
+										$(".carousel-item").click();
+									}
+								});
+							})
+							swal.close();
+						}, 1000);
+					} else {
+						swal.close();
+						mostrarMensajeWarningValidacion('No se encontr&oacute; informaci&oacute;n');
+					}
+				} else {
+					swal.close();
+					mostrarMensajeErrorAlert(result.data.resultDescripcion)
+				}
+			}).catch(err => handleError(err));
+		}
+    }
+
+    $scope.consultaPagosDetalleOt = function () {
+        if (!is_consulta_detalle_pagos) {
+            $scope.detallePagoObj = {};
+            let params = {
+                orden: $scope.infoOtDetalle.idOrden
+            }
+            $scope.detallePagoObj.isPagosPendientes = false;
+            swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
+            swal.showLoading();
+            gestionTicketSoporteService.consultaDetallePagosOT(params).then((result) => {
+                swal.close()
+                is_consulta_detalle_pagos = true;
+                if (result.data.respuesta) {
+                    if (result.data.result) {
+                        if (result.data.result.detallePago.length) {
+                            $scope.detallePagoObj = angular.copy(result.data.result.detallePago);
+                            let estatusIconEstatus = '';
+
+                            let arrayRow = [];
+                            if (tablePagosDetalleOT) {
+                                tablePagosDetalleOT.destroy();
+                            }
+                            $.each($scope.detallePagoObj, function (i, elemento) {
+                                if (elemento.idEstatusPago == 2) {
+                                    $scope.detallePagoObj.isPagosPendientes = true;
+                                    estatusIconEstatus = ` <i class="fas fa-exclamation icono-pago-pendiente"></i> `
+                                } else {
+                                    estatusIconEstatus = ` <i class="far fa-check-circle icono-pago-liberado"></i> `
+                                }
+                                let row = [];
+                                row[0] = elemento.idCveCliente ? elemento.idCveCliente : '';
+                                row[1] = elemento.idOrden ? elemento.idOrden : '';
+                                row[2] = elemento.folioSistema ? elemento.folioSistema : '';
+                                row[3] = elemento.fechaRegistro ? elemento.fechaRegistro : '';
+                                row[4] = elemento.fechaCierreOT ? elemento.fechaCierreOT : '';
+                                row[5] = elemento.tipoIntervencion ? elemento.tipoIntervencion : '';
+                                row[6] = elemento.subTipoIntervencion ? elemento.subTipoIntervencion : '';
+                                row[7] = elemento.tiempo ? elemento.tiempo : '';
+                                row[8] = elemento.tipoPago ? elemento.tipoPago : '';
+                                row[9] = elemento.monto ? Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(elemento.monto) : '$ 0.00';
+                                row[10] = '<div class="text-center">' +
+                                    estatusIconEstatus +
+                                    '</div>';
+                                arrayRow.push(row);
+                            })
+
+                            tablePagosDetalleOT = $('#tablePagosDetalleOT').DataTable({
+                                "paging": true,
+                                "lengthChange": false,
+                                "ordering": false,
+                                "pageLength": 10,
+                                "info": true,
+                                "data": arrayRow,
+                                "autoWidth": true,
+                                "language": idioma_espanol_not_font,
+                            });
+                        } else {
+                            mostrarMensajeWarningValidacion('No se encontr&oacute; informaci&oacute;n');
+                        }
+                    } else {
+                        mostrarMensajeWarningValidacion('No se encontr&oacute; informaci&oacute;n');
+                    }
+                } else {
+                    mostrarMensajeErrorAlert(result.data.resultDescripcion)
+                }
+            }).catch(err => handleError(err));
+        }
+    }
+    
+    $scope.consultarDispositivosDetalleOt = function () {
+        if (!is_consulta_detalle_dispositivos) {
+            $scope.listDispositivosDetalle = [];
+            let params = {
+				orden: $scope.infoOtDetalle.idOrden
+			}
+			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
+			swal.showLoading();
+			gestionTicketSoporteService.consultaDetalleDispositivosOT(params).then((result) => {
+				swal.close()
+				console.log(result)
+				is_consulta_detalle_dispositivos = true
+				if (result.data) {
+					if (result.data.respuesta) {
+                        if (result.data.result) {
+                            if (result.data.result.dispositivos.length) {
+                                $scope.isDispositivosDetalleOT = true;
+                                $scope.listDispositivosDetalle = angular.copy(result.data.result.dispositivos);
+                                if (tableDispositivosDetalleOT) {
+                                    tableDispositivosDetalleOT.destroy();
+                                }
+                                let arrayRow = [];
+                                $scope.listDispositivosDetalle.forEach((dispositivo, index) => {
+                                    let array = [];
+                                    array[0] = '<a id="mostrar-segundo-nivel-' + index + '" class="option-mas-dispositivo segundo-nivel-table-dispositivo" tag-position="' + index + '" tag-hide="false"><i id="icono-dispositivo-' + index + '" class="icono-dispositivo-detalle-ot icon-color-table-dispositivo-ot fa fa-plus" aria-hidden="true"></i></a>';
+                                    array[1] = dispositivo.nombreDispositivo ? dispositivo.nombreDispositivo : 'Sin Informaci&oacute;n';
+                                    array[2] = dispositivo.modelo ? dispositivo.modelo : 'Sin Informaci&oacute;n';
+                                    array[3] = dispositivo.serie ? dispositivo.serie : 'Sin Informaci&oacute;n';
+                                    array[4] = dispositivo.mac ? dispositivo.mac : 'Sin Informaci&oacute;n';
+                                    arrayRow.push(array)
+                                })
+                                tableDispositivosDetalleOT = $('#tableDispositivosDetalleOT').DataTable({
+                                    "paging": true,
+                                    "lengthChange": false,
+                                    "searching": false,
+                                    "ordering": false,
+                                    "pageLength": 10,
+                                    "info": true,
+                                    "autoWidth": true,
+                                    "language": idioma_espanol_not_font,
+                                    "data": arrayRow
+                                });
+                            } else {
+                                $scope.isDispositivosDetalleOT = false;
+                                mostrarMensajeWarningValidacion('No se encontr&oacute; informaci&oacute;n');
+                            }
+                        } else {
+                            $scope.isDispositivosDetalleOT = false;
+                            mostrarMensajeWarningValidacion('No se encontr&oacute; informaci&oacute;n');
+                        }
+					} else {
+                        $scope.isDispositivosDetalleOT = false;
+						mostrarMensajeWarningValidacion(result.data.resultDescripcion);
+					}
+                    is_consulta_detalle_dispositivos = true;
+				} else {
+					$scope.isDispositivosDetalleOT = false;
+					mostrarMensajeErrorAlert(result.data.resultDescripcion);
+				}
+			}).catch(err => handleError(err));
+		}
+    }
+
+    $(document.body).on("click", ".segundo-nivel-table-dispositivo", function () {
+		let tr = $(this).closest('tr')
+		row = tableDispositivosDetalleOT.row(tr)
+		let index = Number($(this).attr('tag-position'))
+		if ($(this).attr('tag-hide') === 'false') {
+			$(this).attr('tag-hide', 'true')
+			document.getElementById('icono-dispositivo-' + index).classList.remove('fa-plus')
+			document.getElementById('icono-dispositivo-' + index).classList.add('fa-window-minimize')
+			let dataTable = pintarTablaSecundaria(index)
+			row.child(dataTable).show();
+		} else {
+			$(this).attr('tag-hide', 'false')
+			document.getElementById('icono-dispositivo-' + index).classList.add('fa-plus')
+			document.getElementById('icono-dispositivo-' + index).classList.remove('fa-window-minimize')
+			row.child.hide();
+			tr.removeClass('shown');
+		}
+	});
+
+	pintarTablaSecundaria = function (position) {
+		let dispositivo = $scope.listDispositivosDetalle[position]
+		let arrayDetalleRed = [];
+		arrayDetalleRed.push(dispositivo.detalleRed)
+		let tableHTML = '<div class="details-container">' +
+			'<table id="table_dispositovos_ot_nivel2" class="table table-hover table-bordered" cellspacing="0" style="width:100%">' +
+			'<thead id="thead_dispositivo_consulta_ot_nivel2">' +
+			'<tr>' +
+			'<th>NOMBRE OLT</th>' +
+			'<th>TIPO APROVISIONAMIENTO</th>' +
+			'<th>FRAME</th>' +
+			'<th>SLOT</th>' +
+			'<th>PUERTO</th>' +
+			'</tr>' +
+			'</thead>' +
+			'<tbody>';
+
+		arrayDetalleRed.forEach(detalle => {
+			tableHTML += "<tr>" +
+				"<td>" + ((detalle != undefined && detalle.nombreOlt) ? detalle.nombreOlt : 'Sin dato') + "</td>" +
+				"<td>" + ((detalle != undefined && detalle.tipoAprovisionamiento) ? detalle.nombreOlt : 'Sin dato') + "</td>" +
+				"<td>" + ((detalle != undefined && detalle.frame) ? detalle.nombreOlt : 'Sin dato') + "</td>" +
+				"<td>" + ((detalle != undefined && detalle.slot) ? detalle.nombreOlt : 'Sin dato') + "</td>" +
+				"<td>" + ((detalle != undefined && detalle.puerto) ? detalle.nombreOlt : 'Sin dato') + "</td>" +
+				"</tr>";
+
+		})
+		tableHTML += '</tbody></table>' +
+			'</div>';
+		return tableHTML;
+	}
+
+    function transformarTextPrecio(num) {
+		if ((num && num != '' && num != '0')) {
+			return (Math.round(parseFloat(num) * 100) / 100).toLocaleString('en-US', {
+				style: 'currency',
+				currency: 'USD',
+			});
+		} else {
+			return parseFloat('0.00').toLocaleString('en-US', {
+				style: 'currency',
+				currency: 'USD',
+			});
+		}
+	}
+
+    $scope.consultaMaterialesDetalleOT = function () {
+        if (!is_consulta_detalle_materiales) {
+			$scope.tecnicoConsultaMateriales = {};
+            $scope.listaMaterialesDetalleOT = [];
+            let params = {
+                idOrden : $scope.infoOtDetalle.idOrden
+            };
+            swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
+            swal.showLoading();
+			gestionTicketSoporteService.consultaDetalleMaterialesOT(params).then(function success(response) {
+				console.log(response);
+                if (response.data) {
+                    if (response.data.respuesta) {
+                        if (response.data.result) {
+                            if (response.data.result.detalleGeneral) {
+                                if (response.data.result.detalleGeneral.detalleMateriales.length) {
+                                    $scope.isTecnicoConsultaMateriales = true;
+                                    $scope.tecnicoConsultaMateriales = response.data.result.detalleGeneral;
+                                    $scope.tecnicoConsultaMateriales.nombreCommpleto = $scope.tecnicoConsultaMateriales.nombre + ' ' + $scope.tecnicoConsultaMateriales.apellidoPaterno + ' ' + $scope.tecnicoConsultaMateriales.apellidoMaterno
+                                    $scope.listaMaterialesDetalleOT = angular.copy(response.data.result.detalleGeneral.detalleMateriales);
+
+                                    let arrayRow = [];
+                                    if (tableMaterialesDetalleOT) {
+                                        tableMaterialesDetalleOT.destroy();
+                                    }
+                                    $.each($scope.listaMaterialesDetalleOT, function (i, elemento) {
+                                        let row = [];
+                                        row[0] = elemento.sku && elemento.sku !== '' ? elemento.sku : 'Sin informaci&oacute;n';
+                                        row[1] = elemento.descripcion && elemento.descripcion !== '' ? elemento.descripcion : 'Sin informaci&oacute;n';
+                                        row[2] = elemento.tipo && elemento.tipo !== '' ? elemento.tipo : 'Sin informaci&oacute;n';
+                                        row[3] = elemento.grupo && elemento.grupo !== '' ? elemento.grupo : 'Sin informaci&oacute;n';
+                                        row[4] = elemento.lote && elemento.lote !== '' ? elemento.lote : 'Sin informaci&oacute;n'
+                                        row[5] = elemento.numSerie && elemento.numSerie !== '' ? elemento.numSerie : 'Sin informaci&oacute;n';
+                                        row[6] = elemento.familia && elemento.familia !== '' ? elemento.familia : 'Sin informaci&oacute;n';
+                                        row[7] = elemento.docSap && elemento.docSap !== '' ? elemento.docSap : 'Sin informaci&oacute;n';
+                                        row[8] = transformarTextPrecio(elemento.precio);
+                                        row[9] = elemento.cantidad && elemento.cantidad !== '' ? elemento.cantidad : 'Sin informaci&oacute;n';
+                                        row[10] = transformarTextPrecio(elemento.costo);
+                                        row[11] = elemento.unidad && elemento.unidad !== '' ? elemento.unidad : 'Sin informaci&oacute;n';
+                                        row[12] = elemento.comentariosSap && elemento.comentariosSap !== '' ? elemento.comentariosSap : 'Sin informaci&oacute;n';
+                                        arrayRow.push(row);
+                                    });
+                                    tableMaterialesDetalleOT = $('#tableMaterialesDetalleOT').DataTable({
+                                        "paging": true,
+                                        "lengthChange": false,
+                                        "ordering": false,
+                                        "pageLength": 10,
+                                        "info": true,
+                                        "data": arrayRow,
+                                        "autoWidth": true,
+                                        "language": idioma_espanol_not_font,
+                                    });
+                                    swal.close()
+                                } else {
+                                    mostrarMensajeInformativo("No se encontraron datos de materiales");
+                                    swal.close()
+                                }
+                            } else {
+                                $scope.isTecnicoConsultaMateriales = false;
+                                mostrarMensajeInformativo("No se encontraron datos de materiales")
+                                swal.close()
+                            }
+                        } else {
+                            $scope.isTecnicoConsultaMateriales = false;
+                            mostrarMensajeInformativo(response.data.result.description);
+                            swal.close();
+                        }
+                        is_consulta_detalle_materiales = true;
+                    } else {
+                        $scope.isTecnicoConsultaMateriales = false;
+                        mostrarMensajeErrorAlert('Ha ocurrido un error en la consulta de los datos');
+                        swal.close()
+                    }
+                } else {
+                    $scope.isTecnicoConsultaMateriales = false;
+                    mostrarMensajeErrorAlert('Ha ocurrido un error en la consulta de los datos');
+                    swal.close()
+                }
+			}).catch(err => handleError(err));
+		}
+    }
+    
+    $scope.consultarRecoleccionDetalleOt = function () {
+        if (!is_consulta_detalle_recoleccion) {
+            $scope.tecnicoConsultaRecoleccion = {};
+            $scope.equiposTecnicoRecoleccion = [];
+            swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
+            swal.showLoading();
+            let params = {
+                "idOrden": $scope.infoOtDetalle.idOrden
+            };
+            gestionTicketSoporteService.consultarDetalleRecoleccionOT(params).then(function success(response) {
+                console.log(response);
+                if (response.data) {
+                    if (response.data.respuesta) {
+                        if (response.data.result) {
+                            if (response.data.result.detalleEquipos.length) {
+                                $scope.isTecnicoConsultaRecoleccion = true;
+                                is_consulta_detalle_recoleccion = true;
+                                $scope.tecnicoConsultaRecoleccion = angular.copy(response.data.result);
+                                $scope.equiposTecnicoRecoleccion = angular.copy(response.data.result.detalleEquipos);
+                                console.log($scope.tecnicoConsultaRecoleccion);
+                                console.log($scope.equiposTecnicoRecoleccion);
+
+                                let arrayRow = [];
+                                if (tableRecoleccionDetalleOT) {
+                                    tableRecoleccionDetalleOT.destroy();
+                                }
+                                $.each($scope.equiposTecnicoRecoleccion, function (i, elemento) {
+                                    let row = [];
+                                    row[0] = elemento.numSerie !== undefined ? elemento.numSerie : 'Sin informaci&oacute;n';
+                                    row[1] = elemento.descripcion !== undefined ? elemento.descripcion : 'Sin informaci&oacute;n';
+                                    row[2] = elemento.centro !== undefined ? elemento.centro : 'Sin informaci&oacute;n';
+                                    row[3] = elemento.almacen !== undefined ? elemento.almacen : 'Sin informaci&oacute;n';
+                                    row[4] = elemento.recuperado == 1 ?
+                                        '<span class="content-success-generic">' +
+                                        '<i class="icono-success-generic fas fa-check"></i>' +
+                                        '</span>' : '';
+                                    row[5] = elemento.adicional == 1 ?
+                                        '<span class="content-success-generic">' +
+                                        '<i class="icono-success-generic fas fa-check"></i>' +
+                                        '</span>' : '';
+                                    row[6] = elemento.fechaRegistro !== undefined ? elemento.fechaRegistro : 'Sin informaci&oacute;n';
+                                    arrayRow.push(row);
+                                });
+
+                                tableRecoleccionDetalleOT = $('#tableRecoleccionDetalleOT').DataTable({
+                                    "paging": true,
+                                    "lengthChange": false,
+                                    "ordering": false,
+                                    "pageLength": 10,
+                                    "info": true,
+                                    "scrollX": false,
+                                    "data": arrayRow,
+                                    "autoWidth": false,
+                                    "language": idioma_espanol_not_font
+                                });
+                                swal.close();
+                            } else {
+                                swal.close();
+                                mostrarMensajeWarningValidacion('No se encontr&oacute; informaci&oacute;n');
+                                $scope.isTecnicoConsultaRecoleccion = false;
+                            }
+                        } else {
+                            swal.close();
+                            mostrarMensajeWarningValidacion('No se encontr&oacute; informaci&oacute;n');
+                            $scope.isTecnicoConsultaRecoleccion = false;
+                        }
+                    } else {
+                        swal.close();
+                        mostrarMensajeWarningValidacion(response.data.resultDescripcion);
+                        $scope.isTecnicoConsultaRecoleccion = false;
+                    }
+                } else {
+                    swal.close();
+                    mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                    $scope.isTecnicoConsultaRecoleccion = false;
                 }
             }).catch(err => handleError(err));
         }
@@ -1977,7 +2549,12 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     $('#modal-detalleOT').on('hidden.bs.modal', function () {
         is_consulta_info_ot = false;
         is_consulta_historico = false;
-        document.querySelector('#informacion-ot').click()
+        is_consulta_detalle_soporte = false;
+        is_consulta_detalle_materiales = false;
+        is_consulta_detalle_pagos = false;
+        is_consulta_detalle_dispositivos = false;
+        is_consulta_detalle_recoleccion = false;
+        document.querySelector('#informacion-ot').click();
     });
 
 }]);

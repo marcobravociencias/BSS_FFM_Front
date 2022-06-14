@@ -13,7 +13,12 @@
                         <div style="padding-left: 0;" class="col-2">
                             <div class="nav flex-column nav-tabs text-center" id="v-tabs-tab-detalle-ot" role="tablist" aria-orientation="vertical">
                                 <a data-mdb-toggle="tab" href="#content-detalle-ot" class="nav-link active" id="informacion-ot">Informaci&oacute;n</li>
-                                    <a ng-click="consultaHistoricoDetalleOt()" data-mdb-toggle="tab" href="#content-historico" class="nav-link" id="info_historico_detalleOT">Hist&oacute;rico</a>
+                                <a ng-click="consultaHistoricoDetalleOt()" data-mdb-toggle="tab" href="#content-detalle-historico" class="nav-link" id="info_historico_detalleOT">Hist&oacute;rico</a>
+                                <a ng-click="consultarPostVentaDetalleOt()" data-mdb-toggle="tab" href="#content-detalle-postVenta" ng-show="permisosModalDetalleOT.indexOf('tabDetalleSoporte') !== -1" class="nav-link" id="postVenta">Detalle Soporte</a>
+                                <a ng-click="consultaPagosDetalleOt()" data-mdb-toggle="tab" href="#content-detalle-pagos" ng-show="permisosModalDetalleOT.indexOf('tabConsultaPagos') !== -1" class="nav-link" id="pagos-Ot">Pagos</a>
+                                <a ng-click="consultarDispositivosDetalleOt()" data-mdb-toggle="tab" href="#content-detalle-dispositivos" ng-show="permisosModalDetalleOT.indexOf('tabConsultaDispositivos') !== -1" class="nav-link" id="dispositivo-Ot">Dispositivos</a>
+                                <a ng-click="consultaMaterialesDetalleOT()" data-mdb-toggle="tab" href="#content-detalle-materiales-ot" ng-show="permisosModalDetalleOT.indexOf('tabConsultaMaterialesOT') !== -1" class="nav-link" id="dispositivo-Ot">Materiales</a>
+                                <a ng-click="consultarRecoleccionDetalleOt()" data-mdb-toggle="tab" href="#content-detalle-recoleccion-ot" ng-show="permisosModalDetalleOT.indexOf('tabConsultaRecoleccionOT') !== -1" class="nav-link" id="recoleccion-ot">Recolecci&oacute;n</a>
                             </div>
                         </div>
                         <div class="col-10">
@@ -211,9 +216,34 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="contenedor_detalle row tab-pane fade" id="content-historico">
+                                <div class="contenedor_detalle row tab-pane fade" id="content-detalle-historico">
                                     <div class="container">
                                         <jsp:include page="../content/historicoDetalleOT.jsp"></jsp:include>
+                                    </div>
+                                </div>
+                                <div class="contenedor_detalle row tab-pane fade" id="content-detalle-postVenta">
+                                    <div class="container">
+                                        <jsp:include page="../content/soporteDetalleOT.jsp"></jsp:include>
+                                    </div>
+                                </div>
+                                <div class="contenedor_detalle row tab-pane fade" id="content-detalle-pagos">
+                                    <div class="container">
+                                        <jsp:include page="../content/pagoDetalleOT.jsp"></jsp:include>
+                                    </div>
+                                </div>
+                                <div class="contenedor_detalle row tab-pane fade" id="content-detalle-dispositivos">
+                                    <div class="container container-tabla-dispositivo-detalle-ot ">
+                                        <jsp:include page="../content/dispositivosDetalleOT.jsp"></jsp:include>
+                                    </div>
+                                </div>
+                                <div class="contenedor_detalle row tab-pane fade" id="content-detalle-materiales-ot">
+                                    <div class="container container-tabla-dispositivo-detalle-ot ">
+                                        <jsp:include page="../content/materialesDetalleOT.jsp"></jsp:include>
+                                    </div>
+                                </div>
+                                <div class="contenedor_detalle row tab-pane fade" id="content-detalle-recoleccion-ot">
+                                    <div class="container container-tabla-dispositivo-detalle-ot ">
+                                        <jsp:include page="../content/recoleccionDetalleOT.jsp"></jsp:include>
                                     </div>
                                 </div>
                             </div>

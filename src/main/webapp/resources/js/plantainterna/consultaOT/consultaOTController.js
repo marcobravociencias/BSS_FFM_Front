@@ -1928,94 +1928,92 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 			swal.showLoading();
 			consultaOTService.consultaPostVentaOt(JSON.stringify(params)).then((result) => {
-				swal.close()
 				console.log(result)
 				isConsultaDetalleSoporte = true
 				if (result.data.respuesta) {
 					if (result.data.result.length > 0) {
 						$scope.detalleSoporteList = angular.copy(result.data.result);
 
-						if ($scope.detalleSoporteList.length > 7) {
-							$('#containerTabsSoporte').removeClass('row');
-							$("#containerTabsSoporte").css('width', '94%');
-							$("#left-arrow").show();
-							$("#right-arrow").show();
-						} else {
-							$('#containerTabsSoporte').addClass('row');
-							$("#containerTabsSoporte").css('width', '100%');
-							$("#left-arrow").hide();
-							$("#right-arrow").hide();
-						}
-
 						setTimeout(() => {
+							if ($scope.detalleSoporteList.length > 7) {
+								$("#left-arrow").css('display', 'block');
+								$("#right-arrow").css('display', 'block');
+								$("#containerTabsSoporte").removeClass('row');
+								$("#containerTabsSoporte").css('width', '94%');
+							} else {
+								$("#left-arrow").hide();
+								$("#right-arrow").hide();
+								$('#containerTabsSoporte').addClass('row');
+								$("#containerTabsSoporte").css('width', '100%');
+							}
 							$scope.detalleSoporteList.forEach((elemento, ind) => {
 								let html_tmp = "";
-								elemento.detalleCambioEquipo.forEach((detalle, index) => {
-									if (detalle.evidencias && detalle.evidencias.length) {
-										contenido_imagenes = retornarFormatoSliders(detalle.evidencias, index);
-									} else {
-										contenido_imagenes =
-											'<h4 id="texto_not_arboles" style="color:#abafae; text-align:center">' +
-											'	SIN IMAGENES PARA ESTA FALLA' +
-											'</h4>';
-									}
-									html_tmp += '' +
-										'<tr>' +
-										'	<td>' +
-										'		<div class="row">' +
-										'			<div class="col-md-6 colInformacionTabla">' +
-										'				<div class="row textFallaOT">' +
-										'					<div class="col-md-5">' +
-										'						<b  class="title_span_1"> Tipo equipo:</b>' +
-										'		        	</div>				               ' +
-										'		        	<div class="col-md-7">' +
-										'		        		<span id="ot_fallas"  class="content_text" >' + detalle.descTipoEquipo + '</span>' +
-										'		        	</div>' +
-										'				</div>' +
-										'				<div class="row textFallaOT">' +
-										'					<div class="col-md-5">' +
-										'						<b  class="title_span_1"> Modelo anterior:</b>' +
-										'		        	</div>				               ' +
-										'		        	<div class="col-md-7">' +
-										'		        		<span id="tipo_falla_corte"  class="content_text" > ' + detalle.descModeloViejo + ' </span>' +
-										'		        	</div>' +
-										'				</div>' +
-										'				<div class="row textFallaOT">' +
-										'					<div class="col-md-5">' +
-										'						<b  class="title_span_1"> Modelo nuevo:</b>	 ' +
-										'		        	</div>				               ' +
-										'		        	<div class="col-md-7">' +
-										'		        		<span id="tecnico_falla"  class="content_text" > ' + detalle.descModeloNuevo + ' </span>' +
-										'		        	</div>' +
-										'				</div>' +
-										'				<div class="row textFallaOT">' +
-										'					<div class="col-md-5">' +
-										'						<b  class="title_span_1"> N&uacute;m. serie equipo anterior:</b>' +
-										'		        	</div>				               ' +
-										'		        	<div class="col-md-7">' +
-										'		        		<span id="status_falla_corte"  class="content_text" > ' + detalle.numSerieModeloViejo + ' </span>' +
-										'		        	</div>' +
-										'				</div>' +
-										'				<div class="row">' +
-										'					<div class="col-md-5">' +
-										'						<b  class="title_span_1">N&uacute;mero serie equipo nuevo:</b>' +
-										'		        	</div>				               ' +
-										'		        	<div class="col-md-7">' +
-										'		        		<span id="comentarios_falla"  class="content_text" > ' + detalle.numSerieModeloNuevo + ' </span>' +
-										'		        	</div>' +
-										'				</div>' +
-										'			</div>' +
-										'			<div class="col-md-6">' +
-										'					<div class="class-12">' +
-										contenido_imagenes +
-										'					</div>' +
-										'			</div>' +
-										'		</div>' +
-										'	</tr>' +
-										'</td>';
-
-
-								})
+								if (elemento.detalleCambioEquipo) {
+									elemento.detalleCambioEquipo.forEach((detalle, index) => {
+										if (detalle.evidencias && detalle.evidencias.length) {
+											contenido_imagenes = retornarFormatoSliders(detalle.evidencias, index);
+										} else {
+											contenido_imagenes =
+												'<h4 id="texto_not_arboles" style="color:#abafae; text-align:center">' +
+												'	SIN IMAGENES PARA ESTA FALLA' +
+												'</h4>';
+										}
+										html_tmp += '' +
+											'<tr>' +
+											'	<td>' +
+											'		<div class="row">' +
+											'			<div class="col-md-6 colInformacionTabla">' +
+											'				<div class="row textFallaOT">' +
+											'					<div class="col-md-5">' +
+											'						<b  class="title_span_1"> Tipo equipo:</b>' +
+											'		        	</div>				               ' +
+											'		        	<div class="col-md-7">' +
+											'		        		<span id="ot_fallas"  class="content_text" >' + detalle.descTipoEquipo + '</span>' +
+											'		        	</div>' +
+											'				</div>' +
+											'				<div class="row textFallaOT">' +
+											'					<div class="col-md-5">' +
+											'						<b  class="title_span_1"> Modelo anterior:</b>' +
+											'		        	</div>				               ' +
+											'		        	<div class="col-md-7">' +
+											'		        		<span id="tipo_falla_corte"  class="content_text" > ' + detalle.descModeloViejo + ' </span>' +
+											'		        	</div>' +
+											'				</div>' +
+											'				<div class="row textFallaOT">' +
+											'					<div class="col-md-5">' +
+											'						<b  class="title_span_1"> Modelo nuevo:</b>	 ' +
+											'		        	</div>				               ' +
+											'		        	<div class="col-md-7">' +
+											'		        		<span id="tecnico_falla"  class="content_text" > ' + detalle.descModeloNuevo + ' </span>' +
+											'		        	</div>' +
+											'				</div>' +
+											'				<div class="row textFallaOT">' +
+											'					<div class="col-md-5">' +
+											'						<b  class="title_span_1"> N&uacute;m. serie equipo anterior:</b>' +
+											'		        	</div>				               ' +
+											'		        	<div class="col-md-7">' +
+											'		        		<span id="status_falla_corte"  class="content_text" > ' + detalle.numSerieModeloViejo + ' </span>' +
+											'		        	</div>' +
+											'				</div>' +
+											'				<div class="row">' +
+											'					<div class="col-md-5">' +
+											'						<b  class="title_span_1">N&uacute;mero serie equipo nuevo:</b>' +
+											'		        	</div>				               ' +
+											'		        	<div class="col-md-7">' +
+											'		        		<span id="comentarios_falla"  class="content_text" > ' + detalle.numSerieModeloNuevo + ' </span>' +
+											'		        	</div>' +
+											'				</div>' +
+											'			</div>' +
+											'			<div class="col-md-6">' +
+											'					<div class="class-12">' +
+											contenido_imagenes +
+											'					</div>' +
+											'			</div>' +
+											'		</div>' +
+											'	</tr>' +
+											'</td>';
+									})
+								}
 								// console.log(ind);
 								// console.log($('#tablaOTDetalle' + ind));
 								//$('#tablaOTDetalle' + elemento.idFalla).destroy();
@@ -2037,11 +2035,14 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 									}
 								});
 							})
+							swal.close();
 						}, 1000);
 					} else {
+						swal.close();
 						mostrarMensajeWarningValidacion('No se encontro informaci&oacute;n')
 					}
 				} else {
+					swal.close();
 					mostrarMensajeErrorAlert(result.data.resultDescripcion)
 				}
 			}).catch(err => handleError(err));

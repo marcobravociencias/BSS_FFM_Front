@@ -263,4 +263,52 @@ app.service("gestionTicketSoporteService", function ($http) {
         });
     };
 
+    this.consultaDetallePostVentaOt = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultaDetallePostVenta",
+            data: JSON.stringify(params),
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
+            transformRequest: angular.identity
+        });
+    };
+
+    this.consultaDetalleMaterialesOT = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultaMaterialesOts",
+            data: JSON.stringify(params),
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
+            transformRequest: angular.identity
+        });
+    };
+
+    this.consultaDetallePagosOT = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultaPagos",
+            data: JSON.stringify(params),
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
+            transformRequest: angular.identity
+        });
+    };
+
+    this.consultaDetalleDispositivosOT = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultaDispositivos",
+            data: JSON.stringify(params),
+            headers: { 'Content-Type': 'application/json' }
+        });
+    };
+
+    this.consultarDetalleRecoleccionOT = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultaRecoleccionConsultaOt",
+            data: JSON.stringify(params),
+            headers: { 'Content-Type': 'application/json' }
+        });
+    };
+
 });
