@@ -148,10 +148,11 @@ public class ImplVistaChecklistService implements VistaChecklistService{
 
         Map<String, String> paramsRequestGet = new HashMap<String, String>();
         paramsRequestGet.put("idOt", jsonObject.get("idOt").getAsString());
-        paramsRequestGet.put("idUsuario", jsonObject.get("idUsuario").getAsString());
-
+        paramsRequestGet.put("idUsuario",jsonObject.get("idUsuario").isJsonNull() ? "null" : jsonObject.get("idUsuario").getAsString());
+        logger.info("PARAMS ##+" + paramsRequestGet);
         ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
                 ServiceResponseResult.class, tokenAcces);
+        logger.info("URL ##+" + response);
         return response;
 	}
     

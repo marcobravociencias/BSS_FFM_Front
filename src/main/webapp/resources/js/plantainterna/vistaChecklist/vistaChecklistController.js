@@ -387,7 +387,7 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
         if ($scope.configPermisoAccionConsultaEvidencia) {
             let params = {
                 idOt: id,
-                idUsuario: usuario
+                idUsuario: usuario 
             }
             swal({ text: 'Espera un momento...', allowOutsideClick: false });
             swal.showLoading();
@@ -396,6 +396,10 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
                 if (response.data !== undefined) {
                     if (response.data.respuesta) {
                         if (response.data.result) {
+                            if(!response.data.result.evidencias.length){
+                                toastr.info("No se encontraron evidencias");
+                                return false;
+                            }
                             $scope.detalleEvidencia = response.data.result;
                             $scope.detalleEvidencia.tipos = [];
                             $scope.listImagenesTipo = response.data.result.evidencias;

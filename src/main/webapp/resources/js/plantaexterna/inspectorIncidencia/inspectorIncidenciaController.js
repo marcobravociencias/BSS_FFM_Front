@@ -321,8 +321,8 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                 $scope.isPermisoGenerarOTInspector = ($scope.permisosUsuario.filter(e => { return e.clave == "generarOTInspectorPEAccion" })[0] != undefined);
             }
 
-            let arrayDefaultKmzElemts=llavesResult.KEY_DEFAULT_KMZ ? llavesResult.KEY_DEFAULT_KMZ.split(",") : null;
-            GenericMapa.prototype.callPrototypeMapa(results[0].data.result,arrayDefaultKmzElemts);
+            let arrayDefaultKmzElemts = llavesResult.KEY_DEFAULT_KMZ ? llavesResult.KEY_DEFAULT_KMZ.split(",") : null;
+            GenericMapa.prototype.callPrototypeMapa(results[0].data.result, arrayDefaultKmzElemts);
             $scope.initMapa();
 
             if (results[1].data !== undefined) {
@@ -671,16 +671,8 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                         if (response.data.result.detalleIncidentes.length) {
                             $scope.fallasIncidenciaDetalle = angular.copy(response.data.result.detalleIncidentes);
                             $scope.inicializarDetalleIncidencia($scope.incidenciaDetalle.latitud, $scope.incidenciaDetalle.longitud);
-
-                            $scope.isBtnGenerarOT = $scope.llaveEstatusGeneraOT.find(function (elem) { return elem === $scope.incidenciaDetalle.idEstatus });
-                            if ($scope.isPermisoGenerarOTInspector) {
-                                if ($scope.isBtnGenerarOT !== undefined) {
-                                    $scope.isGenerar = true;
-                                } else if ($scope.incidenciaDetalle.idEstatus == '1' || $scope.incidenciaDetalle.idEstatus == '4') {
-                                    $scope.isGenerar = true;
-                                } else {
-                                    $scope.isGenerar = false;
-                                }
+                            if ($scope.isPermisoGenerarOTInspector && $scope.incidenciaDetalle.idEstatus == 1) {
+                                $scope.isGenerar = true;
                             } else {
                                 $scope.isGenerar = false;
                             }
@@ -1028,9 +1020,9 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         });
     }
 
-    $scope.filterByText = function(){
-        let txtBusqueda= $("#filtroBusquedaTabla").val();
-		incidenciaTable.search(txtBusqueda).draw();
+    $scope.filterByText = function () {
+        let txtBusqueda = $("#filtroBusquedaTabla").val();
+        incidenciaTable.search(txtBusqueda).draw();
     }
 
     $scope.generarOTIncidencia = function () {
@@ -1189,7 +1181,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                 // console.log(params)
                 inspectorIncidenciaService.consultarIncidenciasInspectorPE(params).then(function success(response) {
                     $("#tableIncidencia tbody").empty()
-                  
+
                     if (response.data) {
                         if (response.data.respuesta) {
                             if (response.data.result) {
@@ -1200,7 +1192,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
 
                                 $scope.incidencias = response.data.result.detalleIncidencias;
                                 $scope.incidenciasTemp = response.data.result.detalleIncidencias;
-                               
+
                                 $scope.createTable();
                                 swal.close();
                             } else {
@@ -1298,7 +1290,6 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
             "data": arraRow,
             "info": false,
             "bDestroy": true,
-            "paging": 3,
             "autoWidth": false,
             "language": idioma_espanol_not_font,
             "dom": '<"top"i>rt<"bottom"flp><"clear">',

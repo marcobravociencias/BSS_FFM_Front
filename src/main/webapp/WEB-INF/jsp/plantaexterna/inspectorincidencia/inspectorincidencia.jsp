@@ -259,8 +259,6 @@
         src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
 
     <!-- ARCHIVOS JS -->
-    <script
-        src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
     <script type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/plantaexterna/inspectorIncidencia/inspectorIncidenciaController.js?v=${sessionScope.versionDepl}"></script>
     <script type="text/javascript"

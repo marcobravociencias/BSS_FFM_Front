@@ -50,11 +50,8 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
             "idTipoAlerta": alerta.id
         }
 
-        if (alerta.id == 9) {
-            $scope.listaTotal = { aceptadas: 0, rechazadas: 0 };
-            $scope.vistaAuditoriaEvidencia = true;
-            $scope.vistaDespacho = false;
-        }
+        $scope.listaTotal = { aceptadas: 0, rechazadas: 0 };
+
 
         $scope.otsAlertas = [];
         mainAlertasService.getDetalleAlertas(params).then(function success(response) {
@@ -67,6 +64,7 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
                     $scope.tipoAlertaSeleccionada = angular.copy(alerta);
                     switch (alerta.id) {
                         case '9':
+                            $scope.vistaAuditoriaEvidencia = true;
                             $scope.mostrarDetalleAlertasEvidencia($scope.otsAlertas);
                             break;
 
@@ -197,16 +195,16 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
         });
     }
 
-    $scope.showImage = function(usuario){
+    $scope.showImage = function (usuario) {
         let ot = $scope.otsAlertas.find((t) => t.tecnico.id == usuario);
-        abrirModalFoto(ot.tecnico.nombre,ot.tecnico.urlFotoPerfil, ot.tecnico.numEmpleado, ot.tecnico.telefonoContacto, '#0B50C4', 'Sin dato')
+        abrirModalFoto(ot.tecnico.nombre, ot.tecnico.urlFotoPerfil, ot.tecnico.numEmpleado, ot.tecnico.telefonoContacto, '#0B50C4', 'Sin dato')
     }
 
-    consultarEvidencia = function (id, usuario, ot) {
+    consultarEvidencia = function (id, usuario) {
         $(".cards-lertas").css("border-left", "1px solid #dddddd");
         $(".cards-lertas").css("box-shadow", "0 0 0 0 #ffffff");
-        $("#cardAlerta_" + ot).css("border-left", "4px solid var(--estandar-color)");
-        $("#cardAlerta_" + ot).css("box-shadow", "0 2px 8px 0 rgb(0 0 0 / 16%), 0 2px 8px 0 rgb(0 0 0 / 16%)");
+        $("#cardAlerta_" + id).css("border-left", "4px solid var(--estandar-color)");
+        $("#cardAlerta_" + id).css("box-shadow", "0 2px 8px 0 rgb(0 0 0 / 16%), 0 2px 8px 0 rgb(0 0 0 / 16%)");
         let params = {
             idOt: id,
             idUsuario: usuario
@@ -215,11 +213,20 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
             swal({ text: 'Cargando registros...', allowOutsideClick: false });
             swal.showLoading();
         }
+
+        $scope.detalleEvidencia.tipos = [];
+        $scope.listImagenesTipo = [];
+
         mainAlertasService.consultarDetalleEvidencia(params).then(function success(response) {
             swal.close();
             if (response.data !== undefined) {
                 if (response.data.respuesta) {
                     if (response.data.result) {
+                        if (!response.data.result.evidencias.length) {
+                            $scope.detalleEvidencia = {};
+                            toastr.info("No se encontraron evidencias");
+                            return false;
+                        }
                         $scope.detalleEvidencia = response.data.result;
                         $scope.detalleEvidencia.tipos = [];
                         $scope.listImagenesTipo = response.data.result.evidencias;
@@ -304,7 +311,7 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
             arra[0] = alertaob.id ? alertaob.id : '';
             arra[1] = alertaob.folioSistema ? alertaob.folioSistema : '';
             arra[2] = `
-                <div id="cardAlerta_${ordenobj.id}" class="card card-alertas-pendientes cards-lertas" onclick="consultarEvidencia('${ordenobj.id}', '${tecnicoObj.id}', '${ordenobj.id}')">
+                <div id="cardAlerta_${ordenobj.id}" class="card card-alertas-pendientes cards-lertas" onclick="consultarEvidencia('${ordenobj.id}', '${tecnicoObj.id}')">
                     <div class="card-body card-body-alertas">
 
                         <div class="top-title-ot">
