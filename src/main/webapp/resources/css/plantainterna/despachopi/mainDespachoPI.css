@@ -2,13 +2,13 @@ body {
   color: grey;
 }
 
-#jstree-proton-3 .jstree-search {
+#jstree-proton-3 .jstree-search, #jstree-intervencion-asignada .jstree-search {
   font-style: italic !important;
   color: #8b0000 !important;
   font-weight: bold !important;
 }
 
-#jstree-proton-3 .jstree-anchor {
+#jstree-proton-3 .jstree-anchor, #jstree-intervencion-asignada .jstree-anchor {
   font-family: 'Montserrat';
   font-size: .8em;
 }

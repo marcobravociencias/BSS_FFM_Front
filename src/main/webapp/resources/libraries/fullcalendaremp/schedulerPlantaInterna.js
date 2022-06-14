@@ -3679,7 +3679,7 @@ TimelineGrid = (function(superClass) {
             <div class="izquierda-icon">
               <i class="far ${event.tipoAsignacion === 2 ?'far fa-hand-paper':'fas fa-desktop'}  icon-tipoot-operacion"></i>
             </div>`
-            content = content + ((accionDetalleSf && event.folioOrden.substr(0,3) === "OS-") ? `<b class="os-content-asignada link-busqueda-salesforce" onclick="mostrarModalDetalleSf('${event.folioOrden}', '${event.idFolioOrden}')">${event.folioOrden}</b>&nbsp&nbsp` : `<b class="os-content-asignada">${event.folioOrden}</b>&nbsp&nbsp`);           
+            content = content + ((accionDetalleSf && event.folioOrden && event.folioOrden.substr(0,3) === "OS-") ? `<b class="os-content-asignada link-busqueda-salesforce" onclick="mostrarModalDetalleSf('${event.folioOrden}', '${event.idFolioOrden}')">${event.folioOrden}</b>&nbsp&nbsp` : `<b class="os-content-asignada">${event.folioOrden}</b>&nbsp&nbsp`);           
             content = content +`</div>
         <div class="content-text-otasignada" >       
             <div class="izquierda-icon">

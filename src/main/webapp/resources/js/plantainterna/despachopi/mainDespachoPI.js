@@ -540,7 +540,7 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                                                 <div class="positiontres">
                                                     <div class="content-posiciontres">
                                                         <p class="text-otpendiente-tres-title">FOLIO: </p>`;
-                                                    tableelemetn = tableelemetn + (($scope.accionDetalleSalesforce && otpendiente.folioOrden.substr(0,3) === "OS-") ? `<p class="text-otpendiente-tres link-busqueda-salesforce" onclick="mostrarModalDetalleSf('${otpendiente.folioOrden}', '${otpendiente.idFolioOrden}')">${otpendiente.folioOrden}</p>` : `<p class="text-otpendiente-tres" >${otpendiente.folioOrden}</p>`);
+                                                    tableelemetn = tableelemetn + (($scope.accionDetalleSalesforce && otpendiente.folioOrden && otpendiente.folioOrden.substr(0,3) === "OS-") ? `<p class="text-otpendiente-tres link-busqueda-salesforce" onclick="mostrarModalDetalleSf('${otpendiente.folioOrden}', '${otpendiente.idFolioOrden}')">${otpendiente.folioOrden}</p>` : `<p class="text-otpendiente-tres" >${otpendiente.folioOrden}</p>`);
                                                     tableelemetn = tableelemetn + `</div>
                                                     <div class="content-posiciontres">
                                                         <p class="text-otpendiente-tres-title">OT:</p>
