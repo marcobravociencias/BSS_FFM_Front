@@ -709,6 +709,63 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 
     }
 
+    mostrarIntervencionesTecnico = function (intervenciones) {
+        $('#searchInterAsig').val('');
+        $scope.arrayIntervenciones = [];
+        $scope.arrayIntervenciones = intervenciones.split(",");
+        $scope.treeIntervencion = angular.copy($scope.arbolIntervenciones);
+        $scope.treeIntervencion.map((intervencion) => {
+            intervencion.check = ($scope.arrayIntervenciones.filter(e => { return Number(e) === intervencion.id })[0] != undefined);
+        });
+        $scope.treeIntervencion.map((e) => {
+            e.parent = e.idPadre == undefined ? "#" : e.idPadre;
+            e.text = e.nombre;
+            e.icon = "fa fa-globe";
+
+            e.state = { //Este objeto tu no lo necesitas karen! e.state
+                opened: false,
+                selected: e.check,
+            }
+            return e
+        })
+        $("#jstree-intervencion-asignada").jstree("destroy");
+        $('#jstree-intervencion-asignada').bind('loaded.jstree', function (e, data) {
+           
+            
+            $('#jstree-intervencion-asignada >ul > li').each( function() {
+                disable( this.id );        
+             })
+            $("#modal-intervencion-asignada").modal('show');
+        }).jstree({
+            'plugins': ["wholerow", "checkbox", "search"],
+            'core': {
+                'data': $scope.treeIntervencion,
+                'themes': {
+                    'name': 'proton',
+                    'responsive': true,
+                    "icons": false
+                }
+            },
+            "search": {
+                "case_sensitive": false,
+                "show_only_matches": true
+            }
+        });
+        
+    }
+
+    function disable(node_id) {
+        var node = $("#jstree-intervencion-asignada").jstree().get_node( node_id );
+        $("#jstree-intervencion-asignada").jstree().disable_node(node); 
+        node.children.forEach( function(child_id) {            
+          disable( child_id );
+        })
+    }
+
+    $('#searchInterAsig').on('keyup', function () {
+        $("#jstree-intervencion-asignada").jstree("search", this.value);
+    })
+
     function transformarTextCantidad(num) {
         return (num && num != '' && num != '0') ? parseInt(num) : "0"
     }
@@ -1832,8 +1889,9 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 
     //ORGCHARTJS
 
+    $scope.listaSubordinados = [];
     $scope.mostrarModalOrganigrama = function() {
-        swal({ text: 'Cambiando estatus de la OT ...', allowOutsideClick: false });
+        swal({ text: 'Espere un momento ...', allowOutsideClick: false });
         swal.showLoading();
         let params = {
             idSupervisor: "156896"
@@ -1844,19 +1902,50 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 if (response.data.respuesta) {
                     if (response.data.result) {
                         if (response.data.result.subordinados) {
-                            swal.close()
-                            OrgChart.templates.ana.img_0 = '<image preserveAspectRatio="xMidYMid slice" xlink:href="{val}" x="20" y="5" width="80" height="80"></image>';
-                            var chart = new OrgChart(document.getElementById("tree"), {
-                                nodeBinding: {
-                                    field_0: "name",
-                                    img_0: "photo1"
-                                },
-                                nodes: [
-                                    { id: 1, name: "Amber McKenzie", photo1: "https://firebasestorage.googleapis.com/v0/b/totalplay-ffm-core-dev.appspot.com/o/usuarios%2Fmex%2FPIRESIDENCIAL%2FfotoPerfil?alt=media&token=uuidv4()" },
-                                    { id: 2, pid: 1, name: "Ava Field", photo1: "https://firebasestorage.googleapis.com/v0/b/totalplay-ffm-core-dev.appspot.com/o/usuarios%2Fmex%2FPIRESIDENCIAL%2FfotoPerfil?alt=media&token=uuidv4()" },
-                                    { id: 3, pid: 1, name: "Peter Stevens", photo1: "https://firebasestorage.googleapis.com/v0/b/totalplay-ffm-core-dev.appspot.com/o/usuarios%2Fmex%2FPIRESIDENCIAL%2FfotoPerfil?alt=media&token=uuidv4()" }
-                                ]
+                            $scope.listaSubordinados = response.data.result.subordinados;
+
+                            $scope.nodes = [];
+                            $scope.nodes.push({ 
+                                id: $("#empleadohidden").val(), 
+                                pid: null, 
+                                Nombre: $("#nombreempleadohidden").val()+' '+$("#primerapempleadohidden").val()+' '+$("#segundoapempleadohidden").val(), 
+                                Puesto: $("#puestoempleadohidden").val(), 
+                                img: $("#fotoempleadohidden").val() ? $("#fotoempleadohidden").val() : './resources/img/generic/defaultPerfil.png'
                             });
+                            angular.forEach($scope.listaSubordinados, function (elemento, index) {
+                                $scope.nodes.push({ 
+                                    id: elemento.idTecnico, 
+                                    pid: $("#empleadohidden").val(), 
+                                    Nombre: elemento.nombre+' '+elemento.apellidoPaterno+' '+elemento.apellidoMaterno, 
+                                    Puesto: elemento.descripcionTipoUsuario, 
+                                    img: elemento.urlFotoPerfil ? elemento.urlFotoPerfil : './resources/img/generic/defaultPerfil.png'
+                                });
+                            });
+                            OrgChart.templates.ula.field_0 = 
+                            '<text data-width="240" text-anchor="middle" style="font-size: 14px;" fill="#039BE5" x="125" y="85">{val}</text>';
+                            OrgChart.templates.ula.field_1 = 
+                            '<text data-width="240" text-anchor="middle" data-text-overflow="multiline" style="font-size: 12px;" fill="#afafaf" x="125" y="100">{val}</text>';
+                            OrgChart.templates.ula.node = 
+                            '<rect x="0" y="0" height="{h}" width="{w}" fill="#ffffff" stroke-width="1" stroke="#aeaeae"></rect>'
+                            + '<line x1="0" y1="120" x2="0" y2="0" stroke-width="4" stroke="rgb(22, 103, 184)"></line>';
+                            OrgChart.templates.ula.img_0 = 
+                            '<clipPath id="{randId}"><circle cx="125" cy="40" r="30"></circle></clipPath>'
+                            + '<image preserveAspectRatio="xMidYMid slice" clip-path="url(#{randId})" xlink:href="{val}" x="95" y="10" width="60" height="60"></image>';
+                            var chart = new OrgChart(document.getElementById("tree"), {
+                                mouseScrool: OrgChart.action.none,
+                                template: "ula",
+                                
+                                nodeBinding: {
+                                    field_0: "Nombre",
+                                    field_1: "Puesto",
+                                    img_0: "img"
+                                },
+                                nodes: $scope.nodes
+                            });
+
+
+
+                            swal.close()
                             $("#modalOrganigrama").modal('show');
                         }
                     } else {

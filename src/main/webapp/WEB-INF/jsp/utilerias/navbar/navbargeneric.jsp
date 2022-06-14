@@ -12,6 +12,11 @@
 <jsp:include page="./modalCambiaContrasenia.jsp"></jsp:include>
 <input type="hidden" id="numempleadohidden" value="${userStore.numEmpleado}">
 <input type="hidden" id="empleadohidden" value="${userStore.idUsuario}">
+<input type="hidden" id="nombreempleadohidden" value="${userStore.usuarioNombre}">
+<input type="hidden" id="primerapempleadohidden" value="${userStore.usuarioApellidoPaterno}">
+<input type="hidden" id="segundoapempleadohidden" value="${userStore.usuarioApellidoMaterno}">
+<input type="hidden" id="puestoempleadohidden" value="${userStore.puesto}">
+<input type="hidden" id="fotoempleadohidden" value="${userStore.urlFoto}">
 
 <header class="header-navbar-p">
     <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-menu-generic">

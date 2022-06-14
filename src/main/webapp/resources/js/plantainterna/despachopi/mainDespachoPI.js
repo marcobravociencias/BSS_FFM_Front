@@ -75,6 +75,7 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
         $scope.intervencionesConteo = [];
         $scope.repDiario;
         $scope.resultReporteDiario = 0;
+        $scope.arbolIntervenciones = [];
 
         $('#searchGeo').on('keyup', function () {
             $("#jstree-proton-3").jstree("search", this.value);
@@ -1104,6 +1105,7 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                         if (results[1].data.result) {
                             $scope.respaldoTipoOrdenArray = [];
                             $scope.respaldoTipoOrdenArray = angular.copy(results[1].data.result);
+                            $scope.arbolIntervenciones = angular.copy($scope.respaldoTipoOrdenArray);
                             $scope.nfiltrointervenciones = $scope.nfiltrointervenciones ? $scope.nfiltrointervenciones : $scope.obtenerUltimoNivelFiltros($scope.respaldoTipoOrdenArray);
                             $scope.filtrosGeneral.tipoOrdenes = $scope.conversionAnidadaRecursiva($scope.respaldoTipoOrdenArray, 1, $scope.nfiltrointervenciones);
                             $scope.intervencionesConteo = $scope.conversionAnidadaRecursiva($scope.respaldoTipoOrdenArray, 1, $scope.nfiltrointervenciones);

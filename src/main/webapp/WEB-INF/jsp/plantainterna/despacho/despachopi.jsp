@@ -236,6 +236,7 @@
         <jsp:include page="./modals/modalOtIntervenciones.jsp"></jsp:include>
         <jsp:include page="./modals/modalPagos.jsp"></jsp:include>
         <jsp:include page="./modals/modalDetalleSalesforce.jsp"></jsp:include>
+        <jsp:include page="./modals/modalIntervencionesAsignadas.jsp"></jsp:include>
         <jsp:include page="./modals/modalOrganigrama.jsp"></jsp:include>
        
         <!--div ng-show="vistaDespacho" class="container-fluid d-flex justify-content-center">    

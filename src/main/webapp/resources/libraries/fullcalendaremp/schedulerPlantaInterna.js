@@ -6437,6 +6437,10 @@ ResourceRow = (function(superClass) {
                           <span class="tooltiptext-icon-des">Pagos pendientes</span>
                           <span class="icono_operario_accion  fa fa-dollar-sign" onclick="abrirInformacionPagos('${resource.idTecnico}')"  ></span>
                       </div>    
+                      <div class="icon-content-operario tooltip-icon-des">
+                          <span class="tooltiptext-icon-des">Pagos pendientes</span>
+                          <span class="icono_operario_accion  fa fa-briefcase" onclick="mostrarIntervencionesTecnico('${resource.idSubIntervenciones}')"  ></span>
+                      </div>
                   </div> 
               </div>
           </div>
