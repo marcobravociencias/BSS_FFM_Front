@@ -293,8 +293,12 @@
                                 <div class="container-text-title-detalle"><span class="text-tile-ticket">OT
                                         FFM</span>
                                 </div>
-                                <div class="container-text-content-detalle"><span class="text-content-ticket ng-binding"
-                                        ng-bind="ticketDetalle.detalleOtDetenida.otGeneraSoporte || 'Sin dato'"></span>
+                                <div class="container-text-content-detalle">
+                                    <span class="text-content-ticket" ng-if="!ticketDetalle.detalleOtDetenida.otGeneraSoporte">Sin dato</span>
+                                    <span class="text-content-ticket text-external-link"
+                                        ng-if="ticketDetalle.detalleOtDetenida.otGeneraSoporte"
+                                        ng-click="consultaDetalleOT(ticketDetalle.detalleOtDetenida.otGeneraSoporte)"
+                                        ng-bind="ticketDetalle.detalleOtDetenida.otGeneraSoporte"></span>
                                 </div>
                             </div>
                             <div class="container-fluid detalle-content">
@@ -323,6 +327,7 @@
                             <div class="dropleft">
                                 <span class="fas fa-comments icon-color-comments" title="Comentarios"
                                     id="dropupComments" data-toggle="dropdown" aria-expanded="false"></span>
+                                <span ng-click="consultaEvidenciaOTDetalle(ticketDetalle.detalleOtDetenida.otGeneraSoporte)" class="fa fa-picture-o icon-color-comments" style="margin-right: .4em;" title="Evidencia"></span>
                                 <div class="dropdown-menu dropup-comments">
                                     <div class="box-comments">
                                         <div class="box-comments-header">

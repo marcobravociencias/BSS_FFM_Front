@@ -39,6 +39,8 @@
             rel="stylesheet" />
         <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css"
             rel="stylesheet" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/magnific_popup/magnific-popup.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/plantainterna/consultaOT/timeLine.css?v=${sessionScope.versionDepl}"/>
         <link rel="stylesheet"
             href="${pageContext.request.contextPath}/resources/css/generic/busquedaSalesforce\styleMainBusqueda.css?v=${sessionScope.versionDepl}">
         <link rel="stylesheet"
@@ -83,6 +85,8 @@
         <jsp:include page="/WEB-INF/jsp/generic/busquedaSalesforce/mainBusquedaSalesforce.jsp"></jsp:include>
         <jsp:include page="./modals/modalDetalle.jsp"></jsp:include>
         <jsp:include page="./modals/modalFoto.jsp"></jsp:include>
+        <jsp:include page="./modals/modalEvidenciaOT.jsp"></jsp:include>
+        <jsp:include page="./modals/modalDetalleOT.jsp"></jsp:include>
     </body>
     <!-- Scripts libraries -->
     <script src="${pageContext.request.contextPath}/resources/libraries/angularjs/js/angular.min.js"></script>
@@ -110,6 +114,7 @@
         src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
     <script type="text/javascript"
         src="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/lib/moment.es.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/magnific_popup/jquery.magnific-popup.min.js"></script>
 
     <script
         src="${pageContext.request.contextPath}/resources/js/plantainterna/seguimientoSoporte/seguimientoSoporteController.js?v=${sessionScope.versionDepl}"></script>
