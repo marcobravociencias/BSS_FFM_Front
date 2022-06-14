@@ -90,11 +90,10 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 		return 0
 	}
 
-	$scope.cambiarTipoDeRegistroNoticia = function () {
-	}
 	$scope.obtenerNivelUltimoJerarquia = function () {
 		return $scope.listadogeografiacopy.sort(compareGeneric)[0].nivel
 	}
+	
 	$scope.abrirModalGeografiaCreacion = function () {
 		$('#searchGeo').val('');
 		$("#jstre-content-geofrafia").jstree("search", '');
@@ -491,7 +490,8 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 			}
 
 			$scope.saveObj.idGeografias = geografiaEnvio;
-
+			$scope.saveObj.soloImagen = $scope.soloImagenCheck == true ? 1 : 0;
+			
 			swal({ text: 'Guardando registro...', allowOutsideClick: false });
 			swal.showLoading();
 
@@ -589,6 +589,7 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 	}
 
 	$scope.abrirModalCrearNoticia = function () {
+		$scope.soloImagenCheck = false;
 		$scope.crearNoticiaContent = true;
 	}
 

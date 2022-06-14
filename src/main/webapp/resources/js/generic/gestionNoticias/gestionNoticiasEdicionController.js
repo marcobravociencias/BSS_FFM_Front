@@ -6,12 +6,28 @@ app.edicionNoticiaController=function($scope,gestionNoticiasService){
     $scope.banderaArchivoBanner=false;
     $scope.banderaArchivoDescarga=false;
     $scope.listaOtrasNoticiaVistaMod = [];
+    //$scope.inhabilidarCamposEdicion = false;
+    
     abrirModalEdicion=function(index){
         $("#jstre-content-geofrafia-edicon").jstree().deselect_all(true);
         $scope.editObj=angular.copy( $scope.litadoNoticiasTemp[index] )
         $scope.editObj.idNoticia=$scope.editObj.id
         $scope.banderaEdicionImagen=true;
-        $scope.edicionNoticaContent=true
+        $scope.edicionNoticaContent=true;
+        
+        if($scope.editObj.soloImagen != undefined && $scope.editObj.soloImagen != null){
+    		if($scope.editObj.soloImagen == 1){
+    			$scope.editObj.soloImagen = true;
+        		$("#inhabilidarCamposEdicion").prop("checked",true);
+    		}else{
+    			$scope.editObj.soloImagen = false;
+        		$("#inhabilidarCamposEdicion").prop("checked",false);
+    		}
+    	}else{
+    		$scope.editObj.soloImagen = false;
+    		$("#inhabilidarCamposEdicion").prop("checked",false);
+    	}
+        
         $scope.fileCargaArchivoNoticiaEdit = {
             "archivo":  $scope.editObj.urlBanner,
             "nombre":   $scope.editObj.nombreBanner
@@ -243,10 +259,12 @@ app.edicionNoticiaController=function($scope,gestionNoticiasService){
 
             delete $scope.editObj.urlBanner
             delete $scope.editObj.urlArchivo
-            delete $scope.editObj.soloImagen
+//            delete $scope.editObj.soloImagen
             delete $scope.editObj.ordenVisual
             delete $scope.editObj.id;
 
+            $scope.editObj.soloImagen = $scope.editObj.soloImagen == true ? 1 : 0;
+            
             swal({ text: 'Editando registro...', allowOutsideClick: false });
             swal.showLoading();
 

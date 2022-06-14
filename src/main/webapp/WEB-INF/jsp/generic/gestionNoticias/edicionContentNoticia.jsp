@@ -160,7 +160,7 @@
                                 <div class="form row  row-input-crea">
                                     <div class="col-12">
                                         <div class="form-check form-switch">
-                                            <input ng-change="cambiarTipoDeEdicionNoticia()" class="form-check-input" type="checkbox" role="switch" ng-model="inhabilidarCamposEdicion" id="inhabilidarCamposEdicion" checked />
+                                            <input ng-change="cambiarTipoDeEdicionNoticia()" class="form-check-input" type="checkbox" role="switch" ng-model="editObj.soloImagen" id="inhabilidarCamposEdicion" checked />
                                             <label class="form-check-label" for="inhabilidarCamposEdicion"> &iquest;Solo imagen? </label>
                                         </div>
                                     </div>

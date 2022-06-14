@@ -158,7 +158,7 @@
 		                        <div class="form row  row-input-crea">
 		                            <div class="col-12">
 		                                <div class="form-check form-switch">
-		                                    <input ng-change="cambiarTipoDeRegistroNoticia()" class="form-check-input" type="checkbox" role="switch" ng-model="inhabilidarCamposRegistro" id="inhabilidarCamposRegistro" checked />
+		                                    <input ng-change="cambiarTipoDeRegistroNoticia()" class="form-check-input" type="checkbox" role="switch" ng-model="soloImagenCheck" id="inhabilidarCamposRegistro" />
 		                                    <label class="form-check-label" for="inhabilidarCamposRegistro"> &iquest;Solo imagen? </label>
 		                                </div>
 		                            </div>
