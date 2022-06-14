@@ -779,7 +779,7 @@
                 <div class="col-12 row" style="margin-top: -4em; padding: 1em;"
                     ng-show="detalleEvidencia.evidencias.length">
                     <div class="col-3 offset-7" style="text-align: right;">
-                        <span class="text-content text-external-link">Descargar carta aceptaci&oacute;n</span>
+                        <!--span class="text-content text-external-link">Descargar carta aceptaci&oacute;n</span-->
                     </div>
                     <div class="col-2" style="text-align: right; padding-right: 0;">
                         <button type="button" class="btn btn-primary btn-guardar ripple-surface"

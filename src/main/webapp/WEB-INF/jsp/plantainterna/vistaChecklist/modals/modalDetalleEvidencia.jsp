@@ -103,7 +103,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <span class="text-content text-external-link">Descargar carta aceptaci&oacute;n</span>
+                <!--span class="text-content text-external-link">Descargar carta aceptaci&oacute;n</span-->
                 <button type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface"
                     data-mdb-dismiss="modal">
                     Cancelar

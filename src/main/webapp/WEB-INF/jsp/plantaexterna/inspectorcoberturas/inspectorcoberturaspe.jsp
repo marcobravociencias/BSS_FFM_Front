@@ -120,7 +120,7 @@
                         <div class="card map-card">
                             <div id="mapaInspectorCobertura">
                             </div>
-                            <div class="card-body" ng-if="isPermisoLigarIncidencia">
+                            <div class="card-body-selected" ng-if="isPermisoLigarIncidencia">
                                 <div class="col-md-12 card-selected">
                                     <div class="timeline">
                                         <div class="timeline-container primary"
@@ -184,7 +184,7 @@
                                     <div class="search-incidencia">
                                         <i class="fas fa-search"></i>
                                         <input type="text" value="" class="form-control form-control-sm"
-                                            ng-model="filtroBusqueda" placeholder="Buscar incidencia" />
+                                            id="filtroBusquedaTabla" placeholder="Buscar incidencia" ng-keyup="filterByText()" />
                                         <span class="chevron accordion-button collapsed" data-toggle="collapse"
                                             data-target="#panelsStayOpen-collapseTwo" aria-expanded="true"
                                             aria-controls="panelsStayOpen-collapseTwo"></span>
@@ -193,80 +193,18 @@
 
                                 <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse"
                                     aria-labelledby="panelsStayOpen-headingTwo">
-                                    <div class="card-body-consulta" id="content_mapa">
-                                        <div class="content-incidencia">
-                                            <div class="incidencia-card"
-                                                ng-repeat="incidencia in incidenciasCobertura  | filter:filtroBusqueda">
-                                                <div class="row">
-                                                    <div class="col-2" style="text-align:center;">
-                                                        <img src="{{incidencia.urlFoto}}"
-                                                            ng-click="showImage(incidencia.idIncidencia)" alt="Foto"
-                                                            width="35" height="35" class="imgFoto">
-                                                    </div>
-                                                    <div class="col-8 content-text">
-                                                        <span class="text-title"
-                                                            title="{{incidencia.usuarioReporta}}"><strong
-                                                                ng-bind="incidencia.usuarioReporta"></strong></span>
-                                                        <p class="text-title" ng-bind="incidencia.numeroEmpleado"></p>
-                                                    </div>
-                                                    <div class="col-2 incidencia-options">
-                                                        <div class="icon-content" ng-if="isPermisoLigarIncidencia"
-                                                            ng-click="agregarIncidenciaList(incidencia.idIncidencia)"
-                                                            style="right: 2.5em; border-color: #ccc;">
-                                                            <i class="fas fa-check" title="Agregado"
-                                                                ng-if="incidencia.isSelected"
-                                                                id="icon-{{incidencia.idIncidencia}}"
-                                                                style="color: #51b37d; font-size: 0.8em;"></i>
-                                                            <i class="fas fa-plus" title="Agregar"
-                                                                ng-if="!incidencia.isSelected"
-                                                                id="icon-{{incidencia.idIncidencia}}"
-                                                                style="color: #000; font-size: 0.8em;"></i>
-                                                        </div>
-                                                        <div class="icon-content" style="border-color: #ccc;"
-                                                            ng-click="pintarUbicacion(incidencia.idIncidencia)">
-                                                            <i class="fas fa-crosshairs" title="Buscar en mapa"
-                                                                style="color: #000;"></i>
-                                                        </div>
+                                    <div class="card-body-consulta">
+                                        <div class="content-incidencia" id="content_mapa" style="display: none;">
+                                            <table id="tableIncidenciaCobertura" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <td></td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
 
-                                                    </div>
-                                                </div>
-                                                <div class="info-incidencia">
-                                                    <div class="rightbox">
-                                                        <div class="rb-container">
-                                                            <ul class="rb">
-                                                                <li class="rb-item">
-                                                                    <div class="item-title"><strong>ID: <span
-                                                                                ng-bind="incidencia.idIncidencia"></span></strong>
-                                                                    </div>
-                                                                    <div class="item-title"><span
-                                                                            ng-bind="incidencia.descEstatus"></span>
-                                                                    </div>
-                                                                </li>
-                                                                <li class="rb-item">
-                                                                    <div class="item-title">
-                                                                        <span
-                                                                            ng-bind="incidencia.desTipoIncidencia"></span>
-                                                                    </div>
-                                                                    <div class="item-title">
-                                                                        <span
-                                                                            ng-bind="incidencia.desSupTipoIncidencia"></span>
-                                                                    </div>
-                                                                </li>
-                                                                <li class="rb-item">
-                                                                    <div class="item-title"><span>Registro: </span>
-                                                                        <span ng-bind="incidencia.fechaRegistro"></span>
-                                                                        <span ng-bind="incidencia.horaRegistro"></span>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <hr style="margin: 0.2em 1em;">
-                                            </div>
-                                            <div ng-if="!incidenciasCobertura.length" class="message-nodata">
-                                                <span>Ning&uacute;n dato disponible</span>
-                                            </div>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
@@ -309,8 +247,6 @@
         src="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/lib/moment.es.js"></script>
     <script src="${pageContext.request.contextPath}/resources/libraries/exportExcel/index.min.js"></script>
 
-    <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
     <script type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/plantaexterna/inspectorCobertura/inspectorCoberturaController.js?v=${sessionScope.versionDepl}"></script>
     <script type="text/javascript"
