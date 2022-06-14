@@ -11,9 +11,7 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
     $scope.tipoAlertaSeleccionada = {};
     $scope.estatusAlerta = {};
     let objectVistaAlerta;
-
     $scope.listaOpcionesAlerta = [];
-
     $scope.listaStatusAlertaAccion = [];
     $scope.listaEstadosAlertaAccion = [];
     $scope.listaMotivosAlertaAccion = [];
@@ -22,14 +20,14 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
     //    $scope.detalleEvidencia = detalleEvidencias.result.evidencias;
     $scope.detalleEvidencia = {};
     $scope.listImagenesTipo = [];
+    $scope.tipoAlertaValidacion = false;
 
 
     $scope.getDetalleAlertas = function (alerta) {
-
         $scope.permisoAtenderAlertas = $scope.permisosConfigUser.permisos.find(e => { return e.clave === 'accionAtiendeAL' });
         $scope.vistaAuditoriaEvidencia = false;
         $scope.detencionVistaModal = false;
-
+        $scope.tipoAlertaValidacion = false;
         // $("#pills-mapa-tab").click();
         $scope.idAlertaSelecionada = '';
         $scope.evidenciaAlertaConsultada = false;
@@ -52,6 +50,13 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
 
         $scope.listaTotal = { aceptadas: 0, rechazadas: 0 };
 
+        if (alerta.id == 9) {
+            $scope.listaTotal = { aceptadas: 0, rechazadas: 0 };
+            $scope.vistaAuditoriaEvidencia = true;
+            $scope.vistaDespacho = false;
+        }else if(alerta.id == 14){ //VALIDACIÓN PARA SABER SI ES ALERTA DE TIPO "Validación" Y MOSTRAR TABS DE DETENCIÓN
+        	$scope.tipoAlertaValidacion = true; 
+        }
 
         $scope.otsAlertas = [];
         mainAlertasService.getDetalleAlertas(params).then(function success(response) {
@@ -60,6 +65,14 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
 
                     //$("#pills-mapa-tab").click();
                     $scope.otsAlertas = response.data.result ? response.data.result.detalleAlerta : [];
+                    
+//                    $scope.otsAlertas[0].alerta.latitudAlerta = "18.935613";
+//                    $scope.otsAlertas[0].alerta.longitudAlerta = "-99.193426";
+//                    $scope.otsAlertas[0].orden.latitud = "18.934736";
+//                    $scope.otsAlertas[0].orden.longitud = "-99.204510";
+//                    $scope.otsAlertas[0].tecnico.latitud = "18.943907";
+//                    $scope.otsAlertas[0].tecnico.longitud = "-99.199506";
+                    
                     $scope.vistaDespacho = false;
                     $scope.tipoAlertaSeleccionada = angular.copy(alerta);
                     switch (alerta.id) {
@@ -106,7 +119,7 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
                 <div id="cardAlerta${ordenobj.id}" class="card card-alertas-pendientes cards-lertas" onclick="consultarAccionesAlerta('${ordenobj.id}', '${ordenobj.folioSistema}', 
                 '${alertaob.latitudAlerta}', '${alertaob.longitudAlerta}', '${tecnicoObj.latitud}', '${tecnicoObj.longitud}', 
                 '${alertaob.idSubAlerta}', '${ordenobj.idIntervencion}', '${ordenobj.idSubIntervencion}', '${tecnicoObj.id}', 
-                '${alertaob.idRegistroAlerta}', '${ordenobj.idFlujo}')">
+                '${alertaob.idRegistroAlerta}', '${ordenobj.idFlujo}', '${ordenobj.latitud}', '${ordenobj.longitud}')">
                     <div class="card-body card-body-alertas">
 
                         <div class="top-title-ot">
@@ -289,7 +302,6 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
         setTimeout(() => {
             $scope.listImagenesTipo.map(function (e) {
                 if (e.idEstatus == 2) {
-                    console.log(e);
                     $("#check_" + e.id).prop("checked", true);
                 }
             });
@@ -476,7 +488,7 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
         tableAlerta.search(textbusqeuda).draw()
     }
     $scope.idAlertaSelecionada = '';
-    consultarAccionesAlerta = function (ot, os, latAlerta, longAlerta, latTecnico, longTecnico, idSubTipoAlerta, idIntervencion, idSubIntervencion, idTecnico, idAlerta, idFlujo) {
+    consultarAccionesAlerta = function (ot, os, latAlerta, longAlerta, latTecnico, longTecnico, idSubTipoAlerta, idIntervencion, idSubIntervencion, idTecnico, idAlerta, idFlujo, latOrden, longOrden) {
         if ($scope.idAlertaSelecionada !== ot) {
             $(".cards-lertas").css("border-left", "1px solid #dddddd");
             $(".cards-lertas").css("box-shadow", "0 0 0 0 #ffffff");
@@ -497,6 +509,8 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
                 longitudAlerta: longAlerta,
                 latitudTecnico: latTecnico,
                 longitudTecnico: longTecnico,
+                latitudOrden: latOrden,
+                longitudOrden: longOrden,
                 idSubTipoAlerta: idSubTipoAlerta,
                 idIntervencion: idIntervencion,
                 idSubIntervencion: idSubIntervencion,
@@ -1125,11 +1139,12 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
 
 
     $scope.setMarkets = function (pos) {
-
         let isDataMarkerTecnico = $scope.validarLatitudLongitudMap(pos.latitudTecnico, pos.longitudTecnico);
         let isDataMarkerAlerta = $scope.validarLatitudLongitudMap(pos.latitudAlerta, pos.longitudAlerta);
+        let isDataMarkerOrden = $scope.validarLatitudLongitudMap(pos.latitudOrden, pos.longitudOrden);
 
         deleteMarkers();
+        var bounds = new google.maps.LatLngBounds();
 
         if (!isDataMarkerTecnico) {
             var marker = new google.maps.Marker({
@@ -1137,7 +1152,7 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
                     lat: parseFloat(pos.latitudTecnico),
                     lng: parseFloat(pos.longitudTecnico)
                 },
-                title: "Tecnico",
+                title: "TÉCNICO",
                 animation: google.maps.Animation.DROP,
                 map: mapaAlerta,
                 icon: {
@@ -1148,44 +1163,68 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
                 }
             });
             markers.push(marker);
+            bounds.extend(marker.getPosition());
         }
 
         if (!isDataMarkerAlerta) {
-            marker = new google.maps.Marker({
+            var marker = new google.maps.Marker({
                 position: {
                     lat: parseFloat(pos.latitudAlerta),
                     lng: parseFloat(pos.longitudAlerta)
+                },
+                title: "ALERTA",
+                animation: google.maps.Animation.DROP,
+                map: mapaAlerta
+//                icon: {
+//                    url: './resources/img/plantainterna/despacho/domicilio-marker.svg',
+//                    scaledSize: new google.maps.Size(37, 43),
+//                    origin: new google.maps.Point(0, 0),
+//                    anchor: new google.maps.Point(10, 20)
+//                },
+            });
+            markers.push(marker);
+            bounds.extend(marker.getPosition());
+        }
+        
+        if (!isDataMarkerOrden) {
+            var marker = new google.maps.Marker({
+                position: {
+                    lat: parseFloat(pos.latitudOrden),
+                    lng: parseFloat(pos.longitudOrden)
                 },
                 title: "OT",
                 animation: google.maps.Animation.DROP,
                 map: mapaAlerta,
                 icon: {
-                    url: './resources/img/plantainterna/despacho/domicilio-marker.svg',
+                	url: './resources/img/plantainterna/despacho/domicilio-marker.svg',
                     scaledSize: new google.maps.Size(37, 43),
                     origin: new google.maps.Point(0, 0),
                     anchor: new google.maps.Point(10, 20)
                 },
             });
             markers.push(marker);
+            bounds.extend(marker.getPosition());
         }
+        
+        mapaAlerta.fitBounds(bounds);
 
-        if (!isDataMarkerTecnico || !isDataMarkerAlerta) {
-            if (!isDataMarkerAlerta) {
-                mapaAlerta.setCenter(new google.maps.LatLng(parseFloat(pos.latitudAlerta), parseFloat(pos.longitudAlerta)));
-            } else {
-                mapaAlerta.setCenter(new google.maps.LatLng(parseFloat(pos.latitudTecnico), parseFloat(pos.longitudTecnico)));
-            }
-        } else {
-            mapaAlerta.setCenter(new google.maps.LatLng(19.4326, -99.1332));
-            mapaAlerta.setZoom(5);
-        }
+//        if (!isDataMarkerTecnico || !isDataMarkerOrden) {
+//            if (!isDataMarkerOrden) {
+//                mapaAlerta.setCenter(new google.maps.LatLng(parseFloat(pos.latitudOrden), parseFloat(pos.longitudOrden)));
+//            } else {
+//                mapaAlerta.setCenter(new google.maps.LatLng(parseFloat(pos.latitudTecnico), parseFloat(pos.longitudTecnico)));
+//            }
+//        } else {
+//            mapaAlerta.setCenter(new google.maps.LatLng(19.4326, -99.1332));
+//            mapaAlerta.setZoom(5);
+//        }
 
         listadoLinesCurves.map(function (e) { e.setMap(null); return e; })
         listadoLinesCurves = [];
 
-        if (!isDataMarkerTecnico && !isDataMarkerAlerta) {
+        if (!isDataMarkerTecnico && !isDataMarkerOrden) {
             let pointA = new google.maps.LatLng(parseFloat(pos.latitudTecnico), parseFloat(pos.longitudTecnico)) // basel airport
-            let pointB = new google.maps.LatLng(parseFloat(pos.latitudAlerta), parseFloat(pos.longitudAlerta))
+            let pointB = new google.maps.LatLng(parseFloat(pos.latitudOrden), parseFloat(pos.longitudOrden))
             $scope.drawCurveExt(pointA, pointB, mapaAlerta);
         }
     }
@@ -1284,9 +1323,9 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
     $scope.isDetalleAlerta = false;
     $scope.abirDetalle = function () {
         if (!$scope.isDetalleAlerta) {
-            $scope.objectDetalleAlerta = $scope.otsAlertas[0]
+            $scope.objectDetalleAlerta = $scope.otsAlertas[0];
             $scope.objectDetalleAlerta.tecnico.urlFotoPerfil ? $scope.objectDetalleAlerta.tecnico.urlFotoPerfil : './resources/img/plantainterna/despacho/tecnicootasignada.png';
-            $scope.inicializarMapasAlertaDetalle()
+            $scope.inicializarMapasAlertaDetalle();
             $scope.isDetalleAlerta = true;
         }
         $scope.pintarMarkesMapDetalleAlerta();

@@ -453,20 +453,20 @@
 <!-- 		                    </div> -->
 <!--                         </div> -->
                         
-                        <div class="col-md-12 contenedor-lista-estados-usuarios" ng-if="verCambioEstatusUsuario">
-		                    <div class="dropdown">
-		                    	<li class="nav-item dropdown form-control form-control-sm input-cambio-estatus-usuario" id="opcCambioEstatus">
-			                        <a class="nav-link dropdown-toggle" href="#" id="" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
-			                        	<i class="fas fa-circle" style="color: #0cd040;"></i>
-	 		                                Activo
-			                        </a>
-									<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-										<li id="listaEstatusUsuarios">
-			                            </li>
-									</ul>
-								</li>
-		                    </div>
-		                </div> 
+<!--                         <div class="col-md-12 contenedor-lista-estados-usuarios" ng-if="verCambioEstatusUsuario"> -->
+<!-- 		                    <div class="dropdown"> -->
+<!-- 		                    	<li class="nav-item dropdown form-control form-control-sm input-cambio-estatus-usuario" id="opcCambioEstatus"> -->
+<!-- 			                        <a class="nav-link dropdown-toggle" href="#" id="" role="button" data-mdb-toggle="dropdown" aria-expanded="false"> -->
+<!-- 			                        	<i class="fas fa-circle" style="color: #0cd040;"></i> -->
+<!-- 	 		                                Activo -->
+<!-- 			                        </a> -->
+<!-- 									<ul class="dropdown-menu" aria-labelledby="navbarDropdown"> -->
+<!-- 										<li id="listaEstatusUsuarios"> -->
+<!-- 			                            </li> -->
+<!-- 									</ul> -->
+<!-- 								</li> -->
+<!-- 		                    </div> -->
+<!-- 		                </div>  -->
                         
                         <div class="dropdown-menu-opciones">
                             <ul class="nav flex-column">

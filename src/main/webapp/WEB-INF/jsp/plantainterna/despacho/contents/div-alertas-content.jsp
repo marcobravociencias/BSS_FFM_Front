@@ -66,13 +66,13 @@
                                 href="#pills-detalle" role="tab" ng-click="abirDetalle()" aria-controls="pills-detalle"
                                 aria-selected="false">Detalle</a>
                         </li>
-                        <li class="nav-item" role="presentation">
+                        <li class="nav-item" role="presentation" ng-show="tipoAlertaValidacion">
                             <a ng-click="consultarDetalleOtPE();" class="nav-link options-alertas"
                                 id="pills-orden-detenida-alertas-tab" data-toggle="pill"
                                 href="#pills-orden-detenida-alertas" role="tab"
                                 aria-controls="pills-orden-detenida-alertas" aria-selected="false">Orden detenida</a>
                         </li>
-                        <li class="nav-item" role="presentation">
+                        <li class="nav-item" role="presentation" ng-show="tipoAlertaValidacion">
                             <a ng-click="consultarDetalleOtPE();" class="nav-link options-alertas"
                                 id="pills-detalle-detencion-alertas-tab" data-toggle="pill"
                                 href="#pills-detalle-detencion-alertas" role="tab" ng-click=""
@@ -391,7 +391,7 @@
                                     <div class="tab-pane fade" id="pills-OT" role="tabpanel"
                                         aria-labelledby="pills-ot-tab">
                                         <div class="row">
-                                            <div class="col-12">
+                                            <div class="col-md-6">
                                                 <div class="container-fluid vehiculo-content">
                                                     <div class="container-text-title-detalle"><span
                                                             class="text-tile-vehiculo">OT</span></div>
@@ -459,13 +459,19 @@
                                                 <div class="container-fluid vehiculo-content">
                                                     <div class="container-text-title-detalle"><span
                                                             class="text-tile-vehiculo">Direcci&oacute;n</span></div>
-                                                    <div class="container-text-content-detalle"><span
+                                                    <div class="container-text-long-content-detalle"><span
                                                             class="text-content-vehiculo"
                                                             title="{{infoOtDetalle.Id_ot}}"
                                                             ng-bind="objectDetalleAlerta.orden.direccion || 'Sin dato'"></span>
                                                     </div>
                                                 </div>
                                             </div>
+                                            
+                                            <div class="col-md-6 col-map-datlle">
+                                                <div id="mapaDetalleOrden" class="contenido-card"
+                                                    style="width:100%;height:100%; border-radius: 10px;"></div>
+                                            </div>
+                                            
                                         </div>
                                     </div>
 

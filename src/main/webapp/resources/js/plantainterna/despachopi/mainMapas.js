@@ -626,6 +626,7 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
 
     let mapaDetalleAlerta;
     let mapaDetalleTecnico;
+    let mapaDetalleOrden;
     $scope.inicializarMapasAlertaDetalle = function () {
         mapaDetalleAlerta = new google.maps.Map(document.getElementById("mapDetalleAlerta"), {
             zoom: 15,
@@ -634,14 +635,20 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
         mapaDetalleTecnico = new google.maps.Map(document.getElementById("mapDetalleTecnico"), {
             zoom: 15,
         });
+        
+        mapaDetalleOrden = new google.maps.Map(document.getElementById("mapaDetalleOrden"), {
+            zoom: 15,
+        });
     }
     let marketsDetalleAlerta = []
     let maDetalleAlerta;
     let mDetalleTecnico;
+    let mDetalleOrden;
     $scope.pintarMarkesMapDetalleAlerta = function () {
         $scope.limpiarMakerTecnicos();
         let isDataMarkerTecnico = $scope.validarLatitudLongitudMap($scope.objectDetalleAlerta.tecnico.latitud, $scope.objectDetalleAlerta.tecnico.longitud);
         let isDataMarkerAlerta = $scope.validarLatitudLongitudMap($scope.objectDetalleAlerta.alerta.latitudAlerta, $scope.objectDetalleAlerta.alerta.longitudAlerta);
+        let isDataMarkerOrden = $scope.validarLatitudLongitudMap($scope.objectDetalleAlerta.orden.latitud, $scope.objectDetalleAlerta.orden.longitud);
         
         if(!isDataMarkerAlerta){
           
@@ -654,14 +661,13 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
                 animation: google.maps.Animation.DROP,
                 map: mapaDetalleAlerta,
                 latitud_ot: parseFloat($scope.objectDetalleAlerta.alerta.latitudAlerta),
-                longitud_ot: parseFloat($scope.objectDetalleAlerta.alerta.longitudAlerta),
-                icon: {
-                    url:'./resources/img/plantainterna/despacho/domicilio-marker.svg',
-                    scaledSize: new google.maps.Size(37, 43),
-                    origin: new google.maps.Point(0, 0),
-                    anchor: new google.maps.Point(10, 20)
-                }
-
+                longitud_ot: parseFloat($scope.objectDetalleAlerta.alerta.longitudAlerta)
+//                icon: {
+//                    url:'./resources/img/plantainterna/despacho/domicilio-marker.svg',
+//                    scaledSize: new google.maps.Size(37, 43),
+//                    origin: new google.maps.Point(0, 0),
+//                    anchor: new google.maps.Point(10, 20)
+//                }
             });
             mapaDetalleAlerta.setCenter(new google.maps.LatLng(parseFloat($scope.objectDetalleAlerta.alerta.latitudAlerta), parseFloat($scope.objectDetalleAlerta.alerta.longitudAlerta)));
             marketsDetalleAlerta.push(maDetalleAlerta)
@@ -695,6 +701,33 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
             mapaDetalleTecnico.setCenter(new google.maps.LatLng(19.4326, -99.1332));
             mapaDetalleTecnico.setZoom(5);
         }
+        
+        if(!isDataMarkerOrden){
+            
+        	mDetalleOrden = new google.maps.Marker({
+                clickable: false,
+                position: {
+                    lat: parseFloat($scope.objectDetalleAlerta.orden.latitud),
+                    lng: parseFloat($scope.objectDetalleAlerta.orden.longitud)
+                },
+                animation: google.maps.Animation.DROP,
+                map: mapaDetalleOrden,
+                latitud_ot: parseFloat($scope.objectDetalleAlerta.orden.latitud),
+                longitud_ot: parseFloat($scope.objectDetalleAlerta.orden.longitud),
+                icon: {
+                	url:'./resources/img/plantainterna/despacho/domicilio-marker.svg',
+                    scaledSize: new google.maps.Size(37, 43),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(10, 20)
+                }
+
+            });
+        	mapaDetalleOrden.setCenter(new google.maps.LatLng(parseFloat($scope.objectDetalleAlerta.orden.latitud), parseFloat($scope.objectDetalleAlerta.orden.longitud)));
+            marketsDetalleAlerta.push(mDetalleOrden)
+        }else{
+        	mapaDetalleOrden.setCenter(new google.maps.LatLng(19.4326, -99.1332));
+        	mapaDetalleOrden.setZoom(5);
+        } 
 
     }
 

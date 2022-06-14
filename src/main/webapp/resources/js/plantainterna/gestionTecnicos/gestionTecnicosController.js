@@ -142,11 +142,12 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
     }
 
     $scope.consultarTecnicos = function () {
-    	
     	$scope.limpiarDetalleJustificacion();
     	$scope.changeView();
     	$scope.isTecnicoSelected = false;
-    	
+    	$.each($scope.listTecnicos, function (i, elemento) {
+            $("#us-"+elemento.idTecnico).css("background-color", "white");
+        });
     	eventosDisponibilidad = [];
     	if ($scope.calendarTec) {
             $scope.calendarTec.destroy();
@@ -160,7 +161,6 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
             	gestionTecnicosService.consultaTecnicosPorDespacho(),
             	gestionTecnicosService.consultaMotivosJustificaciones()
             ]).then(function (results) {
-            	
             	if (results[0].data !== undefined) {
 	            	if(results[0].data.respuesta){
 	            		if(results[0].data.result !== null){
@@ -200,7 +200,7 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
             	
             	if($scope.listTecnicos.length > 0){
             		setTimeout(function () {
-                		$("#"+$scope.listTecnicos[0].idTecnico).trigger('click');
+                		$("#us-"+$scope.listTecnicos[0].idTecnico).trigger('click');
     	    		}, 500);
             	}
             	
@@ -503,10 +503,10 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
         $scope.tipoConsulta = 'TEC';
 
         $.each($scope.listTecnicos, function (i, elemento) {
-            $("#"+elemento.idTecnico).css("background-color", "white");
+            $("#us-"+elemento.idTecnico).css("background-color", "white");
         });
         $.each($scope.listAuxiliares, function (i, elemento) {
-            $("#"+elemento.idAuxiliar).css("background-color", "white");
+            $("#us-"+elemento.idAuxiliar).css("background-color", "white");
         });
         
         if (tecnico !== undefined) {
@@ -522,7 +522,7 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
             }
         }
         
-        $("#" + $scope.idTecnico).css("background-color", "#DCDEDC");
+        $("#us-" + $scope.idTecnico).css("background-color", "#DCDEDC");
         
         const fechaActual = document.getElementsByClassName('fc-toolbar-title')[0].innerText;
         const fechaArray = fechaActual.split(" ");
@@ -1509,7 +1509,7 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
     	$scope.changeView();
     	$scope.isTecnicoSelected = false;
     	$.each($scope.listAuxiliares, function (i, elemento) {
-            $("#"+elemento.idAuxiliar).css("background-color", "white");
+            $("#us-"+elemento.idAuxiliar).css("background-color", "white");
         });
     	eventosDisponibilidad = [];
     	if ($scope.calendarTec) {

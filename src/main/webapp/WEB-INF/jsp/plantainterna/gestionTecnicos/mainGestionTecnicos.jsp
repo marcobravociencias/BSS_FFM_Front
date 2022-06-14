@@ -63,7 +63,7 @@
 			                            </div>
 			                        </div>
 			                        <div style="margin-left: 2%;" ng-repeat="tecnico in listTecnicos | filter:searchTecnico">
-			                            <div id="{{tecnico.idTecnico}}" class="valign-wrapper tecnicosDiv" ng-click="consultarDisponibilidadTecnico(tecnico)">
+			                            <div id="us-{{tecnico.idTecnico}}" class="valign-wrapper tecnicosDiv" ng-click="consultarDisponibilidadTecnico(tecnico)">
 			                                <div class="col-12" style="margin-bottom: 0.1em;">
 			                                    <div class="row">
 			                                        <div class="col-md-1 media-image online pr-0" style="padding-left: 0;" ng-if="!tecnico.foto">
@@ -94,7 +94,7 @@
 			                            </div>
 			                        </div>
 			                        <div style="margin-left: 2%;" ng-repeat="auxiliar in listAuxiliares | filter:searchAuxiliar">
-			                            <div id="{{auxiliar.idAuxiliar}}" class="valign-wrapper tecnicosDiv" ng-click="consultarDisponibilidadTecnico(auxiliar)">
+			                            <div id="us-{{auxiliar.idAuxiliar}}" class="valign-wrapper tecnicosDiv" ng-click="consultarDisponibilidadTecnico(auxiliar)">
 			                                <div class="col-12" style="margin-bottom: 0.1em;">
 			                                    <div class="row">
 			                                        <div class="col-md-1 media-image online pr-0" style="padding-left: 0;" ng-if="!auxiliar.foto">
@@ -216,7 +216,7 @@
 	                    <div class="col-9" id="container_detalleMesTecnico" ng-show="isDetalleMesTecnico">
 	                        <div class="row filter-content" style="margin-top: .5em;">
 	                            <div class="col-6" style="margin-top: .5em;">
-	                                <h5 class="title-modulo" style="margin-left: 3%;">Detalle Mes {{tituloDetalle}}</h5>
+	                                <h5 class="title-modulo" style="margin-left: 3%;">DETALLE MES {{tituloDetalle}}</h5>
 	                            </div>
 	                            <div class="offset-5 col-1" style="margin-top: .5em;">
 	                                <i class="fas fa-arrow-circle-left icon-back" ng-click="changeView()" title="Regresar"></i>
@@ -294,13 +294,11 @@
 	                                                        <th>OS</th>
 	                                                        <th>Cuenta</th>
 	                                                        <th>Tipo</th>
-<!-- 	                                                        <th>Subtipo</th> -->
 	                                                        <th>Fecha inicio</th>
 	                                                        <th>Fecha fin</th>
 	                                                        <th>Usuario auxiliar</th>
 	                                                        <th>Auxiliar</th>
 	                                                        <th>Puntualidad</th>
-<!-- 	                                                        <th>Tiempo total</th> -->
 	                                                        <th>Opciones</th>
 	                                                    </tr>
 	                                                </thead>
@@ -319,7 +317,7 @@
 	                                                        <th>#Empleado creador</th>
 	                                                        <th>Empleado creador</th>
 	                                                        <th>Fecha inicio</th>
-	                                                        <th>Falla fin</th>
+	                                                        <th>Fecha fin</th>
 	                                                        <th>Fecha registro</th>
 	                                                        <th>Fecha modificaci&oacute;n</th>
 	                                                    </tr>
