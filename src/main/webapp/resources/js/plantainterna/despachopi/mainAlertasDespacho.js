@@ -213,21 +213,18 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
             swal({ text: 'Cargando registros...', allowOutsideClick: false });
             swal.showLoading();
         }
-
-        $scope.detalleEvidencia.tipos = [];
-        $scope.listImagenesTipo = [];
-
+        
         mainAlertasService.consultarDetalleEvidencia(params).then(function success(response) {
             swal.close();
             if (response.data !== undefined) {
                 if (response.data.respuesta) {
                     if (response.data.result) {
+                        $scope.detalleEvidencia = response.data.result;
+
                         if (!response.data.result.evidencias.length) {
-                            $scope.detalleEvidencia = {};
                             toastr.info("No se encontraron evidencias");
                             return false;
                         }
-                        $scope.detalleEvidencia = response.data.result;
                         $scope.detalleEvidencia.tipos = [];
                         $scope.listImagenesTipo = response.data.result.evidencias;
 
