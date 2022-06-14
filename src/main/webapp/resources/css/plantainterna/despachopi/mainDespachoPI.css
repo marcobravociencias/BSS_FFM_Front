@@ -12,6 +12,11 @@ body {
   font-family: 'Montserrat';
   font-size: .8em;
 }
+#jstree-intervencion-asignada {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 #todo_filtro,
 #ninguno_filtro {
@@ -3008,4 +3013,13 @@ i.fas.fa-lock.iconoAsignacionOtPermiso {
 
 .fc-now-indicator.fc-now-indicator-line{
   z-index:0;
+}
+.container-busqueda {
+  padding: 0;
+  margin-top: 0!important;
+}
+
+.div-parent-home {
+  margin: 0em!important;
+  
 }

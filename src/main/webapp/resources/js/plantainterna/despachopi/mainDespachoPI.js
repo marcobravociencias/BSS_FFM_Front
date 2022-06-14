@@ -1511,6 +1511,7 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
             if (os.substr(0,3) === "OS-") {
                 $scope.detalleSalesforceView = false;
                 $scope.respaldoHistorial = [];
+                $scope.historial = [];
                 $scope.consultarDetalleObjectosSF(idFolio, 'OS');
                 $("#modalDetalleSalesforce").modal('show');
             } else {
