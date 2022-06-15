@@ -540,7 +540,7 @@ a.descarga-adjuntadocomment {
 #agregarnuevoEquivo{
     position:absolute;
     bottom:0;
-    background-color: #0c56d0;
+    background-color: var(--btn-color-guardar);
     box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
 }
 .label-nuevo-equipo{
@@ -573,13 +573,13 @@ a.descarga-adjuntadocomment {
     text-overflow: ellipsis;
 }
 .eliminar-registro-cambioequipo{
-  background:#f55756;
+  background: var(--btn-color-eliminar-tabla);
   font-size:.7em;
   padding: .3em 1em;
 }
 
 .eliminar-registro-cambioequipo:hover,.eliminar-registro-cambioequipo:active, .eliminar-registro-cambioequipo:focus {
-  background:#f55756 !important;
+  background:var(--btn-color-eliminar-tabla) !important;
 }
 
 #table-cambio-equipo tbody tr:nth-child(odd) {

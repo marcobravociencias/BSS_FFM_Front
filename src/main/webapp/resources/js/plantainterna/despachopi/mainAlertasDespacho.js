@@ -50,11 +50,7 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
 
         $scope.listaTotal = { aceptadas: 0, rechazadas: 0 };
 
-        if (alerta.id == 9) {
-            $scope.listaTotal = { aceptadas: 0, rechazadas: 0 };
-            $scope.vistaAuditoriaEvidencia = true;
-            $scope.vistaDespacho = false;
-        }else if(alerta.id == 14){ //VALIDACIÓN PARA SABER SI ES ALERTA DE TIPO "Validación" Y MOSTRAR TABS DE DETENCIÓN
+        if(alerta.id == 14){ //VALIDACIÓN PARA SABER SI ES ALERTA DE TIPO "Validación" Y MOSTRAR TABS DE DETENCIÓN
         	$scope.tipoAlertaValidacion = true; 
         }
 

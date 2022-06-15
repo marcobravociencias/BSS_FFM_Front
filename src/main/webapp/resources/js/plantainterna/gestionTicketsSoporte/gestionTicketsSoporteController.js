@@ -993,8 +993,8 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                                     swal.close();
                                 }
                                 $scope.cleanForm();
-                                toastr.success(response.data.resultDescripcion);
-                                objectTempAccion.guardarAccionesRecientesModulo(response.data.resultDescripcion, MENSAJE_ACCION_EXITO, tituloAccion);
+                                toastr.success('El ticket se cre&oacute; con la OT: ' + response.data.result.idTicketFFM);
+                                objectTempAccion.guardarAccionesRecientesModulo('El ticket se cre&oacute; con la OT: ' + response.data.result.idTicketFFM, MENSAJE_ACCION_EXITO, tituloAccion);
                                 $scope.isMensajeSuccessOt = true
 
                             } else {
@@ -1223,10 +1223,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                         let urlTec = regexUrl.test($scope.editTicket.detalleOtDetenida.fotoTecnico) ? $scope.editTicket.detalleOtDetenida.fotoTecnico : "./resources/img/plantainterna/despacho/tecnicootasignada.png";
                         let urlIng = regexUrl.test($scope.editTicket.detalleTicketSc.fotoInge) ? $scope.editTicket.detalleTicketSc.fotoInge : "./resources/img/plantainterna/despacho/tecnicootasignada.png";
 
-                        setTimeout(() => {
-                            $("#fotoIngeniero").attr("src", urlIng);
-                            $("#fotoTecnico").attr("src", urlTec);
-                        }, 100);
+                       
                         if ($scope.editTicket.detalleTicketSc.acciones.length && $scope.accionesDinamicasDetalle.length) {
                             $scope.editTicket.detalleTicketSc.acciones.map(function (s) {
                                 if (Number(s.valor) == 1) {
@@ -1243,18 +1240,26 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                                 }
                             });
                         }
-                        if ($scope.editTicket.detalleTicketSc.idEstatus == 4 || $scope.editTicket.detalleTicketSc.idEstatus == 5 || !$scope.editTicket.detalleTicketSc.usuarioInge) {
-                            $(".content-detalle-ticket .inputTicket").prop("disabled", true);
-                            $("#detalleTicketAccordion .dictamen-info").prop("disabled", true);
-                            $(".btn-disabled").prop("disabled", true);
-                            $("#btnGuardarCambios").prop("disabled", true);
-                            $scope.ticketSoporteDetalle.comentarios = $scope.editTicket.detalleTicketSc.comentarioTicket;
-                        } else {
-                            $(".content-detalle-ticket .inputTicket").prop("disabled", false);
-                            $("#detalleTicketAccordion .dictamen-info").prop("disabled", false);
-                            $(".btn-disabled").prop("disabled", false);
-                            $("#btnGuardarCambios").prop("disabled", false);
-                        }
+
+                        setTimeout(() => {
+                            $("#fotoIngeniero").attr("src", urlIng);
+                            $("#fotoTecnico").attr("src", urlTec);
+
+                            if ($scope.editTicket.detalleTicketSc.idEstatus == 4 || $scope.editTicket.detalleTicketSc.idEstatus == 5 || !$scope.editTicket.detalleTicketSc.usuarioInge) {
+                                $(".content-detalle-ticket .inputTicket").prop("disabled", true);
+                                $("#detalleTicketAccordion .dictamen-info").prop("disabled", true);
+                                $(".btn-disabled").prop("disabled", true);
+                                $("#btnGuardarCambios").prop("disabled", true);
+                                $scope.ticketSoporteDetalle.comentarios = $scope.editTicket.detalleTicketSc.comentarioTicket;
+                            } else {
+                                $(".content-detalle-ticket .inputTicket").prop("disabled", false);
+                                $("#detalleTicketAccordion .dictamen-info").prop("disabled", false);
+                                $(".btn-disabled").prop("disabled", false);
+                                $("#btnGuardarCambios").prop("disabled", false);
+                            }
+                            
+                        }, 100);
+                       
 
                         let clusterInd = $scope.listadoGeografiaSoporte.find(e => e.id == $scope.editTicket.detalleOtDetenida.idCluster)
                         if (clusterInd) {

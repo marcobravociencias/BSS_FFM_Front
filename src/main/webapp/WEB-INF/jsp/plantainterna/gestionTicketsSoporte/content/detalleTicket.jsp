@@ -532,7 +532,7 @@
                                         <td ng-bind="itemRegistro.macNueva" title="{{itemRegistro.macNueva}}"></td>
                                         <td>
                                             <button ng-click="eliminarRegistro($index)" type="button"
-                                                class="eliminar-registro-cambioequipo btn btn-sm btn-primary ">
+                                                class="eliminar-registro-cambioequipo btn btn-sm btn-danger btn-disabled">
                                                 <i class="fas fa-times"></i>
                                             </button>
                                         </td>

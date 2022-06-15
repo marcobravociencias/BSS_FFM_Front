@@ -608,7 +608,7 @@ img.img-despacho-navbar.img-user-profile-navbar {
 #user-info-login .dropdown-menu-info .vertical-timeline::before {
   content: '';
   position: absolute;
-  height: 5%;
+  height: 9%;
   width: 4px;
   background: #e9ecef;
   border-radius: 0.25rem;
@@ -621,6 +621,7 @@ img.img-despacho-navbar.img-user-profile-navbar {
 #user-info-login .dropdown-menu-info .vertical-timeline-element {
   margin: 0 0 0.2rem;
   position: relative;
+  line-height: 1.4;
 }
 
 #user-info-login .dropdown-menu-info .vertical-timeline-element-icon::after {

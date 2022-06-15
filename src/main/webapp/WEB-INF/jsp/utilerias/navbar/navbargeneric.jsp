@@ -428,7 +428,7 @@
                                 </div>
                             </div>
                             <div
-                                class="vertical-time-simple vertical-without-time vertical-timeline vertical-timeline--animate vertical-timeline--one-column">
+                                class="vertical-time-simple vertical-without-time">
                                 <div class="vertical-timeline-item vertical-timeline-element">
                                     <div><span class="vertical-timeline-element-icon bounce-in"></span>
                                         <div class="vertical-timeline-element-content bounce-in">

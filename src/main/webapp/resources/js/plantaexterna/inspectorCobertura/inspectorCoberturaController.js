@@ -1,5 +1,8 @@
 var app = angular.module('inspectorCoberturaApp', []);
 app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCoberturaService', 'genericService', function ($scope, $q, inspectorCoberturaService, genericService) {
+    var objectTempAccion = new GenericAccionRealizada('moduloInspectorCoberturasPE', 'TOP_RIGHT');
+    objectTempAccion.inicializarBotonAccionesRecientes();
+
     var regexUrl = /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/;
     var infowindows = [];
     let markers = [];
@@ -708,7 +711,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
         $("#modalCluster").modal('show');
     }
 
-    $scope.ligarIncidenciaPe = function (comentario, cluster) {
+    $scope.ligarIncidenciaPe = function (comentario, cluster, textCluster) {
         let incidenciasArray = $scope.listaIncidenciasLigar.map(e => Number(e.idIncidencia))
         let params = {
             comentario: comentario,
@@ -717,6 +720,8 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
         }
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
+        let tituloAccion = "Ligar incidencia a cl&uacute;ster";
+        let mensajeEnvio = 'Ha ocurrido un error al ligar las incidencias al cluster: ' + textCluster;
         inspectorCoberturaService.ligarIncidenciasCoberturaPE(params).then(function success(response) {
             if (response.data) {
                 if (response.data.respuesta) {
@@ -726,18 +731,23 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                         $("#modalCluster").modal('hide');
                         $('#jstree-proton-3').jstree("deselect_all");
                         $('#jstree-proton-3').jstree("close_all");
+                        mensajeEnvio = 'Se ligaron las incidencias al cluster: ' + textCluster;
+                        objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
                         $scope.consultarCoberturas();
                     } else {
                         mostrarMensajeErrorAlert(response.data.resultDescripcion);
                         swal.close();
+                        objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                     }
                 } else {
                     mostrarMensajeErrorAlert("No se pudo ligar al cluster");
                     swal.close();
+                    objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                 }
             } else {
                 mostrarMensajeErrorAlert(response.data.resultDescripcion);
                 swal.close();
+                objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
             }
         }).catch(err => handleError(err));
     }
@@ -770,7 +780,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
             cancelButtonText: 'Cancelar'
         }).then(function (response) {
             if (response.length) {
-                $scope.ligarIncidenciaPe(response, clustersparam[0]);
+                $scope.ligarIncidenciaPe(response, clustersparam[0], selectedElm[0].text);
             } else {
                 mostrarMensajeWarningValidacion('El comentario es obligatorio para ligar incidencias');
             }
