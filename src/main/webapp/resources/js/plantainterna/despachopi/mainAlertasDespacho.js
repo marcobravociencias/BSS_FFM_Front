@@ -103,10 +103,12 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
             let ordenobj = value.orden;
             let tecnicoObj = value.tecnico;
 
-            //            $scope.otModalSelectedGeneric.idFlujo = ordenobj.idFlujo;
-            //            $scope.otModalSelectedGeneric.idOrden = ordenobj.id;
-            $scope.otModalSelectedGeneric.idFlujo = 10;
-            $scope.otModalSelectedGeneric.idOrden = 592525;
+            $scope.otModalSelectedGeneric.idFlujo = ordenobj.idFlujo;
+            $scope.otModalSelectedGeneric.idOrden = ordenobj.id;
+//            console.log(ordenobj.idFlujo);
+//            console.log(ordenobj.id);
+//            $scope.otModalSelectedGeneric.idFlujo = 10;
+//            $scope.otModalSelectedGeneric.idOrden = 592525;
 
             let arra = [];
             arra[0] = alertaob.id ? alertaob.id : '';
