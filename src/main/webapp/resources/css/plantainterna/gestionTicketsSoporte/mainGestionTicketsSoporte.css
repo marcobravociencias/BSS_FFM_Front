@@ -1266,6 +1266,38 @@ body.modal-open.mfp-zoom-out-cur {
 /* MODAL EVIDENCIA OT */
 
 /* MODAL DETALLE OT */
+.iconoDescargaArchivo {
+    color: #9f9f9f;
+    font-size: .9em;
+    margin-right: .5em;
+}
+
+.textoTituloCardsConsulta {
+    margin-bottom: 0;
+    font-weight: bold;
+}
+
+.text-descarga-consulta {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #858585;
+    font-size: .9em;
+}
+
+.content-descarga-archivo {
+    position: absolute;
+    bottom: .2em;
+    width: auto;
+    max-width: 60%;
+    border-radius: 1em;
+    border: 1px solid #dadada;
+    display: flex;
+    transition: all .3s ease-in;
+    cursor: pointer;
+    line-height: 1em;
+}
+
 #v-tabs-tab-detalle-ot .nav-link {
     border-top-right-radius: 2rem;
     border-bottom-right-radius: 2rem;
@@ -1651,6 +1683,20 @@ img.img-recoleccion {
     object-fit: cover;
 }
 
+.content-success-generic {
+    width: 1.5em;
+    height: 1.5em;
+    text-align: center;
+    background: #b2f585;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+    display: inline-block;
+}
+
+.icono-success-generic {
+    color: #12a91b;
+    font-size: .8em;
+}
 /* RECOLECCION DETALLE OT */
 
 #tableRecoleccionDetalleOT tbody tr:nth-child(even),
