@@ -98,6 +98,14 @@
                 </div>
             </div>
             <div ng-show="contentdetalleticket" class="row row-content-detalle">
+                <div class="message-done badge" ng-if="editTicket.detalleTicketSc.idEstatus == 4">
+                    <i class="icono-completado fas fa-check ml-2"></i>
+                    <span>TICKET COMPLETADO</span>
+                </div>
+                <div class="message-done badge" ng-if="editTicket.detalleTicketSc.idEstatus == 5">
+                    <i class="icono-cancelado fas fa-times ml-2"></i>
+                    <span>TICKET CANCELADO</span>
+                </div>
                 <div class="col-md-12 content-detalle-ticket">
                     <jsp:include page="./content/opcionesTicket.jsp"></jsp:include>
                 </div>

@@ -37,7 +37,7 @@
 }
 
 #container_checklist tbody tr td {
-    padding: 0.5em;
+    padding: 0.5em 1em;
     border: none;
     color: #39455b;
     font-family: 'Montserrat';
