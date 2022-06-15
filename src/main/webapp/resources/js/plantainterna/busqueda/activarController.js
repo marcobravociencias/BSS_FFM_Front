@@ -637,7 +637,7 @@ app.activacionController=function($scope, $q, busquedaService){
 
             //Se agrega bandera para validar los posibles servicios a configurar
             angular.forEach($scope.listaCotizaciones, function(servicio,index){
-                if(servicio.tipo && servicio.tipoCotizacion.includes('Telefonia') ){
+                if(servicio.tipo && servicio.tipoCotizacion && servicio.tipoCotizacion.includes('Telefonia') ){
                     servicio.servicioTelefonia=true
                     servicio.servicioConfigurable=true
                 }else {
