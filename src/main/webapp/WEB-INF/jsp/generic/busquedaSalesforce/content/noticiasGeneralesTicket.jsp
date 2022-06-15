@@ -1,6 +1,6 @@
 <div  class="container-noticia-elemento">
     <div class="row content-btn-cerrar">
-     <button ng-click="cerrarNoticiasGeneral()" id="cerrar-gestion-ticket" type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close">
+     <button ng-click="cerrarNoticiasGeneral()" id="cerrar-gestion-ticket" type="button" class="btn-close">
      </button>
     </div>
      <div class="row">

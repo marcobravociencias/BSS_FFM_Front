@@ -1533,6 +1533,22 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
             if ($scope.historial.length === 0) {
                 $scope.mostrarDetalleOs($scope.respaldoHistorial[0].detalle, "OS");
             }
+
+            if ($scope.historial.length === 1) { 
+                if ($scope.historial[0].keyObject === 'TK') { 
+                    $scope.banderaNoticiasTicket = true; 
+                } 
+                if ($scope.historial[0].keyObject === 'OP') { 
+                    $scope.banderaNoticiasOportunidad = true; 
+                } 
+                if ($scope.historial[0].keyObject === 'OS') { 
+                    $scope.banderaNoticiasOs = true; 
+                } 
+            } else { 
+                $scope.banderaNoticiasTicket = false; 
+                $scope.banderaNoticiasOportunidad = false; 
+                $scope.banderaNoticiasOs = false; 
+            }
             
         }
 
