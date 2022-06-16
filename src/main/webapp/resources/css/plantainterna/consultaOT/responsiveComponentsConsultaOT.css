@@ -353,6 +353,24 @@
     /* RECOLECCION */
 
     /* DETALLE SOPORTE */
+
+    #texto_not_equipos {
+        color: #abafae;
+        text-align: center;
+        font-size: 1.1em !important;
+    }
+      
+    b.title_span_1 {
+        font-weight: bold !important;
+        font-size: 0.7em !important;
+        color: #303030 !important;
+    }
+    
+    .content_text {
+        font-size: 0.7em !important;
+    }
+
+    #tabEquiposSoporte .nav-link,
     #myTab .nav-link {
         padding-top: 0.6em;
         padding-bottom: 0.6em;

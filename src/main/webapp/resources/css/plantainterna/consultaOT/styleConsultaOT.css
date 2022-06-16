@@ -1727,28 +1727,39 @@ i.icono-noseleccion {
   margin-bottom: 1em;
 } */
 
+#texto_not_equipos {
+  color: #abafae;
+  text-align: center;
+  font-size: 1.4em;
+}
+
+#tabEquiposSoporte .nav-item:first-child .nav-link,
 #myTab .nav-item:first-child .nav-link {
   border-top-left-radius: 1em;
   border-bottom-left-radius: 1em;
 }
 
+#tabEquiposSoporte .nav-link.active,
 #myTab .nav-link.active {
   color: var(--estandar-color) !important;
   font-weight: bolder;
   background: #f9f9f9;
 }
 
+#tabEquiposSoporte .nav-link,
 #myTab .nav-link {
   padding-top: 0.6em;
   padding-bottom: 0.6em;
   border: solid 1px #ccc;
 }
 
+#tabEquiposSoporte .nav-item:last-child .nav-link,
 #myTab .nav-item:last-child .nav-link {
   border-top-right-radius: 1em;
   border-bottom-right-radius: 1em;
 }
 
+#tabEquiposSoporte .nav-link,
 #myTab .nav-link {
   padding-top: 0.6em;
   padding-bottom: 0.6em;

@@ -917,6 +917,45 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
         }
     }
 
+    retornarFormatoSliders = function (imagen, contador) {
+        var imgs_blocks = "";
+        var indicators_carousel = "";
+        console.log(imagen);
+
+        imagen.forEach((img, index) => {
+            indicators_carousel += ' <li class="' + ((index === 0) ? 'active' : '') + '" data-target="#carouselExampleIndicators' + contador + '" data-slide-to="' + index + '" ></li>';
+            if (img.urlEvidencia === "") {
+                imgs_blocks += '' +
+                    '      <div class="carousel-item ' + ((index === 0) ? 'active' : '') + ' ">' +
+                    '        <img data-title="' + img.nombre + '" class="d-block img-fluid imagen-carousel-evidencia" style="width:100%; min-width: 100%; height: 100% !important;" src="' + contex_project + '/resources/img/generic/not_found.png" alt="First slide" />' +
+                    '      </div>';
+            } else {
+                imgs_blocks += '' +
+                    '      <div class="carousel-item ' + ((index === 0) ? 'active' : '') + '">' +
+                    '        <img data-title="' + img.nombre + '" class="d-block img-fluid imagen-carousel-evidencia" style="width:100%; min-width: 100%; height: 100% !important;" class="d-block w-100" src="' + img.url + '" alt="First slide" />' +
+                    '      </div>';
+            }
+        })
+
+        return '' +
+            '  <div id="carouselExampleIndicators' + contador + '" class="carousel_componente carousel slide" data-ride="carousel">' +
+            '    <ol class="carousel-indicators">' +
+            '     	' + indicators_carousel + ' ' +
+            '    </ol>' +
+            '    <div class="carousel-inner" role="listbox">' +
+            '			' + imgs_blocks + ' ' +
+            '    </div>' +
+            '    <a class="carousel-control-prev" href="#carouselExampleIndicators' + contador + '" role="button" data-slide="prev">' +
+            '      <span class="carousel-control-prev-icon" aria-hidden="true"></span>' +
+            '      <span class="sr-only">Previous</span>' +
+            '    </a>' +
+            '    <a class="carousel-control-next" href="#carouselExampleIndicators' + contador + '" role="button" data-slide="next">' +
+            '      <span class="carousel-control-next-icon" aria-hidden="true"></span>' +
+            '      <span class="sr-only">Next</span>' +
+            '    </a>' +
+            '  </div>';
+    }
+
     desplazarDerechaTabs = function () {
 		$('#myTabSoporteDetalle').animate({ scrollLeft: '+=100' }, 150);
 	}
@@ -953,66 +992,55 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
 								$("#containerTabsSoporte").css('width', '100%');
 							}
 							$scope.detalleSoporteList.forEach((elemento, ind) => {
-								let html_tmp = "";
-								if (elemento.detalleCambioEquipo) {
-									elemento.detalleCambioEquipo.forEach((detalle, index) => {
-										if (detalle.evidencias && detalle.evidencias.length) {
-											contenido_imagenes = retornarFormatoSliders(detalle.evidencias, index);
+								let html_tmp_eq_nuevo = "";
+								let html_tmp_eq_viejo = "";
+
+                                $("#opcion-tab-equipoNuevo" + ind).show();
+                                $("#opcion-tab-equipoViejo" + ind).show();
+                                
+								if (elemento.equipoNuevo) {
+									elemento.equipoNuevo.forEach((equipoN, index) => {
+										if (equipoN.evidencias && equipoN.evidencias.length) {
+											contenido_imagenes_eqnuevo = retornarFormatoSliders(equipoN.evidencias, index);
 										} else {
-											contenido_imagenes =
-												'<h4 id="texto_not_arboles" style="color:#abafae; text-align:center">' +
-												'	SIN IMAGENES PARA ESTA FALLA' +
+											contenido_imagenes_eqnuevo =
+												'<h4 id="texto_not_equipos">' +
+												'	SIN IM&Aacute;GENES PARA ESTE EQUIPO' +
 												'</h4>';
 										}
-										html_tmp += '' +
+										html_tmp_eq_nuevo += '' +
 											'<tr>' +
 											'	<td>' +
 											'		<div class="row">' +
 											'			<div class="col-md-6 colInformacionTabla">' +
 											'				<div class="row textFallaOT">' +
 											'					<div class="col-md-5">' +
-											'						<b  class="title_span_1"> Tipo equipo:</b>' +
+											'						<b class="title_span_1"> Tipo equipo:</b>' +
 											'		        	</div>				               ' +
 											'		        	<div class="col-md-7">' +
-											'		        		<span id="ot_fallas"  class="content_text" >' + detalle.descTipoEquipo + '</span>' +
+											'		        		<span id="ot_fallas"  class="content_text" >' + (equipoN.descripcionTipoEquipo && equipoN.descripcionTipoEquipo !== '' ? equipoN.descripcionTipoEquipo : 'Sin informaci&oacute;n') + '</span>' +
 											'		        	</div>' +
 											'				</div>' +
 											'				<div class="row textFallaOT">' +
 											'					<div class="col-md-5">' +
-											'						<b  class="title_span_1"> Modelo anterior:</b>' +
+											'						<b class="title_span_1"> Modelo:</b>	 ' +
 											'		        	</div>				               ' +
 											'		        	<div class="col-md-7">' +
-											'		        		<span id="tipo_falla_corte"  class="content_text" > ' + detalle.descModeloViejo + ' </span>' +
+											'		        		<span id="tecnico_falla"  class="content_text" > ' + (equipoN.descripcionModelo && equipoN.descripcionModelo !== '' ? equipoN.descripcionModelo : 'Sin informaci&oacute;n') + ' </span>' +
 											'		        	</div>' +
 											'				</div>' +
 											'				<div class="row textFallaOT">' +
 											'					<div class="col-md-5">' +
-											'						<b  class="title_span_1"> Modelo nuevo:</b>	 ' +
+											'						<b  class="title_span_1"> N&uacute;mero de Serie:</b>' +
 											'		        	</div>				               ' +
 											'		        	<div class="col-md-7">' +
-											'		        		<span id="tecnico_falla"  class="content_text" > ' + detalle.descModeloNuevo + ' </span>' +
-											'		        	</div>' +
-											'				</div>' +
-											'				<div class="row textFallaOT">' +
-											'					<div class="col-md-5">' +
-											'						<b  class="title_span_1"> N&uacute;m. serie equipo anterior:</b>' +
-											'		        	</div>				               ' +
-											'		        	<div class="col-md-7">' +
-											'		        		<span id="status_falla_corte"  class="content_text" > ' + detalle.numSerieModeloViejo + ' </span>' +
-											'		        	</div>' +
-											'				</div>' +
-											'				<div class="row">' +
-											'					<div class="col-md-5">' +
-											'						<b  class="title_span_1">N&uacute;mero serie equipo nuevo:</b>' +
-											'		        	</div>				               ' +
-											'		        	<div class="col-md-7">' +
-											'		        		<span id="comentarios_falla"  class="content_text" > ' + detalle.numSerieModeloNuevo + ' </span>' +
+											'		        		<span id="status_falla_corte"  class="content_text" > ' + (equipoN.numSerie && equipoN.numSerie !== '' ? equipoN.numSerie : 'Sin informaci&oacute;n') + ' </span>' +
 											'		        	</div>' +
 											'				</div>' +
 											'			</div>' +
 											'			<div class="col-md-6">' +
 											'					<div class="class-12">' +
-											contenido_imagenes +
+											contenido_imagenes_eqnuevo +
 											'					</div>' +
 											'			</div>' +
 											'		</div>' +
@@ -1020,8 +1048,77 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
 											'</td>';
 									})
 								}
-								$('#tablaOTDetalle' + ind + ' tbody').empty().append(html_tmp);
-								$('#tablaOTDetalle' + ind).DataTable({
+								if (elemento.equipoViejo) {
+									elemento.equipoViejo.forEach((equipoV, index) => {
+										if (equipoV.evidencias && equipoV.evidencias.length) {
+											contenido_imagenes_eqviejo = retornarFormatoSliders(equipoV.evidencias, index);
+										} else {
+											contenido_imagenes_eqviejo =
+												'<h4 id="texto_not_arboles" style="color:#abafae; text-align:center">' +
+												'	SIN IMAGENES PARA ESTA FALLA' +
+												'</h4>';
+										}
+										html_tmp_eq_viejo += '' +
+											'<tr>' +
+											'	<td>' +
+											'		<div class="row">' +
+											'			<div class="col-md-6 colInformacionTabla">' +
+											'				<div class="row textFallaOT">' +
+											'					<div class="col-md-5">' +
+											'						<b class="title_span_1"> Tipo equipo:</b>' +
+											'		        	</div>				               ' +
+											'		        	<div class="col-md-7">' +
+											'		        		<span id="ot_fallas"  class="content_text" >' + (equipoV.descripcionTipoEquipo && equipoV.descripcionTipoEquipo !== '' ? equipoV.descripcionTipoEquipo : 'Sin informaci&oacute;n') + '</span>' +
+											'		        	</div>' +
+											'				</div>' +
+											'				<div class="row textFallaOT">' +
+											'					<div class="col-md-5">' +
+											'						<b class="title_span_1"> Modelo:</b>	 ' +
+											'		        	</div>				               ' +
+											'		        	<div class="col-md-7">' +
+											'		        		<span id="tecnico_falla"  class="content_text" > ' + (equipoV.descripcionModelo && equipoV.descripcionModelo !== '' ? equipoV.descripcionModelo : 'Sin informaci&oacute;n') + ' </span>' +
+											'		        	</div>' +
+											'				</div>' +
+											'				<div class="row textFallaOT">' +
+											'					<div class="col-md-5">' +
+											'						<b  class="title_span_1"> N&uacute;mero de Serie:</b>' +
+											'		        	</div>				               ' +
+											'		        	<div class="col-md-7">' +
+											'		        		<span id="status_falla_corte"  class="content_text" > ' + (equipoV.numSerie && equipoV.numSerie !== '' ? equipoV.numSerie : 'Sin informaci&oacute;n') + ' </span>' +
+											'		        	</div>' +
+											'				</div>' +
+											'			</div>' +
+											'			<div class="col-md-6">' +
+											'					<div class="class-12">' +
+											contenido_imagenes_eqviejo +
+											'					</div>' +
+											'			</div>' +
+											'		</div>' +
+											'	</tr>' +
+											'</td>';
+									})
+								}
+								$('#tablaEquipoViejo' + ind + ' tbody').empty();
+								$('#tablaEquipoViejo' + ind + ' tbody').append(html_tmp_eq_viejo);
+								$('#tablaEquipoViejo' + ind).DataTable({
+									"processing": false,
+									"ordering": false,
+									"pageLength": 1,
+									"pagingType": "numbers",
+									"info": false,
+									"bInfo": false,
+									"bFilter": false,
+									"bAutoWidth": false,
+									"language": idioma_espanol_not_font,
+									"columns": [null],
+									"lengthChange": false,
+									"fnDrawCallback": function (oSettings) {
+										$(".carousel-item").click();
+									}
+								});
+								$('#tablaEquipoNuevo' + ind + ' tbody').empty();
+								$('#tablaEquipoNuevo' + ind + ' tbody').append(html_tmp_eq_nuevo);
+								$('#tablaEquipoNuevo' + ind).DataTable({
 									"processing": false,
 									"ordering": false,
 									"pageLength": 1,

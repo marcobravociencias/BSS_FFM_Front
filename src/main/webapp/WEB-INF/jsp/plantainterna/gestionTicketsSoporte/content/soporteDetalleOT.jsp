@@ -97,14 +97,37 @@
             </div>
         </div>
         <hr>
-        <div class="row">
-            <table id="tablaOTDetalle{{$index}}" style="width:100%">
-                <thead id="headerT">
-                    <tr><th></th></tr>
-                </thead>
-                <tbody id="mostrarOTDetalle{{$index}}">
-                </tbody>
-            </table>
+        <div class="col-12 pl-0">
+            <ul class="nav nav-tabs" id="tabEquiposSoporte" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="opcion-tab-equipoNuevo{{$index}}" data-toggle="tab" data-target='#tabEquipoNuevo{{$index}}' role="tab" aria-controls="tabEquipoNuevo{{$index}}" aria-selected="true" style="display: none;">Equipo Nuevo</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="opcion-tab-equipoViejo{{$index}}" data-toggle="tab" data-target='#tabEquipoViejo{{$index}}' role="tab" aria-controls="#tabEquipoViejo{{$index}}" aria-selected="true" style="display: none;">Equipo Viejo</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-12 pl-0">
+            <div class="tab-content" id="tabContentEquiposSoporte" style="margin-top: 1em;">
+                <div class="tab-pane fade show active" id="tabEquipoNuevo{{$index}}" role="tabpanel" aria-labelledby="tabEquipoNuevo">
+                    <table id="tablaEquipoNuevo{{$index}}" style="width:100%">
+                        <thead id="headerT">
+                            <tr><th></th></tr>
+                        </thead>
+                        <tbody id="mostrarEquipoNuevo{{$index}}">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="tabEquipoViejo{{$index}}" role="tabpanel" aria-labelledby="tabEquipoViejo">
+                    <table id="tablaEquipoViejo{{$index}}" style="width:100%">
+                        <thead id="headerT">
+                            <tr><th></th></tr>
+                        </thead>
+                        <tbody id="mostrarEquipoViejo{{$index}}">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>

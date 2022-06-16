@@ -1524,28 +1524,49 @@ span.content-titlehistorico.ng-binding {
     padding: 0.1em;
 }
 
+b.title_span_1 {
+    font-weight: bold !important;
+    font-size: 0.8em !important;
+    color: #303030 !important;
+}
+
+.content_text {
+    font-size: 0.8em !important;
+}
+
+#texto_not_equipos {
+    color: #abafae;
+    text-align: center;
+    font-size: 1.4em;
+}
+
+#tabEquiposSoporte .nav-item:first-child .nav-link,
 #myTabSoporteDetalle .nav-item:first-child .nav-link {
     border-top-left-radius: 1em;
     border-bottom-left-radius: 1em;
 }
 
+#tabEquiposSoporte .nav-link.active,
 #myTabSoporteDetalle .nav-link.active {
     color: var(--estandar-color) !important;
     font-weight: bolder;
     background: #f9f9f9;
 }
 
+#tabEquiposSoporte .nav-link,
 #myTabSoporteDetalle .nav-link {
     padding-top: 0.6em;
     padding-bottom: 0.6em;
     border: solid 1px #ccc;
 }
 
+#tabEquiposSoporte .nav-item:last-child .nav-link,
 #myTabSoporteDetalle .nav-item:last-child .nav-link {
     border-top-right-radius: 1em;
     border-bottom-right-radius: 1em;
 }
 
+#tabEquiposSoporte .nav-link,
 #myTabSoporteDetalle .nav-link {
     padding-top: 0.6em;
     padding-bottom: 0.6em;
