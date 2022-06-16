@@ -60,7 +60,7 @@
                     <th>Permanente</th>
                     <th>Inicio</th>
                     <th>Expiraci&oacute;n</th>
-                    <th>Detalle</th>
+                    <th width="20%">Detalle</th>
                     <th>Acciones</th>
 				</tr>
 			</thead>

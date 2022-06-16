@@ -397,13 +397,13 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 							<tr>
 								<td> 	<img   onclick="abrirImagenSize(this)"  class="banner-file-noticias hover-overlay" src="${el.urlBanner}">  </td>
 								<td> 	${htmlDescarga} </td>
-								<td>  	<span class="consultaTituloPrinc"> ${el.tituloPrincipal} </span> </td>
-								<td>  	<span class="consultaTituloSecund"> ${el.tituloSecundario} </span> </td>
-								<td>  	${htmlLinkExterno} </td>
+								<td>  	<span class="consultaTituloPrinc text-tooltip-parent"> ${el.tituloPrincipal} </span> </td>
+								<td>  	<span class="consultaTituloSecund text-tooltip-parent"> ${el.tituloSecundario}  </span> </td>
+								<td>  	<span class="text-tooltip-parent"> ${htmlLinkExterno}</span> </td>
 								<td>  	${iconPermanente} </td>
-								<td>  	<span class="consultaFechaNoticia"> ${el.permanente ? 'NA' : el.fechaInicio} </span> </td>
-								<td>  	<span class="consultaFechaNoticia"> ${el.permanente ? 'NA' : el.fechaExpiracion} </span> </td>
-								<td>  	<span class="consultaDetalleNoticia"> ${el.detalle} </span> </td>
+								<td>  	<span class="consultaFechaNoticia text-tooltip-parent"> ${el.permanente ? 'NA' : el.fechaInicio}</span>  </td>
+								<td>  	<span class="consultaFechaNoticia text-tooltip-parent"> ${el.permanente ? 'NA' : el.fechaExpiracion} </span>   </td>
+								<td>  	<span class="consultaDetalleNoticia text-tooltip-parent"> ${el.detalle}  </span> </td>
 								<td>  	`+ buttonEditar +` `+ buttonEliminar +` 
 								</td>
 
