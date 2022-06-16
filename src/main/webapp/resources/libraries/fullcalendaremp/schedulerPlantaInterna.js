@@ -3666,29 +3666,57 @@ TimelineGrid = (function(superClass) {
       }
     }
     // ***********************************OT Asignada*******************************************************************
-    var intervencion_letter=event.descipcionTipoOrden===undefined?"" :event.descipcionTipoOrden.slice(0,1).toUpperCase();
-    let content=
+    var intervencion_letter= ``;
+    let content= ``;
   //  
-    `
-    <div class="container-asignada">            
-        <div class="content-text-otasignada" >  
-            <div class="izquierda-icon"><i class="elemen-izquierda-asignada icon-otasginada fas fa-bars" onclick="abrirModalInformacion(${event.idOrden});"></i></div>
-            <h5 class="cliente-asignada">${event.nombreCliente}</h5>
-        </div>
-        <div class="content-text-otasignada" >      
-            <div class="izquierda-icon">
-              <i class="far ${event.tipoAsignacion === 2 ?'far fa-hand-paper':'fas fa-desktop'}  icon-tipoot-operacion"></i>
-            </div>`
-            content = content + ((accionDetalleSf && event.folioOrden && event.folioOrden.substr(0,3) === "OS-") ? `<b class="os-content-asignada link-busqueda-salesforce" onclick="mostrarModalDetalleSf('${event.folioOrden}', '${event.idFolioOrden}')">${event.folioOrden}</b>&nbsp&nbsp` : `<b class="os-content-asignada">${event.folioOrden}</b>&nbsp&nbsp`);           
-            content = content +`</div>
-        <div class="content-text-otasignada" >       
-            <div class="izquierda-icon">
-              <span title="${event.descipcionTipoOrden}" style="background-color:${ event.colorEstatus}" class="elemen-izquierda-asignada intervencion_asignada badge badge-pill ">${intervencion_letter}</span>
-            </div>
-            <b class="orden-content">OT: ${event.idOrden}</b>&nbsp&nbsp
-        </div>
-    </div>
-    `
+    if (event.nombreCliente) {
+      intervencion_letter = intervencion_letter + event.descipcionTipoOrden===undefined?"" :event.descipcionTipoOrden.slice(0,1).toUpperCase();
+      content = content +
+      `
+      <div class="container-asignada">            
+          <div class="content-text-otasignada" >  
+              <div class="izquierda-icon"><i class="elemen-izquierda-asignada icon-otasginada fas fa-bars" onclick="abrirModalInformacion(${event.idOrden});"></i></div>
+              <h5 class="cliente-asignada">${event.nombreCliente}</h5>
+          </div>
+          <div class="content-text-otasignada" >      
+              <div class="izquierda-icon">
+                <i class="far ${event.tipoAsignacion === 2 ?'far fa-hand-paper':'fas fa-desktop'}  icon-tipoot-operacion"></i>
+              </div>`
+              content = content + ((accionDetalleSf && event.folioOrden && event.folioOrden.substr(0,3) === "OS-") ? `<b class="os-content-asignada link-busqueda-salesforce" onclick="mostrarModalDetalleSf('${event.folioOrden}', '${event.idFolioOrden}')">${event.folioOrden}</b>&nbsp&nbsp` : `<b class="os-content-asignada">${event.folioOrden}</b>&nbsp&nbsp`);           
+              content = content +`</div>
+          <div class="content-text-otasignada" >       
+              <div class="izquierda-icon">
+                <span title="${event.descipcionTipoOrden}" style="background-color:${ event.colorEstatus}" class="elemen-izquierda-asignada intervencion_asignada badge badge-pill ">${intervencion_letter}</span>
+              </div>
+              <b class="orden-content">OT: ${event.idOrden}</b>&nbsp&nbsp
+          </div>
+      </div>
+      `
+    } else {
+      intervencion_letter = intervencion_letter + event.objectevent.descipcionTipoOrden===undefined?"" :event.objectevent.descipcionTipoOrden.slice(0,1).toUpperCase();
+      content = content +
+      `
+      <div class="container-asignada">            
+          <div class="content-text-otasignada" >  
+              <div class="izquierda-icon"><i class="elemen-izquierda-asignada icon-otasginada fas fa-bars" onclick="abrirModalInformacion(${event.idOrden});"></i></div>
+              <h5 class="cliente-asignada">${event.objectevent.nombreCliente}</h5>
+          </div>
+          <div class="content-text-otasignada" >      
+              <div class="izquierda-icon">
+                <i class="far far fa-hand-paper icon-tipoot-operacion"></i>
+              </div>
+              <b class="os-content-asignada">${event.objectevent.folioOrden}</b>&nbsp&nbsp
+          </div>
+          <div class="content-text-otasignada" >       
+              <div class="izquierda-icon">
+                <span title="${event.objectevent.descipcionTipoOrden}" style="background-color:${ event.objectevent.colorEstatus}" class="elemen-izquierda-asignada intervencion_asignada badge badge-pill ">${intervencion_letter}</span>
+              </div>
+              <b class="orden-content">OT: ${event.objectevent.idOrden}</b>&nbsp&nbsp
+          </div>
+      </div>
+      `
+    }
+    
     
     return '<a class="'+clase_hover+' ' + classes.join(' ') + ' evento-ot-asignada" style="border-left: .5em solid '+ event.colorEstatus + ';  "' + (event.url ? ' href="' + htmlEscape(event.url) + '"' : '') + '  >' + '<div class="fc-content">' + (timeText ? '<span class="fc-time">' + htmlEscape(timeText) + '</span>' : '') + '<div class="fc-title"> ' + content  + '</div>' + '</div>' + '<div class="fc-bg" />' + (isResizableFromStart ? '<div class="fc-resizer fc-start-resizer"></div>' : '') + (isResizableFromEnd ? '<div class="fc-resizer fc-end-resizer"></div>' : '') + '</a>';
   };

@@ -65,9 +65,11 @@ app.controller('busquedaController', ['$scope', '$q', 'busquedaService', 'generi
                         $scope.resultBusqueda = result.data.result;
                         $scope.showSearch = true;
                     } else {
+                        $scope.resultBusqueda = {};
                         mostrarMensajeWarningValidacion("No se encontro resultado")
                     }
                 } else {
+                    $scope.resultBusqueda = {};
                     mostrarMensajeErrorAlert(result.data.resultDescripcion)
                 }
             }).catch((err) => handleError(err));
