@@ -3023,3 +3023,8 @@ i.fas.fa-lock.iconoAsignacionOtPermiso {
   margin: 0em!important;
   
 }
+
+.container-noticia-elemento {
+    box-shadow: none !important;
+    border:1px solid #e1e1e1;
+}
