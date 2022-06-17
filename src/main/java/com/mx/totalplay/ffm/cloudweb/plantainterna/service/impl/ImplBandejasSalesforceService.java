@@ -199,6 +199,26 @@ public class ImplBandejasSalesforceService implements BandejasSalesforceService 
 	            ServiceResponseResult.class, tokenAccess);
 	    return response;
 	}
+
+	@Override
+	public ServiceResponseResult consultarValidacionCSPBandejasSF(String params) {
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+	    logger.info("ImplBandejasSalesforceService.class [metodo = consultarValidacionCSPBandejasSF() ] \n" + params);
+
+	    LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+	    String tokenAccess = principalDetail.getAccess_token();
+		logger.info("consultarValidacionCSPBandejasSF## "+tokenAccess);
+		
+	    String urlRequest = principalDetail.getDireccionAmbiente().concat(constBandejasSalesforce.getConsultaValidacionCSPBandejasSF());
+	    logger.info("URL## " + urlRequest);
+	    
+	    Map<String, String> paramsRequestGet = new HashMap<String, String>();
+	    paramsRequestGet.put("idCotSitioPlan", jsonObject.get("idCotSitioPlan").getAsString());
+	    
+	    ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
+	            ServiceResponseResult.class, tokenAccess);
+	    return response;
+	}
     
     
 }

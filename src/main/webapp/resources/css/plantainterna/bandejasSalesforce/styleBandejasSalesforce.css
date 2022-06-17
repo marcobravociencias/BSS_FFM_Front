@@ -1211,6 +1211,7 @@ i.icono-noseleccion {
 /* FILTROS */
 
 /* TABLES */
+#tableValidacionCSP tbody tr:nth-child(even),
 #tableDetallePromociones tbody tr:nth-child(even),
 #tableDetalleProductos tbody tr:nth-child(even),
 #tableDetalleServicios tbody tr:nth-child(even),
@@ -1220,6 +1221,7 @@ i.icono-noseleccion {
   background: #f5f5f5;
 }
 
+#tableValidacionCSP>tbody>tr>td,
 #tableDetallePromociones>tbody>tr>td,
 #tableDetalleProductos>tbody>tr>td,
 #tableDetalleServicios>tbody>tr>td,
@@ -1233,6 +1235,7 @@ i.icono-noseleccion {
   border-top: 0px solid #eceeef !important;
 }
 
+#tableValidacionCSP thead th,
 #tableDetallePromociones thead th,
 #tableDetalleProductos thead th,
 #tableDetalleServicios thead th,
@@ -1249,6 +1252,7 @@ i.icono-noseleccion {
   font-weight: normal;
 }
 
+#tableValidacionCSP tbody tr td,
 #tableDetallePromociones tbody tr td,
 #tableDetalleProductos tbody tr td,
 #tableDetalleServicios tbody tr td,
@@ -1688,6 +1692,7 @@ a:disabled:hover {
   border: 0.09rem solid var(--btn-color-cerrar-modal) !important;
 }
 
+#tableValidacionCSP_paginate .page-item.active .page-link,
 #tablePendientesAgendar_paginate .page-item.active .page-link,
 #tableRescataventas_paginate .page-item.active .page-link {
   background-color: var(--btn-color-paginador-tabla) !important;
@@ -1792,7 +1797,7 @@ select.inputContacto {
 .btn-detalle-csp {
   float: right;
   cursor: pointer;
-  padding: 0.4em 1em !important;
+  padding: 0.4em !important;
   margin-top: 0.2em;
 }
 

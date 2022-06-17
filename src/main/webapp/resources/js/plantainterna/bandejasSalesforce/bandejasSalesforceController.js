@@ -1127,7 +1127,49 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         }); 
     } 
 
-
+    $scope.listFieldsValidacion = [];
+    $scope.listFieldsCopy = [];
+    $scope.consultarValidacionCSP = function (idCSP) {
+        $scope.listFieldsValidacion = [];
+        $scope.listFieldsCopy = [];
+        if (!swal.isVisible()) { 
+            swal({ text: 'Espera un momento...', allowOutsideClick: false }); 
+            swal.showLoading(); 
+        } 
+        let params = { 
+            'idCotSitioPlan': idCSP 
+        }
+        bandejasSalesforceService.consultarValidacionCSPBandejasSF(params).then(function success(response) {
+            console.log(response); 
+            if (response.data) { 
+                if (response.data.respuesta) { 
+                    if (response.data.result) { 
+                        if (response.data.result.fieldsSalesforce.length) { 
+                            $scope.listFieldsCopy = angular.copy(response.data.result.fieldsSalesforce);
+                            $scope.listFieldsValidacion = $scope.listFieldsCopy.filter(e => { return e.status === 0 })
+                            console.log($scope.listFieldsCopy);
+                            console.log($scope.listFieldsValidacion);
+                        
+                            $("#modalValidacionCSP").modal('show'); 
+                            swal.close(); 
+                        } else { 
+                            mostrarMensajeErrorAlert("No se encontr&oacute; informaci&oacute;n"); 
+                            swal.close(); 
+                        } 
+                    } else { 
+                        mostrarMensajeErrorAlert("No se encontr&oacute; informaci&oacute;n"); 
+                        swal.close(); 
+                    } 
+                } else { 
+                    mostrarMensajeErrorAlert(response.data.resultDescripcion); 
+                    swal.close(); 
+                } 
+            } else { 
+                mostrarMensajeErrorAlert(response.data.resultDescripcion); 
+                swal.close(); 
+            } 
+        });
+    }
 
     angular.element(document).ready(function () {
         $('#moduloBandejasSalesforce').addClass('active');

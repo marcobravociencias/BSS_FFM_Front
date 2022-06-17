@@ -118,4 +118,15 @@ public class BandejasSalesforceController {
 		}
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
+	
+
+	@PostMapping("/consultarValidacionCSPBandejasSF")
+	public ResponseEntity<?> consultarValidacionCSPBandejasSF(@RequestBody String params) {
+		logger.info("###### BandejasSalesforceController - consultarValidacionCSPBandejasSF");
+		ServiceResponseResult response = bandejasSalesforceService.consultarValidacionCSPBandejasSF(params);
+		if(response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
 }

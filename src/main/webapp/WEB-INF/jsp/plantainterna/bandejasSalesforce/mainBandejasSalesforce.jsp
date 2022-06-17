@@ -99,6 +99,7 @@
     <jsp:include page="./modals/modalGeografia.jsp"></jsp:include>
     <jsp:include page="./modals/modalNuevoContacto.jsp"></jsp:include>
     <jsp:include page="./modals/modalDetallePaquete.jsp"></jsp:include>
+    <jsp:include page="./modals/modalValidacionCSP.jsp"></jsp:include>
 </body>
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=${googlkeyattrvar['gkeactok']}&libraries=geometry,places"></script>

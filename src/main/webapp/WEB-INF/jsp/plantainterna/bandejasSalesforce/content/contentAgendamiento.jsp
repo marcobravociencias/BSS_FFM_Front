@@ -38,6 +38,9 @@
                 <span class="text-content-agendamiento btn-detalle-csp" ng-click="consultarResumenPaqueteBandejasSF(elementoCSP.idCSP)"> 
                     <i class="fa fa-bars"></i> 
                 </span> 
+                <span class="text-content-agendamiento btn-detalle-csp" title="Validaci&oacute;n CSP" ng-click="consultarValidacionCSP(elementoCSP.idCSP)"> 
+                    <i class="fa fa-tasks"></i> 
+                </span> 
             </div> 
         </div>
         <br>

@@ -21,4 +21,6 @@ public interface BandejasSalesforceService {
 	public ServiceResponseResult agendarOrdenSalesforce(String params);
 	
 	public ServiceResponseResult consultarDetalleEquiposBandejasSF(String params);
+	
+	public ServiceResponseResult consultarValidacionCSPBandejasSF(String params);
 }
