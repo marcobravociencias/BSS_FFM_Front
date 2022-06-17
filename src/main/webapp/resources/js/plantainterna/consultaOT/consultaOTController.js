@@ -74,7 +74,10 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	$scope.nivelGeografia = '';
 	$scope.nivelIntervenciones = '';
 	$scope.nivelEstatusPendientes = '';
-
+	
+	$scope.infoDetalleOtPe = {};
+	$scope.mostrarTooltipDetencion = false;
+	
 	$scope.consultaOT = function () {
 		let isValido = true;
 		let errorMensaje = '';
@@ -217,8 +220,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				fechaFin: $scope.getFechaFormato(document.getElementById('filtro_fecha_fin_consultaOt').value),
 				elementosPorPagina: 10
 			}
-			// console.log(otTabla.page.info())
-			// console.log(params);
+
 			otTabla = $('#otTable').DataTable({
 				"processing": false,
 				"ordering": false,
@@ -578,17 +580,11 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	}
 
 	$scope.setCheckFiltroGeneric = function (filtroParent) {
-		// console.log(filtroParent.checkedOpcion)
-		// console.log("#####---------")
-		// console.log(filtroParent.children)
 		filtroParent.checkedOpcion = !filtroParent.checkedOpcion
 		filtroParent.children.map(function (e) {
 			e.checkedOpcion = filtroParent.checkedOpcion
 			return e
 		})
-		// console.log("#####")
-		// console.log(filtroParent.children)
-		// console.log(filtroParent.checkedOpcion)
 	}
 
 	$scope.setCheckSubFiltroGeneric = function (subFiltro, parentFiltro) {
@@ -599,17 +595,11 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	}
 
 	$scope.setCheckIntervencion = function (elementoInt) {
-		// console.log(elementoInt.checkedOpcion)
-		// console.log("#####---------")
-		// console.log(elementoInt.subfiltros)
 		elementoInt.checkedOpcion = !elementoInt.checkedOpcion
 		elementoInt.subfiltros.map(function (e) {
 			e.checkedOpcion = elementoInt.checkedOpcion
 			return e
 		})
-		// console.log("#####")
-		// console.log(elementoInt.subfiltros)
-		// console.log(elementoInt.checkedOpcion)
 	}
 
 	$scope.setCheckSubIntervencion = function (subInt, intervencion) {
@@ -891,6 +881,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	$scope.datoSubInt;
 	consultaDetalleOt = function (indexOtConsulta) {
 		$scope.infoOtDetalle = {};
+		$scope.infoDetalleOtPe = {};
 		let otConsultaTemp = $scope.listadoConsultaOtsDisponibles[indexOtConsulta]
 		$scope.datoOt = otConsultaTemp.idOrden
 		is_consulta_info_trayectoria = false;
@@ -906,16 +897,14 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 		swal.showLoading();
 		consultaOTService.consultaInfoDetalle(JSON.stringify(params)).then(function success(response) {
-			console.log(response);
 			if (response.data !== undefined) {
 				if (response.data.respuesta) {
 					if (response.data.result.orden) {
 						$scope.infoOtDetalle = response.data.result.orden
 						is_consulta_info_ot = true;
 						$scope.permisosModal = $scope.elementosConfigGeneral.get("MODAL_CO_FLUJO_" + ordenObject.idFlujo).split(",")
-						// console.log("#flujo ,orden ", ordenObject.idFlujo);
-						// console.log("#permisos ,orden ", $scope.permisosModal);
-						$('#modal-detalle-ot').modal('show');
+						$("#modal-detalle-ot").modal({ backdrop: 'static', keyboard: false });
+						$("#modal-detalle-ot").modal('show');
 						swal.close();
 					} else {
 						swal.close();
@@ -942,7 +931,6 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				tableMaterialesDespacho.destroy();
 			}
 			consultaOTService.consultaMaterialOt(JSON.stringify({ idOrden: $scope.datoOt })).then(function success(response) {
-				console.log(response);
 				$("#table-materiales-ot tbody").empty()
 				if (response.data.respuesta) {
 					if (response.data.result) {
@@ -1145,7 +1133,6 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 			swal.showLoading();
 			genericService.consultarHistoricoDespachoOT(params).then(function (result) {
-				console.log(result);
 				if (result.data !== undefined) {
 					if (result.data.respuesta) {
 						if (result.data.result !== undefined) {
@@ -1183,7 +1170,6 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			swal.showLoading();
 			consultaOTService.consultaActividad(JSON.stringify(params)).then(function success(response) {
 				response = arrayEvidenciaOt;
-				console.log(response);
 				if (response.data !== undefined) {
 					if (response.data.respuesta) {
 						if (response.data.result.result === '0') {
@@ -1231,7 +1217,6 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 			swal.showLoading();
 			consultaOTService.consultaTrayectoria(JSON.stringify(params)).then(function success(response) {
-				console.log(response);
 				if (response.data !== undefined) {
 					if (response.data.respuesta) {
 						var ltlng = [];
@@ -1301,7 +1286,6 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 			swal.showLoading();
 			consultaOTService.consultaInfoRed(JSON.stringify(params)).then(function success(response) {
-				console.log(response);
 				if (response.data !== undefined) {
 					if (response.data.respuesta) {
 						if (response.data.result.result === '0') {
@@ -1533,7 +1517,6 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 			swal.showLoading();
 			consultaOTService.consultarcambioDeEquipo(JSON.stringify(params)).then(function success(response) {
-				console.log(response);
 				if (response.data !== undefined) {
 					if (response.data.respuesta) {
 						if (response.data.result.result === '0') {
@@ -1681,10 +1664,8 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			swal.showLoading();
 			genericService.agregarComentariosOt(params).then(function success(response) {
 				swal.close();
-				console.log(response);
 				if (response.data !== undefined) {
 					if (response.data.respuesta) {
-						// console.log("############## Comentario agregado")
 						$scope.comentarioConsultaOT = '';
 						document.getElementById('comentarioConsultaOt').value = '';
 						is_consulta_comentarios = false;
@@ -1884,14 +1865,11 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				elementosPorPagina: $scope.elementosRegistro,
 				pagina: 1
 			}
-			// console.log(params);
 
 			consultaOTService.consultaReporteConsultaOt(JSON.stringify(params)).then((result) => {
-				console.log(result.data)
 				if (result.data.respuesta) {
 					if (result.data.result) {
 						const data = JSON.parse(result.data.result).ordenes
-						// console.log(JSON.parse(result.data.result))
 						const fileName = 'Resporte Consulta Ot'
 						const exportType = 'xls'
 
@@ -1928,7 +1906,6 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 			swal.showLoading();
 			consultaOTService.consultaPostVentaOt(JSON.stringify(params)).then((result) => {
-				console.log(result)
 				isConsultaDetalleSoporte = true
 				if (result.data.respuesta) {
 					if (result.data.result.length > 0) {
@@ -2192,7 +2169,6 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	retornarFormatoSliders = function (imagen, contador) {
 		var imgs_blocks = "";
 		var indicators_carousel = "";
-		console.log(imagen);
 
 		imagen.forEach((img, index) => {
 			indicators_carousel += ' <li class="' + ((index === 0) ? 'active' : '') + '" data-target="#carouselExampleIndicators' + contador + '" data-slide-to="' + index + '" ></li>';
@@ -2266,7 +2242,6 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			swal.showLoading();
 			consultaOTService.consultarDispositivosOrden(params).then((result) => {
 				swal.close()
-				console.log(result)
 				isConsultaDispositivo = true
 				if (result.data) {
 					if (result.data.respuesta) {
@@ -2341,7 +2316,6 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		tableHTML += '</tbody></table>' +
 			'</div>';
 
-		// console.log(tableHTML)
 		return tableHTML;
 	}
 
@@ -2360,7 +2334,6 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				//"idOrden": '1991'
 			};
 			consultaOTService.consultarRecoleccionOt(params).then(function success(response) {
-				console.log(response);
 				if (response.data !== undefined) {
 					if (response.data.respuesta) {
 						if (response.data.result) {
@@ -2400,8 +2373,6 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 								"autoWidth": false,
 								"language": idioma_espanol_not_font
 							});
-							// console.log($scope.equiposTecnicoRecoleccion);
-							// console.log($scope.tecnicoConsultaRecoleccion);
 							swal.close();
 						} else {
 							swal.close();
@@ -2421,4 +2392,64 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			}).catch(err => handleError(err));
 		}
 	}
+	
+	$scope.consultarDetalleOtPe = function() {
+		
+		$scope.mostrarTooltipDetencion = false;
+		var tamContenedorDetencion = $("#tab-content-modal-detalle-ot").width();
+		if(tamContenedorDetencion < 700){
+			$scope.mostrarTooltipDetencion = true;
+		}
+		
+		if(!Object.keys($scope.infoDetalleOtPe).length){
+			swal({ text: 'Consultando detalle de la OT ...', allowOutsideClick: false });
+	        swal.showLoading();
+	        
+	        let params = {
+	            "idFlujo": $scope.infoOtDetalle.idFlujo,
+	            "idOT": $scope.infoOtDetalle.idOrden
+	        };
+	        
+	        consultaOTService.consultaDetalleOtPe(params).then(function success(response) {
+	            if (response.data !== undefined) {
+	                if (response.data.respuesta) {
+	                    if (response.data.result) {
+	                        if (response.data.result.orden) {
+	                            $scope.infoDetalleOtPe = response.data.result.orden;
+	                        } else {
+	                        	toastr.warning("¡No se encontraron datos en el detalle de la OT!");
+	                        }
+	                    } else {
+	                        toastr.warning(response.data.mensajeException);
+	                    }
+	                } else {
+	                	toastr.warning(response.data.mensajeException);
+	                }
+	            } else {
+	                toastr.error("Ha ocurrido un error en la consulta del detalle de la OT");
+	            }
+	            swal.close()
+	        }).catch(err => handleError(err));
+		}
+	}
+	
+	$scope.cambiarIndicadorBtnImg = function (falla, img) {
+        $(".btnImgPorFalla" + falla).removeClass("btnControlImgsSinOpacidad");
+        $(".btnImgPorFalla" + falla).addClass("btnControlImgsOpacidad");
+        $("#btnIndicadorIndividual" + falla + img).addClass("btnControlImgsSinOpacidad");
+    }
+
+    $scope.cambiarPagTablaSpliters = function (falla, splitter) {
+        $(".spliters" + falla).addClass("ocultarFilaTablaSplitersFallaDetalleDetencion");
+        $("#detencion" + falla + splitter).removeClass("ocultarFilaTablaSplitersFallaDetalleDetencion");
+        $(".btnPaginadorTablaSpliters" + falla).removeClass("btnPaginadorTablaSplitersActive");
+        $(".btnPaginadorTablaSpliters" + falla).addClass("btnPaginadorTablaSplitersNoActive");
+        $("#btnPaginador" + falla + splitter).removeClass("btnPaginadorTablaSplitersNoActive");
+        $("#btnPaginador" + falla + splitter).addClass("btnPaginadorTablaSplitersActive");
+    }
+    
+    $scope.cerrarModalDetalleOt = function () {
+        $("#modal-detalle-ot").modal("hide");
+    }
+	
 }])

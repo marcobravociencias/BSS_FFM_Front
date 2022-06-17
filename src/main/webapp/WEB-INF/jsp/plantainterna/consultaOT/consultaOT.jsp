@@ -186,7 +186,7 @@
 
 <script type="text/javascript">let contex_project = "${pageContext.request.contextPath}";</script>
 <script src="${pageContext.request.contextPath}/resources/js/plantainterna/consultaOT/jsonConsultaOt.js?v=${sessionScope.versionDepl}"></script>
-<script src="${pageContext.request.contextPath}/resources/js/plantainterna/consultaOT/consultaOTController.js?v=${sessionScope.versionDepl}"></script>
+<script src="${pageContext.request.contextPath}/resources/js/plantainterna/consultaOT/consultaOTController.js?v=${sessionScope.versionDepl}" charset="UTF-8"></script>
 <script src="${pageContext.request.contextPath}/resources/js/plantainterna/consultaOT/consultaOTService.js?v=${sessionScope.versionDepl}"></script>
 <script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js?v=${sessionScope.versionDepl}"></script>
 <script src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>

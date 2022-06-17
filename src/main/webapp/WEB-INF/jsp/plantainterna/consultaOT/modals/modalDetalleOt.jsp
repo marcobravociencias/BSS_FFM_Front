@@ -2,17 +2,20 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title modal-title-consulta-ot" style="color: grey;">Detalle de la Orden 
-                    <span id="ot-asignada"></span></h5>
-                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close">
-                </button>
+                <h5 class="modal-title modal-title-consulta-ot" style="color: grey;">Detalle de la Orden</h5>
+                <a class="btnCerrarModalDetalleOrdenOt" href="#" ng-click="cerrarModalDetalleOt()"></a>
             </div>
             <div class="modal-body">
                 <div class="container">
                     <div class="row">
                         <div style="padding-left: 0;" class="col-2">
                             <div class="nav flex-column nav-tabs text-center" id="v-tabs-tab-detalle-ot" role="tablist" aria-orientation="vertical">
-                                <a data-mdb-toggle="tab" href="#content-ot" class="nav-link active" id="informacion-ot">Informaci&oacute;n</li>
+                                <a data-mdb-toggle="tab" href="#content-ot" class="nav-link active" id="informacion-ot">Informaci&oacute;n</a>
+                                
+                                <a ng-click="consultarDetalleOtPe()" data-mdb-toggle="tab" href="#content-corte-masivo" ng-show="permisosModal.indexOf('tabCorteMasivo') !== -1" class="nav-link" id="info_corte_masivo">Detalle corte masivo</a>
+                                <a ng-click="consultarDetalleOtPe()" data-mdb-toggle="tab" href="#content-orden-detenida" ng-show="permisosModal.indexOf('tabOperacionDiaria') !== -1" class="nav-link" id="info_orden_detenida">Orden detenida</a>
+                                <a ng-click="consultarDetalleOtPe()" data-mdb-toggle="tab" href="#content-detalle-detencion" ng-show="permisosModal.indexOf('tabOperacionDiaria') !== -1" class="nav-link" id="info_detalle_detencion">Detalle detenci&oacute;n</a>
+                                <a ng-click="consultarDetalleOtPe()" data-mdb-toggle="tab" href="#content-detalle-inspector" ng-show="permisosModal.indexOf('tabInspectorRed') !== -1" class="nav-link" id="info_detalle_inspector">Detalle inspector</a>
                                     <a ng-click="consultaHistoricoOt()" data-mdb-toggle="tab" href="#content-historico" ng-show="permisosModal.indexOf('tabHistoricoDespacho') !== -1" class="nav-link" id="info_historico">Hist&oacute;rico</a>
                                     <a ng-click="consultaChat()" data-mdb-toggle="tab" href="#content-comentarios" ng-show="permisosModal.indexOf('tabComentariosDespacho') !== -1" class="nav-link" id="comentarios">Comentarios</a>
                                     <a ng-click="consultarPostVentaOt()" data-mdb-toggle="tab" href="#content-postVenta" ng-show="permisosModal.indexOf('tabDetalleSoporte') !== -1" class="nav-link" id="postVenta">Detalle Soporte</a>
@@ -23,7 +26,7 @@
                             </div>
                         </div>
                         <div class="col-10">
-                            <div class="tab-content">
+                            <div id="tab-content-modal-detalle-ot" class="tab-content">
                                 <div class="contenedor_detalle row tab-pane fade show active" id="content-ot" role="tabpanel" aria-labelledby="v-tabs-consulta-acciones-tab">
                                     <div class="row">
                                         <div class="col-6">
@@ -239,6 +242,30 @@
                                 <div class="contenedor_detalle row tab-pane fade" id="content-comentarios">
                                     <div class="container">
                                         <jsp:include page="../contentTap/modalChat.jsp"></jsp:include>
+                                    </div>
+                                </div>
+                                <div class="contenedor_detalle row tab-pane fade" id="content-corte-masivo">
+                                    <div class="container">
+                                        <jsp:include page="../contentTap/div-info-general-detalle-ot-pe.jsp"></jsp:include>
+	                                	<hr />
+	                                	<jsp:include page="../contentTap/div-info-detalle-corte-masivo-ot-pe.jsp"></jsp:include>
+                                    </div>
+                                </div>
+                                <div class="contenedor_detalle row tab-pane fade" id="content-orden-detenida">
+                                    <div class="container">
+                                        <jsp:include page="../contentTap/div-info-general-detalle-ot-pe.jsp"></jsp:include>
+                                    </div>
+                                </div>
+                                <div class="contenedor_detalle row tab-pane fade" id="content-detalle-detencion">
+                                    <div class="container">
+                                        <jsp:include page="../contentTap/div-info-detalle-detencion-ot-pe.jsp"></jsp:include>
+                                    </div>
+                                </div>
+                                <div class="contenedor_detalle row tab-pane fade" id="content-detalle-inspector">
+                                    <div class="container">
+                                        <jsp:include page="../contentTap/div-info-general-detalle-ot-pe.jsp"></jsp:include>
+	                                	<hr />
+	                                	<jsp:include page="../contentTap/div-info-detalle-inspector-ot-pe.jsp"></jsp:include>
                                     </div>
                                 </div>
                                 <div class="contenedor_detalle row tab-pane fade" id="content-historico">

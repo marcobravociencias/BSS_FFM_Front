@@ -164,4 +164,16 @@ app.service("consultaOTService", function($http){
             }
 		});
 	};
+	
+	this.consultaDetalleOtPe=function(params){
+		return $http({
+			method: "post",
+			url: "req/consultaDetalleOtPe",
+			data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
+	
 })
