@@ -121,8 +121,9 @@
 		</div>
 		<div class="container-fluid">
 
-			<button id="btnEditarDireccionOT" class="btn btn-sm btn-primary"
+			<button id="btnEditarDireccionOT" class="btn btn-sm btn-primary disable-terminada"
 				ng-click="mostrarVistaModificarDireccion(infoOtDetalle.direccion.latitud, infoOtDetalle.direccion.longitud)">Editar</button>
+				<span class="text-terminada" ng-if="infoOtDetalle.descripcionEstatus == 'Terminada'"><i class="fas fa-exclamation-circle"></i> La OT esta terminada</span>
 		</div>
 	</div>
 </div>

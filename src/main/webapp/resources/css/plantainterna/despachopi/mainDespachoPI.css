@@ -3030,3 +3030,12 @@ i.fas.fa-lock.iconoAsignacionOtPermiso {
     box-shadow: none !important;
     border:1px solid #e1e1e1;
 }
+
+.text-terminada{
+   font-size: 0.8em;
+   font-weight: bold;
+}
+
+.text-terminada i {
+   color: #ff9f3b;
+}

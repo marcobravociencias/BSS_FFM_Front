@@ -1152,7 +1152,8 @@
                                                         <button
                                                             ng-show="accionesUserConfigText.indexOf('accionTerminaOT') !== -1"
                                                             ng-click="cambioStatus('termina')"
-                                                            class="btn btn-modalAcciones btn-primary">Terminar</button>
+                                                            class="btn btn-modalAcciones btn-primary disable-terminada">Terminar</button>
+                                                            <span class="text-terminada" ng-if="infoOtDetalle.descripcionEstatus == 'Terminada'"><i class="fas fa-exclamation-circle"></i> La OT esta terminada</span>
 
                                                         <div ng-show="accionesUserConfigText.indexOf('accionTerminaOT') === -1"
                                                             class="text-accion-nopermiso">
@@ -1183,8 +1184,8 @@
                                                         <button
                                                             ng-show="accionesUserConfigText.indexOf('accionDesasignaOT') !== -1"
                                                             ng-click="cambioStatus('desasigna')"
-                                                            class="btn btn-modalAcciones btn-primary">Desasigna</button>
-
+                                                            class="btn btn-modalAcciones btn-primary disable-terminada">Desasigna</button>
+                                                            <span class="text-terminada" ng-if="infoOtDetalle.descripcionEstatus == 'Terminada'"><i class="fas fa-exclamation-circle"></i> La OT esta terminada</span>
                                                         <div ng-show="accionesUserConfigText.indexOf('accionDesasignaOT') === -1"
                                                             class="text-accion-nopermiso">
                                                             <i class="icon-not-permiso fas fa-user-lock"></i>
