@@ -473,6 +473,11 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
             $scope.listaTotal.rechazadas = $scope.detalleEvidencia.evidencias.length;
             $scope.listaTotal.aceptadas = 0;
         }
+
+        $.each($scope.detalleEvidencia.evidencias, function (e, img) {
+                img.idEstatus = isSelected == '1' ? 2 : 3;
+        })
+        console.log($scope.detalleEvidencia.evidencias);
     }
 
     $scope.changeSelect = function (element) {
