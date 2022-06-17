@@ -50,8 +50,8 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
 
         $scope.listaTotal = { aceptadas: 0, rechazadas: 0 };
 
-        if(alerta.id == 14){ //VALIDACIÓN PARA SABER SI ES ALERTA DE TIPO "Validación" Y MOSTRAR TABS DE DETENCIÓN
-        	$scope.tipoAlertaValidacion = true; 
+        if (alerta.id == 14) { //VALIDACIÓN PARA SABER SI ES ALERTA DE TIPO "Validación" Y MOSTRAR TABS DE DETENCIÓN
+            $scope.tipoAlertaValidacion = true;
         }
 
         $scope.otsAlertas = [];
@@ -61,14 +61,14 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
 
                     //$("#pills-mapa-tab").click();
                     $scope.otsAlertas = response.data.result ? response.data.result.detalleAlerta : [];
-                    
-//                    $scope.otsAlertas[0].alerta.latitudAlerta = "18.935613";
-//                    $scope.otsAlertas[0].alerta.longitudAlerta = "-99.193426";
-//                    $scope.otsAlertas[0].orden.latitud = "18.934736";
-//                    $scope.otsAlertas[0].orden.longitud = "-99.204510";
-//                    $scope.otsAlertas[0].tecnico.latitud = "18.943907";
-//                    $scope.otsAlertas[0].tecnico.longitud = "-99.199506";
-                    
+
+                    //                    $scope.otsAlertas[0].alerta.latitudAlerta = "18.935613";
+                    //                    $scope.otsAlertas[0].alerta.longitudAlerta = "-99.193426";
+                    //                    $scope.otsAlertas[0].orden.latitud = "18.934736";
+                    //                    $scope.otsAlertas[0].orden.longitud = "-99.204510";
+                    //                    $scope.otsAlertas[0].tecnico.latitud = "18.943907";
+                    //                    $scope.otsAlertas[0].tecnico.longitud = "-99.199506";
+
                     $scope.vistaDespacho = false;
                     $scope.tipoAlertaSeleccionada = angular.copy(alerta);
                     switch (alerta.id) {
@@ -105,10 +105,10 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
 
             $scope.otModalSelectedGeneric.idFlujo = ordenobj.idFlujo;
             $scope.otModalSelectedGeneric.idOrden = ordenobj.id;
-//            console.log(ordenobj.idFlujo);
-//            console.log(ordenobj.id);
-//            $scope.otModalSelectedGeneric.idFlujo = 10;
-//            $scope.otModalSelectedGeneric.idOrden = 592525;
+            //            console.log(ordenobj.idFlujo);
+            //            console.log(ordenobj.id);
+            //            $scope.otModalSelectedGeneric.idFlujo = 10;
+            //            $scope.otModalSelectedGeneric.idOrden = 592525;
 
             let arra = [];
             arra[0] = alertaob.id ? alertaob.id : '';
@@ -224,7 +224,7 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
             swal({ text: 'Cargando registros...', allowOutsideClick: false });
             swal.showLoading();
         }
-        
+
         mainAlertasService.consultarDetalleEvidencia(params).then(function success(response) {
             swal.close();
             if (response.data !== undefined) {
@@ -299,7 +299,7 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
         $(".tipo_evidencia").removeClass("tipo-evidencia-selected");
         $("#categoria_img_" + tipo).addClass("tipo-evidencia-selected");
         setTimeout(() => {
-            $scope.listImagenesTipo.map(function (e) {
+            $scope.detalleEvidencia.evidencias.map(function (e) {
                 if (e.idEstatus == 2) {
                     $("#check_" + e.id).prop("checked", true);
                 }
@@ -419,13 +419,13 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
             let rechazadas = [];
 
             $.each(categoria, function (i, elemento) {
-                if ($("#check_" + elemento.id).is(":checked")) {
+                if (elemento.idEstatus == 2) {
                     aceptadas.push(elemento.id);
                 }
             });
 
             $.each(categoria, function (i, elemento) {
-                if ($("#check_" + elemento.id).hasClass("rechazada-check")) {
+                if (elemento.idEstatus == 3) {
                     rechazadas.push(elemento.id);
                 }
             });
@@ -1174,17 +1174,17 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
                 title: "ALERTA",
                 animation: google.maps.Animation.DROP,
                 map: mapaAlerta
-//                icon: {
-//                    url: './resources/img/plantainterna/despacho/domicilio-marker.svg',
-//                    scaledSize: new google.maps.Size(37, 43),
-//                    origin: new google.maps.Point(0, 0),
-//                    anchor: new google.maps.Point(10, 20)
-//                },
+                //                icon: {
+                //                    url: './resources/img/plantainterna/despacho/domicilio-marker.svg',
+                //                    scaledSize: new google.maps.Size(37, 43),
+                //                    origin: new google.maps.Point(0, 0),
+                //                    anchor: new google.maps.Point(10, 20)
+                //                },
             });
             markers.push(marker);
             bounds.extend(marker.getPosition());
         }
-        
+
         if (!isDataMarkerOrden) {
             var marker = new google.maps.Marker({
                 position: {
@@ -1195,7 +1195,7 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
                 animation: google.maps.Animation.DROP,
                 map: mapaAlerta,
                 icon: {
-                	url: './resources/img/plantainterna/despacho/domicilio-marker.svg',
+                    url: './resources/img/plantainterna/despacho/domicilio-marker.svg',
                     scaledSize: new google.maps.Size(37, 43),
                     origin: new google.maps.Point(0, 0),
                     anchor: new google.maps.Point(10, 20)
@@ -1204,19 +1204,19 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
             markers.push(marker);
             bounds.extend(marker.getPosition());
         }
-        
+
         mapaAlerta.fitBounds(bounds);
 
-//        if (!isDataMarkerTecnico || !isDataMarkerOrden) {
-//            if (!isDataMarkerOrden) {
-//                mapaAlerta.setCenter(new google.maps.LatLng(parseFloat(pos.latitudOrden), parseFloat(pos.longitudOrden)));
-//            } else {
-//                mapaAlerta.setCenter(new google.maps.LatLng(parseFloat(pos.latitudTecnico), parseFloat(pos.longitudTecnico)));
-//            }
-//        } else {
-//            mapaAlerta.setCenter(new google.maps.LatLng(19.4326, -99.1332));
-//            mapaAlerta.setZoom(5);
-//        }
+        //        if (!isDataMarkerTecnico || !isDataMarkerOrden) {
+        //            if (!isDataMarkerOrden) {
+        //                mapaAlerta.setCenter(new google.maps.LatLng(parseFloat(pos.latitudOrden), parseFloat(pos.longitudOrden)));
+        //            } else {
+        //                mapaAlerta.setCenter(new google.maps.LatLng(parseFloat(pos.latitudTecnico), parseFloat(pos.longitudTecnico)));
+        //            }
+        //        } else {
+        //            mapaAlerta.setCenter(new google.maps.LatLng(19.4326, -99.1332));
+        //            mapaAlerta.setZoom(5);
+        //        }
 
         listadoLinesCurves.map(function (e) { e.setMap(null); return e; })
         listadoLinesCurves = [];
@@ -1456,34 +1456,43 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
         if (isSelected == '1') {
             $(".checkbox-evidencia").prop("checked", true);
             $(".checkbox-evidencia").removeClass("rechazada-check");
-            $scope.listaTotal.aceptadas = $scope.listImagenesTipo.length;
+            $scope.listaTotal.aceptadas = $scope.detalleEvidencia.evidencias.length;
             $scope.listaTotal.rechazadas = 0;
         } else {
             $(".checkbox-evidencia").prop("checked", false);
             $(".checkbox-evidencia").addClass("rechazada-check");
-            $scope.listaTotal.rechazadas = $scope.listImagenesTipo.length;
+            $scope.listaTotal.rechazadas = $scope.detalleEvidencia.evidencias.length;
             $scope.listaTotal.aceptadas = 0;
         }
+
+        $.each($scope.detalleEvidencia.evidencias, function (e, img) {
+            img.idEstatus = isSelected == '1' ? 2 : 3;
+        })
     }
 
     $scope.changeSelect = function (element) {
+        $scope.listaTotal.rechazadas = 0;
+        $scope.listaTotal.aceptadas = 0;
         $(".radio-evidencias").prop("checked", false);
         let id = element.target.id;
-        $.each($scope.listImagenesTipo, function (e, img) {
+        $.each($scope.detalleEvidencia.evidencias, function (e, img) {
             if (id.split('_')[1] == img.id) {
                 img.idEstatus = $("#" + id).is(":checked") ? 2 : 3;
             }
         })
+
+        $.each($scope.detalleEvidencia.evidencias, function (e, img) {
+            $scope.listaTotal.rechazadas = img.idEstatus == 3 ? $scope.listaTotal.rechazadas + 1 : $scope.listaTotal.rechazadas;
+            $scope.listaTotal.aceptadas = img.idEstatus == 2 ? $scope.listaTotal.aceptadas + 1 : $scope.listaTotal.aceptadas;
+        })
         if ($("#" + id).is(":checked")) {
             $("#" + id).removeClass("rechazada-check");
-            $scope.listaTotal.rechazadas = $(".rechazada-check").length;
-            $scope.listaTotal.aceptadas = $scope.listaTotal.aceptadas + 1;
         } else {
             $("#" + id).addClass("rechazada-check");
-            $scope.listaTotal.aceptadas = $scope.listaTotal.aceptadas !== 0 ? $scope.listaTotal.aceptadas - 1 : 0;
-            $scope.listaTotal.rechazadas = $(".rechazada-check").length;
         }
     }
+
+
 
 
 };

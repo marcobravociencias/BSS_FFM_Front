@@ -695,7 +695,7 @@
                         </div>
                         <div class="row col-5 content-total">
                             <div class="col-4" style="padding: 0;">
-                                <span>Total evidencia: <strong ng-bind="listImagenesTipo.length"></strong></span>
+                                <span>Total evidencia: <strong ng-bind="detalleEvidencia.evidencias.length"></strong></span>
                             </div>
                             <div class="col-4" style="padding-right: 0;">
                                 <span>Aceptadas: <strong ng-bind="listaTotal.aceptadas || 0"></strong></span>
