@@ -477,21 +477,25 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
 
     $scope.changeSelect = function (element) {
         if ($scope.configPermisoAccionActualizaEvidencia) {
+            $scope.listaTotal.rechazadas = 0;
+            $scope.listaTotal.aceptadas = 0;
             $(".radio-evidencias").prop("checked", false);
             let id = element.target.id;
-            $.each($scope.listImagenesTipo, function (e, img) {
+            console.log($scope.detalleEvidencia.evidencias);
+            $.each($scope.detalleEvidencia.evidencias, function (e, img) {
                 if (id.split('_')[1] == img.id) {
                     img.idEstatus = $("#" + id).is(":checked") ? 2 : 3;
                 }
             })
+
+            $.each($scope.detalleEvidencia.evidencias, function (e, img) {
+                $scope.listaTotal.rechazadas = img.idEstatus == 3 ? $scope.listaTotal.rechazadas + 1 : $scope.listaTotal.rechazadas;
+                $scope.listaTotal.aceptadas = img.idEstatus == 2 ? $scope.listaTotal.aceptadas + 1 : $scope.listaTotal.aceptadas;
+            })
             if ($("#" + id).is(":checked")) {
                 $("#" + id).removeClass("rechazada-check");
-                $scope.listaTotal.rechazadas = $(".rechazada-check").length;
-                $scope.listaTotal.aceptadas = $scope.listaTotal.aceptadas + 1;
             } else {
                 $("#" + id).addClass("rechazada-check");
-                $scope.listaTotal.aceptadas = $scope.listaTotal.aceptadas !== 0 ? $scope.listaTotal.aceptadas - 1 : 0;
-                $scope.listaTotal.rechazadas = $(".rechazada-check").length;
             }
         }
 
@@ -658,9 +662,8 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
             if (!$scope.configPermisoAccionActualizaEvidencia) {
                 $(".checkbox-evidencia").prop("disabled", 'disabled');
             }
-            $scope.listImagenesTipo.map(function (e) {
+            $scope.detalleEvidencia.evidencias.map(function (e) {
                 if (e.idEstatus == 2) {
-                    console.log(e);
                     $("#check_" + e.id).prop("checked", true);
                 }
             });
@@ -674,6 +677,19 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
         $("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
 
     });
+
+    $scope.usuarioFoto = {};
+    $scope.showImage = function(){
+        let url = './resources/img/plantainterna/despacho/tecnicootasignada.png';
+
+        url = regexUrl.test($scope.detalleEvidencia.urlFotoPerfil) ? $scope.detalleEvidencia.urlFotoPerfil : url;
+        
+        $scope.usuarioFoto.tipo = "Tecnico";
+        $scope.usuarioFoto.noEmpleado = $scope.detalleEvidencia.numeroEmpleado;
+        $scope.usuarioFoto.usuario = $scope.detalleEvidencia.nombreCompleto;
+        $('#img_tec').attr('src', url);
+        $('#modalFoto').modal('show');
+    }
 
     $scope.conversionAnidadaRecursiva = function (array, nivelInit, maxNivel) {
         let arrayReturn = [];

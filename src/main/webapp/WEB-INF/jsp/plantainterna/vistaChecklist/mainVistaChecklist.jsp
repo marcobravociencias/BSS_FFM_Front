@@ -187,6 +187,7 @@
         </div>
         <jsp:include page="./modals/modalDetalleEvidencia.jsp"></jsp:include>
         <jsp:include page="./modals/modalGeografia.jsp"></jsp:include>
+        <jsp:include page="./modals/modalFoto.jsp"></jsp:include>
         <jsp:include page="contentTap/filtros.jsp"></jsp:include>
     </body>
     <!-- Scripts libraries -->
