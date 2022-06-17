@@ -6467,7 +6467,7 @@ ResourceRow = (function(superClass) {
                       </div>    
                       <div class="icon-content-operario tooltip-icon-des">
                           <span class="tooltiptext-icon-des">Pagos pendientes</span>
-                          <span class="icono_operario_accion  fa fa-briefcase" onclick="mostrarIntervencionesTecnico('${resource.idSubIntervenciones}')"  ></span>
+                          <span class="icono_operario_accion  fa fa-briefcase" onclick="mostrarIntervencionesTecnico('${resource.idTecnico}')"  ></span>
                       </div>
                   </div> 
               </div>

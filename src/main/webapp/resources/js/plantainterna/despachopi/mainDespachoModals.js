@@ -36,7 +36,6 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     $scope.permisoDescargaSeguimientoDiario = false;
 
 
-
     $scope.listadoCatalogoAcciones = []
     $('#modalAsignacionOrdenTrabajo,#modalReAsignacionOrdenTrabajo,#modalMaterialesOperario,#modalVehiculoOperario,#odalUbicacionOperario,#modalStatusOperario,#modalOtsTrabajadas')
         .on("hidden.bs.modal", function () {
@@ -134,6 +133,11 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                             $("#modalDetalleOT").modal('show')
                             setTimeout(function () {
                                 document.getElementsByClassName('permiso-accion-modal')[0].click();
+                                if($scope.infoOtDetalle.descripcionEstatus == "Terminada"){
+                                    $(".disable-terminada").prop("disabled", true)
+                                }else{
+                                    $(".disable-terminada").prop("disabled", false)
+                                }
                             }, 500)
 
                         } else {
@@ -709,10 +713,11 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 
     }
 
-    mostrarIntervencionesTecnico = function (intervenciones) {
+    mostrarIntervencionesTecnico = function (tecnico) {
+        let data_tecnico = $scope.listadoTecnicosGeneral.find((e) => e.idTecnico == parseInt(tecnico))
         $('#searchInterAsig').val('');
         $scope.arrayIntervenciones = [];
-        $scope.arrayIntervenciones = intervenciones.split(",");
+        $scope.arrayIntervenciones = data_tecnico.idSubIntervenciones;
         $scope.treeIntervencion = angular.copy($scope.arbolIntervenciones);
         $scope.treeIntervencion.map((intervencion) => {
             intervencion.check = ($scope.arrayIntervenciones.filter(e => { return Number(e) === intervencion.id })[0] != undefined);
@@ -722,16 +727,15 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             e.text = e.nombre;
             e.icon = "fa fa-globe";
 
-            e.state = { //Este objeto tu no lo necesitas karen! e.state
+            e.state = {
                 opened: false,
                 selected: e.check,
             }
             return e
         })
+
         $("#jstree-intervencion-asignada").jstree("destroy");
-        $('#jstree-intervencion-asignada').bind('loaded.jstree', function (e, data) {
-           
-            
+        $('#jstree-intervencion-asignada').bind('loaded.jstree', function (e, data) {         
             $('#jstree-intervencion-asignada >ul > li').each( function() {
                 disable( this.id );        
              })
@@ -751,8 +755,49 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 "show_only_matches": true
             }
         });
+
+        let geografia = angular.copy($scope.listadogeografiacopy);
+        let selectedGeografia = data_tecnico.idClusters;
+        geografia.map((geo) => {
+            geo.check = (selectedGeografia.filter(e => { return Number(e) === geo.id })[0] != undefined);
+        });
+        geografia.map((e) => {
+            e.parent = e.padre == undefined ? "#" : e.padre;
+            e.text = e.nombre;
+            e.icon = "fa fa-globe";
+
+            e.state = { 
+                opened: false,
+                selected: e.check,
+            }
+            return e
+        })
+
+        $("#jstree-proton-asignadas").jstree("destroy");
+        $('#jstree-proton-asignadas').bind('loaded.jstree', function (e, data) {
+            setInterval(() => {
+                $('#jstree-proton-asignadas li').each( function() {
+                    $('#jstree-proton-asignadas').jstree().disable_node( this.id );        
+                })
+            }, 100);
+        }).jstree({
+            'plugins': ["wholerow", "checkbox", "search"],
+            'core': {
+                'data': geografia,
+                'themes': {
+                    'name': 'proton',
+                    'responsive': true,
+                    "icons": false
+                }
+            },
+            "search": {
+                "case_sensitive": false,
+                "show_only_matches": true
+            }
+        });
         
     }
+
 
     function disable(node_id) {
         var node = $("#jstree-intervencion-asignada").jstree().get_node( node_id );

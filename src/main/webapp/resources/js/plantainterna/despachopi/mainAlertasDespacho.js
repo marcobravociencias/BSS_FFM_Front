@@ -234,6 +234,7 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
 
                         if (!response.data.result.evidencias.length) {
                             toastr.info("No se encontraron evidencias");
+                            $("#displayContent").css("display", "block");
                             return false;
                         }
                         $scope.detalleEvidencia.tipos = [];

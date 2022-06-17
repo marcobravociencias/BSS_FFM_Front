@@ -336,6 +336,15 @@
   	opacity: 1;
 }
 
+#modal-intervencion-asignada .nav-tabs .nav-link{
+	padding: 5px 20px;
+}
+
+#modal-intervencion-asignada .tab-content{
+	overflow: auto;
+	height: 250px;
+}
+
 /* .carouselImgDetalleFalla::before, */
 /* .carouselImgDetalleFalla::after { */
 /*   content: ''; */

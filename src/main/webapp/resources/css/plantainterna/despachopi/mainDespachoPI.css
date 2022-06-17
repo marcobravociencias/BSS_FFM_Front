@@ -2,12 +2,14 @@ body {
   color: grey;
 }
 
+#jstree-proton-asignadas .jstree-search, #jstree-intervencion-asignada .jstree-search ,
 #jstree-proton-3 .jstree-search, #jstree-intervencion-asignada .jstree-search {
   font-style: italic !important;
   color: #8b0000 !important;
   font-weight: bold !important;
 }
 
+#jstree-proton-asignadas .jstree-anchor, #jstree-intervencion-asignada .jstree-anchor ,
 #jstree-proton-3 .jstree-anchor, #jstree-intervencion-asignada .jstree-anchor {
   font-family: 'Montserrat';
   font-size: .8em;
@@ -2504,7 +2506,7 @@ img.img-tecnico-materiales {
   color: #888888;
   position: absolute;
   right: 0.8em;
-  top: 0.4em;
+  top: 0.45em;
   font-size: 0.8em;
   z-index: 3;
 }

@@ -81,6 +81,10 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
             $("#jstree-proton-3").jstree("search", this.value);
         })
 
+        $('#searchGeoAsignadas').on('keyup', function () {
+            $("#jstree-proton-asignadas").jstree("search", this.value);
+        })
+
         $scope.abrirModalGeografia = function () {
             $('#searchGeo').val('');
             $("#jstree-proton-3").jstree("search", '');

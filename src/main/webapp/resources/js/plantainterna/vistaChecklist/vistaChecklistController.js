@@ -517,13 +517,13 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
             let rechazadas = [];
 
             $.each(categoria, function (i, elemento) {
-                if ($("#check_" + elemento.id).is(":checked")) {
+                if (elemento.idEstatus == 2) {
                     aceptadas.push(elemento.id);
                 }
             });
 
             $.each(categoria, function (i, elemento) {
-                if ($("#check_" + elemento.id).hasClass("rechazada-check")) {
+                if (elemento.idEstatus == 3) {
                     rechazadas.push(elemento.id);
                 }
             });
@@ -651,7 +651,7 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
         $scope.listImagenesTipo = [];
 
         if (tipo.toString() === '0') {
-            $scope.listImagenesTipo = $scope.detalleEvidencia.evidencias;
+            $scope.listImagenesTipo = angular.copy($scope.detalleEvidencia.evidencias);
         } else {
             $scope.detalleEvidencia.tipos.map(function (e) {
                 if (e.id.toString() === tipo.toString()) {
