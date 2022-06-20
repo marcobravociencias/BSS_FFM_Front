@@ -73,6 +73,14 @@
                 <jsp:include page="./content/consultaTickets.jsp"></jsp:include>
             </div>
             <div ng-show="!isBusquedaGeneral && isDetalleTicket && !detalleSalesforceView">
+                <div class="message-done badge" ng-if="ticketDetalle.detalleTicketSc.idEstatus == 4">
+                    <i class="icono-completado fas fa-check ml-2"></i>
+                    <span>TICKET COMPLETADO</span>
+                </div>
+                <div class="message-done badge" ng-if="ticketDetalle.detalleTicketSc.idEstatus == 5">
+                    <i class="icono-cancelado fas fa-times ml-2"></i>
+                    <span>TICKET CANCELADO</span>
+                </div>
                 <div style="text-align: right; padding-top: 0.5em;">
                     <button ng-click="cerrarDetalleTicket()" type="button" style="padding-right: 1em;" class="btn-close" data-mdb-dismiss="modal"
                         aria-label="Close">

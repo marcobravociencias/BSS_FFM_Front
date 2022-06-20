@@ -901,8 +901,8 @@
                                                         <button
                                                             ng-show="accionesUserConfigText.indexOf('accionCancelaOT') !== -1"
                                                             ng-click="cambioStatus('cancela')"
-                                                            class="btn btn-modalAcciones btn-primary">Rescate</button>
-
+                                                            class="btn btn-modalAcciones btn-primary disable-terminada">Rescate</button>
+                                                        <span class="text-terminada" ng-if="keyBloqueoBtn.includes(infoOtDetalle.idEstatus)"><i class="fas fa-exclamation-circle"></i> La acci&oacute;n no esta disponible</span>
                                                         <div ng-show="accionesUserConfigText.indexOf('accionCancelaOT') === -1"
                                                             class="text-accion-nopermiso">
                                                             <i class="icon-not-permiso fas fa-user-lock"></i>
@@ -972,8 +972,8 @@
                                                         <button
                                                             ng-show="accionesUserConfigText.indexOf('accionReagendaOT') !== -1"
                                                             ng-click="cambioStatus('reagendamiento')"
-                                                            class="btn btn-modalAcciones btn-primary">Reagendar</button>
-
+                                                            class="btn btn-modalAcciones btn-primary disable-terminada">Reagendar</button>
+                                                        <span class="text-terminada" ng-if="keyBloqueoBtn.includes(infoOtDetalle.idEstatus)"><i class="fas fa-exclamation-circle"></i> La acci&oacute;n no esta disponible</span>
                                                         <div ng-show="accionesUserConfigText.indexOf('accionReagendaOT') === -1"
                                                             class="text-accion-nopermiso">
                                                             <i class="icon-not-permiso fas fa-user-lock"></i>
@@ -1045,8 +1045,8 @@
                                                         <button
                                                             ng-show="accionesUserConfigText.indexOf('accionCalendarizaOT') !== -1"
                                                             ng-click="cambioStatus('calendariza')"
-                                                            class="btn btn-primary btn-modalAcciones">Calendarizar</button>
-
+                                                            class="btn btn-primary btn-modalAcciones disable-terminada">Calendarizar</button>
+                                                        <span class="text-terminada" ng-if="keyBloqueoBtn.includes(infoOtDetalle.idEstatus)"><i class="fas fa-exclamation-circle"></i> La acci&oacute;n no esta disponible</span>
                                                         <div ng-show="accionesUserConfigText.indexOf('accionCalendarizaOT') === -1"
                                                             class="text-accion-nopermiso">
                                                             <i class="icon-not-permiso fas fa-user-lock"></i>
@@ -1104,8 +1104,8 @@
                                                         <button
                                                             ng-show="accionesUserConfigText.indexOf('accionGestoriaOT') !== -1"
                                                             ng-click="cambioStatus('gestoria')"
-                                                            class="btn btn-modalAcciones btn-primary">Plaza</button>
-
+                                                            class="btn btn-modalAcciones btn-primary disable-terminada">Plaza</button>
+                                                        <span class="text-terminada" ng-if="keyBloqueoBtn.includes(infoOtDetalle.idEstatus)"><i class="fas fa-exclamation-circle"></i> La acci&oacute;n no esta disponible</span>
                                                         <div ng-show="accionesUserConfigText.indexOf('accionGestoriaOT') === -1"
                                                             class="text-accion-nopermiso">
                                                             <i class="icon-not-permiso fas fa-user-lock"></i>
@@ -1153,8 +1153,7 @@
                                                             ng-show="accionesUserConfigText.indexOf('accionTerminaOT') !== -1"
                                                             ng-click="cambioStatus('termina')"
                                                             class="btn btn-modalAcciones btn-primary disable-terminada">Terminar</button>
-                                                            <span class="text-terminada" ng-if="infoOtDetalle.descripcionEstatus == 'Terminada'"><i class="fas fa-exclamation-circle"></i> La OT esta terminada</span>
-
+                                                        <span class="text-terminada" ng-if="keyBloqueoBtn.includes(infoOtDetalle.idEstatus)"><i class="fas fa-exclamation-circle"></i> La acci&oacute;n no esta disponible</span>
                                                         <div ng-show="accionesUserConfigText.indexOf('accionTerminaOT') === -1"
                                                             class="text-accion-nopermiso">
                                                             <i class="icon-not-permiso fas fa-user-lock"></i>
@@ -1185,8 +1184,8 @@
                                                             ng-show="accionesUserConfigText.indexOf('accionDesasignaOT') !== -1"
                                                             ng-click="cambioStatus('desasigna')"
                                                             class="btn btn-modalAcciones btn-primary disable-terminada">Desasigna</button>
-                                                            <span class="text-terminada" ng-if="infoOtDetalle.descripcionEstatus == 'Terminada'"><i class="fas fa-exclamation-circle"></i> La OT esta terminada</span>
-                                                        <div ng-show="accionesUserConfigText.indexOf('accionDesasignaOT') === -1"
+                                                            <span class="text-terminada" ng-if="keyBloqueoBtn.includes(infoOtDetalle.idEstatus)"><i class="fas fa-exclamation-circle"></i> La acci&oacute;n no esta disponible</span>
+                                                            <div ng-show="accionesUserConfigText.indexOf('accionDesasignaOT') === -1"
                                                             class="text-accion-nopermiso">
                                                             <i class="icon-not-permiso fas fa-user-lock"></i>
                                                             <b class="text-not-permiso">No tienes permiso para

@@ -133,7 +133,8 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                             $("#modalDetalleOT").modal('show')
                             setTimeout(function () {
                                 document.getElementsByClassName('permiso-accion-modal')[0].click();
-                                if($scope.infoOtDetalle.descripcionEstatus == "Terminada"){
+                                let isBlock = $scope.keyBloqueoBtn.find((e) => e == $scope.infoOtDetalle.idEstatus)
+                                if(isBlock){
                                     $(".disable-terminada").prop("disabled", true)
                                 }else{
                                     $(".disable-terminada").prop("disabled", false)

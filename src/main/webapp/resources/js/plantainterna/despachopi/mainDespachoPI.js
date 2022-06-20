@@ -71,6 +71,7 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
         $scope.nfiltroestatusDisponbiles = ''
         $scope.nfiltrogeografia = ''
         $scope.nfiltrointervenciones = ''
+        $scope.keyBloqueoBtn = [];
         $scope.estatusCambio = [];
         $scope.intervencionesConteo = [];
         $scope.repDiario;
@@ -1009,8 +1010,9 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                     $scope.nfiltrointervenciones = llavesResult.N_FILTRO_INTERVENCIONES
                     $scope.nfiltroestatuspendiente = llavesResult.N_ESTATUS_PENDIENTES
                     $scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
-                    $scope.nfiltroestatusDisponbiles = llavesResult.N_ESTATUS_ARR_ENVIO
-
+                    $scope.nfiltroestatusDisponbiles = llavesResult.N_ESTATUS_ARR_ENVIO;
+                    $scope.keyBloqueoBtn = llavesResult.KEY_BLOQUEO_OTS ? llavesResult.KEY_BLOQUEO_OTS.split(',').map(function(t){return parseInt(t)}) : [];
+                    
                     if( llavesResult.DURACION_CONTEO_ALERTAS !=undefined    ){
                         MILISEGUNDOS_ALERTAS= parseInt( llavesResult.DURACION_CONTEO_ALERTAS ) * 1000
                     }       

@@ -1,6 +1,6 @@
 <div class="col-12">
     <div class="accordion" id="detalleTicketAccordion">
-        <div class="accordion-item mt-4">
+        <div class="accordion-item">
             <h2 class="accordion-header" id="panelsStayOpen-headingOne">
                 <button class="accordion-button" type="button" data-toggle="collapse"
                     data-target="#panelsStayOpen-collapseOne" aria-expanded="true"

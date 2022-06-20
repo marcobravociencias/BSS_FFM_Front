@@ -123,7 +123,7 @@
 
 			<button id="btnEditarDireccionOT" class="btn btn-sm btn-primary disable-terminada"
 				ng-click="mostrarVistaModificarDireccion(infoOtDetalle.direccion.latitud, infoOtDetalle.direccion.longitud)">Editar</button>
-				<span class="text-terminada" ng-if="infoOtDetalle.descripcionEstatus == 'Terminada'"><i class="fas fa-exclamation-circle"></i> La OT esta terminada</span>
+			<span class="text-terminada" ng-if="keyBloqueoBtn.includes(infoOtDetalle.idEstatus)"><i class="fas fa-exclamation-circle"></i> La acci&oacute;n no esta disponible</span>
 		</div>
 	</div>
 </div>
