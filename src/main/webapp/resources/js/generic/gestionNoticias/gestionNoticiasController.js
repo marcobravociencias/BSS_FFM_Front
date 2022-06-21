@@ -403,7 +403,7 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 								<td>  	${iconPermanente} </td>
 								<td>  	<span class="consultaFechaNoticia text-tooltip-parent"> ${el.permanente ? 'NA' : el.fechaInicio}</span>  </td>
 								<td>  	<span class="consultaFechaNoticia text-tooltip-parent"> ${el.permanente ? 'NA' : el.fechaExpiracion} </span>   </td>
-								<td>  	<span class="consultaDetalleNoticia text-tooltip-parent"> ${el.detalle}  </span> </td>
+								<td>  	<span class="consultaDetalleNoticia text-tooltip-parent" title="${el.detalle}"> ${el.detalle}  </span> </td>
 								<td>  	`+ buttonEditar +` `+ buttonEliminar +` 
 								</td>
 

@@ -59,6 +59,10 @@
                                     class="nav-link" id="v-tabs-consulta-cambio-direccion-tab" data-mdb-toggle="tab"
                                     href="#v-tabs-consulta-cambio-direccion" ng-click="verMapaCambioDireccion(infoOtDetalle.direccion.latitud, infoOtDetalle.direccion.longitud)" role="tab"
                                     aria-controls="v-tabs-consulta-cambio-direccion-tab" aria-selected="false">Cambio direcci&oacute;n</a>
+                                <a ng-show="permisosModal.indexOf('tabOtsRelacionPlantaExterna') !== -1" class="nav-link"
+                                    ng-click="consultarOrdenesPlantaExternaOTDetalle()" data-mdb-toggle="tab" href="#v-tabs-consulta-ordenesPE"
+                                    aria-controls="v-tabs-consulta-ordenesPE-tab" aria-selected="false" id="v-tabs-consulta-ordenesPE-tab">OT Planta
+                                    Externa</a>
                             </div>
                         </div>
                         <div class="col-10">
@@ -1467,6 +1471,10 @@
                                 	<hr />
                                 	<jsp:include page="./../contents/div-info-detalle-inspector-ot-pe.jsp"></jsp:include>
 								</div>
+                                <div ng-show="permisosModal.indexOf('tabOtsRelacionPlantaExterna') !== -1" class="tab-pane fade"
+                                    id="v-tabs-consulta-ordenesPE" role="tabpanel" aria-labelledby="v-tabs-consulta-ordenesPE-tab">
+                                    <jsp:include page="../contents/ordenesPlantaExternaOt.jsp"></jsp:include>
+                                </div>
                             </div>
                         </div>
                     </div>

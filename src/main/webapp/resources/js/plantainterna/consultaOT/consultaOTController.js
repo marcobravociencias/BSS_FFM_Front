@@ -78,6 +78,10 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	$scope.infoDetalleOtPe = {};
 	$scope.mostrarTooltipDetencion = false;
 	
+	let tableOrdenesPlantaExternaOt;
+	let isConsultaOrdenesPE = false;
+	$scope.listOrdenesPE = [];
+	
 	$scope.consultaOT = function () {
 		let isValido = true;
 		let errorMensaje = '';
@@ -664,6 +668,16 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			"autoWidth": true,
 			"language": idioma_espanol_not_font,
 
+		});
+		tableOrdenesPlantaExternaOt = $('#tableOrdenesPlantaExternaOt').DataTable({
+			"paging": true,
+			"lengthChange": false,
+			"searching": false,
+			"ordering": false,
+			"pageLength": 10,
+			"info": false,
+			"autoWidth": true,
+			"language": idioma_espanol_not_font
 		});
 		$scope.consultarCatalagosPI();
 	}
@@ -1599,6 +1613,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		isConsultaDispositivo = false
 		isConsultaMateriales = false
 		isConsultaRecoleccionOt = false;
+		isConsultaOrdenesPE = false;
 		document.querySelector('#informacion-ot').click()
 	})
 
@@ -2447,6 +2462,78 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
         $("#btnPaginador" + falla + splitter).removeClass("btnPaginadorTablaSplitersNoActive");
         $("#btnPaginador" + falla + splitter).addClass("btnPaginadorTablaSplitersActive");
     }
+
+	$scope.consultarOrdenesPlantaExternaOT = function () {
+		if (!isConsultaOrdenesPE) {
+			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
+			swal.showLoading();
+			$scope.listOrdenesPE = [];
+			let params = {
+				"idOrden": $scope.datoOt
+			};
+
+			consultaOTService.consultaOrdenesPlantaExternaOt(params).then(function success(response) {
+				console.log(response);
+				if (response.data) {
+					if (response.data.respuesta) {
+						if (response.data.result) {
+							if (response.data.result.detalleOrdenPe.length) {
+								$scope.listOrdenesPE = angular.copy(response.data.result.detalleOrdenPe);
+								isConsultaOrdenesPE = true;
+
+								let arrayRow = [];
+								if (tableOrdenesPlantaExternaOt) {
+									tableOrdenesPlantaExternaOt.destroy();
+								}
+								$.each($scope.listOrdenesPE, function (i, elemento) {
+									let row = [];
+									row[0] = elemento.idOrdenPe && elemento.idOrdenPe !== '' ? elemento.idOrdenPe : 'Sin informaci&oacute;n';
+									row[1] = (elemento.nivelUno) + " / " + (elemento.nivelDos);
+									row[2] = elemento.subTipoOrden && elemento.subTipoOrden !== '' ? elemento.subTipoOrden : 'Sin informaci&oacute;n';
+									row[3] = elemento.nombreTecnico && elemento.nombreTecnico !== '' ? elemento.nombreTecnico : 'Sin informaci&oacute;n';
+									row[4] = elemento.localizacion && elemento.localizacion !== '' ? elemento.localizacion : 'Sin informaci&oacute;n';
+									row[5] = elemento.estatus && elemento.estatus !== '' ? elemento.estatus : 'Sin informaci&oacute;n';
+									row[6] = elemento.estado && elemento.estado !== '' ? elemento.estado : 'Sin informaci&oacute;n';
+									row[7] = elemento.nivelUrgencia && elemento.nivelUrgencia !== '' ? elemento.nivelUrgencia : 'Sin informaci&oacute;n';
+									row[8] = elemento.fechaAgendamiento && elemento.fechaAgendamiento !== '' ? elemento.fechaAgendamiento : 'Sin informaci&oacute;n';
+									arrayRow.push(row);
+								});
+								tableOrdenesPlantaExternaOt = $('#tableOrdenesPlantaExternaOt').DataTable({
+									"paging": true,
+									"lengthChange": false,
+									"ordering": false,
+									"pageLength": 10,
+									"info": true,
+									"scrollX": false,
+									"data": arrayRow,
+									"autoWidth": false,
+									"language": idioma_espanol_not_font,
+									'createdRow': function (row, data, rowIndex) {
+										$.each($('td', row), function () {
+											$(this).attr('title', $(this).text());
+										});
+									},
+								});
+								swal.close();
+							} else {
+								mostrarMensajeWarningValidacion("No se encontr&oacute; Informaci&oacute;n");
+								swal.close();
+							}
+						} else {
+							mostrarMensajeWarningValidacion("No se encontr&oacute; Informaci&oacute;n");
+							swal.close();
+						}
+					} else {
+						mostrarMensajeWarningValidacion(response.data.result.resultDescripcion);
+						swal.close();
+					}
+				} else {
+					mostrarMensajeWarningValidacion(response.data.result.resultDescripcion);
+					swal.close();
+				}
+			});
+		}
+	}
     
     $scope.cerrarModalDetalleOt = function () {
         $("#modal-detalle-ot").modal("hide");

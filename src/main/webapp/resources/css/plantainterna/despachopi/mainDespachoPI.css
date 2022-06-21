@@ -3039,3 +3039,74 @@ i.fas.fa-lock.iconoAsignacionOtPermiso {
 .text-terminada i {
    color: #ff9f3b;
 }
+
+/* TABLE OT PLANTA EXTERNA */
+
+#tableOrdenesPlantaExternaOt thead th {
+  position: relative;
+  background-color: #b1b1b1;
+  color: #fff;
+  border: none;
+  font-size: .8em;
+  white-space: nowrap;
+  padding: 1em;
+}
+
+#table-tableOrdenesPlantaExternaOt tbody tr td {
+  border: none;
+}
+
+#tableOrdenesPlantaExternaOt>tbody>tr>td {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 1px;
+  color: #39455b;
+  font-family: 'Montserrat';
+  font-size: .8em;
+  border-top: 0px solid #eceeef !important;
+}
+
+#tableOrdenesPlantaExternaOt tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#tableOrdenesPlantaExternaOt_wrapper .dataTables_info {
+  font-size: 0.7em;
+  font-family: "Montserrat" !important;
+  text-align: center;
+}
+
+#tableOrdenesPlantaExternaOt_wrapper .page-link {
+  font-size: 0.7em !important;
+  font-family: "Montserrat" !important;
+}
+
+#tableOrdenesPlantaExternaOt_wrapper div.dataTables_paginate li.next a:after,
+#tableOrdenesPlantaExternaOt_wrapper div.dataTables_paginate li.last a:after {
+  display: none;
+}
+
+#tableOrdenesPlantaExternaOt_wrapper div.dataTables_paginate li.previous a:before {
+  display: none;
+}
+
+#tableOrdenesPlantaExternaOt_paginate ul.pagination {
+  position: absolute;
+  right: 0;
+}
+
+#tableOrdenesPlantaExternaOt_filter {
+  font-size: 0.7em !important;
+  font-family: "Montserrat" !important;
+}
+
+#tableOrdenesPlantaExternaOt_filter input {
+  font-size: 0.9em !important;
+  font-family: "Montserrat" !important;
+}
+
+#tableOrdenesPlantaExternaOt_paginate .page-item.active .page-link {
+  background-color: var(--btn-color-paginador-tabla) !important;
+}
+/* TABLE OT PLANTA EXTERNA */

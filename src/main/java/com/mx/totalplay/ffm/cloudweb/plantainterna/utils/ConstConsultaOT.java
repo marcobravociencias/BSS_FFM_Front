@@ -55,4 +55,7 @@ private static final long serialVersionUID = 1L;
 	
 	@Value("${consultaRecoleccionOt}")
 	private String consultaRecoleccionOt;
+	
+	@Value("${consultaOrdenesPlantaExternaOt}")
+	private String consultaOrdenesPlantaExternaOt;
 }

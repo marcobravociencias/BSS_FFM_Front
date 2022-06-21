@@ -169,4 +169,14 @@ public class ConsultaOTController {
 		}
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
+	
+	@PostMapping("/consultaOrdenesPlantaExternaOt")
+	public ResponseEntity<?> consultaOrdenesPlantaExternaOt(@RequestBody String params){
+		logger.info("#### CONSULTANDO consultaOrdenesPlantaExternaOt: " + params);
+		ServiceResponseResult response = consultaOTService.consultaOrdenesPlantaExternaOt(params);
+		if (response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
 }

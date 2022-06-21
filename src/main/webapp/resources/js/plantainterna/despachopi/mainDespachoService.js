@@ -405,5 +405,16 @@ app.service("mainDespachoService", function ($http) {
             }
 		});
 	};
+
+	this.consultaOrdenesPlantaExternaOt = function (params) {
+		return $http({
+			method: "post",
+			url: "req/consultaOrdenesPlantaExternaOt",
+			data: JSON.stringify(params),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
+	};
 	
 });

@@ -35,4 +35,6 @@ public interface ConsultaOTService {
 	ServiceResponseResult consultaDispositivos(String params);
 
     ServiceResponseResult consultaRecoleccionConsultaOt(String params);
+    
+    public ServiceResponseResult consultaOrdenesPlantaExternaOt(String params);
 }

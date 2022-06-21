@@ -16,13 +16,14 @@
                                 <a ng-click="consultarDetalleOtPe()" data-mdb-toggle="tab" href="#content-orden-detenida" ng-show="permisosModal.indexOf('tabOperacionDiaria') !== -1" class="nav-link" id="info_orden_detenida">Orden detenida</a>
                                 <a ng-click="consultarDetalleOtPe()" data-mdb-toggle="tab" href="#content-detalle-detencion" ng-show="permisosModal.indexOf('tabOperacionDiaria') !== -1" class="nav-link" id="info_detalle_detencion">Detalle detenci&oacute;n</a>
                                 <a ng-click="consultarDetalleOtPe()" data-mdb-toggle="tab" href="#content-detalle-inspector" ng-show="permisosModal.indexOf('tabInspectorRed') !== -1" class="nav-link" id="info_detalle_inspector">Detalle inspector</a>
-                                    <a ng-click="consultaHistoricoOt()" data-mdb-toggle="tab" href="#content-historico" ng-show="permisosModal.indexOf('tabHistoricoDespacho') !== -1" class="nav-link" id="info_historico">Hist&oacute;rico</a>
-                                    <a ng-click="consultaChat()" data-mdb-toggle="tab" href="#content-comentarios" ng-show="permisosModal.indexOf('tabComentariosDespacho') !== -1" class="nav-link" id="comentarios">Comentarios</a>
-                                    <a ng-click="consultarPostVentaOt()" data-mdb-toggle="tab" href="#content-postVenta" ng-show="permisosModal.indexOf('tabDetalleSoporte') !== -1" class="nav-link" id="postVenta">Detalle Soporte</a>
-                                    <a ng-click="consultaPagosOt()" data-mdb-toggle="tab" href="#content-pagos" ng-show="permisosModal.indexOf('tabConsultaPagos') !== -1" class="nav-link" id="pagos-Ot">Pagos</a>
-                                    <a ng-click="consultarDispositivosOt()" data-mdb-toggle="tab" href="#content-dispositivos" ng-show="permisosModal.indexOf('tabConsultaDispositivos') !== -1" class="nav-link" id="dispositivo-Ot">Dispositivos</a>
-                                    <a ng-click="consultaMaterialesOT()" data-mdb-toggle="tab" href="#content-materiales-ot" ng-show="permisosModal.indexOf('tabConsultaMaterialesOT') !== -1" class="nav-link" id="dispositivo-Ot">Materiales</a>
-                                    <a ng-click="consultarRecoleccionOt()" data-mdb-toggle="tab" href="#content-recoleccion-ot" ng-show="permisosModal.indexOf('tabConsultaRecoleccionOT') !== -1" class="nav-link" id="recoleccion-ot">Recolecci&oacute;n</a>
+                                <a ng-click="consultaHistoricoOt()" data-mdb-toggle="tab" href="#content-historico" ng-show="permisosModal.indexOf('tabHistoricoDespacho') !== -1" class="nav-link" id="info_historico">Hist&oacute;rico</a>
+                                <a ng-click="consultaChat()" data-mdb-toggle="tab" href="#content-comentarios" ng-show="permisosModal.indexOf('tabComentariosDespacho') !== -1" class="nav-link" id="comentarios">Comentarios</a>
+                                <a ng-click="consultarPostVentaOt()" data-mdb-toggle="tab" href="#content-postVenta" ng-show="permisosModal.indexOf('tabDetalleSoporte') !== -1" class="nav-link" id="postVenta">Detalle Soporte</a>
+                                <a ng-click="consultaPagosOt()" data-mdb-toggle="tab" href="#content-pagos" ng-show="permisosModal.indexOf('tabConsultaPagos') !== -1" class="nav-link" id="pagos-Ot">Pagos</a>
+                                <a ng-click="consultarDispositivosOt()" data-mdb-toggle="tab" href="#content-dispositivos" ng-show="permisosModal.indexOf('tabConsultaDispositivos') !== -1" class="nav-link" id="dispositivo-Ot">Dispositivos</a>
+                                <a ng-click="consultaMaterialesOT()" data-mdb-toggle="tab" href="#content-materiales-ot" ng-show="permisosModal.indexOf('tabConsultaMaterialesOT') !== -1" class="nav-link" id="dispositivo-Ot">Materiales</a>
+                                <a ng-click="consultarRecoleccionOt()" data-mdb-toggle="tab" href="#content-recoleccion-ot" ng-show="permisosModal.indexOf('tabConsultaRecoleccionOT') !== -1" class="nav-link" id="recoleccion-ot">Recolecci&oacute;n</a>
+                                <a ng-click="consultarOrdenesPlantaExternaOT()" data-mdb-toggle="tab" href="#content-ordenesPE-ot" ng-show="permisosModal.indexOf('tabOtsRelacionPlantaExterna') !== -1" class="nav-link" id="ordenesPE-ot">OT Planta Externa</a>
                             </div>
                         </div>
                         <div class="col-10">
@@ -296,6 +297,11 @@
                                 <div class="contenedor_detalle row tab-pane fade" id="content-recoleccion-ot">
                                     <div class="container container-tabla-dispositivo-consulta-ot">
                                         <jsp:include page="../contentTap/recoleccionConsultaOt.jsp"></jsp:include>
+                                    </div>
+                                </div>
+                                <div class="contenedor_detalle row tab-pane fade" id="content-ordenesPE-ot">
+                                    <div class="container">
+                                        <jsp:include page="../contentTap/ordenesPlantaExternaOt.jsp"></jsp:include>
                                     </div>
                                 </div>
                             </div>
