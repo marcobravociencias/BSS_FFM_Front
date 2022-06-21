@@ -81,7 +81,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="card-body card-body-alerta-principal">
+                <div class="card-body card-body-alerta-principal" id="v-tabs-tabsContent-alertas">
                     <div class="tab-content" id="pills-tabContent">
                         <div class="tab-pane fade show active" id="pills-mapa" role="tabpanel"
                             aria-labelledby="pills-mapa-tab">

@@ -62,7 +62,7 @@
                             </div>
                         </div>
                         <div class="col-10">
-                            <div class="tab-content" id="v-tabs-tabContent">
+                            <div class="tab-content" id="v-tabs-tabsContent">
                                 <div class="tab-pane fade show active" id="v-tabs-consulta-detalleot" role="tabpanel"
                                     aria-labelledby="v-tabs-consulta-detalleot-tab">
                                     <div class="row">

@@ -34,6 +34,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     $scope.tabDetalleInspector = false;
     $scope.infoDetalleOtPe = {};
     $scope.permisoDescargaSeguimientoDiario = false;
+    $scope.mostrarTooltipDetencion = false;
 
 
     $scope.listadoCatalogoAcciones = []
@@ -174,6 +175,21 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     $scope.consultarDetalleOtPEFlag = false;
 
     $scope.consultarDetalleOtPE = function () {
+    	
+    	$scope.mostrarTooltipDetencion = false;
+		var tamContenedorDetencionModal = $("#v-tabs-tabsContent").width();
+		var tamContenedorDetencionAlerta = $("#v-tabs-tabsContent-alertas").width();
+		
+		if(tamContenedorDetencionModal > 0){
+			if(tamContenedorDetencionModal < 700){
+				$scope.mostrarTooltipDetencion = true;
+			}
+		}else{
+			if(tamContenedorDetencionAlerta < 700){
+				$scope.mostrarTooltipDetencion = true;
+			}
+		}
+    	
         if (!$scope.consultarDetalleOtPEFlag) {
             swal({ text: 'Consultando detalle de la OT ...', allowOutsideClick: false });
             swal.showLoading();
@@ -1853,18 +1869,18 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     }
 
     $scope.cambiarIndicadorBtnImg = function (falla, img) {
-        $(".btnImgPorFalla" + falla).removeClass("btnControlImgsSinOpacidad");
+    	$(".btnImgPorFalla" + falla).removeClass("btnControlImgsSinOpacidad");
         $(".btnImgPorFalla" + falla).addClass("btnControlImgsOpacidad");
         $("#btnIndicadorIndividual" + falla + img).addClass("btnControlImgsSinOpacidad");
     }
 
-    $scope.cambiarPagTablaSpliters = function (falla, splitter, index) {
-        $(".filasTablaSpliters" + falla).addClass("ocultarFilaTablaSplitersFallaDetalleDetencion");
-        $("#filaTablaSplitersFallaDetalleDetencion" + falla + splitter).removeClass("ocultarFilaTablaSplitersFallaDetalleDetencion");
+    $scope.cambiarPagTablaSpliters = function (falla, splitter) {
+    	$(".spliters" + falla).addClass("ocultarFilaTablaSplitersFallaDetalleDetencion");
+        $("#detencion" + falla + splitter).removeClass("ocultarFilaTablaSplitersFallaDetalleDetencion");
         $(".btnPaginadorTablaSpliters" + falla).removeClass("btnPaginadorTablaSplitersActive");
         $(".btnPaginadorTablaSpliters" + falla).addClass("btnPaginadorTablaSplitersNoActive");
-        $("#btnPaginadorTablaSpliters" + falla + splitter + index).removeClass("btnPaginadorTablaSplitersNoActive");
-        $("#btnPaginadorTablaSpliters" + falla + splitter + index).addClass("btnPaginadorTablaSplitersActive");
+        $("#btnPaginador" + falla + splitter).removeClass("btnPaginadorTablaSplitersNoActive");
+        $("#btnPaginador" + falla + splitter).addClass("btnPaginadorTablaSplitersActive");
     }
 
     $scope.cerrarModalDetalleOtPe = function () {
