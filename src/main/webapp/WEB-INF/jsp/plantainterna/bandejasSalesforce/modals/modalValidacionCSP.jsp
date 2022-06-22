@@ -28,8 +28,11 @@
                 </div>
             </div>
             <div class="modal-footer border-tecnico-ticket">
+                <button type="button" ng-click="isAgendamiento = false" class="btn btn-cerrar-modal" data-mdb-dismiss="modal">
+                    Cancelar
+                </button>
                 <button type="button" class="btn btn-cerrar-modal" data-mdb-dismiss="modal">
-                    Cerrar
+                    Validar
                 </button>
             </div>
         </div>

@@ -282,7 +282,6 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
             bandejasSalesforceService.consultarConfiguracionDespachoDespacho({ "moduloAccionesUsuario": "moduloBandejasSalesforce" }),
             bandejasSalesforceService.consultarCatalogoGeografia()
         ]).then(function (results) {
-            console.log(results);
             let resultConf = results[0].data.result;
             if (resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
                 let llavesResult = results[0].data.result.MODULO_ACCIONES_USUARIO.llaves;
@@ -316,7 +315,6 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
 
             if (resultConf != undefined && resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.permisos && resultConf.MODULO_ACCIONES_USUARIO.permisos != "") {
                 $scope.permisosUsuario = resultConf.MODULO_ACCIONES_USUARIO.permisos;
-                console.log($scope.permisosUsuario);
                 $scope.isPermisoConsultaPendientesAgendar = ($scope.permisosUsuario.filter(e => { return e.clave == "accionConsultarPendientesAgendar" })[0] != undefined);
                 $scope.isPermisoConsultaRescataventas = ($scope.permisosUsuario.filter(e => { return e.clave == "accionConsultarRescataventas" })[0] != undefined);
                 $scope.isPermisoConsultaPendientesActivar = ($scope.permisosUsuario.filter(e => { return e.clave == "accionConsultarPendientesActivar" })[0] != undefined);
@@ -531,7 +529,6 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
         bandejasSalesforceService.guardarContactoSalesforce(params).then(function success(response) {
-            console.log(response);
             if (response.data !== undefined) {
                 if (response.data.result!=undefined) {
                     if(response.data.result.ids != undefined && response.data.result.ids.length>0){
@@ -578,7 +575,6 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         }
 
         bandejasSalesforceService.consultaFactibilidadAgendamiento(params).then(function success(response) {
-            console.log(response);
             if (response.data !== undefined) {
                 if (response.data.respuesta) {
                     if (response.data.result) {                       
@@ -635,17 +631,17 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
             }
         });    
     }
+    
 
     visualizarAgendamiento = function (index) {
-        $scope.isAgendamiento = true;
-        $scope.isFactibilidad = false;
-        $scope.isFechaSelected = false;
+    	
+    	$scope.consultarValidacionCSP($scope.listPendientesAgendar[index].idCSP);
+    	
         $scope.listContactosAgendamiento = []
         
         $scope.infoFactibilidad = {};
         $scope.elementoCSP = {};
         $scope.elementoCSP = $scope.listPendientesAgendar[index];
-        console.log("elemento CSP ",$scope.elementoCSP)
         $scope.clearMarkersAgendamiento();
         $scope.clearFormAgendamiento();
 
@@ -716,12 +712,12 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
             }
             swal.close()
         });
-
-
+        $scope.isAgendamiento = true;
+        $scope.isFactibilidad = false;
+        $scope.isFechaSelected = false;
     }
 
     $scope.colocarContactoSeleccionado=function(){
-        console.log("contacto selected",$scope.contactoSelected)
         $scope.contactoSelected={}    
         if($scope.idContactoSelected==undefined)
             return 
@@ -822,9 +818,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                 "fechaFin": paramsfecha.fechaFin
                 // "geografias": ["CIUDAD DE MEXICO"], "fechaFin": "2021-01-01", "fechaInicio": "2019-01-01"
             }
-            // console.log(params);
             bandejasSalesforceService.consultarPendientesAgendarBandejasSF(params).then(function success(response) {
-                console.log(response);
                 if (response.data) {
                     if (response.data.respuesta) {
                         if (response.data.result) {
@@ -834,7 +828,6 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                                     pendientesAgendarTable.destroy();
                                 }
                                 $scope.listPendientesAgendar = angular.copy(response.data.result.resultado);
-                                console.log($scope.listPendientesAgendar);
                                 $.each($scope.listPendientesAgendar, function (i, elemento) {
                                     let rowAg = [];
                                     let istop500 = (elemento.top500) ? '<i class="fas fa-star" style="color:#fcba5d;"></i>&nbsp;' : '<i class="fas fa-star" style="color: #b1b1b1;"></i>&nbsp;';
@@ -912,9 +905,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
             let params = {
                 "geografias": clustersSelected,
             }
-            // console.log(params);
             bandejasSalesforceService.consultarRescataventasBandejasSF(params).then(function success(response) {
-                console.log(response);
                 if (response.data) {
                     if (response.data.respuesta) {
                         if (response.data.result) {
@@ -996,9 +987,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                 'fechaInicio': paramsFecha.fechaInicio,
                 'fechaFin': paramsFecha.fechaFin
             };
-            // console.log(params);
             bandejasSalesforceService.consultarPendientesActivarBandejasSF(params).then(function success(response) {
-                console.log(response);
                 if (response.data) {
                     if (response.data.respuesta) {
                         if (response.data.result) {
@@ -1072,9 +1061,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         let params = { 
             "folio": "OS-6944916" 
         }; 
-        console.log(params); 
         bandejasSalesforceService.consultarResumenPaqueteBandejasSF(params).then(function success(response) { 
-            console.log(response); 
             if (response.data) { 
                 if (response.data.respuesta) { 
                     if (response.data.result) { 
@@ -1107,9 +1094,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         let params = { 
             'idCotSitioPlan': idCSP 
         } 
-        console.log(params); 
         bandejasSalesforceService.consultarDetalleEquiposBandejasSF(params).then(function success(response) { 
-            console.log(response); 
             if (response.data) { 
                 if (response.data.respuesta) { 
                     if (response.data.result) { 
@@ -1140,17 +1125,15 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
             'idCotSitioPlan': idCSP 
         }
         bandejasSalesforceService.consultarValidacionCSPBandejasSF(params).then(function success(response) {
-            console.log(response); 
             if (response.data) { 
                 if (response.data.respuesta) { 
                     if (response.data.result) { 
                         if (response.data.result.fieldsSalesforce.length) { 
                             $scope.listFieldsCopy = angular.copy(response.data.result.fieldsSalesforce);
-                            $scope.listFieldsValidacion = $scope.listFieldsCopy.filter(e => { return e.status === 0 })
-                            console.log($scope.listFieldsCopy);
-                            console.log($scope.listFieldsValidacion);
-                        
-                            $("#modalValidacionCSP").modal('show'); 
+                            $scope.listFieldsValidacion = $scope.listFieldsCopy.filter(e => { return e.status === 0 });
+                            if($scope.listFieldsValidacion.length > 0){
+                            	$("#modalValidacionCSP").modal('show'); 
+                            }
                             swal.close(); 
                         } else { 
                             mostrarMensajeErrorAlert("No se encontr&oacute; informaci&oacute;n"); 
