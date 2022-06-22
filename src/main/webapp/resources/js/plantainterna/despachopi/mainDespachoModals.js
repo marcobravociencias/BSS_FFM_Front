@@ -1962,6 +1962,11 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     }
 
     //ORGCHARTJS
+    $scope.cerrarModalOrganigrama = function() {
+ 
+        $("#modalOrganigrama").modal('hide');
+    
+    }
 
     $scope.listaSubordinados = [];
     $scope.mostrarModalOrganigrama = function() {
@@ -2006,6 +2011,8 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                             '<clipPath id="{randId}"><circle cx="125" cy="40" r="30"></circle></clipPath>'
                             + '<image preserveAspectRatio="xMidYMid slice" clip-path="url(#{randId})" xlink:href="{val}" x="95" y="10" width="60" height="60"></image>';
                             var chart = new OrgChart(document.getElementById("tree"), {
+                                enableSearch: false,
+                                orientation: OrgChart.orientation.top,
                                 mouseScrool: OrgChart.action.none,
                                 template: "ula",
                                 
@@ -2015,6 +2022,15 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                                     img_0: "img"
                                 },
                                 nodes: $scope.nodes
+                            });
+                            chart.on('click', function(sender, args){
+ 
+                                //sender.editUI.show(args.node.id, false); 
+                            
+                                // sender.editUI.show(args.node.id, true);  details mode
+                            
+                                return false; //to cansel the click event
+                            
                             });
 
 
