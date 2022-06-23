@@ -44,37 +44,58 @@
                 </div>
             </div>
             <div class="row" ng-show="isPermisoConsultaPendientesAgendar || isPermisoConsultaRescataventas || isPermisoConsultaPendientesActivar">
-                <div class="col-12">
-                    <div id="opciones-menu-sf" class="left-menu small-menu small-sf" style="margin-left: 0; height: 100%;">
-                        <div class="opcion-menu" ng-click="cambiarVistaSF(1);" ng-if="isPermisoConsultaPendientesAgendar">
-                            <i ng-class="{'active-iconmenu':vistaSf==1}" class="icon-menu-left fa fa-clock"></i>
-                            &nbsp;&nbsp;
-                            <span ng-class="{'active-text-menu':vistaSf==1}" class="titulo-menu">Pendiente de agendar</span>
-                        </div>
-                        <div class="opcion-menu" ng-click="cambiarVistaSF(2);" ng-if="isPermisoConsultaRescataventas">
-                            <i ng-class="{'active-iconmenu':vistaSf==2}" class="icon-menu-left fa fa-pencil-square"></i>
-                            &nbsp;&nbsp;
-                            <span ng-class="{'active-text-menu':vistaSf==2}" class="titulo-menu">Rescataventas</span>
-                        </div>
-                        <div class="opcion-menu" ng-click="cambiarVistaSF(3);" ng-if="isPermisoConsultaPendientesActivar">
-                            <i ng-class="{'active-iconmenu':vistaSf==3}" class="icon-menu-left fa fa-stop-circle"></i>
-                            &nbsp;&nbsp;
-                            <span ng-class="{'active-text-menu':vistaSf==3}" class="titulo-menu">Pendiente de activar</span>
-                        </div>
-                    </div>
-                    <div class="right-content">
+                <div class="col-md-12">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="opcion-consulta-tab" data-toggle="tab" href="#opcion-1" role="tab"
+                                aria-controls="opcion-consulta" aria-selected="true" ng-click="cambiarVistaSF(1);"
+                                ng-if="isPermisoConsultaPendientesAgendar">Pendiente de agendar</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="opcion-consulta-tab" data-toggle="tab" href="#opcion-2" role="tab"
+                                aria-controls="opcion-consulta" aria-selected="true" ng-click="cambiarVistaSF(2);"
+                                ng-if="isPermisoConsultaRescataventas">Rescataventas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="opcion-consulta-tab" data-toggle="tab" href="#opcion-3" role="tab"
+                                aria-controls="opcion-consulta" aria-selected="true" ng-click="cambiarVistaSF(3);"
+                                ng-if="isPermisoConsultaPendientesActivar">Pendiente de activar</a>
+                        </li>
+                    </ul>
+<!--                     <div id="opciones-menu-sf" class="left-menu small-menu small-sf" style="margin-left: 0; height: 100%;"> -->
+<!--                         <div class="opcion-menu" ng-click="cambiarVistaSF(1);" ng-if="isPermisoConsultaPendientesAgendar"> -->
+<!--                             <i ng-class="{'active-iconmenu':vistaSf==1}" class="icon-menu-left fa fa-clock"></i> -->
+<!--                             &nbsp;&nbsp; -->
+<!--                             <span ng-class="{'active-text-menu':vistaSf==1}" class="titulo-menu">Pendiente de agendar</span> -->
+<!--                         </div> -->
+<!--                         <div class="opcion-menu" ng-click="cambiarVistaSF(2);" ng-if="isPermisoConsultaRescataventas"> -->
+<!--                             <i ng-class="{'active-iconmenu':vistaSf==2}" class="icon-menu-left fa fa-pencil-square"></i> -->
+<!--                             &nbsp;&nbsp; -->
+<!--                             <span ng-class="{'active-text-menu':vistaSf==2}" class="titulo-menu">Rescataventas</span> -->
+<!--                         </div> -->
+<!--                         <div class="opcion-menu" ng-click="cambiarVistaSF(3);" ng-if="isPermisoConsultaPendientesActivar"> -->
+<!--                             <i ng-class="{'active-iconmenu':vistaSf==3}" class="icon-menu-left fa fa-stop-circle"></i> -->
+<!--                             &nbsp;&nbsp; -->
+<!--                             <span ng-class="{'active-text-menu':vistaSf==3}" class="titulo-menu">Pendiente de activar</span> -->
+<!--                         </div> -->
+<!--                     </div> -->
+                    <div class="tab-content">
                         <div class="row">
                             <div class="col-12 text-center">
                                 <span class="span-titulo-bandeja" ng-bind="nombreBandejaSf"></span>
                             </div>
-                            <div class="row" style="padding-right: 0;">
-                                <div id="vistaPendiente" class="col-12" ng-show="vistaSf === 1 && isPermisoConsultaPendientesAgendar">
+                            <div class="tab-pane fade show active" id="opcion-1" role="tabpanel" aria-labelledby="opcion-alta-tab">
+                                <div id="vistaPendiente" ng-show="vistaSf === 1 && isPermisoConsultaPendientesAgendar">
                                     <jsp:include page="./content/tablePendienteAgendar.jsp"></jsp:include>
                                 </div>
-                                <div id="vistaAsignada" class="col-12" ng-show="vistaSf === 2 && isPermisoConsultaRescataventas">
+                            </div>
+                            <div class="tab-pane fade" id="opcion-2" role="tabpanel" aria-labelledby="opcion-alta-tab">
+                                <div id="vistaAsignada" ng-show="vistaSf === 2 && isPermisoConsultaRescataventas">
                                     <jsp:include page="./content/tableRescataventas.jsp"></jsp:include>
                                 </div>
-                                <div id="vistaDetenida" class="col-12" ng-show="vistaSf === 3 && isPermisoConsultaPendientesActivar">
+                            </div>
+                            <div class="tab-pane fade" id="opcion-3" role="tabpanel" aria-labelledby="opcion-alta-tab">
+                                <div id="vistaDetenida" ng-show="vistaSf === 3 && isPermisoConsultaPendientesActivar">
                                     <jsp:include page="./content/tablePendienteActivar.jsp"></jsp:include>
                                 </div>
                             </div>

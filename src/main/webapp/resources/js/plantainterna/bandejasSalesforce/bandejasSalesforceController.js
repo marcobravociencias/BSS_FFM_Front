@@ -206,7 +206,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                     treeActivar = $('#geografiaPendientesActivar').bind('loaded.jstree', function (e, data) {
                         $scope.btnAceptarGeografiaConsulta('pendientesActivar');
                         $scope.consultarPendientesActivarBandejas();
-                        $scope.$apply();
+                        //$scope.$apply();
                     }).jstree({
                         'plugins': ["wholerow", "checkbox", "search"],
                         'core': {
@@ -562,7 +562,6 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         $("#entreCallesAgendamiento").val('');
         $("#referenciasAgendamiento").val('');
         $("#comentariosAgendamiento").val('');
-        $scope.$apply();
     }
 
     $scope.flagConsultandoFactibilidad = false;
@@ -634,14 +633,16 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
     
 
     visualizarAgendamiento = function (index) {
-    	
-    	$scope.consultarValidacionCSP($scope.listPendientesAgendar[index].idCSP);
-    	
-        $scope.listContactosAgendamiento = []
-        
-        $scope.infoFactibilidad = {};
+    	$scope.consultarValidacionCSP(index);
+    	$scope.indexPendienteSeleccionada = index;
+    }
+    
+    $scope.validarDatos = function() {
+    	console.log("SE VALIDA");
+    	$scope.listContactosAgendamiento = []
+        $scope.infoFactibilidad = {};	
         $scope.elementoCSP = {};
-        $scope.elementoCSP = $scope.listPendientesAgendar[index];
+        $scope.elementoCSP = $scope.listPendientesAgendar[$scope.indexPendienteSeleccionada];
         $scope.clearMarkersAgendamiento();
         $scope.clearFormAgendamiento();
 
@@ -715,7 +716,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         $scope.isAgendamiento = true;
         $scope.isFactibilidad = false;
         $scope.isFechaSelected = false;
-    }
+	}
 
     $scope.colocarContactoSeleccionado=function(){
         $scope.contactoSelected={}    
@@ -1114,7 +1115,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
 
     $scope.listFieldsValidacion = [];
     $scope.listFieldsCopy = [];
-    $scope.consultarValidacionCSP = function (idCSP) {
+    $scope.consultarValidacionCSP = function (index) {
         $scope.listFieldsValidacion = [];
         $scope.listFieldsCopy = [];
         if (!swal.isVisible()) { 
@@ -1122,7 +1123,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
             swal.showLoading(); 
         } 
         let params = { 
-            'idCotSitioPlan': idCSP 
+            'idCotSitioPlan': $scope.listPendientesAgendar[index].idCSP
         }
         bandejasSalesforceService.consultarValidacionCSPBandejasSF(params).then(function success(response) {
             if (response.data) { 
@@ -1133,6 +1134,8 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                             $scope.listFieldsValidacion = $scope.listFieldsCopy.filter(e => { return e.status === 0 });
                             if($scope.listFieldsValidacion.length > 0){
                             	$("#modalValidacionCSP").modal('show'); 
+                            }else{
+                            	$scope.validarDatos();
                             }
                             swal.close(); 
                         } else { 

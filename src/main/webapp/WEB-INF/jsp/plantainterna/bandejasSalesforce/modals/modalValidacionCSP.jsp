@@ -31,7 +31,7 @@
                 <button type="button" ng-click="isAgendamiento = false" class="btn btn-cerrar-modal" data-mdb-dismiss="modal">
                     Cancelar
                 </button>
-                <button type="button" class="btn btn-cerrar-modal" data-mdb-dismiss="modal">
+                <button type="button" ng-click="validarDatos()" class="btn btn-cerrar-modal" data-mdb-dismiss="modal">
                     Validar
                 </button>
             </div>
