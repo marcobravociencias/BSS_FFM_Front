@@ -1808,4 +1808,9 @@ img.img-recoleccion {
 #tableMaterialesDetalleOT .table.dataTable {
     border-collapse: collapse !important;
 }
+
+.container-noticia-elemento {
+    margin-top: 1em;
+    margin-right: 1em;
+}
 /* MODAL DETALLE OT */

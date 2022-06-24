@@ -1,9 +1,4 @@
 
-<div class="row">
-    <div ng-show="isAbiertoOSNoticias">
-        <jsp:include page="/WEB-INF/jsp/generic/busquedaSalesforce/content/noticiasGeneralesOp.jsp"></jsp:include>
-    </div>
-</div>
 <div class="col-12">
     <div class="row header-detalle">
         <div  ng-show="showOportunidad" class="header-back-title col-2">

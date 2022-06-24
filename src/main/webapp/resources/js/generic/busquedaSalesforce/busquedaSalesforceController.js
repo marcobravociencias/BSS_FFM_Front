@@ -12,6 +12,7 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
     Nota: En caso de implementar la funcion en otros modulos favor de agregarlos en la siguiente lista
         * moduloGestionTickets
         * moduloBandejasSalesforce
+        * moduloDespacho
 
     */
     $scope.historial = [];
@@ -571,7 +572,8 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
             $scope.objectoConsulta()
         }
         $scope.isAbiertoOSNoticias = !$scope.isAbiertoOSNoticias
-
+        $(".container-noticia-elemento").height($(".container-busqueda").height()-5); 
+        $('.content-noticias-general').css({"maxHeight":$(".container-busqueda").height()-120}); 
         $scope.isConsultaPrimeraVezNoticias = true
     }
 
@@ -788,11 +790,11 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
                 $scope.tipoResponse = null;
             }
         } else {
-            document.getElementById('content-subcomentario-os-' + numero).style.display = 'block';
-            document.getElementById('content-subcomentario-op-' + numero).style.display = 'block';
+            // document.getElementById('content-subcomentario-os-' + numero).style.display = 'block';
+            // document.getElementById('content-subcomentario-op-' + numero).style.display = 'block';
             document.getElementById('content-subcomentario-ticket-' + numero).style.display = 'block';
-            document.getElementById('texto-subcomentario-os-' + numero).value = '';
-            document.getElementById('texto-subcomentario-op-' + numero).value = '';
+            // document.getElementById('texto-subcomentario-os-' + numero).value = '';
+            // document.getElementById('texto-subcomentario-op-' + numero).value = '';
             document.getElementById('texto-subcomentario-ticket-' + numero).value = '';
             $scope.tipoResponse = 0;
             $scope.banderaShow = true;
@@ -998,8 +1000,8 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
                 if (response.data.result) {
                     if (response.data.result.result === '0') {
                         $scope.resetFileBusqueda(params.newId);
-                        document.getElementById('texto-subcomentario-os-' + params.newId).value = ''
-                        document.getElementById('texto-subcomentario-op-' + params.newId).value = ''
+                        // document.getElementById('texto-subcomentario-os-' + params.newId).value = ''
+                        // document.getElementById('texto-subcomentario-op-' + params.newId).value = ''
                         document.getElementById('texto-subcomentario-ticket-' + params.newId).value = ''
                         $scope.objectoConsulta();
                     } else {
@@ -1251,13 +1253,13 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
         console.log("2");
         let noticia = evento.id.split('-')[1]
         if ($('#' + evento.id).get(0).files[0] === undefined) {
-            document.getElementById('spnNombreAdSubComentarioOs-' + noticia).innerHTML = ''
-            document.getElementById('spnNombreAdSubComentarioOp-' + noticia).innerHTML = ''
+            // document.getElementById('spnNombreAdSubComentarioOs-' + noticia).innerHTML = ''
+            // document.getElementById('spnNombreAdSubComentarioOp-' + noticia).innerHTML = ''
             document.getElementById('spnNombreAdSubComentarioTicket-' + noticia).innerHTML = ''
             $scope.showEliminarSubCom = false;
         } else {
-            document.getElementById('spnNombreAdSubComentarioOs-' + noticia).innerHTML = $('#' + evento.id).get(0).files[0].name
-            document.getElementById('spnNombreAdSubComentarioOp-' + noticia).innerHTML = $('#' + evento.id).get(0).files[0].name
+            // document.getElementById('spnNombreAdSubComentarioOs-' + noticia).innerHTML = $('#' + evento.id).get(0).files[0].name
+            // document.getElementById('spnNombreAdSubComentarioOp-' + noticia).innerHTML = $('#' + evento.id).get(0).files[0].name
             document.getElementById('spnNombreAdSubComentarioTicket-' + noticia).innerHTML = $('#' + evento.id).get(0).files[0].name
             $scope.showEliminarSubCom = true;
         }
@@ -1268,8 +1270,8 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
         $("#fileSubComentarioOs-" + noticia).val("");
         $("#fileSubComentariotOp-" + noticia).val("");
         $("#fileSubComentarioTicket2-" + noticia).val("");
-        document.getElementById('spnNombreAdSubComentarioOs-' + noticia).innerHTML = ''
-        document.getElementById('spnNombreAdSubComentarioOp-' + noticia).innerHTML = ''
+        // document.getElementById('spnNombreAdSubComentarioOs-' + noticia).innerHTML = ''
+        // document.getElementById('spnNombreAdSubComentarioOp-' + noticia).innerHTML = ''
         document.getElementById('spnNombreAdSubComentarioTicket-' + noticia).innerHTML = ''
         $scope.showEliminarSubCom = false;
     }

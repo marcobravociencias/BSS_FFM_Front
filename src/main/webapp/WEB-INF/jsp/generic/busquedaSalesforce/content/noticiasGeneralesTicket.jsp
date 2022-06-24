@@ -1,4 +1,4 @@
-<div  class="container-noticia-elemento">
+<div  class="container-noticia-elemento" ng-show="isAbiertoOSNoticias">
     <div class="row content-btn-cerrar">
      <button ng-click="cerrarNoticiasGeneral()" id="cerrar-gestion-ticket" type="button" class="btn-close">
      </button>
