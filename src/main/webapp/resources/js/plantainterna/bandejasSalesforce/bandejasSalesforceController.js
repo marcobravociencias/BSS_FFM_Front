@@ -657,7 +657,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
             subtipoIntervencion: 35
         }
         let paramsDetalleSitio={
-            cuenta:'0290005899'
+            cuenta:$scope.elementoCSP.cuentaFacturaSf.noCuenta
         }
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
