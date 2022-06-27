@@ -134,5 +134,11 @@ public class PlantaInternaViewsController {
 	public String traspasos() {		
 		return "plantainterna/traspasos/mainTraspasos";
 	}
+	
+	@GetMapping("/moduloOrganigrama")
+	public String organigrama() {		
+		return "plantainterna/organigrama/mainOrganigrama";
+	}
+
 }
 

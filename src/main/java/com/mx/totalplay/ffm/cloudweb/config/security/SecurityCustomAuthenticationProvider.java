@@ -45,6 +45,7 @@ public class SecurityCustomAuthenticationProvider implements AuthenticationProvi
 		put("/moduloGestionTecnicos","ROLE_USER");
 		put("/moduloTercerosGeneric","ROLE_USER");
 		put("/helpReportFFM", "ROLE_USER");
+		put("/moduloOrganigrama","ROLE_USER");
     }};
     
     @Autowired

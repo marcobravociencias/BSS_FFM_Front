@@ -1,0 +1,76 @@
+.content-organigrama {
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+    background: white;
+    border-radius: .5em;
+    margin-top: 1em;
+    font-family: 'Montserrat' !important;
+    height: 87vh !important;
+}
+
+#tree {
+    width: 100%;
+    height: 87vh !important;
+    cursor: move;
+}
+
+
+
+.text-external-link {
+    color: #0c56d0 !important;
+    font-weight: bold !important;
+    text-decoration-line: underline;
+
+}
+
+.text-external-link:hover {
+    color: #114291;
+    text-decoration: solid;
+    cursor: pointer;
+    text-decoration-line: underline;
+}
+
+.modal-dialog-full-width {
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width:none !important;
+
+}
+
+.modal-content-full-width  {
+    height: auto !important;
+    min-height: 100% !important;
+    border-radius: 0 !important;
+    background-color: #ececec !important 
+}
+
+.modal-header-full-width  {
+    border-bottom: 1px solid #9ea2a2 !important;
+}
+
+.modal-footer-full-width  {
+    border-top: 1px solid #9ea2a2 !important;
+}
+
+#tree .boc-form-field {
+    min-width: 290px !important;
+}
+
+#tree .boc-input>input, .boc-input>select {
+    height: 30px !important;
+    padding: 0 .5em !important;
+}
+
+#tree .boc-input>input:focus{
+    border:1px solid #dbdbdb !important;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 7%), 0 1px 2px 0 rgb(0 0 0 / 5%) !important;
+}
+
+#tree .boc-input>label{
+    top: 2px !important;
+}
+
+#tree .boc-input>label.focused {
+    display: none;
+}
