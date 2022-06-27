@@ -220,5 +220,17 @@ public class ImplBandejasSalesforceService implements BandejasSalesforceService 
 	    return response;
 	}
     
+	@Override
+	public ServiceResponseResult agendarPendienteBandejaSF(String params) {
+		logger.info("ImplBandejasSalesforceService.class [metodo = agendarPendienteBandejaSF() ] \n" + params);
+		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		String tokenAcces=principalDetail.getAccess_token() ;
+		String url = principalDetail.getDireccionAmbiente().concat(constBandejasSalesforce.getAgendarPendienteBandejaSF());
+		ServiceResponseResult response=restCaller.callPostBearerTokenRequest(jsonObject.toString(), url, ServiceResponseResult.class, tokenAcces);
+		logger.info("URL " + url);
+		logger.info("RESULT guardarUsuario " + gson.toJson(response));
+		return response;
+	}
     
 }

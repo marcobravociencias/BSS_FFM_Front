@@ -645,10 +645,16 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         $scope.elementoCSP = $scope.listPendientesAgendar[$scope.indexPendienteSeleccionada];
         $scope.clearMarkersAgendamiento();
         $scope.clearFormAgendamiento();
+        
+        $scope.listaIdGeografias = [];
+        var geografias = $("#geografiaPendientesAgendar").jstree("get_selected", true);
+        angular.forEach(geografias,(geo,index) => {
+			$scope.listaIdGeografias.push(geo.id);				
+		});
 
         let dataDisp={
             geografia2: 2047,
-            subtipoIntervencion: 102
+            subtipoIntervencion: 35
         }
         let paramsDetalleSitio={
             cuenta:'0290005899'
@@ -732,6 +738,26 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
     $scope.agendarCSPBandejas = function () {
         let isValid = true;
         let mensajeError = '';
+        
+        console.log($scope.elementoCSP);
+        
+        var comentarios = $("#comentariosAgendamiento").val();
+        let params = {
+        		"idFlujo": 1,
+        		"turno":$scope.elementoCSP.turnoAgendamiento,
+        		"tipo":48,
+        		"subtipo": 106,
+        		"numeroCuenta": $scope.elementoCSP.infoSitio.numeroCuenta,
+        		"cluster": $scope.elementoCSP.cluster,
+        		"comentarios": comentarios,
+        		"fechaAgendamiento":$scope.elementoCSP.fechaAgendamiento,
+        		"hora": "",
+        		"confirmacion":"1", 
+        		"distribuidor":"",
+        		"idTicketSF": "",
+        		"posventa": false	
+        };
+        console.log(params);
 
         if ($("#comentariosAgendamiento").val() == undefined || $("#comentariosAgendamiento").val() == '') {
             mensajeError += "<li>Debe ingresar un comentario para Agendar</li>";
@@ -757,28 +783,39 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                     '<div style="text-align: left;" class="info_ot_detail">' +
                     '	<div class="col-md-10 offset-md-2">' +
                     '		<b class="title_span_detalle"> Regi&oacute;n:</b> &nbsp; &nbsp;' +
-                    '		<span class="ciudad-detalle-cuenta">' + $scope.elementoCSP.region + '</span>' +
+                    '		<span class="ciudad-detalle-cuenta">' + $scope.elementoCSP.infoSitio.regionInstalacionC + '</span>' +
                     '	</div>' +
                     '	<div class="col-md-10 offset-md-2">' +
                     '		<b class="title_span_detalle"> Ciudad:</b> &nbsp; &nbsp;' +
-                    '		<span class="ciudad-detalle-cuenta">' + $scope.elementoCSP.ciudad + ' </span>' +
+                    '		<span class="ciudad-detalle-cuenta">' + $scope.elementoCSP.infoSitio.plazaC + ' </span>' +
                     '	</div>' +
                     '	<div class="col-md-10 offset-md-2">' +
                     '		<b class="title_span_detalle"> Distrito:</b> &nbsp; &nbsp;' +
-                    '		<span class="ciudad-detalle-cuenta">' + $scope.elementoCSP.distrito + ' </span>' +
+                    '		<span class="ciudad-detalle-cuenta">' + $scope.elementoCSP.infoSitio.distritoInstalacionC + ' </span>' +
                     '	</div>' +
                     '	<div class="col-md-10 offset-md-2">' +
                     '		<b class="title_span_detalle"> Cl&uacute;ster:</b> &nbsp; &nbsp;' +
-                    '		<span class="ciudad-detalle-cuenta">' + $scope.elementoCSP.cluster + ' </span>' +
+                    '		<span class="ciudad-detalle-cuenta">' + $scope.elementoCSP.infoSitio.clusterInstalacionC + ' </span>' +
                     '	</div>' +
                     '</div>',
             }).then(function (isConfirm) {
                 if (isConfirm) {
-                    $scope.isAgendamiento = false;
-                    mostrarMensajeExitoAlert("CSP Agendado correctamente");
-                    $scope.cambiarVistaSF(1);
-                    $scope.elementoCSP = {};
-                    $scope.$apply();
+                	
+//                	bandejasSalesforceService.agendarPendienteBandejaSF(params).then(function success(response) {
+//                        if (response.data !== undefined) {
+//                            if (response.data.respuesta) {
+                            	mostrarMensajeExitoAlert("CSP Agendado correctamente");
+                            	$scope.isAgendamiento = false;
+                                $scope.cambiarVistaSF(1);
+                                $scope.elementoCSP = {};
+//                            }else{
+//                            	mostrarMensajeInformativo(response.data.resultDescripcion);
+//                            }
+//                        }else{
+//                        	mostrarMensajeWarningValidacion("Error interno en el servidor.");
+//                        }
+//                	});
+                    
                 }
             }).catch(err => {
             });
@@ -831,18 +868,19 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                                 $scope.listPendientesAgendar = angular.copy(response.data.result.resultado);
                                 $.each($scope.listPendientesAgendar, function (i, elemento) {
                                     let rowAg = [];
-                                    let istop500 = (elemento.top500) ? '<i class="fas fa-star" style="color:#fcba5d;"></i>&nbsp;' : '<i class="fas fa-star" style="color: #b1b1b1;"></i>&nbsp;';
+                                    let istop500 = (elemento.top500) ? '<i class="fas fa-star" style="color:#fcba5d;"></i>' : '<i class="fas fa-star" style="color: #b1b1b1;"></i>';
                                     rowAg[0] = istop500 + (elemento.name && elemento.name !== '' ? elemento.name : 'Sin informaci&oacute;n');
                                     rowAg[1] = elemento.cotSitio && elemento.cotSitio.nombreCotSitio && elemento.cotSitio.nombreCotSitio !== '' ? elemento.cotSitio.nombreCotSitio : 'Sin informaci&oacute;n';
                                     rowAg[2] = elemento.cotizacion && elemento.cotizacion.cotizacion && elemento.cotizacion.cotizacion !== '' ? elemento.cotizacion.cotizacion : 'Sin informaci&oacute;n';
-                                    rowAg[3] = elemento.cuentaFacturaSf && elemento.cuentaFacturaSf.nombreCuentaFactura && elemento.cuentaFacturaSf.nombreCuentaFactura !== '' ? elemento.cuentaFacturaSf.nombreCuentaFactura : 'Sin informaci&oacute;n';
-                                    rowAg[4] = elemento.dpPlan && elemento.dpPlan.nameDpPlan && elemento.dpPlan.nameDpPlan !== '' ? elemento.dpPlan.nameDpPlan : 'Sin informaci&oacute;n';
-                                    rowAg[5] = elemento.cuadrillaFfm && elemento.cuadrillaFfm !== '' ? elemento.cuadrillaFfm : 'Sin informaci&oacute;n';
-                                    rowAg[6] = elemento.cluster && elemento.cluster !== '' ? elemento.cluster : 'Sin informaci&oacute;n';
-                                    rowAg[7] = elemento.ordenServicio && elemento.ordenServicio !== '' ? elemento.ordenServicio : 'Sin informaci&oacute;n';
-                                    rowAg[8] = elemento.estatusOs && elemento.estatusOs !== '' ? elemento.estatusOs : 'Sin informaci&oacute;n';
-                                    rowAg[9] = elemento.fechaCreacion && elemento.fechaCreacion !== '' ? elemento.fechaCreacion : 'Sin informaci&oacute;n';
-                                    rowAg[10] =
+                                    rowAg[3] = elemento.cuentaFacturaSf && elemento.cuentaFacturaSf.noCuenta && elemento.cuentaFacturaSf.noCuenta !== '' ? elemento.cuentaFacturaSf.noCuenta : 'Sin informaci&oacute;n';
+                                    rowAg[4] = elemento.cuentaFacturaSf && elemento.cuentaFacturaSf.nombreCuentaFactura && elemento.cuentaFacturaSf.nombreCuentaFactura !== '' ? elemento.cuentaFacturaSf.nombreCuentaFactura : 'Sin informaci&oacute;n';
+                                    rowAg[5] = elemento.dpPlan && elemento.dpPlan.nameDpPlan && elemento.dpPlan.nameDpPlan !== '' ? elemento.dpPlan.nameDpPlan : 'Sin informaci&oacute;n';
+                                    rowAg[6] = elemento.cuadrillaFfm && elemento.cuadrillaFfm !== '' ? elemento.cuadrillaFfm : 'Sin informaci&oacute;n';
+                                    rowAg[7] = elemento.cluster && elemento.cluster !== '' ? elemento.cluster : 'Sin informaci&oacute;n';
+                                    rowAg[8] = elemento.ordenServicio && elemento.ordenServicio !== '' ? elemento.ordenServicio : 'Sin informaci&oacute;n';
+                                    rowAg[9] = elemento.estatusOs && elemento.estatusOs !== '' ? elemento.estatusOs : 'Sin informaci&oacute;n';
+                                    rowAg[10] = elemento.fechaCreacion && elemento.fechaCreacion !== '' ? elemento.fechaCreacion : 'Sin informaci&oacute;n';
+                                    rowAg[11] =
                                         '<div class="text-center">' +
                                         '   <span title="Agendar" id="btnAgendamiento' + elemento.name + '" class="btnAgendamiento btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnTables" onclick="visualizarAgendamiento(' + i + ')">' +
                                         '       <i class="fa fa-calendar-alt .iconAgendamiento"></i>' +
@@ -860,6 +898,9 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                                     "data": arrayAgendarRow,
                                     "autoWidth": true,
                                     "language": idioma_espanol_not_font,
+                                    "aoColumnDefs" : [ 
+                    		        	{"aTargets" : [0], "sClass":  "rowTablaCsp"}
+                    		        ]
                                 });
                                 if (!$scope.isPermisoAgendamiento) {
                                     $(".btnAgendamiento").addClass("estiloBlockIconoPermiso");

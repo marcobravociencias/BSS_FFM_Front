@@ -129,4 +129,14 @@ public class BandejasSalesforceController {
 		}
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
+	
+	@PostMapping("/agendarPendienteBandejaSF")
+	public ResponseEntity<?> agendarPendienteBandejaSF(@RequestBody String params) {
+		logger.info("###### BandejasSalesforceController - agendarPendienteBandejaSF");
+		ServiceResponseResult response = bandejasSalesforceService.agendarPendienteBandejaSF(params);
+		if(response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
 }

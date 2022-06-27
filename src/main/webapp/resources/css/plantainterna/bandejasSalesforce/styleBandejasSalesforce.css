@@ -1228,7 +1228,7 @@ i.icono-noseleccion {
   /* white-space: nowrap; */
   color: #39455b;
   font-family: 'Montserrat';
-  font-size: .8em;
+  font-size: .7em;
   border-top: 0px solid #eceeef !important;
 }
 
@@ -1861,6 +1861,10 @@ span.text-content-detallePaquete {
 .title-detallePaquete {
   color: #767676;
   font-size: 1em;
+}
+
+.rowTablaCsp {
+	width: 120px !important;
 }
 
 /* DETALLE CSP */

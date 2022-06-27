@@ -24,6 +24,7 @@
                     <th>CSP</th>
                     <th>CS</th>
                     <th>Cotizaci&oacute;n</th>
+                    <th>Cuenta</th>
                     <th>Cliente</th>
                     <th>Paquete</th>
                     <th>Cuadrilla</th>

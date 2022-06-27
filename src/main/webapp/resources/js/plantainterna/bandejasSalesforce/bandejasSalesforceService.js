@@ -131,7 +131,7 @@ app.service("bandejasSalesforceService", function ($http) {
         });
     }
     
-    this.consultarValidacionCSPBandejasSF = function (params) {        
+    this.consultarValidacionCSPBandejasSF = function (params) {     
         return $http({
             method: "post",
             url: "req/consultarValidacionCSPBandejasSF",
@@ -140,4 +140,15 @@ app.service("bandejasSalesforceService", function ($http) {
             transformRequest: angular.identity
         });
     }
+    
+    this.agendarPendienteBandejaSF = function (params) {
+        return $http({
+            method: "post",
+            url: "req/agendarPendienteBandejaSF",
+            data: JSON.stringify(params),
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
+            transformRequest: angular.identity
+        });
+    };
+    
 });
