@@ -32,6 +32,9 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
     $scope.isPermisoConsultaRescataventas = false;
     $scope.isPermisoConsultaPendientesActivar = false;
     $scope.isPermisoAgendamiento = false;
+    $scope.GEOGRAFIA_UNO_AGENDA = null;
+    $scope.GEOGRAFIA_DOS_AGENDA = null;
+    $scope.subtipoIntervencionDisponibilidad = null;
 
     app.agendamientoCalendar($scope, bandejasSalesforceService);
     app.agendamientoMap($scope, bandejasSalesforceService);
@@ -302,6 +305,14 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                     $scope.nfiltrogeografiaPendienteAgendar = llavesResult.N_FILTRO_GEOGRAFIA_PENDIENTES_ACTIVAR;
                 } else if (llavesResult.N_FILTRO_GEOGRAFIA) {
                     $scope.nfiltrogeografiaPendienteAgendar = llavesResult.N_FILTRO_GEOGRAFIA;
+                }
+                
+                if(llavesResult.GEOGRAFIA_UNO_AGENDA){
+                	$scope.GEOGRAFIA_UNO_AGENDA = llavesResult.GEOGRAFIA_UNO_AGENDA;
+                }
+                
+                if(llavesResult.GEOGRAFIA_DOS_AGENDA){
+                	$scope.GEOGRAFIA_DOS_AGENDA = llavesResult.GEOGRAFIA_DOS_AGENDA;
                 }
 
                 validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
@@ -653,8 +664,11 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
 		});
 
         let dataDisp={
-            geografia2: 2047,
-            subtipoIntervencion: 35
+        	geografia1: $scope.GEOGRAFIA_UNO_AGENDA != null ? $scope.GEOGRAFIA_UNO_AGENDA : "CIUDAD DE MEXICO",
+            geografia2: $scope.GEOGRAFIA_DOS_AGENDA != null ? $scope.GEOGRAFIA_DOS_AGENDA : "SUR",
+            subtipoIntervencion: $scope.subtipoIntervencionDisponibilidad != undefined ? $scope.subtipoIntervencionDisponibilidad : 35,
+            propietario: "1",
+            unidadNegocio: "2"
         }
         let paramsDetalleSitio={
             cuenta:$scope.elementoCSP.cuentaFacturaSf.noCuenta
@@ -751,7 +765,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         		"cluster": $scope.elementoCSP.cluster,
         		"comentarios": comentarios,
         		"fechaAgendamiento":$scope.elementoCSP.fechaAgendamiento,
-        		"hora": "",
+        		"hora": "12:00",
         		"confirmacion":"1", 
         		"distribuidor":"",
         		"idTicketSF": "",
@@ -801,20 +815,20 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
             }).then(function (isConfirm) {
                 if (isConfirm) {
                 	
-//                	bandejasSalesforceService.agendarPendienteBandejaSF(params).then(function success(response) {
-//                        if (response.data !== undefined) {
-//                            if (response.data.respuesta) {
+                	bandejasSalesforceService.agendarPendienteBandejaSF(params).then(function success(response) {
+                        if (response.data !== undefined) {
+                            if (response.data.respuesta) {
                             	mostrarMensajeExitoAlert("CSP Agendado correctamente");
                             	$scope.isAgendamiento = false;
                                 $scope.cambiarVistaSF(1);
                                 $scope.elementoCSP = {};
-//                            }else{
-//                            	mostrarMensajeInformativo(response.data.resultDescripcion);
-//                            }
-//                        }else{
-//                        	mostrarMensajeWarningValidacion("Error interno en el servidor.");
-//                        }
-//                	});
+                            }else{
+                            	mostrarMensajeInformativo(response.data.resultDescripcion);
+                            }
+                        }else{
+                        	mostrarMensajeWarningValidacion("Error interno en el servidor.");
+                        }
+                	});
                     
                 }
             }).catch(err => {
@@ -1157,8 +1171,10 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
     $scope.listFieldsValidacion = [];
     $scope.listFieldsCopy = [];
     $scope.consultarValidacionCSP = function (index) {
+    	$scope.subtipoIntervencionDisponibilidad = null;
         $scope.listFieldsValidacion = [];
         $scope.listFieldsCopy = [];
+        
         if (!swal.isVisible()) { 
             swal({ text: 'Espera un momento...', allowOutsideClick: false }); 
             swal.showLoading(); 
@@ -1166,6 +1182,9 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         let params = { 
             'idCotSitioPlan': $scope.listPendientesAgendar[index].idCSP
         }
+        
+        $scope.subtipoIntervencionDisponibilidad = $scope.listPendientesAgendar[index].idSubtipoIntervencion;
+        
         bandejasSalesforceService.consultarValidacionCSPBandejasSF(params).then(function success(response) {
             if (response.data) { 
                 if (response.data.respuesta) { 

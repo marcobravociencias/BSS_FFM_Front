@@ -81,9 +81,9 @@
 <!--                     </div> -->
                     <div class="tab-content">
                         <div class="row">
-                            <div class="col-12 text-center">
-                                <span class="span-titulo-bandeja" ng-bind="nombreBandejaSf"></span>
-                            </div>
+<!--                             <div class="col-12 text-center"> -->
+<!--                                 <span class="span-titulo-bandeja" ng-bind="nombreBandejaSf"></span> -->
+<!--                             </div> -->
                             <div class="tab-pane fade show active" id="opcion-1" role="tabpanel" aria-labelledby="opcion-alta-tab">
                                 <div id="vistaPendiente" ng-show="vistaSf === 1 && isPermisoConsultaPendientesAgendar">
                                     <jsp:include page="./content/tablePendienteAgendar.jsp"></jsp:include>

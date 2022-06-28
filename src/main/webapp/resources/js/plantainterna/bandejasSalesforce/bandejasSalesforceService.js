@@ -62,15 +62,15 @@ app.service("bandejasSalesforceService", function ($http) {
         });
     };
 
-    this.consultaDisponibilidadAgendamiento = function (params) {
-        return $http({
-            method: "post",
-            url: "req/consultarDisponibilidad",
-            data: JSON.stringify(params),
-            headers: { 'Content-Type': "application/json; charset=utf-8" },
-            transformRequest: angular.identity
-        });
-    };
+//    this.consultaDisponibilidadAgendamiento = function (params) {
+//        return $http({
+//            method: "post",
+//            url: "req/consultarDisponibilidad",
+//            data: JSON.stringify(params),
+//            headers: { 'Content-Type': "application/json; charset=utf-8" },
+//            transformRequest: angular.identity
+//        });
+//    };
 
     this.consultarInfoSitioInstalacion = function (params) {
         return $http({
@@ -145,6 +145,16 @@ app.service("bandejasSalesforceService", function ($http) {
         return $http({
             method: "post",
             url: "req/agendarPendienteBandejaSF",
+            data: JSON.stringify(params),
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
+            transformRequest: angular.identity
+        });
+    };
+    
+    this.consultaDisponibilidadAgendamiento = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultaCrmDisponibilidad",
             data: JSON.stringify(params),
             headers: { 'Content-Type': "application/json; charset=utf-8" },
             transformRequest: angular.identity
