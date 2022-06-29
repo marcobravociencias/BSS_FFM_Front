@@ -416,5 +416,15 @@ app.service("mainDespachoService", function ($http) {
 			}
 		});
 	};
+
+	this.consultarDetalleEquiposServicios = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarDetalleEquiposBandejasSF",
+            data: JSON.stringify(params),
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
+            transformRequest: angular.identity
+        });
+    };
 	
 });

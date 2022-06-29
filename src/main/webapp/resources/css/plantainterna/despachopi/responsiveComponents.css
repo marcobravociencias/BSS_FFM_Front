@@ -16,6 +16,32 @@
     height: 41px !important;
 }
 
+.text-equipo-paquete {
+    font-size: .9em;
+    color: #797979;
+    font-weight: bold;
+}
+
+span.text-title-detallePaquete {
+    font-weight: bold;
+    font-size: 0.8em;
+    color: #303030;
+}
+
+span.text-content-detallePaquete {
+    font-size: 0.8em;
+    color: #303030;
+}
+
+.container-fluid.detallePaquete-content {
+    padding: 0;
+    display: flex;
+}
+
+.li_item_modelo {
+    font-size: .8em !important;
+}
+
 @media screen and (max-width: 1300px) {
     .fullSizeCard {
         max-width: 298px;
@@ -565,6 +591,8 @@
 
     .thead_table_servicios,
     .thead_table_productos,
+    .thead_table_productos_servicio,
+    .thead_table_promociones_servicio,
     .thead_table_promociones {
         font-size: .8em;
     }
@@ -581,6 +609,22 @@
         font-size: .9em;
     }
 
+    .text-equipo-paquete {
+        font-size: .8em;
+        color: #797979;
+        font-weight: bold;
+    }
+
+    span.text-title-detallePaquete {
+        font-weight: bold;
+        font-size: 0.7em;
+        color: #303030;
+    }
+
+    span.text-content-detallePaquete {
+        font-size: 0.75em;
+        color: #303030;
+    }
     /* PAQUETE */
 
     /* MODAL DETALLE OT */

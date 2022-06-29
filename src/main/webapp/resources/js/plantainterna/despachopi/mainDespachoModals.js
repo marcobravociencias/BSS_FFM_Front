@@ -683,14 +683,17 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         swal({ text: 'Consultando datos ...', allowOutsideClick: false });
         swal.showLoading();
         let arrayRow = [];
-        let fechaFormatConsulta=moment(new Date()).format('YYYY-MM-DD');
+        let fechaFormatConsulta = moment(new Date()).format('YYYY-MM-DD');
+        let fechaInicioConsulta = moment(new Date()).subtract(1, 'months').format('YYYY-MM-DD');
         let params = {
             idTecnico : tecnicoTemp.idTecnico,
-            fechaInicio : fechaFormatConsulta,
+            fechaInicio : fechaInicioConsulta,
             fechaFin : fechaFormatConsulta
         }
+        console.log(params)
         mainDespachoService.consultarInformacionPagos(params).then(function success(response) {
            $scope.tecnicoConsultaPagos.isPagosPendientes=false
+           console.log(response);
            if( response.data.respuesta){
                 if (response.data.result) {   
                     swal.close()       
@@ -1835,6 +1838,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     $scope.responseServicios = {}
     $scope.obtenerPaquete = function () {
         if (!$scope.flagPaquete) {
+            $scope.listDetalleEquipos = [];
             let osOtSelected = '';
             if ($scope.estatusModals == 'PENDIENTE') {
                 osOtSelected = $scope.detalleOtPendienteSelected.folioOrden
@@ -2050,10 +2054,44 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 swal.close();
                 toastr.error('Ha ocurrido un error en la consulta de los datos');
             }
-        }).catch(err => handleError(err));
-
-        
+        }).catch(err => handleError(err));      
     }
+
+    $scope.pintarTablaOTPEDetalle = function () {
+		let arrayRowPE = [];
+		if (tableOrdenesPlantaExternaOt) {
+			tableOrdenesPlantaExternaOt.destroy();
+		}
+		$.each($scope.listOrdenesPE, function (i, elemento) {
+			let rowPE = [];
+			rowPE[0] = elemento.idOrdenPe && elemento.idOrdenPe !== '' ? elemento.idOrdenPe : 'Sin informaci&oacute;n';
+			rowPE[1] = (elemento.nivelUno) + " / " + (elemento.nivelDos);
+			rowPE[2] = elemento.subTipoOrden && elemento.subTipoOrden !== '' ? elemento.subTipoOrden : 'Sin informaci&oacute;n';
+			rowPE[3] = elemento.nombreTecnico && elemento.nombreTecnico !== '' ? elemento.nombreTecnico : 'Sin informaci&oacute;n';
+			rowPE[4] = elemento.localizacion && elemento.localizacion !== '' ? elemento.localizacion : 'Sin informaci&oacute;n';
+			rowPE[5] = elemento.estatus && elemento.estatus !== '' ? elemento.estatus : 'Sin informaci&oacute;n';
+			rowPE[6] = elemento.estado && elemento.estado !== '' ? elemento.estado : 'Sin informaci&oacute;n';
+			rowPE[7] = elemento.nivelUrgencia && elemento.nivelUrgencia !== '' ? elemento.nivelUrgencia : 'Sin informaci&oacute;n';
+			rowPE[8] = elemento.fechaAgendamiento && elemento.fechaAgendamiento !== '' ? elemento.fechaAgendamiento : 'Sin informaci&oacute;n';
+			arrayRowPE.push(rowPE);
+		});
+		tableOrdenesPlantaExternaOt = $('#tableOrdenesPlantaExternaOt').DataTable({
+			"paging": true,
+			"lengthChange": false,
+			"ordering": false,
+			"pageLength": 10,
+			"info": true,
+			"scrollX": false,
+			"data": arrayRowPE,
+			"autoWidth": false,
+			"language": idioma_espanol_not_font,
+			'createdRow': function (row, data, rowIndex) {
+				$.each($('td', row), function () {
+					$(this).attr('title', $(this).text());
+				});
+			},
+		});
+	}
 
     $scope.consultarOrdenesPlantaExternaOTDetalle = function () {
         if (!$scope.tabOTPlantaExterna) {
@@ -2072,54 +2110,25 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                             if (response.data.result.detalleOrdenPe.length) {
                                 $scope.listOrdenesPE = angular.copy(response.data.result.detalleOrdenPe);
                                 $scope.tabOTPlantaExterna = true;
-
-                                let arrayRow = [];
-                                if (tableOrdenesPlantaExternaOt) {
-                                    tableOrdenesPlantaExternaOt.destroy();
-                                }
-                                $.each($scope.listOrdenesPE, function (i, elemento) {
-                                    let row = [];
-                                    row[0] = elemento.idOrdenPe && elemento.idOrdenPe !== '' ? elemento.idOrdenPe : 'Sin informaci&oacute;n';
-                                    row[1] = (elemento.nivelUno) + " / " + (elemento.nivelDos);
-                                    row[2] = elemento.subTipoOrden && elemento.subTipoOrden !== '' ? elemento.subTipoOrden : 'Sin informaci&oacute;n';
-                                    row[3] = elemento.nombreTecnico && elemento.nombreTecnico !== '' ? elemento.nombreTecnico : 'Sin informaci&oacute;n';
-                                    row[4] = elemento.localizacion && elemento.localizacion !== '' ? elemento.localizacion : 'Sin informaci&oacute;n';
-                                    row[5] = elemento.estatus && elemento.estatus !== '' ? elemento.estatus : 'Sin informaci&oacute;n';
-                                    row[6] = elemento.estado && elemento.estado !== '' ? elemento.estado : 'Sin informaci&oacute;n';
-                                    row[7] = elemento.nivelUrgencia && elemento.nivelUrgencia !== '' ? elemento.nivelUrgencia : 'Sin informaci&oacute;n';
-                                    row[8] = elemento.fechaAgendamiento && elemento.fechaAgendamiento !== '' ? elemento.fechaAgendamiento : 'Sin informaci&oacute;n';
-                                    arrayRow.push(row);
-                                });
-                                tableOrdenesPlantaExternaOt = $('#tableOrdenesPlantaExternaOt').DataTable({
-                                    "paging": true,
-                                    "lengthChange": false,
-                                    "ordering": false,
-                                    "pageLength": 10,
-                                    "info": true,
-                                    "scrollX": false,
-                                    "data": arrayRow,
-                                    "autoWidth": false,
-                                    "language": idioma_espanol_not_font,
-                                    'createdRow': function (row, data, rowIndex) {
-                                        $.each($('td', row), function () {
-                                            $(this).attr('title', $(this).text());
-                                        });
-                                    },
-                                });
+                                $scope.pintarTablaOTPEDetalle();                              
                                 swal.close();
                             } else {
+                                $scope.pintarTablaOTPEDetalle();                              
                                 mostrarMensajeWarningValidacion("No se encontr&oacute; Informaci&oacute;n");
                                 swal.close();
                             }
                         } else {
+                            $scope.pintarTablaOTPEDetalle();                              
                             mostrarMensajeWarningValidacion("No se encontr&oacute; Informaci&oacute;n");
                             swal.close();
                         }
                     } else {
+                        $scope.pintarTablaOTPEDetalle();                              
                         mostrarMensajeWarningValidacion(response.data.result.resultDescripcion);
                         swal.close();
                     }
                 } else {
+                    $scope.pintarTablaOTPEDetalle();                              
                     mostrarMensajeWarningValidacion(response.data.result.resultDescripcion);
                     swal.close();
                 }
@@ -2127,6 +2136,41 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         }
     }
 
+    $scope.consultarDetalleServicio = function (servicio, idCSP) {
+        swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
+        swal.showLoading();
+        $scope.responseServicios.productos = [];
+        $scope.listDetalleEquipos = [];
+        $scope.responseServicios.productos = servicio.productos;
+        let params = {
+            'idCotSitioPlan': idCSP
+        }
+        mainDespachoService.consultarDetalleEquiposServicios(params).then(function success(response) {
+            console.log(response)
+            if (response.data) {
+                if (response.data.respuesta) {
+                    if (response.data.result) {
+                        if (response.data.result.detalleEquipos.length) {
+                            $scope.listDetalleEquipos = angular.copy(response.data.result.detalleEquipos);
+                            swal.close();
+                        } else {
+                            mostrarMensajeInformativo("No se encontraron Equipos");
+                            swal.close();
+                        }
+                    } else {
+                        mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                        swal.close();
+                    }
+                } else {
+                    mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                    swal.close();
+                }
+            } else {
+                mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                swal.close();
+            }
+        });
+    }
 }
 /**
 

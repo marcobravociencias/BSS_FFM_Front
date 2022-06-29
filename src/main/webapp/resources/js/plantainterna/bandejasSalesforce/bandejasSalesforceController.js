@@ -866,8 +866,9 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
             let paramsfecha = $scope.getFechaFormato(document.getElementById('fecha_pendientes_agendar').value);
             let params = {
                 "geografias": clustersSelected,
-                "fechaInicio": '2021-01-01',//paramsfecha.fechaInicio,
+                "fechaInicio": paramsfecha.fechaInicio,
                 "fechaFin": paramsfecha.fechaFin
+                // "fechaInicio": '2021-01-01',
                 // "geografias": ["CIUDAD DE MEXICO"], "fechaFin": "2021-01-01", "fechaInicio": "2019-01-01"
             }
             bandejasSalesforceService.consultarPendientesAgendarBandejasSF(params).then(function success(response) {
@@ -1106,66 +1107,68 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         
     }
     
-    $scope.detallePaqueteCSP = {}; 
-    $scope.consultarResumenPaqueteBandejasSF = function (idCSP) { 
-        $scope.listDetalleEquipos = []; 
-        $scope.detallePaqueteCSP = {}; 
-        if (!swal.isVisible()) { 
-            swal({ text: 'Espera un momento...', allowOutsideClick: false }); 
-            swal.showLoading(); 
-        } 
-        let params = { 
-            "folio": "OS-6944916" 
-        }; 
-        bandejasSalesforceService.consultarResumenPaqueteBandejasSF(params).then(function success(response) { 
-            if (response.data) { 
-                if (response.data.respuesta) { 
-                    if (response.data.result) { 
-                        if (response.data.result.resumenPaquete) { 
-                            $scope.detallePaqueteCSP = angular.copy(response.data.result.resumenPaquete); 
-                            $scope.detallePaqueteCSP.idCSP = idCSP; 
-                            $("#modalDetallePaquete").modal('show'); 
-                            swal.close(); 
-                        } 
-                    } 
-                } else { 
-                    mostrarMensajeErrorAlert(response.data.resultDescripcion); 
-                    swal.close(); 
-                } 
-            } else { 
-                mostrarMensajeErrorAlert(response.data.resultDescripcion); 
-                swal.close(); 
-            } 
-        }); 
+    $scope.detallePaqueteCSP = {};
+    $scope.consultarResumenPaqueteBandejasSF = function (idCSP) {
+        $scope.listDetalleEquipos = [];
+        $scope.detallePaqueteCSP = {};
+        if (!swal.isVisible()) {
+            swal({ text: 'Espera un momento...', allowOutsideClick: false });
+            swal.showLoading();
+        }
+        let params = {
+            // "folio": "OS-6949017" 
+            "folio": $scope.elementoCSP.ordenServicio.nombreOrdenServicio
+        };
+        bandejasSalesforceService.consultarResumenPaqueteBandejasSF(params).then(function success(response) {
+            if (response.data) {
+                if (response.data.respuesta) {
+                    if (response.data.result) {
+                        if (response.data.result.resumenPaquete) {
+                            $scope.detallePaqueteCSP = angular.copy(response.data.result.resumenPaquete);
+                            $scope.detallePaqueteCSP.idCSP = idCSP;
+                            $("#modalDetallePaquete").modal('show');
+                            swal.close();
+                        }
+                    }
+                } else {
+                    mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                    swal.close();
+                }
+            } else {
+                mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                swal.close();
+            }
+        });
     } 
 
-    $scope.listDetalleEquipos = []; 
-    $scope.consultarDetalleEquiposBandejas = function () { 
-        $scope.listDetalleEquipos = []; 
-        if (!swal.isVisible()) { 
-            swal({ text: 'Espera un momento...', allowOutsideClick: false }); 
-            swal.showLoading(); 
-        } 
-        let idCSP = $("#idCSPPaquete").val(); 
-        let params = { 
-            'idCotSitioPlan': idCSP 
-        } 
-        bandejasSalesforceService.consultarDetalleEquiposBandejasSF(params).then(function success(response) { 
-            if (response.data) { 
-                if (response.data.respuesta) { 
-                    if (response.data.result) { 
-                        $scope.listDetalleEquipos = angular.copy(response.data.result.detalleEquipos); 
-                        swal.close(); 
-                    } 
-                } else { 
-                    mostrarMensajeErrorAlert(response.data.resultDescripcion); 
-                    swal.close(); 
-                } 
-            } else { 
-                mostrarMensajeErrorAlert(response.data.resultDescripcion); 
-                swal.close(); 
-            } 
-        }); 
+    $scope.listDetalleEquipos = [];
+    $scope.consultarDetalleEquiposBandejas = function (servicio) {
+        if (!swal.isVisible()) {
+            swal({ text: 'Espera un momento...', allowOutsideClick: false });
+            swal.showLoading();
+        }
+        $scope.detallePaqueteCSP.productos = [];
+        $scope.listDetalleEquipos = [];
+        $scope.detallePaqueteCSP.productos = servicio.productos;
+        let params = {
+            'idCotSitioPlan': $scope.detallePaqueteCSP.idCotSitio
+        }
+        bandejasSalesforceService.consultarDetalleEquiposBandejasSF(params).then(function success(response) {
+            if (response.data) {
+                if (response.data.respuesta) {
+                    if (response.data.result) {
+                        $scope.listDetalleEquipos = angular.copy(response.data.result.detalleEquipos);
+                        swal.close();
+                    }
+                } else {
+                    mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                    swal.close();
+                }
+            } else {
+                mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                swal.close();
+            }
+        });
     } 
 
     $scope.listFieldsValidacion = [];

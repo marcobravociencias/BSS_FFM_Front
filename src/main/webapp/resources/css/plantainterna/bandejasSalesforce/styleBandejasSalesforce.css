@@ -1209,9 +1209,6 @@ i.icono-noseleccion {
 
 /* TABLES */
 #tableValidacionCSP tbody tr:nth-child(even),
-#tableDetallePromociones tbody tr:nth-child(even),
-#tableDetalleProductos tbody tr:nth-child(even),
-#tableDetalleServicios tbody tr:nth-child(even),
 #tableRescataventas tbody tr:nth-child(even),
 #tablePendienteActivar tbody tr:nth-child(even),
 #tablePendientesAgendar tbody tr:nth-child(even) {
@@ -1219,9 +1216,6 @@ i.icono-noseleccion {
 }
 
 #tableValidacionCSP>tbody>tr>td,
-#tableDetallePromociones>tbody>tr>td,
-#tableDetalleProductos>tbody>tr>td,
-#tableDetalleServicios>tbody>tr>td,
 #tableRescataventas>tbody>tr>td,
 #tablePendienteActivar>tbody>tr>td,
 #tablePendientesAgendar>tbody>tr>td {
@@ -1233,9 +1227,6 @@ i.icono-noseleccion {
 }
 
 #tableValidacionCSP thead th,
-#tableDetallePromociones thead th,
-#tableDetalleProductos thead th,
-#tableDetalleServicios thead th,
 #tableRescataventas thead th,
 #tablePendienteActivar thead th,
 #tablePendientesAgendar thead th {
@@ -1250,9 +1241,6 @@ i.icono-noseleccion {
 }
 
 #tableValidacionCSP tbody tr td,
-#tableDetallePromociones tbody tr td,
-#tableDetalleProductos tbody tr td,
-#tableDetalleServicios tbody tr td,
 #tableRescataventas tbody tr td,
 #tablePendienteActivar tbody tr td,
 #tablePendientesAgendar tbody tr td {
@@ -1824,14 +1812,14 @@ select.inputContacto {
 
 .btn_detalleServicio {
   padding: 0.1em 1em;
-  background: var(--estandar-color);
+  background: #333e52;
   color: #fff;
   font-size: .9em;
 }
 
 .btn_detalleServicio:hover {
   padding: 0.1em 1em;
-  background: var(--estandar-color);
+  background: #333e52;
   color: #fff;
   font-size: .9em;
 }
@@ -1867,4 +1855,23 @@ span.text-content-detallePaquete {
 	width: 120px !important;
 }
 
+.detalle-productos-table thead tr th {
+  padding: 0;
+  padding: 0.3em;
+  font-size: 0.9em;
+  font-weight: bold;
+  color: #303030;
+}
+
+.detalle-productos-table tfoot,
+.detalle-productos-table tbody tr td {
+  padding: 0;
+  font-size: 0.8em;
+  padding: 0.3em;
+  color: #303030;
+}
+
+.li_item_modelo {
+  font-size: .8em !important;
+}
 /* DETALLE CSP */
