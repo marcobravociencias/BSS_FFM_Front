@@ -138,16 +138,18 @@ public class ImplBandejasSalesforceService implements BandejasSalesforceService 
 		
 		JsonArray arrayContacto = jsonObject.get("arrayContactos").getAsJsonArray();
 		String cuenta=jsonObject.get("cuenta").getAsString();
+		String idCsp=jsonObject.get("idCsp").getAsString();
 				
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
 		String tokenAccess = principalDetail.getAccess_token();
 		
 	    Map<String, String> paramUri = new HashMap<String, String>(){{
             put("cuenta", cuenta);
+            put("idCsp", idCsp);
         }};
         
         String contacto=arrayContacto.toString();
-        logger.info("contacto --"+contacto);
+        logger.info("paramss --------- " + paramUri);
                 
 		String urlRequest = principalDetail.getDireccionAmbiente().concat(constBandejasSalesforce.getAgregaContactoAgenda());
 		

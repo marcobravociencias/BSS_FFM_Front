@@ -34,6 +34,8 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
     $scope.isPermisoAgendamiento = false;
     $scope.GEOGRAFIA_UNO_AGENDA = null;
     $scope.GEOGRAFIA_DOS_AGENDA = null;
+    $scope.GEOGRAFIA_UNO_AGENDA_NOMBRE = null;
+    $scope.GEOGRAFIA_DOS_AGENDA_NOMBRE = null;
     $scope.subtipoIntervencionDisponibilidad = null;
 
     app.agendamientoCalendar($scope, bandejasSalesforceService);
@@ -533,7 +535,8 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         contacto.title = "Jefe"                     
         let params={
             arrayContactos:[ contacto ],
-            cuenta:$scope.elementoCSP.infoSitio.numeroCuenta
+            cuenta:$scope.elementoCSP.infoSitio.numeroCuenta,
+            idCsp:$scope.elementoCSP.idCSP
         }          
 
         let copyContacto=angular.copy(contacto);
@@ -656,6 +659,8 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         $scope.elementoCSP = $scope.listPendientesAgendar[$scope.indexPendienteSeleccionada];
         $scope.clearMarkersAgendamiento();
         $scope.clearFormAgendamiento();
+        $scope.GEOGRAFIA_UNO_AGENDA_NOMBRE = null;
+        $scope.GEOGRAFIA_DOS_AGENDA_NOMBRE = null;
         
         $scope.listaIdGeografias = [];
         var geografias = $("#geografiaPendientesAgendar").jstree("get_selected", true);
@@ -663,22 +668,93 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
 			$scope.listaIdGeografias.push(geo.id);				
 		});
 
-        let dataDisp={
-        	geografia1: $scope.GEOGRAFIA_UNO_AGENDA != null ? $scope.GEOGRAFIA_UNO_AGENDA : "CIUDAD DE MEXICO",
-            geografia2: $scope.GEOGRAFIA_DOS_AGENDA != null ? $scope.GEOGRAFIA_DOS_AGENDA : "SUR",
-            subtipoIntervencion: $scope.subtipoIntervencionDisponibilidad != undefined ? $scope.subtipoIntervencionDisponibilidad : 35,
-            propietario: "1",
-            unidadNegocio: "2"
-        }
         let paramsDetalleSitio={
             cuenta:$scope.elementoCSP.cuentaFacturaSf.noCuenta
         }
+        
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
 
         $q.all([
-            bandejasSalesforceService.consultaDisponibilidadAgendamiento(dataDisp),
             bandejasSalesforceService.consultarInfoSitioInstalacion(paramsDetalleSitio)
+        ]).then(function (results) {
+            if (results[0].data) {
+                if (results[0].data.respuesta) {
+                    if (results[0].data.result) {
+                        if (results[0].data.result.resultadoConsulta != undefined) {
+                            $scope.elementoCSP.infoSitio = results[0].data.result.resultadoConsulta;
+                            $scope.tipoGeografiaFact="empresarial";
+                            let latitud=$scope.elementoCSP.infoSitio.geolocalizacionInstalacionLatitudeS;
+                            let longitud=$scope.elementoCSP.infoSitio.geolocalizacionInstalacionLongitudeS;
+                            $scope.setMarkerAgendamiento( latitud , longitud );                                                            
+                            $scope.consultarFactibilidadAgendamiento( '1' , latitud , longitud  );
+                            
+                            switch($scope.GEOGRAFIA_UNO_AGENDA){
+	                        	case "cluster":
+	                        		$scope.GEOGRAFIA_UNO_AGENDA_NOMBRE = $scope.elementoCSP.infoSitio.clusterInstalacionC;
+	                        		break;
+	                        	case "ciudad":
+	                        		$scope.GEOGRAFIA_UNO_AGENDA_NOMBRE = $scope.elementoCSP.infoSitio.plazaC;
+	                        		break;
+	                        	case "distrito":
+	                        		$scope.GEOGRAFIA_UNO_AGENDA_NOMBRE = $scope.elementoCSP.infoSitio.distritoInstalacionC;
+	                        		break;
+	                        	case "region":
+	                        		$scope.GEOGRAFIA_UNO_AGENDA_NOMBRE = $scope.elementoCSP.infoSitio.regionInstalacionC;
+	                        		break;
+                            }
+                            
+                            switch($scope.GEOGRAFIA_DOS_AGENDA){
+	                        	case "cluster":
+	                        		$scope.GEOGRAFIA_DOS_AGENDA_NOMBRE = $scope.elementoCSP.infoSitio.clusterInstalacionC;
+	                        		break;
+	                        	case "ciudad":
+	                        		$scope.GEOGRAFIA_DOS_AGENDA_NOMBRE = $scope.elementoCSP.infoSitio.plazaC;
+	                        		break;
+	                        	case "distrito":
+	                        		$scope.GEOGRAFIA_DOS_AGENDA_NOMBRE = $scope.elementoCSP.infoSitio.distritoInstalacionC;
+	                        		break;
+	                        	case "region":
+	                        		$scope.GEOGRAFIA_DOS_AGENDA_NOMBRE = $scope.elementoCSP.infoSitio.regionInstalacionC;
+	                        		break;
+	                        }
+                            
+                            $scope.consultarDisponibilidad();
+                            
+                        }else{
+                            mostrarMensajeInformativo("No se encontr&oacute; informaci&oacute;n del sitio");
+                        }                  
+                        if ( results[0].data.result.resultadoContactos != undefined && results[0].data.result.resultadoContactos.length > 0 ) {
+                            $scope.listContactosAgendamiento=$scope.listContactosAgendamiento.concat( results[0].data.result.resultadoContactos )
+                        }
+                    } else {
+                        mostrarMensajeInformativo("No se encontr&oacute; informaci&oacute;n del sitio");
+                    }
+                } else {
+                    mostrarMensajeErrorAlert(results[0].data.resultDescripcion);
+                    swal.close();
+                }
+            } else {
+                mostrarMensajeErrorAlert(results[0].data.resultDescripcion);
+                swal.close();
+            }
+            swal.close()
+        });
+        $scope.isAgendamiento = true;
+        $scope.isFactibilidad = false;
+        $scope.isFechaSelected = false;
+	}
+    
+    $scope.consultarDisponibilidad = function() {
+    	let dataDisp={
+            	geografia1: $scope.GEOGRAFIA_UNO_AGENDA_NOMBRE != null ? $scope.GEOGRAFIA_UNO_AGENDA_NOMBRE : "CIUDAD DE MEXICO-CENTRO",
+                geografia2: $scope.GEOGRAFIA_DOS_AGENDA_NOMBRE != null ? $scope.GEOGRAFIA_DOS_AGENDA_NOMBRE : "NORESTE CENTRO G",
+                subtipoIntervencion: $scope.subtipoIntervencionDisponibilidad != undefined ? $scope.subtipoIntervencionDisponibilidad : 106,
+                propietario: "1",
+                unidadNegocio: "1"
+        }
+    	$q.all([
+            bandejasSalesforceService.consultaDisponibilidadAgendamiento(dataDisp)
         ]).then(function (results) {
             if (results[0].data) {
                 if (results[0].data.respuesta) {
@@ -701,41 +777,8 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                 mostrarMensajeErrorAlert(results[0].data.resultDescripcion);
                 swal.close();
             }
-
-            if (results[1].data) {
-                if (results[1].data.respuesta) {
-                    if (results[1].data.result) {
-                        if (results[1].data.result.resultadoConsulta != undefined) {
-                            $scope.elementoCSP.infoSitio = results[1].data.result.resultadoConsulta                             
-                            
-                            $scope.tipoGeografiaFact="empresarial"
-                            let latitud=$scope.elementoCSP.infoSitio.geolocalizacionInstalacionLatitudeS
-                            let longitud=$scope.elementoCSP.infoSitio.geolocalizacionInstalacionLongitudeS
-                            $scope.setMarkerAgendamiento( latitud , longitud );                                                            
-                            $scope.consultarFactibilidadAgendamiento( '1' , latitud , longitud  );
-                            
-                        }else{
-                            mostrarMensajeInformativo("No se encontr&oacute; informaci&oacute;n del sitio");
-                        }                  
-                        if ( results[1].data.result.resultadoContactos != undefined && results[1].data.result.resultadoContactos.length > 0 ) {
-                            $scope.listContactosAgendamiento=$scope.listContactosAgendamiento.concat( results[1].data.result.resultadoContactos )
-                        }
-                    } else {
-                        mostrarMensajeInformativo("No se encontr&oacute; informaci&oacute;n del sitio");
-                    }
-                } else {
-                    mostrarMensajeErrorAlert(results[1].data.resultDescripcion);
-                    swal.close();
-                }
-            } else {
-                mostrarMensajeErrorAlert(results[1].data.resultDescripcion);
-                swal.close();
-            }
             swal.close()
         });
-        $scope.isAgendamiento = true;
-        $scope.isFactibilidad = false;
-        $scope.isFechaSelected = false;
 	}
 
     $scope.colocarContactoSeleccionado=function(){
@@ -814,7 +857,8 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                     '</div>',
             }).then(function (isConfirm) {
                 if (isConfirm) {
-                	
+                	swal({ text: 'Espera un momento...', allowOutsideClick: false });
+                    swal.showLoading();
                 	bandejasSalesforceService.agendarPendienteBandejaSF(params).then(function success(response) {
                         if (response.data !== undefined) {
                             if (response.data.respuesta) {
@@ -822,14 +866,16 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                             	$scope.isAgendamiento = false;
                                 $scope.cambiarVistaSF(1);
                                 $scope.elementoCSP = {};
+                                swal.close();
                             }else{
                             	mostrarMensajeInformativo(response.data.resultDescripcion);
+                            	swal.close();
                             }
                         }else{
                         	mostrarMensajeWarningValidacion("Error interno en el servidor.");
+                        	swal.close();
                         }
                 	});
-                    
                 }
             }).catch(err => {
             });
