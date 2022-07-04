@@ -359,7 +359,7 @@
                             <div class="dropleft">
                                 <span class="fas fa-comments icon-color-comments" title="Comentarios"
                                 id="dropupComments" data-toggle="dropdown" aria-expanded="false"></span>
-                                <span ng-click="consultaEvidenciaOTDetalle(editTicket.detalleOtDetenida.otGeneraSoporte)" class="fa fa-picture-o icon-color-comments" style="margin-right: .4em;" title="Evidencia"></span>
+                                <span ng-click="consultaImagenesOT(editTicket.detalleOtDetenida.otGeneraSoporte)" class="fa fa-picture-o icon-color-comments" style="margin-right: .4em;" title="Evidencia"></span>
                                 <div class="dropdown-menu dropup-comments">
                                     <div class="box-comments">
                                         <div class="box-comments-header">

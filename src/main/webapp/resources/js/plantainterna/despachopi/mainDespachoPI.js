@@ -29,8 +29,8 @@ function logwarning(mensaje) {
 function logprocess(mensaje) {
     console.log('%c ' + mensaje, 'background: #7716fa; color: white')
 }
-app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'mainAlertasService', 'genericService', 'busquedaSalesforceService',
-    function ($scope, $q, mainDespachoService, mainAlertasService, genericService, busquedaSalesforceService) {
+app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'mainAlertasService', 'genericService', 'busquedaSalesforceService', 'evidenciaService',
+    function ($scope, $q, mainDespachoService, mainAlertasService, genericService, busquedaSalesforceService, evidenciaService) {
 
 
         app.filtrosDespachoPrincipal($scope, mainDespachoService)
@@ -39,6 +39,7 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
         app.alertasDespachoPrincipal($scope, mainAlertasService, genericService)
         app.misProyectosDependencias($scope, mainDespachoService)
         app.busquedaSalesforce($scope, busquedaSalesforceService)
+        app.evidenciaController($scope, evidenciaService)
 
         $scope.isCargaTecnicosDisponibles = false;
         $scope.isCargaOtsPendientes = false;
@@ -1519,7 +1520,7 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                 $scope.respaldoHistorial = [];
                 $scope.historial = [];
                 $scope.consultarDetalleObjectosSF(idFolio, 'OS');
-                $("#modalDetalleSalesforce").modal('show');
+                //$("#modalDetalleSalesforce").modal('show');
             } else {
                 toastr.warning("No se cuenta con OS");
             }

@@ -41,6 +41,7 @@
 
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/generic/busquedaSalesforce\styleMainBusqueda.css?v=${sessionScope.versionDepl}">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/generic/busquedaSalesforce\mainNoticiaBusqueda.css?v=${sessionScope.versionDepl}">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/generic/evidencia/styleMainEvidencia.css?v=${sessionScope.versionDepl}" /> 
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/plantainterna/despachopi/loaders.css?v=${sessionScope.versionDepl}"/>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/plantainterna/despachopi/mainAlertasPI.css?v=${sessionScope.versionDepl}"/>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/plantainterna/despachopi/mainDespachoPI.css?v=${sessionScope.versionDepl}"/>
@@ -239,6 +240,7 @@
         <jsp:include page="./modals/modalDetalleSalesforce.jsp"></jsp:include>
         <jsp:include page="./modals/modalIntervencionesAsignadas.jsp"></jsp:include>
         <jsp:include page="./modals/modalOrganigrama.jsp"></jsp:include>
+        <jsp:include page="./modals/modalEvidencia.jsp"></jsp:include>
        
         <!--div ng-show="vistaDespacho" class="container-fluid d-flex justify-content-center">    
             <ul class="wall content-alert-parent">
@@ -304,7 +306,10 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/genericService.js?v=${sessionScope.versionDepl}"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plantainterna/despachopi/mainDependencias.js?v=${sessionScope.versionDepl}"></script>
     <script src="${pageContext.request.contextPath}/resources/js/generic/busquedaSalesforce/busquedaSalesforceController.js?v=${sessionScope.versionDepl}"></script>
-<script src="${pageContext.request.contextPath}/resources/js/generic/busquedaSalesforce/busquedaSalesforceService.js?v=${sessionScope.versionDepl}"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/generic/busquedaSalesforce/busquedaSalesforceService.js?v=${sessionScope.versionDepl}"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/generic/evidencia/evidenciaController.js?v=${sessionScope.versionDepl}"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/generic/evidencia/evidenciaService.js?v=${sessionScope.versionDepl}"></script> 
+    
 
     <script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js?v=${sessionScope.versionDepl}"></script>
     <script src="${pageContext.request.contextPath}/resources/js/generic/FileSaver.js?v=${sessionScope.versionDepl}"></script>

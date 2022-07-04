@@ -1,4 +1,4 @@
-<div class="modal img fade right show" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="modal-evidenciaOT" aria-hidden="true">
+<div class="modal img fade right show" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="modal-imagen-ot" aria-hidden="true">
     <div class="modal-dialog img modal-notify" style="min-width: 95%;">
         <div class="modal-content">
             <div class="blue-gradient style_modal_header modal-header modal_header_bg" style="color: #fff; padding: 1em !important;">
@@ -9,7 +9,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div id="categorias_div" class="col-12">
+                <jsp:include page="/WEB-INF/jsp/generic/evidencia/mainEvidencia.jsp"></jsp:include>
+                <!--div id="categorias_div" class="col-12">
                     <div ng-if="listEvidenciaImagenes.tipos.length">
                         <div class="row">
                             <div class="col-3" ng-if="listImagenesTipo.length">
@@ -52,7 +53,7 @@
                             No se encontr&oacute; evidencia
                         </h5>
                     </div>
-                </div>
+                </div-->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface" ng-click="closeModal()" data-mdb-dismiss="modal">

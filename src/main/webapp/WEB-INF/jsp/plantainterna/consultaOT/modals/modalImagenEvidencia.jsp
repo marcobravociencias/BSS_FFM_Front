@@ -10,7 +10,8 @@
                 </button>
 			</div>
 			<div class="modal-body">
-				<div id="categorias_div" class="col-12">
+				<jsp:include page="/WEB-INF/jsp/generic/evidencia/mainEvidencia.jsp"></jsp:include>
+				<!--div id="categorias_div" class="col-12">
 					<div ng-if="listEvidenciaImagenes.tipos.length">
 						<div class="row">
 							<div class="col-3" ng-if="listImagenesTipo.length">
@@ -53,7 +54,7 @@
 							No se encontr&oacute; evidencia
 						</h5>
 					</div>
-				</div>
+				</div-->
 			</div>
 			<div class="modal-footer">
 				<!--

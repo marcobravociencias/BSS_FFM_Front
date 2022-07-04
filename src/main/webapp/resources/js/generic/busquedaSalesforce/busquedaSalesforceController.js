@@ -64,6 +64,7 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
             $scope.mostrarNotaCF = false;
             if (result.data.respuesta) {
                 if (result.data.result) {
+                    $("#modalDetalleSalesforce").modal('show');
                     switch (keyObjeto) {
                         case "CS":
                             $scope.mostrarDetalleCotSitio(result.data.result.detalleCotSitio, keyObjeto);

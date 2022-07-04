@@ -123,7 +123,7 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
                         <div class="top-title-ot">
                             <div class="content-top-element bars-content">
                                 <p class="text-otpendiente-tres-title">${ordenobj.claveCliente}</p>
-                            </div>                        
+                            </div>  
                         </div>
                         <div class="posiciondos">
                             <div class="content-dos-element ">
@@ -1490,6 +1490,15 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
         } else {
             $("#" + id).addClass("rechazada-check");
         }
+    }
+
+    $scope.consultarEvidenciaAlertas = function() {
+        console.log($scope.alertaSeleccionadaObject.IdOT);
+        $scope.consultaImagenesOT($scope.alertaSeleccionadaObject.IdOT);
+    }
+    consultarEvidenciaAlertas = function() {
+        console.log($scope.alertaSeleccionadaObject.IdOT);
+        $scope.consultaImagenesOT($scope.alertaSeleccionadaObject.IdOT);
     }
 
 

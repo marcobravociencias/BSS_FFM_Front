@@ -46,7 +46,7 @@
             rel="stylesheet" />
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/magnific_popup/magnific-popup.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/plantainterna/consultaOT/timeLine.css?v=${sessionScope.versionDepl}" />
-
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/generic/evidencia/styleMainEvidencia.css?v=${sessionScope.versionDepl}" />
         <link
             href="${pageContext.request.contextPath}/resources/css/plantainterna/gestionTicketsSoporte/mainChatter.css?v=${sessionScope.versionDepl}"
             rel="stylesheet">
@@ -173,6 +173,7 @@
         src="${pageContext.request.contextPath}/resources/js/generic/busquedaSalesforce/busquedaSalesforceController.js?v=${sessionScope.versionDepl}"></script>
     <script
         src="${pageContext.request.contextPath}/resources/js/generic/busquedaSalesforce/busquedaSalesforceService.js?v=${sessionScope.versionDepl}"></script>
-
+    <script src="${pageContext.request.contextPath}/resources/js/generic/evidencia/evidenciaController.js?v=${sessionScope.versionDepl}"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/generic/evidencia/evidenciaService.js?v=${sessionScope.versionDepl}"></script>
     </html>
     <!-- <script src="${pageContext.request.contextPath}/resources/js/generic/accionesRecientes.js?v=${sessionScope.versionDepl}"></script> -->

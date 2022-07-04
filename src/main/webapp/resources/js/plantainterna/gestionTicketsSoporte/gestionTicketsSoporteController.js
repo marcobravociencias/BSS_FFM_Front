@@ -3,9 +3,10 @@ var app = angular.module('ticketsSoporteApp', []);
 
 var objectTempAccion = new GenericAccionRealizada('moduloGestionTickets', 'TOP_RIGHT');
 objectTempAccion.inicializarBotonAccionesRecientes();
-app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoporteService', 'genericService', 'busquedaSalesforceService', '$filter', function ($scope, $q, gestionTicketSoporteService, genericService, busquedaSalesforceService, $filter) {
+app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoporteService', 'genericService', 'busquedaSalesforceService', 'evidenciaService', '$filter', function ($scope, $q, gestionTicketSoporteService, genericService, busquedaSalesforceService, evidenciaService, $filter) {
     app.ticketControllerMapa($scope, $q, gestionTicketSoporteService, genericService)
     app.busquedaSalesforce($scope, busquedaSalesforceService)
+    app.evidenciaController($scope, evidenciaService)
     var regexUrl = /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/;
 
     let ticketSoporteTable;
@@ -1850,153 +1851,155 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         }
     }
 
-    mostarImagenesCategoriaEvidenciaOT = function () {
-        var $imageLinks = $('.magnific.item:visible');
-        var items = [];
+    // mostarImagenesCategoriaEvidenciaOT = function () {
+    //     var $imageLinks = $('.magnific.item:visible');
+    //     var items = [];
 
-        $imageLinks.each(function (index, elemento) {
-            var $item = $(this);
-            var magItem = {
-                src: $item.attr('href'),
-                type: 'image'
-            };
-            magItem.title = $item.data('title');
-            items.push(magItem);
-        });
-        $imageLinks.magnificPopup({
-            mainClass: 'mfp-fade',
-            items: items,
-            gallery: {
-                enabled: true,
-                tPrev: $(this).data('prev-text'),
-                tNext: $(this).data('next-text')
-            },
-            type: 'image',
-            callbacks: {
-                beforeOpen: function () {
-                    var index = $imageLinks.index(this.st.el);
-                    if (-1 !== index) {
-                        this.goTo(index);
+    //     $imageLinks.each(function (index, elemento) {
+    //         var $item = $(this);
+    //         var magItem = {
+    //             src: $item.attr('href'),
+    //             type: 'image'
+    //         };
+    //         magItem.title = $item.data('title');
+    //         items.push(magItem);
+    //     });
+    //     $imageLinks.magnificPopup({
+    //         mainClass: 'mfp-fade',
+    //         items: items,
+    //         gallery: {
+    //             enabled: true,
+    //             tPrev: $(this).data('prev-text'),
+    //             tNext: $(this).data('next-text')
+    //         },
+    //         type: 'image',
+    //         callbacks: {
+    //             beforeOpen: function () {
+    //                 var index = $imageLinks.index(this.st.el);
+    //                 if (-1 !== index) {
+    //                     this.goTo(index);
 
-                    }
-                },
-                open: function () {
-                    $.magnificPopup.instance._onFocusIn = function (e) { };
-                }
-            }
-        });
-    }
+    //                 }
+    //             },
+    //             open: function () {
+    //                 $.magnificPopup.instance._onFocusIn = function (e) { };
+    //             }
+    //         }
+    //     });
+    // }
 
-    $(document.body).on("click", ".btn_categoria_img", function () {
-        var id_categoria = $.trim($(this).attr('attr_id_cat'));
-        if (id_categoria === '') {
-            $(".magnific.item").show();
-            $('.imagen_content:hidden').show(400);
-            setTimeout(function () { mostarImagenesCategoriaEvidenciaOT(); }, 500);
-        } else {
-            if ($(".imagen_content:visible").length > 0) {
-                $(".imagen_content:visible").hide(150, "linear", function () {
+    // $(document.body).on("click", ".btn_categoria_img", function () {
+    //     var id_categoria = $.trim($(this).attr('attr_id_cat'));
+    //     if (id_categoria === '') {
+    //         $(".magnific.item").show();
+    //         $('.imagen_content:hidden').show(400);
+    //         setTimeout(function () { mostarImagenesCategoriaEvidenciaOT(); }, 500);
+    //     } else {
+    //         if ($(".imagen_content:visible").length > 0) {
+    //             $(".imagen_content:visible").hide(150, "linear", function () {
 
-                    $(".magnific.item:not(.imgtipo_" + id_categoria + ")").hide();
-                    $(".magnific.item.imgtipo_" + id_categoria + "").show();
+    //                 $(".magnific.item:not(.imgtipo_" + id_categoria + ")").hide();
+    //                 $(".magnific.item.imgtipo_" + id_categoria + "").show();
 
-                    $('.content_img_' + id_categoria).show(200);
-                    //Manda function magnific popup
-                    mostarImagenesCategoriaEvidenciaOT();
-                });
-            } else {
-                $(".magnific.item:not(.imgtipo_" + id_categoria + ")").hide();
-                $(".magnific.item.imgtipo_" + id_categoria + "").show();
+    //                 $('.content_img_' + id_categoria).show(200);
+    //                 //Manda function magnific popup
+    //                 mostarImagenesCategoriaEvidenciaOT();
+    //             });
+    //         } else {
+    //             $(".magnific.item:not(.imgtipo_" + id_categoria + ")").hide();
+    //             $(".magnific.item.imgtipo_" + id_categoria + "").show();
 
-                $('.content_img_' + id_categoria).show(200);
-                //Manda function magnific popup
-                mostarImagenesCategoriaEvidenciaOT();
-            }
-        }
-    });
+    //             $('.content_img_' + id_categoria).show(200);
+    //             //Manda function magnific popup
+    //             mostarImagenesCategoriaEvidenciaOT();
+    //         }
+    //     }
+    // });
 
-    $scope.getEvidenciasImagenes = function (tipo) {
-        $scope.listImagenesTipo = [];
-        if (tipo.toString() === '0') {
-            $scope.listImagenesTipo = $scope.listEvidenciaImagenes.imagenes;
-        } else {
-            $scope.listEvidenciaImagenes.tipos.map(function (e) {
-                if (e.id.toString() === tipo.toString()) {
-                    $scope.listImagenesTipo = e.imagenes;
-                    return false;
-                }
-            });
-        }
-        $(".tipo_evidencia").removeClass("tipo-evidencia-selected");
-        $("#categoria_img_" + tipo).addClass("tipo-evidencia-selected");
-    }
+    // $scope.getEvidenciasImagenes = function (tipo) {
+    //     $scope.listImagenesTipo = [];
+    //     if (tipo.toString() === '0') {
+    //         $scope.listImagenesTipo = $scope.listEvidenciaImagenes.imagenes;
+    //     } else {
+    //         $scope.listEvidenciaImagenes.tipos.map(function (e) {
+    //             if (e.id.toString() === tipo.toString()) {
+    //                 $scope.listImagenesTipo = e.imagenes;
+    //                 return false;
+    //             }
+    //         });
+    //     }
+    //     $(".tipo_evidencia").removeClass("tipo-evidencia-selected");
+    //     $("#categoria_img_" + tipo).addClass("tipo-evidencia-selected");
+    // }
 
-    let groupByEvidencias = function (xs, key) {
-        return xs.reduce(function (rv, x) {
-            (rv[x[key]] = rv[x[key]] || []).push(x);
-            return rv;
-        }, {});
-    };
+    // let groupByEvidencias = function (xs, key) {
+    //     return xs.reduce(function (rv, x) {
+    //         (rv[x[key]] = rv[x[key]] || []).push(x);
+    //         return rv;
+    //     }, {});
+    // };
 
-    $scope.consultaEvidenciaOTDetalle = function (ot) {
-        swal({ text: 'Espera un momento...', allowOutsideClick: false });
-        swal.showLoading();
-        $scope.listEvidenciaImagenes = {};
-        let params = {
-            orden: ot,
-        }
-        $('.idoti').text(ot);
-        gestionTicketSoporteService.consultaEvidenciaOT(params).then(function success(response) {
-            if (response.data !== undefined) {
-                if (response.data.respuesta) {
-                    if (response.data.result) {
-                        if (response.data.result.evidencias) {
-                            $scope.listEvidenciaImagenes.imagenes = response.data.result.evidencias;
-                            $scope.listEvidenciaImagenes.tipos = [];
-                            $scope.listImagenesTipo = response.data.result.evidencias;
-                            let listaTipos = [];
+    
+    // $scope.consultaEvidenciaOTDetalle = function (ot) {
+    //     swal({ text: 'Espera un momento...', allowOutsideClick: false });
+    //     swal.showLoading();
+    //     $scope.listEvidenciaImagenes = {};
+    //     let params = {
+    //         orden: ot,
+    //     }
+    //     $('.idoti').text(ot);
+    //     gestionTicketSoporteService.consultaEvidenciaOT(params).then(function success(response) {
+    //         if (response.data !== undefined) {
+    //             if (response.data.respuesta) {
+    //                 if (response.data.result) {
+    //                     if (response.data.result.evidencias) {
+    //                         $scope.listEvidenciaImagenes.imagenes = response.data.result.evidencias;
+    //                         $scope.listEvidenciaImagenes.tipos = [];
+    //                         $scope.listImagenesTipo = response.data.result.evidencias;
+    //                         let listaTipos = [];
 
-                            var count_cantidad_por_tipo = groupByEvidencias(response.data.result.evidencias, 'idCatEvidencia');
-                            $scope.listEvidenciaImagenes.imagenes.map(function (e) {
-                                let isExist = listaTipos.find((t) => e.idCatEvidencia == t.id)
-                                if (!isExist) {
-                                    let imagenes = [];
-                                    if (count_cantidad_por_tipo[e.idCatEvidencia].length) {
-                                        imagenes = count_cantidad_por_tipo[e.idCatEvidencia]
-                                    }
-                                    listaTipos.push({
-                                        id: e.idCatEvidencia,
-                                        descripcion: e.tipoEvidencia,
-                                        imagenes: imagenes
-                                    });
-                                }
-                            });
-                            $scope.listEvidenciaImagenes.tipos = listaTipos;
-                            is_consultar_evidencia = true;
-                            $('#modal-evidenciaOT').modal('show');
-                            setTimeout(function () {
-                                $("#categoria_img_0").click();
-                                $("#categoria_img_0").addClass("tipo-evidencia-selected");
-                            }, 100);
-                            swal.close();
-                        } else {
-                            swal.close();
-                            mostrarMensajeErrorAlert(response.data.result.resultDescription)
-                        }
-                    } else {
-                        swal.close();
-                        mostrarMensajeInformativo("No se encontraron evidencias")
-                    }
-                } else {
-                    swal.close();
-                    mostrarMensajeErrorAlert(response.data.resultDescripcion);
-                }
-            } else {
-                swal.close();
-                mostrarMensajeErrorAlert("Error del servidor");
-            }
-        }).catch(err => handleError(err));
-    }
+    //                         var count_cantidad_por_tipo = groupByEvidencias(response.data.result.evidencias, 'idCatEvidencia');
+    //                         $scope.listEvidenciaImagenes.imagenes.map(function (e) {
+    //                             let isExist = listaTipos.find((t) => e.idCatEvidencia == t.id)
+    //                             if (!isExist) {
+    //                                 let imagenes = [];
+    //                                 if (count_cantidad_por_tipo[e.idCatEvidencia].length) {
+    //                                     imagenes = count_cantidad_por_tipo[e.idCatEvidencia]
+    //                                 }
+    //                                 listaTipos.push({
+    //                                     id: e.idCatEvidencia,
+    //                                     descripcion: e.tipoEvidencia,
+    //                                     imagenes: imagenes
+    //                                 });
+    //                             }
+    //                         });
+    //                         $scope.listEvidenciaImagenes.tipos = listaTipos;
+    //                         is_consultar_evidencia = true;
+    //                         $('#modal-evidenciaOT').modal('show');
+    //                         setTimeout(function () {
+    //                             $("#categoria_img_0").click();
+    //                             $("#categoria_img_0").addClass("tipo-evidencia-selected");
+    //                         }, 100);
+    //                         swal.close();
+    //                     } else {
+    //                         swal.close();
+    //                         mostrarMensajeErrorAlert(response.data.result.resultDescription)
+    //                     }
+    //                 } else {
+    //                     swal.close();
+    //                     mostrarMensajeInformativo("No se encontraron evidencias")
+    //                 }
+    //             } else {
+    //                 swal.close();
+    //                 mostrarMensajeErrorAlert(response.data.resultDescripcion);
+    //             }
+    //         } else {
+    //             swal.close();
+    //             mostrarMensajeErrorAlert("Error del servidor");
+    //         }
+    //     }).catch(err => handleError(err));
+    // }
+    
 
     $scope.consultaDetalleOT = function (idOrden) {
         $scope.infoOtDetalle = {};

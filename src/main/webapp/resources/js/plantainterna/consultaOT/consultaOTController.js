@@ -1,6 +1,7 @@
 var app = angular.module('consultaOTApp', []);
 var tableMaterialesDespacho;
-app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'genericService', function ($scope, $q, consultaOTService, genericService) {
+app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'genericService','evidenciaService', function ($scope, $q, consultaOTService, genericService, evidenciaService) {
+	app.evidenciaController($scope, evidenciaService)
 
 	$("#moduloConsultaOt").addClass('active')
 
@@ -368,7 +369,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 							$scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
 
 							if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
-								$scope.configPermisoAccionConsultaOrdenes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaOT" })[0] != undefined);
+								$scope.configPermisoAccionConsultaOrdenes = true//($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaOT" })[0] != undefined);
 								$scope.configPermisoAccionDescargaReporteOrdenes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaReporteOT" })[0] != undefined);
 							}
 							$("#idBody").removeAttr("style");
@@ -691,6 +692,12 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		}, 750);
 	}
 
+	$scope.mostrarEvidencia = true;
+	abrirModalEvidencias = function(ot, cuenta) {
+		consultaImagenesOT(ot, cuenta);
+	}
+
+	/*
 	consultaImagenesOT = function (ot, cuenta) {
 		let params = {
 			orden: ot,
@@ -889,6 +896,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	$scope.closeModal = function () {
 		$('#modal-imagen-ot').modal('hide');
 	}
+	*/
 
 	$scope.datoOt;
 	$scope.datoInt;

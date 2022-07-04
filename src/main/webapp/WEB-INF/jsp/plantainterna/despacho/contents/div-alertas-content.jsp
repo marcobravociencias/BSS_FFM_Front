@@ -49,7 +49,7 @@
                                 href="#pills-mapa" role="tab" aria-controls="pills-mapa" aria-selected="true">Mapa</a>
                         </li>
                         <!--li class="nav-item" role="presentation">
-                            <a class="nav-link options-alertas" id="pills-imagenes-tab" data-toggle="pill" href="#pills-imagenes" role="tab" ng-click="consultarEvidenciaAlerta()" aria-controls="pills-imagenes" aria-selected="false">Im&aacute;genes</a>
+                            <a class="nav-link options-alertas" id="pills-imagenes-tab" data-toggle="pill" href="#pills-imagenes" role="tab" ng-click="consultarEvidenciaAlertas()" aria-controls="pills-imagenes" aria-selected="false">Im&aacute;genes</a>
                         </li-->
                         <li class="nav-item" role="presentation">
                             <a class="nav-link options-alertas" id="pills-historico-tab" data-toggle="pill"
@@ -79,6 +79,7 @@
                                 aria-controls="pills-detalle-detencion-alertas" aria-selected="false">Detalle
                                 detenci&oacute;n</a>
                         </li>
+                        <span ng-click="consultarEvidenciaAlertas()" class="fa fa-picture-o icon-color-comments img-menu-evidencia" title="Evidencia"></span>
                     </ul>
                 </div>
                 <div class="card-body card-body-alerta-principal" id="v-tabs-tabsContent-alertas">
@@ -90,7 +91,7 @@
                         </div>
                         <div class="tab-pane fade" id="pills-imagenes" role="tabpanel"
                             aria-labelledby="pills-imagenes-tab">
-                            <div id="categorias_div" class="container row justify-content-center  text-center "
+                            <!--div id="categorias_div" class="container row justify-content-center  text-center "
                                 style="margin-top: 1em;">
                                 <div class="content_category">
                                     <b class="badge accent-3" id="alerta-p-i">3</b>
@@ -143,7 +144,7 @@
                                 <div style="margin-bottom: 1em;" id="contenido_imagenes"
                                     class="row justify-content-center ">
                                 </div>
-                            </div>
+                            </div-->
                         </div>
 
                         <div class="tab-pane fade" id="pills-historico" role="tabpanel"
