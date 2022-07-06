@@ -62,6 +62,11 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         }
     })
 
+    // MODAL ASIGNAR TECNICO GEOCERCA
+    $scope.isTreeTecnicosGeocerca = false;
+    $scope.listaTecnicosAsignar = [];
+    // MODAL ASIGNAR TECNICO GEOCERCA
+
     abrirModalConfirmacionDesconfirmacion = function (instanciaThis, idot) {
         $scope.banderaRegresarCheckbox = false;
         $scope.objConfirmaDesc = {
@@ -2172,7 +2177,6 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         });
     }
 
-    $scope.isTreeTecnicosGeocerca = false;
     $scope.loadGeografiaTecnicosGeocerca = function () {
         if (!$scope.isTreeTecnicosGeocerca) {
             $scope.geografiaTecnicosGeocerca = $scope.listadogeografiacopy;
@@ -2242,22 +2246,19 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         $("#contentAsignarTecnicosGeocerca").hide();
     }
 
-
     agregarTecnicoGeocerca = function (idTecnico) {
-        console.log(idTecnico);
         $scope.agregarTecnicoGeocercaList(idTecnico);
-        $("#icon-plus-" + idTecnico).hide();
-        $("#icon-check-" + idTecnico).show();
         $scope.$apply();
     }
 
-    $scope.listaTecnicosAsignar = [];
     $scope.agregarTecnicoGeocercaList = function (idTecnico) {
         let isSelectedGeocerca = $scope.listaTecnicosAsignar.find((e) => e.idTecnico == idTecnico);
         if (!isSelectedGeocerca) {
             $scope.validarSelectedTecnicoGeocerca(true, idTecnico);
             let tecnicoGeocerca = $scope.listadoTecnicosGeneral.find((e) => e.idTecnico == idTecnico);
             $scope.listaTecnicosAsignar.push(tecnicoGeocerca);
+        } else {
+            $scope.eliminarTecnicoGeocerca(idTecnico);
         }
     }
 
@@ -2316,7 +2317,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
         mainDespachoService.asignarTecnicoGeocerca(params).then(function success(response) {
-            console.log(response);
+            // console.log(response);
             if (response.data) {
                 if (response.data.respuesta) {
                     if (response.data.result) {
