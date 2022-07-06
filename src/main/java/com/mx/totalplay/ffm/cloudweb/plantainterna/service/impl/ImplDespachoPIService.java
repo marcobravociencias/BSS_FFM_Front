@@ -1297,4 +1297,20 @@ public class ImplDespachoPIService implements DespachoPIService {
         ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest, ServiceResponseResult.class, tokenAcces);
         return response;
 	}
+
+	@Override
+	public ServiceResponseResult asignarTecnicoGeocerca(String params) {
+		logger.info("ImplDespachoPIService.class [metodo = asignarTecnicoGeocerca() ]\n" + params);
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        String tokenAcces = principalDetail.getAccess_token();
+        logger.info("ACCESOS asignarTecnicoGeocerca ##+" + tokenAcces);
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constDespachoPI.getAsignarTecnicoGeocerca());
+        logger.info("URL ##+" + urlRequest);
+                
+        ServiceResponseResult response = restCaller.callPatchBearerTokenRequest(jsonObject.toString(), urlRequest, ServiceResponseResult.class, tokenAcces);
+        
+        logger.info("### RESULT asignarTecnicoGeocerca(): \n" + gson.toJson(response));
+		return response;
+	}
 }

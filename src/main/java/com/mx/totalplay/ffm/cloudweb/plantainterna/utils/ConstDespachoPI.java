@@ -151,5 +151,8 @@ public class ConstDespachoPI implements Serializable{
 	
 	@Value("${consultarJerarquiaOrganigrama}")
 	private String consultarJerarquiaOrganigrama;
+	
+	@Value("${asignarTecnicoGeocerca}")
+	private String asignarTecnicoGeocerca;
 }
 

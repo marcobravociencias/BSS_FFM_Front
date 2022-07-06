@@ -206,7 +206,7 @@ span.text-content-detallePaquete {
         display: inline;
         float: right;
         margin-right: 1em;
-        margin-top: 0.7em;
+        /* margin-top: 0.7em; */
         cursor: pointer;
         transition: all 0.5s ease;
         font-size: .8em;
@@ -218,7 +218,7 @@ span.text-content-detallePaquete {
         display: inline;
         float: right;
         margin-right: 1em;
-        margin-top: 0.7em;
+        /* margin-top: 0.7em; */
         cursor: pointer;
         transition: all 0.5s ease;
         font-size: .8em;
@@ -946,4 +946,17 @@ span.text-content-detallePaquete {
     }
     
     /* TABLE OT PLANTA EXTERNA */
+
+    /* MODAL ASIGNAR TECNICOS GEOCERCA */
+    .card-footer.btn-asignarGeocerca {
+        background: var(--btn-color-guardar) !important;
+        color: white;
+        cursor: pointer;
+        border-color: var(--btn-color-guardar) !important;
+        text-align: center;
+        padding: 0.6em 1.5em;
+        border-radius: 0.2rem;
+        font-size: .6em;
+    }
+    /* MODAL ASIGNAR TECNICOS GEOCERCA */
 }

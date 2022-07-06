@@ -524,6 +524,16 @@ public class DespachoPIController {
         }
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
+    
+    @PostMapping("/asignarTecnicoGeocerca")
+    public ResponseEntity<?> asignarTecnicoGeocerca(@RequestBody String params) {
+        LOGGER.info("##### asignarTecnicoGeocerca");
+        ServiceResponseResult response = despachoService.asignarTecnicoGeocerca(params);
+        if (response.getResult() instanceof Integer) {
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
 }
 
 

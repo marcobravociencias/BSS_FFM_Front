@@ -78,6 +78,7 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
         $scope.repDiario;
         $scope.resultReporteDiario = 0;
         $scope.arbolIntervenciones = [];
+        $scope.isAsignacionTecnicosGeocerca = false;
 
         $('#searchGeo').on('keyup', function () {
             $("#jstree-proton-3").jstree("search", this.value);
@@ -274,6 +275,17 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                     }
                 },
                 eventAfterAllRender: function (event) {
+
+                    if ($scope.isAsignacionTecnicosGeocerca) {
+                        $(".col-otspendientes").addClass('disabledDivBlur');
+                        $(".container-filtros-despacho").addClass('disabledDivBlur');
+                        $(".fc-time-area").addClass('disabledDivBlur');
+                        $(".content-alert-parent").addClass('disabledDivBlur');
+                        $(".header-navbar-p").addClass('disabledDivBlur');
+                        $(".content-icons-operario").hide();
+                        $(".icon-content-tecnico-geocerca").show();
+                        $scope.validarListSelectedTecnicoGeocerca();
+                    }
 
                     $scope.setPixelesTableWrapper()
 
@@ -1013,6 +1025,7 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                     $scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
                     $scope.nfiltroestatusDisponbiles = llavesResult.N_ESTATUS_ARR_ENVIO;
                     $scope.keyBloqueoBtn = llavesResult.KEY_BLOQUEO_OTS ? llavesResult.KEY_BLOQUEO_OTS.split(',').map(function(t){return parseInt(t)}) : [];
+                    $scope.nfiltroGeografiaGeocercaT = llavesResult.N_FILTRO_GEOGRAFIA_TECNICOS_GEOCERCA ? parseInt(llavesResult.N_FILTRO_GEOGRAFIA_TECNICOS_GEOCERCA) : 4;
                     
                     if( llavesResult.DURACION_CONTEO_ALERTAS !=undefined    ){
                         MILISEGUNDOS_ALERTAS= parseInt( llavesResult.DURACION_CONTEO_ALERTAS ) * 1000
@@ -1049,6 +1062,7 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                         $scope.accionAsignacionOtPermiso = $scope.accionAsignacionOtPermiso.banderaPermiso
                     }
                     $scope.accionReAsignacionOtPermiso = $scope.permisosConfigUser.permisos.find(e => { return e.clave === 'accionReasignaOT' })
+                    $scope.accionAsignarTecnicosGeocerca = $scope.permisosConfigUser.permisos.find(e => { return e.clave === 'accionAsignarTecnicosGeocerca' });
 
                 } else {
                     $scope.permisosConfigUser = {}

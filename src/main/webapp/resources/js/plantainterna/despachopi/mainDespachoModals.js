@@ -2171,6 +2171,208 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             }
         });
     }
+
+    $scope.isTreeTecnicosGeocerca = false;
+    $scope.loadGeografiaTecnicosGeocerca = function () {
+        if (!$scope.isTreeTecnicosGeocerca) {
+            $scope.geografiaTecnicosGeocerca = $scope.listadogeografiacopy;
+            geografiaTecnicos = $scope.geografiaTecnicosGeocerca.filter(e => e.nivel <= parseInt($scope.nfiltroGeografiaGeocercaT));
+            geografiaTecnicos.map((e) => {
+                e.parent = e.padre == undefined ? "#" : e.padre;
+                e.text = e.nombre;
+                e.icon = "fa fa-globe";
+                e.state = {
+                    opened: false,
+                    selected: false,
+                }
+                return e;
+            })
+            $('#geografiaTecnicosGeocerca').bind('loaded.jstree', function (e, data) {
+                $scope.abrirAsignaTecnicosGeocerca();
+                $scope.isTreeTecnicosGeocerca = true;
+            }).jstree({
+                'plugins': ["search"],
+                'core': {
+                    'data': geografiaTecnicos,
+                    'themes': {
+                        'name': 'proton',
+                        'responsive': true,
+                        "icons": false
+                    }
+                },
+                "search": {
+                    "case_sensitive": false,
+                    "show_only_matches": true
+                }
+            });
+        }
+    }
+
+    $scope.abrirAsignaTecnicosGeocerca = function () {
+        $scope.isAsignacionTecnicosGeocerca = true;
+        $(".col-otspendientes").addClass('disabledDivBlur');
+        $(".container-filtros-despacho").addClass('disabledDivBlur');
+        $(".fc-time-area").addClass('disabledDivBlur');
+        $(".content-alert-parent").addClass('disabledDivBlur');
+        $(".header-navbar-p").addClass('disabledDivBlur');
+        // $(".fc-widget-header").addClass('disabledDivBlur');
+        $(".content-icons-operario").hide();
+        $(".icon-content-tecnico-geocerca").show();
+        $("#contentAsignarTecnicosGeocerca").show();
+    }
+
+    $scope.closeAsignaTecnicosGeocerca = function () {
+        if ($scope.isTreeTecnicosGeocerca) {
+            $("#geografiaTecnicosGeocerca").jstree('destroy');
+            $scope.isTreeTecnicosGeocerca = false;
+        }
+        $scope.isAsignacionTecnicosGeocerca = false;
+        $scope.listaTecnicosAsignar = [];
+        $scope.listadoTecnicosGeneral.map(e => { e.isSelectedGeocerca = false; return e; })
+        $(".icon-change-check").css("display", "none");
+        $(".icon-change-plus").css("display", "block");
+        $(".col-otspendientes").removeClass('disabledDivBlur');
+        $(".container-filtros-despacho").removeClass('disabledDivBlur');
+        $(".fc-time-area").removeClass('disabledDivBlur');
+        $(".content-alert-parent").removeClass('disabledDivBlur');
+        $(".header-navbar-p").removeClass('disabledDivBlur');
+        // $(".fc-widget-header").removeClass('disabledDivBlur');
+        $(".content-icons-operario").show();
+        $(".icon-content-tecnico-geocerca").hide();
+        $("#contentAsignarTecnicosGeocerca").hide();
+    }
+
+
+    agregarTecnicoGeocerca = function (idTecnico) {
+        console.log(idTecnico);
+        $scope.agregarTecnicoGeocercaList(idTecnico);
+        $("#icon-plus-" + idTecnico).hide();
+        $("#icon-check-" + idTecnico).show();
+        $scope.$apply();
+    }
+
+    $scope.listaTecnicosAsignar = [];
+    $scope.agregarTecnicoGeocercaList = function (idTecnico) {
+        let isSelectedGeocerca = $scope.listaTecnicosAsignar.find((e) => e.idTecnico == idTecnico);
+        if (!isSelectedGeocerca) {
+            $scope.validarSelectedTecnicoGeocerca(true, idTecnico);
+            let tecnicoGeocerca = $scope.listadoTecnicosGeneral.find((e) => e.idTecnico == idTecnico);
+            $scope.listaTecnicosAsignar.push(tecnicoGeocerca);
+        }
+    }
+
+    $scope.eliminarTecnicoGeocerca = function (id) {
+        $.each($scope.listaTecnicosAsignar, function (i, elemento) {
+            if (elemento.idTecnico == id) {
+                $scope.validarSelectedTecnicoGeocerca(false, id);
+                $scope.listaTecnicosAsignar.splice(i, 1);
+                return false;
+            }
+        });
+    }
+
+    $scope.validarSelectedTecnicoGeocerca = function (isSelectedGeocerca, id) {
+        $.each($scope.listadoTecnicosGeneral, function (i, elemento) {
+            if (elemento.idTecnico == id) {
+                elemento.isSelectedGeocerca = isSelectedGeocerca;
+                if (isSelectedGeocerca) {
+                    $("#icon-plus-" + id).hide();
+                    $("#icon-check-" + id).show();
+                } else {
+                    $("#icon-plus-" + id).show();
+                    $("#icon-check-" + id).hide();
+                }
+            }
+        });
+    }
+
+    $scope.validarListSelectedTecnicoGeocerca = function () {
+        $.each($scope.listadoTecnicosGeneral, function (i, elemento) {
+            if (elemento.isSelectedGeocerca) {
+                $("#icon-plus-" + elemento.idTecnico).hide();
+                $("#icon-check-" + elemento.idTecnico).show();
+            } else {
+                $("#icon-plus-" + elemento.idTecnico).show();
+                $("#icon-check-" + elemento.idTecnico).hide();
+            }
+        });
+    }
+
+    $scope.openModalGeografiaTecnicos = function () {
+        $("#modalGeografiaTecnicosGeocerca").modal({ backdrop: 'static', keyboard: false });
+        $("#modalGeografiaTecnicosGeocerca").modal('show');
+        setTimeout(function () {
+            $('#buscadorGeografiaAsignarGeocerca').focus();
+        }, 750);
+    }
+
+    $scope.asignarListTecnicosGeocerca = function (comentario, listGeocerca) {
+        let listParamTecnico = $scope.listaTecnicosAsignar.map(e => { return e.idTecnico.toString(); })
+        let params = {
+            'idTecnico': listParamTecnico,
+            'idGeografia': listGeocerca,
+            'comentario': comentario
+        }
+        swal({ text: 'Espera un momento...', allowOutsideClick: false });
+        swal.showLoading();
+        mainDespachoService.asignarTecnicoGeocerca(params).then(function success(response) {
+            console.log(response);
+            if (response.data) {
+                if (response.data.respuesta) {
+                    if (response.data.result) {
+                        mostrarMensajeExitoAlert("T&eacute;cnico(s) asignado(s) con &eacute;xito")
+                        $scope.closeAsignaTecnicosGeocerca();
+                        $("#modalGeografiaTecnicosGeocerca").modal('hide');
+                        swal.close();
+                    } else {
+                        mostrarMensajeWarningValidacion(response.data.resultDescripcion);
+                        swal.close();
+                    }
+                } else {
+                    mostrarMensajeWarningValidacion(response.data.resultDescripcion);
+                    swal.close();
+                }
+            } else {
+                mostrarMensajeWarningValidacion("Ha ocurrido un error al asignar los T&eacute;cnicos");
+                swal.close();
+            }
+        });
+    }
+
+    $scope.asignarTecnicosGeocerca = function () {
+        if (!$scope.listaTecnicosAsignar.length) {
+            mostrarMensajeWarningValidacion('Selecciona al menos un T&eacute;cnico');
+            return false;
+        }
+        let clustersparam = $("#geografiaTecnicosGeocerca").jstree("get_selected", true)
+            .filter(e => e.original.nivel == $scope.nfiltroGeografiaGeocercaT)
+            .map(e => e.id)
+        if (clustersparam.length == 0) {
+            mostrarMensajeWarningValidacion('Selecciona cluster v&aacute;lido');
+            return false;
+        }
+
+        swal({
+            title: "Asignar t&eacute;cnico(s) a Geocerca",
+            text: "Comentarios:",
+            type: "warning",
+            input: "textarea",
+            inputPlaceholder: "Comentarios",
+            showCancelButton: true,
+            confirmButtonColor: '#007bff',
+            confirmButtonText: 'Asignar',
+            cancelButtonText: 'Cancelar'
+        }).then(function (response) {
+            console.log(response);
+            if (response.length) {
+                $scope.asignarListTecnicosGeocerca(response, clustersparam);
+            } else {
+                mostrarMensajeWarningValidacion('El comentario es obligatorio para Asignar T&eacute;cnicos');
+            }
+        }).catch(err => {
+            mostrarMensajeWarningValidacion('Operaci&oacute;n cancelada');
+        });
+    }
 }
 /**
 

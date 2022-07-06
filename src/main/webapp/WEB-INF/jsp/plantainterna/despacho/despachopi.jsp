@@ -152,9 +152,26 @@
                         </div>
                     </button>  
                     <input ng-model="fechaFiltradoCalendar" readonly id="calendar-next-back"  type="text" class="form-control form-control-sm"  />                  
-                    <span ng-click="abrirModalDetalleIconografia()" class="paleta-color-despacho fas fa-palette"></span>
-                    <span onclick="abrirModalReporte()" class="reporte-color-despacho icon-color-despacho fas fa-file-alt"></span>
-                    <span onclick="abrirModalVistaMapa()" class="map-color-despacho icon-color-despacho fas fa-map"></span>
+                    <div class="tooltip-btn">
+                        <span ng-click="abrirModalDetalleIconografia()" class="paleta-color-despacho fas fa-palette">
+                            <span class="tooltiptext-btn">Paleta de Colores</span>
+                        </span>
+                    </div>
+                    <div class="tooltip-btn">
+                        <span onclick="abrirModalReporte()" class="reporte-color-despacho icon-color-despacho fas fa-file-alt">
+                            <span class="tooltiptext-btn">Reporte Operaci&oacute;n Diaria</span>
+                        </span>
+                    </div>
+                    <div class="tooltip-btn">
+                        <span onclick="abrirModalVistaMapa()" class="map-color-despacho icon-color-despacho fas fa-map">
+                            <span class="tooltiptext-btn">Vista Mapa</span>
+                        </span>
+                    </div>
+                    <div class="tooltip-btn">
+                        <span ng-show="accionAsignarTecnicosGeocerca && isCargaOtsPendientes && isCargaOtsAsignadas" ng-click="loadGeografiaTecnicosGeocerca()" class="asignacion-color-despacho icon-color-despacho fa fa-exchange-alt">
+                            <span class="tooltiptext-btn">Asignaci&oacute;n T&eacute;cnicos Geocerca</span>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -241,6 +258,7 @@
         <jsp:include page="./modals/modalIntervencionesAsignadas.jsp"></jsp:include>
         <jsp:include page="./modals/modalOrganigrama.jsp"></jsp:include>
         <jsp:include page="./modals/modalEvidencia.jsp"></jsp:include>
+        <jsp:include page="./modals/modalGeografiaTecnicosGeocerca.jsp"></jsp:include>
        
         <!--div ng-show="vistaDespacho" class="container-fluid d-flex justify-content-center">    
             <ul class="wall content-alert-parent">
@@ -263,6 +281,48 @@
                      </div>
                 </li>              
              </ul>
+        </div>
+        <div id="contentAsignarTecnicosGeocerca" style="display: none;">
+            <button type="button" ng-click="closeAsignaTecnicosGeocerca()" class="btn-close btn-close-tecnicosGeocerca"></button>
+            <div>
+                <div class="card-body-selected-tecnicoGeocerca">
+                    <div class="col-md-12 card-selected-tecnicoGeocerca">
+                        <div class="timeline_tecnicosGeocerca">
+                            <div class="timeline-container primary" ng-repeat="item in listaTecnicosAsignar">
+                                <div class="timeline-icon">
+                                    <!-- <i class="fas fa-check"></i> -->
+                                    <img class="efecto imagen_operario_foto" src="{{(item.urlFotoPerfil != undefined && item.urlFotoPerfil ? item.urlFotoPerfil:'./resources/img/plantainterna/despacho/tecnicootasignada.png' )}}"/>
+                                </div>
+                                <div class="timeline-body">
+                                    <div class="row" style="height: 1.5em;">
+                                        <div class="col-md-10">
+                                            <span class="title_span" style="font-size: .8em;">{{item.usuarioFFM}}</span>
+                                        </div>
+                                        <div class="col-md-2 icon-eliminar-tecnico-geocerca" ng-click="eliminarTecnicoGeocerca(item.idTecnico)">
+                                            <i class="far fa-trash-alt" style="cursor: pointer;" title="Eliminar"></i>
+                                        </div>
+                                    </div>
+                                    <div class="card card-tecnicoGeocerca">
+                                        <div class="row">
+                                            <div class="col-md-12 text-format">
+                                                <span class="title_span">
+                                                    <strong>{{item.nombreCompleto}}</strong>
+                                                </span><br>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
+                    <div class="asigna-geocerca-link" ng-if="listaTecnicosAsignar.length">
+                        <span ng-click="openModalGeografiaTecnicos()">Asignar a Geocerca</span>
+                    </div>
+                    <div ng-if="!listaTecnicosAsignar.length" class="message-nodata">
+                        <span>Ning&uacute;n T&eacute;cnico seleccionado</span>
+                    </div>
+                </div>
+            </div>
         </div>
         <jsp:include page="./contents/div-alertas-content.jsp"></jsp:include>  
         

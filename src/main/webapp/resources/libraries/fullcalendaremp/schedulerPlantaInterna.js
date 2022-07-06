@@ -6430,6 +6430,10 @@ ResourceRow = (function(superClass) {
               </div>
               <div class="row">
                   <h5 title="${resource.nombre}  ${resource.apellidoPaterno}  ${resource.apellidoMaterno}" class="big-text nombre_tecnico">${resource.nombre}  ${resource.apellidoPaterno}  </h5>
+                  <div class="icon-content-tecnico-geocerca" onclick="agregarTecnicoGeocerca(${resource.idTecnico})" style="right: 2.5em; border-color: #ccc; display:none">
+                    <i class="fa fa-plus icon-change-plus" title="Agregar" id="icon-plus-${resource.idTecnico}" style="color: #000; font-size: 0.9em; display:block"></i>
+                    <i class="fa fa-check icon-change-check" title="Agregado" id="icon-check-${resource.idTecnico}" style="color: #51b37d; font-size: 0.9em; display:none"></i>
+                  </div>
               </div>
               <div class="row">
                   <small class="numero_empleado_telefono">
