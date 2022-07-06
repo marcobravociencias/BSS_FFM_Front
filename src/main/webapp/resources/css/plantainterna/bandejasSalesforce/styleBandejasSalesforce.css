@@ -6,7 +6,7 @@
 ::-webkit-scrollbar-thumb {
   background: #39455b;
   border: 71px none #ffffff;
-  border-radius: 31px;
+/*   border-radius: 31px; */
 }
 
 .buscar-input-operario {

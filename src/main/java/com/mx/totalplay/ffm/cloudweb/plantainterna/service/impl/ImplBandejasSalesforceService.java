@@ -92,15 +92,24 @@ public class ImplBandejasSalesforceService implements BandejasSalesforceService 
 	}
 
 	@Override
-	public ServiceResponseResult consultarFactibilidadEmpresarialBandejasSF(String params) {
+	public ServiceResponseResult consultarFactibilidadEmprResiBandejasSF(String params) {
 		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-		logger.info("ImplBandejasSalesforceService.class [metodo = consultarFactibilidadEmpresarialBandejasSF() ] \n" + jsonObject);
+		logger.info("ImplBandejasSalesforceService.class [metodo = consultarFactibilidadEmprResiBandejasSF() ] \n" + jsonObject);
 		
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
 		String tokenAccess = principalDetail.getAccess_token();
 		logger.info("consultarPendientesActivarBandejasSF## "+tokenAccess);
 		
-		String urlRequest = principalDetail.getDireccionAmbiente().concat(constBandejasSalesforce.getConsultaFactibilidadEmpresarialBandejasSF());
+		int idUnidadNegocio = principalDetail.getIdUnidadNegocio();
+		
+		String urlRequest = "";
+		
+		if(idUnidadNegocio == 1) {
+			urlRequest = principalDetail.getDireccionAmbiente().concat(constBandejasSalesforce.getConsultaFactibilidadResidencialBandejasSF());
+		}else if(idUnidadNegocio == 2) {
+			urlRequest = principalDetail.getDireccionAmbiente().concat(constBandejasSalesforce.getConsultaFactibilidadEmpresarialBandejasSF());
+		}
+	
 		logger.info("URL## " + urlRequest);
 		
 		Map<String, String> paramsRequestGet = new HashMap<String, String>();
@@ -108,6 +117,8 @@ public class ImplBandejasSalesforceService implements BandejasSalesforceService 
 		paramsRequestGet.put("longitud", jsonObject.get("longitud").getAsString());
 		
 		logger.info(paramsRequestGet);
+		logger.info("------------------------------------------------>>>>>>> " + idUnidadNegocio);
+		logger.info("------------------------------------------------>>>>>>> " + principalDetail.getUnidadNegocio());
 
 		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
 				ServiceResponseResult.class, tokenAccess);

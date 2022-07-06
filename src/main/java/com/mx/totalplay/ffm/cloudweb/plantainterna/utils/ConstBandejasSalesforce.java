@@ -25,6 +25,9 @@ public class ConstBandejasSalesforce implements Serializable {
 	@Value("${consultaFactibilidadEmpresarialBandejasSF}")
 	private String consultaFactibilidadEmpresarialBandejasSF;
 	
+	@Value("${consultaFactibilidadResidencialBandejasSF}")
+	private String consultaFactibilidadResidencialBandejasSF;
+	
 	@Value("${consultarDetalleSitioAgendamiento}")
 	private String consultaDetalleSitioAgendamiento;
 	

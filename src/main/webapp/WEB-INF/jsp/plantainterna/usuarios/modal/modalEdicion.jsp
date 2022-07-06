@@ -24,7 +24,7 @@
                             <a class="nav-link linkOpcionesRegistro" id="pills-tecnico-tab-mod" ng-click="revisionTecnicosDespachosMod('tabTecnicos')" data-toggle="pill" href="#pills-tecnico-mod" ng-show="mostrarTecnicosMod" role="tab" aria-controls="pills-tecnico-mod" aria-selected="false">T&eacute;cnicos</a>
                         </li>
                         <li class="nav-item tabOpcionesRegistro" role="presentation" ng-show="tabDespachosMod">
-                        	<a class="nav-link linkOpcionesRegistro" id="pills-despacho-tab-mod" ng-click="revisionTecnicosDespachosMod('tabDespachos')" data-toggle="pill" href="#pills-despacho-mod" ng-show="mostrarDespachoMod" role="tab" aria-controls="pills-despacho-mod" aria-selected="false">Despachos</a>
+                        	<a class="nav-link linkOpcionesRegistro" id="pills-despacho-tab-mod" ng-click="revisionTecnicosDespachosMod('tabDespachos')" data-toggle="pill" href="#pills-despacho-mod" role="tab" aria-controls="pills-despacho-mod" aria-selected="false">Despachos</a>
                         </li>
                         <li class="nav-item tabOpcionesRegistro" role="presentation" ng-show="tabPerfilesMod">
                         	<a class="nav-link linkOpcionesRegistro" id="pills-perfiles-tab-mod" data-toggle="pill" href="#pills-perfiles-mod" role="tab" aria-controls="pills-perfiles-mod" aria-selected="false">Perfiles</a>

@@ -193,10 +193,10 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 	                	        	case "tabInformacionVW_CUADRILLA":
 	                	        		if(conf.valor == "true"){
 	                	        			$scope.tabInformacionVW_CUADRILLA_mod = true;
-	                	        			//PENDIENTE DE QUE MANDEN LA LLAVE Y EL ID DE CUADRILLA.
-	                	        			$scope.detalleUsuario.cuadrilla = 12; 
-	                                    	var txtCuadrilla = $scope.listaResultCuadrillas.find((e) => e.id == $scope.detalleUsuario.cuadrilla);
-	                                    	$("#cuadrilla_select_mod").val(txtCuadrilla.descripcion);
+	                                    	var txtCuadrilla = $scope.listaResultCuadrillas.find((e) => e.id == $scope.detalleUsuario.tipoCuadrilla);
+//		                                    setTimeout(function() {
+		                                    $("#cuadrilla_select_mod").val(txtCuadrilla.descripcion);
+//	                                    	},500);
 	                	    			}
 	                	        		break;
 	                	        	case "tabArbol_LB_N1":
@@ -824,7 +824,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                             }
                             $("#modalEdicionUsuario").modal({ backdrop: 'static', keyboard: false });
                             $("#modalEdicionUsuario").modal('show');
-                            
+                            $("#cuadrilla_select_mod").val(txtCuadrilla.descripcion);
                         } else {
                         	toastr.warning(response.data.result.mensaje)
                         }
@@ -1485,13 +1485,27 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 		            	    	angular.forEach($scope.listaDespachosMod,function(despacho,index){
 		            	    		despacho.checkedOpcion = false;
 		            			});
-		            	    	angular.forEach($scope.listaDespachosMod,function(despacho,index){
-		            	    		angular.forEach($scope.detalleUsuario.idDespachos,function(despachoRegistrado,index){
-		            	    			if(despacho.idUsuario == despachoRegistrado.idOperador){
-		            	    				despacho.checkedOpcion = true;
-		            	    			}
-		            	    		});
-		            			});
+		            	    	
+		            	    	if($scope.detalleUsuario.idTipoUsuario == 7){
+		            	    		angular.forEach($scope.listaDespachosMod,function(despacho,index){
+			            	    		angular.forEach($scope.detalleUsuario.idDespachos,function(despachoRegistrado,index){
+			            	    			if(despacho.idUsuario == despachoRegistrado.idOperador){
+			            	    				despacho.checkedOpcion = true;
+			            	    			}
+			            	    		});
+			            			});
+		            	    	}
+		            	    	
+		            	    	if($scope.detalleUsuario.idTipoUsuario == 20){
+		            	    		angular.forEach($scope.listaDespachosMod,function(despacho,index){
+			            	    		angular.forEach($scope.detalleUsuario.subordinados,function(despachoRegistrado,index){
+			            	    			if(despacho.idUsuario == despachoRegistrado.idSubordinado){
+			            	    				despacho.checkedOpcion = true;
+			            	    			}
+			            	    		});
+			            			});
+		            	    	}
+		            	    	
 		            	    	$("#labelDespachosSeleccionadosMod").css("color", "rgb(70, 88, 107)");
 		            			$("#contenedorDespachosMod").css("border", "white solid 0px");
 		            		}else{
@@ -1705,19 +1719,17 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 		var sexoMod = $("#sexo_select_modificacion option:selected").val();
 		var fechaSeleccionadaMod = $scope.detalleUsuario.fechaIngreso.split('/');
 		
-		if($scope.isTecnicoMod){
-			angular.forEach($scope.listaDespachosMod,function(despacho,index){
-				if(despacho.checkedOpcion == true){
-					$scope.detalleUsuario.despachos.push(despacho.idUsuario);
-				}
-			});
-		}else{
-			angular.forEach($scope.listaTecnicosMod,function(tecnico,index){
-				if(tecnico.checkedOpcion == true){
-					$scope.detalleUsuario.tecnicos.push(tecnico.idUsuario);
-				}
-			});
-		}
+		angular.forEach($scope.listaDespachosMod,function(despacho,index){
+			if(despacho.checkedOpcion == true){
+				$scope.detalleUsuario.despachos.push(despacho.idUsuario);
+			}
+		});
+		
+		angular.forEach($scope.listaTecnicosMod,function(tecnico,index){
+			if(tecnico.checkedOpcion == true){
+				$scope.detalleUsuario.tecnicos.push(tecnico.idUsuario);
+			}
+		});
 		
 		angular.forEach($scope.listaIngenierosMod,function(ingeniero,index){
 			if(ingeniero.checkedOpcion == true){
@@ -1790,7 +1802,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 							permisos: $scope.isTecnicoMod == true ? [] : $scope.detalleUsuario.permisosId,
 							idAsignacionAutomatica: $scope.detalleUsuario.idAsignacionAutomatica
 					}
-		        	
+
 		        	if($scope.tabPerfilesMod){
 		        		paramsMod.perfilesOu = jsonPerfilesIntervencionesMod;
 		        	}
@@ -1804,7 +1816,12 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 		        	}
 		        	
 		        	if($scope.tabDespachosMod){
-		        		paramsMod.idDespachos = $scope.detalleUsuario.despachos;
+		        		if($scope.detalleUsuario.idTipoUsuario == 7){
+		        			paramsMod.idDespachos = $scope.detalleUsuario.despachos;
+		        		}
+		        		if($scope.detalleUsuario.idTipoUsuario == 20){
+		        			paramsMod.subordinados = $scope.detalleUsuario.despachos;
+		        		}
 		        	}
 		        	
 		        	if($scope.tabIngenierosMod){
@@ -1818,15 +1835,15 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 		        	if($scope.tabCouchDespachoMod){
 		        		paramsMod.supervisores = $scope.detalleUsuario.couchs;
 		        	}
-		        	
+
 		        	if($scope.tabSupervisorMod){
 		        		paramsMod.supervisores = $scope.detalleUsuario.supervisores;
 		        	}
-		        	
+
 		        	if($scope.tabInformacionVW_CUADRILLA_mod){
-		        		paramsRegistro.tipoCuadrilla = $scope.detalleUsuario.cuadrilla;
+		        		paramsMod.tipoCuadrilla = $scope.detalleUsuario.tipoCuadrilla;
 		        	}
-		        	
+
 		        	if($scope.fileFotoUsuarioMod != null){
 		        		if($scope.fileFotoUsuarioMod.nuevaFoto == true){
 		        			paramsMod.fotoPerfil = {
@@ -2028,7 +2045,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 			}
 			
 			if($scope.tabInformacionVW_CUADRILLA_mod){
-				if($scope.detalleUsuario.cuadrilla === "" || $scope.detalleUsuario.cuadrilla === undefined || $scope.detalleUsuario.cuadrilla === null){
+				if($scope.detalleUsuario.tipoCuadrilla === "" || $scope.detalleUsuario.tipoCuadrilla === undefined || $scope.detalleUsuario.tipoCuadrilla === null){
 					$("#cuadrilla_select_mod").css("border-bottom", "2px solid #f55756");
 					validacionInformacionGeneral = false;
 					mensaje = mensaje + "<br/> *Cuadrilla";

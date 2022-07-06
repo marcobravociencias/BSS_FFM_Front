@@ -95,7 +95,7 @@
         	</select>
         </div>
     </div>
-    <div class="col-md-4" ng-if="tabInformacionVW_CUADRILLA_mod">
+    <div class="col-md-4" ng-show="tabInformacionVW_CUADRILLA_mod">
 		<label class="span-consulta"><i class="fa fa-building"></i> Cuadrillas</label>
 		<div class="dropdown">
 			<input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="NO HAY SELECCI&Oacute;N" type="text" id="cuadrilla_select_mod" class="form-control inputFormulario" style="height: 34px; cursor: pointer;" />
@@ -104,7 +104,7 @@
 		        	<label>{{cuadrillaPadre.descripcion}}</label>
 		            <li ng-repeat="cuadrillaHija in cuadrillaPadre.cuadrillasHijas" class="element-menu-filter">
 		            	<label class="dropdown-item form-check-inputfiltro">
-		                	<input id="" ng-click="cuadrillaSeleccionMod(cuadrillaHija)" class="form-check-input" type="radio" ng-model="detalleUsuario.cuadrilla" ng-value="cuadrillaHija.id" ng-checked="detalleUsuario.cuadrilla == cuadrillaHija.id" />
+		                	<input id="" ng-click="cuadrillaSeleccionMod(cuadrillaHija)" class="form-check-input" type="radio" ng-model="detalleUsuario.tipoCuadrilla" ng-value="cuadrillaHija.id" ng-checked="detalleUsuario.tipoCuadrilla == cuadrillaHija.id" />
 		                    <span for="" class="dropdown-item item-text-filtro" ng-bind="cuadrillaHija.descripcion"></span>
 						</label>
 					</li>

@@ -176,8 +176,6 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 //                validateCreed = true;
 //                validateCreedMask = "sa";
 //                validateCreedText = "Valida todo pass"
-//                console.log(validateCreed);
-//                console.log(validateCreedMask);
                 if(validateCreed){
                 	if(validateCreedMask == null){
                 		$scope.txtExpresionValPassword = "La contraseña deberá tener mínimo 9 caracteres alfanuméricos, al menos un número y un caracter especial (@$!%*#?&).";
@@ -1411,7 +1409,12 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	}
     	
     	if($scope.tabDespachos){
-    		paramsRegistro.idDespachos = $scope.informacionRegistro.despachos;
+    		if(puestoSeleccionado == 7){
+    			paramsRegistro.idDespachos = $scope.informacionRegistro.despachos;
+    		}
+    		if(puestoSeleccionado == 20){
+    			paramsRegistro.subordinados = $scope.informacionRegistro.despachos;
+    		}
     	}
     	
     	if($scope.tabIngenieros){

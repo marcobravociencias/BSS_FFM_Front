@@ -334,8 +334,6 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                 $scope.isPermisoAgendamiento = ($scope.permisosUsuario.filter(e => { return e.clave == "accionAgendamiento" })[0] != undefined);
             }
 
-	
-
             if (results[1].data !== undefined) {
                 if (results[1].data.respuesta) {
                     if (results[1].data.result) {
@@ -568,8 +566,6 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         });
     }
 
- 
-
     $scope.clearFormAgendamiento = function () {
         $("#opcion-calendarioAgendamiento-tab").trigger("click");
         $("#contactoAgendamiento").val('');
@@ -629,14 +625,12 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                         swal.close();
                     }
                 } else {
-
                     $scope.flagConsultandoFactibilidad = false; 
                     $scope.flagRespuestaFactibilidad=='error'
                     mostrarMensajeWarningValidacion(response.data.resultDescripcion);
                     swal.close();
                 }
             } else {
-
                 $scope.flagConsultandoFactibilidad = false; 
                 $scope.flagRespuestaFactibilidad=='error'
                 mostrarMensajeErrorAlert('Ha ocurrido un error al consultar la factibilidad');
@@ -644,7 +638,6 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
             }
         });    
     }
-    
 
     visualizarAgendamiento = function (index) {
     	$scope.consultarValidacionCSP(index);
@@ -670,7 +663,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
 
         let paramsDetalleSitio={
             cuenta:$scope.elementoCSP.cuentaFacturaSf.noCuenta
-        }
+        };
         
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
@@ -725,7 +718,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                             mostrarMensajeInformativo("No se encontr&oacute; informaci&oacute;n del sitio");
                         }                  
                         if ( results[0].data.result.resultadoContactos != undefined && results[0].data.result.resultadoContactos.length > 0 ) {
-                            $scope.listContactosAgendamiento=$scope.listContactosAgendamiento.concat( results[0].data.result.resultadoContactos )
+                            $scope.listContactosAgendamiento= results[0].data.result.resultadoContactos;
                         }
                     } else {
                         mostrarMensajeInformativo("No se encontr&oacute; informaci&oacute;n del sitio");
@@ -752,7 +745,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                 subtipoIntervencion: $scope.subtipoIntervencionDisponibilidad != undefined ? $scope.subtipoIntervencionDisponibilidad : 106,
                 propietario: "1",
                 unidadNegocio: "1"
-        }
+        };
     	$q.all([
             bandejasSalesforceService.consultaDisponibilidadAgendamiento(dataDisp)
         ]).then(function (results) {
@@ -763,11 +756,11 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                             $scope.muestraDisponibilidadCalendar(results[0].data.result);
                         } else {
                             $scope.muestraDisponibilidadCalendar([]);
-                            mostrarMensajeInformativo("No se encontr&oacute; Disponibilidad");
+                            mostrarMensajeInformativo("No se encontr&oacute; disponibilidad");
                         }
                     } else {
                         $scope.muestraDisponibilidadCalendar([]);
-                        mostrarMensajeInformativo("No se encontr&oacute; Disponibilidad");
+                        mostrarMensajeInformativo("No se encontr&oacute; disponibilidad");
                     }
                 } else {
                     mostrarMensajeErrorAlert(results[0].data.resultDescripcion);
@@ -785,9 +778,9 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         $scope.contactoSelected={}    
         if($scope.idContactoSelected==undefined)
             return 
-                 
         $scope.contactoSelected=angular.copy($scope.listContactosAgendamiento.find(function (elem) { return elem.id === $scope.idContactoSelected  }))
     } 
+    
     $scope.abrirModalRegistroContacto=function(){
         $("#modalNuevoContacto").modal('show')
     }
@@ -795,9 +788,6 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
     $scope.agendarCSPBandejas = function () {
         let isValid = true;
         let mensajeError = '';
-        
-        console.log($scope.elementoCSP);
-        
         var comentarios = $("#comentariosAgendamiento").val();
         let params = {
         		"idFlujo": 1,
@@ -814,7 +804,6 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         		"idTicketSF": "",
         		"posventa": false	
         };
-        console.log(params);
 
         if ($("#comentariosAgendamiento").val() == undefined || $("#comentariosAgendamiento").val() == '') {
             mensajeError += "<li>Debe ingresar un comentario para Agendar</li>";
@@ -826,7 +815,6 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
             isValid = false;
         }
         
-
         if (isValid) {
             swal({
                 title: "\u00BFEst\u00E1s seguro de enviar la informaci\u00F3n?",
@@ -917,6 +905,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                 // "fechaInicio": '2021-01-01',
                 // "geografias": ["CIUDAD DE MEXICO"], "fechaFin": "2021-01-01", "fechaInicio": "2019-01-01"
             }
+
             bandejasSalesforceService.consultarPendientesAgendarBandejasSF(params).then(function success(response) {
                 if (response.data) {
                     if (response.data.respuesta) {
@@ -968,11 +957,11 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                                 }
                                 swal.close();
                             } else {
-                                mostrarMensajeInformativo("No se encontraron Pendientes de Agendar");
+                                mostrarMensajeInformativo("No se encontraron pendientes de agendar");
                                 swal.close();
                             }
                         } else {
-                            mostrarMensajeInformativo("No se encontraron Pendientes de Agendar");
+                            mostrarMensajeInformativo("No se encontraron pendientes de agendar");
                             swal.close();
                         }
                     } else {
@@ -1045,11 +1034,11 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                                 });
                                 swal.close();
                             } else {
-                                mostrarMensajeInformativo("No se encontraron Rescataventas");
+                                mostrarMensajeInformativo("No se encontraron rescataventas");
                                 swal.close();
                             }
                         } else {
-                            mostrarMensajeInformativo("No se encontraron Rescataventas");
+                            mostrarMensajeInformativo("No se encontraron rescataventas");
                             swal.close();
                         }
                     } else {
@@ -1128,11 +1117,11 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                                 });
                                 swal.close();
                             } else {
-                                mostrarMensajeInformativo("No se encontraron Pendientes a Activar");
+                                mostrarMensajeInformativo("No se encontraron pendientes a activar");
                                 swal.close();
                             }
                         } else {
-                            mostrarMensajeInformativo("No se encontraron Pendientes a Activar");
+                            mostrarMensajeInformativo("No se encontraron pendientes a activar");
                             swal.close();
                         }
                     } else {
@@ -1150,7 +1139,6 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
     }
 
     $scope.validacionGenerica = function() {
-        
     }
     
     $scope.detallePaqueteCSP = {};
