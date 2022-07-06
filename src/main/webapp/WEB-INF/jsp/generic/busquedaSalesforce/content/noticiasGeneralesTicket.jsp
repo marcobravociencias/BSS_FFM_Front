@@ -46,7 +46,6 @@
                                  </div>
                                  <span class="option-mensajes" ng-click="responderComentario(noticia.id)">Responder</span>
                                  <!-- <span class="option-mensajes" ng-click="editarComentario(noticia.id, noticia.text, 0)">Editar</span> -->
-                                 <span class="option-mensajes" ng-click="eliminarComentarioBusqueda(noticia.id, 0)">Eliminar</span>
                                  <span class="text-fecha-comentario" ng-bind="noticia.createdDate"></span>
                                  <button id="button-subcommet-{{noticia.id}}" type="button" class="btn-close close-enviar-subcomentario" ng-click="responderComentario(noticia.id)" aria-label="Close" style="display: none;"></button>
                                  <div id="content-subcomentario-ticket-{{noticia.id}}" class="row container-text-subcomentarios" style="display: none;">
@@ -108,7 +107,6 @@
                                  <h1 class="title-coment" ng-bind="comentario.createdBy"></h1>
                                  <h1 class="title-subcomment" ng-bind="comentario.text"></h1>
                                  <!-- <span class="option-mensajes" ng-click="editarComentario(comentario.id, comentario.text, 1)">Editar</span> -->
-                                 <span class="option-mensajes" ng-click="eliminarComentarioBusqueda(comentario.id, 1)">Eliminar</span>
                                  <span class="text-fecha-comentario" ng-bind="comentario.createdDate"></span>
                                  <div id="content-text-e-{{comentario.id}}" class="row content-text-send" style="display: none;">
                                      <div class="col-10">
