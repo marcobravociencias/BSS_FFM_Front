@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.Accion;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jasypt.util.text.AES256TextEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,7 @@ public class ImplGenericAccionesService implements GenericAccionesService{
 	private final Logger logger = LogManager.getLogger(ImplGenericAccionesService.class.getName());
     private Gson gson = new Gson();
 	private final HttpSession session;
+	private final Environment env;
 
     private final ConsumeRest restCaller;
     private final UtileriaGeneral utilerias;
@@ -38,6 +40,7 @@ public class ImplGenericAccionesService implements GenericAccionesService{
         this.restCaller = restCaller;
         this.utilerias = utilerias;
 		this.session = session;
+		this.env = env;
     }
 	public ServiceResponseResult creacionOrdenTrabajoGeneric(String params) {
 	        logger.info("ImplDespachoPIService.class [metodo = creacionOrdenTrabajoGeneric() ]\n" + params);
@@ -105,6 +108,30 @@ public class ImplGenericAccionesService implements GenericAccionesService{
 
 		session.setAttribute("MODULO_MENSAJES_ACCIONES_RECIENTES", actionList);
 
+		return response;
+	}
+	
+	@Override
+	public ServiceResponseResult getAutentificacionJerarquia(String params) {	
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		String us = jsonObject.get("usdta").getAsString();
+		String crdospas = jsonObject.get("pwdta").getAsString();
+		
+		logger.info("jgetAutentificacion## "+us+" -- "+crdospas);
+		
+		ServiceResponseResult response = ServiceResponseResult.builder().isRespuesta(true).result(null).build();
+
+		AES256TextEncryptor textEncryptor = new AES256TextEncryptor();
+		textEncryptor.setPassword(env.getProperty("jwt.secret.amb"));
+		crdospas = textEncryptor.decrypt(crdospas);
+		
+		String urlService=env.getProperty("dep.envirom.web").concat(":8151").concat(env.getProperty("ws.url.validausrffm"));		
+		LoginResult responseLog = (LoginResult) restCaller.callPostReturnClassBasicAuthXwwwUrlFormed(
+				urlService ,  us, crdospas, LoginResult.class
+		);
+		
+		logger.info("RESULT" + gson.toJson(responseLog.getAccess_token()));
+		response.setResult(responseLog.getAccess_token());
 		return response;
 	}
 }

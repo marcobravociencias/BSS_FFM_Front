@@ -7,6 +7,8 @@ import com.google.gson.JsonObject;
 import com.mx.totalplay.ffm.cloudweb.plantainterna.service.DespachoPIService;
 import com.mx.totalplay.ffm.cloudweb.plantainterna.utils.ConstDespachoPI;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.*;
+import com.mx.totalplay.ffm.cloudweb.utilerias.service.AutentificacionService;
+import com.mx.totalplay.ffm.cloudweb.utilerias.service.GenericAccionesService;
 import com.mx.totalplay.ffm.cloudweb.utilerias.utils.ConstantesGeneric;
 import com.mx.totalplay.ffm.cloudweb.utilerias.utils.ConsumeRest;
 import com.mx.totalplay.ffm.cloudweb.utilerias.utils.UtileriaGeneral;
@@ -16,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,15 +41,18 @@ public class ImplDespachoPIService implements DespachoPIService {
     private final Environment env;
     private Gson gson = new Gson();
     private final HttpSession session;
+    private GenericAccionesService genericAccionesService;
+
 
     @Autowired
-    public ImplDespachoPIService(ConstantesGeneric constantesAmbiente, ConstDespachoPI constDespachoPI, ConsumeRest restCaller, UtileriaGeneral utilerias, Environment env, HttpSession session) {
+    public ImplDespachoPIService(ConstantesGeneric constantesAmbiente, ConstDespachoPI constDespachoPI, ConsumeRest restCaller, UtileriaGeneral utilerias, Environment env, HttpSession session, GenericAccionesService genericAccionesService) {
         this.constantesAmbiente = constantesAmbiente;
         this.constDespachoPI = constDespachoPI;
         this.restCaller = restCaller;
         this.utilerias = utilerias;
         this.env = env;
         this.session = session;
+        this.genericAccionesService = genericAccionesService;
     }
 
     @Override
@@ -204,7 +210,7 @@ public class ImplDespachoPIService implements DespachoPIService {
     }
 
 
-    public ServiceResponseResult consultarCatalogoTipoOrdenUsuarioDespacho() {
+    public ServiceResponseResult consultarCatalogoTipoOrdenUsuarioDespacho(String params) {
         logger.info("ImplDespachoPIService.class [metodo = consultarCatalogoTipoOrdenUsuarioDespacho() ]\n");
         //logger.info("env --------------------"+env.getProperty("variable.entorno.ambiente"));
 
@@ -215,7 +221,12 @@ public class ImplDespachoPIService implements DespachoPIService {
         String urlRequest = principalDetail.getDireccionAmbiente().concat(constDespachoPI.getConsultaCatalogoTipoOrdenUsuarioDespacho());
         Map<String, String> paramsRequestGet = new HashMap<String, String>();
         paramsRequestGet.put("idUsuario", String.valueOf(principalDetail.getIdUsuario()));
-
+        
+        if(params != null && !params.equals("null")) {
+        	JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        	tokenAcces = jsonObject.get("token").getAsString();
+        }
+        
         logger.info("idUsuario##+" + principalDetail.getIdUsuario());
         logger.info("urlRequest##+" + urlRequest);
 
@@ -230,13 +241,18 @@ public class ImplDespachoPIService implements DespachoPIService {
     }
 
 
-    public ServiceResponseResult consultarCatalogoEstatusOrden() {
+    public ServiceResponseResult consultarCatalogoEstatusOrden(String params) {
         logger.info("ImplDespachoPIService.class [metodo = consultarCatalogoEstatusOrden() ]\n");
 
         LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
         String tokenAcces = principalDetail.getAccess_token();
-        String tokenAccess = principalDetail.getAccess_token();
-        logger.info("consultarCatalogoEstatusOrden ##+" + tokenAccess);
+        logger.info("consultarCatalogoEstatusOrden ##+" + tokenAcces);
+        
+        if(params != null && !params.equals("null")) {
+        	JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        	tokenAcces = jsonObject.get("token").getAsString();
+        }
+        
         String urlRequest = principalDetail.getDireccionAmbiente().concat(constDespachoPI.getConsultaCatalogoEstatusOrdenDespacho());
         logger.info("consultarCatalogoEstatusOrden" + urlRequest);
         Map<String, String> paramsRequestGet = new HashMap<String, String>();
@@ -270,11 +286,16 @@ public class ImplDespachoPIService implements DespachoPIService {
         return response;
     }
 
-    public ServiceResponseResult consultarCatalogoGeografiaUsuario() {
+    public ServiceResponseResult consultarCatalogoGeografiaUsuario(String params) {
         logger.info("ImplDespachoPIService.class [metodo = consultarCatalogoGeografiaUsuario() ]\n");
-
         LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
         String tokenAcces = principalDetail.getAccess_token();
+        
+        if(params != null && !params.equals("null")) {
+        	JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        	tokenAcces = jsonObject.get("token").getAsString();
+        }
+        
         logger.info("consultarCatalogoGeografiaUsuario ##+" + tokenAcces);
         String urlRequest = principalDetail.getDireccionAmbiente().concat(constDespachoPI.getConsultarCatalogoGeografiaUsuarioPI());
         logger.info("urlRequest ##+" + urlRequest);
@@ -290,7 +311,7 @@ public class ImplDespachoPIService implements DespachoPIService {
     }
 
     @Override
-    public ServiceResponseResult consultarCatalogoTurnosPI() {
+    public ServiceResponseResult consultarCatalogoTurnosPI(String params) {
         logger.info("ImplDespachoPIService.class [metodo = consultarCatalogoTurnosPI() ]\n");
 
 
@@ -299,7 +320,12 @@ public class ImplDespachoPIService implements DespachoPIService {
         logger.info("consultarCatalogoTurnosPI ##+" + tokenAcces);
         String urlRequest = principalDetail.getDireccionAmbiente().concat(constDespachoPI.getConsultarCatalogoTurnosPi());
         logger.info("urlRequest ##+" + urlRequest);
-
+        
+        if(params != null && !params.equals("null")) {
+        	JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        	tokenAcces = jsonObject.get("token").getAsString();
+        }
+        
         Map<String, String> paramsRequestGet = new HashMap<String, String>();
         //paramsRequestGet.put("idDespacho", principalDetail.getIdUsuario()+"");
         logger.info("idDespacho ##+" + principalDetail.getIdUsuario());
@@ -406,11 +432,18 @@ public class ImplDespachoPIService implements DespachoPIService {
         logger.info("consultarOperariosAsignadosDespacho ##+" + tokenAcces);
         String urlRequest = principalDetail.getDireccionAmbiente().concat(constDespachoPI.getConsultaOrdenesAsignadasOperarioPI());
         logger.info("URL ##+" + urlRequest);
-
+        
         Map<String, String> paramsRequestGet = new HashMap<String, String>();
         paramsRequestGet.put("idDespacho", principalDetail.getIdUsuario() + "");
         paramsRequestGet.put("fechaInicio", fechaInicioParams);
         paramsRequestGet.put("fechaFin", fechaFinParams);
+        
+        if(jsonObject.get("token") != null && jsonObject.get("token").getAsString().trim() != "") {
+        	tokenAcces = jsonObject.get("token").getAsString();
+        	paramsRequestGet.put("idDespacho",jsonObject.get("usuario").getAsString());
+        }
+        
+       
 
         ServiceResponseResult response = restCaller.callGetBearerTokenRequest(
                 paramsRequestGet,
@@ -422,16 +455,23 @@ public class ImplDespachoPIService implements DespachoPIService {
 
 
     @Override
-    public ServiceResponseResult consultarOperariosAsignadosDespacho() {
+    public ServiceResponseResult consultarOperariosAsignadosDespacho(String params) {
         logger.info("ImplDespachoPIService.class [metodo = consultarOperariosAsignadosDespacho() ]");
 
         LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
         String tokenAcces = principalDetail.getAccess_token();
         logger.info("consultarOperariosAsignadosDespacho ##+" + tokenAcces);
         String urlRequest = principalDetail.getDireccionAmbiente().concat(constDespachoPI.getConsultarOperariosAsignadosDespachoPI());
-
         Map<String, String> paramsRequestGet = new HashMap<String, String>();
         paramsRequestGet.put("idDespacho", principalDetail.getIdUsuario() + "");
+        
+        if(params != null && !params.equals("null")) {
+        	JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        	tokenAcces = jsonObject.get("token").getAsString();
+        	paramsRequestGet.put("idDespacho", jsonObject.get("usuario").getAsString());
+        }
+        
+       
         logger.info("idDespacho ##+" + principalDetail.getIdUsuario());
         ServiceResponseResult response = restCaller.callGetBearerTokenRequest(
                 paramsRequestGet,
@@ -568,7 +608,12 @@ public class ImplDespachoPIService implements DespachoPIService {
         LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
         String tokenAcces = principalDetail.getAccess_token();
         logger.info("consultarOperariosAsignadosDespacho ##+" + tokenAcces);
+        
+    	JsonObject jsonObjectToken = gson.fromJson(params, JsonObject.class);
 
+        if(jsonObjectToken.get("token") != null && jsonObjectToken.get("token").getAsString().trim() != "") {
+        	tokenAcces = jsonObjectToken.get("token").getAsString();	
+        }
 
         String urlRequest = principalDetail.getDireccionAmbiente().concat(constDespachoPI.getOrdenesPendientesDespachoP());
 
@@ -607,16 +652,19 @@ public class ImplDespachoPIService implements DespachoPIService {
         List<Accion> accionesListResponse = new ArrayList<>();
 
         LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
-
+        
         JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
         String claveBusqueda = jsonObject.get("moduloAccionesUsuario").getAsString();
+        
+       
+  
         if (session.getAttribute("MODULO_MENSAJES_ACCIONES_RECIENTES") != null)
             accionesListSession = (List<Accion>) session.getAttribute("MODULO_MENSAJES_ACCIONES_RECIENTES");
         else
             accionesListSession = new ArrayList<>();
 
         Map<String, Object> mapResponse = principalDetail.getConfiguraciones();
-
+        
         if (jsonObject != null) {
             Permiso permiso = principalDetail.getModulos()
                     .stream()
@@ -632,7 +680,27 @@ public class ImplDespachoPIService implements DespachoPIService {
                     .collect(Collectors.toList());
         }
         mapResponse.put("MODULO_MENSAJES_ACCIONES_RECIENTES", accionesListResponse);
+        
+      //Validacion sesion jerarquia
+        if(jsonObject.get("usuario") != null && jsonObject.get("usuario").getAsInt() != 0) {
+        	String urlPermisos=env.getProperty("dep.envirom.web").concat(":8133").concat(env.getProperty("ws.url.validausrffmpermisos"));
+    		Map<String, String> paramsGet = new HashMap<String, String>();
+    		paramsGet.put("idUsuario", ""+jsonObject.get("usuario").getAsInt());
+    		paramsGet.put("idOrigen", "1");
+    		LoginResult permisosModulos = (LoginResult) restCaller.callGetBearerTokenRequestReturnClass(paramsGet, urlPermisos, LoginResult.class,  jsonObject.get("token").getAsString());
+    		mapResponse = permisosModulos.getConfiguracionesGenerales();
+    		
+    		if (jsonObject != null) {
+                Permiso permiso = permisosModulos.getModulos()
+                        .stream()
+                        .filter(e -> claveBusqueda.equals(e.getClave()))
+                        .findAny()
+                        .orElse(null);
 
+                mapResponse.put("MODULO_ACCIONES_USUARIO", permiso);
+            }
+        }
+        
         ServiceResponseResult response = ServiceResponseResult.builder().isRespuesta(true).result(mapResponse).build();
         return response;
     }
@@ -648,7 +716,11 @@ public class ImplDespachoPIService implements DespachoPIService {
         String tokenAcces = principalDetail.getAccess_token();
         logger.info("consultarOperariosAsignadosDespacho ##+" + tokenAcces);
         logger.info("json object params## " + jsonObject.toString());
-
+        
+        if(jsonObject.get("token") != null && jsonObject.get("token").getAsString().trim() != "") {
+        	tokenAcces = jsonObject.get("token").getAsString();
+        }
+        
         String urlRequest = principalDetail.getDireccionAmbiente().concat(constDespachoPI.getConteoAlertasDespachoPI());
         Map<String, String> paramsRequestGet = new HashMap<String, String>();
 
@@ -1294,7 +1366,9 @@ public class ImplDespachoPIService implements DespachoPIService {
         logger.info("URL ##+" + urlRequest);
         Map<String, String> paramsRequestGet = new HashMap<String, String>();
         paramsRequestGet.put("idSupervisor", jsonObject.get("idSupervisor").getAsString());
+        logger.info(paramsRequestGet);
         ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest, ServiceResponseResult.class, tokenAcces);
+
         return response;
 	}
 

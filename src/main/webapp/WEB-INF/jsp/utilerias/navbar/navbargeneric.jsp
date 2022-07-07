@@ -17,7 +17,7 @@
 <input type="hidden" id="segundoapempleadohidden" value="${userStore.usuarioApellidoMaterno}">
 <input type="hidden" id="puestoempleadohidden" value="${userStore.puesto}">
 <input type="hidden" id="fotoempleadohidden" value="${userStore.urlFoto}">
-<input type="hidden" id="contactoempleadohidden" value="${userStore.celular}">
+<input type="hidden" id="usuarioempleadohidden" value="${userStore.usuario}">
 
 <header class="header-navbar-p">
     <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-menu-generic">
@@ -37,7 +37,8 @@
                         <img class="image-totalplayheader" src="${pageContext.request.contextPath}/resources/img/logotipos/residencial.png" alt="" loading="lazy" />
                     </c:if>
                 </div>
-                <ul class="ul-elementos-nav navbar-nav me-auto mb-2 mb-lg-0">
+                <ul class="ul-elementos-nav navbar-nav me-auto mb-2 mb-lg-0" id="otros-nav-menu-temp" style="display: none;"></ul>
+                <ul class="ul-elementos-nav navbar-nav me-auto mb-2 mb-lg-0 hidenn-nav-menu">
                     <c:forEach var="permi" items="${userStore.modulos}">
                         <c:if test="${permi.dentroNavbar}">
                             <li id="${permi.clave}" class="nav-item ">
@@ -110,7 +111,7 @@
                             </div>
                         </li-->
                 </ul>
-                <div class="content-mascota">
+                <div class="content-mascota hidenn-nav-menu">
                     <svg xmlns="http://www.w3.org/2000/svg" id="monsterPlay" viewBox="0 0 949.28 1077.26" width="48"
                         class="monster" height="48">
                         <defs>
@@ -199,9 +200,8 @@
                         </g>
                     </svg>
                 </div>
-
                 <c:if test="${userStore.pais != null}">
-                    <div class="content-header content-header-border">
+                    <div class="content-header content-header-border hidenn-nav-menu">
                         <div class="icon-wrapper icon-wrapper-alt-pais rounded-circle">
                             <div class="icon-wrapper-bg bg-focus"></div>
                             <c:choose>
@@ -226,8 +226,7 @@
                         </div>
                     </div>
                 </c:if>
-
-                <div class="content-header" id="user-info-login">
+                <div class="content-header hidenn-nav-menu" id="user-info-login">
                     <div class="row dropdown-toggle" id="dropdownMenuLogin" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false" style="cursor: pointer;" onclick="cargarEstatusUs()">
                         <div class="col-3" style="padding-right: 0;padding-top: 0.5em;">
@@ -490,8 +489,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="content-header content-header-border"></div> 
-                <div class="content-header ">
+                <div class="content-header content-header-border hidenn-nav-menu"></div> 
+                <div class="content-header hidenn-nav-menu">
                     <a href="javascript:document.getElementById('logout').submit()"
                         class="btn btn-primary button-salir">
                         <i class="fas fa-sign-out-alt"></i>

@@ -37,10 +37,9 @@ app.service("mainDespachoService", function ($http) {
 		return $http({
 			method: "post",
 			url: "req/consultarCatalogoTipoOrdenUsuarioDespacho",
-			//data:JSON.stringify(params),
-            headers : {
-                'Content-Type' : 'application/json'
-            }
+			data:JSON.stringify(params),
+			headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
 		});
 	};
 	
@@ -48,10 +47,9 @@ app.service("mainDespachoService", function ($http) {
 		return $http({
 			method: "post",
 			url: "req/consulCatalogoGeografiaUsuarioDespacho",
-			//data:JSON.stringify(params),
-            headers : {
-                'Content-Type' : 'application/json'
-            }
+			data:JSON.stringify(params),
+			headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
 		});
 	};
 	this.consulCatalogoGeografiaGeneralDespacho=function(params){
@@ -68,10 +66,9 @@ app.service("mainDespachoService", function ($http) {
 		return $http({
 			method: "post",
 			url: "req/consultarCatalogoTurnosDespachoPI",
-			//data:JSON.stringify(params),
-            headers : {
-                'Content-Type' : 'application/json'
-            }
+			data:JSON.stringify(params),
+			headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
 		});
 	};
 
@@ -79,10 +76,9 @@ app.service("mainDespachoService", function ($http) {
 		return $http({
 			method: "post",
 			url: "req/consultarCatalogoEstatusDespachoPI",
-			//data:JSON.stringify(params),
-            headers : {
-                'Content-Type' : 'application/json'
-            }
+			data:JSON.stringify(params),
+			headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
 		});
 	};
 	
@@ -91,9 +87,8 @@ app.service("mainDespachoService", function ($http) {
 			method: "post",
 			url: "req/consultarOrdenesPendientes",
 			data:JSON.stringify(params),
-            headers : {
-                'Content-Type' : 'application/json'
-            }
+			headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
 		});
 	};
 	this.consultarOrdenesaAsignadasDespacho=function(params){
@@ -101,9 +96,8 @@ app.service("mainDespachoService", function ($http) {
 			method: "post",
 			url: "req/consultarOtsAsignadas",
 			data:JSON.stringify(params),
-            headers : {
-                'Content-Type' : 'application/json'
-            }
+			headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
 		});
 	};
 	this.consultarConteoAlertasPI=function(params){
@@ -111,9 +105,8 @@ app.service("mainDespachoService", function ($http) {
 			method: "post",
 			url: "req/consultarConteoAlertasPI",
 			data:JSON.stringify(params),
-            headers : {
-                'Content-Type' : 'application/json'
-            }
+			headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
 		});
 	}
 	this.consultarCatalogoEstatusTecnico=function(params){
@@ -202,13 +195,13 @@ app.service("mainDespachoService", function ($http) {
 		});
 	}
 
-	this.consultarTecnicosDisponibiles=function(){
+	this.consultarTecnicosDisponibiles=function(params){
 		return $http({
 			method: "post",
 			url: "req/consultarTecnicosDisponiblesDespachoPI",
-            headers : {
-                'Content-Type' : 'application/json'
-            }
+			data:JSON.stringify(params),
+			headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
 		});
 	}
 	this.consultarComentariosDespachoOT=function(params){

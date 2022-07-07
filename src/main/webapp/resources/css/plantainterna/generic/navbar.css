@@ -60,7 +60,6 @@ body {
 
 .ul-elementos-nav .nav-item.active a {
   color: var(--estandar-color) !important;
-  font-size: .9em;
   /* font-weight: bold; */
 }
 
@@ -879,4 +878,43 @@ img.img-despacho-navbar.img-user-profile-navbar {
 @keyframes img-perfil-show {
   0% { opacity: 0;}
   100% { opacity: 1;}
+}
+
+@media screen and (max-width: 1366px) {
+  .navbar-light .navbar-nav .nav-link {
+    font-size: .7em;
+  }
+
+  .icon-navbar-izquierda{
+    font-size: 0.7em;
+  }
+}
+
+@media screen and (max-width: 1242px) {
+
+  .navbar-light .navbar-nav .nav-link {
+    font-size: .5em;
+  }
+
+  .icon-navbar-izquierda{
+    font-size: 0.5em;
+  }
+
+  .ul-elementos-nav .nav-item{
+    margin-right: 0.3em !important;
+  }
+
+}
+
+@media screen and (max-width: 997px) {
+
+  .icon-navbar-izquierda{
+    display: none !important;
+  }
+
+  .navbar-light .navbar-nav .nav-link{
+    display: none !important;
+  }
+  
+
 }

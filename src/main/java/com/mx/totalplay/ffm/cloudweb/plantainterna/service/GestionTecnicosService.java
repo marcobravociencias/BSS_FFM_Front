@@ -6,7 +6,7 @@ public interface GestionTecnicosService {
 	
 	public ServiceResponseResult consultaTecnicosGestionTecnicos(String params);
 	public ServiceResponseResult consultaAuxiliaresGestionTecnicos(String params);
-	public ServiceResponseResult consultaTecnicosPorDespacho();
+	public ServiceResponseResult consultaTecnicosPorDespacho(String params);
 	public ServiceResponseResult consultaOrdenesTecnicoPorFecha(String params);
 	public ServiceResponseResult consultaOrdenesAuxiliarPorFecha(String params);
 	public ServiceResponseResult consultaDisponibilidadTecnico(String params);

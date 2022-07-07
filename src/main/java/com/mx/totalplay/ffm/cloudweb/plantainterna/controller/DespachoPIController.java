@@ -123,9 +123,9 @@ public class DespachoPIController {
     }
 
     @PostMapping("consulCatalogoGeografiaUsuarioDespacho")
-    public ResponseEntity<?> consulCatalogoGeografiaUsuarioDespacho() {
+    public ResponseEntity<?> consulCatalogoGeografiaUsuarioDespacho(@RequestBody  (required=false) String params) {
         LOGGER.info("##### CONSULTANDO CATALOGO GEOGRAFIA USUARIO DESPACHO PI");
-        ServiceResponseResult response = despachoService.consultarCatalogoGeografiaUsuario();
+        ServiceResponseResult response = despachoService.consultarCatalogoGeografiaUsuario(params);
         if (response.getResult() instanceof Integer) {
             return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
         }
@@ -143,9 +143,9 @@ public class DespachoPIController {
     }
 
     @PostMapping("consultarCatalogoTipoOrdenUsuarioDespacho")
-    public ResponseEntity<?> consultarCatalogoTipoOrdenUsuarioDespacho() {
+    public ResponseEntity<?> consultarCatalogoTipoOrdenUsuarioDespacho(@RequestBody  (required=false) String params) {
         LOGGER.info("##### CONSULTANDO CATALOGO ESTATUS DESPACHO PI");
-        ServiceResponseResult response = despachoService.consultarCatalogoTipoOrdenUsuarioDespacho();
+        ServiceResponseResult response = despachoService.consultarCatalogoTipoOrdenUsuarioDespacho(params);
         if (response.getResult() instanceof Integer) {
             return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
         }
@@ -153,9 +153,9 @@ public class DespachoPIController {
     }
 
     @PostMapping("consultarCatalogoEstatusDespachoPI")
-    public ResponseEntity<?> consultarCatalogoEstatusOrdenDespacho() {
+    public ResponseEntity<?> consultarCatalogoEstatusOrdenDespacho(@RequestBody  (required=false) String params) {
         LOGGER.info("##### CONSULTANDO CATALOGO ESTATUS DESPACHO PI");
-        ServiceResponseResult response = despachoService.consultarCatalogoEstatusOrden();
+        ServiceResponseResult response = despachoService.consultarCatalogoEstatusOrden(params);
         if (response.getResult() instanceof Integer) {
             return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
         }
@@ -164,9 +164,9 @@ public class DespachoPIController {
 
 
     @PostMapping("consultarCatalogoTurnosDespachoPI")
-    public ResponseEntity<?> consultarCatalogoTurnosPI() {
+    public ResponseEntity<?> consultarCatalogoTurnosPI(@RequestBody  (required=false) String params) {
         LOGGER.info("##### CONSULTANDO CATALOGO TURNO DESPACHO PI");
-        ServiceResponseResult response = despachoService.consultarCatalogoTurnosPI();
+        ServiceResponseResult response = despachoService.consultarCatalogoTurnosPI(params);
         if (response.getResult() instanceof Integer) {
             return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
         }
@@ -299,9 +299,9 @@ public class DespachoPIController {
     }
 
     @PostMapping("/consultarTecnicosDisponiblesDespachoPI")
-    public ResponseEntity<?> consultarTecnicosDisponiblesDespachoPI() {
+    public ResponseEntity<?> consultarTecnicosDisponiblesDespachoPI(@RequestBody  (required=false) String params) {
         LOGGER.info("##### CONSULTANDO OPERARIOS DISPONIBLES");
-        ServiceResponseResult response = despachoService.consultarOperariosAsignadosDespacho();
+        ServiceResponseResult response = despachoService.consultarOperariosAsignadosDespacho(params);
         if (response.getResult() instanceof Integer) {
             return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
         }

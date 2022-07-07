@@ -79,6 +79,7 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
         $scope.resultReporteDiario = 0;
         $scope.arbolIntervenciones = [];
         $scope.isAsignacionTecnicosGeocerca = false;
+        $scope.dataWindow = window.usuario ?  {token: window.token, usuario: window.usuario}:null;
 
         $('#searchGeo').on('keyup', function () {
             $("#jstree-proton-3").jstree("search", this.value);
@@ -250,7 +251,7 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
 
                     let data_tecnico = $scope.listadoTecnicosGeneral.find((e) => e.idTecnico == parseInt(event.resourceId))
                     if ($scope.validate_time_asignacion(fecha_asignacion)) {
-                        if ($scope.validate_status_tecnico(data_tecnico.idEstatusTecnico)) {
+                        if ($scope.validate_status_tecnico(data_tecnico.idEstatusTecnico) && $scope.validate_geografia_intervencion(event, data_tecnico)) {
                             $scope.abrirModalAsignacion(otinfo, data_tecnico);
                         } else {
                             $scope.refrescarBusqueda();
@@ -265,7 +266,7 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
 
                     let data_tecnico = $scope.listadoTecnicosGeneral.find((e) => e.idTecnico == parseInt(event.resourceId))
                     if ($scope.validate_time_asignacion(event.start.format())) {
-                        if ($scope.validate_status_tecnico(data_tecnico.status)) {
+                        if ($scope.validate_status_tecnico(data_tecnico.status) && $scope.validate_geografia_intervencion(event, data_tecnico)) {
                             $scope.abrirModalReAsignacion(event, data_tecnico);
                         } else {
                             $scope.refrescarBusqueda();
@@ -323,7 +324,7 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
         $scope.consultarTecnicosDisponibiles = function () {
             $scope.listadoTecnicosGeneral = []
             $scope.isCargaTecnicosDisponibles = false;
-            mainDespachoService.consultarTecnicosDisponibiles().then(function success(response) {
+            mainDespachoService.consultarTecnicosDisponibiles($scope.dataWindow).then(function success(response) {
                 if (response.data !== undefined) {
                     if (response.data.respuesta) {
                         if (response.data.result) {
@@ -351,6 +352,10 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
         $scope.consultarConteoAlertasPI = function () {
             var params = {
                 "testing": "-",
+            }
+            if($scope.dataWindow){
+                params.token = $scope.dataWindow.token;
+                params.usuario = $scope.dataWindow.usuario;
             }
             mainDespachoService.consultarConteoAlertasPI(params).then(function success(response) {
                 if (response.data !== undefined) {
@@ -404,6 +409,30 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
 
             }
             return result;
+        }
+
+        $scope.validate_geografia_intervencion = function (event, tecnico) {
+
+            let arrayIntervencion =  tecnico.tiposOrdenes ? tecnico.tiposOrdenes.split(',') : [];
+            let arrayGeografias = tecnico.geografias  ? tecnico.geografias.split(',') : [];
+            let arrayGeocerca = tecnico.idGeografia1 ? tecnico.idGeografia1.split(',') : [];
+
+            let isIntervencion = arrayIntervencion.find(e => e == event.objectevent.idtipoOrden);
+            let isSubIntervencion = tecnico.idSubIntervenciones.find(e => e == event.objectevent.idSubtipoOrden);
+            let isGeoagrafia = arrayGeografias.find(e => e == event.objectevent.idGeografia);
+            let isGeocerca = tecnico.idClusters.find(e => e == event.objectevent.idGeografia1);
+
+            if (isIntervencion || isSubIntervencion) {
+                if (isGeoagrafia || isGeocerca) {
+                    return true;
+                } else {
+                    toastr.info('El t&eacute;cnico no cubre la zona geogr&aacute;fica');
+                    return false;
+                }
+            } else {
+                toastr.info('El t&eacute;cnico no cuenta con la intervenci&oacute;n');
+                return false;
+            }
         }
 
         $scope.randomIntFromInterval = function () { // min and max included 
@@ -469,6 +498,9 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                 "idClusters": clustersparam
             }
 
+            if($scope.dataWindow){
+                params.token = $scope.dataWindow.token;
+            }
 
             if (dataTableOtsPendientes)
                 dataTableOtsPendientes.destroy()
@@ -865,6 +897,10 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                 "fechaInicio": formatDateInicio,
                 "fechaFin": formatDateInicio
             }
+            if($scope.dataWindow){
+                params.token = $scope.dataWindow.token;
+                params.usuario = $scope.dataWindow.usuario;
+            }
             mainDespachoService.consultarOrdenesaAsignadasDespacho(params).then(function success(response) {
                 if (response.data !== undefined) {
                     if (response.data.respuesta) {
@@ -962,8 +998,7 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
 
 
         $scope.getCatControllerrafiaUsuarioDespacho = function () {
-
-            mainDespachoService.consulCatalogoGeografiaUsuarioDespacho().then(function success(response) {
+            mainDespachoService.consulCatalogoGeografiaUsuarioDespacho($scope.dataWindow).then(function success(response) {
                 if (response.data !== undefined) {
                     if (response.data.respuesta) {
                         if (response.data.result) {
@@ -1003,14 +1038,20 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
         $scope.fechaInicioFiltro = moment(FECHA_HOY_DATE).format('DD/MM/YYYY');
         $scope.fechaFinFiltro = moment(FECHA_HOY_DATE).format('DD/MM/YYYY');
         $scope.fechaFiltradoCalendar = moment(FECHA_HOY_DATE).format('DD/MM/YYYY');
-
+        console.log($scope.dataWindow);
         $scope.cargarFiltrosGeneric = function () {
+            let paramsConfiguracion =  { "moduloAccionesUsuario": "moduloDespacho" }
+            if($scope.dataWindow){
+                paramsConfiguracion.usuario = $scope.dataWindow.usuario;
+                paramsConfiguracion.token = $scope.dataWindow.token;
+            }
+            console.log(paramsConfiguracion);
             $q.all([
-                mainDespachoService.consultarCatalogosTurnosDespachoPI(),
-                mainDespachoService.consultarCatalogoTipoOrdenUsuarioDespacho(),
-                mainDespachoService.consulCatalogoGeografiaUsuarioDespacho(),
-                mainDespachoService.consultarConfiguracionDespachoDespacho({ "moduloAccionesUsuario": "moduloDespacho" }),
-                mainDespachoService.consultarCatalogoEstatusDespachoPI()
+                mainDespachoService.consultarCatalogosTurnosDespachoPI($scope.dataWindow),
+                mainDespachoService.consultarCatalogoTipoOrdenUsuarioDespacho($scope.dataWindow),
+                mainDespachoService.consulCatalogoGeografiaUsuarioDespacho($scope.dataWindow),
+                mainDespachoService.consultarConfiguracionDespachoDespacho(paramsConfiguracion),
+                mainDespachoService.consultarCatalogoEstatusDespachoPI($scope.dataWindow)
             ]).then(function (results) {
                 let elementosMapa = angular.copy(results[3].data.result);
                 $scope.listadoIconosConfig = []
@@ -1049,26 +1090,33 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                 }
 
                 $scope.estatusCambio = results[4].data.result;
-
-                if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
-                    $scope.permisosConfigUser.permisos.map(e => { e.banderaPermiso = true; return e; });
-                    $scope.accionesUserConfigText = $scope.permisosConfigUser.permisos.map(e => { return e.clave })
-                    $scope.accionAsignacionOtPermiso = $scope.permisosConfigUser.permisos.find(e => { return e.clave === 'accionAsignaOT' })
-                    $scope.accionDetalleSalesforce = $scope.permisosConfigUser.permisos.find(e => { return e.clave === 'accionDetalleSalesforce' })
-                    accionDetalleSf = $scope.accionDetalleSalesforce;
-                    $scope.permisoDescargaSeguimientoDiario = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaSeguimientoDiario" })[0] != undefined);
-
-                    if ($scope.accionAsignacionOtPermiso != undefined) {
-                        $scope.accionAsignacionOtPermiso = $scope.accionAsignacionOtPermiso.banderaPermiso
+                if(!$scope.dataWindow){
+                    if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
+                        $scope.permisosConfigUser.permisos.map(e => { e.banderaPermiso = true; return e; });
+                        $scope.accionesUserConfigText = $scope.permisosConfigUser.permisos.map(e => { return e.clave })
+                        $scope.accionAsignacionOtPermiso = $scope.permisosConfigUser.permisos.find(e => { return e.clave === 'accionAsignaOT' })
+                        $scope.accionDetalleSalesforce = $scope.permisosConfigUser.permisos.find(e => { return e.clave === 'accionDetalleSalesforce' })
+                        accionDetalleSf = $scope.accionDetalleSalesforce;
+                        $scope.permisoDescargaSeguimientoDiario = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaSeguimientoDiario" })[0] != undefined);
+                        $scope.accionReAsignacionOtPermiso = $scope.permisosConfigUser.permisos.find(e => { return e.clave === 'accionReasignaOT' })
+                        $scope.accionAsignarTecnicosGeocerca = $scope.permisosConfigUser.permisos.find(e => { return e.clave === 'accionAsignarTecnicosGeocerca' });
+                        if ($scope.accionAsignacionOtPermiso != undefined) {
+                            $scope.accionAsignacionOtPermiso = $scope.accionAsignacionOtPermiso.banderaPermiso
+                        }
+                    } else {
+                        $scope.permisosConfigUser = {}
+                        $scope.accionesUserConfigText = []
+                        $scope.permisosConfigUser.permisos = []
                     }
-                    $scope.accionReAsignacionOtPermiso = $scope.permisosConfigUser.permisos.find(e => { return e.clave === 'accionReasignaOT' })
-                    $scope.accionAsignarTecnicosGeocerca = $scope.permisosConfigUser.permisos.find(e => { return e.clave === 'accionAsignarTecnicosGeocerca' });
-
+                   
                 } else {
                     $scope.permisosConfigUser = {}
                     $scope.accionesUserConfigText = []
                     $scope.permisosConfigUser.permisos = []
                 }
+                   
+
+               
 
 
                 $scope.iniciarMapaAlertas();

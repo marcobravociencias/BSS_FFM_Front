@@ -197,7 +197,9 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 				$scope.configPermisoAccionEditaUsuarios = ($scope.permisosUsuariosAcciones.filter(e => {return e.clave == "accionEditaUsuarios"})[0] != undefined);
 				$scope.configPermisoAccionEliminaUsuarios = ($scope.permisosUsuariosAcciones.filter(e => {return e.clave == "accionEliminaUsuarios"})[0] != undefined);
 				$scope.bucketIdImg = resultConf.BUCKETID_FB;
-				
+				if(window.usuario){
+					consultarDetalleUsuario(window.usuario)
+				}
 				// *** COMPAÑÍAS ***
 	        	if (results[1].data !== undefined) {
 	            	if(results[1].data.respuesta){

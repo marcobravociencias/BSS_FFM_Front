@@ -21,5 +21,16 @@ app.service("organigramaService", function ($http) {
             }
         });
     };
+
+    this.consultaSession = function (params) {
+        return $http({
+            method: "post",
+            url: "req/generarSesionJerarquia",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    };
     
 })

@@ -48,6 +48,8 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
     $scope.detalleMesTecnico = {};
     $scope.fechaInicioMes = "";
 	$scope.fechaFinMes = "";
+    $scope.dataWindow = window.usuario ?  {token: window.token, usuario: window.usuario}:null;
+
 
     $scope.convertDate = function (fecha) {
         function pad(s) { return (s < 10) ? '0' + s : s; }
@@ -158,7 +160,7 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
             swal({ text: 'Cargando datos ...', allowOutsideClick: false });
             swal.showLoading();
             $q.all([
-            	gestionTecnicosService.consultaTecnicosPorDespacho(),
+            	gestionTecnicosService.consultaTecnicosPorDespacho($scope.dataWindow),
             	gestionTecnicosService.consultaMotivosJustificaciones()
             ]).then(function (results) {
             	if (results[0].data !== undefined) {

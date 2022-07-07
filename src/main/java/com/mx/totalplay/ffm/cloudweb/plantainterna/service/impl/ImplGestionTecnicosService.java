@@ -68,12 +68,19 @@ public class ImplGestionTecnicosService implements GestionTecnicosService {
 	}
 	
 	@Override
-	public ServiceResponseResult consultaTecnicosPorDespacho() {
+	public ServiceResponseResult consultaTecnicosPorDespacho(String params) {
 		logger.info("ImplGestionTecnicosService.class [metodo = consultaTecnicosPorDespacho() ]\n");
 		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
 		Map<String, String> paramsRequestGet = new HashMap<String, String>();
 		paramsRequestGet.put("idDespacho", principalDetail.getIdUsuario()+"");
 		String tokenAcces=principalDetail.getAccess_token(); 
+		
+		if(params != null && !params.equals("null")) {
+	        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+	        tokenAcces = jsonObject.get("token").getAsString();
+	        paramsRequestGet.put("idDespacho",  jsonObject.get("usuario").getAsInt() +"");
+	    }
+	        
 		String url = principalDetail.getDireccionAmbiente().concat(constGestionTecnicos.getConsultaTecnicosPorDespacho());
 		ServiceResponseResult response= restCaller.callGetBearerTokenRequest(paramsRequestGet, url, ServiceResponseResult.class, tokenAcces);
 		logger.info("RESULT busqueda "+gson.toJson(response));

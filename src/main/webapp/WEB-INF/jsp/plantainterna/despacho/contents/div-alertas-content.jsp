@@ -709,7 +709,7 @@
                     <div class="row" id="content-evidencia">
                         <div class="col-2 pl-0">
                             <div class="col-12 content_category content_category_0">
-                                <div id="categoria_img_0" class="tipo_evidencia" ng-click="getEvidenciasImagenes(0)">
+                                <div id="categoria_img_0" class="tipo_evidencia" ng-click="getEvidenciasImagenesAlerta(0)">
                                     <div class="total-imagen-evidencia">
                                         <span ng-bind="detalleEvidencia.evidencias.length"></span>
                                     </div>
@@ -717,7 +717,7 @@
                                 </div>
                             </div>
                             <div class="col-12 content_category content_category_{{tipo.id}}"
-                                ng-repeat="tipo in detalleEvidencia.tipos" ng-click="getEvidenciasImagenes(tipo.id)">
+                                ng-repeat="tipo in detalleEvidencia.tipos" ng-click="getEvidenciasImagenesAlerta(tipo.id)">
                                 <div id="categoria_img_{{tipo.id}}" class="tipo_evidencia">
                                     <div class="total-imagen-evidencia">
                                         <span ng-bind="tipo.imagenes.length"></span>

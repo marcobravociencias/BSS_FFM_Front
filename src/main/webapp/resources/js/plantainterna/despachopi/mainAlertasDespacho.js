@@ -282,7 +282,7 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
         }).catch(err => handleError(err));
     }
 
-    $scope.getEvidenciasImagenes = function (tipo) {
+    $scope.getEvidenciasImagenesAlerta = function (tipo) {
         $scope.listImagenesTipo = [];
 
         if (tipo.toString() === '0') {

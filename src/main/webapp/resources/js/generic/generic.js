@@ -615,6 +615,15 @@ $('.dropdown-menu-login-info').on("click.bs.dropdown", function (e) {
 	e.stopPropagation();
 });
 
+$( document ).ready(function() {
+	if(window.usuario){
+		function disableF5(e) { if ((e.which || e.keyCode) == 116) e.preventDefault(); };
+		$(".hidenn-nav-menu").css("display", "none");
+		$("#otros-nav-menu-temp").css("display", "block");
+		$(document).on("keydown", disableF5);
+	}
+});
+
 inOutImg = function (size) {
 	if (size == 'out') {
 		$('#content-in-img').css('display', 'none');

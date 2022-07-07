@@ -13,19 +13,19 @@ public interface DespachoPIService {
 	public ServiceResponseResult consultarConfiguracionDespachoDespachoServ(String params);
 
 	public ServiceResponseResult consultarCatalogoTipoOrdenGeneralDespacho();
-	public ServiceResponseResult consultarCatalogoTipoOrdenUsuarioDespacho();
+	public ServiceResponseResult consultarCatalogoTipoOrdenUsuarioDespacho(String params);
 	public ServiceResponseResult consultarCatalogosPI(String params);
 
 	public ServiceResponseResult consultarCotizacionOTSe(String params);
-	public ServiceResponseResult consultarCatalogoEstatusOrden();
+	public ServiceResponseResult consultarCatalogoEstatusOrden(String params);
 	public ServiceResponseResult consultarCatalogoEstatusOrdenToken(String token, String direccionAmbiente);
 	public ServiceResponseResult consultarCatalogoGeografiaGeneral();
-	public ServiceResponseResult consultarCatalogoGeografiaUsuario();	
-	public ServiceResponseResult consultarCatalogoTurnosPI();
+	public ServiceResponseResult consultarCatalogoGeografiaUsuario(String params);	
+	public ServiceResponseResult consultarCatalogoTurnosPI(String params);
 	public ServiceResponseResult consultarCatalogoAccionesOTPI();
 	public ServiceResponseResult obtenerOrdenesTrabajoPendientesDespacho(String params);
 	public ServiceResponseResult consultarOrdenesAsignadasOperario(String params);
-	public ServiceResponseResult consultarOperariosAsignadosDespacho();
+	public ServiceResponseResult consultarOperariosAsignadosDespacho(String params);
 	public ServiceResponseResult consultarlocalizacionOtPIDespacho(String params); 
 	public ServiceResponseResult consultarDetalleOTPI(String params);
 	public ServiceResponseResult consultarDetalleOTPIToken(String params, String token, String direccionAmbiente);

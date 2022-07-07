@@ -59,4 +59,15 @@ public class GenericAccionesController {
 		}
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
+	
+	@PostMapping("/generarSesionJerarquia")
+	public ResponseEntity<?> generarSesionJerarquia(@RequestBody String params){
+		logger.info("##### CONSULTANDO generarSesionJerarquia");
+
+		ServiceResponseResult response = genericAccionesService.getAutentificacionJerarquia(params);
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
 }

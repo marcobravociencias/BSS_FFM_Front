@@ -74,3 +74,13 @@
 #tree .boc-input>label.focused {
     display: none;
 }
+
+#tree .mini-map {
+    top: 10px !important;
+    margin: 0 !important;
+    bottom: initial !important;
+}
+
+#tree text {
+    font-family: 'Montserrat';
+}
