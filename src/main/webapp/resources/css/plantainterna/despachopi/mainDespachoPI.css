@@ -3389,3 +3389,17 @@ i.fas.fa-lock.iconoAsignacionOtPermiso {
 }
 
 /* MODAL ASIGNAR TECNICOS GEOCERCA */
+.icon-semaforo-pendiente {
+  width: 1.5em;
+  height: 1.5em;
+}
+
+.content-icon-semaforo-pendiente {
+  display: inline-block;
+  background: white !important;
+  border-radius: 50%;
+  height: 1.5em;
+  width: 1.3em;
+  text-align: center;
+  margin-right:.2em;
+}

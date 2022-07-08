@@ -525,9 +525,31 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                                 let banderaConfirmaOt = $scope.permisosConfigUser.permisos.find(e => { return e.clave === 'accionConfirmaOT' })
                                 let banderaDesconfirmaOt = $scope.permisosConfigUser.permisos.find(e => { return e.clave === 'accionDesconfirmaOT' })
                                 let htmlAsignacionPermiso = '';
-
+                                
+                               
                                 angular.forEach($scope.listadoOtsPendientes, function (otpendiente, index) {
                                     htmlImagenesIconos = $scope.categoriaIconos(otpendiente)
+                                    let horas= ( otpendiente.horasViva== undefined || otpendiente.horasViva == ''  ) ? -1 : parseInt( otpendiente.horasViva )
+                                    let htmlSemaforoOrden=''
+
+                                    if( horas >=24 && horas < 48 ){
+                                        htmlSemaforoOrden=`
+                                        <div class="content-icon-semaforo-pendiente">
+                                            <img class="iconos-ot-pendiente icon-semaforo-pendiente svg"  src="./resources/img/plantainterna/despacho/semaforo/24.png"/>
+                                        </div>`
+                                    }                                    
+                                    if( horas >=48 && horas <72 ){
+                                        htmlSemaforoOrden=`
+                                        <div class="content-icon-semaforo-pendiente">
+                                            <img class="iconos-ot-pendiente icon-semaforo-pendiente svg"  src="./resources/img/plantainterna/despacho/semaforo/48.png"/>
+                                        </div>`
+                                    }
+                                    if( horas >=72 ){
+                                        htmlSemaforoOrden=`
+                                        <div class="content-icon-semaforo-pendiente">
+                                            <img class="iconos-ot-pendiente icon-semaforo-pendiente svg"  src="./resources/img/plantainterna/despacho/semaforo/72.png"/>
+                                        </div>`
+                                    }
 
                                     let stringCheckbox =
                                         `<div class="content-top-element confirmacion-elemn switchpendiente">
@@ -627,8 +649,10 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                                                 <div style=" color:${otpendiente.colorOrden}"  class="content-top-element intervencino-elemn intervencion-title"> 
                                                     ${otpendiente.descipcionTipoOrden}
                                                 </div>
-                                                <div class="content-iconos ${$scope.accionAsignacionOtPermiso ? "elem-asignacion" : "elem-not-asignacion"} "> ${htmlImagenesIconos}</div>   
+                                                <div class="content-iconos ${$scope.accionAsignacionOtPermiso ? "elem-asignacion" : "elem-not-asignacion"} ">  ${htmlSemaforoOrden}  ${htmlImagenesIconos}</div>   
+                                               ${htmlAsignacionPermiso}                                       
                                                 ${htmlAsignacionPermiso}                                       
+                                               ${htmlAsignacionPermiso}                                       
                                             </div>
                                           
                                                                                
