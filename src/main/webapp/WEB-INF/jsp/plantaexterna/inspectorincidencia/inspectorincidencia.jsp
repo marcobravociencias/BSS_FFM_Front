@@ -257,6 +257,10 @@
         src="${pageContext.request.contextPath}/resources/libraries/magnific_popup/jquery.magnific-popup.min.js"></script>
     <script type="text/javascript"
         src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
+    <script type="text/javascript"
+        src="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/lib/moment.min.js"></script>
+    <script type="text/javascript"
+        src="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/lib/moment.es.js"></script>
 
     <!-- ARCHIVOS JS -->
     <script type="text/javascript"

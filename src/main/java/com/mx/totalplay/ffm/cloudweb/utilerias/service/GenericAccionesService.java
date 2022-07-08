@@ -12,4 +12,8 @@ public interface GenericAccionesService {
     
     ServiceResponseResult getAutentificacionJerarquia(String params);
 
+    
+    ServiceResponseResult agregarMensajeAccionService(String params);
+    
+    ServiceResponseResult consultarAccionesRecientesService(String params);
 }

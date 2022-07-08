@@ -1,5 +1,6 @@
 package com.mx.totalplay.ffm.cloudweb.utilerias.controller;
 
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +66,26 @@ public class GenericAccionesController {
 		logger.info("##### CONSULTANDO generarSesionJerarquia");
 
 		ServiceResponseResult response = genericAccionesService.getAutentificacionJerarquia(params);
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	
+	@PostMapping("/consultarAccionesRealizadasService")
+	public ResponseEntity<?> consultarAccionesRealizadasService(@RequestBody String params){
+		logger.info("##### CONSULTANDO consultarAccionesRealizadasService " + params);
+		ServiceResponseResult response = genericAccionesService.consultarAccionesRecientesService(params);
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	
+	@PostMapping("/registrarAccionesRealizadasService")
+	public ResponseEntity<?> registrarAccionesRealizadasService(@RequestBody String params){
+		logger.info("##### CONSULTANDO registrarAccionesRealizadasService");
+		ServiceResponseResult response = genericAccionesService.agregarMensajeAccionService(params);
 		if (response.getResult() instanceof Integer){
 			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
 		}

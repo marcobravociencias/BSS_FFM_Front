@@ -9,6 +9,8 @@ import org.apache.logging.log4j.Logger;
 import org.jasypt.util.text.AES256TextEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
@@ -133,5 +135,46 @@ public class ImplGenericAccionesService implements GenericAccionesService{
 		logger.info("RESULT" + gson.toJson(responseLog.getAccess_token()));
 		response.setResult(responseLog.getAccess_token());
 		return response;
+	}
+	
+	@Override
+	public ServiceResponseResult agregarMensajeAccionService(String params) {
+		logger.info("ImplGenericAccionesService.class [metodo = agregarMensajeAccionService() ]\n" + params);
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        String tokenAcces = principalDetail.getAccess_token();
+        logger.info("json object params## " + jsonObject.toString());
+        String urlRequest = principalDetail.getDireccionAmbiente()
+                .concat(constantesAmbiente.getRegistrarAccionesRealizadas());
+        ServiceResponseResult response = restCaller.callPostBearerTokenRequest(
+                jsonObject.toString(),
+                urlRequest,
+                ServiceResponseResult.class,
+                tokenAcces);
+        
+        return response;
+	}
+	
+	@Override
+	public ServiceResponseResult consultarAccionesRecientesService(String params) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		logger.info("ImplGenericAccionesService.class [metodo = consultarAccionesRecientesService() ]\n" + params);
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        String tokenAcces = principalDetail.getAccess_token();
+        logger.info("consultarAccionesRecientesService ##+" + tokenAcces);
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constantesAmbiente.getConsultarAccionesRealizadas());
+        logger.info("url--- " + urlRequest);
+        Map<String, String> paramsRequestGet = new HashMap<String, String>();
+        paramsRequestGet.put("fechaInicio", jsonObject.get("fechaInicio").getAsString());
+        paramsRequestGet.put("fechaFin", jsonObject.get("fechaFin").getAsString());
+        paramsRequestGet.put("idUsuario", ""+principalDetail.getIdUsuario());
+        ServiceResponseResult response = restCaller.callGetBearerTokenRequest(
+                paramsRequestGet,
+                urlRequest,
+                ServiceResponseResult.class,
+                tokenAcces);
+        logger.info("RESULT" + gson.toJson(response));
+        return response;
 	}
 }

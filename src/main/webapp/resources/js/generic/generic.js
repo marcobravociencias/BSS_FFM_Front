@@ -147,6 +147,16 @@ class GenericAccionRealizada {
 		}
 	}
 
+	getObjectAccionRealizadaService(mensajeAccion, tipoMensaje , tituloAccion) {
+		return {
+			idModulo: this.nombreModuloAccion,
+			comentarios: 'test',
+			descripcionEstatusHttp: tipoMensaje,
+			descripcionAccion: tituloAccion,
+			descripcionMensajeHttp:  mensajeAccion
+		}
+	}
+
 	formatHora(date) {
 		let hours = date.getHours();
 		let minutes = date.getMinutes();
@@ -171,7 +181,10 @@ class GenericAccionRealizada {
 	}
 
 	guardarAccionesRecientesModulo(mensajeAccion, tipoMensaje  , tituloAccion) {
-		let objectGuardado=this.getObjectAccionRealizada(mensajeAccion, tipoMensaje,tituloAccion)		
+		let objectGuardado=this.getObjectAccionRealizadaService(mensajeAccion, tipoMensaje,tituloAccion)		
+		this.guardarAccionesRecientesService(objectGuardado);
+
+		/*
 		let accionesList;
 		if (localStorage.getItem('MODULO_MENSAJES_ACCIONES_RECIENTES')) {
 			accionesList = JSON.parse(localStorage.getItem('MODULO_MENSAJES_ACCIONES_RECIENTES'))
@@ -181,14 +194,46 @@ class GenericAccionRealizada {
 
 		accionesList.push(objectGuardado)
 		localStorage.setItem('MODULO_MENSAJES_ACCIONES_RECIENTES', JSON.stringify(accionesList));
+		*/
 	}
 
-	getAccionesRecientesUsuario() {
-		let accionesList;
-		let accionesListModulo;
-		let accionesListGeneral;
-		let usuario = document.getElementById('tipo1').value;
+	guardarAccionesRecientesService(params) {
+		$.ajax({
+			url : 'req/registrarAccionesRealizadasService',
+			type : "POST",
+			data : JSON.stringify(params),
+			dataType : "json",
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			success : function(jsonResponse, textStatus, jqXHR) {
+				
+			},
+			error : function(jqXHR, textStatus, errorThrown) {
+				
+			}
+		});
+	}
 
+	getAccionesRecientesUsuario = function() {
+		//let usuario = document.getElementById('tipo1').value;
+		let params = {
+            fechaInicio: moment(new Date()).subtract(5,'d').format('YYYY-MM-DD'),
+            fechaFin: moment(new Date()).format("YYYY-MM-DD")
+        }
+		
+		return $.ajax({
+			url : 'req/consultarAccionesRealizadasService',
+			type : "POST",
+			data : JSON.stringify(params),
+			async : false,
+			dataType : "json",
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
+		
+		/*
 		if (localStorage.getItem('MODULO_MENSAJES_ACCIONES_RECIENTES')) {
 			accionesList = JSON.parse(localStorage.getItem('MODULO_MENSAJES_ACCIONES_RECIENTES'));
 			localStorage.removeItem('MODULO_MENSAJES_ACCIONES_RECIENTES');
@@ -212,9 +257,10 @@ class GenericAccionRealizada {
 		} else {
 			accionesList = [];
 		}
+		*/
 
-		let accionesUsuario = accionesList.filter(e => { return e.usuario === usuario && e.identificadorModulo === this.nombreModuloAccion });
-		return accionesUsuario;
+		//let accionesUsuario = accionesList.filter(e => { return e.usuario === usuario && e.identificadorModulo === this.nombreModuloAccion });
+		
 	}
 
 	ocultarUltimasAcciones() {
@@ -230,35 +276,47 @@ class GenericAccionRealizada {
 		}
 
 		$("#container-ultimasAcciones").show();
-		let listaUltimasAcciones = this.getAccionesRecientesUsuario();
+		//let listaUltimasAcciones = this.getAccionesRecientesUsuario();
+		let listaUltimasAcciones = [];
+		let accionesListGeneral;
+		let idModuloConsulta = this.nombreModuloAccion;
+		this.getAccionesRecientesUsuario().done(function (jsonResponse) {
+			if (jsonResponse.respuesta) {
+				if (jsonResponse.result) {
+					if (jsonResponse.result.modulos) {
+						accionesListGeneral = jsonResponse.result.modulos;
+						listaUltimasAcciones = accionesListGeneral.filter(e => { return e.idModulo === idModuloConsulta });
+					}
+				}
+			}
+		});
 		$("#listAccionesRecientes").empty();
 		let contentAcciones = "";
-		
 		if (listaUltimasAcciones.length > 0) {
 			$.each(listaUltimasAcciones, function (i, accion) {
-				if (accion.tipoMensaje == 'success') {
+				if (accion.descripcionEstatusHttp == 'success') {
 					contentAcciones += '<li class="timeline-actions timeline-icon-success active">' +
-						'					<div class="action-time">' + validarAcci(accion.fecha) + ' - ' + validarAcci(accion.hora) + '</div>' +
-						'					<h6 class="action-title">'+validarAcci(accion.tituloAccion)+'</h6>' +
-						'					<p class="action-text">' + validarAcci(accion.mensaje) + '</p>' +
+						'					<div class="action-time">' + validarAcci(accion.fechaRegistro) + '</div>' +
+						'					<h6 class="action-title">'+validarAcci(accion.descripcionAccion)+'</h6>' +
+						'					<p class="action-text">' + validarAcci(accion.descripcionMensajeHttp) + '</p>' +
 						'				</li>';
-				} else if (accion.tipoMensaje == 'warning') {
+				} else if (accion.descripcionEstatusHttp == 'warning') {
 					contentAcciones += '<li class="timeline-actions timeline-icon-warning active">' +
-						'					<div class="action-time">' + validarAcci(accion.fecha) + ' - ' + validarAcci(accion.hora) + '</div>' +
-						'					<h6 class="action-title">'+validarAcci(accion.tituloAccion)+'</h6>' +
-						'					<p class="action-text">' + validarAcci(accion.mensaje) + '</p>' +
+						'					<div class="action-time">' + validarAcci(accion.fechaRegistro) + '</div>' +
+						'					<h6 class="action-title">'+validarAcci(accion.descripcionAccion)+'</h6>' +
+						'					<p class="action-text">' + validarAcci(accion.descripcionMensajeHttp) + '</p>' +
 						'				</li>';
-				} else if (accion.tipoMensaje == 'error') {
+				} else if (accion.descripcionEstatusHttp == 'error') {
 					contentAcciones += '<li class="timeline-actions timeline-icon-error active">' +
-						'					<div class="action-time">' + validarAcci(accion.fecha) + ' - ' + validarAcci(accion.hora) + '</div>' +
-						'					<h6 class="action-title">'+validarAcci(accion.tituloAccion)+'</h6>' +
-						'					<p class="action-text">' + validarAcci(accion.mensaje) + '</p>' +
+						'					<div class="action-time">' + validarAcci(accion.fechaRegistro) + '</div>' +
+						'					<h6 class="action-title">'+validarAcci(accion.descripcionAccion)+'</h6>' +
+						'					<p class="action-text">' + validarAcci(accion.descripcionMensajeHttp) + '</p>' +
 						'				</li>';
-				}	else if (accion.tipoMensaje == 'info') {
+				}	else if (accion.descripcionEstatusHttp == 'info') {
 					contentAcciones += '<li class="timeline-actions timeline-icon-info active">' +
-						'					<div class="action-time">' + validarAcci(accion.fecha) + ' - ' + validarAcci(accion.hora) + '</div>' +
-						'					<h6 class="action-title">'+validarAcci(accion.tituloAccion)+'</h6>' +
-						'					<p class="action-text">' + validarAcci(accion.mensaje) + '</p>' +
+						'					<div class="action-time">' + validarAcci(accion.fechaRegistro) + '</div>' +
+						'					<h6 class="action-title">'+validarAcci(accion.descripcionAccion)+'</h6>' +
+						'					<p class="action-text">' + validarAcci(accion.descripcionMensajeHttp) + '</p>' +
 						'				</li>';
 				}
 			});

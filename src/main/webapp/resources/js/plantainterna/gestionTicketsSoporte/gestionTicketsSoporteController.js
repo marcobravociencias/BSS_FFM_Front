@@ -1,8 +1,8 @@
 
 var app = angular.module('ticketsSoporteApp', []);
 
-var objectTempAccion = new GenericAccionRealizada('moduloGestionTickets', 'TOP_RIGHT');
-objectTempAccion.inicializarBotonAccionesRecientes();
+var objectTempAccion;
+
 app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoporteService', 'genericService', 'busquedaSalesforceService', 'evidenciaService', '$filter', function ($scope, $q, gestionTicketSoporteService, genericService, busquedaSalesforceService, evidenciaService, $filter) {
     app.ticketControllerMapa($scope, $q, gestionTicketSoporteService, genericService)
     app.busquedaSalesforce($scope, busquedaSalesforceService)
@@ -330,6 +330,8 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                                 $scope.configPermisoAccionCreaTicket = (permisosResult.permisos.filter(e => { return e.clave == "accionCreacionTickets" })[0] != undefined);
                                 $scope.configPermisoAccionConsultaTicket = (permisosResult.permisos.filter(e => { return e.clave == "accionConsultaTickets" })[0] != undefined);
                                 $scope.configPermisoAccionModificarTicket = (permisosResult.permisos.filter(e => { return e.clave == "accionModificaTickets" })[0] != undefined);
+                                objectTempAccion = new GenericAccionRealizada(""+permisosResult.id, 'TOP_RIGHT');
+                                objectTempAccion.inicializarBotonAccionesRecientes();
                             }
 
                             if ($scope.configPermisoAccionCreaTicket && !$scope.configPermisoAccionConsultaTicket) {
@@ -1002,13 +1004,13 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                                 swal.close();
                                 mostrarMensajeErrorAlert(response.data.resultDescripcion);
                                 $scope.isMensajeErrorOt = true
-                                let mensajeEnvio = 'Ha ocurrido un error al crear el ticket con la cuenta' + $scope.ticketSoporteR.cuenta
+                                let mensajeEnvio = 'Ha ocurrido un error al crear el ticket con la cuenta ' + $scope.ticketSoporteR.cuenta
                                 objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                             }
                             $scope.mensajeRequestCreacion = response.data.resultDescripcion
 
                         } else {
-                            let mensajeEnvio = 'Ha ocurrido un error al crear el ticket con la cuenta' + $scope.ticketSoporteR.cuenta
+                            let mensajeEnvio = 'Ha ocurrido un error al crear el ticket con la cuenta ' + $scope.ticketSoporteR.cuenta
                             objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
 
                             swal.close();
